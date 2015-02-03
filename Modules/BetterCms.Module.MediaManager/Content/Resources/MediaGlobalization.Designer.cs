@@ -250,7 +250,7 @@ namespace BetterCms.Module.MediaManager.Content.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Category.
+        ///   Looks up a localized string similar to Categories.
         /// </summary>
         public static string FileEditor_Dialog_Category_Title {
             get {
@@ -484,7 +484,7 @@ namespace BetterCms.Module.MediaManager.Content.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Category.
+        ///   Looks up a localized string similar to Categories.
         /// </summary>
         public static string ImageEditor_Dialog_Category_Title {
             get {
