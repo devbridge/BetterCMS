@@ -13,5 +13,12 @@ namespace BetterCms.Module.Api.Operations.MediaManager.Files
         /// <param name="request">The request.</param>
         /// <returns><c>UploadFileResponse</c> with a new file id.</returns>
         UploadFileResponse Post(UploadFileRequest request);
+
+        /// <summary>
+        /// Re-upload file from the stream.
+        /// </summary>
+        /// <param name="request">The request.</param>
+        /// <returns><c>ReuploadFileResponse</c></returns>
+        ReuploadFileResponse Put(ReuploadFileRequest request);
     }
 }
