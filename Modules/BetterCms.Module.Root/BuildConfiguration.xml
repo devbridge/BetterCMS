@@ -20,6 +20,7 @@
       <JavaScriptFiles Include="$(ProjectDir)Scripts\bcms.slides.jquery.js" />
       <JavaScriptFiles Include="$(ProjectDir)Scripts\bcms.spinner.jquery.js" />      
       <JavaScriptFiles Include="$(ProjectDir)Scripts\bcms.authentication.js" />
+      <JavaScriptFiles Include="$(ProjectDir)Scripts\bcms.categories.js" />
       <JavaScriptFiles Include="$(ProjectDir)Scripts\bcms.content.js" />
       <JavaScriptFiles Include="$(ProjectDir)Scripts\bcms.content.tree.js" />
       <JavaScriptFiles Include="$(ProjectDir)Scripts\bcms.languages.js" />
