@@ -5,7 +5,7 @@ using System.Text;
 
 namespace BetterCms.Core.DataContracts
 {
-    public interface IEntityCategory
+    public interface IEntityCategory: IEntity
     {
         ICategory Category { get; set; }
 

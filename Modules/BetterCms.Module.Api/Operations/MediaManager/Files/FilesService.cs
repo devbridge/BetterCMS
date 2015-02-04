@@ -116,7 +116,8 @@ namespace BetterCms.Module.Api.Operations.MediaManager.Files
                 query = query.Where(m => !m.IsArchived);
             }
 
-            query = query.ApplyMediaTagsFilter(request.Data);
+            query = query.ApplyMediaTagsFilter(request.Data)
+                         .ApplyCategoriesFilter(request.Data);
 
             if (request.User != null && !string.IsNullOrWhiteSpace(request.User.Name))
             {

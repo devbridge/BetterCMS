@@ -164,11 +164,9 @@ namespace BetterCms.Module.Pages.Services
                                         .Add(Restrictions.InsensitiveLike(Projections.Property(() => alias.MetaKeywords), searchQuery)));
             }
 
-            // TODO Set selected categories 
             if (request.CategoryId.HasValue)
             {
                 query = query.WithSubquery.WhereExists(QueryOver.Of<PageCategory>().Where(c => c.Category.Id == request.CategoryId && c.Page.Id == alias.Id).Select(tag => 1));
-                //query = query.Where(Restrictions.Eq(Projections.Property(() => alias.Category.Id), request.CategoryId.Value));
             }
 
             if (request.LanguageId.HasValue)

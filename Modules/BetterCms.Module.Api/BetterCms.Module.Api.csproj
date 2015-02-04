@@ -180,6 +180,7 @@
     <Compile Include="Extensions\WidgetModelExtensions.cs" />
     <Compile Include="Filters\GetRequestProcessor.cs" />
     <Compile Include="Helpers\ContentTypeExtensions.cs" />
+    <Compile Include="Helpers\FilterByCategoriesExtension.cs" />
     <Compile Include="Helpers\FilterByTagExtensions.cs" />
     <Compile Include="Helpers\QueryableExtensions.cs" />
     <Compile Include="Helpers\DataOptionsQueryCreator.cs" />

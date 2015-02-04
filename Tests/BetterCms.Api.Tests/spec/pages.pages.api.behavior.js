@@ -368,6 +368,14 @@ describe('pages.pages.api.behavior', function () {
         filterByTags('or', 2, ['IFilterByTags Page 1', 'IFilterByTags Page 3']);
     });
 
+    it('01010.1: Should get pages list, filtered by categories, using AND connector', function () {
+        filterByCategories('and', 1, ['IFilterByCategories Page 1']);
+    });
+
+    it('01010.2: Should get pages list, filtered by categories, using OR connector', function () {
+        filterByCategories('or', 2, ['IFilterByCategories Page 1', 'IFilterByCategories Page 2']);
+    });
+
     it('01011: Should get a list with one page (with layout), filtered by all available columns', function () {
         var url = '/bcms-api/pages/',
             result,
@@ -1246,7 +1254,7 @@ describe('pages.pages.api.behavior', function () {
         expect(page.publishedOn).toBeDefinedAndNotNull('publishedOn should be retrieved.');
         expect(page.layoutId).toBeDefinedAndNotNull('layoutId should be retrieved.');
         expect(page.categories.length).toBe(1, 'Categories count should be ' + 1 + '.');
-        expect(page.categories[0].name]).toBe('Category for _0000_Page_For_Tests', 'Correctly filtered categoryName should be retrieved.');
+        expect(page.categories[0].name).toBe('Category for _0000_Page_For_Tests', 'Correctly filtered categoryName should be retrieved.');
         expect(page.mainImageId).toBeDefinedAndNotNull('mainImageId should be retrieved.');
         expect(page.mainImageThumbnauilUrl).toBeDefinedAndNotNull('mainImageThumbnailUrl should be retrieved.');
         expect(page.mainImageThumbnailUrl).toBeDefinedAndNotNull('mainImageThumbnailUrl should be retrieved.');
@@ -1506,5 +1514,46 @@ describe('pages.pages.api.behavior', function () {
                 expect(result.data.items[i].title).toBe(expectedTitles[i], 'Correctly filtered title should be retrieved.');
             }
         });
-    }
+    };
+
+    function filterByCategories(connector, expectedCount, expectedTitles) {
+        var url = '/bcms-api/pages/',
+            result,
+            ready = false;
+
+        var data = {
+            filter: {
+                where: [{ field: 'Title', operation: 'StartsWith', value: 'IFilterByCategories' }]
+            },
+            order: {
+                by: [{ field: 'Title' }]
+            },
+            filterByCategoriesConnector: connector,
+            filterByCategories: ['15A86920-78E5-4DDC-A259-A43500A2B573', 'FD36A148-DD10-44E0-A5C1-A43500B8A450'],
+            includeUnpublished: true,
+            includeArchived: true
+        };
+
+        runs(function () {
+            api.get(url, data, function (json) {
+                result = json;
+                ready = true;
+            });
+        });
+
+        waitsFor(function () {
+            return ready;
+        }, 'The ' + url + ' timeout.');
+
+        runs(function () {
+            expect(result).toBeDefinedAndNotNull('JSON object should be retrieved.');
+            expect(result.data).toBeDefinedAndNotNull('JSON data object should be retrieved.');
+            expect(result.data.totalCount).toBe(expectedCount, 'Total count should be ' + expectedCount + '.');
+            expect(result.data.items.length).toBe(expectedCount, 'Returned array length should be ' + expectedCount + '.');
+            
+            for (var i = 0; i < result.data.items.length; i++) {
+                expect(result.data.items[i].title).toBe(expectedTitles[i], 'Correctly filtered title should be retrieved.');
+            }
+        });
+    };
 });

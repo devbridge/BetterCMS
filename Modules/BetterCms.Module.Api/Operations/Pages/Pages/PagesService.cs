@@ -112,7 +112,8 @@ namespace BetterCms.Module.Api.Operations.Pages.Pages
                 query = query.Where(b => !b.IsMasterPage);
             }
 
-            query = query.ApplyPageTagsFilter(request.Data);
+            query = query.ApplyPageTagsFilter(request.Data)
+                            .ApplyCategoriesFilter(request.Data);
 
             if (request.User != null && !string.IsNullOrWhiteSpace(request.User.Name))
             {

@@ -93,6 +93,7 @@
     <Compile Include="Infrastructure\DataOrder.cs" />
     <Compile Include="Infrastructure\DeleteResponseBase.cs" />
     <Compile Include="Infrastructure\FilterItem.cs" />
+    <Compile Include="Infrastructure\IFilterByCategories.cs" />
     <Compile Include="Infrastructure\IFilterByTags.cs" />
     <Compile Include="Infrastructure\ListResponseBase.cs" />
     <Compile Include="Infrastructure\ModelBase.cs" />
