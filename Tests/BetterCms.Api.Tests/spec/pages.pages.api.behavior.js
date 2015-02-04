@@ -137,7 +137,7 @@ describe('pages.pages.api.behavior', function () {
         var data = {
             includeTags: true,
             includeLayout: true,
-            includeCategory: true,
+            includeCategories: true,
             includeImages: true,
             includeMetaData: true,
             includePageContents: true,
@@ -185,7 +185,7 @@ describe('pages.pages.api.behavior', function () {
         var data = {
             includeTags: true,
             includeLayout: true,
-            includeCategory: true,
+            includeCategories: true,
             includeImages: true,
             includeMetaData: true,
             includePageContents: true,
@@ -398,8 +398,6 @@ describe('pages.pages.api.behavior', function () {
                     { field: 'PublishedOn', value: '2013-07-26 07:58:15.000' },
                     { field: 'LayoutId', value: '9ab0bbe1e02a4a3bb842a2070082af10' },
                     { field: 'MasterPageId' },
-                    { field: 'CategoryId', value: '1427628c1e7e4beb9098a2070081d2dc' },
-                    { field: 'CategoryName', value: '01011' },
                     { field: 'IsArchived', value: false },
                     { field: 'IsMasterPage', value: false },
                     { field: 'LanguageId', value: '67432fcff2c349c09678a2a70091cf48' },
@@ -445,8 +443,8 @@ describe('pages.pages.api.behavior', function () {
             expect(result.data.items[0].id).toBe('e81a87022bf4419688b4a2070081a57e', 'Correctly filtered id should be retrieved.');
 
             // Check if model properties count didn't changed. If so - update current test filter and another tests.
-            // data.filter.where.length + 4 <-- Because field: {options, tags, metadata, accessRules} cannnot be filtered by
-            expect(data.filter.where.length + 4).toBe(api.getCountOfProperties(result.data.items[0]), 'Retrieved result properties count should be equal to filtering parameters count.');
+            // data.filter.where.length + 4 <-- Because field: {options, tags, metadata, accessRules, categories} cannnot be filtered by
+            expect(data.filter.where.length + 5).toBe(api.getCountOfProperties(result.data.items[0]), 'Retrieved result properties count should be equal to filtering parameters count.');
         });
     });
     
@@ -938,8 +936,7 @@ describe('pages.pages.api.behavior', function () {
                     { field: 'PublishedOn', value: '2014-03-17 13:19:30.000' },
                     { field: 'LayoutId' },
                     { field: 'MasterPageId', value: '5d5eb2f6dd16420d81fca2f100db32d4' },
-                    { field: 'CategoryId' },
-                    { field: 'CategoryName' },
+
                     { field: 'IsArchived', value: false },
                     { field: 'IsMasterPage', value: false },
                     { field: 'LanguageId' },
@@ -985,8 +982,8 @@ describe('pages.pages.api.behavior', function () {
             expect(result.data.items[0].id).toBe('d8f382816bed45d0847ea2f100db58e7', 'Correctly filtered id should be retrieved.');
 
             // Check if model properties count didn't changed. If so - update current test filter and another tests.
-            // data.filter.where.length + 4 <-- Because field: {options, tags, metadata, accessRules} cannnot be filtered by
-            expect(data.filter.where.length + 4).toBe(api.getCountOfProperties(result.data.items[0]), 'Retrieved result properties count should be equal to filtering parameters count.');
+            // data.filter.where.length + 4 <-- Because field: {options, tags, metadata, accessRules, categories} cannnot be filtered by
+            expect(data.filter.where.length + 5).toBe(api.getCountOfProperties(result.data.items[0]), 'Retrieved result properties count should be equal to filtering parameters count.');
         });
     });
 
@@ -1276,7 +1273,7 @@ describe('pages.pages.api.behavior', function () {
         expect(page.isPublished).toBe(true, 'Correctly filtered isPublished should be retrieved.');
         expect(page.publishedOn).toBeDefinedAndNotNull('publishedOn should be retrieved.');
         expect(page.layoutId).toBeDefinedAndNotNull('layoutId should be retrieved.');
-        expect(page.categoryId).toBeDefinedAndNotNull('categoryId should be retrieved.');
+        expect(page.categories.length).toBe(1, 'Categories count should be ' + 1 + '.');
         expect(page.mainImageId).toBeDefinedAndNotNull('mainImageId should be retrieved.');
         expect(page.featuredImageId).toBeDefinedAndNotNull('featuredImageId should be retrieved.');
         expect(page.secondaryImageId).toBeDefinedAndNotNull('secondaryImageId should be retrieved.');
@@ -1300,7 +1297,7 @@ describe('pages.pages.api.behavior', function () {
         expect(layout.previewUrl).toBe('http://www.devbridge.com/Content/styles/images/responsive/logo.png', 'Correctly filtered layout.previewUrl should be retrieved.');
         
         // category
-        var category = response.category;
+        var category = response.categories[0];
         expect(category).toBeDefinedAndNotNull('JSON category object should be retrieved.');
         api.expectBasePropertiesAreNotNull(category);
         expect(category.name).toBe('Category for _0000_Page_For_Tests', 'Correctly filtered category.name should be retrieved.');

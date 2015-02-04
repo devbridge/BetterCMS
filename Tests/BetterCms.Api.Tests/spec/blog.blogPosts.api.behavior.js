@@ -188,7 +188,6 @@ describe('blog.blogPosts.api.behavior', function () {
         var data = {
             includeTags: true,
             includeLayout: true,
-            includeCategory: true,
             includeAuthor: true,
             includeImages: true,
             includeMetaData: true,

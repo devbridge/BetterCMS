@@ -327,14 +327,11 @@ namespace BetterCms.Module.Api.Operations.Pages.Pages.Page.Properties
                     .ToList();
             }
 
-            if (request.PageId.HasValue)
-            {
-                response.Data.Categories = categoryService.GetSelectedCategoriesIds<PageProperties, PageCategory>(request.PageId.Value).ToList();
+            response.Data.Categories = categoryService.GetSelectedCategoriesIds<PageProperties, PageCategory>(response.Data.Id).ToList();
 
-                if (request.Data.IncludeCategories)
-                {
-                    response.Categories = LoadCategories(request.PageId.Value);
-                }
+            if (request.Data.IncludeCategories)
+            {
+                response.Categories = LoadCategories(response.Data.Id);
             }
 
             return response;
