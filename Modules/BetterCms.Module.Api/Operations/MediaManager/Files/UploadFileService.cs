@@ -1,4 +1,5 @@
 ﻿using System;
+using System.ComponentModel;
 using System.Linq;
 
 using BetterCms.Core.DataAccess;
@@ -7,6 +8,7 @@ using BetterCms.Core.Exceptions.Api;
 using BetterCms.Core.Security;
 using BetterCms.Module.Api.Operations.MediaManager.Files.File;
 using BetterCms.Module.MediaManager.Models;
+using BetterCms.Module.MediaManager.Models.Extensions;
 using BetterCms.Module.MediaManager.Services;
 using BetterCms.Module.Root.Models;
 using BetterCms.Module.Root.Models.Extensions;
@@ -84,6 +86,41 @@ namespace BetterCms.Module.Api.Operations.MediaManager.Files
             {
                 Data = savedFile.Id
             };
+        }
+
+        /// <summary>
+        /// Reupload file from the stream.
+        /// </summary>
+        /// <param name="request">The request.</param>
+        /// <returns></returns>
+        public ReuploadFileResponse Put(ReuploadFileRequest request)
+        {
+            if (request.Data.Id.Equals(Guid.Empty))
+            {
+                throw new CmsApiValidationException("MediaFile ID must be provided");
+            }
+
+//            var file = repository.AsQueryable<MediaFile>().FirstOrDefault(f => f.Id == request.Data.Id);
+//            if (file == null)
+//            {
+//                throw new CmsApiValidationException("File with specified ID could not be found");
+//            }
+            // Create and save history item
+//            mediaFileService.SaveMediaFile((MediaFile)file.CreateHistoryItem());
+
+            var savedFile = mediaFileService.UploadFileWithStream(
+                Module.MediaManager.Models.MediaType.File,
+                Guid.Empty,
+                request.Data.FileName,
+                request.Data.FileStream.Length,
+                request.Data.FileStream,
+                request.Data.WaitForUploadResult,
+                string.Empty,
+                string.Empty,
+                request.Data.Id);
+
+//            mediaFileService.SaveMediaFile(savedFile);
+            return new ReuploadFileResponse { Data = savedFile.Id };
         }
     }
 }

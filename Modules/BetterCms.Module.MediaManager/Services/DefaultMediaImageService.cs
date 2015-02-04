@@ -878,7 +878,7 @@ namespace BetterCms.Module.MediaManager.Services
                 fileStream,
                 mediaImage.FileUri,
                 mediaImage.Id,
-                img =>
+                (img, session) =>
                 {
                     if (img != null)
                     {
@@ -898,7 +898,7 @@ namespace BetterCms.Module.MediaManager.Services
                 thumbnailFileStream,
                 mediaImage.ThumbnailUri,
                 mediaImage.Id,
-                img =>
+                (img, session) =>
                 {
                     if (img != null)
                     {
@@ -923,7 +923,7 @@ namespace BetterCms.Module.MediaManager.Services
                 fileStream,
                 mediaImage.OriginalUri,
                 mediaImage.Id,
-                img =>
+                (img, session) =>
                 {
                     if (img != null)
                     {

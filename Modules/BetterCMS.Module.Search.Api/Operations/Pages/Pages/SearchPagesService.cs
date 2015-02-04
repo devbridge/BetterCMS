@@ -22,22 +22,22 @@ namespace BetterCms.Module.Search.Api.Operations.Pages.Pages
         public SearchPagesResponse Get(SearchPagesRequest request)
         {
             var take = request.Data.Take ?? 10;
-            var skip = request.Data.Skip > 0 ? request.Data.Skip : 0; 
+            var skip = request.Data.Skip > 0 ? request.Data.Skip : 0;
 
-            var results = searchService
-                .Search(new SearchRequest(request.SearchString, take, skip))
-                .Items
-                .Select(r => new SearchResultModel
-                                 {
-                                     Title = r.Title,
-                                     Link = r.Link,
-                                     FormattedUrl = r.FormattedUrl,
-                                     Snippet = r.Snippet,
-                                     IsDenied = r.IsDenied
-                                 })
-                .ToList();
+            var results = searchService.Search(new SearchRequest(request.SearchString, take, skip));
 
-            return new SearchPagesResponse { Data = new DataListResponse<SearchResultModel>(results, results.Count) };
+            var items =
+                results.Items.Select(
+                    r => new SearchResultModel
+                    {
+                        Title = r.Title, 
+                        Link = r.Link, 
+                        FormattedUrl = r.FormattedUrl, 
+                        Snippet = r.Snippet, 
+                        IsDenied = r.IsDenied
+                    }).ToList();
+
+            return new SearchPagesResponse { Data = new DataListResponse<SearchResultModel>(items, results.TotalResults) };
         }
     }
 }
