@@ -11,7 +11,7 @@ namespace BetterCms.Module.Root.Services.Categories.Nodes
 {
     public class DefaultCategoryNodeService : ICategoryNodeService
     {
-        private IRepository Repository;
+        private readonly IRepository Repository;
 
         private readonly ICmsConfiguration cmsConfiguration;
 
@@ -27,21 +27,16 @@ namespace BetterCms.Module.Root.Services.Categories.Nodes
         public Category SaveCategory(
             out bool categoryUpdated,
             CategoryTree categoryTree,
-            Guid categoryId,
-            int version,
-            string name,
-            int displayOrder,
-            string macro,
-            Guid parentCategoryId,
-            bool isDeleted = false,
-            Category parentCategory = null,
-            List<Category> categories = null)
+            CategoryNodeModel categoryNode,
+            bool isDeleted,
+            Category parentCategory,
+            IEnumerable<Category> categories = null)
         {
             categoryUpdated = false;
 
-            var category = categoryId.HasDefaultValue()
+            var category = categoryNode.Id.HasDefaultValue()
                 ? new Category()
-                : categories != null ? categories.First(c => c.Id == categoryId) : Repository.First<Category>(categoryId);
+                : categories != null ? categories.First(c => c.Id == categoryNode.Id) : Repository.First<Category>(categoryNode.Id);
 
             if (isDeleted && !category.Id.HasDefaultValue())
             {
@@ -56,16 +51,16 @@ namespace BetterCms.Module.Root.Services.Categories.Nodes
                     category.CategoryTree = categoryTree;
                 }
 
-                if (category.Name != name)
+                if (category.Name != categoryNode.Title)
                 {
                     updated = true;
-                    category.Name = name;
+                    category.Name = categoryNode.Title;
                 }
 
-                if (category.DisplayOrder != displayOrder)
+                if (category.DisplayOrder != categoryNode.DisplayOrder)
                 {
                     updated = true;
-                    category.DisplayOrder = displayOrder;
+                    category.DisplayOrder = categoryNode.DisplayOrder;
                 }
 
                 Category newParent;
@@ -75,9 +70,9 @@ namespace BetterCms.Module.Root.Services.Categories.Nodes
                 }
                 else
                 {
-                    newParent = parentCategoryId.HasDefaultValue()
+                    newParent = categoryNode.ParentId.HasDefaultValue()
                         ? null
-                        : Repository.AsProxy<Category>(parentCategoryId);
+                        : Repository.AsProxy<Category>(categoryNode.ParentId);
                 }
 
                 if (category.ParentCategory != newParent)
@@ -86,15 +81,15 @@ namespace BetterCms.Module.Root.Services.Categories.Nodes
                     category.ParentCategory = newParent;
                 }
 
-                if (cmsConfiguration.EnableMacros && category.Macro != macro)
+                if (cmsConfiguration.EnableMacros && category.Macro != categoryNode.Macro)
                 {
-                    category.Macro = macro;
+                    category.Macro = categoryNode.Macro;
                     updated = true;
                 }
 
                 if (updated)
                 {
-                    category.Version = version;
+                    category.Version = categoryNode.Version;
                     Repository.Save(category);
                     categoryUpdated = true;
                 }

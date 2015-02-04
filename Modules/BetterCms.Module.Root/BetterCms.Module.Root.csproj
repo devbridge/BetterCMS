@@ -370,7 +370,7 @@
     <Compile Include="RootModuleConstants.cs" />
     <Compile Include="Services\Categories\Nodes\DefaultCategoryNodeService.cs" />
     <Compile Include="Services\Categories\Nodes\ICategoryNodeService.cs" />
-    <Compile Include="Services\Categories\Tree\CategoryTreeNodeModel.cs" />
+    <Compile Include="Services\Categories\CategoryNodeModel.cs" />
     <Compile Include="Services\Categories\Tree\DefaultCategoryTreeService.cs" />
     <Compile Include="Services\Categories\Tree\DeleteCategoryTreeRequest.cs" />
     <Compile Include="Services\Categories\Tree\GetCategoryTreeRequest.cs" />

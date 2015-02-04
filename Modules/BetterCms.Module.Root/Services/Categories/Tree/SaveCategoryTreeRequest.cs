@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections;
+using System.Collections.Generic;
 
 namespace BetterCms.Module.Root.Services.Categories.Tree
 {
@@ -10,6 +12,6 @@ namespace BetterCms.Module.Root.Services.Categories.Tree
 
         public int Version { get; set; }
 
-
+        public IEnumerable<CategoryNodeModel> RootNodes { get; set; }
     }
 }

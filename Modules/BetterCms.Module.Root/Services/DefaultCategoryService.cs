@@ -32,6 +32,9 @@ namespace BetterCms.Module.Root.Services
         /// </summary>
         private readonly ICmsConfiguration cmsConfiguration;
 
+        /// <summary>
+        /// The unit of work
+        /// </summary>
         private readonly IUnitOfWork unitOfWork;
 
         /// <summary>
