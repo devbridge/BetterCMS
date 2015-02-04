@@ -23,5 +23,8 @@ namespace BetterCms.Module.Api.Operations.MediaManager.Files.File
         /// </value>
         [DataMember]
         public bool IncludeAccessRules { get; set; }
+        
+        [DataMember]
+        public bool IncludeCategories { get; set; }
     }
 }

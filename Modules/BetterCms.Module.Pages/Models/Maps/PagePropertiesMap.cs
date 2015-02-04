@@ -23,8 +23,7 @@ namespace BetterCms.Module.Pages.Models.Maps
             References(x => x.FeaturedImage).Cascade.SaveUpdate().LazyLoad();
 
             HasMany(x => x.PageTags).KeyColumn("PageId").Cascade.SaveUpdate().Inverse().LazyLoad().Where("IsDeleted = 0");
-            HasMany(x => x.Categories).KeyColumn("PageId").Cascade.SaveUpdate().Inverse().LazyLoad().Where("IsDeleted = 0");
-            //HasManyToMany(x => x.Categories).ParentKeyColumn("PageId").Table("PageCategories").Schema(SchemaName).Cascade.AllDeleteOrphan().LazyLoad();
+            HasMany(x => x.Categories).KeyColumn("PageId").Cascade.SaveUpdate().Inverse().LazyLoad().Where("IsDeleted = 0");            
         }
     }
 }

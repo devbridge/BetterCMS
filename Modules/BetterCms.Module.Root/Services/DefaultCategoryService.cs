@@ -75,11 +75,11 @@ namespace BetterCms.Module.Root.Services
             TEntity entityAlias = null;
             TEntityCategory categoryAlias = default(TEntityCategory);
 
-            return repository.AsQueryOver<Category>()
+            return repository.AsQueryOver<Category>().Where(c => !c.IsDeleted)
                              .WithSubquery.WhereProperty(c => c.Id)
                              .In(QueryOver.Of(() => entityAlias)
                                      .JoinQueryOver(() => entityAlias.Categories, () => categoryAlias)
-                                     .Where(() => entityAlias.Id == entityId)
+                                     .Where(() => entityAlias.Id == entityId && !categoryAlias.IsDeleted)
                                      .SelectList(list => list.Select(() => categoryAlias.Category.Id)))
                                      .Select(category => category.Id)
                                      .Future<Guid>();
@@ -190,7 +190,7 @@ namespace BetterCms.Module.Root.Services
             unitOfWork.Commit();
 
             // Events.
-            // TODO:            Events.SitemapEvents.Instance.OnSitemapDeleted(categoryTree);
+            Events.RootEvents.Instance.OnCategoryTreeDeleted(categoryTree);
         }
 
         public void CombineEntityCategories<TEntity, TEntityCategory>(TEntity entity, IEnumerable<System.Guid> currentCategories) 
@@ -211,7 +211,8 @@ namespace BetterCms.Module.Root.Services
 
                     foreach (var removedCategory in removedCategories)
                     {
-                        entity.RemoveCategory(removedCategory);
+                        //entity.RemoveCategory(removedCategory);
+                        unitOfWork.Session.Delete(removedCategory);
                     }
                 }
 
@@ -225,5 +226,60 @@ namespace BetterCms.Module.Root.Services
                 }              
             }
         }
+
+        public void DeleteCategoryNode(Guid id, int version, Guid? categoryTreeId = null)
+        {
+            IList<Category> deletedNodes = new List<Category>();
+
+            var node = repository.AsQueryable<Category>()
+                .Where(sitemapNode => sitemapNode.Id == id && (!categoryTreeId.HasValue || sitemapNode.CategoryTree.Id == categoryTreeId.Value))
+                .Fetch(sitemapNode => sitemapNode.CategoryTree)
+                .Distinct()
+                .First();
+
+            // Concurrency.
+            if (version > 0 && node.Version != version)
+            {
+                throw new ConcurrentDataException(node);
+            }
+
+            unitOfWork.BeginTransaction();
+
+//            ArchiveSitemap(node.Sitemap.Id);
+
+            DeleteCategoryNode(node, ref deletedNodes);
+
+            unitOfWork.Commit();
+
+            var updatedSitemaps = new List<CategoryTree>();
+            foreach (var deletedNode in deletedNodes)
+            {
+                Events.RootEvents.Instance.OnCategoryDeleted(deletedNode);
+                if (!updatedSitemaps.Contains(deletedNode.CategoryTree))
+                {
+                    updatedSitemaps.Add(deletedNode.CategoryTree);
+                }
+            }
+
+            foreach (var sitemap in updatedSitemaps)
+            {
+                Events.RootEvents.Instance.OnCategoryTreeUpdated(sitemap);
+            }
+        }
+
+        private void DeleteCategoryNode(Category node, ref IList<Category> deletedNodes)
+        {
+            if (node.ChildCategories != null)
+            {
+                foreach (var childNode in node.ChildCategories)
+                {
+                    DeleteCategoryNode(childNode, ref deletedNodes);
+                }
+            }
+
+            repository.Delete(node);
+            deletedNodes.Add(node);
+        }
+
     }
 }

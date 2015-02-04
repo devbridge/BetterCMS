@@ -1,7 +1,10 @@
-﻿using BetterCms.Core.Models;
+﻿using System.Linq;
+
+using BetterCms.Core.Models;
 using BetterCms.Module.Api.Extensions;
 using BetterCms.Module.Api.Operations.MediaManager.Files.File;
 using BetterCms.Module.Api.Operations.Root;
+using BetterCms.Module.Root.Models;
 
 using NHibernate;
 
@@ -20,6 +23,7 @@ namespace BetterCms.Test.Module.Api.Media.Files
 
         private int unarchivedMediaEventCount;
 
+        private Category category;
         [Test]
         public void Should_CRUD_File_Successfully()
         {
@@ -29,8 +33,18 @@ namespace BetterCms.Test.Module.Api.Media.Files
             Events.MediaManagerEvents.Instance.MediaArchived += Instance_MediaArchived;
             Events.MediaManagerEvents.Instance.MediaUnarchived += Instance_MediaUnarchived;
 
-            RunApiActionInTransaction((api, session) =>
-                Run(session, api.Media.Files.Post, api.Media.File.Get, api.Media.File.Put, api.Media.File.Delete));
+            RunApiActionInTransaction(
+                (api, session) =>
+                {
+                    category = null;
+                    var categoryTree = TestDataProvider.CreateNewCategoryTree();
+                    category = TestDataProvider.CreateNewCategory(categoryTree);
+                    session.SaveOrUpdate(categoryTree);
+                    session.SaveOrUpdate(category);
+                    session.Flush();
+
+                    Run(session, api.Media.Files.Post, api.Media.File.Get, api.Media.File.Put, api.Media.File.Delete);
+                });
 
             Assert.AreEqual(1, archivedMediaEventCount, "Archived media events fired count");
             Assert.AreEqual(1, unarchivedMediaEventCount, "Unarchived media events fired count");
@@ -92,7 +106,7 @@ namespace BetterCms.Test.Module.Api.Media.Files
 
         protected override GetFileRequest GetGetRequest(BetterCms.Module.Api.Infrastructure.SaveResponseBase saveResponseBase)
         {
-            return new GetFileRequest { FileId = saveResponseBase.Data.Value, Data = new GetFileModel() { IncludeAccessRules = true, IncludeTags = true } };
+            return new GetFileRequest { FileId = saveResponseBase.Data.Value, Data = new GetFileModel() { IncludeAccessRules = true, IncludeTags = true , IncludeCategories = true} };
         }
 
         protected override PutFileRequest GetUpdateRequest(GetFileResponse getResponse)
@@ -100,6 +114,7 @@ namespace BetterCms.Test.Module.Api.Media.Files
             var request = getResponse.ToPutRequest();
             request.Data.Title = this.TestDataProvider.ProvideRandomString(MaxLength.Name);
             request.Data.IsArchived = false;
+            request.Data.Categories.Clear();
             return request;
         }
 
@@ -122,6 +137,16 @@ namespace BetterCms.Test.Module.Api.Media.Files
             Assert.AreEqual(getResponse.Data.ThumbnailId, model.ThumbnailId);
             Assert.AreEqual(getResponse.AccessRules.Count, model.AccessRules.Count);
             Assert.AreEqual(getResponse.Data.FileUrl, model.PublicUrl);
+
+            if (model.Categories != null)
+            {
+                Assert.AreEqual(model.Categories.Count, getResponse.Data.Categories.Count);
+
+                foreach (var categoryId in model.Categories)
+                {
+                    Assert.IsNotNull(getResponse.Data.Categories.FirstOrDefault(c => c.Id == categoryId));
+                }
+            }
         }
     }
 }

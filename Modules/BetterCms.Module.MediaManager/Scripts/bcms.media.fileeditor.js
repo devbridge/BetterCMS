@@ -1,7 +1,7 @@
 ﻿/*jslint unparam: true, white: true, browser: true, devel: true */
 /*global bettercms */
 
-bettercms.define('bcms.media.fileeditor', ['bcms.jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', 'bcms.forms', 'bcms.dynamicContent', 'bcms.ko.extenders', 'bcms.tags', 'bcms.security', 'bcms.media.upload'],
+bettercms.define('bcms.media.fileeditor', ['bcms.jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', 'bcms.forms', 'bcms.dynamicContent', 'bcms.ko.extenders', 'bcms.tags', 'bcms.security', 'bcms.media.upload', 'bcms.multiple.select'],
     function ($, bcms, modal, siteSettings, forms, dynamicContent, ko, tags, security, mediaUpload) {
         'use strict';
 
@@ -157,6 +157,8 @@ bettercms.define('bcms.media.fileeditor', ['bcms.jquery', 'bcms', 'bcms.modal', 
             dialog.container.find(selectors.selectableInputs).on('click', function () {
                 this.select();
             });
+
+            $(".multiple-dropdown-select").multipleSelect({ name: "Categories" });
         }
 
         return editor;
