@@ -219,7 +219,7 @@ namespace BetterCms.Module.Root.Services
                     var newentityCategory = new TEntityCategory();
                     newentityCategory.Category = newCategory;
                     newentityCategory.SetEntity(entity);
-                    newentityCategory.Version = 1;
+                   // newentityCategory.Version = 0;
                     entity.AddCategory(newentityCategory);
                 }              
             }
