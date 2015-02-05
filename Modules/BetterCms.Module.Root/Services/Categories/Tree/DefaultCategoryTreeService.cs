@@ -87,6 +87,8 @@ namespace BetterCms.Module.Root.Services.Categories.Tree
 
             categoryTree.Title = request.Title;
             categoryTree.Version = request.Version;
+            categoryTree.Macro = request.Macro;
+
             UnitOfWork.Session.Save(categoryTree);
 
             SaveCategoryTree(categoryTree, request.RootNodes, null, categories.ToList(), createdCategories, updatedCategories, deletedCategories);

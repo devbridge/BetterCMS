@@ -14,6 +14,5 @@ namespace BetterCms.Module.Root.Services.Categories.Nodes
             bool isDeleted,
             Category parentCategory,
             IEnumerable<Category> categories = null);
-
     }
 }
