@@ -61,7 +61,7 @@ namespace BetterCms.Module.Root.Commands.Category.SaveCategoryTree
             categoryNode.Id = category.Id;
             categoryNode.IsDeleted = category.IsDeleted;
             categoryNode.Macro = category.Macro;
-            categoryNode.ParentId = category.ParentId;
+//            categoryNode.ParentId = category.ParentId;
             categoryNode.Title = category.Title;
             categoryNode.Version = category.Version;
 

@@ -71,11 +71,11 @@ namespace BetterCms.Test.Module.Api
             CheckEventsCount(1, 0, 1);
         }
 
-        protected void CheckEventsCount(int createdCount, int updatedCount, int deletedCount)
+        protected void CheckEventsCount(int expectedCreatedCount, int expectedUpdatedCount, int expectedDeletedCount)
         {
-            Assert.AreEqual(createdEventCount, createdCount, "Created events fired count");
-            Assert.AreEqual(updatedEventCount, updatedCount, "Updated events fired count");
-            Assert.AreEqual(deletedEventCount, deletedCount, "Deleted events fired count");
+            Assert.AreEqual(expectedCreatedCount, createdEventCount, "Created events fired count");
+            Assert.AreEqual(expectedUpdatedCount, updatedEventCount, "Updated events fired count");
+            Assert.AreEqual(expectedDeletedCount, deletedEventCount, "Deleted events fired count");
         }
 
         protected virtual void Run(

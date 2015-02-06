@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System.Collections;
+using System.Collections.Generic;
 using System.Linq;
 using System.Web.UI.WebControls;
 
@@ -70,16 +71,16 @@ namespace BetterCms.Module.Root.Services.Categories.Tree
 
             var createNew = request.Id.HasDefaultValue();
 
-            IEnumerable<Category> categories;
+            IEnumerable<Category> existingCategories;
             CategoryTree categoryTree;
             if (createNew)
             {
-                categories = new List<Category>();
+                existingCategories = new List<Category>();
                 categoryTree = new CategoryTree();
             }
             else
             {
-                categories = Repository.AsQueryable<Category>().Where(node => node.CategoryTree.Id == request.Id).ToFuture();
+                existingCategories = Repository.AsQueryable<Category>().Where(node => node.CategoryTree.Id == request.Id).ToFuture();
                 categoryTree = Repository.AsQueryable<CategoryTree>().Where(s => s.Id == request.Id).ToFuture().First();
             }
 
@@ -90,8 +91,14 @@ namespace BetterCms.Module.Root.Services.Categories.Tree
             categoryTree.Macro = request.Macro;
 
             UnitOfWork.Session.Save(categoryTree);
+            var existingCategoryList = existingCategories.ToList();
+            SaveCategoryTreeNodes(categoryTree, request.RootNodes, null, existingCategoryList, createdCategories, updatedCategories, deletedCategories);
 
-            SaveCategoryTree(categoryTree, request.RootNodes, null, categories.ToList(), createdCategories, updatedCategories, deletedCategories);
+            foreach (var category in existingCategoryList)
+            {
+                UnitOfWork.Session.Delete(category);
+                deletedCategories.Add(category);
+            }
 
             UnitOfWork.Commit();
 
@@ -108,6 +115,15 @@ namespace BetterCms.Module.Root.Services.Categories.Tree
             foreach (var category in deletedCategories)
             {
                 Events.RootEvents.Instance.OnCategoryDeleted(category);
+            }
+
+            if (createNew)
+            {
+                Events.RootEvents.Instance.OnCategoryTreeCreated(categoryTree);
+            }
+            else
+            {
+                Events.RootEvents.Instance.OnCategoryTreeUpdated(categoryTree);
             }
 
             return categoryTree;
@@ -149,16 +165,17 @@ namespace BetterCms.Module.Root.Services.Categories.Tree
 
             UnitOfWork.Commit();
 
+            Events.RootEvents.Instance.OnCategoryTreeDeleted(categoryTree);
             // Events.
             // TODO:            Events.SitemapEvents.Instance.OnSitemapDeleted(categoryTree);
             return true;
         }
 
 
-        private void SaveCategoryTree(CategoryTree categoryTree, 
+        private void SaveCategoryTreeNodes(CategoryTree categoryTree, 
             IEnumerable<CategoryNodeModel> categories, 
             Category parentCategory, 
-            IList<Category> categoryList, 
+            ICollection<Category> existingCategories, 
             IList<Category> createdCategories,
             IList<Category> updatedCategories,
             IList<Category> deletedCategories)
@@ -171,12 +188,13 @@ namespace BetterCms.Module.Root.Services.Categories.Tree
             foreach (var categoryNode in categories)
             {
                 var isDeleted = categoryNode.IsDeleted || (parentCategory != null && parentCategory.IsDeleted);
+
                 var create = categoryNode.Id.HasDefaultValue() && !isDeleted;
                 var update = !categoryNode.Id.HasDefaultValue() && !isDeleted;
                 var delete = !categoryNode.Id.HasDefaultValue() && isDeleted;
 
                 bool updatedInDB;
-                var category = CategoryNodeService.SaveCategory(out updatedInDB, categoryTree, categoryNode, isDeleted, parentCategory, categoryList);
+                var category = CategoryNodeService.SaveCategory(out updatedInDB, categoryTree, categoryNode, isDeleted, parentCategory, existingCategories);
 
                 if (create && updatedInDB)
                 {
@@ -190,8 +208,13 @@ namespace BetterCms.Module.Root.Services.Categories.Tree
                 {
                     deletedCategories.Add(category);
                 }
+                var existingCategory = existingCategories.FirstOrDefault(c => c.Id == categoryNode.Id);
+                if (existingCategory != null)
+                {
+                    existingCategories.Remove(existingCategory);
+                }
 
-                SaveCategoryTree(categoryTree, categoryNode.ChildNodes, category, categoryList, createdCategories, updatedCategories, deletedCategories);
+                SaveCategoryTreeNodes(categoryTree, categoryNode.ChildNodes, category, existingCategories, createdCategories, updatedCategories, deletedCategories);
             }
         }
     }

@@ -34,9 +34,22 @@ namespace BetterCms.Module.Root.Services.Categories.Nodes
         {
             categoryUpdated = false;
 
-            var category = categoryNode.Id.HasDefaultValue()
-                ? new Category()
-                : categories != null ? categories.First(c => c.Id == categoryNode.Id) : Repository.First<Category>(categoryNode.Id);
+            Category category = null;
+            if (categoryNode.Id.HasDefaultValue())
+            {
+                category = new Category();
+            }
+            else
+            {
+                if (categories != null)
+                {
+                    category = categories.FirstOrDefault(c => c.Id == categoryNode.Id);
+                }
+                if (category == null)
+                {
+                    category = Repository.First<Category>(categoryNode.Id);
+                }
+            }
 
             if (isDeleted && !category.Id.HasDefaultValue())
             {
