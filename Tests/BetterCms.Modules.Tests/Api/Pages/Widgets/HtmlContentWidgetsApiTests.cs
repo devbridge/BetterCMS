@@ -73,7 +73,7 @@ namespace BetterCms.Test.Module.Api.Pages.Widgets
                 TestDataProvider.ProvideRandomString(50),
                 TestDataProvider.CreateChildWidgetAssignment(widget.Id, assignmentId2));
 
-            session.SaveOrUpdate(content.Category);
+            session.SaveOrUpdate(content);
 
             return new SaveHtmlContentWidgetModel
                 {
@@ -81,7 +81,7 @@ namespace BetterCms.Test.Module.Api.Pages.Widgets
                     IsPublished = true,
                     PublishedOn = content.PublishedOn,
                     PublishedByUser = content.PublishedByUser,
-                    CategoryId = content.Category.Id,
+                    Categories = content.Categories.Select(c => c.Id).ToList(),
                     CustomCss = content.CustomCss,
                     UseCustomCss = true,
                     Html = content.Html,
@@ -170,7 +170,7 @@ namespace BetterCms.Test.Module.Api.Pages.Widgets
             Assert.IsNotNull(getResponse.Data.Name);
             Assert.IsNotNull(getResponse.Data.PublishedOn);
             Assert.IsNotNull(getResponse.Data.PublishedByUser);
-            Assert.IsNotNull(getResponse.Data.CategoryId);
+            Assert.IsNotNull(getResponse.Data.Categories);
             Assert.IsNotNull(getResponse.Data.CustomCss);
             Assert.IsNotNull(getResponse.Data.Html);
             Assert.IsNotNull(getResponse.Data.CustomJavaScript);
@@ -184,7 +184,10 @@ namespace BetterCms.Test.Module.Api.Pages.Widgets
             Assert.AreEqual(getResponse.Data.IsPublished, model.IsPublished);
             Assert.AreEqual(getResponse.Data.PublishedOn, model.PublishedOn);
             Assert.AreEqual(getResponse.Data.PublishedByUser, model.PublishedByUser);
-            Assert.AreEqual(getResponse.Data.CategoryId, model.CategoryId);
+            foreach (var category in model.Categories)
+            {
+                Assert.IsTrue(getResponse.Data.Categories.Any(c => c.Id == category));
+            }
             Assert.AreEqual(getResponse.Data.CustomCss, model.CustomCss);
             Assert.AreEqual(getResponse.Data.UseCustomCss, model.UseCustomCss);
             Assert.AreEqual(getResponse.Data.Html, model.Html);

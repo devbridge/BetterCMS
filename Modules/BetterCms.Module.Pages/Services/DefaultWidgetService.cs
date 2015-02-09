@@ -25,6 +25,8 @@ using BetterCms.Module.Root.Mvc.PageHtmlRenderer;
 using BetterCms.Module.Root.Services;
 using BetterCms.Module.Root.ViewModels.Option;
 
+using FluentNHibernate.Conventions;
+
 using NHibernate.Criterion;
 
 using CategoryEntity = BetterCms.Module.Root.Models.Category;
@@ -196,15 +198,15 @@ namespace BetterCms.Module.Pages.Services
         {
             HtmlContentWidget content = new HtmlContentWidget();
             content.Id = request.Id;
-
-            if (request.CategoryId.HasValue && !request.CategoryId.Value.HasDefaultValue())
-            {
-                content.Category = repository.AsProxy<CategoryEntity>(request.CategoryId.Value);
-            }
-            else
-            {
-                content.Category = null;
-            }
+            // TODO Widget categories
+//            if (request.CategoryId.HasValue && !request.CategoryId.Value.HasDefaultValue())
+//            {
+//                content.Category = repository.AsProxy<CategoryEntity>(request.CategoryId.Value);
+//            }
+//            else
+//            {
+//                content.Category = null;
+//            }
 
             SetWidgetOptions(request, content, treatNullsAsLists, isNew);
 
@@ -226,14 +228,15 @@ namespace BetterCms.Module.Pages.Services
             ServerControlWidget widget = new ServerControlWidget();
             widget.Id = request.Id;
 
-            if (request.CategoryId.HasValue && !request.CategoryId.Value.HasDefaultValue())
-            {
-                widget.Category = repository.AsProxy<CategoryEntity>(request.CategoryId.Value);
-            }
-            else
-            {
-                widget.Category = null;
-            }
+            // TODO Widget categories
+//            if (request.CategoryId.HasValue && !request.CategoryId.Value.HasDefaultValue())
+//            {
+//                widget.Category = repository.AsProxy<CategoryEntity>(request.CategoryId.Value);
+//            }
+//            else
+//            {
+//                widget.Category = null;
+//            }
 
             widget.Name = request.Name;
             widget.Url = request.Url;
@@ -374,7 +377,7 @@ namespace BetterCms.Module.Pages.Services
                     Version = f.Version,
                     OriginalVersion = f.Status == ContentStatus.Draft && f.Original != null && f.Original.Status == ContentStatus.Published ? f.Original.Version : f.Version,
                     WidgetName = f.Name,
-                    CategoryName = (!f.Category.IsDeleted) ? f.Category.Name : null,
+                    CategoriesNames = (f.Categories != null && !f.Categories.IsEmpty())? f.Categories.Where(c => !c.IsDeleted).Select(c => c.Category.Name).ToList() : new List<string>(),
                     WidgetEntityType = f.GetType(),
                     IsPublished = f.Status == ContentStatus.Published || (f.Original != null && f.Original.Status == ContentStatus.Published),
                     HasDraft = f.Status == ContentStatus.Draft
@@ -383,7 +386,7 @@ namespace BetterCms.Module.Pages.Services
             if (!string.IsNullOrWhiteSpace(filter.SearchQuery))
             {
                 var searchQuery = filter.SearchQuery.ToLowerInvariant();
-                modelQuery = modelQuery.Where(f => f.CategoryName.ToLower().Contains(searchQuery) || f.WidgetName.ToLower().Contains(searchQuery));
+                modelQuery = modelQuery.Where(f => f.CategoriesNames.Any(cn => cn.ToLower().Contains(searchQuery)) || f.WidgetName.ToLower().Contains(searchQuery));
             }
 
             modelQuery = modelQuery.ToList()

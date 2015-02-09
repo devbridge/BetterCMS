@@ -18,7 +18,7 @@ namespace BetterCms.Module.Api.Extensions
             serviceModel.DesirableStatus = model.IsPublished ? ContentStatus.Published : ContentStatus.Draft;
             serviceModel.PublishedOn = model.PublishedOn;
             serviceModel.PublishedByUser = model.PublishedByUser;
-            serviceModel.CategoryId = model.CategoryId;
+            serviceModel.SelectItemCategories = model.Categories;
             serviceModel.CustomCSS = model.CustomCss;
             serviceModel.EnableCustomCSS = model.UseCustomCss;
             serviceModel.PageContent = model.Html;
@@ -43,7 +43,7 @@ namespace BetterCms.Module.Api.Extensions
             serviceModel.DesirableStatus = model.IsPublished ? ContentStatus.Published : ContentStatus.Draft;
             serviceModel.PublishedOn = model.PublishedOn;
             serviceModel.PublishedByUser = model.PublishedByUser;
-            serviceModel.CategoryId = model.CategoryId;
+            serviceModel.SelectItemCategories = model.Categories;
             serviceModel.Url = model.WidgetUrl;
             serviceModel.PreviewImageUrl = model.PreviewUrl;
 

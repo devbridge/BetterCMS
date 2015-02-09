@@ -71,7 +71,7 @@ namespace BetterCms.Module.Api.Operations.Pages.Widgets.Widget.ServerControlWidg
         /// The widget category id.
         /// </value>
         [DataMember]
-        public System.Guid? CategoryId { get; set; }
+        public List<Guid> Categories { get; set; }
 
         /// <summary>
         /// Gets or sets the list of options.

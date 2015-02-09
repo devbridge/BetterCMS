@@ -1,4 +1,7 @@
-﻿using BetterCms.Core.DataContracts.Enums;
+﻿using System;
+using System.Collections.Generic;
+
+using BetterCms.Core.DataContracts.Enums;
 
 namespace BetterCms.Module.Pages.ViewModels.Widgets
 {
@@ -54,6 +57,14 @@ namespace BetterCms.Module.Pages.ViewModels.Widgets
         /// <c>true</c> if user confirmed content saving when affecting children pages; otherwise, <c>false</c>.
         /// </value>
         public bool IsUserConfirmed { get; set; }
+
+        /// <summary>
+        /// Gets or sets the list of SelectedCategories Ids.
+        /// </summary>
+        /// <value>
+        /// The list of categories Ids.
+        /// </value>
+        public IList<Guid> SelectItemCategories { get; set; }
 
         /// <summary>
         /// Returns a <see cref="System.String" /> that represents this instance.

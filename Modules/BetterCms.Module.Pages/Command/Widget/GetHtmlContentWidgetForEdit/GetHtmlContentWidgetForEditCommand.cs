@@ -8,7 +8,7 @@ using BetterCms.Module.Pages.Helpers;
 using BetterCms.Module.Pages.Models;
 using BetterCms.Module.Pages.Services;
 using BetterCms.Module.Pages.ViewModels.Widgets;
-
+using BetterCms.Module.Root.Models;
 using BetterCms.Module.Root.Mvc;
 using BetterCms.Module.Root.Services;
 using BetterCms.Module.Root.ViewModels.Option;
@@ -65,8 +65,7 @@ namespace BetterCms.Module.Pages.Command.Widget.GetHtmlContentWidgetForEdit
                     model = new EditHtmlContentWidgetViewModel
                                 {
                                     Id = htmlContentWidget.Id,
-                                    Version = htmlContentWidget.Version,
-                                    CategoryId = htmlContentWidget.Category != null ? htmlContentWidget.Category.Id : (Guid?)null,
+                                    Version = htmlContentWidget.Version,                                    
                                     Name = htmlContentWidget.Name,
                                     PageContent = htmlContentWidget.Html,
                                     EnableCustomHtml = htmlContentWidget.UseHtml,
@@ -121,6 +120,7 @@ namespace BetterCms.Module.Pages.Command.Widget.GetHtmlContentWidgetForEdit
             }
 
             model.Categories = categories.ToList();
+            model.SelectItemCategories = categoryService.GetSelectedCategoriesIds<Root.Models.Widget, WidgetCategory>(widgetId).ToList();
             model.CustomOptions = optionService.GetCustomOptions();
             model.CanDestroyDraft = model.CurrentStatus == ContentStatus.Draft && model.HasPublishedContent;
 
