@@ -57,6 +57,7 @@ namespace BetterCms.Module.Root.Services
         {
             return repository
                 .AsQueryable<Category>()
+                .Where(c => !c.CategoryTree.IsDeleted)
                 .Select(c => new LookupKeyValue
                 {
                     Key = c.Id.ToString().ToLowerInvariant(),

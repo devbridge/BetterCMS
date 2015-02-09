@@ -45,7 +45,7 @@ namespace BetterCms.Module.Api.Operations.Root.Categories.Category.Nodes
         /// </returns>
         public GetCategoryNodesResponse Get(GetCategoryNodesRequest request)
         {
-            request.Data.SetDefaultOrder("Title");
+            request.Data.SetDefaultOrder("Name");
 
             var listResponse = repository
                 .AsQueryable<Module.Root.Models.Category>()

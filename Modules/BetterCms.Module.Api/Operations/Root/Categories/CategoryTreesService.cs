@@ -44,7 +44,7 @@ namespace BetterCms.Module.Api.Operations.Root.Categories
         /// </returns>
         public GetCategoryTreesResponse Get(GetCategoryTreesRequest request)
         {
-            request.Data.SetDefaultOrder("Title");
+            request.Data.SetDefaultOrder("Name");
 
             var query = repository
                 .AsQueryable<Module.Root.Models.CategoryTree>();
