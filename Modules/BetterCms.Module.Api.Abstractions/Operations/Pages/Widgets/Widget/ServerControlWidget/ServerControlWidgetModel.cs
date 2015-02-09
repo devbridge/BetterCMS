@@ -65,13 +65,5 @@ namespace BetterCms.Module.Api.Operations.Pages.Widgets.Widget.ServerControlWidg
         [DataMember]
         public string PublishedByUser { get; set; }
 
-        /// <summary>
-        /// Gets or sets the widget category id.
-        /// </summary>
-        /// <value>
-        /// The widget category id.
-        /// </value>
-        [DataMember]
-        public List<CategoryModel> Categories { get; set; }
     }
 }

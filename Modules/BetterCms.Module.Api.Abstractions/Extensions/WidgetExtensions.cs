@@ -30,7 +30,7 @@ namespace BetterCms.Module.Api.Extensions
                             IsPublished = response.Data.IsPublished,
                             PublishedOn = response.Data.PublishedOn,
                             PublishedByUser = response.Data.PublishedByUser,
-                            Categories = response.Data.Categories.Select(c => c.Id).ToList(),
+                            Categories = response.Categories.Select(c => c.Id).ToList(),
                             CustomCss = response.Data.CustomCss,
                             UseCustomCss = response.Data.UseCustomCss,
                             Html = response.Data.Html,
@@ -67,7 +67,7 @@ namespace BetterCms.Module.Api.Extensions
                             IsPublished = response.Data.IsPublished,
                             PublishedOn = response.Data.PublishedOn,
                             PublishedByUser = response.Data.PublishedByUser,
-                            Categories = response.Data.Categories.Select(c => c.Id).ToList(),
+                            Categories = response.Categories.Select(c => c.Id).ToList(),
                             PreviewUrl = response.Data.PreviewUrl,
                             WidgetUrl = response.Data.WidgetUrl,
                             Options = response.Options

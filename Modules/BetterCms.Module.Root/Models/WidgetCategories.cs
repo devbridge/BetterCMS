@@ -31,5 +31,18 @@ namespace BetterCms.Module.Root.Models
                 Category = value as Category;
             }
         }
+
+        public virtual WidgetCategory Clone()
+        {
+            return CopyDataTo(new WidgetCategory());
+        }
+
+        public virtual WidgetCategory CopyDataTo(WidgetCategory widget)
+        {
+            widget.Widget = Widget;
+            widget.Category = Category;
+
+            return widget;
+        }
     }
 }

@@ -226,7 +226,7 @@ namespace BetterCms.Module.Api.Operations.Pages.Pages.Page
                                 where pagePr.Id == model.Id
                                 select new CategoryModel
                                 {
-                                    Id = category.Id,
+                                    Id = category.Category.Id,
                                     Version = category.Version,
                                     CreatedBy = category.CreatedByUser,
                                     CreatedOn = category.CreatedOn,

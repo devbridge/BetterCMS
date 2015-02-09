@@ -51,14 +51,6 @@ namespace BetterCms.Module.Pages.ViewModels.SiteSettings
         public string WidgetName { get; set; }
 
         /// <summary>
-        /// Gets or sets the category name.
-        /// </summary>
-        /// <value>
-        /// The category name.
-        /// </value>
-        public List<string> CategoriesNames { get; set; }
-
-        /// <summary>
         /// Gets or sets the type of the widget entity.
         /// </summary>
         /// <value>
@@ -127,7 +119,7 @@ namespace BetterCms.Module.Pages.ViewModels.SiteSettings
         /// </returns>
         public override string ToString()
         {
-            return string.Format("Id: {0}, Version: {1}, WidgetName: {2}, CategoriesNames: {3}", Id, Version, WidgetName, CategoriesNames);
+            return string.Format("Id: {0}, Version: {1}, WidgetName: {2}", Id, Version, WidgetName);
         }
         
 

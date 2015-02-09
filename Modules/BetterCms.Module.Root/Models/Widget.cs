@@ -21,7 +21,22 @@ namespace BetterCms.Module.Root.Models
         public override Content CopyDataTo(Content content, bool copyCollections = true)
         {
             var copy = (Widget)base.CopyDataTo(content, copyCollections);
-            copy.Categories = Categories;
+
+            if (copyCollections && Categories != null)
+            {
+                if (copy.Categories == null)
+                {
+                    copy.Categories = new List<WidgetCategory>();
+                }
+
+                foreach (var category in Categories)
+                {
+                    var clonedWidget = category.Clone();
+                    clonedWidget.Widget = copy;
+
+                    copy.Categories.Add(clonedWidget);
+                }
+            }
 
             return copy;
         }

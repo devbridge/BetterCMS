@@ -287,7 +287,7 @@ namespace BetterCms.Module.Api.Operations.Pages.Pages
                                                                where pagePr.Id == page.Id && !category.IsDeleted
                                                                select new CategoryModel
                                                                 {
-                                                                    Id = category.Id,
+                                                                    Id = category.Category.Id,
                                                                     Version = category.Version,
                                                                     CreatedBy = category.CreatedByUser,
                                                                     CreatedOn = category.CreatedOn,
