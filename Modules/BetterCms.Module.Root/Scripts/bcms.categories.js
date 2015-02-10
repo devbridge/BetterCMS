@@ -298,7 +298,7 @@
                 }
                 return "";
             });
-            self.dropOnCancel = false;
+            self.dropOnCancel = true;
 
             // User for validation.
             self.containerId = "node-" + nodeId++;
