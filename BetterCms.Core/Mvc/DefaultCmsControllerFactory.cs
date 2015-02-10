@@ -5,8 +5,9 @@ using System.Web.Routing;
 using Autofac;
 using Autofac.Features.Metadata;
 
-using BetterCms.Core.Dependencies;
 using BetterCms.Core.Mvc.Routes;
+
+using Devbridge.Platform.Core.Web.Dependencies;
 
 namespace BetterCms.Core.Mvc
 {

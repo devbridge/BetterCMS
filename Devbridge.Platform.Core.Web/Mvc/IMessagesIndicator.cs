@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace BetterCms.Core.Mvc
+namespace Devbridge.Platform.Core.Web.Mvc
 {
     public interface IMessagesIndicator
     {

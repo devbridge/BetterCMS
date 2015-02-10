@@ -6,8 +6,6 @@ using System.Web;
 using BetterCms.Core.DataContracts;
 using BetterCms.Core.DataContracts.Enums;
 using BetterCms.Core.Modules.Projections;
-using BetterCms.Core.Mvc.Commands;
-using BetterCms.Core.Mvc.Extensions;
 using BetterCms.Core.Security;
 using BetterCms.Core.Services;
 
@@ -20,6 +18,9 @@ using BetterCms.Module.Root.ViewModels.Cms;
 using BetterCms.Module.Root.Models.Extensions;
 using BetterCms.Module.Root.ViewModels.Security;
 using BetterCms.Module.Root.Views.Language;
+
+using Devbridge.Platform.Core.Web.Mvc.Commands;
+using Devbridge.Platform.Core.Web.Mvc.Extensions;
 
 using NHibernate.Linq;
 

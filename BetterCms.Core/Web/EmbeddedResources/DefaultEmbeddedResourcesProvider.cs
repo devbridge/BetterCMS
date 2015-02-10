@@ -41,14 +41,14 @@ namespace BetterCms.Core.Web.EmbeddedResources
         /// <summary>
         /// Modules registry contract.
         /// </summary>
-        private readonly IModulesRegistration modulesRegistry;
+        private readonly ICmsModulesRegistration modulesRegistry;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="DefaultEmbeddedResourcesProvider" /> class.
         /// </summary>
         /// <param name="modulesRegistry">The modules registry.</param>
         /// <param name="assemblyLoader">The assembly loader contract.</param>
-        public DefaultEmbeddedResourcesProvider(IModulesRegistration modulesRegistry, IAssemblyLoader assemblyLoader)
+        public DefaultEmbeddedResourcesProvider(ICmsModulesRegistration modulesRegistry, IAssemblyLoader assemblyLoader)
         {
             resourceNameEmbeddedResource = new ConcurrentDictionary<string, EmbeddedResourceDescriptor>();
             virtualPathResourceName = new ConcurrentDictionary<string, string>();

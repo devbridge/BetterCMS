@@ -3,9 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Security.Principal;
 
-using BetterCms.Core.Web;
-
 using Devbridge.Platform.Core.Web.Security;
+using Devbridge.Platform.Core.Web.Web;
 
 namespace BetterCms.Module.Root.Services
 {
@@ -17,7 +16,7 @@ namespace BetterCms.Module.Root.Services
         /// <summary>
         /// The roles splitter.
         /// </summary>
-        private static readonly char[] RolesSplitter = new[] { ',' };
+        private static readonly char[] RolesSplitter = { ',' };
 
         /// <summary>
         /// The configuration service.
@@ -25,18 +24,13 @@ namespace BetterCms.Module.Root.Services
         private readonly ICmsConfiguration configuration;
 
         /// <summary>
-        /// The HTTP context accessor.
-        /// </summary>
-        private readonly IHttpContextAccessor httpContextAccessor;
-
-        /// <summary>
         /// Initializes a new instance of the <see cref="DefaultSecurityService" /> class.
         /// </summary>
         /// <param name="configuration">The configuration.</param>
         /// <param name="httpContextAccessor">The HTTP context accessor.</param>
         public DefaultSecurityService(ICmsConfiguration configuration, IHttpContextAccessor httpContextAccessor)
+            : base(httpContextAccessor)
         {
-            this.httpContextAccessor = httpContextAccessor;
             this.configuration = configuration;
         }
 

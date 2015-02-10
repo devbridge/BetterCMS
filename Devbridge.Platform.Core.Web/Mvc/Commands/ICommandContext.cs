@@ -1,6 +1,6 @@
 ﻿using System.Security.Principal;
 
-namespace BetterCms.Core.Mvc.Commands
+namespace Devbridge.Platform.Core.Web.Mvc.Commands
 {
     public interface ICommandContext
     {

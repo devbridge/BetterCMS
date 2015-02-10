@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Reflection;
 using System.Web.Mvc;
 
-namespace BetterCms.Core.Mvc.Extensions
+namespace Devbridge.Platform.Core.Web.Mvc.Extensions
 {
     /// <summary>
     /// Defines the contract for controller extensions.

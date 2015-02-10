@@ -3,6 +3,7 @@
 using Common.Logging;
 
 using Devbridge.Platform.Core.Environment.Assemblies;
+using Devbridge.Platform.Core.Modules.Registration;
 
 using FluentNHibernate.Cfg;
 

@@ -8,6 +8,7 @@ using Common.Logging;
 
 using Devbridge.Platform.Core.Environment.FileSystem;
 using Devbridge.Platform.Core.Exceptions;
+using Devbridge.Platform.Core.Modules.Registration;
 
 namespace Devbridge.Platform.Core.Environment.Assemblies
 {
@@ -37,27 +38,19 @@ namespace Devbridge.Platform.Core.Environment.Assemblies
         private readonly IAssemblyLoader assemblyLoader;
 
         /// <summary>
-        /// Embedded resources provider.
-        /// </summary>
-        private readonly IEmbeddedResourcesProvider embeddedResourcesProvider;
-
-        /// <summary>
         /// Initializes a new instance of the <see cref="DefaultAssemblyManager" /> class.
         /// </summary>
         /// <param name="workingDirectory">The working directory.</param>
         /// <param name="modulesRegistration">The module loader.</param>
-        /// <param name="embeddedResourcesProvider">The embedded resources provider.</param>
         /// <param name="assemblyLoader">The assembly loader.</param>
         public DefaultAssemblyManager(
             IWorkingDirectory workingDirectory,
             IModulesRegistration modulesRegistration,
-            IEmbeddedResourcesProvider embeddedResourcesProvider,
             IAssemblyLoader assemblyLoader)
         {
             this.workingDirectory = workingDirectory;
             this.modulesRegistration = modulesRegistration;
             this.assemblyLoader = assemblyLoader;
-            this.embeddedResourcesProvider = embeddedResourcesProvider;
         }
 
         /// <summary>
@@ -94,11 +87,7 @@ namespace Devbridge.Platform.Core.Environment.Assemblies
                     {
                         var runtimeModuleAssembly = assemblyLoader.Load(AssemblyName.GetAssemblyName(runtimeModuleFile.FullName));
 
-                        BuildManager.AddReferencedAssembly(runtimeModuleAssembly);
-
-                        embeddedResourcesProvider.AddEmbeddedResourcesFrom(runtimeModuleAssembly);
-
-                        modulesRegistration.AddModuleDescriptorTypeFromAssembly(runtimeModuleAssembly);
+                        AddUploadedModule(runtimeModuleAssembly);
                     }
                 }
                 catch (Exception ex)
@@ -106,6 +95,15 @@ namespace Devbridge.Platform.Core.Environment.Assemblies
                     throw new PlatformException("Failed to add reference to runtime module " + runtimeModuleFile.FullName + ".", ex);
                 }
             }
+        }
+
+        /// <summary>
+        /// Adds the uploaded module.
+        /// </summary>
+        /// <param name="assembly">The assembly.</param>
+        public virtual void AddUploadedModule(Assembly assembly)
+        {
+            modulesRegistration.AddModuleDescriptorTypeFromAssembly(assembly);
         }
 
         /// <summary>
@@ -139,9 +137,17 @@ namespace Devbridge.Platform.Core.Environment.Assemblies
 
             foreach (var module in modules)
             {
-                embeddedResourcesProvider.AddEmbeddedResourcesFrom(module);
-                modulesRegistration.AddModuleDescriptorTypeFromAssembly(module);
+                AddReferencedModule(module);
             }
+        }
+
+        /// <summary>
+        /// Adds the referenced module.
+        /// </summary>
+        /// <param name="assembly">The assembly.</param>
+        public virtual void AddReferencedModule(Assembly assembly)
+        {
+            modulesRegistration.AddModuleDescriptorTypeFromAssembly(assembly);
         }
     }
 }

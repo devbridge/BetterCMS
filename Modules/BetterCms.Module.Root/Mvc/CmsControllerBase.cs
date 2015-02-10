@@ -8,13 +8,15 @@ using System.Web.Security;
 
 using Autofac;
 
-using BetterCms.Core.Dependencies;
 using BetterCms.Core.Mvc;
-using BetterCms.Core.Mvc.Commands;
 using BetterCms.Core.Services;
 using BetterCms.Core.Web;
 using BetterCms.Module.Root.Models;
 using BetterCms.Module.Root.Mvc.Helpers;
+
+using Devbridge.Platform.Core.Web.Dependencies;
+using Devbridge.Platform.Core.Web.Mvc;
+using Devbridge.Platform.Core.Web.Mvc.Commands;
 
 namespace BetterCms.Module.Root.Mvc
 {    

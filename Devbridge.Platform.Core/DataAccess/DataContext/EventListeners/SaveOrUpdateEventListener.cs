@@ -1,4 +1,6 @@
-﻿using NHibernate.Event;
+﻿using Devbridge.Platform.Core.DataContracts;
+
+using NHibernate.Event;
 using NHibernate.Event.Default;
 
 namespace Devbridge.Platform.Core.DataAccess.DataContext.EventListeners

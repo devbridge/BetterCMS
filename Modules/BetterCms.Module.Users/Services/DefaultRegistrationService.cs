@@ -1,6 +1,6 @@
 ﻿using System.Linq;
 
-using BetterCms.Core.DataAccess;
+using Devbridge.Platform.Core.DataAccess;
 using BetterCms.Core.Web;
 using BetterCms.Module.Users.Models;
 

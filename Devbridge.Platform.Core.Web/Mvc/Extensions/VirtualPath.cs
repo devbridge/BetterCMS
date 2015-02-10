@@ -1,10 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.IO;
-using System.Linq;
-using System.Text;
 
-namespace BetterCms.Core.Mvc.Extensions
+namespace Devbridge.Platform.Core.Web.Mvc.Extensions
 {
     public class VirtualPath
     {

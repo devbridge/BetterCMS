@@ -2,7 +2,7 @@
 
 namespace Devbridge.Platform.Core.Configuration
 {
-    public class DefaultConfiguration :  ConfigurationSection, IConfiguration
+    public class DefaultConfigurationSection :  ConfigurationSection, IConfiguration
     {
         private const string DatabaseNode = "database";
 

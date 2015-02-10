@@ -4,7 +4,6 @@ using System.Linq;
 using System.Web.Security;
 
 using BetterCms.Configuration;
-using BetterCms.Core.Mvc.Commands;
 using BetterCms.Core.Services.Caching;
 
 using BetterCms.Module.Root.Models;
@@ -12,6 +11,8 @@ using BetterCms.Module.Root.Mvc;
 using BetterCms.Module.Root.ViewModels.Autocomplete;
 
 using Common.Logging;
+
+using Devbridge.Platform.Core.Web.Mvc.Commands;
 
 namespace BetterCms.Module.Root.Commands.Authentication.SearchUsers
 {

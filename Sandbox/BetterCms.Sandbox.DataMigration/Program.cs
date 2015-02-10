@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 
 using BetterCms.Configuration;
-using BetterCms.Core.DataAccess.DataContext.Migrations;
+using Devbridge.Platform.Core.DataAccess.DataContext.Migrations;
 using BetterCms.Core.Environment.Assemblies;
 using BetterCms.Core.Modules;
 

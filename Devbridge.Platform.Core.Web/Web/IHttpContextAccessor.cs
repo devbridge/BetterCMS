@@ -3,7 +3,7 @@ using System.Linq.Expressions;
 using System.Web;
 using System.Web.Mvc;
 
-namespace BetterCms.Core.Web
+namespace Devbridge.Platform.Core.Web.Web
 {
     /// <summary>
     /// Defines the contract to access current http context.

@@ -40,27 +40,28 @@ namespace Devbridge.Platform.Core.Environment.FileSystem
         /// <summary>
         /// Initializes a new instance of the <see cref="DefaultWorkingDirectory" /> class.
         /// </summary>
-        /// <param name="cmsConfiguration">Cms configuration.</param>
-        public DefaultWorkingDirectory(ICmsConfiguration cmsConfiguration)
+        public DefaultWorkingDirectory()
         {
-            if (!string.IsNullOrWhiteSpace(cmsConfiguration.WorkingDirectoryRootPath))
-            {
-                rootFolder = new DirectoryInfo(HostingEnvironment.MapPath(cmsConfiguration.WorkingDirectoryRootPath));
-            }
-            else
-            {
-                rootFolder = new DirectoryInfo("~/App_Data/BetterCMS");
-            }
+            rootFolder = new DirectoryInfo(GetWorkingDirectoryPath());
 
             modulesFolder = new DirectoryInfo(Path.Combine(rootFolder.FullName, ModulesFolderName));
             modulesRuntimeFolder = new DirectoryInfo(AppDomain.CurrentDomain.DynamicDirectory);
         }
 
         /// <summary>
+        /// Gets the working directory path.
+        /// </summary>
+        /// <returns>The working directory path</returns>
+        public virtual string GetWorkingDirectoryPath()
+        {
+            return Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "App_Data");
+        }
+
+        /// <summary>
         /// Gets module files from working folder.
         /// </summary>        
         /// <returns>Assembly file names.</returns>
-        public IEnumerable<FileInfo> GetAvailableModules()
+        public virtual IEnumerable<FileInfo> GetAvailableModules()
         {                        
             if (!modulesFolder.Exists)
             {
@@ -75,7 +76,7 @@ namespace Devbridge.Platform.Core.Environment.FileSystem
         /// </summary>
         /// <param name="module">The module file information.</param>
         /// <returns>Runtime module file information.</returns>
-        public FileInfo RecopyModulesToRuntimeFolder(FileInfo module)
+        public virtual FileInfo RecopyModulesToRuntimeFolder(FileInfo module)
         {             
             if (!modulesRuntimeFolder.Exists)
             {

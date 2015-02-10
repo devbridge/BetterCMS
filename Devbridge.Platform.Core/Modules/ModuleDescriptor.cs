@@ -2,6 +2,8 @@
 
 using Autofac;
 
+using Devbridge.Platform.Core.Modules.Registration;
+
 namespace Devbridge.Platform.Core.Modules
 {
     /// <summary>
@@ -61,6 +63,24 @@ namespace Devbridge.Platform.Core.Modules
 
                 return assemblyName;
             }
+        }
+
+        /// <summary>
+        /// Registers module types.
+        /// </summary>
+        /// <param name="context">The area registration context.</param>
+        /// <param name="containerBuilder">The container builder.</param>
+        public virtual void RegisterModuleTypes(ModuleRegistrationContext context, ContainerBuilder containerBuilder)
+        {
+        }
+
+        /// <summary>
+        /// Creates the registration context.
+        /// </summary>
+        /// <returns>Module registration context</returns>
+        public virtual ModuleRegistrationContext CreateRegistrationContext()
+        {
+            return new ModuleRegistrationContext(this);
         }
     }
 }

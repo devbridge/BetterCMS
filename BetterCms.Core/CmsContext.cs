@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Web.Compilation;
+using System.Security.Cryptography;
 using System.Web.Hosting;
 using System.Web.Mvc;
 using System.Web.Routing;
@@ -10,28 +10,30 @@ using System.Web.WebPages;
 using Autofac;
 
 using BetterCms.Configuration;
-using BetterCms.Core.DataAccess;
-using BetterCms.Core.DataAccess.DataContext;
-using BetterCms.Core.DataAccess.DataContext.Fetching;
-using BetterCms.Core.DataAccess.DataContext.Migrations;
-using BetterCms.Core.Dependencies;
 using BetterCms.Core.Environment.Host;
 using BetterCms.Core.Exceptions;
 using BetterCms.Core.Modules.Registration;
 using BetterCms.Core.Mvc;
-using BetterCms.Core.Mvc.Commands;
-using BetterCms.Core.Mvc.Extensions;
 using BetterCms.Core.Mvc.Routes;
 using BetterCms.Core.Security;
 using BetterCms.Core.Services.Caching;
 using BetterCms.Core.Services.Storage;
-using BetterCms.Core.Web;
 using BetterCms.Core.Web.EmbeddedResources;
-using BetterCms.Core.Web.ViewEngines;
 
 using Devbridge.Platform.Core.Configuration;
+using Devbridge.Platform.Core.DataAccess;
+using Devbridge.Platform.Core.DataAccess.DataContext;
+using Devbridge.Platform.Core.DataAccess.DataContext.Fetching;
+using Devbridge.Platform.Core.DataAccess.DataContext.Migrations;
+using Devbridge.Platform.Core.Dependencies;
 using Devbridge.Platform.Core.Environment.Assemblies;
 using Devbridge.Platform.Core.Environment.FileSystem;
+using Devbridge.Platform.Core.Security;
+using Devbridge.Platform.Core.Web.Dependencies;
+using Devbridge.Platform.Core.Web.Modules;
+using Devbridge.Platform.Core.Web.Mvc.Commands;
+using Devbridge.Platform.Core.Web.Mvc.Extensions;
+using Devbridge.Platform.Core.Web.Web;
 
 using NHibernate.Linq;
 using NHibernate.Mapping;
@@ -67,7 +69,7 @@ namespace BetterCms.Core
                     {
                         if (config == null)
                         {
-                            ICmsConfigurationLoader configurationLoader = new DefaultConfigurationLoader();
+                            ICmsConfigurationLoader configurationLoader = new CmsConfigurationLoader();
                             config = configurationLoader.LoadCmsConfiguration();                            
                         }
                     }
@@ -118,7 +120,7 @@ namespace BetterCms.Core
             builder.RegisterType<DefaultUnitOfWorkFactory>().As<IUnitOfWorkFactory>().SingleInstance();
             builder.RegisterType<DefaultTextEncryptor>().As<ITextEncryptor>().SingleInstance();
 
-            builder.RegisterType<DefaultModulesRegistration>().As<IModulesRegistration>().SingleInstance();
+            builder.RegisterType<CmsModulesRegistration>().As<ICmsModulesRegistration>().SingleInstance();
             builder.RegisterType<DefaultMappingResolver>().As<IMappingResolver>().SingleInstance();
             builder.RegisterType<DefaultWorkingDirectory>().As<IWorkingDirectory>().SingleInstance();
             builder.RegisterType<DefaultCmsControllerFactory>().SingleInstance();
@@ -267,20 +269,24 @@ namespace BetterCms.Core
                 // ...then scan and register uploaded modules.
                 assemblyManager.AddUploadedModules();
 
-                var moduleRegistration = container.Resolve<IModulesRegistration>();
+                var moduleRegistration = container.Resolve<ICmsModulesRegistration>();
                 moduleRegistration.InitializeModules();
 
                 // Register precompiled views for all the assemblies
                 var precompiledAssemblies = new List<PrecompiledViewAssembly>();
                 moduleRegistration.GetModules().Select(m => m.ModuleDescriptor).Distinct().ForEach(
                     descriptor =>
+                    {
+                        var webDescriptor = descriptor as WebModuleDescriptor;
+                        if (webDescriptor != null)
                         {
-                            var precompiledAssembly = new PrecompiledViewAssembly(descriptor.GetType().Assembly, string.Format("~/Areas/{0}/", descriptor.AreaName))
-                                                  {
-                                                      UsePhysicalViewsIfNewer = false
-                                                  };
+                            var precompiledAssembly = new PrecompiledViewAssembly(descriptor.GetType().Assembly, string.Format("~/Areas/{0}/", webDescriptor.AreaName))
+                            {
+                                UsePhysicalViewsIfNewer = false
+                            };
                             precompiledAssemblies.Add(precompiledAssembly);
-                        });
+                        }
+                    });
                 
                 var engine = new CompositePrecompiledMvcEngine(precompiledAssemblies.ToArray());
                 ViewEngines.Engines.Insert(0, engine);

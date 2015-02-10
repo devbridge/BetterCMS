@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Linq;
 
-using BetterCms.Core.DataAccess.DataContext;
+using Devbridge.Platform.Core.DataAccess.DataContext;
 using BetterCms.Core.Mvc.Commands;
 using BetterCms.Core.Security;
 using BetterCms.Core.Services;

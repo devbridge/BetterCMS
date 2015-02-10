@@ -1,12 +1,13 @@
 ﻿using System.Collections.Generic;
 
-using BetterCms.Core.DataAccess;
-using BetterCms.Core.DataAccess.DataContext;
-using BetterCms.Core.Mvc.Commands;
+using Devbridge.Platform.Core.DataAccess;
+using Devbridge.Platform.Core.DataAccess.DataContext;
 using BetterCms.Core.Security;
 using BetterCms.Core.Services;
 using BetterCms.Module.Root.Content.Resources;
 using BetterCms.Module.Root.ViewModels.Security;
+
+using Devbridge.Platform.Core.Web.Mvc.Commands;
 
 namespace BetterCms.Module.Root.Mvc
 {

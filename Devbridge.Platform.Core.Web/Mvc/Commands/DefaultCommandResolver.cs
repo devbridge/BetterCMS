@@ -1,9 +1,8 @@
 ﻿using Autofac;
 
-using BetterCms.Core.Dependencies;
-using BetterCms.Core.Services;
+using Devbridge.Platform.Core.Web.Dependencies;
 
-namespace BetterCms.Core.Mvc.Commands
+namespace Devbridge.Platform.Core.Web.Mvc.Commands
 {
     public class DefaultCommandResolver : ICommandResolver
     {

@@ -1,6 +1,6 @@
 ﻿using System.Linq;
 
-using BetterCms.Core.DataAccess;
+using Devbridge.Platform.Core.DataAccess;
 using BetterCms.Module.Api.Helpers;
 using BetterCms.Module.Api.Infrastructure;
 using BetterCms.Module.Api.Operations.MediaManager.Folders.Folder;

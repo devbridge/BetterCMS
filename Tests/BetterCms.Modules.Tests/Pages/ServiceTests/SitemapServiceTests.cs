@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using BetterCms.Core.DataAccess;
+using Devbridge.Platform.Core.DataAccess;
 using BetterCms.Module.Pages.Models;
 using BetterCms.Module.Pages.Services;
 

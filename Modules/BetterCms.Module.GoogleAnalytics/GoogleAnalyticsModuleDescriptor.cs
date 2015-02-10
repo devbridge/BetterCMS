@@ -74,7 +74,7 @@ namespace BetterCms.Module.GoogleAnalytics
         /// </summary>
         /// <param name="context">The module context.</param>
         /// <param name="containerBuilder">The container builder.</param>
-        public override void RegisterCustomRoutes(ModuleRegistrationContext context, ContainerBuilder containerBuilder)
+        public override void RegisterCustomRoutes(CmsModuleRegistrationContext context, ContainerBuilder containerBuilder)
         {
             context.MapRoute(
                 "bcms-google-sitemap",

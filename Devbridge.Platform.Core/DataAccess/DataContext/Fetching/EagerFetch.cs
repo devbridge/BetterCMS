@@ -3,6 +3,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
 
+using Autofac;
+
+using Devbridge.Platform.Core.Dependencies;
+
 namespace Devbridge.Platform.Core.DataAccess.DataContext.Fetching
 {
     public static class EagerFetch

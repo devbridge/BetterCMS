@@ -1,27 +1,48 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Text;
 
 using Common.Logging;
+
+using Devbridge.Platform.Core.Environment.FileSystem;
+using Devbridge.Platform.Core.Modules.Registration;
+
+using NHibernate.Transform;
 
 namespace Devbridge.Platform.Core.DataAccess.DataContext.Migrations
 {
     public class DefaultVersionChecker : IVersionChecker
     {
-        private readonly string folderPath = HostingEnvironment.MapPath(@"~/App_Data/BetterCMS/");
+        private string folderPath;
 
         private const string filename = @"versions.info.cache";
+
+        private string FolderPath
+        {
+            get
+            {
+                if (folderPath == null)
+                {
+                    folderPath = workingDirectory.GetWorkingDirectoryPath();
+                }
+
+                return folderPath;
+            }
+        }
 
         private string FilePath
         {
             get
             {
-                return string.Concat(folderPath, filename);
+                return string.Concat(FolderPath, filename);
             }
         }
 
         private readonly IUnitOfWork unitOfWork;
+
+        private readonly IWorkingDirectory workingDirectory;
         
         private readonly IModulesRegistration modulesRegistration;
 
@@ -31,10 +52,11 @@ namespace Devbridge.Platform.Core.DataAccess.DataContext.Migrations
 
         private bool isLoadedFromDatabase;
 
-        public DefaultVersionChecker(IUnitOfWork unitOfWork, IModulesRegistration modulesRegistration)
+        public DefaultVersionChecker(IUnitOfWork unitOfWork, IModulesRegistration modulesRegistration, IWorkingDirectory workingDirectory)
         {
             this.unitOfWork = unitOfWork;
             this.modulesRegistration = modulesRegistration;
+            this.workingDirectory = workingDirectory;
 
             try
             {
@@ -212,9 +234,9 @@ namespace Devbridge.Platform.Core.DataAccess.DataContext.Migrations
             StreamWriter file = null;
             try
             {
-                if (!Directory.Exists(folderPath))
+                if (!Directory.Exists(FolderPath))
                 {
-                    Directory.CreateDirectory(folderPath);
+                    Directory.CreateDirectory(FolderPath);
                 }
 
                 file = new StreamWriter(FilePath, true);

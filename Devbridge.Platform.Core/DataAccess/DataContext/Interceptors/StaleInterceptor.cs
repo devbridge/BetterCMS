@@ -1,4 +1,5 @@
-﻿using FluentNHibernate.Data;
+﻿using Devbridge.Platform.Core.Exceptions.DataTier;
+using Devbridge.Platform.Core.Models;
 
 using NHibernate;
 using NHibernate.Engine;

@@ -2,8 +2,8 @@
 using System.Collections.Generic;
 using System.Linq;
 
-using BetterCms.Core.DataAccess;
-using BetterCms.Core.DataAccess.DataContext;
+using Devbridge.Platform.Core.DataAccess;
+using Devbridge.Platform.Core.DataAccess.DataContext;
 using BetterCms.Core.Mvc.Commands;
 using BetterCms.Core.Security;
 using BetterCms.Module.Pages.Command.Page.DeletePage;
@@ -47,7 +47,7 @@ namespace BetterCms.Test.Module.Pages.CommandTests.PageTests
                     securityService.Setup(f => f.AccessControlEnabled).Returns(false);
 
                     var configurationService = new Mock<ICmsConfiguration>();
-                    configurationService.Setup(f => f.Security).Returns(securityService.Object);
+                    configurationService.Setup(f => f.CmsSecurity).Returns(securityService.Object);
 
                     var redirectService = new Mock<IRedirectService>();
 

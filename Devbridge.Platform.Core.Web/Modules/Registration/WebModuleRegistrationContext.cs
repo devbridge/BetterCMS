@@ -4,22 +4,26 @@ using System.Linq;
 using System.Web.Mvc;
 using System.Web.Routing;
 
-namespace BetterCms.Core.Modules
+using Devbridge.Platform.Core.Modules.Registration;
+
+namespace Devbridge.Platform.Core.Web.Modules.Registration
 {
-    public class ModuleRegistrationContext
+    public class WebModuleRegistrationContext : ModuleRegistrationContext
     {
-        public ModuleRegistrationContext(CmsModuleDescriptor moduleDescriptor)
+        public WebModuleRegistrationContext(WebModuleDescriptor moduleDescriptor) : base(moduleDescriptor)
         {
             Namespaces = new HashSet<string>(StringComparer.OrdinalIgnoreCase);
-            ModuleDescriptor = moduleDescriptor;
-            Routes = new RouteCollection();            
+            Routes = new RouteCollection();
         }
 
-        public CmsModuleDescriptor ModuleDescriptor { get; private set; }
-
-        protected ICollection<string> Namespaces { get; private set; }        
+        protected ICollection<string> Namespaces { get; private set; }
 
         internal RouteCollection Routes { get; private set; }
+
+        public override string GetRegistrationName()
+        {
+            return ((WebModuleDescriptor)ModuleDescriptor).AreaName.ToLowerInvariant();
+        }
 
         public Route MapRoute(string name, string url)
         {
@@ -55,12 +59,12 @@ namespace BetterCms.Core.Modules
                 namespaces = Namespaces.ToArray<string>();
             }
             Route route = Routes.MapRoute(name, url, defaults, constraints, namespaces);
-            route.DataTokens["area"] = ModuleDescriptor.AreaName;
+            route.DataTokens["area"] = ((WebModuleDescriptor)ModuleDescriptor).AreaName;
             bool flag = (namespaces == null) || (namespaces.Length == 0);
             route.DataTokens["UseNamespaceFallback"] = flag;
-           
+
             return route;
-        } 
+        }
 
         public void IgnoreRoute(string url)
         {

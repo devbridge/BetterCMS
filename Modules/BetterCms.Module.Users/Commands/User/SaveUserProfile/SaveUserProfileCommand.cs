@@ -1,6 +1,6 @@
 ﻿using System.Linq;
 
-using BetterCms.Core.DataAccess.DataContext;
+using Devbridge.Platform.Core.DataAccess.DataContext;
 using BetterCms.Core.DataAccess.DataContext.Fetching;
 using BetterCms.Core.Exceptions.Mvc;
 using BetterCms.Core.Mvc.Commands;

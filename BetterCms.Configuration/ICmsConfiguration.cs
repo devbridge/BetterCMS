@@ -41,14 +41,6 @@ namespace BetterCms
         string LoginUrl { get; set; }
 
         /// <summary>
-        /// Gets or sets the web site URL.
-        /// </summary>
-        /// <value>
-        /// The web site URL.
-        /// </value>
-        string WebSiteUrl { get; set; }
-
-        /// <summary>
         /// Gets the virtual root path (like "~/App_Data") of BetterCMS working directory. 
         /// </summary>
         /// <value>

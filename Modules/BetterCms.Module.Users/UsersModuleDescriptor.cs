@@ -216,7 +216,7 @@ namespace BetterCms.Module.Users
         /// </summary>
         /// <param name="context">The area registration context.</param>
         /// <param name="containerBuilder">The container builder.</param>
-        public override void RegisterModuleTypes(ModuleRegistrationContext context, ContainerBuilder containerBuilder)
+        public override void RegisterModuleTypes(CmsModuleRegistrationContext context, ContainerBuilder containerBuilder)
         {
             containerBuilder.RegisterType<DefaultAuthenticationService>().AsImplementedInterfaces().InstancePerLifetimeScope();
             containerBuilder.RegisterType<DefaultRoleService>().AsImplementedInterfaces().InstancePerLifetimeScope();
@@ -225,7 +225,7 @@ namespace BetterCms.Module.Users
             containerBuilder.RegisterType<DefaultRegistrationService>().As<IRegistrationService>().InstancePerLifetimeScope();
         }
 
-        public override void RegisterCustomRoutes(ModuleRegistrationContext context, ContainerBuilder containerBuilder)
+        public override void RegisterCustomRoutes(CmsModuleRegistrationContext context, ContainerBuilder containerBuilder)
         {
             if (Configuration.Users != null)
             {

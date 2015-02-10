@@ -51,15 +51,15 @@ namespace BetterCms.Module.Api
         private static Assembly[] GetAssembliesWithServices()
         {
             List<Assembly> assemblies = new List<Assembly>();
-            IModulesRegistration modulesRegistry;
+            ICmsModulesRegistration modulesRegistry;
             IAssemblyLoader assemblyLoader = null;
 
             using (var container = ContextScopeProvider.CreateChildContainer())
             {
-                modulesRegistry = container.Resolve<IModulesRegistration>();
+                modulesRegistry = container.Resolve<ICmsModulesRegistration>();
                 if (modulesRegistry == null)
                 {
-                    throw new CmsApiException("Failed to resolve IModulesRegistration.");
+                    throw new CmsApiException("Failed to resolve ICmsModulesRegistration.");
                 }
 
                 assemblyLoader = container.Resolve<IAssemblyLoader>();

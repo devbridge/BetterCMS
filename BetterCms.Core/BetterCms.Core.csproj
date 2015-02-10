@@ -156,6 +156,7 @@
     <Compile Include="DataContracts\IOptionContainer.cs" />
     <Compile Include="DataContracts\IOptionValue.cs" />
     <Compile Include="DataContracts\IRenderPage.cs" />
+    <Compile Include="Environment\FileSystem\CmsWorkingDirectory.cs" />
     <Compile Include="Events\CmsCoreEvents.cs" />
     <Compile Include="CmsContext.cs" />
     <Compile Include="DataContracts\Enums\ContentStatus.cs" />
@@ -170,38 +171,35 @@
     <Compile Include="DataContracts\IPageContent.cs" />
     <Compile Include="DataContracts\IRegion.cs" />
     <Compile Include="DataContracts\IWidget.cs" />
-    <Compile Include="Dependencies\ContextScopeProvider.cs" />
     <Compile Include="Environment\ApplicationStart\BetterCmsEntrypoint.cs" />
-    <Compile Include="Dependencies\PerWebRequestContainerProvider.cs" />
-    <Compile Include="Dependencies\PerWebRequestLifetimeModule.cs" />
     <Compile Include="DataContracts\Enums\PageStatus.cs" />
     <Compile Include="Exceptions\Api\CmsApiException.cs" />
     <Compile Include="Exceptions\Api\CmsApiValidationException.cs" />
     <Compile Include="Exceptions\Mvc\ConfirmationRequestException.cs" />
     <Compile Include="Modules\CssIncludeDescriptor.cs" />
-    <Compile Include="Modules\Projections\JavaScriptModuleLink.cs" />
+    <Compile Include="Modules\JsIncludeDescriptor.cs" />
     <Compile Include="Modules\JsShimConfigDescriptor.cs" />
-    <Compile Include="Modules\Registration\DefaultModulesRegistration.cs" />
-    <Compile Include="Modules\Registration\IModulesRegistration.cs" />
+    <Compile Include="Modules\Projections\JavaScriptModuleLink.cs" />
+    <Compile Include="Modules\Registration\CmsModulesRegistration.cs" />
+    <Compile Include="Modules\Registration\ICmsModulesRegistration.cs" />
     <Compile Include="Mvc\Binders\JSONDataBinder.cs" />
     <Compile Include="ActionResults\IHaveCustomXmlSettings.cs" />
     <Compile Include="ActionResults\XmlResult.cs" />
+    <Compile Include="Security\DefaultTextEncryptor.cs" />
+    <Compile Include="Security\EncryptableString.cs" />
+    <Compile Include="Security\ITextEncryptor.cs" />
     <Compile Include="Security\SuppressFormsAuthenticationRedirectModule.cs" />
     <Compile Include="Mvc\Attributes\NoCacheAttribute.cs" />
-    <Compile Include="Mvc\Extensions\VirtualPath.cs" />
     <Compile Include="Security\AccessLevel.cs" />
     <Compile Include="Security\BcmsAuthorizeAttribute.cs" />
     <Compile Include="Security\IAccessControlDisabled.cs" />
     <Compile Include="Security\IAccessSecuredObject.cs" />
     <Compile Include="Security\IAccessRule.cs" />
-    <Compile Include="Security\EncryptableString.cs" />
     <Compile Include="Security\IAccessControlService.cs" />
     <Compile Include="Security\IAccessSecuredObjectDependency.cs" />
-    <Compile Include="Security\ITextEncryptor.cs" />
     <Compile Include="Security\IUserRole.cs" />
     <Compile Include="Modules\Projections\EmptyContentAccessor.cs" />
     <Compile Include="Mvc\Attributes\IgnoreAutoRouteAttribute.cs" />
-    <Compile Include="Security\DefaultTextEncryptor.cs" />
     <Compile Include="Security\SpecialIdentities.cs" />
     <Compile Include="Security\UserRole.cs" />
     <Compile Include="Services\Storage\FtpStorageService.cs" />
@@ -223,7 +221,6 @@
     <Compile Include="Exceptions\Service\PageException.cs" />
     <Compile Include="Exceptions\Service\SecurityException.cs" />
     <Compile Include="Exceptions\Service\StorageException.cs" />
-    <Compile Include="Modules\ModuleRegistrationContext.cs" />
     <Compile Include="Modules\Projections\ButtonActionProjection.cs" />
     <Compile Include="Modules\Projections\ActionCallProjectionBase.cs" />
     <Compile Include="Modules\Projections\ContentAccessor.cs" />
@@ -238,19 +235,10 @@
     <Compile Include="Modules\Projections\RenderActionProjection.cs" />
     <Compile Include="Modules\Projections\IPageActionProjection.cs" />
     <Compile Include="Modules\Projections\JavaScriptModuleGlobalization.cs" />
-    <Compile Include="Modules\JsIncludeDescriptor.cs" />
     <Compile Include="Modules\Projections\JavaScriptModuleLinkTo.cs" />
     <Compile Include="Modules\Projections\SeparatorProjection.cs" />
-    <Compile Include="Mvc\Commands\DefaultCommandResolver.cs" />
-    <Compile Include="Mvc\Commands\ICommandContext.cs" />
-    <Compile Include="Mvc\Commands\ICommandResolver.cs" />
-    <Compile Include="Mvc\Extensions\DefaultControllerExtensions.cs" />
-    <Compile Include="Mvc\Extensions\IControllerExtensions.cs" />
-    <Compile Include="Mvc\Commands\ICommand.cs" />
-    <Compile Include="Mvc\IMessagesIndicator.cs" />
     <Compile Include="Services\IPageAccessor.cs" />
     <Compile Include="Services\ISecurityService.cs" />
-    <Compile Include="Web\DefaultHttpContextAccessor.cs" />
     <Compile Include="Modules\Install\DefaultModuleManager.cs" />
     <Compile Include="Modules\Install\IModuleManager.cs" />
     <Compile Include="Web\EmbeddedResources\DefaultEmbeddedResourcesProvider.cs" />
@@ -259,7 +247,6 @@
     <Compile Include="Web\EmbeddedResources\EmbeddedResourcesVirtualPathProvider.cs" />
     <Compile Include="Web\EmbeddedResources\IEmbeddedResourcesProvider.cs" />
     <Compile Include="Web\HttpContextTool.cs" />
-    <Compile Include="Web\IHttpContextAccessor.cs" />
     <Compile Include="Web\ViewEngines\EmbeddedResourcesViewEngine.cs" />
     <Compile Include="Mvc\Routes\RouteExtensions.cs" />
     <Compile Include="Mvc\Routes\DefaultRouteTable.cs" />
@@ -276,9 +263,7 @@
     <None Include="app.config" />
     <None Include="packages.config" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Models\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <ProjectReference Include="..\BetterCMS.Configuration\BetterCms.Configuration.csproj">
       <Project>{DA2B225E-6AEE-4465-8B08-4D5B1C1CED49}</Project>

@@ -3,6 +3,8 @@ using System.Web.Mvc;
 
 using Common.Logging;
 
+using Devbridge.Platform.Core.Web.Modules;
+
 namespace BetterCms.Core.Modules.Projections
 {
     /// <summary>

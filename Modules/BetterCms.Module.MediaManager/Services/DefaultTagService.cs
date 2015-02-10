@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 
-using BetterCms.Core.DataAccess.DataContext;
+using Devbridge.Platform.Core.DataAccess.DataContext;
 using BetterCms.Module.MediaManager.Models;
 using BetterCms.Module.Root.Models;
 

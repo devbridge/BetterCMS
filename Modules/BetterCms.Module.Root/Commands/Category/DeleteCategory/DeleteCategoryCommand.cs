@@ -1,5 +1,6 @@
-﻿using BetterCms.Core.Mvc.Commands;
-using BetterCms.Module.Root.Mvc;
+﻿using BetterCms.Module.Root.Mvc;
+
+using Devbridge.Platform.Core.Web.Mvc.Commands;
 
 namespace BetterCms.Module.Root.Commands.Category.DeleteCategory
 {

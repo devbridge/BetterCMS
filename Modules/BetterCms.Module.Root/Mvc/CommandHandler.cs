@@ -1,17 +1,15 @@
 ﻿using System;
 using System.Text;
 
-using BetterCms.Core.Exceptions;
-using BetterCms.Core.Exceptions.DataTier;
 using BetterCms.Core.Exceptions.Mvc;
 using BetterCms.Core.Exceptions.Service;
-using BetterCms.Core.Mvc.Commands;
 using BetterCms.Module.Root.Content.Resources;
 
 using Common.Logging;
 
 using Devbridge.Platform.Core.Exceptions;
 using Devbridge.Platform.Core.Exceptions.DataTier;
+using Devbridge.Platform.Core.Web.Mvc.Commands;
 
 namespace BetterCms.Module.Root.Mvc
 {

@@ -1,13 +1,12 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 
-using BetterCms.Core.DataContracts;
-using BetterCms.Core.Mvc.Commands;
 using BetterCms.Module.MediaManager.Models;
 using BetterCms.Module.MediaManager.ViewModels.MediaManager;
 using BetterCms.Module.Root.Mvc;
 
-using NHibernate.Mapping;
+using Devbridge.Platform.Core.DataContracts;
+using Devbridge.Platform.Core.Web.Mvc.Commands;
 
 namespace BetterCms.Module.MediaManager.Command.MediaManager.ArchiveMedia
 {

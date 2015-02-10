@@ -1,13 +1,14 @@
 ﻿using System;
 using System.Globalization;
 
-using BetterCms.Core.Mvc.Commands;
 using BetterCms.Module.MediaManager.Helpers;
 using BetterCms.Module.MediaManager.Models;
 using BetterCms.Module.MediaManager.Models.Extensions;
 using BetterCms.Module.MediaManager.Services;
 using BetterCms.Module.MediaManager.ViewModels.Images;
 using BetterCms.Module.Root.Mvc;
+
+using Devbridge.Platform.Core.Web.Mvc.Commands;
 
 namespace BetterCms.Module.MediaManager.Command.Images.GetImage
 {

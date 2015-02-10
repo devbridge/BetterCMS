@@ -129,7 +129,7 @@ namespace BetterCms.Module.LuceneSearch
                 };
         }
         
-        public override void RegisterModuleTypes(ModuleRegistrationContext context, ContainerBuilder containerBuilder)
+        public override void RegisterModuleTypes(CmsModuleRegistrationContext context, ContainerBuilder containerBuilder)
         {
             containerBuilder.RegisterType<DefaultIndexerService>().As<IIndexerService>().InstancePerDependency();
             containerBuilder.RegisterType<DefaultIndexerService>().As<ISearchService>().InstancePerDependency();

@@ -85,7 +85,7 @@ namespace BetterCms.Module.Api
         /// </summary>
         /// <param name="context">The area registration context.</param>
         /// <param name="containerBuilder">The container builder.</param>
-        public override void RegisterCustomRoutes(ModuleRegistrationContext context, ContainerBuilder containerBuilder)
+        public override void RegisterCustomRoutes(CmsModuleRegistrationContext context, ContainerBuilder containerBuilder)
         {
             context.IgnoreRoute("bcms-api/{*pathInfo}");
         }

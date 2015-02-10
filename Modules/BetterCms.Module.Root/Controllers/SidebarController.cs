@@ -33,7 +33,7 @@ namespace BetterCms.Module.Root.Controllers
         /// <summary>
         /// A contract to manage modules registry.
         /// </summary>
-        private readonly IModulesRegistration modulesRegistration;
+        private readonly ICmsModulesRegistration modulesRegistration;
 
         /// <summary>
         /// The contract for BetterCMS application host.
@@ -45,7 +45,7 @@ namespace BetterCms.Module.Root.Controllers
         /// </summary>
         /// <param name="modulesRegistration">The modules.</param>
         /// <param name="configuration">The CMS configuration.</param>
-        public SidebarController(IModulesRegistration modulesRegistration, ICmsConfiguration configuration)
+        public SidebarController(ICmsModulesRegistration modulesRegistration, ICmsConfiguration configuration)
         {
             this.configuration = configuration;
             this.modulesRegistration = modulesRegistration;

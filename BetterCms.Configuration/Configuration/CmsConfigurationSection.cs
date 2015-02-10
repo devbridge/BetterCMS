@@ -2,17 +2,16 @@
 using System.Configuration;
 using System.Reflection;
 
-using Devbridge.Platform.Core.Configuration;
+using Devbridge.Platform.Core.Web.Configuration;
 
 namespace BetterCms.Configuration
 {
-    public class CmsConfigurationSection : DefaultConfiguration, ICmsConfiguration
+    public class CmsConfigurationSection : DefaultWebConfigurationSection, ICmsConfiguration
     {
         private const string VersionAttribute = "version";
         private const string UseMinifiedResourcesAttribute = "useMinifiedResources";
         private const string ResourcesBasePathAttribute = "resourcesBasePath";
         private const string LoginUrlAttribute = "loginUrl";
-        private const string WebSiteUrlAttribute = "webSiteUrl";
         private const string PageNotFoundUrlAttribute = "pageNotFoundUrl";
         private const string UrlModeAttribute = "urlMode";
         private const string StorageNode = "storage";
@@ -86,19 +85,6 @@ namespace BetterCms.Configuration
         {
             get { return Convert.ToString(this[LoginUrlAttribute]); }
             set { this[LoginUrlAttribute] = value; }
-        }
-
-        /// <summary>
-        /// Gets or sets the web site URL.
-        /// </summary>
-        /// <value>
-        /// The web site URL.
-        /// </value>
-        [ConfigurationProperty(WebSiteUrlAttribute, DefaultValue = "Auto", IsRequired = false)]
-        public string WebSiteUrl
-        {
-            get { return Convert.ToString(this[WebSiteUrlAttribute]); }
-            set { this[WebSiteUrlAttribute] = value; }
         }
 
         /// <summary>

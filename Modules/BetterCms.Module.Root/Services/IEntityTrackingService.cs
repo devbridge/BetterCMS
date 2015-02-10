@@ -1,4 +1,4 @@
-﻿using BetterCms.Core.DataContracts;
+﻿using Devbridge.Platform.Core.DataContracts;
 
 namespace BetterCms.Module.Root.Services
 {

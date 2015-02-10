@@ -6,9 +6,9 @@ using Autofac;
 using BetterCms.Core.DataContracts;
 using BetterCms.Core.Exceptions;
 using BetterCms.Core.Modules.Projections;
-using BetterCms.Core.Mvc.Extensions;
 
 using Devbridge.Platform.Core.Web.Modules;
+using Devbridge.Platform.Core.Web.Mvc.Extensions;
 
 namespace BetterCms.Core.Modules
 {
@@ -134,15 +134,6 @@ namespace BetterCms.Core.Modules
 
                 return minCssPath;
             }
-        }
-
-        /// <summary>
-        /// Registers module types.
-        /// </summary>
-        /// <param name="context">The area registration context.</param>
-        /// <param name="containerBuilder">The container builder.</param>
-        public virtual void RegisterModuleTypes(ModuleRegistrationContext context, ContainerBuilder containerBuilder)
-        {            
         }
 
         /// <summary>

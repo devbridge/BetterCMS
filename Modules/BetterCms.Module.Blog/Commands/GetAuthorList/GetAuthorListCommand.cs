@@ -1,7 +1,7 @@
 ﻿using System.Linq;
 
 using BetterCms.Core;
-using BetterCms.Core.DataAccess.DataContext;
+using Devbridge.Platform.Core.DataAccess.DataContext;
 using BetterCms.Core.Mvc.Commands;
 using BetterCms.Module.Blog.Models;
 using BetterCms.Module.Blog.Services;

@@ -3,6 +3,8 @@ using System.Web.Mvc;
 
 using BetterCms.Core.DataContracts;
 
+using Devbridge.Platform.Core.DataContracts;
+
 namespace BetterCms.Module.Root.ViewModels.Option
 {
     /// <summary>

@@ -5,7 +5,7 @@ using System.Text;
 
 using Autofac;
 
-using BetterCms.Core.DataAccess;
+using Devbridge.Platform.Core.DataAccess;
 using BetterCms.Core.Security;
 
 using NUnit.Framework;

@@ -6,8 +6,8 @@ using Autofac;
 using BetterCMS.Module.LuceneSearch.Models;
 using BetterCMS.Module.LuceneSearch.Services.ScrapeService;
 
-using BetterCms.Core.DataAccess;
-using BetterCms.Core.DataAccess.DataContext;
+using Devbridge.Platform.Core.DataAccess;
+using Devbridge.Platform.Core.DataAccess.DataContext;
 using BetterCms.Module.Api.Operations.Blog.Authors;
 using BetterCms.Module.Blog.Models;
 using BetterCms.Module.Root.Models;

@@ -12,6 +12,8 @@ using BetterCms.Module.Root.Mvc.Helpers;
 using BetterCms.Module.Root.Projections;
 using BetterCms.Module.Root.ViewModels.Security;
 
+using Devbridge.Platform.Core.DataContracts;
+
 namespace BetterCms.Module.Root.ViewModels.Cms
 {
     /// <summary>

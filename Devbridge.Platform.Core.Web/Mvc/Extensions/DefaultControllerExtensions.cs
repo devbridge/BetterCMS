@@ -6,7 +6,7 @@ using System.Web.Mvc;
 
 using Devbridge.Platform.Core.Environment.Assemblies;
 
-namespace BetterCms.Core.Mvc.Extensions
+namespace Devbridge.Platform.Core.Web.Mvc.Extensions
 {
     /// <summary>
     /// Default controller extensions implementation.

@@ -1,12 +1,14 @@
 ﻿using System;
 using System.Web;
 
-using BetterCms.Core.Dependencies;
 using BetterCms.Core.Environment.ApplicationStart;
 using BetterCms.Core.Exceptions;
 using BetterCms.Core.Security;
 
 using Common.Logging;
+
+using Devbridge.Platform.Core.Dependencies;
+using Devbridge.Platform.Core.Web.Dependencies;
 
 [assembly: PreApplicationStartMethod(typeof(BetterCmsEntrypoint), "PreApplicationStart")]
 

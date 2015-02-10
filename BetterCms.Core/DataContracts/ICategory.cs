@@ -1,4 +1,6 @@
-﻿namespace BetterCms.Core.DataContracts
+﻿using Devbridge.Platform.Core.DataContracts;
+
+namespace BetterCms.Core.DataContracts
 {
     /// <summary>
     /// Defines interface to access basic content properties.

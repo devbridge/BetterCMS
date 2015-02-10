@@ -9,6 +9,12 @@ namespace Devbridge.Platform.Core.Environment.FileSystem
     public interface IWorkingDirectory
     {
         /// <summary>
+        /// Gets the working directory path.
+        /// </summary>
+        /// <returns>The working directory path</returns>
+        string GetWorkingDirectoryPath();
+
+        /// <summary>
         /// Gets module assembly files from working folder.
         /// </summary>        
         /// <returns>Module assembly file names.</returns>

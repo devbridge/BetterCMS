@@ -4,7 +4,9 @@ using System.Reflection;
 using System.Web;
 using System.Web.Mvc;
 
-namespace BetterCms.Core.Web
+using Devbridge.Platform.Core.Web.Configuration;
+
+namespace Devbridge.Platform.Core.Web.Web
 {
     /// <summary>
     /// Default implementation of http context accessor. Provides HttpContext.Current context wrapper.
@@ -12,17 +14,17 @@ namespace BetterCms.Core.Web
     public class DefaultHttpContextAccessor : IHttpContextAccessor
     {
         /// <summary>
-        /// The CMS configuration
+        /// The web configuration
         /// </summary>
-        private readonly ICmsConfiguration cmsConfiguration;
+        private readonly IWebConfiguration configuration;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="DefaultHttpContextAccessor" /> class.
         /// </summary>
-        /// <param name="cmsConfiguration">The CMS configuration.</param>
-        public DefaultHttpContextAccessor(ICmsConfiguration cmsConfiguration)
+        /// <param name="configuration">The CMS configuration.</param>
+        public DefaultHttpContextAccessor(IWebConfiguration configuration)
         {
-            this.cmsConfiguration = cmsConfiguration;
+            this.configuration = configuration;
         }
 
         /// <summary>
@@ -111,7 +113,7 @@ namespace BetterCms.Core.Web
         private string GetServerUrl(HttpRequestBase request)
         {
             if (request != null
-                && string.IsNullOrWhiteSpace(cmsConfiguration.WebSiteUrl) || cmsConfiguration.WebSiteUrl.Equals("auto", StringComparison.InvariantCultureIgnoreCase))
+                && string.IsNullOrWhiteSpace(configuration.WebSiteUrl) || configuration.WebSiteUrl.Equals("auto", StringComparison.InvariantCultureIgnoreCase))
             {
                 var url = request.Url.AbsoluteUri;
                 var query = HttpContext.Current.Request.Url.PathAndQuery;
@@ -123,7 +125,7 @@ namespace BetterCms.Core.Web
                 return url;
             }
 
-            return cmsConfiguration.WebSiteUrl;
+            return configuration.WebSiteUrl;
         }
 
         private string GetExecutingAssemblyPath()

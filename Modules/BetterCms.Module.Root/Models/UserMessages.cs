@@ -2,6 +2,8 @@
 
 using BetterCms.Core.Mvc;
 
+using Devbridge.Platform.Core.Web.Mvc;
+
 namespace BetterCms.Module.Root.Models
 {
     /// <summary>

@@ -61,7 +61,7 @@ namespace BetterCMS.Module.GoogleSiteSearch
         {
         }
         
-        public override void RegisterModuleTypes(ModuleRegistrationContext context, ContainerBuilder containerBuilder)
+        public override void RegisterModuleTypes(CmsModuleRegistrationContext context, ContainerBuilder containerBuilder)
         {
             containerBuilder.RegisterType<GoogleSiteSearchService>().As<ISearchService>().SingleInstance();
             containerBuilder.RegisterType<DefaultWebClient>().As<IWebClient>().SingleInstance();

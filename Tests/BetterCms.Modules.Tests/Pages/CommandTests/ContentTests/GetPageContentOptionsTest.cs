@@ -4,8 +4,8 @@ using System.Linq;
 
 using Autofac;
 
-using BetterCms.Core.DataAccess;
-using BetterCms.Core.DataAccess.DataContext;
+using Devbridge.Platform.Core.DataAccess;
+using Devbridge.Platform.Core.DataAccess.DataContext;
 using BetterCms.Core.DataContracts.Enums;
 using BetterCms.Core.Services.Caching;
 using BetterCms.Module.Pages.Command.Content.GetPageContentOptions;

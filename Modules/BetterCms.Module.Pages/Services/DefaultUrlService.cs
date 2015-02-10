@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text.RegularExpressions;
 
 using BetterCms.Configuration;
-using BetterCms.Core.DataAccess.DataContext;
+using Devbridge.Platform.Core.DataAccess.DataContext;
 using BetterCms.Module.Pages.Content.Resources;
 using BetterCms.Module.Root.Models;
 using BetterCms.Module.Root.Mvc.Helpers;

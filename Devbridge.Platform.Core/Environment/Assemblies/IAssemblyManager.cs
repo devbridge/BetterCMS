@@ -1,4 +1,6 @@
-﻿namespace Devbridge.Platform.Core.Environment.Assemblies
+﻿using System.Reflection;
+
+namespace Devbridge.Platform.Core.Environment.Assemblies
 {
     /// <summary>
     /// Defines the contract to scan and load assemblies.
@@ -14,5 +16,17 @@
         /// Adds referenced modules.
         /// </summary>
         void AddReferencedModules();
+
+        /// <summary>
+        /// Adds the uploaded module.
+        /// </summary>
+        /// <param name="assembly">The assembly.</param>
+        void AddUploadedModule(Assembly assembly);
+
+        /// <summary>
+        /// Adds the referenced module.
+        /// </summary>
+        /// <param name="assembly">The assembly.</param>
+        void AddReferencedModule(Assembly assembly);
     }
 }

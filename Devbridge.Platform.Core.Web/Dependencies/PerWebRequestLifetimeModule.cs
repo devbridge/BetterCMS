@@ -2,7 +2,7 @@
 
 using Microsoft.Web.Infrastructure.DynamicModuleHelper;
 
-namespace BetterCms.Core.Dependencies
+namespace Devbridge.Platform.Core.Web.Dependencies
 {
     /// <summary>
     /// Per web request lifetime http module.

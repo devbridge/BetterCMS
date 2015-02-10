@@ -2,7 +2,9 @@
 
 using BetterCms.Core.Modules;
 using BetterCms.Core.Modules.Projections;
-using BetterCms.Core.Mvc.Extensions;
+
+using Devbridge.Platform.Core.Web.Modules;
+using Devbridge.Platform.Core.Web.Mvc.Extensions;
 
 namespace BetterCms.Module.Root.Registration
 {

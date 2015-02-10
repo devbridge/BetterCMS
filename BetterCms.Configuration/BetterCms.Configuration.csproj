@@ -137,9 +137,14 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="app.config" />
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Devbridge.Platform.Core.Web\Devbridge.Platform.Core.Web.csproj">
+      <Project>{c8588325-b702-4785-834f-313c19562871}</Project>
+      <Name>Devbridge.Platform.Core.Web</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Devbridge.Platform.Core\Devbridge.Platform.Core.csproj">
       <Project>{c97b2899-5ac5-4528-b205-478d4183676d}</Project>
       <Name>Devbridge.Platform.Core</Name>

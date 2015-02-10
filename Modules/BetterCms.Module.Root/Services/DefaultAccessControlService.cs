@@ -5,9 +5,6 @@ using System.Security.Principal;
 using System.Text;
 
 using BetterCms.Configuration;
-using BetterCms.Core.DataAccess;
-using BetterCms.Core.DataAccess.DataContext.Fetching;
-using BetterCms.Core.DataContracts;
 using BetterCms.Core.Exceptions;
 using BetterCms.Core.Exceptions.Mvc;
 using BetterCms.Core.Exceptions.Service;
@@ -18,6 +15,10 @@ using BetterCms.Core.Services.Caching;
 using BetterCms.Module.Root.Content.Resources;
 using BetterCms.Module.Root.Models;
 using BetterCms.Module.Root.ViewModels.Security;
+
+using Devbridge.Platform.Core.DataAccess;
+using Devbridge.Platform.Core.DataAccess.DataContext.Fetching;
+using Devbridge.Platform.Core.DataContracts;
 
 namespace BetterCms.Module.Root.Services
 {

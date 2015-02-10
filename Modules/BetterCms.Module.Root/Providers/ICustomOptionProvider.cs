@@ -1,6 +1,5 @@
 ﻿using System.Collections.Generic;
-
-using BetterCms.Core.DataAccess;
+using Devbridge.Platform.Core.DataAccess;
 
 namespace BetterCms.Module.Root.Providers
 {

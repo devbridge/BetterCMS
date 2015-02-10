@@ -2,6 +2,8 @@
 
 using BetterCms.Core.Web;
 
+using Devbridge.Platform.Core.Web.Web;
+
 namespace BetterCms.Module.Root.Services
 {
     public class DefaultEntityTrackingCacheService : IEntityTrackingCacheService

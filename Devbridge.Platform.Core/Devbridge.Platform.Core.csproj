@@ -66,7 +66,7 @@
   <ItemGroup>
     <Compile Include="Configuration\DatabaseConfigurationElement.cs" />
     <Compile Include="Configuration\DatabaseType.cs" />
-    <Compile Include="Configuration\DefaultConfiguration.cs" />
+    <Compile Include="Configuration\DefaultConfigurationSection.cs" />
     <Compile Include="Configuration\DefaultConfigurationLoader.cs" />
     <Compile Include="Configuration\IConfiguration.cs" />
     <Compile Include="Configuration\IConfigurationLoader.cs" />
@@ -107,6 +107,7 @@
     <Compile Include="DataAccess\PredicateBuilder.cs" />
     <Compile Include="DataContracts\IDeleteableEntity.cs" />
     <Compile Include="DataContracts\IEntity.cs" />
+    <Compile Include="Dependencies\ContextScopeProvider.cs" />
     <Compile Include="Environment\Assemblies\DefaultAssemblyLoader.cs" />
     <Compile Include="Environment\Assemblies\DefaultAssemblyManager.cs" />
     <Compile Include="Environment\Assemblies\IAssemblyLoader.cs" />
@@ -128,7 +129,10 @@
     <Compile Include="Models\EntitySubClassMapBase.cs" />
     <Compile Include="Models\EquatableEntity.cs" />
     <Compile Include="Models\MaxLength.cs" />
+    <Compile Include="Modules\Registration\DefaultModulesRegistration.cs" />
+    <Compile Include="Modules\Registration\IModulesRegistration.cs" />
     <Compile Include="Modules\ModuleDescriptor.cs" />
+    <Compile Include="Modules\Registration\ModuleRegistrationContext.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Security\DefaultPrincipalProvider.cs" />
     <Compile Include="Security\IPrincipalProvider.cs" />

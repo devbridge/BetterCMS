@@ -1,4 +1,3 @@
-using BetterCms.Core.Models;
 using BetterCms.Core.Security;
 
 namespace BetterCms.Module.Pages.Models.Maps

@@ -6,6 +6,7 @@ using System.Linq;
 
 using Common.Logging;
 
+using Devbridge.Platform.Core.Configuration;
 using Devbridge.Platform.Core.Environment.Assemblies;
 using Devbridge.Platform.Core.Modules;
 
@@ -48,7 +49,7 @@ namespace Devbridge.Platform.Core.DataAccess.DataContext.Migrations
         /// <summary>
         /// The configuration.
         /// </summary>
-        private readonly ICmsConfiguration configuration;
+        private readonly IConfiguration configuration;
 
         /// <summary>
         /// The version checker
@@ -61,7 +62,7 @@ namespace Devbridge.Platform.Core.DataAccess.DataContext.Migrations
         /// <param name="assemblyLoader">The assembly loader.</param>
         /// <param name="configuration">The configuration.</param>
         /// <param name="versionChecker">The version checker.</param>
-        public DefaultMigrationRunner(IAssemblyLoader assemblyLoader, ICmsConfiguration configuration, IVersionChecker versionChecker)
+        public DefaultMigrationRunner(IAssemblyLoader assemblyLoader, IConfiguration configuration, IVersionChecker versionChecker)
         {
             this.assemblyLoader = assemblyLoader;
             this.configuration = configuration;

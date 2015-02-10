@@ -4,13 +4,8 @@ using System.Collections.Generic;
 using Autofac;
 
 using BetterCms.Core;
-using BetterCms.Core.DataAccess;
-using BetterCms.Core.DataAccess.DataContext;
-using BetterCms.Core.DataContracts;
-using BetterCms.Core.Dependencies;
 using BetterCms.Core.Modules;
 using BetterCms.Core.Modules.Projections;
-using BetterCms.Events;
 
 using BetterCms.Module.Root.Content.Resources;
 using BetterCms.Module.Root.Controllers;
@@ -18,6 +13,13 @@ using BetterCms.Module.Root.Mvc;
 using BetterCms.Module.Root.Projections;
 using BetterCms.Module.Root.Registration;
 using BetterCms.Module.Root.Services;
+
+using Devbridge.Platform.Core.DataAccess.DataContext;
+using Devbridge.Platform.Core.DataContracts;
+using Devbridge.Platform.Core.Dependencies;
+using Devbridge.Platform.Core.Modules.Registration;
+using Devbridge.Platform.Core.Web.Modules.Registration;
+using Devbridge.Platform.Events;
 
 namespace BetterCms.Module.Root
 {
@@ -74,33 +76,6 @@ namespace BetterCms.Module.Root
             InitializeSecurity();            
         }
 
-        internal const string ModuleId = "456353c3-f4af-4016-838b-12e4677c3133";
-
-        /// <summary>
-        /// Gets the identifier.
-        /// </summary>
-        /// <value>
-        /// The identifier.
-        /// </value>
-        public override Guid Id
-        {
-            get
-            {
-                return new Guid(ModuleId);
-            }
-        }
-
-        /// <summary>
-        /// Flag describe is module root or additional
-        /// </summary>
-        public override bool IsRootModule
-        {
-            get
-            {
-                return true;
-            }
-        }
-
         /// <summary>
         /// Gets the name.
         /// </summary>
@@ -112,20 +87,6 @@ namespace BetterCms.Module.Root
             get
             {
                 return ModuleName;
-            }
-        }
-
-        /// <summary>
-        /// Gets the description.
-        /// </summary>
-        /// <value>
-        /// The description.
-        /// </value>
-        public override string Description
-        {
-            get
-            {
-                return "Root functionality module for Better CMS.";
             }
         }
 
@@ -198,7 +159,7 @@ namespace BetterCms.Module.Root
         /// </summary>
         /// <param name="context">The area registration context.</param>
         /// <param name="containerBuilder">The container builder.</param>
-        public override void RegisterCustomRoutes(ModuleRegistrationContext context, ContainerBuilder containerBuilder)
+        public override void RegisterCustomRoutes(WebModuleRegistrationContext context, ContainerBuilder containerBuilder)
         {            
             context.MapRoute(
                 "bcms_" + AreaName + "_MainJs",
@@ -367,7 +328,7 @@ namespace BetterCms.Module.Root
         /// Creates the resource routes for 6 levels folder structure.
         /// </summary>
         /// <param name="context">The context.</param>
-        private void CreateEmbeddedResourcesRoutes(ModuleRegistrationContext context)
+        private void CreateEmbeddedResourcesRoutes(WebModuleRegistrationContext context)
         {
             string[] urls = new[]
                 {
@@ -403,8 +364,8 @@ namespace BetterCms.Module.Root
         {            
             if (Configuration.Security.AccessControlEnabled)
             {
-                CmsCoreEvents.Instance.EntitySaving += OnEntitySave;
-                CmsCoreEvents.Instance.EntityDeleting += OnEntityDelete;
+                CoreEvents.Instance.EntitySaving += OnEntitySave;
+                CoreEvents.Instance.EntityDeleting += OnEntityDelete;
             }
         }
 

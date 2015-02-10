@@ -1,8 +1,8 @@
 ﻿using System.IO;
 using System.Linq;
 
-using BetterCms.Core.DataAccess;
-using BetterCms.Core.DataAccess.DataContext;
+using Devbridge.Platform.Core.DataAccess;
+using Devbridge.Platform.Core.DataAccess.DataContext;
 using BetterCms.Core.Exceptions.Api;
 
 using BetterCms.Module.Api.Operations.MediaManager.Images.Image;

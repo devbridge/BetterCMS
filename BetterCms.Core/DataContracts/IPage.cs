@@ -1,5 +1,7 @@
 ﻿using BetterCms.Core.DataContracts.Enums;
 
+using Devbridge.Platform.Core.DataContracts;
+
 namespace BetterCms.Core.DataContracts
 {
     /// <summary>

@@ -1,11 +1,17 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Reflection;
+using System.Web.Mvc;
 
 using Autofac;
 
 using Devbridge.Platform.Core.Extensions;
 using Devbridge.Platform.Core.Modules;
+using Devbridge.Platform.Core.Modules.Registration;
+using Devbridge.Platform.Core.Web.Modules.Registration;
+using Devbridge.Platform.Core.Web.Mvc.Commands;
+using Devbridge.Platform.Core.Web.Mvc.Extensions;
 
 namespace Devbridge.Platform.Core.Web.Modules
 {
@@ -153,7 +159,7 @@ namespace Devbridge.Platform.Core.Web.Modules
         /// </summary>
         /// <param name="context">The area registration context.</param>
         /// <param name="containerBuilder">The container builder.</param>
-        public virtual void RegisterCustomRoutes(ModuleRegistrationContext context, ContainerBuilder containerBuilder)
+        public virtual void RegisterCustomRoutes(WebModuleRegistrationContext context, ContainerBuilder containerBuilder)
         {
         }
 
@@ -163,7 +169,7 @@ namespace Devbridge.Platform.Core.Web.Modules
         /// <param name="registrationContext">The area registration context.</param>
         /// <param name="containerBuilder">The container builder.</param>
         /// <param name="controllerExtensions">The controller extensions.</param>
-        protected virtual void RegisterModuleControllers(ModuleRegistrationContext registrationContext, ContainerBuilder containerBuilder, IControllerExtensions controllerExtensions)
+        public virtual void RegisterModuleControllers(WebModuleRegistrationContext registrationContext, ContainerBuilder containerBuilder, IControllerExtensions controllerExtensions)
         {
             var controllerTypes = controllerExtensions.GetControllerTypes(GetType().Assembly);
 
@@ -204,7 +210,7 @@ namespace Devbridge.Platform.Core.Web.Modules
         /// </summary>
         /// <param name="registrationContext">The area registration context.</param>
         /// <param name="containerBuilder">The container builder.</param>
-        protected virtual void RegisterModuleCommands(ModuleRegistrationContext registrationContext, ContainerBuilder containerBuilder)
+        public virtual void RegisterModuleCommands(WebModuleRegistrationContext registrationContext, ContainerBuilder containerBuilder)
         {
             Assembly assembly = GetType().Assembly;
 
@@ -225,6 +231,13 @@ namespace Devbridge.Platform.Core.Web.Modules
                 .InstancePerLifetimeScope();
         }
 
-        
+        /// <summary>
+        /// Creates the registration context.
+        /// </summary>
+        /// <returns>Module registration context</returns>
+        public override ModuleRegistrationContext CreateRegistrationContext()
+        {
+            return new WebModuleRegistrationContext(this);
+        }
     }
 }

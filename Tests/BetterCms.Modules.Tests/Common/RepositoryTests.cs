@@ -2,7 +2,7 @@
 
 using Autofac;
 
-using BetterCms.Core.DataAccess;
+using Devbridge.Platform.Core.DataAccess;
 using BetterCms.Core.Exceptions.DataTier;
 using BetterCms.Module.Root.Models;
 

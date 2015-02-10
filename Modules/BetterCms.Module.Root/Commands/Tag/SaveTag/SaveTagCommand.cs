@@ -1,10 +1,11 @@
 ﻿using System;
 
 using BetterCms.Core.Exceptions.Mvc;
-using BetterCms.Core.Mvc.Commands;
 using BetterCms.Module.Root.Content.Resources;
 using BetterCms.Module.Root.Mvc;
 using BetterCms.Module.Root.ViewModels.Tags;
+
+using Devbridge.Platform.Core.Web.Mvc.Commands;
 
 namespace BetterCms.Module.Root.Commands.Tag.SaveTag
 {

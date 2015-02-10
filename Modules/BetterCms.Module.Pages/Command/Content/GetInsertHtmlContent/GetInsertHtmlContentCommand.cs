@@ -1,6 +1,6 @@
 ﻿using System;
 
-using BetterCms.Core.DataAccess;
+using Devbridge.Platform.Core.DataAccess;
 using BetterCms.Core.Mvc.Commands;
 
 using BetterCms.Module.Pages.Services;

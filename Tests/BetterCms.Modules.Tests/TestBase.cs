@@ -6,7 +6,7 @@ using Autofac;
 using BetterCMS.Module.LuceneSearch.Helpers;
 
 using BetterCms.Core;
-using BetterCms.Core.DataAccess.DataContext;
+using Devbridge.Platform.Core.DataAccess.DataContext;
 using BetterCms.Core.DataAccess.DataContext.Fetching;
 using BetterCms.Core.Dependencies;
 using BetterCms.Core.Modules.Registration;
@@ -87,7 +87,7 @@ namespace BetterCms.Test.Module
 
             var container = ContextScopeProvider.CreateChildContainer();
 
-            IModulesRegistration modulesRegistration = container.Resolve<IModulesRegistration>();
+            ICmsModulesRegistration modulesRegistration = container.Resolve<ICmsModulesRegistration>();
             foreach (var knownAssembly in KnownAssemblies)
             {
                 modulesRegistration.AddModuleDescriptorTypeFromAssembly(knownAssembly);

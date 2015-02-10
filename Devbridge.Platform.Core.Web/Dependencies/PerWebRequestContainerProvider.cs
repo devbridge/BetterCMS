@@ -3,9 +3,10 @@ using System.Web;
 
 using Autofac;
 
-using BetterCms.Core.Web;
+using Devbridge.Platform.Core.Dependencies;
+using Devbridge.Platform.Core.Web.Web;
 
-namespace BetterCms.Core.Dependencies
+namespace Devbridge.Platform.Core.Web.Dependencies
 {
     /// <summary>
     /// Service locator to support per web request life time manager.

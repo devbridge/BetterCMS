@@ -11,7 +11,7 @@ using BetterCMS.Module.LuceneSearch.Helpers;
 using BetterCMS.Module.LuceneSearch.Services.IndexerService;
 using BetterCMS.Module.LuceneSearch.Services.WebCrawlerService;
 
-using BetterCms.Core.DataAccess;
+using Devbridge.Platform.Core.DataAccess;
 using BetterCms.Core.Security;
 using BetterCms.Core.Services;
 using BetterCms.Module.Search.Models;

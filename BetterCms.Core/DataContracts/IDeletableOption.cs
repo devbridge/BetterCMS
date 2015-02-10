@@ -1,4 +1,6 @@
-﻿namespace BetterCms.Core.DataContracts
+﻿using Devbridge.Platform.Core.DataContracts;
+
+namespace BetterCms.Core.DataContracts
 {
     public interface IDeletableOption<TEntity> : IOption
         where TEntity : IEntity

@@ -8,12 +8,13 @@ using System.Web.Hosting;
 using System.Web.Mvc;
 using System.Web.Routing;
 
-using BetterCms.Core.DataAccess.DataContext.Migrations;
 using BetterCms.Core.Exceptions;
 using BetterCms.Core.Exceptions.Host;
 using BetterCms.Core.Modules.Registration;
 
 using Common.Logging;
+
+using Devbridge.Platform.Core.DataAccess.DataContext.Migrations;
 
 using RazorGenerator.Mvc;
 
@@ -29,7 +30,7 @@ namespace BetterCms.Core.Environment.Host
         /// </summary>
         private static readonly ILog Logger = LogManager.GetCurrentClassLogger();
 
-        private readonly IModulesRegistration modulesRegistration;
+        private readonly ICmsModulesRegistration modulesRegistration;
 
         private readonly IMigrationRunner migrationRunner;
 
@@ -38,7 +39,7 @@ namespace BetterCms.Core.Environment.Host
         /// </summary>
         /// <param name="modulesRegistration">The modules registration.</param>
         /// <param name="migrationRunner">The migration runner.</param>
-        public DefaultCmsHost(IModulesRegistration modulesRegistration, IMigrationRunner migrationRunner)
+        public DefaultCmsHost(ICmsModulesRegistration modulesRegistration, IMigrationRunner migrationRunner)
         {
             this.modulesRegistration = modulesRegistration;
             this.migrationRunner = migrationRunner;

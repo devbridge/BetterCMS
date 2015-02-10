@@ -1,6 +1,4 @@
-﻿using BetterCms.Core.Services;
-
-namespace BetterCms.Core.Mvc.Commands
+﻿namespace Devbridge.Platform.Core.Web.Mvc.Commands
 {
     /// <summary>
     /// Defines command base contract.

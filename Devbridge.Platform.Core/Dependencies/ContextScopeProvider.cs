@@ -1,6 +1,6 @@
 ﻿using Autofac;
 
-namespace BetterCms.Core.Dependencies
+namespace Devbridge.Platform.Core.Dependencies
 {
     /// <summary>
     /// The context scope provider.
