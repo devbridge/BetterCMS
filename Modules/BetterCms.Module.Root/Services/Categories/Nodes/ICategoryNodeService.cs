@@ -10,15 +10,9 @@ namespace BetterCms.Module.Root.Services.Categories.Nodes
         Category SaveCategory(
             out bool categoryUpdated,
             CategoryTree categoryTree,
-            Guid categoryId,
-            int version,
-            string name,
-            int displayOrder,
-            string macro,
-            Guid parentCategoryId,
-            bool isDeleted = false,
-            Category parentCategory = null,
-            List<Category> categories = null);
-
+            CategoryNodeModel categoryNode,
+            bool isDeleted,
+            Category parentCategory,
+            IEnumerable<Category> categories = null);
     }
 }

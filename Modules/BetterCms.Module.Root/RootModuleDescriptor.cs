@@ -19,6 +19,8 @@ using BetterCms.Module.Root.Mvc;
 using BetterCms.Module.Root.Projections;
 using BetterCms.Module.Root.Registration;
 using BetterCms.Module.Root.Services;
+using BetterCms.Module.Root.Services.Categories.Nodes;
+using BetterCms.Module.Root.Services.Categories.Tree;
 
 namespace BetterCms.Module.Root
 {
@@ -199,6 +201,8 @@ namespace BetterCms.Module.Root
             containerBuilder.RegisterType<DefaultContentProjectionService>().AsImplementedInterfaces().InstancePerLifetimeScope();
             containerBuilder.RegisterType<DefaultChildContentService>().AsImplementedInterfaces().InstancePerLifetimeScope();
             containerBuilder.RegisterType<DefaultCategoryService>().AsImplementedInterfaces().InstancePerLifetimeScope();
+            containerBuilder.RegisterType<DefaultCategoryTreeService>().AsImplementedInterfaces().InstancePerLifetimeScope();
+            containerBuilder.RegisterType<DefaultCategoryNodeService>().AsImplementedInterfaces().InstancePerLifetimeScope();
         }
 
         /// <summary>
