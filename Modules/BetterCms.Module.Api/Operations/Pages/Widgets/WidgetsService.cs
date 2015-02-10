@@ -33,6 +33,8 @@ namespace BetterCms.Module.Api.Operations.Pages.Widgets
                 query = query.Where(widget => widget.Status == ContentStatus.Published);
             }
 
+            query.ApplyCategoriesFilter(request.Data);
+
             var listResponse = query
                  .Select(widget => new WidgetModel
                  {
