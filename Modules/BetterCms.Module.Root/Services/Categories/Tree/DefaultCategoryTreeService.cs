@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web.UI.WebControls;
@@ -88,9 +89,15 @@ namespace BetterCms.Module.Root.Services.Categories.Tree
                 categoryTree = Repository.AsQueryable<CategoryTree>().Where(s => s.Id == request.Id).ToFuture().First();
             }
 
-            var selectedItems = selectedCategorizableItemsFuture.ToList();
-            var itemsToRemove = selectedItems.Where(s => !request.UseForCategorizableItems.Exists(c => c == s.CategorizableItem.Id)).ToList();
-            var itemsToAdd = request.UseForCategorizableItems.Where(id => !selectedItems.Exists(s => s.CategorizableItem.Id == id)).ToList();
+            List<CategoryTreeCategorizableItem> itemsToRemove = null;
+            List<Guid> itemsToAdd = null;
+            if (request.UseForCategorizableItems != null)
+            {
+                var selectedItems = selectedCategorizableItemsFuture.ToList();
+                itemsToRemove = selectedItems.Where(s => !request.UseForCategorizableItems.Exists(c => c == s.CategorizableItem.Id)).ToList();
+                itemsToAdd = request.UseForCategorizableItems.Where(id => !selectedItems.Exists(s => s.CategorizableItem.Id == id)).ToList();
+            }
+
 
             UnitOfWork.BeginTransaction();
 
@@ -100,12 +107,13 @@ namespace BetterCms.Module.Root.Services.Categories.Tree
 
             Repository.Save(categoryTree);
 
-            itemsToRemove.ForEach(Repository.Delete);
-            itemsToAdd.ForEach(id => Repository.Save(new CategoryTreeCategorizableItem
+            if (itemsToRemove != null)
             {
-                CategoryTree = categoryTree,
-                CategorizableItem = Repository.AsProxy<CategorizableItem>(id)
-            }));
+                itemsToRemove.ForEach(Repository.Delete);
+                itemsToAdd.ForEach(
+                    id =>
+                    Repository.Save(new CategoryTreeCategorizableItem { CategoryTree = categoryTree, CategorizableItem = Repository.AsProxy<CategorizableItem>(id) }));
+            }
 
             var existingCategoryList = existingCategories.ToList();
             SaveCategoryTreeNodes(categoryTree, request.RootNodes, null, existingCategoryList, createdCategories, updatedCategories, deletedCategories);
