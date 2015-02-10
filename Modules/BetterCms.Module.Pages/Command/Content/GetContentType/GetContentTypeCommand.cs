@@ -2,10 +2,11 @@
 using System.Linq;
 
 using Devbridge.Platform.Core.DataAccess.DataContext;
-using BetterCms.Core.Mvc.Commands;
 
 using BetterCms.Module.Pages.Models;
 using BetterCms.Module.Root.Mvc;
+
+using Devbridge.Platform.Core.Web.Mvc.Commands;
 
 namespace BetterCms.Module.Pages.Command.Content.GetContentType
 {

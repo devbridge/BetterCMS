@@ -1,10 +1,11 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations;
 
-using BetterCms.Core.Models;
 using BetterCms.Module.Pages.Content.Resources;
 using BetterCms.Module.Root.Content.Resources;
 using BetterCms.Module.Root.ViewModels.Security;
+
+using Devbridge.Platform.Core.Models;
 
 namespace BetterCms.Module.Pages.ViewModels.Seo
 {

@@ -3,8 +3,7 @@ using System.Globalization;
 using System.Linq;
 
 using Devbridge.Platform.Core.DataAccess.DataContext;
-using BetterCms.Core.DataAccess.DataContext.Fetching;
-using BetterCms.Core.Mvc.Commands;
+
 using BetterCms.Core.Security;
 using BetterCms.Core.Services.Storage;
 
@@ -16,6 +15,9 @@ using BetterCms.Module.MediaManager.ViewModels.File;
 
 using BetterCms.Module.Root.Mvc;
 using BetterCms.Module.Root.ViewModels.Security;
+
+using Devbridge.Platform.Core.DataAccess.DataContext.Fetching;
+using Devbridge.Platform.Core.Web.Mvc.Commands;
 
 namespace BetterCms.Module.MediaManager.Command.Files.GetFile
 {

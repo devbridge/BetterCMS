@@ -1,7 +1,7 @@
 ﻿using System;
 
 using Devbridge.Platform.Core.DataAccess.DataContext.Migrations;
-using BetterCms.Core.Models;
+using Devbridge.Platform.Core.Models;
 
 using FluentMigrator;
 

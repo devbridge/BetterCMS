@@ -91,6 +91,20 @@ namespace BetterCms.Module.Root
         }
 
         /// <summary>
+        /// Gets the description.
+        /// </summary>
+        /// <value>
+        /// The description.
+        /// </value>
+        public override string Description
+        {
+            get
+            {
+                return "Root functionality module for Better CMS.";
+            }
+        }
+
+        /// <summary>
         /// Gets the name of the module area.
         /// </summary>
         /// <value>

@@ -1,13 +1,14 @@
 ﻿using System.Linq;
 
 using Devbridge.Platform.Core.DataAccess.DataContext;
-using BetterCms.Core.Mvc.Commands;
 
 using BetterCms.Module.Pages.ViewModels.SiteSettings;
 
 using BetterCms.Module.Root.Mvc;
 using BetterCms.Module.Root.Mvc.Grids.Extensions;
 using BetterCms.Module.Root.Mvc.Grids.GridOptions;
+
+using Devbridge.Platform.Core.Web.Mvc.Commands;
 
 using NHibernate.Linq;
 

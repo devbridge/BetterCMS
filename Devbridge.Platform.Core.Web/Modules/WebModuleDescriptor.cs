@@ -41,6 +41,14 @@ namespace Devbridge.Platform.Core.Web.Modules
         public abstract override string Name { get; }
 
         /// <summary>
+        /// Gets the description.
+        /// </summary>
+        /// <value>
+        /// The description.
+        /// </value>
+        public abstract override string Description { get; }
+
+        /// <summary>
         /// Gets the name of the module area.
         /// </summary>
         /// <value>

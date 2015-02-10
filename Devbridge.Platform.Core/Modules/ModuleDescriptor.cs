@@ -14,6 +14,14 @@ namespace Devbridge.Platform.Core.Modules
         private AssemblyName assemblyName;
 
         /// <summary>
+        /// Gets the description.
+        /// </summary>
+        /// <value>
+        /// The description.
+        /// </value>
+        public abstract string Description { get; }
+
+        /// <summary>
         /// Gets the order.
         /// </summary>
         /// <value>

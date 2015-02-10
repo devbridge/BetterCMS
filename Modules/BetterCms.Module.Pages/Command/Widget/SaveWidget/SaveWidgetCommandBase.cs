@@ -1,6 +1,7 @@
-﻿using BetterCms.Core.Mvc.Commands;
-using BetterCms.Module.Pages.ViewModels.Widgets;
+﻿using BetterCms.Module.Pages.ViewModels.Widgets;
 using BetterCms.Module.Root.Mvc;
+
+using Devbridge.Platform.Core.Web.Mvc.Commands;
 
 namespace BetterCms.Module.Pages.Command.Widget.SaveWidget
 {

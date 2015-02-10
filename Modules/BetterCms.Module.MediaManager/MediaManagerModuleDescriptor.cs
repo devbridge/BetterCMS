@@ -14,6 +14,8 @@ using BetterCms.Module.MediaManager.Services;
 using BetterCms.Module.Root;
 using BetterCms.Module.Root.Providers;
 
+using Devbridge.Platform.Core.Modules.Registration;
+
 namespace BetterCms.Module.MediaManager
 {
     /// <summary>
@@ -80,33 +82,6 @@ namespace BetterCms.Module.MediaManager
             // Register images gallery custom option: album
             CustomOptionsProvider.RegisterProvider(MediaManagerFolderOptionProvider.Identifier, new MediaManagerFolderOptionProvider());
             CustomOptionsProvider.RegisterProvider(MediaManagerImageUrlOptionProvider.Identifier, new MediaManagerImageUrlOptionProvider());
-        }
-
-        internal const string ModuleId = "73f53dfe-bf78-4e80-b231-9b275129b2cb";
-
-        /// <summary>
-        /// Gets the identifier.
-        /// </summary>
-        /// <value>
-        /// The identifier.
-        /// </value>
-        public override Guid Id
-        {
-            get
-            {
-                return new Guid(ModuleId);
-            }
-        }
-
-        /// <summary>
-        /// Flag describe is module root or additional
-        /// </summary>
-        public override bool IsRootModule
-        {
-            get
-            {
-                return true;
-            }
         }
 
         /// <summary>
@@ -184,9 +159,8 @@ namespace BetterCms.Module.MediaManager
         /// </summary>
         /// <param name="context">The area registration context.</param>
         /// <param name="containerBuilder">The container builder.</param>        
-        public override void RegisterModuleTypes(CmsModuleRegistrationContext context, ContainerBuilder containerBuilder)
+        public override void RegisterModuleTypes(ModuleRegistrationContext context, ContainerBuilder containerBuilder)
         {
-
             containerBuilder.RegisterType<DefaultMediaFileUrlResolver>().AsImplementedInterfaces().InstancePerLifetimeScope();
             containerBuilder.RegisterType<DefaultMediaFileService>().AsImplementedInterfaces().InstancePerLifetimeScope();
             containerBuilder.RegisterType<DefaultMediaImageService>().AsImplementedInterfaces().InstancePerLifetimeScope();            

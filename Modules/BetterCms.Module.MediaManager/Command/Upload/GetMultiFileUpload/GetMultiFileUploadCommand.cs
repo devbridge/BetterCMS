@@ -1,15 +1,17 @@
 ﻿using System;
 using System.Linq;
 
-using Devbridge.Platform.Core.DataAccess.DataContext;
-using BetterCms.Core.Mvc.Commands;
 using BetterCms.Core.Security;
-using BetterCms.Core.Services;
 
 using BetterCms.Module.MediaManager.Models;
 using BetterCms.Module.MediaManager.ViewModels.Upload;
+
 using BetterCms.Module.Root.Mvc;
 using BetterCms.Module.Root.ViewModels.Security;
+
+using Devbridge.Platform.Core.DataAccess.DataContext;
+
+using Devbridge.Platform.Core.Web.Mvc.Commands;
 
 namespace BetterCms.Module.MediaManager.Command.Upload.GetMultiFileUpload
 {

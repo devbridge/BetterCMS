@@ -5,8 +5,7 @@ using System.Linq.Expressions;
 
 using Devbridge.Platform.Core.DataAccess;
 using Devbridge.Platform.Core.DataAccess.DataContext;
-using BetterCms.Core.DataAccess.DataContext.Fetching;
-using BetterCms.Core.Mvc.Commands;
+
 using BetterCms.Core.Security;
 
 using BetterCms.Module.MediaManager.Content.Resources;
@@ -17,6 +16,9 @@ using BetterCms.Module.MediaManager.ViewModels.MediaManager;
 
 using BetterCms.Module.Root.Mvc;
 using BetterCms.Module.Root.Mvc.Grids.Extensions;
+
+using Devbridge.Platform.Core.DataAccess.DataContext.Fetching;
+using Devbridge.Platform.Core.Web.Mvc.Commands;
 
 using MvcContrib.Sorting;
 

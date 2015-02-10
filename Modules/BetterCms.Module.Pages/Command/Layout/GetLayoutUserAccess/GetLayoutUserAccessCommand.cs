@@ -1,10 +1,11 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 
-using BetterCms.Core.Mvc.Commands;
 using BetterCms.Core.Services;
 using BetterCms.Module.Root.Mvc;
 using BetterCms.Module.Root.ViewModels.Security;
+
+using Devbridge.Platform.Core.Web.Mvc.Commands;
 
 namespace BetterCms.Module.Pages.Command.Layout.GetLayoutUserAccess
 {

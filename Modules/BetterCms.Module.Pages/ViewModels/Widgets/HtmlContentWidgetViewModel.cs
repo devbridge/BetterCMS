@@ -1,8 +1,9 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.Web.Mvc;
 
-using BetterCms.Core.Models;
 using BetterCms.Module.Pages.Content.Resources;
+
+using Devbridge.Platform.Core.Models;
 
 namespace BetterCms.Module.Pages.ViewModels.Widgets
 {

@@ -5,16 +5,12 @@ using System.Threading.Tasks;
 using System.Web;
 
 using BetterCms.Configuration;
-using Devbridge.Platform.Core.DataAccess;
-using Devbridge.Platform.Core.DataAccess.DataContext;
-using BetterCms.Core.DataAccess.DataContext.Fetching;
+
 using BetterCms.Core.Exceptions;
-using BetterCms.Core.Exceptions.DataTier;
 using BetterCms.Core.Security;
 using BetterCms.Core.Services;
 using BetterCms.Core.Services.Caching;
 using BetterCms.Core.Services.Storage;
-using BetterCms.Core.Web;
 
 using BetterCms.Module.MediaManager.Models;
 using BetterCms.Module.Root.Models;
@@ -22,8 +18,13 @@ using BetterCms.Module.Root.Mvc;
 
 using Common.Logging;
 
+using Devbridge.Platform.Core.DataAccess;
+using Devbridge.Platform.Core.DataAccess.DataContext;
+using Devbridge.Platform.Core.DataAccess.DataContext.Fetching;
+using Devbridge.Platform.Core.Exceptions.DataTier;
+using Devbridge.Platform.Core.Web.Web;
+
 using NHibernate;
-using NHibernate.Hql.Ast.ANTLR;
 
 namespace BetterCms.Module.MediaManager.Services
 {

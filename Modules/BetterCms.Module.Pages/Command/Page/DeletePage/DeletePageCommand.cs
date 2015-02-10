@@ -1,8 +1,8 @@
-﻿using BetterCms.Core.Mvc.Commands;
-
-using BetterCms.Module.Pages.Services;
+﻿using BetterCms.Module.Pages.Services;
 using BetterCms.Module.Pages.ViewModels.Page;
 using BetterCms.Module.Root.Mvc;
+
+using Devbridge.Platform.Core.Web.Mvc.Commands;
 
 namespace BetterCms.Module.Pages.Command.Page.DeletePage
 {

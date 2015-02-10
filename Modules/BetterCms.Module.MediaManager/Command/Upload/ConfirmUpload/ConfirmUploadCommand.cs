@@ -1,12 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Net;
-
-using Devbridge.Platform.Core.DataAccess.DataContext;
-using BetterCms.Core.DataAccess.DataContext.Fetching;
 using BetterCms.Core.Exceptions;
-using BetterCms.Core.Mvc.Commands;
+
 using BetterCms.Core.Security;
 
 using BetterCms.Module.MediaManager.Models;
@@ -16,6 +12,10 @@ using BetterCms.Module.MediaManager.ViewModels.MediaManager;
 using BetterCms.Module.MediaManager.ViewModels.Upload;
 
 using BetterCms.Module.Root.Mvc;
+
+using Devbridge.Platform.Core.DataAccess.DataContext;
+using Devbridge.Platform.Core.DataAccess.DataContext.Fetching;
+using Devbridge.Platform.Core.Web.Mvc.Commands;
 
 namespace BetterCms.Module.MediaManager.Command.Upload.ConfirmUpload
 {
@@ -95,7 +95,6 @@ namespace BetterCms.Module.MediaManager.Command.Upload.ConfirmUpload
 
                             // Do not update access control, if reuploading
                             updateAccessControl = false;
-
 
                             file.CopyDataTo(originalMedia);
 

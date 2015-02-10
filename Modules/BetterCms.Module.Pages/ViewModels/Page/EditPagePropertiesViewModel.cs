@@ -4,7 +4,6 @@ using System.ComponentModel.DataAnnotations;
 using System.Web.Mvc;
 
 using BetterCms.Core.DataContracts.Enums;
-using BetterCms.Core.Models;
 
 using BetterCms.Module.MediaManager.ViewModels;
 
@@ -13,6 +12,8 @@ using BetterCms.Module.Pages.Content.Resources;
 using BetterCms.Module.Root.Models;
 using BetterCms.Module.Root.ViewModels.Option;
 using BetterCms.Module.Root.ViewModels.Security;
+
+using Devbridge.Platform.Core.Models;
 
 namespace BetterCms.Module.Pages.ViewModels.Page
 {

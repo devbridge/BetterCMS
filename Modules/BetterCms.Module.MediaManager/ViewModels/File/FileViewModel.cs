@@ -1,10 +1,10 @@
 ﻿using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
-using BetterCms.Core.Models;
-using BetterCms.Core.Security;
 using BetterCms.Module.Root.Content.Resources;
 using BetterCms.Module.Root.ViewModels.Security;
+
+using Devbridge.Platform.Core.Models;
 
 namespace BetterCms.Module.MediaManager.ViewModels.File
 {
