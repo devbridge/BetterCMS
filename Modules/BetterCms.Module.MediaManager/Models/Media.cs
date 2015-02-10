@@ -50,6 +50,11 @@ namespace BetterCms.Module.MediaManager.Models
             }
         }
 
+        public virtual string GetCategorizableItemKey()
+        {
+            return null;
+        }
+
         IEnumerable<IEntityCategory> ICategorized.Categories
         {
             get

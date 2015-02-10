@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+﻿using System.Collections.Generic;
 
 namespace BetterCms.Core.DataContracts
 {
@@ -12,5 +9,7 @@ namespace BetterCms.Core.DataContracts
         void AddCategory(IEntityCategory category);
 
         void RemoveCategory(IEntityCategory category);
+
+        string GetCategorizableItemKey();
     }
 }

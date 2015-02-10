@@ -7,6 +7,7 @@ namespace BetterCms.Module.Root.Models
     [Serializable]
     public class Widget : Content, IWidget
     {
+        public const string CategorizableItemKeyForWidgets = "Widgets";
         public virtual Category Category { get; set; }
 
         ICategory IWidget.Category
@@ -15,6 +16,11 @@ namespace BetterCms.Module.Root.Models
             {
                 return Category;
             }
+        }
+
+        public virtual string GetCategorizableItemKey()
+        {
+            return CategorizableItemKeyForWidgets;
         }
 
         public override Content CopyDataTo(Content content, bool copyCollections = true)

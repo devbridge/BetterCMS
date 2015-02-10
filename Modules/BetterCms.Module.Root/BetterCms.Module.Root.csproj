@@ -189,11 +189,15 @@
     <Compile Include="Controllers\SiteSettingsController.cs" />
     <Compile Include="Controllers\TagsController.cs" />
     <Compile Include="Helpers\CategoriesHelper.cs" />
+    <Compile Include="Models\CategorizableItem.cs" />
     <Compile Include="Models\CategoryTree.cs" />
+    <Compile Include="Models\CategoryTreeCategorizableItem.cs" />
     <Compile Include="Models\ChildContentOption.cs" />
     <Compile Include="Models\IChildRegionContainer.cs" />
     <Compile Include="Models\Language.cs" />
     <Compile Include="Models\Extensions\CultureInfoExtensions.cs" />
+    <Compile Include="Models\Maps\CategorizableItemMap.cs" />
+    <Compile Include="Models\Maps\CategoryTreeCategorizableItemMap.cs" />
     <Compile Include="Models\Maps\CategoryTreeMap.cs" />
     <Compile Include="Models\Maps\LanguageMap.cs" />
     <Compile Include="Models\Maps\ChildContentMap.cs" />
@@ -221,6 +225,8 @@
     <Compile Include="Models\Migrations\Migration201406101600.cs" />
     <Compile Include="Models\Migrations\Migration201502041430.cs" />
     <Compile Include="Models\Migrations\Migration201501281145.cs" />
+    <Compile Include="Models\Migrations\Migration201502101035.cs" />
+    <Compile Include="Models\Migrations\Migration201502101136.cs" />
     <Compile Include="Models\PagesView.cs" />
     <Compile Include="Mvc\Extensions\HtmlAttributesUtility.cs" />
     <Compile Include="Mvc\Extensions\HtmlHelperExtensions.cs" />
@@ -406,6 +412,7 @@
     <Compile Include="ViewModels\Category\CategoryTreeNodeViewModel.cs" />
     <Compile Include="ViewModels\Category\CategoryTreesGridViewModel.cs" />
     <Compile Include="ViewModels\Category\CategoryTreeGridViewModel.cs" />
+    <Compile Include="ViewModels\Category\CategorizableItemViewModel.cs" />
     <Compile Include="ViewModels\Category\CategoryTreeViewModel.cs" />
     <Compile Include="ViewModels\Cms\CmsRequestViewModel.cs" />
     <Compile Include="ViewModels\Cms\PageRegionViewModel.cs" />
@@ -1378,6 +1385,7 @@
     <EmbeddedResource Include="Scripts\bcms.categories.js" />
     <EmbeddedResource Include="Scripts\bcms.multiple.select.js" />
     <EmbeddedResource Include="Content\Styles\multiple-select.png" />
+    <EmbeddedResource Include="Models\Migrations\Migration201502101136.sqlserver.sql" />
     <Content Include="Views\Web.config" />
     <Content Include="Views\Category\CategoryTreeEdit.cshtml">
       <Generator>RazorGenerator</Generator>

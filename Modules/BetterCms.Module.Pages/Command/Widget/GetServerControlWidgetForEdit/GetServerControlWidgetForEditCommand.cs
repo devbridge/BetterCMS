@@ -57,7 +57,7 @@ namespace BetterCms.Module.Pages.Command.Widget.GetServerControlWidgetForEdit
         public EditServerControlWidgetViewModel Execute(Guid? widgetId)
         {            
             EditServerControlWidgetViewModel model = null;
-            var categories = categoryService.GetCategories();
+            var categories = categoryService.GetCategories(Root.Models.Widget.CategorizableItemKeyForWidgets);
 
             if (widgetId.HasValue && widgetId.Value != Guid.Empty)
             {
