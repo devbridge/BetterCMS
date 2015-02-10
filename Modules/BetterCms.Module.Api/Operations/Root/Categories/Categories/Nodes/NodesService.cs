@@ -47,10 +47,14 @@ namespace BetterCms.Module.Api.Operations.Root.Categories.Category.Nodes
         {
             request.Data.SetDefaultOrder("Name");
 
-            var listResponse = repository
-                .AsQueryable<Module.Root.Models.Category>()
-                .Where(node => node.CategoryTree.Id == request.CategoryTreeId && !node.IsDeleted)
-                .Select(node => new CategoryNodeModel
+            var query = repository.AsQueryable<Module.Root.Models.Category>();
+            if (request.CategoryTreeId.HasValue)
+            {
+                query = query.Where(node => node.CategoryTree.Id == request.CategoryTreeId);
+            }
+            query = query.Where(node => !node.CategoryTree.IsDeleted && !node.IsDeleted);
+
+            var listResponse = query.Select(node => new CategoryNodeModel
                     {
                         Id = node.Id,
                         Version = node.Version,
@@ -59,6 +63,7 @@ namespace BetterCms.Module.Api.Operations.Root.Categories.Category.Nodes
                         LastModifiedBy = node.ModifiedByUser,
                         LastModifiedOn = node.ModifiedOn,
 
+                        CategoryTreeId = node.CategoryTree.Id,
                         ParentId = node.ParentCategory != null && !node.ParentCategory.IsDeleted ? node.ParentCategory.Id : (Guid?)null,
                         Name = node.Name,
                         DisplayOrder = node.DisplayOrder,

@@ -226,12 +226,12 @@ namespace BetterCms.Module.Api.Operations.Pages.Pages.Page
                                 where pagePr.Id == model.Id
                                 select new CategoryModel
                                 {
-                                    Id = category.Id,
-                                    Version = category.Version,
-                                    CreatedBy = category.CreatedByUser,
-                                    CreatedOn = category.CreatedOn,
-                                    LastModifiedBy = category.ModifiedByUser,
-                                    LastModifiedOn = category.ModifiedOn,
+                                    Id = category.Category.Id,
+                                    Version = category.Category.Version,
+                                    CreatedBy = category.Category.CreatedByUser,
+                                    CreatedOn = category.Category.CreatedOn,
+                                    LastModifiedBy = category.Category.ModifiedByUser,
+                                    LastModifiedOn = category.Category.ModifiedOn,
                                     Name = category.Category.Name
                                 }).ToList();
 

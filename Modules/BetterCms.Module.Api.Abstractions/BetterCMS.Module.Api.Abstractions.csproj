@@ -478,7 +478,6 @@
     <Compile Include="Operations\Root\Categories\Category\ICategoryTreeService.cs" />
     <Compile Include="Operations\Root\Categories\Category\Nodes\CategoryNodeModel.cs" />
     <Compile Include="Operations\Root\Categories\Category\Nodes\GetCategoryNodesRequest.cs" />
-    <Compile Include="Operations\Root\Categories\Category\Nodes\GetCategoryNodesRequestValidator.cs" />
     <Compile Include="Operations\Root\Categories\Category\Nodes\GetCategoryNodesResponse.cs" />
     <Compile Include="Operations\Root\Categories\Category\Nodes\INodesService.cs" />
     <Compile Include="Operations\Root\Categories\Category\Nodes\Node\DeleteNodeRequest.cs" />
