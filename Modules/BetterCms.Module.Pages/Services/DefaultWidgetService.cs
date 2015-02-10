@@ -202,7 +202,7 @@ namespace BetterCms.Module.Pages.Services
                 widget.Categories = new List<WidgetCategory>();
             }
 
-            foreach (var entityId in repository.AsQueryable<WidgetCategory>(c => c.Widget.Id == model.Id).Select(w => w.Id))
+            foreach (var entityId in repository.AsQueryable<WidgetCategory>(c => c.Widget.Id == model.Id && !c.IsDeleted).Select(w => w.Id))
             {
                 widget.Categories.Add(repository.AsProxy<WidgetCategory>(entityId));            
             }

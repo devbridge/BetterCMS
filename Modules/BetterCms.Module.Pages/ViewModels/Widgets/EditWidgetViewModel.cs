@@ -2,6 +2,9 @@
 using System.Collections.Generic;
 
 using BetterCms.Core.DataContracts.Enums;
+using BetterCms.Core.Mvc.Binders;
+
+using Newtonsoft.Json;
 
 namespace BetterCms.Module.Pages.ViewModels.Widgets
 {
@@ -63,7 +66,13 @@ namespace BetterCms.Module.Pages.ViewModels.Widgets
         /// </summary>
         /// <value>
         /// The list of categories Ids.
+        /// </value>        /// <summary>
+        /// Gets or sets the list of SelectedCategories Ids.
+        /// </summary>
+        /// <value>
+        /// The list of categories Ids.
         /// </value>
+        [JsonConverter(typeof(SingleValueArrayConverter<Guid>))]
         public IList<Guid> SelectItemCategories { get; set; }
 
         /// <summary>
