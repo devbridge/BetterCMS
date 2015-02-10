@@ -54,7 +54,7 @@ namespace BetterCms.Module.Pages.Command.Widget.GetHtmlContentWidgetForEdit
         {
             EditHtmlContentWidgetViewModel model = null;
 
-            var categories = categoryService.GetCategories();
+            var categories = categoryService.GetCategories(Root.Models.Widget.CategorizableItemKeyForWidgets);
 
             if (widgetId.HasValue && widgetId.Value != Guid.Empty)
             {

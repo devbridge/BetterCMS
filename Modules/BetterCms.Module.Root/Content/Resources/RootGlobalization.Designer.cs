@@ -574,6 +574,24 @@ namespace BetterCms.Module.Root.Content.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Nodes.
+        /// </summary>
+        public static string CategoryTree_EditDialog_NodesTab_Title {
+            get {
+                return ResourceManager.GetString("CategoryTree_EditDialog_NodesTab_Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Properties.
+        /// </summary>
+        public static string CategoryTree_EditDialog_PropertiesTab_Title {
+            get {
+                return ResourceManager.GetString("CategoryTree_EditDialog_PropertiesTab_Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Title.
         /// </summary>
         public static string CategoryTree_EditDialog_Title_Title {
@@ -588,6 +606,24 @@ namespace BetterCms.Module.Root.Content.Resources {
         public static string CategoryTree_EditDialog_Title_Tooltip_Description {
             get {
                 return ResourceManager.GetString("CategoryTree_EditDialog_Title_Tooltip_Description", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Use For.
+        /// </summary>
+        public static string CategoryTree_EditDialog_UsedFor_Title {
+            get {
+                return ResourceManager.GetString("CategoryTree_EditDialog_UsedFor_Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to This category will be used for selected objects..
+        /// </summary>
+        public static string CategoryTree_EditDialog_UsedFor_Tooltip_Description {
+            get {
+                return ResourceManager.GetString("CategoryTree_EditDialog_UsedFor_Tooltip_Description", resourceCulture);
             }
         }
         

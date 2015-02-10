@@ -11,6 +11,8 @@ namespace BetterCms.Module.Pages.Models
     [Serializable]
     public class PageProperties : Page, ICategorized
     {
+        public const string CategorizableItemKeyForPages = "Pages";
+
         public virtual string Description { get; set; }
         public virtual string CustomCss { get; set; }
         public virtual string CustomJS { get; set; }
@@ -75,6 +77,11 @@ namespace BetterCms.Module.Pages.Models
             {
                 Categories.Remove(category as PageCategory);   
             }           
+        }
+
+        public virtual string GetCategorizableItemKey()
+        {
+            return CategorizableItemKeyForPages;
         }
 
         protected virtual PageProperties CopyDataToDuplicate(PageProperties duplicate)

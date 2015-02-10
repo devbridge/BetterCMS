@@ -39,6 +39,10 @@ namespace BetterCms.Module.Root.Commands.Category.SaveCategoryTree
 
             var createNew = request.Id.HasDefaultValue();
 
+            var selectedCategorizableItemsFuture = Repository.AsQueryable<CategoryTreeCategorizableItem>()
+                .Where(i => i.CategoryTree.Id == request.Id)
+                .ToFuture();
+
             var categories = !createNew ? Repository.AsQueryable<Models.Category>()
                                                         .Where(node => node.CategoryTree.Id == request.Id)
                                                         .ToFuture()
@@ -46,11 +50,22 @@ namespace BetterCms.Module.Root.Commands.Category.SaveCategoryTree
 
             var categoryTree = !createNew ? this.Repository.AsQueryable<CategoryTree>().Where(s => s.Id == request.Id).ToFuture().ToList().First() : new CategoryTree();
 
+            var selectedItems = selectedCategorizableItemsFuture.ToList();
+            var itemsToRemove = selectedItems.Where(s => request.CategorizableItems.Any(c => c.Id == s.CategorizableItem.Id && !c.IsSelected)).ToList();
+            var itemsToAdd = request.CategorizableItems.Where(c => c.IsSelected && selectedItems.All(s => s.CategorizableItem.Id != c.Id)).ToList();
+
             UnitOfWork.BeginTransaction();
 
             categoryTree.Title = request.Title;
             categoryTree.Version = request.Version;
             Repository.Save(categoryTree);
+
+            itemsToRemove.ForEach(Repository.Delete);
+            itemsToAdd.ForEach(i => Repository.Save(new CategoryTreeCategorizableItem
+                                                        {
+                                                            CategoryTree = categoryTree,
+                                                            CategorizableItem = Repository.AsProxy<CategorizableItem>(i.Id)
+                                                        }));
 
             SaveCategoryTree(categoryTree, request.RootNodes, null, categories.ToList());
             

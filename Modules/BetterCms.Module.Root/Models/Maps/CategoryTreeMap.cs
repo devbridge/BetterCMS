@@ -13,6 +13,7 @@ namespace BetterCms.Module.Root.Models.Maps
             Map(x => x.Macro).Nullable().Length(MaxLength.Text);
 
             HasMany(f => f.Categories).Table("Categories").KeyColumn("CategoryTreeId").Inverse().Cascade.SaveUpdate().Where("IsDeleted = 0");
+            HasMany(x => x.AvailableFor).KeyColumn("CategoryTreeId").Cascade.SaveUpdate().Inverse().LazyLoad().Where("IsDeleted = 0");
         }
     }
 }

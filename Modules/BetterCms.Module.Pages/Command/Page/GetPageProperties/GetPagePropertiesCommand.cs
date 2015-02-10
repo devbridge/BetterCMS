@@ -106,7 +106,13 @@ namespace BetterCms.Module.Pages.Command.Page.GetPageProperties
         /// <param name="id">The page id.</param>
         /// <returns></returns>
         public EditPagePropertiesViewModel Execute(Guid id)
-        {            
+        {
+            var pageEntity = Repository.AsQueryable<PageProperties>().FirstOrDefault(p => p.Id == id);
+            if (pageEntity == null)
+            {
+                return null;
+            }
+
             var modelQuery = Repository
                 .AsQueryable<PageProperties>()
                 .Where(p => p.Id == id)
@@ -169,7 +175,7 @@ namespace BetterCms.Module.Pages.Command.Page.GetPageProperties
                 .ToFuture();
 
             var tagsFuture = tagService.GetPageTagNames(id);
-            var categories = categoryService.GetCategories();
+            var categories = categoryService.GetCategories(pageEntity.GetCategorizableItemKey());
             var selectedCategories = categoryService.GetSelectedCategoriesIds<PageProperties, PageCategory>(id);
             var languagesFuture = (cmsConfiguration.EnableMultilanguage) ? languageService.GetLanguagesLookupValues() : null;
 

@@ -7,6 +7,8 @@ namespace BetterCms.Module.MediaManager.Models
     [Serializable]
     public class MediaImage : MediaFile, IAccessControlDisabled
     {
+        public const string CategorizableItemKeyForImages = "Images";
+
         public virtual string Caption { get; set; }
 
         public virtual MediaImageAlign? ImageAlign { get; set; }
@@ -46,6 +48,11 @@ namespace BetterCms.Module.MediaManager.Models
         public virtual bool? IsThumbnailUploaded { get; set; }
 
         public virtual string PublicThumbnailUrl { get; set; }
+
+        public override string GetCategorizableItemKey()
+        {
+            return CategorizableItemKeyForImages;
+        }
 
         public override Media Clone()
         {

@@ -13,5 +13,7 @@ namespace BetterCms.Module.Root.Models
         public virtual IList<Category> Categories { get; set; }
 
         public virtual string Macro { get; set; }
+
+        public virtual IList<CategoryTreeCategorizableItem> AvailableFor { get; set; }
     }
 }

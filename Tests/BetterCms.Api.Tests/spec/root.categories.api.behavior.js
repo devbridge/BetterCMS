@@ -251,7 +251,7 @@ describe('root.categories.api.behavior', function () {
             expect(result.data.items[0].id).toBe(constants.categoryNodeId, 'Correctly filtered id should be retrieved.');
             
             // Check if model properties count didn't changed. If so - update current test filter and another tests.
-            expect(data.filter.where.length).toBe(api.getCountOfProperties(result.data.items[0]), 'Retrieved result properties count should be equal to filter parameters count.');
+            expect(api.getCountOfProperties(result.data.items[0])).toBe(data.filter.where.length+1, 'Retrieved result properties count should be equal to filter parameters count.');
         });
     });
 
