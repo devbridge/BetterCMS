@@ -10,6 +10,9 @@ using BetterCms.Module.Root.Content.Resources;
 
 using Common.Logging;
 
+using Devbridge.Platform.Core.Exceptions;
+using Devbridge.Platform.Core.Exceptions.DataTier;
+
 namespace BetterCms.Module.Root.Mvc
 {
     /// <summary>
@@ -54,9 +57,9 @@ namespace BetterCms.Module.Root.Mvc
             {
                 HandleSecurityException(ex, command);
             }
-            catch (CmsException ex)
+            catch (PlatformException ex)
             {
-                HandleCmsException(ex, command);
+                HandlePlatformException(ex, command);
             }
             catch (Exception ex)
             {
@@ -100,9 +103,9 @@ namespace BetterCms.Module.Root.Mvc
             {
                 HandleSecurityException(ex, command, request);
             }
-            catch (CmsException ex)
+            catch (PlatformException ex)
             {
-                HandleCmsException(ex, command, request);
+                HandlePlatformException(ex, command, request);
             }
             catch (Exception ex)
             {
@@ -144,9 +147,9 @@ namespace BetterCms.Module.Root.Mvc
             {
                 HandleSecurityException(ex, command);
             }
-            catch (CmsException ex)
+            catch (PlatformException ex)
             {
-                HandleCmsException(ex, command);
+                HandlePlatformException(ex, command);
             }
             catch (Exception ex)
             {
@@ -190,9 +193,9 @@ namespace BetterCms.Module.Root.Mvc
             {
                 HandleSecurityException(ex, command, request);
             }
-            catch (CmsException ex)
+            catch (PlatformException ex)
             {
-                HandleCmsException(ex, command, request);
+                HandlePlatformException(ex, command, request);
             }
             catch (Exception ex)
             {
@@ -299,7 +302,7 @@ namespace BetterCms.Module.Root.Mvc
         /// <param name="ex">The exception.</param>
         /// <param name="command">The command.</param>
         /// <param name="request">The request.</param>
-        private static void HandleCmsException(CmsException ex, ICommandBase command, object request = null)
+        private static void HandlePlatformException(PlatformException ex, ICommandBase command, object request = null)
         {
             Log.Error(FormatCommandExceptionMessage(command, request), ex);
             if (command.Context != null)

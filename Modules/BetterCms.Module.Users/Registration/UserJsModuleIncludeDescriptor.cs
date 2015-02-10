@@ -14,7 +14,7 @@ namespace BetterCms.Module.Users.Registration
         /// Initializes a new instance of the <see cref="UserJsModuleIncludeDescriptor" /> class.
         /// </summary>
         /// <param name="module">The container module.</param>
-        public UserJsModuleIncludeDescriptor(ModuleDescriptor module)
+        public UserJsModuleIncludeDescriptor(CmsModuleDescriptor module)
             : base(module, "bcms.user")
         {
             Links = new IActionProjection[]

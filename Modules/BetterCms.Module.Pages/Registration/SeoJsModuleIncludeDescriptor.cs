@@ -14,7 +14,7 @@ namespace BetterCms.Module.Pages.Registration
         /// Initializes a new instance of the <see cref="SeoJsModuleIncludeDescriptor" /> class.
         /// </summary>
         /// <param name="module">The container module.</param>
-        public SeoJsModuleIncludeDescriptor(ModuleDescriptor module)
+        public SeoJsModuleIncludeDescriptor(CmsModuleDescriptor module)
             : base(module, "bcms.pages.seo")
         {
 

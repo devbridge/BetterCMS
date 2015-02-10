@@ -30,7 +30,7 @@ namespace BetterCms.Module.Blog
     /// <summary>
     /// Blog module descriptor
     /// </summary>
-    public class BlogModuleDescriptor : ModuleDescriptor
+    public class BlogModuleDescriptor : CmsModuleDescriptor
     {
         /// <summary>
         /// The module name.

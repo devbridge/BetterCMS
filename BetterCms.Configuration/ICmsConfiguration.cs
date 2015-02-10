@@ -1,10 +1,12 @@
 using BetterCms.Configuration;
 
+using Devbridge.Platform.Core.Configuration;
+
 namespace BetterCms
 {
     /// <summary>
     /// </summary>
-    public interface ICmsConfiguration
+    public interface ICmsConfiguration : IConfiguration
     {
         /// <summary>
         /// Gets the Better CMS version.
@@ -61,11 +63,6 @@ namespace BetterCms
         /// The storage service.
         /// </value>
         ICmsStorageConfiguration Storage { get; }
-
-        /// <summary>
-        /// Gets the configuration of CMS database.
-        /// </summary>
-        ICmsDatabaseConfiguration Database { get; }
 
         /// <summary>
         /// Gets the configuration of CMS permissions service.

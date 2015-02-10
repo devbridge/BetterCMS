@@ -186,7 +186,7 @@ namespace BetterCms.Module.Root.Mvc.Helpers
         /// <param name="htmlHelper">The html helper.</param>
         /// <typeparam name="T"></typeparam>
         /// <returns>The <see cref="IHtmlString"/>.</returns>
-        public static IHtmlString RenderStyleSheets<T>(this HtmlHelper htmlHelper) where T : ModuleDescriptor
+        public static IHtmlString RenderStyleSheets<T>(this HtmlHelper htmlHelper) where T : CmsModuleDescriptor
         {
             return htmlHelper.Action("RenderModuleStyleSheetIncludes", "Rendering", new { moduleDescriptorType = typeof(T) });
         }

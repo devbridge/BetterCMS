@@ -8,7 +8,7 @@ using BetterCms.Module.GoogleAnalytics.Accessors;
 
 namespace BetterCms.Module.GoogleAnalytics
 {
-    public class GoogleAnalyticsModuleDescriptor : ModuleDescriptor
+    public class GoogleAnalyticsModuleDescriptor : CmsModuleDescriptor
     {
         internal const string ModuleName = "google_analytics";
 

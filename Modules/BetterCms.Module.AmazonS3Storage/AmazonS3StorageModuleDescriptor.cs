@@ -11,7 +11,7 @@ namespace BetterCms.Module.AmazonS3Storage
     /// <summary>
     /// A storage module based on the Amazon S3 cloud service.
     /// </summary>
-    public class AmazonS3StorageModuleDescriptor : ModuleDescriptor
+    public class AmazonS3StorageModuleDescriptor : CmsModuleDescriptor
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="AmazonS3StorageModuleDescriptor" /> class.

@@ -19,7 +19,7 @@ using HtmlAgilityPack;
 
 namespace BetterCms.Module.LuceneSearch
 {
-    public class LuceneSearchModuleDescriptor : ModuleDescriptor
+    public class LuceneSearchModuleDescriptor : CmsModuleDescriptor
     {
         /// <summary>
         /// Current class logger.
@@ -99,7 +99,7 @@ namespace BetterCms.Module.LuceneSearch
         public LuceneSearchModuleDescriptor(ICmsConfiguration configuration)
             : base(configuration)
         {
-            Events.CoreEvents.Instance.HostStart += x =>
+            Events.CmsCoreEvents.Instance.HostStart += x =>
                 {
                     Logger.Info("OnHostStart: preparing Lucene Search index workers...");
 

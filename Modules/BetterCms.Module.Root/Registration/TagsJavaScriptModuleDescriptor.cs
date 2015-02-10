@@ -14,7 +14,7 @@ namespace BetterCms.Module.Root.Registration
         /// Initializes a new instance of the <see cref="TagsJsModuleIncludeDescriptor" /> class.
         /// </summary>
         /// <param name="module">The container module.</param>
-        public TagsJsModuleIncludeDescriptor(ModuleDescriptor module)
+        public TagsJsModuleIncludeDescriptor(CmsModuleDescriptor module)
             : base(module, "bcms.tags")
         {
 

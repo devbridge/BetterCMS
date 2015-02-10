@@ -17,7 +17,7 @@ namespace BetterCms.Core.Modules
         /// <param name="fileName">Name of the file.</param>
         /// <param name="minFileName">Name of the minified CSS file version.</param>
         /// <param name="isPublic">if set to <c>true</c> then this CSS include is public (visible for in the edit/non-edit mode).</param>
-        public CssIncludeDescriptor(ModuleDescriptor module, string fileName, string minFileName = null, bool isPublic = false)
+        public CssIncludeDescriptor(CmsModuleDescriptor module, string fileName, string minFileName = null, bool isPublic = false)
         {
             if (isPublic && string.IsNullOrEmpty(minFileName))
             {
@@ -41,7 +41,7 @@ namespace BetterCms.Core.Modules
         /// <value>
         /// The container module.
         /// </value>
-        public ModuleDescriptor ContainerModule { get; private set; }
+        public CmsModuleDescriptor ContainerModule { get; private set; }
 
         /// <summary>
         /// Gets or sets the CSS include path (like '/file/bcms-pages/content/styles/bcms.page.css').

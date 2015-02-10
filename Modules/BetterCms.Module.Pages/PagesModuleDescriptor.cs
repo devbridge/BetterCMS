@@ -31,7 +31,7 @@ namespace BetterCms.Module.Pages
     /// <summary>
     /// Pages module descriptor.
     /// </summary>
-    public class PagesModuleDescriptor : ModuleDescriptor
+    public class PagesModuleDescriptor : CmsModuleDescriptor
     {        
         /// <summary>
         /// The module name.

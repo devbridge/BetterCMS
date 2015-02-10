@@ -2,17 +2,17 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Security.Principal;
-using System.Threading;
 
-using BetterCms.Core.Services;
 using BetterCms.Core.Web;
+
+using Devbridge.Platform.Core.Web.Security;
 
 namespace BetterCms.Module.Root.Services
 {
     /// <summary>
     /// Default security service contract realization.
     /// </summary>
-    public class DefaultSecurityService : ISecurityService
+    public class DefaultSecurityService : DefaultWebPrincipalProvider
     {
         /// <summary>
         /// The roles splitter.
@@ -38,45 +38,6 @@ namespace BetterCms.Module.Root.Services
         {
             this.httpContextAccessor = httpContextAccessor;
             this.configuration = configuration;
-        }
-
-        /// <summary>
-        /// Gets the name of the get current principal.
-        /// </summary>
-        /// <value>
-        /// The name of the get current principal.
-        /// </value>
-        public string CurrentPrincipalName
-        {
-            get
-            {
-                var principal = GetCurrentPrincipal();
-
-                if (principal != null && principal.Identity.IsAuthenticated)
-                {
-                    return principal.Identity.Name;
-                }
-
-                return "Anonymous";
-            }
-        }
-
-        /// <summary>
-        /// Gets the current principal.
-        /// </summary>
-        /// <returns>
-        /// Current IPrincipal.
-        /// </returns>
-        public IPrincipal GetCurrentPrincipal()
-        {
-            var currentHttpContext = httpContextAccessor.GetCurrent();
-
-            if (currentHttpContext == null)
-            {
-                return Thread.CurrentPrincipal;
-            }
-
-            return currentHttpContext.User;
         }
 
         /// <summary>

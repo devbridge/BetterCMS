@@ -15,7 +15,7 @@ namespace BetterCms.Module.Pages.Registration
         /// Initializes a new instance of the <see cref="SitemapJsModuleIncludeDescriptor" /> class.
         /// </summary>
         /// <param name="module">The container module.</param>
-        public SitemapJsModuleIncludeDescriptor(ModuleDescriptor module)
+        public SitemapJsModuleIncludeDescriptor(CmsModuleDescriptor module)
             : base(module, "bcms.pages.sitemap")
         {            
             Links = new IActionProjection[]

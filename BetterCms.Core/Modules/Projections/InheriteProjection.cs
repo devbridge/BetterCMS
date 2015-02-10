@@ -7,7 +7,6 @@ using System.Web.Mvc;
 using System.Web.UI;
 
 using BetterCms.Core.DataContracts;
-using BetterCms.Core.Models;
 using BetterCms.Core.Services;
 
 namespace BetterCms.Core.Modules.Projections

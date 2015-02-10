@@ -10,7 +10,6 @@ using BetterCms.Core.DataContracts;
 using BetterCms.Core.Dependencies;
 using BetterCms.Core.Modules;
 using BetterCms.Core.Modules.Projections;
-using BetterCms.Core.Modules.Registration;
 using BetterCms.Events;
 
 using BetterCms.Module.Root.Content.Resources;
@@ -25,7 +24,7 @@ namespace BetterCms.Module.Root
     /// <summary>
     /// Root functionality module descriptor.
     /// </summary>
-    public class RootModuleDescriptor : ModuleDescriptor
+    public class RootModuleDescriptor : CmsModuleDescriptor
     {        
         /// <summary>
         /// The module name.
@@ -404,8 +403,8 @@ namespace BetterCms.Module.Root
         {            
             if (Configuration.Security.AccessControlEnabled)
             {
-                CoreEvents.Instance.EntitySaving += OnEntitySave;
-                CoreEvents.Instance.EntityDeleting += OnEntityDelete;
+                CmsCoreEvents.Instance.EntitySaving += OnEntitySave;
+                CmsCoreEvents.Instance.EntityDeleting += OnEntityDelete;
             }
         }
 

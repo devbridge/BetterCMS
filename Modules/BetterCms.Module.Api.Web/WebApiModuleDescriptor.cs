@@ -14,7 +14,7 @@ namespace BetterCms.Module.Api
     /// <summary>
     /// API module descriptor.
     /// </summary>
-    public class WebApiModuleDescriptor : ModuleDescriptor
+    public class WebApiModuleDescriptor : CmsModuleDescriptor
     {
         /// <summary>
         /// Current class logger.
@@ -33,7 +33,7 @@ namespace BetterCms.Module.Api
         public WebApiModuleDescriptor(ICmsConfiguration cmsConfiguration)
             : base(cmsConfiguration)
         {
-            CoreEvents.Instance.HostStart += ApplicationStart;
+            CmsCoreEvents.Instance.HostStart += ApplicationStart;
         }
 
         internal const string ModuleId = "f19e11dc-f991-48e7-be82-ab4d2c07209d";

@@ -7,7 +7,7 @@ namespace BetterCms.Module.ImagesGallery
     /// <summary>
     /// Images gallery module descriptor.
     /// </summary>
-    public class ImagesGalleryModuleDescriptor : ModuleDescriptor
+    public class ImagesGalleryModuleDescriptor : CmsModuleDescriptor
     {
         /// <summary>
         /// The module name.

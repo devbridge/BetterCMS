@@ -11,6 +11,8 @@ using BetterCms.Module.Root.ViewModels.Rendering;
 
 using Common.Logging;
 
+using Devbridge.Platform.Core.Exceptions;
+
 namespace BetterCms.Module.Root.Services
 {
     public class DefaultRenderingService : IRenderingService
@@ -80,7 +82,7 @@ namespace BetterCms.Module.Root.Services
                             });
                 }
             }
-            catch (CmsException ex)
+            catch (PlatformException ex)
             {
                 Log.Error("Failed to retrieve java script modules.", ex);
             }

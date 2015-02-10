@@ -12,7 +12,7 @@ using BetterCms.Module.Pages.Helpers.Extensions;
 
 namespace BetterCms.Module.OpenGraphIntegration
 {
-    public class OpenGraphIntegrationModuleDescriptor : ModuleDescriptor
+    public class OpenGraphIntegrationModuleDescriptor : CmsModuleDescriptor
     {
         internal const string ModuleName = "opengraph_integration";
 

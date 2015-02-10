@@ -4,7 +4,8 @@ using System.Linq;
 
 using BetterCms.Core.DataContracts;
 using BetterCms.Core.DataContracts.Enums;
-using BetterCms.Core.Models;
+
+using Devbridge.Platform.Core.Models;
 
 namespace BetterCms.Module.Root.Models
 {

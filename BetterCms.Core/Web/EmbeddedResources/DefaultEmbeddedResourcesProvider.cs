@@ -5,10 +5,11 @@ using System.Linq;
 using System.Reflection;
 using System.Text.RegularExpressions;
 
-using BetterCms.Core.Environment.Assemblies;
 using BetterCms.Core.Modules.Registration;
 
 using Common.Logging;
+
+using Devbridge.Platform.Core.Environment.Assemblies;
 
 namespace BetterCms.Core.Web.EmbeddedResources
 {

@@ -15,7 +15,7 @@ namespace BetterCms.Module.Root.Registration
         /// Initializes a new instance of the <see cref="LanguagesJsModuleIncludeDescriptor" /> class.
         /// </summary>
         /// <param name="module">The container module.</param>
-        public LanguagesJsModuleIncludeDescriptor(ModuleDescriptor module)
+        public LanguagesJsModuleIncludeDescriptor(CmsModuleDescriptor module)
             : base(module, "bcms.languages")
         {
 

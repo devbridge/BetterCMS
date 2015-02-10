@@ -11,7 +11,7 @@ namespace BetterCms.Module.WindowsAzureStorage
     /// <summary>
     /// A storage module based on the Windows Azure Storage cloud service.
     /// </summary>
-    public class WindowsAzureStorageModuleDescriptor : ModuleDescriptor
+    public class WindowsAzureStorageModuleDescriptor : CmsModuleDescriptor
     {
         internal const string ModuleId = "92296b77-4102-4a85-92d9-35d8be2044a2";
 

@@ -65,7 +65,7 @@ namespace BetterCms.Core.Environment.Host
                 MigrateDatabase();
 
                 // Notify.                                
-                Events.CoreEvents.Instance.OnHostStart(application);
+                Events.CmsCoreEvents.Instance.OnHostStart(application);
 
                 Logger.Info("Better CMS host application started.");
             }
@@ -84,7 +84,7 @@ namespace BetterCms.Core.Environment.Host
             Logger.Info("Better CMS host application stopped.");
             
             // Notify.
-            Events.CoreEvents.Instance.OnHostStop(application);
+            Events.CmsCoreEvents.Instance.OnHostStop(application);
         }
 
         /// <summary>
@@ -97,7 +97,7 @@ namespace BetterCms.Core.Environment.Host
             Logger.Fatal("Unhandled exception occurred in Better CMS host application.", error);
 
             // Notify.
-            Events.CoreEvents.Instance.OnHostError(application);
+            Events.CmsCoreEvents.Instance.OnHostError(application);
         }
         
         /// <summary>
@@ -138,7 +138,7 @@ namespace BetterCms.Core.Environment.Host
             }
 
             // Notify.
-            Events.CoreEvents.Instance.OnHostAuthenticateRequest(application);
+            Events.CmsCoreEvents.Instance.OnHostAuthenticateRequest(application);
         }
 
         /// <summary>

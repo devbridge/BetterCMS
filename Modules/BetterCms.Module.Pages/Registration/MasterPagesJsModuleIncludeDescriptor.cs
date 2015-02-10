@@ -11,7 +11,7 @@ namespace BetterCms.Module.Pages.Registration
         /// Initializes a new instance of the <see cref="MasterPagesJsModuleIncludeDescriptor" /> class.
         /// </summary>
         /// <param name="module">The container module.</param>
-        public MasterPagesJsModuleIncludeDescriptor(ModuleDescriptor module)
+        public MasterPagesJsModuleIncludeDescriptor(CmsModuleDescriptor module)
             : base(module, "bcms.pages.masterpage")
         {
 

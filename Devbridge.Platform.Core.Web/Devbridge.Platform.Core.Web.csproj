@@ -9,7 +9,7 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>Devbridge.Platform.Core.Web</RootNamespace>
     <AssemblyName>Devbridge.Platform.Core.Web</AssemblyName>
-    <TargetFrameworkVersion>v4.5.1</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <TargetFrameworkProfile />
     <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">..\</SolutionDir>
@@ -40,7 +40,9 @@
       <HintPath>..\packages\Common.Logging.2.1.2\lib\net40\Common.Logging.dll</HintPath>
     </Reference>
     <Reference Include="System" />
+    <Reference Include="System.configuration" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Web" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -48,7 +50,10 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Configuration\DefaultWebConfigurationLoader.cs" />
+    <Compile Include="Modules\WebModuleDescriptor.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Security\DefaultWebPrincipalProvider.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Devbridge.Platform.Core\Devbridge.Platform.Core.csproj">

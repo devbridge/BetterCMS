@@ -38,13 +38,13 @@ namespace BetterCms.Sandbox.DataMigration
 
         private static readonly ILog Log = LogManager.GetCurrentClassLogger();
 
-        private static List<ModuleDescriptor> descriptors;
+        private static List<CmsModuleDescriptor> descriptors;
 
         static Program()
         {
              ICmsConfiguration configuration = new CmsConfigurationSection();
              descriptors = 
-                    (new ModuleDescriptor[]
+                    (new CmsModuleDescriptor[]
                     {
                         new BlogModuleDescriptor(configuration),
                         new InstallationModuleDescriptor(configuration),
@@ -63,7 +63,7 @@ namespace BetterCms.Sandbox.DataMigration
 
         private static void Migrate()
         {
-            IConfigurationLoader configurationLoader = new DefaultConfigurationLoader();
+            ICmsConfigurationLoader configurationLoader = new CmsConfigurationLoader();
             ICmsConfiguration cmsConfiguration = configurationLoader.LoadCmsConfiguration();
             IVersionChecker versionChecker = new VersionCheckerStub();
             DefaultMigrationRunner runner = new DefaultMigrationRunner(new DefaultAssemblyLoader(), cmsConfiguration, versionChecker);

@@ -11,7 +11,7 @@ namespace BetterCms.Module.Pages.Registration
         /// Initializes a new instance of the <see cref="RedirectsJsModuleIncludeDescriptor" /> class.
         /// </summary>
         /// <param name="module">The container module.</param>
-        public RedirectsJsModuleIncludeDescriptor(ModuleDescriptor module)
+        public RedirectsJsModuleIncludeDescriptor(CmsModuleDescriptor module)
             : base(module, "bcms.pages.redirects")
         {
 

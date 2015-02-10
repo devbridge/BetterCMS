@@ -22,7 +22,7 @@ namespace BetterCms.Module.Users
     /// <summary>
     /// Pages module descriptor.
     /// </summary>
-    public class UsersModuleDescriptor : ModuleDescriptor
+    public class UsersModuleDescriptor : CmsModuleDescriptor
     {
         /// <summary>
         /// Current class logger.
@@ -76,8 +76,8 @@ namespace BetterCms.Module.Users
         {
             userJsModuleIncludeDescriptor = new UserJsModuleIncludeDescriptor(this);
 
-            CoreEvents.Instance.HostStart += OnHostStart;
-            CoreEvents.Instance.HostAuthenticateRequest += HostAuthenticateRequest;            
+            CmsCoreEvents.Instance.HostStart += OnHostStart;
+            CmsCoreEvents.Instance.HostAuthenticateRequest += HostAuthenticateRequest;            
         }
 
         internal const string ModuleId = "6c5ca410-e8c4-483f-a9ec-354051e1cb38";

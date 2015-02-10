@@ -11,7 +11,7 @@ namespace BetterCms.Module.AppFabricCache
     /// <summary>
     /// Caching module based on AppFabric cache server.
     /// </summary>
-    public class AppFabricCacheModuleDescriptor : ModuleDescriptor
+    public class AppFabricCacheModuleDescriptor : CmsModuleDescriptor
     {
         internal const string ModuleId = "c7980cec-fd62-4e1a-84a4-1ecfe99283e0";
 

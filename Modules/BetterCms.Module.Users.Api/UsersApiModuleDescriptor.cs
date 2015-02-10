@@ -21,7 +21,7 @@ namespace BetterCms.Module.Users.Api
     /// <summary>
     /// API module descriptor.
     /// </summary>
-    public class UsersApiModuleDescriptor : ModuleDescriptor
+    public class UsersApiModuleDescriptor : CmsModuleDescriptor
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="UsersApiModuleDescriptor" /> class.

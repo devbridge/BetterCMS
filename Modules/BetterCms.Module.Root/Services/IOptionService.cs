@@ -3,9 +3,10 @@ using System.Collections.Generic;
 
 using BetterCms.Core.DataContracts;
 using BetterCms.Core.DataContracts.Enums;
-using BetterCms.Core.Models;
 using BetterCms.Module.Root.Models;
 using BetterCms.Module.Root.ViewModels.Option;
+
+using Devbridge.Platform.Core.Models;
 
 namespace BetterCms.Module.Root.Services
 {

@@ -9,7 +9,7 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>Devbridge.Platform.Core</RootNamespace>
     <AssemblyName>Devbridge.Platform.Core</AssemblyName>
-    <TargetFrameworkVersion>v4.5.1</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <TargetFrameworkProfile />
     <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">..\</SolutionDir>
@@ -39,7 +39,23 @@
     <Reference Include="Common.Logging">
       <HintPath>..\packages\Common.Logging.2.1.2\lib\net40\Common.Logging.dll</HintPath>
     </Reference>
+    <Reference Include="FluentMigrator">
+      <HintPath>..\packages\FluentMigrator.1.0.6.0\lib\40\FluentMigrator.dll</HintPath>
+    </Reference>
+    <Reference Include="FluentMigrator.Runner">
+      <HintPath>..\packages\FluentMigrator.Tools.1.0.6.0\tools\AnyCPU\40\FluentMigrator.Runner.dll</HintPath>
+    </Reference>
+    <Reference Include="FluentNHibernate">
+      <HintPath>..\packages\FluentNHibernate.1.3.0.733\lib\FluentNHibernate.dll</HintPath>
+    </Reference>
+    <Reference Include="Iesi.Collections">
+      <HintPath>..\packages\Iesi.Collections.3.2.0.4000\lib\Net35\Iesi.Collections.dll</HintPath>
+    </Reference>
+    <Reference Include="NHibernate">
+      <HintPath>..\packages\NHibernate.3.3.3.4001\lib\Net35\NHibernate.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
+    <Reference Include="System.configuration" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
@@ -48,10 +64,80 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Configuration\DatabaseConfigurationElement.cs" />
+    <Compile Include="Configuration\DatabaseType.cs" />
+    <Compile Include="Configuration\DefaultConfiguration.cs" />
+    <Compile Include="Configuration\DefaultConfigurationLoader.cs" />
+    <Compile Include="Configuration\IConfiguration.cs" />
+    <Compile Include="Configuration\IConfigurationLoader.cs" />
+    <Compile Include="Configuration\IDatabaseConfiguration.cs" />
+    <Compile Include="DataAccess\DataContext\Conventions\EnumConvention.cs" />
+    <Compile Include="DataAccess\DataContext\DefaultMappingResolver.cs" />
+    <Compile Include="DataAccess\DataContext\DefaultSessionFactoryProvider.cs" />
+    <Compile Include="DataAccess\DataContext\DefaultUnitOfWork.cs" />
+    <Compile Include="DataAccess\DataContext\DefaultUnitOfWorkFactory.cs" />
+    <Compile Include="DataAccess\DataContext\EventListeners\DeleteEventListener.cs" />
+    <Compile Include="DataAccess\DataContext\EventListeners\EventListenerHelper.cs" />
+    <Compile Include="DataAccess\DataContext\EventListeners\SaveOrUpdateEventListener.cs" />
+    <Compile Include="DataAccess\DataContext\Fetching\DefaultFetchingProvider.cs" />
+    <Compile Include="DataAccess\DataContext\Fetching\EagerFetch.cs" />
+    <Compile Include="DataAccess\DataContext\Fetching\FetchRequest.cs" />
+    <Compile Include="DataAccess\DataContext\Fetching\IFetchingProvider.cs" />
+    <Compile Include="DataAccess\DataContext\Fetching\IFetchRequest.cs" />
+    <Compile Include="DataAccess\DataContext\IMappingResolver.cs" />
+    <Compile Include="DataAccess\DataContext\Interceptors\StaleInterceptor.cs" />
+    <Compile Include="DataAccess\DataContext\ISessionFactoryProvider.cs" />
+    <Compile Include="DataAccess\DataContext\IUnitOfWork.cs" />
+    <Compile Include="DataAccess\DataContext\IUnitOfWorkFactory.cs" />
+    <Compile Include="DataAccess\DataContext\Migrations\DatabaseType.cs" />
+    <Compile Include="DataAccess\DataContext\Migrations\DefaultMigration.cs" />
+    <Compile Include="DataAccess\DataContext\Migrations\DefaultMigrationRunner.cs" />
+    <Compile Include="DataAccess\DataContext\Migrations\DefaultVersionChecker.cs" />
+    <Compile Include="DataAccess\DataContext\Migrations\IMigrationRunner.cs" />
+    <Compile Include="DataAccess\DataContext\Migrations\IVersionChecker.cs" />
+    <Compile Include="DataAccess\DataContext\Migrations\MigrationExtensions.cs" />
+    <Compile Include="DataAccess\DataContext\Migrations\VersionInfo.cs" />
+    <Compile Include="DataAccess\DataContext\QueryableExtensions.cs" />
+    <Compile Include="DataAccess\DataContext\QueryOverExtensions.cs" />
+    <Compile Include="DataAccess\DataContext\RestrictionsExtensions.cs" />
+    <Compile Include="DataAccess\DataContext\SessionExtensions.cs" />
+    <Compile Include="DataAccess\DefaultRepository.cs" />
+    <Compile Include="DataAccess\IRepository.cs" />
+    <Compile Include="DataAccess\IUnitOfWorkRepository.cs" />
+    <Compile Include="DataAccess\PredicateBuilder.cs" />
+    <Compile Include="DataContracts\IDeleteableEntity.cs" />
+    <Compile Include="DataContracts\IEntity.cs" />
+    <Compile Include="Environment\Assemblies\DefaultAssemblyLoader.cs" />
+    <Compile Include="Environment\Assemblies\DefaultAssemblyManager.cs" />
+    <Compile Include="Environment\Assemblies\IAssemblyLoader.cs" />
+    <Compile Include="Environment\Assemblies\IAssemblyManager.cs" />
+    <Compile Include="Environment\FileSystem\DefaultWorkingDirectory.cs" />
+    <Compile Include="Environment\FileSystem\IWorkingDirectory.cs" />
+    <Compile Include="Events\CoreEvents.cs" />
+    <Compile Include="Events\EntitySavingEventArgs.cs" />
+    <Compile Include="Events\EventBase.cs" />
+    <Compile Include="Events\SingleItemEventArgs.cs" />
+    <Compile Include="Exceptions\PlatformException.cs" />
+    <Compile Include="Exceptions\DataTier\ConcurrentDataException.cs" />
+    <Compile Include="Exceptions\DataTier\DataTierException.cs" />
+    <Compile Include="Exceptions\DataTier\EntityNotFoundException.cs" />
+    <Compile Include="Extensions\TypeExtensions.cs" />
+    <Compile Include="Models\Entity.cs" />
+    <Compile Include="Models\EntityIdGenerator.cs" />
+    <Compile Include="Models\EntityMapBase.cs" />
+    <Compile Include="Models\EntitySubClassMapBase.cs" />
+    <Compile Include="Models\EquatableEntity.cs" />
+    <Compile Include="Models\MaxLength.cs" />
+    <Compile Include="Modules\ModuleDescriptor.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Security\DefaultPrincipalProvider.cs" />
+    <Compile Include="Security\IPrincipalProvider.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Resources\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="$(SolutionDir)\.nuget\NuGet.targets" Condition="Exists('$(SolutionDir)\.nuget\NuGet.targets')" />

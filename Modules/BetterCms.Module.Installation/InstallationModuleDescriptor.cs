@@ -8,7 +8,7 @@ namespace BetterCms.Module.Installation
     /// <summary>
     /// Templates module descriptor.
     /// </summary>
-    public class InstallationModuleDescriptor : ModuleDescriptor
+    public class InstallationModuleDescriptor : CmsModuleDescriptor
     {
         internal const string ModuleName = "installation";
         

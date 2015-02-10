@@ -1,8 +1,5 @@
 ﻿using System.Collections.Generic;
 using System.Reflection;
-using System.Web.Routing;
-
-using BetterCms.Core.Modules.Projections;
 
 namespace BetterCms.Core.Modules.Registration
 {
@@ -58,7 +55,7 @@ namespace BetterCms.Core.Modules.Registration
         /// </summary>
         /// <param name="areaName">Name of the area.</param>
         /// <returns>Known module instance.</returns>
-        ModuleDescriptor FindModuleByAreaName(string areaName);
+        CmsModuleDescriptor FindModuleByAreaName(string areaName);
 
         /// <summary>
         /// Determines whether module by area name is registered.

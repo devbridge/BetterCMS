@@ -3,16 +3,12 @@ using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Reflection;
-using System.Web.Routing;
 
 using Autofac;
 
-using BetterCms.Core.Dependencies;
-using BetterCms.Core.Environment.Assemblies;
-using BetterCms.Core.Modules.Projections;
-using BetterCms.Core.Mvc.Extensions;
-
 using Common.Logging;
+
+using Devbridge.Platform.Core.Environment.Assemblies;
 
 namespace BetterCms.Core.Modules.Registration
 {
@@ -194,7 +190,7 @@ namespace BetterCms.Core.Modules.Registration
         /// </summary>
         /// <param name="areaName">Name of the area.</param>
         /// <returns>Known module instance.</returns>
-        public ModuleDescriptor FindModuleByAreaName(string areaName)
+        public CmsModuleDescriptor FindModuleByAreaName(string areaName)
         {
             ModuleRegistrationContext module;
             if (knownModules.TryGetValue(areaName.ToLowerInvariant(), out module))
@@ -222,7 +218,7 @@ namespace BetterCms.Core.Modules.Registration
         /// </summary>
         /// <param name="moduleDescriptor">Module information.</param>
         [SuppressMessage("StyleCop.CSharp.NamingRules", "SA1305:FieldNamesMustNotUseHungarianNotation", Justification = "Reviewed. Suppression is OK here.")]
-        public void RegisterModule(ModuleDescriptor moduleDescriptor)
+        public void RegisterModule(CmsModuleDescriptor moduleDescriptor)
         {
             ContainerBuilder containerBuilder = new ContainerBuilder();
 
@@ -300,12 +296,12 @@ namespace BetterCms.Core.Modules.Registration
 
                 using (var container = ContextScopeProvider.CreateChildContainer())
                 {
-                    var moduleDescriptors = new List<ModuleDescriptor>();
+                    var moduleDescriptors = new List<CmsModuleDescriptor>();
                     foreach (var moduleDescriptorType in knownModuleDescriptorTypes.Values)
                     {
                         if (container.IsRegistered(moduleDescriptorType))
                         {
-                            var moduleDescriptor = container.Resolve(moduleDescriptorType) as ModuleDescriptor;
+                            var moduleDescriptor = container.Resolve(moduleDescriptorType) as CmsModuleDescriptor;
                             moduleDescriptors.Add(moduleDescriptor);
                         }
                         else
@@ -343,7 +339,7 @@ namespace BetterCms.Core.Modules.Registration
         /// </returns>
         private static bool IsModuleDescriptorType(Type type)
         {
-            return typeof(ModuleDescriptor).IsAssignableFrom(type) && type.IsPublic;
+            return typeof(CmsModuleDescriptor).IsAssignableFrom(type) && type.IsPublic;
         }
 
         /// <summary>

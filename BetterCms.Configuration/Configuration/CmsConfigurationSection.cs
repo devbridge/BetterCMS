@@ -2,9 +2,11 @@
 using System.Configuration;
 using System.Reflection;
 
+using Devbridge.Platform.Core.Configuration;
+
 namespace BetterCms.Configuration
 {
-    public class CmsConfigurationSection : ConfigurationSection, ICmsConfiguration
+    public class CmsConfigurationSection : DefaultConfiguration, ICmsConfiguration
     {
         private const string VersionAttribute = "version";
         private const string UseMinifiedResourcesAttribute = "useMinifiedResources";
@@ -13,7 +15,6 @@ namespace BetterCms.Configuration
         private const string WebSiteUrlAttribute = "webSiteUrl";
         private const string PageNotFoundUrlAttribute = "pageNotFoundUrl";
         private const string UrlModeAttribute = "urlMode";
-        private const string DatabaseNode = "database";
         private const string StorageNode = "storage";
         private const string SearchNode = "search";
         private const string CacheNode = "cache";
@@ -233,8 +234,6 @@ namespace BetterCms.Configuration
 
         #region Child Nodes
 
-
-
         /// <summary>
         /// Gets or sets the URL patterns.
         /// </summary>
@@ -280,13 +279,6 @@ namespace BetterCms.Configuration
         {
             get { return (CmsCacheConfigurationElement)this[CacheNode]; }
             set { this[CacheNode] = value; }
-        }
-
-        [ConfigurationProperty(DatabaseNode, IsRequired = true)]
-        public CmsDatabaseConfigurationElement Database
-        {
-            get { return (CmsDatabaseConfigurationElement)this[DatabaseNode]; }
-            set { this[DatabaseNode] = value; }
         }
 
         [ConfigurationProperty(SecurityNode, IsRequired = true)]
@@ -336,11 +328,6 @@ namespace BetterCms.Configuration
         ICmsCacheConfiguration ICmsConfiguration.Cache
         {
             get { return Cache; }
-        }
-
-        ICmsDatabaseConfiguration ICmsConfiguration.Database
-        {
-            get { return Database; }
         }
 
         ICmsSecurityConfiguration ICmsConfiguration.Security

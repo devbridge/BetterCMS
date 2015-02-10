@@ -4,7 +4,7 @@ using System.Linq;
 using System.Reflection;
 using System.Web.Mvc;
 
-using BetterCms.Core.Environment.Assemblies;
+using Devbridge.Platform.Core.Environment.Assemblies;
 
 namespace BetterCms.Core.Mvc.Extensions
 {

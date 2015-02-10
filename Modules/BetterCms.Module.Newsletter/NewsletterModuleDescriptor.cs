@@ -16,7 +16,7 @@ namespace BetterCms.Module.Newsletter
     /// <summary>
     /// Pages module descriptor.
     /// </summary>
-    public class NewsletterModuleDescriptor : ModuleDescriptor
+    public class NewsletterModuleDescriptor : CmsModuleDescriptor
     {
         /// <summary>
         /// The module name.

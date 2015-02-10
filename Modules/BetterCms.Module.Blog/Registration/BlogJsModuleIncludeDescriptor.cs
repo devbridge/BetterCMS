@@ -15,7 +15,7 @@ namespace BetterCms.Module.Blog.Registration
         /// Initializes a new instance of the <see cref="BlogJsModuleIncludeDescriptor" /> class.
         /// </summary>
         /// <param name="module">The container module.</param>
-        public BlogJsModuleIncludeDescriptor(ModuleDescriptor module)
+        public BlogJsModuleIncludeDescriptor(CmsModuleDescriptor module)
             : base(module, "bcms.blog")
         {
             Links = new IActionProjection[]

@@ -15,8 +15,6 @@ using BetterCms.Core.DataAccess.DataContext;
 using BetterCms.Core.DataAccess.DataContext.Fetching;
 using BetterCms.Core.DataAccess.DataContext.Migrations;
 using BetterCms.Core.Dependencies;
-using BetterCms.Core.Environment.Assemblies;
-using BetterCms.Core.Environment.FileSystem;
 using BetterCms.Core.Environment.Host;
 using BetterCms.Core.Exceptions;
 using BetterCms.Core.Modules.Registration;
@@ -30,6 +28,10 @@ using BetterCms.Core.Services.Storage;
 using BetterCms.Core.Web;
 using BetterCms.Core.Web.EmbeddedResources;
 using BetterCms.Core.Web.ViewEngines;
+
+using Devbridge.Platform.Core.Configuration;
+using Devbridge.Platform.Core.Environment.Assemblies;
+using Devbridge.Platform.Core.Environment.FileSystem;
 
 using NHibernate.Linq;
 using NHibernate.Mapping;
@@ -65,7 +67,7 @@ namespace BetterCms.Core
                     {
                         if (config == null)
                         {
-                            IConfigurationLoader configurationLoader = new DefaultConfigurationLoader();
+                            ICmsConfigurationLoader configurationLoader = new DefaultConfigurationLoader();
                             config = configurationLoader.LoadCmsConfiguration();                            
                         }
                     }

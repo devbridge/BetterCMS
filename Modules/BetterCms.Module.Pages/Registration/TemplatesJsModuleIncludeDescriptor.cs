@@ -12,7 +12,7 @@ namespace BetterCms.Module.Pages.Registration
         /// Initializes a new instance of the <see cref="WidgetsJsModuleIncludeDescriptor" /> class.
         /// </summary>
         /// <param name="module">The container module.</param>
-        public TemplatesJsModuleIncludeDescriptor(ModuleDescriptor module)
+        public TemplatesJsModuleIncludeDescriptor(CmsModuleDescriptor module)
             : base(module, "bcms.pages.template")
         {
 

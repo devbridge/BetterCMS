@@ -19,7 +19,7 @@ namespace BetterCms.Module.MediaManager
     /// <summary>
     /// Pages module descriptor.
     /// </summary>
-    public class MediaManagerModuleDescriptor : ModuleDescriptor
+    public class MediaManagerModuleDescriptor : CmsModuleDescriptor
     {
         /// <summary>
         /// The module name.

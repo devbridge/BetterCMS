@@ -9,7 +9,7 @@ namespace BetterCms.Module.Search
     /// <summary>
     /// Pages module descriptor.
     /// </summary>
-    public class SearchModuleDescriptor : ModuleDescriptor
+    public class SearchModuleDescriptor : CmsModuleDescriptor
     {
         /// <summary>
         /// The module name.

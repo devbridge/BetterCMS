@@ -8,7 +8,7 @@ using BetterCms.Module.Search.Api.Operations.Pages.Pages;
 
 namespace BetterCms.Module.Search.Api
 {
-    public class SearchApiModuleDescriptor : ModuleDescriptor
+    public class SearchApiModuleDescriptor : CmsModuleDescriptor
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="SearchApiModuleDescriptor" /> class.

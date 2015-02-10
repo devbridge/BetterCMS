@@ -79,7 +79,7 @@ namespace BetterCms.Module.Api
     /// <summary>
     /// API module descriptor.
     /// </summary>
-    public class ApiModuleDescriptor : ModuleDescriptor
+    public class ApiModuleDescriptor : CmsModuleDescriptor
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="ApiModuleDescriptor" /> class.

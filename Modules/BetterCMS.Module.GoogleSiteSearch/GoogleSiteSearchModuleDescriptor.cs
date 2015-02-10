@@ -10,7 +10,7 @@ using BetterCms.Module.Search.Services;
 
 namespace BetterCMS.Module.GoogleSiteSearch
 {
-    public class GoogleSiteSearchModuleDescriptor : ModuleDescriptor
+    public class GoogleSiteSearchModuleDescriptor : CmsModuleDescriptor
     {
         internal const string ModuleName = "googlesitesearch";
 

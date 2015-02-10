@@ -102,7 +102,6 @@
     </Compile>
     <Compile Include="Configuration\AccessControlElement.cs" />
     <Compile Include="Configuration\CmsConfigurationSection.cs" />
-    <Compile Include="Configuration\CmsDatabaseConfigurationElement.cs" />
     <Compile Include="Configuration\CmsModuleGalleryConfigurationElement.cs" />
     <Compile Include="Configuration\CmsCacheConfigurationElement.cs" />
     <Compile Include="Configuration\CacheServiceType.cs" />
@@ -112,9 +111,8 @@
     <Compile Include="Configuration\CmsSearchConfigurationElement.cs" />
     <Compile Include="Configuration\CustomRoleElement.cs" />
     <Compile Include="Configuration\CustomRolesCollection.cs" />
-    <Compile Include="Configuration\DatabaseType.cs" />
-    <Compile Include="Configuration\DefaultConfigurationLoader.cs" />
     <Compile Include="Configuration\CmsSecurityConfigurationElement.cs" />
+    <Compile Include="Configuration\CmsConfigurationLoader.cs" />
     <Compile Include="Configuration\ModuleElement.cs" />
     <Compile Include="Configuration\ModulesCollection.cs" />
     <Compile Include="Configuration\StorageServiceType.cs" />
@@ -128,7 +126,6 @@
     <Compile Include="ICmsStorageConfiguration.cs" />
     <Compile Include="ICmsSecurityConfiguration.cs" />
     <Compile Include="ICmsConfiguration.cs" />
-    <Compile Include="ICmsDatabaseConfiguration.cs" />
     <Compile Include="Configuration\KeyValueElement.cs" />
     <Compile Include="Configuration\LinkCollection.cs" />
     <Compile Include="Configuration\LinkElement.cs" />
@@ -136,11 +133,17 @@
     <Compile Include="Configuration\SectionElement.cs" />
     <Compile Include="Configuration\SectionElementCollection.cs" />
     <Compile Include="Configuration\CmsStorageConfigurationElement.cs" />
-    <Compile Include="IConfigurationLoader.cs" />
+    <Compile Include="ICmsConfigurationLoader.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Devbridge.Platform.Core\Devbridge.Platform.Core.csproj">
+      <Project>{c97b2899-5ac5-4528-b205-478d4183676d}</Project>
+      <Name>Devbridge.Platform.Core</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="$(SolutionDir)\.nuget\nuget.targets" />

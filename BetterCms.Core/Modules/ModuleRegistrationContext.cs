@@ -8,14 +8,14 @@ namespace BetterCms.Core.Modules
 {
     public class ModuleRegistrationContext
     {
-        public ModuleRegistrationContext(ModuleDescriptor moduleDescriptor)
+        public ModuleRegistrationContext(CmsModuleDescriptor moduleDescriptor)
         {
             Namespaces = new HashSet<string>(StringComparer.OrdinalIgnoreCase);
             ModuleDescriptor = moduleDescriptor;
             Routes = new RouteCollection();            
         }
 
-        public ModuleDescriptor ModuleDescriptor { get; private set; }
+        public CmsModuleDescriptor ModuleDescriptor { get; private set; }
 
         protected ICollection<string> Namespaces { get; private set; }        
 

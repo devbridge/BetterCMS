@@ -1,8 +1,9 @@
 ﻿using System;
 
-using BetterCms.Core.DataContracts;
-using BetterCms.Core.Models;
 using BetterCms.Core.Security;
+
+using Devbridge.Platform.Core.DataContracts;
+using Devbridge.Platform.Core.Models;
 
 namespace BetterCms.Module.Root.Models
 {
