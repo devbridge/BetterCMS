@@ -634,11 +634,11 @@ namespace BetterCms.Module.Blog.Services
                 var searchQuery = string.Format("%{0}%", request.SearchQuery);
                 query = query.Where(Restrictions.InsensitiveLike(Projections.Property(() => alias.Title), searchQuery));
             }
-            // TODO Categories
-//            if (request.CategoryId.HasValue)
-//            {
-//                query = query.Where(Restrictions.Eq(Projections.Property(() => alias.Category.Id), request.CategoryId.Value));
-//            }
+            
+            if (request.CategoryId.HasValue)
+            {
+                query = query.WithSubquery.WhereExists(QueryOver.Of<PageCategory>().Where(c => c.Category.Id == request.CategoryId && c.Page.Id == alias.Id).Select(tag => 1));
+            }
 
             if (request.LanguageId.HasValue)
             {
