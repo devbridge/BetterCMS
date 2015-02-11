@@ -10,6 +10,8 @@ using BetterCms.Module.Pages.Models;
 using BetterCms.Module.Pages.ViewModels.Widgets;
 using BetterCms.Module.Root.Mvc;
 
+using FluentNHibernate.Conventions;
+
 using NHibernate.Linq;
 
 using CategoryEntity = BetterCms.Module.Root.Models.Category;
@@ -63,11 +65,11 @@ namespace BetterCms.Module.Pages.Command.Widget.GetWidgetCategory
             {
                 if (request.CategoryId.Value.HasDefaultValue())
                 {
-                    widgetsQuery = widgetsQuery.Where(c => c.Category == null);
+                    widgetsQuery = widgetsQuery.Where(c => c.Categories == null);
                 }
                 else
                 {
-                    widgetsQuery = widgetsQuery.Where(c => c.Category.Id == request.CategoryId.Value);
+                    widgetsQuery = widgetsQuery.Where(wc => wc.Categories.Any(c => c.Id == request.CategoryId.Value));
                 }
             }
 
@@ -87,7 +89,7 @@ namespace BetterCms.Module.Pages.Command.Widget.GetWidgetCategory
                 drafts = Repository
                     .AsQueryable<Root.Models.Widget>()
                     .Where(c => ids.Contains(c.Original.Id) && c.Status == ContentStatus.Draft && !c.IsDeleted)
-                    .Fetch(c => c.Category)
+                    .Fetch(c => c.Categories)
                     .ToList();
             }
             else
@@ -110,13 +112,13 @@ namespace BetterCms.Module.Pages.Command.Widget.GetWidgetCategory
                 categories = new List<WidgetCategoryViewModel>();
             }
 
-            categories.ForEach(c => c.Widgets = contents.Where(x => x.CategoryId == c.CategoryId).ToList());
+            categories.ForEach(c => c.Widgets = contents.Where(x => x.Categories.Contains(c.CategoryId.Value)).ToList());
 
             // Move uncategorized contents to fake category
-            var uncategorized = contents.Where(c => c.CategoryId == null);
+            var uncategorized = contents.Where(c => c.Categories == null || c.Categories.IsEmpty());
 
             // Workaround for deleted categories:
-            uncategorized = contents.Where(c => c.CategoryId != null && !categories.Any(x => x.CategoryId == c.CategoryId)).Concat(uncategorized);
+            uncategorized = contents.Where(c => (c.Categories == null || c.Categories.IsEmpty()) && !categories.Any(x => c.Categories.Contains(x.CategoryId.Value))).Concat(uncategorized);
 
             if (uncategorized.Any())
             {
@@ -179,14 +181,14 @@ namespace BetterCms.Module.Pages.Command.Widget.GetWidgetCategory
             if (draft != null && !result.Status.Equals(ContentStatus.Published.ToString()))
             {
                 result.Name = draft.Name;
-                result.CategoryId = draft.Category != null ? draft.Category.Id : (Guid?)null;
+                result.Categories = draft.Categories != null ? draft.Categories.Select(c => c.Id).ToList() : new List<Guid>();
                 result.Id = draft.Id;
                 result.Version = draft.Version;
             }
             else
             {
                 result.Name = widget.Name;
-                result.CategoryId = widget.Category != null ? widget.Category.Id : (Guid?)null;
+                result.Categories = widget.Categories != null ? widget.Categories.Select(c => c.Id).ToList() : new List<Guid>();                
                 result.Id = widget.Id;
                 result.Version = widget.Version;
             }

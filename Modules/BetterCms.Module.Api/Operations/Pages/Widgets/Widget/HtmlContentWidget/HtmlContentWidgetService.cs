@@ -8,6 +8,7 @@ using BetterCms.Core.DataContracts.Enums;
 
 using BetterCms.Module.Api.Extensions;
 using BetterCms.Module.Api.Operations.Pages.Widgets.Widget.HtmlContentWidget.Options;
+using BetterCms.Module.Api.Operations.Root.Categories.Category;
 using BetterCms.Module.Root.Services;
 using BetterCms.Module.Root.ViewModels.Option;
 
@@ -54,8 +55,6 @@ namespace BetterCms.Module.Api.Operations.Pages.Widgets.Widget.HtmlContentWidget
                         IsPublished = widget.Status == ContentStatus.Published,
                         PublishedOn = widget.Status == ContentStatus.Published ? widget.PublishedOn : null,
                         PublishedByUser = widget.Status == ContentStatus.Published ? widget.PublishedByUser : null,
-                        CategoryId = widget.Category != null && !widget.Category.IsDeleted ? widget.Category.Id : (Guid?)null,
-                        CategoryName = widget.Category != null && !widget.Category.IsDeleted ? widget.Category.Name : null,
                         CustomCss = widget.CustomCss,
                         UseCustomCss = widget.UseCustomCss,
                         Html = widget.Html,
@@ -76,6 +75,23 @@ namespace BetterCms.Module.Api.Operations.Pages.Widgets.Widget.HtmlContentWidget
                 response.ChildContentsOptionValues = optionService
                     .GetChildContentsOptionValues(request.WidgetId)
                     .ToServiceModel();
+            }
+
+            if (request.Data.IncludeCategories)
+            {
+                response.Categories = (from pagePr in repository.AsQueryable<Module.Root.Models.Widget>()
+                                       from category in pagePr.Categories
+                                       where pagePr.Id == request.WidgetId && !category.IsDeleted
+                                       select new CategoryModel
+                                       {
+                                           Id = category.Category.Id,
+                                           Version = category.Version,
+                                           CreatedBy = category.CreatedByUser,
+                                           CreatedOn = category.CreatedOn,
+                                           LastModifiedBy = category.ModifiedByUser,
+                                           LastModifiedOn = category.ModifiedOn,
+                                           Name = category.Category.Name
+                                       }).ToList();
             }
 
             return response;

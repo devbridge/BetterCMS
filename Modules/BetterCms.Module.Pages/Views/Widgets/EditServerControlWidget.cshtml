@@ -2,6 +2,7 @@
 @using BetterCms.Module.Pages.Content.Resources
 @using BetterCms.Module.Pages.Controllers
 @using BetterCms.Module.Pages.ViewModels.Widgets
+@using BetterCms.Module.Root.Mvc.Extensions
 @using BetterCms.Module.Root.Mvc.Helpers
 @using Microsoft.Web.Mvc
 
@@ -33,7 +34,7 @@
                 <div class="bcms-input-list-holder">
                     @Html.Tooltip(PagesGlobalization.Widget_Category_Tooltip_Description)
                     <div class="bcms-content-titles">@PagesGlobalization.Widget_Category_Title:</div>
-                    @Html.DropDownListFor(model => model.CategoryId, Model.Categories.ToSelectList(Model.CategoryId), PagesGlobalization.Widget_Category_SelectCategory, new { @class = "bcms-global-select" })
+                    @Html.MultipleDropDown(Model.Categories.ToSelectListItems(Model.SelectItemCategories), new { @class = "multiple-dropdown-select" })
                 </div>
 
                 <div class="bcms-input-list-holder">

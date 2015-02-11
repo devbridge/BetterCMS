@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
 using BetterCms.Core.Models;
@@ -12,14 +13,14 @@ namespace BetterCms.Module.Pages.ViewModels.Widgets
     /// A widget view model.
     /// </summary>
     public class WidgetViewModel : ContentViewModel
-    {        
+    {
         /// <summary>
-        /// Gets or sets the category id.
+        /// Gets or sets the list of SelectedCategories Ids.
         /// </summary>
         /// <value>
-        /// The category id.
+        /// The list of categories Ids.
         /// </value>
-        public virtual Guid? CategoryId { get; set; }
+        public IList<Guid> Categories { get; set; }
 
         /// <summary>
         /// Gets or sets the image URL.
@@ -40,7 +41,7 @@ namespace BetterCms.Module.Pages.ViewModels.Widgets
 
         public override string ToString()
         {
-            return string.Format("{0}, CategoryId: {1}, PreviewImageUrl: {2}, WidgetType: {3}", base.ToString(), CategoryId, PreviewImageUrl, WidgetType);
+            return string.Format("{0}, PreviewImageUrl: {1}, WidgetType: {2}", base.ToString(), PreviewImageUrl, WidgetType);
         }
     }
 }

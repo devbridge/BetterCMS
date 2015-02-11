@@ -7,7 +7,7 @@ using BetterCms.Core.Mvc.Commands;
 using BetterCms.Module.Pages.Models;
 using BetterCms.Module.Pages.Services;
 using BetterCms.Module.Pages.ViewModels.Widgets;
-
+using BetterCms.Module.Root.Models;
 using BetterCms.Module.Root.Mvc;
 using BetterCms.Module.Root.Services;
 using BetterCms.Module.Root.ViewModels.Option;
@@ -73,8 +73,7 @@ namespace BetterCms.Module.Pages.Command.Widget.GetServerControlWidgetForEdit
                                                                      PreviewImageUrl = serverControlWidget.PreviewUrl,
                                                                      CurrentStatus = serverControlWidget.Status,
                                                                      HasPublishedContent = serverControlWidget.Original != null,
-                                                                     WidgetType = WidgetType.ServerControl,
-                                                                     CategoryId = serverControlWidget.Category != null ? serverControlWidget.Category.Id : (Guid?)null
+                                                                     WidgetType = WidgetType.ServerControl                                                                     
                                                                  };
 
                     model.Options = serverControlWidget.ContentOptions.Distinct()
@@ -111,6 +110,7 @@ namespace BetterCms.Module.Pages.Command.Widget.GetServerControlWidgetForEdit
             }
 
             model.Categories = categories.ToList();
+            model.SelectItemCategories = categoryService.GetSelectedCategoriesIds<Root.Models.Widget, WidgetCategory>(widgetId).ToList();
             model.CustomOptions = optionService.GetCustomOptions();
             
             return model;

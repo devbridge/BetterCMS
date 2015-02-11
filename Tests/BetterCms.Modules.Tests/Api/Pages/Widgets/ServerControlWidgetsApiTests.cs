@@ -43,8 +43,8 @@ namespace BetterCms.Test.Module.Api.Pages.Widgets
         {
             var content = TestDataProvider.CreateNewServerControlWidget();
 
-            session.SaveOrUpdate(content.Category);
-
+            session.SaveOrUpdate(content);
+            session.Flush();
             return new SaveServerControlWidgetModel
                 {
                     Name = TestDataProvider.ProvideRandomString(MaxLength.Name),
@@ -53,7 +53,7 @@ namespace BetterCms.Test.Module.Api.Pages.Widgets
                     IsPublished = true,
                     PublishedOn = content.PublishedOn,
                     PublishedByUser = content.PublishedByUser,
-                    CategoryId = content.Category.Id,
+                    Categories = content.Categories.Select(c => c.Category.Id).ToList(),
                     Options = new List<OptionModel>
                               {
                                   new OptionModel
@@ -78,7 +78,7 @@ namespace BetterCms.Test.Module.Api.Pages.Widgets
         {
             var request = new GetServerControlWidgetRequest { WidgetId = saveResponseBase.Data.Value };
             request.Data.IncludeOptions = true;
-
+            request.Data.IncludeCategories = true;
             return request;
         }
 
@@ -96,7 +96,7 @@ namespace BetterCms.Test.Module.Api.Pages.Widgets
             Assert.IsNotNull(getResponse.Data.Name);
             Assert.IsNotNull(getResponse.Data.PublishedOn);
             Assert.IsNotNull(getResponse.Data.PublishedByUser);
-            Assert.IsNotNull(getResponse.Data.CategoryId);
+            Assert.IsNotNull(getResponse.Categories);
             Assert.IsNotNull(getResponse.Data.WidgetUrl);
             Assert.IsNotNull(getResponse.Data.PreviewUrl);
             Assert.IsNotNull(getResponse.Options);
@@ -107,7 +107,12 @@ namespace BetterCms.Test.Module.Api.Pages.Widgets
             Assert.AreEqual(getResponse.Data.IsPublished, model.IsPublished);
             Assert.AreEqual(getResponse.Data.PublishedOn, model.PublishedOn);
             Assert.AreEqual(getResponse.Data.PublishedByUser, model.PublishedByUser);
-            Assert.AreEqual(getResponse.Data.CategoryId, model.CategoryId);
+
+            foreach (var category in model.Categories)
+            {
+                Assert.IsTrue(getResponse.Categories.Any(c => c.Id == category));
+            }
+            
             Assert.AreEqual(getResponse.Data.PreviewUrl, model.PreviewUrl);
             Assert.AreEqual(getResponse.Data.WidgetUrl, model.WidgetUrl);
             

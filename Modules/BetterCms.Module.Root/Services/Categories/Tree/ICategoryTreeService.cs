@@ -4,7 +4,7 @@ using BetterCms.Module.Root.Models;
 
 namespace BetterCms.Module.Root.Services.Categories.Tree
 {
-    interface ICategoryTreeService
+    public interface ICategoryTreeService
     {
         GetCategoryTreeResponse Get(GetCategoryTreeRequest request);
 

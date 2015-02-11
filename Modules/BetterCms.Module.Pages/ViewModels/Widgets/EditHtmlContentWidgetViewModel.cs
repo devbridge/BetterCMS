@@ -1,8 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 
+using BetterCms.Core.Mvc.Binders;
 using BetterCms.Module.Pages.ViewModels.Content;
 using BetterCms.Module.Root.Models;
+
+using Newtonsoft.Json;
 
 namespace BetterCms.Module.Pages.ViewModels.Widgets
 {
