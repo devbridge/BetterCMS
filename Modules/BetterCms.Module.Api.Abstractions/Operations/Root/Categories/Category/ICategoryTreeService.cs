@@ -1,7 +1,7 @@
-﻿using BetterCms.Module.Api.Operations.Root.Categories.CategorizableItems;
-using BetterCms.Module.Api.Operations.Root.Categories.Category.Nodes;
+﻿using BetterCms.Module.Api.Operations.Root.Categories.Category.Nodes;
 using BetterCms.Module.Api.Operations.Root.Categories.Category.Nodes.Node;
 using BetterCms.Module.Api.Operations.Root.Categories.Category.Tree;
+using BetterCms.Module.Api.Operations.Root.CategorizableItems;
 
 namespace BetterCms.Module.Api.Operations.Root.Categories.Category
 {

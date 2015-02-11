@@ -6,7 +6,6 @@ using BetterCms.Module.Api.Extensions;
 using BetterCms.Module.Api.Operations.MediaManager.Files;
 using BetterCms.Module.Api.Operations.MediaManager.Files.File;
 using BetterCms.Module.Api.Operations.Root.Categories;
-using BetterCms.Module.Api.Operations.Root.Categories.CategorizableItems;
 using BetterCms.Module.Api.Operations.Root.Categories.Category;
 using BetterCms.Module.Api.Operations.Root.Categories.Category.Tree;
 using BetterCms.Sandbox.Mvc4.Models;

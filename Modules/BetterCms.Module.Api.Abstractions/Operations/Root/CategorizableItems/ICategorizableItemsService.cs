@@ -1,4 +1,4 @@
-﻿namespace BetterCms.Module.Api.Operations.Root.Categories.CategorizableItems
+﻿namespace BetterCms.Module.Api.Operations.Root.CategorizableItems
 {
     /// <summary>
     /// Service contract for categorizable items.

@@ -5,7 +5,7 @@ using BetterCms.Module.Api.Helpers;
 using BetterCms.Module.Api.Infrastructure;
 using BetterCms.Module.Root.Models;
 
-namespace BetterCms.Module.Api.Operations.Root.Categories.CategorizableItems
+namespace BetterCms.Module.Api.Operations.Root.CategorizableItems
 {
     public class CategorizableItemsService : ICategorizableItemsService
     {
