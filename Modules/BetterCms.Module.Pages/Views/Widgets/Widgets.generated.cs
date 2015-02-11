@@ -125,11 +125,6 @@ WriteLiteral("\r\n");
             .SortColumnName("WidgetName")
             .HeaderAttributes(@style => "width: 245px;")
             .Encode(false);
-        // TODO Categories
-//        column.For(f => f.CategoryName)
-//            .Named(PagesGlobalization.SiteSettings_Widgets_CategoryColumn)
-//            .SortColumnName("CategoryName")
-//            .Attributes(@class => "bcms-category-name");
 
         column.For(f => Html.EditorFor(e => f.Status, "WidgetStatus"))
             .Named(PagesGlobalization.SiteSettings_Widgets_StatusColumn)

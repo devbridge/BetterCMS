@@ -176,7 +176,7 @@ bettercms.define('bcms.pages.properties', ['bcms.jquery', 'bcms', 'bcms.modal', 
                 dialog.container.find(selectors.translationsTabContent).addClass(classes.inactive);
             }
 
-            $(".multiple-dropdown-select").multipleSelect({ name: "Categories" });
+            
 
             return pageViewModel;
         };

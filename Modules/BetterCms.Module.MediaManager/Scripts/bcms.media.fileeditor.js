@@ -160,7 +160,7 @@ bettercms.define('bcms.media.fileeditor', ['bcms.jquery', 'bcms', 'bcms.modal', 
                 this.select();
             });
 
-            $(".multiple-dropdown-select").multipleSelect({ name: "Categories" });
+            
         }
 
         return editor;

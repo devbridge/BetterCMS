@@ -375,7 +375,7 @@ bettercms.define('bcms.pages.widgets', ['bcms.jquery', 'bcms', 'bcms.modal', 'bc
             showHideCustomJsText(dialog);
             showHideCustomHtmlText(dialog);
 
-            $(".multiple-dropdown-select").multipleSelect({ name: "Categories" });
+            
 
             return optionListViewModel;
         };
@@ -441,7 +441,7 @@ bettercms.define('bcms.pages.widgets', ['bcms.jquery', 'bcms', 'bcms.modal', 'bc
                 previewImage.parent().show();
             }
 
-            $(".multiple-dropdown-select").multipleSelect({ name: "Categories" });
+            
             return optionListViewModel;
         };
 
