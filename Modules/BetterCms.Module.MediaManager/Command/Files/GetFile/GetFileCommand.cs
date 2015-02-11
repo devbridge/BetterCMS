@@ -112,11 +112,7 @@ namespace BetterCms.Module.MediaManager.Command.Files.GetFile
                     AccessControlEnabled = configuration.Security.AccessControlEnabled
                 };
 
-            var categories = categoryService.GetCategories(file.GetCategorizableItemKey());
-            var selectedCategories = categoryService.GetSelectedCategoriesIds<Media, MediaCategory>(fileId);
-
-            model.Categories = categories.ToList();
-            model.SelectItemCategories = selectedCategories.ToList();
+            model.Categories = categoryService.GetSelectedCategories<Media, MediaCategory>(fileId);
 
             if (configuration.Security.AccessControlEnabled)
             {

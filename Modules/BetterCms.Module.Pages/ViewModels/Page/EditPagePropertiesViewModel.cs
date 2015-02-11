@@ -75,14 +75,6 @@ namespace BetterCms.Module.Pages.ViewModels.Page
         public IEnumerable<LookupKeyValue> Categories { get; set; }
 
         /// <summary>
-        /// Gets or sets the list of SelectedCategories Ids.
-        /// </summary>
-        /// <value>
-        /// The list of categories Ids.
-        /// </value>
-        public IList<Guid> SelectItemCategories { get; set; }
-
-        /// <summary>
         /// Gets or sets the page custom CSS.
         /// </summary>
         /// <value>

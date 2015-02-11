@@ -1,5 +1,6 @@
 ﻿@using BetterCms.Module.MediaManager.Models
 @using BetterCms.Module.Root.Mvc.Extensions
+@using BetterCms.Module.Root.ViewModels.Category
 @using BetterCms.Module.Root.ViewModels.Tags
 @using Microsoft.Web.Mvc
 @using BetterCms.Module.Root.Mvc.Helpers
@@ -13,6 +14,13 @@
     var tagsTemplateViewModel = new TagsTemplateViewModel
     {
         TooltipDescription = MediaGlobalization.FileEditor_Dialog_AddTags_Tooltip_Description
+    };
+}
+
+@{
+    var categoriesTemplateViewModel = new CategoryTemplateViewModel
+    {
+        TooltipDescription = MediaGlobalization.FileEditor_Dialog_Category_Tooltip_Description
     };
 }
 <div class="bcms-scroll-window">
@@ -153,12 +161,8 @@
 
             </div>
 
-    <div class="bcms-input-list-holder">
-        @Html.Tooltip(MediaGlobalization.ImageEditor_Dialog_Category_Tooltip_Description)
-
-        <div class="bcms-content-titles">@MediaGlobalization.ImageEditor_Dialog_Category_Title</div>
-
-        @Html.MultipleDropDown(Model.Categories.ToSelectListItems(Model.SelectItemCategories), new { @class = "multiple-dropdown-select" })
+    <div class="bcms-tags-box-holder" data-bind="with: categories">
+        @Html.Partial("~/Areas/bcms-root/Views/Category/CategoriesTemplate.cshtml", categoriesTemplateViewModel)
     </div>
 
             <div class="bcms-media-tags-box-holder bcms-clearfix" data-bind="with: tags">

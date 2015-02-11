@@ -106,7 +106,7 @@ namespace BetterCms.Module.Pages.Command.Page.GetPageProperties
         /// <param name="id">The page id.</param>
         /// <returns></returns>
         public EditPagePropertiesViewModel Execute(Guid id)
-        {
+        {            
             var pageEntity = Repository.AsQueryable<PageProperties>().FirstOrDefault(p => p.Id == id);
             if (pageEntity == null)
             {
@@ -175,8 +175,8 @@ namespace BetterCms.Module.Pages.Command.Page.GetPageProperties
                 .ToFuture();
 
             var tagsFuture = tagService.GetPageTagNames(id);
-            var categories = categoryService.GetCategories(pageEntity.GetCategorizableItemKey());
-            var selectedCategories = categoryService.GetSelectedCategoriesIds<PageProperties, PageCategory>(id);
+
+            
             var languagesFuture = (cmsConfiguration.EnableMultilanguage) ? languageService.GetLanguagesLookupValues() : null;
 
             IEnumerable<AccessRule> userAccessFuture;
@@ -209,8 +209,7 @@ namespace BetterCms.Module.Pages.Command.Page.GetPageProperties
 
                 model.Model.Tags = tagsFuture.ToList();
                 model.Model.RedirectFromOldUrl = true;
-                model.Model.Categories = categories;
-                model.Model.SelectItemCategories = selectedCategories.ToList();
+                model.Model.Categories = categoryService.GetSelectedCategories<PageProperties, PageCategory>(id).ToList();
                 model.Model.PageAccessProtocols = this.GetProtocolForcingTypes();
                 model.Model.UpdateSitemap = true;
                 model.Model.CustomOptions = optionService.GetCustomOptions();

@@ -4,9 +4,18 @@
 @using BetterCms.Module.Pages.ViewModels.Widgets
 @using BetterCms.Module.Root.Mvc.Extensions
 @using BetterCms.Module.Root.Mvc.Helpers
+@using BetterCms.Module.Root.ViewModels.Category
 @using Microsoft.Web.Mvc
 
 @model EditServerControlWidgetViewModel
+
+@{
+    var categoriesTemplateViewModel = new CategoryTemplateViewModel
+    {
+        TooltipDescription = PagesGlobalization.EditPageProperties_BasicPropertiesTab_Category_Tooltip_Description
+    };
+}
+
 @if (Model == null)
 {
     return;
@@ -31,10 +40,14 @@
                     </div>
                 </div>
 
-                <div class="bcms-input-list-holder">
-                    @Html.Tooltip(PagesGlobalization.Widget_Category_Tooltip_Description)
-                    <div class="bcms-content-titles">@PagesGlobalization.Widget_Category_Title:</div>
-                    @Html.MultipleDropDown(Model.Categories.ToSelectListItems(Model.SelectItemCategories), new { @class = "multiple-dropdown-select" })
+@*                <div class="bcms-input-list-holder">*@
+@*                    @Html.Tooltip(PagesGlobalization.Widget_Category_Tooltip_Description)*@
+@*                    <div class="bcms-content-titles">@PagesGlobalization.Widget_Category_Title:</div>*@
+@*                    @Html.MultipleDropDown(Model.Categories.ToSelectListItems(Model.SelectedCategories), new { @class = "multiple-dropdown-select" })*@
+@*                </div>*@
+                
+                <div class="bcms-tags-box-holder" data-bind="with: categories">
+                    @Html.Partial("~/Areas/bcms-root/Views/Category/CategoriesTemplate.cshtml", categoriesTemplateViewModel)
                 </div>
 
                 <div class="bcms-input-list-holder">

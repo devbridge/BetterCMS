@@ -20,14 +20,6 @@ namespace BetterCms.Module.Pages.ViewModels.Widgets
         public Guid? PreviewOnPageContentId { get; set; }
 
         /// <summary>
-        /// Gets or sets the categories.
-        /// </summary>
-        /// <value>
-        /// The categories.
-        /// </value>
-        public IList<LookupKeyValue> Categories { get; set; }
-
-        /// <summary>
         /// Returns a <see cref="System.String" /> that represents this instance.
         /// </summary>
         /// <returns>

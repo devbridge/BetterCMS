@@ -23,14 +23,6 @@ namespace BetterCms.Module.Pages.ViewModels.Widgets
         public Guid? PreviewOnPageContentId { get; set; }
 
         /// <summary>
-        /// Gets or sets the categories.
-        /// </summary>
-        /// <value>
-        /// The categories.
-        /// </value>
-        public IList<LookupKeyValue> Categories { get; set; }
-
-        /// <summary>
         /// Gets or sets a value indicating whether content editor must be opened in source mode.
         /// </summary>
         /// <value>

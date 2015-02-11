@@ -24,6 +24,7 @@ namespace BetterCms.Module.Root.Registration
                       new JavaScriptModuleLinkTo<CategoryController>(this, "categoryTreeEditDialogUrl", c => c.EditCategoryTree("{0}")),
                       new JavaScriptModuleLinkTo<CategoryController>(this, "saveCategoryTreeUrl", c => c.SaveCategoryTree(null)),
                       new JavaScriptModuleLinkTo<CategoryController>(this, "deleteCategoryTreeUrl", c => c.DeleteCategoryTree("{0}", "{1}")),
+                       new JavaScriptModuleLinkTo<CategoryController>(this, "categoriesSuggestionServiceUrl", c => c.SuggestCategories(null))
                 };
 
             Globalization = new IActionProjection[]

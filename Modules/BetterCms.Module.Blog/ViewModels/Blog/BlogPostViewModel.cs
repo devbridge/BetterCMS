@@ -138,15 +138,6 @@ namespace BetterCms.Module.Blog.ViewModels.Blog
         public string BlogUrl { get; set; }
 
         /// <summary>
-        /// Gets or sets the list of SelectedCategories Ids.
-        /// </summary>
-        /// <value>
-        /// The list of categories Ids.
-        /// </value>
-        [JsonConverter(typeof(SingleValueArrayConverter<Guid>))]
-        public IList<Guid> SelectItemCategories { get; set; }
-
-        /// <summary>
         /// Gets or sets the desirable status for the saved widget.
         /// </summary>
         /// <value>
@@ -192,7 +183,7 @@ namespace BetterCms.Module.Blog.ViewModels.Blog
         /// <value>
         /// The list of categories.
         /// </value>
-        public IEnumerable<LookupKeyValue> Categories { get; set; }
+        public IList<LookupKeyValue> Categories { get; set; }
 
         /// <summary>
         /// Gets or sets the image view model.

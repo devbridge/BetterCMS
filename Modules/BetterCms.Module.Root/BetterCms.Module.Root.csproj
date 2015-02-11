@@ -150,6 +150,7 @@
     <Compile Include="Commands\Category\GetCategoryTreesList\GetCategoryTreesListCommand.cs" />
     <Compile Include="Commands\Category\GetCategoryTree\GetCategoryTreeCommand.cs" />
     <Compile Include="Commands\Category\SaveCategoryTree\SaveCategoryTreeCommand.cs" />
+    <Compile Include="Commands\Category\SearchCategory\SearchCategoriesCommand.cs" />
     <Compile Include="Commands\Language\DeleteLanguage\DeleteLanguageCommand.cs" />
     <Compile Include="Commands\Language\GetLanguageList\GetLanguageListCommand.cs" />
     <Compile Include="Commands\Language\SaveLanguage\SaveLanguageCommand.cs" />
@@ -417,6 +418,7 @@
     <Compile Include="ViewModels\Category\CategoryTreeGridViewModel.cs" />
     <Compile Include="ViewModels\Category\CategorizableItemViewModel.cs" />
     <Compile Include="ViewModels\Category\CategoryTreeViewModel.cs" />
+    <Compile Include="ViewModels\Category\CategoryTemplateViewModel.cs" />
     <Compile Include="ViewModels\Cms\CmsRequestViewModel.cs" />
     <Compile Include="ViewModels\Cms\PageRegionViewModel.cs" />
     <Compile Include="DataContracts\Enums\PageRetrievedEventResults.cs" />
@@ -482,6 +484,11 @@
     </Compile>
     <Compile Include="Views\Category\Partial\CategoryTreeTemplate.generated.cs">
       <DependentUpon>CategoryTreeTemplate.cshtml</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+    </Compile>
+    <Compile Include="Views\Category\CategoriesTemplate.generated.cs">
+      <DependentUpon>CategoriesTemplate.cshtml</DependentUpon>
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
     </Compile>
@@ -1406,6 +1413,10 @@
     <Content Include="Views\Category\Partial\CategoryTreeTemplate.cshtml">
       <Generator>RazorGenerator</Generator>
       <LastGenOutput>CategoryTreeTemplate.generated.cs</LastGenOutput>
+    </Content>
+    <Content Include="Views\Category\CategoriesTemplate.cshtml">
+      <Generator>RazorGenerator</Generator>
+      <LastGenOutput>CategoriesTemplate.generated.cs</LastGenOutput>
     </Content>
     <None Include="Views\Shared\Partial\ContentsTree.cshtml">
       <LastGenOutput>ContentsTree.generated.cs</LastGenOutput>

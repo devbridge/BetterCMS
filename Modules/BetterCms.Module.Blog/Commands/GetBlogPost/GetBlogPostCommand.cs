@@ -162,7 +162,7 @@ namespace BetterCms.Module.Blog.Commands.GetBlogPost
                     {
                         model.LiveFromDate = DateTime.Today;
                     }
-                    model.SelectItemCategories = categoryService.GetSelectedCategoriesIds<BlogPost, PageCategory>(id).ToList();
+                    model.Categories = categoryService.GetSelectedCategories<BlogPost, PageCategory>(id).ToList();
                     model.Tags = tagService.GetPageTagNames(id).ToList();
                 }
                 else
@@ -176,7 +176,6 @@ namespace BetterCms.Module.Blog.Commands.GetBlogPost
             }
 
             model.Authors = authorService.GetAuthors();
-            model.Categories = categoryService.GetCategories(categoriesFilterKey);
             model.RedirectFromOldUrl = true;
 
             return model;

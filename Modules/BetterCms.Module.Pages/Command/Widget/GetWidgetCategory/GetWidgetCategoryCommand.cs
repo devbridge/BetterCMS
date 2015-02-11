@@ -8,9 +8,11 @@ using BetterCms.Core.Mvc.Commands;
 using BetterCms.Module.Pages.Content.Resources;
 using BetterCms.Module.Pages.Models;
 using BetterCms.Module.Pages.ViewModels.Widgets;
+using BetterCms.Module.Root.Models;
 using BetterCms.Module.Root.Mvc;
 
 using FluentNHibernate.Conventions;
+using FluentNHibernate.Utils;
 
 using NHibernate.Linq;
 
@@ -112,13 +114,13 @@ namespace BetterCms.Module.Pages.Command.Widget.GetWidgetCategory
                 categories = new List<WidgetCategoryViewModel>();
             }
 
-            categories.ForEach(c => c.Widgets = contents.Where(x => x.Categories.Contains(c.CategoryId.Value)).ToList());
+            categories.ForEach(c => c.Widgets = contents.Where(x => x.Categories.Any(cat => Guid.Parse(cat.Key) == c.CategoryId)).ToList());
 
             // Move uncategorized contents to fake category
             var uncategorized = contents.Where(c => c.Categories == null || c.Categories.IsEmpty());
 
             // Workaround for deleted categories:
-            uncategorized = contents.Where(c => (c.Categories == null || c.Categories.IsEmpty()) && !categories.Any(x => c.Categories.Contains(x.CategoryId.Value))).Concat(uncategorized);
+            uncategorized = contents.Where(c => (c.Categories == null || c.Categories.IsEmpty()) && !categories.Any(x => c.Categories.Any(cat => Guid.Parse(cat.Key) == x.CategoryId))).Concat(uncategorized);
 
             if (uncategorized.Any())
             {
@@ -181,14 +183,22 @@ namespace BetterCms.Module.Pages.Command.Widget.GetWidgetCategory
             if (draft != null && !result.Status.Equals(ContentStatus.Published.ToString()))
             {
                 result.Name = draft.Name;
-                result.Categories = draft.Categories != null ? draft.Categories.Select(c => c.Id).ToList() : new List<Guid>();
+                result.Categories = draft.Categories != null ? draft.Categories.Select(c => new LookupKeyValue()
+                {
+                    Key = c.Category.Id.ToLowerInvariantString(),
+                    Value = c.Category.Name
+                }).ToList() : new List<LookupKeyValue>();
                 result.Id = draft.Id;
                 result.Version = draft.Version;
             }
             else
             {
                 result.Name = widget.Name;
-                result.Categories = widget.Categories != null ? widget.Categories.Select(c => c.Id).ToList() : new List<Guid>();                
+                result.Categories = widget.Categories != null ? widget.Categories.Select(c => new LookupKeyValue()
+                {
+                    Key = c.Category.Id.ToLowerInvariantString(),
+                    Value = c.Category.Name
+                }).ToList() : new List<LookupKeyValue>();                
                 result.Id = widget.Id;
                 result.Version = widget.Version;
             }

@@ -134,14 +134,6 @@ namespace BetterCms.Module.MediaManager.ViewModels.File
         public IEnumerable<LookupKeyValue> Categories { get; set; }
 
         /// <summary>
-        /// Gets or sets the list of SelectedCategories Ids.
-        /// </summary>
-        /// <value>
-        /// The list of categories Ids.
-        /// </value>
-        public IList<Guid> SelectItemCategories { get; set; }
-
-        /// <summary>
         /// Returns a <see cref="System.String" /> that represents this instance.
         /// </summary>
         /// <returns>

@@ -208,7 +208,7 @@ namespace BetterCms.Module.Pages.Services
             }
 
 
-            categoryService.CombineEntityCategories<Widget, WidgetCategory>(widget, model.SelectItemCategories);
+            categoryService.CombineEntityCategories<Widget, WidgetCategory>(widget, model.Categories);
 
             return widget;
         }
