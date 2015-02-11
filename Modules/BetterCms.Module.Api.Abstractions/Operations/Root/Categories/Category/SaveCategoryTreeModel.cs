@@ -34,6 +34,9 @@ namespace BetterCms.Module.Api.Operations.Root.Categories.Category
         [DataMember]
         public Guid CategoryTreeId { get; set; }
 
+        [DataMember]
+        public List<Guid> UseForCategorizableItems { get; set; }
+
         //        /// <summary>
 //        /// Gets or sets the access rules.
 //        /// </summary>

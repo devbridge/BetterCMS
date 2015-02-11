@@ -1,9 +1,16 @@
-﻿using System.Linq;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 
 using BetterCms.Core.DataAccess;
+using BetterCms.Core.DataAccess.DataContext.Fetching;
 using BetterCms.Module.Api.Helpers;
 using BetterCms.Module.Api.Infrastructure;
 using BetterCms.Module.Api.Operations.Root.Categories.Category;
+using BetterCms.Module.Root.Models;
+using BetterCms.Module.Root.Views.Language;
+
+using NHibernate.Linq;
 
 using ServiceStack.ServiceInterface;
 
@@ -46,6 +53,8 @@ namespace BetterCms.Module.Api.Operations.Root.Categories
         {
             request.Data.SetDefaultOrder("Name");
 
+            var categorizableItemsFuture = repository.AsQueryable<CategoryTreeCategorizableItem>().ToFuture();
+
             var query = repository
                 .AsQueryable<Module.Root.Models.CategoryTree>();
 
@@ -61,9 +70,14 @@ namespace BetterCms.Module.Api.Operations.Root.Categories
                     LastModifiedOn = map.ModifiedOn,
 
                     Name = map.Title,
-                    Macro = map.Macro
+                    Macro = map.Macro,
                 }).ToDataListResponse(request);
 
+            var categorizableItems = categorizableItemsFuture.ToList();
+            foreach (var listItem in listResponse.Items)
+            {
+                listItem.AvailableFor = categorizableItems.Where(c => c.CategoryTree.Id == listItem.Id).Select(c => c.CategorizableItem.Id).ToList();
+            }
             return new GetCategoryTreesResponse
             {
                 Data = listResponse

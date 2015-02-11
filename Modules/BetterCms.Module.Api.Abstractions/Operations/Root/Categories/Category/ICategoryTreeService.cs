@@ -1,4 +1,5 @@
-﻿using BetterCms.Module.Api.Operations.Root.Categories.Category.Nodes;
+﻿using BetterCms.Module.Api.Operations.Root.Categories.CategorizableItems;
+using BetterCms.Module.Api.Operations.Root.Categories.Category.Nodes;
 using BetterCms.Module.Api.Operations.Root.Categories.Category.Nodes.Node;
 using BetterCms.Module.Api.Operations.Root.Categories.Category.Tree;
 
@@ -32,6 +33,14 @@ namespace BetterCms.Module.Api.Operations.Root.Categories.Category
         /// The node.
         /// </value>
         INodeService Node { get; }
+
+        /// <summary>
+        /// Gets the categorizable items.
+        /// </summary>
+        /// <value>
+        /// The categorizable items.
+        /// </value>
+        ICategorizableItemsService CategorizableItems { get; }
 
         /// <summary>
         /// Gets the category specified in request.

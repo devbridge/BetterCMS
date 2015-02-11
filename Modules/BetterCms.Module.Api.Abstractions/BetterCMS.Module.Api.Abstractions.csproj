@@ -468,6 +468,10 @@
     <Compile Include="Operations\Pages\Widgets\Widget\ServerControlWidget\Options\IServerControlWidgetOptionsService.cs" />
     <Compile Include="Operations\OptionModel.cs" />
     <Compile Include="Operations\Pages\Widgets\Widget\ServerControlWidget\ServerControlWidgetModel.cs" />
+    <Compile Include="Operations\Root\Categories\CategorizableItems\CategorizableItemModel.cs" />
+    <Compile Include="Operations\Root\Categories\CategorizableItems\GetCategorizableItemsRequest.cs" />
+    <Compile Include="Operations\Root\Categories\CategorizableItems\GetCategorizableItemsResponse.cs" />
+    <Compile Include="Operations\Root\Categories\CategorizableItems\ICategorizableItemsService.cs" />
     <Compile Include="Operations\Root\Categories\Category\CategoryModel.cs" />
     <Compile Include="Operations\Root\Categories\Category\CategoryTreeModel.cs" />
     <Compile Include="Operations\Root\Categories\Category\CategoryNodeModel.cs" />

@@ -6,6 +6,7 @@ using BetterCms.Core.DataAccess;
 using BetterCms.Core.DataAccess.DataContext;
 using BetterCms.Core.Security;
 using BetterCms.Core.Services;
+using BetterCms.Module.Api.Operations.Root.Categories.CategorizableItems;
 using BetterCms.Module.Api.Operations.Root.Categories.Category.Nodes;
 using BetterCms.Module.Api.Operations.Root.Categories.Category.Nodes.Node;
 using BetterCms.Module.Api.Operations.Root.Categories.Category.Tree;
@@ -72,6 +73,11 @@ namespace BetterCms.Module.Api.Operations.Root.Categories.Category
         private readonly INodeService nodeService;
 
         /// <summary>
+        /// The categorizable items service
+        /// </summary>
+        private readonly ICategorizableItemsService categorizableItemsService;
+
+        /// <summary>
         /// Initializes a new instance of the <see cref="CategoryTreeService" /> class.
         /// </summary>
         /// <param name="repository">The repository.</param>
@@ -83,7 +89,9 @@ namespace BetterCms.Module.Api.Operations.Root.Categories.Category
         /// <param name="accessControlService">The access control service.</param>
         /// <param name="securityService">The security service.</param>
         /// <param name="categoryService">The category service.</param>
+        /// <param name="categoryTreeService">The category tree service</param>
         /// <param name="cmsConfiguration">The CMS configuration.</param>
+        /// <param name="categorizableItemsService">The categorizable items service</param>
         public CategoryTreeService(
             IRepository repository,
             IUnitOfWork unitOfWork,
@@ -94,7 +102,9 @@ namespace BetterCms.Module.Api.Operations.Root.Categories.Category
             ISecurityService securityService,
             Module.Root.Services.ICategoryService categoryService,
             Module.Root.Services.Categories.Tree.ICategoryTreeService categoryTreeService,
-            ICmsConfiguration cmsConfiguration)
+            ICmsConfiguration cmsConfiguration,
+            ICategorizableItemsService categorizableItemsService
+            )
         {
             this.repository = repository;
             this.unitOfWork = unitOfWork;
@@ -106,6 +116,7 @@ namespace BetterCms.Module.Api.Operations.Root.Categories.Category
             this.categoryService = categoryService;
             this.categoryTreeService = categoryTreeService;
             this.cmsConfiguration = cmsConfiguration;
+            this.categorizableItemsService = categorizableItemsService;
         }
 
         /// <summary>
@@ -151,6 +162,20 @@ namespace BetterCms.Module.Api.Operations.Root.Categories.Category
         }
 
         /// <summary>
+        /// Gets the categorizable items.
+        /// </summary>
+        /// <value>
+        /// The categorizable items.
+        /// </value>
+        ICategorizableItemsService ICategoryTreeService.CategorizableItems
+        {
+            get
+            {
+                return categorizableItemsService;
+            }
+        }
+
+        /// <summary>
         /// Gets the category specified in request.
         /// </summary>
         /// <param name="request">The request.</param>
@@ -169,6 +194,8 @@ namespace BetterCms.Module.Api.Operations.Root.Categories.Category
                         .Where(node => node.CategoryTree.Id == request.CategoryTreeId && !node.IsDeleted)
                         .ToFuture();
             }
+
+            var categorizableItemsFuture = repository.AsQueryable<CategoryTreeCategorizableItem>().Where(c => c.CategoryTree.Id == request.CategoryTreeId).ToFuture();
 
             var response =
                 repository.AsQueryable<CategoryTree>()
@@ -219,6 +246,9 @@ namespace BetterCms.Module.Api.Operations.Root.Categories.Category
                         .ToList();
             }
 
+            var categorizableItems = categorizableItemsFuture.ToList();
+
+            response.Data.AvailableFor = categorizableItems.Select(c => c.CategorizableItem.Id).ToList();
 //            if (request.Data.IncludeAccessRules)
 //            {
 //                response.AccessRules = LoadAccessRules(response.Data.Id);
@@ -241,6 +271,7 @@ namespace BetterCms.Module.Api.Operations.Root.Categories.Category
                 Id = request.Id ?? Guid.Empty, 
                 Title = request.Data.Name, 
                 Version = request.Data.Version,
+                UseForCategorizableItems = request.Data.UseForCategorizableItems
             };
             IList<Module.Root.Services.Categories.CategoryNodeModel> rootNodes = new List<Module.Root.Services.Categories.CategoryNodeModel>();
             if (request.Data.Nodes != null)
