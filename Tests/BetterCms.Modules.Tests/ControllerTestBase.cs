@@ -1,11 +1,7 @@
 ﻿using System;
-using System.Linq.Expressions;
-using System.Web;
-using System.Web.Mvc;
-using System.Web.Routing;
 
-using BetterCms.Core.Mvc;
-using BetterCms.Core.Mvc.Commands;
+using Devbridge.Platform.Core.Web.Mvc;
+using Devbridge.Platform.Core.Web.Mvc.Commands;
 
 using Moq;
 

@@ -4,9 +4,6 @@ using System.Linq;
 
 using Autofac;
 
-using Devbridge.Platform.Core.DataAccess;
-using Devbridge.Platform.Core.DataAccess.DataContext;
-using BetterCms.Core.Mvc.Commands;
 using BetterCms.Core.Security;
 using BetterCms.Core.Services;
 using BetterCms.Module.Pages.Command.Page.ClonePage;
@@ -14,6 +11,9 @@ using BetterCms.Module.Pages.Models;
 using BetterCms.Module.Pages.Services;
 using BetterCms.Module.Pages.ViewModels.Page;
 using BetterCms.Module.Root.ViewModels.Security;
+
+using Devbridge.Platform.Core.DataAccess;
+using Devbridge.Platform.Core.DataAccess.DataContext;
 
 using Moq;
 

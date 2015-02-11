@@ -3,15 +3,17 @@ using System.Security.Principal;
 
 using Autofac;
 
-using Devbridge.Platform.Core.DataAccess;
-using Devbridge.Platform.Core.DataAccess.DataContext;
 using BetterCms.Core.DataContracts.Enums;
-using BetterCms.Core.Mvc.Commands;
 using BetterCms.Core.Services;
+
 using BetterCms.Module.Pages.Services;
 using BetterCms.Module.Root.Models;
 using BetterCms.Module.Root.Services;
 using BetterCms.Module.Pages.Command.Content.GetPageHtmlContent;
+
+using Devbridge.Platform.Core.DataAccess;
+using Devbridge.Platform.Core.DataAccess.DataContext;
+using Devbridge.Platform.Core.Web.Mvc.Commands;
 
 using Moq;
 

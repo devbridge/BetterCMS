@@ -1,7 +1,7 @@
 ﻿using Autofac;
 
 using Devbridge.Platform.Core.DataAccess.DataContext;
-using BetterCms.Core.Exceptions.DataTier;
+using Devbridge.Platform.Core.Exceptions.DataTier;
 
 using NUnit.Framework;
 

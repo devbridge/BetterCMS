@@ -1,10 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Text;
 
-using Devbridge.Platform.Core.DataAccess;
 using BetterCms.Core.DataContracts.Enums;
-using BetterCms.Core.Models;
 using BetterCms.Core.Security;
 
 using BetterCms.Module.Blog.Models;
@@ -15,6 +12,8 @@ using BetterCms.Module.Users;
 using BetterCms.Module.Users.Models;
 
 using BetterCms.Module.Root.Mvc.Helpers;
+
+using Devbridge.Platform.Core.Models;
 
 using NHibernate;
 

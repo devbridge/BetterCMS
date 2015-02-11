@@ -1,7 +1,8 @@
 ﻿using Autofac;
 
-using BetterCms.Core.Dependencies;
 using BetterCms.Core.Exceptions.Api;
+
+using Devbridge.Platform.Core.Dependencies;
 
 namespace BetterCms.Module.Api
 {

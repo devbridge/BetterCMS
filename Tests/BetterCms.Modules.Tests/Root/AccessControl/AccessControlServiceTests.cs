@@ -5,9 +5,11 @@ using System.Security.Principal;
 using Autofac;
 
 using BetterCms.Configuration;
+
 using BetterCms.Core.Security;
 using BetterCms.Core.Services;
 using BetterCms.Core.Services.Caching;
+
 using BetterCms.Module.Root.Models;
 using BetterCms.Module.Root.Services;
 
@@ -363,7 +365,7 @@ namespace BetterCms.Test.Module.Root.AccessControl
             cmsSecuritySection.Setup(x => x.DefaultAccessRules).Returns(() => accessControlCollection ?? new AccessControlCollection());
 
             var cmsConfiguration = new Mock<ICmsConfiguration>();
-            cmsConfiguration.Setup(x => x.CmsSecurity).Returns(cmsSecuritySection.Object);
+            cmsConfiguration.Setup(x => x.Security).Returns(cmsSecuritySection.Object);
 
             return cmsConfiguration;
         }     

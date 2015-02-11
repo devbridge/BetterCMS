@@ -1,17 +1,15 @@
 ﻿using System;
 using System.Linq;
 
-using Devbridge.Platform.Core.DataAccess;
-using Devbridge.Platform.Core.DataAccess.DataContext;
-using BetterCms.Core.Exceptions.Api;
-using BetterCms.Core.Exceptions.DataTier;
 using BetterCms.Module.MediaManager.Models;
 using BetterCms.Module.MediaManager.Services;
 using BetterCms.Module.Root.Mvc;
 
-using ServiceStack.ServiceInterface;
+using Devbridge.Platform.Core.DataAccess;
+using Devbridge.Platform.Core.DataAccess.DataContext;
+using Devbridge.Platform.Core.Exceptions.DataTier;
 
-using NHibernate.Linq;
+using ServiceStack.ServiceInterface;
 
 namespace BetterCms.Module.Api.Operations.Blog.Authors.Author
 {

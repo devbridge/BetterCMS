@@ -4,7 +4,7 @@ using System.Transactions;
 using Autofac;
 
 using Devbridge.Platform.Core.DataAccess.DataContext;
-using BetterCms.Core.Models;
+using Devbridge.Platform.Core.Models;
 
 using FluentNHibernate.Testing;
 

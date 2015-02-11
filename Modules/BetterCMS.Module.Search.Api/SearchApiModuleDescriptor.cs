@@ -6,6 +6,8 @@ using BetterCms.Core.Modules;
 using BetterCms.Module.Api.Operations.Pages.Pages.Search;
 using BetterCms.Module.Search.Api.Operations.Pages.Pages;
 
+using Devbridge.Platform.Core.Modules.Registration;
+
 namespace BetterCms.Module.Search.Api
 {
     public class SearchApiModuleDescriptor : CmsModuleDescriptor
@@ -17,22 +19,6 @@ namespace BetterCms.Module.Search.Api
         public SearchApiModuleDescriptor(ICmsConfiguration cmsConfiguration)
             : base(cmsConfiguration)
         {
-        }
-
-        internal const string ModuleId = "a383b814-6dbf-497f-9f57-24fa57b74edd";
-
-        /// <summary>
-        /// Gets the identifier.
-        /// </summary>
-        /// <value>
-        /// The identifier.
-        /// </value>
-        public override Guid Id
-        {
-            get
-            {
-                return new Guid(ModuleId);
-            }
         }
 
         /// <summary>
@@ -82,7 +68,7 @@ namespace BetterCms.Module.Search.Api
         /// </summary>
         /// <param name="context">The area registration context.</param>
         /// <param name="containerBuilder">The container builder.</param>        
-        public override void RegisterModuleTypes(CmsModuleRegistrationContext context, ContainerBuilder containerBuilder)
+        public override void RegisterModuleTypes(ModuleRegistrationContext context, ContainerBuilder containerBuilder)
         {
             containerBuilder.RegisterType<SearchPagesService>().As<ISearchPagesService>().InstancePerLifetimeScope().PropertiesAutowired(PropertyWiringOptions.PreserveSetValues);
         }

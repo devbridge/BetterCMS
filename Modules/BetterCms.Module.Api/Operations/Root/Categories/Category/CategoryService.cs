@@ -1,10 +1,11 @@
 ﻿using System.Linq;
 
+using BetterCms.Core.Exceptions.Api;
+using BetterCms.Module.Root.Mvc;
+
 using Devbridge.Platform.Core.DataAccess;
 using Devbridge.Platform.Core.DataAccess.DataContext;
-using BetterCms.Core.Exceptions.Api;
-using BetterCms.Core.Exceptions.DataTier;
-using BetterCms.Module.Root.Mvc;
+using Devbridge.Platform.Core.Exceptions.DataTier;
 
 using ServiceStack.ServiceInterface;
 

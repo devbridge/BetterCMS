@@ -3,15 +3,15 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text.RegularExpressions;
 
-using BetterCms.Core.Mvc.Commands;
-using BetterCms.Core.Web;
-
 using BetterCms.Module.ImagesGallery.ViewModels;
 using BetterCms.Module.MediaManager.Models;
 using BetterCms.Module.MediaManager.Services;
 using BetterCms.Module.Root.Mvc;
 using BetterCms.Module.Root.Mvc.Helpers;
 using BetterCms.Module.Root.ViewModels.Cms;
+
+using Devbridge.Platform.Core.Web.Mvc.Commands;
+using Devbridge.Platform.Core.Web.Web;
 
 using NHibernate;
 using NHibernate.Criterion;

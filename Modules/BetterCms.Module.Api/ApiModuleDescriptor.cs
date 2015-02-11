@@ -68,6 +68,8 @@ using BetterCms.Module.Api.Operations.Users.Users.User;
 using BetterCms.Module.Api.Operations.Users.Users.User.Validate;
 using BetterCms.Module.Api.Operations.Users.Users.User.ValidateUser;
 
+using Devbridge.Platform.Core.Modules.Registration;
+
 using ContentService = BetterCms.Module.Api.Operations.Pages.Contents.Content.ContentService;
 using INodeService = BetterCms.Module.Api.Operations.Pages.Sitemaps.Sitemap.Nodes.Node.INodeService;
 using INodesService = BetterCms.Module.Api.Operations.Pages.Sitemaps.Sitemap.Nodes.INodesService;
@@ -88,22 +90,6 @@ namespace BetterCms.Module.Api
         public ApiModuleDescriptor(ICmsConfiguration cmsConfiguration)
             : base(cmsConfiguration)
         {
-        }
-
-        internal const string ModuleId = "4abf7d03-bd9d-43db-9c2e-a964342c0af1";
-
-        /// <summary>
-        /// Gets the identifier.
-        /// </summary>
-        /// <value>
-        /// The identifier.
-        /// </value>
-        public override Guid Id
-        {
-            get
-            {
-                return new Guid(ModuleId);
-            }
         }
 
         /// <summary>
@@ -153,7 +139,7 @@ namespace BetterCms.Module.Api
         /// </summary>
         /// <param name="context">The area registration context.</param>
         /// <param name="containerBuilder">The container builder.</param>        
-        public override void RegisterModuleTypes(CmsModuleRegistrationContext context, ContainerBuilder containerBuilder)
+        public override void RegisterModuleTypes(ModuleRegistrationContext context, ContainerBuilder containerBuilder)
         {
             containerBuilder.RegisterType<AuthorsService>().As<IAuthorsService>().InstancePerLifetimeScope().PropertiesAutowired(PropertyWiringOptions.PreserveSetValues);
             containerBuilder.RegisterType<AuthorService>().As<IAuthorService>().InstancePerLifetimeScope().PropertiesAutowired(PropertyWiringOptions.PreserveSetValues);

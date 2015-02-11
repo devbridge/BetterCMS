@@ -3,8 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 
 using BetterCms.Configuration;
-using Devbridge.Platform.Core.DataAccess.DataContext.Migrations;
-using BetterCms.Core.Environment.Assemblies;
+
 using BetterCms.Core.Modules;
 
 using BetterCms.Module.Blog;
@@ -19,6 +18,10 @@ using BetterCms.Module.Search;
 using BetterCms.Module.Users;
 
 using Common.Logging;
+
+using Devbridge.Platform.Core.DataAccess.DataContext.Migrations;
+using Devbridge.Platform.Core.Environment.Assemblies;
+using Devbridge.Platform.Core.Modules;
 
 namespace BetterCms.Sandbox.DataMigration
 {
@@ -67,7 +70,7 @@ namespace BetterCms.Sandbox.DataMigration
             ICmsConfiguration cmsConfiguration = configurationLoader.LoadCmsConfiguration();
             IVersionChecker versionChecker = new VersionCheckerStub();
             DefaultMigrationRunner runner = new DefaultMigrationRunner(new DefaultAssemblyLoader(), cmsConfiguration, versionChecker);
-            runner.MigrateStructure(descriptors);
+            runner.MigrateStructure(descriptors.Cast<ModuleDescriptor>().ToList());
         }
 
         private static void Main(string[] args)

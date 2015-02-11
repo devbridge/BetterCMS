@@ -1,6 +1,4 @@
-﻿using System;
-
-using Autofac;
+﻿using Autofac;
 
 using BetterCms.Core.Modules;
 
@@ -16,6 +14,8 @@ using BetterCms.Module.Users.Api.Operations.Users.Users;
 using BetterCms.Module.Users.Api.Operations.Users.Users.User;
 using BetterCms.Module.Users.Api.Operations.Users.Users.User.Validate;
 
+using Devbridge.Platform.Core.Modules.Registration;
+
 namespace BetterCms.Module.Users.Api
 {
     /// <summary>
@@ -30,22 +30,6 @@ namespace BetterCms.Module.Users.Api
         public UsersApiModuleDescriptor(ICmsConfiguration cmsConfiguration)
             : base(cmsConfiguration)
         {
-        }
-
-        internal const string ModuleId = "aa68459e-50fc-4e66-9c31-0eaaaacdf832";
-
-        /// <summary>
-        /// Gets the identifier.
-        /// </summary>
-        /// <value>
-        /// The identifier.
-        /// </value>
-        public override Guid Id
-        {
-            get
-            {
-                return new Guid(ModuleId);
-            }
         }
 
         /// <summary>
@@ -95,7 +79,7 @@ namespace BetterCms.Module.Users.Api
         /// </summary>
         /// <param name="context">The area registration context.</param>
         /// <param name="containerBuilder">The container builder.</param>        
-        public override void RegisterModuleTypes(CmsModuleRegistrationContext context, ContainerBuilder containerBuilder)
+        public override void RegisterModuleTypes(ModuleRegistrationContext context, ContainerBuilder containerBuilder)
         {
             containerBuilder.RegisterType<UsersService>().As<IUsersService>().InstancePerLifetimeScope().PropertiesAutowired(PropertyWiringOptions.PreserveSetValues);
             containerBuilder.RegisterType<UserService>().As<IUserService>().InstancePerLifetimeScope().PropertiesAutowired(PropertyWiringOptions.PreserveSetValues);

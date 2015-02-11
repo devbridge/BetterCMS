@@ -2,12 +2,12 @@
 using System.Collections.Generic;
 using System.Linq;
 
-using BetterCms.Core.Models;
-
 using BetterCms.Module.Api.Extensions;
 using BetterCms.Module.Api.Operations;
 using BetterCms.Module.Api.Operations.Pages.Contents.Content.HtmlContent;
 using BetterCms.Module.Api.Operations.Root;
+
+using Devbridge.Platform.Core.Models;
 
 using NHibernate;
 

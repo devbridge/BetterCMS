@@ -4,14 +4,16 @@ using System.Reflection;
 
 using Autofac;
 
-using BetterCms.Core.Dependencies;
-using BetterCms.Core.Environment.Assemblies;
 using BetterCms.Core.Exceptions.Api;
 using BetterCms.Core.Modules.Registration;
+
 using BetterCms.Module.Api.Filters;
 using BetterCms.Module.Api.Operations.Root.Tags.Tag;
 
 using Common.Logging;
+
+using Devbridge.Platform.Core.Dependencies;
+using Devbridge.Platform.Core.Environment.Assemblies;
 
 using ServiceStack.ServiceInterface.Validation;
 using ServiceStack.Text;

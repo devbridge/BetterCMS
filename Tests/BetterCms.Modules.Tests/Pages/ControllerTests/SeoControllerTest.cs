@@ -1,14 +1,14 @@
-﻿using System;
-using System.Web.Mvc;
+﻿using System.Web.Mvc;
 
-using BetterCms.Core.Mvc.Commands;
 using BetterCms.Core.Services;
-using BetterCms.Module.Pages.Command.Page.GetPageSeo;
+
 using BetterCms.Module.Pages.Command.Page.SavePageSeo;
 using BetterCms.Module.Pages.Controllers;
 using BetterCms.Module.Pages.Services;
 using BetterCms.Module.Pages.ViewModels.Seo;
 using BetterCms.Module.Root.Models;
+
+using Devbridge.Platform.Core.Web.Mvc.Commands;
 
 using Moq;
 

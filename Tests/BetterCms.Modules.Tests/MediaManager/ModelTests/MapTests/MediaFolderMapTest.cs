@@ -1,8 +1,5 @@
 using System.Linq;
 
-using BetterCms.Core.Models;
-using BetterCms.Module.MediaManager.Models;
-
 using NUnit.Framework;
 
 namespace BetterCms.Test.Module.MediaManager.ModelTests.MapTests

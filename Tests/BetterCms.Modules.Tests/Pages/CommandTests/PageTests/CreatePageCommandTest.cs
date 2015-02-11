@@ -1,17 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using System.Security.Principal;
-using System.Text;
-using System.Web.Security;
 
 using Autofac;
 
 using BetterCms.Configuration;
-using BetterCms.Core;
-using Devbridge.Platform.Core.DataAccess;
-using Devbridge.Platform.Core.DataAccess.DataContext;
-using BetterCms.Core.Mvc.Commands;
+
 using BetterCms.Core.Security;
 using BetterCms.Core.Services;
 using BetterCms.Core.Services.Caching;
@@ -22,6 +16,10 @@ using BetterCms.Module.Root;
 using BetterCms.Module.Root.Models;
 using BetterCms.Module.Root.Services;
 using BetterCms.Module.Root.ViewModels.Security;
+
+using Devbridge.Platform.Core.DataAccess;
+using Devbridge.Platform.Core.DataAccess.DataContext;
+using Devbridge.Platform.Core.Web.Mvc.Commands;
 
 using Moq;
 

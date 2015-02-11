@@ -1,8 +1,8 @@
-﻿using BetterCms.Core.Models;
-
-using BetterCms.Module.Api.Extensions;
+﻿using BetterCms.Module.Api.Extensions;
 using BetterCms.Module.Api.Operations.Root.Categories;
 using BetterCms.Module.Api.Operations.Root.Categories.Category;
+
+using Devbridge.Platform.Core.Models;
 
 using NHibernate;
 

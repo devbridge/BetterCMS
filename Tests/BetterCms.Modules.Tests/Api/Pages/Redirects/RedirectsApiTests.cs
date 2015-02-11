@@ -1,8 +1,8 @@
-﻿using BetterCms.Core.Models;
-
-using BetterCms.Module.Api.Extensions;
+﻿using BetterCms.Module.Api.Extensions;
 using BetterCms.Module.Api.Operations.Pages.Redirects;
 using BetterCms.Module.Api.Operations.Pages.Redirects.Redirect;
+
+using Devbridge.Platform.Core.Models;
 
 using NHibernate;
 

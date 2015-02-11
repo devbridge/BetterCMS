@@ -2,13 +2,15 @@
 using System.Configuration.Provider;
 using System.Linq;
 
-using Devbridge.Platform.Core.DataAccess;
-using Devbridge.Platform.Core.DataAccess.DataContext;
 using BetterCms.Core.Exceptions.Mvc;
-using BetterCms.Core.Models;
+
 using BetterCms.Module.Users.Models;
 using BetterCms.Module.Users.Provider;
 using BetterCms.Module.Users.Services;
+
+using Devbridge.Platform.Core.DataAccess;
+using Devbridge.Platform.Core.DataAccess.DataContext;
+using Devbridge.Platform.Core.Models;
 
 using NHibernate;
 

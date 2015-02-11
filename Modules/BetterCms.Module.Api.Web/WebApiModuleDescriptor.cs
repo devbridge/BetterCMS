@@ -1,11 +1,14 @@
-﻿using System;
-using System.Web;
+﻿using System.Web;
 
 using Autofac;
 
-using BetterCms.Core.Dependencies;
 using BetterCms.Core.Modules;
 using BetterCms.Events;
+
+using Devbridge.Platform.Core.Dependencies;
+using Devbridge.Platform.Core.Web.Dependencies;
+using Devbridge.Platform.Core.Web.Modules.Registration;
+using Devbridge.Platform.Events;
 
 namespace BetterCms.Module.Api
 {
@@ -37,20 +40,6 @@ namespace BetterCms.Module.Api
         }
 
         internal const string ModuleId = "f19e11dc-f991-48e7-be82-ab4d2c07209d";
-
-        /// <summary>
-        /// Gets the identifier.
-        /// </summary>
-        /// <value>
-        /// The identifier.
-        /// </value>
-        public override Guid Id
-        {
-            get
-            {
-                return new Guid(ModuleId);
-            }
-        }
 
         /// <summary>
         /// Gets the name of module.
@@ -85,7 +74,7 @@ namespace BetterCms.Module.Api
         /// </summary>
         /// <param name="context">The area registration context.</param>
         /// <param name="containerBuilder">The container builder.</param>
-        public override void RegisterCustomRoutes(CmsModuleRegistrationContext context, ContainerBuilder containerBuilder)
+        public override void RegisterCustomRoutes(WebModuleRegistrationContext context, ContainerBuilder containerBuilder)
         {
             context.IgnoreRoute("bcms-api/{*pathInfo}");
         }

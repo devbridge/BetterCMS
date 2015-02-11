@@ -2,6 +2,8 @@
 
 using BetterCms.Module.Api.Infrastructure;
 
+using Devbridge.Platform.Events;
+
 using NHibernate;
 
 using NUnit.Framework;
@@ -59,7 +61,7 @@ namespace BetterCms.Test.Module.Api
             CheckEventsCount(1, 1, 1);
         }
 
-        protected void Instance_EntityUpdated<TEntity>(Events.SingleItemEventArgs<TEntity> args)
+        protected void Instance_EntityUpdated<TEntity>(SingleItemEventArgs<TEntity> args)
         {
             updatedEventCount++;
         }

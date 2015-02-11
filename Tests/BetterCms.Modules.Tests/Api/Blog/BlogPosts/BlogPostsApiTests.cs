@@ -3,15 +3,17 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Security.Principal;
 
-using BetterCms.Core.Models;
-
 using BetterCms.Module.Api.Extensions;
 using BetterCms.Module.Api.Operations;
 using BetterCms.Module.Api.Operations.Blog.BlogPosts.BlogPost.Properties;
 using BetterCms.Module.Api.Operations.Root;
+
 using BetterCms.Module.Blog.Models;
+
 using BetterCms.Module.Root;
 using BetterCms.Module.Root.Models;
+
+using Devbridge.Platform.Core.Models;
 
 using NHibernate;
 

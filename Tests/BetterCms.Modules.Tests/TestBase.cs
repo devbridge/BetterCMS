@@ -6,10 +6,8 @@ using Autofac;
 using BetterCMS.Module.LuceneSearch.Helpers;
 
 using BetterCms.Core;
-using Devbridge.Platform.Core.DataAccess.DataContext;
-using BetterCms.Core.DataAccess.DataContext.Fetching;
-using BetterCms.Core.Dependencies;
 using BetterCms.Core.Modules.Registration;
+
 using BetterCms.Module.Api;
 using BetterCms.Module.Blog;
 using BetterCms.Module.ImagesGallery;
@@ -19,8 +17,13 @@ using BetterCms.Module.Pages;
 using BetterCms.Module.Root;
 using BetterCms.Module.Users;
 using BetterCms.Module.Users.Api;
+
 using BetterCms.Test.Module.Helpers;
 using BetterCms.Tests.Helpers;
+
+using Devbridge.Platform.Core.DataAccess.DataContext;
+using Devbridge.Platform.Core.DataAccess.DataContext.Fetching;
+using Devbridge.Platform.Core.Dependencies;
 
 namespace BetterCms.Test.Module
 {

@@ -1,7 +1,9 @@
-﻿using BetterCms.Core.Models;
-using BetterCms.Module.Api.Extensions;
+﻿using BetterCms.Module.Api.Extensions;
 using BetterCms.Module.Api.Operations.MediaManager.Files.File;
 using BetterCms.Module.Api.Operations.Root;
+
+using Devbridge.Platform.Core.Models;
+using Devbridge.Platform.Events;
 
 using NHibernate;
 
@@ -42,12 +44,12 @@ namespace BetterCms.Test.Module.Api.Media.Files
             Events.MediaManagerEvents.Instance.MediaUnarchived -= Instance_MediaUnarchived;
         }
 
-        void Instance_MediaUnarchived(Events.SingleItemEventArgs<BetterCms.Module.MediaManager.Models.Media> args)
+        void Instance_MediaUnarchived(SingleItemEventArgs<BetterCms.Module.MediaManager.Models.Media> args)
         {
             archivedMediaEventCount++;
         }
 
-        void Instance_MediaArchived(Events.SingleItemEventArgs<BetterCms.Module.MediaManager.Models.Media> args)
+        void Instance_MediaArchived(SingleItemEventArgs<BetterCms.Module.MediaManager.Models.Media> args)
         {
             unarchivedMediaEventCount++;
         }

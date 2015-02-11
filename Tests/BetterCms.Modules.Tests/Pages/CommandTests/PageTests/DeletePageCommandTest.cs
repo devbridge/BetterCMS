@@ -1,15 +1,16 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 
-using Devbridge.Platform.Core.DataAccess;
-using Devbridge.Platform.Core.DataAccess.DataContext;
-using BetterCms.Core.Mvc.Commands;
 using BetterCms.Core.Security;
+
 using BetterCms.Module.Pages.Command.Page.DeletePage;
 using BetterCms.Module.Pages.Models;
 using BetterCms.Module.Pages.Services;
 using BetterCms.Module.Pages.ViewModels.Page;
+
+using Devbridge.Platform.Core.DataAccess;
+using Devbridge.Platform.Core.DataAccess.DataContext;
+using Devbridge.Platform.Core.Web.Mvc.Commands;
 
 using Moq;
 
@@ -47,7 +48,7 @@ namespace BetterCms.Test.Module.Pages.CommandTests.PageTests
                     securityService.Setup(f => f.AccessControlEnabled).Returns(false);
 
                     var configurationService = new Mock<ICmsConfiguration>();
-                    configurationService.Setup(f => f.CmsSecurity).Returns(securityService.Object);
+                    configurationService.Setup(f => f.Security).Returns(securityService.Object);
 
                     var redirectService = new Mock<IRedirectService>();
 
