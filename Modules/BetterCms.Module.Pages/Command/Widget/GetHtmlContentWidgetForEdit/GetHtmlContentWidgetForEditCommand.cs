@@ -54,8 +54,6 @@ namespace BetterCms.Module.Pages.Command.Widget.GetHtmlContentWidgetForEdit
         {
             EditHtmlContentWidgetViewModel model = null;
 
-            var categories = categoryService.GetCategories();
-
             if (widgetId.HasValue && widgetId.Value != Guid.Empty)
             {
                 var htmlContentWidget = contentService.GetContentForEdit(widgetId.Value) as HtmlContentWidget;
@@ -119,8 +117,7 @@ namespace BetterCms.Module.Pages.Command.Widget.GetHtmlContentWidgetForEdit
                 model = new EditHtmlContentWidgetViewModel();
             }
 
-            model.Categories = categories.ToList();
-            model.SelectItemCategories = categoryService.GetSelectedCategoriesIds<Root.Models.Widget, WidgetCategory>(widgetId).ToList();
+            model.Categories = categoryService.GetSelectedCategories<Root.Models.Widget, WidgetCategory>(widgetId).ToList();
             model.CustomOptions = optionService.GetCustomOptions();
             model.CanDestroyDraft = model.CurrentStatus == ContentStatus.Draft && model.HasPublishedContent;
 

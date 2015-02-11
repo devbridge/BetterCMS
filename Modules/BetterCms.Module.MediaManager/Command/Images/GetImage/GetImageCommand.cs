@@ -75,8 +75,7 @@ namespace BetterCms.Module.MediaManager.Command.Images.GetImage
                     OriginalImageUrl = FileUrlResolver.EnsureFullPathUrl(image.PublicOriginallUrl + string.Format("?{0}", DateTime.Now.ToString(MediaManagerModuleDescriptor.HardLoadImageDateTimeFormat))),
                     FolderId = image.Folder != null ? image.Folder.Id : (Guid?)null,
                     Tags = TagService.GetMediaTagNames(imageId),
-                    Categories = CategoryService.GetCategories(),
-                    SelectItemCategories = CategoryService.GetSelectedCategoriesIds<Media, MediaCategory>(imageId).ToList()
+                    Categories = CategoryService.GetSelectedCategories<Media, MediaCategory>(imageId).ToList()
                 };
         }
     }

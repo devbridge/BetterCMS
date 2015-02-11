@@ -27,13 +27,13 @@ namespace BetterCms.Module.MediaManager.Views.Files
     using System.Web.UI;
     using System.Web.WebPages;
     
-    #line 8 "..\..\Views\Files\FileEditor.cshtml"
+    #line 9 "..\..\Views\Files\FileEditor.cshtml"
     using BetterCms.Module.MediaManager.Content.Resources;
     
     #line default
     #line hidden
     
-    #line 9 "..\..\Views\Files\FileEditor.cshtml"
+    #line 10 "..\..\Views\Files\FileEditor.cshtml"
     using BetterCms.Module.MediaManager.Controllers;
     
     #line default
@@ -63,19 +63,25 @@ namespace BetterCms.Module.MediaManager.Views.Files
     #line default
     #line hidden
     
-    #line 7 "..\..\Views\Files\FileEditor.cshtml"
+    #line 8 "..\..\Views\Files\FileEditor.cshtml"
     using BetterCms.Module.Root.Mvc.Helpers;
     
     #line default
     #line hidden
     
     #line 5 "..\..\Views\Files\FileEditor.cshtml"
-    using BetterCms.Module.Root.ViewModels.Tags;
+    using BetterCms.Module.Root.ViewModels.Category;
     
     #line default
     #line hidden
     
     #line 6 "..\..\Views\Files\FileEditor.cshtml"
+    using BetterCms.Module.Root.ViewModels.Tags;
+    
+    #line default
+    #line hidden
+    
+    #line 7 "..\..\Views\Files\FileEditor.cshtml"
     using Microsoft.Web.Mvc;
     
     #line default
@@ -93,11 +99,15 @@ namespace BetterCms.Module.MediaManager.Views.Files
 WriteLiteral("\r\n");
 
             
-            #line 12 "..\..\Views\Files\FileEditor.cshtml"
+            #line 13 "..\..\Views\Files\FileEditor.cshtml"
   
     var tagsTemplateViewModel = new TagsTemplateViewModel
     {
         TooltipDescription = MediaGlobalization.FileEditor_Dialog_AddTags_Tooltip_Description
+    };
+    var categoriesTemplateViewModel = new CategoryTemplateViewModel
+    {
+        TooltipDescription = MediaGlobalization.FileEditor_Dialog_Category_Tooltip_Description
     };
 
             
@@ -112,7 +122,7 @@ WriteLiteral(">\r\n");
 WriteLiteral("    ");
 
             
-            #line 19 "..\..\Views\Files\FileEditor.cshtml"
+            #line 24 "..\..\Views\Files\FileEditor.cshtml"
 Write(Html.TabbedContentMessagesBox());
 
             
@@ -129,13 +139,13 @@ WriteLiteral(" style=\"margin-top: 30px;\"");
 WriteLiteral(">\r\n");
 
             
-            #line 21 "..\..\Views\Files\FileEditor.cshtml"
+            #line 26 "..\..\Views\Files\FileEditor.cshtml"
         
             
             #line default
             #line hidden
             
-            #line 21 "..\..\Views\Files\FileEditor.cshtml"
+            #line 26 "..\..\Views\Files\FileEditor.cshtml"
          using (Html.BeginForm<FilesController>(f => f.FileEditor((FileViewModel)null), FormMethod.Post,
             new
                 {
@@ -149,56 +159,56 @@ WriteLiteral(">\r\n");
             #line default
             #line hidden
             
-            #line 29 "..\..\Views\Files\FileEditor.cshtml"
+            #line 34 "..\..\Views\Files\FileEditor.cshtml"
        Write(Html.HiddenFor(model => model.Id));
 
             
             #line default
             #line hidden
             
-            #line 29 "..\..\Views\Files\FileEditor.cshtml"
+            #line 34 "..\..\Views\Files\FileEditor.cshtml"
                                               
             
             
             #line default
             #line hidden
             
-            #line 30 "..\..\Views\Files\FileEditor.cshtml"
+            #line 35 "..\..\Views\Files\FileEditor.cshtml"
        Write(Html.HiddenFor(model => model.Version, new { @id = "image-version-field" }));
 
             
             #line default
             #line hidden
             
-            #line 30 "..\..\Views\Files\FileEditor.cshtml"
+            #line 35 "..\..\Views\Files\FileEditor.cshtml"
                                                                                         
             
             
             #line default
             #line hidden
             
-            #line 31 "..\..\Views\Files\FileEditor.cshtml"
+            #line 36 "..\..\Views\Files\FileEditor.cshtml"
        Write(Html.HiddenFor(model => model.AccessControlEnabled));
 
             
             #line default
             #line hidden
             
-            #line 31 "..\..\Views\Files\FileEditor.cshtml"
+            #line 36 "..\..\Views\Files\FileEditor.cshtml"
                                                                 
             
             
             #line default
             #line hidden
             
-            #line 32 "..\..\Views\Files\FileEditor.cshtml"
+            #line 37 "..\..\Views\Files\FileEditor.cshtml"
        Write(Html.HiddenFor(model => model.Image.ImageId, new { data_bind = "value: image().id()" }));
 
             
             #line default
             #line hidden
             
-            #line 32 "..\..\Views\Files\FileEditor.cshtml"
+            #line 37 "..\..\Views\Files\FileEditor.cshtml"
                                                                                                     
 
 
@@ -214,7 +224,7 @@ WriteLiteral(">\r\n");
 WriteLiteral("                ");
 
             
-            #line 35 "..\..\Views\Files\FileEditor.cshtml"
+            #line 40 "..\..\Views\Files\FileEditor.cshtml"
            Write(Html.Tooltip(MediaGlobalization.FileEditor_Dialog_Title_Tooltip_Description));
 
             
@@ -227,7 +237,7 @@ WriteLiteral(" class=\"bcms-content-titles\"");
 WriteLiteral(">");
 
             
-            #line 36 "..\..\Views\Files\FileEditor.cshtml"
+            #line 41 "..\..\Views\Files\FileEditor.cshtml"
                                             Write(MediaGlobalization.FileEditor_Dialog_Title_Title);
 
             
@@ -242,7 +252,7 @@ WriteLiteral(">\r\n");
 WriteLiteral("                    ");
 
             
-            #line 38 "..\..\Views\Files\FileEditor.cshtml"
+            #line 43 "..\..\Views\Files\FileEditor.cshtml"
                Write(Html.TextBoxFor(f => f.Title, new { @class = "bcms-editor-field-box", @id = "Title", data_bind = "event: {change: onValueChange}" }));
 
             
@@ -253,7 +263,7 @@ WriteLiteral("\r\n");
 WriteLiteral("                    ");
 
             
-            #line 39 "..\..\Views\Files\FileEditor.cshtml"
+            #line 44 "..\..\Views\Files\FileEditor.cshtml"
                Write(Html.BcmsValidationMessageFor(f => f.Title));
 
             
@@ -262,7 +272,7 @@ WriteLiteral("                    ");
 WriteLiteral("\r\n                </div>\r\n            </div>\r\n");
 
             
-            #line 42 "..\..\Views\Files\FileEditor.cshtml"
+            #line 47 "..\..\Views\Files\FileEditor.cshtml"
 
 
             
@@ -277,7 +287,7 @@ WriteLiteral(">\r\n");
 WriteLiteral("                ");
 
             
-            #line 44 "..\..\Views\Files\FileEditor.cshtml"
+            #line 49 "..\..\Views\Files\FileEditor.cshtml"
            Write(Html.Tooltip(MediaGlobalization.FileEditor_Dialog_PublicUrl_Tooltip_Description));
 
             
@@ -290,7 +300,7 @@ WriteLiteral(" class=\"bcms-content-titles\"");
 WriteLiteral(">");
 
             
-            #line 45 "..\..\Views\Files\FileEditor.cshtml"
+            #line 50 "..\..\Views\Files\FileEditor.cshtml"
                                             Write(MediaGlobalization.FileProperties_Dialog_PublicUrl);
 
             
@@ -306,14 +316,14 @@ WriteLiteral(" class=\"bcms-editor-field-box bcms-editor-selectable-field-box\""
 
 WriteLiteral(" type=\"text\"");
 
-WriteAttribute("value", Tuple.Create(" value=\"", 2406), Tuple.Create("\"", 2424)
+WriteAttribute("value", Tuple.Create(" value=\"", 2636), Tuple.Create("\"", 2654)
             
-            #line 47 "..\..\Views\Files\FileEditor.cshtml"
-                             , Tuple.Create(Tuple.Create("", 2414), Tuple.Create<System.Object, System.Int32>(Model.Url
+            #line 52 "..\..\Views\Files\FileEditor.cshtml"
+                             , Tuple.Create(Tuple.Create("", 2644), Tuple.Create<System.Object, System.Int32>(Model.Url
             
             #line default
             #line hidden
-, 2414), false)
+, 2644), false)
 );
 
 WriteLiteral(" readonly=\"readonly\"");
@@ -321,7 +331,7 @@ WriteLiteral(" readonly=\"readonly\"");
 WriteLiteral(" />\r\n                </div>\r\n            </div>\r\n");
 
             
-            #line 50 "..\..\Views\Files\FileEditor.cshtml"
+            #line 55 "..\..\Views\Files\FileEditor.cshtml"
 
 
             
@@ -334,7 +344,7 @@ WriteLiteral(" class=\"bcms-input-list-holder\"");
 WriteLiteral(">\r\n                <b>");
 
             
-            #line 52 "..\..\Views\Files\FileEditor.cshtml"
+            #line 57 "..\..\Views\Files\FileEditor.cshtml"
               Write(MediaGlobalization.FileEditor_Dialog_FileSize);
 
             
@@ -349,7 +359,7 @@ WriteLiteral(" id=\"image-file-size\"");
 WriteLiteral(">");
 
             
-            #line 53 "..\..\Views\Files\FileEditor.cshtml"
+            #line 58 "..\..\Views\Files\FileEditor.cshtml"
                                                                Write(Model.FileSize);
 
             
@@ -358,7 +368,7 @@ WriteLiteral(">");
 WriteLiteral("</div>\r\n            </div>\r\n");
 
             
-            #line 55 "..\..\Views\Files\FileEditor.cshtml"
+            #line 60 "..\..\Views\Files\FileEditor.cshtml"
 
 
             
@@ -373,7 +383,7 @@ WriteLiteral(">\r\n");
 WriteLiteral("                ");
 
             
-            #line 57 "..\..\Views\Files\FileEditor.cshtml"
+            #line 62 "..\..\Views\Files\FileEditor.cshtml"
            Write(Html.Tooltip(MediaGlobalization.FileEditor_Dialog_Description_Tooltip_Description));
 
             
@@ -386,7 +396,7 @@ WriteLiteral(" class=\"bcms-content-titles\"");
 WriteLiteral(">");
 
             
-            #line 58 "..\..\Views\Files\FileEditor.cshtml"
+            #line 63 "..\..\Views\Files\FileEditor.cshtml"
                                             Write(MediaGlobalization.FileEditor_Dialog_Description);
 
             
@@ -401,7 +411,7 @@ WriteLiteral(">\r\n");
 WriteLiteral("                    ");
 
             
-            #line 60 "..\..\Views\Files\FileEditor.cshtml"
+            #line 65 "..\..\Views\Files\FileEditor.cshtml"
                Write(Html.TextAreaFor(f => f.Description, new { @class = "bcms-editor-field-area", @id = "Description", data_bind = "event: {change: onValueChange}" }));
 
             
@@ -412,7 +422,7 @@ WriteLiteral("\r\n");
 WriteLiteral("                    ");
 
             
-            #line 61 "..\..\Views\Files\FileEditor.cshtml"
+            #line 66 "..\..\Views\Files\FileEditor.cshtml"
                Write(Html.BcmsValidationMessageFor(f => f.Description));
 
             
@@ -421,55 +431,33 @@ WriteLiteral("                    ");
 WriteLiteral("\r\n                </div>\r\n            </div>\r\n");
 
             
-            #line 64 "..\..\Views\Files\FileEditor.cshtml"
+            #line 69 "..\..\Views\Files\FileEditor.cshtml"
 
 
             
             #line default
             #line hidden
-WriteLiteral("<div");
+WriteLiteral("            <div");
 
-WriteLiteral(" class=\"bcms-input-list-holder\"");
+WriteLiteral(" class=\"bcms-tags-box-holder\"");
+
+WriteLiteral(" data-bind=\"with: categories\"");
 
 WriteLiteral(">\r\n");
 
-WriteLiteral("    ");
+WriteLiteral("                ");
 
             
-            #line 66 "..\..\Views\Files\FileEditor.cshtml"
-Write(Html.Tooltip(MediaGlobalization.FileEditor_Dialog_Category_Tooltip_Description));
-
-            
-            #line default
-            #line hidden
-WriteLiteral("\r\n\r\n    <div");
-
-WriteLiteral(" class=\"bcms-content-titles\"");
-
-WriteLiteral(">");
-
-            
-            #line 68 "..\..\Views\Files\FileEditor.cshtml"
-                                Write(MediaGlobalization.FileEditor_Dialog_Category_Title);
+            #line 71 "..\..\Views\Files\FileEditor.cshtml"
+           Write(Html.Partial("~/Areas/bcms-root/Views/Category/CategoriesTemplate.cshtml", categoriesTemplateViewModel));
 
             
             #line default
             #line hidden
-WriteLiteral("</div>\r\n\r\n");
-
-WriteLiteral("    ");
+WriteLiteral("\r\n            </div>\r\n");
 
             
-            #line 70 "..\..\Views\Files\FileEditor.cshtml"
-Write(Html.MultipleDropDown(Model.Categories.ToSelectListItems(Model.SelectItemCategories), new { @class = "multiple-dropdown-select" }));
-
-            
-            #line default
-            #line hidden
-WriteLiteral("\r\n</div>\r\n");
-
-            
-            #line 72 "..\..\Views\Files\FileEditor.cshtml"
+            #line 73 "..\..\Views\Files\FileEditor.cshtml"
 
 
             
@@ -486,7 +474,7 @@ WriteLiteral(">\r\n");
 WriteLiteral("                ");
 
             
-            #line 74 "..\..\Views\Files\FileEditor.cshtml"
+            #line 75 "..\..\Views\Files\FileEditor.cshtml"
            Write(Html.Partial("~/Areas/bcms-root/Views/Tags/TagsTemplate.cshtml", tagsTemplateViewModel));
 
             
@@ -495,7 +483,7 @@ WriteLiteral("                ");
 WriteLiteral("\r\n            </div>\r\n");
 
             
-            #line 76 "..\..\Views\Files\FileEditor.cshtml"
+            #line 77 "..\..\Views\Files\FileEditor.cshtml"
 
             if (Model.AccessControlEnabled)
             {
@@ -504,14 +492,14 @@ WriteLiteral("\r\n            </div>\r\n");
             #line default
             #line hidden
             
-            #line 79 "..\..\Views\Files\FileEditor.cshtml"
+            #line 80 "..\..\Views\Files\FileEditor.cshtml"
            Write(Html.Partial(RootModuleConstants.AccessControlTemplate));
 
             
             #line default
             #line hidden
             
-            #line 79 "..\..\Views\Files\FileEditor.cshtml"
+            #line 80 "..\..\Views\Files\FileEditor.cshtml"
                                                                         
             }
 
@@ -532,7 +520,7 @@ WriteLiteral(">\r\n");
 WriteLiteral("                    ");
 
             
-            #line 84 "..\..\Views\Files\FileEditor.cshtml"
+            #line 85 "..\..\Views\Files\FileEditor.cshtml"
                Write(Html.Tooltip(MediaGlobalization.FileEditor_Dialog_Image_Tooltip_Description));
 
             
@@ -545,7 +533,7 @@ WriteLiteral(" class=\"bcms-content-titles\"");
 WriteLiteral(">");
 
             
-            #line 85 "..\..\Views\Files\FileEditor.cshtml"
+            #line 86 "..\..\Views\Files\FileEditor.cshtml"
                                                 Write(MediaGlobalization.FileEditor_Dialog_Image_Title);
 
             
@@ -565,7 +553,7 @@ WriteLiteral(" data-bind=\"click: image().remove.bind(image())\"");
 WriteLiteral(">");
 
             
-            #line 88 "..\..\Views\Files\FileEditor.cshtml"
+            #line 89 "..\..\Views\Files\FileEditor.cshtml"
                                                                                                 Write(RootGlobalization.Button_Remove);
 
             
@@ -589,7 +577,7 @@ WriteLiteral(" data-bind=\"click: image().select.bind(image())\"");
 WriteLiteral(">");
 
             
-            #line 94 "..\..\Views\Files\FileEditor.cshtml"
+            #line 95 "..\..\Views\Files\FileEditor.cshtml"
                                                                                            Write(MediaGlobalization.FileEditor_Dialog_Image_SelectButtonTitle);
 
             
@@ -598,7 +586,7 @@ WriteLiteral(">");
 WriteLiteral("</div>\r\n                </div>\r\n            </div>\r\n");
 
             
-            #line 97 "..\..\Views\Files\FileEditor.cshtml"
+            #line 98 "..\..\Views\Files\FileEditor.cshtml"
 
 
             
@@ -613,7 +601,7 @@ WriteLiteral(" data-bind=\"click: reupload\"");
 WriteLiteral(">");
 
             
-            #line 98 "..\..\Views\Files\FileEditor.cshtml"
+            #line 99 "..\..\Views\Files\FileEditor.cshtml"
                                                                     Write(MediaGlobalization.FileEditor_Dialog_Reupload_Title);
 
             
@@ -622,21 +610,21 @@ WriteLiteral(">");
 WriteLiteral("</div>\r\n");
 
             
-            #line 99 "..\..\Views\Files\FileEditor.cshtml"
+            #line 100 "..\..\Views\Files\FileEditor.cshtml"
 
             
             
             #line default
             #line hidden
             
-            #line 100 "..\..\Views\Files\FileEditor.cshtml"
+            #line 101 "..\..\Views\Files\FileEditor.cshtml"
        Write(Html.HiddenSubmit());
 
             
             #line default
             #line hidden
             
-            #line 100 "..\..\Views\Files\FileEditor.cshtml"
+            #line 101 "..\..\Views\Files\FileEditor.cshtml"
                                 
         }
 

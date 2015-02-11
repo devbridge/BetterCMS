@@ -339,12 +339,12 @@ namespace BetterCms.Module.Blog.Services
                             {
                                 var category = blogML.Categories[i];
 
-                                if (blogPostModel.SelectItemCategories == null)
+                                if (blogPostModel.Categories == null)
                                 {
-                                    blogPostModel.SelectItemCategories = new List<Guid>();
+                                    blogPostModel.Categories = new List<LookupKeyValue>();
                                 }
 
-                                blogPostModel.SelectItemCategories.Add(new Guid(categories[category.Ref].ToLowerInvariantString()));                                
+                                blogPostModel.Categories.Add(new LookupKeyValue() {Key = categories[category.Ref].ToLowerInvariantString()});                                
                             }                            
                         }
 

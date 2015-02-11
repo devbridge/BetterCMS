@@ -62,20 +62,6 @@ namespace BetterCms.Module.Pages.ViewModels.Widgets
         public bool IsUserConfirmed { get; set; }
 
         /// <summary>
-        /// Gets or sets the list of SelectedCategories Ids.
-        /// </summary>
-        /// <value>
-        /// The list of categories Ids.
-        /// </value>        /// <summary>
-        /// Gets or sets the list of SelectedCategories Ids.
-        /// </summary>
-        /// <value>
-        /// The list of categories Ids.
-        /// </value>
-        [JsonConverter(typeof(SingleValueArrayConverter<Guid>))]
-        public IList<Guid> SelectItemCategories { get; set; }
-
-        /// <summary>
         /// Returns a <see cref="System.String" /> that represents this instance.
         /// </summary>
         /// <returns>

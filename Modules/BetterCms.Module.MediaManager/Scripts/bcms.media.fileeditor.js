@@ -1,8 +1,8 @@
 ﻿/*jslint unparam: true, white: true, browser: true, devel: true */
 /*global bettercms */
 
-bettercms.define('bcms.media.fileeditor', ['bcms.jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', 'bcms.forms', 'bcms.dynamicContent', 'bcms.ko.extenders', 'bcms.tags', 'bcms.security', 'bcms.media.upload', 'bcms.multiple.select'],
-    function ($, bcms, modal, siteSettings, forms, dynamicContent, ko, tags, security, mediaUpload) {
+bettercms.define('bcms.media.fileeditor', ['bcms.jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', 'bcms.forms', 'bcms.dynamicContent', 'bcms.ko.extenders', 'bcms.tags', 'bcms.categories', 'bcms.security', 'bcms.media.upload', 'bcms.multiple.select'],
+    function ($, bcms, modal, siteSettings, forms, dynamicContent, ko, tags, categories, security, mediaUpload) {
         'use strict';
 
         var editor = {},
@@ -80,6 +80,7 @@ bettercms.define('bcms.media.fileeditor', ['bcms.jquery', 'bcms', 'bcms.modal', 
         function FileEditViewModel(dialog, data, onSaveCallback) {
             var self = this,
                 tagsViewModel = new tags.TagsListViewModel(data.Tags),
+                categoriesViewModel = new categories.CategoriesListViewModel(data.Categories),
                 accessControl = security.createUserAccessViewModel(data.UserAccessList),
                 image = data.Image,
                 userAccessList = accessControl.UserAccessList(),
@@ -87,6 +88,7 @@ bettercms.define('bcms.media.fileeditor', ['bcms.jquery', 'bcms', 'bcms.modal', 
                 i;
             
             self.tags = tagsViewModel;
+            self.categories = categoriesViewModel;
             self.image = ko.observable(new media.ImageSelectorViewModel(image));
             self.accessControl = accessControl;
 

@@ -4,8 +4,8 @@
 bettercms.define('bcms.pages.widgets', ['bcms.jquery', 'bcms', 'bcms.modal', 'bcms.datepicker', 'bcms.htmlEditor',
         'bcms.dynamicContent', 'bcms.siteSettings', 'bcms.messages', 'bcms.preview', 'bcms.grid',
         'bcms.slides.jquery', 'bcms.redirect', 'bcms.pages.history', 'bcms.security', 'bcms.options', 'bcms.ko.extenders', 'bcms.codeEditor',
-        'bcms.pages', 'bcms.forms', 'bcms.ko.grid'],
-    function ($, bcms, modal, datepicker, htmlEditor, dynamicContent, siteSettings, messages, preview, grid, slides, redirect, contentHistory, security, options, ko, codeEditor, pages, forms, kogrid) {
+        'bcms.pages', 'bcms.categories', 'bcms.forms', 'bcms.ko.grid'],
+    function ($, bcms, modal, datepicker, htmlEditor, dynamicContent, siteSettings, messages, preview, grid, slides, redirect, contentHistory, security, options, ko, codeEditor, pages, categories, forms, kogrid) {
         'use strict';
 
         var widgets = {},
@@ -88,6 +88,7 @@ bettercms.define('bcms.pages.widgets', ['bcms.jquery', 'bcms', 'bcms.modal', 'bc
 
                 siteSettingsWidgetsListForm: '#bcms-widgets-form',
 
+                widgetTab: '#bcms-tab-1',
                 optionsTab: '#bcms-tab-2',
                 pageContentOptionsForm: '#bcms-options-form',
 
@@ -314,13 +315,25 @@ bettercms.define('bcms.pages.widgets', ['bcms.jquery', 'bcms', 'bcms.modal', 'bc
         /**
         * Initializes 'Edit Html Content Widget' dialog form.
         */
+
+        function WidgetEditViewModel(data) {
+            var self = this,
+                categorieslist = data.Categories;
+            self.categories = new categories.CategoriesListViewModel(categorieslist);
+        }
+
         function initializeEditHtmlContentWidgetForm(dialog, availablePreviewOnPageContentId, onSaveCallback, editInSourceMode, content, editorId, includeChildRegions) {
             var optionsContainer = dialog.container.find(selectors.optionsTab),
+                widgetEditContainer = dialog.container.find(selectors.widgetTab),
                 data = content.Data || {},
                 widgetOptions = data.Options,
                 customOptions = data.CustomOptions,
-                optionListViewModel = options.createOptionsViewModel(optionsContainer, widgetOptions, customOptions);
+                optionListViewModel = options.createOptionsViewModel(optionsContainer, widgetOptions, customOptions),
+                widgetEditViewModel = new WidgetEditViewModel(data);
+                
+
             ko.applyBindings(optionListViewModel, optionsContainer.get(0));
+            ko.applyBindings(widgetEditViewModel, widgetEditContainer.get(0));
 
             if (availablePreviewOnPageContentId !== null) {
                 dialog.container.find(selectors.widgetPreviewPageContentId).val(availablePreviewOnPageContentId);
@@ -376,10 +389,14 @@ bettercms.define('bcms.pages.widgets', ['bcms.jquery', 'bcms', 'bcms.modal', 'bc
             }
 
             var optionsContainer = dialog.container.find(selectors.optionsTab),
+                widgetEditContainer = dialog.container.find(selectors.widgetTab),
                 widgetOptions = data != null ? data.Options : null,
                 customOptions = data != null ? data.CustomOptions : null,
-                optionListViewModel = options.createOptionsViewModel(optionsContainer, widgetOptions, customOptions);
+                optionListViewModel = options.createOptionsViewModel(optionsContainer, widgetOptions, customOptions),
+                widgetEditViewModel = new WidgetEditViewModel(data);
+
             ko.applyBindings(optionListViewModel, optionsContainer.get(0));
+            ko.applyBindings(widgetEditViewModel, widgetEditContainer.get(0)); c
 
             dialog.container.find(selectors.widgetPreviewImage).error(function () {
                 var image = dialog.container.find(selectors.widgetPreviewImage);

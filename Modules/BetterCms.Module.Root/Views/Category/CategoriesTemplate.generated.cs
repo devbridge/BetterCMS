@@ -9,7 +9,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace BetterCms.Module.Root.Views.Tags
+namespace BetterCms.Module.Root.Views.Category
 {
     using System;
     using System.Collections.Generic;
@@ -27,35 +27,35 @@ namespace BetterCms.Module.Root.Views.Tags
     using System.Web.UI;
     using System.Web.WebPages;
     
-    #line 1 "..\..\Views\Tags\TagsTemplate.cshtml"
+    #line 1 "..\..\Views\Category\CategoriesTemplate.cshtml"
     using BetterCms.Module.Root;
     
     #line default
     #line hidden
     
-    #line 2 "..\..\Views\Tags\TagsTemplate.cshtml"
+    #line 2 "..\..\Views\Category\CategoriesTemplate.cshtml"
     using BetterCms.Module.Root.Content.Resources;
     
     #line default
     #line hidden
     
-    #line 3 "..\..\Views\Tags\TagsTemplate.cshtml"
+    #line 3 "..\..\Views\Category\CategoriesTemplate.cshtml"
     using BetterCms.Module.Root.Mvc;
     
     #line default
     #line hidden
     
-    #line 4 "..\..\Views\Tags\TagsTemplate.cshtml"
+    #line 4 "..\..\Views\Category\CategoriesTemplate.cshtml"
     using BetterCms.Module.Root.Mvc.Helpers;
     
     #line default
     #line hidden
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("RazorGenerator", "2.0.0.0")]
-    [System.Web.WebPages.PageVirtualPathAttribute("~/Views/Tags/TagsTemplate.cshtml")]
-    public partial class TagsTemplate : System.Web.Mvc.WebViewPage<BetterCms.Module.Root.ViewModels.Tags.TagsTemplateViewModel>
+    [System.Web.WebPages.PageVirtualPathAttribute("~/Views/Category/CategoriesTemplate.cshtml")]
+    public partial class CategoriesTemplate : System.Web.Mvc.WebViewPage<BetterCms.Module.Root.ViewModels.Category.CategoryTemplateViewModel>
     {
-        public TagsTemplate()
+        public CategoriesTemplate()
         {
         }
         public override void Execute()
@@ -63,7 +63,7 @@ namespace BetterCms.Module.Root.Views.Tags
 WriteLiteral("\r\n");
 
             
-            #line 8 "..\..\Views\Tags\TagsTemplate.cshtml"
+            #line 8 "..\..\Views\Category\CategoriesTemplate.cshtml"
    var canEdit = (ViewContext.Controller as CmsControllerBase).SecurityService.IsAuthorized(RootModuleConstants.UserRoles.EditContent); 
             
             #line default
@@ -77,7 +77,7 @@ WriteLiteral(">\r\n");
 WriteLiteral("    ");
 
             
-            #line 10 "..\..\Views\Tags\TagsTemplate.cshtml"
+            #line 10 "..\..\Views\Category\CategoriesTemplate.cshtml"
 Write(Html.Tooltip(Model.TooltipDescription));
 
             
@@ -92,8 +92,8 @@ WriteLiteral(">\r\n");
 WriteLiteral("        ");
 
             
-            #line 12 "..\..\Views\Tags\TagsTemplate.cshtml"
-   Write(RootGlobalization.TagsTemplate_AddTags_Title);
+            #line 12 "..\..\Views\Category\CategoriesTemplate.cshtml"
+   Write(RootGlobalization.CategoriesTemplate_AddCategories_Title);
 
             
             #line default
@@ -105,7 +105,7 @@ WriteLiteral(" class=\"bcms-btn-plus\"");
 WriteLiteral(" data-bind=\"css: { \'bcms-btn-plus-expand\': isExpanded() }");
 
             
-            #line 13 "..\..\Views\Tags\TagsTemplate.cshtml"
+            #line 13 "..\..\Views\Category\CategoriesTemplate.cshtml"
                                                                                        Write(canEdit ? ", click: expandCollapse" : string.Empty);
 
             
@@ -132,7 +132,7 @@ WriteLiteral(@" data-bind=""
                     value: newItem,
                     valueUpdate: 'afterkeydown',
                     hasfocus: hasfocus,
-                    autocompleteList: '',
+                    autocompleteList: 'onlyExisting',
                     enterPress: addItem,
                     escPress: clearItem""");
 
@@ -166,7 +166,7 @@ WriteLiteral("></span><a");
 WriteLiteral(" data-bind=\"");
 
             
-            #line 31 "..\..\Views\Tags\TagsTemplate.cshtml"
+            #line 31 "..\..\Views\Category\CategoriesTemplate.cshtml"
                                                                                                                                                    Write(canEdit ? "click: remove" : string.Empty);
 
             
@@ -177,7 +177,7 @@ WriteLiteral("\"");
 WriteLiteral(">");
 
             
-            #line 31 "..\..\Views\Tags\TagsTemplate.cshtml"
+            #line 31 "..\..\Views\Category\CategoriesTemplate.cshtml"
                                                                                                                                                                                                Write(RootGlobalization.Button_Remove);
 
             
@@ -187,7 +187,7 @@ WriteLiteral("</a></div>\r\n        <input");
 
 WriteLiteral(" type=\"hidden\"");
 
-WriteLiteral(" data-bind=\"attr: { name: getItemInputName($index()), value: name() }\"");
+WriteLiteral(" data-bind=\"attr: { name: getItemInputName($index()), value: id() }\"");
 
 WriteLiteral(" />\r\n    </div>\r\n</div>\r\n");
 

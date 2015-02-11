@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Security.Principal;
 using System.Web.Mvc;
+using System.Web.Services.Description;
 
 using BetterCms.Core.DataAccess;
 using BetterCms.Core.DataAccess.DataContext;
@@ -17,6 +18,7 @@ using FluentNHibernate.Utils;
 
 using NHibernate.Criterion;
 using NHibernate.Linq;
+using NHibernate.Transform;
 
 namespace BetterCms.Module.Root.Services
 {
@@ -83,6 +85,27 @@ namespace BetterCms.Module.Root.Services
                                      .Future<Guid>();
         }
 
+        public IEnumerable<LookupKeyValue> GetSelectedCategories<TEntity, TEntityCategory>(Guid? entityId)
+            where TEntity : Entity, ICategorized
+            where TEntityCategory : Entity, IEntityCategory
+        {
+            Category categoryAliasa = null;
+            TEntity entityAlias = null;
+            TEntityCategory categoryAlias = default(TEntityCategory);
+            LookupKeyValue valueAlias = null;
+
+            return repository.AsQueryOver(() => categoryAliasa).Where(c => !c.IsDeleted)
+                             .WithSubquery.WhereProperty(c => c.Id)
+                             .In(QueryOver.Of(() => entityAlias)
+                                     .JoinQueryOver(() => entityAlias.Categories, () => categoryAlias)
+                                     .Where(() => entityAlias.Id == entityId && !categoryAlias.IsDeleted)
+                                     .SelectList(list => list.Select(() => categoryAlias.Category.Id)))
+                                     .SelectList(l => l
+                                         .Select(NHibernate.Criterion.Projections.Cast(NHibernate.NHibernateUtil.String, NHibernate.Criterion.Projections.Property(() => categoryAliasa.Id))).WithAlias(() => valueAlias.Key)
+                                         .Select(() => categoryAliasa.Name).WithAlias(() => valueAlias.Value))
+                                     .TransformUsing(Transformers.AliasToBean<LookupKeyValue>())
+                                     .Future<LookupKeyValue>();
+        }
         public Category SaveCategory(out bool categoryUpdated, CategoryTree categoryTree, Guid categoryId, int version, string name, int displayOrder, string macro, Guid parentCategoryId, bool isDeleted = false, Category parentCategory = null, List<Category> categories = null)
         {
             categoryUpdated = false;
@@ -224,6 +247,12 @@ namespace BetterCms.Module.Root.Services
                     entity.AddCategory(newentityCategory);
                 }              
             }
+        }
+
+       public void CombineEntityCategories<TEntity, TEntityCategory>(TEntity entity, IEnumerable<LookupKeyValue> currentCategories) where TEntity : Entity, ICategorized
+            where TEntityCategory : Entity, IEntityCategory, new()
+        {
+            CombineEntityCategories<TEntity, TEntityCategory>(entity, currentCategories != null ? currentCategories.Select(c => Guid.Parse(c.Key)) : Enumerable.Empty<Guid>());
         }
 
         public void DeleteCategoryNode(Guid id, int version, Guid? categoryTreeId = null)

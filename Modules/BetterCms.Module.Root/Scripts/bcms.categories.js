@@ -1,5 +1,5 @@
-﻿bettercms.define("bcms.categories", ["bcms.jquery", "bcms", "bcms.siteSettings", "bcms.dynamicContent", "bcms.grid", "bcms.messages", "bcms.modal", "bcms.forms", "bcms.ko.extenders"],
-    function ($, bcms, siteSettings, dynamicContent, grid, messages, modal, forms, ko) {
+﻿bettercms.define("bcms.categories", ["bcms.jquery", "bcms", "bcms.siteSettings", "bcms.dynamicContent", "bcms.grid", "bcms.messages", "bcms.modal", "bcms.forms", "bcms.ko.extenders", 'bcms.autocomplete'],
+    function ($, bcms, siteSettings, dynamicContent, grid, messages, modal, forms, ko, autocomplete) {
         "use strict";
 
         var module = {},
@@ -7,7 +7,8 @@
                 loadSiteSettingsCategoryTreesListUrl: null,
                 categoryTreeEditDialogUrl: null,
                 saveCategoryTreeUrl: null,
-                deleteCategoryTreeUrl: null
+                deleteCategoryTreeUrl: null,
+                categoriesSuggestionServiceUrl: null
             },
             globalization = {
                 categoryTreeCreatorDialogTitle: null,
@@ -1049,6 +1050,26 @@
 
         // --------------------------------------------------------------------
 
+
+        /**
+*  autocomplete list view model
+*/
+        var CategoriesListViewModel = (function (_super) {
+            bcms.extendsClass(CategoriesListViewModel, _super);
+
+            function CategoriesListViewModel(categoriesList) {
+                var options = {
+                    serviceUrl: links.categoriesSuggestionServiceUrl,
+                    pattern: 'Categories[{0}].key'
+                };
+
+                _super.call(this, categoriesList, options);
+            }
+
+            return CategoriesListViewModel;
+        })(autocomplete.AutocompleteListViewModel);
+
+        module.CategoriesListViewModel = CategoriesListViewModel;
 
         /**
         * Loads a categories view to the site settings container.

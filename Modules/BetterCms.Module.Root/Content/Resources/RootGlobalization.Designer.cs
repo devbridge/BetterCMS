@@ -475,6 +475,15 @@ namespace BetterCms.Module.Root.Content.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Add Categories.
+        /// </summary>
+        public static string CategoriesTemplate_AddCategories_Title {
+            get {
+                return ResourceManager.GetString("CategoriesTemplate_AddCategories_Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to CollapseAll.
         /// </summary>
         public static string CategoryTree_Button_CollapseAll {

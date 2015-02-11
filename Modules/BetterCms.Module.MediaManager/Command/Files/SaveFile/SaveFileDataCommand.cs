@@ -66,7 +66,7 @@ namespace BetterCms.Module.MediaManager.Command.Files.SaveFile
             mediaFile.Version = request.Version.ToIntOrDefault();
             mediaFile.Image = request.Image != null && request.Image.ImageId.HasValue ? Repository.AsProxy<MediaImage>(request.Image.ImageId.Value) : null;
 
-            categoryService.CombineEntityCategories<Media, MediaCategory>(mediaFile, request.SelectItemCategories); 
+            categoryService.CombineEntityCategories<Media, MediaCategory>(mediaFile, request.Categories); 
 
             Repository.Save(mediaFile);
 

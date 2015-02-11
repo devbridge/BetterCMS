@@ -21,6 +21,10 @@ namespace BetterCms.Module.Root.Services
         IEnumerable<Guid> GetSelectedCategoriesIds<TEntity, TEntityCategory>(Guid? entityId)
             where TEntity : Entity, ICategorized
             where TEntityCategory : Entity, IEntityCategory;
+
+        IEnumerable<LookupKeyValue> GetSelectedCategories<TEntity, TEntityCategory>(Guid? entityId)
+            where TEntity : Entity, ICategorized
+            where TEntityCategory : Entity, IEntityCategory;
         /// <summary>
         /// Saves the category.
         /// </summary>
@@ -41,6 +45,10 @@ namespace BetterCms.Module.Root.Services
         Category SaveCategory(out bool categoryUpdated, CategoryTree categoryTree, Guid categoryId, int version, string name, int displayOrder, string macro, Guid parentCategoryId, bool isDeleted = false, Category parentCategory = null, List<Category> categories = null);
 
         void DeleteCategoryTree(Guid id, int version, IPrincipal currentUser);
+
+        void CombineEntityCategories<TEntity, TEntityCategory>(TEntity entity, IEnumerable<LookupKeyValue> currentCategories)
+            where TEntity : Entity, ICategorized
+            where TEntityCategory : Entity, IEntityCategory, new();
 
         void CombineEntityCategories<TEntity, TEntityCategory>(TEntity entity, IEnumerable<System.Guid> currentCategories)
             where TEntity : Entity, ICategorized

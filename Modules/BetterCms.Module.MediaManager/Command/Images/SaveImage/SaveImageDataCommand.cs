@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Drawing;
 using System.IO;
+using System.Linq;
 
 using BetterCms.Core.Mvc.Commands;
 using BetterCms.Core.Services.Storage;
@@ -67,7 +68,7 @@ namespace BetterCms.Module.MediaManager.Command.Images.SaveImage
             mediaImage.Description = request.Description;
             mediaImage.ImageAlign = request.ImageAlign;
 
-            CategoryService.CombineEntityCategories<Media, MediaCategory>(mediaImage, request.SelectItemCategories); 
+            CategoryService.CombineEntityCategories<Media, MediaCategory>(mediaImage, request.Categories); 
 
             if (croppedFileStream != null)
             {

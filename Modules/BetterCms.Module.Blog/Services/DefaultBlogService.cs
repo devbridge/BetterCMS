@@ -263,7 +263,7 @@ namespace BetterCms.Module.Blog.Services
                 blogPost.Description = request.IntroText;
                 blogPost.Author = request.AuthorId.HasValue ? repository.AsProxy<Author>(request.AuthorId.Value) : null;
 
-                categoryService.CombineEntityCategories<BlogPost, PageCategory>(blogPost, request.SelectItemCategories);
+                categoryService.CombineEntityCategories<BlogPost, PageCategory>(blogPost, request.Categories);
                 
                 blogPost.Image = (request.Image != null && request.Image.ImageId.HasValue) ? repository.AsProxy<MediaImage>(request.Image.ImageId.Value) : null;
                 if (isNew || request.DesirableStatus == ContentStatus.Published)
