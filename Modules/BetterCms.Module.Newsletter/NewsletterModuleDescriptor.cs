@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 
 using Autofac;
@@ -10,6 +9,8 @@ using BetterCms.Module.Newsletter.Content.Resources;
 using BetterCms.Module.Newsletter.Registration;
 using BetterCms.Module.Newsletter.Services;
 using BetterCms.Module.Root;
+
+using Devbridge.Platform.Core.Modules.Registration;
 
 namespace BetterCms.Module.Newsletter
 {
@@ -45,22 +46,6 @@ namespace BetterCms.Module.Newsletter
             : base(cmsConfiguration)
         {
             newsletterJsModuleIncludeDescriptor = new NewsletterJsModuleIncludeDescriptor(this);
-        }
-
-        internal const string ModuleId = "c99ff575-daa8-4b6c-8b02-a8a4aac31bad";
-
-        /// <summary>
-        /// Gets the identifier.
-        /// </summary>
-        /// <value>
-        /// The identifier.
-        /// </value>
-        public override Guid Id
-        {
-            get
-            {
-                return new Guid(ModuleId);
-            }
         }
 
         /// <summary>
@@ -124,9 +109,8 @@ namespace BetterCms.Module.Newsletter
         /// </summary>
         /// <param name="context">The area registration context.</param>
         /// <param name="containerBuilder">The container builder.</param>        
-        public override void RegisterModuleTypes(CmsModuleRegistrationContext context, ContainerBuilder containerBuilder)
+        public override void RegisterModuleTypes(ModuleRegistrationContext context, ContainerBuilder containerBuilder)
         {
-
             containerBuilder.RegisterType<DefaultSubscriberService>().AsImplementedInterfaces().InstancePerLifetimeScope();
         }
 

@@ -211,6 +211,14 @@
       <Project>{694ca5ca-a0e2-4578-a249-648498b058d7}</Project>
       <Name>BetterCms.Core</Name>
     </ProjectReference>
+    <ProjectReference Include="..\..\Devbridge.Platform.Core.Web\Devbridge.Platform.Core.Web.csproj">
+      <Project>{c8588325-b702-4785-834f-313c19562871}</Project>
+      <Name>Devbridge.Platform.Core.Web</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Devbridge.Platform.Core\Devbridge.Platform.Core.csproj">
+      <Project>{c97b2899-5ac5-4528-b205-478d4183676d}</Project>
+      <Name>Devbridge.Platform.Core</Name>
+    </ProjectReference>
     <ProjectReference Include="..\BetterCms.Module.MediaManager\BetterCms.Module.MediaManager.csproj">
       <Project>{f3e41793-e8ed-4ba8-a1ab-cba1e47b0786}</Project>
       <Name>BetterCms.Module.MediaManager</Name>

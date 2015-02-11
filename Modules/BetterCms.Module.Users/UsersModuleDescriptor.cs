@@ -1,19 +1,25 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Web;
 
 using Autofac;
 
-using BetterCms.Core.Dependencies;
 using BetterCms.Core.Modules;
 using BetterCms.Core.Modules.Projections;
+
 using BetterCms.Events;
+
 using BetterCms.Module.Root;
 using BetterCms.Module.Root.Services;
+
 using BetterCms.Module.Users.Content.Resources;
 using BetterCms.Module.Users.Registration;
 using BetterCms.Module.Users.Services;
+
+using Devbridge.Platform.Core.Dependencies;
+using Devbridge.Platform.Core.Modules.Registration;
+using Devbridge.Platform.Core.Web.Modules.Registration;
+using Devbridge.Platform.Events;
 
 namespace BetterCms.Module.Users
 {
@@ -78,22 +84,6 @@ namespace BetterCms.Module.Users
 
             CmsCoreEvents.Instance.HostStart += OnHostStart;
             CmsCoreEvents.Instance.HostAuthenticateRequest += HostAuthenticateRequest;            
-        }
-
-        internal const string ModuleId = "6c5ca410-e8c4-483f-a9ec-354051e1cb38";
-
-        /// <summary>
-        /// Gets the identifier.
-        /// </summary>
-        /// <value>
-        /// The identifier.
-        /// </value>
-        public override Guid Id
-        {
-            get
-            {
-                return new Guid(ModuleId);
-            }
         }
 
         /// <summary>
@@ -216,7 +206,7 @@ namespace BetterCms.Module.Users
         /// </summary>
         /// <param name="context">The area registration context.</param>
         /// <param name="containerBuilder">The container builder.</param>
-        public override void RegisterModuleTypes(CmsModuleRegistrationContext context, ContainerBuilder containerBuilder)
+        public override void RegisterModuleTypes(ModuleRegistrationContext context, ContainerBuilder containerBuilder)
         {
             containerBuilder.RegisterType<DefaultAuthenticationService>().AsImplementedInterfaces().InstancePerLifetimeScope();
             containerBuilder.RegisterType<DefaultRoleService>().AsImplementedInterfaces().InstancePerLifetimeScope();
@@ -225,7 +215,7 @@ namespace BetterCms.Module.Users
             containerBuilder.RegisterType<DefaultRegistrationService>().As<IRegistrationService>().InstancePerLifetimeScope();
         }
 
-        public override void RegisterCustomRoutes(CmsModuleRegistrationContext context, ContainerBuilder containerBuilder)
+        public override void RegisterCustomRoutes(WebModuleRegistrationContext context, ContainerBuilder containerBuilder)
         {
             if (Configuration.Users != null)
             {

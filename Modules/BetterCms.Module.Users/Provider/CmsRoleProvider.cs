@@ -5,9 +5,10 @@ using System.Linq;
 using Autofac;
 
 using Devbridge.Platform.Core.DataAccess;
-using Devbridge.Platform.Core.DataAccess.DataContext;
-using BetterCms.Core.Dependencies;
 using BetterCms.Module.Users.Services;
+
+using Devbridge.Platform.Core.DataAccess.DataContext;
+using Devbridge.Platform.Core.Dependencies;
 
 using NHibernate.Linq;
 

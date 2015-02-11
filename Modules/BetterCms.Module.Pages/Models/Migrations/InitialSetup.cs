@@ -1,6 +1,7 @@
 ﻿using System;
 
 using Devbridge.Platform.Core.DataAccess.DataContext.Migrations;
+using Devbridge.Platform.Core.Models;
 
 using FluentMigrator;
 

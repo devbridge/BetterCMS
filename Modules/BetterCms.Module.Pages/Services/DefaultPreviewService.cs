@@ -3,8 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Security.Principal;
 
-using Devbridge.Platform.Core.DataAccess;
-using BetterCms.Core.DataAccess.DataContext.Fetching;
 using BetterCms.Core.Exceptions.Service;
 using BetterCms.Core.Modules.Projections;
 using BetterCms.Core.Services;
@@ -14,6 +12,9 @@ using BetterCms.Module.Root.Models;
 using BetterCms.Module.Root.Projections;
 using BetterCms.Module.Root.Services;
 using BetterCms.Module.Root.ViewModels.Cms;
+
+using Devbridge.Platform.Core.DataAccess;
+using Devbridge.Platform.Core.DataAccess.DataContext.Fetching;
 
 using ContentEntity = BetterCms.Module.Root.Models.Content;
 

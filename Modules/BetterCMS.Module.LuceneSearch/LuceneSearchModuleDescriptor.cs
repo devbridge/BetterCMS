@@ -15,7 +15,7 @@ using BetterCms.Module.Search.Services;
 
 using Common.Logging;
 
-using HtmlAgilityPack;
+using Devbridge.Platform.Core.Modules.Registration;
 
 namespace BetterCms.Module.LuceneSearch
 {
@@ -31,24 +31,6 @@ namespace BetterCms.Module.LuceneSearch
         internal const string LuceneSchemaName = "bcms_lucene";        
 
         private static List<IWorker> workers = new List<IWorker>();
-
-        private static readonly ILog Log = LogManager.GetLogger(LuceneSearchConstants.LuceneSearchModuleLoggerNamespace);
-
-        internal const string ModuleId = "4382d4f2-b5a3-4c1f-bcdb-823289ccf82f";
-
-        /// <summary>
-        /// Gets the identifier.
-        /// </summary>
-        /// <value>
-        /// The identifier.
-        /// </value>
-        public override Guid Id
-        {
-            get
-            {
-                return new Guid(ModuleId);
-            }
-        }
 
         /// <summary>
         /// Gets the name.
@@ -129,7 +111,7 @@ namespace BetterCms.Module.LuceneSearch
                 };
         }
         
-        public override void RegisterModuleTypes(CmsModuleRegistrationContext context, ContainerBuilder containerBuilder)
+        public override void RegisterModuleTypes(ModuleRegistrationContext context, ContainerBuilder containerBuilder)
         {
             containerBuilder.RegisterType<DefaultIndexerService>().As<IIndexerService>().InstancePerDependency();
             containerBuilder.RegisterType<DefaultIndexerService>().As<ISearchService>().InstancePerDependency();

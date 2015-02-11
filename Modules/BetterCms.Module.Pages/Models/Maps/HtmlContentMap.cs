@@ -1,5 +1,7 @@
 using BetterCms.Core.Security;
 
+using Devbridge.Platform.Core.Models;
+
 namespace BetterCms.Module.Pages.Models.Maps
 {
     public class HtmlContentMap : EntitySubClassMapBase<HtmlContent>

@@ -5,14 +5,15 @@ using System.Linq;
 using System.Text;
 using System.Xml;
 
-using Devbridge.Platform.Core.DataAccess;
 using BetterCms.Core.DataContracts.Enums;
-using BetterCms.Core.Web;
 using BetterCms.Module.Blog.Models;
 using BetterCms.Module.Root.Models;
 
 using BlogML;
 using BlogML.Xml;
+
+using Devbridge.Platform.Core.DataAccess;
+using Devbridge.Platform.Core.Web.Web;
 
 namespace BetterCms.Module.Blog.Services
 {

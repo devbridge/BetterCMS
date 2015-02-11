@@ -26,6 +26,8 @@ using BetterCms.Module.Root.Mvc.PageHtmlRenderer;
 using BetterCms.Module.Root.Services;
 using BetterCms.Module.Root.ViewModels.Cms;
 
+using Devbridge.Platform.Core.Modules.Registration;
+
 namespace BetterCms.Module.Pages
 {
     /// <summary>
@@ -119,33 +121,6 @@ namespace BetterCms.Module.Pages
             RegisterRenderingPageProperties();
         }
 
-        internal const string ModuleId = "6be7d282-e319-408e-8425-abf7468412de";
-
-        /// <summary>
-        /// Gets the identifier.
-        /// </summary>
-        /// <value>
-        /// The identifier.
-        /// </value>
-        public override Guid Id
-        {
-            get
-            {
-                return new Guid(ModuleId);
-            }
-        }
-
-        /// <summary>
-        /// Flag describe is module root or additional
-        /// </summary>
-        public override bool IsRootModule
-        {
-            get
-            {
-                return true;
-            }
-        }
-
         /// <summary>
         /// Gets the name of module.
         /// </summary>
@@ -221,7 +196,7 @@ namespace BetterCms.Module.Pages
         /// </summary>
         /// <param name="context">The area registration context.</param>
         /// <param name="containerBuilder">The container builder.</param>        
-        public override void RegisterModuleTypes(CmsModuleRegistrationContext context, ContainerBuilder containerBuilder)
+        public override void RegisterModuleTypes(ModuleRegistrationContext context, ContainerBuilder containerBuilder)
         {
             RegisterStylesheetRendererType<PageStylesheetAccessor, PageProperties>(containerBuilder);
             RegisterJavaScriptRendererType<PageJavaScriptAccessor, PageProperties>(containerBuilder);

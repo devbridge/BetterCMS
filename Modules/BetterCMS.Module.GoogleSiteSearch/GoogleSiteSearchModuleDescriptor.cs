@@ -1,6 +1,4 @@
-﻿using System;
-
-using Autofac;
+﻿using Autofac;
 
 using BetterCMS.Module.GoogleSiteSearch.Services.Search;
 
@@ -8,27 +6,13 @@ using BetterCms;
 using BetterCms.Core.Modules;
 using BetterCms.Module.Search.Services;
 
+using Devbridge.Platform.Core.Modules.Registration;
+
 namespace BetterCMS.Module.GoogleSiteSearch
 {
     public class GoogleSiteSearchModuleDescriptor : CmsModuleDescriptor
     {
         internal const string ModuleName = "googlesitesearch";
-
-        internal const string ModuleId = "a15f4a2a-6adf-447e-984c-c782212f3f2e";
-
-        /// <summary>
-        /// Gets the identifier.
-        /// </summary>
-        /// <value>
-        /// The identifier.
-        /// </value>
-        public override Guid Id
-        {
-            get
-            {
-                return new Guid(ModuleId);
-            }
-        }
 
         /// <summary>
         /// Gets the name.
@@ -61,7 +45,7 @@ namespace BetterCMS.Module.GoogleSiteSearch
         {
         }
         
-        public override void RegisterModuleTypes(CmsModuleRegistrationContext context, ContainerBuilder containerBuilder)
+        public override void RegisterModuleTypes(ModuleRegistrationContext context, ContainerBuilder containerBuilder)
         {
             containerBuilder.RegisterType<GoogleSiteSearchService>().As<ISearchService>().SingleInstance();
             containerBuilder.RegisterType<DefaultWebClient>().As<IWebClient>().SingleInstance();

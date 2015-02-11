@@ -1,11 +1,12 @@
 ﻿using System.Linq;
 
 using BetterCms.Core.DataContracts.Enums;
-using BetterCms.Core.Mvc.Commands;
 
 using BetterCms.Module.Blog.Services;
 using BetterCms.Module.Pages.Services;
 using BetterCms.Module.Root.Mvc;
+
+using Devbridge.Platform.Core.Web.Mvc.Commands;
 
 namespace BetterCms.Module.Blog.Commands.SaveBlogPost
 {

@@ -4,6 +4,8 @@ using Autofac;
 
 using BetterCms.Core.Modules;
 
+using Devbridge.Platform.Core.Modules.Registration;
+
 namespace BetterCms.Module.Search
 {
     /// <summary>
@@ -32,22 +34,6 @@ namespace BetterCms.Module.Search
         public SearchModuleDescriptor(ICmsConfiguration cmsConfiguration)
             : base(cmsConfiguration)
         {            
-        }
-
-        internal const string ModuleId = "312bf2f0-dbfb-408e-a648-b17b69b0f6dc";
-
-        /// <summary>
-        /// Gets the identifier.
-        /// </summary>
-        /// <value>
-        /// The identifier.
-        /// </value>
-        public override Guid Id
-        {
-            get
-            {
-                return new Guid(ModuleId);
-            }
         }
 
         /// <summary>
@@ -111,7 +97,7 @@ namespace BetterCms.Module.Search
         /// </summary>
         /// <param name="context">The area registration context.</param>
         /// <param name="containerBuilder">The container builder.</param>        
-        public override void RegisterModuleTypes(CmsModuleRegistrationContext context, ContainerBuilder containerBuilder)
+        public override void RegisterModuleTypes(ModuleRegistrationContext context, ContainerBuilder containerBuilder)
         {
         }        
     }

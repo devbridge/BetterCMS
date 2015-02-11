@@ -8,10 +8,7 @@ using System.Web;
 using System.Xml;
 
 using BetterCms.Configuration;
-using Devbridge.Platform.Core.DataAccess;
-using Devbridge.Platform.Core.DataAccess.DataContext;
 using BetterCms.Core.DataContracts.Enums;
-using BetterCms.Core.Web;
 
 using BetterCms.Module.Blog.Content.Resources;
 using BetterCms.Module.Blog.Models;
@@ -23,6 +20,10 @@ using BetterCms.Module.Root.Mvc;
 using BlogML.Xml;
 
 using Common.Logging;
+
+using Devbridge.Platform.Core.DataAccess;
+using Devbridge.Platform.Core.DataAccess.DataContext;
+using Devbridge.Platform.Core.Web.Web;
 
 using ValidationException = BetterCms.Core.Exceptions.Mvc.ValidationException;
 

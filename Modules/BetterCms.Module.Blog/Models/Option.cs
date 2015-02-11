@@ -1,6 +1,6 @@
 ﻿using System;
-using BetterCms.Core.Models;
 using BetterCms.Module.Root.Models;
+using Devbridge.Platform.Core.Models;
 
 namespace BetterCms.Module.Blog.Models
 {

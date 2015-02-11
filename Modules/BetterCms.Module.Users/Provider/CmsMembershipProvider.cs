@@ -1,13 +1,13 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using System.Web.Security;
 
 using Autofac;
 
-using Devbridge.Platform.Core.DataAccess.DataContext;
-using BetterCms.Core.Dependencies;
 using BetterCms.Module.Users.Models;
 using BetterCms.Module.Users.Services;
+
+using Devbridge.Platform.Core.DataAccess.DataContext;
+using Devbridge.Platform.Core.Dependencies;
 
 namespace BetterCms.Module.Users.Provider
 {

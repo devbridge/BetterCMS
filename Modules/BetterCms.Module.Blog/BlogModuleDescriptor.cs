@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 
 using Autofac;
@@ -24,6 +23,8 @@ using BetterCms.Module.Pages.Accessors;
 using BetterCms.Module.Root;
 using BetterCms.Module.Root.Mvc.PageHtmlRenderer;
 using BetterCms.Module.Root.ViewModels.Cms;
+
+using Devbridge.Platform.Core.Modules.Registration;
 
 namespace BetterCms.Module.Blog
 {
@@ -62,33 +63,6 @@ namespace BetterCms.Module.Blog
             RootEvents.Instance.PageRetrieved += Events_PageRetrieved;
 
             RegisterRenderingPageProperties();
-        }
-
-        internal const string ModuleId = "f2fd4209-8cc1-42a4-9b81-bde4de11008a";
-
-        /// <summary>
-        /// Gets the identifier.
-        /// </summary>
-        /// <value>
-        /// The identifier.
-        /// </value>
-        public override Guid Id
-        {
-            get
-            {
-                return new Guid(ModuleId);
-            }
-        }
-
-        /// <summary>
-        /// Flag describe is module root or additional
-        /// </summary>
-        public override bool IsRootModule
-        {
-            get
-            {
-                return true;
-            }
         }
 
         /// <summary>
@@ -217,7 +191,7 @@ namespace BetterCms.Module.Blog
         /// </summary>
         /// <param name="context">The area registration context.</param>
         /// <param name="containerBuilder">The container builder.</param>        
-        public override void RegisterModuleTypes(CmsModuleRegistrationContext context, ContainerBuilder containerBuilder)
+        public override void RegisterModuleTypes(ModuleRegistrationContext context, ContainerBuilder containerBuilder)
         {
             RegisterContentRendererType<BlogPostContentAccessor, BlogPostContent>(containerBuilder);
             RegisterStylesheetRendererType<PageStylesheetAccessor, BlogPost>(containerBuilder);

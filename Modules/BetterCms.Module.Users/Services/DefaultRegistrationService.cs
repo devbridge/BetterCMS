@@ -1,8 +1,9 @@
 ﻿using System.Linq;
 
-using Devbridge.Platform.Core.DataAccess;
-using BetterCms.Core.Web;
 using BetterCms.Module.Users.Models;
+
+using Devbridge.Platform.Core.DataAccess;
+using Devbridge.Platform.Core.Web.Web;
 
 namespace BetterCms.Module.Users.Services
 {

@@ -1,12 +1,13 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 
-using BetterCms.Core.Mvc.Commands;
 using BetterCms.Module.Blog.Services;
 using BetterCms.Module.Blog.ViewModels.Blog;
 using BetterCms.Module.Pages.Models;
 using BetterCms.Module.Root.Models;
 using BetterCms.Module.Root.Mvc;
+
+using Devbridge.Platform.Core.Web.Mvc.Commands;
 
 using NHibernate.Transform;
 

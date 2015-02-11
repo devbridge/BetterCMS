@@ -1,10 +1,10 @@
-﻿using System;
-
-using Autofac;
+﻿using Autofac;
 
 using BetterCms.Configuration;
 using BetterCms.Core.Modules;
 using BetterCms.Core.Services.Storage;
+
+using Devbridge.Platform.Core.Modules.Registration;
 
 namespace BetterCms.Module.WindowsAzureStorage
 {
@@ -13,22 +13,6 @@ namespace BetterCms.Module.WindowsAzureStorage
     /// </summary>
     public class WindowsAzureStorageModuleDescriptor : CmsModuleDescriptor
     {
-        internal const string ModuleId = "92296b77-4102-4a85-92d9-35d8be2044a2";
-
-        /// <summary>
-        /// Gets the identifier.
-        /// </summary>
-        /// <value>
-        /// The identifier.
-        /// </value>
-        public override Guid Id
-        {
-            get
-            {
-                return new Guid(ModuleId);
-            }
-        }
-
         /// <summary>
         /// Gets the name.
         /// </summary>
@@ -71,7 +55,7 @@ namespace BetterCms.Module.WindowsAzureStorage
         /// </summary>
         /// <param name="context">The area registration context.</param>
         /// <param name="containerBuilder">The container builder.</param>
-        public override void RegisterModuleTypes(CmsModuleRegistrationContext context, ContainerBuilder containerBuilder)
+        public override void RegisterModuleTypes(ModuleRegistrationContext context, ContainerBuilder containerBuilder)
         {
             if (Configuration.Storage.ServiceType == StorageServiceType.Auto)
             {

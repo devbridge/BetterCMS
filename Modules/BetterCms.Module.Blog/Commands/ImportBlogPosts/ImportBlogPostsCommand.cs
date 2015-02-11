@@ -3,8 +3,8 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 
 using BetterCms.Core.Exceptions.Mvc;
-using BetterCms.Core.Mvc.Commands;
 using BetterCms.Core.Services.Storage;
+
 using BetterCms.Module.Blog.Content.Resources;
 using BetterCms.Module.Blog.Models;
 using BetterCms.Module.Blog.Services;
@@ -12,6 +12,8 @@ using BetterCms.Module.Blog.ViewModels.Blog;
 using BetterCms.Module.Root.Mvc;
 
 using Common.Logging;
+
+using Devbridge.Platform.Core.Web.Mvc.Commands;
 
 namespace BetterCms.Module.Blog.Commands.ImportBlogPosts
 {

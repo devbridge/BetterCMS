@@ -12,6 +12,7 @@ using BetterCms.Module.Root.Mvc;
 using BetterCms.Module.Root.Services;
 using BetterCms.Module.Root.ViewModels.Option;
 
+using Devbridge.Platform.Core.Exceptions.DataTier;
 using Devbridge.Platform.Core.Web.Mvc.Commands;
 
 namespace BetterCms.Module.Pages.Command.Widget.GetHtmlContentWidgetForEdit

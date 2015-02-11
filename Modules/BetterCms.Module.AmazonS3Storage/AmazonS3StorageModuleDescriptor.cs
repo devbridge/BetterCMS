@@ -1,10 +1,10 @@
-﻿using System;
-
-using Autofac;
+﻿using Autofac;
 
 using BetterCms.Configuration;
 using BetterCms.Core.Modules;
 using BetterCms.Core.Services.Storage;
+
+using Devbridge.Platform.Core.Modules.Registration;
 
 namespace BetterCms.Module.AmazonS3Storage
 {
@@ -20,22 +20,6 @@ namespace BetterCms.Module.AmazonS3Storage
         public AmazonS3StorageModuleDescriptor(ICmsConfiguration configuration)
             : base(configuration)
         {
-        }
-
-        internal const string ModuleId = "3723f5a8-b855-4c20-878f-cd2ed43451fa";
-
-        /// <summary>
-        /// Gets the identifier.
-        /// </summary>
-        /// <value>
-        /// The identifier.
-        /// </value>
-        public override Guid Id
-        {
-            get
-            {
-                return new Guid(ModuleId);
-            }
         }
 
         /// <summary>
@@ -72,7 +56,7 @@ namespace BetterCms.Module.AmazonS3Storage
         /// </summary>
         /// <param name="context">The area registration context.</param>
         /// <param name="containerBuilder">The container builder.</param>
-        public override void RegisterModuleTypes(CmsModuleRegistrationContext context, ContainerBuilder containerBuilder)
+        public override void RegisterModuleTypes(ModuleRegistrationContext context, ContainerBuilder containerBuilder)
         {
             if (Configuration.Storage.ServiceType == StorageServiceType.Auto)
             {

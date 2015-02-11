@@ -1,8 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 
-using BetterCms.Core.Models;
 using BetterCms.Module.MediaManager.Models;
+
+using Devbridge.Platform.Core.Models;
 
 namespace BetterCms.Module.Users.Models
 {

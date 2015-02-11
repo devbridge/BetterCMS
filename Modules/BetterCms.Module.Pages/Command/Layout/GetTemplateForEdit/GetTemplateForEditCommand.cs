@@ -8,6 +8,7 @@ using BetterCms.Module.Root.Models;
 using BetterCms.Module.Root.Mvc;
 using BetterCms.Module.Root.Services;
 
+using Devbridge.Platform.Core.Exceptions.DataTier;
 using Devbridge.Platform.Core.Web.Mvc.Commands;
 
 using NHibernate.Transform;

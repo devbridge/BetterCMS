@@ -32,22 +32,6 @@ namespace BetterCms.Module.ImagesGallery
         {
         }
 
-        internal const string ModuleId = "abbdb3e7-818c-457c-a787-98822ffafc61";
-
-        /// <summary>
-        /// Gets the identifier.
-        /// </summary>
-        /// <value>
-        /// The identifier.
-        /// </value>
-        public override Guid Id
-        {
-            get
-            {
-                return new Guid(ModuleId);
-            }
-        }
-
         /// <summary>
         /// Gets the name of module.
         /// </summary>

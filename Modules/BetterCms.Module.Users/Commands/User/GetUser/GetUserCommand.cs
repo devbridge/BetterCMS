@@ -1,12 +1,13 @@
 ﻿using System;
 using System.Linq;
 
-using Devbridge.Platform.Core.DataAccess.DataContext;
-using BetterCms.Core.Mvc.Commands;
 using BetterCms.Module.MediaManager.Services;
 using BetterCms.Module.MediaManager.ViewModels;
 using BetterCms.Module.Root.Mvc;
 using BetterCms.Module.Users.ViewModels.User;
+
+using Devbridge.Platform.Core.DataAccess.DataContext;
+using Devbridge.Platform.Core.Web.Mvc.Commands;
 
 using NHibernate.Linq;
 

@@ -2,16 +2,19 @@
 using System.Linq;
 using System.Security.Principal;
 
-using Devbridge.Platform.Core.DataAccess;
-using Devbridge.Platform.Core.DataAccess.DataContext;
-using BetterCms.Core.DataAccess.DataContext.Fetching;
+
 using BetterCms.Core.DataContracts.Enums;
 using BetterCms.Core.Exceptions;
-using BetterCms.Core.Exceptions.DataTier;
 using BetterCms.Core.Security;
+
 using BetterCms.Module.Pages.Exceptions;
 using BetterCms.Module.Pages.Models;
 using BetterCms.Module.Root;
+
+using Devbridge.Platform.Core.DataAccess;
+using Devbridge.Platform.Core.DataAccess.DataContext;
+using Devbridge.Platform.Core.DataAccess.DataContext.Fetching;
+using Devbridge.Platform.Core.Exceptions.DataTier;
 
 namespace BetterCms.Module.Pages.Services
 {

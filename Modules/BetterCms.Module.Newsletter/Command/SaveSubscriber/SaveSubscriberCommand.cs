@@ -1,7 +1,9 @@
-﻿using BetterCms.Core.Mvc.Commands;
-using BetterCms.Module.Newsletter.Services;
+﻿using BetterCms.Module.Newsletter.Services;
 using BetterCms.Module.Newsletter.ViewModels;
+
 using BetterCms.Module.Root.Mvc;
+
+using Devbridge.Platform.Core.Web.Mvc.Commands;
 
 namespace BetterCms.Module.Newsletter.Command.SaveSubscriber
 {
