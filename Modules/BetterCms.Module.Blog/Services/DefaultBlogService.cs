@@ -173,12 +173,13 @@ namespace BetterCms.Module.Blog.Services
         /// <param name="childContentOptionValues">The child content option values.</param>
         /// <param name="principal">The principal.</param>
         /// <param name="errorMessages">The error messages.</param>
+        /// <param name="updateActivationIfNotChanged">if set to <c>true</c> update activation time even if it was not changed.</param>
         /// <returns>
         /// Saved blog post entity
         /// </returns>
         /// <exception cref="System.ComponentModel.DataAnnotations.ValidationException"></exception>
         /// <exception cref="SecurityException">Forbidden: Access is denied.</exception>
-        public BlogPost SaveBlogPost(BlogPostViewModel request, IList<ContentOptionValuesViewModel> childContentOptionValues, IPrincipal principal, out string[] errorMessages)
+        public BlogPost SaveBlogPost(BlogPostViewModel request, IList<ContentOptionValuesViewModel> childContentOptionValues, IPrincipal principal, out string[] errorMessages, bool updateActivationIfNotChanged = true)
         {
             errorMessages = new string[0];
             string[] roles;
@@ -268,8 +269,16 @@ namespace BetterCms.Module.Blog.Services
                 blogPost.Image = (request.Image != null && request.Image.ImageId.HasValue) ? repository.AsProxy<MediaImage>(request.Image.ImageId.Value) : null;
                 if (isNew || request.DesirableStatus == ContentStatus.Published)
                 {
-                    blogPost.ActivationDate = request.LiveFromDate;
-                    blogPost.ExpirationDate = TimeHelper.FormatEndDate(request.LiveToDate);
+                    if (updateActivationIfNotChanged)
+                    {
+                        blogPost.ActivationDate = request.LiveFromDate;
+                        blogPost.ExpirationDate = TimeHelper.FormatEndDate(request.LiveToDate);
+                    }
+                    else
+                    {
+                        blogPost.ActivationDate = TimeHelper.GetFirstIfTheSameDay(blogPost.ActivationDate, request.LiveFromDate);
+                        blogPost.ExpirationDate = TimeHelper.GetFirstIfTheSameDay(blogPost.ExpirationDate, TimeHelper.FormatEndDate(request.LiveToDate));
+                    }
                 }
             }
 
@@ -316,6 +325,12 @@ namespace BetterCms.Module.Blog.Services
                 ActivationDate = request.LiveFromDate,
                 ExpirationDate = TimeHelper.FormatEndDate(request.LiveToDate)
             };
+
+            if (!updateActivationIfNotChanged && content != null)
+            {
+                newContent.ActivationDate = TimeHelper.GetFirstIfTheSameDay(content.ActivationDate, newContent.ActivationDate);
+                newContent.ExpirationDate = TimeHelper.GetFirstIfTheSameDay(content.ExpirationDate, newContent.ExpirationDate);
+            }
 
             // Preserve content if user is not authorized to change it.
             if (!userCanEdit)
