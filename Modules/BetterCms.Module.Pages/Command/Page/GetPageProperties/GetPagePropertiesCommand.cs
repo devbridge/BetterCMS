@@ -107,6 +107,12 @@ namespace BetterCms.Module.Pages.Command.Page.GetPageProperties
         /// <returns></returns>
         public EditPagePropertiesViewModel Execute(Guid id)
         {            
+            var pageEntity = Repository.AsQueryable<PageProperties>().FirstOrDefault(p => p.Id == id);
+            if (pageEntity == null)
+            {
+                return null;
+            }
+
             var modelQuery = Repository
                 .AsQueryable<PageProperties>()
                 .Where(p => p.Id == id)

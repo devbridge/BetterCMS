@@ -11,6 +11,7 @@ using BetterCms.Module.Api.Operations.Root.Categories.Category.Nodes.Node;
 using BetterCms.Module.Api.Operations.Root.Categories.Category.Tree;
 using BetterCms.Module.Root.Models;
 using BetterCms.Module.Root.Mvc;
+using BetterCms.Module.Root.Services.Categories.Tree;
 
 using NHibernate.Linq;
 
@@ -59,6 +60,7 @@ namespace BetterCms.Module.Api.Operations.Root.Categories.Category
         /// </summary>
         private readonly Module.Root.Services.ICategoryService categoryService;
 
+        private readonly Module.Root.Services.Categories.Tree.ICategoryTreeService categoryTreeService;
         /// <summary>
         /// The CMS configuration.
         /// </summary>
@@ -91,6 +93,7 @@ namespace BetterCms.Module.Api.Operations.Root.Categories.Category
             IAccessControlService accessControlService,
             ISecurityService securityService,
             Module.Root.Services.ICategoryService categoryService,
+            Module.Root.Services.Categories.Tree.ICategoryTreeService categoryTreeService,
             ICmsConfiguration cmsConfiguration)
         {
             this.repository = repository;
@@ -101,6 +104,7 @@ namespace BetterCms.Module.Api.Operations.Root.Categories.Category
             this.accessControlService = accessControlService;
             this.securityService = securityService;
             this.categoryService = categoryService;
+            this.categoryTreeService = categoryTreeService;
             this.cmsConfiguration = cmsConfiguration;
         }
 
@@ -232,101 +236,49 @@ namespace BetterCms.Module.Api.Operations.Root.Categories.Category
         /// </returns>
         public PutCategoryTreeResponse Put(PutCategoryTreeRequest request)
         {
-            IEnumerable<Module.Root.Models.Category> nodesFuture = null;
+            var serviceRequest = new SaveCategoryTreeRequest
+            {
+                Id = request.Id ?? Guid.Empty, 
+                Title = request.Data.Name, 
+                Version = request.Data.Version,
+            };
+            IList<Module.Root.Services.Categories.CategoryNodeModel> rootNodes = new List<Module.Root.Services.Categories.CategoryNodeModel>();
             if (request.Data.Nodes != null)
             {
-                nodesFuture =
-                   repository.AsQueryable<Module.Root.Models.Category>()
-                       .Where(node => node.CategoryTree.Id == request.Id && !node.IsDeleted)
-                       .ToFuture();
+                foreach (var node in request.Data.Nodes)
+                {
+                    rootNodes.Add(RemapChildren(node, null));
+                }
+                serviceRequest.RootNodes = rootNodes;
             }
 
-            var categoryTree =
-                repository.AsQueryable<CategoryTree>(e => e.Id == request.Id.GetValueOrDefault())
-//                    .FetchMany(f => f.AccessRules)
-                    .ToFuture()
-                    .ToList()
-                    .FirstOrDefault();
-
-            var isNew = categoryTree == null;
-            if (isNew)
-            {
-                categoryTree = new CategoryTree { Id = request.Id.GetValueOrDefault()/*, AccessRules = new List<AccessRule>()*/ };
-            }
-            else if (request.Data.Version > 0)
-            {
-                categoryTree.Version = request.Data.Version;
-            }
-
-//            if (cmsConfiguration.Security.AccessControlEnabled)
-//            {
-//                accessControlService.DemandAccess(category, securityService.GetCurrentPrincipal(), AccessLevel.ReadWrite);
-//            }
-
-            unitOfWork.BeginTransaction();
-
-//            if (!isNew)
-//            {
-//                categoryService.ArchiveCategory(category.Id);
-//            }
-
-            categoryTree.Title = request.Data.Name;
-
-//            IList<Tag> newTags = null;
-//            if (request.Data.Tags != null)
-//            {
-//                tagService.SaveTags(category, request.Data.Tags, out newTags);
-//            }
-//
-//            if (request.Data.AccessRules != null)
-//            {
-//                category.AccessRules.RemoveDuplicateEntities();
-//                var accessRules =
-//                    request.Data.AccessRules.Select(
-//                        r => (IAccessRule)new AccessRule { AccessLevel = (AccessLevel)(int)r.AccessLevel, Identity = r.Identity, IsForRole = r.IsForRole })
-//                        .ToList();
-//                accessControlService.UpdateAccessControl(category, accessRules);
-//            }
-
-            repository.Save(categoryTree);
-
-            var createdNodes = (IList<Module.Root.Models.Category>)new List<Module.Root.Models.Category>();
-            var updatedNodes = (IList<Module.Root.Models.Category>)new List<Module.Root.Models.Category>();
-            var deletedNodes = (IList<Module.Root.Models.Category>)new List<Module.Root.Models.Category>();
-            if (request.Data.Nodes != null)
-            {
-                SaveNodes(categoryTree, request.Data.Nodes, nodesFuture != null ? nodesFuture.ToList() : new List<Module.Root.Models.Category>(), ref createdNodes, ref updatedNodes, ref deletedNodes);
-            }
-
-            unitOfWork.Commit();
-
-            // Fire events.
-//            Events.RootEvents.Instance.OnTagCreated(newTags);
-            foreach (var node in createdNodes)
-            {
-                Events.RootEvents.Instance.OnCategoryCreated(node);
-            }
-
-            foreach (var node in updatedNodes)
-            {
-                Events.RootEvents.Instance.OnCategoryUpdated(node);
-            }
-
-            foreach (var node in deletedNodes)
-            {
-                Events.RootEvents.Instance.OnCategoryDeleted(node);
-            }
-
-            if (isNew)
-            {
-                Events.RootEvents.Instance.OnCategoryTreeCreated(categoryTree);
-            }
-            else
-            {
-                Events.RootEvents.Instance.OnCategoryTreeUpdated(categoryTree);
-            }
+            var categoryTree = categoryTreeService.Save(serviceRequest);
 
             return new PutCategoryTreeResponse { Data = categoryTree.Id };
+        }
+
+        private Module.Root.Services.Categories.CategoryNodeModel RemapChildren(SaveCategoryTreeNodeModel node, Guid? parentId)
+        {
+            var categoryNode = new Module.Root.Services.Categories.CategoryNodeModel();
+            IList<Module.Root.Services.Categories.CategoryNodeModel> childrenCategories = new List<Module.Root.Services.Categories.CategoryNodeModel>();
+            categoryNode.DisplayOrder = node.DisplayOrder;
+            categoryNode.Id = node.Id ?? Guid.Empty;
+            categoryNode.IsDeleted = false;
+            categoryNode.Macro = node.Macro;
+            categoryNode.ParentId = parentId ?? Guid.Empty;
+            categoryNode.Title = node.Name;
+            categoryNode.Version = node.Version;
+
+            if (node.Nodes != null)
+            {
+                foreach (var childNode in node.Nodes)
+                {
+                    childrenCategories.Add(RemapChildren(childNode, node.Id));
+                }
+                categoryNode.ChildNodes = childrenCategories;
+            }
+
+            return categoryNode;
         }
 
         /// <summary>
@@ -343,146 +295,15 @@ namespace BetterCms.Module.Api.Operations.Root.Categories.Category
                 return new DeleteCategoryTreeResponse { Data = false };
             }
 
-            categoryService.DeleteCategoryTree(request.Id, request.Data.Version, securityService.GetCurrentPrincipal());
+            categoryTreeService.Delete(
+                new Module.Root.Services.Categories.Tree.DeleteCategoryTreeRequest
+                {
+                    Id = request.Id,
+                    CurrentUser = securityService.GetCurrentPrincipal(),
+                    Version = request.Data.Version
+                });
 
             return new DeleteCategoryTreeResponse { Data = true };
-        }
-
-//        /// <summary>
-//        /// Loads the access rules.
-//        /// </summary>
-//        /// <param name="categoryId">The category identifier.</param>
-//        /// <returns>Page access rules collection.</returns>
-//        private List<AccessRuleModel> LoadAccessRules(Guid categoryId)
-//        {
-//            return (from page in repository.AsQueryable<CategoryTree>()
-//                    from accessRule in page.AccessRules
-//                    where page.Id == categoryId
-//                    orderby accessRule.IsForRole, accessRule.Identity
-//                    select new AccessRuleModel
-//                    {
-//                        AccessLevel = (Root.AccessLevel)(int)accessRule.AccessLevel,
-//                        Identity = accessRule.Identity,
-//                        IsForRole = accessRule.IsForRole
-//                    })
-//                    .ToList();
-//        }
-
-        /// <summary>
-        /// Saves the nodes.
-        /// </summary>
-        /// <param name="category">The category.</param>
-        /// <param name="nodeModels">The node models.</param>
-        /// <param name="currentNodes">The existing nodes.</param>
-        /// <param name="createdNodes">The created nodes.</param>
-        /// <param name="updatedNodes">The category nodes.</param>
-        /// <param name="deletedNodes">The deleted nodes.</param>
-        private void SaveNodes(Module.Root.Models.CategoryTree category, IList<SaveCategoryTreeNodeModel> nodeModels, List<Module.Root.Models.Category> currentNodes, ref IList<Module.Root.Models.Category> createdNodes, ref IList<Module.Root.Models.Category> updatedNodes, ref IList<Module.Root.Models.Category> deletedNodes)
-        {
-            var removeAll = nodeModels.IsEmpty();
-
-            foreach (var existingNode in currentNodes)
-            {
-                if (removeAll || !NodeExist(nodeModels, existingNode.Id))
-                {
-                    repository.Delete(existingNode);
-                    deletedNodes.Add(existingNode);
-                }
-            }
-
-            if (removeAll)
-            {
-                return;
-            }
-
-            SaveChildNodes(category, null, nodeModels, currentNodes, ref createdNodes, ref updatedNodes, ref deletedNodes);
-        }
-
-        /// <summary>
-        /// Nodes the exist.
-        /// </summary>
-        /// <param name="updatedNodes">The updated nodes.</param>
-        /// <param name="id">The identifier.</param>
-        /// <returns>
-        ///   <c>true</c> if node exists; <c>false</c> otherwise.
-        /// </returns>
-        private bool NodeExist(IList<SaveCategoryTreeNodeModel> updatedNodes, Guid id)
-        {
-            if (updatedNodes == null || updatedNodes.IsEmpty())
-            {
-                return false;
-            }
-
-            foreach (var node in updatedNodes)
-            {
-                if (node.Id == id || NodeExist(node.Nodes, id))
-                {
-                    return true;
-                }
-            }
-
-            return false;
-        }
-
-        /// <summary>
-        /// Saves the child nodes.
-        /// </summary>
-        /// <param name="categoryTree">The category.</param>
-        /// <param name="parentNode">The parent node.</param>
-        /// <param name="nodesToSave">The nodes to save.</param>
-        /// <param name="currentNodes">The current nodes.</param>
-        /// <param name="createdNodes">The created nodes.</param>
-        /// <param name="updatedNodes">The category nodes.</param>
-        /// <param name="deletedNodes">The deleted nodes.</param>
-        private void SaveChildNodes(
-            Module.Root.Models.CategoryTree categoryTree,
-            Module.Root.Models.Category parentNode,
-            IEnumerable<SaveCategoryTreeNodeModel> nodesToSave,
-            IList<Module.Root.Models.Category> currentNodes,
-            ref IList<Module.Root.Models.Category> createdNodes,
-            ref IList<Module.Root.Models.Category> updatedNodes,
-            ref IList<Module.Root.Models.Category> deletedNodes)
-        {
-            if (nodesToSave == null)
-            {
-                return;
-            }
-
-            foreach (var nodeModel in nodesToSave)
-            {
-                var nodeToSave = currentNodes.FirstOrDefault(n => n.Id == nodeModel.Id && !n.IsDeleted);
-                var isNew = nodeToSave == null;
-                if (isNew)
-                {
-                    nodeToSave = new Module.Root.Models.Category
-                                     {
-                                         Id = nodeModel.Id.GetValueOrDefault(),
-                                         CategoryTree = categoryTree
-                                     };
-                }
-                else if (nodeModel.Version > 0)
-                {
-                    nodeToSave.Version = nodeModel.Version;
-                }
-
-                nodeToSave.Name = nodeModel.Name;
-                nodeToSave.DisplayOrder = nodeModel.DisplayOrder;
-                nodeToSave.Macro = nodeModel.Macro;
-                nodeToSave.ParentCategory = parentNode;
-
-                repository.Save(nodeToSave);
-
-                if (isNew)
-                {
-                    createdNodes.Add(nodeToSave);
-                }
-                else
-                {
-                    updatedNodes.Add(nodeToSave);
-                }
-
-                SaveChildNodes(categoryTree, nodeToSave, nodeModel.Nodes, currentNodes, ref createdNodes, ref updatedNodes, ref deletedNodes);
-            }
         }
     }
 }

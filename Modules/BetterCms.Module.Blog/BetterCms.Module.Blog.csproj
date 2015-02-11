@@ -191,6 +191,7 @@
     <Compile Include="Models\Migrations\Migration201312051034.cs" />
     <Compile Include="Models\Migrations\Migration201305271258.cs" />
     <Compile Include="Models\Migrations\Migration201305271234.cs" />
+    <Compile Include="Models\Migrations\Migration201502101139.cs" />
     <Compile Include="Models\Option.cs" />
     <Compile Include="Models\Migrations\InitialSetup.cs" />
     <Compile Include="Models\Migrations\MigrationVersionMetaData.cs" />
@@ -289,6 +290,7 @@
     <EmbeddedResource Include="Scripts\bcms.blog.filter.js" />
     <EmbeddedResource Include="Models\Migrations\Migration201305271258.sqlserver.sql" />
     <EmbeddedResource Include="Content\example.blog.post.import.xml" />
+    <EmbeddedResource Include="Models\Migrations\Migration201502101139.sqlserver.sql" />
     <Content Include="web.config" />
   </ItemGroup>
   <ItemGroup>

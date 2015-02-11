@@ -34,6 +34,9 @@ namespace BetterCms.Module.Root.Services
         /// </summary>
         private readonly ICmsConfiguration cmsConfiguration;
 
+        /// <summary>
+        /// The unit of work
+        /// </summary>
         private readonly IUnitOfWork unitOfWork;
 
         /// <summary>
@@ -55,16 +58,24 @@ namespace BetterCms.Module.Root.Services
         /// <returns>
         /// List of category lookup values
         /// </returns>
-        public IEnumerable<LookupKeyValue> GetCategories()
+        public IEnumerable<LookupKeyValue> GetCategories(string categoryTreeForKey)
         {
-            return repository
-                .AsQueryable<Category>()
-                .Where(c => !c.CategoryTree.IsDeleted)
-                .Select(c => new LookupKeyValue
-                {
-                    Key = c.Id.ToString().ToLowerInvariant(),
-                    Value = c.Name
-                })
+            var query = repository.AsQueryable<Category>();
+
+            if (!string.IsNullOrEmpty(categoryTreeForKey))
+            {
+                query = query.Where( c => !c.CategoryTree.IsDeleted && c.CategoryTree.AvailableFor.Any(e => e.CategorizableItem.Name == categoryTreeForKey));
+            }
+            else
+            {
+                query = query.Where(c => !c.CategoryTree.IsDeleted);
+            }
+
+            return query.Select(c => new LookupKeyValue
+            {
+                Key = c.Id.ToString().ToLowerInvariant(),
+                Value = c.Name
+            })
                 .ToFuture();
         }
 

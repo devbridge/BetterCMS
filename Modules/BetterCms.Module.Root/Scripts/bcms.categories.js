@@ -299,7 +299,7 @@
                 }
                 return "";
             });
-            self.dropOnCancel = false;
+            self.dropOnCancel = true;
 
             // User for validation.
             self.containerId = "node-" + nodeId++;
@@ -553,6 +553,17 @@
             };
         }
 
+        function CategorizableItemViewModel(jsonItem) {
+            var self = this;
+            self.id = ko.observable(jsonItem.Id);
+            self.name = ko.observable(jsonItem.Name);
+            self.isSelected = ko.observable(jsonItem.IsSelected);
+
+            self.inverseSelection = function() {
+                self.isSelected(!self.isSelected());
+            }
+        }
+
         function CategoryTreeViewModel(jsonCategoryTree) {
             var self = this;
 
@@ -567,6 +578,15 @@
             self.version = jsonCategoryTree.Version;
             self.title = ko.observable(jsonCategoryTree.Title);
             self.macro = ko.observable(jsonCategoryTree.Macro);
+            
+            var items = [];
+            if (jsonCategoryTree.CategorizableItems != null) {
+                for (var k = 0; k < jsonCategoryTree.CategorizableItems.length; k++) {
+                    items.push(new CategorizableItemViewModel(jsonCategoryTree.CategorizableItems[k]));
+                }
+            }
+            self.categorizableItems = ko.observableArray(items);
+
             // TODO: self.accessControl = security.createUserAccessViewModel(jsonCategoryTree.UserAccessList);
 
 // TODO:      self.languageId = ko.observable("");
@@ -843,12 +863,25 @@
 //                    });
 //                }
 
+                var categorizableItems = [],
+                    categorizableItemModels = self.categorizableItems(),
+                    i;
+
+                for (i = 0; i < categorizableItemModels.length; i++) {
+                    categorizableItems.push({
+                        Id: categorizableItemModels[i].id(),
+                        Name: categorizableItemModels[i].name(),
+                        IsSelected: categorizableItemModels[i].isSelected()
+                    });
+                }
+
                 return {
                     Id: self.id(),
                     Version: self.version,
                     Title: self.title(),
                     Macro: self.macro(),
-                    RootNodes: self.composeJsonNodes()
+                    RootNodes: self.composeJsonNodes(),
+                    CategorizableItems: categorizableItems,
                     // TODO: UserAccessList: userAccessList
                 };
             };

@@ -90,12 +90,14 @@ namespace BetterCms.Module.Blog.Commands.GetBlogPost
         public BlogPostViewModel Execute(Guid id)
         {
             var model = new BlogPostViewModel();
+            var categoriesFilterKey = BlogPost.CategorizableItemKeyForBlogs;
 
             if (!id.HasDefaultValue())
             {               
                 var result = Repository.AsQueryable<BlogPost>()
                     .Where(bp => bp.Id == id)
                     .Select(bp => new {
+                            Entity = bp,
                             AccessRules = bp.AccessRules,
                             Model = new BlogPostViewModel
                                 {
@@ -120,11 +122,11 @@ namespace BetterCms.Module.Blog.Commands.GetBlogPost
                             })
                     .ToList()
                     .FirstOne();
-
                 model = result.Model;
 
                 if (model != null)
                 {
+                    categoriesFilterKey = result.Entity.GetCategorizableItemKey();
                     if (cmsConfiguration.Security.AccessControlEnabled)
                     {
                         SetIsReadOnly(model, result.AccessRules.Cast<IAccessRule>().ToList());

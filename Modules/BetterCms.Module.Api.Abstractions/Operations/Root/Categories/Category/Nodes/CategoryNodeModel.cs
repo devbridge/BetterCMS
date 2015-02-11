@@ -12,6 +12,9 @@ namespace BetterCms.Module.Api.Operations.Root.Categories.Category.Nodes
     [DataContract]
     public class CategoryNodeModel : ModelBase
     {
+        [DataMember]
+        public Guid? CategoryTreeId { get; set; }
+        
         /// <summary>
         /// Gets or sets the parent node id.
         /// </summary>

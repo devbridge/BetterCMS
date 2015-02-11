@@ -1,8 +1,9 @@
 ﻿using System;
+using System.Collections.Generic;
 
-namespace BetterCms.Module.Root.Services.Categories.Tree
+namespace BetterCms.Module.Root.Services.Categories
 {
-    public class CategoryTreeNodeModel
+    public class CategoryNodeModel
     {
         public Guid Id { get; set; }
 
@@ -16,6 +17,8 @@ namespace BetterCms.Module.Root.Services.Categories.Tree
 
         public string Macro { get; set; }
 
-        public Guid? parentId { get; set; }
+        public Guid ParentId { get; set; }
+
+        public IEnumerable<CategoryNodeModel> ChildNodes { get; set; }
     }
 }
