@@ -5,6 +5,10 @@ using BetterCms.Module.Api;
 using BetterCms.Module.Api.Extensions;
 using BetterCms.Module.Api.Operations.MediaManager.Files;
 using BetterCms.Module.Api.Operations.MediaManager.Files.File;
+using BetterCms.Module.Api.Operations.Root.Categories;
+using BetterCms.Module.Api.Operations.Root.Categories.CategorizableItems;
+using BetterCms.Module.Api.Operations.Root.Categories.Category;
+using BetterCms.Module.Api.Operations.Root.Categories.Category.Tree;
 using BetterCms.Sandbox.Mvc4.Models;
 
 using httpContext = System.Web.HttpContext;
@@ -65,6 +69,24 @@ namespace BetterCms.Sandbox.Mvc4.Controllers
                 }
             }
             return Content(res);
+        }
+
+        public virtual ActionResult ApiTestWidget(ApiTestWidgetModel model)
+        {
+            using (var api = ApiFactory.Create())
+            {
+                var response = api.Root.Categories.Get(new GetCategoryTreesRequest());
+                foreach (var item in response.Data.Items)
+                {
+                    model.Data += item.Id + " " + item.Name + " ";
+                    foreach (var guid in item.AvailableFor)
+                    {
+                        model.Data += guid + " ";
+                    }
+                    model.Data += '\n';
+                }
+            }
+            return PartialView(model);
         }
     }
 }
