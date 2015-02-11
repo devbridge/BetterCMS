@@ -24,7 +24,13 @@
 
             public const string LuceneAuthorizationUrl = "LuceneAuthorizationUrl";
 
+            public const string LuceneAuthorizationMode = "LuceneAuthorizationMode";
+
             public const string LuceneAuthorizationFormFieldPrefix = "LuceneAuthorizationForm.";
+
+            public const string LuceneAuthorizationWindows_UserName = "LuceneAuthorizationWindows.UserName";
+
+            public const string LuceneAuthorizationWindows_Password = "LuceneAuthorizationWindows.Password";
 
             public const string LuceneSearchForPartOfWordsPrefix = "LuceneSearchForPartOfWords";
         }
