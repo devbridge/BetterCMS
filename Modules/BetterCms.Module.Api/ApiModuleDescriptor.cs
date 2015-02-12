@@ -1,6 +1,7 @@
 ﻿using System;
 
 using Autofac;
+using Autofac.Core;
 
 using BetterCms.Core.Modules;
 
@@ -52,6 +53,7 @@ using BetterCms.Module.Api.Operations.Root;
 using BetterCms.Module.Api.Operations.Root.Categories;
 using BetterCms.Module.Api.Operations.Root.Categories.Category;
 using BetterCms.Module.Api.Operations.Root.Categories.Category.Tree;
+using BetterCms.Module.Api.Operations.Root.CategorizableItems;
 using BetterCms.Module.Api.Operations.Root.Languages;
 using BetterCms.Module.Api.Operations.Root.Languages.Language;
 using BetterCms.Module.Api.Operations.Root.Layouts;
@@ -179,6 +181,7 @@ namespace BetterCms.Module.Api
             containerBuilder.RegisterType<NodesTreeService>().As<INodesTreeService>().InstancePerLifetimeScope().PropertiesAutowired(PropertyWiringOptions.PreserveSetValues);
             containerBuilder.RegisterType<Operations.Root.Categories.Category.Nodes.NodesService>().As<Operations.Root.Categories.Category.Nodes.INodesService>().InstancePerLifetimeScope().PropertiesAutowired(PropertyWiringOptions.PreserveSetValues);
             containerBuilder.RegisterType<Operations.Root.Categories.Category.Nodes.Node.NodeService>().As<Operations.Root.Categories.Category.Nodes.Node.INodeService>().InstancePerLifetimeScope().PropertiesAutowired(PropertyWiringOptions.PreserveSetValues);
+            containerBuilder.RegisterType<CategorizableItemsService>().As<ICategorizableItemsService>().InstancePerLifetimeScope().PropertiesAutowired(PropertyWiringOptions.PreserveSetValues);
 
             containerBuilder.RegisterType<LanguagesService>().As<ILanguagesService>().InstancePerLifetimeScope().PropertiesAutowired(PropertyWiringOptions.PreserveSetValues);
             containerBuilder.RegisterType<LanguageService>().As<ILanguageService>().InstancePerLifetimeScope().PropertiesAutowired(PropertyWiringOptions.PreserveSetValues);
