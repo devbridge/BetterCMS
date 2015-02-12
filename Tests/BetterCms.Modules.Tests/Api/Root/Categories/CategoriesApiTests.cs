@@ -1,4 +1,7 @@
-﻿using System.Linq;
+﻿using System;
+using System.Collections;
+using System.Collections.Generic;
+using System.Linq;
 
 using BetterCms.Core.Models;
 using BetterCms.Events;
@@ -24,6 +27,15 @@ namespace BetterCms.Test.Module.Api.Root.Categories
     {
         private int createdNodeEventCount;
         private int deletedNodeEventCount;
+
+        private readonly List<Guid> sampleGuids =
+
+        // These guids are hardcoded into database migration scripts
+        new List<Guid>()
+        {
+            new Guid("DC861498-FCD1-4F19-9C75-AE71916EF7BF"),
+            new Guid("B2F05159-74AF-4B67-AEB9-36B9CC9EED57")
+        };
 
         [Test]
         public void Should_CRUD_CategoryTree_Successfully()
@@ -73,6 +85,7 @@ namespace BetterCms.Test.Module.Api.Root.Categories
             return new SaveCategoryTreeModel
             {
                 Name = TestDataProvider.ProvideRandomString(MaxLength.Name),
+                UseForCategorizableItems = sampleGuids,
                 Nodes =
                     new[]
                                    {
@@ -119,6 +132,10 @@ namespace BetterCms.Test.Module.Api.Root.Categories
             Assert.AreEqual(getResponse.Data.Name, saveModel.Name);
 
             Assert.AreEqual(getResponse.Nodes.First(n => n.ParentId == null).Name, saveModel.Nodes.First().Name);
+
+            Assert.IsNotNull(getResponse.Data.AvailableFor);
+
+            Assert.AreEqual(sampleGuids.Count, getResponse.Data.AvailableFor.Count());
 
             //            Assert.AreEqual(getResponse.AccessRules[0].AccessLevel, saveModel.AccessRules[0].AccessLevel);
             //            Assert.AreEqual(getResponse.AccessRules[0].Identity, saveModel.AccessRules[0].Identity);

@@ -42,8 +42,8 @@ describe('root.categories.api.behavior', function () {
             expect(result.data).toBeDefinedAndNotNull('JSON data object should be retrieved.');
             expect(result.data.items).not.toBeNull('JSON data.items object should be retrieved.');
 
-            expect(result.data.totalCount).toBe(1, 'Total count should be 1.');
-            expect(result.data.items.length).toBe(1, 'Returned array length should be 1.');
+            expect(result.data.totalCount).toBe(2, 'Total count should be 2.');
+            expect(result.data.items.length).toBe(2, 'Returned array length should be 2.');
         });
     });
 
@@ -71,6 +71,9 @@ describe('root.categories.api.behavior', function () {
             expect(result.data).toBeDefinedAndNotNull('JSON data object should be retrieved.');
             expect(result.data.title).not.toBeNull('JSON data.title object should be retrieved.');
             expect(result.data.nodes).not.toBeNull('JSON data.tags object should be retrieved.');
+            expect(result.data.availableFor).toBeDefined('JSON data.availableFor should be retrieved');
+            expect(result.data.macro).toBeDefined('JSON data.macro should be retrieved');
+
         });
     });
 

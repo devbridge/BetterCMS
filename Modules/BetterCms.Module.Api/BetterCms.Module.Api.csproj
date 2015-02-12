@@ -239,6 +239,7 @@
     <Compile Include="Operations\Pages\Widgets\WidgetsService.cs" />
     <Compile Include="Operations\Pages\Widgets\Widget\WidgetOptionsHelper.cs" />
     <Compile Include="Operations\Pages\Widgets\Widget\WidgetService.cs" />
+    <Compile Include="Operations\Root\CategorizableItems\CategorizableItemsService.cs" />
     <Compile Include="Operations\Root\Categories\CategoryTreesService.cs" />
     <Compile Include="Operations\Root\Categories\Categories\CategoryTreeService.cs" />
     <Compile Include="Operations\Root\Categories\Categories\Nodes\NodesService.cs" />

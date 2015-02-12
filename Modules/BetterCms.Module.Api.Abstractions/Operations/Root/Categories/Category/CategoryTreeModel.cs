@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections;
+using System.Collections.Generic;
 using System.Runtime.Serialization;
 
 using BetterCms.Module.Api.Infrastructure;
@@ -23,5 +25,8 @@ namespace BetterCms.Module.Api.Operations.Root.Categories.Category
 
         [DataMember]
         public string Macro { get; set; }
+
+        [DataMember]
+        public IEnumerable<Guid> AvailableFor { get; set; }
     }
 }
