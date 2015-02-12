@@ -1,4 +1,6 @@
-﻿using System.Runtime.Serialization;
+﻿using System;
+using System.Collections.Generic;
+using System.Runtime.Serialization;
 
 using BetterCms.Module.Api.Infrastructure;
 using BetterCms.Module.Api.Infrastructure.Enums;
@@ -7,7 +9,7 @@ namespace BetterCms.Module.Api.Operations.Pages.Pages
 {
     [DataContract]
     [System.Serializable]
-    public class GetPagesModel : DataOptions, IFilterByTags
+    public class GetPagesModel : DataOptions, IFilterByTags, IFilterByCategories
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="GetPagesModel" /> class.
@@ -97,5 +99,32 @@ namespace BetterCms.Module.Api.Operations.Pages.Pages
         /// </value>
         [DataMember]
         public bool IncludeAccessRules { get; set; }
+        
+        /// <summary>
+        /// Gets or sets a value indicating whether to include Categories.
+        /// </summary>
+        /// <value>
+        ///   <c>true</c> if to includecategories; otherwise, <c>false</c>.
+        /// </value>
+        [DataMember]
+        public bool IncludeCategories { get; set; }
+
+        /// <summary>
+        /// Gets or sets the categories.
+        /// </summary>
+        /// <value>
+        /// The tags.
+        /// </value>
+        [DataMember]
+        public List<Guid> FilterByCategories { get; set; }
+
+        /// <summary>
+        /// Gets or sets the categories filter connector.
+        /// </summary>
+        /// <value>
+        /// The tags filter connector.
+        /// </value>
+        [DataMember]
+        public FilterConnector FilterByCategoriesConnector { get; set; }
     }
 }

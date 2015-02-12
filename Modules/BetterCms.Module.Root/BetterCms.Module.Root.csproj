@@ -146,6 +146,11 @@
     <Compile Include="Commands\Authentication\GetAuthenticationInfo\GetAuthenticationInfoCommand.cs" />
     <Compile Include="Commands\Authentication\SearchUsers\SearchUsersCommand.cs" />
     <Compile Include="Commands\Authentication\SearchRoles\SearchRolesCommand.cs" />
+    <Compile Include="Commands\Category\DeleteCategoryTree\DeleteCategoryTreeCommand.cs" />
+    <Compile Include="Commands\Category\GetCategoryTreesList\GetCategoryTreesListCommand.cs" />
+    <Compile Include="Commands\Category\GetCategoryTree\GetCategoryTreeCommand.cs" />
+    <Compile Include="Commands\Category\SaveCategoryTree\SaveCategoryTreeCommand.cs" />
+    <Compile Include="Commands\Category\SearchCategory\SearchCategoriesCommand.cs" />
     <Compile Include="Commands\Language\DeleteLanguage\DeleteLanguageCommand.cs" />
     <Compile Include="Commands\Language\GetLanguageList\GetLanguageListCommand.cs" />
     <Compile Include="Commands\Language\SaveLanguage\SaveLanguageCommand.cs" />
@@ -158,10 +163,6 @@
     <Compile Include="Events\RootEvents.cs" />
     <Compile Include="Events\PageRenderingEventArgs.cs" />
     <Compile Include="Events\TagEvents.cs" />
-    <Compile Include="Commands\Category\DeleteCategory\DeleteCategoryCommand.cs" />
-    <Compile Include="Commands\Category\DeleteCategory\DeleteCategoryCommandRequest.cs" />
-    <Compile Include="Commands\Category\GetCategoryList\GetCategoryListCommand.cs" />
-    <Compile Include="Commands\Category\SaveCategory\SaveCategoryCommand.cs" />
     <Compile Include="Commands\GetMainJsData\GetMainJsDataCommand.cs" />
     <Compile Include="Commands\GetProcessorJsData\GetProcessorJsDataCommand.cs" />
     <Compile Include="Commands\GetPageToRender\GetPageToRenderRequest.cs" />
@@ -188,10 +189,20 @@
     <Compile Include="Controllers\SidebarController.cs" />
     <Compile Include="Controllers\SiteSettingsController.cs" />
     <Compile Include="Controllers\TagsController.cs" />
+    <Compile Include="Helpers\CategoriesHelper.cs" />
+    <Compile Include="Models\CategorizableItem.cs" />
+    <Compile Include="Models\CategoryTree.cs" />
+    <Compile Include="Models\CategoryTreeCategorizableItem.cs" />
     <Compile Include="Models\ChildContentOption.cs" />
+    <Compile Include="Models\Maps\WidgetCategoryMap.cs" />
+    <Compile Include="Models\Migrations\Migration201502061445.cs" />
+    <Compile Include="Models\WidgetCategories.cs" />
     <Compile Include="Models\IChildRegionContainer.cs" />
     <Compile Include="Models\Language.cs" />
     <Compile Include="Models\Extensions\CultureInfoExtensions.cs" />
+    <Compile Include="Models\Maps\CategorizableItemMap.cs" />
+    <Compile Include="Models\Maps\CategoryTreeCategorizableItemMap.cs" />
+    <Compile Include="Models\Maps\CategoryTreeMap.cs" />
     <Compile Include="Models\Maps\LanguageMap.cs" />
     <Compile Include="Models\Maps\ChildContentMap.cs" />
     <Compile Include="Models\Maps\MasterPageMap.cs" />
@@ -211,11 +222,19 @@
     <Compile Include="Models\Migrations\Migration201310170919.cs" />
     <Compile Include="Models\Migrations\Migration201310160818.cs" />
     <Compile Include="Models\Migrations\Migration201310180900.cs" />
+    <Compile Include="Models\Migrations\Migration201501131230.cs" />
     <Compile Include="Models\Migrations\Migration201408131530.cs" />
     <Compile Include="Models\Migrations\Migration201407231054.cs" />
     <Compile Include="Models\Migrations\Migration201406191600.cs" />
     <Compile Include="Models\Migrations\Migration201406101600.cs" />
+    <Compile Include="Models\Migrations\Migration201502041430.cs" />
+    <Compile Include="Models\Migrations\Migration201501281145.cs" />
+    <Compile Include="Models\Migrations\Migration201502101035.cs" />
+    <Compile Include="Models\Migrations\Migration201502101136.cs" />
     <Compile Include="Models\PagesView.cs" />
+    <Compile Include="Mvc\Extensions\HtmlAttributesUtility.cs" />
+    <Compile Include="Mvc\Extensions\HtmlHelperExtensions.cs" />
+    <Compile Include="Mvc\Extensions\StringExtensions.cs" />
     <Compile Include="Mvc\PageHtmlRenderer\PageContentRenderHelper.cs" />
     <Compile Include="Mvc\PageHtmlRenderer\PageContentHtmlRenderer.cs" />
     <Compile Include="Mvc\PageHtmlRenderer\RenderingContentOptionProperty.cs" />
@@ -333,6 +352,7 @@
     <Compile Include="Registration\CodeEditorJsModuleIncludeDescriptor.cs" />
     <Compile Include="Registration\LanguagesJsModuleIncludeDescriptor.cs" />
     <Compile Include="Registration\OptionsJsModuleIncludeDescriptor.cs" />
+    <Compile Include="Registration\CategoriesJavaScriptModuleDescriptor.cs" />
     <Compile Include="Registration\TagsJavaScriptModuleDescriptor.cs" />
     <Compile Include="Registration\SecurityJsModuleIncludeDescriptor.cs" />
     <Compile Include="Registration\KnockoutExtendersJsModuleIncludeDescriptor.cs" />
@@ -359,9 +379,20 @@
     <Compile Include="Mvc\Helpers\MessagesHelper.cs" />
     <Compile Include="Registration\TabsJsModuleIncludeDescriptor.cs" />
     <Compile Include="RootModuleConstants.cs" />
+    <Compile Include="Services\Categories\Nodes\DefaultCategoryNodeService.cs" />
+    <Compile Include="Services\Categories\Nodes\ICategoryNodeService.cs" />
+    <Compile Include="Services\Categories\CategoryNodeModel.cs" />
+    <Compile Include="Services\Categories\Tree\DefaultCategoryTreeService.cs" />
+    <Compile Include="Services\Categories\Tree\DeleteCategoryTreeRequest.cs" />
+    <Compile Include="Services\Categories\Tree\GetCategoryTreeRequest.cs" />
+    <Compile Include="Services\Categories\Tree\GetCategoryTreeResponse.cs" />
+    <Compile Include="Services\Categories\Tree\ICategoryTreeService.cs" />
+    <Compile Include="Services\Categories\Tree\SaveCategoryTreeRequest.cs" />
+    <Compile Include="Services\DefaultCategoryService.cs" />
     <Compile Include="Services\DefaultChildContentService.cs" />
     <Compile Include="Services\DefaultContentProjectionService.cs" />
     <Compile Include="Services\DefaultLanguageService.cs" />
+    <Compile Include="Services\ICategoryService.cs" />
     <Compile Include="Services\IChildContentService.cs" />
     <Compile Include="Services\IContentProjectionService.cs" />
     <Compile Include="Services\ILanguageService.cs" />
@@ -381,7 +412,14 @@
     <Compile Include="Services\IUserProfileUrlResolver.cs" />
     <Compile Include="ViewModels\Authentication\InfoViewModel.cs" />
     <Compile Include="ViewModels\Autocomplete\SuggestionViewModel.cs" />
-    <Compile Include="ViewModels\Category\CategoryItemViewModel.cs" />
+    <Compile Include="ViewModels\CategoryTreesFilter.cs" />
+    <Compile Include="ViewModels\Category\CategorySuggestionViewModel.cs" />
+    <Compile Include="ViewModels\Category\CategoryTreeNodeViewModel.cs" />
+    <Compile Include="ViewModels\Category\CategoryTreesGridViewModel.cs" />
+    <Compile Include="ViewModels\Category\CategoryTreeGridViewModel.cs" />
+    <Compile Include="ViewModels\Category\CategorizableItemViewModel.cs" />
+    <Compile Include="ViewModels\Category\CategoryTreeViewModel.cs" />
+    <Compile Include="ViewModels\Category\CategoryTemplateViewModel.cs" />
     <Compile Include="ViewModels\Cms\CmsRequestViewModel.cs" />
     <Compile Include="ViewModels\Cms\PageRegionViewModel.cs" />
     <Compile Include="DataContracts\Enums\PageRetrievedEventResults.cs" />
@@ -413,6 +451,7 @@
     <Compile Include="ViewModels\Sidebar\SidebarContainerViewModel.cs" />
     <Compile Include="ViewModels\ProjectionsViewModel.cs" />
     <Compile Include="ViewModels\SiteSettings\SearchableGridViewModel.cs" />
+    <Compile Include="ViewModels\SiteSettings\SiteSettingCategoryTreeViewModel.cs" />
     <Compile Include="ViewModels\SiteSettings\SiteSettingsContainerViewModel.cs" />
     <Compile Include="Mvc\Helpers\JavaScriptModulesHelper.cs" />
     <Compile Include="Mvc\MimeTypeRouteConstraint.cs" />
@@ -429,10 +468,30 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Info.cshtml</DependentUpon>
     </Compile>
-    <Compile Include="Views\Category\Categories.generated.cs">
+    <Compile Include="Views\Category\CategoryTreeEdit.generated.cs">
+      <DependentUpon>CategoryTreeEdit.cshtml</DependentUpon>
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>Categories.cshtml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Category\CategoryTrees.generated.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>CategoryTrees.cshtml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Category\Partial\CategoryTree.generated.cs">
+      <DependentUpon>CategoryTree.cshtml</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+    </Compile>
+    <Compile Include="Views\Category\Partial\CategoryTreeTemplate.generated.cs">
+      <DependentUpon>CategoryTreeTemplate.cshtml</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+    </Compile>
+    <Compile Include="Views\Category\CategoriesTemplate.generated.cs">
+      <DependentUpon>CategoriesTemplate.cshtml</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
     </Compile>
     <Compile Include="Views\Cms\Index.generated.cs">
       <AutoGen>True</AutoGen>
@@ -1334,7 +1393,32 @@
     <EmbeddedResource Include="Scripts\ckeditor\styles.js" />
     <EmbeddedResource Include="Scripts\bcms.content.tree.js" />
     <EmbeddedResource Include="Scripts\bcms.store.js" />
+    <EmbeddedResource Include="Scripts\bcms.categories.js" />
+    <EmbeddedResource Include="Scripts\bcms.multiple.select.js" />
+    <EmbeddedResource Include="Content\Styles\multiple-select.png" />
+    <EmbeddedResource Include="Models\Migrations\Migration201502101136.sqlserver.sql" />
+    <EmbeddedResource Include="Models\Migrations\Migration201502061445.sqlserver.sql" />
     <Content Include="Views\Web.config" />
+    <Content Include="Views\Category\CategoryTreeEdit.cshtml">
+      <Generator>RazorGenerator</Generator>
+      <LastGenOutput>CategoryTreeEdit.generated.cs</LastGenOutput>
+    </Content>
+    <None Include="Views\Category\CategoryTrees.cshtml">
+      <Generator>RazorGenerator</Generator>
+      <LastGenOutput>CategoryTrees.generated.cs</LastGenOutput>
+    </None>
+    <Content Include="Views\Category\Partial\CategoryTree.cshtml">
+      <Generator>RazorGenerator</Generator>
+      <LastGenOutput>CategoryTree.generated.cs</LastGenOutput>
+    </Content>
+    <Content Include="Views\Category\Partial\CategoryTreeTemplate.cshtml">
+      <Generator>RazorGenerator</Generator>
+      <LastGenOutput>CategoryTreeTemplate.generated.cs</LastGenOutput>
+    </Content>
+    <Content Include="Views\Category\CategoriesTemplate.cshtml">
+      <Generator>RazorGenerator</Generator>
+      <LastGenOutput>CategoriesTemplate.generated.cs</LastGenOutput>
+    </Content>
     <None Include="Views\Shared\Partial\ContentsTree.cshtml">
       <LastGenOutput>ContentsTree.generated.cs</LastGenOutput>
       <Generator>RazorGenerator</Generator>
@@ -1514,12 +1598,6 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <None Include="Views\Category\Categories.cshtml">
-      <Generator>RazorGenerator</Generator>
-      <LastGenOutput>Categories.generated.cs</LastGenOutput>
-    </None>
-  </ItemGroup>
-  <ItemGroup>
     <None Include="Views\Security\AccessControlTemplate.cshtml">
       <Generator>RazorGenerator</Generator>
       <LastGenOutput>AccessControlTemplate.generated.cs</LastGenOutput>
@@ -1600,6 +1678,7 @@
   <ItemGroup>
     <EmbeddedResource Include="Scripts\ckeditor\plugins\wsc\README.md" />
   </ItemGroup>
+  <ItemGroup />
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
     <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>

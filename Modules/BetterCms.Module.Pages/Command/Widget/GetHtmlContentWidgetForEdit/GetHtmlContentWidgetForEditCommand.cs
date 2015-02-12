@@ -8,7 +8,7 @@ using BetterCms.Module.Pages.Helpers;
 using BetterCms.Module.Pages.Models;
 using BetterCms.Module.Pages.Services;
 using BetterCms.Module.Pages.ViewModels.Widgets;
-
+using BetterCms.Module.Root.Models;
 using BetterCms.Module.Root.Mvc;
 using BetterCms.Module.Root.Services;
 using BetterCms.Module.Root.ViewModels.Option;
@@ -54,8 +54,6 @@ namespace BetterCms.Module.Pages.Command.Widget.GetHtmlContentWidgetForEdit
         {
             EditHtmlContentWidgetViewModel model = null;
 
-            var categories = categoryService.GetCategories();
-
             if (widgetId.HasValue && widgetId.Value != Guid.Empty)
             {
                 var htmlContentWidget = contentService.GetContentForEdit(widgetId.Value) as HtmlContentWidget;
@@ -65,8 +63,7 @@ namespace BetterCms.Module.Pages.Command.Widget.GetHtmlContentWidgetForEdit
                     model = new EditHtmlContentWidgetViewModel
                                 {
                                     Id = htmlContentWidget.Id,
-                                    Version = htmlContentWidget.Version,
-                                    CategoryId = htmlContentWidget.Category != null ? htmlContentWidget.Category.Id : (Guid?)null,
+                                    Version = htmlContentWidget.Version,                                    
                                     Name = htmlContentWidget.Name,
                                     PageContent = htmlContentWidget.Html,
                                     EnableCustomHtml = htmlContentWidget.UseHtml,
@@ -120,7 +117,7 @@ namespace BetterCms.Module.Pages.Command.Widget.GetHtmlContentWidgetForEdit
                 model = new EditHtmlContentWidgetViewModel();
             }
 
-            model.Categories = categories.ToList();
+            model.Categories = categoryService.GetSelectedCategories<Root.Models.Widget, WidgetCategory>(widgetId).ToList();
             model.CustomOptions = optionService.GetCustomOptions();
             model.CanDestroyDraft = model.CurrentStatus == ContentStatus.Draft && model.HasPublishedContent;
 

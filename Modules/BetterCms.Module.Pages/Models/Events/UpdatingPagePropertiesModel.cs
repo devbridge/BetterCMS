@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 
 using BetterCms.Core.DataContracts.Enums;
 
@@ -32,7 +34,9 @@ namespace BetterCms.Module.Pages.Models.Events
 
             LayoutId = pageProperties.Layout != null ? pageProperties.Layout.Id : (Guid?)null;
             MasterPageId = pageProperties.MasterPage != null ? pageProperties.MasterPage.Id : (Guid?)null;
-            CategoryId = pageProperties.Category != null ? pageProperties.Category.Id : (Guid?)null;
+
+            Categories = pageProperties.Categories != null ? pageProperties.Categories.Select(c => c.Id).ToList() : new List<Guid>();
+
             MainImageId = pageProperties.Image != null ? pageProperties.Image.Id : (Guid?)null;
             SecondaryImageId = pageProperties.SecondaryImage != null ? pageProperties.SecondaryImage.Id : (Guid?)null;
             FeaturedImageId = pageProperties.FeaturedImage != null ? pageProperties.FeaturedImage.Id : (Guid?)null;
@@ -62,7 +66,7 @@ namespace BetterCms.Module.Pages.Models.Events
 
         public Guid? LayoutId { get; private set; }
         public Guid? MasterPageId { get; private set; }
-        public Guid? CategoryId { get; private set; }
+        public IList<Guid> Categories { get; private set; }
         public Guid? MainImageId { get; private set; }
         public Guid? SecondaryImageId { get; private set; }
         public Guid? FeaturedImageId { get; private set; }

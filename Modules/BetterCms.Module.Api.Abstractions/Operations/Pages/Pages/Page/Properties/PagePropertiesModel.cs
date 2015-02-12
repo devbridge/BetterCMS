@@ -1,4 +1,5 @@
-﻿using System.Runtime.Serialization;
+﻿using System.Collections.Generic;
+using System.Runtime.Serialization;
 
 using BetterCms.Module.Api.Infrastructure;
 
@@ -78,7 +79,7 @@ namespace BetterCms.Module.Api.Operations.Pages.Pages.Page.Properties
         /// The category id.
         /// </value>
         [DataMember]
-        public System.Guid? CategoryId { get; set; }
+        public List<System.Guid> Categories { get; set; }
 
         /// <summary>
         /// Gets or sets a value indicating whether page is marked as archived.

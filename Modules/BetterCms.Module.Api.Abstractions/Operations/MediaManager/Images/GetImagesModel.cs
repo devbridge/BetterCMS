@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Runtime.Serialization;
 
 using BetterCms.Module.Api.Infrastructure;
@@ -8,7 +9,7 @@ namespace BetterCms.Module.Api.Operations.MediaManager.Images
 {
     [DataContract]
     [Serializable]
-    public class GetImagesModel : DataOptions, IFilterByTags
+    public class GetImagesModel : DataOptions, IFilterByTags, IFilterByCategories
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="GetImagesModel" /> class.
@@ -56,6 +57,9 @@ namespace BetterCms.Module.Api.Operations.MediaManager.Images
         /// </value>
         [DataMember]
         public bool IncludeFolders { get; set; }
+        
+        [DataMember]
+        public bool IncludeCategories { get; set; }
 
         /// <summary>
         /// Gets or sets the image tags for filtering.
@@ -74,5 +78,23 @@ namespace BetterCms.Module.Api.Operations.MediaManager.Images
         /// </value>
         [DataMember]
         public FilterConnector FilterByTagsConnector { get; set; }
+
+        /// <summary>
+        /// Gets or sets the categories.
+        /// </summary>
+        /// <value>
+        /// The tags.
+        /// </value>
+        [DataMember]
+        public List<Guid> FilterByCategories { get; set; }
+
+        /// <summary>
+        /// Gets or sets the categories filter connector.
+        /// </summary>
+        /// <value>
+        /// The tags filter connector.
+        /// </value>
+        [DataMember]
+        public FilterConnector FilterByCategoriesConnector { get; set; }
     }
 }

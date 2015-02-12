@@ -73,5 +73,8 @@ namespace BetterCms.Module.Api.Operations.Blog.BlogPosts
         /// </value>
         [DataMember]
         public bool IncludeAccessRules { get; set; }
+
+        [DataMember]
+        public bool IncludeCategories { get; set; }
     }
 }

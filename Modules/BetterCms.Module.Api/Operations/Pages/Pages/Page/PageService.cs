@@ -175,7 +175,7 @@ namespace BetterCms.Module.Api.Operations.Pages.Pages.Page
         public GetPageResponse Get(GetPageRequest request)
         {
             var query = repository.AsQueryable<PageProperties>();
-            
+
             if (request.PageId.HasValue)
             {
                 query = query.Where(page => page.Id == request.PageId.Value);
@@ -203,8 +203,6 @@ namespace BetterCms.Module.Api.Operations.Pages.Pages.Page
                         PublishedOn = page.PublishedOn,
                         LayoutId = page.Layout != null && !page.Layout.IsDeleted ? page.Layout.Id : (Guid?)null,
                         MasterPageId = page.MasterPage != null && !page.MasterPage.IsDeleted ? page.MasterPage.Id : (Guid?)null,
-                        CategoryId = page.Category != null && !page.Category.IsDeleted ? page.Category.Id : (Guid?)null,
-                        CategoryName = page.Category != null && !page.Category.IsDeleted ? page.Category.Name : null,
                         MainImageId = page.Image != null && !page.Image.IsDeleted ? page.Image.Id : (Guid?)null,
                         MainImageUrl = page.Image != null && !page.Image.IsDeleted ? page.Image.PublicUrl : null,
                         MainImageThumbnauilUrl = page.Image != null && !page.Image.IsDeleted ? page.Image.PublicThumbnailUrl : null,
@@ -221,6 +219,21 @@ namespace BetterCms.Module.Api.Operations.Pages.Pages.Page
             model.MainImageUrl = fileUrlResolver.EnsureFullPathUrl(model.MainImageUrl);
             model.MainImageThumbnauilUrl = fileUrlResolver.EnsureFullPathUrl(model.MainImageThumbnauilUrl);
             model.MainImageThumbnailUrl = fileUrlResolver.EnsureFullPathUrl(model.MainImageThumbnailUrl);
+
+
+            model.Categories = (from pagePr in repository.AsQueryable<PageProperties>()
+                                from category in pagePr.Categories
+                                where pagePr.Id == model.Id
+                                select new CategoryModel
+                                {
+                                    Id = category.Category.Id,
+                                    Version = category.Category.Version,
+                                    CreatedBy = category.Category.CreatedByUser,
+                                    CreatedOn = category.Category.CreatedOn,
+                                    LastModifiedBy = category.Category.ModifiedByUser,
+                                    LastModifiedOn = category.Category.ModifiedOn,
+                                    Name = category.Category.Name
+                                }).ToList();
 
             return new GetPageResponse { Data = model };
         }

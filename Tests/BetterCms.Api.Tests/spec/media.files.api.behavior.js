@@ -317,6 +317,14 @@ describe('media.files.api.behavior', function () {
         filterByTags('or', 2, ['IFilterByTags File 1', 'IFilterByTags File 3']);
     });
 
+    it('03109.1: Should get files list, filtered by categories, using AND connector', function () {
+        filterByCategories('and', 1, ['IFilterByCategories File 2']);
+    });
+
+    it('03109.2: Should get files list, filtered by categories, using OR connector', function () {
+        filterByCategories('or', 2, ['IFilterByCategories File 1', 'IFilterByCategories File 2']);
+    });
+
     it('03110: Should get a list with one file, filtered by all available columns', function () {
         var url = '/bcms-api/files/',
             result,
@@ -366,8 +374,8 @@ describe('media.files.api.behavior', function () {
             expect(result.data.items[0].id).toBe('7f753def7d2647aaa36ca2070078465e', 'Correctly filtered id should be retrieved.');
 
             // Check if model properties count didn't changed. If so - update current test filter and another tests.
-            // data.filter.where.length + 1 <-- Because field: {accessRules} cannnot be filtered by
-            expect(data.filter.where.length + 1).toBe(api.getCountOfProperties(result.data.items[0]), 'Retrieved result properties cound should be equal to filterting parameters count.');
+            // data.filter.where.length + 1 <-- Because field: {accessRules, Categories} cannnot be filtered by
+            expect(data.filter.where.length + 2).toBe(api.getCountOfProperties(result.data.items[0]), 'Retrieved result properties cound should be equal to filterting parameters count.');
         });
     });
     
@@ -601,6 +609,44 @@ describe('media.files.api.behavior', function () {
             folderId: 'cf304a17091244c69740a206008a9e7e',
             filterByTagsConnector: connector,
             filterByTags: ['IFilterByTags Tag 1', 'IFilterByTags Tag 2'],
+            includeArchived: true
+        };
+
+        runs(function () {
+            api.get(url, data, function (json) {
+                result = json;
+                ready = true;
+            });
+        });
+
+        waitsFor(function () {
+            return ready;
+        }, 'The ' + url + ' timeout.');
+
+        runs(function () {
+            expect(result).toBeDefinedAndNotNull('JSON object should be retrieved.');
+            expect(result.data).toBeDefinedAndNotNull('JSON data object should be retrieved.');
+            expect(result.data.totalCount).toBe(expectedCount, 'Total count should be ' + expectedCount + '.');
+            expect(result.data.items.length).toBe(expectedCount, 'Returned array length should be ' + expectedCount + '.');
+
+            for (var i = 0; i < result.data.items.length; i++) {
+                expect(result.data.items[i].title).toBe(expectedTitles[i]);
+            }
+        });
+    }
+
+    function filterByCategories(connector, expectedCount, expectedTitles) {
+        var url = '/bcms-api/files/',
+            result,
+            ready = false;
+
+        var data = {
+            order: {
+                by: [{ field: 'Title' }]
+            },
+            folderId: 'DEE811B5-5F39-4846-862B-A43500F478BE',
+            filterByCategoriesConnector: connector,
+            filterByCategories: ['15A86920-78E5-4DDC-A259-A43500A2B573', 'FD36A148-DD10-44E0-A5C1-A43500B8A450'],
             includeArchived: true
         };
 

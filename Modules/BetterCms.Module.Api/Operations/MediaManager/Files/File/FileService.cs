@@ -8,12 +8,14 @@ using BetterCms.Core.Exceptions.Api;
 using BetterCms.Core.Exceptions.DataTier;
 using BetterCms.Core.Security;
 using BetterCms.Module.Api.Operations.Root;
+using BetterCms.Module.Api.Operations.Root.Categories.Category;
 using BetterCms.Module.MediaManager.Models;
 using BetterCms.Module.MediaManager.Models.Extensions;
 using BetterCms.Module.MediaManager.Services;
 using BetterCms.Module.Root.Models;
 using BetterCms.Module.Root.Models.Extensions;
 using BetterCms.Module.Root.Mvc;
+using BetterCms.Module.Root.Services;
 
 using NHibernate.Linq;
 
@@ -61,6 +63,8 @@ namespace BetterCms.Module.Api.Operations.MediaManager.Files.File
         /// </summary>
         private readonly IAccessControlService accessControlService;
 
+        private readonly ICategoryService categoryService = null;
+
         /// <summary>
         /// Initializes a new instance of the <see cref="FileService" /> class.
         /// </summary>
@@ -78,7 +82,8 @@ namespace BetterCms.Module.Api.Operations.MediaManager.Files.File
             IUnitOfWork unitOfWork,
             ITagService tagService,
             IMediaService mediaService,
-            IAccessControlService accessControlService)
+            IAccessControlService accessControlService,
+            ICategoryService categoryService)
         {
             this.repository = repository;
             this.fileService = fileService;
@@ -87,6 +92,7 @@ namespace BetterCms.Module.Api.Operations.MediaManager.Files.File
             this.tagService = tagService;
             this.mediaService = mediaService;
             this.accessControlService = accessControlService;
+            this.categoryService = categoryService;
         }
 
         /// <summary>
@@ -186,6 +192,24 @@ namespace BetterCms.Module.Api.Operations.MediaManager.Files.File
             else
             {
                 accessRulesFuture = null;
+            }
+
+            if (request.Data.IncludeCategories)
+            {
+                model.Model.Categories = (from media in repository.AsQueryable<MediaFile>()
+                                          from category in media.Categories
+                                          where media.Id == model.Model.Id && !category.IsDeleted
+                                          select new CategoryNodeModel
+                                          {
+                                              Id = category.Category.Id,
+                                              Version = category.Version,
+                                              CreatedBy = category.CreatedByUser,
+                                              CreatedOn = category.CreatedOn,
+                                              LastModifiedBy = category.ModifiedByUser,
+                                              LastModifiedOn = category.ModifiedOn,
+                                              Name = category.Category.Name,
+                                              CategoryTreeId = category.Category.CategoryTree.Id
+                                          }).ToList(); 
             }
 
             return new GetFileResponse
@@ -302,6 +326,8 @@ namespace BetterCms.Module.Api.Operations.MediaManager.Files.File
                         .ToList();
                 accessControlService.UpdateAccessControl(mediaFile, accessRules);
             }
+
+            categoryService.CombineEntityCategories<Media, MediaCategory>(mediaFile, request.Data.Categories);
 
             repository.Save(mediaFile);
 

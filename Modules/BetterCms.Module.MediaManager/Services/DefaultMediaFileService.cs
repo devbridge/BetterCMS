@@ -29,6 +29,8 @@ namespace BetterCms.Module.MediaManager.Services
 {
     internal class DefaultMediaFileService : IMediaFileService
     {
+        private static readonly ILog Log = LogManager.GetCurrentClassLogger();
+
         private readonly IStorageService storageService;
         
         private readonly IRepository repository;
@@ -155,20 +157,29 @@ namespace BetterCms.Module.MediaManager.Services
             fileUploadTask.ContinueWith(
                 task =>
                     {
-                        // During uploading progress Cancel action can by executed. Need to remove uploaded files from the storage.
-                        ExecuteActionOnThreadSeparatedSessionWithNoConcurrencyTracking(
-                            session =>
-                                {
-                                    var media = session.Get<MediaFile>(file.Id);
-                                    if (media != null)
+                        try
+                        {
+                            // During uploading progress Cancel action can by executed. Need to remove uploaded files from the storage.
+                            ExecuteActionOnThreadSeparatedSessionWithNoConcurrencyTracking(
+                                session =>
                                     {
-                                        if (media.IsCanceled && media.IsUploaded.HasValue && media.IsUploaded.Value)
+                                        var media = session.Get<MediaFile>(file.Id);
+                                        if (media != null)
                                         {
-                                            RemoveFile(media.Id, media.Version);
+                                            if (media.IsCanceled && media.IsUploaded.HasValue && media.IsUploaded.Value)
+                                            {
+                                                RemoveFile(media.Id, media.Version);
+                                            }
                                         }
-                                    }
-                                });
+                                    });
+                        }
+                        catch (Exception ex)
+                        {
+                            Log.Error("Failed to cancel file upload.", ex);
+                        }
                     });
+
+            fileUploadTask.ContinueWith((t) => { Log.Error("Error observed while executing parallel task in file uploading.", t.Exception); }, TaskContinuationOptions.OnlyOnFaulted);
 
             fileUploadTask.Start();
 
@@ -432,14 +443,28 @@ namespace BetterCms.Module.MediaManager.Services
                 {
                     if (t.Exception == null)
                     {
-                        ExecuteActionOnThreadSeparatedSessionWithNoConcurrencyTracking(completedAction);
+                        try
+                        {
+                            ExecuteActionOnThreadSeparatedSessionWithNoConcurrencyTracking(completedAction);
+                        }
+                        catch (Exception ex)
+                        {
+                            LogManager.GetCurrentClassLogger().Error("Failed to complete successful file upload.", ex);
+                        }
                     }
                     else
                     {
-                        ExecuteActionOnThreadSeparatedSessionWithNoConcurrencyTracking(failedResultAction);
-
                         // Log exception
                         LogManager.GetCurrentClassLogger().Error("Failed to upload file.", t.Exception.Flatten());
+
+                        try
+                        {
+                            ExecuteActionOnThreadSeparatedSessionWithNoConcurrencyTracking(failedResultAction);
+                        }
+                        catch (Exception ex)
+                        {
+                            LogManager.GetCurrentClassLogger().Error("Failed to complete failed file upload.", ex);
+                        }
                     }
                 })
              .ContinueWith(t => finalAction());

@@ -14,7 +14,7 @@ namespace BetterCms.Module.Api.Operations.Root
     public class DefaultRootApiOperations : IRootApiOperations
     {
         public DefaultRootApiOperations(ITagsService tags, ITagService tag, IVersionService version, ILayoutsService layouts, ILayoutService layout,
-            ICategoriesService categories, ICategoryService category, ILanguagesService languages, ILanguageService language)
+            ICategoryTreesService categories, ICategoryTreeService category, ILanguagesService languages, ILanguageService language)
         {
             Tags = tags;
             Tag = tag;
@@ -39,13 +39,13 @@ namespace BetterCms.Module.Api.Operations.Root
             private set;
         }
         
-        public ICategoriesService Categories
+        public ICategoryTreesService Categories
         {
             get; 
             private set;
         }
 
-        public ICategoryService Category
+        public ICategoryTreeService Category
         {
             get;
             private set;

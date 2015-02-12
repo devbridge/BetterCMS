@@ -20,6 +20,7 @@
       <JavaScriptFiles Include="$(ProjectDir)Scripts\bcms.slides.jquery.js" />
       <JavaScriptFiles Include="$(ProjectDir)Scripts\bcms.spinner.jquery.js" />      
       <JavaScriptFiles Include="$(ProjectDir)Scripts\bcms.authentication.js" />
+      <JavaScriptFiles Include="$(ProjectDir)Scripts\bcms.categories.js" />
       <JavaScriptFiles Include="$(ProjectDir)Scripts\bcms.content.js" />
       <JavaScriptFiles Include="$(ProjectDir)Scripts\bcms.content.tree.js" />
       <JavaScriptFiles Include="$(ProjectDir)Scripts\bcms.languages.js" />
@@ -45,6 +46,7 @@
       <JavaScriptFiles Include="$(ProjectDir)Scripts\bcms.tabs.js" />
       <JavaScriptFiles Include="$(ProjectDir)Scripts\bcms.tooltip.js" />
       <JavaScriptFiles Include="$(ProjectDir)Scripts\bcms.tags.js" />
+      <JavaScriptFiles Include="$(ProjectDir)Scripts\bcms.multiple.select.js" />
     </ItemGroup>
 
     <CssCompressorTask

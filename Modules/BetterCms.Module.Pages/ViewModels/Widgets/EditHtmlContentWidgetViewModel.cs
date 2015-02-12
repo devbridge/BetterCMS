@@ -1,8 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 
+using BetterCms.Core.Mvc.Binders;
 using BetterCms.Module.Pages.ViewModels.Content;
 using BetterCms.Module.Root.Models;
+
+using Newtonsoft.Json;
 
 namespace BetterCms.Module.Pages.ViewModels.Widgets
 {
@@ -18,14 +21,6 @@ namespace BetterCms.Module.Pages.ViewModels.Widgets
         /// The page content id to preview this widget.
         /// </value>
         public Guid? PreviewOnPageContentId { get; set; }
-
-        /// <summary>
-        /// Gets or sets the categories.
-        /// </summary>
-        /// <value>
-        /// The categories.
-        /// </value>
-        public IList<LookupKeyValue> Categories { get; set; }
 
         /// <summary>
         /// Gets or sets a value indicating whether content editor must be opened in source mode.

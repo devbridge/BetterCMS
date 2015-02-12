@@ -50,11 +50,29 @@
                             <div class="bcms-filter-text">@MediaGlobalization.SiteSettings_FilterByTags</div>
                             <div class="bcms-filter-field-holder">
                                 <input type="text" class="bcms-add-tags-field" data-bind="
-    css: { 'bcms-tag-validation-error': newItem.hasError() },
-    value: newItem,
-    valueUpdate: 'afterkeydown',
-    escPress: clearItem,
-    autocompleteList: 'onlyExisting'" />
+                                    css: { 'bcms-tag-validation-error': newItem.hasError() },
+                                    value: newItem,
+                                    valueUpdate: 'afterkeydown',
+                                    escPress: clearItem,
+                                    autocompleteList: 'onlyExisting'" />
+                                <!-- ko if: newItem.hasError()  -->
+                                <span class="bcms-tag-field-validation-error">
+                                    <span data-bind="text: newItem.validationMessage()"></span>
+                                </span>
+                                <!-- /ko -->
+                            </div>
+                        </div>
+                        
+                        <div class="bcms-filter-options" data-bind="with: gridOptions().categories">
+                            <div class="bcms-filter-text">@MediaGlobalization.SiteSettings_FilterByCategory</div>
+
+                            <div class="bcms-filter-field-holder">
+                                <input type="text" class="bcms-add-tags-field" data-bind="
+                                    css: { 'bcms-tag-validation-error': newItem.hasError() },
+                                    value: newItem,
+                                    valueUpdate: 'afterkeydown',
+                                    escPress: clearItem,
+                                    autocompleteList: 'onlyExisting'" />
                                 <!-- ko if: newItem.hasError()  -->
                                 <span class="bcms-tag-field-validation-error">
                                     <span data-bind="text: newItem.validationMessage()"></span>
@@ -72,7 +90,15 @@
                         <input type="hidden" data-bind="attr: { name: getItemInputName($index()) + '.Key', value: id() }" />
                         <input type="hidden" data-bind="attr: { name: getItemInputName($index()) + '.Value', value: name() }" />
                     </div>
-
+                    
+                    
+                    <div class="bcms-single-tag-holder" data-bind="foreach: gridOptions().categories.items()">
+                        <div class="bcms-single-tag" data-bind="css: { 'bcms-single-tag-active': isActive() }">
+                            <span data-bind="text: name()"></span><a data-bind="    click: remove">@RootGlobalization.Button_Remove</a>
+                        </div>
+                        <input type="hidden" data-bind="attr: { name: 'Categories[' + $index() + '].Key', value: id() }" />
+                        <input type="hidden" data-bind="attr: { name: 'Categories[' + $index() + '].Value', value: name() }" />
+                    </div>
                 </div>
 
                 <div class="bcms-clearfix">

@@ -255,5 +255,14 @@ namespace BetterCms.Module.Api.Operations.MediaManager.Images.Image
         /// </value>
         [DataMember]
         public IList<string> Tags { get; set; }
+
+        /// <summary>
+        /// Gets or sets the tags.
+        /// </summary>
+        /// <value>
+        /// The tags.
+        /// </value>
+        [DataMember]
+        public IList<Guid> Categories { get; set; }
     }
 }

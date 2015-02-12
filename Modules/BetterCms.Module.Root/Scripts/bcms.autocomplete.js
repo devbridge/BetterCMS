@@ -29,9 +29,17 @@ bettercms.define('bcms.autocomplete', ['bcms.jquery', 'bcms', 'bcms.jquery.autoc
             }, onSearchStart = function (params, autocompleteViewModel) {
                 var additionalParams = autocompleteViewModel.getAdditionalParameters(),
                     param;
+
+                if (autocompleteViewModel.params) {
+                    for (param in autocompleteViewModel.params) {
+                        params[param] = autocompleteViewModel.params[param];
+                    }
+                }
+
                 for (param in additionalParams) {
                     params[param] = additionalParams[param];
                 }
+
             }, onBeforeSearchStart = function (params, autocompleteViewModel) {
                 return autocompleteViewModel.onBeforeSearchStart(params);
             };
@@ -155,6 +163,7 @@ bettercms.define('bcms.autocomplete', ['bcms.jquery', 'bcms', 'bcms.jquery.autoc
                 self.autocompleteInstance = null;
                 self.serviceUrl = options.serviceUrl;
                 self.pattern = options.pattern;
+                self.params = options.params;
 
                 self.isExpanded = ko.observable(true);
                 self.hasfocus = ko.observable(false);
@@ -181,7 +190,7 @@ bettercms.define('bcms.autocomplete', ['bcms.jquery', 'bcms', 'bcms.jquery.autoc
 
                 self.addItemWithId = function(name, id) {
 
-                    if (name && id && !self.alreadyExists(name)) {
+                    if (name && id && !self.alreadyExists(id)) {
                         var itemViewModel = new autocomplete.AutocompleteItemViewModel(self, name, id);
                         self.items.push(itemViewModel);
                     }

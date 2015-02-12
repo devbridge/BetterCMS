@@ -7,7 +7,7 @@ using BetterCms.Core.Mvc.Commands;
 using BetterCms.Module.Pages.Models;
 using BetterCms.Module.Pages.Services;
 using BetterCms.Module.Pages.ViewModels.Widgets;
-
+using BetterCms.Module.Root.Models;
 using BetterCms.Module.Root.Mvc;
 using BetterCms.Module.Root.Services;
 using BetterCms.Module.Root.ViewModels.Option;
@@ -57,7 +57,7 @@ namespace BetterCms.Module.Pages.Command.Widget.GetServerControlWidgetForEdit
         public EditServerControlWidgetViewModel Execute(Guid? widgetId)
         {            
             EditServerControlWidgetViewModel model = null;
-            var categories = categoryService.GetCategories();
+            var categories = categoryService.GetCategories(Root.Models.Widget.CategorizableItemKeyForWidgets);
 
             if (widgetId.HasValue && widgetId.Value != Guid.Empty)
             {
@@ -73,8 +73,7 @@ namespace BetterCms.Module.Pages.Command.Widget.GetServerControlWidgetForEdit
                                                                      PreviewImageUrl = serverControlWidget.PreviewUrl,
                                                                      CurrentStatus = serverControlWidget.Status,
                                                                      HasPublishedContent = serverControlWidget.Original != null,
-                                                                     WidgetType = WidgetType.ServerControl,
-                                                                     CategoryId = serverControlWidget.Category != null ? serverControlWidget.Category.Id : (Guid?)null
+                                                                     WidgetType = WidgetType.ServerControl                                                                     
                                                                  };
 
                     model.Options = serverControlWidget.ContentOptions.Distinct()
@@ -110,7 +109,7 @@ namespace BetterCms.Module.Pages.Command.Widget.GetServerControlWidgetForEdit
                 model = new EditServerControlWidgetViewModel();
             }
 
-            model.Categories = categories.ToList();
+            model.Categories = categoryService.GetSelectedCategories<Root.Models.Widget, WidgetCategory>(widgetId).ToList();
             model.CustomOptions = optionService.GetCustomOptions();
             
             return model;

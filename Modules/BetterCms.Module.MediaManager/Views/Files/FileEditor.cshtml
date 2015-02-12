@@ -1,6 +1,8 @@
 ﻿@using BetterCms.Module.MediaManager.ViewModels.File
 @using BetterCms.Module.Root
 @using BetterCms.Module.Root.Content.Resources
+@using BetterCms.Module.Root.Mvc.Extensions
+@using BetterCms.Module.Root.ViewModels.Category
 @using BetterCms.Module.Root.ViewModels.Tags
 @using Microsoft.Web.Mvc
 @using BetterCms.Module.Root.Mvc.Helpers
@@ -12,6 +14,10 @@
     var tagsTemplateViewModel = new TagsTemplateViewModel
     {
         TooltipDescription = MediaGlobalization.FileEditor_Dialog_AddTags_Tooltip_Description
+    };
+    var categoriesTemplateViewModel = new CategoryTemplateViewModel
+    {
+        TooltipDescription = MediaGlobalization.FileEditor_Dialog_Category_Tooltip_Description
     };
 }
 <div class="bcms-scroll-window">
@@ -59,6 +65,10 @@
                     @Html.TextAreaFor(f => f.Description, new { @class = "bcms-editor-field-area", @id = "Description", data_bind = "event: {change: onValueChange}" })
                     @Html.BcmsValidationMessageFor(f => f.Description)
                 </div>
+            </div>
+
+            <div class="bcms-categories-box-holder" data-bind="with: categories">
+                @Html.Partial("~/Areas/bcms-root/Views/Category/CategoriesTemplate.cshtml", categoriesTemplateViewModel)
             </div>
 
             <div class="bcms-tags-box-holder" data-bind="with: tags">

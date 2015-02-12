@@ -8,6 +8,7 @@ using BetterCms.Core.Security;
 
 using BetterCms.Module.Api.Helpers;
 using BetterCms.Module.Api.Infrastructure;
+using BetterCms.Module.Api.Operations.Blog.BlogPosts.BlogPost.Properties;
 using BetterCms.Module.Api.Operations.Root;
 using BetterCms.Module.Blog.Models;
 using BetterCms.Module.MediaManager.Services;
@@ -107,8 +108,6 @@ namespace BetterCms.Module.Api.Operations.Blog.BlogPosts
                         PublishedOn = blogPost.PublishedOn,
                         LayoutId = blogPost.Layout != null && !blogPost.Layout.IsDeleted ? blogPost.Layout.Id : (Guid?)null,
                         MasterPageId = blogPost.MasterPage != null && !blogPost.MasterPage.IsDeleted ? blogPost.MasterPage.Id : (Guid?)null,
-                        CategoryId = blogPost.Category != null && !blogPost.Category.IsDeleted ? blogPost.Category.Id : (Guid?)null,
-                        CategoryName = blogPost.Category != null && !blogPost.Category.IsDeleted ? blogPost.Category.Name : null,
                         AuthorId = blogPost.Author != null && !blogPost.Author.IsDeleted ? blogPost.Author.Id : (Guid?)null,
                         AuthorName = blogPost.Author != null && !blogPost.Author.IsDeleted ? blogPost.Author.Name : null,
                         MainImageId = blogPost.Image != null && !blogPost.Image.IsDeleted ? blogPost.Image.Id : (Guid?)null,
@@ -138,6 +137,27 @@ namespace BetterCms.Module.Api.Operations.Blog.BlogPosts
             if (listResponse.Items.Count > 0 && (request.Data.IncludeTags || request.Data.IncludeAccessRules))
             {
                 LoadTags(listResponse, request.Data.IncludeTags, request.Data.IncludeAccessRules);
+            }
+
+
+            if (request.Data.IncludeCategories)
+            {
+                listResponse.Items.ForEach(page =>
+                {
+                    page.Categories = (from pagePr in repository.AsQueryable<Module.Blog.Models.BlogPost>()
+                                       from category in pagePr.Categories
+                                       where pagePr.Id == page.Id && !category.IsDeleted
+                                       select new CategoryModel
+                                       {
+                                           Id = category.Category.Id,
+                                           Version = category.Version,
+                                           CreatedBy = category.CreatedByUser,
+                                           CreatedOn = category.CreatedOn,
+                                           LastModifiedBy = category.ModifiedByUser,
+                                           LastModifiedOn = category.ModifiedOn,
+                                           Name = category.Category.Name
+                                       }).ToList();
+                });
             }
 
             return new GetBlogPostsResponse

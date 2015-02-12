@@ -1,4 +1,6 @@
-﻿using BetterCms.Module.Pages.Models.Events;
+﻿using System.Linq;
+
+using BetterCms.Module.Pages.Models.Events;
 
 using NUnit.Framework;
 
@@ -40,7 +42,13 @@ namespace BetterCms.Test.Module.Pages.CommandTests.EventTests
             
             Assert.AreEqual(entity.Layout.Id, model.LayoutId);
             Assert.AreEqual(entity.MasterPage.Id, model.MasterPageId);
-            Assert.AreEqual(entity.Category.Id, model.CategoryId);
+
+            foreach (var category in entity.Categories)
+            {
+                Assert.Contains(category.Id, model.Categories.ToArray());
+            }
+
+            
             Assert.AreEqual(entity.Image.Id, model.MainImageId);
             Assert.AreEqual(entity.SecondaryImage.Id, model.SecondaryImageId);
             Assert.AreEqual(entity.FeaturedImage.Id, model.FeaturedImageId);
@@ -52,7 +60,7 @@ namespace BetterCms.Test.Module.Pages.CommandTests.EventTests
             var entity = TestDataProvider.CreateNewPageProperties();
             entity.Layout = null;
             entity.MasterPage = null;
-            entity.Category = null;
+            entity.Categories = null;
             entity.Image = null;
             entity.SecondaryImage = null;
             entity.FeaturedImage = null;
@@ -61,7 +69,7 @@ namespace BetterCms.Test.Module.Pages.CommandTests.EventTests
 
             Assert.IsNull(model.LayoutId);
             Assert.IsNull(model.MasterPageId);
-            Assert.IsNull(model.CategoryId);
+            Assert.IsEmpty(model.Categories);
             Assert.IsNull(model.MainImageId);
             Assert.IsNull(model.SecondaryImageId);
             Assert.IsNull(model.FeaturedImageId);

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 
 using BetterCms.Core.DataContracts.Enums;
@@ -7,6 +8,7 @@ using BetterCms.Core.Security;
 using BetterCms.Module.Api.Operations.Blog.BlogPosts.BlogPost.Properties;
 using BetterCms.Module.Blog.ViewModels.Blog;
 using BetterCms.Module.MediaManager.ViewModels;
+using BetterCms.Module.Root.Models;
 using BetterCms.Module.Root.ViewModels.Security;
 
 namespace BetterCms.Module.Api.Extensions
@@ -25,7 +27,10 @@ namespace BetterCms.Module.Api.Extensions
             serviceModel.LiveToDate = model.ExpirationDate;
             serviceModel.BlogUrl = model.BlogPostUrl;
             serviceModel.AuthorId = model.AuthorId;
-            serviceModel.CategoryId = model.CategoryId;
+            serviceModel.Categories = model.Categories != null ? model.Categories.Select(c => new LookupKeyValue()
+            {
+                Key = c.ToString(),
+            }).ToList() : new List<LookupKeyValue>();
             serviceModel.DesirableStatus = model.IsPublished ? ContentStatus.Published : ContentStatus.Draft;
             serviceModel.Tags = model.Tags;
             serviceModel.Image = new ImageSelectorViewModel { ImageId = model.MainImageId };

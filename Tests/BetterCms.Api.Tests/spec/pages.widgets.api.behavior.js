@@ -61,7 +61,8 @@ describe('pages.widgets.api.behavior', function () {
             result,
             ready = false,
             data = {
-                includeChildContentsOptions: true
+                includeChildContentsOptions: true,
+                includeCategories: true
             };
 
         runs(function () {
@@ -86,15 +87,21 @@ describe('pages.widgets.api.behavior', function () {
             expect(widget.name).toBe('_0004_Html_Widget_2', 'Correctly filtered name should be retrieved.');
             expect(widget.isPublished).toBe(true, 'Correctly filtered isPublished should be retrieved.');
             expect(widget.publishedOn).toBeDefinedAndNotNull('publishedOn should be retrieved.');
-            expect(widget.publishedByUser).toBe('Better CMS test user', 'Correctly filtered publishedByUser should be retrieved.');
-            expect(widget.categoryId).toBeDefinedAndNotNull('categoryId should be retrieved.');
-            expect(widget.categoryName).toBe('Category for _0004_Html_Widget_2', 'Correctly filtered categoryName should be retrieved.');
+            expect(widget.publishedByUser).toBe('Better CMS test user', 'Correctly filtered publishedByUser should be retrieved.');            
             expect(widget.customCss).toBe('custom css', 'Correctly filtered customCss should be retrieved.');
             expect(widget.useCustomCss).toBe(true, 'Correctly filtered useCustomCss should be retrieved.');
             expect(widget.html.substring(0, substring.length)).toBe(substring, 'Correctly filtered html should be retrieved.');
             expect(widget.useHtml).toBe(true, 'Correctly filtered useHtml should be retrieved.');
             expect(widget.customJavaScript).toBe("console.log('test')", 'Correctly filtered customJavaScript should be retrieved.');
             expect(widget.useCustomJavaScript).toBe(true, 'Correctly filtered useCustomJavaScript should be retrieved.');
+
+            expect(result.categories).toBeDefinedAndNotNull('Correct categories should be retrieved.');
+            expect(result.categories.length).toBe(1, 'Correct categories.length should be retrieved.');
+
+            var category = result.categories[0];
+
+            expect(category.id).toBeDefinedAndNotNull('categoryId should be retrieved.');
+            expect(category.name).toBe('Category for _0004_Html_Widget_2', 'Correctly filtered categoryName should be retrieved.');
 
             expect(result.childContentsOptionValues).toBeDefinedAndNotNull('Correct childContentsOptionValues should be retrieved.');
             expect(result.childContentsOptionValues.length).toBe(2, 'Correct childContentsOptionValues.length should be retrieved.');
@@ -126,10 +133,13 @@ describe('pages.widgets.api.behavior', function () {
     it('01202: Should get a server control widget by id', function () {
         var url = '/bcms-api/widgets/server-control/3ac115dfc5f34f148141a205009162cd',
             result,
-            ready = false;
+            ready = false,
+            data = {
+                includeCategories: true
+            };
 
         runs(function () {
-            api.get(url, null, function (json) {
+            api.get(url, data, function (json) {
                 result = json;
                 ready = true;
             });
@@ -151,8 +161,14 @@ describe('pages.widgets.api.behavior', function () {
             expect(widget.isPublished).toBe(true, 'Correctly filtered isPublished should be retrieved.');
             expect(widget.publishedOn).toBeDefinedAndNotNull('publishedOn should be retrieved.');
             expect(widget.publishedByUser).toBe('Better CMS test user', 'Correctly filtered publishedByUser should be retrieved.');
-            expect(widget.categoryId).toBeDefinedAndNotNull('categoryId should be retrieved.');
-            expect(widget.categoryName).toBe('Category for _0004_Server_Widget_1', 'Correctly filtered categoryName should be retrieved.');
+
+            expect(result.categories).toBeDefinedAndNotNull('Correct categories should be retrieved.');
+            expect(result.categories.length).toBe(1, 'Correct categories.length should be retrieved.');
+
+            var category = result.categories[0];
+
+            expect(category.id).toBeDefinedAndNotNull('categoryId should be retrieved.');
+            expect(category.name).toBe('Category for _0004_Server_Widget_1', 'Correctly filtered categoryName should be retrieved.');
         });
     });
     
@@ -170,15 +186,14 @@ describe('pages.widgets.api.behavior', function () {
                     { field: 'LastModifiedOn', value: '2013-07-26 10:26:50.000' },
                     { field: 'LastModifiedBy', value: 'Better CMS test user' },
                     { field: 'Version', value: '2' },
-
                     { field: 'Name', value: '01203' },
                     { field: 'IsPublished', value: true },
                     { field: 'PublishedOn', value: '2013-07-26 10:26:50.000' },
                     { field: 'PublishedByUser', value: 'Better CMS test user' },
-                    { field: 'CategoryId', value: '1d8dbfbce4bf46c2acb7a20700ac186a' },
-                    { field: 'CategoryName', value: '01203' }
                 ]
-            }
+            },
+            filterByCategoriesConnector: 'AND',
+            filterByCategories: ['1d8dbfbc-e4bf-46c2-acb7-a20700ac186a'],
         };
 
         runs(function () {
@@ -201,8 +216,8 @@ describe('pages.widgets.api.behavior', function () {
             expect(result.data.items[0].id).toBe('d674977e193f4d858b83a20700ac13b6', 'Correctly filtered id should be retrieved.');
 
             // Check if model properties count didn't changed. If so - update current test filter and another tests.
-            // data.filter.where.length + 1 <-- Because field WidgetType cannnot be filtered by
-            expect(data.filter.where.length + 1).toBe(api.getCountOfProperties(result.data.items[0]), 'Retrieved result properties cound should be equal to filterting parameters count.');
+            // data.filter.where.length + 1 <-- Because field WidgetType and Categories cannnot be filtered by
+            expect(data.filter.where.length + 2).toBe(api.getCountOfProperties(result.data.items[0]), 'Retrieved result properties cound should be equal to filterting parameters count.');
         });
     });
     

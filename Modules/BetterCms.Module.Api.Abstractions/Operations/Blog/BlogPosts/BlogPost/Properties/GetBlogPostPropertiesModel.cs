@@ -25,13 +25,13 @@ namespace BetterCms.Module.Api.Operations.Blog.BlogPosts.BlogPost.Properties
         public bool IncludeTags { get; set; }
 
         /// <summary>
-        /// Gets or sets a value indicating whether to include category.
+        /// Gets or sets a value indicating whether to include categories.
         /// </summary>
         /// <value>
         ///   <c>true</c> if to include category; otherwise, <c>false</c>.
         /// </value>
         [DataMember]
-        public bool IncludeCategory { get; set; }
+        public bool IncludeCategories { get; set; }
 
         /// <summary>
         /// Gets or sets a value indicating whether to include language.

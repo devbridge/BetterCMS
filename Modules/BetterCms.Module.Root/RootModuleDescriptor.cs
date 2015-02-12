@@ -19,6 +19,8 @@ using BetterCms.Module.Root.Mvc;
 using BetterCms.Module.Root.Projections;
 using BetterCms.Module.Root.Registration;
 using BetterCms.Module.Root.Services;
+using BetterCms.Module.Root.Services.Categories.Nodes;
+using BetterCms.Module.Root.Services.Categories.Tree;
 
 namespace BetterCms.Module.Root
 {
@@ -58,6 +60,11 @@ namespace BetterCms.Module.Root
         private readonly TagsJsModuleIncludeDescriptor tagsJsModuleIncludeDescriptor;
 
         /// <summary>
+        /// bcms.categories.js java script module descriptor.
+        /// </summary>
+        private readonly CategoriesJavaScriptModuleDescriptor categoriesJavaScriptModuleDescriptor;
+
+        /// <summary>
         /// bcms.languages.js java script module descriptor.
         /// </summary>
         private readonly LanguagesJsModuleIncludeDescriptor languagesJsModuleIncludeDescriptor;
@@ -70,6 +77,7 @@ namespace BetterCms.Module.Root
             authenticationJsModuleIncludeDescriptor = new AuthenticationJsModuleIncludeDescriptor(this);
             siteSettingsJsModuleIncludeDescriptor = new SiteSettingsJsModuleIncludeDescriptor(this);
             tagsJsModuleIncludeDescriptor = new TagsJsModuleIncludeDescriptor(this);
+            categoriesJavaScriptModuleDescriptor = new CategoriesJavaScriptModuleDescriptor(this);
             languagesJsModuleIncludeDescriptor = new LanguagesJsModuleIncludeDescriptor(this);
 
             InitializeSecurity();            
@@ -192,6 +200,9 @@ namespace BetterCms.Module.Root
             containerBuilder.RegisterType<DefaultLanguageService>().AsImplementedInterfaces().InstancePerLifetimeScope();
             containerBuilder.RegisterType<DefaultContentProjectionService>().AsImplementedInterfaces().InstancePerLifetimeScope();
             containerBuilder.RegisterType<DefaultChildContentService>().AsImplementedInterfaces().InstancePerLifetimeScope();
+            containerBuilder.RegisterType<DefaultCategoryService>().AsImplementedInterfaces().InstancePerLifetimeScope();
+            containerBuilder.RegisterType<DefaultCategoryTreeService>().AsImplementedInterfaces().InstancePerLifetimeScope();
+            containerBuilder.RegisterType<DefaultCategoryNodeService>().AsImplementedInterfaces().InstancePerLifetimeScope();
         }
 
         /// <summary>
@@ -279,6 +290,7 @@ namespace BetterCms.Module.Root
                     new JsIncludeDescriptor(this, "bcms.jquery.validate.unobtrusive"),
                     new JsIncludeDescriptor(this, "bcms.jquery.autocomplete"),
                     new JsIncludeDescriptor(this, "bcms.autocomplete"),
+                    new JsIncludeDescriptor(this, "bcms.multiple.select"),
                     new BcmsJsModuleIncludeDescriptor(this), 
                     new KnockoutExtendersJsModuleIncludeDescriptor(this), 
                     new JsIncludeDescriptor(this, "bcms.ko.grid"),                    
@@ -299,6 +311,7 @@ namespace BetterCms.Module.Root
                     new JsIncludeDescriptor(this, "ace", "ace/ace.js", "ace/ace.js"),
                     new JsIncludeDescriptor(this, "ckeditor", "ckeditor/ckeditor.js", "ckeditor/ckeditor.js"),
                     tagsJsModuleIncludeDescriptor,
+                    categoriesJavaScriptModuleDescriptor,
                     languagesJsModuleIncludeDescriptor,
                     new OptionsJsModuleIncludeDescriptor(this)
                 };
@@ -339,7 +352,7 @@ namespace BetterCms.Module.Root
         {
             return new List<IPageActionProjection>
                 {
-                    new LinkActionProjection(tagsJsModuleIncludeDescriptor, page => "loadSiteSettingsCategoryList")
+                    new LinkActionProjection(categoriesJavaScriptModuleDescriptor, page => "loadSiteSettingsCategoryTreesList")
                         {
                             Order = 2000,
                             Title = page => RootGlobalization.SiteSettings_CategoriesMenuItem,

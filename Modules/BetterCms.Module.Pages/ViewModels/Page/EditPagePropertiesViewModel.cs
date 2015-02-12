@@ -59,21 +59,13 @@ namespace BetterCms.Module.Pages.ViewModels.Page
         public string PageUrl { get; set; }
         
         /// <summary>
-        /// Gets or sets the category.
-        /// </summary>
-        /// <value>
-        /// The category.
-        /// </value>
-        public Guid? CategoryId { get; set; }
-
-        /// <summary>
         /// Gets or sets the tags.
         /// </summary>
         /// <value>
         /// The tags.
         /// </value>
         public IList<string> Tags { get; set; }
-
+        
         /// <summary>
         /// Gets or sets the list of categories.
         /// </summary>
