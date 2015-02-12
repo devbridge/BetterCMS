@@ -9,7 +9,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace BetterCms.Module.MediaManager.Views.Images
+namespace ASP
 {
     using System;
     using System.Collections.Generic;
@@ -89,9 +89,9 @@ namespace BetterCms.Module.MediaManager.Views.Images
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("RazorGenerator", "2.0.0.0")]
     [System.Web.WebPages.PageVirtualPathAttribute("~/Views/Images/ImageEditor.cshtml")]
-    public partial class ImageEditor : System.Web.Mvc.WebViewPage<ImageViewModel>
+    public partial class _Views_Images_ImageEditor_cshtml : System.Web.Mvc.WebViewPage<ImageViewModel>
     {
-        public ImageEditor()
+        public _Views_Images_ImageEditor_cshtml()
         {
         }
         public override void Execute()
@@ -1048,24 +1048,24 @@ WriteLiteral("\r\n                    </div>\r\n                </div>\r\n\r\n  
             
             #line default
             #line hidden
-WriteLiteral("    <div");
+WriteLiteral("            <div");
 
-WriteLiteral(" class=\"bcms-tags-box-holder\"");
+WriteLiteral(" class=\"bcms-categories-box-holder\"");
 
 WriteLiteral(" data-bind=\"with: categories\"");
 
 WriteLiteral(">\r\n");
 
-WriteLiteral("        ");
+WriteLiteral("                ");
 
             
             #line 165 "..\..\Views\Images\ImageEditor.cshtml"
-   Write(Html.Partial("~/Areas/bcms-root/Views/Category/CategoriesTemplate.cshtml", categoriesTemplateViewModel));
+           Write(Html.Partial("~/Areas/bcms-root/Views/Category/CategoriesTemplate.cshtml", categoriesTemplateViewModel));
 
             
             #line default
             #line hidden
-WriteLiteral("\r\n    </div>\r\n");
+WriteLiteral("\r\n            </div>\r\n");
 
             
             #line 167 "..\..\Views\Images\ImageEditor.cshtml"

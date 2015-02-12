@@ -9,7 +9,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace BetterCms.Module.Pages.Views.Widgets
+namespace ASP
 {
     using System;
     using System.Collections.Generic;
@@ -77,9 +77,9 @@ namespace BetterCms.Module.Pages.Views.Widgets
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("RazorGenerator", "2.0.0.0")]
     [System.Web.WebPages.PageVirtualPathAttribute("~/Views/Widgets/EditServerControlWidget.cshtml")]
-    public partial class EditServerControlWidget : System.Web.Mvc.WebViewPage<EditServerControlWidgetViewModel>
+    public partial class _Views_Widgets_EditServerControlWidget_cshtml : System.Web.Mvc.WebViewPage<EditServerControlWidgetViewModel>
     {
-        public EditServerControlWidget()
+        public _Views_Widgets_EditServerControlWidget_cshtml()
         {
         }
         public override void Execute()
@@ -227,8 +227,6 @@ WriteLiteral(":</div>\r\n                    <div");
 
 WriteLiteral(" class=\"bcms-input-box\"");
 
-WriteLiteral(" style=\"width: 523px;\"");
-
 WriteLiteral(">\r\n");
 
 WriteLiteral("                        ");
@@ -263,23 +261,6 @@ WriteLiteral("\r\n");
 
 WriteLiteral("\r\n                \r\n                <div");
 
-WriteLiteral(" class=\"bcms-tags-box-holder\"");
-
-WriteLiteral(" data-bind=\"with: categories\"");
-
-WriteLiteral(">\r\n");
-
-WriteLiteral("                    ");
-
-            
-            #line 50 "..\..\Views\Widgets\EditServerControlWidget.cshtml"
-               Write(Html.Partial("~/Areas/bcms-root/Views/Category/CategoriesTemplate.cshtml", categoriesTemplateViewModel));
-
-            
-            #line default
-            #line hidden
-WriteLiteral("\r\n                </div>\r\n\r\n                <div");
-
 WriteLiteral(" class=\"bcms-input-list-holder\"");
 
 WriteLiteral(">\r\n");
@@ -287,7 +268,7 @@ WriteLiteral(">\r\n");
 WriteLiteral("                    ");
 
             
-            #line 54 "..\..\Views\Widgets\EditServerControlWidget.cshtml"
+            #line 50 "..\..\Views\Widgets\EditServerControlWidget.cshtml"
                Write(Html.Tooltip(PagesGlobalization.Widget_Url_Tooltip_Description));
 
             
@@ -300,7 +281,7 @@ WriteLiteral(" class=\"bcms-content-titles\"");
 WriteLiteral(">");
 
             
-            #line 55 "..\..\Views\Widgets\EditServerControlWidget.cshtml"
+            #line 51 "..\..\Views\Widgets\EditServerControlWidget.cshtml"
                                                 Write(PagesGlobalization.Widget_Url_Title);
 
             
@@ -310,14 +291,12 @@ WriteLiteral(":</div>\r\n                    <div");
 
 WriteLiteral(" class=\"bcms-input-box\"");
 
-WriteLiteral(" style=\"width: 523px;\"");
-
 WriteLiteral(">\r\n");
 
 WriteLiteral("                        ");
 
             
-            #line 57 "..\..\Views\Widgets\EditServerControlWidget.cshtml"
+            #line 53 "..\..\Views\Widgets\EditServerControlWidget.cshtml"
                    Write(Html.TextBoxFor(model => model.Url, new { @class = "bcms-editor-field-box" }));
 
             
@@ -328,13 +307,30 @@ WriteLiteral("\r\n");
 WriteLiteral("                        ");
 
             
-            #line 58 "..\..\Views\Widgets\EditServerControlWidget.cshtml"
+            #line 54 "..\..\Views\Widgets\EditServerControlWidget.cshtml"
                    Write(Html.BcmsValidationMessageFor(m => m.Url));
 
             
             #line default
             #line hidden
 WriteLiteral("\r\n                    </div>\r\n                </div>\r\n\r\n                <div");
+
+WriteLiteral(" class=\"bcms-tags-box-holder\"");
+
+WriteLiteral(" data-bind=\"with: categories\"");
+
+WriteLiteral(">\r\n");
+
+WriteLiteral("                    ");
+
+            
+            #line 59 "..\..\Views\Widgets\EditServerControlWidget.cshtml"
+               Write(Html.Partial("~/Areas/bcms-root/Views/Category/CategoriesTemplate.cshtml", categoriesTemplateViewModel));
+
+            
+            #line default
+            #line hidden
+WriteLiteral("\r\n                </div>\r\n\r\n                <div");
 
 WriteLiteral(" class=\"bcms-input-list-holder\"");
 
@@ -365,8 +361,6 @@ WriteLiteral(">");
 WriteLiteral(":</div>\r\n                    <div");
 
 WriteLiteral(" class=\"bcms-input-box\"");
-
-WriteLiteral(" style=\"width: 523px;\"");
 
 WriteLiteral(">\r\n");
 
@@ -430,14 +424,14 @@ WriteLiteral(">\r\n                            <img");
 
 WriteLiteral(" id=\"bcms-widget-preview-image\"");
 
-WriteAttribute("src", Tuple.Create(" src=\"", 4122), Tuple.Create("\"", 4150)
+WriteAttribute("src", Tuple.Create(" src=\"", 4056), Tuple.Create("\"", 4084)
             
             #line 77 "..\..\Views\Widgets\EditServerControlWidget.cshtml"
-, Tuple.Create(Tuple.Create("", 4128), Tuple.Create<System.Object, System.Int32>(Model.PreviewImageUrl
+, Tuple.Create(Tuple.Create("", 4062), Tuple.Create<System.Object, System.Int32>(Model.PreviewImageUrl
             
             #line default
             #line hidden
-, 4128), false)
+, 4062), false)
 );
 
 WriteLiteral(" alt=\"\"");

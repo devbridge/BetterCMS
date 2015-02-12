@@ -9,7 +9,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace BetterCms.Module.MediaManager.Views.Files
+namespace ASP
 {
     using System;
     using System.Collections.Generic;
@@ -89,9 +89,9 @@ namespace BetterCms.Module.MediaManager.Views.Files
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("RazorGenerator", "2.0.0.0")]
     [System.Web.WebPages.PageVirtualPathAttribute("~/Views/Files/FileEditor.cshtml")]
-    public partial class FileEditor : System.Web.Mvc.WebViewPage<FileViewModel>
+    public partial class _Views_Files_FileEditor_cshtml : System.Web.Mvc.WebViewPage<FileViewModel>
     {
-        public FileEditor()
+        public _Views_Files_FileEditor_cshtml()
         {
         }
         public override void Execute()
@@ -439,7 +439,7 @@ WriteLiteral("\r\n                </div>\r\n            </div>\r\n");
             #line hidden
 WriteLiteral("            <div");
 
-WriteLiteral(" class=\"bcms-tags-box-holder\"");
+WriteLiteral(" class=\"bcms-categories-box-holder\"");
 
 WriteLiteral(" data-bind=\"with: categories\"");
 
