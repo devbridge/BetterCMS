@@ -299,7 +299,7 @@
                 }
                 return "";
             });
-            self.dropOnCancel = true;
+            self.dropOnCancel = false;
 
             // User for validation.
             self.containerId = "node-" + nodeId++;
@@ -323,10 +323,10 @@
                 }
             };
             self.saveCategoryTreeNodeWithValidation = function () {
-                self.dropOnCancel = false;
                 var inputFields = $('input', '#' + self.containerId);
                 if (inputFields.valid()) {
                     inputFields.blur();
+                    self.dropOnCancel = false;
                     self.isActive(false);
                 }
             };
@@ -641,6 +641,7 @@
                 };
                 node.isBeingDragged(false);
                 node.displayOrder(0);
+                node.dropOnCancel = true;
                 self.childNodes.splice(0, 0, node);
                 self.updateNodesOrderAndParent();
             };
@@ -845,8 +846,10 @@
                 var result = [];
                 for (var i = 0; i < nodes.length; i++) {
                     var nodeToSave = nodes[i].toJson();
-                    nodeToSave.ChildNodes = self.nodesToJson(nodes[i].childNodes());
-                    result.push(nodeToSave);
+                    if (!nodeToSave.IsDeleted) {
+                        nodeToSave.ChildNodes = self.nodesToJson(nodes[i].childNodes());
+                        result.push(nodeToSave);
+                    }
                 }
                 return result;
             };

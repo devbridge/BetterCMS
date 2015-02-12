@@ -7,8 +7,6 @@ namespace BetterCms.Module.Root.Services.Categories
     {
         public Guid Id { get; set; }
 
-        public bool IsDeleted { get; set; }
-
         public int Version { get; set; }
 
         public string Title { get; set; }
@@ -16,8 +14,6 @@ namespace BetterCms.Module.Root.Services.Categories
         public int DisplayOrder { get; set; }
 
         public string Macro { get; set; }
-
-        public Guid ParentId { get; set; }
 
         public IEnumerable<CategoryNodeModel> ChildNodes { get; set; }
     }

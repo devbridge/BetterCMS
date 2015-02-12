@@ -46,22 +46,6 @@ namespace BetterCms.Module.Root.ViewModels.Category
         public int DisplayOrder { get; set; }
 
         /// <summary>
-        /// Gets or sets the parent id.
-        /// </summary>
-        /// <value>
-        /// The parent id.
-        /// </value>
-        public Guid ParentId { get; set; }
-
-        /// <summary>
-        /// Gets or sets a value indicating whether this instance is deleted.
-        /// </summary>
-        /// <value>
-        /// <c>true</c> if this instance is deleted; otherwise, <c>false</c>.
-        /// </value>
-        public bool IsDeleted { get; set; }
-
-        /// <summary>
         /// Gets or sets the child nodes.
         /// </summary>
         /// <value>
