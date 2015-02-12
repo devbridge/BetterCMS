@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
+using BetterCms.Module.Root.Models;
 using BetterCms.Module.Root.Mvc.Grids.GridOptions;
 using BetterCms.Module.Root.ViewModels.SiteSettings;
 
@@ -11,9 +12,14 @@ namespace BetterCms.Module.MediaManager.ViewModels.MediaManager
     {
         public MediaPathViewModel Path { get; set; }
 
+        public IEnumerable<LookupKeyValue> Tags { get; set; }
+
+        public IEnumerable<LookupKeyValue> Categories { get; set; }
+
         public MediaManagerItemsViewModel(IEnumerable<MediaViewModel> items, SearchableGridOptions options, int totalCount) : 
             base(items, options, totalCount)
         {
+
         }
 
         /// <summary>

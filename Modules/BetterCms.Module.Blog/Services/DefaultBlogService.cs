@@ -650,10 +650,7 @@ namespace BetterCms.Module.Blog.Services
                 query = query.Where(Restrictions.InsensitiveLike(Projections.Property(() => alias.Title), searchQuery));
             }
             
-            if (request.CategoryId.HasValue)
-            {
-                query = query.WithSubquery.WhereExists(QueryOver.Of<PageCategory>().Where(c => c.Category.Id == request.CategoryId && c.Page.Id == alias.Id).Select(tag => 1));
-            }
+
 
             if (request.LanguageId.HasValue)
             {
@@ -673,6 +670,15 @@ namespace BetterCms.Module.Blog.Services
                 {
                     var id = tagKeyValue.Key.ToGuidOrDefault();
                     query = query.WithSubquery.WhereExists(QueryOver.Of<PageTag>().Where(tag => tag.Tag.Id == id && tag.Page.Id == alias.Id).Select(tag => 1));
+                }
+            }
+
+            if (request.Categories != null)
+            {
+                foreach (var categoryKeyValue in request.Categories)
+                {
+                    var id = categoryKeyValue.Key.ToGuidOrDefault();
+                    query = query.WithSubquery.WhereExists(QueryOver.Of<PageCategory>().Where(cat => cat.Category.Id == id && cat.Page.Id == alias.Id).Select(cat => 1));
                 }
             }
 

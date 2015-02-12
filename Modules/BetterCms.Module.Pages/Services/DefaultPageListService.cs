@@ -100,8 +100,6 @@ namespace BetterCms.Module.Pages.Services
 
             var count = query.ToRowCountFutureValue();
 
-            var categoriesFuture = categoryService.GetCategories(PageProperties.CategorizableItemKeyForPages);
-
             IEnumerable<LookupKeyValue> languagesFuture = configuration.EnableMultilanguage ? languageService.GetLanguagesLookupValues() : null;
 
             var pages = query.AddSortingAndPaging(request).Future<SiteSettingPageViewModel>();
@@ -113,7 +111,7 @@ namespace BetterCms.Module.Pages.Services
                             l.Title))
                         .ToList();
 
-            var model = CreateModel(pages, request, count, categoriesFuture, layouts);
+            var model = CreateModel(pages, request, count, layouts);
 
             if (languagesFuture != null)
             {
@@ -125,13 +123,12 @@ namespace BetterCms.Module.Pages.Services
         }
 
         protected virtual PagesGridViewModel<SiteSettingPageViewModel> CreateModel(IEnumerable<SiteSettingPageViewModel> pages,
-            PagesFilter request, IFutureValue<int> count, IEnumerable<LookupKeyValue> categoriesFuture, IList<LookupKeyValue> layouts)
+            PagesFilter request, IFutureValue<int> count, IList<LookupKeyValue> layouts)
         {
             return new PagesGridViewModel<SiteSettingPageViewModel>(
                 pages.ToList(),
                 request,
-                count.Value,
-                categoriesFuture.ToList()) { Layouts = layouts };
+                count.Value) { Layouts = layouts };
         }
 
         protected virtual IQueryOver<PagesView, PagesView> FilterQuery(IQueryOver<PagesView, PagesView> query,
@@ -164,11 +161,6 @@ namespace BetterCms.Module.Pages.Services
                                         .Add(Restrictions.InsensitiveLike(Projections.Property(() => alias.MetaKeywords), searchQuery)));
             }
 
-            if (request.CategoryId.HasValue)
-            {
-                query = query.WithSubquery.WhereExists(QueryOver.Of<PageCategory>().Where(c => c.Category.Id == request.CategoryId && c.Page.Id == alias.Id).Select(tag => 1));
-            }
-
             if (request.LanguageId.HasValue)
             {
                 if (request.LanguageId.Value.HasDefaultValue())
@@ -187,6 +179,15 @@ namespace BetterCms.Module.Pages.Services
                 {
                     var id = tagKeyValue.Key.ToGuidOrDefault();
                     query = query.WithSubquery.WhereExists(QueryOver.Of<PageTag>().Where(tag => tag.Tag.Id == id && tag.Page.Id == alias.Id).Select(tag => 1));
+                }
+            }
+
+            if (request.Categories != null)
+            {
+                foreach (var categoryKeyValue in request.Categories)
+                {
+                    var id = categoryKeyValue.Key.ToGuidOrDefault();
+                    query = query.WithSubquery.WhereExists(QueryOver.Of<PageCategory>().Where(cat => cat.Category.Id == id && cat.Page.Id == alias.Id).Select(cat => 1));
                 }
             }
 

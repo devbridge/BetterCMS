@@ -666,4 +666,7 @@
   <data name="ImageEditor_Dialog_Category_Tooltip_Description" xml:space="preserve">
     <value>Assign this image to a category to identify it with similar images.</value>
   </data>
+  <data name="SiteSettings_FilterByCategory" xml:space="preserve">
+    <value>By Category</value>
+  </data>
 </root>

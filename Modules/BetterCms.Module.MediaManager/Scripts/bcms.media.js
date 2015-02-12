@@ -1,8 +1,8 @@
 ﻿/*jslint unparam: true, white: true, browser: true, devel: true */
 /*global bettercms */
 
-bettercms.define('bcms.media', ['bcms.jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', 'bcms.forms', 'bcms.dynamicContent', 'bcms.messages', 'bcms.media.upload', 'bcms.media.imageeditor', 'bcms.htmlEditor', 'bcms.ko.extenders', 'bcms.contextMenu', 'bcms.security', 'bcms.media.history', 'bcms.media.fileeditor', 'bcms.tags', 'bcms.options', 'bcms.store'],
-function ($, bcms, modal, siteSettings, forms, dynamicContent, messages, mediaUpload, imageEditor, htmlEditor, ko, menu, security, history, fileEditor, tags, optionsModule, store) {
+bettercms.define('bcms.media', ['bcms.jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', 'bcms.forms', 'bcms.dynamicContent', 'bcms.messages', 'bcms.media.upload', 'bcms.media.imageeditor', 'bcms.htmlEditor', 'bcms.ko.extenders', 'bcms.contextMenu', 'bcms.security', 'bcms.media.history', 'bcms.media.fileeditor', 'bcms.tags', 'bcms.categories', 'bcms.options', 'bcms.store'],
+function ($, bcms, modal, siteSettings, forms, dynamicContent, messages, mediaUpload, imageEditor, htmlEditor, ko, menu, security, history, fileEditor, tags, categories, optionsModule, store) {
     'use strict';
 
     var media = {},
@@ -155,11 +155,15 @@ function ($, bcms, modal, siteSettings, forms, dynamicContent, messages, mediaUp
         self.column = ko.observable();
         self.isDescending = ko.observable(false);
         self.tags = new tags.TagsListViewModel();
+        self.categories = new categories.CategoriesListViewModel(),
         self.isEdited = ko.computed(function () {
             if (self.includeArchived()) {
                 return true;
             }
             if (self.tags != null && self.tags.items() != null && self.tags.items().length > 0) {
+                return true;
+            }
+            if (self.categories != null && self.categories.items() != null && self.categories.items().length > 0) {
                 return true;
             }
             return false;
@@ -194,6 +198,7 @@ function ($, bcms, modal, siteSettings, forms, dynamicContent, messages, mediaUp
             self.paging.setPaging(options.GridOptions.PageSize, options.GridOptions.PageNumber, options.TotalCount);
 
             self.tags.applyItemList(options.GridOptions.Tags);
+            self.categories.applyItemList(options.GridOptions.Categories);
         };
 
         self.isSearchEmpty = function () {
@@ -1669,6 +1674,16 @@ function ($, bcms, modal, siteSettings, forms, dynamicContent, messages, mediaUp
                     params.Tags.push({
                         Key: folderViewModel.gridOptions().tags.items()[i].id(),
                         Value: folderViewModel.gridOptions().tags.items()[i].name()
+                    });
+                }
+            }
+
+            if (folderViewModel.gridOptions().categories.items().length > 0) {
+                params.Categories = [];
+                for (var i = 0; i < folderViewModel.gridOptions().categories.items().length; i++) {
+                    params.Categories.push({
+                        Key: folderViewModel.gridOptions().categories.items()[i].id(),
+                        Value: folderViewModel.gridOptions().categories.items()[i].name()
                     });
                 }
             }

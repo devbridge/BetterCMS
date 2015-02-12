@@ -1609,6 +1609,15 @@ namespace BetterCms.Module.MediaManager.Content.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to By Category.
+        /// </summary>
+        public static string SiteSettings_FilterByCategory {
+            get {
+                return ResourceManager.GetString("SiteSettings_FilterByCategory", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to By Tags.
         /// </summary>
         public static string SiteSettings_FilterByTags {

@@ -1,8 +1,8 @@
 ﻿/*jslint unparam: true, white: true, browser: true, devel: true */
 /*global bettercms */
 
-bettercms.define('bcms.pages.filter', ['bcms.jquery', 'bcms', 'bcms.ko.extenders', 'bcms.tags'],
-    function($, bcms, ko, tags) {
+bettercms.define('bcms.pages.filter', ['bcms.jquery', 'bcms', 'bcms.ko.extenders', 'bcms.tags', 'bcms.categories'],
+    function ($, bcms, ko, tags, categories) {
         'use strict';
 
         var filter = {},
@@ -18,17 +18,16 @@ bettercms.define('bcms.pages.filter', ['bcms.jquery', 'bcms', 'bcms.ko.extenders
         filter.links = links;
         filter.globalization = globalization;
 
-        function FilterViewModel(tagsViewModel, container, onSearchClick, jsonData) {
+        function FilterViewModel(tagsViewModel, categoriesViewModel, container, onSearchClick, jsonData) {
             var self = this;
 
             self.isVisible = ko.observable(false);
             self.tags = tagsViewModel;
+            self.categories = categoriesViewModel;
             self.includeArchived = ko.observable(false);
             self.includeMasterPages = ko.observable(false);
             self.languageId = ko.observable(jsonData.LanguageId);
             self.languages = jsonData.Languages || [];
-            self.categoryId = ko.observable(jsonData.CategoryId);
-            self.categories = jsonData.Categories || [];
             self.status = ko.observable(jsonData.Status);
             self.statuses = jsonData.Statuses || [];
             self.seoStatus = ko.observable(jsonData.SeoStatus);
@@ -36,7 +35,6 @@ bettercms.define('bcms.pages.filter', ['bcms.jquery', 'bcms', 'bcms.ko.extenders
             self.layout = ko.observable(jsonData.Layout);
             self.layouts = jsonData.Layouts || [];
 
-            self.categories.unshift({ Key: '', Value: '' });
             self.languages.unshift({ Key: '', Value: '' });
             self.statuses.unshift({ Key: '', Value: '' });
             self.seoStatuses.unshift({ Key: '', Value: '' });
@@ -52,7 +50,10 @@ bettercms.define('bcms.pages.filter', ['bcms.jquery', 'bcms', 'bcms.ko.extenders
                 if (self.tags != null && self.tags.items() != null && self.tags.items().length > 0) {
                     return true;
                 }
-                if (self.categoryId() || self.languageId() || self.seoStatus() || self.status() || self.layout()) {
+                if (self.categories != null && self.categories.items() != null && self.categories.items().length > 0) {
+                    return true;
+                }
+                if (self.languageId() || self.seoStatus() || self.status() || self.layout()) {
                     return true;
                 }
                 return false;
@@ -72,10 +73,10 @@ bettercms.define('bcms.pages.filter', ['bcms.jquery', 'bcms', 'bcms.ko.extenders
             };
             self.clearFilter = function () {
                 self.tags.items([]);
+                self.categories.items([]);
                 self.includeArchived(false);
                 self.includeMasterPages(false);
                 self.languageId('');
-                self.categoryId('');
                 self.status('');
                 self.seoStatus('');
                 self.layout('');
@@ -92,7 +93,8 @@ bettercms.define('bcms.pages.filter', ['bcms.jquery', 'bcms', 'bcms.ko.extenders
 
         filter.bind = function (container, jsonData, onSearchClick) {
             var tagsViewModel = new tags.TagsListViewModel(jsonData.Tags),
-                filterViewModel = new FilterViewModel(tagsViewModel, container, onSearchClick, jsonData);
+                categoriesViewModel = new categories.CategoriesListViewModel(jsonData.Categories),
+                filterViewModel = new FilterViewModel(tagsViewModel, categoriesViewModel, container, onSearchClick, jsonData);
             filterViewModel.includeArchived(jsonData.IncludeArchived ? true : false);
             filterViewModel.includeMasterPages(jsonData.IncludeMasterPages ? true : false);
             ko.applyBindings(filterViewModel, container.find(selectors.filterTemplate).get(0));
