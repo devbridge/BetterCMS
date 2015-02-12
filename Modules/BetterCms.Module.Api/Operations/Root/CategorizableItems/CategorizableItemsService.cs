@@ -5,9 +5,11 @@ using BetterCms.Module.Api.Helpers;
 using BetterCms.Module.Api.Infrastructure;
 using BetterCms.Module.Root.Models;
 
+using ServiceStack.ServiceInterface;
+
 namespace BetterCms.Module.Api.Operations.Root.CategorizableItems
 {
-    public class CategorizableItemsService : ICategorizableItemsService
+    public class CategorizableItemsService : Service, ICategorizableItemsService
     {
         /// <summary>
         /// The repository.
