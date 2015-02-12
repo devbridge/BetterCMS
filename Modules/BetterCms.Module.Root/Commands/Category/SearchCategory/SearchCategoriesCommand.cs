@@ -23,6 +23,8 @@ namespace BetterCms.Module.Root.Commands.Category.SearchCategory
         /// </returns>
         public List<LookupKeyValue> Execute(CategorySuggestionViewModel model)
         {
+            // TODO:
+            // return Categories(model);
             var query = Repository.AsQueryable<Models.Category>()
                 .Where(category => category.Name.Contains(model.Query));
 
@@ -39,6 +41,42 @@ namespace BetterCms.Module.Root.Commands.Category.SearchCategory
             return query.OrderBy(category => category.Name)
                 .Select(category => new LookupKeyValue { Key = category.Id.ToString(), Value = category.Name })
                 .ToList();
+        }
+
+
+        private List<LookupKeyValue> Categories(CategorySuggestionViewModel model)
+        {
+            var query = Repository.AsQueryable<Models.Category>().Where(c => !c.CategoryTree.IsDeleted && !c.IsDeleted);
+            if (!string.IsNullOrEmpty(model.CategoryTreeForKey))
+            {
+                query = query.Where(c => c.CategoryTree.AvailableFor.Any(e => e.CategorizableItem.Name == model.CategoryTreeForKey));
+            }
+            var allCategories = query.ToList();
+            var treeLikePlainList = new List<LookupKeyValue>();
+            ConstructTreeLike(
+                treeLikePlainList,
+                string.Empty,
+                allCategories.Where(c => c.ParentCategory == null).OrderBy(c => c.DisplayOrder).ToList(),
+                allCategories,
+                model.Query);
+            return treeLikePlainList;
+        }
+
+        private void ConstructTreeLike(List<LookupKeyValue> list, string prefix, List<Models.Category> categoriesToAdd, List<Models.Category> allCategories, string query)
+        {
+            foreach (var category in categoriesToAdd)
+            {
+                if (category.Name.ToLowerInvariant().Contains(query.ToLowerInvariant()))
+                {
+                    list.Add(new LookupKeyValue { Key = category.Id.ToString(), Value = string.Format("{0}{1}", prefix, category.Name) });
+                }
+                ConstructTreeLike(
+                    list,
+                    string.Format("{0}{1} => ", prefix, category.Name),
+                    allCategories.Where(c => c.ParentCategory != null && c.ParentCategory.Id == category.Id).OrderBy(c => c.DisplayOrder).ToList(),
+                    allCategories,
+                    query);
+            }
         }
     }
 }
