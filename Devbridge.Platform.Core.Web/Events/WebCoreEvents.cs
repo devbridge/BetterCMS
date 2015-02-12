@@ -1,12 +1,10 @@
 ﻿using System.Web;
 
-using Devbridge.Platform.Events;
-
 // ReSharper disable CheckNamespace
-namespace BetterCms.Events
+namespace Devbridge.Platform.Events
 // ReSharper restore CheckNamespace
 {
-    public class CmsCoreEvents : EventsBase<CmsCoreEvents>
+    public class WebCoreEvents : EventsBase<WebCoreEvents>
     {
         /// <summary>
         /// Occurs when a CMS host starts.

@@ -3,7 +3,6 @@
 using Autofac;
 
 using BetterCms.Core.Modules;
-using BetterCms.Events;
 
 using Devbridge.Platform.Core.Dependencies;
 using Devbridge.Platform.Core.Web.Dependencies;
@@ -36,10 +35,8 @@ namespace BetterCms.Module.Api
         public WebApiModuleDescriptor(ICmsConfiguration cmsConfiguration)
             : base(cmsConfiguration)
         {
-            CmsCoreEvents.Instance.HostStart += ApplicationStart;
+            WebCoreEvents.Instance.HostStart += ApplicationStart;
         }
-
-        internal const string ModuleId = "f19e11dc-f991-48e7-be82-ab4d2c07209d";
 
         /// <summary>
         /// Gets the name of module.

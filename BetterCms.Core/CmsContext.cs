@@ -1,7 +1,6 @@
 ﻿using Autofac;
 
 using BetterCms.Configuration;
-
 using BetterCms.Core.Environment.Host;
 using BetterCms.Core.Exceptions;
 using BetterCms.Core.Modules.Registration;
@@ -13,6 +12,7 @@ using Devbridge.Platform.Core.Dependencies;
 using Devbridge.Platform.Core.Modules.Registration;
 using Devbridge.Platform.Core.Web;
 using Devbridge.Platform.Core.Web.Configuration;
+using Devbridge.Platform.Core.Web.Environment.Host;
 using Devbridge.Platform.Core.Web.Modules.Registration;
 
 using System;
@@ -106,11 +106,13 @@ namespace BetterCms.Core
                 .As<IConfiguration>()
                 .SingleInstance();
 
+            builder.RegisterType<DefaultCmsHost>()
+                .As<IWebApplicationHost>()
+                .As<ICmsHost>()
+                .SingleInstance();
+
             RegisterCacheService(builder);
             RegisterStorageService(builder);
-
-            // TODO:
-            builder.RegisterType<DefaultCmsHost>().As<ICmsHost>().SingleInstance();
 
             return builder;
         }       

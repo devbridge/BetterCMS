@@ -93,6 +93,10 @@
     <Compile Include="Dependencies\PerWebRequestContainerProvider.cs" />
     <Compile Include="Dependencies\PerWebRequestLifetimeModule.cs" />
     <Compile Include="Environment\Application\WebApplicationEntryPoint.cs" />
+    <Compile Include="Environment\Host\DefaultWebApplicationHost.cs" />
+    <Compile Include="Environment\Host\IWebApplicationHost.cs" />
+    <Compile Include="Events\WebCoreEvents.cs" />
+    <Compile Include="Exceptions\Host\RestartApplicationException.cs" />
     <Compile Include="Mvc\Commands\DefaultCommandResolver.cs" />
     <Compile Include="Mvc\Commands\ICommand.cs" />
     <Compile Include="Mvc\Commands\ICommandContext.cs" />

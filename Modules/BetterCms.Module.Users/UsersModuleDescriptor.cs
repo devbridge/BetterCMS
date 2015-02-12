@@ -7,8 +7,6 @@ using Autofac;
 using BetterCms.Core.Modules;
 using BetterCms.Core.Modules.Projections;
 
-using BetterCms.Events;
-
 using BetterCms.Module.Root;
 using BetterCms.Module.Root.Services;
 
@@ -82,8 +80,8 @@ namespace BetterCms.Module.Users
         {
             userJsModuleIncludeDescriptor = new UserJsModuleIncludeDescriptor(this);
 
-            CmsCoreEvents.Instance.HostStart += OnHostStart;
-            CmsCoreEvents.Instance.HostAuthenticateRequest += HostAuthenticateRequest;            
+            WebCoreEvents.Instance.HostStart += OnHostStart;
+            WebCoreEvents.Instance.HostAuthenticateRequest += HostAuthenticateRequest;            
         }
 
         /// <summary>

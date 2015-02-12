@@ -160,7 +160,8 @@
     <Compile Include="DataContracts\IOptionValue.cs" />
     <Compile Include="DataContracts\IRenderPage.cs" />
     <Compile Include="Environment\FileSystem\CmsWorkingDirectory.cs" />
-    <Compile Include="Events\CmsCoreEvents.cs" />
+    <Compile Include="Environment\Host\DefaultCmsHost.cs" />
+    <Compile Include="Environment\Host\ICmsHost.cs" />
     <Compile Include="CmsContext.cs" />
     <Compile Include="DataContracts\Enums\ContentStatus.cs" />
     <Compile Include="DataContracts\Enums\OptionType.cs" />
@@ -212,7 +213,6 @@
     <Compile Include="Services\Storage\UploadRequest.cs" />
     <Compile Include="Exceptions\CmsException.cs" />
     <Compile Include="Exceptions\Configuration\ConfigurationLoaderException.cs" />
-    <Compile Include="Exceptions\Host\RestartApplicationException.cs" />
     <Compile Include="Exceptions\Modules\ModuleAlreadyInstalledException.cs" />
     <Compile Include="Exceptions\Modules\ModuleException.cs" />
     <Compile Include="Exceptions\Modules\ModuleManagerNullException.cs" />
@@ -246,8 +246,6 @@
     <Compile Include="Modules\Install\IModuleManager.cs" />
     <Compile Include="Web\HttpContextTool.cs" />
     <Compile Include="Web\ViewEngines\EmbeddedResourcesViewEngine.cs" />
-    <Compile Include="Environment\Host\DefaultCmsHost.cs" />
-    <Compile Include="Environment\Host\ICmsHost.cs" />
     <Compile Include="Modules\CmsModuleDescriptor.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

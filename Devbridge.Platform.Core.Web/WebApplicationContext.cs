@@ -16,6 +16,7 @@ using Devbridge.Platform.Core.Security;
 using Devbridge.Platform.Core.Web.Configuration;
 using Devbridge.Platform.Core.Web.Dependencies;
 using Devbridge.Platform.Core.Web.Environment.Assemblies;
+using Devbridge.Platform.Core.Web.Environment.Host;
 using Devbridge.Platform.Core.Web.Modules;
 using Devbridge.Platform.Core.Web.Modules.Registration;
 using Devbridge.Platform.Core.Web.Mvc;
@@ -69,6 +70,30 @@ namespace Devbridge.Platform.Core.Web
 
                 return config;
             }
+        }
+
+        /// <summary>
+        /// Constructs the host context.
+        /// </summary>
+        /// <returns>Constructed host context.</returns>
+        public static IWebApplicationHost RegisterHost()
+        {
+            IWebApplicationHost host;
+            using (var container = ContextScopeProvider.CreateChildContainer())
+            {
+                if (container == null)
+                {
+                    throw new PlatformException("Web application dependencies container is not initialized.");
+                }
+
+                host = container.Resolve<IWebApplicationHost>();
+                if (host == null)
+                {
+                    throw new PlatformException("Web application host context was not created.");
+                }
+            }
+
+            return host;
         }
 
         /// <summary>

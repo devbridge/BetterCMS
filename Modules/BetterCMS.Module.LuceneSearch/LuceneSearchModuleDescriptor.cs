@@ -16,6 +16,7 @@ using BetterCms.Module.Search.Services;
 using Common.Logging;
 
 using Devbridge.Platform.Core.Modules.Registration;
+using Devbridge.Platform.Events;
 
 namespace BetterCms.Module.LuceneSearch
 {
@@ -81,7 +82,7 @@ namespace BetterCms.Module.LuceneSearch
         public LuceneSearchModuleDescriptor(ICmsConfiguration configuration)
             : base(configuration)
         {
-            Events.CmsCoreEvents.Instance.HostStart += x =>
+            WebCoreEvents.Instance.HostStart += x =>
                 {
                     Logger.Info("OnHostStart: preparing Lucene Search index workers...");
 
