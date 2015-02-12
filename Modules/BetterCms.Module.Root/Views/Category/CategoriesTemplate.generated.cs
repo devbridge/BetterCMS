@@ -9,7 +9,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace BetterCms.Module.Root.Views.Category
+namespace ASP
 {
     using System;
     using System.Collections.Generic;
@@ -53,9 +53,9 @@ namespace BetterCms.Module.Root.Views.Category
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("RazorGenerator", "2.0.0.0")]
     [System.Web.WebPages.PageVirtualPathAttribute("~/Views/Category/CategoriesTemplate.cshtml")]
-    public partial class CategoriesTemplate : System.Web.Mvc.WebViewPage<BetterCms.Module.Root.ViewModels.Category.CategoryTemplateViewModel>
+    public partial class _Views_Category_CategoriesTemplate_cshtml : System.Web.Mvc.WebViewPage<BetterCms.Module.Root.ViewModels.Category.CategoryTemplateViewModel>
     {
-        public CategoriesTemplate()
+        public _Views_Category_CategoriesTemplate_cshtml()
         {
         }
         public override void Execute()
@@ -133,7 +133,7 @@ WriteLiteral(@" data-bind=""
                     valueUpdate: 'afterkeydown',
                     hasfocus: hasfocus,
                     autocompleteList: 'onlyExisting',
-                    enterPress: addItem,
+                    enterPress: function(){},
                     escPress: clearItem""");
 
 WriteLiteral(" />\r\n            <!-- ko if: newItem.hasError()  -->\r\n            <span");
