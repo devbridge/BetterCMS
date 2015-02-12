@@ -263,9 +263,7 @@ namespace BetterCms.Module.Api.Operations.Root.Categories.Category
             IList<Module.Root.Services.Categories.CategoryNodeModel> childrenCategories = new List<Module.Root.Services.Categories.CategoryNodeModel>();
             categoryNode.DisplayOrder = node.DisplayOrder;
             categoryNode.Id = node.Id ?? Guid.Empty;
-            categoryNode.IsDeleted = false;
             categoryNode.Macro = node.Macro;
-            categoryNode.ParentId = parentId ?? Guid.Empty;
             categoryNode.Title = node.Name;
             categoryNode.Version = node.Version;
 

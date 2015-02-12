@@ -396,7 +396,7 @@ bettercms.define('bcms.pages.widgets', ['bcms.jquery', 'bcms', 'bcms.modal', 'bc
                 widgetEditViewModel = new WidgetEditViewModel(data);
 
             ko.applyBindings(optionListViewModel, optionsContainer.get(0));
-            ko.applyBindings(widgetEditViewModel, widgetEditContainer.get(0)); c
+            ko.applyBindings(widgetEditViewModel, widgetEditContainer.get(0));
 
             dialog.container.find(selectors.widgetPreviewImage).error(function () {
                 var image = dialog.container.find(selectors.widgetPreviewImage);
