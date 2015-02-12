@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Web;
 
 using BetterCms.Core.Environment.ApplicationStart;
 using BetterCms.Core.Exceptions;
@@ -8,10 +7,10 @@ using BetterCms.Core.Security;
 using Common.Logging;
 
 using Devbridge.Platform.Core.Dependencies;
-using Devbridge.Platform.Core.Web;
-using Devbridge.Platform.Core.Web.Dependencies;
+using Devbridge.Platform.Core.Exceptions;
+using Devbridge.Platform.Core.Web.Environment.Application;
 
-[assembly: PreApplicationStartMethod(typeof(BetterCmsEntrypoint), "PreApplicationStart")]
+[assembly: WebActivatorEx.PreApplicationStartMethod(typeof(BetterCmsEntrypoint), "PreApplicationStart", Order = 50)]
 
 namespace BetterCms.Core.Environment.ApplicationStart
 {
@@ -46,8 +45,8 @@ namespace BetterCms.Core.Environment.ApplicationStart
             }
             catch (Exception ex)
             {
-                throw new CmsException("Logging is not working. A reason may be that Common.Logging section is not configured in web.config.", ex);
-            }            
+                throw new PlatformException("Logging is not working. A reason may be that Common.Logging section is not configured in web.config.", ex);
+            } 
 
             if (!IsFullTrust)
             {
@@ -70,18 +69,8 @@ namespace BetterCms.Core.Environment.ApplicationStart
                 throw new CmsException(message, ex);
             }
 
-            try
-            {
-                logger.Info("Registering per web request lifetime manager module...");
-                PerWebRequestLifetimeModule.DynamicModuleRegistration();
-            }
-            catch (Exception ex)
-            {
-                string message = "Failed to register per web request lifetime manager module.";
-                logger.Fatal(message, ex);
-
-                throw new CmsException(message, ex);
-            }
+            // Initialize web application
+            WebApplicationEntryPoint.PreStartWebApplication();
             
             try
             {
@@ -91,19 +80,6 @@ namespace BetterCms.Core.Environment.ApplicationStart
             catch (Exception ex)
             {
                 string message = "Failed to register forms authentication redirect suppress module.";
-                logger.Fatal(message, ex);
-
-                throw new CmsException(message, ex);
-            }
-
-            try
-            {
-                logger.Info("Load assemblies...");
-                WebApplicationContext.LoadAssemblies();
-            }
-            catch (Exception ex)
-            {
-                string message = "Failed to load assemblies.";
                 logger.Fatal(message, ex);
 
                 throw new CmsException(message, ex);

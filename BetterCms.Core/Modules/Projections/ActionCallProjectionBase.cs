@@ -5,8 +5,6 @@ using System.Web.UI;
 
 using BetterCms.Core.DataContracts;
 
-using Devbridge.Platform.Core.Web.Modules;
-
 namespace BetterCms.Core.Modules.Projections
 {
     /// <summary>

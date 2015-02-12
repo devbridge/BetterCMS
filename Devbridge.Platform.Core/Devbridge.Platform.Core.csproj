@@ -64,6 +64,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Application.cs" />
     <Compile Include="ApplicationContext.cs" />
     <Compile Include="Configuration\DatabaseConfigurationElement.cs" />
     <Compile Include="Configuration\DatabaseType.cs" />

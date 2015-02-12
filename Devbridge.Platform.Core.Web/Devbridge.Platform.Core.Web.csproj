@@ -82,6 +82,9 @@
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Data" />
     <Reference Include="System.Xml" />
+    <Reference Include="WebActivatorEx">
+      <HintPath>..\packages\WebActivatorEx.2.0.6\lib\net40\WebActivatorEx.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Configuration\DefaultWebConfigurationSection.cs" />
@@ -89,6 +92,7 @@
     <Compile Include="Configuration\IWebConfiguration.cs" />
     <Compile Include="Dependencies\PerWebRequestContainerProvider.cs" />
     <Compile Include="Dependencies\PerWebRequestLifetimeModule.cs" />
+    <Compile Include="Environment\Application\WebApplicationEntryPoint.cs" />
     <Compile Include="Mvc\Commands\DefaultCommandResolver.cs" />
     <Compile Include="Mvc\Commands\ICommand.cs" />
     <Compile Include="Mvc\Commands\ICommandContext.cs" />
