@@ -125,12 +125,13 @@
     <Compile Include="Exceptions\DataTier\DataTierException.cs" />
     <Compile Include="Exceptions\DataTier\EntityNotFoundException.cs" />
     <Compile Include="Extensions\TypeExtensions.cs" />
-    <Compile Include="Models\Entity.cs" />
-    <Compile Include="Models\EntityIdGenerator.cs" />
     <Compile Include="Models\EntityMapBase.cs" />
     <Compile Include="Models\EntitySubClassMapBase.cs" />
+    <Compile Include="Models\Entity.cs" />
+    <Compile Include="Models\EntityIdGenerator.cs" />
     <Compile Include="Models\EquatableEntity.cs" />
     <Compile Include="Models\MaxLength.cs" />
+    <Compile Include="Models\SchemaNameProvider.cs" />
     <Compile Include="Modules\Registration\DefaultModulesRegistration.cs" />
     <Compile Include="Modules\Registration\IModulesRegistration.cs" />
     <Compile Include="Modules\ModuleDescriptor.cs" />

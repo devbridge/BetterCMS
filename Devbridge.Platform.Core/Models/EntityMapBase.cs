@@ -17,6 +17,11 @@ namespace Devbridge.Platform.Core.Models
         private readonly string moduleName;
 
         /// <summary>
+        /// The schema name
+        /// </summary>
+        private string schemaName;
+
+        /// <summary>
         /// Gets the name of the schema.
         /// </summary>
         /// <value>
@@ -26,7 +31,7 @@ namespace Devbridge.Platform.Core.Models
         {
             get
             {
-                return "bcms_" + moduleName;
+                return schemaName ?? (schemaName = SchemaNameProvider.GetSchemaName(moduleName));
             }
         }
 
@@ -38,7 +43,10 @@ namespace Devbridge.Platform.Core.Models
         {
             this.moduleName = moduleName;
 
-            Schema(SchemaName);
+            if (SchemaName != null)
+            {
+                Schema(SchemaName);
+            }
 
             Id(x => x.Id).GeneratedBy.Custom<EntityIdGenerator>();
 

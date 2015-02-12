@@ -1,5 +1,6 @@
-﻿using Devbridge.Platform.Core.DataAccess.DataContext.Migrations;
+﻿using BetterCms.Core.DataAccess.DataContext.Migrations;
 
+using Devbridge.Platform.Core.DataAccess.DataContext.Migrations;
 using Devbridge.Platform.Core.Models;
 
 using FluentMigrator;
@@ -7,7 +8,7 @@ using FluentMigrator;
 namespace BetterCms.Module.Root.Models.Migrations
 {
     [Migration(201308021300)]
-    public class Migration201308021300 : DefaultMigration
+    public class Migration201308021300 : CmsDefaultMigration
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="Migration201308021300" /> class.
@@ -23,7 +24,7 @@ namespace BetterCms.Module.Root.Models.Migrations
             Create
                 .Table("LayoutOptions")
                 .InSchema(SchemaName)
-                .WithCmsBaseColumns()
+                .WithBaseColumns()
                 .WithColumn("LayoutId").AsGuid().NotNullable()
                 .WithColumn("Key").AsString(MaxLength.Name).NotNullable()
                 .WithColumn("Type").AsInt32().NotNullable()

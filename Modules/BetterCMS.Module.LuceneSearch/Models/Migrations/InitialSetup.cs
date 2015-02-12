@@ -1,5 +1,6 @@
-﻿using Devbridge.Platform.Core.DataAccess.DataContext.Migrations;
+﻿using BetterCms.Core.DataAccess.DataContext.Migrations;
 
+using Devbridge.Platform.Core.DataAccess.DataContext.Migrations;
 using Devbridge.Platform.Core.Models;
 
 using FluentMigrator;
@@ -7,7 +8,7 @@ using FluentMigrator;
 namespace BetterCms.Module.LuceneSearch.Models.Migrations
 {
     [Migration(201312190004)]
-    public class InitialSetup : DefaultMigration
+    public class InitialSetup : CmsDefaultMigration
     {
         public InitialSetup()
             : base(LuceneSearchModuleDescriptor.ModuleName)
@@ -19,7 +20,7 @@ namespace BetterCms.Module.LuceneSearch.Models.Migrations
             Create
                 .Table("IndexSources")
                 .InSchema(SchemaName)
-                .WithCmsBaseColumns()
+                .WithBaseColumns()
                 .WithColumn("SourceId").AsGuid().NotNullable()
                 .WithColumn("Path").AsString(MaxLength.Url).NotNullable()
                 .WithColumn("StartTime").AsDateTime().Nullable()

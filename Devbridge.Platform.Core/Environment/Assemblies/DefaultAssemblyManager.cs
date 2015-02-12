@@ -60,7 +60,7 @@ namespace Devbridge.Platform.Core.Environment.Assemblies
         {
             if (Log.IsTraceEnabled)
             {
-                Log.Trace("Add uploaded Better Cms modules.");
+                Log.Trace("Add uploaded modules.");
             }
 
             var availableModuleFiles = workingDirectory.GetAvailableModules();
@@ -113,7 +113,7 @@ namespace Devbridge.Platform.Core.Environment.Assemblies
         {
             if (Log.IsTraceEnabled)
             {
-                Log.Trace("Add referenced Better Cms modules.");
+                Log.Trace("Add referenced modules.");
             }
 
             var modules = AppDomain.CurrentDomain.GetAssemblies().Where(f => f.FullName.StartsWith("BetterCms.Module.", StringComparison.OrdinalIgnoreCase)).ToList();

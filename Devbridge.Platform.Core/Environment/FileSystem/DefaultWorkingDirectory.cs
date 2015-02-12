@@ -8,7 +8,7 @@ using Common.Logging;
 namespace Devbridge.Platform.Core.Environment.FileSystem
 {
     /// <summary>
-    /// Default Better CMS working directory managing implementation.
+    /// Default working directory managing implementation.
     /// </summary>
     public class DefaultWorkingDirectory : IWorkingDirectory
     {        

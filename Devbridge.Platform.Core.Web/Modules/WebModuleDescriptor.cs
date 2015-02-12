@@ -203,7 +203,7 @@ namespace Devbridge.Platform.Core.Web.Modules
                 }
 
                 registrationContext.MapRoute(
-                        string.Format("bcms_{0}_internal_routes", AreaName),
+                        string.Format("module_{0}_internal_routes", AreaName),
                         string.Format("{0}/{{controller}}/{{action}}", AreaName),
                         new
                         {

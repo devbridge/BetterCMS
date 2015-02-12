@@ -4,7 +4,7 @@ using System.IO;
 namespace Devbridge.Platform.Core.Environment.FileSystem
 {
     /// <summary>
-    ///  Defines the contract to manage BetterCMS working directory.
+    ///  Defines the contract to manage working directory.
     /// </summary>
     public interface IWorkingDirectory
     {

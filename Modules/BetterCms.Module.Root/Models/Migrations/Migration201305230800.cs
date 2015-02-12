@@ -1,7 +1,6 @@
-﻿using System;
+﻿using BetterCms.Core.DataAccess.DataContext.Migrations;
 
 using Devbridge.Platform.Core.DataAccess.DataContext.Migrations;
-
 using Devbridge.Platform.Core.Models;
 
 using FluentMigrator;
@@ -12,7 +11,7 @@ namespace BetterCms.Module.Root.Models.Migrations
     /// module database structure update.
     /// </summary>
     [Migration(201305230800)]
-    public class Migration201305230800 : DefaultMigration
+    public class Migration201305230800 : CmsDefaultMigration
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="Migration201305230800"/> class.
@@ -30,7 +29,7 @@ namespace BetterCms.Module.Root.Models.Migrations
             Create
                 .Table("ModulesContentVersions")
                 .InSchema(SchemaName)
-                .WithCmsBaseColumns()
+                .WithBaseColumns()
                 .WithColumn("ModuleName").AsString(MaxLength.Name).NotNullable()
                 .WithColumn("ContentVersion").AsInt64().NotNullable();
         }

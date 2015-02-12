@@ -8,6 +8,7 @@ using Common.Logging;
 
 using Devbridge.Platform.Core.Dependencies;
 using Devbridge.Platform.Core.Exceptions;
+using Devbridge.Platform.Core.Models;
 using Devbridge.Platform.Core.Web.Environment.Application;
 
 [assembly: WebActivatorEx.PreApplicationStartMethod(typeof(BetterCmsEntrypoint), "PreApplicationStart", Order = 50)]
@@ -46,7 +47,10 @@ namespace BetterCms.Core.Environment.ApplicationStart
             catch (Exception ex)
             {
                 throw new PlatformException("Logging is not working. A reason may be that Common.Logging section is not configured in web.config.", ex);
-            } 
+            }
+
+            // Apply Better CMS schema name pattern
+            SchemaNameProvider.SchemaNamePattern = "bcms_{0}";
 
             if (!IsFullTrust)
             {

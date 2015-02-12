@@ -1,4 +1,6 @@
-﻿using Devbridge.Platform.Core.DataAccess.DataContext.Migrations;
+﻿using BetterCms.Core.DataAccess.DataContext.Migrations;
+
+using Devbridge.Platform.Core.DataAccess.DataContext.Migrations;
 using Devbridge.Platform.Core.Models;
 
 using FluentMigrator;
@@ -9,7 +11,7 @@ namespace BetterCms.Module.Users.Models.Migrations
     /// Module initial database structure creation.
     /// </summary>
     [Migration(201308200000)]
-    public class InitialSetup : DefaultMigration
+    public class InitialSetup : CmsDefaultMigration
     {
         private readonly string mediaModuleSchemaName = (new MediaManager.Models.Migrations.MediaManagerVersionTableMetaData()).SchemaName;
 
@@ -38,7 +40,7 @@ namespace BetterCms.Module.Users.Models.Migrations
         /// </summary>
         private void CreateUsersTable()
         {
-            Create.Table("Users").InSchema(SchemaName).WithCmsBaseColumns()
+            Create.Table("Users").InSchema(SchemaName).WithBaseColumns()
                 .WithColumn("UserName").AsAnsiString(UsersModuleConstants.UserNameMaxLength).NotNullable()
                 .WithColumn("FirstName").AsAnsiString(MaxLength.Name).NotNullable()
                 .WithColumn("LastName").AsAnsiString(MaxLength.Name).NotNullable()
@@ -72,7 +74,7 @@ namespace BetterCms.Module.Users.Models.Migrations
         {
             Create
                 .Table("Roles").InSchema(SchemaName)
-                .WithCmsBaseColumns()
+                .WithBaseColumns()
                 .WithColumn("Name").AsAnsiString(MaxLength.Name).NotNullable()
                 .WithColumn("DisplayName").AsAnsiString(MaxLength.Name).Nullable()
                 .WithColumn("IsSystematic").AsBoolean().NotNullable().WithDefaultValue(false);
@@ -89,7 +91,7 @@ namespace BetterCms.Module.Users.Models.Migrations
         private void CreateUserRolesTable()
         {
             Create.Table("UserRoles").InSchema(SchemaName)
-                .WithCmsBaseColumns()
+                .WithBaseColumns()
                 .WithColumn("RoleId").AsGuid().NotNullable()
                 .WithColumn("UserId").AsGuid().NotNullable();
 

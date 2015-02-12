@@ -1,5 +1,7 @@
 ﻿using System;
 
+using BetterCms.Core.DataAccess.DataContext.Migrations;
+
 using Devbridge.Platform.Core.DataAccess.DataContext.Migrations;
 using Devbridge.Platform.Core.Models;
 
@@ -11,7 +13,7 @@ namespace BetterCms.Module.MediaManager.Models.Migrations
     /// Module initial database structure creation.
     /// </summary>
     [Migration(201301151845)]
-    public class InitialSetup : DefaultMigration
+    public class InitialSetup : CmsDefaultMigration
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="InitialSetup"/> class.
@@ -67,7 +69,7 @@ namespace BetterCms.Module.MediaManager.Models.Migrations
         {
             Create
                 .Table("Medias").InSchema(SchemaName)
-                .WithCmsBaseColumns()
+                .WithBaseColumns()
                 .WithColumn("FolderId").AsGuid().Nullable()
                 .WithColumn("Title").AsString(MaxLength.Name).NotNullable()
                 .WithColumn("Type").AsInt32().NotNullable();

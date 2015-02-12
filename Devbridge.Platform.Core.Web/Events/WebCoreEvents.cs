@@ -7,7 +7,7 @@ namespace Devbridge.Platform.Events
     public class WebCoreEvents : EventsBase<WebCoreEvents>
     {
         /// <summary>
-        /// Occurs when a CMS host starts.
+        /// Occurs when a host starts.
         /// </summary>
         public event DefaultEventHandler<SingleItemEventArgs<HttpApplication>> HostStart;
 
@@ -18,9 +18,9 @@ namespace Devbridge.Platform.Events
         public event DefaultEventHandler<SingleItemEventArgs<HttpApplication>> HostAuthenticateRequest;
 
         /// <summary>
-        /// Called when a CMS host starts.
+        /// Called when a host starts.
         /// </summary>
-        /// <param name="host">The CMS host.</param>
+        /// <param name="host">The host.</param>
         public void OnHostStart(HttpApplication host)
         {
             if (HostStart != null)
@@ -30,9 +30,9 @@ namespace Devbridge.Platform.Events
         }
 
         /// <summary>
-        /// Called when a CMS host stops.
+        /// Called when a host stops.
         /// </summary>
-        /// <param name="host">The CMS host.</param>
+        /// <param name="host">The host.</param>
         public void OnHostStop(HttpApplication host)
         {
             if (HostStop != null)
@@ -42,9 +42,9 @@ namespace Devbridge.Platform.Events
         }
 
         /// <summary>
-        /// Called when a CMS host throws error.
+        /// Called when a host throws error.
         /// </summary>
-        /// <param name="host">The CMS host.</param>
+        /// <param name="host">The host.</param>
         public void OnHostError(HttpApplication host)
         {
             if (HostError != null)
@@ -54,9 +54,9 @@ namespace Devbridge.Platform.Events
         }
 
         /// <summary>
-        /// Called when a CMS host authenticates request.
+        /// Called when a host authenticates request.
         /// </summary>
-        /// <param name="host">The CMS host.</param>
+        /// <param name="host">The host.</param>
         public void OnHostAuthenticateRequest(HttpApplication host)
         {
             if (HostAuthenticateRequest != null)

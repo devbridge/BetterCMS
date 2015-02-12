@@ -1,6 +1,6 @@
 ﻿using System;
 
-using Devbridge.Platform.Core.DataAccess.DataContext.Migrations;
+using BetterCms.Core.DataAccess.DataContext.Migrations;
 
 using FluentMigrator;
 
@@ -10,7 +10,7 @@ namespace BetterCms.Module.ImagesGallery.Models.Migrations
     /// Creates servercontrol widget "Images Gallery Album Widget" with options
     /// </summary>
     [Migration(201310040830)]
-    public class Migration201310040830 : DefaultMigration
+    public class Migration201310040830 : CmsDefaultMigration
     {
         /// <summary>
         /// The root schema name

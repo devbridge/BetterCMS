@@ -21,7 +21,7 @@ namespace Devbridge.Platform.Core.Web.Web
         /// <summary>
         /// Initializes a new instance of the <see cref="DefaultHttpContextAccessor" /> class.
         /// </summary>
-        /// <param name="configuration">The CMS configuration.</param>
+        /// <param name="configuration">The application configuration.</param>
         public DefaultHttpContextAccessor(IWebConfiguration configuration)
         {
             this.configuration = configuration;

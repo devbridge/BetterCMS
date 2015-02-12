@@ -15,11 +15,11 @@ namespace Devbridge.Platform.Core.DataAccess.DataContext.Migrations
 
         private readonly string moduleName;
 
-        public string SchemaName
+        public virtual string SchemaName
         {
             get
             {
-                return "bcms_" + moduleName;
+                return "module_" + moduleName;
             }
         }
 
@@ -33,7 +33,7 @@ namespace Devbridge.Platform.Core.DataAccess.DataContext.Migrations
         /// </summary>
         public override void Down()
         {
-            throw new PlatformException("Down migration not possible.", new NotSupportedException("Better CMS don't supports DOWN migrations."));
+            throw new PlatformException("Down migration not possible.", new NotSupportedException("Application doesn't support DOWN migrations."));
         }
 
         protected IIfDatabaseExpressionRoot IfSqlServer()

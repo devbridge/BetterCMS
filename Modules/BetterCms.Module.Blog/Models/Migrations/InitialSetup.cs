@@ -1,4 +1,5 @@
-﻿using BetterCms.Module.Pages.Models.Migrations;
+﻿using BetterCms.Core.DataAccess.DataContext.Migrations;
+using BetterCms.Module.Pages.Models.Migrations;
 using BetterCms.Module.Root.Models.Migrations;
 
 using Devbridge.Platform.Core.DataAccess.DataContext.Migrations;
@@ -12,7 +13,7 @@ namespace BetterCms.Module.Blog.Models.Migrations
     /// Module initial database structure creations script.
     /// </summary>
     [Migration(201301151922)]
-    public class InitialSetup : DefaultMigration
+    public class InitialSetup : CmsDefaultMigration
     {
         /// <summary>
         /// The root schema name.
@@ -60,7 +61,7 @@ namespace BetterCms.Module.Blog.Models.Migrations
                .Table("Authors")
                .InSchema(SchemaName)
 
-               .WithCmsBaseColumns()
+               .WithBaseColumns()
 
                .WithColumn("Name").AsString(MaxLength.Name).NotNullable()
                .WithColumn("ImageId").AsGuid().Nullable();
@@ -100,7 +101,7 @@ namespace BetterCms.Module.Blog.Models.Migrations
             Create
                .Table("Options")
                .InSchema(SchemaName)
-               .WithCmsBaseColumns()
+               .WithBaseColumns()
                .WithColumn("DefaultLayoutId").AsGuid().Nullable();
 
             Create

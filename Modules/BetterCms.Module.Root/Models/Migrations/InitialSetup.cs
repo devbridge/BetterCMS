@@ -1,7 +1,8 @@
 ﻿using System;
 
-using Devbridge.Platform.Core.DataAccess.DataContext.Migrations;
+using BetterCms.Core.DataAccess.DataContext.Migrations;
 
+using Devbridge.Platform.Core.DataAccess.DataContext.Migrations;
 using Devbridge.Platform.Core.Models;
 
 using FluentMigrator;
@@ -12,7 +13,7 @@ namespace BetterCms.Module.Root.Models.Migrations
     /// Module initial database structure creation.
     /// </summary>
     [Migration(201301151829)]
-    public class InitialSetup : DefaultMigration
+    public class InitialSetup : CmsDefaultMigration
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="InitialSetup"/> class.
@@ -64,7 +65,7 @@ namespace BetterCms.Module.Root.Models.Migrations
         {
             Create
                 .Table("Modules").InSchema(SchemaName)
-                .WithCmsBaseColumns()
+                .WithBaseColumns()
                 .WithColumn("Name").AsString(MaxLength.Name).NotNullable()
                 .WithColumn("Description").AsString(MaxLength.Text).NotNullable()
                 .WithColumn("ModuleVersion").AsString(MaxLength.Name).NotNullable()
@@ -83,7 +84,7 @@ namespace BetterCms.Module.Root.Models.Migrations
         {
             Create
                 .Table("Layouts").InSchema(SchemaName)
-                .WithCmsBaseColumns()
+                .WithBaseColumns()
                 .WithColumn("Name").AsString(MaxLength.Name).NotNullable()
                 .WithColumn("LayoutPath").AsAnsiString(MaxLength.Url).NotNullable()
                 .WithColumn("ModuleId").AsGuid().Nullable()
@@ -106,7 +107,7 @@ namespace BetterCms.Module.Root.Models.Migrations
         {
             Create
                 .Table("Regions").InSchema(SchemaName)
-                .WithCmsBaseColumns()                
+                .WithBaseColumns()                
                 .WithColumn("RegionIdentifier").AsAnsiString(MaxLength.Name).NotNullable();        
     
             Create
@@ -122,7 +123,7 @@ namespace BetterCms.Module.Root.Models.Migrations
         {
             Create
                 .Table("LayoutRegions").InSchema(SchemaName)
-                .WithCmsBaseColumns()
+                .WithBaseColumns()
                 .WithColumn("Description").AsAnsiString(MaxLength.Name).Nullable()
                 .WithColumn("LayoutId").AsGuid().NotNullable()
                 .WithColumn("RegionId").AsGuid().NotNullable();
@@ -150,7 +151,7 @@ namespace BetterCms.Module.Root.Models.Migrations
         {
             Create
                 .Table("Contents").InSchema(SchemaName)
-                .WithCmsBaseColumns()
+                .WithBaseColumns()
                 .WithColumn("Name").AsString(MaxLength.Name).NotNullable()
                 .WithColumn("PreviewUrl").AsAnsiString(MaxLength.Url).Nullable()
                 .WithColumn("Status").AsInt32().NotNullable()
@@ -192,7 +193,7 @@ namespace BetterCms.Module.Root.Models.Migrations
             Create
                 .Table("ContentOptions")
                 .InSchema(SchemaName)
-                .WithCmsBaseColumns()
+                .WithBaseColumns()
                 .WithColumn("ContentId").AsGuid().NotNullable()
                 .WithColumn("Key").AsString(MaxLength.Name).NotNullable()
                 .WithColumn("Type").AsInt32().NotNullable()
@@ -269,7 +270,7 @@ namespace BetterCms.Module.Root.Models.Migrations
         {
             Create
                 .Table("Users").InSchema(SchemaName)
-                .WithCmsBaseColumns()
+                .WithBaseColumns()
                 .WithColumn("UserName").AsString(MaxLength.Name).NotNullable().Unique()
                 .WithColumn("Email").AsString(MaxLength.Email).Nullable()
                 .WithColumn("DisplayName").AsString(MaxLength.Name).Nullable();
@@ -282,7 +283,7 @@ namespace BetterCms.Module.Root.Models.Migrations
         {
             Create
                 .Table("Tags").InSchema(SchemaName)
-                .WithCmsBaseColumns()
+                .WithBaseColumns()
                 .WithColumn("Name").AsString(MaxLength.Name).NotNullable();
 
             Create
@@ -298,7 +299,7 @@ namespace BetterCms.Module.Root.Models.Migrations
         {
             Create
                 .Table("Categories").InSchema(SchemaName)
-                .WithCmsBaseColumns()
+                .WithBaseColumns()
                 .WithColumn("Name").AsString(MaxLength.Name).NotNullable();
                 
             Create
@@ -314,7 +315,7 @@ namespace BetterCms.Module.Root.Models.Migrations
         {
             Create
                 .Table("Pages").InSchema(SchemaName)
-                .WithCmsBaseColumns()
+                .WithBaseColumns()
 
                 .WithColumn("PageUrl").AsAnsiString(MaxLength.Url).NotNullable()
                 .WithColumn("Title").AsString(MaxLength.Name).NotNullable()
@@ -354,7 +355,7 @@ namespace BetterCms.Module.Root.Models.Migrations
         {
             Create
                 .Table("PageContents").InSchema(SchemaName)
-                .WithCmsBaseColumns()
+                .WithBaseColumns()
                 .WithColumn("PageId").AsGuid().NotNullable()
                 .WithColumn("ContentId").AsGuid().NotNullable()
                 .WithColumn("RegionId").AsGuid().NotNullable()
@@ -384,7 +385,7 @@ namespace BetterCms.Module.Root.Models.Migrations
             Create
                 .Table("PageContentOptions")
                 .InSchema(SchemaName)
-                .WithCmsBaseColumns()
+                .WithBaseColumns()
                 .WithColumn("PageContentId").AsGuid().NotNullable()
                 .WithColumn("Value").AsString(MaxLength.Max).Nullable()
                 .WithColumn("Key").AsString(MaxLength.Name).NotNullable()

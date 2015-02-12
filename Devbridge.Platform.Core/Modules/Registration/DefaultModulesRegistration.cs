@@ -90,7 +90,7 @@ namespace Devbridge.Platform.Core.Modules.Registration
         }
         
         /// <summary>
-        /// Registers Better CMS module.
+        /// Registers the module.
         /// </summary>
         /// <param name="moduleDescriptor">Module information.</param>
         [SuppressMessage("StyleCop.CSharp.NamingRules", "SA1305:FieldNamesMustNotUseHungarianNotation", Justification = "Reviewed. Suppression is OK here.")]

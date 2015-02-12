@@ -2,7 +2,7 @@
 
 using BetterCms.Configuration;
 using BetterCms.Core;
-using Devbridge.Platform.Core.DataAccess.DataContext.Migrations;
+using BetterCms.Core.DataAccess.DataContext.Migrations;
 using BetterCms.Core.DataContracts.Enums;
 using BetterCms.Module.Pages.Models.Migrations;
 using BetterCms.Module.Root.Models.Migrations;
@@ -15,7 +15,7 @@ namespace BetterCms.Module.Installation.Models.Migrations
     /// Module initial database structure creation.
     /// </summary>
     [Migration(201305221458)]
-    public class InitialSetup : DefaultMigration
+    public class InitialSetup : CmsDefaultMigration
     {
         private const string LayoutsTableName = "Layouts";
 

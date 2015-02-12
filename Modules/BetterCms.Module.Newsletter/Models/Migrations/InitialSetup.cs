@@ -1,5 +1,7 @@
 ﻿using System;
 
+using BetterCms.Core.DataAccess.DataContext.Migrations;
+
 using Devbridge.Platform.Core.DataAccess.DataContext.Migrations;
 using Devbridge.Platform.Core.Models;
 
@@ -11,7 +13,7 @@ namespace BetterCms.Module.Newsletter.Models.Migrations
     /// Module initial database structure creation.
     /// </summary>
     [Migration(201304221200)]
-    public class InitialSetup : DefaultMigration
+    public class InitialSetup : CmsDefaultMigration
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="InitialSetup"/> class.
@@ -44,7 +46,7 @@ namespace BetterCms.Module.Newsletter.Models.Migrations
         {
             Create
                 .Table("Subscribers").InSchema(SchemaName)
-                .WithCmsBaseColumns()
+                .WithBaseColumns()
                 .WithColumn("Email").AsString(MaxLength.Email).NotNullable();
         }
     }

@@ -3,7 +3,7 @@
     public interface IConfiguration
     {
         /// <summary>
-        /// Gets the configuration of CMS database.
+        /// Gets the configuration of database.
         /// </summary>
         IDatabaseConfiguration Database { get; }
     }

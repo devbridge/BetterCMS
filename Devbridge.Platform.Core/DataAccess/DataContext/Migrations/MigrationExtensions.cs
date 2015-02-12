@@ -7,7 +7,7 @@ namespace Devbridge.Platform.Core.DataAccess.DataContext.Migrations
 {
     public static class MigrationExtensions
     {
-        public static ICreateTableWithColumnSyntax WithCmsBaseColumns(this ICreateTableWithColumnSyntax table)
+        public static ICreateTableWithColumnSyntax WithBaseColumns(this ICreateTableWithColumnSyntax table)
         {
             return table
                 .WithColumn("Id").AsGuid().PrimaryKey().WithDefault(SystemMethods.NewGuid)

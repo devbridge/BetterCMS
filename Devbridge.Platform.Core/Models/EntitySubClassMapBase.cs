@@ -8,19 +8,27 @@ namespace Devbridge.Platform.Core.Models
     /// <typeparam name="TEntity">The type of the entity to map.</typeparam>
     public abstract class EntitySubClassMapBase<TEntity> : SubclassMap<TEntity>
     {
+        /// <summary>
+        /// The module name.
+        /// </summary>
         private readonly string moduleName;
 
         /// <summary>
-        /// Gets the name of the database schema.
+        /// The schema name
+        /// </summary>
+        private string schemaName;
+
+        /// <summary>
+        /// Gets the name of the schema.
         /// </summary>
         /// <value>
-        /// The name of the database schema.
+        /// The name of the schema.
         /// </value>
         protected string SchemaName
         {
             get
             {
-                return "bcms_" + moduleName;
+                return schemaName ?? (schemaName = SchemaNameProvider.GetSchemaName(moduleName));
             }
         }
 
@@ -32,7 +40,10 @@ namespace Devbridge.Platform.Core.Models
         {
             this.moduleName = moduleName;
 
-            Schema(SchemaName);
+            if (SchemaName != null)
+            {
+                Schema(SchemaName);
+            }
 
             KeyColumn("Id");
         }

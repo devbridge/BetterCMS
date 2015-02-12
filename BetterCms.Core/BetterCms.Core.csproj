@@ -150,6 +150,7 @@
     <Compile Include="..\SharedAssemblyInfo.cs">
       <Link>Properties\SharedAssemblyInfo.cs</Link>
     </Compile>
+    <Compile Include="DataAccess\DataContext\Migrations\CmsDefaultMigration.cs" />
     <Compile Include="DataContracts\Enums\ForceProtocolType.cs" />
     <Compile Include="DataContracts\IChildContent.cs" />
     <Compile Include="DataContracts\IContentRegion.cs" />

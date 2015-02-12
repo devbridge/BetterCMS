@@ -11,7 +11,7 @@ using Devbridge.Platform.Core.Web.Mvc.Routes;
 namespace Devbridge.Platform.Core.Web.Mvc
 {
     /// <summary>
-    /// Controller factory to work in Better CMS context.
+    /// Controller factory to work in web application context.
     /// </summary>
     public class DefaultWebControllerFactory : DefaultControllerFactory
     {
