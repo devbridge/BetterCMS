@@ -181,7 +181,7 @@ bettercms.define('bcms.autocomplete', ['bcms.jquery', 'bcms', 'bcms.jquery.autoc
 
                 self.addItemWithId = function(name, id) {
 
-                    if (name && id && !self.alreadyExists(name)) {
+                    if (name && id && !self.alreadyExists(id)) {
                         var itemViewModel = new autocomplete.AutocompleteItemViewModel(self, name, id);
                         self.items.push(itemViewModel);
                     }
