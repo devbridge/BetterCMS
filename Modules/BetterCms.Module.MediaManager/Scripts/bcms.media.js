@@ -146,8 +146,10 @@ function ($, bcms, modal, siteSettings, forms, dynamicContent, messages, mediaUp
     /**
     * Media's current folder sort / search / paging option view model
     */
-    function MediaItemsOptionsViewModel(onOpenPage) {
+    function MediaItemsOptionsViewModel(onOpenPage, folderType) {
         var self = this;
+
+        var categorizableItemKey = folderType == mediaTypes.image ? 'Images' : 'Files';
 
         self.searchQuery = ko.observable();
         self.includeArchived = ko.observable(false);
@@ -155,7 +157,7 @@ function ($, bcms, modal, siteSettings, forms, dynamicContent, messages, mediaUp
         self.column = ko.observable();
         self.isDescending = ko.observable(false);
         self.tags = new tags.TagsListViewModel();
-        self.categories = new categories.CategoriesListViewModel(),
+        self.categories = new categories.CategoriesListViewModel(null, categorizableItemKey),
         self.isEdited = ko.computed(function () {
             if (self.includeArchived()) {
                 return true;
@@ -1754,7 +1756,7 @@ function ($, bcms, modal, siteSettings, forms, dynamicContent, messages, mediaUp
 
                 // Map grid options
                 if (!folderViewModel.gridOptions()) {
-                    folderViewModel.gridOptions(new MediaItemsOptionsViewModel(folderViewModel.onOpenPage));
+                    folderViewModel.gridOptions(new MediaItemsOptionsViewModel(folderViewModel.onOpenPage, json.Data.Path.CurrentFolder.Type));
                 }
                 folderViewModel.gridOptions().fromJson(json.Data);
 

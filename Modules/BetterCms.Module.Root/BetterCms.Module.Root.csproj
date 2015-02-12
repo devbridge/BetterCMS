@@ -413,6 +413,7 @@
     <Compile Include="ViewModels\Authentication\InfoViewModel.cs" />
     <Compile Include="ViewModels\Autocomplete\SuggestionViewModel.cs" />
     <Compile Include="ViewModels\CategoryTreesFilter.cs" />
+    <Compile Include="ViewModels\Category\CategorySuggestionViewModel.cs" />
     <Compile Include="ViewModels\Category\CategoryTreeNodeViewModel.cs" />
     <Compile Include="ViewModels\Category\CategoryTreesGridViewModel.cs" />
     <Compile Include="ViewModels\Category\CategoryTreeGridViewModel.cs" />

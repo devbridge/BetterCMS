@@ -82,7 +82,7 @@ bettercms.define('bcms.blog.filter', ['bcms.jquery', 'bcms', 'bcms.ko.extenders'
 
         filter.bind = function (container, jsonData, onSearchClick) {
             var tagsViewModel = new tags.TagsListViewModel(jsonData.Tags),
-                categoriesViewModel = new categories.CategoriesListViewModel(jsonData.Categories),
+                categoriesViewModel = new categories.CategoriesListViewModel(jsonData.Categories, 'Blog Posts'),
                 filterViewModel = new FilterViewModel(tagsViewModel, categoriesViewModel, container, onSearchClick, jsonData);
 
             filterViewModel.includeArchived(jsonData.IncludeArchived ? true : false);

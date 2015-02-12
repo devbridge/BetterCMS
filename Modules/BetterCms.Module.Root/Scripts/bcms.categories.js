@@ -1090,10 +1090,13 @@
         var CategoriesListViewModel = (function (_super) {
             bcms.extendsClass(CategoriesListViewModel, _super);
 
-            function CategoriesListViewModel(categoriesList) {
+            function CategoriesListViewModel(categoriesList, categoryTreeForKey) {
                 var options = {
                     serviceUrl: links.categoriesSuggestionServiceUrl,
-                    pattern: 'Categories[{0}].key'
+                    pattern: 'Categories[{0}].key',
+                    params : {
+                        categoryTreeForKey: categoryTreeForKey
+                    }                    
                 };
 
                 _super.call(this, categoriesList, options);

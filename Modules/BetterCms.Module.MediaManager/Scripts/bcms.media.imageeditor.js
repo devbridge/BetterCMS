@@ -534,7 +534,7 @@ bettercms.define('bcms.media.imageeditor', ['bcms.jquery', 'bcms', 'bcms.modal',
             var self = this,
                 titleEditorViewModel = new TitleEditorViewModel(dialog, data.Title),
                 imageEditorViewModel = new ImageEditorViewModel(dialog, data, true),
-                categoriesViewModel = new categories.CategoriesListViewModel(data.Categories),
+                categoriesViewModel = new categories.CategoriesListViewModel(data.Categories, 'Images'),
                 tagsViewModel = new tags.TagsListViewModel(data.Tags);
 
             self.titleEditorViewModel = titleEditorViewModel;

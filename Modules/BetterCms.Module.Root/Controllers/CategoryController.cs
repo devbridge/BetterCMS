@@ -83,7 +83,7 @@ namespace BetterCms.Module.Root.Controllers
         }
 
         [HttpPost]
-        public ActionResult SuggestCategories(SuggestionViewModel model)
+        public ActionResult SuggestCategories(CategorySuggestionViewModel model)
         {
             var suggestedTags = GetCommand<SearchCategoriesCommand>().ExecuteCommand(model);
             return Json(new { suggestions = suggestedTags });
