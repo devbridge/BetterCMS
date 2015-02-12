@@ -4,13 +4,13 @@ using System.Linq;
 using Devbridge.Platform.Core.DataAccess;
 using Devbridge.Platform.Core.DataAccess.DataContext;
 using BetterCms.Core.DataContracts.Enums;
-using BetterCms.Core.Services.Caching;
-
 using BetterCms.Module.Pages.Command.Content.SavePageContentOptions;
 using BetterCms.Module.Pages.ViewModels.Content;
 using BetterCms.Module.Root.Models;
 using BetterCms.Module.Root.Services;
 using BetterCms.Module.Root.ViewModels.Option;
+
+using Devbridge.Platform.Core.Web.Services.Caching;
 
 using NUnit.Framework;
 

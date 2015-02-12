@@ -10,8 +10,6 @@ using BetterCms.Core.Exceptions.Mvc;
 using BetterCms.Core.Exceptions.Service;
 using BetterCms.Core.Security;
 using BetterCms.Core.Services;
-using BetterCms.Core.Services.Caching;
-
 using BetterCms.Module.Root.Content.Resources;
 using BetterCms.Module.Root.Models;
 using BetterCms.Module.Root.ViewModels.Security;
@@ -19,6 +17,7 @@ using BetterCms.Module.Root.ViewModels.Security;
 using Devbridge.Platform.Core.DataAccess;
 using Devbridge.Platform.Core.DataAccess.DataContext.Fetching;
 using Devbridge.Platform.Core.DataContracts;
+using Devbridge.Platform.Core.Web.Services.Caching;
 
 namespace BetterCms.Module.Root.Services
 {

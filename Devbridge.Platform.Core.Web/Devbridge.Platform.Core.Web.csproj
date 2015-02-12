@@ -46,6 +46,9 @@
     <Reference Include="Microsoft.Web.Mvc">
       <HintPath>..\packages\Mvc3Futures.3.0.20105.0\lib\Microsoft.Web.Mvc.dll</HintPath>
     </Reference>
+    <Reference Include="RazorGenerator.Mvc">
+      <HintPath>..\Libs\RazorGenerator.Mvc.2.2.3\RazorGenerator.Mvc.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.configuration" />
     <Reference Include="System.Core" />
@@ -90,7 +93,14 @@
     <Compile Include="Mvc\Commands\ICommand.cs" />
     <Compile Include="Mvc\Commands\ICommandContext.cs" />
     <Compile Include="Mvc\Commands\ICommandResolver.cs" />
+    <Compile Include="Mvc\DefaultWebControllerFactory.cs" />
     <Compile Include="Mvc\IMessagesIndicator.cs" />
+    <Compile Include="Mvc\Routes\DefaultRouteTable.cs" />
+    <Compile Include="Mvc\Routes\IRouteTable.cs" />
+    <Compile Include="Mvc\Routes\RouteExtensions.cs" />
+    <Compile Include="Services\Caching\HttpRuntimeCacheService.cs" />
+    <Compile Include="Services\Caching\ICacheService.cs" />
+    <Compile Include="WebApplicationContext.cs" />
     <Compile Include="Web\DefaultHttpContextAccessor.cs" />
     <Compile Include="Web\EmbeddedResources\DefaultEmbeddedResourcesProvider.cs" />
     <Compile Include="Web\EmbeddedResources\EmbeddedResourceDescriptor.cs" />

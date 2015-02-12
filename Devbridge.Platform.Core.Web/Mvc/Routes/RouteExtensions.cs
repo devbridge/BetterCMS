@@ -1,7 +1,8 @@
 ﻿using System.Web.Routing;
+
 using Microsoft.Web.Mvc;
 
-namespace BetterCms.Core.Mvc.Routes
+namespace Devbridge.Platform.Core.Web.Mvc.Routes
 {
     /// <summary>
     /// Route extensions container.

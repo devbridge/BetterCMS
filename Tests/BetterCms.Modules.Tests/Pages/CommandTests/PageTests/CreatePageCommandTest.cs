@@ -8,7 +8,6 @@ using BetterCms.Configuration;
 
 using BetterCms.Core.Security;
 using BetterCms.Core.Services;
-using BetterCms.Core.Services.Caching;
 using BetterCms.Module.Pages.Command.Page.CreatePage;
 using BetterCms.Module.Pages.Services;
 using BetterCms.Module.Pages.ViewModels.Page;
@@ -20,6 +19,7 @@ using BetterCms.Module.Root.ViewModels.Security;
 using Devbridge.Platform.Core.DataAccess;
 using Devbridge.Platform.Core.DataAccess.DataContext;
 using Devbridge.Platform.Core.Web.Mvc.Commands;
+using Devbridge.Platform.Core.Web.Services.Caching;
 
 using Moq;
 

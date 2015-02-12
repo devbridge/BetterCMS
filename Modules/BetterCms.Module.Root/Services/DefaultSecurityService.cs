@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Security.Principal;
 
+using BetterCms.Core.Services;
+
 using Devbridge.Platform.Core.Web.Security;
 using Devbridge.Platform.Core.Web.Web;
 
@@ -11,7 +13,7 @@ namespace BetterCms.Module.Root.Services
     /// <summary>
     /// Default security service contract realization.
     /// </summary>
-    public class DefaultSecurityService : DefaultWebPrincipalProvider
+    public class DefaultSecurityService : DefaultWebPrincipalProvider, ISecurityService
     {
         /// <summary>
         /// The roles splitter.

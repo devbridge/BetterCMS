@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace BetterCms.Core.Services.Caching
+namespace Devbridge.Platform.Core.Web.Services.Caching
 {
     /// <summary>
     /// Defines the contract to manage cache items.

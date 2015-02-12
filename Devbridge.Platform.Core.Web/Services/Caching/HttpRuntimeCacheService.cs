@@ -4,7 +4,7 @@ using System.Web.Caching;
 
 using Common.Logging;
 
-namespace BetterCms.Core.Services.Caching
+namespace Devbridge.Platform.Core.Web.Services.Caching
 {
     /// <summary>
     /// Provides a cache service implementation based on the HttpRuntime cache.

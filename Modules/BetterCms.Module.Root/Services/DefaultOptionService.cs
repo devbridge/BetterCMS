@@ -9,8 +9,6 @@ using Devbridge.Platform.Core.DataAccess;
 using BetterCms.Core.DataContracts;
 using BetterCms.Core.DataContracts.Enums;
 using BetterCms.Core.Exceptions.Mvc;
-using BetterCms.Core.Services.Caching;
-
 using BetterCms.Module.Root.Content.Resources;
 using BetterCms.Module.Root.Models;
 using BetterCms.Module.Root.Models.Extensions;
@@ -20,6 +18,7 @@ using BetterCms.Module.Root.ViewModels.Option;
 
 using Devbridge.Platform.Core.DataContracts;
 using Devbridge.Platform.Core.Models;
+using Devbridge.Platform.Core.Web.Services.Caching;
 
 using NHibernate.Linq;
 using NHibernate.Proxy.DynamicProxy;

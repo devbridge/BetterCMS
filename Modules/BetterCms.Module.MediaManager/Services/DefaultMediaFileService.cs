@@ -9,7 +9,6 @@ using BetterCms.Configuration;
 using BetterCms.Core.Exceptions;
 using BetterCms.Core.Security;
 using BetterCms.Core.Services;
-using BetterCms.Core.Services.Caching;
 using BetterCms.Core.Services.Storage;
 
 using BetterCms.Module.MediaManager.Models;
@@ -22,6 +21,7 @@ using Devbridge.Platform.Core.DataAccess;
 using Devbridge.Platform.Core.DataAccess.DataContext;
 using Devbridge.Platform.Core.DataAccess.DataContext.Fetching;
 using Devbridge.Platform.Core.Exceptions.DataTier;
+using Devbridge.Platform.Core.Web.Services.Caching;
 using Devbridge.Platform.Core.Web.Web;
 
 using NHibernate;

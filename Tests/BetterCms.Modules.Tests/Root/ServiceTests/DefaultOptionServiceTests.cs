@@ -4,8 +4,9 @@ using System.Linq;
 
 using BetterCms.Core.DataContracts;
 using BetterCms.Core.DataContracts.Enums;
-using BetterCms.Core.Services.Caching;
 using BetterCms.Module.Root.Services;
+
+using Devbridge.Platform.Core.Web.Services.Caching;
 
 using NUnit.Framework;
 

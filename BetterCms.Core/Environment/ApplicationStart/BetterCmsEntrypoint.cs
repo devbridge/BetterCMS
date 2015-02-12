@@ -8,6 +8,7 @@ using BetterCms.Core.Security;
 using Common.Logging;
 
 using Devbridge.Platform.Core.Dependencies;
+using Devbridge.Platform.Core.Web;
 using Devbridge.Platform.Core.Web.Dependencies;
 
 [assembly: PreApplicationStartMethod(typeof(BetterCmsEntrypoint), "PreApplicationStart")]
@@ -98,7 +99,7 @@ namespace BetterCms.Core.Environment.ApplicationStart
             try
             {
                 logger.Info("Load assemblies...");
-                CmsContext.LoadAssemblies();
+                WebApplicationContext.LoadAssemblies();
             }
             catch (Exception ex)
             {
@@ -107,8 +108,6 @@ namespace BetterCms.Core.Environment.ApplicationStart
 
                 throw new CmsException(message, ex);
             }
-
-
         }
     }
 }

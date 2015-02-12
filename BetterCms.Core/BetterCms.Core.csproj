@@ -98,7 +98,7 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\Nuget.Core.2.0.1\lib\net40-Client\NuGet.Core.dll</HintPath>
     </Reference>
-    <Reference Include="RazorGenerator.Mvc, Version=2.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+    <Reference Include="RazorGenerator.Mvc, Version=2.0.0.0, Culture=neutral, PublicKeyToken=7b26dc2a43f6a0d4, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\Libs\RazorGenerator.Mvc.2.2.3\RazorGenerator.Mvc.dll</HintPath>
     </Reference>
@@ -241,23 +241,12 @@
     <Compile Include="Services\ISecurityService.cs" />
     <Compile Include="Modules\Install\DefaultModuleManager.cs" />
     <Compile Include="Modules\Install\IModuleManager.cs" />
-    <Compile Include="Web\EmbeddedResources\DefaultEmbeddedResourcesProvider.cs" />
-    <Compile Include="Web\EmbeddedResources\EmbeddedResourceDescriptor.cs" />
-    <Compile Include="Web\EmbeddedResources\EmbeddedResourcesVirtualFile.cs" />
-    <Compile Include="Web\EmbeddedResources\EmbeddedResourcesVirtualPathProvider.cs" />
-    <Compile Include="Web\EmbeddedResources\IEmbeddedResourcesProvider.cs" />
     <Compile Include="Web\HttpContextTool.cs" />
     <Compile Include="Web\ViewEngines\EmbeddedResourcesViewEngine.cs" />
-    <Compile Include="Mvc\Routes\RouteExtensions.cs" />
-    <Compile Include="Mvc\Routes\DefaultRouteTable.cs" />
     <Compile Include="Environment\Host\DefaultCmsHost.cs" />
     <Compile Include="Environment\Host\ICmsHost.cs" />
-    <Compile Include="Mvc\Routes\IRouteTable.cs" />
     <Compile Include="Modules\CmsModuleDescriptor.cs" />
-    <Compile Include="Mvc\DefaultCmsControllerFactory.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Services\Caching\HttpRuntimeCacheService.cs" />
-    <Compile Include="Services\Caching\ICacheService.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />

@@ -5,20 +5,19 @@ using System.Web.Routing;
 using Autofac;
 using Autofac.Features.Metadata;
 
-using BetterCms.Core.Mvc.Routes;
-
 using Devbridge.Platform.Core.Web.Dependencies;
+using Devbridge.Platform.Core.Web.Mvc.Routes;
 
-namespace BetterCms.Core.Mvc
+namespace Devbridge.Platform.Core.Web.Mvc
 {
     /// <summary>
     /// Controller factory to work in Better CMS context.
     /// </summary>
-    public class DefaultCmsControllerFactory : DefaultControllerFactory
+    public class DefaultWebControllerFactory : DefaultControllerFactory
     {
         private readonly PerWebRequestContainerProvider containerProvider;
 
-        public DefaultCmsControllerFactory(PerWebRequestContainerProvider containerProvider)
+        public DefaultWebControllerFactory(PerWebRequestContainerProvider containerProvider)
         {
             this.containerProvider = containerProvider;
         }

@@ -1,46 +1,23 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Security.Cryptography;
-using System.Web.Hosting;
-using System.Web.Mvc;
-using System.Web.Routing;
-using System.Web.WebPages;
-
-using Autofac;
+﻿using Autofac;
 
 using BetterCms.Configuration;
+
 using BetterCms.Core.Environment.Host;
 using BetterCms.Core.Exceptions;
 using BetterCms.Core.Modules.Registration;
-using BetterCms.Core.Mvc;
-using BetterCms.Core.Mvc.Routes;
 using BetterCms.Core.Security;
-using BetterCms.Core.Services.Caching;
 using BetterCms.Core.Services.Storage;
-using BetterCms.Core.Web.EmbeddedResources;
 
 using Devbridge.Platform.Core.Configuration;
-using Devbridge.Platform.Core.DataAccess;
-using Devbridge.Platform.Core.DataAccess.DataContext;
-using Devbridge.Platform.Core.DataAccess.DataContext.Fetching;
-using Devbridge.Platform.Core.DataAccess.DataContext.Migrations;
 using Devbridge.Platform.Core.Dependencies;
-using Devbridge.Platform.Core.Environment.Assemblies;
-using Devbridge.Platform.Core.Environment.FileSystem;
-using Devbridge.Platform.Core.Security;
-using Devbridge.Platform.Core.Web.Dependencies;
-using Devbridge.Platform.Core.Web.Modules;
-using Devbridge.Platform.Core.Web.Mvc.Commands;
-using Devbridge.Platform.Core.Web.Mvc.Extensions;
-using Devbridge.Platform.Core.Web.Web;
+using Devbridge.Platform.Core.Modules.Registration;
+using Devbridge.Platform.Core.Web;
+using Devbridge.Platform.Core.Web.Configuration;
+using Devbridge.Platform.Core.Web.Modules.Registration;
 
-using NHibernate.Linq;
-using NHibernate.Mapping;
+using System;
 
-using RazorGenerator.Mvc;
-
-using PreApplicationStartCode = System.Web.Mvc.PreApplicationStartCode;
+using Devbridge.Platform.Core.Web.Services.Caching;
 
 namespace BetterCms.Core
 {
@@ -78,6 +55,7 @@ namespace BetterCms.Core
                 return config;
             }
         }
+
         /// <summary>
         /// Constructs the host context.
         /// </summary>
@@ -106,43 +84,33 @@ namespace BetterCms.Core
         /// Creates the configured BetterCMS root dependencies container.
         /// </summary>
         /// <returns>The container builder.</returns>
-        public static ContainerBuilder InitializeContainer()
+        public static ContainerBuilder InitializeContainer(ContainerBuilder builder = null)
         {
-            ContainerBuilder builder = new ContainerBuilder();
-            
-            builder.RegisterInstance(Config).As<ICmsConfiguration>().SingleInstance();
+            if (builder == null)
+            {
+                builder = new ContainerBuilder();
+            }
 
-            builder.RegisterType<DefaultCmsHost>().As<ICmsHost>().SingleInstance();
-            
-            builder.RegisterType<DefaultSessionFactoryProvider>().As<ISessionFactoryProvider>().SingleInstance();
-            builder.RegisterType<DefaultAssemblyLoader>().As<IAssemblyLoader>().SingleInstance();
-            builder.RegisterType<DefaultAssemblyManager>().As<IAssemblyManager>().SingleInstance();
-            builder.RegisterType<DefaultUnitOfWorkFactory>().As<IUnitOfWorkFactory>().SingleInstance();
+            builder = WebApplicationContext.InitializeContainer(builder);
             builder.RegisterType<DefaultTextEncryptor>().As<ITextEncryptor>().SingleInstance();
 
-            builder.RegisterType<CmsModulesRegistration>().As<ICmsModulesRegistration>().SingleInstance();
-            builder.RegisterType<DefaultMappingResolver>().As<IMappingResolver>().SingleInstance();
-            builder.RegisterType<DefaultWorkingDirectory>().As<IWorkingDirectory>().SingleInstance();
-            builder.RegisterType<DefaultCmsControllerFactory>().SingleInstance();
-            builder.RegisterType<DefaultEmbeddedResourcesProvider>().As<IEmbeddedResourcesProvider>().SingleInstance();
-            builder.RegisterType<DefaultHttpContextAccessor>().As<IHttpContextAccessor>().SingleInstance();
-            builder.RegisterType<DefaultControllerExtensions>().As<IControllerExtensions>().SingleInstance();
-            builder.RegisterType<DefaultCommandResolver>().As<ICommandResolver>().InstancePerLifetimeScope();
-            builder.RegisterType<DefaultFetchingProvider>().As<IFetchingProvider>().SingleInstance();
+            builder.RegisterType<CmsModulesRegistration>()
+                .As<IModulesRegistration>()
+                .As<IWebModulesRegistration>()
+                .As<ICmsModulesRegistration>()
+                .SingleInstance();
 
-            builder.RegisterType<DefaultUnitOfWork>().As<IUnitOfWork>().InstancePerLifetimeScope();
-            builder.RegisterType<DefaultRepository>().As<IRepository>().InstancePerLifetimeScope();
-            
-            builder.RegisterInstance(new DefaultRouteTable(RouteTable.Routes)).As<IRouteTable>().SingleInstance();
-            
-            builder.RegisterType<PerWebRequestContainerProvider>().InstancePerLifetimeScope();
-          
-            builder.RegisterType<DefaultVersionChecker>().AsImplementedInterfaces().SingleInstance();
-            builder.RegisterType<DefaultMigrationRunner>().AsImplementedInterfaces().SingleInstance();
+            builder.RegisterInstance(Config)
+                .As<ICmsConfiguration>()
+                .As<IWebConfiguration>()
+                .As<IConfiguration>()
+                .SingleInstance();
 
             RegisterCacheService(builder);
-
             RegisterStorageService(builder);
+
+            // TODO:
+            builder.RegisterType<DefaultCmsHost>().As<ICmsHost>().SingleInstance();
 
             return builder;
         }       
@@ -235,62 +203,6 @@ namespace BetterCms.Core
             catch (Exception ex)
             {
                 throw new CmsException("Failed to register a storage service.", ex);
-            }
-        }
-
-        /// <summary>
-        /// Loads available assemblies.
-        /// </summary>
-        internal static void LoadAssemblies()
-        {
-            using (var container = ContextScopeProvider.CreateChildContainer())
-            {
-                if (container == null)
-                {
-                    throw new CmsException("Better CMS dependencies container is not initialized.");
-                }
-
-                if (HostingEnvironment.IsHosted)
-                {
-                    HostingEnvironment.RegisterVirtualPathProvider(new EmbeddedResourcesVirtualPathProvider(container.Resolve<IEmbeddedResourcesProvider>()));
-                }
-                else
-                {
-                    throw new CmsException("Failed to register EmbeddedResourcesVirtualPathProvider as a virtual path provider.");
-                }
-
-                ControllerBuilder.Current.SetControllerFactory(container.Resolve<DefaultCmsControllerFactory>());
-
-                IAssemblyManager assemblyManager = container.Resolve<IAssemblyManager>();
-                                
-                // First add referenced modules...
-                assemblyManager.AddReferencedModules();
-                
-                // ...then scan and register uploaded modules.
-                assemblyManager.AddUploadedModules();
-
-                var moduleRegistration = container.Resolve<ICmsModulesRegistration>();
-                moduleRegistration.InitializeModules();
-
-                // Register precompiled views for all the assemblies
-                var precompiledAssemblies = new List<PrecompiledViewAssembly>();
-                moduleRegistration.GetModules().Select(m => m.ModuleDescriptor).Distinct().ForEach(
-                    descriptor =>
-                    {
-                        var webDescriptor = descriptor as WebModuleDescriptor;
-                        if (webDescriptor != null)
-                        {
-                            var precompiledAssembly = new PrecompiledViewAssembly(descriptor.GetType().Assembly, string.Format("~/Areas/{0}/", webDescriptor.AreaName))
-                            {
-                                UsePhysicalViewsIfNewer = false
-                            };
-                            precompiledAssemblies.Add(precompiledAssembly);
-                        }
-                    });
-                
-                var engine = new CompositePrecompiledMvcEngine(precompiledAssemblies.ToArray());
-                ViewEngines.Engines.Insert(0, engine);
-                VirtualPathFactoryManager.RegisterVirtualPathFactory(engine);
             }
         }
     }

@@ -7,10 +7,11 @@ using Autofac;
 using Devbridge.Platform.Core.DataAccess;
 using Devbridge.Platform.Core.DataAccess.DataContext;
 using BetterCms.Core.DataContracts.Enums;
-using BetterCms.Core.Services.Caching;
 using BetterCms.Module.Pages.Command.Content.GetPageContentOptions;
 using BetterCms.Module.Root.Models;
 using BetterCms.Module.Root.Services;
+
+using Devbridge.Platform.Core.Web.Services.Caching;
 
 using NUnit.Framework;
 

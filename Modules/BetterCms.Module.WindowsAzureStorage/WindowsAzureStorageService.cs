@@ -2,7 +2,6 @@
 using System.IO;
 using System.Net;
 
-using BetterCms.Core.Services.Caching;
 using BetterCms.Core.Services.Storage;
 using BetterCms.Module.WindowsAzureStorage.Content.Resources;
 

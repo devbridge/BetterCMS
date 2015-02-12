@@ -90,7 +90,7 @@ namespace Devbridge.Platform.Core.Configuration
             return section;
         }
 
-        public T LoadConfig<T>() where T : ConfigurationSection
+        public virtual T LoadConfig<T>() where T : ConfigurationSection
         {
             if (cache.ContainsKey(typeof(T)))
             {
@@ -100,6 +100,18 @@ namespace Devbridge.Platform.Core.Configuration
             var config = GetConfig<T>();
             cache.Add(typeof(T), config);
             return config;
+        }
+        
+        public virtual T TryLoadConfig<T>() where T : ConfigurationSection
+        {
+            try
+            {
+                return LoadConfig<T>();
+            }
+            catch
+            {
+                return null;
+            }
         }
 
         protected virtual System.Configuration.Configuration OpenApplicationConfiguration()

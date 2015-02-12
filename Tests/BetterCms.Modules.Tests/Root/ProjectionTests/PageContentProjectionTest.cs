@@ -1,8 +1,9 @@
-﻿using BetterCms.Core.Services.Caching;
-using BetterCms.Module.Pages.Accessors;
+﻿using BetterCms.Module.Pages.Accessors;
 using BetterCms.Module.Pages.Models;
 using BetterCms.Module.Root.Projections;
 using BetterCms.Module.Root.Services;
+
+using Devbridge.Platform.Core.Web.Services.Caching;
 
 using NUnit.Framework;
 

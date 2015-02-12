@@ -1,6 +1,6 @@
 ﻿using System.Web.Routing;
 
-namespace BetterCms.Core.Mvc.Routes
+namespace Devbridge.Platform.Core.Web.Mvc.Routes
 {
     /// <summary>
     /// Default implementation of <see cref="IRouteTable" /> interface.
