@@ -140,7 +140,7 @@
                     @Html.DropDownListFor(model => model.AuthorId, Model.Authors.ToSelectList(Model.AuthorId), string.Empty, new { @class = "bcms-global-select", @style = "width: 245px;" })
                 </div>
 
-                <div class="bcms-tags-box-holder" data-bind="with: categories">
+                <div class="bcms-blog-categories-holder" data-bind="with: categories">
                     @Html.Partial("~/Areas/bcms-root/Views/Category/CategoriesTemplate.cshtml", categoriesTemplateViewModel)
                 </div>
 

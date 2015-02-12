@@ -291,6 +291,9 @@
     <EmbeddedResource Include="Models\Migrations\Migration201305271258.sqlserver.sql" />
     <EmbeddedResource Include="Content\example.blog.post.import.xml" />
     <EmbeddedResource Include="Models\Migrations\Migration201502101139.sqlserver.sql" />
+    <Content Include="Content\Styles\bcms.blog.min.css">
+      <DependentUpon>bcms.blog.css</DependentUpon>
+    </Content>
     <Content Include="web.config" />
   </ItemGroup>
   <ItemGroup>

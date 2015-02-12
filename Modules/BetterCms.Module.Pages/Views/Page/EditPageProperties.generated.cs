@@ -9,7 +9,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace BetterCms.Module.Pages.Views.Page
+namespace ASP
 {
     using System;
     using System.Collections.Generic;
@@ -101,9 +101,9 @@ namespace BetterCms.Module.Pages.Views.Page
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("RazorGenerator", "2.0.0.0")]
     [System.Web.WebPages.PageVirtualPathAttribute("~/Views/Page/EditPageProperties.cshtml")]
-    public partial class EditPageProperties : System.Web.Mvc.WebViewPage<EditPagePropertiesViewModel>
+    public partial class _Views_Page_EditPageProperties_cshtml : System.Web.Mvc.WebViewPage<EditPagePropertiesViewModel>
     {
-        public EditPageProperties()
+        public _Views_Page_EditPageProperties_cshtml()
         {
         }
         public override void Execute()
@@ -601,7 +601,7 @@ WriteLiteral(">");
 WriteLiteral("</div>\r\n                    </div>\r\n                </div>\r\n\r\n                <di" +
 "v");
 
-WriteLiteral(" class=\"bcms-tags-box-holder\"");
+WriteLiteral(" class=\"bcms-categories-box-holder\"");
 
 WriteLiteral(" data-bind=\"with: categories\"");
 

@@ -9,7 +9,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace BetterCms.Module.Blog.Views.Blog
+namespace ASP
 {
     using System;
     using System.Collections.Generic;
@@ -107,9 +107,9 @@ namespace BetterCms.Module.Blog.Views.Blog
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("RazorGenerator", "2.0.0.0")]
     [System.Web.WebPages.PageVirtualPathAttribute("~/Views/Blog/EditBlogPost.cshtml")]
-    public partial class EditBlogPost : System.Web.Mvc.WebViewPage<BetterCms.Module.Blog.ViewModels.Blog.BlogPostViewModel>
+    public partial class _Views_Blog_EditBlogPost_cshtml : System.Web.Mvc.WebViewPage<BetterCms.Module.Blog.ViewModels.Blog.BlogPostViewModel>
     {
-        public EditBlogPost()
+        public _Views_Blog_EditBlogPost_cshtml()
         {
         }
         public override void Execute()
@@ -781,7 +781,7 @@ WriteLiteral("                    ");
             #line hidden
 WriteLiteral("\r\n                </div>\r\n\r\n                <div");
 
-WriteLiteral(" class=\"bcms-tags-box-holder\"");
+WriteLiteral(" class=\"bcms-blog-categories-holder\"");
 
 WriteLiteral(" data-bind=\"with: categories\"");
 

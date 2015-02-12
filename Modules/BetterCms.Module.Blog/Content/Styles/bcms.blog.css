@@ -185,6 +185,15 @@ div.bcms-btn-blog-add {
     left: -15px;
 }
 
+.bcms-blog-categories-holder {
+    position: relative;
+    margin: 5px 0 -17px 20px;
+}
+
+    .bcms-blog-categories-holder .bcms-content-titles {
+        display: inline-block;
+    }
+
 .bcms-blog-tags-holder {
     position: relative;
     margin: 0 0 0 20px;
