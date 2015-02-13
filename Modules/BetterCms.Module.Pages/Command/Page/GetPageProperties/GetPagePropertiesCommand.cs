@@ -210,6 +210,7 @@ namespace BetterCms.Module.Pages.Command.Page.GetPageProperties
                 model.Model.Tags = tagsFuture.ToList();
                 model.Model.RedirectFromOldUrl = true;
                 model.Model.Categories = categoryService.GetSelectedCategories<PageProperties, PageCategory>(id).ToList();
+                model.Model.CategoriesFilterKey = pageEntity.GetCategorizableItemKey();
                 model.Model.PageAccessProtocols = this.GetProtocolForcingTypes();
                 model.Model.UpdateSitemap = true;
                 model.Model.CustomOptions = optionService.GetCustomOptions();

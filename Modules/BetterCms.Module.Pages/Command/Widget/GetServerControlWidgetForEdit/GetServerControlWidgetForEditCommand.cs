@@ -57,7 +57,6 @@ namespace BetterCms.Module.Pages.Command.Widget.GetServerControlWidgetForEdit
         public EditServerControlWidgetViewModel Execute(Guid? widgetId)
         {            
             EditServerControlWidgetViewModel model = null;
-            var categories = categoryService.GetCategories(Root.Models.Widget.CategorizableItemKeyForWidgets);
 
             if (widgetId.HasValue && widgetId.Value != Guid.Empty)
             {
@@ -111,6 +110,7 @@ namespace BetterCms.Module.Pages.Command.Widget.GetServerControlWidgetForEdit
 
             model.Categories = categoryService.GetSelectedCategories<Root.Models.Widget, WidgetCategory>(widgetId).ToList();
             model.CustomOptions = optionService.GetCustomOptions();
+            model.CategoriesFilterKey = Root.Models.Widget.CategorizableItemKeyForWidgets;
             
             return model;
         }
