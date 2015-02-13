@@ -56,7 +56,8 @@ describe('pages.pages.api.behavior', function () {
             filter: {
                 where: [{ field: 'Title', value: constants.testPageTitle }]
             },
-            includeArchived: true
+            includeArchived: true,
+            includeCategories: true,
         };
 
         runs(function () {
@@ -136,7 +137,7 @@ describe('pages.pages.api.behavior', function () {
         var data = {
             includeTags: true,
             includeLayout: true,
-            includeCategory: true,
+            includeCategories: true,
             includeImages: true,
             includeMetaData: true,
             includePageContents: true,
@@ -184,7 +185,7 @@ describe('pages.pages.api.behavior', function () {
         var data = {
             includeTags: true,
             includeLayout: true,
-            includeCategory: true,
+            includeCategories: true,
             includeImages: true,
             includeMetaData: true,
             includePageContents: true,
@@ -367,6 +368,14 @@ describe('pages.pages.api.behavior', function () {
         filterByTags('or', 2, ['IFilterByTags Page 1', 'IFilterByTags Page 3']);
     });
 
+    it('01010.1: Should get pages list, filtered by categories, using AND connector', function () {
+        filterByCategories('and', 1, ['IFilterByCategories Page 1']);
+    });
+
+    it('01010.2: Should get pages list, filtered by categories, using OR connector', function () {
+        filterByCategories('or', 2, ['IFilterByCategories Page 1', 'IFilterByCategories Page 2']);
+    });
+
     it('01011: Should get a list with one page (with layout), filtered by all available columns', function () {
         var url = '/bcms-api/pages/',
             result,
@@ -389,8 +398,6 @@ describe('pages.pages.api.behavior', function () {
                     { field: 'PublishedOn', value: '2013-07-26 07:58:15.000' },
                     { field: 'LayoutId', value: '9ab0bbe1e02a4a3bb842a2070082af10' },
                     { field: 'MasterPageId' },
-                    { field: 'CategoryId', value: '1427628c1e7e4beb9098a2070081d2dc' },
-                    { field: 'CategoryName', value: '01011' },
                     { field: 'IsArchived', value: false },
                     { field: 'IsMasterPage', value: false },
                     { field: 'LanguageId', value: '67432fcff2c349c09678a2a70091cf48' },
@@ -436,8 +443,8 @@ describe('pages.pages.api.behavior', function () {
             expect(result.data.items[0].id).toBe('e81a87022bf4419688b4a2070081a57e', 'Correctly filtered id should be retrieved.');
 
             // Check if model properties count didn't changed. If so - update current test filter and another tests.
-            // data.filter.where.length + 4 <-- Because field: {options, tags, metadata, accessRules} cannnot be filtered by
-            expect(data.filter.where.length + 4).toBe(api.getCountOfProperties(result.data.items[0]), 'Retrieved result properties count should be equal to filtering parameters count.');
+            // data.filter.where.length + 4 <-- Because field: {options, tags, metadata, accessRules, categories} cannnot be filtered by
+            expect(data.filter.where.length + 5).toBe(api.getCountOfProperties(result.data.items[0]), 'Retrieved result properties count should be equal to filtering parameters count.');
         });
     });
     
@@ -487,7 +494,7 @@ describe('pages.pages.api.behavior', function () {
             expect(result.data.items[0].id).toBe('457c26ad2d654dc381e8a20700848027', 'Correctly filtered id should be retrieved.');
 
             // Check if model properties count didn't changed. If so - update current test filter and another tests.
-            // data.filter.where.length + 1 <-- Because field ContentType cannnot be filtered by
+            // data.filter.where.length + 1 <-- Because field ContentType cannnot be filtered by            
             expect(data.filter.where.length + 1).toBe(api.getCountOfProperties(result.data.items[0]), 'Retrieved result properties count should be equal to filterting parameters count.');
         });
     });
@@ -929,8 +936,7 @@ describe('pages.pages.api.behavior', function () {
                     { field: 'PublishedOn', value: '2014-03-17 13:19:30.000' },
                     { field: 'LayoutId' },
                     { field: 'MasterPageId', value: '5d5eb2f6dd16420d81fca2f100db32d4' },
-                    { field: 'CategoryId' },
-                    { field: 'CategoryName' },
+
                     { field: 'IsArchived', value: false },
                     { field: 'IsMasterPage', value: false },
                     { field: 'LanguageId' },
@@ -976,8 +982,8 @@ describe('pages.pages.api.behavior', function () {
             expect(result.data.items[0].id).toBe('d8f382816bed45d0847ea2f100db58e7', 'Correctly filtered id should be retrieved.');
 
             // Check if model properties count didn't changed. If so - update current test filter and another tests.
-            // data.filter.where.length + 4 <-- Because field: {options, tags, metadata, accessRules} cannnot be filtered by
-            expect(data.filter.where.length + 4).toBe(api.getCountOfProperties(result.data.items[0]), 'Retrieved result properties count should be equal to filtering parameters count.');
+            // data.filter.where.length + 4 <-- Because field: {options, tags, metadata, accessRules, categories} cannnot be filtered by
+            expect(data.filter.where.length + 5).toBe(api.getCountOfProperties(result.data.items[0]), 'Retrieved result properties count should be equal to filtering parameters count.');
         });
     });
 
@@ -1222,8 +1228,8 @@ describe('pages.pages.api.behavior', function () {
         expect(page.isPublished).toBe(true, 'Correctly filtered isPublished should be retrieved.');
         expect(page.publishedOn).toBeDefinedAndNotNull('publishedOn should be retrieved.');
         expect(page.layoutId).toBeDefinedAndNotNull('layoutId should be retrieved.');
-        expect(page.categoryId).toBeDefinedAndNotNull('categoryId should be retrieved.');
-        expect(page.categoryName).toBe('Category for _0000_Page_For_Tests', 'Correctly filtered categoryName should be retrieved.');
+        expect(page.categories.length).toBe(1, 'Categories count should be ' + 1 + '.');        
+        expect(page.categories[0].name).toBe('Category for _0000_Page_For_Tests', 'Correctly filtered categoryName should be retrieved.');
         expect(page.mainImageId).toBeDefinedAndNotNull('mainImageId should be retrieved.');
         expect(page.mainImageThumbnauilUrl).toBeDefinedAndNotNull('mainImageThumbnailUrl should be retrieved.');
         expect(page.mainImageThumbnailUrl).toBeDefinedAndNotNull('mainImageThumbnailUrl should be retrieved.');
@@ -1244,8 +1250,8 @@ describe('pages.pages.api.behavior', function () {
         expect(page.isPublished).toBe(true, 'Correctly filtered isPublished should be retrieved.');
         expect(page.publishedOn).toBeDefinedAndNotNull('publishedOn should be retrieved.');
         expect(page.layoutId).toBeDefinedAndNotNull('layoutId should be retrieved.');
-        expect(page.categoryId).toBeDefinedAndNotNull('categoryId should be retrieved.');
-        expect(page.categoryName).toBe('Category for _0000_Page_For_Tests', 'Correctly filtered categoryName should be retrieved.');
+        expect(page.categories.length).toBe(1, 'Categories count should be ' + 1 + '.');
+        expect(page.categories[0].name).toBe('Category for _0000_Page_For_Tests', 'Correctly filtered categoryName should be retrieved.');
         expect(page.mainImageId).toBeDefinedAndNotNull('mainImageId should be retrieved.');
         expect(page.mainImageThumbnauilUrl).toBeDefinedAndNotNull('mainImageThumbnailUrl should be retrieved.');
         expect(page.mainImageThumbnailUrl).toBeDefinedAndNotNull('mainImageThumbnailUrl should be retrieved.');
@@ -1267,7 +1273,7 @@ describe('pages.pages.api.behavior', function () {
         expect(page.isPublished).toBe(true, 'Correctly filtered isPublished should be retrieved.');
         expect(page.publishedOn).toBeDefinedAndNotNull('publishedOn should be retrieved.');
         expect(page.layoutId).toBeDefinedAndNotNull('layoutId should be retrieved.');
-        expect(page.categoryId).toBeDefinedAndNotNull('categoryId should be retrieved.');
+        expect(page.categories.length).toBe(1, 'Categories count should be ' + 1 + '.');
         expect(page.mainImageId).toBeDefinedAndNotNull('mainImageId should be retrieved.');
         expect(page.featuredImageId).toBeDefinedAndNotNull('featuredImageId should be retrieved.');
         expect(page.secondaryImageId).toBeDefinedAndNotNull('secondaryImageId should be retrieved.');
@@ -1291,7 +1297,7 @@ describe('pages.pages.api.behavior', function () {
         expect(layout.previewUrl).toBe('http://www.devbridge.com/Content/styles/images/responsive/logo.png', 'Correctly filtered layout.previewUrl should be retrieved.');
         
         // category
-        var category = response.category;
+        var category = response.categories[0];
         expect(category).toBeDefinedAndNotNull('JSON category object should be retrieved.');
         api.expectBasePropertiesAreNotNull(category);
         expect(category.name).toBe('Category for _0000_Page_For_Tests', 'Correctly filtered category.name should be retrieved.');
@@ -1505,5 +1511,46 @@ describe('pages.pages.api.behavior', function () {
                 expect(result.data.items[i].title).toBe(expectedTitles[i], 'Correctly filtered title should be retrieved.');
             }
         });
-    }
+    };
+
+    function filterByCategories(connector, expectedCount, expectedTitles) {
+        var url = '/bcms-api/pages/',
+            result,
+            ready = false;
+
+        var data = {
+            filter: {
+                where: [{ field: 'Title', operation: 'StartsWith', value: 'IFilterByCategories' }]
+            },
+            order: {
+                by: [{ field: 'Title' }]
+            },
+            filterByCategoriesConnector: connector,
+            filterByCategories: ['15A86920-78E5-4DDC-A259-A43500A2B573', 'FD36A148-DD10-44E0-A5C1-A43500B8A450'],
+            includeUnpublished: true,
+            includeArchived: true
+        };
+
+        runs(function () {
+            api.get(url, data, function (json) {
+                result = json;
+                ready = true;
+            });
+        });
+
+        waitsFor(function () {
+            return ready;
+        }, 'The ' + url + ' timeout.');
+
+        runs(function () {
+            expect(result).toBeDefinedAndNotNull('JSON object should be retrieved.');
+            expect(result.data).toBeDefinedAndNotNull('JSON data object should be retrieved.');
+            expect(result.data.totalCount).toBe(expectedCount, 'Total count should be ' + expectedCount + '.');
+            expect(result.data.items.length).toBe(expectedCount, 'Returned array length should be ' + expectedCount + '.');
+            
+            for (var i = 0; i < result.data.items.length; i++) {
+                expect(result.data.items[i].title).toBe(expectedTitles[i], 'Correctly filtered title should be retrieved.');
+            }
+        });
+    };
 });

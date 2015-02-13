@@ -51,6 +51,14 @@ namespace BetterCms.Module.MediaManager.Command.MediaManager.DeleteMedia
                 }                
             }
 
+            if (media.Categories != null)
+            {
+                foreach (var category in media.Categories)
+                {
+                    Repository.Delete(category);
+                }
+            }
+
             if (media is MediaFile)
             {
                 MediaFile file = (MediaFile)media;

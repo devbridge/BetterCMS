@@ -26,9 +26,9 @@ using RootOptionService = BetterCms.Module.Root.Services.IOptionService;
 namespace BetterCms.Module.Blog.Services
 {
     public class DefaultBlogSaveService : DefaultBlogService, IBlogSaveService
-    {
-        public DefaultBlogSaveService(ICmsConfiguration configuration, IUrlService urlService, IRepository repository, IOptionService blogOptionService, IAccessControlService accessControlService, ISecurityService securityService, IContentService contentService, ITagService tagService, IPageService pageService, IRedirectService redirectService, IMasterPageService masterPageService, IUnitOfWork unitOfWork, RootOptionService optionService)
-            : base(configuration, urlService, repository, blogOptionService, accessControlService, securityService, contentService, tagService, pageService, redirectService, masterPageService, unitOfWork, optionService)
+    {        
+        public DefaultBlogSaveService(ICmsConfiguration configuration, IUrlService urlService, IRepository repository, IOptionService blogOptionService, IAccessControlService accessControlService, ISecurityService securityService, IContentService contentService, ITagService tagService, IPageService pageService, IRedirectService redirectService, IMasterPageService masterPageService, IUnitOfWork unitOfWork, RootOptionService optionService, ICategoryService categoryService)
+            : base(configuration, urlService, repository, blogOptionService, accessControlService, securityService, contentService, tagService, pageService, redirectService, masterPageService, unitOfWork, optionService, categoryService)
         {
         }
 

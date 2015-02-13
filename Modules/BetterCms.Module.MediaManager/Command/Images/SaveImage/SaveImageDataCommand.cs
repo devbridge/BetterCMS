@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Drawing;
 using System.IO;
+using System.Linq;
 
 using BetterCms.Core.Services.Storage;
 
@@ -11,6 +12,7 @@ using BetterCms.Module.MediaManager.Services;
 using BetterCms.Module.MediaManager.ViewModels.Images;
 
 using BetterCms.Module.Root.Mvc;
+using BetterCms.Module.Root.Services;
 
 using Devbridge.Platform.Core.Web.Mvc.Commands;
 
@@ -46,6 +48,11 @@ namespace BetterCms.Module.MediaManager.Command.Images.SaveImage
         public ITagService TagService { get; set; }
 
         /// <summary>
+        /// The category service
+        /// </summary>
+        public ICategoryService CategoryService { get; set; }
+
+        /// <summary>
         /// Executes this command.
         /// </summary>
         /// <param name="request">The request.</param>
@@ -61,6 +68,8 @@ namespace BetterCms.Module.MediaManager.Command.Images.SaveImage
             mediaImage.Title = request.Title;
             mediaImage.Description = request.Description;
             mediaImage.ImageAlign = request.ImageAlign;
+
+            CategoryService.CombineEntityCategories<Media, MediaCategory>(mediaImage, request.Categories); 
 
             if (croppedFileStream != null)
             {

@@ -31,10 +31,11 @@ namespace BetterCms.Module.Blog.Services
         /// <param name="childContentOptionValues">The child content option values.</param>
         /// <param name="principall">The principall.</param>
         /// <param name="errorMessages">The error messages.</param>
+        /// <param name="updateActivationIfNotChanged">if set to <c>true</c> update activation time even if it was not changed.</param>
         /// <returns>
         /// Saved blog post entity
         /// </returns>
-        BlogPost SaveBlogPost(BlogPostViewModel model, IList<ContentOptionValuesViewModel> childContentOptionValues, IPrincipal principall, out string[] errorMessages);
+        BlogPost SaveBlogPost(BlogPostViewModel model, IList<ContentOptionValuesViewModel> childContentOptionValues, IPrincipal principall, out string[] errorMessages, bool updateActivationIfNotChanged = true);
 
         /// <summary>
         /// Gets the filtered blog posts query.

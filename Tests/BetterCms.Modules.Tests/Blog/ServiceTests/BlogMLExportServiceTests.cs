@@ -5,14 +5,15 @@ using System.Linq;
 using System.Text;
 using System.Xml;
 
+using BetterCms.Core.DataAccess;
 using BetterCms.Core.DataContracts.Enums;
-
+using BetterCms.Core.Web;
 using BetterCms.Module.Blog.Models;
 using BetterCms.Module.Blog.Services;
+using BetterCms.Module.Pages.Models;
 using BetterCms.Module.Root.Models;
 
-using Devbridge.Platform.Core.DataAccess;
-using Devbridge.Platform.Core.Web.Web;
+using FluentNHibernate.Utils;
 
 using Moq;
 
@@ -38,7 +39,7 @@ namespace BetterCms.Test.Module.Blog.ServiceTests
             Assert.IsTrue(xml.Contains(fakeBlogPosts[0].MetaTitle));
             Assert.IsTrue(xml.Contains(fakeBlogPosts[0].PageUrl));
         }
-        
+
         [Test]
         public void ShouldExportBlogPosts_AndDeserializeWithReferences_Successfully()
         {
@@ -52,7 +53,7 @@ namespace BetterCms.Test.Module.Blog.ServiceTests
 
             AssertXml(xml, fakeBlogPosts);
         }
-        
+
         [Test]
         public void ShouldExportBlogPosts_AndDeserializeWithoutReferences_Successfully()
         {
@@ -62,7 +63,7 @@ namespace BetterCms.Test.Module.Blog.ServiceTests
             var service = new DefaultBlogMLExportService(contextAccesssor.Object, repository.Object);
             var fakeBlogPosts = GetFakeBlogPosts();
             fakeBlogPosts[0].Author = null;
-            fakeBlogPosts[0].Category = null;
+            fakeBlogPosts[0].Categories = null;
             fakeBlogPosts[0].Description = null;
 
             var xml = service.ExportBlogPosts(fakeBlogPosts);
@@ -130,19 +131,27 @@ namespace BetterCms.Test.Module.Blog.ServiceTests
                 Assert.IsNotNull(docNodes.FirstOrDefault(node => node.Name == "authors"));
                 Assert.IsFalse(docNodes.First(node => node.Name == "authors").HasChildNodes);
             }
-            
-            if (post.Category != null)
+
+            if (post.Categories != null)
             {
+                var categoriesIds = post.Categories.Select(c => c.Category.Id.ToLowerInvariantString()).ToList();
+                var categoriesNode = docNodes.First(node => node.Name == "categories");
                 Assert.IsTrue(childNodes.First(node => node.Name == "categories").HasChildNodes);
                 Assert.IsTrue(docNodes.First(node => node.Name == "categories").HasChildNodes);
 
-                var xmlCategory = docNodes.First(node => node.Name == "categories").ChildNodes[0];
-                Assert.IsNotNull(xmlCategory);
-                Assert.AreEqual(xmlCategory.Attributes.Cast<XmlAttribute>().First(a => a.Name == "id").InnerText, post.Category.Id.ToString().ToLower());
+                for (var i = 0; i < categoriesNode.ChildNodes.Count; i++)
+                {
+                    var xmlCategory = categoriesNode.ChildNodes[0];
+                    Assert.IsNotNull(xmlCategory);
+                    Assert.Contains(xmlCategory.Attributes.Cast<XmlAttribute>().First(a => a.Name == "id").InnerText, categoriesIds);
 
-                xmlCategory = childNodes.First(node => node.Name == "categories").ChildNodes[0];
-                Assert.IsNotNull(xmlCategory);
-                Assert.AreEqual(xmlCategory.Attributes.Cast<XmlAttribute>().First(a => a.Name == "ref").InnerText, post.Category.Id.ToString().ToLower());
+                    xmlCategory = childNodes.First(node => node.Name == "categories").ChildNodes[0];
+                    Assert.IsNotNull(xmlCategory);
+                    Assert.Contains(xmlCategory.Attributes.Cast<XmlAttribute>().First(a => a.Name == "ref").InnerText, categoriesIds);
+                }
+
+                //var xmlCategory = docNodes.First(node => node.Name == "categories").ChildNodes[0];
+
             }
             else
             {
@@ -154,38 +163,27 @@ namespace BetterCms.Test.Module.Blog.ServiceTests
 
         private List<BlogPost> GetFakeBlogPosts()
         {
+            var blog = new BlogPost
+            {
+                Id = Guid.NewGuid(),
+                Author = new Author { Id = Guid.NewGuid(), Name = "Test Author" },
+                PageUrl = "/test/url/",
+                Title = "Test title",
+                MetaTitle = "Test Meta Title",
+                CreatedOn = new DateTime(2012, 10, 9),
+                ModifiedOn = new DateTime(2012, 10, 15),
+                Description = "Intro Text",
+                PageContents =
+                    new List<PageContent>
+                    {
+                        new PageContent { Content = new BlogPostContent { Html = "Unpbulished content <p>with HTML</p>" } },
+                        new PageContent { Content = new BlogPostContent { Html = "Test content <p>with HTML</p>", Status = ContentStatus.Published } }
+                    }
+            };
+            blog.Categories = new List<PageCategory>() { new PageCategory() { Category = new Category { Id = Guid.NewGuid(), Name = "Test Category" }, Page = blog } };
             return new List<BlogPost>
                    {
-                       new BlogPost
-                       {
-                           Id = Guid.NewGuid(),
-                           Author = new Author { Id = Guid.NewGuid(), Name = "Test Author" },
-                           Category = new Category { Id = Guid.NewGuid(), Name = "Test Category" },
-                           PageUrl = "/test/url/",
-                           Title = "Test title",
-                           MetaTitle = "Test Meta Title",
-                           CreatedOn = new DateTime(2012, 10, 9),
-                           ModifiedOn = new DateTime(2012, 10, 15),
-                           Description = "Intro Text",
-                           PageContents = new List<PageContent>
-                                          {
-                                              new PageContent
-                                              {
-                                                   Content = new BlogPostContent
-                                                             {
-                                                                 Html = "Unpbulished content <p>with HTML</p>"
-                                                             }
-                                              },
-                                              new PageContent
-                                              {
-                                                   Content = new BlogPostContent
-                                                             {
-                                                                 Html = "Test content <p>with HTML</p>",
-                                                                 Status = ContentStatus.Published
-                                                             }
-                                              }
-                                          }
-                       }
+                        blog
                    };
         }
     }

@@ -22,10 +22,12 @@ using Devbridge.Platform.Core.Web.Mvc.Commands;
 
 using MvcContrib.Sorting;
 
+using NHibernate.Criterion;
+
 namespace BetterCms.Module.MediaManager.Command.MediaManager
 {
     public abstract class GetMediaItemsCommandBase<TEntity> : CommandBase, ICommand<MediaManagerViewModel, MediaManagerItemsViewModel>
-        where TEntity: MediaFile
+        where TEntity : MediaFile
     {
         /// <summary>
         /// The file service
@@ -68,7 +70,8 @@ namespace BetterCms.Module.MediaManager.Command.MediaManager
             var items = GetAllItemsList(request);
             var model = new MediaManagerItemsViewModel(items.Item1, request, items.Item2);
             model.Path = LoadMediaFolder(request);
-
+            model.Tags = request.Tags;
+            model.Categories = request.Categories;
             return model;
         }
 
@@ -157,16 +160,26 @@ namespace BetterCms.Module.MediaManager.Command.MediaManager
                 }
             }
 
+            if (request.Categories != null)
+            {
+                foreach (var categoryKeyValue in request.Categories)
+                {
+                    var id = categoryKeyValue.Key.ToGuidOrDefault();
+                    query = query.Where(m => m is MediaFolder || m.Categories.Any(mt => mt.Category.Id == id));
+                }
+            }
+
             query = AttachDeniedMediasFilterIfEnabled(query, request);
 
             if (!string.IsNullOrWhiteSpace(request.SearchQuery))
-            {               
+            {
                 var searchQuery = string.Format("%{0}%", request.SearchQuery);
 
                 var predicate = PredicateBuilder.False<Media>();
                 predicate = predicate.Or(m => m.Title.Contains(searchQuery));
                 predicate = predicate.Or(m => m.Description.Contains(searchQuery));
                 predicate = predicate.Or(m => m.MediaTags.Any(mt => mt.Tag.Name.Contains(searchQuery)));
+                predicate = predicate.Or(m => m.Categories.Any(mt => mt.Category.Name.Contains(searchQuery)));
                 predicate = AppendSearchFilter(predicate, searchQuery);
 
                 if (request.SearchInHistory)
@@ -202,7 +215,7 @@ namespace BetterCms.Module.MediaManager.Command.MediaManager
             {
                 query = query.Where(m => m.Folder == null);
             }
-          
+
 
             return removeEmptyFolders
                 ? RemoveEmptyFolders(query, request)
@@ -459,6 +472,6 @@ namespace BetterCms.Module.MediaManager.Command.MediaManager
             {
                 SetIsReadOnly(model, ((IAccessSecuredObject)media).AccessRules);
             }
-        }    
+        }
     }
 }

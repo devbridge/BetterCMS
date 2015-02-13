@@ -4,6 +4,7 @@ using Devbridge.Platform.Core.DataAccess;
 using BetterCms.Module.Api.Helpers;
 using BetterCms.Module.Api.Infrastructure;
 using BetterCms.Module.Api.Operations.MediaManager.Images.Image;
+using BetterCms.Module.Api.Operations.Root.Categories.Category;
 using BetterCms.Module.MediaManager.Models;
 using BetterCms.Module.MediaManager.Services;
 
@@ -90,7 +91,8 @@ namespace BetterCms.Module.Api.Operations.MediaManager.Images
                 query = query.Where(m => !m.IsArchived);
             }
 
-            query = query.ApplyMediaTagsFilter(request.Data);
+            query = query.ApplyMediaTagsFilter(request.Data)
+                         .ApplyCategoriesFilter(request.Data);
 
             var listResponse = query.Select(media =>
                     new MediaModel
@@ -120,6 +122,26 @@ namespace BetterCms.Module.Api.Operations.MediaManager.Images
             {
                 model.ImageUrl = fileUrlResolver.EnsureFullPathUrl(model.ImageUrl);
                 model.ThumbnailUrl = fileUrlResolver.EnsureFullPathUrl(model.ThumbnailUrl);
+
+
+                if (request.Data.IncludeCategories)
+                {
+                    model.Categories = (from media in repository.AsQueryable<MediaFile>()
+                        from category in media.Categories
+                                        where media.Id == model.Id && !category.IsDeleted
+                        select
+                            new CategoryNodeModel
+                            {
+                                Id = category.Category.Id,
+                                Version = category.Version,
+                                CreatedBy = category.CreatedByUser,
+                                CreatedOn = category.CreatedOn,
+                                LastModifiedBy = category.ModifiedByUser,
+                                LastModifiedOn = category.ModifiedOn,
+                                Name = category.Category.Name,
+                                CategoryTreeId = category.Category.CategoryTree.Id
+                            }).ToList();
+                }
             }
 
             return new GetImagesResponse

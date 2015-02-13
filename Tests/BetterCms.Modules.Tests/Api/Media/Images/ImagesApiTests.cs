@@ -1,8 +1,11 @@
-﻿using BetterCms.Module.Api.Extensions;
-using BetterCms.Module.Api.Operations.MediaManager.Images.Image;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 
-using Devbridge.Platform.Core.Models;
-using Devbridge.Platform.Events;
+using BetterCms.Core.Models;
+using BetterCms.Module.Api.Extensions;
+using BetterCms.Module.Api.Operations.MediaManager.Images.Image;
+using BetterCms.Module.Root.Models;
 
 using NHibernate;
 
@@ -21,6 +24,7 @@ namespace BetterCms.Test.Module.Api.Media.Images
 
         private int unarchivedMediaEventCount;
 
+        private Category category;
         [Test]
         public void Should_CRUD_Image_Successfully()
         {
@@ -31,8 +35,18 @@ namespace BetterCms.Test.Module.Api.Media.Images
             Events.MediaManagerEvents.Instance.MediaUnarchived += Instance_MediaUnarchived;
 
 
-            RunApiActionInTransaction((api, session) =>
-                Run(session, api.Media.Images.Post, api.Media.Image.Get, api.Media.Image.Put, api.Media.Image.Delete));
+            RunApiActionInTransaction(
+                (api, session) =>
+                {
+                    category = null;
+                    var categoryTree = TestDataProvider.CreateNewCategoryTree();
+                    category = TestDataProvider.CreateNewCategory(categoryTree);
+                    session.SaveOrUpdate(categoryTree);
+                    session.SaveOrUpdate(category);
+                    session.Flush();
+                    Run(session, api.Media.Images.Post, api.Media.Image.Get, api.Media.Image.Put, api.Media.Image.Delete);
+
+                });
 
             Assert.AreEqual(1, archivedMediaEventCount, "Archived media events fired count");
             Assert.AreEqual(1, unarchivedMediaEventCount, "Unarchived media events fired count");
@@ -44,12 +58,12 @@ namespace BetterCms.Test.Module.Api.Media.Images
             Events.MediaManagerEvents.Instance.MediaUnarchived -= Instance_MediaUnarchived;
         }
 
-        void Instance_MediaUnarchived(SingleItemEventArgs<BetterCms.Module.MediaManager.Models.Media> args)
+        void Instance_MediaUnarchived(Events.SingleItemEventArgs<BetterCms.Module.MediaManager.Models.Media> args)
         {
             archivedMediaEventCount++;
         }
 
-        void Instance_MediaArchived(SingleItemEventArgs<BetterCms.Module.MediaManager.Models.Media> args)
+        void Instance_MediaArchived(Events.SingleItemEventArgs<BetterCms.Module.MediaManager.Models.Media> args)
         {
             unarchivedMediaEventCount++;
         }
@@ -85,13 +99,14 @@ namespace BetterCms.Test.Module.Api.Media.Images
                     ThumbnailWidth = TestDataProvider.ProvideRandomNumber(1, 100),
                     Title = TestDataProvider.ProvideRandomString(MaxLength.Name),
                     Version = 0,
-                    Width = TestDataProvider.ProvideRandomNumber(1, 1000)
+                    Width = TestDataProvider.ProvideRandomNumber(1, 1000),
+                    Categories = new List<Guid>() { category.Id }
                 };
         }
 
         protected override GetImageRequest GetGetRequest(BetterCms.Module.Api.Infrastructure.SaveResponseBase saveResponseBase)
         {
-            return new GetImageRequest { ImageId = saveResponseBase.Data.Value, Data = new GetImageModel() { IncludeTags = true } };
+            return new GetImageRequest { ImageId = saveResponseBase.Data.Value, Data = new GetImageModel() { IncludeTags = true, IncludeCategories = true } };
         }
 
         protected override PutImageRequest GetUpdateRequest(GetImageResponse getResponse)
@@ -99,6 +114,7 @@ namespace BetterCms.Test.Module.Api.Media.Images
             var request = getResponse.ToPutRequest();
             request.Data.Title = this.TestDataProvider.ProvideRandomString(MaxLength.Name);
             request.Data.IsArchived = false;
+            request.Data.Categories.Clear();
             return request;
         }
 
@@ -132,6 +148,16 @@ namespace BetterCms.Test.Module.Api.Media.Images
             Assert.AreEqual(getResponse.Data.ThumbnailUrl, model.ThumbnailUrl);
             Assert.AreEqual(getResponse.Data.ThumbnailWidth, model.ThumbnailWidth);
             Assert.AreEqual(getResponse.Data.Width, model.Width);
+
+            if (model.Categories != null)
+            {
+                Assert.AreEqual(model.Categories.Count, getResponse.Data.Categories.Count);
+
+                foreach (var categoryId in model.Categories)
+                {
+                    Assert.IsNotNull(getResponse.Data.Categories.FirstOrDefault(c => c.Id == categoryId));
+                }
+            }
         }
     }
 }

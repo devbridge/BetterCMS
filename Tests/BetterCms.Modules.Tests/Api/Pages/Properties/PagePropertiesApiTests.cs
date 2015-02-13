@@ -53,20 +53,20 @@ namespace BetterCms.Test.Module.Api.Pages.Properties
 
             RunApiActionInTransaction(
                 (api, session) =>
-                    {
-                        masterPage = null;
-                        layout = TestDataProvider.CreateNewLayout();
-                        region = TestDataProvider.CreateNewRegion();
+                {
+                    masterPage = null;
+                    layout = TestDataProvider.CreateNewLayout();
+                    region = TestDataProvider.CreateNewRegion();
 
-                        var layoutRegion = new LayoutRegion { Layout = layout, Region = region };
-                        layout.LayoutRegions = new[] { layoutRegion };
+                    var layoutRegion = new LayoutRegion { Layout = layout, Region = region };
+                    layout.LayoutRegions = new[] { layoutRegion };
 
-                        session.SaveOrUpdate(region);
-                        session.SaveOrUpdate(layout);
-                        session.SaveOrUpdate(layoutRegion);
+                    session.SaveOrUpdate(region);
+                    session.SaveOrUpdate(layout);
+                    session.SaveOrUpdate(layoutRegion);
 
-                        Run(session, api.Pages.Page.Properties.Post, api.Pages.Page.Properties.Get, api.Pages.Page.Properties.Put, api.Pages.Page.Properties.Delete);
-                    });
+                    Run(session, api.Pages.Page.Properties.Post, api.Pages.Page.Properties.Get, api.Pages.Page.Properties.Put, api.Pages.Page.Properties.Delete);
+                });
 
             Assert.AreEqual(1, changingPageProepertiesCount, "Page properties changing events fired count");
 
@@ -90,16 +90,16 @@ namespace BetterCms.Test.Module.Api.Pages.Properties
 
             RunApiActionInTransaction(
                 (api, session) =>
-                    {
-                        masterPage = TestDataProvider.CreateNewPage();
-                        masterPage.IsMasterPage = true;
-                        layout = null;
-                        region = TestDataProvider.CreateNewRegion();
-                        session.SaveOrUpdate(region);
-                        session.SaveOrUpdate(masterPage);
+                {
+                    masterPage = TestDataProvider.CreateNewPage();
+                    masterPage.IsMasterPage = true;
+                    layout = null;
+                    region = TestDataProvider.CreateNewRegion();
+                    session.SaveOrUpdate(region);
+                    session.SaveOrUpdate(masterPage);
 
-                        Run(session, api.Pages.Page.Properties.Post, api.Pages.Page.Properties.Get, api.Pages.Page.Properties.Put, api.Pages.Page.Properties.Delete);
-                    });
+                    Run(session, api.Pages.Page.Properties.Post, api.Pages.Page.Properties.Get, api.Pages.Page.Properties.Put, api.Pages.Page.Properties.Delete);
+                });
 
             Assert.AreEqual(1, changingPageProepertiesCount, "Page properties changing events fired count");
 
@@ -117,7 +117,8 @@ namespace BetterCms.Test.Module.Api.Pages.Properties
 
         protected override SavePagePropertiesModel GetCreateModel(ISession session)
         {
-            var category = TestDataProvider.CreateNewCategory();
+            var categoryTree = TestDataProvider.CreateNewCategoryTree();
+            var category = TestDataProvider.CreateNewCategory(categoryTree);
             var image = TestDataProvider.CreateNewMediaImage();
             session.SaveOrUpdate(category);
             session.SaveOrUpdate(image);
@@ -146,7 +147,7 @@ namespace BetterCms.Test.Module.Api.Pages.Properties
                        CustomCss = TestDataProvider.ProvideRandomString(MaxLength.Text),
                        CustomJavaScript = TestDataProvider.ProvideRandomString(MaxLength.Text),
                        Description = TestDataProvider.ProvideRandomString(MaxLength.Text),
-                       CategoryId = category.Id,
+                       Categories = new List<Guid>() { category.Id },
                        FeaturedImageId = image.Id,
                        IsArchived = false,
                        IsMasterPage = false,
@@ -200,7 +201,7 @@ namespace BetterCms.Test.Module.Api.Pages.Properties
                            Data = new GetPagePropertiesModel
                                       {
                                           IncludeAccessRules = true,
-                                          IncludeCategory = true,
+                                          IncludeCategories = true,
                                           IncludeImages = true,
                                           IncludeLanguage = true,
                                           IncludeLayout = true,
@@ -230,7 +231,10 @@ namespace BetterCms.Test.Module.Api.Pages.Properties
             Assert.AreEqual(getResponse.Data.CustomCss, model.CustomCss);
             Assert.AreEqual(getResponse.Data.CustomJavaScript, model.CustomJavaScript);
             Assert.AreEqual(getResponse.Data.Description, model.Description);
-            Assert.AreEqual(getResponse.Data.CategoryId, model.CategoryId);
+            foreach (var category in model.Categories)
+            {
+                Assert.IsNotNull(getResponse.Data.Categories.FirstOrDefault(c => c == category));
+            }
             Assert.AreEqual(getResponse.Data.FeaturedImageId, model.FeaturedImageId);
             Assert.AreEqual(getResponse.Data.IsArchived, model.IsArchived);
             Assert.AreEqual(getResponse.Data.IsMasterPage, model.IsMasterPage);

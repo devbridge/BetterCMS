@@ -10,6 +10,8 @@ namespace BetterCms.Module.MediaManager.Models
     [Serializable]
     public class MediaFile : Media, IAccessSecuredObject
     {
+        public const string CategorizableItemKeyForFiles = "Files";
+
         public virtual string OriginalFileName { get; set; }
 
         public virtual string OriginalFileExtension { get; set; }
@@ -62,6 +64,11 @@ namespace BetterCms.Module.MediaManager.Models
         public virtual void RemoveRule(IAccessRule accessRule)
         {
             AccessRules.Remove((AccessRule)accessRule);
+        }
+
+        public override string GetCategorizableItemKey()
+        {
+            return CategorizableItemKeyForFiles;
         }
 
         public override Media Clone()

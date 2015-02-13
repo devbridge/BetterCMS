@@ -38,7 +38,7 @@ namespace BetterCms.Module.Blog.Commands.SaveBlogPost
         public SaveBlogPostCommandResponse Execute(SaveBlogPostCommandRequest request)
         {
             string[] error;
-            var blogPost = blogService.SaveBlogPost(request.Content, request.ChildContentOptionValues, Context.Principal, out error);
+            var blogPost = blogService.SaveBlogPost(request.Content, request.ChildContentOptionValues, Context.Principal, out error, false);
             if (blogPost == null)
             {
                 Context.Messages.AddError(error);

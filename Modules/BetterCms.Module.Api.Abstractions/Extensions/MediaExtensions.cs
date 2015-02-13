@@ -88,6 +88,7 @@ namespace BetterCms.Module.Api.Extensions
                                 OriginalUri = response.Data.OriginalUri,
                                 ThumbnailUri = response.Data.ThumbnailUri,
                                 Tags = response.Tags != null ? response.Tags.Select(t => t.Name).ToList() : null,
+                                Categories = response.Data.Categories != null ? response.Data.Categories.Select(t => t.Id).ToList() : null,
                             };
 
             return model;
@@ -114,6 +115,7 @@ namespace BetterCms.Module.Api.Extensions
                                 Tags = response.Tags != null ? response.Tags.Select(t => t.Name).ToList() : null,
                                 AccessRules = response.AccessRules,
                                 ThumbnailId = response.Data.ThumbnailId,
+                                Categories = response.Data.Categories != null ? response.Data.Categories.Select(t => t.Id).ToList() : null,
                             };
 
             return model;

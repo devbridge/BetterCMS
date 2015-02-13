@@ -9,7 +9,7 @@ namespace BetterCms.Module.Root.Models.Maps
         {
             Table("Widgets");
 
-            References(f => f.Category).Cascade.SaveUpdate().LazyLoad();
+            HasMany(x => x.Categories).KeyColumn("WidgetId").Cascade.SaveUpdate().LazyLoad().Where("IsDeleted = 0"); 
         }
     }
 }

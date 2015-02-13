@@ -8,7 +8,10 @@ using System.Web;
 using System.Xml;
 
 using BetterCms.Configuration;
+using BetterCms.Core.DataAccess;
+using BetterCms.Core.DataAccess.DataContext;
 using BetterCms.Core.DataContracts.Enums;
+using BetterCms.Core.Web;
 
 using BetterCms.Module.Blog.Content.Resources;
 using BetterCms.Module.Blog.Models;
@@ -21,9 +24,8 @@ using BlogML.Xml;
 
 using Common.Logging;
 
-using Devbridge.Platform.Core.DataAccess;
-using Devbridge.Platform.Core.DataAccess.DataContext;
-using Devbridge.Platform.Core.Web.Web;
+using FluentNHibernate.Testing.Values;
+using FluentNHibernate.Utils;
 
 using ValidationException = BetterCms.Core.Exceptions.Mvc.ValidationException;
 
@@ -333,7 +335,17 @@ namespace BetterCms.Module.Blog.Services
                         }
                         if (blogML.Categories != null && blogML.Categories.Count > 0)
                         {
-                            blogPostModel.CategoryId = categories[blogML.Categories[0].Ref];
+                            for (var i = 0; i < blogML.Categories.Count; i++)
+                            {
+                                var category = blogML.Categories[i];
+
+                                if (blogPostModel.Categories == null)
+                                {
+                                    blogPostModel.Categories = new List<LookupKeyValue>();
+                                }
+
+                                blogPostModel.Categories.Add(new LookupKeyValue() {Key = categories[category.Ref].ToLowerInvariantString()});                                
+                            }                            
                         }
 
                         string[] error;

@@ -1,9 +1,9 @@
 ﻿/*jslint unparam: true, white: true, browser: true, devel: true, vars: true */
 /*global bettercms */
 
-bettercms.define('bcms.pages.properties', ['bcms.jquery', 'bcms', 'bcms.modal', 'bcms.forms', 'bcms.dynamicContent', 'bcms.tags', 'bcms.ko.extenders',
-        'bcms.media', 'bcms.redirect', 'bcms.options', 'bcms.security', 'bcms.messages', 'bcms.codeEditor', 'bcms.pages.languages', 'bcms.store'],
-    function ($, bcms, modal, forms, dynamicContent, tags, ko, media, redirect, options, security, messages, codeEditor, pageLanguages, store) {
+bettercms.define('bcms.pages.properties', ['bcms.jquery', 'bcms', 'bcms.modal', 'bcms.forms', 'bcms.dynamicContent', 'bcms.tags', 'bcms.categories', 'bcms.ko.extenders',
+        'bcms.media', 'bcms.redirect', 'bcms.options', 'bcms.security', 'bcms.messages', 'bcms.codeEditor', 'bcms.pages.languages', 'bcms.store', 'bcms.multiple.select'],
+    function ($, bcms, modal, forms, dynamicContent, tags, categories, ko, media, redirect, options, security, messages, codeEditor, pageLanguages, store) {
         'use strict';
 
         var page = {},
@@ -14,7 +14,7 @@ bettercms.define('bcms.pages.properties', ['bcms.jquery', 'bcms', 'bcms.modal', 
                 editPermalinkBox: '.bcms-edit-urlpath-box',
                 editPermalinkClose: 'div.bcms-edit-urlpath-box .bcms-tip-close, div.bcms-edit-urlpath-box .bcms-btn-links-small',
                 editPermalinkSave: '#bcms-save-permalink',
-                
+
                 permalinkHiddenField: '#bcms-page-permalink',
                 permalinkEditField: '#bcms-page-permalink-edit',
                 permalinkInfoField: '#bcms-page-permalink-info',
@@ -66,7 +66,7 @@ bettercms.define('bcms.pages.properties', ['bcms.jquery', 'bcms', 'bcms.modal', 
         /**
         * Page view model
         */
-        function PageViewModel(image, secondaryImage, featuredImage, tagsViewModel, optionListViewModel, accessControlViewModel, translationsViewModel) {
+        function PageViewModel(image, secondaryImage, featuredImage, tagsViewModel, optionListViewModel, accessControlViewModel, translationsViewModel, categoriesModel) {
             var self = this;
 
             self.tags = tagsViewModel;
@@ -76,6 +76,7 @@ bettercms.define('bcms.pages.properties', ['bcms.jquery', 'bcms', 'bcms.modal', 
             self.featuredImage = ko.observable(new media.ImageSelectorViewModel(featuredImage));
             self.accessControl = accessControlViewModel;
             self.translations = translationsViewModel;
+            self.categories = categoriesModel;
         }
 
         /**
@@ -85,9 +86,10 @@ bettercms.define('bcms.pages.properties', ['bcms.jquery', 'bcms', 'bcms.modal', 
             var optionsContainer = dialog.container.find(selectors.optionsTab),
                 optionListViewModel = options.createOptionValuesViewModel(optionsContainer, content.Data.OptionValues, content.Data.CustomOptions),
                 tagsViewModel = new tags.TagsListViewModel(content.Data.Tags),
+                categoriesModel = new categories.CategoriesListViewModel(content.Data.Categories, 'Pages'),
                 accessControlViewModel = security.createUserAccessViewModel(content.Data.UserAccessList),
                 translationsViewModel = content.Data.Languages ? new pageLanguages.PageTranslationsListViewModel(content.Data.Translations, content.Data.Languages, content.Data.LanguageId, content.Data.PageId) : null,
-                pageViewModel = new PageViewModel(content.Data.Image, content.Data.SecondaryImage, content.Data.FeaturedImage, tagsViewModel, optionListViewModel, accessControlViewModel, translationsViewModel),
+                pageViewModel = new PageViewModel(content.Data.Image, content.Data.SecondaryImage, content.Data.FeaturedImage, tagsViewModel, optionListViewModel, accessControlViewModel, translationsViewModel, categoriesModel),
                 form = dialog.container.find(selectors.pagePropertiesForm);
 
             ko.applyBindings(pageViewModel, form.get(0));
@@ -153,10 +155,10 @@ bettercms.define('bcms.pages.properties', ['bcms.jquery', 'bcms', 'bcms.modal', 
 
             // IE11 fix: recall resize method after editors initialization
             dialog.container.find(selectors.javascriptCssTabOpener).on('click', function () {
-                setTimeout(function() {
+                setTimeout(function () {
                     dialog.container.find(selectors.pagePropertiesAceEditorContainer).each(function () {
                         var editor = $(this).data('aceEditor');
-                        
+
                         if (editor && $.isFunction(editor.resize)) {
                             editor.resize(true);
                             editor.renderer.updateFull();
@@ -168,11 +170,13 @@ bettercms.define('bcms.pages.properties', ['bcms.jquery', 'bcms', 'bcms.modal', 
                     });
                 }, 20);
             });
-            
+
             // Translations tab
             if (content.Data.ShowTranslationsTab && (!content.Data.Languages || content.Data.Languages.length == 0)) {
                 dialog.container.find(selectors.translationsTabContent).addClass(classes.inactive);
             }
+
+            
 
             return pageViewModel;
         };
@@ -349,7 +353,7 @@ bettercms.define('bcms.pages.properties', ['bcms.jquery', 'bcms', 'bcms.modal', 
                 id = $(template).data('id'),
                 isMasterPage = $(template).data('master'),
                 isCircular = $(template).data('iscircular');
-            
+
             if (active.get(0) === template.get(0)) {
                 return;
             }
@@ -384,7 +388,7 @@ bettercms.define('bcms.pages.properties', ['bcms.jquery', 'bcms', 'bcms.modal', 
                 canEdit = security.IsAuthorized(["BcmsEditContent"]),
                 canEditMaster = security.IsAuthorized(["BcmsAdministration"]),
                 canPublish = security.IsAuthorized(["BcmsPublishContent"]);
-            
+
             modal.open({
                 title: title || globalization.editPagePropertiesModalTitle,
                 disableAccept: !canEdit && !canPublish && !canEditMaster,
@@ -395,7 +399,7 @@ bettercms.define('bcms.pages.properties', ['bcms.jquery', 'bcms', 'bcms.modal', 
                             var form = dialog.container.find(selectors.pagePropertiesForm),
                                 publishCheckbox,
                                 publishCheckboxParent;
-                            
+
                             // User with only BcmsPublishContent but without BcmsEditContent can only publish - only publish checkbox needs to be enabled.
                             if (form.data('readonly') !== true && canPublish && !canEdit && !canEditMaster) {
                                 form.data('readonlyWithPublishing', true);
@@ -414,7 +418,7 @@ bettercms.define('bcms.pages.properties', ['bcms.jquery', 'bcms', 'bcms.modal', 
                             if (content.Data && content.Data.IsMasterPage === true) {
                                 childDialog.setTitle(globalization.editMasterPagePropertiesModalTitle);
                             }
-                            
+
                             if ($.isFunction(onLoad)) {
                                 onLoad(childDialog, content);
                             }
@@ -433,7 +437,7 @@ bettercms.define('bcms.pages.properties', ['bcms.jquery', 'bcms', 'bcms.modal', 
                             var newPageIsPublished = dialog.container.find(selectors.pagePropertiesPageIsPublishedCheckbox).is(':checked'),
                                 message = newPageIsPublished ? globalization.pageStatusChangeConfirmationMessagePublish : globalization.pageStatusChangeConfirmationMessageUnPublish,
                                 isMasterPage = dialog.container.find(selectors.pagePropertiesPageIsMasterCheckbox).is(':checked');
-                            
+
                             if (currentPageIsMaster != isMasterPage) {
                                 modal.confirm({
                                     content: globalization.pageConversionToMasterConfirmationMessage,
@@ -480,7 +484,7 @@ bettercms.define('bcms.pages.properties', ['bcms.jquery', 'bcms', 'bcms.modal', 
                 }
             }, globalization.editPagePropertiesModalTitle, onLoad);
         };
-        
+
         /**
         * Opens modal window for current page with page properties
         */

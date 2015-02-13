@@ -33,7 +33,7 @@ namespace BetterCms.Module.Api.Extensions
                 PublishedOn = response.Data.PublishedOn,
                 LayoutId = response.Data.LayoutId,
                 MasterPageId = response.Data.MasterPageId,
-                CategoryId = response.Data.CategoryId,
+                Categories = response.Data.Categories,
                 IsArchived = response.Data.IsArchived,
                 MainImageId = response.Data.MainImageId,
                 FeaturedImageId = response.Data.FeaturedImageId,

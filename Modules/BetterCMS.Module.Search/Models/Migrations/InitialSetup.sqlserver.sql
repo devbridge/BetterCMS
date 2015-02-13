@@ -1,4 +1,6 @@
-﻿-------------------
+﻿BEGIN TRY
+
+-------------------
 -- Creates category
 -------------------
 IF NOT EXISTS (
@@ -37,3 +39,7 @@ UPDATE bcms_root.Widgets
 SET CategoryId = @categoryId
 WHERE Id IN ('D31DB767-B352-4E5B-A0DA-6696A53B87F6', '663A1D0C-FADA-4ACC-A34F-7437523AE65B')
 	AND CategoryId IS NULL
+
+END TRY
+BEGIN CATCH
+END CATCH

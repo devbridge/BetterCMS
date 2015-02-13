@@ -1,12 +1,13 @@
 using System;
 using System.Collections.Generic;
 
-using Devbridge.Platform.Core.Models;
+using BetterCms.Core.DataContracts;
+using BetterCms.Core.Models;
 
 namespace BetterCms.Module.MediaManager.Models
 {
     [Serializable]
-    public class Media : EquatableEntity<Media>
+    public class Media : EquatableEntity<Media>, ICategorized
     {
         public virtual string Title { get; set; }
 
@@ -29,6 +30,38 @@ namespace BetterCms.Module.MediaManager.Models
         public virtual MediaImage Image { get; set; }
 
         public virtual string Description { get; set; }
+
+        public virtual IList<MediaCategory> Categories { get; set; }
+
+        public virtual void AddCategory(IEntityCategory category)
+        {
+            if (Categories == null)
+            {
+                Categories = new List<MediaCategory>();
+            }
+            Categories.Add(category as MediaCategory);
+        }
+
+        public virtual void RemoveCategory(IEntityCategory category)
+        {
+            if (Categories != null)
+            {
+                Categories.Remove(category as MediaCategory);
+            }
+        }
+
+        public virtual string GetCategorizableItemKey()
+        {
+            return null;
+        }
+
+        IEnumerable<IEntityCategory> ICategorized.Categories
+        {
+            get
+            {
+                return Categories;
+            }
+        }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="Media" /> class.

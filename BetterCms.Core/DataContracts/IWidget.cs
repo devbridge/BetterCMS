@@ -5,6 +5,6 @@
     /// </summary>
     public interface IWidget : IContent
     {
-        ICategory Category { get; }
+        //ICategory Category { get; }
     }
 }

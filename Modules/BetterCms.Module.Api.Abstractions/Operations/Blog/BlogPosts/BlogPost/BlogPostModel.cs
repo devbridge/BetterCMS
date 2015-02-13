@@ -1,7 +1,9 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Runtime.Serialization;
 
 using BetterCms.Module.Api.Infrastructure;
+using BetterCms.Module.Api.Operations.Blog.BlogPosts.BlogPost.Properties;
 
 namespace BetterCms.Module.Api.Operations.Blog.BlogPosts.BlogPost
 {
@@ -81,23 +83,8 @@ namespace BetterCms.Module.Api.Operations.Blog.BlogPosts.BlogPost
         [DataMember]
         public System.Guid? MasterPageId { get; set; }
 
-        /// <summary>
-        /// Gets or sets the category id.
-        /// </summary>
-        /// <value>
-        /// The category id.
-        /// </value>
         [DataMember]
-        public System.Guid? CategoryId { get; set; }
-
-        /// <summary>
-        /// Gets or sets the name of the category.
-        /// </summary>
-        /// <value>
-        /// The name of the category.
-        /// </value>
-        [DataMember]
-        public string CategoryName { get; set; }
+        public List<CategoryModel> Categories { get; set; }
 
         /// <summary>
         /// Gets or sets the blog post author id.

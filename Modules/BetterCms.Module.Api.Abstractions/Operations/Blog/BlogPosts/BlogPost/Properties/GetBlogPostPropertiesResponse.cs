@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Runtime.Serialization;
 
 using BetterCms.Module.Api.Infrastructure;
@@ -35,7 +36,7 @@ namespace BetterCms.Module.Api.Operations.Blog.BlogPosts.BlogPost.Properties
         /// The category.
         /// </value>
         [DataMember]
-        public CategoryModel Category { get; set; }
+        public IList<CategoryModel> Categories { get; set; }
         
         /// <summary>
         /// Gets or sets the language.

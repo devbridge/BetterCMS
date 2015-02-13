@@ -93,6 +93,11 @@ namespace BetterCms.Module.Api.Operations.Pages.Pages.Page.Properties
         private readonly ISecurityService securityService;
 
         /// <summary>
+        /// The category service
+        /// </summary>
+        private ICategoryService categoryService;
+
+        /// <summary>
         /// Initializes a new instance of the <see cref="PagePropertiesService" /> class.
         /// </summary>
         /// <param name="repository">The repository.</param>
@@ -115,7 +120,8 @@ namespace BetterCms.Module.Api.Operations.Pages.Pages.Page.Properties
             IAccessControlService accessControlService,
             IUnitOfWork unitOfWork,
             Module.Pages.Services.IPageService pageService,
-            ISecurityService securityService)
+            ISecurityService securityService,
+            ICategoryService categoryService)
         {
             this.repository = repository;
             this.urlService = urlService;
@@ -127,6 +133,7 @@ namespace BetterCms.Module.Api.Operations.Pages.Pages.Page.Properties
             this.unitOfWork = unitOfWork;
             this.securityService = securityService;
             this.pageService = pageService;
+            this.categoryService = categoryService;
         }
 
         /// <summary>
@@ -169,7 +176,6 @@ namespace BetterCms.Module.Api.Operations.Pages.Pages.Page.Properties
                                 PublishedOn = page.PublishedOn,
                                 LayoutId = page.Layout != null && !page.Layout.IsDeleted ? page.Layout.Id : (Guid?)null,
                                 MasterPageId = page.MasterPage != null && !page.MasterPage.IsDeleted ? page.MasterPage.Id : (Guid?)null,
-                                CategoryId = page.Category != null && !page.Category.IsDeleted ? page.Category.Id : (Guid?)null,
                                 IsArchived = page.IsArchived,
                                 IsMasterPage = page.IsMasterPage,
                                 LanguageGroupIdentifier = page.LanguageGroupIdentifier,
@@ -184,27 +190,15 @@ namespace BetterCms.Module.Api.Operations.Pages.Pages.Page.Properties
                                 UseNoFollow = page.UseNoFollow,
                                 UseNoIndex = page.UseNoIndex
                             },
-                        MetaData = request.Data.IncludeMetaData 
+                        MetaData = request.Data.IncludeMetaData
                             ? new MetadataModel
                             {
                                 MetaTitle = page.MetaTitle,
                                 MetaDescription = page.MetaDescription,
                                 MetaKeywords = page.MetaKeywords
-                            } 
-                            : null,
-                        Category = page.Category != null && !page.Category.IsDeleted && request.Data.IncludeCategory 
-                            ? new CategoryModel
-                            {
-                                Id = page.Category.Id,
-                                Version = page.Category.Version,
-                                CreatedBy = page.Category.CreatedByUser,
-                                CreatedOn = page.Category.CreatedOn,
-                                LastModifiedBy = page.Category.ModifiedByUser,
-                                LastModifiedOn = page.Category.ModifiedOn,
-                                Name = page.Category.Name
                             }
                             : null,
-                        Layout = request.Data.IncludeLayout && !page.Layout.IsDeleted 
+                        Layout = request.Data.IncludeLayout && !page.Layout.IsDeleted
                             ? new LayoutModel
                             {
                                 Id = page.Layout.Id,
@@ -217,9 +211,9 @@ namespace BetterCms.Module.Api.Operations.Pages.Pages.Page.Properties
                                 Name = page.Layout.Name,
                                 LayoutPath = page.Layout.LayoutPath,
                                 PreviewUrl = page.Layout.PreviewUrl
-                            } 
+                            }
                             : null,
-                        MainImage = page.Image != null && !page.Image.IsDeleted && request.Data.IncludeImages 
+                        MainImage = page.Image != null && !page.Image.IsDeleted && request.Data.IncludeImages
                             ? new ImageModel
                             {
                                 Id = page.Image.Id,
@@ -233,9 +227,9 @@ namespace BetterCms.Module.Api.Operations.Pages.Pages.Page.Properties
                                 Caption = page.Image.Caption,
                                 Url = fileUrlResolver.EnsureFullPathUrl(page.Image.PublicUrl),
                                 ThumbnailUrl = fileUrlResolver.EnsureFullPathUrl(page.Image.PublicThumbnailUrl)
-                            } 
+                            }
                             : null,
-                        FeaturedImage = page.FeaturedImage != null && !page.FeaturedImage.IsDeleted && request.Data.IncludeImages 
+                        FeaturedImage = page.FeaturedImage != null && !page.FeaturedImage.IsDeleted && request.Data.IncludeImages
                             ? new ImageModel
                             {
                                 Id = page.FeaturedImage.Id,
@@ -249,9 +243,9 @@ namespace BetterCms.Module.Api.Operations.Pages.Pages.Page.Properties
                                 Caption = page.FeaturedImage.Caption,
                                 Url = fileUrlResolver.EnsureFullPathUrl(page.FeaturedImage.PublicUrl),
                                 ThumbnailUrl = fileUrlResolver.EnsureFullPathUrl(page.FeaturedImage.PublicThumbnailUrl)
-                            } 
+                            }
                             : null,
-                        SecondaryImage = page.SecondaryImage != null && !page.SecondaryImage.IsDeleted && request.Data.IncludeImages 
+                        SecondaryImage = page.SecondaryImage != null && !page.SecondaryImage.IsDeleted && request.Data.IncludeImages
                             ? new ImageModel
                             {
                                 Id = page.SecondaryImage.Id,
@@ -265,7 +259,7 @@ namespace BetterCms.Module.Api.Operations.Pages.Pages.Page.Properties
                                 Caption = page.SecondaryImage.Caption,
                                 Url = fileUrlResolver.EnsureFullPathUrl(page.SecondaryImage.PublicUrl),
                                 ThumbnailUrl = fileUrlResolver.EnsureFullPathUrl(page.SecondaryImage.PublicThumbnailUrl)
-                            } 
+                            }
                             : null,
                         Language = page.Language != null && !page.Language.IsDeleted && request.Data.IncludeLanguage
                             ? new LanguageModel
@@ -310,13 +304,13 @@ namespace BetterCms.Module.Api.Operations.Pages.Pages.Page.Properties
                         })
                     .ToList();
             }
-            
+
             if (request.Data.IncludeAccessRules)
             {
                 response.AccessRules = LoadAccessRules(response.Data.Id);
             }
-            
-            if (request.Data.IncludePageTranslations 
+
+            if (request.Data.IncludePageTranslations
                 && response.Data.LanguageGroupIdentifier.HasValue)
             {
                 response.PageTranslations = repository
@@ -334,7 +328,32 @@ namespace BetterCms.Module.Api.Operations.Pages.Pages.Page.Properties
                     .ToList();
             }
 
+            response.Data.Categories = categoryService.GetSelectedCategoriesIds<PageProperties, PageCategory>(response.Data.Id).ToList();
+
+            if (request.Data.IncludeCategories)
+            {
+                response.Categories = LoadCategories(response.Data.Id);
+            }
+
             return response;
+        }
+
+        private IList<CategoryModel> LoadCategories(Guid blogPostId)
+        {
+            return (from page in repository.AsQueryable<PageProperties>()
+                    from category in page.Categories
+                    where page.Id == blogPostId
+                    select new CategoryModel
+                    {
+                        Id = category.Category.Id,
+                        Version = category.Version,
+                        CreatedBy = category.CreatedByUser,
+                        CreatedOn = category.CreatedOn,
+                        LastModifiedBy = category.ModifiedByUser,
+                        LastModifiedOn = category.ModifiedOn,
+                        Name = category.Category.Name
+                    })
+                     .ToList();
         }
 
         /// <summary>
@@ -465,7 +484,7 @@ namespace BetterCms.Module.Api.Operations.Pages.Pages.Page.Properties
                         .FetchMany(f => f.AccessRules)
                         .ToList()
                         .FirstOrDefault();
-                
+
                 isNew = pageProperties == null;
             }
             UpdatingPagePropertiesModel beforeChange = null;
@@ -509,7 +528,8 @@ namespace BetterCms.Module.Api.Operations.Pages.Pages.Page.Properties
                 var pageUrl = request.Data.PageUrl;
                 if (string.IsNullOrEmpty(pageUrl) && !string.IsNullOrWhiteSpace(request.Data.Title))
                 {
-                    pageUrl = pageService.CreatePagePermalink(request.Data.Title, null, null, request.Data.LanguageId, request.Data.CategoryId);
+                    // TODO Categories Which category to use creating url?
+                    pageUrl = pageService.CreatePagePermalink(request.Data.Title, null, null, request.Data.LanguageId, request.Data.Categories.FirstOrDefault());
                 }
                 else
                 {
@@ -535,9 +555,8 @@ namespace BetterCms.Module.Api.Operations.Pages.Pages.Page.Properties
 
             masterPageService.SetMasterOrLayout(pageProperties, request.Data.MasterPageId, request.Data.LayoutId);
 
-            pageProperties.Category = request.Data.CategoryId.HasValue
-                                    ? repository.AsProxy<Category>(request.Data.CategoryId.Value)
-                                    : null;
+            categoryService.CombineEntityCategories<PageProperties, PageCategory>(pageProperties, request.Data.Categories);
+
             pageProperties.IsArchived = request.Data.IsArchived;
             pageProperties.IsMasterPage = request.Data.IsMasterPage;
             pageProperties.LanguageGroupIdentifier = request.Data.LanguageGroupIdentifier;

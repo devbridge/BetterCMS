@@ -11,7 +11,6 @@ namespace BetterCms.Module.Pages.ViewModels.Filter
     public class PagesGridViewModel<TModel> : SearchableGridViewModel<TModel> where TModel : IEditableGridItem
     {
         public IEnumerable<LookupKeyValue> Tags { get; set; }
-        public Guid? CategoryId { get; set; }
         public Guid? LanguageId { get; set; }
         public Guid? ContentId { get; set; }
         public IEnumerable<LookupKeyValue> Categories { get; set; }
@@ -26,16 +25,15 @@ namespace BetterCms.Module.Pages.ViewModels.Filter
         public SeoStatusFilterType? SeoStatus { get; set; }
         public string Layout { get; set; }
 
-        public PagesGridViewModel(IEnumerable<TModel> items, PagesFilter filter, int totalCount, IEnumerable<LookupKeyValue> categories) : base(items, filter, totalCount)
+        public PagesGridViewModel(IEnumerable<TModel> items, PagesFilter filter, int totalCount) : base(items, filter, totalCount)
         {
             Tags = filter.Tags;
-            CategoryId = filter.CategoryId;
             LanguageId = filter.LanguageId;
             ContentId = filter.ContentId;
             Status = filter.Status;
             SeoStatus = filter.SeoStatus;
             Layout = filter.Layout;
-            Categories = categories;
+            Categories = filter.Categories;
             IncludeArchived = filter.IncludeArchived;
             IncludeMasterPages = filter.IncludeMasterPages;
 

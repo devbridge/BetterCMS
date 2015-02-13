@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Globalization;
+using System.Linq;
 
 using BetterCms.Module.MediaManager.Helpers;
 using BetterCms.Module.MediaManager.Models;
@@ -7,6 +8,7 @@ using BetterCms.Module.MediaManager.Models.Extensions;
 using BetterCms.Module.MediaManager.Services;
 using BetterCms.Module.MediaManager.ViewModels.Images;
 using BetterCms.Module.Root.Mvc;
+using BetterCms.Module.Root.Services;
 
 using Devbridge.Platform.Core.Web.Mvc.Commands;
 
@@ -32,6 +34,11 @@ namespace BetterCms.Module.MediaManager.Command.Images.GetImage
         /// The file service.
         /// </value>
         public IMediaFileUrlResolver FileUrlResolver { get; set; }
+
+        /// <summary>
+        /// The category service
+        /// </summary>
+        public ICategoryService CategoryService { get; set; }
 
         /// <summary>
         /// Executes this command.
@@ -68,7 +75,8 @@ namespace BetterCms.Module.MediaManager.Command.Images.GetImage
                     CropCoordY2 = image.CropCoordY2.HasValue ? image.CropCoordY2.Value : image.OriginalHeight,
                     OriginalImageUrl = FileUrlResolver.EnsureFullPathUrl(image.PublicOriginallUrl + string.Format("?{0}", DateTime.Now.ToString(MediaManagerModuleDescriptor.HardLoadImageDateTimeFormat))),
                     FolderId = image.Folder != null ? image.Folder.Id : (Guid?)null,
-                    Tags = TagService.GetMediaTagNames(imageId)
+                    Tags = TagService.GetMediaTagNames(imageId),
+                    Categories = CategoryService.GetSelectedCategories<Media, MediaCategory>(imageId).ToList()
                 };
         }
     }

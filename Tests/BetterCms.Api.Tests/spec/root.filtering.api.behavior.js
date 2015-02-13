@@ -9,11 +9,6 @@ describe('root.filtering.api.behavior', function () {
     // Opeators: Less, LessOrEqual, Greater, GreaterOrEqual
     // Operators: Contains, NotContains, StartsWith, EndsWith
     var tests = [
-        { id: '09000', type: 'Guid', operation: 'Equal', value: '07CF20A8-A53B-46F5-8A43-A20600E44B1E', count: 2 },
-        { id: '09001', type: 'Guid', operation: 'NotEqual', value: '07CF20A8-A53B-46F5-8A43-A20600E44B1E', count: 3 },
-        { id: '09002', type: 'Guid', operation: 'Equal', value: null, count: 2 },
-        { id: '09003', type: 'Guid', operation: 'NotEqual', value: null, count: 3 },
-
         { id: '09010', type: 'DateTime', operation: 'Equal', value: '2013-04-01', count: 1 },
         { id: '09011', type: 'DateTime', operation: 'NotEqual', value: '2013-04-01', count: 4 },
         { id: '09012', type: 'DateTime', operation: 'Less', value: '2013-04-01', count: 1 },
@@ -76,11 +71,6 @@ describe('root.filtering.api.behavior', function () {
 
             // Get URL and filtering data
             switch (test.type) {
-                case 'Guid':
-                    url = '/bcms-api/widgets';
-                    columnName = 'CategoryId';
-                    data.filter.where.push({ field: 'Name', operation: 'StartsWith', value: '0900X: ' });
-                    break;
                 case 'DateTime':
                     url = '/bcms-api/pages';
                     columnName = 'PublishedOn';

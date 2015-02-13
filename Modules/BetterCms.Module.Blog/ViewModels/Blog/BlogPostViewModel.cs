@@ -4,7 +4,8 @@ using System.ComponentModel.DataAnnotations;
 using System.Web.Mvc;
 
 using BetterCms.Core.DataContracts.Enums;
-
+using BetterCms.Core.Models;
+using BetterCms.Core.Mvc.Binders;
 using BetterCms.Module.Blog.Content.Resources;
 using BetterCms.Module.MediaManager.ViewModels;
 using BetterCms.Module.Pages.Mvc.Attributes;
@@ -12,7 +13,7 @@ using BetterCms.Module.Root.Content.Resources;
 using BetterCms.Module.Root.Models;
 using BetterCms.Module.Root.ViewModels.Security;
 
-using Devbridge.Platform.Core.Models;
+using Newtonsoft.Json;
 
 namespace BetterCms.Module.Blog.ViewModels.Blog
 {
@@ -137,14 +138,6 @@ namespace BetterCms.Module.Blog.ViewModels.Blog
         public string BlogUrl { get; set; }
 
         /// <summary>
-        /// Gets or sets the cathegory.
-        /// </summary>
-        /// <value>
-        /// The cathegory.
-        /// </value>
-        public virtual Guid? CategoryId { get; set; }
-
-        /// <summary>
         /// Gets or sets the desirable status for the saved widget.
         /// </summary>
         /// <value>
@@ -190,7 +183,7 @@ namespace BetterCms.Module.Blog.ViewModels.Blog
         /// <value>
         /// The list of categories.
         /// </value>
-        public IEnumerable<LookupKeyValue> Categories { get; set; }
+        public IList<LookupKeyValue> Categories { get; set; }
 
         /// <summary>
         /// Gets or sets the image view model.

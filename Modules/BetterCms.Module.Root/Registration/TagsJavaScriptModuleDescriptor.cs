@@ -22,12 +22,9 @@ namespace BetterCms.Module.Root.Registration
 
             Links = new IActionProjection[]
                 {
-                    new JavaScriptModuleLinkTo<CategoryController>(this, "loadSiteSettingsCategoryListUrl", c => c.Categories(null)),
                     new JavaScriptModuleLinkTo<TagsController>(this, "loadSiteSettingsTagListUrl", c => c.ListTags(null)),
                     new JavaScriptModuleLinkTo<TagsController>(this, "saveTagUrl", c => c.SaveTag(null)),
                     new JavaScriptModuleLinkTo<TagsController>(this, "deleteTagUrl", c => c.DeleteTag(null)),
-                    new JavaScriptModuleLinkTo<CategoryController>(this, "saveCategoryUrl", c => c.SaveCategory(null)),
-                    new JavaScriptModuleLinkTo<CategoryController>(this, "deleteCategoryUrl", c => c.DeleteCategory(null)),
                     new JavaScriptModuleLinkTo<TagsController>(this, "tagSuggestionServiceUrl", c => c.SuggestTags(null))
                 };
 

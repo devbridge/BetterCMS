@@ -40,6 +40,14 @@ namespace BetterCms.Module.MediaManager.Services
                 }
             }
 
+            if (media.Categories != null)
+            {
+                foreach (var category in media.Categories)
+                {
+                    repository.Delete(category);
+                }
+            }
+
             if (media is MediaFile)
             {
                 MediaFile file = (MediaFile)media;

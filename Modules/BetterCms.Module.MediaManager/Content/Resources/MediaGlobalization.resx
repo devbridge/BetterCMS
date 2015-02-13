@@ -654,4 +654,19 @@
   <data name="ImageUpload_SaveAsNewVersion_Title" xml:space="preserve">
     <value>Upload as new version</value>
   </data>
+  <data name="FileEditor_Dialog_Category_Title" xml:space="preserve">
+    <value>Categories</value>
+  </data>
+  <data name="FileEditor_Dialog_Category_Tooltip_Description" xml:space="preserve">
+    <value>Assign this file to a category to identify it with similar files.</value>
+  </data>
+  <data name="ImageEditor_Dialog_Category_Title" xml:space="preserve">
+    <value>Categories</value>
+  </data>
+  <data name="ImageEditor_Dialog_Category_Tooltip_Description" xml:space="preserve">
+    <value>Assign this image to a category to identify it with similar images.</value>
+  </data>
+  <data name="SiteSettings_FilterByCategory" xml:space="preserve">
+    <value>By Category</value>
+  </data>
 </root>

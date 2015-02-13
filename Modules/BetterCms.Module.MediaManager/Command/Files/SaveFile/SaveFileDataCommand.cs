@@ -11,6 +11,7 @@ using BetterCms.Module.MediaManager.ViewModels.File;
 
 using BetterCms.Module.Root.Models.Extensions;
 using BetterCms.Module.Root.Mvc;
+using BetterCms.Module.Root.Services;
 
 using Devbridge.Platform.Core.Web.Mvc.Commands;
 
@@ -31,16 +32,22 @@ namespace BetterCms.Module.MediaManager.Command.Files.SaveFile
         private readonly IAccessControlService accessControlService;
 
         /// <summary>
+        /// The category service
+        /// </summary>
+        private ICategoryService categoryService;
+
+        /// <summary>
         /// Initializes a new instance of the <see cref="SaveFileDataCommand" /> class.
         /// </summary>
         /// <param name="tagService">The tag service.</param>
         /// <param name="cmsConfiguration">The CMS configuration.</param>
         /// <param name="accessControlService">The access control service.</param>
-        public SaveFileDataCommand(ITagService tagService, ICmsConfiguration cmsConfiguration, IAccessControlService accessControlService)
+        public SaveFileDataCommand(ITagService tagService, ICmsConfiguration cmsConfiguration, IAccessControlService accessControlService, ICategoryService categoryService)
         {
             this.tagService = tagService;
             this.cmsConfiguration = cmsConfiguration;
             this.accessControlService = accessControlService;
+            this.categoryService = categoryService;
         }
 
         /// <summary>
@@ -60,6 +67,8 @@ namespace BetterCms.Module.MediaManager.Command.Files.SaveFile
             mediaFile.Description = request.Description;
             mediaFile.Version = request.Version.ToIntOrDefault();
             mediaFile.Image = request.Image != null && request.Image.ImageId.HasValue ? Repository.AsProxy<MediaImage>(request.Image.ImageId.Value) : null;
+
+            categoryService.CombineEntityCategories<Media, MediaCategory>(mediaFile, request.Categories); 
 
             Repository.Save(mediaFile);
 

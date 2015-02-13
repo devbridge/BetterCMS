@@ -198,7 +198,9 @@
     <Compile Include="Models\Enum\MediaHistoryStatus.cs" />
     <Compile Include="Models\Extensions\MediaExtensions.cs" />
     <Compile Include="Models\Extensions\MediaFileExtensions.cs" />
+    <Compile Include="Models\Maps\MediaCategoryMap.cs" />
     <Compile Include="Models\Maps\MediaTagMap.cs" />
+    <Compile Include="Models\MediaCategory.cs" />
     <Compile Include="Models\MediaImageAlign.cs" />
     <Compile Include="Models\MediaType.cs" />
     <Compile Include="Models\Maps\MediaMap.cs" />
@@ -210,6 +212,7 @@
     <Compile Include="Models\MediaFolder.cs" />
     <Compile Include="Models\Media.cs" />
     <Compile Include="Models\MediaImage.cs" />
+    <Compile Include="Models\Migrations\Migration201502031000.cs" />
     <Compile Include="Models\Migrations\Migration201409241658.cs" />
     <Compile Include="Models\Migrations\Migration201310211500.cs" />
     <Compile Include="Models\Migrations\Migration201310081420.cs" />
@@ -231,6 +234,7 @@
     <Compile Include="Models\Migrations\Migration201303081430.cs" />
     <Compile Include="Models\Migrations\Migration201308252350.cs" />
     <Compile Include="Models\Migrations\Migration201308272154.cs" />
+    <Compile Include="Models\Migrations\Migration201502101137.cs" />
     <Compile Include="Models\Migrations\MigrationVersionMetaData.cs" />
     <Compile Include="Models\MediaTag.cs" />
     <Compile Include="Provider\MediaManagerImageUrlOptionProvider.cs" />
@@ -380,6 +384,7 @@
     <EmbeddedResource Include="Content\Styles\Images\sprite-media-3.png" />
     <EmbeddedResource Include="Models\Migrations\Migration201306071105.sqlserver.sql" />
     <EmbeddedResource Include="Models\Migrations\Migration201306201216.sqlserver.sql" />
+    <EmbeddedResource Include="Models\Migrations\Migration201502101137.sqlserver.sql" />
     <Content Include="packages.config">
       <SubType>Designer</SubType>
     </Content>

@@ -4,9 +4,12 @@
 @using BetterCms.Module.Pages.ViewModels.Page
 @using BetterCms.Module.Root
 @using BetterCms.Module.Root.Content.Resources
+@using BetterCms.Module.Root.Mvc.Extensions
 @using BetterCms.Module.Root.Mvc.Helpers
+@using BetterCms.Module.Root.ViewModels.Category
 @using BetterCms.Module.Root.ViewModels.Tags
 @using Microsoft.Web.Mvc
+@using MvcContrib.EnumerableExtensions
 
 @model EditPagePropertiesViewModel
 @if (Model == null)
@@ -17,6 +20,11 @@
     var tagsTemplateViewModel = new TagsTemplateViewModel
     {
         TooltipDescription = PagesGlobalization.EditPageProperties_BasicPropertiesTab_AddTags_Tooltip_Description
+    };
+
+    var categoriesTemplateViewModel = new CategoryTemplateViewModel
+    {
+        TooltipDescription = PagesGlobalization.EditPageProperties_BasicPropertiesTab_Category_Tooltip_Description
     };
 }
 
@@ -102,10 +110,8 @@
                     </div>
                 </div>
 
-                <div class="bcms-input-list-holder">
-                    @Html.Tooltip(PagesGlobalization.EditPageProperties_BasicPropertiesTab_Category_Tooltip_Description)
-                    <div class="bcms-content-titles">@PagesGlobalization.EditPageProperties_BasicPropertiesTab_Category_Title</div>
-                    @Html.DropDownListFor(model => model.CategoryId, Model.Categories.ToSelectList(Model.CategoryId), string.Empty, new { @class = "bcms-global-select" })
+                <div class="bcms-categories-box-holder" data-bind="with: categories">
+                    @Html.Partial("~/Areas/bcms-root/Views/Category/CategoriesTemplate.cshtml", categoriesTemplateViewModel)
                 </div>
 
                 <div class="bcms-tags-box-holder" data-bind="with: tags">
@@ -149,7 +155,7 @@
                     <div class="bcms-input-list-holder">
                         @Html.Tooltip(PagesGlobalization.EditPageProperties_ForceProtocol_Tooltip_Description)
                         <div class="bcms-content-titles">@PagesGlobalization.EditPageProperties_ForceProtocol_Title</div>
-                        @Html.DropDownListFor(model => model.ForceAccessProtocol, Model.PageAccessProtocols.ToSelectList(Model.CategoryId), null, new { @class = "bcms-global-select" })
+                        @Html.DropDownListFor(model => model.ForceAccessProtocol, Model.PageAccessProtocols.ToSelectList(Model.ForceAccessProtocol), null, new { @class = "bcms-global-select" })
                     </div>
                 }
                 @Html.HiddenFor(model => model.CanPublishPage)

@@ -2,9 +2,14 @@
 using System.Collections.Generic;
 using System.Linq;
 
+using BetterCms.Core.DataAccess;
+using BetterCms.Core.DataAccess.DataContext;
+using BetterCms.Core.DataAccess.DataContext.Fetching;
 using BetterCms.Core.DataContracts.Enums;
 using BetterCms.Core.Exceptions;
 using BetterCms.Core.Exceptions.Mvc;
+using BetterCms.Core.Models;
+using BetterCms.Core.Mvc.Commands;
 using BetterCms.Core.Security;
 
 using BetterCms.Module.MediaManager.Models;
@@ -21,11 +26,6 @@ using BetterCms.Module.Root.Models.Extensions;
 using BetterCms.Module.Root.Mvc;
 using BetterCms.Module.Root.Mvc.Helpers;
 using BetterCms.Module.Root.Services;
-
-using Devbridge.Platform.Core.DataAccess;
-using Devbridge.Platform.Core.DataAccess.DataContext;
-using Devbridge.Platform.Core.DataAccess.DataContext.Fetching;
-using Devbridge.Platform.Core.Web.Mvc.Commands;
 
 using CategoryEntity = BetterCms.Module.Root.Models.Category;
 
@@ -87,6 +87,11 @@ namespace BetterCms.Module.Pages.Command.Page.SavePageProperties
         private readonly IMasterPageService masterPageService;
 
         /// <summary>
+        /// The category service
+        /// </summary>
+        private readonly ICategoryService categoryService;
+
+        /// <summary>
         /// Initializes a new instance of the <see cref="SavePagePropertiesCommand" /> class.
         /// </summary>
         /// <param name="pageService">The page service.</param>
@@ -99,6 +104,7 @@ namespace BetterCms.Module.Pages.Command.Page.SavePageProperties
         /// <param name="accessControlService">The access control service.</param>
         /// <param name="contentService">The content service.</param>
         /// <param name="masterPageService">The master page service.</param>
+        /// <param name="categoryService">The category service.</param>
         public SavePagePropertiesCommand(
             IPageService pageService,
             IRedirectService redirectService,
@@ -109,7 +115,8 @@ namespace BetterCms.Module.Pages.Command.Page.SavePageProperties
             ICmsConfiguration cmsConfiguration,
             IAccessControlService accessControlService,
             IContentService contentService,
-            IMasterPageService masterPageService)
+            IMasterPageService masterPageService,
+            ICategoryService categoryService)
         {
             this.pageService = pageService;
             this.redirectService = redirectService;
@@ -121,6 +128,7 @@ namespace BetterCms.Module.Pages.Command.Page.SavePageProperties
             this.accessControlService = accessControlService;
             this.contentService = contentService;
             this.masterPageService = masterPageService;
+            this.categoryService = categoryService;
         }
 
         /// <summary>
@@ -222,7 +230,9 @@ namespace BetterCms.Module.Pages.Command.Page.SavePageProperties
             {
                 page.PageUrlHash = page.PageUrl.UrlHash();
                 page.ForceAccessProtocol = request.ForceAccessProtocol;
-                page.Category = request.CategoryId.HasValue ? Repository.AsProxy<CategoryEntity>(request.CategoryId.Value) : null;
+
+                categoryService.CombineEntityCategories<PageProperties, PageCategory>(page, request.Categories);                
+
                 page.Title = request.PageName;
                 page.CustomCss = request.PageCSS;
                 page.CustomJS = request.PageJavascript;

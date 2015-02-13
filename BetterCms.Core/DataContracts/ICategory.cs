@@ -1,4 +1,4 @@
-﻿using Devbridge.Platform.Core.DataContracts;
+﻿using System.Collections.Generic;
 
 namespace BetterCms.Core.DataContracts
 {
@@ -8,5 +8,11 @@ namespace BetterCms.Core.DataContracts
     public interface ICategory : IEntity
     {
         string Name { get; }
+
+        //IList<ICategory> ChildCategories { get; set; }
+
+        //ICategory ParentCategory { get; set; }
+
+        string Macro { get; set; }
     }
 }

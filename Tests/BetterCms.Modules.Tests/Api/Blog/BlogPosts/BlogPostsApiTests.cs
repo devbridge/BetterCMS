@@ -61,7 +61,7 @@ namespace BetterCms.Test.Module.Api.Blog.BlogPosts
                     masterPage = null;
                     layout = TestDataProvider.CreateNewLayout();
                     region = TestDataProvider.CreateNewRegion();
-                    
+
                     var layoutRegion = new LayoutRegion { Layout = layout, Region = region };
                     layout.LayoutRegions = new[] { layoutRegion };
 
@@ -77,7 +77,7 @@ namespace BetterCms.Test.Module.Api.Blog.BlogPosts
             Events.BlogEvents.Instance.BlogUpdated -= Instance_EntityUpdated;
             Events.BlogEvents.Instance.BlogDeleted -= Instance_EntityDeleted;
         }
-        
+
         [Test]
         public void Should_CRUD_BlogPost_WithLayout_Successfully_WithIdSpecified()
         {
@@ -92,7 +92,7 @@ namespace BetterCms.Test.Module.Api.Blog.BlogPosts
                     masterPage = null;
                     layout = TestDataProvider.CreateNewLayout();
                     region = TestDataProvider.CreateNewRegion();
-                    
+
                     var layoutRegion = new LayoutRegion { Layout = layout, Region = region };
                     layout.LayoutRegions = new[] { layoutRegion };
 
@@ -108,7 +108,7 @@ namespace BetterCms.Test.Module.Api.Blog.BlogPosts
             Events.BlogEvents.Instance.BlogUpdated -= Instance_EntityUpdated;
             Events.BlogEvents.Instance.BlogDeleted -= Instance_EntityDeleted;
         }
-        
+
         [Test]
         public void Should_CRUD_BlogPost_WithMasterPage_Successfully()
         {
@@ -144,7 +144,7 @@ namespace BetterCms.Test.Module.Api.Blog.BlogPosts
             Events.BlogEvents.Instance.BlogUpdated -= Instance_EntityUpdated;
             Events.BlogEvents.Instance.BlogDeleted -= Instance_EntityDeleted;
         }
-        
+
         [Test]
         public void Should_CRUD_BlogPost_WithNoLayoutSpecified_Successfully()
         {
@@ -205,12 +205,12 @@ namespace BetterCms.Test.Module.Api.Blog.BlogPosts
                 TestDataProvider.ProvideRandomString(50),
                 TestDataProvider.CreateChildWidgetAssignment(widget.Id, assignmentId2));
             
-            session.SaveOrUpdate(blogPost.Category);
+            session.SaveOrUpdate(blogPost);
             session.SaveOrUpdate(blogPost.Author);
             session.SaveOrUpdate(blogPost.Image);
             session.SaveOrUpdate(blogPost.FeaturedImage);
             session.SaveOrUpdate(blogPost.SecondaryImage);
-            session.SaveOrUpdate(blogPost.Language);
+            session.SaveOrUpdate(blogPost.Language);            
 
             session.Flush();
             session.Clear();
@@ -223,8 +223,7 @@ namespace BetterCms.Test.Module.Api.Blog.BlogPosts
                     IsPublished = true,
                     PublishedOn = blogPost.PublishedOn,
                     LayoutId = layout != null ? layout.Id : (defaultLayout != null ? defaultLayout.Id : (Guid?)null),
-                    MasterPageId = masterPage != null ? masterPage.Id : (Guid?)null,
-                    CategoryId = blogPost.Category.Id,
+                    MasterPageId = masterPage != null ? masterPage.Id : (Guid?)null,                   
                     AuthorId = blogPost.Author.Id,
                     MainImageId = blogPost.Image.Id,
                     FeaturedImageId = blogPost.FeaturedImage.Id,
@@ -310,6 +309,8 @@ namespace BetterCms.Test.Module.Api.Blog.BlogPosts
                                 } 
                 };
 
+            model.Categories = blogPost.Categories.Select(c => c.Category.Id).ToList();
+
             return model;
         }
 
@@ -324,7 +325,7 @@ namespace BetterCms.Test.Module.Api.Blog.BlogPosts
             request.Data.IncludeChildContentsOptions = true;
             request.Data.IncludeLayout = true;
             request.Data.IncludeLanguage = true;
-
+            request.Data.IncludeCategories = true;
             return request;
         }
 
@@ -343,7 +344,7 @@ namespace BetterCms.Test.Module.Api.Blog.BlogPosts
             Assert.IsNotNull(getResponse.Data.Title);
             Assert.IsNotNull(getResponse.Data.IntroText);
             Assert.IsNotNull(getResponse.Data.PublishedOn);
-            Assert.IsNotNull(getResponse.Data.CategoryId);
+            Assert.IsNotEmpty(getResponse.Data.Categories);
             Assert.IsNotNull(getResponse.Data.MainImageId);
             Assert.IsNotNull(getResponse.Data.FeaturedImageId);
             Assert.IsNotNull(getResponse.Data.SecondaryImageId);
@@ -387,7 +388,12 @@ namespace BetterCms.Test.Module.Api.Blog.BlogPosts
             Assert.AreEqual(getResponse.Data.PublishedOn, model.PublishedOn);
             Assert.AreEqual(getResponse.Data.LayoutId, model.LayoutId);
             Assert.AreEqual(getResponse.Data.MasterPageId, model.MasterPageId);
-            Assert.AreEqual(getResponse.Data.CategoryId, model.CategoryId);
+
+            foreach (var category in model.Categories)
+            {
+                Assert.IsNotNull(getResponse.Data.Categories.FirstOrDefault(c => c == category));
+            }
+
             Assert.AreEqual(getResponse.Data.AuthorId, model.AuthorId);
             Assert.AreEqual(getResponse.Data.MainImageId, model.MainImageId);
             Assert.AreEqual(getResponse.Data.FeaturedImageId, model.FeaturedImageId);
@@ -404,18 +410,18 @@ namespace BetterCms.Test.Module.Api.Blog.BlogPosts
             Assert.IsTrue(getResponse.Tags.All(t1 => model.Tags.Any(t2 => t2 == t1.Name)));
 
             Assert.AreEqual(getResponse.AccessRules.Count, model.AccessRules.Count);
-            Assert.IsTrue(getResponse.AccessRules.All(a1 => model.AccessRules.Any(a2 => a1.AccessLevel == a2.AccessLevel 
+            Assert.IsTrue(getResponse.AccessRules.All(a1 => model.AccessRules.Any(a2 => a1.AccessLevel == a2.AccessLevel
                 && a1.IsForRole == a2.IsForRole
                 && a1.Identity == a2.Identity)));
 
             Assert.AreEqual(getResponse.MetaData.MetaKeywords, model.MetaData.MetaKeywords);
             Assert.AreEqual(getResponse.MetaData.MetaDescription, model.MetaData.MetaDescription);
             Assert.AreEqual(getResponse.MetaData.MetaTitle, model.MetaData.MetaTitle);
-            
+
             Assert.AreEqual(getResponse.TechnicalInfo.BlogPostContentId, model.TechnicalInfo.BlogPostContentId);
             Assert.AreEqual(getResponse.TechnicalInfo.PageContentId, model.TechnicalInfo.PageContentId);
             Assert.AreEqual(getResponse.TechnicalInfo.RegionId, model.TechnicalInfo.RegionId);
-            
+
             Assert.AreEqual(getResponse.Language.Id, model.Language.Id);
             Assert.AreEqual(getResponse.Language.LanguageGroupIdentifier, model.Language.LanguageGroupIdentifier);
             Assert.AreEqual(getResponse.Language.Name, model.Language.Name);

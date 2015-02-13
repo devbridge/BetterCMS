@@ -1,0 +1,34 @@
+﻿@using BetterCms.Module.Root
+@using BetterCms.Module.Root.Content.Resources
+@using BetterCms.Module.Root.Mvc
+@using BetterCms.Module.Root.Mvc.Helpers
+
+@model BetterCms.Module.Root.ViewModels.Category.CategoryTemplateViewModel
+
+@{ var canEdit = (ViewContext.Controller as CmsControllerBase).SecurityService.IsAuthorized(RootModuleConstants.UserRoles.EditContent); }
+<div class="bcms-input-list-holder">
+    @Html.Tooltip(Model.TooltipDescription)
+    <div class="bcms-content-titles">
+        @RootGlobalization.CategoriesTemplate_AddCategories_Title
+        <div class="bcms-btn-plus" data-bind="css: { 'bcms-btn-plus-expand': isExpanded() }@(canEdit ? ", click: expandCollapse" : string.Empty)">&nbsp;</div>
+        <div class="bcms-tags-field-holder" data-bind="visible: isExpanded()">
+            <input type="text" class="bcms-add-tags-field" style="width: 107px;" data-bind="
+                    css: { 'bcms-tag-validation-error': newItem.hasError() },
+                    value: newItem,
+                    valueUpdate: 'afterkeydown',
+                    hasfocus: hasfocus,
+                    autocompleteList: 'onlyExisting',
+                    enterPress: function(){},
+                    escPress: clearItem" />
+            <!-- ko if: newItem.hasError()  -->
+            <span class="bcms-tag-field-validation-error">
+                <span data-bind="text: newItem.validationMessage()"></span>
+            </span>
+            <!-- /ko -->
+        </div>
+    </div>
+    <div class="bcms-single-tag-holder" data-bind="foreach: items()">
+        <div class="bcms-single-tag" data-bind="css: { 'bcms-single-tag-active': isActive() }"><span data-bind="    text: name()"></span><a data-bind="@(canEdit ? "click: remove" : string.Empty)">@RootGlobalization.Button_Remove</a></div>
+        <input type="hidden" data-bind="attr: { name: getItemInputName($index()), value: id() }" />
+    </div>
+</div>
