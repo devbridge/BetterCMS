@@ -24,6 +24,7 @@ using BetterCms.Module.Pages.Command.Page.SavePagePublishStatus;
 using BetterCms.Module.Pages.Command.Page.SuggestPages;
 using BetterCms.Module.Pages.Content.Resources;
 using BetterCms.Module.Pages.Helpers;
+using BetterCms.Module.Pages.Models;
 using BetterCms.Module.Pages.Services;
 using BetterCms.Module.Pages.ViewModels.Filter;
 using BetterCms.Module.Pages.ViewModels.Page;
@@ -177,7 +178,8 @@ namespace BetterCms.Module.Pages.Controllers
                                Languages = success ? model.Languages : null,
                                LanguageId = success ? model.LanguageId : null,
                                Translations = success ? model.Translations : null,
-                               ShowTranslationsTab = success && model.ShowTranslationsTab
+                               ShowTranslationsTab = success && model.ShowTranslationsTab,
+                               CategoriesFilterKey = success ? model.CategoriesFilterKey : PageProperties.CategorizableItemKeyForPages
                            };
 
             return ComboWireJson(success, view, json, JsonRequestBehavior.AllowGet);

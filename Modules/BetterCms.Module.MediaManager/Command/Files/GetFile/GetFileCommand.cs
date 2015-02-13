@@ -123,7 +123,9 @@ namespace BetterCms.Module.MediaManager.Command.Files.GetFile
 
                 SetIsReadOnly(model, ((IAccessSecuredObject)file).AccessRules);
             }
-            
+
+            model.CategoriesFilterKey = file.GetCategorizableItemKey();
+
             return model;
         }
     }
