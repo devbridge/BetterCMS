@@ -177,6 +177,7 @@ namespace BetterCms.Module.Blog.Commands.GetBlogPost
 
             model.Authors = authorService.GetAuthors();
             model.RedirectFromOldUrl = true;
+            model.CategoriesFilterKey = categoriesFilterKey;
 
             return model;
         }

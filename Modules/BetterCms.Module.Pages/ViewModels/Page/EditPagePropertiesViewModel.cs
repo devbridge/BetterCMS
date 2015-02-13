@@ -317,6 +317,14 @@ namespace BetterCms.Module.Pages.ViewModels.Page
         public IEnumerable<LookupKeyValue> PageAccessProtocols { get; set; }
 
         /// <summary>
+        /// Gets or sets the categories filter key.
+        /// </summary>
+        /// <value>
+        /// The categories filter key.
+        /// </value>
+        public string CategoriesFilterKey { get; set; }
+
+        /// <summary>
         /// Initializes a new instance of the <see cref="EditPagePropertiesViewModel" /> class.
         /// </summary>
         public EditPagePropertiesViewModel()
