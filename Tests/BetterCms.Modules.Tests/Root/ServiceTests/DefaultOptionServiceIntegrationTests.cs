@@ -1,8 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 
-using Devbridge.Platform.Core.DataAccess;
-using Devbridge.Platform.Core.DataAccess.DataContext;
 using BetterCms.Core.DataContracts;
 using BetterCms.Core.DataContracts.Enums;
 using BetterCms.Core.Exceptions.Mvc;
@@ -10,6 +8,8 @@ using BetterCms.Module.Pages.Models;
 using BetterCms.Module.Root.Models;
 using BetterCms.Module.Root.Services;
 
+using Devbridge.Platform.Core.DataAccess;
+using Devbridge.Platform.Core.DataAccess.DataContext;
 using Devbridge.Platform.Core.Web.Services.Caching;
 
 using NHibernate;

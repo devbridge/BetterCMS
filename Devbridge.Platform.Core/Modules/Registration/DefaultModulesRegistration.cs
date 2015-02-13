@@ -119,7 +119,7 @@ namespace Devbridge.Platform.Core.Modules.Registration
         /// <summary>
         /// Initializes all known modules.
         /// </summary>        
-        public void InitializeModules()
+        public virtual void InitializeModules()
         {
             if (knownModuleDescriptorTypes != null && knownModuleDescriptorTypes.Count > 0)
             {

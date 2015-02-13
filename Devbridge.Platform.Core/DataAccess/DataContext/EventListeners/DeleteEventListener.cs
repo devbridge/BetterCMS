@@ -1,6 +1,5 @@
 ﻿using Devbridge.Platform.Core.DataContracts;
-
-using FluentNHibernate.Data;
+using Devbridge.Platform.Core.Models;
 
 using Iesi.Collections;
 

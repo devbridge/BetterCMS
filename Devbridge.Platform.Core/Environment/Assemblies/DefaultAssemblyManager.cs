@@ -116,7 +116,7 @@ namespace Devbridge.Platform.Core.Environment.Assemblies
                 Log.Trace("Add referenced modules.");
             }
 
-            var modules = AppDomain.CurrentDomain.GetAssemblies().Where(f => f.FullName.StartsWith("BetterCms.Module.", StringComparison.OrdinalIgnoreCase)).ToList();
+            var modules = AppDomain.CurrentDomain.GetAssemblies().Where(f => f.FullName.ToLowerInvariant().Contains("module.")).ToList();
             var loadedPaths = modules.Select(f => f.Location).ToArray();
             var referencedPaths = Directory.GetFiles(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "bin"), "*.dll");
             var notLoadedReferencedPaths = referencedPaths.Where(r => !loadedPaths.Contains(r, StringComparer.OrdinalIgnoreCase)).ToList();
@@ -124,10 +124,10 @@ namespace Devbridge.Platform.Core.Environment.Assemblies
             foreach (var notLoadedReferencedPath in notLoadedReferencedPaths)
             {
                 string fileName = Path.GetFileNameWithoutExtension(notLoadedReferencedPath);
-                if (fileName != null && fileName.StartsWith("BetterCms", StringComparison.OrdinalIgnoreCase))
+                if (fileName != null && fileName.ToLowerInvariant().Contains("module."))
                 {
                     AssemblyName assemblyName = AssemblyName.GetAssemblyName(notLoadedReferencedPath);
-                    if (assemblyName.FullName.StartsWith("BetterCms.Module.", StringComparison.OrdinalIgnoreCase))
+                    if (assemblyName.FullName.ToLowerInvariant().Contains("module."))
                     {
                         var module = assemblyLoader.Load(assemblyName);
                         modules.Add(module);

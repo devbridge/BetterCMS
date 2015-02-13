@@ -5,6 +5,7 @@ using Autofac;
 using BetterCms.Core.Modules.Projections;
 
 using Devbridge.Platform.Core.Environment.Assemblies;
+using Devbridge.Platform.Core.Models;
 using Devbridge.Platform.Core.Modules.Registration;
 using Devbridge.Platform.Core.Web.Modules.Registration;
 using Devbridge.Platform.Core.Web.Mvc.Extensions;
@@ -133,6 +134,22 @@ namespace BetterCms.Core.Modules.Registration
             return knownSiteSettingsItems;
         }
 
+        /// <summary>
+        /// Initializes all known modules.
+        /// </summary>
+        public override void InitializeModules()
+        {
+            base.InitializeModules();
+
+            // Apply Better CMS schema name pattern
+            SchemaNameProvider.SchemaNamePattern = "bcms_{0}";
+        }
+
+        /// <summary>
+        /// Registers the types.
+        /// </summary>
+        /// <param name="registrationContext">The registration context.</param>
+        /// <param name="containerBuilder">The container builder.</param>
         protected override void RegisterModuleDescriptor(ModuleRegistrationContext registrationContext, ContainerBuilder containerBuilder)
         {
             var descriptor = registrationContext.ModuleDescriptor as CmsModuleDescriptor;
