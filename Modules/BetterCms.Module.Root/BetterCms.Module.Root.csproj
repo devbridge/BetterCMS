@@ -263,7 +263,6 @@
     <Compile Include="Models\Category.cs" />
     <Compile Include="Models\Content.cs" />
     <Compile Include="Models\ContentOption.cs" />
-    <Compile Include="Models\ComboWireJson.cs" />
     <Compile Include="Models\AccessRule.cs" />
     <Compile Include="Models\CustomOption.cs" />
     <Compile Include="Models\Extensions\ListExtensions.cs" />
@@ -374,7 +373,6 @@
     <Compile Include="Models\Page.cs" />
     <Compile Include="Mvc\Helpers\SelectHelper.cs" />
     <Compile Include="Mvc\UI\DateBoxHelper.cs" />
-    <Compile Include="Models\WireJson.cs" />
     <Compile Include="Mvc\Helpers\FormHelper.cs" />
     <Compile Include="Mvc\Helpers\MessagesHelper.cs" />
     <Compile Include="Registration\TabsJsModuleIncludeDescriptor.cs" />
@@ -439,9 +437,6 @@
     <Compile Include="ViewModels\Rendering\JavaScriptModuleInclude.cs" />
     <Compile Include="ViewModels\Rendering\RenderMainJsViewModel.cs" />
     <Compile Include="ViewModels\Rendering\RenderStyleSheetIncludesViewModel.cs" />
-    <Compile Include="Models\UserMessages.cs">
-      <SubType>Code</SubType>
-    </Compile>
     <Compile Include="Mvc\Grids\EditableGridColumn.cs" />
     <Compile Include="ViewModels\Rendering\JavaScriptModuleShimConfigurationViewModel.cs" />
     <Compile Include="ViewModels\Security\IAccessSecuredViewModel.cs" />

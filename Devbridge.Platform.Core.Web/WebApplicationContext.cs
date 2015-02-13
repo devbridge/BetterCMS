@@ -55,17 +55,22 @@ namespace Devbridge.Platform.Core.Web
             {
                 if (!configLoaded)
                 {
-                    configLoaded = true;
                     lock (configurationLoaderLock)
                     {
                         if (!configLoaded)
                         {
-                            configLoaded = true;
-
                             IConfigurationLoader configurationLoader = new DefaultWebConfigurationLoader();
                             config = configurationLoader.TryLoadConfig<DefaultWebConfigurationSection>();
+
+                            if (config == null)
+                            {
+                                config = new DefaultWebConfigurationSection();
+                            }
+
+                            configLoaded = true;
                         }
                     }
+                    configLoaded = true;
                 }
 
                 return config;
@@ -124,6 +129,7 @@ namespace Devbridge.Platform.Core.Web
             builder.RegisterType<DefaultWebPrincipalProvider>().As<IPrincipalProvider>().SingleInstance();
             builder.RegisterType<DefaultWebAssemblyManager>().As<IAssemblyManager>().SingleInstance();
             builder.RegisterType<HttpRuntimeCacheService>().As<ICacheService>().SingleInstance();
+            builder.RegisterType<DefaultWebApplicationHost>().As<IWebApplicationHost>().SingleInstance();
 
             if (Config != null)
             {

@@ -146,6 +146,14 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Sandbox", "Sandbox", "{BF1C
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Devbridge.Platform.Core.Web.Tests", "Devbridge.Platform.Core.Web.Tests\Devbridge.Platform.Core.Web.Tests.csproj", "{1646AD68-8EC8-4109-B538-E725C5E2A53B}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Modules", "Modules", "{D575594B-739F-4D8A-9B86-00036592F04B}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Devbridge.Platform.Sample.Module", "Devbridge.Platform.Sample.Module\Devbridge.Platform.Sample.Module.csproj", "{ED95B78C-2448-4096-A89C-A2CA3916783A}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Devbridge.Platform.Sample.Web.Module", "Devbridge.Platform.Sample.Web.Module\Devbridge.Platform.Sample.Web.Module.csproj", "{523F9A3E-B266-4863-91C4-08690044A852}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Devbridge.Platform.Mvc5.Sandbox", "Devbridge.Platform.Mvc5.Sandbox\Devbridge.Platform.Mvc5.Sandbox.csproj", "{88BB4C32-0EC8-4676-9870-EBD147CEF3A1}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -419,6 +427,30 @@ Global
 		{1646AD68-8EC8-4109-B538-E725C5E2A53B}.Release|Any CPU.Build.0 = Release|Any CPU
 		{1646AD68-8EC8-4109-B538-E725C5E2A53B}.Staging|Any CPU.ActiveCfg = Release|Any CPU
 		{1646AD68-8EC8-4109-B538-E725C5E2A53B}.Staging|Any CPU.Build.0 = Release|Any CPU
+		{ED95B78C-2448-4096-A89C-A2CA3916783A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{ED95B78C-2448-4096-A89C-A2CA3916783A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{ED95B78C-2448-4096-A89C-A2CA3916783A}.Dev|Any CPU.ActiveCfg = Debug|Any CPU
+		{ED95B78C-2448-4096-A89C-A2CA3916783A}.Dev|Any CPU.Build.0 = Debug|Any CPU
+		{ED95B78C-2448-4096-A89C-A2CA3916783A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{ED95B78C-2448-4096-A89C-A2CA3916783A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{ED95B78C-2448-4096-A89C-A2CA3916783A}.Staging|Any CPU.ActiveCfg = Release|Any CPU
+		{ED95B78C-2448-4096-A89C-A2CA3916783A}.Staging|Any CPU.Build.0 = Release|Any CPU
+		{523F9A3E-B266-4863-91C4-08690044A852}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{523F9A3E-B266-4863-91C4-08690044A852}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{523F9A3E-B266-4863-91C4-08690044A852}.Dev|Any CPU.ActiveCfg = Debug|Any CPU
+		{523F9A3E-B266-4863-91C4-08690044A852}.Dev|Any CPU.Build.0 = Debug|Any CPU
+		{523F9A3E-B266-4863-91C4-08690044A852}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{523F9A3E-B266-4863-91C4-08690044A852}.Release|Any CPU.Build.0 = Release|Any CPU
+		{523F9A3E-B266-4863-91C4-08690044A852}.Staging|Any CPU.ActiveCfg = Release|Any CPU
+		{523F9A3E-B266-4863-91C4-08690044A852}.Staging|Any CPU.Build.0 = Release|Any CPU
+		{88BB4C32-0EC8-4676-9870-EBD147CEF3A1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{88BB4C32-0EC8-4676-9870-EBD147CEF3A1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{88BB4C32-0EC8-4676-9870-EBD147CEF3A1}.Dev|Any CPU.ActiveCfg = Debug|Any CPU
+		{88BB4C32-0EC8-4676-9870-EBD147CEF3A1}.Dev|Any CPU.Build.0 = Debug|Any CPU
+		{88BB4C32-0EC8-4676-9870-EBD147CEF3A1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{88BB4C32-0EC8-4676-9870-EBD147CEF3A1}.Release|Any CPU.Build.0 = Release|Any CPU
+		{88BB4C32-0EC8-4676-9870-EBD147CEF3A1}.Staging|Any CPU.ActiveCfg = Release|Any CPU
+		{88BB4C32-0EC8-4676-9870-EBD147CEF3A1}.Staging|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -464,6 +496,10 @@ Global
 		{4C359C11-CFBD-4CD6-B0D7-8552C6E09FEB} = {9821FD3B-C261-424D-9F91-2F89A9E1FD38}
 		{BF1C252E-1ABD-48E4-A675-E94AC4FEEB4E} = {9821FD3B-C261-424D-9F91-2F89A9E1FD38}
 		{1646AD68-8EC8-4109-B538-E725C5E2A53B} = {4C359C11-CFBD-4CD6-B0D7-8552C6E09FEB}
+		{D575594B-739F-4D8A-9B86-00036592F04B} = {9821FD3B-C261-424D-9F91-2F89A9E1FD38}
+		{ED95B78C-2448-4096-A89C-A2CA3916783A} = {D575594B-739F-4D8A-9B86-00036592F04B}
+		{523F9A3E-B266-4863-91C4-08690044A852} = {D575594B-739F-4D8A-9B86-00036592F04B}
+		{88BB4C32-0EC8-4676-9870-EBD147CEF3A1} = {BF1C252E-1ABD-48E4-A675-E94AC4FEEB4E}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		EnterpriseLibraryConfigurationToolBinariesPath = packages\Unity.2.1.505.0\lib\NET35

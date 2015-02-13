@@ -66,8 +66,6 @@
   <ItemGroup>
     <Compile Include="ServiceTests\StorageTests\FtpStorageServiceTest.cs" />
     <Compile Include="ServiceTests\StorageTests\FileSystemStorageServiceTest.cs" />
-    <Compile Include="ModuleTests\ModuleDescriptorTest.cs" />
-    <Compile Include="Mvc\BetterCmsControllerFactoryTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -76,10 +74,7 @@
       <SubType>Designer</SubType>
     </None>
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="EnvironmentTests\" />
-    <Folder Include="ModelTests\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <ProjectReference Include="..\..\BetterCMS.Configuration\BetterCms.Configuration.csproj">
       <Project>{DA2B225E-6AEE-4465-8B08-4D5B1C1CED49}</Project>

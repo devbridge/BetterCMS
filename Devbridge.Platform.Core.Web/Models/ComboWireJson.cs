@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace BetterCms.Module.Root.Models
+namespace Devbridge.Platform.Core.Web.Models
 {
     /// <summary>
     /// Generic communication object to transfer information between Ajax posts.

@@ -8,6 +8,7 @@ using BetterCms.Module.Pages.Services;
 using BetterCms.Module.Pages.ViewModels.Seo;
 using BetterCms.Module.Root.Models;
 
+using Devbridge.Platform.Core.Web.Models;
 using Devbridge.Platform.Core.Web.Mvc.Commands;
 
 using Moq;

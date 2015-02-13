@@ -14,6 +14,7 @@ using BetterCms.Module.Root.ViewModels.Option;
 using BetterCms.Module.Root.ViewModels.Security;
 
 using Devbridge.Platform.Core.Models;
+using Devbridge.Platform.Core.Web.Models;
 
 namespace BetterCms.Module.Pages.ViewModels.Page
 {

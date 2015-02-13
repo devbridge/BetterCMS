@@ -18,6 +18,7 @@ using BetterCms.Module.Root.Mvc;
 using BetterCms.Module.Root.Services;
 using BetterCms.Module.Root.ViewModels.Security;
 
+using Devbridge.Platform.Core.Web.Models;
 using Devbridge.Platform.Core.Web.Mvc.Commands;
 
 using NHibernate.Linq;

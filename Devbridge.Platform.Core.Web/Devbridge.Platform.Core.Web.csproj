@@ -97,11 +97,17 @@
     <Compile Include="Environment\Host\IWebApplicationHost.cs" />
     <Compile Include="Events\WebCoreEvents.cs" />
     <Compile Include="Exceptions\Host\RestartApplicationException.cs" />
+    <Compile Include="Models\ComboWireJson.cs" />
+    <Compile Include="Models\UserMessages.cs" />
+    <Compile Include="Models\WireJson.cs" />
+    <Compile Include="Mvc\Commands\CoreCommandBase.cs" />
     <Compile Include="Mvc\Commands\DefaultCommandResolver.cs" />
     <Compile Include="Mvc\Commands\ICommand.cs" />
     <Compile Include="Mvc\Commands\ICommandContext.cs" />
     <Compile Include="Mvc\Commands\ICommandResolver.cs" />
+    <Compile Include="Mvc\CoreControllerBase.cs" />
     <Compile Include="Mvc\DefaultWebControllerFactory.cs" />
+    <Compile Include="Mvc\Extensions\ViewRenderingExtensions.cs" />
     <Compile Include="Mvc\IMessagesIndicator.cs" />
     <Compile Include="Mvc\Routes\DefaultRouteTable.cs" />
     <Compile Include="Mvc\Routes\IRouteTable.cs" />

@@ -7,6 +7,8 @@ using BetterCms.Module.Root.Models;
 using BetterCms.Module.Root.Mvc;
 using BetterCms.Module.Root.Mvc.Helpers;
 
+using Devbridge.Platform.Core.Web.Models;
+
 using Moq;
 
 using NUnit.Framework;

@@ -1,10 +1,8 @@
 ﻿using System.Collections.Generic;
 
-using BetterCms.Core.Mvc;
-
 using Devbridge.Platform.Core.Web.Mvc;
 
-namespace BetterCms.Module.Root.Models
+namespace Devbridge.Platform.Core.Web.Models
 {
     /// <summary>
     /// Data contract to handle user messages.

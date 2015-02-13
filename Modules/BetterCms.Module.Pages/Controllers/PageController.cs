@@ -23,8 +23,9 @@ using BetterCms.Module.Pages.Command.Page.SavePageProperties;
 using BetterCms.Module.Pages.Command.Page.SavePagePublishStatus;
 using BetterCms.Module.Pages.Command.Page.SuggestPages;
 using BetterCms.Module.Pages.Content.Resources;
-using BetterCms.Module.Pages.Helpers;
+
 using BetterCms.Module.Pages.Services;
+
 using BetterCms.Module.Pages.ViewModels.Filter;
 using BetterCms.Module.Pages.ViewModels.Page;
 
@@ -32,6 +33,8 @@ using BetterCms.Module.Root;
 using BetterCms.Module.Root.Models;
 using BetterCms.Module.Root.Mvc;
 using BetterCms.Module.Root.ViewModels.Security;
+
+using Devbridge.Platform.Core.Web.Models;
 
 using Microsoft.Web.Mvc;
 
