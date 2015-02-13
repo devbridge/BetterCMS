@@ -1,21 +1,16 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Security.Principal;
-using System.Web.Mvc;
-using System.Web.Services.Description;
 
 using BetterCms.Core.DataAccess;
 using BetterCms.Core.DataAccess.DataContext;
 using BetterCms.Core.DataContracts;
 using BetterCms.Core.Exceptions.DataTier;
 using BetterCms.Core.Models;
-using BetterCms.Core.Security;
+using BetterCms.Events;
 using BetterCms.Module.Root.Models;
-using BetterCms.Module.Root.Mvc;
 
-using FluentNHibernate.Utils;
-
+using NHibernate;
 using NHibernate.Criterion;
 using NHibernate.Linq;
 using NHibernate.Transform;
@@ -30,11 +25,6 @@ namespace BetterCms.Module.Root.Services
         private readonly IRepository repository;
 
         /// <summary>
-        /// The CMS configuration.
-        /// </summary>
-        private readonly ICmsConfiguration cmsConfiguration;
-
-        /// <summary>
         /// The unit of work
         /// </summary>
         private readonly IUnitOfWork unitOfWork;
@@ -45,10 +35,9 @@ namespace BetterCms.Module.Root.Services
         /// <param name="repository">The repository.</param>
         /// <param name="cmsConfiguration">The CMS configuration.</param>
         /// <param name="unitOfWork">The unit of work.</param>
-        public DefaultCategoryService(IRepository repository, ICmsConfiguration cmsConfiguration, IUnitOfWork unitOfWork)
+        public DefaultCategoryService(IRepository repository, IUnitOfWork unitOfWork)
         {
             this.repository = repository;
-            this.cmsConfiguration = cmsConfiguration;
             this.unitOfWork = unitOfWork;
         }
 
@@ -112,120 +101,13 @@ namespace BetterCms.Module.Root.Services
                                      .Where(() => entityAlias.Id == entityId && !categoryAlias.IsDeleted)
                                      .SelectList(list => list.Select(() => categoryAlias.Category.Id)))
                                      .SelectList(l => l
-                                         .Select(NHibernate.Criterion.Projections.Cast(NHibernate.NHibernateUtil.String, NHibernate.Criterion.Projections.Property(() => categoryAliasa.Id))).WithAlias(() => valueAlias.Key)
+                                         .Select(NHibernate.Criterion.Projections.Cast(NHibernateUtil.String, NHibernate.Criterion.Projections.Property(() => categoryAliasa.Id))).WithAlias(() => valueAlias.Key)
                                          .Select(() => categoryAliasa.Name).WithAlias(() => valueAlias.Value))
                                      .TransformUsing(Transformers.AliasToBean<LookupKeyValue>())
                                      .Future<LookupKeyValue>();
         }
-        public Category SaveCategory(out bool categoryUpdated, CategoryTree categoryTree, Guid categoryId, int version, string name, int displayOrder, string macro, Guid parentCategoryId, bool isDeleted = false, Category parentCategory = null, List<Category> categories = null)
-        {
-            categoryUpdated = false;
 
-            var category = categoryId.HasDefaultValue()
-                ? new Category()
-                : categories != null ? categories.First(c => c.Id == categoryId) : repository.First<Category>(categoryId);
-
-            if (isDeleted && !category.Id.HasDefaultValue())
-            {
-                repository.Delete(category);
-                categoryUpdated = true;
-            }
-            else
-            {
-                var updated = false;
-                if (category.CategoryTree == null)
-                {
-                    category.CategoryTree = categoryTree;
-                }
-
-                if (category.Name != name)
-                {
-                    updated = true;
-                    category.Name = name;
-                }
-
-                if (category.DisplayOrder != displayOrder)
-                {
-                    updated = true;
-                    category.DisplayOrder = displayOrder;
-                }
-
-                Category newParent;
-                if (parentCategory != null && !parentCategory.Id.HasDefaultValue())
-                {
-                    newParent = parentCategory;
-                }
-                else
-                {
-                    newParent = parentCategoryId.HasDefaultValue()
-                        ? null
-                        : repository.AsProxy<Category>(parentCategoryId);
-                }
-
-                if (category.ParentCategory != newParent)
-                {
-                    updated = true;
-                    category.ParentCategory = newParent;
-                }
-
-                if (cmsConfiguration.EnableMacros && category.Macro != macro)
-                {
-                    category.Macro = macro;
-                    updated = true;
-                }
-
-                if (updated)
-                {
-                    category.Version = version;
-                    repository.Save(category);
-                    categoryUpdated = true;
-                }
-            }
-
-            return category;
-        }
-
-        public void DeleteCategoryTree(Guid id, int version, IPrincipal currentUser)
-        {
-            var categoryTree = repository
-                .AsQueryable<CategoryTree>()
-                .Where(map => map.Id == id)
-                // TODO:                .FetchMany(map => map.AccessRules)
-                .Distinct()
-                .ToList()
-                .First();
-
-            // TODO:            // Security.
-            //            if (cmsConfiguration.Security.AccessControlEnabled)
-            //            {
-            //                var roles = new[] { RootModuleConstants.UserRoles.EditContent };
-            //                accessControlService.DemandAccess(sitemap, currentUser, AccessLevel.ReadWrite, roles);
-            //            }
-
-            // Concurrency.
-            if (version > 0 && categoryTree.Version != version)
-            {
-                throw new ConcurrentDataException(categoryTree);
-            }
-
-            unitOfWork.BeginTransaction();
-
-            // TODO:
-            //            if (sitemap.AccessRules != null)
-            //            {
-            //                var rules = sitemap.AccessRules.ToList();
-            //                rules.ForEach(sitemap.RemoveRule);
-            //            }
-
-            repository.Delete(categoryTree);
-
-            unitOfWork.Commit();
-
-            // Events.
-            Events.RootEvents.Instance.OnCategoryTreeDeleted(categoryTree);
-        }
-
-        public void CombineEntityCategories<TEntity, TEntityCategory>(TEntity entity, IEnumerable<System.Guid> currentCategories) 
+        public void CombineEntityCategories<TEntity, TEntityCategory>(TEntity entity, IEnumerable<Guid> currentCategories) 
             where TEntity : Entity, ICategorized
             where TEntityCategory : Entity, IEntityCategory, new()
         {
@@ -293,7 +175,7 @@ namespace BetterCms.Module.Root.Services
             var updatedSitemaps = new List<CategoryTree>();
             foreach (var deletedNode in deletedNodes)
             {
-                Events.RootEvents.Instance.OnCategoryDeleted(deletedNode);
+                RootEvents.Instance.OnCategoryDeleted(deletedNode);
                 if (!updatedSitemaps.Contains(deletedNode.CategoryTree))
                 {
                     updatedSitemaps.Add(deletedNode.CategoryTree);
@@ -302,7 +184,7 @@ namespace BetterCms.Module.Root.Services
 
             foreach (var sitemap in updatedSitemaps)
             {
-                Events.RootEvents.Instance.OnCategoryTreeUpdated(sitemap);
+                RootEvents.Instance.OnCategoryTreeUpdated(sitemap);
             }
         }
 
