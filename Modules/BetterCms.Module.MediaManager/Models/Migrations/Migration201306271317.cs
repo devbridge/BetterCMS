@@ -1,6 +1,6 @@
 ﻿using System;
 
-using BetterCms.Core.DataAccess.DataContext.Migrations;
+using Devbridge.Platform.Core.DataAccess.DataContext.Migrations;
 
 using Devbridge.Platform.Core.DataAccess.DataContext.Migrations;
 
@@ -12,7 +12,7 @@ namespace BetterCms.Module.MediaManager.Models.Migrations
     /// Module database structure update.
     /// </summary>
     [Migration(201306271317)]
-    public class Migration201306271317 : CmsDefaultMigration
+    public class Migration201306271317: DefaultMigration
     {
         /// <summary>
         /// The root module schema name.

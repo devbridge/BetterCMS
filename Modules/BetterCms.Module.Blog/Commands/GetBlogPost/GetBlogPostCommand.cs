@@ -1,8 +1,6 @@
 ﻿using System;
 using System.Linq;
 
-using BetterCms.Core.DataAccess.DataContext;
-using BetterCms.Core.Mvc.Commands;
 using BetterCms.Core.Security;
 
 using BetterCms.Module.Blog.Models;
@@ -12,13 +10,13 @@ using BetterCms.Module.Blog.ViewModels.Blog;
 using BetterCms.Module.MediaManager.Services;
 using BetterCms.Module.MediaManager.ViewModels;
 using BetterCms.Module.Pages.Models;
-using BetterCms.Module.Pages.Services;
 
 using BetterCms.Module.Root.Models;
 using BetterCms.Module.Root.Mvc;
 using BetterCms.Module.Root.Services;
 
-using FluentNHibernate.Utils;
+using Devbridge.Platform.Core.DataAccess.DataContext;
+using Devbridge.Platform.Core.Web.Mvc.Commands;
 
 using BlogContent = BetterCms.Module.Root.Models.Content;
 using ITagService = BetterCms.Module.Pages.Services.ITagService;

@@ -1,11 +1,11 @@
-﻿using BetterCms.Core.DataAccess.DataContext.Migrations;
+﻿using Devbridge.Platform.Core.DataAccess.DataContext.Migrations;
 
 using FluentMigrator;
 
 namespace BetterCms.Module.ImagesGallery.Models.Migrations
 {
     [Migration(201310251623)]
-    public class Migration201310251623 : CmsDefaultMigration
+    public class Migration201310251623: DefaultMigration
     {
         /// <summary>
         /// The root schema name

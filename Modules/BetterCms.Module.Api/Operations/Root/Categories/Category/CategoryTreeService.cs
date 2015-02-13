@@ -17,6 +17,8 @@ using BetterCms.Module.Root.Services.Categories.Tree;
 using Devbridge.Platform.Core.DataAccess;
 using Devbridge.Platform.Core.DataAccess.DataContext;
 
+using NHibernate.Linq;
+
 using ServiceStack.ServiceInterface;
 
 namespace BetterCms.Module.Api.Operations.Root.Categories.Category
@@ -61,7 +63,11 @@ namespace BetterCms.Module.Api.Operations.Root.Categories.Category
         /// </summary>
         private readonly Module.Root.Services.ICategoryService categoryService;
 
+        /// <summary>
+        /// The category tree service
+        /// </summary>
         private readonly Module.Root.Services.Categories.Tree.ICategoryTreeService categoryTreeService;
+
         /// <summary>
         /// The CMS configuration.
         /// </summary>
@@ -85,7 +91,6 @@ namespace BetterCms.Module.Api.Operations.Root.Categories.Category
         /// <param name="treeService">The tree service.</param>
         /// <param name="nodeService">The node service.</param>
         /// <param name="nodesService">The nodes service.</param>
-        /// <param name="tagService">The tag service.</param>
         /// <param name="accessControlService">The access control service.</param>
         /// <param name="securityService">The security service.</param>
         /// <param name="categoryService">The category service.</param>
@@ -103,8 +108,7 @@ namespace BetterCms.Module.Api.Operations.Root.Categories.Category
             Module.Root.Services.ICategoryService categoryService,
             Module.Root.Services.Categories.Tree.ICategoryTreeService categoryTreeService,
             ICmsConfiguration cmsConfiguration,
-            ICategorizableItemsService categorizableItemsService
-            )
+            ICategorizableItemsService categorizableItemsService)
         {
             this.repository = repository;
             this.unitOfWork = unitOfWork;

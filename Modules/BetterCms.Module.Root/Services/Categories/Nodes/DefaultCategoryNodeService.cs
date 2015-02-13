@@ -1,9 +1,10 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 
-using BetterCms.Core.DataAccess;
 using BetterCms.Module.Root.Models;
 using BetterCms.Module.Root.Mvc;
+
+using Devbridge.Platform.Core.DataAccess;
 
 namespace BetterCms.Module.Root.Services.Categories.Nodes
 {

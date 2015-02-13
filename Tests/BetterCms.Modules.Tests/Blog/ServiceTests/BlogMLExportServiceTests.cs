@@ -5,13 +5,15 @@ using System.Linq;
 using System.Text;
 using System.Xml;
 
-using BetterCms.Core.DataAccess;
 using BetterCms.Core.DataContracts.Enums;
-using BetterCms.Core.Web;
+
 using BetterCms.Module.Blog.Models;
 using BetterCms.Module.Blog.Services;
 using BetterCms.Module.Pages.Models;
 using BetterCms.Module.Root.Models;
+
+using Devbridge.Platform.Core.DataAccess;
+using Devbridge.Platform.Core.Web.Web;
 
 using FluentNHibernate.Utils;
 

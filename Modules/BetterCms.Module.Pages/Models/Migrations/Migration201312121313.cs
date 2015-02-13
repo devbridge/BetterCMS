@@ -1,6 +1,6 @@
 ﻿using System;
 
-using BetterCms.Core.DataAccess.DataContext.Migrations;
+using Devbridge.Platform.Core.DataAccess.DataContext.Migrations;
 
 using Devbridge.Platform.Core.DataAccess.DataContext.Migrations;
 using Devbridge.Platform.Core.Models;
@@ -13,7 +13,7 @@ namespace BetterCms.Module.Pages.Models.Migrations
     /// Module database structure update.
     /// </summary>
     [Migration(201312121313)]
-    public class Migration201312121313 : CmsDefaultMigration
+    public class Migration201312121313: DefaultMigration
     {
         /// <summary>
         /// The default sitemap identifier.

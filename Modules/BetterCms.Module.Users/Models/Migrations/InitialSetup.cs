@@ -1,6 +1,4 @@
-﻿using BetterCms.Core.DataAccess.DataContext.Migrations;
-
-using Devbridge.Platform.Core.DataAccess.DataContext.Migrations;
+﻿using Devbridge.Platform.Core.DataAccess.DataContext.Migrations;
 using Devbridge.Platform.Core.Models;
 
 using FluentMigrator;
@@ -11,7 +9,7 @@ namespace BetterCms.Module.Users.Models.Migrations
     /// Module initial database structure creation.
     /// </summary>
     [Migration(201308200000)]
-    public class InitialSetup : CmsDefaultMigration
+    public class InitialSetup : DefaultMigration
     {
         private readonly string mediaModuleSchemaName = (new MediaManager.Models.Migrations.MediaManagerVersionTableMetaData()).SchemaName;
 

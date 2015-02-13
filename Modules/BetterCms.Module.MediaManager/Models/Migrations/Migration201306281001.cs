@@ -1,4 +1,4 @@
-﻿using BetterCms.Core.DataAccess.DataContext.Migrations;
+﻿using Devbridge.Platform.Core.DataAccess.DataContext.Migrations;
 using Devbridge.Platform.Core.Models;
 
 using FluentMigrator;
@@ -9,7 +9,7 @@ namespace BetterCms.Module.MediaManager.Models.Migrations
     /// Migration for IsInSitemap.
     /// </summary>
     [Migration(201306281001)]
-    public class Migration201306281001 : CmsDefaultMigration
+    public class Migration201306281001: DefaultMigration
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="Migration201306281001"/> class.

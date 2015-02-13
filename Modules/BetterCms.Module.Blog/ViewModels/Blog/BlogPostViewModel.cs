@@ -4,8 +4,7 @@ using System.ComponentModel.DataAnnotations;
 using System.Web.Mvc;
 
 using BetterCms.Core.DataContracts.Enums;
-using BetterCms.Core.Models;
-using BetterCms.Core.Mvc.Binders;
+
 using BetterCms.Module.Blog.Content.Resources;
 using BetterCms.Module.MediaManager.ViewModels;
 using BetterCms.Module.Pages.Mvc.Attributes;
@@ -13,7 +12,7 @@ using BetterCms.Module.Root.Content.Resources;
 using BetterCms.Module.Root.Models;
 using BetterCms.Module.Root.ViewModels.Security;
 
-using Newtonsoft.Json;
+using Devbridge.Platform.Core.Models;
 
 namespace BetterCms.Module.Blog.ViewModels.Blog
 {

@@ -2,8 +2,9 @@
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
-using BetterCms.Core.Models;
 using BetterCms.Module.Root.Content.Resources;
+
+using Devbridge.Platform.Core.Models;
 
 namespace BetterCms.Module.Root.ViewModels.Category
 {

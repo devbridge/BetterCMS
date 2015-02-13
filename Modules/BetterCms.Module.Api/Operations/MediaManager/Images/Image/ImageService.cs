@@ -2,10 +2,8 @@
 using System.Collections.Generic;
 using System.Linq;
 
-using BetterCms.Core.DataAccess;
-using BetterCms.Core.DataAccess.DataContext;
 using BetterCms.Core.Exceptions.Api;
-using BetterCms.Core.Exceptions.DataTier;
+
 using BetterCms.Module.Api.Operations.Root.Categories.Category;
 using BetterCms.Module.MediaManager.Models;
 using BetterCms.Module.MediaManager.Models.Extensions;
@@ -13,6 +11,10 @@ using BetterCms.Module.MediaManager.Services;
 using BetterCms.Module.Root.Models;
 using BetterCms.Module.Root.Mvc;
 using BetterCms.Module.Root.Services;
+
+using Devbridge.Platform.Core.DataAccess;
+using Devbridge.Platform.Core.DataAccess.DataContext;
+using Devbridge.Platform.Core.Exceptions.DataTier;
 
 using NHibernate.Linq;
 

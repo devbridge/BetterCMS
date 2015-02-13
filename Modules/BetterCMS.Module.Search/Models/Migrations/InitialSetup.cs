@@ -1,7 +1,8 @@
 ﻿using System;
 
-using BetterCms.Core.DataAccess.DataContext.Migrations;
 using BetterCms.Module.Search.Content.Resources;
+
+using Devbridge.Platform.Core.DataAccess.DataContext.Migrations;
 
 using FluentMigrator;
 
@@ -11,7 +12,7 @@ namespace BetterCms.Module.Search.Models.Migrations
     /// Module initial database structure creation.
     /// </summary>
     [Migration(201401030900)]
-    public class InitialSetup : CmsDefaultMigration
+    public class InitialSetup : DefaultMigration
     {
         /// <summary>
         /// The root schema name

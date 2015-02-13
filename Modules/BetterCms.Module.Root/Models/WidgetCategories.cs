@@ -1,10 +1,9 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
 
 using BetterCms.Core.DataContracts;
-using BetterCms.Core.Models;
+
+using Devbridge.Platform.Core.DataContracts;
+using Devbridge.Platform.Core.Models;
 
 namespace BetterCms.Module.Root.Models
 {

@@ -1,13 +1,13 @@
 ﻿using System;
 
-using BetterCms.Core.DataAccess.DataContext.Migrations;
+using Devbridge.Platform.Core.DataAccess.DataContext.Migrations;
 
 using FluentMigrator;
 
 namespace BetterCms.Module.Users.Models.Migrations
 {
     [Migration(201309091554)]
-    public class Migration201309091554 : CmsDefaultMigration
+    public class Migration201309091554: DefaultMigration
     {
         private static readonly Guid loginWidgetId = new Guid("DE0E47B2-728D-4BE6-904D-ED99CDDEDA4A");
 

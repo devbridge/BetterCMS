@@ -2,19 +2,15 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Security.Principal;
-using System.Web.Mvc;
-using System.Web.Services.Description;
 
-using BetterCms.Core.DataAccess;
-using BetterCms.Core.DataAccess.DataContext;
 using BetterCms.Core.DataContracts;
-using BetterCms.Core.Exceptions.DataTier;
-using BetterCms.Core.Models;
-using BetterCms.Core.Security;
 using BetterCms.Module.Root.Models;
 using BetterCms.Module.Root.Mvc;
 
-using FluentNHibernate.Utils;
+using Devbridge.Platform.Core.DataAccess;
+using Devbridge.Platform.Core.DataAccess.DataContext;
+using Devbridge.Platform.Core.Exceptions.DataTier;
+using Devbridge.Platform.Core.Models;
 
 using NHibernate.Criterion;
 using NHibernate.Linq;

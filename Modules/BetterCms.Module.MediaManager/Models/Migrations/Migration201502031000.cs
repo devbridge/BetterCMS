@@ -1,7 +1,6 @@
-﻿using System;
+﻿using BetterCms.Module.Root.Models.Migrations;
 
-using BetterCms.Core.DataAccess.DataContext.Migrations;
-using BetterCms.Module.Root.Models.Migrations;
+using Devbridge.Platform.Core.DataAccess.DataContext.Migrations;
 
 using FluentMigrator;
 
@@ -29,7 +28,7 @@ namespace BetterCms.Module.MediaManager.Models.Migrations
             Create
                 .Table("MediaCategories")
                 .InSchema(SchemaName)
-                .WithCmsBaseColumns()
+                .WithBaseColumns()
                 .WithColumn("MediaId").AsGuid().NotNullable()
                 .WithColumn("CategoryId").AsGuid().NotNullable();
 

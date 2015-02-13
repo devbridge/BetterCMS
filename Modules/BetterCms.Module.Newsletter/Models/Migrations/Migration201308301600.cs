@@ -1,11 +1,11 @@
-﻿using BetterCms.Core.DataAccess.DataContext.Migrations;
+﻿using Devbridge.Platform.Core.DataAccess.DataContext.Migrations;
 
 using FluentMigrator;
 
 namespace BetterCms.Module.Newsletter.Models.Migrations
 {
     [Migration(201308301600)]
-    public class Migration201308301600 : CmsDefaultMigration
+    public class Migration201308301600: DefaultMigration
     {
         public Migration201308301600()
             : base(NewsletterModuleDescriptor.ModuleName)

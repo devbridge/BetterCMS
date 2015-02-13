@@ -1,11 +1,11 @@
-﻿using System.Web.Mvc;
-
-using BetterCms.Core.DataContracts;
-using BetterCms.Core.Models;
-using BetterCms.Module.Root.Models;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Security.Principal;
+
+using BetterCms.Core.DataContracts;
+using BetterCms.Module.Root.Models;
+
+using Devbridge.Platform.Core.Models;
 
 namespace BetterCms.Module.Root.Services
 {

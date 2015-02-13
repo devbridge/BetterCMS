@@ -1,6 +1,7 @@
 ﻿using System;
 
 using Devbridge.Platform.Core.Exceptions;
+using Devbridge.Platform.Core.Models;
 
 using FluentMigrator;
 using FluentMigrator.Builders.IfDatabase;
@@ -15,11 +16,11 @@ namespace Devbridge.Platform.Core.DataAccess.DataContext.Migrations
 
         private readonly string moduleName;
 
-        public virtual string SchemaName
+        public string SchemaName
         {
             get
             {
-                return "module_" + moduleName;
+                return SchemaNameProvider.GetSchemaName(moduleName);
             }
         }
 

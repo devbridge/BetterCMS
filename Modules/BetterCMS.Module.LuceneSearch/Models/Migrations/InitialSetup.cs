@@ -1,6 +1,4 @@
-﻿using BetterCms.Core.DataAccess.DataContext.Migrations;
-
-using Devbridge.Platform.Core.DataAccess.DataContext.Migrations;
+﻿using Devbridge.Platform.Core.DataAccess.DataContext.Migrations;
 using Devbridge.Platform.Core.Models;
 
 using FluentMigrator;
@@ -8,7 +6,7 @@ using FluentMigrator;
 namespace BetterCms.Module.LuceneSearch.Models.Migrations
 {
     [Migration(201312190004)]
-    public class InitialSetup : CmsDefaultMigration
+    public class InitialSetup : DefaultMigration
     {
         public InitialSetup()
             : base(LuceneSearchModuleDescriptor.ModuleName)

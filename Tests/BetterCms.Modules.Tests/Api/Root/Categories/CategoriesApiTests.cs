@@ -1,15 +1,18 @@
 ﻿using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 
-using BetterCms.Core.Models;
 using BetterCms.Events;
+
 using BetterCms.Module.Api.Extensions;
 using BetterCms.Module.Api.Infrastructure;
 using BetterCms.Module.Api.Operations.Root.Categories;
 using BetterCms.Module.Api.Operations.Root.Categories.Category;
+
 using BetterCms.Module.Root.Models;
+
+using Devbridge.Platform.Core.Models;
+using Devbridge.Platform.Events;
 
 using NHibernate;
 

@@ -1,7 +1,5 @@
 ﻿using System;
 
-using BetterCms.Core.DataAccess.DataContext.Migrations;
-
 using Devbridge.Platform.Core.DataAccess.DataContext.Migrations;
 using Devbridge.Platform.Core.Models;
 
@@ -13,7 +11,7 @@ namespace BetterCms.Module.Pages.Models.Migrations
     /// Module initial database structure creation.
     /// </summary>
     [Migration(201301151849)]
-    public class InitialSetup : CmsDefaultMigration
+    public class InitialSetup : DefaultMigration
     {
         /// <summary>
         /// The root module schema name.
