@@ -5,7 +5,7 @@ using System.Linq;
 using BetterCms.Core.DataAccess.DataContext;
 using BetterCms.Core.DataContracts.Enums;
 using BetterCms.Core.Security;
-
+using BetterCms.Module.MediaManager.Models;
 using BetterCms.Module.Pages.Models;
 using BetterCms.Module.Pages.ViewModels.Filter;
 using BetterCms.Module.Pages.ViewModels.SiteSettings;
@@ -33,7 +33,7 @@ namespace BetterCms.Module.Pages.Services
         private readonly ICmsConfiguration configuration;
 
         private readonly IAccessControlService accessControlService;
-        
+
         private readonly IUnitOfWork unitOfWork;
 
         public DefaultPageListService(ICategoryService categoryService, ICmsConfiguration configuration,
@@ -184,10 +184,12 @@ namespace BetterCms.Module.Pages.Services
 
             if (request.Categories != null)
             {
-                foreach (var categoryKeyValue in request.Categories)
+                var categories = request.Categories.Select(c => new Guid(c.Key)).Distinct().ToList();
+
+                foreach (var category in categories)
                 {
-                    var id = categoryKeyValue.Key.ToGuidOrDefault();
-                    query = query.WithSubquery.WhereExists(QueryOver.Of<PageCategory>().Where(cat => cat.Category.Id == id && cat.Page.Id == alias.Id).Select(cat => 1));
+                    var childCategories = categoryService.GetChildCategoriesIds(category).ToArray();
+                    query = query.WithSubquery.WhereExists(QueryOver.Of<PageCategory>().Where(cat => cat.Page.Id == alias.Id).WhereRestrictionOn(cat => cat.Category.Id).IsIn(childCategories).Select(cat => 1));
                 }
             }
 

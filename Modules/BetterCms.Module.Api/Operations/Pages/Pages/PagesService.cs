@@ -60,6 +60,8 @@ namespace BetterCms.Module.Api.Operations.Pages.Pages
         /// </summary>
         private readonly IPageService pageService;
 
+        private readonly ICategoryService categoryService;
+
         /// <summary>
         /// Initializes a new instance of the <see cref="PagesService"/> class.
         /// </summary>
@@ -75,7 +77,8 @@ namespace BetterCms.Module.Api.Operations.Pages.Pages
             IMediaFileUrlResolver fileUrlResolver,
             ISearchPagesService searchPagesService,
             IAccessControlService accessControlService,
-            IPageService pageService)
+            IPageService pageService,
+            ICategoryService categoryService)
         {
             this.repository = repository;
             this.optionService = optionService;
@@ -83,6 +86,7 @@ namespace BetterCms.Module.Api.Operations.Pages.Pages
             this.searchPagesService = searchPagesService;
             this.accessControlService = accessControlService;
             this.pageService = pageService;
+            this.categoryService = categoryService;
         }
 
         /// <summary>
@@ -113,7 +117,7 @@ namespace BetterCms.Module.Api.Operations.Pages.Pages
             }
 
             query = query.ApplyPageTagsFilter(request.Data)
-                            .ApplyCategoriesFilter(request.Data);
+                            .ApplyCategoriesFilter(categoryService, request.Data);
 
             if (request.User != null && !string.IsNullOrWhiteSpace(request.User.Name))
             {

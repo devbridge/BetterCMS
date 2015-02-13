@@ -9,27 +9,38 @@ using BetterCms.Module.Api.Infrastructure;
 using BetterCms.Module.Api.Infrastructure.Enums;
 using BetterCms.Module.MediaManager.Models;
 using BetterCms.Module.Pages.Models;
+using BetterCms.Module.Root.Services;
 
 namespace BetterCms.Module.Api.Helpers
 {
     public static class FilterByCategoriesExtension
     {
-        public static IQueryable<TModel> ApplyCategoriesFilter<TModel>(this IQueryable<TModel> query, IFilterByCategories categoriesFilter)
+        public static IQueryable<TModel> ApplyCategoriesFilter<TModel>(this IQueryable<TModel> query, ICategoryService categoryService, IFilterByCategories categoriesFilter)
     where TModel : Entity, ICategorized
         {
             if (categoriesFilter != null && categoriesFilter.FilterByCategories != null)
             {
-                var tags = categoriesFilter.FilterByCategories.Where(catId => catId != Guid.Empty).Distinct().ToArray();
+                var categories = categoriesFilter.FilterByCategories.Where(catId => catId != Guid.Empty).Distinct().ToArray();
 
-                if (tags.Length > 0)
+                if (categories.Length > 0)
                 {
                     if (categoriesFilter.FilterByCategoriesConnector == FilterConnector.And)
-                    {
-                        query = query.Where(page => page.Categories.Count(cat => tags.Contains(cat.Category.Id) && !cat.IsDeleted && !cat.Category.IsDeleted) == tags.Length);
+                    {                    
+                        foreach (var category in categories)
+                        {
+                            var childCategories = categoryService.GetChildCategoriesIds(category).ToArray();
+                            query = query.Where(m => m.Categories.Any(cat => childCategories.Contains(cat.Category.Id) && !cat.IsDeleted && !cat.Category.IsDeleted));
+                        }
                     }
                     else
                     {
-                        query = query.Where(page => page.Categories.Any(cat => tags.Contains(cat.Category.Id) && !cat.IsDeleted && !cat.Category.IsDeleted));
+                        var allCategories = new List<Guid>();
+                        foreach (var category in categories)
+                        {                            
+                            allCategories.AddRange(categoryService.GetChildCategoriesIds(category));
+                        }
+
+                        query = query.Where(page => page.Categories.Any(cat => allCategories.Contains(cat.Category.Id) && !cat.IsDeleted && !cat.Category.IsDeleted));
                     }
                 }
             }
