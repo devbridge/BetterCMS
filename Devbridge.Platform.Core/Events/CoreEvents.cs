@@ -15,25 +15,25 @@ namespace Devbridge.Platform.Events
         /// <summary>
         /// Called before an entity is saved.
         /// </summary>
-        /// <param name="accessSecuredObject">The access secured object.</param>
+        /// <param name="entity">The entity.</param>
         /// <param name="nHibernateSession">The n hibernate session.</param>
-        public void OnEntitySaving(IEntity accessSecuredObject, ISession nHibernateSession)
+        public void OnEntitySaving(IEntity entity, ISession nHibernateSession)
         {
             if (EntitySaving != null)
             {
-                EntitySaving(new EntitySavingEventArgs(accessSecuredObject, nHibernateSession));
+                EntitySaving(new EntitySavingEventArgs(entity, nHibernateSession));
             }
         }
 
         /// <summary>
         /// Called before an entity is deleted.
         /// </summary>
-        /// <param name="accessSecuredObject">The access secured object.</param>
-        public void OnEntityDelete(IEntity accessSecuredObject)
+        /// <param name="entity">The entity.</param>
+        public void OnEntityDelete(IEntity entity)
         {
             if (EntityDeleting != null)
             {
-                EntityDeleting(new SingleItemEventArgs<IEntity>(accessSecuredObject));
+                EntityDeleting(new SingleItemEventArgs<IEntity>(entity));
             }
         }  
     }

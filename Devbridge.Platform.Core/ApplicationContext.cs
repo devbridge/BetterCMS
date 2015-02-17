@@ -37,17 +37,17 @@ namespace Devbridge.Platform.Core
             {
                 if (!configLoaded)
                 {
-                    configLoaded = true;
                     lock (configurationLoaderLock)
                     {
                         if (!configLoaded)
                         {
-                            configLoaded = true;
-
                             IConfigurationLoader configurationLoader = new DefaultConfigurationLoader();
                             config = configurationLoader.TryLoadConfig<DefaultConfigurationSection>();
+
+                            configLoaded = true;
                         }
                     }
+                    configLoaded = true;
                 }
 
                 return config;

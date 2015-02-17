@@ -5,6 +5,8 @@ namespace Devbridge.Platform.Core.Security
 {
     public class DefaultPrincipalProvider : IPrincipalProvider
     {
+        public const string AnonymousPrincipalName = "Anonymous";
+
         /// <summary>
         /// Gets the name of the get current principal.
         /// </summary>
@@ -22,7 +24,7 @@ namespace Devbridge.Platform.Core.Security
                     return principal.Identity.Name;
                 }
 
-                return "Anonymous";
+                return AnonymousPrincipalName;
             }
         }
 

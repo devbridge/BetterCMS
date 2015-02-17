@@ -43,6 +43,20 @@ namespace Devbridge.Platform.Core.Web
         
         private static volatile bool configLoaded;
 
+        private static bool isTestMode;
+
+        public static bool IsTestMode
+        {
+            get
+            {
+                return isTestMode;
+            }
+            set
+            {
+                isTestMode = value;
+            }
+        }
+
         /// <summary>
         /// Gets the application configuration.
         /// </summary>
@@ -157,7 +171,10 @@ namespace Devbridge.Platform.Core.Web
                 }
                 else
                 {
-                    throw new PlatformException("Failed to register EmbeddedResourcesVirtualPathProvider as a virtual path provider.");
+                    if (!IsTestMode)
+                    {
+                        throw new PlatformException("Failed to register EmbeddedResourcesVirtualPathProvider as a virtual path provider.");
+                    }
                 }
 
                 ControllerBuilder.Current.SetControllerFactory(container.Resolve<DefaultWebControllerFactory>());

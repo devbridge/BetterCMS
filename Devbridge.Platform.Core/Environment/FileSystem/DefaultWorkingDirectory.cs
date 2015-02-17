@@ -45,7 +45,7 @@ namespace Devbridge.Platform.Core.Environment.FileSystem
             rootFolder = new DirectoryInfo(GetWorkingDirectoryPath());
 
             modulesFolder = new DirectoryInfo(Path.Combine(rootFolder.FullName, ModulesFolderName));
-            modulesRuntimeFolder = new DirectoryInfo(AppDomain.CurrentDomain.DynamicDirectory);
+            modulesRuntimeFolder = new DirectoryInfo(AppDomain.CurrentDomain.DynamicDirectory ?? AppDomain.CurrentDomain.BaseDirectory);
         }
 
         /// <summary>

@@ -118,7 +118,14 @@ namespace Devbridge.Platform.Core.Environment.Assemblies
 
             var modules = AppDomain.CurrentDomain.GetAssemblies().Where(f => f.FullName.ToLowerInvariant().Contains("module")).ToList();
             var loadedPaths = modules.Select(f => f.Location).ToArray();
-            var referencedPaths = Directory.GetFiles(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "bin"), "*.dll");
+
+            var directory = AppDomain.CurrentDomain.BaseDirectory;
+            if (!directory.ToLowerInvariant().Contains("\\bin\\debug"))
+            {
+                directory = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "bin");
+            }
+
+            var referencedPaths = Directory.GetFiles(directory, "*.dll");
             var notLoadedReferencedPaths = referencedPaths.Where(r => !loadedPaths.Contains(r, StringComparer.OrdinalIgnoreCase)).ToList();
 
             foreach (var notLoadedReferencedPath in notLoadedReferencedPaths)

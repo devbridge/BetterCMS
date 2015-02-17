@@ -114,6 +114,7 @@
     <Compile Include="Mvc\Routes\RouteExtensions.cs" />
     <Compile Include="Services\Caching\HttpRuntimeCacheService.cs" />
     <Compile Include="Services\Caching\ICacheService.cs" />
+    <Compile Include="WebApplication.cs" />
     <Compile Include="WebApplicationContext.cs" />
     <Compile Include="Web\DefaultHttpContextAccessor.cs" />
     <Compile Include="Web\EmbeddedResources\DefaultEmbeddedResourcesProvider.cs" />

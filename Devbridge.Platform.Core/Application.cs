@@ -41,6 +41,19 @@ namespace Devbridge.Platform.Core
 
                 throw new PlatformException(message, ex);
             }
+
+            try
+            {
+                logger.Info("Load assemblies...");
+                ApplicationContext.LoadAssemblies();
+            }
+            catch (Exception ex)
+            {
+                string message = "Failed to load assemblies.";
+                logger.Fatal(message, ex);
+
+                throw new PlatformException(message, ex);
+            }
         }
 
         /// <summary>

@@ -30,7 +30,6 @@ namespace BetterCms.Core.Environment.ApplicationStart
             get { return AppDomain.CurrentDomain.IsHomogenous && AppDomain.CurrentDomain.IsFullyTrusted; }
         }
 
-
         /// <summary>
         /// Method to run logic before application start (as PreApplicationStartMethod). Do not run this method from your code.
         /// </summary>        
