@@ -36,9 +36,11 @@ namespace BetterCMS.Module.LuceneSearch.Workers
         {
             hostShuttingDown = true;
 
-            OnStop();
-
-            HostingEnvironment.UnregisterObject(this);
+            lock (lockObject)
+            {
+                OnStop();
+                HostingEnvironment.UnregisterObject(this);
+            }
         }
 
         public void Start()
