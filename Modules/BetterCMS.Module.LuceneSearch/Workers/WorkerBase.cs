@@ -34,10 +34,7 @@ namespace BetterCMS.Module.LuceneSearch.Workers
         
         public void Stop(bool immediate)
         {
-            lock (lockObject)
-            {
-                hostShuttingDown = true;
-            }
+            hostShuttingDown = true;
 
             OnStop();
 

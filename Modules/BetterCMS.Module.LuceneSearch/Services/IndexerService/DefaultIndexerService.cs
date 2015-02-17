@@ -210,7 +210,15 @@ namespace BetterCMS.Module.LuceneSearch.Services.IndexerService
                 return true;
             }
 
-            reader = IndexReader.Open(index, true);
+            try
+            {
+                reader = IndexReader.Open(index, true);
+            }
+            catch (Exception ex)
+            {
+                Log.ErrorFormat("Failed to open Lucene search index reader.", ex);
+                return false;
+            }
 
             return true;
         }
@@ -410,10 +418,17 @@ namespace BetterCMS.Module.LuceneSearch.Services.IndexerService
 
         public void CloseWriter()
         {
-            if (writer != null)
+            try
             {
-                writer.Dispose(true);
-                writer = null;
+                if (writer != null)
+                {
+                    writer.Dispose(true);
+                    writer = null;
+                }
+            }
+            catch (Exception ex)
+            {
+                Log.ErrorFormat("Failed to close Lucene search index writer.", ex);
             }
         }
 
@@ -427,10 +442,17 @@ namespace BetterCMS.Module.LuceneSearch.Services.IndexerService
        
         private void CloseReader()
         {
-            if (reader != null)
+            try
             {
-                reader.Dispose();
-                reader = null;
+                if (reader != null)
+                {
+                    reader.Dispose();
+                    reader = null;
+                }
+            }
+            catch (Exception ex)
+            {
+                Log.ErrorFormat("Failed to close Lucene search index reader.", ex);
             }
         }
 
@@ -629,15 +651,30 @@ namespace BetterCMS.Module.LuceneSearch.Services.IndexerService
 
             CloseWriter();
             CloseReader();
-            
-            if (index != null)
+
+            try
             {
-                index.Dispose();
+                if (index != null)
+                {
+                    index.Dispose();
+                }
             }
-            if (analyzer != null)
+            catch (Exception ex)
             {
-                analyzer.Close();
-                analyzer.Dispose();
+                Log.ErrorFormat("Failed to dispose Lucene search index.", ex);
+            }
+
+            try
+            {
+                if (analyzer != null)
+                {
+                    analyzer.Close();
+                    analyzer.Dispose();
+                }
+            }
+            catch (Exception ex)
+            {
+                Log.ErrorFormat("Failed to close/dispose Lucene search analyzer.", ex);
             }
         }
     }

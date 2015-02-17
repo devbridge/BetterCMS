@@ -97,6 +97,11 @@ namespace BetterCMS.Module.LuceneSearch.Workers
                                     break;
                                 }
 
+                                case HttpStatusCode.ServiceUnavailable:
+                                    Log.Trace("Server Unavailable (503) - stop indexing for a moment.");
+                                    scrapeService.MarkFailed(link.Id);
+                                    return;
+
                                 default:
                                 {
                                     scrapeService.MarkFailed(link.Id);
