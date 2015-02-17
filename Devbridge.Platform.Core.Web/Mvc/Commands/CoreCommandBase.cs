@@ -3,7 +3,7 @@ using Devbridge.Platform.Core.DataAccess.DataContext;
 
 namespace Devbridge.Platform.Core.Web.Mvc.Commands
 {
-    public class CoreCommandBase : ICommandBase
+    public abstract class CoreCommandBase : ICommandBase
     {
         /// <summary>
         /// Gets or sets a command context.

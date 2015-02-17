@@ -56,6 +56,11 @@ namespace Devbridge.Platform.Core.Web.Models
             Data = data;
         }
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="WireJson"/> class.
+        /// </summary>
+        /// <param name="success">if set to <c>true</c> [success].</param>
+        /// <param name="data">The data.</param>
         public WireJson(bool success, dynamic data)
         {
             Success = success;

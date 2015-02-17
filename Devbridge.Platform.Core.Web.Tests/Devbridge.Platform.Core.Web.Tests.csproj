@@ -94,7 +94,20 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Configuration\DefaultWebConfigurationLoaderTests.cs" />
+    <Compile Include="Dependencies\PerWebRequestContainerProviderTests.cs" />
+    <Compile Include="Environment\Host\DefaultWebApplicationHostTests.cs" />
+    <Compile Include="Events\WebCoreEventsTests.cs" />
+    <Compile Include="Models\UserMessagesTests.cs" />
+    <Compile Include="Models\WireJsonTests.cs" />
+    <Compile Include="Models\ComboWireJsonTests.cs" />
+    <Compile Include="Modules\Registration\DefaultWebModulesRegistrationTests.cs" />
+    <Compile Include="Modules\Registration\WebModuleRegistrationContextTests.cs" />
+    <Compile Include="Modules\WebModuleDescriptorTests.cs" />
+    <Compile Include="Mvc\Commands\DefaultCommandResolverTests.cs" />
+    <Compile Include="Mvc\Extensions\DefaultControllerExtensionsTests.cs" />
+    <Compile Include="Mvc\Extensions\ViewRenderingExtensionsTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Services\Caching\HttpRuntimeCacheServiceTests.cs" />
     <Compile Include="TestHelpers\HttpContextMoq.cs" />
     <Compile Include="TestHelpers\RandomTestDataProvider.cs" />
     <Compile Include="TestBase.cs" />
