@@ -22,16 +22,6 @@ namespace Devbridge.Platform.Core.Web.Modules
     {
         private string areaName;
 
-        private string baseModulePath;
-
-        private string baseJsPath;
-
-        private string baseCssPath;
-
-        private string minJsPath;
-
-        private string minCssPath;
-
         /// <summary>
         /// Gets the name.
         /// </summary>
@@ -64,101 +54,6 @@ namespace Devbridge.Platform.Core.Web.Modules
                 }
 
                 return areaName;
-            }
-        }
-
-        /// <summary>
-        /// Gets the base module path. Default value is /file/module-name/.
-        /// </summary>
-        /// <value>
-        /// The base module path.
-        /// </value>
-        public virtual string BaseModulePath
-        {
-            get
-            {
-                if (baseModulePath == null)
-                {
-                    baseModulePath = VirtualPath.Combine("/", "file", AreaName);
-                }
-
-                return baseModulePath;
-            }
-        }
-
-        /// <summary>
-        /// Gets the JavaScript base path.
-        /// </summary>
-        /// <value>
-        /// The JavaScript base path.
-        /// </value>
-        public virtual string JsBasePath
-        {
-            get
-            {
-                if (baseJsPath == null)
-                {
-                    baseJsPath = VirtualPath.Combine(BaseModulePath, "scripts");
-                }
-
-                return baseJsPath;
-            }
-        }
-
-        /// <summary>
-        /// Gets the CSS base path.
-        /// </summary>
-        /// <value>
-        /// The CSS base path.
-        /// </value>
-        public virtual string CssBasePath
-        {
-            get
-            {
-                if (baseCssPath == null)
-                {
-                    baseCssPath = VirtualPath.Combine(BaseModulePath, "content", "styles");
-                }
-
-                return baseCssPath;
-            }
-        }
-
-        /// <summary>
-        /// Gets the path of the module packed and minified JS file.
-        /// </summary>
-        /// <value>
-        /// The path of the module packed and minified JS file.
-        /// </value>
-        public virtual string MinifiedJsPath
-        {
-            get
-            {
-                if (minJsPath == null)
-                {
-                    minJsPath = VirtualPath.Combine(JsBasePath, string.Format("module.{0}.min.js", Name.ToLowerInvariant()));
-                }
-
-                return minJsPath;
-            }
-        }
-
-        /// <summary>
-        /// Gets the path of the module packed and minified CSS file.
-        /// </summary>
-        /// <value>
-        /// The path of the module packed and minified CSS file.
-        /// </value>
-        public virtual string MinifiedCssPath
-        {
-            get
-            {
-                if (minCssPath == null)
-                {
-                    minCssPath = VirtualPath.Combine(CssBasePath, string.Format("module.{0}.min.css", Name.ToLowerInvariant()));
-                }
-
-                return minCssPath;
             }
         }
 

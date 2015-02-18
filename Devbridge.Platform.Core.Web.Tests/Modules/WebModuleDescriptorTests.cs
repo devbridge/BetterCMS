@@ -26,46 +26,6 @@ namespace Devbridge.Platform.Core.Web.Tests.Modules
 
             Assert.AreEqual(descriptor.AreaName, "module-testwebmodule");
         }
-        
-        [Test]
-        public void Should_Return_Correct_BaseModulePath()
-        {
-            var descriptor = new TestWebModuleDescriptor();
-
-            Assert.AreEqual(descriptor.BaseModulePath, "/file/module-testwebmodule");
-        }
-        
-        [Test]
-        public void Should_Return_Correct_JsBasePath()
-        {
-            var descriptor = new TestWebModuleDescriptor();
-
-            Assert.AreEqual(descriptor.JsBasePath, "/file/module-testwebmodule/scripts");
-        }
-        
-        [Test]
-        public void Should_Return_Correct_CssBasePath()
-        {
-            var descriptor = new TestWebModuleDescriptor();
-
-            Assert.AreEqual(descriptor.CssBasePath, "/file/module-testwebmodule/content/styles");
-        }
-        
-        [Test]
-        public void Should_Return_Correct_MinifiedJsPath()
-        {
-            var descriptor = new TestWebModuleDescriptor();
-
-            Assert.AreEqual(descriptor.MinifiedJsPath, "/file/module-testwebmodule/scripts/module.testwebmodule.min.js");
-        }
-        
-        [Test]
-        public void Should_Return_Correct_MinifiedCssPath()
-        {
-            var descriptor = new TestWebModuleDescriptor();
-
-            Assert.AreEqual(descriptor.MinifiedCssPath, "/file/module-testwebmodule/content/styles/module.testwebmodule.min.css");
-        }
 
         [Test]
         public void Should_Register_ModuleControllers_Correctly()

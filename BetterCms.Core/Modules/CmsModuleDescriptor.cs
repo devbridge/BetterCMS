@@ -25,6 +25,10 @@ namespace BetterCms.Core.Modules
 
         private string minCssPath;
 
+        private string baseJsPath;
+
+        private string baseCssPath;
+
         /// <summary>
         /// Initializes a new instance of the <see cref="CmsModuleDescriptor" /> class.
         /// </summary>
@@ -67,7 +71,7 @@ namespace BetterCms.Core.Modules
         /// <value>
         /// The base module path.
         /// </value>
-        public override string BaseModulePath
+        public virtual string BaseModulePath
         {
             get
             {
@@ -104,7 +108,7 @@ namespace BetterCms.Core.Modules
         /// <value>
         /// The path of the module packed and minified JS file.
         /// </value>
-        public override string MinifiedJsPath
+        public virtual string MinifiedJsPath
         {
             get
             {
@@ -123,7 +127,7 @@ namespace BetterCms.Core.Modules
         /// <value>
         /// The path of the module packed and minified CSS file.
         /// </value>
-        public override string MinifiedCssPath
+        public virtual string MinifiedCssPath
         {
             get
             {
@@ -133,6 +137,44 @@ namespace BetterCms.Core.Modules
                 }
 
                 return minCssPath;
+            }
+        }
+
+        /// <summary>
+        /// Gets the JavaScript base path.
+        /// </summary>
+        /// <value>
+        /// The JavaScript base path.
+        /// </value>
+        public virtual string JsBasePath
+        {
+            get
+            {
+                if (baseJsPath == null)
+                {
+                    baseJsPath = VirtualPath.Combine(BaseModulePath, "scripts");
+                }
+
+                return baseJsPath;
+            }
+        }
+
+        /// <summary>
+        /// Gets the CSS base path.
+        /// </summary>
+        /// <value>
+        /// The CSS base path.
+        /// </value>
+        public virtual string CssBasePath
+        {
+            get
+            {
+                if (baseCssPath == null)
+                {
+                    baseCssPath = VirtualPath.Combine(BaseModulePath, "content", "styles");
+                }
+
+                return baseCssPath;
             }
         }
 

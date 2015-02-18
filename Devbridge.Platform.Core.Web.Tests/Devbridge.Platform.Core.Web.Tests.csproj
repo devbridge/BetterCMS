@@ -118,6 +118,7 @@
     <Compile Include="TestHelpers\RandomTestDataProvider.cs" />
     <Compile Include="TestBase.cs" />
     <Compile Include="WebApplicationContextTests.cs" />
+    <Compile Include="Web\DefaultHttpContextAccessorTests.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Devbridge.Platform.Core.Web\Devbridge.Platform.Core.Web.csproj">
