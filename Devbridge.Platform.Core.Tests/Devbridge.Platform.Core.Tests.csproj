@@ -65,6 +65,7 @@
   <ItemGroup>
     <Compile Include="ApplicationContextTests.cs" />
     <Compile Include="Configuration\DefaultConfigurationLoaderTests.cs" />
+    <Compile Include="DataAccess\DataContext\Migrations\DefaultMigrationRunnerIntegrationTests.cs" />
     <Compile Include="DataAccess\PredicateBuilderTests.cs" />
     <Compile Include="Dependencies\ContextScopeProviderTests.cs" />
     <Compile Include="Environment\Assemblies\DefaultAssemblyLoaderTests.cs" />

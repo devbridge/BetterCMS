@@ -14,7 +14,7 @@
 
         public static string GetSchemaName(string module)
         {
-            return string.Format(SchemaNamePattern, module);
+            return string.Format(SchemaNamePattern, module).ToLowerInvariant();
         }
     }
 }

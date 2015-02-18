@@ -4,6 +4,8 @@ namespace Devbridge.Platform.Sample.Module
 {
     public class SampleModuleDescriptor : ModuleDescriptor
     {
+        public const string ModuleName = "DBSample";
+
         public override string Description
         {
             get
@@ -16,7 +18,7 @@ namespace Devbridge.Platform.Sample.Module
         {
             get
             {
-                return "DBSample";
+                return ModuleName;
             }
         }
     }
