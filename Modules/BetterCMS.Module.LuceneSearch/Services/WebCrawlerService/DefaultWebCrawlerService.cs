@@ -57,11 +57,8 @@ namespace BetterCMS.Module.LuceneSearch.Services.WebCrawlerService
                         case "windows":
                             authMode = AuthMode.Windows;
                             break;
-                        case "forms":
-                            authMode = AuthMode.Forms;
-                            break;
                         default:
-                            authMode = AuthMode.None;
+                            authMode = AuthMode.Forms;
                             break;
                     }
                 }
@@ -79,7 +76,7 @@ namespace BetterCMS.Module.LuceneSearch.Services.WebCrawlerService
 
         public PageData FetchPage(string url)
         {
-            if (indexPrivatePages && authorizationCookies == null && authMode == AuthMode.Forms)
+            if (indexPrivatePages && authorizationCookies == null && authMode != AuthMode.Windows)
             {
                 TryAuthenticate(); // Forms authentication.
             }

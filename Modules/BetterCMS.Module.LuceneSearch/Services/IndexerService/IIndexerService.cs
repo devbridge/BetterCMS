@@ -13,5 +13,9 @@ namespace BetterCMS.Module.LuceneSearch.Services.IndexerService
         bool OpenWriter();
 
         void OptimizeIndex();
+
+        void CleanLock();
+
+        bool StartIndexer();
     }
 }
