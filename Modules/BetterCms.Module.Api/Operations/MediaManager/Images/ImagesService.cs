@@ -7,6 +7,7 @@ using BetterCms.Module.Api.Operations.MediaManager.Images.Image;
 using BetterCms.Module.Api.Operations.Root.Categories.Category;
 using BetterCms.Module.MediaManager.Models;
 using BetterCms.Module.MediaManager.Services;
+using BetterCms.Module.Root.Services;
 
 using ServiceStack.ServiceInterface;
 
@@ -32,17 +33,19 @@ namespace BetterCms.Module.Api.Operations.MediaManager.Images
         /// </summary>
         private readonly IImageService imageService;
 
+        private readonly ICategoryService categoryService;
         /// <summary>
         /// Initializes a new instance of the <see cref="ImagesService" /> class.
         /// </summary>
         /// <param name="repository">The repository.</param>
         /// <param name="fileUrlResolver">The file URL resolver.</param>
         /// <param name="imageService">The image service.</param>
-        public ImagesService(IRepository repository, IMediaFileUrlResolver fileUrlResolver, IImageService imageService, IUploadImageService uploadImageService)
+        public ImagesService(IRepository repository, IMediaFileUrlResolver fileUrlResolver, IImageService imageService, IUploadImageService uploadImageService, ICategoryService categoryService)
         {
             this.repository = repository;
             this.fileUrlResolver = fileUrlResolver;
             this.imageService = imageService;
+            this.categoryService = categoryService;
             Upload = uploadImageService;
         }
 
@@ -92,7 +95,7 @@ namespace BetterCms.Module.Api.Operations.MediaManager.Images
             }
 
             query = query.ApplyMediaTagsFilter(request.Data)
-                         .ApplyCategoriesFilter(request.Data);
+                         .ApplyCategoriesFilter(categoryService, request.Data);
 
             var listResponse = query.Select(media =>
                     new MediaModel

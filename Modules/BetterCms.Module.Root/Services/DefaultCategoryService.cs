@@ -7,8 +7,12 @@ using BetterCms.Core.DataAccess.DataContext;
 using BetterCms.Core.DataContracts;
 using BetterCms.Core.Exceptions.DataTier;
 using BetterCms.Core.Models;
+using BetterCms.Core.Security;
+using BetterCms.Module.Root.Helpers;
 using BetterCms.Events;
 using BetterCms.Module.Root.Models;
+using BetterCms.Module.Root.Mvc;
+using BetterCms.Module.Root.ViewModels.Category;
 
 using NHibernate;
 using NHibernate.Criterion;
@@ -53,7 +57,7 @@ namespace BetterCms.Module.Root.Services
 
             if (!string.IsNullOrEmpty(categoryTreeForKey))
             {
-                query = query.Where( c => !c.CategoryTree.IsDeleted && c.CategoryTree.AvailableFor.Any(e => e.CategorizableItem.Name == categoryTreeForKey));
+                query = query.Where(c => !c.CategoryTree.IsDeleted && c.CategoryTree.AvailableFor.Any(e => e.CategorizableItem.Name == categoryTreeForKey));
             }
             else
             {
@@ -142,7 +146,8 @@ namespace BetterCms.Module.Root.Services
             }
         }
 
-       public void CombineEntityCategories<TEntity, TEntityCategory>(TEntity entity, IEnumerable<LookupKeyValue> currentCategories) where TEntity : Entity, ICategorized
+        public void CombineEntityCategories<TEntity, TEntityCategory>(TEntity entity, IEnumerable<LookupKeyValue> currentCategories)
+            where TEntity : Entity, ICategorized
             where TEntityCategory : Entity, IEntityCategory, new()
         {
             CombineEntityCategories<TEntity, TEntityCategory>(entity, currentCategories != null ? currentCategories.Select(c => Guid.Parse(c.Key)) : Enumerable.Empty<Guid>());
@@ -185,6 +190,40 @@ namespace BetterCms.Module.Root.Services
             foreach (var sitemap in updatedSitemaps)
             {
                 RootEvents.Instance.OnCategoryTreeUpdated(sitemap);
+            }
+        }
+
+        public IEnumerable<Guid> GetChildCategoriesIds(Guid categoryId)
+        {
+            var allCategoryNodes = repository.AsQueryable<Category>().Where(c =>
+                                                    repository.AsQueryable<Category>().Where(cat => cat.Id == categoryId && !cat.IsDeleted)
+                                                    .Any(catT => catT.CategoryTree.Id == c.CategoryTree.Id && !catT.IsDeleted)
+                                                    ).Select(c => new CategoryViewModel()
+                                                    {
+                                                        Id = c.Id,
+                                                        Title = c.Name,
+                                                        DisplayOrder = c.DisplayOrder,
+                                                        CategoryTreeId = c.CategoryTree.Id,
+                                                        ParentCategoryId = c.ParentCategory != null ? c.ParentCategory.Id : (Guid?)null
+                                                    }).ToList();
+            // Find given category
+            var mainCategory = allCategoryNodes.First(c => c.Id == categoryId);
+            List<CategoryViewModel> childCategories = new List<CategoryViewModel>() { mainCategory };
+
+            FillChildCategories(allCategoryNodes, mainCategory, childCategories);
+
+            return childCategories.Select(c => c.Id);
+        }
+
+        private void FillChildCategories(List<CategoryViewModel> allItems, CategoryViewModel mainCategory, List<CategoryViewModel> childCategories)
+        {
+            var childItems = allItems.Where(item => item.ParentCategoryId == mainCategory.Id && item.Id != mainCategory.Id).OrderBy(node => node.DisplayOrder).ToList();
+
+            foreach (var item in childItems)
+            {
+                childCategories.Add(item);
+
+                FillChildCategories(allItems.Except(childCategories).ToList(), item, childCategories);
             }
         }
 

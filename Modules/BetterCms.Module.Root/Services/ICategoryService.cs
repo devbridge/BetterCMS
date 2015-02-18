@@ -32,5 +32,7 @@ namespace BetterCms.Module.Root.Services
             where TEntityCategory : Entity, IEntityCategory, new();
 
         void DeleteCategoryNode(Guid id, int version, Guid? categoryTreeId = null);
+
+        IEnumerable<Guid> GetChildCategoriesIds(Guid category);
     }
 }

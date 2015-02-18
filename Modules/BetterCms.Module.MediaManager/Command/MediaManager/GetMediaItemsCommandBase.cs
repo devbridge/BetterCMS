@@ -17,6 +17,7 @@ using BetterCms.Module.MediaManager.ViewModels.MediaManager;
 
 using BetterCms.Module.Root.Mvc;
 using BetterCms.Module.Root.Mvc.Grids.Extensions;
+using BetterCms.Module.Root.Services;
 
 using MvcContrib.Sorting;
 
@@ -27,6 +28,11 @@ namespace BetterCms.Module.MediaManager.Command.MediaManager
     public abstract class GetMediaItemsCommandBase<TEntity> : CommandBase, ICommand<MediaManagerViewModel, MediaManagerItemsViewModel>
         where TEntity : MediaFile
     {
+        /// <summary>
+        /// The category service
+        /// </summary>
+        public ICategoryService CategoryService { get; set; }
+
         /// <summary>
         /// The file service
         /// </summary>
@@ -160,10 +166,12 @@ namespace BetterCms.Module.MediaManager.Command.MediaManager
 
             if (request.Categories != null)
             {
-                foreach (var categoryKeyValue in request.Categories)
+                var categories = request.Categories.Select(c => new Guid(c.Key)).Distinct().ToList();
+
+                foreach (var category in categories)
                 {
-                    var id = categoryKeyValue.Key.ToGuidOrDefault();
-                    query = query.Where(m => m is MediaFolder || m.Categories.Any(mt => mt.Category.Id == id));
+                    var childCategories = CategoryService.GetChildCategoriesIds(category).ToArray();
+                    query = query.Where(m => m is MediaFolder || m.Categories.Any(cat => childCategories.Contains(cat.Category.Id) && !cat.IsDeleted && !cat.Category.IsDeleted));
                 }
             }
 

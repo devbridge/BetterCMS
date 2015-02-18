@@ -50,5 +50,8 @@ namespace BetterCms.Module.Api.Operations.Root.Categories.Category.Nodes
         /// </value>
         [DataMember]
         public string Macro { get; set; }
+
+
+
     }
 }

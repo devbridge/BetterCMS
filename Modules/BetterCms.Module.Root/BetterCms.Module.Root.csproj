@@ -420,6 +420,7 @@
     <Compile Include="ViewModels\Category\CategorizableItemViewModel.cs" />
     <Compile Include="ViewModels\Category\CategoryTreeViewModel.cs" />
     <Compile Include="ViewModels\Category\CategoryTemplateViewModel.cs" />
+    <Compile Include="ViewModels\Category\CategoryViewModel.cs" />
     <Compile Include="ViewModels\Cms\CmsRequestViewModel.cs" />
     <Compile Include="ViewModels\Cms\PageRegionViewModel.cs" />
     <Compile Include="DataContracts\Enums\PageRetrievedEventResults.cs" />
