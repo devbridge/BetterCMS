@@ -1,12 +1,12 @@
 using BetterCms.Configuration;
 
-using Devbridge.Platform.Core.Configuration;
+using Devbridge.Platform.Core.Web.Configuration;
 
 namespace BetterCms
 {
     /// <summary>
     /// </summary>
-    public interface ICmsConfiguration : IConfiguration
+    public interface ICmsConfiguration : IWebConfiguration
     {
         /// <summary>
         /// Gets the Better CMS version.

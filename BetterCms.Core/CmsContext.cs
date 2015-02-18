@@ -91,7 +91,7 @@ namespace BetterCms.Core
                 builder = new ContainerBuilder();
             }
 
-            builder = WebApplicationContext.InitializeContainer(builder);
+            builder = WebApplicationContext.InitializeContainer(builder, Config);
             builder.RegisterType<DefaultTextEncryptor>().As<ITextEncryptor>().SingleInstance();
 
             builder.RegisterType<CmsModulesRegistration>()

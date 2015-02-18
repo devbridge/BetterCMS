@@ -52,17 +52,30 @@ namespace Devbridge.Platform.Core
 
                 return config;
             }
+            set
+            {
+                lock (configurationLoaderLock)
+                {
+                    configLoaded = true;
+                    config = value;
+                }
+            }
         }
 
         /// <summary>
         /// Creates the configured application dependencies container.
         /// </summary>
         /// <returns>The container builder.</returns>
-        public static ContainerBuilder InitializeContainer(ContainerBuilder builder = null)
+        public static ContainerBuilder InitializeContainer(ContainerBuilder builder = null, IConfiguration configuration = null)
         {
             if (builder == null)
             {
                 builder = new ContainerBuilder();
+            }
+
+            if (configuration != null)
+            {
+                Config = configuration;
             }
 
             builder.RegisterType<DefaultModulesRegistration>().As<IModulesRegistration>().SingleInstance();

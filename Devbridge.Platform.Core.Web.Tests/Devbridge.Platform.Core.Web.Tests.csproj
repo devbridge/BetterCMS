@@ -59,6 +59,7 @@
       <HintPath>..\Libs\RazorGenerator.Mvc.2.2.3\RazorGenerator.Mvc.dll</HintPath>
     </Reference>
     <Reference Include="System" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Configuration" />
     <Reference Include="System.Core" />
     <Reference Include="System.Web" />
@@ -104,9 +105,14 @@
     <Compile Include="Modules\Registration\WebModuleRegistrationContextTests.cs" />
     <Compile Include="Modules\WebModuleDescriptorTests.cs" />
     <Compile Include="Mvc\Commands\DefaultCommandResolverTests.cs" />
+    <Compile Include="Mvc\CoreControllerBaseTests.cs" />
     <Compile Include="Mvc\Extensions\DefaultControllerExtensionsTests.cs" />
     <Compile Include="Mvc\Extensions\ViewRenderingExtensionsTests.cs" />
+    <Compile Include="Mvc\Extensions\VirtualPathTests.cs" />
+    <Compile Include="Mvc\Routes\DefaultRouteTableTests.cs" />
+    <Compile Include="Mvc\Routes\RouteExtensionsTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Security\DefaultWebPrincipalProviderTests.cs" />
     <Compile Include="Services\Caching\HttpRuntimeCacheServiceTests.cs" />
     <Compile Include="TestHelpers\HttpContextMoq.cs" />
     <Compile Include="TestHelpers\RandomTestDataProvider.cs" />

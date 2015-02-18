@@ -89,6 +89,14 @@ namespace Devbridge.Platform.Core.Web
 
                 return config;
             }
+            set
+            {
+                lock (configurationLoaderLock)
+                {
+                    configLoaded = true;
+                    config = value;
+                }
+            }
         }
 
         /// <summary>
@@ -119,14 +127,19 @@ namespace Devbridge.Platform.Core.Web
         /// Creates the configured web application dependencies container.
         /// </summary>
         /// <returns>The container builder.</returns>
-        public static ContainerBuilder InitializeContainer(ContainerBuilder builder = null)
+        public static ContainerBuilder InitializeContainer(ContainerBuilder builder = null, IWebConfiguration configuration = null)
         {
             if (builder == null)
             {
                 builder = new ContainerBuilder();
             }
 
-            builder = ApplicationContext.InitializeContainer(builder);
+            if (configuration != null)
+            {
+                Config = configuration;
+            }
+
+            builder = ApplicationContext.InitializeContainer(builder, Config);
 
             builder.RegisterType<DefaultWebModulesRegistration>()
                 .As<IModulesRegistration>()
