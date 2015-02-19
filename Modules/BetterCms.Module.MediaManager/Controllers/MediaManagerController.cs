@@ -53,8 +53,11 @@ namespace BetterCms.Module.MediaManager.Controllers
             var viewModel = new MediaManagerIndexViewModel();
             if (CmsConfiguration.Security.AccessControlEnabled && !StorageService.SecuredUrlsEnabled)
             {
-                viewModel.CustomFilesMessages = new UserMessages();
-                viewModel.CustomFilesMessages.AddWarn(MediaGlobalization.TokenBasedSecurity_NotSupported_Message);
+                if (!(StorageService is FileSystemStorageService && CmsConfiguration.Security.IgnoreLocalFileSystemWarning))
+                {
+                    viewModel.CustomFilesMessages = new UserMessages();
+                    viewModel.CustomFilesMessages.AddWarn(MediaGlobalization.TokenBasedSecurity_NotSupported_Message);
+                }
             }
             if (CmsConfiguration.Security.AccessControlEnabled
                 && StorageService.SecuredUrlsEnabled
