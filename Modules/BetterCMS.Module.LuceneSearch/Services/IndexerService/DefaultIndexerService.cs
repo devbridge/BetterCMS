@@ -488,7 +488,7 @@ namespace BetterCMS.Module.LuceneSearch.Services.IndexerService
                 return false;
             }
 
-            var startIndexer = runOnHost == hostName;
+            var startIndexer = String.Equals(runOnHost.Trim(), hostName.Trim(), StringComparison.InvariantCultureIgnoreCase);
             if (!startIndexer)
             {
                 Log.WarnFormat("Indexer on host '{0}' will not start, because host name does not match provided in configuration.", hostName);
