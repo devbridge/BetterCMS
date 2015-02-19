@@ -45,33 +45,6 @@ namespace BetterCms.Module.Root.Services
             this.unitOfWork = unitOfWork;
         }
 
-        /// <summary>
-        /// Gets the list of category lookup values.
-        /// </summary>
-        /// <returns>
-        /// List of category lookup values
-        /// </returns>
-        public IEnumerable<LookupKeyValue> GetCategories(string categoryTreeForKey)
-        {
-            var query = repository.AsQueryable<Category>();
-
-            if (!string.IsNullOrEmpty(categoryTreeForKey))
-            {
-                query = query.Where(c => !c.CategoryTree.IsDeleted && c.CategoryTree.AvailableFor.Any(e => e.CategorizableItem.Name == categoryTreeForKey));
-            }
-            else
-            {
-                query = query.Where(c => !c.CategoryTree.IsDeleted);
-            }
-
-            return query.Select(c => new LookupKeyValue
-            {
-                Key = c.Id.ToString().ToLowerInvariant(),
-                Value = c.Name
-            })
-                .ToFuture();
-        }
-
         public IEnumerable<Guid> GetSelectedCategoriesIds<TEntity, TEntityCategory>(Guid? entityId) 
             where TEntity : Entity, ICategorized
             where TEntityCategory : Entity, IEntityCategory
