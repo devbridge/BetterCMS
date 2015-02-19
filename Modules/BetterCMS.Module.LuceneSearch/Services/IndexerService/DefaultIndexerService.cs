@@ -176,7 +176,7 @@ namespace BetterCMS.Module.LuceneSearch.Services.IndexerService
         private ICollection<string> GetCollectionFromConfiguration(string configurationKey)
         {
             var configValue = cmsConfiguration.Search.GetValue(configurationKey);
-            return configValue != null ? configValue.Split(',').Select(val => val.Trim()).ToList() : new List<string>();
+            return configValue != null ? configValue.Split(',',';').Select(val => val.Trim()).ToList() : new List<string>();
         }
 
         private bool OpenWriter(bool create)
