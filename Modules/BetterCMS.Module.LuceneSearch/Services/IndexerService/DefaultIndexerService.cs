@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -34,6 +35,9 @@ using Lucene.Net.QueryParsers;
 using Lucene.Net.Search;
 using Lucene.Net.Store;
 
+using NHibernate.Linq;
+using NHibernate.Mapping;
+
 using Directory = Lucene.Net.Store.Directory;
 using Version = Lucene.Net.Util.Version;
 
@@ -52,9 +56,13 @@ namespace BetterCMS.Module.LuceneSearch.Services.IndexerService
 
         private static readonly ILog Log = LogManager.GetLogger("LuceneSearchModule");
 
-        private static string[] excludedNodeTypes = new[] { "noscript", "script", "button" };
-        private static string[] excludedIds = new[] { "bcms-browser-info", "bcms-sidemenu" };
-        private static string[] excludedClasses = new[] { "bcms-layout-path" };
+        private static string[] defaultExcludedNodeTypes = new[] { "noscript", "script", "button", "style" };
+        private static string[] defaultExcludedIds = new[] { "bcms-browser-info", "bcms-sidemenu" };
+        private static string[] defautlExcludedClasses = new[] { "bcms-layout-path" };
+
+        private static ICollection<string> configurationExcludedNodeTypes = new List<string>();
+        private static ICollection<string> configurationExcludedIds = new List<string>();
+        private static ICollection<string> configurationExcludedClasses = new List<string>();
 
         private IndexWriter writer;
 
@@ -117,6 +125,10 @@ namespace BetterCMS.Module.LuceneSearch.Services.IndexerService
 
             try
             {
+                configurationExcludedNodeTypes = GetCollectionFromConfiguration(LuceneSearchConstants.ConfigurationKeys.LuceneExcludedNodes);
+                configurationExcludedIds = GetCollectionFromConfiguration(LuceneSearchConstants.ConfigurationKeys.LuceneExcludedIds);
+                configurationExcludedClasses = GetCollectionFromConfiguration(LuceneSearchConstants.ConfigurationKeys.LuceneExcludedClasses);
+
                 bool.TryParse(cmsConfiguration.Search.GetValue(LuceneSearchConstants.ConfigurationKeys.LuceneSearchForPartOfWordsPrefix), out searchForPartOfWords);
                 
                 bool disableStopWords;
@@ -159,6 +171,12 @@ namespace BetterCMS.Module.LuceneSearch.Services.IndexerService
 
             initialized = true;
             return true;
+        }
+
+        private ICollection<string> GetCollectionFromConfiguration(string configurationKey)
+        {
+            var configValue = cmsConfiguration.Search.GetValue(configurationKey);
+            return configValue != null ? configValue.Split(',').Select(val => val.Trim()).ToList() : new List<string>();
         }
 
         private bool OpenWriter(bool create)
@@ -458,13 +476,13 @@ namespace BetterCMS.Module.LuceneSearch.Services.IndexerService
 
         private static bool CanIncludeNodeToResults(HtmlNode node)
         {
-            if (excludedNodeTypes.Contains(node.Name))
+            if (defaultExcludedNodeTypes.Contains(node.Name) || configurationExcludedNodeTypes.Contains(node.Name))
             {
                 return false;
             }
 
-            if (node.Attributes.Any(a => (a.Name == "id" && excludedIds.Contains(a.Value))
-                || (a.Name == "class" && excludedClasses.Contains(a.Value))))
+            if (node.Attributes.Any(a => (a.Name == "id" && (defaultExcludedIds.Contains(a.Value) || configurationExcludedIds.Contains(a.Value)))
+                || (a.Name == "class" && (defautlExcludedClasses.Contains(a.Value) || configurationExcludedClasses.Contains(a.Value)))))
             {
                 return false;
             }

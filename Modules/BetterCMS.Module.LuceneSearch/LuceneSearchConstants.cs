@@ -33,6 +33,12 @@
             public const string LuceneAuthorizationWindows_Password = "LuceneAuthorizationWindows.Password";
 
             public const string LuceneSearchForPartOfWordsPrefix = "LuceneSearchForPartOfWords";
+
+            public const string LuceneExcludedNodes = "LuceneExcludedNodes";
+
+            public const string LuceneExcludedIds = "LuceneExcludedIds";
+
+            public const string LuceneExcludedClasses = "LuceneExcludedClasses";
         }
 
         public const string LuceneSearchModuleLoggerNamespace = "LuceneSearchModule";
