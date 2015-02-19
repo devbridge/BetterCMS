@@ -45,70 +45,50 @@ namespace BetterCms.Module.Root.Services
             this.unitOfWork = unitOfWork;
         }
 
-        /// <summary>
-        /// Gets the list of category lookup values.
-        /// </summary>
-        /// <returns>
-        /// List of category lookup values
-        /// </returns>
-        public IEnumerable<LookupKeyValue> GetCategories(string categoryTreeForKey)
-        {
-            var query = repository.AsQueryable<Category>();
-
-            if (!string.IsNullOrEmpty(categoryTreeForKey))
-            {
-                query = query.Where(c => !c.CategoryTree.IsDeleted && c.CategoryTree.AvailableFor.Any(e => e.CategorizableItem.Name == categoryTreeForKey));
-            }
-            else
-            {
-                query = query.Where(c => !c.CategoryTree.IsDeleted);
-            }
-
-            return query.Select(c => new LookupKeyValue
-            {
-                Key = c.Id.ToString().ToLowerInvariant(),
-                Value = c.Name
-            })
-                .ToFuture();
-        }
-
         public IEnumerable<Guid> GetSelectedCategoriesIds<TEntity, TEntityCategory>(Guid? entityId) 
             where TEntity : Entity, ICategorized
             where TEntityCategory : Entity, IEntityCategory
         {
+            CategoryTree categoryTreeAlias = null;
+            Category categoryAliasa = null;
             TEntity entityAlias = null;
             TEntityCategory categoryAlias = default(TEntityCategory);
 
-            return repository.AsQueryOver<Category>().Where(c => !c.IsDeleted)
-                             .WithSubquery.WhereProperty(c => c.Id)
+            return repository.AsQueryOver(() => categoryAliasa)
+                             .JoinQueryOver(() => categoryAliasa.CategoryTree, () => categoryTreeAlias)
+                             .Where(() => !categoryTreeAlias.IsDeleted && !categoryAliasa.IsDeleted)
+                             .WithSubquery.WhereProperty(() => categoryAliasa.Id)
                              .In(QueryOver.Of(() => entityAlias)
                                      .JoinQueryOver(() => entityAlias.Categories, () => categoryAlias)
                                      .Where(() => entityAlias.Id == entityId && !categoryAlias.IsDeleted)
                                      .SelectList(list => list.Select(() => categoryAlias.Category.Id)))
-                                     .Select(category => category.Id)
-                                     .Future<Guid>();
+                             .Select(category => category.Id)
+                             .Future<Guid>();
         }
 
         public IEnumerable<LookupKeyValue> GetSelectedCategories<TEntity, TEntityCategory>(Guid? entityId)
             where TEntity : Entity, ICategorized
             where TEntityCategory : Entity, IEntityCategory
         {
+            CategoryTree categoryTreeAlias = null;
             Category categoryAliasa = null;
             TEntity entityAlias = null;
             TEntityCategory categoryAlias = default(TEntityCategory);
             LookupKeyValue valueAlias = null;
 
-            return repository.AsQueryOver(() => categoryAliasa).Where(c => !c.IsDeleted)
-                             .WithSubquery.WhereProperty(c => c.Id)
+            return repository.AsQueryOver(() => categoryAliasa)
+                             .JoinQueryOver(() => categoryAliasa.CategoryTree, () => categoryTreeAlias)
+                             .Where(() => !categoryTreeAlias.IsDeleted && !categoryAliasa.IsDeleted)
+                             .WithSubquery.WhereProperty(() => categoryAliasa.Id)
                              .In(QueryOver.Of(() => entityAlias)
                                      .JoinQueryOver(() => entityAlias.Categories, () => categoryAlias)
                                      .Where(() => entityAlias.Id == entityId && !categoryAlias.IsDeleted)
                                      .SelectList(list => list.Select(() => categoryAlias.Category.Id)))
-                                     .SelectList(l => l
-                                         .Select(NHibernate.Criterion.Projections.Cast(NHibernateUtil.String, NHibernate.Criterion.Projections.Property(() => categoryAliasa.Id))).WithAlias(() => valueAlias.Key)
-                                         .Select(() => categoryAliasa.Name).WithAlias(() => valueAlias.Value))
-                                     .TransformUsing(Transformers.AliasToBean<LookupKeyValue>())
-                                     .Future<LookupKeyValue>();
+                             .SelectList(l => l
+                                 .Select(NHibernate.Criterion.Projections.Cast(NHibernateUtil.String, NHibernate.Criterion.Projections.Property(() => categoryAliasa.Id))).WithAlias(() => valueAlias.Key)
+                                 .Select(() => categoryAliasa.Name).WithAlias(() => valueAlias.Value))
+                             .TransformUsing(Transformers.AliasToBean<LookupKeyValue>())
+                             .Future<LookupKeyValue>();
         }
 
         public void CombineEntityCategories<TEntity, TEntityCategory>(TEntity entity, IEnumerable<Guid> currentCategories) 

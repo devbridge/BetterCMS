@@ -34,6 +34,10 @@
 
             public const string LuceneSearchForPartOfWordsPrefix = "LuceneSearchForPartOfWords";
 
+            public const string LuceneIndexerDeleteLockFileOnStart = "LuceneIndexerDeleteLockFileOnStart";
+
+            public const string LuceneIndexerRunsOnlyOnHost = "LuceneIndexerRunsOnlyOnHost";
+
             public const string LuceneExcludedNodes = "LuceneExcludedNodes";
 
             public const string LuceneExcludedIds = "LuceneExcludedIds";

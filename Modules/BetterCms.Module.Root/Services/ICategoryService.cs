@@ -9,12 +9,6 @@ namespace BetterCms.Module.Root.Services
 {
     public interface ICategoryService
     {
-        /// <summary>
-        /// Gets the list of category lookup values.
-        /// </summary>
-        /// <returns>List of category lookup values.</returns>
-        IEnumerable<LookupKeyValue> GetCategories(string categoryTreeForKey);
-
         IEnumerable<Guid> GetSelectedCategoriesIds<TEntity, TEntityCategory>(Guid? entityId)
             where TEntity : Entity, ICategorized
             where TEntityCategory : Entity, IEntityCategory;

@@ -457,7 +457,64 @@ namespace BetterCMS.Module.LuceneSearch.Services.IndexerService
                 writer.Optimize();
             }
         }
-       
+
+        public void CleanLock()
+        {
+            bool deleteLockFileOnStart;
+            if (bool.TryParse(cmsConfiguration.Search.GetValue(LuceneSearchConstants.ConfigurationKeys.LuceneIndexerDeleteLockFileOnStart), out deleteLockFileOnStart) && deleteLockFileOnStart)
+            {
+                try
+                {
+                    var fileSystemPath = cmsConfiguration.Search.GetValue(LuceneSearchConstants.ConfigurationKeys.LuceneFileSystemDirectory);
+                    if (string.IsNullOrWhiteSpace(fileSystemPath))
+                    {
+                        Log.Info("Lucene file system path is not set.");
+                        return;
+                    }
+
+                    directory = GetLuceneDirectory(fileSystemPath);
+                    var path = Path.Combine(directory, IndexWriter.WRITE_LOCK_NAME);
+                    if (File.Exists(path))
+                    {
+                        File.Delete(path);
+                    }
+                }
+                catch (Exception ex)
+                {
+                    Log.Error(string.Format("Failed to delete write lock file '{0}' in directory '{1}'.", IndexWriter.WRITE_LOCK_NAME, directory), ex);
+                }
+            }
+        }
+
+        public bool StartIndexer()
+        {
+            var runOnHost = cmsConfiguration.Search.GetValue(LuceneSearchConstants.ConfigurationKeys.LuceneIndexerRunsOnlyOnHost);
+            
+            if (string.IsNullOrWhiteSpace(runOnHost))
+            {
+                return true;
+            }
+
+            var hostName = "";
+            try
+            {
+                hostName = Environment.MachineName;
+            }
+            catch (Exception ex)
+            {
+                Log.ErrorFormat("Failed to check host name. Indexer will not start.", ex);
+                return false;
+            }
+
+            var startIndexer = String.Equals(runOnHost.Trim(), hostName.Trim(), StringComparison.InvariantCultureIgnoreCase);
+            if (!startIndexer)
+            {
+                Log.WarnFormat("Indexer on host '{0}' will not start, because host name does not match provided in configuration.", hostName);
+            }
+
+            return startIndexer;
+        }
+
         private void CloseReader()
         {
             try

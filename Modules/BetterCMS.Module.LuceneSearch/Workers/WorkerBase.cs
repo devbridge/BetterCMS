@@ -31,8 +31,8 @@ namespace BetterCMS.Module.LuceneSearch.Workers
         protected virtual void OnStop()
         {
         }
-        
-        public void Stop(bool immediate)
+
+        public virtual void Stop(bool immediate)
         {
             hostShuttingDown = true;
 
@@ -43,7 +43,7 @@ namespace BetterCMS.Module.LuceneSearch.Workers
             }
         }
 
-        public void Start()
+        public virtual void Start()
         {
             workingThread.Start();
         }
