@@ -1,6 +1,6 @@
 ﻿using System.Linq;
 
-using Devbridge.Platform.Core.DataAccess.DataContext;
+using BetterModules.Core.DataAccess.DataContext;
 using BetterCms.Module.Api.Infrastructure;
 using BetterCms.Module.Api.Operations;
 

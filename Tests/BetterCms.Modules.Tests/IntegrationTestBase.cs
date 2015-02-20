@@ -3,8 +3,8 @@ using System.Transactions;
 
 using Autofac;
 
-using Devbridge.Platform.Core.DataAccess.DataContext;
-using Devbridge.Platform.Core.Models;
+using BetterModules.Core.DataAccess.DataContext;
+using BetterModules.Core.Models;
 
 using FluentNHibernate.Testing;
 

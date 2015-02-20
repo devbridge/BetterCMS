@@ -2,7 +2,7 @@
 using System.Linq.Expressions;
 using System.Web;
 
-using Devbridge.Platform.Core.DataAccess;
+using BetterModules.Core.DataAccess;
 
 using BetterCms.Module.MediaManager.Command.MediaManager;
 using BetterCms.Module.MediaManager.Helpers;

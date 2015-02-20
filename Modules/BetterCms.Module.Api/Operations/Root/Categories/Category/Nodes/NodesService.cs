@@ -5,7 +5,7 @@ using BetterCms.Module.Api.Helpers;
 using BetterCms.Module.Api.Infrastructure;
 using BetterCms.Module.Api.Operations.Root.Categories.Category.Nodes.Node;
 
-using Devbridge.Platform.Core.DataAccess;
+using BetterModules.Core.DataAccess;
 
 using ServiceStack.ServiceInterface;
 

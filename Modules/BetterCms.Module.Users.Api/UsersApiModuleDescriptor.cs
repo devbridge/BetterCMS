@@ -14,7 +14,7 @@ using BetterCms.Module.Users.Api.Operations.Users.Users;
 using BetterCms.Module.Users.Api.Operations.Users.Users.User;
 using BetterCms.Module.Users.Api.Operations.Users.Users.User.Validate;
 
-using Devbridge.Platform.Core.Modules.Registration;
+using BetterModules.Core.Modules.Registration;
 
 namespace BetterCms.Module.Users.Api
 {

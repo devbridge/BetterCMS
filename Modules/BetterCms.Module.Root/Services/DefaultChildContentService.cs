@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 
-using Devbridge.Platform.Core.DataAccess;
+using BetterModules.Core.DataAccess;
 using BetterCms.Core.DataContracts.Enums;
 using BetterCms.Core.Exceptions.Mvc;
 

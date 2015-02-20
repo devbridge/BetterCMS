@@ -6,7 +6,7 @@ using BetterCms;
 using BetterCms.Core.Modules;
 using BetterCms.Module.Search.Services;
 
-using Devbridge.Platform.Core.Modules.Registration;
+using BetterModules.Core.Modules.Registration;
 
 namespace BetterCMS.Module.GoogleSiteSearch
 {

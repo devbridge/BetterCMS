@@ -11,9 +11,9 @@ using BetterCms.Module.Root.Models;
 using BetterCms.Module.Root.Services;
 using BetterCms.Module.Pages.Command.Content.GetPageHtmlContent;
 
-using Devbridge.Platform.Core.DataAccess;
-using Devbridge.Platform.Core.DataAccess.DataContext;
-using Devbridge.Platform.Core.Web.Mvc.Commands;
+using BetterModules.Core.DataAccess;
+using BetterModules.Core.DataAccess.DataContext;
+using BetterModules.Core.Web.Mvc.Commands;
 
 using Moq;
 

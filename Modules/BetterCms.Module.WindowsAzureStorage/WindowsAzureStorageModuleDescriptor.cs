@@ -4,7 +4,7 @@ using BetterCms.Configuration;
 using BetterCms.Core.Modules;
 using BetterCms.Core.Services.Storage;
 
-using Devbridge.Platform.Core.Modules.Registration;
+using BetterModules.Core.Modules.Registration;
 
 namespace BetterCms.Module.WindowsAzureStorage
 {

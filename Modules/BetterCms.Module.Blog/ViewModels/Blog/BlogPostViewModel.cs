@@ -12,7 +12,7 @@ using BetterCms.Module.Root.Content.Resources;
 using BetterCms.Module.Root.Models;
 using BetterCms.Module.Root.ViewModels.Security;
 
-using Devbridge.Platform.Core.Models;
+using BetterModules.Core.Models;
 
 namespace BetterCms.Module.Blog.ViewModels.Blog
 {

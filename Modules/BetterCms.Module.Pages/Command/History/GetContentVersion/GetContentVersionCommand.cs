@@ -4,7 +4,7 @@ using BetterCms.Module.Pages.Services;
 using BetterCms.Module.Root.Mvc;
 using BetterCms.Module.Root.ViewModels.Cms;
 
-using Devbridge.Platform.Core.Web.Mvc.Commands;
+using BetterModules.Core.Web.Mvc.Commands;
 
 namespace BetterCms.Module.Pages.Command.History.GetContentVersion
 {

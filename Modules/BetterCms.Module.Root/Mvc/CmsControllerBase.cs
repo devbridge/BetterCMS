@@ -9,8 +9,8 @@ using BetterCms.Core.Services;
 using BetterCms.Core.Web;
 using BetterCms.Module.Root.Mvc.Helpers;
 
-using Devbridge.Platform.Core.Web.Dependencies;
-using Devbridge.Platform.Core.Web.Mvc;
+using BetterModules.Core.Web.Dependencies;
+using BetterModules.Core.Web.Mvc;
 
 namespace BetterCms.Module.Root.Mvc
 {    

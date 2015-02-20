@@ -7,7 +7,7 @@ using BetterCms.Module.Users.Models;
 using BetterCms.Module.Users.Services;
 using BetterCms.Module.Users.ViewModels.Registration;
 
-using Devbridge.Platform.Core.Web.Mvc.Commands;
+using BetterModules.Core.Web.Mvc.Commands;
 
 namespace BetterCms.Module.Users.Commands.Registration
 {

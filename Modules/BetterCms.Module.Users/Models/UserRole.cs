@@ -1,6 +1,6 @@
 ﻿using System;
 
-using Devbridge.Platform.Core.Models;
+using BetterModules.Core.Models;
 
 namespace BetterCms.Module.Users.Models
 {

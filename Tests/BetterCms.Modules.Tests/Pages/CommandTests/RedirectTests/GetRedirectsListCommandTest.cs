@@ -1,6 +1,6 @@
 ﻿using Autofac;
 
-using Devbridge.Platform.Core.DataAccess.DataContext;
+using BetterModules.Core.DataAccess.DataContext;
 using BetterCms.Module.Pages.ViewModels.SiteSettings;
 using BetterCms.Module.Root.Mvc.Grids.Extensions;
 using BetterCms.Module.Root.Mvc.Grids.GridOptions;

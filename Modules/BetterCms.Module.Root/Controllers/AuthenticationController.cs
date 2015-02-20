@@ -13,7 +13,7 @@ using BetterCms.Module.Root.ViewModels.Autocomplete;
 
 using Common.Logging;
 
-using Devbridge.Platform.Core.Web.Models;
+using BetterModules.Core.Web.Models;
 
 using Microsoft.Web.Mvc;
 

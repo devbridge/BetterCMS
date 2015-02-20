@@ -16,12 +16,12 @@ using BetterCms.Module.Root.Services;
 using BetterCms.Module.Root.Services.Categories.Nodes;
 using BetterCms.Module.Root.Services.Categories.Tree;
 
-using Devbridge.Platform.Core.DataAccess.DataContext;
-using Devbridge.Platform.Core.DataContracts;
-using Devbridge.Platform.Core.Dependencies;
-using Devbridge.Platform.Core.Modules.Registration;
-using Devbridge.Platform.Core.Web.Modules.Registration;
-using Devbridge.Platform.Events;
+using BetterModules.Core.DataAccess.DataContext;
+using BetterModules.Core.DataContracts;
+using BetterModules.Core.Dependencies;
+using BetterModules.Core.Modules.Registration;
+using BetterModules.Core.Web.Modules.Registration;
+using BetterModules.Core.Events;
 
 namespace BetterCms.Module.Root
 {

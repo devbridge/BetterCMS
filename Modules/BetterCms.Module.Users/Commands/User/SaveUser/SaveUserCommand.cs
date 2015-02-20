@@ -3,7 +3,7 @@
 using BetterCms.Module.Users.Services;
 using BetterCms.Module.Users.ViewModels.User;
 
-using Devbridge.Platform.Core.Web.Mvc.Commands;
+using BetterModules.Core.Web.Mvc.Commands;
 
 namespace BetterCms.Module.Users.Commands.User.SaveUser
 {

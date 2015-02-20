@@ -12,8 +12,8 @@ using BetterCms.Module.Pages.ViewModels.SiteSettings;
 using BetterCms.Module.Root.Mvc;
 using BetterCms.Module.Root.Mvc.Grids.Extensions;
 
-using Devbridge.Platform.Core.DataAccess.DataContext.Fetching;
-using Devbridge.Platform.Core.Web.Mvc.Commands;
+using BetterModules.Core.DataAccess.DataContext.Fetching;
+using BetterModules.Core.Web.Mvc.Commands;
 
 using NHibernate.Criterion;
 using NHibernate.Transform;

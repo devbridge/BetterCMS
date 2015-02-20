@@ -1,4 +1,4 @@
-﻿using Devbridge.Platform.Core.DataAccess;
+﻿using BetterModules.Core.DataAccess;
 using BetterCms.Module.Root.Services;
 using ServiceStack.ServiceInterface;
 

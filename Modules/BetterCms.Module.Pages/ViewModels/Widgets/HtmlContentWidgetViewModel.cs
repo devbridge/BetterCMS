@@ -3,7 +3,7 @@ using System.Web.Mvc;
 
 using BetterCms.Module.Pages.Content.Resources;
 
-using Devbridge.Platform.Core.Models;
+using BetterModules.Core.Models;
 
 namespace BetterCms.Module.Pages.ViewModels.Widgets
 {

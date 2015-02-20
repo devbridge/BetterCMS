@@ -10,7 +10,7 @@ using BetterCms.Module.Pages.ViewModels.Widgets;
 using BetterCms.Module.Root.Models;
 using BetterCms.Module.Root.Mvc;
 
-using Devbridge.Platform.Core.Web.Mvc.Commands;
+using BetterModules.Core.Web.Mvc.Commands;
 
 using FluentNHibernate.Conventions;
 using FluentNHibernate.Utils;

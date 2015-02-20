@@ -12,8 +12,8 @@ using BetterCms.Module.Api.Operations.Root.Tags.Tag;
 
 using Common.Logging;
 
-using Devbridge.Platform.Core.Dependencies;
-using Devbridge.Platform.Core.Environment.Assemblies;
+using BetterModules.Core.Dependencies;
+using BetterModules.Core.Environment.Assemblies;
 
 using ServiceStack.ServiceInterface.Validation;
 using ServiceStack.Text;

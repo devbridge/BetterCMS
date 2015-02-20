@@ -4,7 +4,7 @@ using System.ComponentModel.DataAnnotations;
 using BetterCms.Core.DataContracts.Enums;
 using BetterCms.Module.Root.Content.Resources;
 
-using Devbridge.Platform.Core.Models;
+using BetterModules.Core.Models;
 
 namespace BetterCms.Module.Root.ViewModels.Option
 {

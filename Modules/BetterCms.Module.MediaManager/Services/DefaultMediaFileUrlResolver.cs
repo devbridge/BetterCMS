@@ -2,7 +2,7 @@
 
 using BetterCms.Module.MediaManager.Controllers;
 
-using Devbridge.Platform.Core.Web.Web;
+using BetterModules.Core.Web.Web;
 
 namespace BetterCms.Module.MediaManager.Services
 {

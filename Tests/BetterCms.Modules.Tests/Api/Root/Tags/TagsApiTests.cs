@@ -2,7 +2,7 @@
 using BetterCms.Module.Api.Operations.Root.Tags;
 using BetterCms.Module.Api.Operations.Root.Tags.Tag;
 
-using Devbridge.Platform.Core.Models;
+using BetterModules.Core.Models;
 
 using NHibernate;
 

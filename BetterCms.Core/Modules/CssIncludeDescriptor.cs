@@ -1,8 +1,8 @@
 ﻿using System;
 
-using Devbridge.Platform.Core.Exceptions;
-using Devbridge.Platform.Core.Modules;
-using Devbridge.Platform.Core.Web.Mvc.Extensions;
+using BetterModules.Core.Exceptions;
+using BetterModules.Core.Modules;
+using BetterModules.Core.Web.Mvc.Extensions;
 
 namespace BetterCms.Core.Modules
 {
@@ -22,7 +22,7 @@ namespace BetterCms.Core.Modules
         {
             if (isPublic && string.IsNullOrEmpty(minFileName))
             {
-                throw new PlatformException("Public CSS includes should describe a minified file version itself.", new ArgumentNullException("minFileName", "Please define the minFileName parameter."));
+                throw new CoreException("Public CSS includes should describe a minified file version itself.", new ArgumentNullException("minFileName", "Please define the minFileName parameter."));
             }
 
             ContainerModule = module;                        

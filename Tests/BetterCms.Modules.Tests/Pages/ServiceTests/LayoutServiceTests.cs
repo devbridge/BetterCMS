@@ -1,6 +1,6 @@
 ﻿using System.Linq;
-using Devbridge.Platform.Core.DataAccess;
-using Devbridge.Platform.Core.DataAccess.DataContext;
+using BetterModules.Core.DataAccess;
+using BetterModules.Core.DataAccess.DataContext;
 using BetterCms.Core.Security;
 using BetterCms.Module.Pages.Services;
 using BetterCms.Module.Root.Services;

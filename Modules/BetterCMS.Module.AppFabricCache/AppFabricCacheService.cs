@@ -4,7 +4,7 @@ using BetterCms.Core.Exceptions;
 
 using Common.Logging;
 
-using Devbridge.Platform.Core.Web.Services.Caching;
+using BetterModules.Core.Web.Services.Caching;
 
 using Microsoft.ApplicationServer.Caching;
 

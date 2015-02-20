@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Data.SqlTypes;
 
-using Devbridge.Platform.Core.DataAccess.DataContext.Migrations;
+using BetterModules.Core.DataAccess.DataContext.Migrations;
 
 using FluentMigrator;
 

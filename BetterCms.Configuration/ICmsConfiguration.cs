@@ -1,6 +1,6 @@
 using BetterCms.Configuration;
 
-using Devbridge.Platform.Core.Web.Configuration;
+using BetterModules.Core.Web.Configuration;
 
 namespace BetterCms
 {

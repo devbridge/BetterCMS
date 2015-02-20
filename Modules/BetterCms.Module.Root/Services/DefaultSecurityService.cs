@@ -5,8 +5,8 @@ using System.Security.Principal;
 
 using BetterCms.Core.Services;
 
-using Devbridge.Platform.Core.Web.Security;
-using Devbridge.Platform.Core.Web.Web;
+using BetterModules.Core.Web.Security;
+using BetterModules.Core.Web.Web;
 
 namespace BetterCms.Module.Root.Services
 {

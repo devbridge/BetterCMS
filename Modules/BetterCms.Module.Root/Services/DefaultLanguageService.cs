@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 
-using Devbridge.Platform.Core.DataAccess;
+using BetterModules.Core.DataAccess;
 
 using BetterCms.Module.Root.Content.Resources;
 using BetterCms.Module.Root.Models;

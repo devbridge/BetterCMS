@@ -1,7 +1,7 @@
 ﻿using System;
 
-using Devbridge.Platform.Core.Exceptions.DataTier;
-using Devbridge.Platform.Core.Models;
+using BetterModules.Core.Exceptions.DataTier;
+using BetterModules.Core.Models;
 
 namespace BetterCms.Module.Pages.Exceptions
 {

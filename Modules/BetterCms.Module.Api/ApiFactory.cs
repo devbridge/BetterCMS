@@ -2,7 +2,7 @@
 
 using BetterCms.Core.Exceptions.Api;
 
-using Devbridge.Platform.Core.Dependencies;
+using BetterModules.Core.Dependencies;
 
 namespace BetterCms.Module.Api
 {

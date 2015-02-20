@@ -1,6 +1,6 @@
 ﻿using System.Linq;
 
-using Devbridge.Platform.Core.DataAccess;
+using BetterModules.Core.DataAccess;
 using BetterCms.Module.Blog.Models;
 
 using NHibernate.Linq;

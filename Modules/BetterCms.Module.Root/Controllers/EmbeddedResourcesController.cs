@@ -2,7 +2,7 @@
 using System.Web.Mvc;
 using System.Web.UI;
 
-using Devbridge.Platform.Core.Web.Web.EmbeddedResources;
+using BetterModules.Core.Web.Web.EmbeddedResources;
 
 using Microsoft.Web.Mvc;
 

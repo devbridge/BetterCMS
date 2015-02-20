@@ -4,10 +4,11 @@ using Autofac;
 
 using BetterCms.Core.Modules;
 
-using Devbridge.Platform.Core.Dependencies;
-using Devbridge.Platform.Core.Web.Dependencies;
-using Devbridge.Platform.Core.Web.Modules.Registration;
-using Devbridge.Platform.Events;
+using BetterModules.Core.Dependencies;
+using BetterModules.Core.Web.Dependencies;
+using BetterModules.Core.Web.Events;
+using BetterModules.Core.Web.Modules.Registration;
+using BetterModules.Core.Events;
 
 namespace BetterCms.Module.Api
 {

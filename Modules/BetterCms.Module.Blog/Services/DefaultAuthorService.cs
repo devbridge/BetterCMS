@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 
-using Devbridge.Platform.Core.DataAccess;
-using Devbridge.Platform.Core.DataAccess.DataContext;
+using BetterModules.Core.DataAccess;
+using BetterModules.Core.DataAccess.DataContext;
 using BetterCms.Module.Blog.Models;
 using BetterCms.Module.Root.Models;
 

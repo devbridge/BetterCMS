@@ -19,8 +19,8 @@ using BetterCms.Module.Root.Models.Extensions;
 using BetterCms.Module.Root.ViewModels.Security;
 using BetterCms.Module.Root.Views.Language;
 
-using Devbridge.Platform.Core.Web.Mvc.Commands;
-using Devbridge.Platform.Core.Web.Mvc.Extensions;
+using BetterModules.Core.Web.Mvc.Commands;
+using BetterModules.Core.Web.Mvc.Extensions;
 
 using NHibernate.Linq;
 

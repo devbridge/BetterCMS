@@ -2,7 +2,7 @@
 using System.Configuration;
 using System.Reflection;
 
-using Devbridge.Platform.Core.Web.Configuration;
+using BetterModules.Core.Web.Configuration;
 
 namespace BetterCms.Configuration
 {

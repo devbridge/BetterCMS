@@ -7,7 +7,7 @@ using BetterCms.Module.Api.Operations.Pages.Contents.Content.Draft;
 using BetterCms.Module.Pages.Exceptions;
 using BetterCms.Module.Root;
 
-using Devbridge.Platform.Core.Exceptions.DataTier;
+using BetterModules.Core.Exceptions.DataTier;
 
 using NHibernate;
 

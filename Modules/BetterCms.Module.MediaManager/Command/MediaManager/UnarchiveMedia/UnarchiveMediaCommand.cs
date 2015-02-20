@@ -5,8 +5,8 @@ using BetterCms.Module.MediaManager.Models;
 using BetterCms.Module.MediaManager.ViewModels.MediaManager;
 using BetterCms.Module.Root.Mvc;
 
-using Devbridge.Platform.Core.DataContracts;
-using Devbridge.Platform.Core.Web.Mvc.Commands;
+using BetterModules.Core.DataContracts;
+using BetterModules.Core.Web.Mvc.Commands;
 
 namespace BetterCms.Module.MediaManager.Command.MediaManager.UnarchiveMedia
 {

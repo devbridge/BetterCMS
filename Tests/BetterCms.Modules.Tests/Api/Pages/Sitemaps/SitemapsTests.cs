@@ -8,8 +8,8 @@ using BetterCms.Module.Api.Operations.Pages.Sitemaps;
 using BetterCms.Module.Api.Operations.Pages.Sitemaps.Sitemap;
 using BetterCms.Module.Api.Operations.Root;
 
-using Devbridge.Platform.Core.Models;
-using Devbridge.Platform.Events;
+using BetterModules.Core.Models;
+using BetterModules.Core.Events;
 
 using NHibernate;
 

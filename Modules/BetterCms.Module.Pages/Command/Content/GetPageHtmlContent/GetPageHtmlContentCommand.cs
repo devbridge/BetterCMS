@@ -14,8 +14,8 @@ using BetterCms.Module.Root.Mvc;
 using BetterCms.Module.Root.Services;
 using BetterCms.Module.Root.ViewModels.Security;
 
-using Devbridge.Platform.Core.Exceptions.DataTier;
-using Devbridge.Platform.Core.Web.Mvc.Commands;
+using BetterModules.Core.Exceptions.DataTier;
+using BetterModules.Core.Web.Mvc.Commands;
 
 namespace BetterCms.Module.Pages.Command.Content.GetPageHtmlContent
 {

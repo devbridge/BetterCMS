@@ -7,8 +7,8 @@ using BetterCms.Module.Pages.ViewModels.Page;
 using BetterCms.Module.Root.Models;
 using BetterCms.Module.Root.Mvc;
 
-using Devbridge.Platform.Core.DataAccess.DataContext;
-using Devbridge.Platform.Core.Web.Mvc.Commands;
+using BetterModules.Core.DataAccess.DataContext;
+using BetterModules.Core.Web.Mvc.Commands;
 
 using NHibernate.Linq;
 

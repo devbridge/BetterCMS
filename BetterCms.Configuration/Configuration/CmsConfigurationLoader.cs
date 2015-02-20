@@ -1,7 +1,7 @@
 ﻿using System.Configuration;
 using System.Web.Configuration;
 
-using Devbridge.Platform.Core.Configuration;
+using BetterModules.Core.Configuration;
 
 namespace BetterCms.Configuration
 {

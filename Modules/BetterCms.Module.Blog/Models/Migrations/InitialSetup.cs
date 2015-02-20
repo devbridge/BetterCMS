@@ -1,8 +1,8 @@
 ﻿using BetterCms.Module.Pages.Models.Migrations;
 using BetterCms.Module.Root.Models.Migrations;
 
-using Devbridge.Platform.Core.DataAccess.DataContext.Migrations;
-using Devbridge.Platform.Core.Models;
+using BetterModules.Core.DataAccess.DataContext.Migrations;
+using BetterModules.Core.Models;
 
 using FluentMigrator;
 

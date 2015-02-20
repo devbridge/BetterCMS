@@ -8,7 +8,7 @@ using BetterCms.Module.Root;
 using BetterCms.Module.Users.Content.Resources;
 using BetterCms.Module.Users.Mvc.Attributes;
 
-using Devbridge.Platform.Core.Models;
+using BetterModules.Core.Models;
 
 namespace BetterCms.Module.Users.ViewModels.User
 {

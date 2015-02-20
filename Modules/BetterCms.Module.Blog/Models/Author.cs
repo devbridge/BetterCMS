@@ -1,6 +1,6 @@
 ﻿using System;
 using BetterCms.Module.MediaManager.Models;
-using Devbridge.Platform.Core.Models;
+using BetterModules.Core.Models;
 
 namespace BetterCms.Module.Blog.Models
 {

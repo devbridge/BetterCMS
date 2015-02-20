@@ -3,7 +3,7 @@ using System.Data;
 
 using Autofac;
 
-using Devbridge.Platform.Core.Dependencies;
+using BetterModules.Core.Dependencies;
 
 using NHibernate;
 using NHibernate.SqlTypes;

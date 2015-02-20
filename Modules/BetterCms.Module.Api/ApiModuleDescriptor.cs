@@ -71,7 +71,7 @@ using BetterCms.Module.Api.Operations.Users.Users.User;
 using BetterCms.Module.Api.Operations.Users.Users.User.Validate;
 using BetterCms.Module.Api.Operations.Users.Users.User.ValidateUser;
 
-using Devbridge.Platform.Core.Modules.Registration;
+using BetterModules.Core.Modules.Registration;
 
 using ContentService = BetterCms.Module.Api.Operations.Pages.Contents.Content.ContentService;
 

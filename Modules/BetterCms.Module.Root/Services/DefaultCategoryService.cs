@@ -7,10 +7,10 @@ using BetterCms.Core.DataContracts;
 using BetterCms.Module.Root.Models;
 using BetterCms.Module.Root.Mvc;
 
-using Devbridge.Platform.Core.DataAccess;
-using Devbridge.Platform.Core.DataAccess.DataContext;
-using Devbridge.Platform.Core.Exceptions.DataTier;
-using Devbridge.Platform.Core.Models;
+using BetterModules.Core.DataAccess;
+using BetterModules.Core.DataAccess.DataContext;
+using BetterModules.Core.Exceptions.DataTier;
+using BetterModules.Core.Models;
 
 using NHibernate.Criterion;
 using NHibernate.Linq;

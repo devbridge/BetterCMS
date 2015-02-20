@@ -10,9 +10,9 @@ using BetterCms.Module.MediaManager.Models;
 using BetterCms.Module.MediaManager.Services;
 using BetterCms.Module.Root.Mvc;
 
-using Devbridge.Platform.Core.DataAccess.DataContext;
-using Devbridge.Platform.Core.DataAccess.DataContext.Fetching;
-using Devbridge.Platform.Core.Web.Mvc.Commands;
+using BetterModules.Core.DataAccess.DataContext;
+using BetterModules.Core.DataAccess.DataContext.Fetching;
+using BetterModules.Core.Web.Mvc.Commands;
 
 namespace BetterCms.Module.MediaManager.Command.Files.DownloadFile
 {

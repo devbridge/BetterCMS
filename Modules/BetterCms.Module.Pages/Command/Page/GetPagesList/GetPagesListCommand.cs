@@ -4,7 +4,7 @@ using BetterCms.Module.Pages.ViewModels.SiteSettings;
 
 using BetterCms.Module.Root.Mvc;
 
-using Devbridge.Platform.Core.Web.Mvc.Commands;
+using BetterModules.Core.Web.Mvc.Commands;
 
 namespace BetterCms.Module.Pages.Command.Page.GetPagesList
 {

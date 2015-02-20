@@ -5,7 +5,7 @@ using System.Security.Principal;
 using BetterCms.Core.DataContracts;
 using BetterCms.Module.Root.Models;
 
-using Devbridge.Platform.Core.Models;
+using BetterModules.Core.Models;
 
 namespace BetterCms.Module.Root.Services
 {

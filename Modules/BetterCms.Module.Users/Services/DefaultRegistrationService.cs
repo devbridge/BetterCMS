@@ -2,8 +2,8 @@
 
 using BetterCms.Module.Users.Models;
 
-using Devbridge.Platform.Core.DataAccess;
-using Devbridge.Platform.Core.Web.Web;
+using BetterModules.Core.DataAccess;
+using BetterModules.Core.Web.Web;
 
 namespace BetterCms.Module.Users.Services
 {

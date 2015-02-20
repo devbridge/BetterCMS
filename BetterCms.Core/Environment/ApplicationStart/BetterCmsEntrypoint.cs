@@ -6,9 +6,9 @@ using BetterCms.Core.Security;
 
 using Common.Logging;
 
-using Devbridge.Platform.Core.Dependencies;
-using Devbridge.Platform.Core.Exceptions;
-using Devbridge.Platform.Core.Web.Environment.Application;
+using BetterModules.Core.Dependencies;
+using BetterModules.Core.Exceptions;
+using BetterModules.Core.Web.Environment.Application;
 
 [assembly: WebActivatorEx.PreApplicationStartMethod(typeof(BetterCmsEntrypoint), "PreApplicationStart", Order = 50)]
 
@@ -44,7 +44,7 @@ namespace BetterCms.Core.Environment.ApplicationStart
             }
             catch (Exception ex)
             {
-                throw new PlatformException("Logging is not working. A reason may be that Common.Logging section is not configured in web.config.", ex);
+                throw new CoreException("Logging is not working. A reason may be that Common.Logging section is not configured in web.config.", ex);
             }
 
             if (!IsFullTrust)

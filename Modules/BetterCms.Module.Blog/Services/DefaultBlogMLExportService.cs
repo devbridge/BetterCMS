@@ -13,8 +13,8 @@ using BetterCms.Module.Root.Models;
 using BlogML;
 using BlogML.Xml;
 
-using Devbridge.Platform.Core.DataAccess;
-using Devbridge.Platform.Core.Web.Web;
+using BetterModules.Core.DataAccess;
+using BetterModules.Core.Web.Web;
 
 namespace BetterCms.Module.Blog.Services
 {

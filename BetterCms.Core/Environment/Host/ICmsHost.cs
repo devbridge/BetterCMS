@@ -1,4 +1,4 @@
-﻿using Devbridge.Platform.Core.Web.Environment.Host;
+﻿using BetterModules.Core.Web.Environment.Host;
 
 namespace BetterCms.Core.Environment.Host
 {

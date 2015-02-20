@@ -2,7 +2,7 @@
 
 using BetterCms.Core.Web;
 
-using Devbridge.Platform.Core.Web.Web;
+using BetterModules.Core.Web.Web;
 
 namespace BetterCms.Module.Root.Services
 {

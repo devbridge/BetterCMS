@@ -3,8 +3,8 @@
 using BetterCms.Configuration;
 using BetterCms.Core.Modules;
 
-using Devbridge.Platform.Core.Modules.Registration;
-using Devbridge.Platform.Core.Web.Services.Caching;
+using BetterModules.Core.Modules.Registration;
+using BetterModules.Core.Web.Services.Caching;
 
 namespace BetterCms.Module.AppFabricCache
 {

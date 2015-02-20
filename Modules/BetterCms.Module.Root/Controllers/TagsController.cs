@@ -13,7 +13,7 @@ using BetterCms.Module.Root.Mvc.Grids.GridOptions;
 using BetterCms.Module.Root.ViewModels.Autocomplete;
 using BetterCms.Module.Root.ViewModels.Tags;
 
-using Devbridge.Platform.Core.Web.Models;
+using BetterModules.Core.Web.Models;
 
 using Microsoft.Web.Mvc;
 

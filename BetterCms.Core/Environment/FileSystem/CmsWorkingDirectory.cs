@@ -1,6 +1,6 @@
 ﻿using System.Web.Hosting;
 
-using Devbridge.Platform.Core.Environment.FileSystem;
+using BetterModules.Core.Environment.FileSystem;
 
 namespace BetterCms.Core.Environment.FileSystem
 {

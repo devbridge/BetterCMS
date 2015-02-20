@@ -2,8 +2,8 @@
 using BetterCms.Module.Api.Operations.MediaManager;
 using BetterCms.Module.Api.Operations.MediaManager.Folders.Folder;
 
-using Devbridge.Platform.Core.Models;
-using Devbridge.Platform.Events;
+using BetterModules.Core.Models;
+using BetterModules.Core.Events;
 
 using NHibernate;
 

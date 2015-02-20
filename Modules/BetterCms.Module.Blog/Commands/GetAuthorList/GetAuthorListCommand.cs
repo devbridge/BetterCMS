@@ -11,8 +11,8 @@ using BetterCms.Module.Root.Mvc.Grids.Extensions;
 using BetterCms.Module.Root.Mvc.Grids.GridOptions;
 using BetterCms.Module.Root.ViewModels.SiteSettings;
 
-using Devbridge.Platform.Core.DataAccess.DataContext;
-using Devbridge.Platform.Core.Web.Mvc.Commands;
+using BetterModules.Core.DataAccess.DataContext;
+using BetterModules.Core.Web.Mvc.Commands;
 
 namespace BetterCms.Module.Blog.Commands.GetAuthorList
 {

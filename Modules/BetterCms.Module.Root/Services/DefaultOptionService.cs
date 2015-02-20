@@ -5,7 +5,7 @@ using System.Linq;
 using System.Threading;
 using System.Web;
 
-using Devbridge.Platform.Core.DataAccess;
+using BetterModules.Core.DataAccess;
 using BetterCms.Core.DataContracts;
 using BetterCms.Core.DataContracts.Enums;
 using BetterCms.Core.Exceptions.Mvc;
@@ -16,9 +16,9 @@ using BetterCms.Module.Root.Mvc;
 using BetterCms.Module.Root.Providers;
 using BetterCms.Module.Root.ViewModels.Option;
 
-using Devbridge.Platform.Core.DataContracts;
-using Devbridge.Platform.Core.Models;
-using Devbridge.Platform.Core.Web.Services.Caching;
+using BetterModules.Core.DataContracts;
+using BetterModules.Core.Models;
+using BetterModules.Core.Web.Services.Caching;
 
 using NHibernate.Linq;
 using NHibernate.Proxy.DynamicProxy;

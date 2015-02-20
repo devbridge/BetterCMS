@@ -10,7 +10,7 @@ namespace BetterCms.Module.Root.Mvc
     /// <summary>
     /// A base class for commands.
     /// </summary>
-    public abstract class CommandBase : Devbridge.Platform.Core.Web.Mvc.Commands.CoreCommandBase
+    public abstract class CommandBase : BetterModules.Core.Web.Mvc.Commands.CoreCommandBase
     {
         /// <summary>
         /// Gets or sets the security service.

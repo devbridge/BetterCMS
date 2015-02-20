@@ -2,7 +2,7 @@
 using System.Linq;
 using System.Linq.Expressions;
 
-using Devbridge.Platform.Core.DataAccess;
+using BetterModules.Core.DataAccess;
 
 using BetterCms.Module.Api.Helpers;
 using BetterCms.Module.Api.Infrastructure;

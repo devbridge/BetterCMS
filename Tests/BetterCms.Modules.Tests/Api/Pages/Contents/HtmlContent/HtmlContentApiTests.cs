@@ -7,7 +7,7 @@ using BetterCms.Module.Api.Operations;
 using BetterCms.Module.Api.Operations.Pages.Contents.Content.HtmlContent;
 using BetterCms.Module.Api.Operations.Root;
 
-using Devbridge.Platform.Core.Models;
+using BetterModules.Core.Models;
 
 using NHibernate;
 

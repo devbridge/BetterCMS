@@ -18,7 +18,7 @@ using BetterCms.Module.Installation;
 using BetterCms.Module.Root.Services;
 using BetterCms.Module.Users;
 
-using Devbridge.Platform.Core.Web.Web;
+using BetterModules.Core.Web.Web;
 
 using Moq;
 

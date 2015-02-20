@@ -9,7 +9,7 @@ using BetterCms.Module.Api.Operations.Root;
 
 using BetterCms.Module.MediaManager.Provider;
 
-using Devbridge.Platform.Core.Models;
+using BetterModules.Core.Models;
 
 using NHibernate;
 

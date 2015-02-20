@@ -4,8 +4,8 @@ using System.Transactions;
 
 using Autofac;
 
-using Devbridge.Platform.Core.DataAccess;
-using Devbridge.Platform.Core.DataAccess.DataContext;
+using BetterModules.Core.DataAccess;
+using BetterModules.Core.DataAccess.DataContext;
 
 using BetterCms.Module.Api;
 using BetterCms.Module.Api.Infrastructure;

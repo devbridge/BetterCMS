@@ -10,7 +10,7 @@ using BetterCms.Core.Modules.Projections;
 using BetterCms.Module.Root.Mvc.PageHtmlRenderer;
 using BetterCms.Module.Root.ViewModels.Cms;
 
-using Devbridge.Platform.Core.Web.Mvc.Extensions;
+using BetterModules.Core.Web.Mvc.Extensions;
 
 namespace BetterCms.Module.Root.Mvc.Helpers
 {

@@ -21,9 +21,9 @@ using BetterCms.Module.Users.Api;
 using BetterCms.Test.Module.Helpers;
 using BetterCms.Tests.Helpers;
 
-using Devbridge.Platform.Core.DataAccess.DataContext;
-using Devbridge.Platform.Core.DataAccess.DataContext.Fetching;
-using Devbridge.Platform.Core.Dependencies;
+using BetterModules.Core.DataAccess.DataContext;
+using BetterModules.Core.DataAccess.DataContext.Fetching;
+using BetterModules.Core.Dependencies;
 
 namespace BetterCms.Test.Module
 {

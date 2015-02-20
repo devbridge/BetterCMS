@@ -6,7 +6,7 @@ using BetterCms.Core.DataContracts.Enums;
 using BetterCms.Module.Pages.Models.Migrations;
 using BetterCms.Module.Root.Models.Migrations;
 
-using Devbridge.Platform.Core.DataAccess.DataContext.Migrations;
+using BetterModules.Core.DataAccess.DataContext.Migrations;
 
 using FluentMigrator;
 

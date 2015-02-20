@@ -10,10 +10,10 @@ using BetterCms.Module.Pages.Services;
 using BetterCms.Module.Root.Mvc;
 using BetterCms.Module.Root.Services;
 
-using Devbridge.Platform.Core.Dependencies;
-using Devbridge.Platform.Core.Exceptions.DataTier;
-using Devbridge.Platform.Core.Web.Mvc.Commands;
-using Devbridge.Platform.Core.Web.Web;
+using BetterModules.Core.Dependencies;
+using BetterModules.Core.Exceptions.DataTier;
+using BetterModules.Core.Web.Mvc.Commands;
+using BetterModules.Core.Web.Web;
 
 namespace BetterCms.Module.GoogleAnalytics.Command.Sitemap
 {

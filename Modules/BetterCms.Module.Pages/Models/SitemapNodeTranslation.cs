@@ -2,7 +2,7 @@
 
 using BetterCms.Module.Root.Models;
 
-using Devbridge.Platform.Core.Models;
+using BetterModules.Core.Models;
 
 namespace BetterCms.Module.Pages.Models
 {

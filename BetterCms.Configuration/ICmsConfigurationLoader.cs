@@ -1,4 +1,4 @@
-﻿using Devbridge.Platform.Core.Configuration;
+﻿using BetterModules.Core.Configuration;
 
 namespace BetterCms
 {

@@ -14,7 +14,7 @@ using BetterCms.Module.Users.Models;
 
 using BetterCms.Module.Root.Mvc.Helpers;
 
-using Devbridge.Platform.Core.Models;
+using BetterModules.Core.Models;
 
 using NHibernate;
 

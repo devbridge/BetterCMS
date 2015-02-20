@@ -4,7 +4,7 @@ using Autofac;
 
 using BetterCms.Core.Modules;
 
-using Devbridge.Platform.Core.Modules.Registration;
+using BetterModules.Core.Modules.Registration;
 
 namespace BetterCms.Module.Search
 {

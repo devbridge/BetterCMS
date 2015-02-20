@@ -2,7 +2,7 @@
 
 using BetterCms.Module.Search.Content.Resources;
 
-using Devbridge.Platform.Core.DataAccess.DataContext.Migrations;
+using BetterModules.Core.DataAccess.DataContext.Migrations;
 
 using FluentMigrator;
 

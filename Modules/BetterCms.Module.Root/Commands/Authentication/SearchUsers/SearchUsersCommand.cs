@@ -10,8 +10,8 @@ using BetterCms.Module.Root.ViewModels.Autocomplete;
 
 using Common.Logging;
 
-using Devbridge.Platform.Core.Web.Mvc.Commands;
-using Devbridge.Platform.Core.Web.Services.Caching;
+using BetterModules.Core.Web.Mvc.Commands;
+using BetterModules.Core.Web.Services.Caching;
 
 namespace BetterCms.Module.Root.Commands.Authentication.SearchUsers
 {

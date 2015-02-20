@@ -2,7 +2,7 @@
 
 using BetterCms.Module.Api.Infrastructure;
 
-using Devbridge.Platform.Events;
+using BetterModules.Core.Events;
 
 using NHibernate;
 

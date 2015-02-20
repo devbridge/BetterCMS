@@ -3,8 +3,8 @@
 using BetterCms.Core.DataContracts;
 using BetterCms.Module.Root.Models;
 
-using Devbridge.Platform.Core.DataContracts;
-using Devbridge.Platform.Core.Models;
+using BetterModules.Core.DataContracts;
+using BetterModules.Core.Models;
 
 namespace BetterCms.Module.MediaManager.Models
 {

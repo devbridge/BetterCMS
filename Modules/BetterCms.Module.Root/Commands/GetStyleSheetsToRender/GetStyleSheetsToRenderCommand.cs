@@ -2,7 +2,7 @@
 using BetterCms.Module.Root.Services;
 using BetterCms.Module.Root.ViewModels.Rendering;
 
-using Devbridge.Platform.Core.Web.Mvc.Commands;
+using BetterModules.Core.Web.Mvc.Commands;
 
 namespace BetterCms.Module.Root.Commands.GetStyleSheetsToRender
 {

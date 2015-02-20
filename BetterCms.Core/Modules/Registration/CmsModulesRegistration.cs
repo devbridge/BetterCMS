@@ -4,11 +4,11 @@ using Autofac;
 
 using BetterCms.Core.Modules.Projections;
 
-using Devbridge.Platform.Core.Environment.Assemblies;
-using Devbridge.Platform.Core.Models;
-using Devbridge.Platform.Core.Modules.Registration;
-using Devbridge.Platform.Core.Web.Modules.Registration;
-using Devbridge.Platform.Core.Web.Mvc.Extensions;
+using BetterModules.Core.Environment.Assemblies;
+using BetterModules.Core.Models;
+using BetterModules.Core.Modules.Registration;
+using BetterModules.Core.Web.Modules.Registration;
+using BetterModules.Core.Web.Mvc.Extensions;
 
 namespace BetterCms.Core.Modules.Registration
 {

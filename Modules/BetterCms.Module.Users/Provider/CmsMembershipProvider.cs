@@ -6,8 +6,8 @@ using Autofac;
 using BetterCms.Module.Users.Models;
 using BetterCms.Module.Users.Services;
 
-using Devbridge.Platform.Core.DataAccess.DataContext;
-using Devbridge.Platform.Core.Dependencies;
+using BetterModules.Core.DataAccess.DataContext;
+using BetterModules.Core.Dependencies;
 
 namespace BetterCms.Module.Users.Provider
 {

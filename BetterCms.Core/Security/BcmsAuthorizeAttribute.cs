@@ -7,7 +7,7 @@ using Autofac;
 
 using BetterCms.Core.Services;
 
-using Devbridge.Platform.Core.Web.Dependencies;
+using BetterModules.Core.Web.Dependencies;
 
 namespace BetterCms.Core.Security
 {

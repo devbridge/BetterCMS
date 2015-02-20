@@ -2,10 +2,10 @@
 
 using Autofac;
 
-using Devbridge.Platform.Core.DataAccess;
+using BetterModules.Core.DataAccess;
 using BetterCms.Module.Root.Models;
 
-using Devbridge.Platform.Core.Exceptions.DataTier;
+using BetterModules.Core.Exceptions.DataTier;
 
 using NUnit.Framework;
 

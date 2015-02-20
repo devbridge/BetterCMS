@@ -12,7 +12,7 @@ using BetterCms.Module.Root.ViewModels.Cms;
 
 using Common.Logging;
 
-using Devbridge.Platform.Core.Exceptions;
+using BetterModules.Core.Exceptions;
 
 using Microsoft.Web.Mvc;
 
@@ -83,7 +83,7 @@ namespace BetterCms.Module.Root.Controllers
 
                 model.Version = configuration.Version;
             }
-            catch (PlatformException ex)
+            catch (CoreException ex)
             {
                 Log.Error(ex);
             }                       

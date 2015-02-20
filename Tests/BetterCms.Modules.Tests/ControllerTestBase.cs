@@ -1,7 +1,7 @@
 ﻿using System;
 
-using Devbridge.Platform.Core.Web.Mvc;
-using Devbridge.Platform.Core.Web.Mvc.Commands;
+using BetterModules.Core.Web.Mvc;
+using BetterModules.Core.Web.Mvc.Commands;
 
 using Moq;
 

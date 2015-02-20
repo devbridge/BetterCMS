@@ -2,7 +2,7 @@
 using BetterCms.Module.Users.Services;
 using BetterCms.Module.Users.ViewModels.Role;
 
-using Devbridge.Platform.Core.Web.Mvc.Commands;
+using BetterModules.Core.Web.Mvc.Commands;
 
 namespace BetterCms.Module.Users.Commands.Role.SaveRole
 {

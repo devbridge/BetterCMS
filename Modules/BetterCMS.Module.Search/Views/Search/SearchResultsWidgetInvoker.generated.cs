@@ -46,7 +46,7 @@ namespace BetterCms.Module.Search.Views.Search
     #line hidden
     
     #line 4 "..\..\Views\Search\SearchResultsWidgetInvoker.cshtml"
-    using Devbridge.Platform.Core.Dependencies;
+    using BetterModules.Core.Dependencies;
     
     #line default
     #line hidden

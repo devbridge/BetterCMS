@@ -13,10 +13,11 @@ using BetterCMS.Module.LuceneSearch.Workers;
 
 using BetterCms.Module.Search.Services;
 
+using BetterModules.Core.Web.Events;
+
 using Common.Logging;
 
-using Devbridge.Platform.Core.Modules.Registration;
-using Devbridge.Platform.Events;
+using BetterModules.Core.Modules.Registration;
 
 namespace BetterCms.Module.LuceneSearch
 {

@@ -10,8 +10,8 @@ using BetterCms.Module.Root.Mvc;
 using BetterCms.Module.Root.Mvc.Helpers;
 using BetterCms.Module.Root.ViewModels.Cms;
 
-using Devbridge.Platform.Core.Web.Mvc.Commands;
-using Devbridge.Platform.Core.Web.Web;
+using BetterModules.Core.Web.Mvc.Commands;
+using BetterModules.Core.Web.Web;
 
 using NHibernate;
 using NHibernate.Criterion;

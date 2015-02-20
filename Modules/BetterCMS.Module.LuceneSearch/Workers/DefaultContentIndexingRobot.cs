@@ -9,7 +9,7 @@ using BetterCMS.Module.LuceneSearch.Services.IndexerService;
 using BetterCMS.Module.LuceneSearch.Services.ScrapeService;
 using BetterCMS.Module.LuceneSearch.Services.WebCrawlerService;
 
-using Devbridge.Platform.Core.Dependencies;
+using BetterModules.Core.Dependencies;
 
 namespace BetterCMS.Module.LuceneSearch.Workers
 {

@@ -9,7 +9,7 @@ using BetterCms.Module.Pages.ViewModels.History;
 using BetterCms.Module.Root.Mvc;
 using BetterCms.Module.Root.Mvc.Grids.Extensions;
 
-using Devbridge.Platform.Core.Web.Mvc.Commands;
+using BetterModules.Core.Web.Mvc.Commands;
 
 using NHibernate.Linq;
 

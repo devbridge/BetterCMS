@@ -5,8 +5,8 @@ using BetterCms.Module.Api.Infrastructure;
 using BetterCms.Module.Api.Operations.Root.Categories.Category.Nodes;
 using BetterCms.Module.Api.Operations.Root.Categories.Category.Nodes.Node;
 
-using Devbridge.Platform.Core.Models;
-using Devbridge.Platform.Events;
+using BetterModules.Core.Models;
+using BetterModules.Core.Events;
 
 using NHibernate;
 

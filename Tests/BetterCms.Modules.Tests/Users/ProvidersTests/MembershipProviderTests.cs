@@ -2,8 +2,8 @@
 using System.Linq;
 using System.Web.Security;
 
-using Devbridge.Platform.Core.DataAccess;
-using Devbridge.Platform.Core.DataAccess.DataContext;
+using BetterModules.Core.DataAccess;
+using BetterModules.Core.DataAccess.DataContext;
 using BetterCms.Module.Users.Models;
 using BetterCms.Module.Users.Provider;
 using BetterCms.Module.Users.Services;

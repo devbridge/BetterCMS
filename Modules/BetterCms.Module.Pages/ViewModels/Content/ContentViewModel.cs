@@ -5,7 +5,7 @@ using System.ComponentModel.DataAnnotations;
 using BetterCms.Module.Root.Content.Resources;
 using BetterCms.Module.Root.ViewModels.Option;
 
-using Devbridge.Platform.Core.Models;
+using BetterModules.Core.Models;
 
 namespace BetterCms.Module.Pages.ViewModels.Content
 {

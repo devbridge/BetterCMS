@@ -1,8 +1,8 @@
 ﻿using System.Web;
 
-using Devbridge.Platform.Core.DataAccess.DataContext.Migrations;
-using Devbridge.Platform.Core.Web.Environment.Host;
-using Devbridge.Platform.Core.Web.Modules.Registration;
+using BetterModules.Core.DataAccess.DataContext.Migrations;
+using BetterModules.Core.Web.Environment.Host;
+using BetterModules.Core.Web.Modules.Registration;
 
 namespace BetterCms.Core.Environment.Host
 {

@@ -6,7 +6,7 @@ using BetterCms.Module.Root.Services.Categories;
 using BetterCms.Module.Root.Services.Categories.Tree;
 using BetterCms.Module.Root.ViewModels.Category;
 
-using Devbridge.Platform.Core.Web.Mvc.Commands;
+using BetterModules.Core.Web.Mvc.Commands;
 
 namespace BetterCms.Module.Root.Commands.Category.SaveCategoryTree
 {

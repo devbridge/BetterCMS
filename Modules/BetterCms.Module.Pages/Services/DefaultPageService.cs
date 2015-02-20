@@ -24,10 +24,10 @@ using BetterCms.Module.Root.Mvc.Helpers;
 
 using Common.Logging;
 
-using Devbridge.Platform.Core.DataAccess;
-using Devbridge.Platform.Core.DataAccess.DataContext;
-using Devbridge.Platform.Core.Exceptions.DataTier;
-using Devbridge.Platform.Core.Web.Mvc;
+using BetterModules.Core.DataAccess;
+using BetterModules.Core.DataAccess.DataContext;
+using BetterModules.Core.Exceptions.DataTier;
+using BetterModules.Core.Web.Mvc;
 
 using NHibernate.Linq;
 

@@ -1,6 +1,6 @@
 ﻿using System;
 
-using Devbridge.Platform.Core.Exceptions;
+using BetterModules.Core.Exceptions;
 
 namespace BetterCms.Core.Exceptions
 {
@@ -8,7 +8,7 @@ namespace BetterCms.Core.Exceptions
     /// Generic CMS exception.
     /// </summary>
     [Serializable]
-    public class CmsException : PlatformException
+    public class CmsException : CoreException
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="CmsException" /> class.

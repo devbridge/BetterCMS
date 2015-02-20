@@ -6,8 +6,8 @@ using BetterCms.Core.DataContracts.Enums;
 using BetterCms.Module.Root.Models;
 using BetterCms.Module.Root.ViewModels.Option;
 
-using Devbridge.Platform.Core.DataContracts;
-using Devbridge.Platform.Core.Models;
+using BetterModules.Core.DataContracts;
+using BetterModules.Core.Models;
 
 namespace BetterCms.Module.Root.Services
 {

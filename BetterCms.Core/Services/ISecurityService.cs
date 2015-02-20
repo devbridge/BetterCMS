@@ -1,6 +1,6 @@
 ﻿using System.Security.Principal;
 
-using Devbridge.Platform.Core.Security;
+using BetterModules.Core.Security;
 
 namespace BetterCms.Core.Services
 {

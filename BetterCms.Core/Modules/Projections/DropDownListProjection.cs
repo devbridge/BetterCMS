@@ -8,7 +8,7 @@ using System.Web.UI.HtmlControls;
 
 using BetterCms.Core.DataContracts;
 
-using Devbridge.Platform.Core.Web.Modules;
+using BetterModules.Core.Web.Modules;
 
 namespace BetterCms.Core.Modules.Projections
 {

@@ -4,14 +4,14 @@ using System.Collections.Generic;
 using Autofac;
 using Autofac.Core;
 
-using Devbridge.Platform.Core.DataAccess.DataContext;
+using BetterModules.Core.DataAccess.DataContext;
 using BetterCms.Core.DataContracts;
 using BetterCms.Core.Modules.Projections;
 using BetterCms.Module.Root.Content.Resources;
 
 using Common.Logging;
 
-using Devbridge.Platform.Core.Web.Dependencies;
+using BetterModules.Core.Web.Dependencies;
 
 using NHibernate.Proxy.DynamicProxy;
 

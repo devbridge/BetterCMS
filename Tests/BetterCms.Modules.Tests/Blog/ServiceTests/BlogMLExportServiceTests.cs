@@ -12,8 +12,8 @@ using BetterCms.Module.Blog.Services;
 using BetterCms.Module.Pages.Models;
 using BetterCms.Module.Root.Models;
 
-using Devbridge.Platform.Core.DataAccess;
-using Devbridge.Platform.Core.Web.Web;
+using BetterModules.Core.DataAccess;
+using BetterModules.Core.Web.Web;
 
 using FluentNHibernate.Utils;
 

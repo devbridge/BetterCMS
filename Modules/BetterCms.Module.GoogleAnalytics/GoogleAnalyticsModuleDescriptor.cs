@@ -6,7 +6,7 @@ using BetterCms.Core.Modules;
 using BetterCms.Events;
 using BetterCms.Module.GoogleAnalytics.Accessors;
 
-using Devbridge.Platform.Core.Web.Modules.Registration;
+using BetterModules.Core.Web.Modules.Registration;
 
 namespace BetterCms.Module.GoogleAnalytics
 {

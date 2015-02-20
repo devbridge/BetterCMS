@@ -5,8 +5,8 @@ using BetterCms.Module.Pages.Models;
 using BetterCms.Module.Pages.Services;
 using BetterCms.Module.Root.Mvc;
 
-using Devbridge.Platform.Core.Exceptions.DataTier;
-using Devbridge.Platform.Core.Web.Mvc.Commands;
+using BetterModules.Core.Exceptions.DataTier;
+using BetterModules.Core.Web.Mvc.Commands;
 
 namespace BetterCms.Module.Pages.Command.History.DestroyContentDraft
 {

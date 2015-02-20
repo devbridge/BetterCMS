@@ -5,7 +5,7 @@ using BetterCms.Module.Blog.ViewModels.Blog;
 using BetterCms.Module.Root.Models;
 using BetterCms.Module.Root.Mvc;
 
-using Devbridge.Platform.Core.Web.Mvc.Commands;
+using BetterModules.Core.Web.Mvc.Commands;
 
 namespace BetterCms.Module.Blog.Commands.SaveDefaultTemplate
 {

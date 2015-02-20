@@ -1,6 +1,6 @@
 ﻿using System.Linq;
 
-using Devbridge.Platform.Core.DataAccess.DataContext;
+using BetterModules.Core.DataAccess.DataContext;
 using BetterCms.Module.Newsletter.Models;
 using BetterCms.Module.Newsletter.ViewModels;
 
@@ -9,7 +9,7 @@ using BetterCms.Module.Root.Mvc.Grids.Extensions;
 using BetterCms.Module.Root.Mvc.Grids.GridOptions;
 using BetterCms.Module.Root.ViewModels.SiteSettings;
 
-using Devbridge.Platform.Core.Web.Mvc.Commands;
+using BetterModules.Core.Web.Mvc.Commands;
 
 namespace BetterCms.Module.Newsletter.Command.GetSubscriberList
 {

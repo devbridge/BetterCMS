@@ -6,7 +6,7 @@ using BetterCms.Module.Api.Operations.Root.Categories.Category;
 
 using BetterCms.Module.Root.Models;
 
-using Devbridge.Platform.Core.DataAccess;
+using BetterModules.Core.DataAccess;
 
 using NHibernate.Linq;
 

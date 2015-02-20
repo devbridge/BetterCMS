@@ -8,8 +8,8 @@ using BetterCms.Module.Search.Models;
 using BetterCms.Module.Search.Services;
 using BetterCms.Module.Search.ViewModels;
 
-using Devbridge.Platform.Core.Web.Mvc.Commands;
-using Devbridge.Platform.Core.Web.Web;
+using BetterModules.Core.Web.Mvc.Commands;
+using BetterModules.Core.Web.Web;
 
 namespace BetterCms.Module.Search.Command.SearchQuery
 {

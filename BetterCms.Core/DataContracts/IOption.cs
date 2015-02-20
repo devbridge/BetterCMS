@@ -1,6 +1,6 @@
 ﻿using BetterCms.Core.DataContracts.Enums;
 
-using Devbridge.Platform.Core.DataContracts;
+using BetterModules.Core.DataContracts;
 
 namespace BetterCms.Core.DataContracts
 {

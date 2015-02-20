@@ -3,7 +3,7 @@ using System.Linq;
 
 using Autofac;
 
-using Devbridge.Platform.Core.DataAccess;
+using BetterModules.Core.DataAccess;
 using BetterCms.Module.Root.Models;
 using BetterCms.Module.Root.ViewModels.Option;
 

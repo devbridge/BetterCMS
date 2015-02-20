@@ -6,7 +6,7 @@ using BetterCms.Module.Api.Operations.Root.Languages;
 using BetterCms.Module.Api.Operations.Root.Languages.Language;
 using BetterCms.Module.Root.Models;
 
-using Devbridge.Platform.Core.Models;
+using BetterModules.Core.Models;
 
 using NHibernate;
 

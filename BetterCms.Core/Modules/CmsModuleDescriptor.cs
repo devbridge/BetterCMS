@@ -7,8 +7,8 @@ using BetterCms.Core.DataContracts;
 using BetterCms.Core.Exceptions;
 using BetterCms.Core.Modules.Projections;
 
-using Devbridge.Platform.Core.Web.Modules;
-using Devbridge.Platform.Core.Web.Mvc.Extensions;
+using BetterModules.Core.Web.Modules;
+using BetterModules.Core.Web.Mvc.Extensions;
 
 namespace BetterCms.Core.Modules
 {

@@ -7,9 +7,9 @@ using BetterCms.Module.Api.Operations.Pages.Pages.Page.Contents.Content.Options;
 using BetterCms.Module.Root.Models;
 using BetterCms.Module.Root.Mvc;
 
-using Devbridge.Platform.Core.DataAccess;
-using Devbridge.Platform.Core.DataAccess.DataContext;
-using Devbridge.Platform.Core.Exceptions.DataTier;
+using BetterModules.Core.DataAccess;
+using BetterModules.Core.DataAccess.DataContext;
+using BetterModules.Core.Exceptions.DataTier;
 
 using ServiceStack.ServiceInterface;
 

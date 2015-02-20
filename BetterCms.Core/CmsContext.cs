@@ -7,17 +7,17 @@ using BetterCms.Core.Modules.Registration;
 using BetterCms.Core.Security;
 using BetterCms.Core.Services.Storage;
 
-using Devbridge.Platform.Core.Configuration;
-using Devbridge.Platform.Core.Dependencies;
-using Devbridge.Platform.Core.Modules.Registration;
-using Devbridge.Platform.Core.Web;
-using Devbridge.Platform.Core.Web.Configuration;
-using Devbridge.Platform.Core.Web.Environment.Host;
-using Devbridge.Platform.Core.Web.Modules.Registration;
+using BetterModules.Core.Configuration;
+using BetterModules.Core.Dependencies;
+using BetterModules.Core.Modules.Registration;
+using BetterModules.Core.Web;
+using BetterModules.Core.Web.Configuration;
+using BetterModules.Core.Web.Environment.Host;
+using BetterModules.Core.Web.Modules.Registration;
 
 using System;
 
-using Devbridge.Platform.Core.Web.Services.Caching;
+using BetterModules.Core.Web.Services.Caching;
 
 namespace BetterCms.Core
 {

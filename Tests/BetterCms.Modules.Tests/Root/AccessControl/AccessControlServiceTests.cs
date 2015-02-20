@@ -11,7 +11,7 @@ using BetterCms.Core.Services;
 using BetterCms.Module.Root.Models;
 using BetterCms.Module.Root.Services;
 
-using Devbridge.Platform.Core.Web.Services.Caching;
+using BetterModules.Core.Web.Services.Caching;
 
 using Moq;
 

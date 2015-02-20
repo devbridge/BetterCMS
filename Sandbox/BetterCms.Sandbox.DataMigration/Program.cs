@@ -19,9 +19,9 @@ using BetterCms.Module.Users;
 
 using Common.Logging;
 
-using Devbridge.Platform.Core.DataAccess.DataContext.Migrations;
-using Devbridge.Platform.Core.Environment.Assemblies;
-using Devbridge.Platform.Core.Modules;
+using BetterModules.Core.DataAccess.DataContext.Migrations;
+using BetterModules.Core.Environment.Assemblies;
+using BetterModules.Core.Modules;
 
 namespace BetterCms.Sandbox.DataMigration
 {

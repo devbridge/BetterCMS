@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-using Devbridge.Platform.Core.DataContracts;
+using BetterModules.Core.DataContracts;
 
 namespace BetterCms.Core.DataContracts
 {

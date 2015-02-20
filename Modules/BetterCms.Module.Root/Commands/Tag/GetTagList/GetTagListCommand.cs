@@ -6,7 +6,7 @@ using BetterCms.Module.Root.Mvc.Grids.GridOptions;
 using BetterCms.Module.Root.ViewModels.SiteSettings;
 using BetterCms.Module.Root.ViewModels.Tags;
 
-using Devbridge.Platform.Core.Web.Mvc.Commands;
+using BetterModules.Core.Web.Mvc.Commands;
 
 using NHibernate.Criterion;
 using NHibernate.Transform;

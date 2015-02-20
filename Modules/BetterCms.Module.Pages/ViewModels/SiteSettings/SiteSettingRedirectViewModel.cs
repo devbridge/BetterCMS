@@ -5,7 +5,7 @@ using BetterCms.Module.Pages.Content.Resources;
 using BetterCms.Module.Root.Content.Resources;
 using BetterCms.Module.Root.Mvc.Grids;
 
-using Devbridge.Platform.Core.Models;
+using BetterModules.Core.Models;
 
 namespace BetterCms.Module.Pages.ViewModels.SiteSettings
 {

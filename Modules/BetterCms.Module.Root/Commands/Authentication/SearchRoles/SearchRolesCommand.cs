@@ -8,8 +8,8 @@ using BetterCms.Module.Root.Models;
 using BetterCms.Module.Root.Mvc;
 using BetterCms.Module.Root.ViewModels.Autocomplete;
 
-using Devbridge.Platform.Core.Web.Mvc.Commands;
-using Devbridge.Platform.Core.Web.Services.Caching;
+using BetterModules.Core.Web.Mvc.Commands;
+using BetterModules.Core.Web.Services.Caching;
 
 namespace BetterCms.Module.Root.Commands.Authentication.SearchRoles
 {

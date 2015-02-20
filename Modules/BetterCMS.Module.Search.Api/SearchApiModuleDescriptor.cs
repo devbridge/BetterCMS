@@ -6,7 +6,7 @@ using BetterCms.Core.Modules;
 using BetterCms.Module.Api.Operations.Pages.Pages.Search;
 using BetterCms.Module.Search.Api.Operations.Pages.Pages;
 
-using Devbridge.Platform.Core.Modules.Registration;
+using BetterModules.Core.Modules.Registration;
 
 namespace BetterCms.Module.Search.Api
 {

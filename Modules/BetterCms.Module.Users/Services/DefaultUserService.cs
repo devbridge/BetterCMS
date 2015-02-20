@@ -11,9 +11,9 @@ using BetterCms.Module.Users.Content.Resources;
 using BetterCms.Module.Users.Models;
 using BetterCms.Module.Users.ViewModels.User;
 
-using Devbridge.Platform.Core.DataAccess;
-using Devbridge.Platform.Core.DataAccess.DataContext;
-using Devbridge.Platform.Core.Exceptions.DataTier;
+using BetterModules.Core.DataAccess;
+using BetterModules.Core.DataAccess.DataContext;
+using BetterModules.Core.Exceptions.DataTier;
 
 using NHibernate.Linq;
 

@@ -11,7 +11,7 @@ using BetterCms.Module.Api.Operations.Root.Layouts.Layout.Regions;
 
 using BetterCms.Module.MediaManager.Provider;
 
-using Devbridge.Platform.Core.Models;
+using BetterModules.Core.Models;
 
 using NHibernate;
 

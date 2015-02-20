@@ -1,6 +1,6 @@
 ﻿using BetterCms.Module.LuceneSearch;
 
-using Devbridge.Platform.Core.Models;
+using BetterModules.Core.Models;
 
 namespace BetterCMS.Module.LuceneSearch.Models.Maps
 {

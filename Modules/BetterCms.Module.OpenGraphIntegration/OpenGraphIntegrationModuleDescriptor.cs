@@ -7,8 +7,8 @@ using BetterCms.Events;
 using BetterCms.Module.OpenGraphIntegration.Projections;
 using BetterCms.Module.Pages.Helpers.Extensions;
 
-using Devbridge.Platform.Core.Dependencies;
-using Devbridge.Platform.Core.Web.Web;
+using BetterModules.Core.Dependencies;
+using BetterModules.Core.Web.Web;
 
 namespace BetterCms.Module.OpenGraphIntegration
 {

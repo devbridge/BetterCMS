@@ -2,9 +2,9 @@
 
 using BetterCms.Core.Modules.Projections;
 
-using Devbridge.Platform.Core.Exceptions;
-using Devbridge.Platform.Core.Modules;
-using Devbridge.Platform.Core.Web.Mvc.Extensions;
+using BetterModules.Core.Exceptions;
+using BetterModules.Core.Modules;
+using BetterModules.Core.Web.Mvc.Extensions;
 
 namespace BetterCms.Core.Modules
 {
@@ -36,7 +36,7 @@ namespace BetterCms.Core.Modules
             {
                 if (string.IsNullOrEmpty(fileName) || string.IsNullOrEmpty(minFileName))
                 {
-                    throw new PlatformException("Paths for the external JS file and minified JS file can not by empty");
+                    throw new CoreException("Paths for the external JS file and minified JS file can not by empty");
                 }
 
                 FileName = System.IO.Path.GetFileName(fileName);

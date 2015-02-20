@@ -4,7 +4,7 @@ using System.Security.Principal;
 
 using BetterCms.Module.Pages.ViewModels.Page;
 
-using Devbridge.Platform.Core.Web.Mvc;
+using BetterModules.Core.Web.Mvc;
 
 using Page = BetterCms.Module.Pages.Models.PageProperties;
 

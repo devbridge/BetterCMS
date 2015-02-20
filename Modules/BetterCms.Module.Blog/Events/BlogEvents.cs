@@ -2,7 +2,7 @@
 using BetterCms.Module.Blog.Models.Events;
 using BetterCms.Module.Pages.Models;
 
-using Devbridge.Platform.Events;
+using BetterModules.Core.Events;
 
 // ReSharper disable CheckNamespace
 namespace BetterCms.Events

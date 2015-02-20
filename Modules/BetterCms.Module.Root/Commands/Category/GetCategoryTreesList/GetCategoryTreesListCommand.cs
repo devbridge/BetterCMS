@@ -7,7 +7,7 @@ using BetterCms.Module.Root.ViewModels;
 using BetterCms.Module.Root.ViewModels.Category;
 using BetterCms.Module.Root.ViewModels.SiteSettings;
 
-using Devbridge.Platform.Core.Web.Mvc.Commands;
+using BetterModules.Core.Web.Mvc.Commands;
 
 using NHibernate.Criterion;
 using NHibernate.Transform;

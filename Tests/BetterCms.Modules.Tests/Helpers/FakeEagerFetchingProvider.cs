@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
 
-using Devbridge.Platform.Core.DataAccess.DataContext.Fetching;
+using BetterModules.Core.DataAccess.DataContext.Fetching;
 
 using NHibernate.Linq;
 

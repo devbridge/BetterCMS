@@ -8,8 +8,8 @@ using BetterCms.Module.Root.Mvc;
 using BetterCms.Module.Users.Services;
 using BetterCms.Module.Users.ViewModels.User;
 
-using Devbridge.Platform.Core.DataAccess.DataContext;
-using Devbridge.Platform.Core.Web.Mvc.Commands;
+using BetterModules.Core.DataAccess.DataContext;
+using BetterModules.Core.Web.Mvc.Commands;
 
 namespace BetterCms.Module.Users.Commands.User.GetUserProfile
 {

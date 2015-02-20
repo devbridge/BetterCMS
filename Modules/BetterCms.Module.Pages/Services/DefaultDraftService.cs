@@ -11,10 +11,10 @@ using BetterCms.Module.Pages.Exceptions;
 using BetterCms.Module.Pages.Models;
 using BetterCms.Module.Root;
 
-using Devbridge.Platform.Core.DataAccess;
-using Devbridge.Platform.Core.DataAccess.DataContext;
-using Devbridge.Platform.Core.DataAccess.DataContext.Fetching;
-using Devbridge.Platform.Core.Exceptions.DataTier;
+using BetterModules.Core.DataAccess;
+using BetterModules.Core.DataAccess.DataContext;
+using BetterModules.Core.DataAccess.DataContext.Fetching;
+using BetterModules.Core.Exceptions.DataTier;
 
 namespace BetterCms.Module.Pages.Services
 {

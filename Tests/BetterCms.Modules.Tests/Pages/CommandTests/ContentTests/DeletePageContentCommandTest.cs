@@ -1,7 +1,7 @@
 ﻿using Autofac;
 
-using Devbridge.Platform.Core.DataAccess;
-using Devbridge.Platform.Core.DataAccess.DataContext;
+using BetterModules.Core.DataAccess;
+using BetterModules.Core.DataAccess.DataContext;
 using BetterCms.Core.Services;
 using BetterCms.Module.Pages.Command.Content.DeletePageContent;
 using BetterCms.Module.Root.Services;

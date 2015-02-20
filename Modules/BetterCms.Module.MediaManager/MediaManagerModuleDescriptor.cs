@@ -14,7 +14,7 @@ using BetterCms.Module.MediaManager.Services;
 using BetterCms.Module.Root;
 using BetterCms.Module.Root.Providers;
 
-using Devbridge.Platform.Core.Modules.Registration;
+using BetterModules.Core.Modules.Registration;
 
 namespace BetterCms.Module.MediaManager
 {

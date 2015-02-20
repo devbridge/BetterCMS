@@ -6,7 +6,7 @@ using BetterCms.Module.Api.Infrastructure;
 using BetterCms.Module.Api.Operations.MediaManager.Images.Image;
 using BetterCms.Module.MediaManager.Models;
 
-using Devbridge.Platform.Core.Models;
+using BetterModules.Core.Models;
 
 using NHibernate;
 

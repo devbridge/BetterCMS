@@ -1,6 +1,6 @@
 ﻿using BetterCms.Module.MediaManager.Models;
 
-using Devbridge.Platform.Events;
+using BetterModules.Core.Events;
 
 // ReSharper disable CheckNamespace
 namespace BetterCms.Events

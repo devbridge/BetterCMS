@@ -34,7 +34,7 @@ using BetterCms.Module.Root.Models;
 using BetterCms.Module.Root.Mvc;
 using BetterCms.Module.Root.ViewModels.Security;
 
-using Devbridge.Platform.Core.Web.Models;
+using BetterModules.Core.Web.Models;
 
 using Microsoft.Web.Mvc;
 

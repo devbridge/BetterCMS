@@ -10,7 +10,7 @@ using BetterCms.Module.Newsletter.Registration;
 using BetterCms.Module.Newsletter.Services;
 using BetterCms.Module.Root;
 
-using Devbridge.Platform.Core.Modules.Registration;
+using BetterModules.Core.Modules.Registration;
 
 namespace BetterCms.Module.Newsletter
 {

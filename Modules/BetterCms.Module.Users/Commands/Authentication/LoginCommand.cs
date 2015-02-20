@@ -11,7 +11,7 @@ using BetterCms.Module.Users.Content.Resources;
 using BetterCms.Module.Users.Services;
 using BetterCms.Module.Users.ViewModels.Authentication;
 
-using Devbridge.Platform.Core.Web.Mvc.Commands;
+using BetterModules.Core.Web.Mvc.Commands;
 
 namespace BetterCms.Module.Users.Commands.Authentication
 {

@@ -15,7 +15,7 @@ using BetterCms.Module.Root.ViewModels.Cms;
 
 using Common.Logging;
 
-using Devbridge.Platform.Core.Web.Services.Caching;
+using BetterModules.Core.Web.Services.Caching;
 
 using Microsoft.Web.Mvc;
 

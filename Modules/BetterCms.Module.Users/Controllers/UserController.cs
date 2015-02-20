@@ -15,7 +15,7 @@ using BetterCms.Module.Users.Content.Resources;
 
 using BetterCms.Module.Users.ViewModels.User;
 
-using Devbridge.Platform.Core.Web.Models;
+using BetterModules.Core.Web.Models;
 
 using Microsoft.Web.Mvc;
 

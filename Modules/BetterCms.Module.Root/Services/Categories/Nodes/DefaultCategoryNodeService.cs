@@ -4,7 +4,7 @@ using System.Linq;
 using BetterCms.Module.Root.Models;
 using BetterCms.Module.Root.Mvc;
 
-using Devbridge.Platform.Core.DataAccess;
+using BetterModules.Core.DataAccess;
 
 namespace BetterCms.Module.Root.Services.Categories.Nodes
 {

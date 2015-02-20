@@ -2,7 +2,7 @@
 using BetterCms.Module.Api.Operations.Blog.Authors;
 using BetterCms.Module.Api.Operations.Blog.Authors.Author;
 
-using Devbridge.Platform.Core.Models;
+using BetterModules.Core.Models;
 
 using NHibernate;
 

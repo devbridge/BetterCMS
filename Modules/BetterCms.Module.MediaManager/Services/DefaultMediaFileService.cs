@@ -17,12 +17,12 @@ using BetterCms.Module.Root.Mvc;
 
 using Common.Logging;
 
-using Devbridge.Platform.Core.DataAccess;
-using Devbridge.Platform.Core.DataAccess.DataContext;
-using Devbridge.Platform.Core.DataAccess.DataContext.Fetching;
-using Devbridge.Platform.Core.Exceptions.DataTier;
-using Devbridge.Platform.Core.Web.Services.Caching;
-using Devbridge.Platform.Core.Web.Web;
+using BetterModules.Core.DataAccess;
+using BetterModules.Core.DataAccess.DataContext;
+using BetterModules.Core.DataAccess.DataContext.Fetching;
+using BetterModules.Core.Exceptions.DataTier;
+using BetterModules.Core.Web.Services.Caching;
+using BetterModules.Core.Web.Web;
 
 using NHibernate;
 

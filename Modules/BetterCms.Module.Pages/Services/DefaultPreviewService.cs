@@ -13,8 +13,8 @@ using BetterCms.Module.Root.Projections;
 using BetterCms.Module.Root.Services;
 using BetterCms.Module.Root.ViewModels.Cms;
 
-using Devbridge.Platform.Core.DataAccess;
-using Devbridge.Platform.Core.DataAccess.DataContext.Fetching;
+using BetterModules.Core.DataAccess;
+using BetterModules.Core.DataAccess.DataContext.Fetching;
 
 using ContentEntity = BetterCms.Module.Root.Models.Content;
 
