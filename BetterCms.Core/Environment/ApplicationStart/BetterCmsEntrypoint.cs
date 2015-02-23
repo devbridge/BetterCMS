@@ -10,7 +10,7 @@ using BetterModules.Core.Dependencies;
 using BetterModules.Core.Exceptions;
 using BetterModules.Core.Web.Environment.Application;
 
-[assembly: WebActivatorEx.PreApplicationStartMethod(typeof(BetterCmsEntrypoint), "PreApplicationStart", Order = 50)]
+[assembly: WebApplicationPreStart(typeof(BetterCmsEntrypoint), "PreApplicationStart", Order = 50)]
 
 namespace BetterCms.Core.Environment.ApplicationStart
 {
