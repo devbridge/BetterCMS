@@ -382,11 +382,12 @@ namespace BetterCms.Module.Pages.Services
         
         private void CloneCategories(PageCategory category, PageProperties newPage)
         {
-            if (newPage.Categories == null)
+            var newPageCategory = new PageCategory
             {
-                newPage.Categories = new List<PageCategory>();
-            }
-            newPage.Categories.Add(category);            
+                Page = newPage,
+                Category = category.Category
+            };
+            repository.Save(newPageCategory);
         }
 
         private void ValidateCloningPage(PageProperties page, System.Guid? languageId, System.Guid? languageGroupIdentifier)
