@@ -189,7 +189,7 @@ namespace BetterCms.Module.Pages.Services
                 foreach (var category in categories)
                 {
                     var childCategories = categoryService.GetChildCategoriesIds(category).ToArray();
-                    query = query.WithSubquery.WhereExists(QueryOver.Of<PageCategory>().Where(cat => cat.Page.Id == alias.Id).WhereRestrictionOn(cat => cat.Category.Id).IsIn(childCategories).Select(cat => 1));
+                    query = query.WithSubquery.WhereExists(QueryOver.Of<PageCategory>().Where(cat => !cat.IsDeleted && cat.Page.Id == alias.Id).WhereRestrictionOn(cat => cat.Category.Id).IsIn(childCategories).Select(cat => 1));
                 }
             }
 
