@@ -42,7 +42,7 @@ namespace BetterCms.Module.Pages.Command.Widget.GetWidgetCategory
             }
             else
             {
-                var categoriesQuery = Repository.AsQueryable<CategoryEntity>();
+                var categoriesQuery = Repository.AsQueryable<CategoryEntity>().Where(c => !c.IsDeleted && !c.CategoryTree.IsDeleted);
 
                 if (request.CategoryId.HasValue)
                 {
