@@ -1744,6 +1744,15 @@ namespace BetterCms.Module.Root.Content.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Selected category &apos;{0}&apos; cannot be assigned..
+        /// </summary>
+        public static string Validation_Category_Unavailable_Message {
+            get {
+                return ResourceManager.GetString("Validation_Category_Unavailable_Message", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Current user &quot;{0}&quot; has no access rights to update or delete the &quot;{1}&quot; secured record..
         /// </summary>
         public static string Validation_CurrentUserHasNoRightsToUpdateOrDelete_Message {

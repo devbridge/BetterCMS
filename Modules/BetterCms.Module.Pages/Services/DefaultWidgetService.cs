@@ -17,7 +17,7 @@ using BetterCms.Module.Pages.ViewModels.Content;
 using BetterCms.Module.Pages.ViewModels.Filter;
 using BetterCms.Module.Pages.ViewModels.SiteSettings;
 using BetterCms.Module.Pages.ViewModels.Widgets;
-
+using BetterCms.Module.Root.Content.Resources;
 using BetterCms.Module.Root.Models;
 using BetterCms.Module.Root.Mvc;
 using BetterCms.Module.Root.Mvc.Grids.Extensions;
@@ -197,19 +197,6 @@ namespace BetterCms.Module.Pages.Services
                 widget = (TEntity)contentService.SaveContentWithStatusUpdate(widgetContent, model.DesirableStatus);
             }
 
-            if (widget.Categories == null)
-            {
-                widget.Categories = new List<WidgetCategory>();
-            }
-
-            foreach (var entityId in repository.AsQueryable<WidgetCategory>(c => c.Widget.Id == model.Id && !c.IsDeleted).Select(w => w.Id))
-            {
-                widget.Categories.Add(repository.AsProxy<WidgetCategory>(entityId));            
-            }
-
-
-            categoryService.CombineEntityCategories<Widget, WidgetCategory>(widget, model.Categories);
-
             return widget;
         }
 
@@ -218,6 +205,7 @@ namespace BetterCms.Module.Pages.Services
             HtmlContentWidget content = new HtmlContentWidget();
             content.Id = request.Id;
 
+            SetWidgetCategories(request, content, treatNullsAsLists, isNew);
             SetWidgetOptions(request, content, treatNullsAsLists, isNew);
 
             content.Name = request.Name;
@@ -233,6 +221,44 @@ namespace BetterCms.Module.Pages.Services
             return content;
         }
 
+        private void SetWidgetCategories(EditWidgetViewModel request, Widget content, bool treatNullsAsLists, bool isNew)
+        {
+            if (request.Categories != null)
+            {
+                content.Categories = new List<WidgetCategory>();
+
+                var categories =
+                    repository.AsQueryable<Category>()
+                        .Where(c => !c.CategoryTree.IsDeleted && c.CategoryTree.AvailableFor.Any(e => e.CategorizableItem.Name == content.GetCategorizableItemKey()))
+                        .ToList();
+
+                foreach (var categoryItem in request.Categories)
+                {
+                    var category = categories.FirstOrDefault(c => c.Id == categoryItem.Key.ToGuidOrDefault());
+                    if (category == null)
+                    {
+                        var message = string.Format(RootGlobalization.Validation_Category_Unavailable_Message, categoryItem.Value);
+                        throw new ValidationException(() => message, message);
+                    }
+                    var widgetCategory = new WidgetCategory
+                                             {
+                                                 Widget = content,
+                                                 Category = repository.AsProxy<Category>(category.Id)
+                                             };
+                    content.Categories.Add(widgetCategory);
+                }
+            }
+            else if (!treatNullsAsLists)
+            {
+                // When calling from API with null list, categories should be loaded before process.
+                // Null from API means, that list should be kept unchanged.
+                content.Categories = repository
+                    .AsQueryable<WidgetCategory>(pco => pco.Widget.Id == request.Id)
+                    .Fetch(pco => pco.Category)
+                    .ToList();
+            }
+        }
+
         private ServerControlWidget GetServerControlWidgetFromRequest(EditServerControlWidgetViewModel request, bool treatNullsAsLists, bool isNew)
         {
             ServerControlWidget widget = new ServerControlWidget();
@@ -243,6 +269,7 @@ namespace BetterCms.Module.Pages.Services
             widget.Version = request.Version;
             widget.PreviewUrl = request.PreviewImageUrl;
 
+            SetWidgetCategories(request, widget, treatNullsAsLists, isNew);
             SetWidgetOptions(request, widget, treatNullsAsLists, isNew);
 
             return widget;
