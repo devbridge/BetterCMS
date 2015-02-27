@@ -100,7 +100,7 @@ namespace BetterCms.Module.Pages.Command.Widget.GetWidgetCategory
             }
 
             // Map to view models
-            var contents = contentEntities.Select(f => CreateWidgetViewModel(f, drafts.FirstOrDefault(d => d.Original.Id == f.Id)));
+            var contents = contentEntities.Select(f => CreateWidgetViewModel(f, drafts.FirstOrDefault(d => d.Original.Id == f.Id))).ToList();
 
             List<WidgetCategoryViewModel> categories;
 
@@ -114,20 +114,20 @@ namespace BetterCms.Module.Pages.Command.Widget.GetWidgetCategory
                 categories = new List<WidgetCategoryViewModel>();
             }
 
-            categories.ForEach(c => c.Widgets = contents.Where(x => x.Categories.Any(cat => Guid.Parse(cat.Key) == c.CategoryId)).ToList());
+            categories.ForEach(c => c.Widgets = contents.Where(x => x.Categories.Any(cat => Guid.Parse(cat.Key) == c.CategoryId)).Distinct().ToList());
 
             // Move uncategorized contents to fake category
-            var uncategorized = contents.Where(c => c.Categories == null || c.Categories.IsEmpty());
+            var uncategorized = contents.Where(c => c.Categories == null || c.Categories.IsEmpty()).Distinct().ToList();
 
             // Workaround for deleted categories:
-            uncategorized = contents.Where(c => (c.Categories == null || c.Categories.IsEmpty()) && !categories.Any(x => c.Categories.Any(cat => Guid.Parse(cat.Key) == x.CategoryId))).Concat(uncategorized);
+            uncategorized = contents.Where(c => (c.Categories == null || c.Categories.IsEmpty()) && !categories.Any(x => c.Categories.Any(cat => Guid.Parse(cat.Key) == x.CategoryId))).Concat(uncategorized).Distinct().ToList();
 
             if (uncategorized.Any())
             {
                 var category = new WidgetCategoryViewModel
                     {
                         CategoryName = PagesGlobalization.AddPageContent_WidgetTab_UncategorizedWidget_Title,
-                        Widgets = uncategorized.ToList()
+                        Widgets = uncategorized
                     };
                 categories.Add(category);
             }
