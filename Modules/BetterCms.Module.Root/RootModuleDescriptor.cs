@@ -14,6 +14,7 @@ using BetterCms.Module.Root.Accessors;
 using BetterCms.Module.Root.Content.Resources;
 using BetterCms.Module.Root.Controllers;
 using BetterCms.Module.Root.Models;
+using BetterCms.Module.Root.Models.Accessors;
 using BetterCms.Module.Root.Mvc;
 using BetterCms.Module.Root.Projections;
 using BetterCms.Module.Root.Registration;
@@ -78,7 +79,7 @@ namespace BetterCms.Module.Root
             tagsJsModuleIncludeDescriptor = new TagsJsModuleIncludeDescriptor(this);
             categoriesJavaScriptModuleDescriptor = new CategoriesJavaScriptModuleDescriptor(this);
             languagesJsModuleIncludeDescriptor = new LanguagesJsModuleIncludeDescriptor(this);
-            CategoryAccessors.Register<WidgetCategory>(Widget.CategorizableItemKeyForWidgets);
+            CategoryAccessors.Register<WidgetCategoryAccessor>();
             InitializeSecurity();            
         }
 

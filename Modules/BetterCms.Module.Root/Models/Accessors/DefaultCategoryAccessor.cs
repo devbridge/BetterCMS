@@ -27,9 +27,7 @@ namespace BetterCms.Module.Root.Models.Accessors
         } 
         public virtual IFutureValue<int> CheckIsUsed(IRepository repository, CategoryTree categoryTree)
         {
-            var q = repository.AsQueryable<T>().Where(ec => (CategoryTree)ec.Category.CategoryTree == categoryTree).ToList();
             var query = repository.AsQueryable<T>().Where(ec => (CategoryTree)ec.Category.CategoryTree == categoryTree).ToRowCountFutureValue();
-
             return query;
         }
     }

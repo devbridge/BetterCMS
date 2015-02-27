@@ -191,6 +191,7 @@
     <Compile Include="Controllers\SiteSettingsController.cs" />
     <Compile Include="Controllers\TagsController.cs" />
     <Compile Include="Helpers\CategoriesHelper.cs" />
+    <Compile Include="Models\Accessors\WidgetCategoryAccessor.cs" />
     <Compile Include="Models\CategorizableItem.cs" />
     <Compile Include="Models\Accessors\DefaultCategoryAccessor.cs" />
     <Compile Include="Models\CategoryTree.cs" />
