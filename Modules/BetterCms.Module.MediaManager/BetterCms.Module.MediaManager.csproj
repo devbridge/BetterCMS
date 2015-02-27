@@ -195,6 +195,8 @@
     <Compile Include="Helpers\MediaImageHelper.cs" />
     <Compile Include="Helpers\WrappedJsonResult.cs" />
     <Compile Include="MediaManagerModuleDescriptor.cs" />
+    <Compile Include="Models\Accessors\MediaFileCategoryAccessor.cs" />
+    <Compile Include="Models\Accessors\MediaImageCategoryAccessor.cs" />
     <Compile Include="Models\Enum\MediaHistoryStatus.cs" />
     <Compile Include="Models\Extensions\MediaExtensions.cs" />
     <Compile Include="Models\Extensions\MediaFileExtensions.cs" />

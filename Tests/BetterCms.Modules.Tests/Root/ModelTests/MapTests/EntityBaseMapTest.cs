@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
+using BetterCms.Core.DataContracts;
 using BetterCms.Module.Root.Models;
 
 using NUnit.Framework;

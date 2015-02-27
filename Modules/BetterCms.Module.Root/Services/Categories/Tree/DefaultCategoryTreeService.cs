@@ -4,8 +4,10 @@ using System.Linq;
 
 using BetterCms.Core.DataAccess;
 using BetterCms.Core.DataAccess.DataContext;
+using BetterCms.Core.Exceptions;
 using BetterCms.Core.Exceptions.DataTier;
 using BetterCms.Events;
+using BetterCms.Module.Root.Accessors;
 using BetterCms.Module.Root.Models;
 using BetterCms.Module.Root.Mvc;
 using BetterCms.Module.Root.Mvc.Grids.Extensions;
@@ -93,9 +95,20 @@ namespace BetterCms.Module.Root.Services.Categories.Tree
             {
                 var selectedItems = selectedCategorizableItemsFuture.ToList();
                 itemsToRemove = selectedItems.Where(s => !request.UseForCategorizableItems.Exists(c => c == s.CategorizableItem.Id)).ToList();
+                if (!createNew)
+                {
+                    foreach (var categoryTreeCategorizableItem in itemsToRemove)
+                    {
+                        var categorizableItemName = categoryTreeCategorizableItem.CategorizableItem.Name;
+                        var accessor = CategoryAccessors.Accessors.First(ca => ca.Name == categorizableItemName);
+                        if (accessor.CheckIsUsed(Repository, categoryTree).Value > 0)
+                        {
+                            throw new CmsException("Cannot deselect categorizable items that have usages");
+                        }
+                    }
+                }
                 itemsToAdd = request.UseForCategorizableItems.Where(id => !selectedItems.Exists(s => s.CategorizableItem.Id == id)).ToList();
             }
-
 
             UnitOfWork.BeginTransaction();
 

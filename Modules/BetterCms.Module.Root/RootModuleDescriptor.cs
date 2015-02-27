@@ -4,17 +4,16 @@ using System.Collections.Generic;
 using Autofac;
 
 using BetterCms.Core;
-using BetterCms.Core.DataAccess;
 using BetterCms.Core.DataAccess.DataContext;
 using BetterCms.Core.DataContracts;
 using BetterCms.Core.Dependencies;
 using BetterCms.Core.Modules;
 using BetterCms.Core.Modules.Projections;
-using BetterCms.Core.Modules.Registration;
 using BetterCms.Events;
-
+using BetterCms.Module.Root.Accessors;
 using BetterCms.Module.Root.Content.Resources;
 using BetterCms.Module.Root.Controllers;
+using BetterCms.Module.Root.Models;
 using BetterCms.Module.Root.Mvc;
 using BetterCms.Module.Root.Projections;
 using BetterCms.Module.Root.Registration;
@@ -79,7 +78,7 @@ namespace BetterCms.Module.Root
             tagsJsModuleIncludeDescriptor = new TagsJsModuleIncludeDescriptor(this);
             categoriesJavaScriptModuleDescriptor = new CategoriesJavaScriptModuleDescriptor(this);
             languagesJsModuleIncludeDescriptor = new LanguagesJsModuleIncludeDescriptor(this);
-
+            CategoryAccessors.Register<WidgetCategory>(Widget.CategorizableItemKeyForWidgets);
             InitializeSecurity();            
         }
 
