@@ -357,7 +357,7 @@ namespace BetterCms.Module.Root
                             Order = 2000,
                             Title = page => RootGlobalization.SiteSettings_CategoriesMenuItem,
                             CssClass = page => "bcms-sidebar-link",
-                            AccessRole = RootModuleConstants.UserRoles.EditContent
+                            AccessRole = RootModuleConstants.UserRoles.MultipleRoles(RootModuleConstants.UserRoles.EditContent, RootModuleConstants.UserRoles.Administration)
                         },
                    new LinkActionProjection(tagsJsModuleIncludeDescriptor, page => "loadSiteSettingsTagList")
                         {
