@@ -172,6 +172,7 @@ namespace BetterCms.Module.MediaManager.Command.MediaManager
                 {
                     var childCategories = CategoryService.GetChildCategoriesIds(category).ToArray();
                     query = query.Where(m => m is MediaFolder || m.Categories.Any(cat => childCategories.Contains(cat.Category.Id) && !cat.IsDeleted && !cat.Category.IsDeleted));
+                    removeEmptyFolders = true;
                 }
             }
 
@@ -265,7 +266,7 @@ namespace BetterCms.Module.MediaManager.Command.MediaManager
                 }
                 else
                 {
-                    if (HasTaggedSubItems(folder, request))
+                    if (HasFilteredSubItems(folder, request))
                     {
                         result.Add(media);
                     }
@@ -275,7 +276,7 @@ namespace BetterCms.Module.MediaManager.Command.MediaManager
             return ToResponse(request, result.AsQueryable());
         }
 
-        private bool HasTaggedSubItems(MediaFolder folder, MediaManagerViewModel request)
+        private bool HasFilteredSubItems(MediaFolder folder, MediaManagerViewModel request)
         {
             if (folder == null)
             {
@@ -304,6 +305,19 @@ namespace BetterCms.Module.MediaManager.Command.MediaManager
                 }
             }
 
+            if (request.Categories != null)
+            {
+                var categories = request.Categories.Select(c => new Guid(c.Key)).Distinct().ToList();
+
+                foreach (var category in categories)
+                {
+                    var childCategories = CategoryService.GetChildCategoriesIds(category).ToArray();
+                    query =
+                        query.Where(
+                            m => m is MediaFolder || m.Categories.Any(cat => childCategories.Contains(cat.Category.Id) && !cat.IsDeleted && !cat.Category.IsDeleted));
+                }
+            }
+
             var medias = query.ToList();
             if (medias.Any(m => m is TEntity))
             {
@@ -313,7 +327,7 @@ namespace BetterCms.Module.MediaManager.Command.MediaManager
 
             foreach (var media in medias)
             {
-                if (HasTaggedSubItems(media as MediaFolder, request))
+                if (HasFilteredSubItems(media as MediaFolder, request))
                 {
                     return true;
                 }
