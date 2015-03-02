@@ -97,7 +97,7 @@ namespace BetterCms.Module.Root.Commands.Category.GetCategoryTree
             {
                 var name = countFuture.Key;
                 var categorizableItem = model.CategorizableItems.First(c => c.Name == name);
-                categorizableItem.IsDisabled = (countFuture.Value.Value > 0 && categorizableItem.IsSelected);
+                categorizableItem.IsDisabled = categorizableItem.IsSelected && countFuture.Value.Value > 0;
             }
 
             return model;
