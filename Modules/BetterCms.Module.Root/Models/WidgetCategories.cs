@@ -1,7 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
 
 using BetterCms.Core.DataContracts;
 using BetterCms.Core.Models;
@@ -12,6 +9,7 @@ namespace BetterCms.Module.Root.Models
     public class WidgetCategory : EquatableEntity<WidgetCategory>, IEntityCategory
     {
         public virtual Category Category { get; set; }
+
 
         public virtual void SetEntity(IEntity entity)
         {
@@ -29,6 +27,18 @@ namespace BetterCms.Module.Root.Models
             set
             {
                 Category = value as Category;
+            }
+        }
+
+        IEntity IEntityCategory.Entity
+        {
+            get
+            {
+                return Widget;
+            }
+            set
+            {
+                Widget = value as Widget;
             }
         }
 

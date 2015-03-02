@@ -11,6 +11,18 @@ namespace BetterCms.Module.Pages.Models
     {
         public virtual Category Category { get; set; }
 
+        public virtual IEntity Entity
+        {
+            get
+            {
+                return Category;
+            }
+            set
+            {
+                Page = value as PageProperties;
+            }
+        }
+
         public virtual void SetEntity(IEntity entity)
         {
             Page = entity as PageProperties;

@@ -40,6 +40,12 @@ namespace BetterCms.Configuration
         private const string ContentEncryptionKeyAttribute = "encryptionKey";
 
         /// <summary>
+        /// The 'ignoreLocalFileSystemWarning' attribute name.
+        /// </summary>
+        private const string IgnoreLocalFileSystemWarningAttribute = "ignoreLocalFileSystemWarning";
+
+
+        /// <summary>
         /// Gets or sets the full access roles.
         /// These roles are check despite attribute UseCustomRoles is <c>true</c> or <c>false</c>.
         /// </summary>
@@ -88,6 +94,24 @@ namespace BetterCms.Configuration
         {
             get { return Convert.ToString(this[ContentEncryptionKeyAttribute]); }
             set { this[ContentEncryptionKeyAttribute] = value; }
+        }
+
+        /// <summary>
+        /// Gets or sets a value indicating whether to ignore local file system security warning.
+        /// </summary>
+        /// <value>
+        /// <c>true</c> if ignore local file system warning; otherwise, <c>false</c>.
+        /// </value>
+        [ConfigurationProperty(IgnoreLocalFileSystemWarningAttribute, IsRequired = false, DefaultValue = false)]
+        public bool IgnoreLocalFileSystemWarning {
+            get
+            {
+                return (bool)this[IgnoreLocalFileSystemWarningAttribute];
+            }
+            set
+            {
+                this[IgnoreLocalFileSystemWarningAttribute] = value;
+            } 
         }
 
         /// <summary>

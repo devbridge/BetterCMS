@@ -63,6 +63,11 @@ namespace BetterCms.Module.MediaManager.Command.MediaManager
         protected abstract MediaType MediaType { get; }
 
         /// <summary>
+        /// The escape chars for search query
+        /// </summary>
+        private readonly string[] escapeChars = {"[","_","%"};
+
+        /// <summary>
         /// Executes this command.
         /// </summary>
         /// <param name="request">A filter to search for specific media items/folders.</param>
@@ -180,7 +185,12 @@ namespace BetterCms.Module.MediaManager.Command.MediaManager
 
             if (!string.IsNullOrWhiteSpace(request.SearchQuery))
             {
-                var searchQuery = string.Format("%{0}%", request.SearchQuery);
+                var searchQuery = request.SearchQuery;
+                const string escapeFormat = "[{0}]";
+                foreach (var escapeChar in escapeChars)
+                {
+                    searchQuery = searchQuery.Replace(escapeChar, string.Format(escapeFormat, escapeChar));
+                }
 
                 var predicate = PredicateBuilder.False<Media>();
                 predicate = predicate.Or(m => m.Title.Contains(searchQuery));

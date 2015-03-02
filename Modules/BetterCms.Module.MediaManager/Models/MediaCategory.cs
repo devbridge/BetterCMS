@@ -1,7 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
 
 using BetterCms.Core.DataContracts;
 using BetterCms.Core.Models;
@@ -13,6 +10,18 @@ namespace BetterCms.Module.MediaManager.Models
     public class MediaCategory : EquatableEntity<MediaCategory>, IEntityCategory
     {
         public virtual Category Category { get; set; }
+
+        public virtual IEntity Entity
+        {
+            get
+            {
+                return Media;
+            }
+            set
+            {
+                Media = value as Media;
+            }
+        }
 
         public virtual void SetEntity(IEntity entity)
         {

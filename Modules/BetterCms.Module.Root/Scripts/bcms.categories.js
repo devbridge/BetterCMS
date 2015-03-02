@@ -558,9 +558,12 @@
             self.id = ko.observable(jsonItem.Id);
             self.name = ko.observable(jsonItem.Name);
             self.isSelected = ko.observable(jsonItem.IsSelected);
+            self.isDisabled = ko.observable(jsonItem.IsDisabled);
 
-            self.inverseSelection = function() {
-                self.isSelected(!self.isSelected());
+            self.inverseSelection = function () {
+                if (!self.isDisabled()) {
+                    self.isSelected(!self.isSelected());
+                }
             }
         }
 
@@ -874,7 +877,8 @@
                     categorizableItems.push({
                         Id: categorizableItemModels[i].id(),
                         Name: categorizableItemModels[i].name(),
-                        IsSelected: categorizableItemModels[i].isSelected()
+                        IsSelected: categorizableItemModels[i].isSelected(),
+                        IsDisabled: categorizableItemModels[i].isDisabled()
                     });
                 }
 
