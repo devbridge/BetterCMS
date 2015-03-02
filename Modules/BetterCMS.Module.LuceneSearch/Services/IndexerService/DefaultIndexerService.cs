@@ -533,6 +533,10 @@ namespace BetterCMS.Module.LuceneSearch.Services.IndexerService
 
         private static bool CanIncludeNodeToResults(HtmlNode node)
         {
+            if (node.NodeType == HtmlNodeType.Comment)
+            {
+                return false;
+            }
             if (defaultExcludedNodeTypes.Contains(node.Name) || configurationExcludedNodeTypes.Contains(node.Name))
             {
                 return false;
