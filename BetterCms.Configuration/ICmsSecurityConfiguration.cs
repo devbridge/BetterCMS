@@ -24,6 +24,15 @@ namespace BetterCms
         /// The content encryption key.
         /// </value>
         string EncryptionKey { get; }
+
+
+        /// <summary>
+        /// Gets or sets a value indicating whether to ignore local file system security warning.
+        /// </summary>
+        /// <value>
+        /// <c>true</c> if ignore local file system warning; otherwise, <c>false</c>.
+        /// </value>
+        bool IgnoreLocalFileSystemWarning { get; set; }
         
         /// <summary>
         /// Gets or sets a value indicating whether [access control enabled].

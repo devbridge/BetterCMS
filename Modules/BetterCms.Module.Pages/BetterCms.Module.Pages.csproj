@@ -195,6 +195,7 @@
     <Compile Include="Helpers\SitemapHelper.cs" />
     <Compile Include="Helpers\Extensions\RenderPageViewModelExtensions.cs" />
     <Compile Include="Helpers\UrlHelper.cs" />
+    <Compile Include="Models\Accessors\PageCategoryAccessor.cs" />
     <Compile Include="Models\Enums\WidgetUsageType.cs" />
     <Compile Include="Models\Migrations\Migration201502101138.cs" />
     <Compile Include="Models\PageCategory.cs" />

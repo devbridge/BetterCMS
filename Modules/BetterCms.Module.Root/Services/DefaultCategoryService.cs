@@ -135,7 +135,7 @@ namespace BetterCms.Module.Root.Services
 
         public void DeleteCategoryNode(Guid id, int version, Guid? categoryTreeId = null)
         {
-            IList<Category> deletedNodes = new List<Category>();
+            IList<ICategory> deletedNodes = new List<ICategory>();
 
             var node = repository.AsQueryable<Category>()
                 .Where(sitemapNode => sitemapNode.Id == id && (!categoryTreeId.HasValue || sitemapNode.CategoryTree.Id == categoryTreeId.Value))
@@ -157,17 +157,17 @@ namespace BetterCms.Module.Root.Services
 
             unitOfWork.Commit();
 
-            var updatedSitemaps = new List<CategoryTree>();
+            var updatedCategories = new List<ICategoryTree>();
             foreach (var deletedNode in deletedNodes)
             {
                 RootEvents.Instance.OnCategoryDeleted(deletedNode);
-                if (!updatedSitemaps.Contains(deletedNode.CategoryTree))
+                if (!updatedCategories.Contains(deletedNode.CategoryTree))
                 {
-                    updatedSitemaps.Add(deletedNode.CategoryTree);
+                    updatedCategories.Add(deletedNode.CategoryTree);
                 }
             }
 
-            foreach (var sitemap in updatedSitemaps)
+            foreach (var sitemap in updatedCategories)
             {
                 RootEvents.Instance.OnCategoryTreeUpdated(sitemap);
             }
@@ -207,7 +207,7 @@ namespace BetterCms.Module.Root.Services
             }
         }
 
-        private void DeleteCategoryNode(Category node, ref IList<Category> deletedNodes)
+        private void DeleteCategoryNode(ICategory node, ref IList<ICategory> deletedNodes)
         {
             if (node.ChildCategories != null)
             {

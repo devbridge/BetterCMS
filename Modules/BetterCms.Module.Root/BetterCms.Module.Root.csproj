@@ -143,6 +143,7 @@
     <Compile Include="..\..\SharedAssemblyInfo.cs">
       <Link>Properties\SharedAssemblyInfo.cs</Link>
     </Compile>
+    <Compile Include="Accessors\CategoryAccessors.cs" />
     <Compile Include="Commands\Authentication\GetAuthenticationInfo\GetAuthenticationInfoCommand.cs" />
     <Compile Include="Commands\Authentication\SearchUsers\SearchUsersCommand.cs" />
     <Compile Include="Commands\Authentication\SearchRoles\SearchRolesCommand.cs" />
@@ -190,10 +191,13 @@
     <Compile Include="Controllers\SiteSettingsController.cs" />
     <Compile Include="Controllers\TagsController.cs" />
     <Compile Include="Helpers\CategoriesHelper.cs" />
+    <Compile Include="Models\Accessors\WidgetCategoryAccessor.cs" />
     <Compile Include="Models\CategorizableItem.cs" />
+    <Compile Include="Models\Accessors\DefaultCategoryAccessor.cs" />
     <Compile Include="Models\CategoryTree.cs" />
     <Compile Include="Models\CategoryTreeCategorizableItem.cs" />
     <Compile Include="Models\ChildContentOption.cs" />
+    <Compile Include="Models\ICategoryAccessor.cs" />
     <Compile Include="Models\Maps\WidgetCategoryMap.cs" />
     <Compile Include="Models\Migrations\Migration201502061445.cs" />
     <Compile Include="Models\WidgetCategories.cs" />
