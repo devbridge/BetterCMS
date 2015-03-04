@@ -54,11 +54,14 @@ namespace BetterCms.Module.MediaManager.Command.Files.SaveFile
         /// <param name="request">The request.</param>
         public void Execute(FileViewModel request)
         {
-            var mediaFile = Repository.First<MediaFile>(request.Id.ToGuidOrDefault());
+//            var mediaFile = Repository.First<MediaFile>(request.Id.ToGuidOrDefault());
 
+            var mediaFile = Repository.AsQueryable<MediaFile>().Where(mf => mf.Id == request.Id.ToGuidOrDefault()).ToList().First();
             UnitOfWork.BeginTransaction();
 
-            Repository.Save(mediaFile.CreateHistoryItem());
+            var histItem = (MediaFile)mediaFile.CreateHistoryItem();
+            histItem.SaveUnsecured = true;
+            Repository.Save(histItem);
 
             mediaFile.PublishedOn = DateTime.Now;
             mediaFile.Title = request.Title;

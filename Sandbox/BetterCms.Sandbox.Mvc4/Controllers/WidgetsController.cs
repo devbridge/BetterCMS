@@ -1,5 +1,8 @@
 ﻿using System.Web.Mvc;
+using System.Web.Security;
 using System.Windows.Forms.VisualStyles;
+
+using Amazon.Auth.AccessControlPolicy;
 
 using BetterCms.Module.Api;
 using BetterCms.Module.Api.Extensions;
@@ -8,6 +11,7 @@ using BetterCms.Module.Api.Operations.MediaManager.Files.File;
 using BetterCms.Module.Api.Operations.Root.Categories;
 using BetterCms.Module.Api.Operations.Root.Categories.Category;
 using BetterCms.Module.Api.Operations.Root.Categories.Category.Tree;
+using BetterCms.Module.Root.Controllers;
 using BetterCms.Sandbox.Mvc4.Models;
 
 using httpContext = System.Web.HttpContext;

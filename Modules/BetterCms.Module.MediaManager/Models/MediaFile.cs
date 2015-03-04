@@ -76,9 +76,9 @@ namespace BetterCms.Module.MediaManager.Models
             return CopyDataTo(new MediaFile());
         }
 
-        public override Media CopyDataTo(Media media)
+        public override Media CopyDataTo(Media media, bool copyCollections = true)
         {
-            var copy = (MediaFile)base.CopyDataTo(media);
+            var copy = (MediaFile)base.CopyDataTo(media, copyCollections);
 
             copy.OriginalFileName = OriginalFileName;
             copy.OriginalFileExtension = OriginalFileExtension;

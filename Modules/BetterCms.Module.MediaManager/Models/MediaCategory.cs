@@ -41,5 +41,18 @@ namespace BetterCms.Module.MediaManager.Models
                 Category = value as Category;
             }
         }
+
+        public virtual MediaCategory Clone()
+        {
+            return CopyDataTo(new MediaCategory());
+        }
+
+        public virtual MediaCategory CopyDataTo(MediaCategory mediaCategory)
+        {
+            mediaCategory.Media = Media;
+            mediaCategory.Category = Category;
+
+            return mediaCategory;
+        }
     }
 }

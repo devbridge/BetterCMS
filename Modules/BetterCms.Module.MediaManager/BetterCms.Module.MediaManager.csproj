@@ -192,6 +192,7 @@
     <Compile Include="Controllers\MediaManagerController.cs" />
     <Compile Include="Helpers\ImageDimensionsCalculator.cs" />
     <Compile Include="Helpers\ImageHelper.cs" />
+    <Compile Include="Helpers\MediaHelper.cs" />
     <Compile Include="Helpers\MediaImageHelper.cs" />
     <Compile Include="Helpers\WrappedJsonResult.cs" />
     <Compile Include="MediaManagerModuleDescriptor.cs" />

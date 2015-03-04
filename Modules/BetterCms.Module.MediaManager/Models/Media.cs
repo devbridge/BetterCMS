@@ -50,6 +50,15 @@ namespace BetterCms.Module.MediaManager.Models
             }
         }
 
+        public virtual void AddTag(MediaTag tag)
+        {
+            if (MediaTags == null)
+            {
+                MediaTags = new List<MediaTag>();
+            }
+            MediaTags.Add(tag);
+        }
+
         public virtual string GetCategorizableItemKey()
         {
             return null;
@@ -97,7 +106,7 @@ namespace BetterCms.Module.MediaManager.Models
         /// </summary>
         /// <param name="media">The media.</param>
         /// <returns></returns>
-        public virtual Media CopyDataTo(Media media)
+        public virtual Media CopyDataTo(Media media, bool copyCollections = true)
         {
             media.Title = Title;
             media.Description = Description;
@@ -107,6 +116,26 @@ namespace BetterCms.Module.MediaManager.Models
             media.Folder = Folder;
             media.PublishedOn = PublishedOn;
             media.Image = Image;
+
+            if (Categories != null && copyCollections)
+            {
+                foreach (var mediaCategory in Categories)
+                {
+                    var clonedMediaCategory = mediaCategory.Clone();
+                    clonedMediaCategory.Media = media;
+                    media.AddCategory(clonedMediaCategory);
+                }
+            }
+
+            if (MediaTags != null && copyCollections)
+            {
+                foreach (var mediaTag in MediaTags)
+                {
+                    var clonedMediaTag = mediaTag.Clone();
+                    clonedMediaTag.Media = media;
+                    media.AddTag(clonedMediaTag);
+                }
+            }
 
             return media;
         }
