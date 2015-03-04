@@ -21,7 +21,7 @@ namespace BetterCms.Module.MediaManager.Models.Accessors
         public IFutureValue<int> CheckIsUsed(IRepository repository, CategoryTree categoryTree)
         {
 
-            return repository.AsQueryable<MediaCategory>().Where(m => m.Media is MediaFile && m.Category.CategoryTree == categoryTree).ToRowCountFutureValue();
+            return repository.AsQueryable<MediaCategory>().Where(m => m.Media is MediaFile && m.Category.CategoryTree == categoryTree && m.Media.Original == null).ToRowCountFutureValue();
         }
     }
 }
