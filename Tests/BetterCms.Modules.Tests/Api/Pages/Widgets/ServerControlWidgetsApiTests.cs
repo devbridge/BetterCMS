@@ -8,6 +8,7 @@ using BetterCms.Module.Api.Operations;
 using BetterCms.Module.Api.Operations.Pages.Widgets.Widget.ServerControlWidget;
 using BetterCms.Module.Api.Operations.Root;
 using BetterCms.Module.MediaManager.Provider;
+using BetterCms.Module.Root.Models;
 
 using NHibernate;
 
@@ -41,6 +42,21 @@ namespace BetterCms.Test.Module.Api.Pages.Widgets
 
         protected override SaveServerControlWidgetModel GetCreateModel(ISession session)
         {
+            var categoryTree = TestDataProvider.CreateNewCategoryTree();
+            var category = TestDataProvider.CreateNewCategory(categoryTree);
+            categoryTree.AvailableFor = new List<CategoryTreeCategorizableItem>
+                    {
+                        new CategoryTreeCategorizableItem
+                        {
+                            // See Migration201502101136.cs
+                            CategorizableItem = session.Load<CategorizableItem>(new Guid("B2F05159-74AF-4B67-AEB9-36B9CC9EED57")),
+                            CategoryTree = categoryTree
+                        }
+                    };
+            session.SaveOrUpdate(categoryTree);
+            session.SaveOrUpdate(category);
+            session.Flush();
+
             var content = TestDataProvider.CreateNewServerControlWidget();
 
             session.SaveOrUpdate(content);
@@ -53,7 +69,7 @@ namespace BetterCms.Test.Module.Api.Pages.Widgets
                     IsPublished = true,
                     PublishedOn = content.PublishedOn,
                     PublishedByUser = content.PublishedByUser,
-                    Categories = content.Categories.Select(c => c.Category.Id).ToList(),
+                    Categories = new List<Guid>{category.Id},
                     Options = new List<OptionModel>
                               {
                                   new OptionModel
