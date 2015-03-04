@@ -712,7 +712,7 @@
     <value>Use For</value>
   </data>
   <data name="CategoryTree_EditDialog_UsedFor_Tooltip_Description" xml:space="preserve">
-    <value>This category will be used for selected objects. "Use For" items can be unchecked only if non of the category nodes are used for them.</value>
+    <value>This category will be used for selected objects. "Use For" items can be unchecked only if none of the category nodes are used for them.</value>
   </data>
   <data name="CategoryTree_EditDialog_NodesTab_Title" xml:space="preserve">
     <value>Nodes</value>

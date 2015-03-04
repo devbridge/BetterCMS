@@ -628,7 +628,7 @@ namespace BetterCms.Module.Root.Content.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to This category will be used for selected objects. &quot;Use For&quot; items can be unchecked only if non of the category nodes are used for them..
+        ///   Looks up a localized string similar to This category will be used for selected objects. &quot;Use For&quot; items can be unchecked only if none of the category nodes are used for them..
         /// </summary>
         public static string CategoryTree_EditDialog_UsedFor_Tooltip_Description {
             get {
