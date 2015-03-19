@@ -63,7 +63,7 @@ namespace BetterCms.Module.MediaManager.Command.Files.SaveFile
             histItem.SaveUnsecured = true;
             Repository.Save(histItem);
 
-            mediaFile.PublishedOn = DateTime.Now;
+            mediaFile.PublishedOn = DateTime.UtcNow;
             mediaFile.Title = request.Title;
             mediaFile.Description = request.Description;
             mediaFile.Version = request.Version.ToIntOrDefault();
