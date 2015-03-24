@@ -16,7 +16,7 @@ using BetterCMS.Module.LuceneSearch.Services.WebCrawlerService;
 using BetterCms.Module.Search.Models;
 
 using BetterModules.Core.DataAccess;
-using BetterModules.Core.Events;
+using BetterModules.Events;
 
 using HtmlAgilityPack;
 

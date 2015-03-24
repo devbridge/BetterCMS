@@ -6,9 +6,8 @@ using BetterCms.Core.Modules;
 
 using BetterModules.Core.Dependencies;
 using BetterModules.Core.Web.Dependencies;
-using BetterModules.Core.Web.Events;
 using BetterModules.Core.Web.Modules.Registration;
-using BetterModules.Core.Events;
+using BetterModules.Events;
 
 namespace BetterCms.Module.Api
 {

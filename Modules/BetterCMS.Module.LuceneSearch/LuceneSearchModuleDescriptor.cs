@@ -13,7 +13,7 @@ using BetterCMS.Module.LuceneSearch.Workers;
 
 using BetterCms.Module.Search.Services;
 
-using BetterModules.Core.Web.Events;
+using BetterModules.Events;
 
 using Common.Logging;
 

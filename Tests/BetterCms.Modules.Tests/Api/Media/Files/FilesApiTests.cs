@@ -6,7 +6,7 @@ using BetterCms.Module.Api.Operations.Root;
 using BetterCms.Module.Root.Models;
 
 using BetterModules.Core.Models;
-using BetterModules.Core.Events;
+using BetterModules.Events;
 
 using NHibernate;
 

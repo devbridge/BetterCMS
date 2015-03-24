@@ -9,7 +9,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace ASP
+namespace BetterCms.Module.Pages.Views.Page
 {
     using System;
     using System.Collections.Generic;
@@ -101,9 +101,9 @@ namespace ASP
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("RazorGenerator", "2.0.0.0")]
     [System.Web.WebPages.PageVirtualPathAttribute("~/Views/Page/EditPageProperties.cshtml")]
-    public partial class _Views_Page_EditPageProperties_cshtml : System.Web.Mvc.WebViewPage<EditPagePropertiesViewModel>
+    public partial class EditPageProperties : System.Web.Mvc.WebViewPage<EditPagePropertiesViewModel>
     {
-        public _Views_Page_EditPageProperties_cshtml()
+        public EditPageProperties()
         {
         }
         public override void Execute()

@@ -37,6 +37,8 @@ namespace BetterCms.Sandbox.DataMigration
             public void AddVersion(string moduleName, long version)
             {
             }
+
+            public string CacheFilePath { get; private set; }
         }
 
         private static readonly ILog Log = LogManager.GetCurrentClassLogger();

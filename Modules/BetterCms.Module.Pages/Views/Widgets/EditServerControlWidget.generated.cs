@@ -9,7 +9,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace ASP
+namespace BetterCms.Module.Pages.Views.Widgets
 {
     using System;
     using System.Collections.Generic;
@@ -77,9 +77,9 @@ namespace ASP
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("RazorGenerator", "2.0.0.0")]
     [System.Web.WebPages.PageVirtualPathAttribute("~/Views/Widgets/EditServerControlWidget.cshtml")]
-    public partial class _Views_Widgets_EditServerControlWidget_cshtml : System.Web.Mvc.WebViewPage<EditServerControlWidgetViewModel>
+    public partial class EditServerControlWidget : System.Web.Mvc.WebViewPage<EditServerControlWidgetViewModel>
     {
-        public _Views_Widgets_EditServerControlWidget_cshtml()
+        public EditServerControlWidget()
         {
         }
         public override void Execute()

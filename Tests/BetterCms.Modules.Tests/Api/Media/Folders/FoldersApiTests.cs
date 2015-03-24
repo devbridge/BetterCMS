@@ -3,7 +3,7 @@ using BetterCms.Module.Api.Operations.MediaManager;
 using BetterCms.Module.Api.Operations.MediaManager.Folders.Folder;
 
 using BetterModules.Core.Models;
-using BetterModules.Core.Events;
+using BetterModules.Events;
 
 using NHibernate;
 

@@ -147,26 +147,26 @@ else
             #line hidden
 WriteLiteral("    <form");
 
-WriteAttribute("action", Tuple.Create(" action=\"", 1818), Tuple.Create("\"", 1844)
+WriteAttribute("action", Tuple.Create(" action=\"", 1813), Tuple.Create("\"", 1839)
             
             #line 44 "..\..\Views\Search\SearchInputWidget.cshtml"
-, Tuple.Create(Tuple.Create("", 1827), Tuple.Create<System.Object, System.Int32>(searchResultsUrl
+, Tuple.Create(Tuple.Create("", 1822), Tuple.Create<System.Object, System.Int32>(searchResultsUrl
             
             #line default
             #line hidden
-, 1827), false)
+, 1822), false)
 );
 
 WriteLiteral(" class=\"bcms-search-input-form\"");
 
-WriteAttribute("method", Tuple.Create(" method=\"", 1876), Tuple.Create("\"", 1896)
+WriteAttribute("method", Tuple.Create(" method=\"", 1871), Tuple.Create("\"", 1891)
             
             #line 44 "..\..\Views\Search\SearchInputWidget.cshtml"
-, Tuple.Create(Tuple.Create("", 1885), Tuple.Create<System.Object, System.Int32>(formMethod
+, Tuple.Create(Tuple.Create("", 1880), Tuple.Create<System.Object, System.Int32>(formMethod
             
             #line default
             #line hidden
-, 1885), false)
+, 1880), false)
 );
 
 WriteLiteral(">\r\n");

@@ -9,7 +9,7 @@ using BetterCms.Module.Api.Operations.Pages.Sitemaps.Sitemap;
 using BetterCms.Module.Api.Operations.Root;
 
 using BetterModules.Core.Models;
-using BetterModules.Core.Events;
+using BetterModules.Events;
 
 using NHibernate;
 

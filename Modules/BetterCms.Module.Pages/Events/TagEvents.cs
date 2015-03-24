@@ -4,7 +4,7 @@ using System.Linq;
 
 using BetterCms.Module.Root.Models;
 
-using BetterModules.Core.Events;
+using BetterModules.Events;
 
 // ReSharper disable CheckNamespace
 namespace BetterCms.Events

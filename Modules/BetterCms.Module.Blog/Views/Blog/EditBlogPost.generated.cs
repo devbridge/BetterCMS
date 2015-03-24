@@ -9,7 +9,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace ASP
+namespace BetterCms.Module.Blog.Views.Blog
 {
     using System;
     using System.Collections.Generic;
@@ -107,9 +107,9 @@ namespace ASP
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("RazorGenerator", "2.0.0.0")]
     [System.Web.WebPages.PageVirtualPathAttribute("~/Views/Blog/EditBlogPost.cshtml")]
-    public partial class _Views_Blog_EditBlogPost_cshtml : System.Web.Mvc.WebViewPage<BetterCms.Module.Blog.ViewModels.Blog.BlogPostViewModel>
+    public partial class EditBlogPost : System.Web.Mvc.WebViewPage<BetterCms.Module.Blog.ViewModels.Blog.BlogPostViewModel>
     {
-        public _Views_Blog_EditBlogPost_cshtml()
+        public EditBlogPost()
         {
         }
         public override void Execute()

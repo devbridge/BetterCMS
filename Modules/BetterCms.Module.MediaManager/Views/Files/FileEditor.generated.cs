@@ -9,7 +9,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace ASP
+namespace BetterCms.Module.MediaManager.Views.Files
 {
     using System;
     using System.Collections.Generic;
@@ -89,9 +89,9 @@ namespace ASP
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("RazorGenerator", "2.0.0.0")]
     [System.Web.WebPages.PageVirtualPathAttribute("~/Views/Files/FileEditor.cshtml")]
-    public partial class _Views_Files_FileEditor_cshtml : System.Web.Mvc.WebViewPage<FileViewModel>
+    public partial class FileEditor : System.Web.Mvc.WebViewPage<FileViewModel>
     {
-        public _Views_Files_FileEditor_cshtml()
+        public FileEditor()
         {
         }
         public override void Execute()

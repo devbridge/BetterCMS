@@ -9,7 +9,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace ASP
+namespace BetterCms.Module.Pages.Views.Templates
 {
     using System;
     using System.Collections.Generic;
@@ -65,9 +65,9 @@ namespace ASP
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("RazorGenerator", "2.0.0.0")]
     [System.Web.WebPages.PageVirtualPathAttribute("~/Views/Templates/EditTemplate.cshtml")]
-    public partial class _Views_Templates_EditTemplate_cshtml : System.Web.Mvc.WebViewPage<TemplateEditViewModel>
+    public partial class EditTemplate : System.Web.Mvc.WebViewPage<TemplateEditViewModel>
     {
-        public _Views_Templates_EditTemplate_cshtml()
+        public EditTemplate()
         {
         }
         public override void Execute()

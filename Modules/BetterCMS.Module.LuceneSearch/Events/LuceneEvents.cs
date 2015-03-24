@@ -3,7 +3,7 @@
 using BetterCMS.Module.LuceneSearch.Services.WebCrawlerService;
 using BetterCms.Module.Search.Models;
 
-using BetterModules.Core.Events;
+using BetterModules.Events;
 
 using Lucene.Net.Documents;
 using Lucene.Net.Search;

@@ -11,7 +11,7 @@ using BetterCms.Module.MediaManager.Provider;
 
 using BetterCms.Module.Root.Models;
 
-using BetterModules.Core.Events;
+using BetterModules.Events;
 
 using NHibernate;
 

@@ -9,7 +9,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace ASP
+namespace BetterCms.Module.Root.Views.Category
 {
     using System;
     using System.Collections.Generic;
@@ -65,9 +65,9 @@ namespace ASP
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("RazorGenerator", "2.0.0.0")]
     [System.Web.WebPages.PageVirtualPathAttribute("~/Views/Category/CategoryTreeEdit.cshtml")]
-    public partial class _Views_Category_CategoryTreeEdit_cshtml : System.Web.Mvc.WebViewPage<CategoryTreeViewModel>
+    public partial class CategoryTreeEdit : System.Web.Mvc.WebViewPage<CategoryTreeViewModel>
     {
-        public _Views_Category_CategoryTreeEdit_cshtml()
+        public CategoryTreeEdit()
         {
         }
         public override void Execute()

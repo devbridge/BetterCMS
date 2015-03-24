@@ -21,7 +21,7 @@ using BetterModules.Core.DataContracts;
 using BetterModules.Core.Dependencies;
 using BetterModules.Core.Modules.Registration;
 using BetterModules.Core.Web.Modules.Registration;
-using BetterModules.Core.Events;
+using BetterModules.Events;
 
 namespace BetterCms.Module.Root
 {
