@@ -18,7 +18,10 @@ using BetterCms.Module.MediaManager.Helpers;
 using BetterCms.Module.MediaManager.Models;
 using BetterCms.Module.Root.Mvc;
 
+using Common.Logging;
+
 using NHibernate;
+using NHibernate.Linq;
 
 namespace BetterCms.Module.MediaManager.Services
 {
@@ -27,6 +30,8 @@ namespace BetterCms.Module.MediaManager.Services
     /// </summary>
     internal class DefaultMediaImageService : IMediaImageService
     {
+        private static readonly ILog Log = LogManager.GetCurrentClassLogger();
+
         /// <summary>
         /// The thumbnail size.
         /// </summary>
@@ -153,7 +158,10 @@ namespace BetterCms.Module.MediaManager.Services
                 {
                     var media = repository.AsQueryable<MediaImage>().FirstOrDefault(f => f.Id == mediaImageId);
                     var archivedImage = RevertChanges(media);
-                    repository.Delete(archivedImage);
+                    if (archivedImage != null)
+                    {
+                        repository.Delete(archivedImage);
+                    }
                 }
                 else
                 {
@@ -371,7 +379,8 @@ namespace BetterCms.Module.MediaManager.Services
                     originalUriTemp = originalImage.OriginalUri;
                 }
 
-                image.CopyDataTo(originalImage);
+                image.CopyDataTo(originalImage, false);
+                MediaHelper.SetCollections(repository, image, originalImage);
 
                 if (!overrideUrl)
                 {
@@ -878,7 +887,7 @@ namespace BetterCms.Module.MediaManager.Services
                 fileStream,
                 mediaImage.FileUri,
                 mediaImage.Id,
-                img =>
+                (img, session) =>
                 {
                     if (img != null)
                     {
@@ -898,7 +907,7 @@ namespace BetterCms.Module.MediaManager.Services
                 thumbnailFileStream,
                 mediaImage.ThumbnailUri,
                 mediaImage.Id,
-                img =>
+                (img, session) =>
                 {
                     if (img != null)
                     {
@@ -923,7 +932,7 @@ namespace BetterCms.Module.MediaManager.Services
                 fileStream,
                 mediaImage.OriginalUri,
                 mediaImage.Id,
-                img =>
+                (img, session) =>
                 {
                     if (img != null)
                     {
@@ -941,17 +950,29 @@ namespace BetterCms.Module.MediaManager.Services
                 allTasks.Add(publicOriginalUpload);
             }
 
+            allTasks.ForEach(task => task.ContinueWith((t) => { Log.Error("Error observed while executing parallel task during image upload.", t.Exception); }, TaskContinuationOptions.OnlyOnFaulted));
+
             Task.Factory.ContinueWhenAll(
                 allTasks.ToArray(),
-                result => ExecuteActionOnThreadSeparatedSessionWithNoConcurrencyTracking(
-                    session =>
+                result =>
                     {
-                        var media = session.Get<MediaImage>(mediaImage.Id);
-                        if (media != null)
+                        try
                         {
-                            OnAfterUploadCompleted(media, shouldNotUploadOriginal);
+                            ExecuteActionOnThreadSeparatedSessionWithNoConcurrencyTracking(
+                                session =>
+                                    {
+                                        var media = session.Get<MediaImage>(mediaImage.Id);
+                                        if (media != null)
+                                        {
+                                            OnAfterUploadCompleted(media, shouldNotUploadOriginal);
+                                        }
+                                    });
                         }
-                    }));
+                        catch (Exception ex)
+                        {
+                            Log.Error("Failed to finalize upload.", ex);
+                        }
+                    });
 
             publicImageUpload.Start();
             if (publicOriginalUpload != null)

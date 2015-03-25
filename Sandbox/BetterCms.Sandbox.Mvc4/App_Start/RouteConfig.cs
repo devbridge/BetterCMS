@@ -37,6 +37,17 @@ namespace BetterCms.Sandbox.Mvc4
                 "testblogindex", 
                 new { controller = "Blog",  action = "Index" },
                 new[] { "BetterCms.Sandbox.Mvc4.Controllers" });
+
+            routes.MapRoute(
+                "Upload",
+                "Widgets/MyFileUploadWidget_Upload",
+                new { controller = "Widgets", action = "MyFileUploadWidget_Upload" },
+                new[] { "BetterCms.Sandbox.Mvc4.Controllers" });
+
+            routes.MapRoute("WidgetController_ApiTestWidget",
+                "cmswidget/apitestwidget",
+                new { controller = "Widgets", action = "ApiTestWidget" },
+                new[] { "BetterCms.Sandbox.Mvc4.Controllers" });
         }
     }
 }

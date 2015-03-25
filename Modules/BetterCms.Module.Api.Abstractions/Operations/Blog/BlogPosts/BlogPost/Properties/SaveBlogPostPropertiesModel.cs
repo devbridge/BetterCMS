@@ -1,4 +1,6 @@
-﻿using System.Runtime.Serialization;
+﻿using System;
+using System.Collections.Generic;
+using System.Runtime.Serialization;
 
 using BetterCms.Module.Api.Infrastructure;
 using BetterCms.Module.Api.Operations.Root;
@@ -79,7 +81,7 @@ namespace BetterCms.Module.Api.Operations.Blog.BlogPosts.BlogPost.Properties
         /// The category id.
         /// </value>
         [DataMember]
-        public System.Guid? CategoryId { get; set; }
+        public IList<Guid> Categories{ get; set; }
 
         /// <summary>
         /// Gets or sets the blog post author id.

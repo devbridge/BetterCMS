@@ -17,14 +17,22 @@ using BetterCms.Module.MediaManager.ViewModels.MediaManager;
 
 using BetterCms.Module.Root.Mvc;
 using BetterCms.Module.Root.Mvc.Grids.Extensions;
+using BetterCms.Module.Root.Services;
 
 using MvcContrib.Sorting;
+
+using NHibernate.Criterion;
 
 namespace BetterCms.Module.MediaManager.Command.MediaManager
 {
     public abstract class GetMediaItemsCommandBase<TEntity> : CommandBase, ICommand<MediaManagerViewModel, MediaManagerItemsViewModel>
-        where TEntity: MediaFile
+        where TEntity : MediaFile
     {
+        /// <summary>
+        /// The category service
+        /// </summary>
+        public ICategoryService CategoryService { get; set; }
+
         /// <summary>
         /// The file service
         /// </summary>
@@ -55,6 +63,11 @@ namespace BetterCms.Module.MediaManager.Command.MediaManager
         protected abstract MediaType MediaType { get; }
 
         /// <summary>
+        /// The escape chars for search query
+        /// </summary>
+        private readonly string[] escapeChars = {"[","_","%"};
+
+        /// <summary>
         /// Executes this command.
         /// </summary>
         /// <param name="request">A filter to search for specific media items/folders.</param>
@@ -66,7 +79,8 @@ namespace BetterCms.Module.MediaManager.Command.MediaManager
             var items = GetAllItemsList(request);
             var model = new MediaManagerItemsViewModel(items.Item1, request, items.Item2);
             model.Path = LoadMediaFolder(request);
-
+            model.Tags = request.Tags;
+            model.Categories = request.Categories;
             return model;
         }
 
@@ -155,16 +169,34 @@ namespace BetterCms.Module.MediaManager.Command.MediaManager
                 }
             }
 
+            if (request.Categories != null)
+            {
+                var categories = request.Categories.Select(c => new Guid(c.Key)).Distinct().ToList();
+
+                foreach (var category in categories)
+                {
+                    var childCategories = CategoryService.GetChildCategoriesIds(category).ToArray();
+                    query = query.Where(m => m is MediaFolder || m.Categories.Any(cat => childCategories.Contains(cat.Category.Id) && !cat.IsDeleted && !cat.Category.IsDeleted));
+                    removeEmptyFolders = true;
+                }
+            }
+
             query = AttachDeniedMediasFilterIfEnabled(query, request);
 
             if (!string.IsNullOrWhiteSpace(request.SearchQuery))
-            {               
-                var searchQuery = string.Format("%{0}%", request.SearchQuery);
+            {
+                var searchQuery = request.SearchQuery;
+                const string escapeFormat = "[{0}]";
+                foreach (var escapeChar in escapeChars)
+                {
+                    searchQuery = searchQuery.Replace(escapeChar, string.Format(escapeFormat, escapeChar));
+                }
 
                 var predicate = PredicateBuilder.False<Media>();
                 predicate = predicate.Or(m => m.Title.Contains(searchQuery));
                 predicate = predicate.Or(m => m.Description.Contains(searchQuery));
                 predicate = predicate.Or(m => m.MediaTags.Any(mt => mt.Tag.Name.Contains(searchQuery)));
+                predicate = predicate.Or(m => m.Categories.Any(mt => mt.Category.Name.Contains(searchQuery)));
                 predicate = AppendSearchFilter(predicate, searchQuery);
 
                 if (request.SearchInHistory)
@@ -200,7 +232,7 @@ namespace BetterCms.Module.MediaManager.Command.MediaManager
             {
                 query = query.Where(m => m.Folder == null);
             }
-          
+
 
             return removeEmptyFolders
                 ? RemoveEmptyFolders(query, request)
@@ -244,7 +276,7 @@ namespace BetterCms.Module.MediaManager.Command.MediaManager
                 }
                 else
                 {
-                    if (HasTaggedSubItems(folder, request))
+                    if (HasFilteredSubItems(folder, request))
                     {
                         result.Add(media);
                     }
@@ -254,7 +286,7 @@ namespace BetterCms.Module.MediaManager.Command.MediaManager
             return ToResponse(request, result.AsQueryable());
         }
 
-        private bool HasTaggedSubItems(MediaFolder folder, MediaManagerViewModel request)
+        private bool HasFilteredSubItems(MediaFolder folder, MediaManagerViewModel request)
         {
             if (folder == null)
             {
@@ -283,6 +315,19 @@ namespace BetterCms.Module.MediaManager.Command.MediaManager
                 }
             }
 
+            if (request.Categories != null)
+            {
+                var categories = request.Categories.Select(c => new Guid(c.Key)).Distinct().ToList();
+
+                foreach (var category in categories)
+                {
+                    var childCategories = CategoryService.GetChildCategoriesIds(category).ToArray();
+                    query =
+                        query.Where(
+                            m => m is MediaFolder || m.Categories.Any(cat => childCategories.Contains(cat.Category.Id) && !cat.IsDeleted && !cat.Category.IsDeleted));
+                }
+            }
+
             var medias = query.ToList();
             if (medias.Any(m => m is TEntity))
             {
@@ -292,7 +337,7 @@ namespace BetterCms.Module.MediaManager.Command.MediaManager
 
             foreach (var media in medias)
             {
-                if (HasTaggedSubItems(media as MediaFolder, request))
+                if (HasFilteredSubItems(media as MediaFolder, request))
                 {
                     return true;
                 }
@@ -457,6 +502,6 @@ namespace BetterCms.Module.MediaManager.Command.MediaManager
             {
                 SetIsReadOnly(model, ((IAccessSecuredObject)media).AccessRules);
             }
-        }    
+        }
     }
 }

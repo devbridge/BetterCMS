@@ -1,14 +1,18 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 
+using BetterCms.Core.DataContracts;
 using BetterCms.Module.MediaManager.Models;
 using BetterCms.Module.Root.Models;
 
 namespace BetterCms.Module.Pages.Models
 {
     [Serializable]
-    public class PageProperties : Page
+    public class PageProperties : Page, ICategorized
     {
+        public const string CategorizableItemKeyForPages = "Pages";
+
         public virtual string Description { get; set; }
         public virtual string CustomCss { get; set; }
         public virtual string CustomJS { get; set; }
@@ -28,14 +32,24 @@ namespace BetterCms.Module.Pages.Models
         }
 
         public virtual IList<PageTag> PageTags { get; set; }
-        
-        public virtual Category Category { get; set; }
+
+
         public virtual MediaImage Image { get; set; }
         public virtual MediaImage SecondaryImage { get; set; }
         public virtual MediaImage FeaturedImage { get; set; }
         public virtual bool IsArchived { get; set; }
 
         public virtual bool IsReadOnly { get; set; }
+
+        public virtual IList<PageCategory> Categories { get; set; }
+
+        IEnumerable<IEntityCategory> ICategorized.Categories
+        {
+            get
+            {
+                return Categories;
+            }
+        }
 
         public PageProperties()
         {
@@ -45,6 +59,29 @@ namespace BetterCms.Module.Pages.Models
         public virtual PageProperties Duplicate()
         {
             return CopyDataToDuplicate(new PageProperties());
+        }
+
+        public virtual void AddCategory(IEntityCategory category)
+        {
+            if (Categories == null)
+            {
+                Categories = new List<PageCategory>();
+            }
+
+            Categories.Add(category as PageCategory);
+        }
+
+        public virtual void RemoveCategory(IEntityCategory category)
+        {
+            if (Categories != null)
+            {
+                Categories.Remove(category as PageCategory);   
+            }           
+        }
+
+        public virtual string GetCategorizableItemKey()
+        {
+            return CategorizableItemKeyForPages;
         }
 
         protected virtual PageProperties CopyDataToDuplicate(PageProperties duplicate)
@@ -65,7 +102,6 @@ namespace BetterCms.Module.Pages.Models
             duplicate.Image = Image;
             duplicate.SecondaryImage = SecondaryImage;
             duplicate.FeaturedImage = FeaturedImage;
-            duplicate.Category = Category;
             duplicate.IsArchived = IsArchived;
             duplicate.IsMasterPage = IsMasterPage;
             duplicate.ForceAccessProtocol = ForceAccessProtocol;

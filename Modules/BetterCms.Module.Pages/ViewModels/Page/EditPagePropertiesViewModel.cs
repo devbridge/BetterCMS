@@ -59,21 +59,13 @@ namespace BetterCms.Module.Pages.ViewModels.Page
         public string PageUrl { get; set; }
         
         /// <summary>
-        /// Gets or sets the category.
-        /// </summary>
-        /// <value>
-        /// The category.
-        /// </value>
-        public Guid? CategoryId { get; set; }
-
-        /// <summary>
         /// Gets or sets the tags.
         /// </summary>
         /// <value>
         /// The tags.
         /// </value>
         public IList<string> Tags { get; set; }
-
+        
         /// <summary>
         /// Gets or sets the list of categories.
         /// </summary>
@@ -323,6 +315,14 @@ namespace BetterCms.Module.Pages.ViewModels.Page
         /// The list of page access protocols.
         /// </value>
         public IEnumerable<LookupKeyValue> PageAccessProtocols { get; set; }
+
+        /// <summary>
+        /// Gets or sets the categories filter key.
+        /// </summary>
+        /// <value>
+        /// The categories filter key.
+        /// </value>
+        public string CategoriesFilterKey { get; set; }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="EditPagePropertiesViewModel" /> class.

@@ -1,8 +1,8 @@
 ﻿/*jslint unparam: true, white: true, browser: true, devel: true */
 /*global bettercms */
 
-bettercms.define('bcms.media.imageeditor', ['bcms.jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', 'bcms.forms', 'bcms.dynamicContent', 'bcms.jquery.jcrop', 'bcms.ko.extenders', 'bcms.tags', 'bcms.media.upload'],
-    function($, bcms, modal, siteSettings, forms, dynamicContent, jcrop, ko, tags, mediaUpload) {
+bettercms.define('bcms.media.imageeditor', ['bcms.jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', 'bcms.forms', 'bcms.dynamicContent', 'bcms.jquery.jcrop', 'bcms.ko.extenders', 'bcms.tags', 'bcms.categories', 'bcms.media.upload'],
+    function($, bcms, modal, siteSettings, forms, dynamicContent, jcrop, ko, tags, categories, mediaUpload) {
         'use strict';
 
         var imageEditor = {},
@@ -534,10 +534,12 @@ bettercms.define('bcms.media.imageeditor', ['bcms.jquery', 'bcms', 'bcms.modal',
             var self = this,
                 titleEditorViewModel = new TitleEditorViewModel(dialog, data.Title),
                 imageEditorViewModel = new ImageEditorViewModel(dialog, data, true),
+                categoriesViewModel = new categories.CategoriesListViewModel(data.Categories, data.CategoriesFilterKey),
                 tagsViewModel = new tags.TagsListViewModel(data.Tags);
 
             self.titleEditorViewModel = titleEditorViewModel;
             self.imageEditorViewModel = imageEditorViewModel;
+            self.categories = categoriesViewModel;
             self.tags = tagsViewModel;
             
             // Track buttons
@@ -654,6 +656,7 @@ bettercms.define('bcms.media.imageeditor', ['bcms.jquery', 'bcms', 'bcms.modal',
             dialog.container.find(selectors.selectableInputs).on('click', function () {
                 this.select();
             });
+            
         }
 
         /**

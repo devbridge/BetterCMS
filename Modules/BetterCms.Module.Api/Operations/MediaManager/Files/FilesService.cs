@@ -8,9 +8,12 @@ using BetterCms.Module.Api.Helpers;
 using BetterCms.Module.Api.Infrastructure;
 using BetterCms.Module.Api.Operations.MediaManager.Files.File;
 using BetterCms.Module.Api.Operations.Root;
+using BetterCms.Module.Api.Operations.Root.Categories.Category;
 using BetterCms.Module.MediaManager.Models;
 using BetterCms.Module.MediaManager.Services;
+using BetterCms.Module.Root.Services;
 
+using ServiceStack.Common.Extensions;
 using ServiceStack.ServiceInterface;
 
 using AccessLevel = BetterCms.Module.Api.Operations.Root.AccessLevel;
@@ -44,6 +47,7 @@ namespace BetterCms.Module.Api.Operations.MediaManager.Files
         /// </summary>
         private readonly IFileService fileService;
 
+        private readonly ICategoryService categoryService;
         /// <summary>
         /// Initializes a new instance of the <see cref="FilesService"/> class.
         /// </summary>
@@ -59,13 +63,15 @@ namespace BetterCms.Module.Api.Operations.MediaManager.Files
             IMediaFileUrlResolver fileUrlResolver,
             IAccessControlService accessControlService,
             IFileService fileService,
-            IUploadFileService uploadFileService)
+            IUploadFileService uploadFileService,
+            ICategoryService categoryService)
         {
             this.repository = repository;
             this.mediaFileService = mediaFileService;
             this.fileUrlResolver = fileUrlResolver;
             this.accessControlService = accessControlService;
             this.fileService = fileService;
+            this.categoryService = categoryService;
             Upload = uploadFileService;
         }
 
@@ -114,7 +120,8 @@ namespace BetterCms.Module.Api.Operations.MediaManager.Files
                 query = query.Where(m => !m.IsArchived);
             }
 
-            query = query.ApplyMediaTagsFilter(request.Data);
+            query = query.ApplyMediaTagsFilter(request.Data)
+                         .ApplyCategoriesFilter(categoryService, request.Data);
 
             if (request.User != null && !string.IsNullOrWhiteSpace(request.User.Name))
             {
@@ -193,6 +200,28 @@ namespace BetterCms.Module.Api.Operations.MediaManager.Files
                                     }
                                     file.AccessRules.Add(rule.AccessRule);
                                 }));
+            }
+
+            if (request.Data.IncludeCategories)
+            {
+                listResponse.Items.ForEach(
+                    item =>
+                    {
+                        item.Categories = (from media in repository.AsQueryable<MediaFile>()
+                                           from category in media.Categories
+                                           where media.Id == item.Id && !category.IsDeleted
+                                           select new CategoryNodeModel
+                                           {
+                                               Id = category.Category.Id,
+                                               Version = category.Version,
+                                               CreatedBy = category.CreatedByUser,
+                                               CreatedOn = category.CreatedOn,
+                                               LastModifiedBy = category.ModifiedByUser,
+                                               LastModifiedOn = category.ModifiedOn,
+                                               Name = category.Category.Name,
+                                               CategoryTreeId = category.Category.CategoryTree.Id
+                                           }).ToList();
+                    });
             }
 
             return new GetFilesResponse { Data = listResponse };

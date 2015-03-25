@@ -281,6 +281,14 @@ describe('media.images.api.behavior', function () {
         filterByTags('or', 2, ['IFilterByTags Image 1', 'IFilterByTags Image 3']);
     });
 
+    it('03209.1: Should get images list, filtered by categories, using AND connector', function () {
+        filterByCategories('and', 1, ['IFilterByCategories Image 3']);
+    });
+
+    it('03209.2: Should get images list, filtered by categories, using OR connector', function () {
+        filterByCategories('or', 2, ['IFilterByCategories Image 1', 'IFilterByCategories Image 3']);
+    });
+
     it('03210: Should get a list with one image, filtered by all available columns', function () {
         var url = '/bcms-api/images/',
             result,
@@ -329,7 +337,7 @@ describe('media.images.api.behavior', function () {
             expect(result.data.items[0].id).toBe('b53f6544cd6242a29a70a207007c75f8', 'Correctly filtered id should be retrieved.');
 
             // Check if model properties count didn't changed. If so - update current test filter and another tests.
-            expect(data.filter.where.length).toBe(api.getCountOfProperties(result.data.items[0]), 'Retrieved result properties cound should be equal to filterting parameters count.');
+            expect(data.filter.where.length + 1).toBe(api.getCountOfProperties(result.data.items[0]), 'Retrieved result properties cound should be equal to filterting parameters count.');
         });
     });
 
@@ -407,6 +415,44 @@ describe('media.images.api.behavior', function () {
             folderId: 'e16c7e649d564e19946fa206008a198d',
             filterByTagsConnector: connector,
             filterByTags: ['IFilterByTags Tag 1', 'IFilterByTags Tag 2'],
+            includeArchived: true
+        };
+
+        runs(function () {
+            api.get(url, data, function (json) {
+                result = json;
+                ready = true;
+            });
+        });
+
+        waitsFor(function () {
+            return ready;
+        }, 'The ' + url + ' timeout.');
+
+        runs(function () {
+            expect(result).toBeDefinedAndNotNull('JSON object should be retrieved.');
+            expect(result.data).toBeDefinedAndNotNull('JSON data object should be retrieved.');
+            expect(result.data.totalCount).toBe(expectedCount, 'Total count should be ' + expectedCount + '.');
+            expect(result.data.items.length).toBe(expectedCount, 'Returned array length should be ' + expectedCount + '.');
+
+            for (var i = 0; i < result.data.items.length; i++) {
+                expect(result.data.items[i].title).toBe(expectedTitles[i], 'Correctly filtered title should be retrieved.');
+            }
+        });
+    };
+
+    function filterByCategories(connector, expectedCount, expectedTitles) {
+        var url = '/bcms-api/images/',
+            result,
+            ready = false;
+
+        var data = {
+            order: {
+                by: [{ field: 'Title' }]
+            },
+            folderId: 'BAC8F80A-DB6D-46A9-9793-A43500EBEDB0',
+            filterByCategoriesConnector: connector,
+            filterByCategories: ['15A86920-78E5-4DDC-A259-A43500A2B573', 'FD36A148-DD10-44E0-A5C1-A43500B8A450'],
             includeArchived: true
         };
 

@@ -1,0 +1,40 @@
+﻿@using BetterCms.Module.Root.Content.Resources
+@using BetterCms.Module.Root.Controllers
+@using BetterCms.Module.Root.Mvc.Grids.Extensions
+@using BetterCms.Module.Root.Mvc.Grids.TableRenderers
+@using BetterCms.Module.Root.Mvc.Helpers
+@using BetterCms.Module.Root.ViewModels.SiteSettings
+@using Microsoft.Web.Mvc
+@using MvcContrib.UI.Grid
+@model BetterCms.Module.Root.ViewModels.Category.CategoryTreesGridViewModel<SiteSettingCategoryTreeViewModel>
+@{
+    Action<ColumnBuilder<SiteSettingCategoryTreeViewModel>> columns = column =>
+    {
+        column.EditButtonColumn();
+        column.For(m => m.Title)
+            .Named(RootGlobalization.SiteSettings_CategoryTrees_TitleColumn)
+            .SortColumnName("Title")
+            .Attributes(@class => "bcms-grid-item-title");
+        column.DeleteButtonColumn();
+    };
+}
+@using (Html.BeginForm<CategoryController>(f => f.CategoryTrees(null), FormMethod.Post, new { @id = "bcms-categorytrees-form", @class = "bcms-ajax-form" }))
+{
+    @Html.HiddenGridOptions(Model.GridOptions)
+    <div class="bcms-twocols-title-block">
+        <div class="bcms-large-titles">@RootGlobalization.SiteSettings_CategoryTrees_Title</div>
+        <div class="bcms-btn-links-main" id="bcms-create-categorytree-button">@RootGlobalization.SiteSettings_CategoryTrees_AddNewCategoryTree</div>
+        <div class="bcms-search-block">
+            @Html.TextBoxFor(m => m.SearchQuery, new { @class = "bcms-editor-field-box bcms-search-query", @placeholder = RootGlobalization.WaterMark_Search })
+            <div class="bcms-btn-search" id="bcms-categorytrees-search-btn">@RootGlobalization.SiteSettings_CategoryTrees_Search</div>
+        </div>
+        <div class="bcms-featured-grid bcms-clearfix">
+            @Html.RenderPaging(Model)
+        </div>
+    </div>
+    @Html.SiteSettingsMessagesBox()
+    @Html.Grid(Model.Items).Sort(Model.GridOptions).Columns(columns).Attributes(@class => "bcms-tables").RenderUsing(new EditableHtmlTableGridRenderer<SiteSettingCategoryTreeViewModel>())
+}
+<script type="text/html" id="bcms-categorytree-list-row-template">
+    @Html.Grid(new List<SiteSettingCategoryTreeViewModel> { new SiteSettingCategoryTreeViewModel() }).Columns(columns).Attributes(@class => "bcms-tables").RenderUsing(new HtmlTableGridSingleRowRenderer<SiteSettingCategoryTreeViewModel>())
+</script>

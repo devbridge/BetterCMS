@@ -1,13 +1,15 @@
 ﻿using System.Web.Mvc;
 
 using BetterCms.Core.Security;
-using BetterCms.Module.Root.Commands.Category.DeleteCategory;
-using BetterCms.Module.Root.Commands.Category.GetCategoryList;
-using BetterCms.Module.Root.Commands.Category.SaveCategory;
+using BetterCms.Module.Root.Commands.Category.DeleteCategoryTree;
+using BetterCms.Module.Root.Commands.Category.GetCategoryTree;
+using BetterCms.Module.Root.Commands.Category.GetCategoryTreesList;
+using BetterCms.Module.Root.Commands.Category.SaveCategoryTree;
+using BetterCms.Module.Root.Commands.Category.SearchCategory;
 using BetterCms.Module.Root.Content.Resources;
 using BetterCms.Module.Root.Models;
 using BetterCms.Module.Root.Mvc;
-using BetterCms.Module.Root.Mvc.Grids.GridOptions;
+using BetterCms.Module.Root.ViewModels;
 using BetterCms.Module.Root.ViewModels.Category;
 
 using Microsoft.Web.Mvc;
@@ -17,41 +19,43 @@ namespace BetterCms.Module.Root.Controllers
     /// <summary>
     /// Handles categories logic.
     /// </summary>
-    [BcmsAuthorize(RootModuleConstants.UserRoles.EditContent)]
+    [BcmsAuthorize]
     [ActionLinkArea(RootModuleDescriptor.RootAreaName)]
     public class CategoryController : CmsControllerBase
-    {       
-        /// <summary>
-        /// Renders a category list for the site settings dialog.
-        /// </summary>
-        /// <param name="request">The request.</param>
-        /// <returns>
-        /// Rendered category list.
-        /// </returns>
-        public ActionResult Categories(SearchableGridOptions request)
+    {
+        [BcmsAuthorize(RootModuleConstants.UserRoles.EditContent, RootModuleConstants.UserRoles.Administration)]
+        public ActionResult CategoryTrees(CategoryTreesFilter request)
         {
             request.SetDefaultPaging();
-            var model = GetCommand<GetCategoryListCommand>().ExecuteCommand(request);
+            var model = GetCommand<GetCategoryTreesListCommand>().ExecuteCommand(request);
 
-            return View(model);
+            var view = RenderView("CategoryTrees", model);
+
+            return ComboWireJson(model != null, view, new {}, JsonRequestBehavior.AllowGet);
         }
 
-        /// <summary>
-        /// An action to save the category.
-        /// </summary>
-        /// <param name="category">The category data.</param>
-        /// <returns>Json with status.</returns>
+        [HttpGet]
+        [BcmsAuthorize(RootModuleConstants.UserRoles.EditContent, RootModuleConstants.UserRoles.Administration)]
+        public ActionResult EditCategoryTree(string sitemapId)
+        {
+            var model = GetCommand<GetCategoryTreeCommand>().ExecuteCommand(sitemapId.ToGuidOrDefault());
+            var success = model != null;
+            var view = RenderView("CategoryTreeEdit", model);
+            return ComboWireJson(success, view, model, JsonRequestBehavior.AllowGet);
+        }
+
         [HttpPost]
-        public ActionResult SaveCategory(CategoryItemViewModel category)
+        [BcmsAuthorize(RootModuleConstants.UserRoles.EditContent, RootModuleConstants.UserRoles.Administration)]
+        public ActionResult SaveCategoryTree(CategoryTreeViewModel model)
         {
             if (ModelState.IsValid)
             {
-                var response = GetCommand<SaveCategoryCommand>().ExecuteCommand(category);
+                var response = GetCommand<SaveCategoryTreeCommand>().ExecuteCommand(model);
                 if (response != null)
                 {
-                    if (category.Id.HasDefaultValue())
+                    if (model.Id.HasDefaultValue())
                     {
-                        Messages.AddSuccess(RootGlobalization.CreateCategory_CreatedSuccessfully_Message);
+                        Messages.AddSuccess(RootGlobalization.CategoryTree_CategoryTreeCreatedSuccessfully_Message);
                     }
 
                     return Json(new WireJson { Success = true, Data = response });
@@ -61,29 +65,30 @@ namespace BetterCms.Module.Root.Controllers
             return Json(new WireJson { Success = false });
         }
 
-        /// <summary>
-        /// An action to delete a given category.
-        /// </summary>
-        /// <param name="category">The category.</param>
-        /// <returns>
-        /// Json with status.
-        /// </returns>
         [HttpPost]
-        public ActionResult DeleteCategory(CategoryItemViewModel category)
+        [BcmsAuthorize(RootModuleConstants.UserRoles.EditContent, RootModuleConstants.UserRoles.Administration)]
+        public ActionResult DeleteCategoryTree(string id, string version)
         {
-            bool success = GetCommand<DeleteCategoryCommand>().ExecuteCommand(                
-                new DeleteCategoryCommandRequest
-                    {
-                        CategoryId = category.Id,
-                        Version = category.Version
-                    });
+            var success =
+                GetCommand<DeleteCategoryTreeCommand>().ExecuteCommand(new CategoryTreeViewModel
+                                                                           {
+                                                                               Id = id.ToGuidOrDefault(),
+                                                                               Version = version.ToIntOrDefault()
+                                                                           });
 
             if (success)
             {
-                Messages.AddSuccess(RootGlobalization.DeleteCategory_DeletedSuccessfully_Message);
+                Messages.AddSuccess(RootGlobalization.CategoryTree_DeletedSuccessfully_Message);
             }
 
             return Json(new WireJson(success));
+        }
+
+        [HttpPost]
+        public ActionResult SuggestCategories(CategorySuggestionViewModel model)
+        {
+            var suggestedTags = GetCommand<SearchCategoriesCommand>().ExecuteCommand(model);
+            return Json(new { suggestions = suggestedTags });
         }
     }
 }

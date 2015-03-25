@@ -16,8 +16,8 @@ namespace BetterCms.Module.Pages.ViewModels.Filter
         /// <param name="filter">The filter.</param>
         /// <param name="totalCount">The total count.</param>
         /// <param name="categories">The categories.</param>
-        public UntranslatedPagesGridViewModel(IEnumerable<TModel> items, UntranslatedPagesFilter filter, int totalCount, IEnumerable<LookupKeyValue> categories)
-            : base(items, filter, totalCount, categories)
+        public UntranslatedPagesGridViewModel(IEnumerable<TModel> items, UntranslatedPagesFilter filter, int totalCount)
+            : base(items, filter, totalCount)
         {
             ExcplicitlyIncludedPages = filter.ExcplicitlyIncludedPages;
             ExcludedLanguageId = filter.ExcludedLanguageId;

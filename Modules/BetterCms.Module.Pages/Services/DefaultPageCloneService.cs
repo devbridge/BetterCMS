@@ -88,6 +88,7 @@ namespace BetterCms.Module.Pages.Services
                 .AsQueryable<PageProperties>()
                 .Where(f => f.Id == pageId)
                 .FetchMany(f => f.Options)
+                .FetchMany(f => f.Categories).ThenFetch(c => c.Category).ThenFetch(c => c.CategoryTree)
                 .FetchMany(f => f.PageContents).ThenFetch(f => f.Region)
                 .FetchMany(f => f.PageContents).ThenFetch(f => f.Content)
                 .FetchMany(f => f.PageContents).ThenFetchMany(f => f.Options)
@@ -106,11 +107,13 @@ namespace BetterCms.Module.Pages.Services
             page.PageContents.ForEach(repository.Detach);
             page.PageTags.ForEach(repository.Detach);
             page.Options.ForEach(repository.Detach);
+            page.Categories.ForEach(repository.Detach);
             page.SaveUnsecured = true;
 
             var pageContents = page.PageContents.Distinct().ToList();
             var pageTags = page.PageTags.Distinct().ToList();
             var pageOptions = page.Options.Distinct().ToList();
+            var pageCategories = page.Categories.Distinct().ToList();
 
             var masterPages = page.MasterPages != null ? page.MasterPages.Distinct().ToList() : new List<MasterPage>();
 
@@ -153,6 +156,9 @@ namespace BetterCms.Module.Pages.Services
 
             // Clone master pages
             masterPages.ForEach(masterPage => CloneMasterPages(masterPage, newPage));
+            
+            // Clone categories pages
+            pageCategories.ForEach(category => CloneCategories(category, newPage));
 
             // Set language identifier for parent page, if it hasn't and child is cloned from the parent.
             var parentChanged = false;
@@ -372,6 +378,16 @@ namespace BetterCms.Module.Pages.Services
 
             newPage.MasterPages.Add(newMasterPage);
             repository.Save(newMasterPage);
+        }        
+        
+        private void CloneCategories(PageCategory category, PageProperties newPage)
+        {
+            var newPageCategory = new PageCategory
+            {
+                Page = newPage,
+                Category = category.Category
+            };
+            repository.Save(newPageCategory);
         }
 
         private void ValidateCloningPage(PageProperties page, System.Guid? languageId, System.Guid? languageGroupIdentifier)

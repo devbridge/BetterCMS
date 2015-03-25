@@ -24,9 +24,25 @@
 
             public const string LuceneAuthorizationUrl = "LuceneAuthorizationUrl";
 
+            public const string LuceneAuthorizationMode = "LuceneAuthorizationMode";
+
             public const string LuceneAuthorizationFormFieldPrefix = "LuceneAuthorizationForm.";
 
+            public const string LuceneAuthorizationWindows_UserName = "LuceneAuthorizationWindows.UserName";
+
+            public const string LuceneAuthorizationWindows_Password = "LuceneAuthorizationWindows.Password";
+
             public const string LuceneSearchForPartOfWordsPrefix = "LuceneSearchForPartOfWords";
+
+            public const string LuceneIndexerDeleteLockFileOnStart = "LuceneIndexerDeleteLockFileOnStart";
+
+            public const string LuceneIndexerRunsOnlyOnHost = "LuceneIndexerRunsOnlyOnHost";
+
+            public const string LuceneExcludedNodes = "LuceneExcludedNodes";
+
+            public const string LuceneExcludedIds = "LuceneExcludedIds";
+
+            public const string LuceneExcludedClasses = "LuceneExcludedClasses";
         }
 
         public const string LuceneSearchModuleLoggerNamespace = "LuceneSearchModule";

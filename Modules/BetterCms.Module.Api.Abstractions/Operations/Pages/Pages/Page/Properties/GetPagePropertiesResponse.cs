@@ -1,4 +1,5 @@
-﻿using System.Runtime.Serialization;
+﻿using System.Collections.Generic;
+using System.Runtime.Serialization;
 
 using BetterCms.Module.Api.Infrastructure;
 using BetterCms.Module.Api.Operations.Root;
@@ -25,7 +26,7 @@ namespace BetterCms.Module.Api.Operations.Pages.Pages.Page.Properties
         /// The category.
         /// </value>
         [DataMember]
-        public CategoryModel Category { get; set; }
+        public IList<CategoryModel> Categories { get; set; }
 
         /// <summary>
         /// Gets or sets the list of tags.

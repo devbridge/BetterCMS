@@ -10,7 +10,7 @@ namespace BetterCms.Module.Blog.ViewModels.Filter
     public class BlogsFilter : SearchableGridOptions
     {
         public List<LookupKeyValue> Tags { get; set; }
-        public Guid? CategoryId { get; set; }
+        public List<LookupKeyValue> Categories { get; set; }
         public Guid? LanguageId { get; set; }
         public bool IncludeArchived { get; set; }
         public PageStatusFilterType? Status { get; set; }

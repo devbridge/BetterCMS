@@ -10,8 +10,6 @@ using BetterCms.Core.Modules.Projections;
 using BetterCms.Module.Root.Mvc.PageHtmlRenderer;
 using BetterCms.Module.Root.ViewModels.Cms;
 
-using NHibernate.Linq;
-
 namespace BetterCms.Module.Root.Mvc.Helpers
 {
     public static class ViewRenderingExtensions
@@ -26,9 +24,14 @@ namespace BetterCms.Module.Root.Mvc.Helpers
         /// <returns>View, rendered to string</returns>
         public static string RenderViewToString(this CmsControllerBase controller, string viewName, object model, bool enableFormContext = false)
         {
-            if (string.IsNullOrEmpty(viewName))
+
+            if (string.IsNullOrEmpty(viewName) || viewName.ToLower() == controller.ControllerContext.RouteData.GetRequiredString("action").ToLower())
             {
-                viewName = controller.ControllerContext.RouteData.GetRequiredString("action");
+                var areaName = controller.ControllerContext.RouteData.GetRequiredString("area");
+                var controllerName = controller.ControllerContext.RouteData.GetRequiredString("controller");
+                var actionName = controller.ControllerContext.RouteData.GetRequiredString("action");
+
+                viewName = string.Format("~/Areas/{0}/Views/{1}/{2}.cshtml", areaName, controllerName, actionName);
             }
 
             controller.ViewData.Model = model;

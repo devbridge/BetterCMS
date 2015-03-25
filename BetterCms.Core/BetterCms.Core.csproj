@@ -150,11 +150,16 @@
     <Compile Include="DataAccess\DataContext\Migrations\VersionInfo.cs" />
     <Compile Include="DataAccess\PredicateBuilder.cs" />
     <Compile Include="DataContracts\Enums\ForceProtocolType.cs" />
+    <Compile Include="DataContracts\ICategorizableItem.cs" />
+    <Compile Include="DataContracts\ICategorized.cs" />
+    <Compile Include="DataContracts\ICategoryTree.cs" />
+    <Compile Include="DataContracts\ICategoryTreeCategorizableItem.cs" />
     <Compile Include="DataContracts\IChildContent.cs" />
     <Compile Include="DataContracts\IContentRegion.cs" />
     <Compile Include="DataContracts\ICustomOption.cs" />
     <Compile Include="DataContracts\IDeletableOption.cs" />
     <Compile Include="DataContracts\IDynamicContentContainer.cs" />
+    <Compile Include="DataContracts\IEntityCategory.cs" />
     <Compile Include="DataContracts\IOptionContainer.cs" />
     <Compile Include="DataContracts\IDeleteableEntity.cs" />
     <Compile Include="DataContracts\IOptionValue.cs" />

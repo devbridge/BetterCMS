@@ -281,7 +281,7 @@ namespace BetterCms.Core
                         });
                 
                 var engine = new CompositePrecompiledMvcEngine(precompiledAssemblies.ToArray());
-                ViewEngines.Engines.Insert(0, engine);
+                ViewEngines.Engines.Add(engine);
                 VirtualPathFactoryManager.RegisterVirtualPathFactory(engine);
             }
         }

@@ -46,11 +46,12 @@ namespace BetterCms.Module.Pages.Command.History.DestroyContentDraft
                        };
 
             // Try to cast to widget
-            var widget = content.Original as HtmlContentWidget;
-            if (widget != null && widget.Category != null && !widget.Category.IsDeleted)
-            {
-                response.CategoryName = widget.Category.Name;
-            }
+            // TODO Widget categories
+//            var widget = content.Original as HtmlContentWidget;
+//            if (widget != null && widget.Category != null && !widget.Category.IsDeleted)
+//            {
+//                response.CategoryName = widget.Category.Name;
+//            }
 
             if (request.IncludeChildRegions)
             {

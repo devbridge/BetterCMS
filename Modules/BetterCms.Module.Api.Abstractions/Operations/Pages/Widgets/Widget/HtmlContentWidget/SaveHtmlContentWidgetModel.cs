@@ -53,7 +53,7 @@ namespace BetterCms.Module.Api.Operations.Pages.Widgets.Widget.HtmlContentWidget
         /// The widget category id.
         /// </value>
         [DataMember]
-        public Guid? CategoryId { get; set; }
+        public List<Guid> Categories { get; set; }
 
         /// <summary>
         /// Gets or sets the custom CSS.

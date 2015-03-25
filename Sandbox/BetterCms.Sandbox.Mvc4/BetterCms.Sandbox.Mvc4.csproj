@@ -237,8 +237,10 @@
     </Compile>
     <Compile Include="Helpers\AuthenticationHelper.cs" />
     <Compile Include="Helpers\OptionsHelper.cs" />
+    <Compile Include="Models\ApiTestWidgetModel.cs" />
     <Compile Include="Models\BlogTestViewModel.cs" />
     <Compile Include="Models\MenuItemViewModel.cs" />
+    <Compile Include="Models\MyFileUploadViewModel.cs" />
     <Compile Include="Models\SitemapMenuViewModel.cs" />
     <Compile Include="Models\TestPostAndGetInheritedViewModel.cs" />
     <Compile Include="Models\TestPostAndGetViewModel.cs" />
@@ -428,6 +430,14 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\Upload\Upload.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Widgets\MyFileUploadWidget.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Properties\PublishProfiles\bcms-sandbox.pubxml" />
+    <Content Include="Views\Widgets\ApiTestWidget.cshtml" />
+    <Content Include="Views\Widgets\ApiTestWidgetInvoker.cshtml" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

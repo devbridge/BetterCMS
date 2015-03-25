@@ -1,9 +1,14 @@
 ﻿using System;
+using System.IO;
 using System.Linq;
 
+using BetterCms.Module.Api.Infrastructure;
+using BetterCms.Module.Api.Operations.MediaManager.Files;
 using BetterCms.Module.Api.Operations.MediaManager.Files.File;
 using BetterCms.Module.Api.Operations.MediaManager.Folders.Folder;
 using BetterCms.Module.Api.Operations.MediaManager.Images.Image;
+
+using ServiceStack;
 
 namespace BetterCms.Module.Api.Extensions
 {
@@ -83,6 +88,7 @@ namespace BetterCms.Module.Api.Extensions
                                 OriginalUri = response.Data.OriginalUri,
                                 ThumbnailUri = response.Data.ThumbnailUri,
                                 Tags = response.Tags != null ? response.Tags.Select(t => t.Name).ToList() : null,
+                                Categories = response.Data.Categories != null ? response.Data.Categories.Select(t => t.Id).ToList() : null,
                             };
 
             return model;
@@ -109,6 +115,7 @@ namespace BetterCms.Module.Api.Extensions
                                 Tags = response.Tags != null ? response.Tags.Select(t => t.Name).ToList() : null,
                                 AccessRules = response.AccessRules,
                                 ThumbnailId = response.Data.ThumbnailId,
+                                Categories = response.Data.Categories != null ? response.Data.Categories.Select(t => t.Id).ToList() : null,
                             };
 
             return model;

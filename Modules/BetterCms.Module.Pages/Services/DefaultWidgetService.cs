@@ -17,13 +17,15 @@ using BetterCms.Module.Pages.ViewModels.Content;
 using BetterCms.Module.Pages.ViewModels.Filter;
 using BetterCms.Module.Pages.ViewModels.SiteSettings;
 using BetterCms.Module.Pages.ViewModels.Widgets;
-
+using BetterCms.Module.Root.Content.Resources;
 using BetterCms.Module.Root.Models;
 using BetterCms.Module.Root.Mvc;
 using BetterCms.Module.Root.Mvc.Grids.Extensions;
 using BetterCms.Module.Root.Mvc.PageHtmlRenderer;
 using BetterCms.Module.Root.Services;
 using BetterCms.Module.Root.ViewModels.Option;
+
+using FluentNHibernate.Conventions;
 
 using NHibernate.Criterion;
 
@@ -34,23 +36,26 @@ namespace BetterCms.Module.Pages.Services
     public class DefaultWidgetService : IWidgetService
     {
         private readonly IRepository repository;
-        
+
         private readonly IUnitOfWork unitOfWork;
-        
+
         private readonly IOptionService optionService;
-        
+
         private readonly IContentService contentService;
-        
+
         private readonly IChildContentService childContentService;
 
+        private readonly ICategoryService categoryService;
+
         public DefaultWidgetService(IRepository repository, IUnitOfWork unitOfWork, IOptionService optionService, IContentService contentService,
-            IChildContentService childContentService)
+            IChildContentService childContentService, ICategoryService categoryService)
         {
             this.repository = repository;
             this.unitOfWork = unitOfWork;
             this.optionService = optionService;
             this.contentService = contentService;
             this.childContentService = childContentService;
+            this.categoryService = categoryService;
         }
 
         public void SaveHtmlContentWidget(EditHtmlContentWidgetViewModel model, IList<ContentOptionValuesViewModel> childContentOptionValues,
@@ -68,12 +73,13 @@ namespace BetterCms.Module.Pages.Services
 
             var widgetContent = GetHtmlContentWidgetFromRequest(model, treatNullsAsLists, !model.Id.HasDefaultValue());
             widget = GetWidgetForSave(widgetContent, model, createIfNotExists, out isCreatingNew);
-            optionService.SaveChildContentOptions(widget, childContentOptionValues, model.DesirableStatus);
+
+            optionService.SaveChildContentOptions(widget, childContentOptionValues, model.DesirableStatus);             
 
             repository.Save(widget);
             unitOfWork.Commit();
 
-            // Notify.
+            // Notify
             if (widget.Status != ContentStatus.Preview)
             {
                 if (isCreatingNew)
@@ -115,7 +121,7 @@ namespace BetterCms.Module.Pages.Services
 
             var requestWidget = GetServerControlWidgetFromRequest(model, treatNullsAsLists, !model.Id.HasDefaultValue());
             var widget = GetWidgetForSave(requestWidget, model, createIfNotExists, out isCreatingNew);
-            
+
             repository.Save(widget);
             unitOfWork.Commit();
 
@@ -172,9 +178,11 @@ namespace BetterCms.Module.Pages.Services
                 else
                 {
                     widgetContent.PublishedOn = originalWidget.PublishedOn;
-                    widgetContent.PublishedByUser = originalWidget.PublishedByUser;
+                    widgetContent.PublishedByUser = originalWidget.PublishedByUser;                    
                 }
             }
+
+            
 
             if (createNewWithId)
             {
@@ -197,15 +205,7 @@ namespace BetterCms.Module.Pages.Services
             HtmlContentWidget content = new HtmlContentWidget();
             content.Id = request.Id;
 
-            if (request.CategoryId.HasValue && !request.CategoryId.Value.HasDefaultValue())
-            {
-                content.Category = repository.AsProxy<CategoryEntity>(request.CategoryId.Value);
-            }
-            else
-            {
-                content.Category = null;
-            }
-
+            SetWidgetCategories(request, content, treatNullsAsLists, isNew);
             SetWidgetOptions(request, content, treatNullsAsLists, isNew);
 
             content.Name = request.Name;
@@ -221,25 +221,55 @@ namespace BetterCms.Module.Pages.Services
             return content;
         }
 
+        private void SetWidgetCategories(EditWidgetViewModel request, Widget content, bool treatNullsAsLists, bool isNew)
+        {
+            if (request.Categories != null)
+            {
+                content.Categories = new List<WidgetCategory>();
+
+                var categories =
+                    repository.AsQueryable<Category>()
+                        .Where(c => !c.CategoryTree.IsDeleted && c.CategoryTree.AvailableFor.Any(e => e.CategorizableItem.Name == content.GetCategorizableItemKey()))
+                        .ToList();
+
+                foreach (var categoryItem in request.Categories)
+                {
+                    var category = categories.FirstOrDefault(c => c.Id == categoryItem.Key.ToGuidOrDefault());
+                    if (category == null)
+                    {
+                        var message = string.Format(RootGlobalization.Validation_Category_Unavailable_Message, categoryItem.Value);
+                        throw new ValidationException(() => message, message);
+                    }
+                    var widgetCategory = new WidgetCategory
+                                             {
+                                                 Widget = content,
+                                                 Category = repository.AsProxy<Category>(category.Id)
+                                             };
+                    content.Categories.Add(widgetCategory);
+                }
+            }
+            else if (!treatNullsAsLists)
+            {
+                // When calling from API with null list, categories should be loaded before process.
+                // Null from API means, that list should be kept unchanged.
+                content.Categories = repository
+                    .AsQueryable<WidgetCategory>(pco => pco.Widget.Id == request.Id)
+                    .Fetch(pco => pco.Category)
+                    .ToList();
+            }
+        }
+
         private ServerControlWidget GetServerControlWidgetFromRequest(EditServerControlWidgetViewModel request, bool treatNullsAsLists, bool isNew)
         {
             ServerControlWidget widget = new ServerControlWidget();
             widget.Id = request.Id;
-
-            if (request.CategoryId.HasValue && !request.CategoryId.Value.HasDefaultValue())
-            {
-                widget.Category = repository.AsProxy<CategoryEntity>(request.CategoryId.Value);
-            }
-            else
-            {
-                widget.Category = null;
-            }
 
             widget.Name = request.Name;
             widget.Url = request.Url;
             widget.Version = request.Version;
             widget.PreviewUrl = request.PreviewImageUrl;
 
+            SetWidgetCategories(request, widget, treatNullsAsLists, isNew);
             SetWidgetOptions(request, widget, treatNullsAsLists, isNew);
 
             return widget;
@@ -358,7 +388,7 @@ namespace BetterCms.Module.Pages.Services
             filter.SetDefaultSortingOptions("WidgetName");
 
             var query = repository.AsQueryable<Widget>()
-                        .Where(f => !f.IsDeleted 
+                        .Where(f => !f.IsDeleted
                                 && (f.Status == ContentStatus.Published || f.Status == ContentStatus.Draft)
                                 && (f.Original == null || !f.Original.IsDeleted));
 
@@ -367,14 +397,15 @@ namespace BetterCms.Module.Pages.Services
                 query = query.Where(f => f.ChildContents.Any(cc => cc.Child.Id == filter.ChildContentId.Value));
             }
 
+            
+
             var modelQuery = query.Select(f => new SiteSettingWidgetItemViewModel
                 {
                     Id = f.Id,
                     OriginalId = f.Status == ContentStatus.Draft && f.Original != null && f.Original.Status == ContentStatus.Published ? f.Original.Id : f.Id,
                     Version = f.Version,
                     OriginalVersion = f.Status == ContentStatus.Draft && f.Original != null && f.Original.Status == ContentStatus.Published ? f.Original.Version : f.Version,
-                    WidgetName = f.Name,
-                    CategoryName = (!f.Category.IsDeleted) ? f.Category.Name : null,
+                    WidgetName = f.Name,                    
                     WidgetEntityType = f.GetType(),
                     IsPublished = f.Status == ContentStatus.Published || (f.Original != null && f.Original.Status == ContentStatus.Published),
                     HasDraft = f.Status == ContentStatus.Draft
@@ -383,7 +414,8 @@ namespace BetterCms.Module.Pages.Services
             if (!string.IsNullOrWhiteSpace(filter.SearchQuery))
             {
                 var searchQuery = filter.SearchQuery.ToLowerInvariant();
-                modelQuery = modelQuery.Where(f => f.CategoryName.ToLower().Contains(searchQuery) || f.WidgetName.ToLower().Contains(searchQuery));
+                modelQuery = modelQuery.Where(f => f.WidgetName.ToLower().Contains(searchQuery)
+                                                || repository.AsQueryable<WidgetCategory>().Where(c => c.Category.Name.ToLower().Contains(searchQuery)).Select(c => c.Id).Contains(f.Id));
             }
 
             modelQuery = modelQuery.ToList()
@@ -419,7 +451,7 @@ namespace BetterCms.Module.Pages.Services
             var sourceHtml = ((IDynamicContentContainer)widget).Html;
             var sourceWidgets = PageContentRenderHelper.ParseWidgetsFromHtml(sourceHtml);
             var targetWidgets = PageContentRenderHelper.ParseWidgetsFromHtml(targetHtml);
-            
+
             // Get ids of child widgets, which are being removed from the content
             var removingWidgetIds = sourceWidgets
                 .Where(sw => targetWidgets.All(tw => tw.WidgetId != sw.WidgetId))
@@ -445,7 +477,8 @@ namespace BetterCms.Module.Pages.Services
                     .And(() => !pcAlias.IsDeleted)
                     .RowCount() > 0;
 
-                if (areAnyContentUsages) { 
+                if (areAnyContentUsages)
+                {
                     var message = PagesGlobalization.SaveWidget_ContentHasChildrenWidgetWithDynamicContents_ConfirmationMessage;
                     var logMessage = string.Format("User is trying to remove child widget which has children with dynamic regions and assigned contents. Confirmation is required.");
                     throw new ConfirmationRequestException(() => message, logMessage);

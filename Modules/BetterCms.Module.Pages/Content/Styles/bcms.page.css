@@ -226,6 +226,22 @@ a.bcms-slider-next {
         vertical-align: top;
     }
 
+.bcms-categories-box-holder {
+    padding: 10px 0 0 30px;
+    margin: 0 0 0 -30px;
+    border-top: 1px solid #c6c6c6;
+}
+
+    .bcms-categories-box-holder .bcms-content-titles:hover {
+        color: #24597e;
+        cursor: pointer;
+    }
+
+    .bcms-categories-box-holder .bcms-content-titles {
+        display: inline-block;
+        vertical-align: top;
+    }
+
 /*Add new page*/
 .bcms-addpage-title {
     position: relative;

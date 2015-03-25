@@ -1,4 +1,5 @@
 ﻿using BetterCms.Core.Models;
+using BetterCms.Module.Root;
 
 namespace BetterCms.Module.Pages.Models.Maps
 {
@@ -16,12 +17,13 @@ namespace BetterCms.Module.Pages.Models.Maps
             Map(x => x.UseNoIndex).Not.Nullable();
             Map(x => x.IsArchived).Not.Nullable();
 
-            References(x => x.Category).Cascade.SaveUpdate().LazyLoad();
+            
             References(x => x.Image).Cascade.SaveUpdate().LazyLoad();
             References(x => x.SecondaryImage).Cascade.SaveUpdate().LazyLoad();
             References(x => x.FeaturedImage).Cascade.SaveUpdate().LazyLoad();
 
             HasMany(x => x.PageTags).KeyColumn("PageId").Cascade.SaveUpdate().Inverse().LazyLoad().Where("IsDeleted = 0");
+            HasMany(x => x.Categories).KeyColumn("PageId").Cascade.SaveUpdate().Inverse().LazyLoad().Where("IsDeleted = 0");            
         }
     }
 }

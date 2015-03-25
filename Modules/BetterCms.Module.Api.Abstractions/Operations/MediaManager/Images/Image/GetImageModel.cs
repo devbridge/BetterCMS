@@ -14,6 +14,9 @@ namespace BetterCms.Module.Api.Operations.MediaManager.Images.Image
         ///   <c>true</c> if to include tags to response; otherwise, <c>false</c>.
         /// </value>
         [DataMember]
-        public bool IncludeTags { get; set; }
+        public bool IncludeTags { get; set; } 
+        
+        [DataMember]
+        public bool IncludeCategories { get; set; }
     }
 }

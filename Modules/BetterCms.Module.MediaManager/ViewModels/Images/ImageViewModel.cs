@@ -1,10 +1,12 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
 using BetterCms.Core.Models;
 using BetterCms.Module.MediaManager.Content.Resources;
 using BetterCms.Module.MediaManager.Models;
 using BetterCms.Module.Root.Content.Resources;
+using BetterCms.Module.Root.Models;
 
 namespace BetterCms.Module.MediaManager.ViewModels.Images
 {
@@ -218,12 +220,28 @@ namespace BetterCms.Module.MediaManager.ViewModels.Images
         /// <value>
         /// The folder id.
         /// </value>
-        public System.Guid? FolderId { get; set; }
+        public Guid? FolderId { get; set; }
 
         /// <summary>
         /// Gets or sets override flag.
         /// </summary>
         public bool ShouldOverride { get; set; }
+
+        /// <summary>
+        /// Gets or sets the list of categories.
+        /// </summary>
+        /// <value>
+        /// The list of categories.
+        /// </value>
+        public IEnumerable<LookupKeyValue> Categories { get; set; }
+
+        /// <summary>
+        /// Gets or sets the categories filter key.
+        /// </summary>
+        /// <value>
+        /// The categories filter key.
+        /// </value>
+        public string CategoriesFilterKey { get; set; }
 
         /// <summary>
         /// Returns a <see cref="System.String" /> that represents this instance.

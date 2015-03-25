@@ -7,6 +7,8 @@ using BetterCms.Core.DataContracts.Enums;
 using BetterCms.Core.Models;
 using BetterCms.Core.Security;
 
+using NHibernate.Linq;
+
 namespace BetterCms.Module.Root.Models
 {
     /// <summary>

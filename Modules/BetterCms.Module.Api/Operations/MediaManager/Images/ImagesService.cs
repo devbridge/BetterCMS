@@ -4,8 +4,10 @@ using BetterCms.Core.DataAccess;
 using BetterCms.Module.Api.Helpers;
 using BetterCms.Module.Api.Infrastructure;
 using BetterCms.Module.Api.Operations.MediaManager.Images.Image;
+using BetterCms.Module.Api.Operations.Root.Categories.Category;
 using BetterCms.Module.MediaManager.Models;
 using BetterCms.Module.MediaManager.Services;
+using BetterCms.Module.Root.Services;
 
 using ServiceStack.ServiceInterface;
 
@@ -31,17 +33,19 @@ namespace BetterCms.Module.Api.Operations.MediaManager.Images
         /// </summary>
         private readonly IImageService imageService;
 
+        private readonly ICategoryService categoryService;
         /// <summary>
         /// Initializes a new instance of the <see cref="ImagesService" /> class.
         /// </summary>
         /// <param name="repository">The repository.</param>
         /// <param name="fileUrlResolver">The file URL resolver.</param>
         /// <param name="imageService">The image service.</param>
-        public ImagesService(IRepository repository, IMediaFileUrlResolver fileUrlResolver, IImageService imageService, IUploadImageService uploadImageService)
+        public ImagesService(IRepository repository, IMediaFileUrlResolver fileUrlResolver, IImageService imageService, IUploadImageService uploadImageService, ICategoryService categoryService)
         {
             this.repository = repository;
             this.fileUrlResolver = fileUrlResolver;
             this.imageService = imageService;
+            this.categoryService = categoryService;
             Upload = uploadImageService;
         }
 
@@ -90,7 +94,8 @@ namespace BetterCms.Module.Api.Operations.MediaManager.Images
                 query = query.Where(m => !m.IsArchived);
             }
 
-            query = query.ApplyMediaTagsFilter(request.Data);
+            query = query.ApplyMediaTagsFilter(request.Data)
+                         .ApplyCategoriesFilter(categoryService, request.Data);
 
             var listResponse = query.Select(media =>
                     new MediaModel
@@ -120,6 +125,26 @@ namespace BetterCms.Module.Api.Operations.MediaManager.Images
             {
                 model.ImageUrl = fileUrlResolver.EnsureFullPathUrl(model.ImageUrl);
                 model.ThumbnailUrl = fileUrlResolver.EnsureFullPathUrl(model.ThumbnailUrl);
+
+
+                if (request.Data.IncludeCategories)
+                {
+                    model.Categories = (from media in repository.AsQueryable<MediaFile>()
+                        from category in media.Categories
+                                        where media.Id == model.Id && !category.IsDeleted
+                        select
+                            new CategoryNodeModel
+                            {
+                                Id = category.Category.Id,
+                                Version = category.Version,
+                                CreatedBy = category.CreatedByUser,
+                                CreatedOn = category.CreatedOn,
+                                LastModifiedBy = category.ModifiedByUser,
+                                LastModifiedOn = category.ModifiedOn,
+                                Name = category.Category.Name,
+                                CategoryTreeId = category.Category.CategoryTree.Id
+                            }).ToList();
+                }
             }
 
             return new GetImagesResponse

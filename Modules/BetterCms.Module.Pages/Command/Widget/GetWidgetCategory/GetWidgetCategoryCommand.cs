@@ -8,7 +8,11 @@ using BetterCms.Core.Mvc.Commands;
 using BetterCms.Module.Pages.Content.Resources;
 using BetterCms.Module.Pages.Models;
 using BetterCms.Module.Pages.ViewModels.Widgets;
+using BetterCms.Module.Root.Models;
 using BetterCms.Module.Root.Mvc;
+
+using FluentNHibernate.Conventions;
+using FluentNHibernate.Utils;
 
 using NHibernate.Linq;
 
@@ -38,7 +42,7 @@ namespace BetterCms.Module.Pages.Command.Widget.GetWidgetCategory
             }
             else
             {
-                var categoriesQuery = Repository.AsQueryable<CategoryEntity>();
+                var categoriesQuery = Repository.AsQueryable<CategoryEntity>().Where(c => !c.IsDeleted && !c.CategoryTree.IsDeleted);
 
                 if (request.CategoryId.HasValue)
                 {
@@ -63,11 +67,11 @@ namespace BetterCms.Module.Pages.Command.Widget.GetWidgetCategory
             {
                 if (request.CategoryId.Value.HasDefaultValue())
                 {
-                    widgetsQuery = widgetsQuery.Where(c => c.Category == null);
+                    widgetsQuery = widgetsQuery.Where(c => c.Categories == null);
                 }
                 else
                 {
-                    widgetsQuery = widgetsQuery.Where(c => c.Category.Id == request.CategoryId.Value);
+                    widgetsQuery = widgetsQuery.Where(wc => wc.Categories.Any(c => c.Id == request.CategoryId.Value));
                 }
             }
 
@@ -87,7 +91,7 @@ namespace BetterCms.Module.Pages.Command.Widget.GetWidgetCategory
                 drafts = Repository
                     .AsQueryable<Root.Models.Widget>()
                     .Where(c => ids.Contains(c.Original.Id) && c.Status == ContentStatus.Draft && !c.IsDeleted)
-                    .Fetch(c => c.Category)
+                    .Fetch(c => c.Categories)
                     .ToList();
             }
             else
@@ -96,7 +100,7 @@ namespace BetterCms.Module.Pages.Command.Widget.GetWidgetCategory
             }
 
             // Map to view models
-            var contents = contentEntities.Select(f => CreateWidgetViewModel(f, drafts.FirstOrDefault(d => d.Original.Id == f.Id)));
+            var contents = contentEntities.Select(f => CreateWidgetViewModel(f, drafts.FirstOrDefault(d => d.Original.Id == f.Id))).ToList();
 
             List<WidgetCategoryViewModel> categories;
 
@@ -110,20 +114,20 @@ namespace BetterCms.Module.Pages.Command.Widget.GetWidgetCategory
                 categories = new List<WidgetCategoryViewModel>();
             }
 
-            categories.ForEach(c => c.Widgets = contents.Where(x => x.CategoryId == c.CategoryId).ToList());
+            categories.ForEach(c => c.Widgets = contents.Where(x => x.Categories.Any(cat => Guid.Parse(cat.Key) == c.CategoryId)).Distinct().ToList());
 
             // Move uncategorized contents to fake category
-            var uncategorized = contents.Where(c => c.CategoryId == null);
+            var uncategorized = contents.Where(c => c.Categories == null || c.Categories.IsEmpty()).Distinct().ToList();
 
             // Workaround for deleted categories:
-            uncategorized = contents.Where(c => c.CategoryId != null && !categories.Any(x => x.CategoryId == c.CategoryId)).Concat(uncategorized);
+            uncategorized = contents.Where(c => (c.Categories == null || c.Categories.IsEmpty()) && !categories.Any(x => c.Categories.Any(cat => Guid.Parse(cat.Key) == x.CategoryId))).Concat(uncategorized).Distinct().ToList();
 
             if (uncategorized.Any())
             {
                 var category = new WidgetCategoryViewModel
                     {
                         CategoryName = PagesGlobalization.AddPageContent_WidgetTab_UncategorizedWidget_Title,
-                        Widgets = uncategorized.ToList()
+                        Widgets = uncategorized
                     };
                 categories.Add(category);
             }
@@ -179,14 +183,22 @@ namespace BetterCms.Module.Pages.Command.Widget.GetWidgetCategory
             if (draft != null && !result.Status.Equals(ContentStatus.Published.ToString()))
             {
                 result.Name = draft.Name;
-                result.CategoryId = draft.Category != null ? draft.Category.Id : (Guid?)null;
+                result.Categories = draft.Categories != null ? draft.Categories.Select(c => new LookupKeyValue()
+                {
+                    Key = c.Category.Id.ToLowerInvariantString(),
+                    Value = c.Category.Name
+                }).ToList() : new List<LookupKeyValue>();
                 result.Id = draft.Id;
                 result.Version = draft.Version;
             }
             else
             {
                 result.Name = widget.Name;
-                result.CategoryId = widget.Category != null ? widget.Category.Id : (Guid?)null;
+                result.Categories = widget.Categories != null ? widget.Categories.Select(c => new LookupKeyValue()
+                {
+                    Key = c.Category.Id.ToLowerInvariantString(),
+                    Value = c.Category.Name
+                }).ToList() : new List<LookupKeyValue>();                
                 result.Id = widget.Id;
                 result.Version = widget.Version;
             }

@@ -1,0 +1,10 @@
+﻿@using BetterCms.Module.Root.Content.Resources
+@model BetterCms.Module.Root.ViewModels.Category.CategoryTreeNodeViewModel
+@*<!-- ko with: categorytree -->*@
+<!-- ko if: hasChildNodes() && showHasNoDataMessage() -->
+<div class="bcms-nodes-dropzone bcms-nodes-dropzone-active">
+    <div class="bcms-node-infotext">@RootGlobalization.Grid_NoDataAvailable_Message</div>
+</div>
+<!-- /ko -->
+<div data-bind='template: { name: "bcms-navigation-categorynode-template" }'></div>
+@*<!-- /ko -->*@

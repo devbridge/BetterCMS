@@ -8,6 +8,9 @@ using BetterCms.Module.Pages.Models;
 using BetterCms.Module.Pages.Services;
 using BetterCms.Module.Pages.ViewModels.Filter;
 using BetterCms.Module.Root.Mvc.Grids.GridOptions;
+using BetterCms.Module.Root.Services;
+
+using Moq;
 
 using NUnit.Framework;
 
@@ -34,7 +37,8 @@ namespace BetterCms.Test.Module.Pages.CommandTests.WidgetTests
 
                         var unitOfWork = new DefaultUnitOfWork(session);
                         var repository = new DefaultRepository(unitOfWork);
-                        var widgetService = new DefaultWidgetService(repository, unitOfWork, null, null, null);
+                        var categoryService = new Mock<ICategoryService>();
+                        var widgetService = new DefaultWidgetService(repository, unitOfWork, null, null, null, categoryService.Object);
                         var command = new GetSiteSettingsWidgetsCommand(widgetService);
 
                         var response = command.Execute(new WidgetsFilter { SearchQuery = control1.Name.Substring(1, control1.Name.Length - 1) });
@@ -57,7 +61,8 @@ namespace BetterCms.Test.Module.Pages.CommandTests.WidgetTests
                     {
                         var unitOfWork = new DefaultUnitOfWork(session);
                         var repository = new DefaultRepository(unitOfWork);
-                        var widgetService = new DefaultWidgetService(repository, unitOfWork, null, null, null);
+                        var categoryService = new Mock<ICategoryService>();
+                        var widgetService = new DefaultWidgetService(repository, unitOfWork, null, null, null, categoryService.Object);
                         var command = new GetSiteSettingsWidgetsCommand(widgetService);
 
                         var response = command.Execute(new WidgetsFilter { SearchQuery = Guid.NewGuid().ToString() });

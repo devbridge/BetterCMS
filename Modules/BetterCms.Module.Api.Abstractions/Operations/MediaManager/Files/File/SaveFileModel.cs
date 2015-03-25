@@ -154,5 +154,14 @@ namespace BetterCms.Module.Api.Operations.MediaManager.Files.File
         /// </value>
         [DataMember]
         public Guid? ThumbnailId { get; set; }
+
+        /// <summary>
+        /// Gets or sets the Categories.
+        /// </summary>
+        /// <value>
+        /// The tags.
+        /// </value>
+        [DataMember]
+        public IList<Guid> Categories { get; set; }
     }
 }

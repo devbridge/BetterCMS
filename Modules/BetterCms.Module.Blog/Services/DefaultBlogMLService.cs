@@ -24,6 +24,9 @@ using BlogML.Xml;
 
 using Common.Logging;
 
+using FluentNHibernate.Testing.Values;
+using FluentNHibernate.Utils;
+
 using ValidationException = BetterCms.Core.Exceptions.Mvc.ValidationException;
 
 namespace BetterCms.Module.Blog.Services
@@ -330,9 +333,19 @@ namespace BetterCms.Module.Blog.Services
                         {
                             blogPostModel.AuthorId = authors[blogML.Authors[0].Ref];
                         }
-                        if (blogML.Categories != null && blogML.Categories.Count > 0)
+                        if (blogML.Categories != null && blogML.Categories.Count > 0 && categories != null && categories.Count > 0)
                         {
-                            blogPostModel.CategoryId = categories[blogML.Categories[0].Ref];
+                            for (var i = 0; i < blogML.Categories.Count; i++)
+                            {
+                                var category = blogML.Categories[i];
+
+                                if (blogPostModel.Categories == null)
+                                {
+                                    blogPostModel.Categories = new List<LookupKeyValue>();
+                                }
+
+                                blogPostModel.Categories.Add(new LookupKeyValue() {Key = categories[category.Ref].ToLowerInvariantString()});                                
+                            }                            
                         }
 
                         string[] error;
@@ -469,6 +482,7 @@ namespace BetterCms.Module.Blog.Services
         private IDictionary<string, Guid> ImportCategories(BlogMLBlog.CategoryCollection categories, IList<Category> createdCategories, List<BlogMLPost> blogs)
         {
             var dictionary = new Dictionary<string, Guid>();
+            return dictionary; // TODO: https://github.com/devbridge/BetterCMS/issues/1235
             if (categories != null)
             {
                 foreach (var categoryML in categories)

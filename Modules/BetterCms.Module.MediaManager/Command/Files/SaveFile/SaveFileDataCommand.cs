@@ -11,6 +11,7 @@ using BetterCms.Module.MediaManager.ViewModels.File;
 using BetterCms.Module.Root;
 using BetterCms.Module.Root.Models.Extensions;
 using BetterCms.Module.Root.Mvc;
+using BetterCms.Module.Root.Services;
 
 namespace BetterCms.Module.MediaManager.Command.Files.SaveFile
 {
@@ -29,16 +30,22 @@ namespace BetterCms.Module.MediaManager.Command.Files.SaveFile
         private readonly IAccessControlService accessControlService;
 
         /// <summary>
+        /// The category service
+        /// </summary>
+        private ICategoryService categoryService;
+
+        /// <summary>
         /// Initializes a new instance of the <see cref="SaveFileDataCommand" /> class.
         /// </summary>
         /// <param name="tagService">The tag service.</param>
         /// <param name="cmsConfiguration">The CMS configuration.</param>
         /// <param name="accessControlService">The access control service.</param>
-        public SaveFileDataCommand(ITagService tagService, ICmsConfiguration cmsConfiguration, IAccessControlService accessControlService)
+        public SaveFileDataCommand(ITagService tagService, ICmsConfiguration cmsConfiguration, IAccessControlService accessControlService, ICategoryService categoryService)
         {
             this.tagService = tagService;
             this.cmsConfiguration = cmsConfiguration;
             this.accessControlService = accessControlService;
+            this.categoryService = categoryService;
         }
 
         /// <summary>
@@ -47,17 +54,22 @@ namespace BetterCms.Module.MediaManager.Command.Files.SaveFile
         /// <param name="request">The request.</param>
         public void Execute(FileViewModel request)
         {
-            var mediaFile = Repository.First<MediaFile>(request.Id.ToGuidOrDefault());
+//            var mediaFile = Repository.First<MediaFile>(request.Id.ToGuidOrDefault());
 
+            var mediaFile = Repository.AsQueryable<MediaFile>().Where(mf => mf.Id == request.Id.ToGuidOrDefault()).ToList().First();
             UnitOfWork.BeginTransaction();
 
-            Repository.Save(mediaFile.CreateHistoryItem());
+            var histItem = (MediaFile)mediaFile.CreateHistoryItem();
+            histItem.SaveUnsecured = true;
+            Repository.Save(histItem);
 
-            mediaFile.PublishedOn = DateTime.Now;
+            mediaFile.PublishedOn = DateTime.UtcNow;
             mediaFile.Title = request.Title;
             mediaFile.Description = request.Description;
             mediaFile.Version = request.Version.ToIntOrDefault();
             mediaFile.Image = request.Image != null && request.Image.ImageId.HasValue ? Repository.AsProxy<MediaImage>(request.Image.ImageId.Value) : null;
+
+            categoryService.CombineEntityCategories<Media, MediaCategory>(mediaFile, request.Categories); 
 
             Repository.Save(mediaFile);
 

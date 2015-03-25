@@ -18,6 +18,13 @@ namespace BetterCMS.Module.LuceneSearch.Services.WebCrawlerService
 {
     public class DefaultWebCrawlerService : IWebCrawlerService
     {
+        private enum AuthMode
+        {
+            None,
+            Forms,
+            Windows
+        }
+
         private static readonly ILog Log = LogManager.GetLogger(LuceneSearchConstants.LuceneSearchModuleLoggerNamespace);
 
         private readonly ICmsConfiguration cmsConfiguration;
@@ -25,6 +32,8 @@ namespace BetterCMS.Module.LuceneSearch.Services.WebCrawlerService
         private readonly string webServer;
 
         private readonly bool indexPrivatePages;
+
+        private readonly AuthMode authMode = AuthMode.None;
 
         private readonly TimeSpan fetchTimeout = TimeSpan.FromMinutes(1);
 
@@ -38,6 +47,23 @@ namespace BetterCMS.Module.LuceneSearch.Services.WebCrawlerService
 
             bool.TryParse(cmsConfiguration.Search.GetValue(LuceneSearchConstants.ConfigurationKeys.LuceneIndexPrivatePages), out indexPrivatePages);
 
+            if (indexPrivatePages)
+            {
+                var authModeString = cmsConfiguration.Search.GetValue(LuceneSearchConstants.ConfigurationKeys.LuceneAuthorizationMode);
+                if (!string.IsNullOrWhiteSpace(authModeString))
+                {
+                    switch (authModeString.ToLower().Trim())
+                    {
+                        case "windows":
+                            authMode = AuthMode.Windows;
+                            break;
+                        default:
+                            authMode = AuthMode.Forms;
+                            break;
+                    }
+                }
+            }
+
             HtmlAgilityPackHelper.FixMissingTagClosings();
 
             TimeSpan timeout;
@@ -50,16 +76,25 @@ namespace BetterCMS.Module.LuceneSearch.Services.WebCrawlerService
 
         public PageData FetchPage(string url)
         {
-            if (indexPrivatePages && authorizationCookies == null)
+            if (indexPrivatePages && authorizationCookies == null && authMode != AuthMode.Windows)
             {
-                TryAuthenticate();
+                TryAuthenticate(); // Forms authentication.
             }
 
             var fullUrl = string.Concat(webServer.TrimEnd('/'), "/", url.TrimStart('/'));
             var httpWebRequest = (HttpWebRequest)WebRequest.Create(fullUrl);
+
+            if (indexPrivatePages && authMode == AuthMode.Windows)
+            {
+                var userName = cmsConfiguration.Search.GetValue(LuceneSearchConstants.ConfigurationKeys.LuceneAuthorizationWindows_UserName);
+                var password = cmsConfiguration.Search.GetValue(LuceneSearchConstants.ConfigurationKeys.LuceneAuthorizationWindows_Password);
+                httpWebRequest.Credentials = new NetworkCredential(userName, password);
+            }
+
             httpWebRequest.AllowAutoRedirect = true;
             httpWebRequest.Timeout = (int)fetchTimeout.TotalMilliseconds;
             httpWebRequest.CookieContainer = new CookieContainer();
+
             if (authorizationCookies != null)
             {
                 foreach (Cookie authCookie in authorizationCookies)
@@ -77,7 +112,6 @@ namespace BetterCMS.Module.LuceneSearch.Services.WebCrawlerService
             try
             {
                 httpWebResponse = (HttpWebResponse)httpWebRequest.GetResponse();
-
                 response.StatusCode = httpWebResponse.StatusCode;
                 response.AbsolutePath = httpWebResponse.ResponseUri.AbsolutePath;
                 response.AbsoluteUri = httpWebResponse.ResponseUri.AbsoluteUri;

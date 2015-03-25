@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -34,6 +35,9 @@ using Lucene.Net.QueryParsers;
 using Lucene.Net.Search;
 using Lucene.Net.Store;
 
+using NHibernate.Linq;
+using NHibernate.Mapping;
+
 using Directory = Lucene.Net.Store.Directory;
 using Version = Lucene.Net.Util.Version;
 
@@ -52,9 +56,13 @@ namespace BetterCMS.Module.LuceneSearch.Services.IndexerService
 
         private static readonly ILog Log = LogManager.GetLogger("LuceneSearchModule");
 
-        private static string[] excludedNodeTypes = new[] { "noscript", "script", "button" };
-        private static string[] excludedIds = new[] { "bcms-browser-info", "bcms-sidemenu" };
-        private static string[] excludedClasses = new[] { "bcms-layout-path" };
+        private static string[] defaultExcludedNodeTypes = new[] { "noscript", "script", "button", "style" };
+        private static string[] defaultExcludedIds = new[] { "bcms-browser-info", "bcms-sidemenu" };
+        private static string[] defautlExcludedClasses = new[] { "bcms-layout-path" };
+
+        private static ICollection<string> configurationExcludedNodeTypes = new List<string>();
+        private static ICollection<string> configurationExcludedIds = new List<string>();
+        private static ICollection<string> configurationExcludedClasses = new List<string>();
 
         private IndexWriter writer;
 
@@ -117,6 +125,10 @@ namespace BetterCMS.Module.LuceneSearch.Services.IndexerService
 
             try
             {
+                configurationExcludedNodeTypes = GetCollectionFromConfiguration(LuceneSearchConstants.ConfigurationKeys.LuceneExcludedNodes);
+                configurationExcludedIds = GetCollectionFromConfiguration(LuceneSearchConstants.ConfigurationKeys.LuceneExcludedIds);
+                configurationExcludedClasses = GetCollectionFromConfiguration(LuceneSearchConstants.ConfigurationKeys.LuceneExcludedClasses);
+
                 bool.TryParse(cmsConfiguration.Search.GetValue(LuceneSearchConstants.ConfigurationKeys.LuceneSearchForPartOfWordsPrefix), out searchForPartOfWords);
                 
                 bool disableStopWords;
@@ -159,6 +171,12 @@ namespace BetterCMS.Module.LuceneSearch.Services.IndexerService
 
             initialized = true;
             return true;
+        }
+
+        private ICollection<string> GetCollectionFromConfiguration(string configurationKey)
+        {
+            var configValue = cmsConfiguration.Search.GetValue(configurationKey);
+            return configValue != null ? configValue.Split(',',';').Select(val => val.Trim()).ToList() : new List<string>();
         }
 
         private bool OpenWriter(bool create)
@@ -210,7 +228,15 @@ namespace BetterCMS.Module.LuceneSearch.Services.IndexerService
                 return true;
             }
 
-            reader = IndexReader.Open(index, true);
+            try
+            {
+                reader = IndexReader.Open(index, true);
+            }
+            catch (Exception ex)
+            {
+                Log.ErrorFormat("Failed to open Lucene search index reader.", ex);
+                return false;
+            }
 
             return true;
         }
@@ -410,10 +436,17 @@ namespace BetterCMS.Module.LuceneSearch.Services.IndexerService
 
         public void CloseWriter()
         {
-            if (writer != null)
+            try
             {
-                writer.Dispose(true);
-                writer = null;
+                if (writer != null)
+                {
+                    writer.Dispose(true);
+                    writer = null;
+                }
+            }
+            catch (Exception ex)
+            {
+                Log.ErrorFormat("Failed to close Lucene search index writer.", ex);
             }
         }
 
@@ -424,25 +457,93 @@ namespace BetterCMS.Module.LuceneSearch.Services.IndexerService
                 writer.Optimize();
             }
         }
-       
+
+        public void CleanLock()
+        {
+            bool deleteLockFileOnStart;
+            if (bool.TryParse(cmsConfiguration.Search.GetValue(LuceneSearchConstants.ConfigurationKeys.LuceneIndexerDeleteLockFileOnStart), out deleteLockFileOnStart) && deleteLockFileOnStart)
+            {
+                try
+                {
+                    var fileSystemPath = cmsConfiguration.Search.GetValue(LuceneSearchConstants.ConfigurationKeys.LuceneFileSystemDirectory);
+                    if (string.IsNullOrWhiteSpace(fileSystemPath))
+                    {
+                        Log.Info("Lucene file system path is not set.");
+                        return;
+                    }
+
+                    directory = GetLuceneDirectory(fileSystemPath);
+                    var path = Path.Combine(directory, IndexWriter.WRITE_LOCK_NAME);
+                    if (File.Exists(path))
+                    {
+                        File.Delete(path);
+                    }
+                }
+                catch (Exception ex)
+                {
+                    Log.Error(string.Format("Failed to delete write lock file '{0}' in directory '{1}'.", IndexWriter.WRITE_LOCK_NAME, directory), ex);
+                }
+            }
+        }
+
+        public bool StartIndexer()
+        {
+            var runOnHost = cmsConfiguration.Search.GetValue(LuceneSearchConstants.ConfigurationKeys.LuceneIndexerRunsOnlyOnHost);
+            
+            if (string.IsNullOrWhiteSpace(runOnHost))
+            {
+                return true;
+            }
+
+            var hostName = "";
+            try
+            {
+                hostName = Environment.MachineName;
+            }
+            catch (Exception ex)
+            {
+                Log.ErrorFormat("Failed to check host name. Indexer will not start.", ex);
+                return false;
+            }
+
+            var startIndexer = String.Equals(runOnHost.Trim(), hostName.Trim(), StringComparison.InvariantCultureIgnoreCase);
+            if (!startIndexer)
+            {
+                Log.WarnFormat("Indexer on host '{0}' will not start, because host name does not match provided in configuration.", hostName);
+            }
+
+            return startIndexer;
+        }
+
         private void CloseReader()
         {
-            if (reader != null)
+            try
             {
-                reader.Dispose();
-                reader = null;
+                if (reader != null)
+                {
+                    reader.Dispose();
+                    reader = null;
+                }
+            }
+            catch (Exception ex)
+            {
+                Log.ErrorFormat("Failed to close Lucene search index reader.", ex);
             }
         }
 
         private static bool CanIncludeNodeToResults(HtmlNode node)
         {
-            if (excludedNodeTypes.Contains(node.Name))
+            if (node.NodeType == HtmlNodeType.Comment)
+            {
+                return false;
+            }
+            if (defaultExcludedNodeTypes.Contains(node.Name) || configurationExcludedNodeTypes.Contains(node.Name))
             {
                 return false;
             }
 
-            if (node.Attributes.Any(a => (a.Name == "id" && excludedIds.Contains(a.Value))
-                || (a.Name == "class" && excludedClasses.Contains(a.Value))))
+            if (node.Attributes.Any(a => (a.Name == "id" && (defaultExcludedIds.Contains(a.Value) || configurationExcludedIds.Contains(a.Value)))
+                || (a.Name == "class" && (defautlExcludedClasses.Contains(a.Value) || configurationExcludedClasses.Contains(a.Value)))))
             {
                 return false;
             }
@@ -629,15 +730,30 @@ namespace BetterCMS.Module.LuceneSearch.Services.IndexerService
 
             CloseWriter();
             CloseReader();
-            
-            if (index != null)
+
+            try
             {
-                index.Dispose();
+                if (index != null)
+                {
+                    index.Dispose();
+                }
             }
-            if (analyzer != null)
+            catch (Exception ex)
             {
-                analyzer.Close();
-                analyzer.Dispose();
+                Log.ErrorFormat("Failed to dispose Lucene search index.", ex);
+            }
+
+            try
+            {
+                if (analyzer != null)
+                {
+                    analyzer.Close();
+                    analyzer.Dispose();
+                }
+            }
+            catch (Exception ex)
+            {
+                Log.ErrorFormat("Failed to close/dispose Lucene search analyzer.", ex);
             }
         }
     }

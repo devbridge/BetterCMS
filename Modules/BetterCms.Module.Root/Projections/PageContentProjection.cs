@@ -152,7 +152,7 @@ namespace BetterCms.Module.Root.Projections
 
         public string[] GetCustomStyles(HtmlHelper html)
         {
-            return null;
+            return GetStylesAndScripts(accessor => accessor.GetCustomStyles(html));
         }
 
         public string[] GetCustomJavaScript(HtmlHelper html)

@@ -1,7 +1,9 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Runtime.Serialization;
 
 using BetterCms.Module.Api.Infrastructure;
+using BetterCms.Module.Api.Operations.Root.Categories.Category;
 
 namespace BetterCms.Module.Api.Operations.Pages.Widgets.Widget.ServerControlWidget
 {
@@ -63,22 +65,5 @@ namespace BetterCms.Module.Api.Operations.Pages.Widgets.Widget.ServerControlWidg
         [DataMember]
         public string PublishedByUser { get; set; }
 
-        /// <summary>
-        /// Gets or sets the widget category id.
-        /// </summary>
-        /// <value>
-        /// The widget category id.
-        /// </value>
-        [DataMember]
-        public System.Guid? CategoryId { get; set; }
-
-        /// <summary>
-        /// Gets or sets the widget category name.
-        /// </summary>
-        /// <value>
-        /// The widget category name.
-        /// </value>
-        [DataMember]
-        public string CategoryName { get; set; }
     }
 }

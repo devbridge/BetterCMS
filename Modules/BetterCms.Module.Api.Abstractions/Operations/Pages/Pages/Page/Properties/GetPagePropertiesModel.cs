@@ -22,7 +22,7 @@ namespace BetterCms.Module.Api.Operations.Pages.Pages.Page.Properties
         ///   <c>true</c> if to include category; otherwise, <c>false</c>.
         /// </value>
         [DataMember]
-        public bool IncludeCategory { get; set; }
+        public bool IncludeCategories { get; set; }
 
         /// <summary>
         /// Gets or sets a value indicating whether to include layout.

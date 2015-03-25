@@ -9,6 +9,7 @@ using BetterCms.Core.DataAccess;
 using BetterCms.Core.DataContracts.Enums;
 using BetterCms.Core.Web;
 using BetterCms.Module.Blog.Models;
+using BetterCms.Module.Pages.Models;
 using BetterCms.Module.Root.Models;
 
 using BlogML;
@@ -101,11 +102,12 @@ namespace BetterCms.Module.Blog.Services
 
         private void WriteCategories()
         {
+            return; // TODO: https://github.com/devbridge/BetterCMS/issues/1235
             WriteStartCategories();
-            foreach (var category in posts.Where(p => p.Category != null).Select(p => p.Category).Distinct())
+            foreach (var category in posts.Where(p => p.Categories != null).SelectMany(p => p.Categories).Distinct())
             {
-                WriteCategory(category.Id.ToString(), 
-                    category.Name, 
+                WriteCategory(category.Category.Id.ToString(), 
+                    category.Category.Name, 
                     ContentTypes.Text, 
                     category.CreatedOn, 
                     category.ModifiedOn, 
@@ -122,9 +124,9 @@ namespace BetterCms.Module.Blog.Services
             foreach (var post in posts)
             {
                 WriteStartBlogMLPost(post);
-                if (post.Category != null)
+                if (post.Categories != null)
                 {
-                    WritePostCategory(post.Category);
+                    WritePostCategories(post.Categories);
                 }
                 if (post.Author != null)
                 {
@@ -168,10 +170,13 @@ namespace BetterCms.Module.Blog.Services
             WriteContent(elementName, content);
         }
 
-        protected void WritePostCategory(Category category)
+        protected void WritePostCategories(IEnumerable<PageCategory> categories)
         {
             WriteStartCategories();
-            WriteCategoryReference(category.Id.ToString());
+            foreach (var category in categories)
+            {
+                WriteCategoryReference(category.Category.Id.ToString());    
+            }            
             WriteEndElement();
         }
 

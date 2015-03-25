@@ -11,12 +11,14 @@ using BetterCms.Module.Blog.ViewModels.Blog;
 
 using BetterCms.Module.MediaManager.Services;
 using BetterCms.Module.MediaManager.ViewModels;
-
+using BetterCms.Module.Pages.Models;
 using BetterCms.Module.Pages.Services;
 
 using BetterCms.Module.Root.Models;
 using BetterCms.Module.Root.Mvc;
 using BetterCms.Module.Root.Services;
+
+using FluentNHibernate.Utils;
 
 using BlogContent = BetterCms.Module.Root.Models.Content;
 using ITagService = BetterCms.Module.Pages.Services.ITagService;
@@ -88,12 +90,14 @@ namespace BetterCms.Module.Blog.Commands.GetBlogPost
         public BlogPostViewModel Execute(Guid id)
         {
             var model = new BlogPostViewModel();
+            var categoriesFilterKey = BlogPost.CategorizableItemKeyForBlogs;
 
             if (!id.HasDefaultValue())
-            {
+            {               
                 var result = Repository.AsQueryable<BlogPost>()
                     .Where(bp => bp.Id == id)
                     .Select(bp => new {
+                            Entity = bp,
                             AccessRules = bp.AccessRules,
                             Model = new BlogPostViewModel
                                 {
@@ -103,8 +107,7 @@ namespace BetterCms.Module.Blog.Commands.GetBlogPost
                                     BlogUrl = bp.PageUrl,
                                     UseCanonicalUrl = bp.UseCanonicalUrl,
                                     IntroText = bp.Description,
-                                    AuthorId = bp.Author != null ? bp.Author.Id : (Guid?)null,
-                                    CategoryId = bp.Category != null ? bp.Category.Id : (Guid?)null,
+                                    AuthorId = bp.Author != null ? bp.Author.Id : (Guid?)null,                                  
                                     Image = bp.Image == null || bp.Image.IsDeleted ? null :
                                         new ImageSelectorViewModel
                                         {
@@ -119,11 +122,11 @@ namespace BetterCms.Module.Blog.Commands.GetBlogPost
                             })
                     .ToList()
                     .FirstOne();
-
                 model = result.Model;
 
                 if (model != null)
                 {
+                    categoriesFilterKey = result.Entity.GetCategorizableItemKey();
                     if (cmsConfiguration.Security.AccessControlEnabled)
                     {
                         SetIsReadOnly(model, result.AccessRules.Cast<IAccessRule>().ToList());
@@ -159,7 +162,7 @@ namespace BetterCms.Module.Blog.Commands.GetBlogPost
                     {
                         model.LiveFromDate = DateTime.Today;
                     }
-
+                    model.Categories = categoryService.GetSelectedCategories<BlogPost, PageCategory>(id).ToList();
                     model.Tags = tagService.GetPageTagNames(id).ToList();
                 }
                 else
@@ -173,8 +176,8 @@ namespace BetterCms.Module.Blog.Commands.GetBlogPost
             }
 
             model.Authors = authorService.GetAuthors();
-            model.Categories = categoryService.GetCategories();
             model.RedirectFromOldUrl = true;
+            model.CategoriesFilterKey = categoriesFilterKey;
 
             return model;
         }

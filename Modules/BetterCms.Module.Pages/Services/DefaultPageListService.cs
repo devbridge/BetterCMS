@@ -5,7 +5,7 @@ using System.Linq;
 using BetterCms.Core.DataAccess.DataContext;
 using BetterCms.Core.DataContracts.Enums;
 using BetterCms.Core.Security;
-
+using BetterCms.Module.MediaManager.Models;
 using BetterCms.Module.Pages.Models;
 using BetterCms.Module.Pages.ViewModels.Filter;
 using BetterCms.Module.Pages.ViewModels.SiteSettings;
@@ -14,6 +14,7 @@ using BetterCms.Module.Root.Models;
 using BetterCms.Module.Root.Mvc;
 using BetterCms.Module.Root.Mvc.Grids.Extensions;
 using BetterCms.Module.Root.Services;
+using BetterCms.Module.Root.Views.Language;
 
 using NHibernate;
 using NHibernate.Criterion;
@@ -32,7 +33,7 @@ namespace BetterCms.Module.Pages.Services
         private readonly ICmsConfiguration configuration;
 
         private readonly IAccessControlService accessControlService;
-        
+
         private readonly IUnitOfWork unitOfWork;
 
         public DefaultPageListService(ICategoryService categoryService, ICmsConfiguration configuration,
@@ -99,7 +100,6 @@ namespace BetterCms.Module.Pages.Services
 
             var count = query.ToRowCountFutureValue();
 
-            var categoriesFuture = categoryService.GetCategories();
             IEnumerable<LookupKeyValue> languagesFuture = configuration.EnableMultilanguage ? languageService.GetLanguagesLookupValues() : null;
 
             var pages = query.AddSortingAndPaging(request).Future<SiteSettingPageViewModel>();
@@ -111,7 +111,7 @@ namespace BetterCms.Module.Pages.Services
                             l.Title))
                         .ToList();
 
-            var model = CreateModel(pages, request, count, categoriesFuture, layouts);
+            var model = CreateModel(pages, request, count, layouts);
 
             if (languagesFuture != null)
             {
@@ -123,13 +123,12 @@ namespace BetterCms.Module.Pages.Services
         }
 
         protected virtual PagesGridViewModel<SiteSettingPageViewModel> CreateModel(IEnumerable<SiteSettingPageViewModel> pages,
-            PagesFilter request, IFutureValue<int> count, IEnumerable<LookupKeyValue> categoriesFuture, IList<LookupKeyValue> layouts)
+            PagesFilter request, IFutureValue<int> count, IList<LookupKeyValue> layouts)
         {
             return new PagesGridViewModel<SiteSettingPageViewModel>(
                 pages.ToList(),
                 request,
-                count.Value,
-                categoriesFuture.ToList()) { Layouts = layouts };
+                count.Value) { Layouts = layouts };
         }
 
         protected virtual IQueryOver<PagesView, PagesView> FilterQuery(IQueryOver<PagesView, PagesView> query,
@@ -162,11 +161,6 @@ namespace BetterCms.Module.Pages.Services
                                         .Add(Restrictions.InsensitiveLike(Projections.Property(() => alias.MetaKeywords), searchQuery)));
             }
 
-            if (request.CategoryId.HasValue)
-            {
-                query = query.Where(Restrictions.Eq(Projections.Property(() => alias.Category.Id), request.CategoryId.Value));
-            }
-
             if (request.LanguageId.HasValue)
             {
                 if (request.LanguageId.Value.HasDefaultValue())
@@ -185,6 +179,17 @@ namespace BetterCms.Module.Pages.Services
                 {
                     var id = tagKeyValue.Key.ToGuidOrDefault();
                     query = query.WithSubquery.WhereExists(QueryOver.Of<PageTag>().Where(tag => tag.Tag.Id == id && tag.Page.Id == alias.Id).Select(tag => 1));
+                }
+            }
+
+            if (request.Categories != null)
+            {
+                var categories = request.Categories.Select(c => new Guid(c.Key)).Distinct().ToList();
+
+                foreach (var category in categories)
+                {
+                    var childCategories = categoryService.GetChildCategoriesIds(category).ToArray();
+                    query = query.WithSubquery.WhereExists(QueryOver.Of<PageCategory>().Where(cat => !cat.IsDeleted && cat.Page.Id == alias.Id).WhereRestrictionOn(cat => cat.Category.Id).IsIn(childCategories).Select(cat => 1));
                 }
             }
 

@@ -9,7 +9,7 @@ namespace BetterCms.Module.Api.Operations.Blog.BlogPosts
 {
     [DataContract]
     [Serializable]
-    public class GetBlogPostsModel : DataOptions, IFilterByTags
+    public class GetBlogPostsModel : DataOptions, IFilterByTags, IFilterByCategories
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="GetBlogPostsRequest" /> class.
@@ -73,5 +73,26 @@ namespace BetterCms.Module.Api.Operations.Blog.BlogPosts
         /// </value>
         [DataMember]
         public bool IncludeAccessRules { get; set; }
+
+        [DataMember]
+        public bool IncludeCategories { get; set; }
+
+        /// <summary>
+        /// Gets or sets the categories.
+        /// </summary>
+        /// <value>
+        /// The tags.
+        /// </value>
+        [DataMember]
+        public List<Guid> FilterByCategories { get; set; }
+
+        /// <summary>
+        /// Gets or sets the categories filter connector.
+        /// </summary>
+        /// <value>
+        /// The tags filter connector.
+        /// </value>
+        [DataMember]
+        public FilterConnector FilterByCategoriesConnector { get; set; }
     }
 }

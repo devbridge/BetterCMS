@@ -64,14 +64,12 @@ namespace BetterCms.Module.Pages.Services
         /// </returns>
         protected override PagesGridViewModel<SiteSettingPageViewModel> CreateModel(System.Collections.Generic.IEnumerable<SiteSettingPageViewModel> pages,
             PagesFilter request, NHibernate.IFutureValue<int> count,
-            System.Collections.Generic.IEnumerable<LookupKeyValue> categoriesFuture,
             System.Collections.Generic.IList<LookupKeyValue> layouts)
         {
             return new UntranslatedPagesGridViewModel<SiteSettingPageViewModel>(
                 pages.ToList(),
                 request as UntranslatedPagesFilter,
-                count.Value,
-                categoriesFuture.ToList()) { Layouts = layouts };
+                count.Value) { Layouts = layouts };
         }
 
         /// <summary>

@@ -8,6 +8,7 @@ using BetterCms.Module.Api.Operations;
 using BetterCms.Module.Api.Operations.Pages.Widgets.Widget.HtmlContentWidget;
 using BetterCms.Module.Api.Operations.Root;
 using BetterCms.Module.MediaManager.Provider;
+using BetterCms.Module.Root.Models;
 
 using NHibernate;
 
@@ -22,6 +23,9 @@ namespace BetterCms.Test.Module.Api.Pages.Widgets
         PutHtmlContentWidgetRequest, PutHtmlContentWidgetResponse,
         DeleteHtmlContentWidgetRequest, DeleteHtmlContentWidgetResponse>
     {
+
+        private Category category;
+
         [Test]
         public void Should_CRUD_HtmlContentWidget_Successfully()
         {
@@ -31,8 +35,13 @@ namespace BetterCms.Test.Module.Api.Pages.Widgets
             Events.PageEvents.Instance.WidgetDeleted += Instance_EntityDeleted;
 
             // Run tests
-            RunApiActionInTransaction((api, session) =>
-                Run(session, api.Pages.Widget.HtmlContent.Post, api.Pages.Widget.HtmlContent.Get, api.Pages.Widget.HtmlContent.Put, api.Pages.Widget.HtmlContent.Delete));
+            RunApiActionInTransaction(
+                (api, session) => Run(
+                    session,
+                    api.Pages.Widget.HtmlContent.Post,
+                    api.Pages.Widget.HtmlContent.Get,
+                    api.Pages.Widget.HtmlContent.Put,
+                    api.Pages.Widget.HtmlContent.Delete));
 
             // Detach from events
             Events.PageEvents.Instance.WidgetCreated -= Instance_EntityCreated;
@@ -49,8 +58,8 @@ namespace BetterCms.Test.Module.Api.Pages.Widgets
             Events.PageEvents.Instance.WidgetDeleted += Instance_EntityDeleted;
 
             // Run tests
-            RunApiActionInTransaction((api, session) =>
-                RunWithIdSpecified(session, api.Pages.Widget.HtmlContent.Get, api.Pages.Widget.HtmlContent.Put, api.Pages.Widget.HtmlContent.Delete));
+            RunApiActionInTransaction(
+                (api, session) => RunWithIdSpecified(session, api.Pages.Widget.HtmlContent.Get, api.Pages.Widget.HtmlContent.Put, api.Pages.Widget.HtmlContent.Delete));
 
             // Detach from events
             Events.PageEvents.Instance.WidgetCreated -= Instance_EntityCreated;
@@ -60,6 +69,21 @@ namespace BetterCms.Test.Module.Api.Pages.Widgets
 
         protected override SaveHtmlContentWidgetModel GetCreateModel(ISession session)
         {
+            var categoryTree = TestDataProvider.CreateNewCategoryTree();
+            category = TestDataProvider.CreateNewCategory(categoryTree);
+            categoryTree.AvailableFor = new List<CategoryTreeCategorizableItem>
+                    {
+                        new CategoryTreeCategorizableItem
+                        {
+                            // See Migration201502101136.cs
+                            CategorizableItem = session.Load<CategorizableItem>(new Guid("B2F05159-74AF-4B67-AEB9-36B9CC9EED57")),
+                            CategoryTree = categoryTree
+                        }
+                    };
+            session.SaveOrUpdate(categoryTree);
+            session.SaveOrUpdate(category);
+            session.Flush();
+
             var widget = TestDataProvider.CreateNewHtmlContentWidget();
             session.SaveOrUpdate(widget);
 
@@ -73,15 +97,15 @@ namespace BetterCms.Test.Module.Api.Pages.Widgets
                 TestDataProvider.ProvideRandomString(50),
                 TestDataProvider.CreateChildWidgetAssignment(widget.Id, assignmentId2));
 
-            session.SaveOrUpdate(content.Category);
-
+            session.SaveOrUpdate(content);
+            session.Flush();
             return new SaveHtmlContentWidgetModel
                 {
                     Name = TestDataProvider.ProvideRandomString(MaxLength.Name),
                     IsPublished = true,
                     PublishedOn = content.PublishedOn,
                     PublishedByUser = content.PublishedByUser,
-                    CategoryId = content.Category.Id,
+                    Categories = new List<Guid>(){category.Id},
                     CustomCss = content.CustomCss,
                     UseCustomCss = true,
                     Html = content.Html,
@@ -152,6 +176,7 @@ namespace BetterCms.Test.Module.Api.Pages.Widgets
             var request = new GetHtmlContentWidgetRequest { WidgetId = saveResponseBase.Data.Value };
             request.Data.IncludeOptions = true;
             request.Data.IncludeChildContentsOptions = true;
+            request.Data.IncludeCategories = true;
 
             return request;
         }
@@ -160,7 +185,7 @@ namespace BetterCms.Test.Module.Api.Pages.Widgets
         {
             var request = getResponse.ToPutRequest();
             request.Data.Name = TestDataProvider.ProvideRandomString(MaxLength.Name);
-
+             
             return request;
         }
 
@@ -170,7 +195,7 @@ namespace BetterCms.Test.Module.Api.Pages.Widgets
             Assert.IsNotNull(getResponse.Data.Name);
             Assert.IsNotNull(getResponse.Data.PublishedOn);
             Assert.IsNotNull(getResponse.Data.PublishedByUser);
-            Assert.IsNotNull(getResponse.Data.CategoryId);
+            Assert.IsNotNull(getResponse.Categories);
             Assert.IsNotNull(getResponse.Data.CustomCss);
             Assert.IsNotNull(getResponse.Data.Html);
             Assert.IsNotNull(getResponse.Data.CustomJavaScript);
@@ -184,7 +209,10 @@ namespace BetterCms.Test.Module.Api.Pages.Widgets
             Assert.AreEqual(getResponse.Data.IsPublished, model.IsPublished);
             Assert.AreEqual(getResponse.Data.PublishedOn, model.PublishedOn);
             Assert.AreEqual(getResponse.Data.PublishedByUser, model.PublishedByUser);
-            Assert.AreEqual(getResponse.Data.CategoryId, model.CategoryId);
+            foreach (var category in model.Categories)
+            {
+                Assert.IsTrue(getResponse.Categories.Any(c => c.Id == category));
+            }
             Assert.AreEqual(getResponse.Data.CustomCss, model.CustomCss);
             Assert.AreEqual(getResponse.Data.UseCustomCss, model.UseCustomCss);
             Assert.AreEqual(getResponse.Data.Html, model.Html);

@@ -1,0 +1,94 @@
+﻿@using BetterCms.Module.Root.Content.Resources
+@using BetterCms.Module.Root.Mvc.Helpers
+@model BetterCms.Module.Root.ViewModels.Category.CategoryTreeNodeViewModel
+<script type="text/html" id="bcms-navigation-categorynode-template">
+    <!-- ko if: !hasChildNodes() -->
+    <div class="bcms-nodes-dropzone bcms-nodes-dropzone-active" data-bind="droppableCategoryNode: 'emptyListZone'">
+        <div class="bcms-node-infotext" data-bind="text: getNoDataMessage()">@RootGlobalization.CategoryTree_PlaceLinkHere_Message</div>
+    </div>
+    <!-- /ko -->
+    <!-- ko foreach: childNodes -->
+    <!-- ko if: isVisible() && !isDeleted() -->
+    <div class="bcms-tree-holder">
+        <!-- ko if: isFirstNode() -->
+        <div class="bcms-nodes-dropzone"
+             data-bind="css: { 'bcms-nodes-dropzone-active': activeZone() == 'topZone'  }, droppableCategoryNode: 'topZone'">
+            <div class="bcms-node-infotext">@RootGlobalization.CategoryTree_PlaceLinkHere_Message</div>
+        </div>
+        <!-- /ko -->
+        <div data-bind="draggableCategoryNode: $parentContext.$index, style: { zIndex: !isBeingDragged() ? '0' : '9999' }">
+            <div class="bcms-placement-node" data-bind="
+                        attr: { id: containerId },
+                        css: { 'bcms-placement-node-drag': isBeingDragged(), 'bcms-placement-node-edit': isActive(), 'bcms-placement-one-active': !isBeingDragged() && superDraggable() },
+                        style: { height: getNodeHeight() }">
+                <!-- ko if: hasChildNodes() -->
+                <a class="bcms-expand-collapse-node" data-bind="click: toggleExpand, css: { 'bcms-expanded-nodes': isExpanded() }">&nbsp;</a>
+                <!-- /ko -->
+                <div class="bcms-node-info" data-bind="droppableCategoryNode: 'middleZone'">
+                    <div class="bcms-placement-title" data-bind="text: title"></div>
+                </div>
+                <!-- ko if: getCategoryTree().settings.canEditNode && isActive() -->
+                <div class="bcms-edit-node">
+                    <div class="bcms-edit-node-holder">
+                        @Html.Tooltip(RootGlobalization.CategoryTree_NodeEdit_Title_Tooltip_Message)
+                        <div class="bcms-custom-input-box" style="width: 50%;">
+                            @Html.TextBoxFor(m => m.Title, new
+                            {
+                                data_bind = "value: title, valueUpdate: 'afterkeydown', enterPress: saveCategoryTreeNodeWithValidation, escPress: cancelEditCategoryTreeNode, hasfocus: isActive()",
+                                @class = "bcms-editor-field-box",
+                                Title = (string)null,
+                            })
+                            @Html.BcmsValidationMessageFor(m => m.Title)
+                        </div>
+                        <div class="bcms-btn-small" data-bind="click: saveCategoryTreeNodeWithValidation, text: getCategoryTree().settings.nodeSaveButtonTitle">@RootGlobalization.Button_Ok</div>
+                        <div class="bcms-btn-links-small" data-bind="click: cancelEditCategoryTreeNode">@RootGlobalization.Button_Cancel</div>
+                    </div>
+                    <!-- ko if: getCategoryTree().showMacros -->
+                    <div class="bcms-edit-node-holder">
+                        @Html.Tooltip(RootGlobalization.CategoryTree_NodeEdit_Macro_Tooltip_Message)
+                        <div class="bcms-custom-input-box" style="width: 100%;">
+                            @Html.TextBoxFor(m => m.Macro, new
+                            {
+                                data_bind = "value: macro, valueUpdate: 'afterkeydown', enterPress: saveCategoryTreeNodeWithValidation, escPress: cancelEditCategoryTreeNode",
+                                @class = "bcms-editor-field-box",
+                                Title = (string)null,
+                                placeholder = RootGlobalization.CategoryTree_NodeEdit_Macro_Placeholder_Message
+                            })
+                            @Html.BcmsValidationMessageFor(m => m.Macro)
+                        </div>
+                    </div>
+                    <!-- /ko -->
+                </div>
+                <!-- /ko -->
+                <div class="bcms-node-controls">
+                    <!-- ko if: getCategoryTree().settings.canEditNode -->
+                    <a class="bcms-icn-edit" data-bind="click: startEditCategoryTreeNode">@RootGlobalization.Button_Edit</a>
+                    <!-- /ko -->
+                    <!-- ko if: getCategoryTree().settings.canDeleteNode -->
+                    <a class="bcms-icn-delete" data-bind="click: deleteCategoryTreeNode">@RootGlobalization.Button_Delete</a>
+                    <!-- /ko -->
+                </div>
+            </div>
+            <!-- ko if: activeZone() == 'middleZone' -->
+            <div class="bcms-zone-holder">
+                <div class="bcms-nodes-dropzone bcms-nodes-dropzone-active">
+                    <div class="bcms-node-infotext">@RootGlobalization.CategoryTree_PlaceLinkHere_Message</div>
+                </div>
+            </div>
+            <!-- /ko -->
+            <!-- ko if: isExpanded() && hasChildNodes() -->
+            <div class="bcms-zone-holder" data-bind="template: { name: 'bcms-navigation-categorynode-template' }"></div>
+            <!-- /ko -->
+            <!-- ko if: !isBeingDragged() -->
+            <div class="bcms-nodes-dropzone"
+                 data-bind="css: { 'bcms-nodes-dropzone-active': activeZone() == 'bottomZone' },
+                            style: { paddingBottom: !(parentNode().parentNode) && isLastNode() ? '80px' : '' },
+                            droppableCategoryNode: 'bottomZone'">
+                <div class="bcms-node-infotext">@RootGlobalization.CategoryTree_PlaceLinkHere_Message</div>
+            </div>
+            <!-- /ko -->
+        </div>
+    </div>
+    <!-- /ko -->
+    <!-- /ko -->
+</script>

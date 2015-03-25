@@ -1,0 +1,36 @@
+﻿@using Microsoft.Web.Mvc
+@model BetterCms.Sandbox.Mvc4.Models.MyFileUploadViewModel
+
+
+@using (Html.BeginForm("MyFileUploadWidget_Upload", "WidgetsController", FormMethod.Post, new { id = "upload_form", enctype = "multipart/form-data" }))
+{
+    <div>
+        <label for="MyFile">MyFile:</label>
+        <input type="file" name="MyFile" id="MyFile" />
+        <input type="hidden" name="Name" value="test" />
+    </div>
+    @Html.SubmitButton("submit", "submit", new { id = "submit_button" });
+}
+<script src="http://code.jquery.com/jquery-latest.min.js"></script>
+<script type="text/javascript">
+
+    $("#upload_form").submit(function (e) {
+        e.preventDefault();
+
+        var formData = new FormData();
+        formData.append("Name", "anything");
+        formData.append("MyFile", $('input[type=file]')[0].files[0]);
+        $.ajax({
+            url: "../Widgets/MyFileUploadWidget_Upload",
+            type: "POST",
+            data: formData,
+            enctype: 'multipart/form_data',
+            processData: false,
+            contentType: false,
+            success: function(r) {
+                    alert(r);
+                }
+            }
+        );
+    });
+</script>

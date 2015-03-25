@@ -1,5 +1,7 @@
 ﻿using System;
+using System.Collections.Generic;
 
+using BetterCms.Core.DataContracts;
 using BetterCms.Module.Root.Models;
 
 using NUnit.Framework;
@@ -32,7 +34,9 @@ namespace BetterCms.Test.Module.Root.ModelTests.MapTests
             // Can be any another entity type.
             var entity = new Category();
             entity.Name = "test name";
-
+            entity.CategoryTree = new CategoryTree();
+            entity.CategoryTree.Title = "category tree";
+            entity.CategoryTree.Categories = new List<Category>();
             SaveEntityAndRunAssertionsInTransaction(
                 entity,
                 resultEntity =>
@@ -58,7 +62,9 @@ namespace BetterCms.Test.Module.Root.ModelTests.MapTests
             // Can be any another entity type.
             var entity = new Category();
             entity.Name = "test name";
-
+            entity.CategoryTree = new CategoryTree();
+            entity.CategoryTree.Title = "category tree";
+            entity.CategoryTree.Categories = new List<Category>();
             SaveEntityAndRunAssertionsInTransaction(
                 entity,
                 resultEntity =>
@@ -84,7 +90,9 @@ namespace BetterCms.Test.Module.Root.ModelTests.MapTests
             // Can be any another entity type.
             var entity = new Category();
             entity.Name = "test name";
-
+            entity.CategoryTree = new CategoryTree();
+            entity.CategoryTree.Title = "category tree";
+            entity.CategoryTree.Categories = new List<Category>();
             DeleteCreatedEntityAndRunAssertionsInTransaction(
                 entity,
                 resultEntity =>

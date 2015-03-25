@@ -11,7 +11,7 @@ namespace BetterCms.Module.Pages.ViewModels.Filter
     public class PagesFilter : SearchableGridOptions
     {
         public List<LookupKeyValue> Tags { get; set; }
-        public Guid? CategoryId { get; set; }
+        public List<LookupKeyValue> Categories { get; set; }
         public Guid? LanguageId { get; set; }
         public Guid? ContentId { get; set; }
         public bool IncludeArchived { get; set; }

@@ -1,4 +1,10 @@
-﻿using BetterCms.Core.DataContracts.Enums;
+﻿using System;
+using System.Collections.Generic;
+
+using BetterCms.Core.DataContracts.Enums;
+using BetterCms.Core.Mvc.Binders;
+
+using Newtonsoft.Json;
 
 namespace BetterCms.Module.Pages.ViewModels.Widgets
 {

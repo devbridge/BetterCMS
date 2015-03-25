@@ -22,6 +22,23 @@ namespace BetterCMS.Module.LuceneSearch.Workers
         {
         }
 
+        public override void Start()
+        {
+            using (var lifetimeScope = ContextScopeProvider.CreateChildContainer())
+            {
+                using (indexerService = lifetimeScope.Resolve<IIndexerService>())
+                {
+                    if (!indexerService.StartIndexer())
+                    {
+                        return;
+                    }
+                    indexerService.CleanLock();
+                }
+            }
+
+            base.Start();
+        }
+
         protected override void DoWork()
         {
             Log.Trace("Starting Lucene Content Indexing Robot.");
@@ -73,7 +90,7 @@ namespace BetterCMS.Module.LuceneSearch.Workers
                         }
                         catch (Exception exc)
                         {
-                            Log.Error("Unhandled excpetion occured while fetching a page.", exc);
+                            Log.Error("Unhandled exception occurred while fetching a page.", exc);
                             response = null;
                         }
 
@@ -96,6 +113,11 @@ namespace BetterCMS.Module.LuceneSearch.Workers
                                     scrapeService.Delete(link.Id);
                                     break;
                                 }
+
+                                case HttpStatusCode.ServiceUnavailable:
+                                    Log.Trace("Server Unavailable (503) - stop indexing for a moment.");
+                                    scrapeService.MarkFailed(link.Id);
+                                    return;
 
                                 default:
                                 {

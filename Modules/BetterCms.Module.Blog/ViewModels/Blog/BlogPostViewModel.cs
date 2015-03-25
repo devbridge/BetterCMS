@@ -5,13 +5,15 @@ using System.Web.Mvc;
 
 using BetterCms.Core.DataContracts.Enums;
 using BetterCms.Core.Models;
-
+using BetterCms.Core.Mvc.Binders;
 using BetterCms.Module.Blog.Content.Resources;
 using BetterCms.Module.MediaManager.ViewModels;
 using BetterCms.Module.Pages.Mvc.Attributes;
 using BetterCms.Module.Root.Content.Resources;
 using BetterCms.Module.Root.Models;
 using BetterCms.Module.Root.ViewModels.Security;
+
+using Newtonsoft.Json;
 
 namespace BetterCms.Module.Blog.ViewModels.Blog
 {
@@ -136,14 +138,6 @@ namespace BetterCms.Module.Blog.ViewModels.Blog
         public string BlogUrl { get; set; }
 
         /// <summary>
-        /// Gets or sets the cathegory.
-        /// </summary>
-        /// <value>
-        /// The cathegory.
-        /// </value>
-        public virtual Guid? CategoryId { get; set; }
-
-        /// <summary>
         /// Gets or sets the desirable status for the saved widget.
         /// </summary>
         /// <value>
@@ -189,7 +183,7 @@ namespace BetterCms.Module.Blog.ViewModels.Blog
         /// <value>
         /// The list of categories.
         /// </value>
-        public IEnumerable<LookupKeyValue> Categories { get; set; }
+        public IList<LookupKeyValue> Categories { get; set; }
 
         /// <summary>
         /// Gets or sets the image view model.
@@ -238,6 +232,8 @@ namespace BetterCms.Module.Blog.ViewModels.Blog
         ///   <c>true</c> if child regions should be included to the results; otherwise, <c>false</c>.
         /// </value>
         public bool IncludeChildRegions { get; set; }
+
+        public string CategoriesFilterKey { get; set; }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="BlogPostViewModel" /> class.

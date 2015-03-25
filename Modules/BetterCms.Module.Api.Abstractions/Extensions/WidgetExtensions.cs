@@ -1,4 +1,6 @@
-﻿using BetterCms.Module.Api.Operations.Pages.Widgets.Widget.HtmlContentWidget;
+﻿using System.Linq;
+
+using BetterCms.Module.Api.Operations.Pages.Widgets.Widget.HtmlContentWidget;
 using BetterCms.Module.Api.Operations.Pages.Widgets.Widget.ServerControlWidget;
 
 namespace BetterCms.Module.Api.Extensions
@@ -28,7 +30,7 @@ namespace BetterCms.Module.Api.Extensions
                             IsPublished = response.Data.IsPublished,
                             PublishedOn = response.Data.PublishedOn,
                             PublishedByUser = response.Data.PublishedByUser,
-                            CategoryId = response.Data.CategoryId,
+                            Categories = response.Categories.Select(c => c.Id).ToList(),
                             CustomCss = response.Data.CustomCss,
                             UseCustomCss = response.Data.UseCustomCss,
                             Html = response.Data.Html,
@@ -65,7 +67,7 @@ namespace BetterCms.Module.Api.Extensions
                             IsPublished = response.Data.IsPublished,
                             PublishedOn = response.Data.PublishedOn,
                             PublishedByUser = response.Data.PublishedByUser,
-                            CategoryId = response.Data.CategoryId,
+                            Categories = response.Categories.Select(c => c.Id).ToList(),
                             PreviewUrl = response.Data.PreviewUrl,
                             WidgetUrl = response.Data.WidgetUrl,
                             Options = response.Options

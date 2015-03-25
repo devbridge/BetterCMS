@@ -12,7 +12,7 @@ namespace BetterCms.Module.Pages.ViewModels.Page
         public RenderPagePropertiesViewModel(Models.PageProperties page = null)
         {
             Tags = new List<string>();
-
+            Categories = new List<RenderPageCategoryViewModel>();
             if (page != null)
             {
                 Description = page.Description;
@@ -38,9 +38,12 @@ namespace BetterCms.Module.Pages.ViewModels.Page
                 {
                     SecondaryImage = new RenderPageImageViewModel(page.SecondaryImage);
                 }
-                if (page.Category != null)
+                if (page.Categories != null)
                 {
-                    Category = new RenderPageCategoryViewModel(page.Category);
+                    foreach (var category in page.Categories)
+                    {
+                        Categories.Add(new RenderPageCategoryViewModel(category));
+                    }                    
                 }
                 if (page.PageTags != null)
                 {
@@ -82,7 +85,7 @@ namespace BetterCms.Module.Pages.ViewModels.Page
 
         public RenderPageImageViewModel SecondaryImage { get; set; }
 
-        public RenderPageCategoryViewModel Category { get; set; }
+        public IList<RenderPageCategoryViewModel> Categories { get; set; }
 
         public IList<string> Tags { get; set; }
 

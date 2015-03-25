@@ -3,7 +3,7 @@ using System.Linq;
 
 using BetterCms.Core.DataAccess.DataContext.Fetching;
 using BetterCms.Core.Mvc.Commands;
-
+using BetterCms.Module.MediaManager.Helpers;
 using BetterCms.Module.MediaManager.Models;
 using BetterCms.Module.MediaManager.Models.Extensions;
 using BetterCms.Module.MediaManager.Services;
@@ -25,6 +25,7 @@ namespace BetterCms.Module.MediaManager.Command.History.RestoreMediaVersion
             var imageToRevert = Repository
                 .AsQueryable<MediaImage>(i => i.Id == request.VersionId)
                 .Fetch(f => f.Original)
+
                 .FirstOrDefault();
 
             if (imageToRevert != null)
@@ -52,7 +53,8 @@ namespace BetterCms.Module.MediaManager.Command.History.RestoreMediaVersion
             {
                 UnitOfWork.BeginTransaction();
                 Repository.Save(original.CreateHistoryItem());
-                versionToRevert.CopyDataTo(original);
+                versionToRevert.CopyDataTo(original, false);
+                MediaHelper.SetCollections(Repository, versionToRevert, original);
                 original.Original = null;
                 original.PublishedOn = DateTime.Now;
                 Repository.Save(original);

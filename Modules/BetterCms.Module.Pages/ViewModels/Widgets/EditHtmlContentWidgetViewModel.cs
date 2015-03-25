@@ -1,8 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
 
 using BetterCms.Module.Pages.ViewModels.Content;
-using BetterCms.Module.Root.Models;
 
 namespace BetterCms.Module.Pages.ViewModels.Widgets
 {
@@ -18,14 +16,6 @@ namespace BetterCms.Module.Pages.ViewModels.Widgets
         /// The page content id to preview this widget.
         /// </value>
         public Guid? PreviewOnPageContentId { get; set; }
-
-        /// <summary>
-        /// Gets or sets the categories.
-        /// </summary>
-        /// <value>
-        /// The categories.
-        /// </value>
-        public IList<LookupKeyValue> Categories { get; set; }
 
         /// <summary>
         /// Gets or sets a value indicating whether content editor must be opened in source mode.
@@ -58,6 +48,14 @@ namespace BetterCms.Module.Pages.ViewModels.Widgets
         ///   <c>true</c> if child regions should be included to the results; otherwise, <c>false</c>.
         /// </value>
         public bool IncludeChildRegions { get; set; }
+
+        /// <summary>
+        /// Gets or sets the categories filter key.
+        /// </summary>
+        /// <value>
+        /// The categories filter key.
+        /// </value>
+        public string CategoriesFilterKey { get; set; }
 
         /// <summary>
         /// Returns a <see cref="System.String" /> that represents this instance.

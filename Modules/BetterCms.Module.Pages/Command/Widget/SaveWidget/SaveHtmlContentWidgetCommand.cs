@@ -28,7 +28,6 @@ namespace BetterCms.Module.Pages.Command.Widget.SaveWidget
                         Id = widget.Id,
                         OriginalId = originalWiget.Id,
                         WidgetName = widget.Name,
-                        CategoryName = widget.Category != null ? widget.Category.Name : null,
                         Version = widget.Version,
                         OriginalVersion = originalWiget.Version,
                         WidgetType = WidgetType.HtmlContent.ToString(),

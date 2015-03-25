@@ -49,6 +49,11 @@ namespace BetterCms.Module.Blog.Services
         /// </summary>
         private const string RegionIdentifier = BlogModuleConstants.BlogPostMainContentRegionIdentifier;
 
+        /// <summary>
+        /// The category service
+        /// </summary>
+        private ICategoryService categoryService;
+
         private static readonly ILog Logger = LogManager.GetCurrentClassLogger();
 
         protected readonly ICmsConfiguration configuration;
@@ -85,7 +90,7 @@ namespace BetterCms.Module.Blog.Services
             IOptionService blogOptionService, IAccessControlService accessControlService, ISecurityService securityService,
             IContentService contentService, ITagService tagService,
             IPageService pageService, IRedirectService redirectService, IMasterPageService masterPageService,
-            IUnitOfWork unitOfWork, RootOptionService optionService)
+            IUnitOfWork unitOfWork, RootOptionService optionService, ICategoryService categoryService)
         {
             this.configuration = configuration;
             this.urlService = urlService;
@@ -100,6 +105,7 @@ namespace BetterCms.Module.Blog.Services
             this.masterPageService = masterPageService;
             this.tagService = tagService;
             this.unitOfWork = unitOfWork;
+            this.categoryService = categoryService;
         }
 
         /// <summary>
@@ -167,12 +173,13 @@ namespace BetterCms.Module.Blog.Services
         /// <param name="childContentOptionValues">The child content option values.</param>
         /// <param name="principal">The principal.</param>
         /// <param name="errorMessages">The error messages.</param>
+        /// <param name="updateActivationIfNotChanged">if set to <c>true</c> update activation time even if it was not changed.</param>
         /// <returns>
         /// Saved blog post entity
         /// </returns>
         /// <exception cref="System.ComponentModel.DataAnnotations.ValidationException"></exception>
         /// <exception cref="SecurityException">Forbidden: Access is denied.</exception>
-        public BlogPost SaveBlogPost(BlogPostViewModel request, IList<ContentOptionValuesViewModel> childContentOptionValues, IPrincipal principal, out string[] errorMessages)
+        public BlogPost SaveBlogPost(BlogPostViewModel request, IList<ContentOptionValuesViewModel> childContentOptionValues, IPrincipal principal, out string[] errorMessages, bool updateActivationIfNotChanged = true)
         {
             errorMessages = new string[0];
             string[] roles;
@@ -256,12 +263,22 @@ namespace BetterCms.Module.Blog.Services
                 blogPost.Title = request.Title;
                 blogPost.Description = request.IntroText;
                 blogPost.Author = request.AuthorId.HasValue ? repository.AsProxy<Author>(request.AuthorId.Value) : null;
-                blogPost.Category = request.CategoryId.HasValue ? repository.AsProxy<Category>(request.CategoryId.Value) : null;
+
+                categoryService.CombineEntityCategories<BlogPost, PageCategory>(blogPost, request.Categories);
+                
                 blogPost.Image = (request.Image != null && request.Image.ImageId.HasValue) ? repository.AsProxy<MediaImage>(request.Image.ImageId.Value) : null;
                 if (isNew || request.DesirableStatus == ContentStatus.Published)
                 {
-                    blogPost.ActivationDate = request.LiveFromDate;
-                    blogPost.ExpirationDate = TimeHelper.FormatEndDate(request.LiveToDate);
+                    if (updateActivationIfNotChanged)
+                    {
+                        blogPost.ActivationDate = request.LiveFromDate;
+                        blogPost.ExpirationDate = TimeHelper.FormatEndDate(request.LiveToDate);
+                    }
+                    else
+                    {
+                        blogPost.ActivationDate = TimeHelper.GetFirstIfTheSameDay(blogPost.ActivationDate, request.LiveFromDate);
+                        blogPost.ExpirationDate = TimeHelper.GetFirstIfTheSameDay(blogPost.ExpirationDate, TimeHelper.FormatEndDate(request.LiveToDate));
+                    }
                 }
             }
 
@@ -274,7 +291,7 @@ namespace BetterCms.Module.Blog.Services
                 }
                 else
                 {
-                    blogPost.PageUrl = CreateBlogPermalink(request.Title, null, blogPost.Category != null ? (Guid?)blogPost.Category.Id : null);
+                    blogPost.PageUrl = CreateBlogPermalink(request.Title, null, blogPost.Categories != null ? (Guid?)blogPost.Categories.First().Id : null);
                 }
 
                 blogPost.MetaTitle = request.MetaTitle ?? request.Title;
@@ -309,6 +326,12 @@ namespace BetterCms.Module.Blog.Services
                 ExpirationDate = TimeHelper.FormatEndDate(request.LiveToDate)
             };
 
+            if (!updateActivationIfNotChanged && content != null)
+            {
+                newContent.ActivationDate = TimeHelper.GetFirstIfTheSameDay(content.ActivationDate, newContent.ActivationDate);
+                newContent.ExpirationDate = TimeHelper.GetFirstIfTheSameDay(content.ExpirationDate, newContent.ExpirationDate);
+            }
+
             // Preserve content if user is not authorized to change it.
             if (!userCanEdit)
             {
@@ -328,7 +351,7 @@ namespace BetterCms.Module.Blog.Services
             content = SaveContentWithStatusUpdate(isNew, newContent, request, principal);
             pageContent.Content = content;
             optionService.SaveChildContentOptions(content, childContentOptionValues, request.DesirableStatus);
-
+            
             blogPost.PageUrlHash = blogPost.PageUrl.UrlHash();
             blogPost.UseCanonicalUrl = request.UseCanonicalUrl;
 
@@ -626,11 +649,8 @@ namespace BetterCms.Module.Blog.Services
                 var searchQuery = string.Format("%{0}%", request.SearchQuery);
                 query = query.Where(Restrictions.InsensitiveLike(Projections.Property(() => alias.Title), searchQuery));
             }
+            
 
-            if (request.CategoryId.HasValue)
-            {
-                query = query.Where(Restrictions.Eq(Projections.Property(() => alias.Category.Id), request.CategoryId.Value));
-            }
 
             if (request.LanguageId.HasValue)
             {
@@ -650,6 +670,17 @@ namespace BetterCms.Module.Blog.Services
                 {
                     var id = tagKeyValue.Key.ToGuidOrDefault();
                     query = query.WithSubquery.WhereExists(QueryOver.Of<PageTag>().Where(tag => tag.Tag.Id == id && tag.Page.Id == alias.Id).Select(tag => 1));
+                }
+            }
+
+            if (request.Categories != null)
+            {
+                var categories = request.Categories.Select(c => new Guid(c.Key)).Distinct().ToList();
+
+                foreach (var category in categories)
+                {
+                    var childCategories = categoryService.GetChildCategoriesIds(category).ToArray();
+                    query = query.WithSubquery.WhereExists(QueryOver.Of<PageCategory>().Where(cat => !cat.IsDeleted && cat.Page.Id == alias.Id).WhereRestrictionOn(cat => cat.Category.Id).IsIn(childCategories).Select(cat => 1));
                 }
             }
 

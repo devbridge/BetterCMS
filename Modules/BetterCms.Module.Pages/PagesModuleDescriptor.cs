@@ -16,12 +16,15 @@ using BetterCms.Module.Pages.Accessors;
 using BetterCms.Module.Pages.Content.Resources;
 using BetterCms.Module.Pages.Helpers.Extensions;
 using BetterCms.Module.Pages.Models;
+using BetterCms.Module.Pages.Models.Accessors;
 using BetterCms.Module.Pages.Mvc.PageHtmlRenderer;
 using BetterCms.Module.Pages.Mvc.Projections;
 using BetterCms.Module.Pages.Registration;
 using BetterCms.Module.Pages.Services;
 
 using BetterCms.Module.Root;
+using BetterCms.Module.Root.Accessors;
+using BetterCms.Module.Root.Models;
 using BetterCms.Module.Root.Mvc.PageHtmlRenderer;
 using BetterCms.Module.Root.Services;
 using BetterCms.Module.Root.ViewModels.Cms;
@@ -113,6 +116,8 @@ namespace BetterCms.Module.Pages
             masterPagesJsModuleIncludeDescriptor = new MasterPagesJsModuleIncludeDescriptor(this);
             historyJsModuleIncludeDescriptor = new HistoryJsModuleIncludeDescriptor(this);
             sitemapJsModuleIncludeDescriptor = new SitemapJsModuleIncludeDescriptor(this);
+//            CategoryAccessors.Register<PageCategory, PageProperties>(PageProperties.CategorizableItemKeyForPages);
+            CategoryAccessors.Register<PageCategoryAccessor>();
 
             RootEvents.Instance.PageRetrieved += Events_PageRetrieved;
 
@@ -235,7 +240,6 @@ namespace BetterCms.Module.Pages
 
             containerBuilder.RegisterType<DefaultPageService>().AsImplementedInterfaces().InstancePerLifetimeScope();
             containerBuilder.RegisterType<DefaultRedirectService>().AsImplementedInterfaces().InstancePerLifetimeScope();
-            containerBuilder.RegisterType<DefaultCategoryService>().AsImplementedInterfaces().InstancePerLifetimeScope();            
             containerBuilder.RegisterType<DefaultTagService>().AsImplementedInterfaces().InstancePerLifetimeScope();
             containerBuilder.RegisterType<DefaultHistoryService>().AsImplementedInterfaces().InstancePerLifetimeScope();
             containerBuilder.RegisterType<DefaultSitemapService>().AsImplementedInterfaces().InstancePerLifetimeScope();

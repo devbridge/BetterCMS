@@ -16,6 +16,8 @@ namespace BetterCms.Module.MediaManager.ViewModels.MediaManager
 
         public List<LookupKeyValue> Tags { get; set; }
 
+        public List<LookupKeyValue> Categories { get; set; }
+
         public MediaManagerViewModel()
         {
             Column = "Title";

@@ -6,11 +6,13 @@ using BetterCms.Core.DataAccess;
 using BetterCms.Core.DataAccess.DataContext;
 using BetterCms.Core.Exceptions.Api;
 using BetterCms.Core.Exceptions.DataTier;
+using BetterCms.Module.Api.Operations.Root.Categories.Category;
 using BetterCms.Module.MediaManager.Models;
 using BetterCms.Module.MediaManager.Models.Extensions;
 using BetterCms.Module.MediaManager.Services;
 using BetterCms.Module.Root.Models;
 using BetterCms.Module.Root.Mvc;
+using BetterCms.Module.Root.Services;
 
 using NHibernate.Linq;
 
@@ -49,6 +51,12 @@ namespace BetterCms.Module.Api.Operations.MediaManager.Images.Image
         /// The media service.
         /// </summary>
         private readonly IMediaService mediaService;
+        
+        
+        /// <summary>
+        /// The category service.
+        /// </summary>
+        private readonly ICategoryService categoryService;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="ImageService" /> class.
@@ -58,13 +66,14 @@ namespace BetterCms.Module.Api.Operations.MediaManager.Images.Image
         /// <param name="fileUrlResolver">The file URL resolver.</param>
         /// <param name="tagService">The tag service.</param>
         /// <param name="mediaService">The media service.</param>
-        public ImageService(IRepository repository, IUnitOfWork unitOfWork, IMediaFileUrlResolver fileUrlResolver, ITagService tagService, IMediaService mediaService)
+        public ImageService(IRepository repository, IUnitOfWork unitOfWork, IMediaFileUrlResolver fileUrlResolver, ITagService tagService, IMediaService mediaService, ICategoryService categoryService)
         {
             this.repository = repository;
             this.unitOfWork = unitOfWork;
             this.fileUrlResolver = fileUrlResolver;
             this.tagService = tagService;
             this.mediaService = mediaService;
+            this.categoryService = categoryService;
         }
 
         /// <summary>
@@ -154,6 +163,25 @@ namespace BetterCms.Module.Api.Operations.MediaManager.Images.Image
             else
             {
                 tags = null;
+            }
+
+
+            if (request.Data.IncludeCategories)
+            {
+                model.Model.Categories = (from media in repository.AsQueryable<MediaFile>()
+                                          from category in media.Categories
+                                          where media.Id == model.Model.Id && !category.IsDeleted
+                                          select new CategoryNodeModel
+                                          {
+                                              Id = category.Category.Id,
+                                              Version = category.Version,
+                                              CreatedBy = category.CreatedByUser,
+                                              CreatedOn = category.CreatedOn,
+                                              LastModifiedBy = category.ModifiedByUser,
+                                              LastModifiedOn = category.ModifiedOn,
+                                              Name = category.Category.Name,
+                                              CategoryTreeId = category.Category.CategoryTree.Id
+                                          }).ToList();
             }
 
             return new GetImageResponse
@@ -260,6 +288,11 @@ namespace BetterCms.Module.Api.Operations.MediaManager.Images.Image
             }
 
             mediaImage.IsArchived = request.Data.IsArchived;
+
+            if (request.Data.Categories != null)
+            {
+                categoryService.CombineEntityCategories<Media, MediaCategory>(mediaImage, request.Data.Categories);
+            }
 
             repository.Save(mediaImage);
 

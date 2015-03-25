@@ -24,6 +24,9 @@ namespace BetterCms.Test.Module.Api
                 Assert.IsNotNull(api.Root.Tag);
                 Assert.IsNotNull(api.Root.Categories);
                 Assert.IsNotNull(api.Root.Category);
+                Assert.IsNotNull(api.Root.Category.Node);
+                Assert.IsNotNull(api.Root.Category.Nodes);
+                Assert.IsNotNull(api.Root.Category.Tree);
                 Assert.IsNotNull(api.Root.Languages);
                 Assert.IsNotNull(api.Root.Language);
                 Assert.IsNotNull(api.Root.Version);

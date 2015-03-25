@@ -2,7 +2,9 @@
 using System.Runtime.Serialization;
 
 using BetterCms.Module.Api.Infrastructure;
+
 using BetterCms.Module.Api.Operations.Root;
+using BetterCms.Module.Api.Operations.Root.Categories.Category;
 
 namespace BetterCms.Module.Api.Operations.MediaManager.Files
 {
@@ -108,5 +110,8 @@ namespace BetterCms.Module.Api.Operations.MediaManager.Files
         /// </value>
         [DataMember]
         public IList<AccessRuleModel> AccessRules { get; set; }
+
+        [DataMember]
+        public IList<CategoryNodeModel> Categories { get; set; }
     }
 }

@@ -346,7 +346,7 @@ namespace BetterCms.Module.Root.Services
                 childContent.Child.ContentOptions = contentOptions.Where(i => i.Content.Id == childContent.Child.Id).ToList();
                 childContent.Child.ContentRegions = contentRegions.Where(i => i.Content.Id == childContent.Child.Id).ToList();
                 childContent.Child.ChildContents = childChildContents.Where(i => i.Parent.Id == childContent.Child.Id).ToList();
-                childContent.Options = childContentOptions.Where(i => i.Id == childContent.Id).ToList();
+                childContent.Options = childContentOptions.Where(i => i.ChildContent.Id == childContent.Id).ToList();
                 if (histories.Count > 0)
                 {
                     childContent.Child.History = histories.Where(i => i.Original.Id == childContent.Child.Id).ToList();
