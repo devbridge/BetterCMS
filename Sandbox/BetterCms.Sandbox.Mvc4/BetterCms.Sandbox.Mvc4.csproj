@@ -251,6 +251,7 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Content Include="404.aspx" />
     <Content Include="500.aspx" />
+    <Content Include="Areas\bcms-root\Scripts\bcms.content.js" />
     <Content Include="favicon.ico" />
     <Content Include="Global.asax" />
     <Content Include="Scripts\knockout-2.2.1.debug.js" />
