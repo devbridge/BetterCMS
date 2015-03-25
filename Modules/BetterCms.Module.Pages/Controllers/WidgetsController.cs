@@ -1,4 +1,6 @@
-﻿using System.Web.Mvc;
+﻿using System;
+using System.Web.Mvc;
+using System.Web.UI.WebControls;
 
 using BetterCms.Core.Exceptions.Mvc;
 using BetterCms.Core.Mvc.Binders;
@@ -21,6 +23,8 @@ using BetterCms.Module.Root.Models;
 using BetterCms.Module.Root.Mvc;
 using BetterCms.Module.Root.Mvc.Grids.GridOptions;
 
+using Common.Logging;
+
 using Microsoft.Web.Mvc;
 
 namespace BetterCms.Module.Pages.Controllers
@@ -31,7 +35,8 @@ namespace BetterCms.Module.Pages.Controllers
     [BcmsAuthorize]
     [ActionLinkArea(PagesModuleDescriptor.PagesAreaName)]
     public class WidgetsController : CmsControllerBase
-    {                    
+    {
+        private static readonly ILog Logger = LogManager.GetCurrentClassLogger();
         /// <summary>
         /// Deletes widget.
         /// </summary>
@@ -182,7 +187,15 @@ namespace BetterCms.Module.Pages.Controllers
 
             if (ModelState.IsValid)
             {
-                var viewEngineResult = ViewEngines.Engines.FindView(ControllerContext, request.Content.Url, null);
+                ViewEngineResult viewEngineResult = null;
+                try
+                {
+                    viewEngineResult = ViewEngines.Engines.FindView(ControllerContext, request.Content.Url, null);
+                }
+                catch (Exception ex)
+                {
+                    Logger.Error(string.Format("Failed to get the view for server widget by url '{0}'.", request.Content.Url), ex);
+                }
                 if (viewEngineResult == null || viewEngineResult.View == null)
                 {
                     Messages.AddError(string.Format(PagesGlobalization.SaveWidget_VirtualPathNotExists_Message, request.Content.Url));
