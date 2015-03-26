@@ -55,13 +55,13 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\packages\AWSSDK.1.5.20.0\lib\AWSSDK.dll</HintPath>
     </Reference>
-    <Reference Include="BetterModules.Core">
-      <HintPath>..\..\packages\BetterModules.Core.1.0.0-dev\lib\net40\BetterModules.Core.dll</HintPath>
-      <Private>True</Private>
+    <Reference Include="BetterModules.Core, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\packages\BetterModules.Core.1.0.0-dev2\lib\net40\BetterModules.Core.dll</HintPath>
     </Reference>
-    <Reference Include="BetterModules.Core.Web">
-      <HintPath>..\..\packages\BetterModules.Core.Web.1.0.0-dev\lib\net40\BetterModules.Core.Web.dll</HintPath>
-      <Private>True</Private>
+    <Reference Include="BetterModules.Core.Web, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\packages\BetterModules.Core.Web.1.0.0-dev2\lib\net40\BetterModules.Core.Web.dll</HintPath>
     </Reference>
     <Reference Include="Common.Logging, Version=2.1.2.0, Culture=neutral, PublicKeyToken=af08829b84f0328e, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
@@ -132,9 +132,9 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\packages\NuGet.Core.2.0.1\lib\net40-Client\NuGet.Core.dll</HintPath>
     </Reference>
-    <Reference Include="RazorGenerator.Mvc">
-      <HintPath>..\..\packages\BetterModules.Core.Web.1.0.0-dev\lib\net40\RazorGenerator.Mvc.dll</HintPath>
-      <Private>True</Private>
+    <Reference Include="RazorGenerator.Mvc, Version=2.0.0.0, Culture=neutral, PublicKeyToken=7b26dc2a43f6a0d4, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\packages\BetterModules.Core.Web.1.0.0-dev2\lib\net40\RazorGenerator.Mvc.dll</HintPath>
     </Reference>
     <Reference Include="RouteDebugger">
       <HintPath>..\..\packages\routedebugger.2.1.4.0\lib\net40\RouteDebugger.dll</HintPath>

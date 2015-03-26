@@ -61,13 +61,13 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\packages\Autofac.3.1.5\lib\net40\Autofac.dll</HintPath>
     </Reference>
-    <Reference Include="BetterModules.Core">
-      <HintPath>..\..\packages\BetterModules.Core.1.0.0-dev\lib\net40\BetterModules.Core.dll</HintPath>
-      <Private>True</Private>
+    <Reference Include="BetterModules.Core, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\packages\BetterModules.Core.1.0.0-dev2\lib\net40\BetterModules.Core.dll</HintPath>
     </Reference>
-    <Reference Include="BetterModules.Core.Web">
-      <HintPath>..\..\packages\BetterModules.Core.Web.1.0.0-dev\lib\net40\BetterModules.Core.Web.dll</HintPath>
-      <Private>True</Private>
+    <Reference Include="BetterModules.Core.Web, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\packages\BetterModules.Core.Web.1.0.0-dev2\lib\net40\BetterModules.Core.Web.dll</HintPath>
     </Reference>
     <Reference Include="BlogML">
       <HintPath>..\..\packages\blogml.2.2.0\lib\BlogML.dll</HintPath>
@@ -108,9 +108,9 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\packages\NHibernate.3.3.3.4001\lib\Net35\NHibernate.dll</HintPath>
     </Reference>
-    <Reference Include="RazorGenerator.Mvc">
-      <HintPath>..\..\packages\BetterModules.Core.Web.1.0.0-dev\lib\net40\RazorGenerator.Mvc.dll</HintPath>
-      <Private>True</Private>
+    <Reference Include="RazorGenerator.Mvc, Version=2.0.0.0, Culture=neutral, PublicKeyToken=7b26dc2a43f6a0d4, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\packages\BetterModules.Core.Web.1.0.0-dev2\lib\net40\RazorGenerator.Mvc.dll</HintPath>
     </Reference>
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="System.Data.Entity" />
@@ -397,9 +397,7 @@
       <LastGenOutput>UploadImportFile.generated.cs</LastGenOutput>
     </None>
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Content\Resources\" />
-  </ItemGroup>
+  <ItemGroup />
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
     <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>

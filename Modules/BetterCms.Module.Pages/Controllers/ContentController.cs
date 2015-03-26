@@ -152,7 +152,7 @@ namespace BetterCms.Module.Pages.Controllers
         {
             try
             {
-                ValidateModelExplicilty(request.Content);
+                ValidateModelExplicitly(request.Content);
 
                 ChangedContentResultViewModel result = null;
                 if (ModelState.IsValid)

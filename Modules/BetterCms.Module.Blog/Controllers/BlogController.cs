@@ -108,7 +108,7 @@ namespace BetterCms.Module.Blog.Controllers
         {
             try
             {
-                ValidateModelExplicilty(request.Content);
+                ValidateModelExplicitly(request.Content);
 
                 SaveBlogPostCommandResponse response = null;
                 if (ModelState.IsValid)
