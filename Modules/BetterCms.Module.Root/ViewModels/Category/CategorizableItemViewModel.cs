@@ -29,6 +29,8 @@ namespace BetterCms.Module.Root.ViewModels.Category
         /// </value>
         public bool IsSelected { get; set; }
 
+        public bool IsDisabled { get; set; }
+
         /// <summary>
         /// Returns a <see cref="System.String" /> that represents this instance.
         /// </summary>

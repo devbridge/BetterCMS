@@ -2,14 +2,14 @@
 using System.Collections.Generic;
 using System.Linq;
 
+using BetterCms.Core.DataContracts;
+
 using BetterCms.Events;
 
 using BetterCms.Module.Api.Extensions;
 using BetterCms.Module.Api.Infrastructure;
 using BetterCms.Module.Api.Operations.Root.Categories;
 using BetterCms.Module.Api.Operations.Root.Categories.Category;
-
-using BetterCms.Module.Root.Models;
 
 using BetterModules.Core.Models;
 using BetterModules.Events;
@@ -63,12 +63,12 @@ namespace BetterCms.Test.Module.Api.Root.Categories
             RootEvents.Instance.CategoryDeleted += Instance_CategoryNodeDeleted;
         }
 
-        void Instance_CategoryNodeCreated(SingleItemEventArgs<Category> args)
+        void Instance_CategoryNodeCreated(SingleItemEventArgs<ICategory> args)
         {
             createdNodeEventCount++;
         }
 
-        void Instance_CategoryNodeDeleted(SingleItemEventArgs<Category> args)
+        void Instance_CategoryNodeDeleted(SingleItemEventArgs<ICategory> args)
         {
             deletedNodeEventCount++;
         }

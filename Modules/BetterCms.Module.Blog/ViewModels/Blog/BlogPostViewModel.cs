@@ -232,6 +232,8 @@ namespace BetterCms.Module.Blog.ViewModels.Blog
         /// </value>
         public bool IncludeChildRegions { get; set; }
 
+        public string CategoriesFilterKey { get; set; }
+
         /// <summary>
         /// Initializes a new instance of the <see cref="BlogPostViewModel" /> class.
         /// </summary>

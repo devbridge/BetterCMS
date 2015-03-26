@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 using BetterCms.Core.DataContracts;
 
@@ -21,5 +22,42 @@ namespace BetterCms.Module.Root.Models
         public virtual Category ParentCategory { get; set; }
 
         public virtual string Macro { get; set; }
+
+        ICategoryTree ICategory.CategoryTree
+        {
+            get
+            {
+                return CategoryTree;
+            }
+            set
+            {
+                CategoryTree = value as CategoryTree;
+            }
+        }
+
+        ICategory ICategory.ParentCategory
+        {
+            get
+            {
+                return ParentCategory;
+            }
+            set
+            {
+                ParentCategory = value as Category;
+            }
+        }
+
+        IList<ICategory> ICategory.ChildCategories
+        {
+            get
+            {
+                return ChildCategories.Cast<ICategory>().ToList();
+            }
+            set
+            {
+                ChildCategories = value.Cast<Category>().ToList();
+            }
+        } 
+
     }
 }

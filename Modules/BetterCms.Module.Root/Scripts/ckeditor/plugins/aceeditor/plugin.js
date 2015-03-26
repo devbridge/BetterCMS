@@ -62,7 +62,7 @@ Edited by the Devbridge Better CMS team.
                                     enableSnippets: true
                                 });
                             });
-
+                            aceEditor.$blockScrolling = Infinity;
                             // Set the z-index for ACEEditor really high.
                             $('#aceEditor_container_' + editorID).css('z-index', bcms.getHighestZindex() + 1);
 
@@ -111,7 +111,8 @@ Edited by the Devbridge Better CMS team.
                                         $('#aceEditor_container_' + editorID).css('z-index', 'auto');
                                     }
                                 }
-
+                                aceEditor.blur();
+                                aceEditor.focus();
                                 // TODO: check why this is commented out by the plug-in creator.
                                 // If we are still in source view, remove this listener.
                                 //if (e.data.name == 'source'){
@@ -126,6 +127,8 @@ Edited by the Devbridge Better CMS team.
                                 // Make the editor container fill the space.
                                 $('#aceEditor_container_' + editorID).css(holderElement.position()).width(holderElement.width()).height(holderElement.height());
                                 aceEditor.resize(true);
+                                aceEditor.blur();
+                                aceEditor.focus();
                             };
 
                             // Update
@@ -134,11 +137,8 @@ Edited by the Devbridge Better CMS team.
                                 bcms.logger.trace('change detected');
 
                                 // Set the data of the CKEditor to the value of ACE Editor.
-                                editor.setData(aceEditor.getSession().getValue(), function () {
+                                editor.setData(aceEditor.getSession().getValue(), function() {
                                     bcms.logger.trace('change saved');
-                                    // NOTE: hack to reattach keyboard events after backspace click. // TODO: investigate for proper fix.
-                                    aceEditor.blur();
-                                    aceEditor.focus();
                                 }, false);
 
                                 return false;

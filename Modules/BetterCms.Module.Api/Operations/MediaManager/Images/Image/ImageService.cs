@@ -291,7 +291,10 @@ namespace BetterCms.Module.Api.Operations.MediaManager.Images.Image
 
             mediaImage.IsArchived = request.Data.IsArchived;
 
-            categoryService.CombineEntityCategories<Media, MediaCategory>(mediaImage, request.Data.Categories);
+            if (request.Data.Categories != null)
+            {
+                categoryService.CombineEntityCategories<Media, MediaCategory>(mediaImage, request.Data.Categories);
+            }
 
             repository.Save(mediaImage);
 

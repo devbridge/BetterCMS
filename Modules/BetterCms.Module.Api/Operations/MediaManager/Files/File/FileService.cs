@@ -329,7 +329,10 @@ namespace BetterCms.Module.Api.Operations.MediaManager.Files.File
                 accessControlService.UpdateAccessControl(mediaFile, accessRules);
             }
 
-            categoryService.CombineEntityCategories<Media, MediaCategory>(mediaFile, request.Data.Categories);
+            if (request.Data.Categories != null)
+            {
+                categoryService.CombineEntityCategories<Media, MediaCategory>(mediaFile, request.Data.Categories);
+            }
 
             repository.Save(mediaFile);
 

@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 
 using Autofac;
 
@@ -7,8 +6,10 @@ using BetterCms.Core;
 using BetterCms.Core.Modules;
 using BetterCms.Core.Modules.Projections;
 
+using BetterCms.Module.Root.Accessors;
 using BetterCms.Module.Root.Content.Resources;
 using BetterCms.Module.Root.Controllers;
+using BetterCms.Module.Root.Models.Accessors;
 using BetterCms.Module.Root.Mvc;
 using BetterCms.Module.Root.Projections;
 using BetterCms.Module.Root.Registration;
@@ -80,7 +81,7 @@ namespace BetterCms.Module.Root
             tagsJsModuleIncludeDescriptor = new TagsJsModuleIncludeDescriptor(this);
             categoriesJavaScriptModuleDescriptor = new CategoriesJavaScriptModuleDescriptor(this);
             languagesJsModuleIncludeDescriptor = new LanguagesJsModuleIncludeDescriptor(this);
-
+            CategoryAccessors.Register<WidgetCategoryAccessor>();
             InitializeSecurity();            
         }
 
@@ -331,7 +332,7 @@ namespace BetterCms.Module.Root
                             Order = 2000,
                             Title = page => RootGlobalization.SiteSettings_CategoriesMenuItem,
                             CssClass = page => "bcms-sidebar-link",
-                            AccessRole = RootModuleConstants.UserRoles.EditContent
+                            AccessRole = RootModuleConstants.UserRoles.MultipleRoles(RootModuleConstants.UserRoles.EditContent, RootModuleConstants.UserRoles.Administration)
                         },
                    new LinkActionProjection(tagsJsModuleIncludeDescriptor, page => "loadSiteSettingsTagList")
                         {

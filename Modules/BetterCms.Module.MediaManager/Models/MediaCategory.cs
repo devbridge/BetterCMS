@@ -13,6 +13,18 @@ namespace BetterCms.Module.MediaManager.Models
     {
         public virtual Category Category { get; set; }
 
+        public virtual IEntity Entity
+        {
+            get
+            {
+                return Media;
+            }
+            set
+            {
+                Media = value as Media;
+            }
+        }
+
         public virtual void SetEntity(IEntity entity)
         {
             Media = entity as Media;
@@ -30,6 +42,19 @@ namespace BetterCms.Module.MediaManager.Models
             {
                 Category = value as Category;
             }
+        }
+
+        public virtual MediaCategory Clone()
+        {
+            return CopyDataTo(new MediaCategory());
+        }
+
+        public virtual MediaCategory CopyDataTo(MediaCategory mediaCategory)
+        {
+            mediaCategory.Media = Media;
+            mediaCategory.Category = Category;
+
+            return mediaCategory;
         }
     }
 }

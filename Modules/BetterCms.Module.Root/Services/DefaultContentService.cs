@@ -179,6 +179,7 @@ namespace BetterCms.Module.Root.Services
                 }
 
                 updatedContent.CopyDataTo(contentVersionOfRequestedStatus, false);
+                SetCategories(contentVersionOfRequestedStatus, updatedContent);
                 SetContentOptions(contentVersionOfRequestedStatus, updatedContent);
                 SetContentRegions(contentVersionOfRequestedStatus, updatedContent);
                 childContentService.CopyChildContents(contentVersionOfRequestedStatus, updatedContent);
@@ -215,6 +216,7 @@ namespace BetterCms.Module.Root.Services
                 }
 
                 updatedContent.CopyDataTo(originalContent, false);
+                SetCategories(originalContent, updatedContent);
                 SetContentOptions(originalContent, updatedContent);
                 SetContentRegions(originalContent, updatedContent);
                 childContentService.CopyChildContents(originalContent, updatedContent);
@@ -236,6 +238,33 @@ namespace BetterCms.Module.Root.Services
                     repository.Delete(redundantContent);
                     originalContent.History.Remove(redundantContent);
                 }
+            }
+        }
+
+        private void SetCategories(Models.Content destinationContent, Models.Content sourceContent)
+        {
+            var destination = destinationContent as ICategorized;
+            var source = sourceContent as ICategorized;
+            if (destination == null || source == null)
+            {
+                return;
+            }
+
+            if (destination.Categories != null)
+            {
+                var categoriesToRemove = destination.Categories.ToList();
+                categoriesToRemove.ForEach(repository.Delete);
+            }
+
+            if (source.Categories == null)
+            {
+                return;
+            }
+
+            source.Categories.ForEach(destination.AddCategory);
+            if (destination.Categories != null)
+            {
+                destination.Categories.ForEach(e => e.SetEntity(destinationContent));
             }
         }
 
@@ -270,6 +299,7 @@ namespace BetterCms.Module.Root.Services
                 }
 
                 updatedContent.CopyDataTo(previewOrDraftContentVersion, false);
+                SetCategories(previewOrDraftContentVersion, updatedContent);
                 SetContentOptions(previewOrDraftContentVersion, updatedContent);
                 SetContentRegions(previewOrDraftContentVersion, updatedContent);
                 childContentService.CopyChildContents(previewOrDraftContentVersion, updatedContent);
@@ -291,6 +321,7 @@ namespace BetterCms.Module.Root.Services
                 }
 
                 updatedContent.CopyDataTo(originalContent, false);
+                SetCategories(originalContent, updatedContent);
                 SetContentOptions(originalContent, updatedContent);
                 SetContentRegions(originalContent, updatedContent);
                 childContentService.CopyChildContents(originalContent, updatedContent);

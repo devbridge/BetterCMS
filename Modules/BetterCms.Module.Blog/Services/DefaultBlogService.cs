@@ -675,10 +675,12 @@ namespace BetterCms.Module.Blog.Services
 
             if (request.Categories != null)
             {
-                foreach (var categoryKeyValue in request.Categories)
+                var categories = request.Categories.Select(c => new Guid(c.Key)).Distinct().ToList();
+
+                foreach (var category in categories)
                 {
-                    var id = categoryKeyValue.Key.ToGuidOrDefault();
-                    query = query.WithSubquery.WhereExists(QueryOver.Of<PageCategory>().Where(cat => cat.Category.Id == id && cat.Page.Id == alias.Id).Select(cat => 1));
+                    var childCategories = categoryService.GetChildCategoriesIds(category).ToArray();
+                    query = query.WithSubquery.WhereExists(QueryOver.Of<PageCategory>().Where(cat => !cat.IsDeleted && cat.Page.Id == alias.Id).WhereRestrictionOn(cat => cat.Category.Id).IsIn(childCategories).Select(cat => 1));
                 }
             }
 

@@ -160,7 +160,10 @@
       <Link>Properties\SharedAssemblyInfo.cs</Link>
     </Compile>
     <Compile Include="DataContracts\Enums\ForceProtocolType.cs" />
+    <Compile Include="DataContracts\ICategorizableItem.cs" />
     <Compile Include="DataContracts\ICategorized.cs" />
+    <Compile Include="DataContracts\ICategoryTree.cs" />
+    <Compile Include="DataContracts\ICategoryTreeCategorizableItem.cs" />
     <Compile Include="DataContracts\IChildContent.cs" />
     <Compile Include="DataContracts\IContentRegion.cs" />
     <Compile Include="DataContracts\ICustomOption.cs" />

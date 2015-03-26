@@ -1,5 +1,7 @@
 ﻿using System;
 
+using BetterCms.Core.DataContracts;
+
 using BetterCms.Module.Api.Extensions;
 using BetterCms.Module.Api.Infrastructure;
 using BetterCms.Module.Api.Operations.Root.Categories.Category.Nodes;
@@ -54,7 +56,7 @@ namespace BetterCms.Test.Module.Api.Root.Categories.Nodes
             Events.RootEvents.Instance.CategoryDeleted -= Instance_EntityDeleted;
         }
 
-        void Instance_SitemapUpdated(SingleItemEventArgs<BetterCms.Module.Root.Models.CategoryTree> args)
+        void Instance_SitemapUpdated(SingleItemEventArgs<ICategoryTree> args)
         {
             updatedCategoryTreeEventCount++;
         }

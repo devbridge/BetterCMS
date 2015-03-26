@@ -6,12 +6,10 @@ using BetterCms.Module.Root.Commands.Category.GetCategoryTree;
 using BetterCms.Module.Root.Commands.Category.GetCategoryTreesList;
 using BetterCms.Module.Root.Commands.Category.SaveCategoryTree;
 using BetterCms.Module.Root.Commands.Category.SearchCategory;
-using BetterCms.Module.Root.Commands.Tag.SearchTags;
 using BetterCms.Module.Root.Content.Resources;
 using BetterCms.Module.Root.Models;
 using BetterCms.Module.Root.Mvc;
 using BetterCms.Module.Root.ViewModels;
-using BetterCms.Module.Root.ViewModels.Autocomplete;
 using BetterCms.Module.Root.ViewModels.Category;
 
 using BetterModules.Core.Web.Models;
@@ -23,10 +21,11 @@ namespace BetterCms.Module.Root.Controllers
     /// <summary>
     /// Handles categories logic.
     /// </summary>
-    [BcmsAuthorize(RootModuleConstants.UserRoles.EditContent)]
+    [BcmsAuthorize]
     [ActionLinkArea(RootModuleDescriptor.RootAreaName)]
     public class CategoryController : CmsControllerBase
-    {       
+    {
+        [BcmsAuthorize(RootModuleConstants.UserRoles.EditContent, RootModuleConstants.UserRoles.Administration)]
         public ActionResult CategoryTrees(CategoryTreesFilter request)
         {
             request.SetDefaultPaging();
@@ -38,6 +37,7 @@ namespace BetterCms.Module.Root.Controllers
         }
 
         [HttpGet]
+        [BcmsAuthorize(RootModuleConstants.UserRoles.EditContent, RootModuleConstants.UserRoles.Administration)]
         public ActionResult EditCategoryTree(string sitemapId)
         {
             var model = GetCommand<GetCategoryTreeCommand>().ExecuteCommand(sitemapId.ToGuidOrDefault());
@@ -47,6 +47,7 @@ namespace BetterCms.Module.Root.Controllers
         }
 
         [HttpPost]
+        [BcmsAuthorize(RootModuleConstants.UserRoles.EditContent, RootModuleConstants.UserRoles.Administration)]
         public ActionResult SaveCategoryTree(CategoryTreeViewModel model)
         {
             if (ModelState.IsValid)
@@ -67,6 +68,7 @@ namespace BetterCms.Module.Root.Controllers
         }
 
         [HttpPost]
+        [BcmsAuthorize(RootModuleConstants.UserRoles.EditContent, RootModuleConstants.UserRoles.Administration)]
         public ActionResult DeleteCategoryTree(string id, string version)
         {
             var success =

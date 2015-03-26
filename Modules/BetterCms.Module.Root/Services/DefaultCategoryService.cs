@@ -1,17 +1,20 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Security.Principal;
 
 using BetterCms.Core.DataContracts;
+
+using BetterCms.Events;
+
 using BetterCms.Module.Root.Models;
-using BetterCms.Module.Root.Mvc;
+using BetterCms.Module.Root.ViewModels.Category;
 
 using BetterModules.Core.DataAccess;
 using BetterModules.Core.DataAccess.DataContext;
 using BetterModules.Core.Exceptions.DataTier;
 using BetterModules.Core.Models;
 
+using NHibernate;
 using NHibernate.Criterion;
 using NHibernate.Linq;
 using NHibernate.Transform;
@@ -26,11 +29,6 @@ namespace BetterCms.Module.Root.Services
         private readonly IRepository repository;
 
         /// <summary>
-        /// The CMS configuration.
-        /// </summary>
-        private readonly ICmsConfiguration cmsConfiguration;
-
-        /// <summary>
         /// The unit of work
         /// </summary>
         private readonly IUnitOfWork unitOfWork;
@@ -41,187 +39,59 @@ namespace BetterCms.Module.Root.Services
         /// <param name="repository">The repository.</param>
         /// <param name="cmsConfiguration">The CMS configuration.</param>
         /// <param name="unitOfWork">The unit of work.</param>
-        public DefaultCategoryService(IRepository repository, ICmsConfiguration cmsConfiguration, IUnitOfWork unitOfWork)
+        public DefaultCategoryService(IRepository repository, IUnitOfWork unitOfWork)
         {
             this.repository = repository;
-            this.cmsConfiguration = cmsConfiguration;
             this.unitOfWork = unitOfWork;
-        }
-
-        /// <summary>
-        /// Gets the list of category lookup values.
-        /// </summary>
-        /// <returns>
-        /// List of category lookup values
-        /// </returns>
-        public IEnumerable<LookupKeyValue> GetCategories(string categoryTreeForKey)
-        {
-            var query = repository.AsQueryable<Category>();
-
-            if (!string.IsNullOrEmpty(categoryTreeForKey))
-            {
-                query = query.Where( c => !c.CategoryTree.IsDeleted && c.CategoryTree.AvailableFor.Any(e => e.CategorizableItem.Name == categoryTreeForKey));
-            }
-            else
-            {
-                query = query.Where(c => !c.CategoryTree.IsDeleted);
-            }
-
-            return query.Select(c => new LookupKeyValue
-            {
-                Key = c.Id.ToString().ToLowerInvariant(),
-                Value = c.Name
-            })
-                .ToFuture();
         }
 
         public IEnumerable<Guid> GetSelectedCategoriesIds<TEntity, TEntityCategory>(Guid? entityId) 
             where TEntity : Entity, ICategorized
             where TEntityCategory : Entity, IEntityCategory
         {
+            CategoryTree categoryTreeAlias = null;
+            Category categoryAliasa = null;
             TEntity entityAlias = null;
             TEntityCategory categoryAlias = default(TEntityCategory);
 
-            return repository.AsQueryOver<Category>().Where(c => !c.IsDeleted)
-                             .WithSubquery.WhereProperty(c => c.Id)
+            return repository.AsQueryOver(() => categoryAliasa)
+                             .JoinQueryOver(() => categoryAliasa.CategoryTree, () => categoryTreeAlias)
+                             .Where(() => !categoryTreeAlias.IsDeleted && !categoryAliasa.IsDeleted)
+                             .WithSubquery.WhereProperty(() => categoryAliasa.Id)
                              .In(QueryOver.Of(() => entityAlias)
                                      .JoinQueryOver(() => entityAlias.Categories, () => categoryAlias)
                                      .Where(() => entityAlias.Id == entityId && !categoryAlias.IsDeleted)
                                      .SelectList(list => list.Select(() => categoryAlias.Category.Id)))
-                                     .Select(category => category.Id)
-                                     .Future<Guid>();
+                             .Select(category => category.Id)
+                             .Future<Guid>();
         }
 
         public IEnumerable<LookupKeyValue> GetSelectedCategories<TEntity, TEntityCategory>(Guid? entityId)
             where TEntity : Entity, ICategorized
             where TEntityCategory : Entity, IEntityCategory
         {
+            CategoryTree categoryTreeAlias = null;
             Category categoryAliasa = null;
             TEntity entityAlias = null;
             TEntityCategory categoryAlias = default(TEntityCategory);
             LookupKeyValue valueAlias = null;
 
-            return repository.AsQueryOver(() => categoryAliasa).Where(c => !c.IsDeleted)
-                             .WithSubquery.WhereProperty(c => c.Id)
+            return repository.AsQueryOver(() => categoryAliasa)
+                             .JoinQueryOver(() => categoryAliasa.CategoryTree, () => categoryTreeAlias)
+                             .Where(() => !categoryTreeAlias.IsDeleted && !categoryAliasa.IsDeleted)
+                             .WithSubquery.WhereProperty(() => categoryAliasa.Id)
                              .In(QueryOver.Of(() => entityAlias)
                                      .JoinQueryOver(() => entityAlias.Categories, () => categoryAlias)
                                      .Where(() => entityAlias.Id == entityId && !categoryAlias.IsDeleted)
                                      .SelectList(list => list.Select(() => categoryAlias.Category.Id)))
-                                     .SelectList(l => l
-                                         .Select(NHibernate.Criterion.Projections.Cast(NHibernate.NHibernateUtil.String, NHibernate.Criterion.Projections.Property(() => categoryAliasa.Id))).WithAlias(() => valueAlias.Key)
-                                         .Select(() => categoryAliasa.Name).WithAlias(() => valueAlias.Value))
-                                     .TransformUsing(Transformers.AliasToBean<LookupKeyValue>())
-                                     .Future<LookupKeyValue>();
-        }
-        public Category SaveCategory(out bool categoryUpdated, CategoryTree categoryTree, Guid categoryId, int version, string name, int displayOrder, string macro, Guid parentCategoryId, bool isDeleted = false, Category parentCategory = null, List<Category> categories = null)
-        {
-            categoryUpdated = false;
-
-            var category = categoryId.HasDefaultValue()
-                ? new Category()
-                : categories != null ? categories.First(c => c.Id == categoryId) : repository.First<Category>(categoryId);
-
-            if (isDeleted && !category.Id.HasDefaultValue())
-            {
-                repository.Delete(category);
-                categoryUpdated = true;
-            }
-            else
-            {
-                var updated = false;
-                if (category.CategoryTree == null)
-                {
-                    category.CategoryTree = categoryTree;
-                }
-
-                if (category.Name != name)
-                {
-                    updated = true;
-                    category.Name = name;
-                }
-
-                if (category.DisplayOrder != displayOrder)
-                {
-                    updated = true;
-                    category.DisplayOrder = displayOrder;
-                }
-
-                Category newParent;
-                if (parentCategory != null && !parentCategory.Id.HasDefaultValue())
-                {
-                    newParent = parentCategory;
-                }
-                else
-                {
-                    newParent = parentCategoryId.HasDefaultValue()
-                        ? null
-                        : repository.AsProxy<Category>(parentCategoryId);
-                }
-
-                if (category.ParentCategory != newParent)
-                {
-                    updated = true;
-                    category.ParentCategory = newParent;
-                }
-
-                if (cmsConfiguration.EnableMacros && category.Macro != macro)
-                {
-                    category.Macro = macro;
-                    updated = true;
-                }
-
-                if (updated)
-                {
-                    category.Version = version;
-                    repository.Save(category);
-                    categoryUpdated = true;
-                }
-            }
-
-            return category;
+                             .SelectList(l => l
+                                 .Select(NHibernate.Criterion.Projections.Cast(NHibernateUtil.String, NHibernate.Criterion.Projections.Property(() => categoryAliasa.Id))).WithAlias(() => valueAlias.Key)
+                                 .Select(() => categoryAliasa.Name).WithAlias(() => valueAlias.Value))
+                             .TransformUsing(Transformers.AliasToBean<LookupKeyValue>())
+                             .Future<LookupKeyValue>();
         }
 
-        public void DeleteCategoryTree(Guid id, int version, IPrincipal currentUser)
-        {
-            var categoryTree = repository
-                .AsQueryable<CategoryTree>()
-                .Where(map => map.Id == id)
-                // TODO:                .FetchMany(map => map.AccessRules)
-                .Distinct()
-                .ToList()
-                .First();
-
-            // TODO:            // Security.
-            //            if (cmsConfiguration.Security.AccessControlEnabled)
-            //            {
-            //                var roles = new[] { RootModuleConstants.UserRoles.EditContent };
-            //                accessControlService.DemandAccess(sitemap, currentUser, AccessLevel.ReadWrite, roles);
-            //            }
-
-            // Concurrency.
-            if (version > 0 && categoryTree.Version != version)
-            {
-                throw new ConcurrentDataException(categoryTree);
-            }
-
-            unitOfWork.BeginTransaction();
-
-            // TODO:
-            //            if (sitemap.AccessRules != null)
-            //            {
-            //                var rules = sitemap.AccessRules.ToList();
-            //                rules.ForEach(sitemap.RemoveRule);
-            //            }
-
-            repository.Delete(categoryTree);
-
-            unitOfWork.Commit();
-
-            // Events.
-            Events.RootEvents.Instance.OnCategoryTreeDeleted(categoryTree);
-        }
-
-        public void CombineEntityCategories<TEntity, TEntityCategory>(TEntity entity, IEnumerable<System.Guid> currentCategories) 
+        public void CombineEntityCategories<TEntity, TEntityCategory>(TEntity entity, IEnumerable<Guid> currentCategories) 
             where TEntity : Entity, ICategorized
             where TEntityCategory : Entity, IEntityCategory, new()
         {
@@ -256,7 +126,8 @@ namespace BetterCms.Module.Root.Services
             }
         }
 
-       public void CombineEntityCategories<TEntity, TEntityCategory>(TEntity entity, IEnumerable<LookupKeyValue> currentCategories) where TEntity : Entity, ICategorized
+        public void CombineEntityCategories<TEntity, TEntityCategory>(TEntity entity, IEnumerable<LookupKeyValue> currentCategories)
+            where TEntity : Entity, ICategorized
             where TEntityCategory : Entity, IEntityCategory, new()
         {
             CombineEntityCategories<TEntity, TEntityCategory>(entity, currentCategories != null ? currentCategories.Select(c => Guid.Parse(c.Key)) : Enumerable.Empty<Guid>());
@@ -264,7 +135,7 @@ namespace BetterCms.Module.Root.Services
 
         public void DeleteCategoryNode(Guid id, int version, Guid? categoryTreeId = null)
         {
-            IList<Category> deletedNodes = new List<Category>();
+            IList<ICategory> deletedNodes = new List<ICategory>();
 
             var node = repository.AsQueryable<Category>()
                 .Where(sitemapNode => sitemapNode.Id == id && (!categoryTreeId.HasValue || sitemapNode.CategoryTree.Id == categoryTreeId.Value))
@@ -286,23 +157,57 @@ namespace BetterCms.Module.Root.Services
 
             unitOfWork.Commit();
 
-            var updatedSitemaps = new List<CategoryTree>();
+            var updatedCategories = new List<ICategoryTree>();
             foreach (var deletedNode in deletedNodes)
             {
-                Events.RootEvents.Instance.OnCategoryDeleted(deletedNode);
-                if (!updatedSitemaps.Contains(deletedNode.CategoryTree))
+                RootEvents.Instance.OnCategoryDeleted(deletedNode);
+                if (!updatedCategories.Contains(deletedNode.CategoryTree))
                 {
-                    updatedSitemaps.Add(deletedNode.CategoryTree);
+                    updatedCategories.Add(deletedNode.CategoryTree);
                 }
             }
 
-            foreach (var sitemap in updatedSitemaps)
+            foreach (var sitemap in updatedCategories)
             {
-                Events.RootEvents.Instance.OnCategoryTreeUpdated(sitemap);
+                RootEvents.Instance.OnCategoryTreeUpdated(sitemap);
             }
         }
 
-        private void DeleteCategoryNode(Category node, ref IList<Category> deletedNodes)
+        public IEnumerable<Guid> GetChildCategoriesIds(Guid categoryId)
+        {
+            var allCategoryNodes = repository.AsQueryable<Category>().Where(c =>
+                                                    repository.AsQueryable<Category>().Where(cat => cat.Id == categoryId && !cat.IsDeleted)
+                                                    .Any(catT => catT.CategoryTree.Id == c.CategoryTree.Id && !catT.IsDeleted)
+                                                    ).Select(c => new CategoryViewModel()
+                                                    {
+                                                        Id = c.Id,
+                                                        Title = c.Name,
+                                                        DisplayOrder = c.DisplayOrder,
+                                                        CategoryTreeId = c.CategoryTree.Id,
+                                                        ParentCategoryId = c.ParentCategory != null ? c.ParentCategory.Id : (Guid?)null
+                                                    }).ToList();
+            // Find given category
+            var mainCategory = allCategoryNodes.First(c => c.Id == categoryId);
+            List<CategoryViewModel> childCategories = new List<CategoryViewModel>() { mainCategory };
+
+            FillChildCategories(allCategoryNodes, mainCategory, childCategories);
+
+            return childCategories.Select(c => c.Id);
+        }
+
+        private void FillChildCategories(List<CategoryViewModel> allItems, CategoryViewModel mainCategory, List<CategoryViewModel> childCategories)
+        {
+            var childItems = allItems.Where(item => item.ParentCategoryId == mainCategory.Id && item.Id != mainCategory.Id).OrderBy(node => node.DisplayOrder).ToList();
+
+            foreach (var item in childItems)
+            {
+                childCategories.Add(item);
+
+                FillChildCategories(allItems.Except(childCategories).ToList(), item, childCategories);
+            }
+        }
+
+        private void DeleteCategoryNode(ICategory node, ref IList<ICategory> deletedNodes)
         {
             if (node.ChildCategories != null)
             {

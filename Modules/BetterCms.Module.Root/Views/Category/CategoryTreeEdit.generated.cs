@@ -266,7 +266,7 @@ WriteLiteral(">\r\n                        <input");
 
 WriteLiteral(" type=\"checkbox\"");
 
-WriteLiteral(" data-bind=\"checked: isSelected\"");
+WriteLiteral(" data-bind=\"checked: isSelected, enable: !isDisabled()\"");
 
 WriteLiteral(">\r\n                        <div");
 
@@ -476,15 +476,15 @@ WriteLiteral(" class=\"bcms-sitemap-holder bcms-sitemap-edit\"");
 
 WriteLiteral(">\r\n                            <div");
 
-WriteAttribute("class", Tuple.Create(" class=\"", 5518), Tuple.Create("\"", 5603)
-, Tuple.Create(Tuple.Create("", 5526), Tuple.Create("bcms-addnode-placement-holder", 5526), true)
+WriteAttribute("class", Tuple.Create(" class=\"", 5541), Tuple.Create("\"", 5626)
+, Tuple.Create(Tuple.Create("", 5549), Tuple.Create("bcms-addnode-placement-holder", 5549), true)
             
             #line 88 "..\..\Views\Category\CategoryTreeEdit.cshtml"
-, Tuple.Create(Tuple.Create("", 5555), Tuple.Create<System.Object, System.Int32>(Model.IsReadOnly ? "-readonly" : string.Empty
+, Tuple.Create(Tuple.Create("", 5578), Tuple.Create<System.Object, System.Int32>(Model.IsReadOnly ? "-readonly" : string.Empty
             
             #line default
             #line hidden
-, 5555), false)
+, 5578), false)
 );
 
 WriteLiteral(">\r\n");

@@ -38,23 +38,12 @@ namespace BetterCms.Test.Module.Api.Pages.Widgets
 
             // Run tests
             RunApiActionInTransaction(
-                (api, session) =>
-                {
-//                    category = null;
-//                    var categoryTree = TestDataProvider.CreateNewCategoryTree();
-//                    category = TestDataProvider.CreateNewCategory(categoryTree);
-//                    session.SaveOrUpdate(categoryTree);
-//                    session.SaveOrUpdate(category);
-//                    session.Flush();
-
-                    Run(
-                        session,
-                        api.Pages.Widget.HtmlContent.Post,
-                        api.Pages.Widget.HtmlContent.Get,
-                        api.Pages.Widget.HtmlContent.Put,
-                        api.Pages.Widget.HtmlContent.Delete);
-                }
-                );
+                (api, session) => Run(
+                    session,
+                    api.Pages.Widget.HtmlContent.Post,
+                    api.Pages.Widget.HtmlContent.Get,
+                    api.Pages.Widget.HtmlContent.Put,
+                    api.Pages.Widget.HtmlContent.Delete));
 
             // Detach from events
             Events.PageEvents.Instance.WidgetCreated -= Instance_EntityCreated;
@@ -71,8 +60,8 @@ namespace BetterCms.Test.Module.Api.Pages.Widgets
             Events.PageEvents.Instance.WidgetDeleted += Instance_EntityDeleted;
 
             // Run tests
-            RunApiActionInTransaction((api, session) =>
-                RunWithIdSpecified(session, api.Pages.Widget.HtmlContent.Get, api.Pages.Widget.HtmlContent.Put, api.Pages.Widget.HtmlContent.Delete));
+            RunApiActionInTransaction(
+                (api, session) => RunWithIdSpecified(session, api.Pages.Widget.HtmlContent.Get, api.Pages.Widget.HtmlContent.Put, api.Pages.Widget.HtmlContent.Delete));
 
             // Detach from events
             Events.PageEvents.Instance.WidgetCreated -= Instance_EntityCreated;
@@ -82,6 +71,21 @@ namespace BetterCms.Test.Module.Api.Pages.Widgets
 
         protected override SaveHtmlContentWidgetModel GetCreateModel(ISession session)
         {
+            var categoryTree = TestDataProvider.CreateNewCategoryTree();
+            category = TestDataProvider.CreateNewCategory(categoryTree);
+            categoryTree.AvailableFor = new List<CategoryTreeCategorizableItem>
+                    {
+                        new CategoryTreeCategorizableItem
+                        {
+                            // See Migration201502101136.cs
+                            CategorizableItem = session.Load<CategorizableItem>(new Guid("B2F05159-74AF-4B67-AEB9-36B9CC9EED57")),
+                            CategoryTree = categoryTree
+                        }
+                    };
+            session.SaveOrUpdate(categoryTree);
+            session.SaveOrUpdate(category);
+            session.Flush();
+
             var widget = TestDataProvider.CreateNewHtmlContentWidget();
             session.SaveOrUpdate(widget);
 
@@ -103,7 +107,7 @@ namespace BetterCms.Test.Module.Api.Pages.Widgets
                     IsPublished = true,
                     PublishedOn = content.PublishedOn,
                     PublishedByUser = content.PublishedByUser,
-                    Categories = content.Categories.Select(c => c.Category.Id).ToList(),
+                    Categories = new List<Guid>(){category.Id},
                     CustomCss = content.CustomCss,
                     UseCustomCss = true,
                     Html = content.Html,

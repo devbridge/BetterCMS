@@ -14,6 +14,7 @@ using BetterCms.Module.Blog.Models;
 using BetterCms.Module.MediaManager.Services;
 
 using BetterCms.Module.Pages.Models;
+using BetterCms.Module.Root.Services;
 
 using NHibernate.Linq;
 
@@ -40,6 +41,8 @@ namespace BetterCms.Module.Api.Operations.Blog.BlogPosts
         /// </summary>
         private readonly IAccessControlService accessControlService;
 
+
+        private readonly ICategoryService categoryService;
         /// <summary>
         /// Initializes a new instance of the <see cref="BlogPostsService"/> class.
         /// </summary>
@@ -49,11 +52,13 @@ namespace BetterCms.Module.Api.Operations.Blog.BlogPosts
         public BlogPostsService(
             IRepository repository,
             IMediaFileUrlResolver fileUrlResolver,
-            IAccessControlService accessControlService)
+            IAccessControlService accessControlService,
+            ICategoryService categoryService)
         {
             this.repository = repository;
             this.fileUrlResolver = fileUrlResolver;
             this.accessControlService = accessControlService;
+            this.categoryService = categoryService;
         }
 
         /// <summary>
@@ -89,7 +94,8 @@ namespace BetterCms.Module.Api.Operations.Blog.BlogPosts
                 }
             }
 
-            query = query.ApplyPageTagsFilter(request.Data);
+            query = query.ApplyPageTagsFilter(request.Data)
+                .ApplyCategoriesFilter(categoryService, request.Data);
 
             var listResponse = query
                 .Select(blogPost => new BlogPostModel

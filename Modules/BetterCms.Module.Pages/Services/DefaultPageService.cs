@@ -30,6 +30,7 @@ using BetterModules.Core.Exceptions.DataTier;
 using BetterModules.Core.Web.Mvc;
 
 using NHibernate.Linq;
+using NHibernate.Proxy;
 
 using Page = BetterCms.Module.Pages.Models.PageProperties;
 using RootPage = BetterCms.Module.Root.Models.Page;
@@ -330,12 +331,20 @@ namespace BetterCms.Module.Pages.Services
         {
             var languagesFuture = repository.AsQueryable<Language>().ToFuture();
 
-            var page = repository
-                .AsQueryable<PageProperties>(p => p.Id == model.PageId)
-                .FetchMany(p => p.PageContents)
-                .ThenFetch(pc => pc.Content)
-                .ToFuture()
-                .FirstOne();
+            var page =
+                repository.AsQueryable<PageProperties>(p => p.Id == model.PageId)
+                    .FetchMany(p => p.PageContents)
+                    .ThenFetch(pc => pc.Content)
+                    .ToFuture()
+                    .ToList()
+                    .FirstOne();
+
+            // Unidentified problem where in some cases proxy is returned.
+            if (page is INHibernateProxy)
+            {
+                page = repository.UnProxy(page);
+            }
+
             if (model.Version > 0 && page.Version != model.Version)
             {
                 throw new ConcurrentDataException(page);

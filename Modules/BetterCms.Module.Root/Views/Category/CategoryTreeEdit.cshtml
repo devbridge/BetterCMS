@@ -35,7 +35,7 @@
                     <div class="bcms-content-titles">@RootGlobalization.CategoryTree_EditDialog_UsedFor_Title</div>
                     <!-- ko foreach: categorizableItems -->
                     <div class="bcms-checkbox-holder">
-                        <input type="checkbox" data-bind="checked: isSelected">
+                        <input type="checkbox" data-bind="checked: isSelected, enable: !isDisabled()">
                         <div class="bcms-edit-label" data-bind="text: name, click: inverseSelection"></div>
                     </div>
                     <!-- /ko -->

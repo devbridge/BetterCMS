@@ -1,4 +1,6 @@
-﻿using BetterModules.Core.DataContracts;
+﻿using System.Collections.Generic;
+
+using BetterModules.Core.DataContracts;
 
 namespace BetterCms.Core.DataContracts
 {
@@ -7,11 +9,15 @@ namespace BetterCms.Core.DataContracts
     /// </summary>
     public interface ICategory : IEntity
     {
-        string Name { get; }
+        ICategoryTree CategoryTree { get; set; }
 
-        //IList<ICategory> ChildCategories { get; set; }
+        string Name { get; set; }
 
-        //ICategory ParentCategory { get; set; }
+        int DisplayOrder { get; set; }
+
+        IList<ICategory> ChildCategories { get; set; }
+
+        ICategory ParentCategory { get; set; }
 
         string Macro { get; set; }
     }

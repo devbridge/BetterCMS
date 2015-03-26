@@ -80,7 +80,7 @@ bettercms.define('bcms.media.fileeditor', ['bcms.jquery', 'bcms', 'bcms.modal', 
         function FileEditViewModel(dialog, data, onSaveCallback) {
             var self = this,
                 tagsViewModel = new tags.TagsListViewModel(data.Tags),
-                categoriesViewModel = new categories.CategoriesListViewModel(data.Categories, 'Files'),
+                categoriesViewModel = new categories.CategoriesListViewModel(data.Categories, data.CategoriesFilterKey),
                 accessControl = security.createUserAccessViewModel(data.UserAccessList),
                 image = data.Image,
                 userAccessList = accessControl.UserAccessList(),

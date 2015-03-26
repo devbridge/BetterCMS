@@ -1,5 +1,6 @@
 ﻿using System.Linq;
 using System.Web.Mvc;
+using System.Web.Script.Serialization;
 
 using BetterCms.Core.Exceptions.Mvc;
 using BetterCms.Core.Mvc.Binders;
@@ -136,7 +137,18 @@ namespace BetterCms.Module.Pages.Controllers
 
             var view = RenderView("AddPageHtmlContent", model ?? new PageContentViewModel());
 
-            return ComboWireJson(model != null, view, model, JsonRequestBehavior.AllowGet);
+            var result = ComboWireJson(model != null, view, model, JsonRequestBehavior.AllowGet);
+
+            result.MaxJsonLength = int.MaxValue;
+// TODO: very large JSON ~2.1MB on test environment!!!
+//            var scriptSerializer = new JavaScriptSerializer();
+//            if (result.MaxJsonLength.HasValue)
+//            {
+//                scriptSerializer.MaxJsonLength = result.MaxJsonLength.Value;
+//            }
+//            var jsonString = scriptSerializer.Serialize(result.Data);
+
+            return result;
         }
 
         /// <summary>

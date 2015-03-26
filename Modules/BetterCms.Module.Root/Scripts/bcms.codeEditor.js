@@ -36,7 +36,7 @@ bettercms.define('bcms.codeEditor', ['bcms.jquery', 'bcms', 'ace'], function ($,
                 isReadOnly = inputField.attr('readonly') === 'readonly',
                 editorId = "aceEditor_" + id,
                 containerId = "aceEditor_container_" + id,
-                aceContainer = $('<div id="' + containerId + '" class="bcms-editor-field-area-container" style="padding:0;"><div id="' + editorId + '" style="width:100%; height:100%;"></div></div>');
+                aceContainer = $('<div id="' + containerId + '" class="bcms-editor-field-area-container" style="padding:0;"><div id="' + editorId + '" style="width:100%; height:80px;"></div></div>');
             
             inputField.hide();
             inputField.after(aceContainer);

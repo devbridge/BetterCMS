@@ -258,7 +258,7 @@ bettercms.define('bcms.content', ['bcms.jquery', 'bcms', 'bcms.modal', 'bcms.red
         }
 
         for (var i = 0; i < before.length; i++) {
-            if (!after[i] || after[i].contentId != before[i].contentId) {
+            if (!after[i] || after[i].pageContentId != before[i].pageContentId) {
                 return true;
             }
         }

@@ -628,7 +628,7 @@ namespace BetterCms.Module.Root.Content.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to This category will be used for selected objects..
+        ///   Looks up a localized string similar to This category will be used for selected objects. &quot;Use For&quot; items can be unchecked only if none of the category nodes are used for them..
         /// </summary>
         public static string CategoryTree_EditDialog_UsedFor_Tooltip_Description {
             get {
@@ -1740,6 +1740,15 @@ namespace BetterCms.Module.Root.Content.Resources {
         public static string UserRole_PublishContent {
             get {
                 return ResourceManager.GetString("UserRole_PublishContent", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Selected category &apos;{0}&apos; cannot be assigned..
+        /// </summary>
+        public static string Validation_Category_Unavailable_Message {
+            get {
+                return ResourceManager.GetString("Validation_Category_Unavailable_Message", resourceCulture);
             }
         }
         

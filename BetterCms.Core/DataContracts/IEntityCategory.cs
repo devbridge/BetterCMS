@@ -6,6 +6,8 @@ namespace BetterCms.Core.DataContracts
     {
         ICategory Category { get; set; }
 
+        IEntity Entity { get; set; }
+
         void SetEntity(IEntity entity);
     }
 }

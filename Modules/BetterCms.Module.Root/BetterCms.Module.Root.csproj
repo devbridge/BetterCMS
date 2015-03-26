@@ -157,6 +157,7 @@
     <Compile Include="..\..\SharedAssemblyInfo.cs">
       <Link>Properties\SharedAssemblyInfo.cs</Link>
     </Compile>
+    <Compile Include="Accessors\CategoryAccessors.cs" />
     <Compile Include="Commands\Authentication\GetAuthenticationInfo\GetAuthenticationInfoCommand.cs" />
     <Compile Include="Commands\Authentication\SearchUsers\SearchUsersCommand.cs" />
     <Compile Include="Commands\Authentication\SearchRoles\SearchRolesCommand.cs" />
@@ -204,10 +205,13 @@
     <Compile Include="Controllers\SiteSettingsController.cs" />
     <Compile Include="Controllers\TagsController.cs" />
     <Compile Include="Helpers\CategoriesHelper.cs" />
+    <Compile Include="Models\Accessors\WidgetCategoryAccessor.cs" />
     <Compile Include="Models\CategorizableItem.cs" />
+    <Compile Include="Models\Accessors\DefaultCategoryAccessor.cs" />
     <Compile Include="Models\CategoryTree.cs" />
     <Compile Include="Models\CategoryTreeCategorizableItem.cs" />
     <Compile Include="Models\ChildContentOption.cs" />
+    <Compile Include="Models\ICategoryAccessor.cs" />
     <Compile Include="Models\Maps\WidgetCategoryMap.cs" />
     <Compile Include="Models\Migrations\Migration201502061445.cs" />
     <Compile Include="Models\WidgetCategories.cs" />
@@ -432,6 +436,7 @@
     <Compile Include="ViewModels\Category\CategorizableItemViewModel.cs" />
     <Compile Include="ViewModels\Category\CategoryTreeViewModel.cs" />
     <Compile Include="ViewModels\Category\CategoryTemplateViewModel.cs" />
+    <Compile Include="ViewModels\Category\CategoryViewModel.cs" />
     <Compile Include="ViewModels\Cms\CmsRequestViewModel.cs" />
     <Compile Include="ViewModels\Cms\PageRegionViewModel.cs" />
     <Compile Include="DataContracts\Enums\PageRetrievedEventResults.cs" />
@@ -885,7 +890,6 @@
     <EmbeddedResource Include="Scripts\ace\mode-haskell.js" />
     <EmbeddedResource Include="Scripts\ace\mode-haxe.js" />
     <EmbeddedResource Include="Scripts\ace\mode-html.js" />
-    <EmbeddedResource Include="Scripts\ace\mode-html_completions.js" />
     <EmbeddedResource Include="Scripts\ace\mode-html_ruby.js" />
     <EmbeddedResource Include="Scripts\ace\mode-ini.js" />
     <EmbeddedResource Include="Scripts\ace\mode-jack.js" />
@@ -911,7 +915,6 @@
     <EmbeddedResource Include="Scripts\ace\mode-markdown.js" />
     <EmbeddedResource Include="Scripts\ace\mode-matlab.js" />
     <EmbeddedResource Include="Scripts\ace\mode-mushcode.js" />
-    <EmbeddedResource Include="Scripts\ace\mode-mushcode_high_rules.js" />
     <EmbeddedResource Include="Scripts\ace\mode-mysql.js" />
     <EmbeddedResource Include="Scripts\ace\mode-nix.js" />
     <EmbeddedResource Include="Scripts\ace\mode-objectivec.js" />
@@ -970,7 +973,6 @@
     <EmbeddedResource Include="Scripts\ace\theme-eclipse.js" />
     <EmbeddedResource Include="Scripts\ace\theme-github.js" />
     <EmbeddedResource Include="Scripts\ace\theme-idle_fingers.js" />
-    <EmbeddedResource Include="Scripts\ace\theme-kr.js" />
     <EmbeddedResource Include="Scripts\ace\theme-merbivore.js" />
     <EmbeddedResource Include="Scripts\ace\theme-merbivore_soft.js" />
     <EmbeddedResource Include="Scripts\ace\theme-monokai.js" />
@@ -1028,7 +1030,6 @@
     <EmbeddedResource Include="Scripts\ace\snippets\haskell.js" />
     <EmbeddedResource Include="Scripts\ace\snippets\haxe.js" />
     <EmbeddedResource Include="Scripts\ace\snippets\html.js" />
-    <EmbeddedResource Include="Scripts\ace\snippets\html_completions.js" />
     <EmbeddedResource Include="Scripts\ace\snippets\html_ruby.js" />
     <EmbeddedResource Include="Scripts\ace\snippets\ini.js" />
     <EmbeddedResource Include="Scripts\ace\snippets\jack.js" />
@@ -1054,7 +1055,6 @@
     <EmbeddedResource Include="Scripts\ace\snippets\markdown.js" />
     <EmbeddedResource Include="Scripts\ace\snippets\matlab.js" />
     <EmbeddedResource Include="Scripts\ace\snippets\mushcode.js" />
-    <EmbeddedResource Include="Scripts\ace\snippets\mushcode_high_rules.js" />
     <EmbeddedResource Include="Scripts\ace\snippets\mysql.js" />
     <EmbeddedResource Include="Scripts\ace\snippets\nix.js" />
     <EmbeddedResource Include="Scripts\ace\snippets\objectivec.js" />
@@ -1407,6 +1407,56 @@
     <EmbeddedResource Include="Content\Styles\multiple-select.png" />
     <EmbeddedResource Include="Models\Migrations\Migration201502101136.sqlserver.sql" />
     <EmbeddedResource Include="Models\Migrations\Migration201502061445.sqlserver.sql" />
+    <EmbeddedResource Include="Scripts\ace\ext-beautify.js" />
+    <EmbeddedResource Include="Scripts\ace\ext-error_marker.js" />
+    <EmbeddedResource Include="Scripts\ace\ext-linking.js" />
+    <EmbeddedResource Include="Scripts\ace\mode-abc.js" />
+    <EmbeddedResource Include="Scripts\ace\mode-apache_conf.js" />
+    <EmbeddedResource Include="Scripts\ace\mode-applescript.js" />
+    <EmbeddedResource Include="Scripts\ace\mode-cirru.js" />
+    <EmbeddedResource Include="Scripts\ace\mode-dockerfile.js" />
+    <EmbeddedResource Include="Scripts\ace\mode-eiffel.js" />
+    <EmbeddedResource Include="Scripts\ace\mode-elixir.js" />
+    <EmbeddedResource Include="Scripts\ace\mode-elm.js" />
+    <EmbeddedResource Include="Scripts\ace\mode-gcode.js" />
+    <EmbeddedResource Include="Scripts\ace\mode-gherkin.js" />
+    <EmbeddedResource Include="Scripts\ace\mode-gitignore.js" />
+    <EmbeddedResource Include="Scripts\ace\mode-io.js" />
+    <EmbeddedResource Include="Scripts\ace\mode-lean.js" />
+    <EmbeddedResource Include="Scripts\ace\mode-live_script.js" />
+    <EmbeddedResource Include="Scripts\ace\mode-mask.js" />
+    <EmbeddedResource Include="Scripts\ace\mode-mel.js" />
+    <EmbeddedResource Include="Scripts\ace\mode-mipsassembler.js" />
+    <EmbeddedResource Include="Scripts\ace\mode-mips_assembler.js" />
+    <EmbeddedResource Include="Scripts\ace\mode-praat.js" />
+    <EmbeddedResource Include="Scripts\ace\mode-smarty.js" />
+    <EmbeddedResource Include="Scripts\ace\mode-vala.js" />
+    <EmbeddedResource Include="Scripts\ace\snippets\abc.js" />
+    <EmbeddedResource Include="Scripts\ace\snippets\apache_conf.js" />
+    <EmbeddedResource Include="Scripts\ace\snippets\applescript.js" />
+    <EmbeddedResource Include="Scripts\ace\snippets\cirru.js" />
+    <EmbeddedResource Include="Scripts\ace\snippets\dockerfile.js" />
+    <EmbeddedResource Include="Scripts\ace\snippets\eiffel.js" />
+    <EmbeddedResource Include="Scripts\ace\snippets\elixir.js" />
+    <EmbeddedResource Include="Scripts\ace\snippets\elm.js" />
+    <EmbeddedResource Include="Scripts\ace\snippets\gcode.js" />
+    <EmbeddedResource Include="Scripts\ace\snippets\gherkin.js" />
+    <EmbeddedResource Include="Scripts\ace\snippets\gitignore.js" />
+    <EmbeddedResource Include="Scripts\ace\snippets\io.js" />
+    <EmbeddedResource Include="Scripts\ace\snippets\lean.js" />
+    <EmbeddedResource Include="Scripts\ace\snippets\live_script.js" />
+    <EmbeddedResource Include="Scripts\ace\snippets\mask.js" />
+    <EmbeddedResource Include="Scripts\ace\snippets\mel.js" />
+    <EmbeddedResource Include="Scripts\ace\snippets\mipsassembler.js" />
+    <EmbeddedResource Include="Scripts\ace\snippets\mips_assembler.js" />
+    <EmbeddedResource Include="Scripts\ace\snippets\praat.js" />
+    <EmbeddedResource Include="Scripts\ace\snippets\smarty.js" />
+    <EmbeddedResource Include="Scripts\ace\snippets\vala.js" />
+    <EmbeddedResource Include="Scripts\ace\theme-katzenmilch.js" />
+    <EmbeddedResource Include="Scripts\ace\theme-kr_theme.js" />
+    <EmbeddedResource Include="Scripts\ace\theme-kuroir.js" />
+    <EmbeddedResource Include="Scripts\ace\worker-html.js" />
+    <EmbeddedResource Include="Scripts\ace\worker-xml.js" />
     <Content Include="Views\Web.config" />
     <Content Include="Views\Category\CategoryTreeEdit.cshtml">
       <Generator>RazorGenerator</Generator>

@@ -12,6 +12,7 @@ namespace BetterCms.Module.Root.Models
     {
         public virtual Category Category { get; set; }
 
+
         public virtual void SetEntity(IEntity entity)
         {
             Widget = entity as Widget;
@@ -28,6 +29,18 @@ namespace BetterCms.Module.Root.Models
             set
             {
                 Category = value as Category;
+            }
+        }
+
+        IEntity IEntityCategory.Entity
+        {
+            get
+            {
+                return Widget;
+            }
+            set
+            {
+                Widget = value as Widget;
             }
         }
 

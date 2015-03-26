@@ -103,6 +103,7 @@ namespace BetterCms.Module.Blog.Services
 
         private void WriteCategories()
         {
+            return; // TODO: https://github.com/devbridge/BetterCMS/issues/1235
             WriteStartCategories();
             foreach (var category in posts.Where(p => p.Categories != null).SelectMany(p => p.Categories).Distinct())
             {

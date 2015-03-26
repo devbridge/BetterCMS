@@ -1,4 +1,5 @@
-﻿using System.Web.Mvc;
+﻿using System;
+using System.Web.Mvc;
 
 using BetterCms.Core.Exceptions.Mvc;
 using BetterCms.Core.Mvc.Binders;
@@ -17,11 +18,12 @@ using BetterCms.Module.Pages.ViewModels.Filter;
 using BetterCms.Module.Pages.ViewModels.Widgets;
 
 using BetterCms.Module.Root;
-using BetterCms.Module.Root.Models;
 using BetterCms.Module.Root.Mvc;
 using BetterCms.Module.Root.Mvc.Grids.GridOptions;
 
 using BetterModules.Core.Web.Models;
+
+using Common.Logging;
 
 using Microsoft.Web.Mvc;
 
@@ -33,7 +35,8 @@ namespace BetterCms.Module.Pages.Controllers
     [BcmsAuthorize]
     [ActionLinkArea(PagesModuleDescriptor.PagesAreaName)]
     public class WidgetsController : CmsControllerBase
-    {                    
+    {
+        private static readonly ILog Logger = LogManager.GetCurrentClassLogger();
         /// <summary>
         /// Deletes widget.
         /// </summary>
@@ -184,7 +187,15 @@ namespace BetterCms.Module.Pages.Controllers
 
             if (ModelState.IsValid)
             {
-                var viewEngineResult = ViewEngines.Engines.FindView(ControllerContext, request.Content.Url, null);
+                ViewEngineResult viewEngineResult = null;
+                try
+                {
+                    viewEngineResult = ViewEngines.Engines.FindView(ControllerContext, request.Content.Url, null);
+                }
+                catch (Exception ex)
+                {
+                    Logger.Error(string.Format("Failed to get the view for server widget by url '{0}'.", request.Content.Url), ex);
+                }
                 if (viewEngineResult == null || viewEngineResult.View == null)
                 {
                     Messages.AddError(string.Format(PagesGlobalization.SaveWidget_VirtualPathNotExists_Message, request.Content.Url));
@@ -260,7 +271,17 @@ namespace BetterCms.Module.Pages.Controllers
             var model = GetCommand<GetWidgetCategoryCommand>().ExecuteCommand(request);
             var view = model != null ? RenderView("SelectWidget", model.WidgetCategories) : string.Empty;
 
-            return ComboWireJson(model != null, view, model, JsonRequestBehavior.AllowGet);
+            var result = ComboWireJson(model != null, view, model, JsonRequestBehavior.AllowGet);
+            result.MaxJsonLength = int.MaxValue;
+// TODO: very large JSON ~2.1MB on test environment!!!
+//            var scriptSerializer = new JavaScriptSerializer();
+//            if (result.MaxJsonLength.HasValue)
+//            {
+//                scriptSerializer.MaxJsonLength = result.MaxJsonLength.Value;
+//            }
+//            var jsonString = scriptSerializer.Serialize(result.Data);
+
+            return result;
         }
 
         /// <summary>

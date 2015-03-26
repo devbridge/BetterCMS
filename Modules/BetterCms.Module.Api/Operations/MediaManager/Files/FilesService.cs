@@ -11,6 +11,7 @@ using BetterCms.Module.Api.Operations.Root;
 using BetterCms.Module.Api.Operations.Root.Categories.Category;
 using BetterCms.Module.MediaManager.Models;
 using BetterCms.Module.MediaManager.Services;
+using BetterCms.Module.Root.Services;
 
 using ServiceStack.Common.Extensions;
 using ServiceStack.ServiceInterface;
@@ -46,6 +47,7 @@ namespace BetterCms.Module.Api.Operations.MediaManager.Files
         /// </summary>
         private readonly IFileService fileService;
 
+        private readonly ICategoryService categoryService;
         /// <summary>
         /// Initializes a new instance of the <see cref="FilesService"/> class.
         /// </summary>
@@ -61,13 +63,15 @@ namespace BetterCms.Module.Api.Operations.MediaManager.Files
             IMediaFileUrlResolver fileUrlResolver,
             IAccessControlService accessControlService,
             IFileService fileService,
-            IUploadFileService uploadFileService)
+            IUploadFileService uploadFileService,
+            ICategoryService categoryService)
         {
             this.repository = repository;
             this.mediaFileService = mediaFileService;
             this.fileUrlResolver = fileUrlResolver;
             this.accessControlService = accessControlService;
             this.fileService = fileService;
+            this.categoryService = categoryService;
             Upload = uploadFileService;
         }
 
@@ -117,7 +121,7 @@ namespace BetterCms.Module.Api.Operations.MediaManager.Files
             }
 
             query = query.ApplyMediaTagsFilter(request.Data)
-                         .ApplyCategoriesFilter(request.Data);
+                         .ApplyCategoriesFilter(categoryService, request.Data);
 
             if (request.User != null && !string.IsNullOrWhiteSpace(request.User.Name))
             {

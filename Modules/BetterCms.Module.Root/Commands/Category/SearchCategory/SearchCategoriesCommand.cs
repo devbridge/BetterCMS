@@ -23,14 +23,14 @@ namespace BetterCms.Module.Root.Commands.Category.SearchCategory
         /// </returns>
         public List<LookupKeyValue> Execute(CategorySuggestionViewModel model)
         {
-            // TODO:
+            // TODO: #1210
             // return Categories(model);
             var query = Repository.AsQueryable<Models.Category>()
                 .Where(category => category.Name.Contains(model.Query));
 
             if (model.ExistingItemsArray.Length > 0)
             {
-                query = query.Where(category => !model.ExistingItems.Contains(category.Name) && !model.ExistingItems.Contains(category.Id.ToString().ToUpper()));
+                query = query.Where(category => !model.ExistingItems.Contains(category.Id.ToString().ToUpper()));
             }
 
             if (!string.IsNullOrEmpty(model.CategoryTreeForKey))

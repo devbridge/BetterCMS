@@ -319,7 +319,7 @@ bettercms.define('bcms.pages.widgets', ['bcms.jquery', 'bcms', 'bcms.modal', 'bc
         function WidgetEditViewModel(data) {
             var self = this,
                 categorieslist = data.Categories;
-            self.categories = new categories.CategoriesListViewModel(categorieslist, 'Widgets');
+            self.categories = new categories.CategoriesListViewModel(categorieslist, data.CategoriesFilterKey);
         }
 
         function initializeEditHtmlContentWidgetForm(dialog, availablePreviewOnPageContentId, onSaveCallback, editInSourceMode, content, editorId, includeChildRegions) {

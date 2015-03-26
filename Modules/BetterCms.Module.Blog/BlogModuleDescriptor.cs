@@ -14,13 +14,15 @@ using BetterCms.Module.Blog.Accessors;
 using BetterCms.Module.Blog.Content.Resources;
 using BetterCms.Module.Blog.Helpers.Extensions;
 using BetterCms.Module.Blog.Models;
+using BetterCms.Module.Blog.Models.Accessors;
 using BetterCms.Module.Blog.Mvc.PageHtmlRenderer;
 using BetterCms.Module.Blog.Registration;
 using BetterCms.Module.Blog.Services;
 
 using BetterCms.Module.Pages.Accessors;
-
+using BetterCms.Module.Pages.Models;
 using BetterCms.Module.Root;
+using BetterCms.Module.Root.Accessors;
 using BetterCms.Module.Root.Mvc.PageHtmlRenderer;
 using BetterCms.Module.Root.ViewModels.Cms;
 
@@ -62,6 +64,7 @@ namespace BetterCms.Module.Blog
 
             RootEvents.Instance.PageRetrieved += Events_PageRetrieved;
 
+            CategoryAccessors.Register<BlogCategoryAccessor>();
             RegisterRenderingPageProperties();
         }
 

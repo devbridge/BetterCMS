@@ -178,6 +178,7 @@ function ($, bcms, modal, siteSettings, forms, dynamicContent, messages, mediaUp
         self.clearFilter = function () {
             self.includeArchived(false);
             self.tags.removeAll();
+            self.categories.removeAll();
         };
 
         self.toggleFilter = function () {

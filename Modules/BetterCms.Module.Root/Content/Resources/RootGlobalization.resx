@@ -712,12 +712,15 @@
     <value>Use For</value>
   </data>
   <data name="CategoryTree_EditDialog_UsedFor_Tooltip_Description" xml:space="preserve">
-    <value>This category will be used for selected objects.</value>
+    <value>This category will be used for selected objects. "Use For" items can be unchecked only if none of the category nodes are used for them.</value>
   </data>
   <data name="CategoryTree_EditDialog_NodesTab_Title" xml:space="preserve">
     <value>Nodes</value>
   </data>
   <data name="CategoryTree_EditDialog_PropertiesTab_Title" xml:space="preserve">
     <value>Properties</value>
+  </data>
+  <data name="Validation_Category_Unavailable_Message" xml:space="preserve">
+    <value>Selected category '{0}' cannot be assigned.</value>
   </data>
 </root>

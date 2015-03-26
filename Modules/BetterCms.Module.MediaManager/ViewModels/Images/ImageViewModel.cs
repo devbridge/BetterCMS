@@ -221,7 +221,7 @@ namespace BetterCms.Module.MediaManager.ViewModels.Images
         /// <value>
         /// The folder id.
         /// </value>
-        public System.Guid? FolderId { get; set; }
+        public Guid? FolderId { get; set; }
 
         /// <summary>
         /// Gets or sets override flag.
@@ -235,6 +235,14 @@ namespace BetterCms.Module.MediaManager.ViewModels.Images
         /// The list of categories.
         /// </value>
         public IEnumerable<LookupKeyValue> Categories { get; set; }
+
+        /// <summary>
+        /// Gets or sets the categories filter key.
+        /// </summary>
+        /// <value>
+        /// The categories filter key.
+        /// </value>
+        public string CategoriesFilterKey { get; set; }
 
         /// <summary>
         /// Returns a <see cref="System.String" /> that represents this instance.

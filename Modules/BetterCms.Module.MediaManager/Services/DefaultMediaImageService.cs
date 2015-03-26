@@ -379,7 +379,8 @@ namespace BetterCms.Module.MediaManager.Services
                     originalUriTemp = originalImage.OriginalUri;
                 }
 
-                image.CopyDataTo(originalImage);
+                image.CopyDataTo(originalImage, false);
+                MediaHelper.SetCollections(repository, image, originalImage);
 
                 if (!overrideUrl)
                 {

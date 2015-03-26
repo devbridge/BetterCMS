@@ -1,8 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
 
 using BetterCms.Module.Pages.ViewModels.Content;
-using BetterCms.Module.Root.Models;
 
 namespace BetterCms.Module.Pages.ViewModels.Widgets
 {
@@ -43,5 +41,13 @@ namespace BetterCms.Module.Pages.ViewModels.Widgets
                 return true;
             }
         }
+
+        /// <summary>
+        /// Gets or sets the categories filter key.
+        /// </summary>
+        /// <value>
+        /// The categories filter key.
+        /// </value>
+        public string CategoriesFilterKey { get; set; }
     }
 }
