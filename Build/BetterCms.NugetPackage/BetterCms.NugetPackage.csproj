@@ -50,6 +50,10 @@
     <Reference Include="BetterCms.Module.Newsletter">
       <HintPath>..\..\Modules\BetterCms.Module.Newsletter\bin\BetterCms.Module.Newsletter.dll</HintPath>
     </Reference>
+    <Reference Include="BetterModules.Core, Version=1.0.0.21, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\packages\BetterModules.Core.1.0.0-rc1\lib\net40\BetterModules.Core.dll</HintPath>
+    </Reference>
     <Reference Include="BetterModules.Core.Web, Version=1.0.0.21, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\packages\BetterModules.Core.Web.1.0.0-rc1\lib\net40\BetterModules.Core.Web.dll</HintPath>
