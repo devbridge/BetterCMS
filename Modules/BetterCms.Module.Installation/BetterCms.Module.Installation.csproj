@@ -63,11 +63,11 @@
     </Reference>
     <Reference Include="BetterModules.Core, Version=1.0.0.21, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\packages\BetterModules.Core.1.0.0-rc1\lib\net40\BetterModules.Core.dll</HintPath>
+      <HintPath>..\..\packages\BetterModules.Core.1.0.0-rc2\lib\net40\BetterModules.Core.dll</HintPath>
     </Reference>
     <Reference Include="BetterModules.Core.Web, Version=1.0.0.21, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\packages\BetterModules.Core.Web.1.0.0-rc1\lib\net40\BetterModules.Core.Web.dll</HintPath>
+      <HintPath>..\..\packages\BetterModules.Core.Web.1.0.0-rc2\lib\net40\BetterModules.Core.Web.dll</HintPath>
     </Reference>
     <Reference Include="Common.Logging, Version=2.1.2.0, Culture=neutral, PublicKeyToken=af08829b84f0328e, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
@@ -100,7 +100,7 @@
     </Reference>
     <Reference Include="RazorGenerator.Mvc, Version=2.0.0.0, Culture=neutral, PublicKeyToken=7b26dc2a43f6a0d4, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\packages\BetterModules.Core.Web.1.0.0-rc1\lib\net40\RazorGenerator.Mvc.dll</HintPath>
+      <HintPath>..\..\packages\BetterModules.Core.Web.1.0.0-rc2\lib\net40\RazorGenerator.Mvc.dll</HintPath>
     </Reference>
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="System.Data.Entity" />
@@ -119,9 +119,9 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\packages\Microsoft.AspNet.WebPages.3.2.2\lib\net45\System.Web.Helpers.dll</HintPath>
     </Reference>
-    <Reference Include="System.Web.Mvc, Version=5.2.2.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+    <Reference Include="System.Web.Mvc, Version=5.2.3.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\packages\Microsoft.AspNet.Mvc.5.2.2\lib\net45\System.Web.Mvc.dll</HintPath>
+      <HintPath>..\..\packages\Microsoft.AspNet.Mvc.5.2.3\lib\net45\System.Web.Mvc.dll</HintPath>
     </Reference>
     <Reference Include="System.Web.Razor, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>

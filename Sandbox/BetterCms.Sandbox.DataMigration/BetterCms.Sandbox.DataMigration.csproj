@@ -56,11 +56,11 @@
     </Reference>
     <Reference Include="BetterModules.Core, Version=1.0.0.21, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\packages\BetterModules.Core.1.0.0-rc1\lib\net40\BetterModules.Core.dll</HintPath>
+      <HintPath>..\..\packages\BetterModules.Core.1.0.0-rc2\lib\net40\BetterModules.Core.dll</HintPath>
     </Reference>
     <Reference Include="BetterModules.Core.Web, Version=1.0.0.21, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\packages\BetterModules.Core.Web.1.0.0-rc1\lib\net40\BetterModules.Core.Web.dll</HintPath>
+      <HintPath>..\..\packages\BetterModules.Core.Web.1.0.0-rc2\lib\net40\BetterModules.Core.Web.dll</HintPath>
     </Reference>
     <Reference Include="Common.Logging">
       <HintPath>..\..\packages\Common.Logging.2.1.2\lib\net40\Common.Logging.dll</HintPath>
@@ -98,7 +98,7 @@
     </Reference>
     <Reference Include="RazorGenerator.Mvc, Version=2.0.0.0, Culture=neutral, PublicKeyToken=7b26dc2a43f6a0d4, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\packages\BetterModules.Core.Web.1.0.0-rc1\lib\net40\RazorGenerator.Mvc.dll</HintPath>
+      <HintPath>..\..\packages\BetterModules.Core.Web.1.0.0-rc2\lib\net40\RazorGenerator.Mvc.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Configuration" />
@@ -108,7 +108,7 @@
       <Private>True</Private>
     </Reference>
     <Reference Include="System.Web.Mvc">
-      <HintPath>..\..\packages\Microsoft.AspNet.Mvc.5.2.2\lib\net45\System.Web.Mvc.dll</HintPath>
+      <HintPath>..\..\packages\Microsoft.AspNet.Mvc.5.2.3\lib\net45\System.Web.Mvc.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="System.Web.Razor">
