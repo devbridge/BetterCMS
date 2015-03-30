@@ -26,6 +26,8 @@ namespace BetterCms.Core
     /// </summary>
     public static class CmsContext
     {
+        private static bool isStarted;
+
         private static readonly object configurationLoaderLock = new object();
 
         private static volatile ICmsConfiguration config;
@@ -91,6 +93,11 @@ namespace BetterCms.Core
                 builder = new ContainerBuilder();
             }
 
+            if (isStarted)
+            {
+                return builder;
+            }
+
             builder = WebApplicationContext.InitializeContainer(builder, Config);
             builder.RegisterType<DefaultTextEncryptor>().As<ITextEncryptor>().SingleInstance();
 
@@ -113,6 +120,8 @@ namespace BetterCms.Core
 
             RegisterCacheService(builder);
             RegisterStorageService(builder);
+
+            isStarted = true;
 
             return builder;
         }       
