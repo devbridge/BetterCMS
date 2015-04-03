@@ -76,7 +76,7 @@
                     @Html.Tooltip(BlogGlobalization.EditBlockPost_Title_Tooltip_Description)
                     <div class="bcms-content-titles">@BlogGlobalization.EditBlockPost_Title_Title</div>
                     <div class="bcms-input-box">
-                        @Html.TextBoxFor(m => m.Title, new { @style = "width: 510px;", @class = "bcms-editor-field-box", @id = "bcms-editor-blog-title" })
+                        @Html.TextBoxFor(m => m.Title, new { @class = "bcms-editor-field-box", @id = "bcms-editor-blog-title" })
                         @Html.BcmsValidationMessageFor(m => m.Title)
                     </div>
                 </div>
@@ -87,7 +87,7 @@
                     @Html.Tooltip(BlogGlobalization.EditBlockPost_IntroText_Tooltip_Description)
                     <div class="bcms-content-titles">@BlogGlobalization.EditBlockPost_IntroText_Title</div>
                     <div class="bcms-textarea-box">
-                        @Html.TextAreaFor(m => m.IntroText, new { @style = "width: 510px; height: 170px;", @class = "bcms-editor-field-area" })
+                        @Html.TextAreaFor(m => m.IntroText, new { @style = "height: 170px;", @class = "bcms-editor-field-area" })
                         @Html.BcmsValidationMessageFor(m => m.IntroText)
                     </div>
                 </div>
