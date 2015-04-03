@@ -114,7 +114,7 @@ bettercms.define('bcms.pages.masterpage', ['bcms.jquery', 'bcms', 'bcms.siteSett
                     var template = $(selectors.siteSettingsPageRowTemplate),
                         newRow = $(template.html()).find(selectors.siteSettingsPageRowTemplateFirstRow);
 
-                    newRow.find(selectors.siteSettingsPageTitleCell).html(data.Data.Title);
+                    newRow.find(selectors.siteSettingsPageTitleCell).html(document.createTextNode(data.Data.Title));
 
                     newRow.find(selectors.siteSettingsPageTitleCell).data('url', data.Data.PageUrl);
                     newRow.find(selectors.siteSettingsPageEditButton).data('id', data.Data.PageId);

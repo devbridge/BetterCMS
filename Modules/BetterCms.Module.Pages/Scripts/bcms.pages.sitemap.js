@@ -203,6 +203,7 @@ bettercms.define('bcms.pages.sitemap', ['bcms.jquery', 'bcms', 'bcms.modal', 'bc
                         newRow = $(template.html()).find(selectors.siteSettingsSitemapRowTemplateFirstRow);
 
                     newRow.find(selectors.siteSettingsSitemapTitleCell).html(data.Data.Title);
+                    newRow.find(selectors.siteSettingsSitemapTitleCell).html(document.createTextNode(data.Data.Title));
                     newRow.find(selectors.siteSettingsSitemapEditButton).data('id', data.Data.Id);
                     newRow.find(selectors.siteSettingsSitemapHistoryButton).data('id', data.Data.Id);
                     newRow.find(selectors.siteSettingsSitemapDeleteButton).data('id', data.Data.Id);

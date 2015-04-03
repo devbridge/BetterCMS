@@ -631,7 +631,7 @@ bettercms.define('bcms.pages', ['bcms.jquery', 'bcms', 'bcms.modal', 'bcms.siteS
                     var template = $(selectors.siteSettingsPageRowTemplate),
                         newRow = $(template.html()).find(selectors.siteSettingsPageRowTemplateFirstRow);
 
-                    newRow.find(selectors.siteSettingPageTitleCell).html(data.Data.Title);
+                    newRow.find(selectors.siteSettingPageTitleCell).html(document.createTextNode(data.Data.Title));
                     newRow.find(selectors.siteSettingPageCreatedCell).html(data.Data.CreatedOn);
                     newRow.find(selectors.siteSettingPageModifiedCell).html(data.Data.ModifiedOn);
                         
@@ -707,7 +707,7 @@ bettercms.define('bcms.pages', ['bcms.jquery', 'bcms', 'bcms.modal', 'bcms.siteS
 
                     var row = self.parents(selectors.siteSettingsPageParentRow),
                         cell = row.find(selectors.siteSettingPageTitleCell);
-                    cell.html(data.Data.Title);
+                    cell.html(document.createTextNode(data.Data.Title));
                     cell.data('url', data.Data.PageUrl);
                     row.find(selectors.siteSettingPageCreatedCell).html(data.Data.CreatedOn);
                     row.find(selectors.siteSettingPageModifiedCell).html(data.Data.ModifiedOn);

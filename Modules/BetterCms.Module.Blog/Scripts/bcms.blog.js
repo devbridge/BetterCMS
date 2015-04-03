@@ -335,7 +335,7 @@ bettercms.define('bcms.blog', ['bcms.jquery', 'bcms', 'bcms.modal', 'bcms.siteSe
     */
     function onAfterSiteSettingsBlogPostSaved(json, row) {
         if (json.Data != null) {
-            row.find(selectors.siteSettingsBlogCellPrefix + 'Title').html(json.Data.Title);
+            row.find(selectors.siteSettingsBlogCellPrefix + 'Title').html(document.createTextNode(json.Data.Title));
             row.find(selectors.siteSettingsBlogCellPrefix + 'ModifiedOn').html(json.Data.ModifiedOn);
             row.find(selectors.siteSettingsBlogCellPrefix + 'ModifiedByUser').html(json.Data.ModifiedByUser);
             row.find(selectors.siteSettingsBlogCellPrefix + 'CreatedOn').html(json.Data.CreatedOn);

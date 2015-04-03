@@ -771,7 +771,7 @@ bettercms.define('bcms.pages.widgets', ['bcms.jquery', 'bcms', 'bcms.modal', 'bc
             row.data('originalId', json.Data.OriginalId);
             row.data('version', json.Data.Version);
             row.data('originalVersion', json.Data.OriginalVersion);
-            row.find(selectors.widgetNameCell).html(json.Data.WidgetName);
+            row.find(selectors.widgetNameCell).html(document.createTextNode(json.Data.WidgetName));
             row.find(selectors.widgetCategoryNameCell).html(json.Data.CategoryName);
 
             // Set widget type, if it's set
