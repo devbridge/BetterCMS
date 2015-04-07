@@ -3,13 +3,17 @@
     padding: 0 35px 20px;
 }
 
-    .bcms-file-manager-inner .bcms-input-list-holder:first-of-type {
-        padding-top: 20px;
+    .bcms-file-manager-inner .bcms-input-list-holder {
+        max-width: none;
     }
 
-        .bcms-file-manager-inner .bcms-input-list-holder:first-of-type .bcms-tooltip-mark {
-            top: 24px;
+        .bcms-file-manager-inner .bcms-input-list-holder:first-of-type {
+            padding-top: 20px;
         }
+
+            .bcms-file-manager-inner .bcms-input-list-holder:first-of-type .bcms-tooltip-mark {
+                top: 24px;
+            }
 
 .bcms-edit-file-info .bcms-input-list-holder:first-child {
     padding-top: 0;
@@ -48,7 +52,6 @@
     }
 
 .bcms-croped-block {
-    width: 835px;
     max-height: 557px;
     padding: 15px;
     margin: -20px 0 20px;
