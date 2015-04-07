@@ -56,11 +56,11 @@
       <HintPath>..\..\packages\AWSSDK.1.5.20.0\lib\AWSSDK.dll</HintPath>
     </Reference>
     <Reference Include="BetterModules.Core">
-      <HintPath>..\..\packages\BetterModules.Core.1.0.0-rc4\lib\net40\BetterModules.Core.dll</HintPath>
+      <HintPath>..\..\packages\BetterModules.Core.1.0.0-rc5\lib\net40\BetterModules.Core.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="BetterModules.Core.Web">
-      <HintPath>..\..\packages\BetterModules.Core.Web.1.0.0-rc4\lib\net40\BetterModules.Core.Web.dll</HintPath>
+      <HintPath>..\..\packages\BetterModules.Core.Web.1.0.0-rc5\lib\net40\BetterModules.Core.Web.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="Common.Logging, Version=2.1.2.0, Culture=neutral, PublicKeyToken=af08829b84f0328e, processorArchitecture=MSIL">
@@ -133,7 +133,7 @@
       <HintPath>..\..\packages\NuGet.Core.2.0.1\lib\net40-Client\NuGet.Core.dll</HintPath>
     </Reference>
     <Reference Include="RazorGenerator.Mvc">
-      <HintPath>..\..\packages\BetterModules.Core.Web.1.0.0-rc4\lib\net40\RazorGenerator.Mvc.dll</HintPath>
+      <HintPath>..\..\packages\BetterModules.Core.Web.1.0.0-rc5\lib\net40\RazorGenerator.Mvc.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="RouteDebugger">
