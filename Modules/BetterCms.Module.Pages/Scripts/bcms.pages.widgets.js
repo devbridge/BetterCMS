@@ -682,7 +682,7 @@ bettercms.define('bcms.pages.widgets', ['bcms.jquery', 'bcms', 'bcms.modal', 'bc
                                             if (this.type() == widgetUsageTypes.page || this.type() == widgetUsageTypes.masterPage) {
                                                 pages.openEditPageDialog(this.id(), function (pageData) {
                                                     newItem.url(pageData.Data.PageUrl);
-                                                    newItem.title(pageData.Data.Title);
+                                                    newItem.title(document.createTextNode(pageData.Data.Title));
                                                 });
                                             } else if (item.Type == widgetUsageTypes.htmlWidget) {
                                                 widgets.openEditHtmlContentWidgetDialog(this.id(), function(widgetData) {

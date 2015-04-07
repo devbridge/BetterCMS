@@ -202,7 +202,6 @@ bettercms.define('bcms.pages.sitemap', ['bcms.jquery', 'bcms', 'bcms.modal', 'bc
                     var template = $(selectors.siteSettingsSitemapRowTemplate),
                         newRow = $(template.html()).find(selectors.siteSettingsSitemapRowTemplateFirstRow);
 
-                    newRow.find(selectors.siteSettingsSitemapTitleCell).html(data.Data.Title);
                     newRow.find(selectors.siteSettingsSitemapTitleCell).html(document.createTextNode(data.Data.Title));
                     newRow.find(selectors.siteSettingsSitemapEditButton).data('id', data.Data.Id);
                     newRow.find(selectors.siteSettingsSitemapHistoryButton).data('id', data.Data.Id);
@@ -228,7 +227,7 @@ bettercms.define('bcms.pages.sitemap', ['bcms.jquery', 'bcms', 'bcms.modal', 'bc
                 if (data.Data != null) {
                     var row = self.parents(selectors.siteSettingsSitemapParentRow),
                         cell = row.find(selectors.siteSettingsSitemapTitleCell);
-                    cell.html(data.Data.Title);
+                    cell.html(document.createTextNode(data.Data.Title));
                     row.find(selectors.siteSettingsSitemapDeleteButton).data('version', data.Data.Version);
                 }
             }, globalization.sitemapEditorDialogTitle);
@@ -244,7 +243,7 @@ bettercms.define('bcms.pages.sitemap', ['bcms.jquery', 'bcms', 'bcms.modal', 'bc
                 if (data.Data != null) {
                     var row = self.parents(selectors.siteSettingsSitemapParentRow),
                         cell = row.find(selectors.siteSettingsSitemapTitleCell);
-                    cell.html(data.Data.Title);
+                    cell.html(document.createTextNode(data.Data.Title));
                     row.find(selectors.siteSettingsSitemapDeleteButton).data('version', data.Data.Version);
                 }
             }, globalization.sitemapHistoryDialogTitle);

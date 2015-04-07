@@ -147,7 +147,7 @@ bettercms.define('bcms.pages.masterpage', ['bcms.jquery', 'bcms', 'bcms.siteSett
 
                     var row = self.parents(selectors.siteSettingsPageParentRow),
                         cell = row.find(selectors.siteSettingsPageTitleCell);
-                    cell.html(data.Data.Title);
+                    cell.html(document.createTextNode(data.Data.Title));
                     cell.data('url', data.Data.PageUrl);
                 }
             }, globalization.editMasterPagePropertiesModalTitle);

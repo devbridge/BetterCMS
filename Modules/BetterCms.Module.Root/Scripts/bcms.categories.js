@@ -995,7 +995,6 @@
                     var template = $(selectors.siteSettingsGridRowTemplate),
                         newRow = $(template.html()).find(selectors.siteSettingsGridRowTemplateFirstRow);
 
-                    newRow.find(selectors.siteSettingsGridRowTitleCell).html(data.Data.Title);
                     newRow.find(selectors.siteSettingsGridRowTitleCell).html(document.createTextNode(data.Data.Title));
                     newRow.find(selectors.siteSettingsGridItemEditButton).data("id", data.Data.Id);
                     newRow.find(selectors.siteSettingsGridItemDeleteButton).data("id", data.Data.Id);
@@ -1017,7 +1016,7 @@
                 if (data.Data != null) {
                     var row = self.parents(selectors.siteSettingsGridRowTemplateFirstRow),
                         cell = row.find(selectors.siteSettingsGridRowTitleCell);
-                    cell.html(data.Data.Title);
+                    cell.html(document.createTextNode(data.Data.Title));
                     row.find(selectors.siteSettingsGridItemDeleteButton).data("version", data.Data.Version);
                 }
             }, globalization.categoryTreeEditorDialogTitle);
