@@ -369,11 +369,19 @@ describe('pages.pages.api.behavior', function () {
     });
 
     it('01010.1: Should get pages list, filtered by categories, using AND connector', function () {
-        filterByCategories('and', 1, ['IFilterByCategories Page 1']);
+        filterByCategories('and', 1, ['IFilterByCategories Page 1'], 'id');
     });
 
     it('01010.2: Should get pages list, filtered by categories, using OR connector', function () {
-        filterByCategories('or', 2, ['IFilterByCategories Page 1', 'IFilterByCategories Page 2']);
+        filterByCategories('or', 2, ['IFilterByCategories Page 1', 'IFilterByCategories Page 2'], 'id');
+    });
+
+    it('01010.3: Should get pages list, filtered by categories names, using AND connector', function () {
+        filterByCategories('and', 1, ['IFilterByCategories Page 1'], 'name');
+    });
+
+    it('01010.4: Should get pages list, filtered by categories names, using OR connector', function () {
+        filterByCategories('or', 2, ['IFilterByCategories Page 1', 'IFilterByCategories Page 2'], 'name');
     });
 
     it('01011: Should get a list with one page (with layout), filtered by all available columns', function () {
@@ -1513,7 +1521,7 @@ describe('pages.pages.api.behavior', function () {
         });
     };
 
-    function filterByCategories(connector, expectedCount, expectedTitles) {
+    function filterByCategories(connector, expectedCount, expectedTitles, filterBy) {
         var url = '/bcms-api/pages/',
             result,
             ready = false;
@@ -1526,10 +1534,15 @@ describe('pages.pages.api.behavior', function () {
                 by: [{ field: 'Title' }]
             },
             filterByCategoriesConnector: connector,
-            filterByCategories: ['15A86920-78E5-4DDC-A259-A43500A2B573', 'FD36A148-DD10-44E0-A5C1-A43500B8A450'],
             includeUnpublished: true,
             includeArchived: true
         };
+        
+        if (filterBy === 'id') {
+            data.filterByCategories = ['15A86920-78E5-4DDC-A259-A43500A2B573', 'FD36A148-DD10-44E0-A5C1-A43500B8A450'];
+        } else if (filterBy === 'name') {
+            data.filterByCategoriesNames = ['IFilterByCategories Category 1', 'IFilterByCategories Category 2'];
+        }
 
         runs(function () {
             api.get(url, data, function (json) {
