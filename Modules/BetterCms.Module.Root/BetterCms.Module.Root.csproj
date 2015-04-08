@@ -1448,6 +1448,7 @@
     <EmbeddedResource Include="Scripts\ace\theme-kuroir.js" />
     <EmbeddedResource Include="Scripts\ace\worker-html.js" />
     <EmbeddedResource Include="Scripts\ace\worker-xml.js" />
+    <EmbeddedResource Include="Scripts\ckeditor\plugins\cms-togglelinewrap\plugin.js" />
     <Content Include="Views\Web.config" />
     <Content Include="Views\Category\CategoryTreeEdit.cshtml">
       <Generator>RazorGenerator</Generator>

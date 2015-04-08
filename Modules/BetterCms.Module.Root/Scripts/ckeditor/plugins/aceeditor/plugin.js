@@ -67,6 +67,12 @@ Edited by the Devbridge Better CMS team.
                             $('#aceEditor_container_' + editorID).css('z-index', bcms.getHighestZindex() + 1);
 
                             // CUSTOM FUNCTIONS
+                            //Changes source editor line wrap
+                            var toggleLineWrapChange = function() {
+                                aceEditor.getSession().setUseWrapMode(!aceEditor.getSession().getUseWrapMode());
+                            };
+
+
                             // This function checks to see if we are returning to design view.  If so, purge all the ACE stuff.
                             var returnToDesignView = function(e) {
 
@@ -150,6 +156,9 @@ Edited by the Devbridge Better CMS team.
 
                             // Commit source data back into 'source' mode.
                             editor.on('beforeCommandExec', returnToDesignView);
+
+                            // Change Line Wrap Mode.
+                            editor.on('onLineWrapChange', toggleLineWrapChange);
 
                             // When the editor fires the 'resize' event call the resize function.
                             editor.on('resize', resizeACE);
