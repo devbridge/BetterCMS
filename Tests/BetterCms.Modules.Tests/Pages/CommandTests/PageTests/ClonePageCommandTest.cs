@@ -41,7 +41,7 @@ namespace BetterCms.Test.Module.Pages.CommandTests.PageTests
                     
                     var pageService = new Mock<IPageService>();
                     pageService.Setup(f => f.ValidatePageUrl(It.IsAny<string>(), It.IsAny<Guid?>()));
-                    pageService.Setup(f => f.CreatePagePermalink(It.IsAny<string>(), It.IsAny<string>(), It.IsAny<Guid>(), It.IsAny<Guid>(), It.IsAny<Guid>())).Returns(url);
+                    pageService.Setup(f => f.CreatePagePermalink(It.IsAny<string>(), It.IsAny<string>(), It.IsAny<Guid>(), It.IsAny<Guid>(), It.IsAny<IEnumerable<Guid>>())).Returns(url);
 
                     var urlService = new Mock<IUrlService>();
                     urlService.Setup(f => f.FixUrl(It.IsAny<string>())).Returns(url);

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace BetterCms.Module.Pages.Helpers
 {
@@ -10,7 +11,7 @@ namespace BetterCms.Module.Pages.Helpers
 
         public Guid? LanguageId { get; set; }
 
-        public Guid? CategoryId { get; set; }
+        public IEnumerable<Guid> CategoryId { get; set; }
     }
 
     public static class UrlHelper

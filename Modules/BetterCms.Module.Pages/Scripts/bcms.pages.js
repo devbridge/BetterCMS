@@ -502,9 +502,21 @@ bettercms.define('bcms.pages', ['bcms.jquery', 'bcms', 'bcms.modal', 'bcms.siteS
                 if (text && oldText == text) {
                     var prefix = (addPrefix) ? encodeURIComponent(window.location.pathname) : '';
 
+                    var url = $.format(actionUrl, encodeURIComponent(text), senderId, prefix, parentPageId, languageId);
+
+                    if (categoryId) {
+                        for (var i = 0; i < categoryId.length; i++) {
+                            var connector = '&';
+                            if (url.indexOf('?') === -1) {
+                                connector = '?';
+                            }
+                            url = url.concat(connector + 'categoryId=' + categoryId[i]);
+                        }
+                    }
+
                     $.ajax({
                         type: 'GET',
-                        url: $.format(actionUrl, encodeURIComponent(text), senderId, prefix, parentPageId, languageId, categoryId),
+                        url: url,
                         dataType: 'json'
                     })
                         .done(function (result) {

@@ -117,7 +117,7 @@ namespace BetterCms.Module.Blog.Services
         /// <returns>
         /// Created blog URL
         /// </returns>
-        public string CreateBlogPermalink(string title, List<string> unsavedUrls = null, Guid? categoryId = null)
+        public string CreateBlogPermalink(string title, List<string> unsavedUrls = null, IEnumerable<Guid> categoryId = null)
         {
             string newUrl = null;
             if (UrlHelper.GeneratePageUrl != null)
@@ -291,7 +291,7 @@ namespace BetterCms.Module.Blog.Services
                 }
                 else
                 {
-                    blogPost.PageUrl = CreateBlogPermalink(request.Title, null, blogPost.Categories != null ? (Guid?)blogPost.Categories.First().Id : null);
+                    blogPost.PageUrl = CreateBlogPermalink(request.Title, null, blogPost.Categories != null ? blogPost.Categories.Select(x => x.Id) : null);
                 }
 
                 blogPost.MetaTitle = request.MetaTitle ?? request.Title;
