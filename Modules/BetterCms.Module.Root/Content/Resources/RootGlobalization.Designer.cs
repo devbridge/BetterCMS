@@ -151,6 +151,15 @@ namespace BetterCms.Module.Root.Content.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to The field must not contain html..
+        /// </summary>
+        public static string AntiXss_Contains_Html_Error {
+            get {
+                return ResourceManager.GetString("AntiXss_Contains_Html_Error", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Are you sure you want to log out?.
         /// </summary>
         public static string Authentication_LogOutConfirmationMessage {

@@ -266,6 +266,7 @@ namespace BetterCms.Module.Root
                     new JsIncludeDescriptor(this, "bcms.jquery.autocomplete"),
                     new JsIncludeDescriptor(this, "bcms.autocomplete"),
                     new JsIncludeDescriptor(this, "bcms.multiple.select"),
+                    new AntiXssJsModuleIncludeDescriptor(this),
                     new BcmsJsModuleIncludeDescriptor(this), 
                     new KnockoutExtendersJsModuleIncludeDescriptor(this), 
                     new JsIncludeDescriptor(this, "bcms.ko.grid"),                    

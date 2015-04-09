@@ -723,4 +723,7 @@
   <data name="Validation_Category_Unavailable_Message" xml:space="preserve">
     <value>Selected category '{0}' cannot be assigned.</value>
   </data>
+  <data name="AntiXss_Contains_Html_Error" xml:space="preserve">
+    <value>The field must not contain html.</value>
+  </data>
 </root>
