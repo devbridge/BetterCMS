@@ -1,5 +1,5 @@
-﻿bettercms.define("bcms.categories", ["bcms.jquery", "bcms", "bcms.siteSettings", "bcms.dynamicContent", "bcms.grid", "bcms.messages", "bcms.modal", "bcms.forms", "bcms.ko.extenders", 'bcms.autocomplete'],
-    function ($, bcms, siteSettings, dynamicContent, grid, messages, modal, forms, ko, autocomplete) {
+﻿bettercms.define("bcms.categories", ["bcms.jquery", "bcms", "bcms.siteSettings", "bcms.dynamicContent", "bcms.grid", "bcms.messages", "bcms.modal", "bcms.forms", "bcms.ko.extenders", 'bcms.autocomplete', 'bcms.antiXss'],
+    function ($, bcms, siteSettings, dynamicContent, grid, messages, modal, forms, ko, autocomplete, antiXss) {
         "use strict";
 
         var module = {},
@@ -995,7 +995,7 @@
                     var template = $(selectors.siteSettingsGridRowTemplate),
                         newRow = $(template.html()).find(selectors.siteSettingsGridRowTemplateFirstRow);
 
-                    newRow.find(selectors.siteSettingsGridRowTitleCell).html(document.createTextNode(data.Data.Title));
+                    newRow.find(selectors.siteSettingsGridRowTitleCell).html(antiXss.encodeHtml(data.Data.Title));
                     newRow.find(selectors.siteSettingsGridItemEditButton).data("id", data.Data.Id);
                     newRow.find(selectors.siteSettingsGridItemDeleteButton).data("id", data.Data.Id);
                     newRow.find(selectors.siteSettingsGridItemDeleteButton).data("version", data.Data.Version);
@@ -1016,7 +1016,7 @@
                 if (data.Data != null) {
                     var row = self.parents(selectors.siteSettingsGridRowTemplateFirstRow),
                         cell = row.find(selectors.siteSettingsGridRowTitleCell);
-                    cell.html(document.createTextNode(data.Data.Title));
+                    cell.html(antiXss.encodeHtml(data.Data.Title));
                     row.find(selectors.siteSettingsGridItemDeleteButton).data("version", data.Data.Version);
                 }
             }, globalization.categoryTreeEditorDialogTitle);

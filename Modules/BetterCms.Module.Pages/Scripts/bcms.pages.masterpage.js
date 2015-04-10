@@ -1,8 +1,8 @@
 ﻿/*jslint unparam: true, white: true, browser: true, devel: true */
 /*global bettercms */
 
-bettercms.define('bcms.pages.masterpage', ['bcms.jquery', 'bcms', 'bcms.siteSettings', 'bcms.pages', 'bcms.grid', 'bcms.pages.properties', 'bcms.messages'],
-    function ($, bcms, siteSettings, page, grid, pageProperties, messages) {
+bettercms.define('bcms.pages.masterpage', ['bcms.jquery', 'bcms', 'bcms.siteSettings', 'bcms.pages', 'bcms.grid', 'bcms.pages.properties', 'bcms.messages', 'bcms.antiXss'],
+    function ($, bcms, siteSettings, page, grid, pageProperties, messages, antiXss) {
         'use strict';
 
         var module = {},
@@ -114,7 +114,7 @@ bettercms.define('bcms.pages.masterpage', ['bcms.jquery', 'bcms', 'bcms.siteSett
                     var template = $(selectors.siteSettingsPageRowTemplate),
                         newRow = $(template.html()).find(selectors.siteSettingsPageRowTemplateFirstRow);
 
-                    newRow.find(selectors.siteSettingsPageTitleCell).html(document.createTextNode(data.Data.Title));
+                    newRow.find(selectors.siteSettingsPageTitleCell).html(antiXss.encodeHtml(data.Data.Title));
 
                     newRow.find(selectors.siteSettingsPageTitleCell).data('url', data.Data.PageUrl);
                     newRow.find(selectors.siteSettingsPageEditButton).data('id', data.Data.PageId);
@@ -147,7 +147,7 @@ bettercms.define('bcms.pages.masterpage', ['bcms.jquery', 'bcms', 'bcms.siteSett
 
                     var row = self.parents(selectors.siteSettingsPageParentRow),
                         cell = row.find(selectors.siteSettingsPageTitleCell);
-                    cell.html(document.createTextNode(data.Data.Title));
+                    cell.html(antiXss.encodeHtml(data.Data.Title));
                     cell.data('url', data.Data.PageUrl);
                 }
             }, globalization.editMasterPagePropertiesModalTitle);
