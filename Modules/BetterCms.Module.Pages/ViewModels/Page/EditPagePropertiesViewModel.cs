@@ -45,6 +45,7 @@ namespace BetterCms.Module.Pages.ViewModels.Page
         /// <value>
         /// The name of the page.
         /// </value>
+        [AllowHtml]
         [Required(AllowEmptyStrings = false, ErrorMessageResourceType = typeof(PagesGlobalization), ErrorMessageResourceName = "EditPageProperties_PageTitle_RequiredMessage")]
         [StringLength(MaxLength.Name, MinimumLength = 1, ErrorMessageResourceType = typeof(PagesGlobalization), ErrorMessageResourceName = "EditPageProperties_PageTitle_MaxLengthMessage")]
         public string PageName { get; set; }
