@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
 using BetterCms.Module.Root.Content.Resources;
+using BetterCms.Module.Root.Mvc.Attributes;
 
 using BetterModules.Core.Models;
 
@@ -34,6 +35,7 @@ namespace BetterCms.Module.Root.ViewModels.Category
         /// <value>
         /// The title.
         /// </value>
+        [DisallowHtml(ErrorMessageResourceType = typeof(RootGlobalization), ErrorMessageResourceName = "Validation_DisallowHtml_Title_Message")]
         [StringLength(MaxLength.Name, ErrorMessageResourceType = typeof(RootGlobalization), ErrorMessageResourceName = "Validation_StringLengthAttribute_Message")]
         [Required(AllowEmptyStrings = false, ErrorMessageResourceType = typeof(RootGlobalization), ErrorMessageResourceName = "CategoryTree_Dialog_NodeTitle_RequiredMessage")]
         public string Title { get; set; }
