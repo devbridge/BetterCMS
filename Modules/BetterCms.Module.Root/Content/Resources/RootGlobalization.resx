@@ -726,4 +726,13 @@
   <data name="AntiXss_Contains_Html_Error" xml:space="preserve">
     <value>The field must not contain html.</value>
   </data>
+  <data name="Validation_DisallowHtml_Title_Message" xml:space="preserve">
+    <value>Title field must not contain HTML.</value>
+  </data>
+  <data name="Validation_DisallowHtml_Field_Message" xml:space="preserve">
+    <value>Field must not contain HTML.</value>
+  </data>
+  <data name="Validation_DisallowHtml_Name_Message" xml:space="preserve">
+    <value>Name field must not contain HTML.</value>
+  </data>
 </root>

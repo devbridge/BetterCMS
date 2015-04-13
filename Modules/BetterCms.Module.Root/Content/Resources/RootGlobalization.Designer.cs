@@ -1771,6 +1771,33 @@ namespace BetterCms.Module.Root.Content.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Field must not contain HTML..
+        /// </summary>
+        public static string Validation_DisallowHtml_Field_Message {
+            get {
+                return ResourceManager.GetString("Validation_DisallowHtml_Field_Message", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Name field must not contain HTML..
+        /// </summary>
+        public static string Validation_DisallowHtml_Name_Message {
+            get {
+                return ResourceManager.GetString("Validation_DisallowHtml_Name_Message", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Title field must not contain HTML..
+        /// </summary>
+        public static string Validation_DisallowHtml_Title_Message {
+            get {
+                return ResourceManager.GetString("Validation_DisallowHtml_Title_Message", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Invalid email address..
         /// </summary>
         public static string Validation_Email_Message {
