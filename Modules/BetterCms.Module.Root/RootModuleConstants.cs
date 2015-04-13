@@ -66,6 +66,11 @@
         public const string EmailRegularExpression = @"^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)+$";
 
         /// <summary>
+        /// The email regular expression
+        /// </summary>
+        public const string HtmlRegularExpression = "</?\\w+((\\s+\\w+(\\s*=\\s*(?:\".*?\"|'.*?'|[^'\">\\s]+))?)+\\s*|\\s*)/?>";
+
+        /// <summary>
         /// The editable grid option cell template.
         /// </summary>
         public const string EditableOptionValueCellTemplate = "~/Areas/bcms-pages/Views/Option/Partial/OptionCell.cshtml";

@@ -251,6 +251,7 @@
     <Compile Include="Models\Migrations\Migration201502101035.cs" />
     <Compile Include="Models\Migrations\Migration201502101136.cs" />
     <Compile Include="Models\PagesView.cs" />
+    <Compile Include="Mvc\Attributes\DisallowHtmlAttribute.cs" />
     <Compile Include="Mvc\Extensions\HtmlAttributesUtility.cs" />
     <Compile Include="Mvc\Extensions\HtmlHelperExtensions.cs" />
     <Compile Include="Mvc\Extensions\StringExtensions.cs" />
@@ -363,6 +364,7 @@
     <Compile Include="Projections\PageContentProjectionFactory.cs" />
     <Compile Include="Projections\PageJavaScriptProjection.cs" />
     <Compile Include="Providers\ICustomOptionProvider.cs" />
+    <Compile Include="Registration\CustomValidationJsModuleIncludeDescriptor.cs" />
     <Compile Include="Registration\AntiXssJsModuleIncludeDescriptor.cs" />
     <Compile Include="Registration\AuthenticationJavaScriptModuleDescriptor.cs" />
     <Compile Include="Registration\ContentJsModuleIncludeDescriptor.cs" />
@@ -1460,6 +1462,7 @@
     <EmbeddedResource Include="Scripts\ace\worker-html.js" />
     <EmbeddedResource Include="Scripts\ace\worker-xml.js" />
     <EmbeddedResource Include="Scripts\bcms.antiXss.js" />
+    <EmbeddedResource Include="Scripts\bcms.customValidation.js" />
     <Content Include="Views\Web.config" />
     <Content Include="Views\Category\CategoryTreeEdit.cshtml">
       <Generator>RazorGenerator</Generator>

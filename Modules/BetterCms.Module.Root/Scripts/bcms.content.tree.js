@@ -1,7 +1,7 @@
 ﻿/*jslint unparam: true, white: true, browser: true, devel: true */
 /*global bettercms */
-bettercms.define('bcms.content.tree', ['bcms.jquery', 'bcms', 'bcms.ko.extenders', 'bcms.modal', 'bcms.content', 'bcms.redirect'],
-function ($, bcms, ko, modal, contentModule, redirect) {
+bettercms.define('bcms.content.tree', ['bcms.jquery', 'bcms', 'bcms.ko.extenders', 'bcms.modal', 'bcms.content', 'bcms.redirect', 'bcms.antiXss'],
+function ($, bcms, ko, modal, contentModule, redirect, antiXss) {
     'use strict';
 
     var tree = {},
@@ -370,8 +370,8 @@ function ($, bcms, ko, modal, contentModule, redirect) {
             onLoad: function (dialog) {
                 var container = $($(selectors.treeTemplate).html());
                 dialog.setContent(container);
-
                 treeViewModel = new TreeViewModel(pageModel);
+                
                 if ($.isFunction(onModelCreated)) {
                     onModelCreated();
                 }
