@@ -1070,8 +1070,7 @@ div.bcms-region-sortcancel:hover {
 }
 
 .bcms-padded-content {
-    padding-left: 50px;
-    max-width: 830px;
+    padding: 0 25px 0 50px;
 }
 
 html.bcms-noscroll {
@@ -1093,7 +1092,7 @@ html.bcms-noscroll {
 
 .bcms-modal-body {
     position: relative;
-    width: 940px;
+    width: 1024px;
     background: #FFF;
     margin: 0 auto;
 }
@@ -1557,6 +1556,7 @@ a.bcms-btn-close {
 .bcms-input-list-holder {
     position: relative;
     padding: 0 0 20px 0;
+    max-width: 523px;
 }
 
     .bcms-input-list-holder:first-child {
@@ -2285,7 +2285,7 @@ a.bcms-sort-arrow-top:hover {
     display: table-cell;
     position: relative;
     min-height: 100%;
-    width: 25%;
+    width: 235px;
 }
 
 .bcms-leftcol-inner {
@@ -2697,8 +2697,9 @@ span.bcms-tag-field-validation-error {
     border-bottom: 1px solid #c6c6c6;
 }
 
-.bcms-access-table {
-}
+    .bcms-user-access .bcms-input-list-holder {
+        max-width: none;
+    }
 
 .bcms-access-title {
     border-bottom: 1px solid #c6c6c6;
