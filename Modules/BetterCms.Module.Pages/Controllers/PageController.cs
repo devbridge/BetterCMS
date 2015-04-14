@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Web;
 using System.Web.Mvc;
 
@@ -385,7 +386,16 @@ namespace BetterCms.Module.Pages.Controllers
         [BcmsAuthorize]
         public ActionResult ConvertStringToSlug(string text, string senderId, string parentPageUrl, string parentPageId, string languageId, string categoryId)
         {
-            var slug = pageService.CreatePagePermalink(text, HttpUtility.UrlDecode(parentPageUrl), parentPageId.ToGuidOrNull(), languageId.ToGuidOrNull(), categoryId.ToGuidOrNull());
+            var category = categoryId.ToGuidOrNull();
+            List<Guid> categories = null;
+
+            if (category != null)
+            {
+                categories = new List<Guid>() { category.GetValueOrDefault() };
+            }
+
+
+            var slug = pageService.CreatePagePermalink(text, HttpUtility.UrlDecode(parentPageUrl), parentPageId.ToGuidOrNull(), languageId.ToGuidOrNull(), categories);
 
             return Json(new { Text = text, Url = slug, SenderId = senderId }, JsonRequestBehavior.AllowGet);
         }

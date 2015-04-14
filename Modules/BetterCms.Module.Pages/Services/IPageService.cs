@@ -30,7 +30,7 @@ namespace BetterCms.Module.Pages.Services
         /// <returns>
         /// Created permalink
         /// </returns>
-        string CreatePagePermalink(string url, string parentPageUrl, Guid? parentPageId = null, Guid? languageId = null, Guid? categoryId = null);
+        string CreatePagePermalink(string url, string parentPageUrl, Guid? parentPageId = null, Guid? languageId = null, IEnumerable<Guid> categoryId = null);
 
         /// <summary>
         /// Gets the list of page translation view models.

@@ -181,7 +181,7 @@ namespace BetterCms.Module.Pages.Services
         /// <returns>
         /// Created permalink
         /// </returns>
-        public string CreatePagePermalink(string url, string parentPageUrl, Guid? parentPageId = null, Guid? languageId = null, Guid? categoryId = null)
+        public string CreatePagePermalink(string url, string parentPageUrl, Guid? parentPageId = null, Guid? languageId = null, IEnumerable<Guid> categoryId = null)
         {
             string newUrl = null;
             if (UrlHelper.GeneratePageUrl != null)

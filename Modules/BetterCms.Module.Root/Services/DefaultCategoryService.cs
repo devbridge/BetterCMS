@@ -195,6 +195,13 @@ namespace BetterCms.Module.Root.Services
             return childCategories.Select(c => c.Id);
         }
 
+        public IEnumerable<Guid> GetCategoriesIds(IEnumerable<string> categoriesNames)
+        {
+            return repository.AsQueryable<Category>()
+                        .Where(c => categoriesNames.Contains(c.Name) && !c.IsDeleted)
+                        .Select(c => c.Id).ToList();
+        }
+
         private void FillChildCategories(List<CategoryViewModel> allItems, CategoryViewModel mainCategory, List<CategoryViewModel> childCategories)
         {
             var childItems = allItems.Where(item => item.ParentCategoryId == mainCategory.Id && item.Id != mainCategory.Id).OrderBy(node => node.DisplayOrder).ToList();

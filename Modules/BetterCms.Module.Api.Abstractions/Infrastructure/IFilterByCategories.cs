@@ -13,6 +13,14 @@ namespace BetterCms.Module.Api.Infrastructure
         System.Collections.Generic.List<Guid> FilterByCategories { get; }
 
         /// <summary>
+        /// Gets or sets the category names.
+        /// </summary>
+        /// <value>
+        /// The tags.
+        /// </value>
+        System.Collections.Generic.List<string> FilterByCategoriesNames { get; }
+
+        /// <summary>
         /// Gets or sets the categories filter connector.
         /// </summary>
         /// <value>

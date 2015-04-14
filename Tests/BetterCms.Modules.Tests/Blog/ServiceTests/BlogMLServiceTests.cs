@@ -185,7 +185,7 @@ namespace BetterCms.Test.Module.Blog.ServiceTests
         {
             var blogService = new Mock<IBlogService>();
             blogService
-                .Setup(x => x.CreateBlogPermalink(It.IsAny<string>(), It.IsAny<List<string>>(), It.IsAny<Guid>()))
+                .Setup(x => x.CreateBlogPermalink(It.IsAny<string>(), It.IsAny<List<string>>(), It.IsAny<IEnumerable<Guid>>()))
                 .Returns<string>(x => x.Transliterate());
 
             return blogService;

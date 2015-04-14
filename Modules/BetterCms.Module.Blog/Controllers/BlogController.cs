@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Web.Mvc;
 
 using BetterCms.Core.DataContracts.Enums;
@@ -17,6 +19,8 @@ using BetterCms.Module.Root;
 using BetterCms.Module.Root.Mvc;
 
 using Microsoft.Web.Mvc;
+
+using NHibernate.Util;
 
 namespace BetterCms.Module.Blog.Controllers
 {
@@ -145,9 +149,13 @@ namespace BetterCms.Module.Blog.Controllers
         /// Json result.
         /// </returns>
         [BcmsAuthorize]
-        public ActionResult ConvertStringToSlug(string text, string senderId, string parentPageUrl, string parentPageId, string languageId, string categoryId)
+        public ActionResult ConvertStringToSlug(string text, string senderId, string parentPageUrl, string parentPageId, string languageId, List<string> categoryId)
         {
-            var slug = blogService.CreateBlogPermalink(text, null, categoryId.ToGuidOrNull());
+            var categories = categoryId == null || categoryId.All(string.IsNullOrEmpty) 
+                ? null
+                : categoryId.Select(x => x.ToGuidOrNull()).Where(x => x != null).Select(x => x.GetValueOrDefault());
+
+            var slug = blogService.CreateBlogPermalink(text, null, categories);
 
             return Json(new { Text = text, Url = slug, SenderId = senderId }, JsonRequestBehavior.AllowGet);
         }
