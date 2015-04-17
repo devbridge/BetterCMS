@@ -193,7 +193,7 @@ bettercms.define('bcms.options', ['bcms.jquery', 'bcms', 'bcms.ko.extenders', 'b
                     ci, cl, cOption;
 
                 // Main values
-                self.key = ko.observable().extend({ required: "", maxLength: { maxLength: ko.maxLength.name } });
+                self.key = ko.observable().extend({ required: "", maxLength: { maxLength: ko.maxLength.name }, preventHtml: "" });
                 self.defaultValue = ko.observable().extend({ optionValue: { self: self } }).extend({ notify: 'always' });
                 self.value = ko.observable().extend({ optionValue: { self: self } }).extend({ notify: 'always' });
                 self.type = ko.observable();
