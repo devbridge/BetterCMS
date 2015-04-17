@@ -1,12 +1,13 @@
 ﻿/*global bettercms */
 
-bettercms.define('bcms.ko.extenders', ['bcms.jquery', 'bcms', 'knockout'], function ($, bcms, ko) {
+bettercms.define('bcms.ko.extenders', ['bcms.jquery', 'bcms', 'knockout', 'bcms.antiXss'], function ($, bcms, ko, antiXss) {
     'use strict';
 
     ko.globalization = {
         maximumLengthMessage: null,
         requiredFieldMessage: null,
-        invalidEmailMessage: null
+        invalidEmailMessage: null,
+        invalidKeyMessage: null
     },
 
     ko.maxLength = {
@@ -180,6 +181,17 @@ bettercms.define('bcms.ko.extenders', ['bcms.jquery', 'bcms', 'knockout'], funct
     };
 
     /**
+    * Extend knockout: add validation against HTML
+    */
+    ko.extenders.preventHtml = function (target, options) {
+        options = $.extend({
+            pattern: "</?\\w+((\\s+\\w+(\\s*=\\s*(?:\".*?\"|'.*?'|[^'\">\\s]+))?)+\\s*|\\s*)/?>",
+            message: ko.globalization.invalidKeyMessage
+    }, options);
+        return ko.extenders.doNotMatchRegularExpression(target, options);
+    };
+
+    /**
     * Extend knockout: add regular expression validation
     */
     ko.extenders.email = function (target, options) {
@@ -190,19 +202,39 @@ bettercms.define('bcms.ko.extenders', ['bcms.jquery', 'bcms', 'knockout'], funct
         return ko.extenders.regularExpression(target, options);
     };
 
+    var baseRegularExpressionExtender = function (target, options, ruleName, globalValidationMessage, shouldMatch) {
+        var pattern = options.pattern || '',
+            message = options.message || globalValidationMessage;
+        return ko.extenders.koValidationExtender(ruleName, target, function (newValue) {
+            var hasError;
+
+            // if we're validating that the input SHOULD match the regexp
+            if (shouldMatch) {
+                hasError = (newValue != null && pattern && !newValue.match(new RegExp(pattern, "i")));
+            }
+            // if we're validating that the input SHOULD NOT match the regexp
+            else {
+                hasError = (newValue != null && pattern && newValue.match(new RegExp(pattern, "i")) != null);
+            }
+
+            var showMessage = hasError ? $.format(message, pattern) : '';
+            target.validator.setError(ruleName, hasError, showMessage);
+        });
+    }
+
     /**
     * Extend knockout: add regular expression validation
     */
     ko.extenders.regularExpression = function (target, options) {
-        var ruleName = 'regularExpression',
-            pattern = options.pattern || '',
-            message = options.message || ko.globalization.regularExpressionMessage;
-        return ko.extenders.koValidationExtender(ruleName, target, function (newValue) {
-            var hasError = (newValue != null && pattern && !newValue.match(new RegExp(pattern, "i"))),
-                showMessage = hasError ? $.format(message, pattern) : '';
-            
-            target.validator.setError(ruleName, hasError, showMessage);
-        });
+        return baseRegularExpressionExtender(target, options, 'regularExpression', ko.globalization.regularExpressionMessage, true);
+    };
+
+    /*
+    ** Extend knockout: add 'does not' match regular expression validation
+    */
+
+    ko.extenders.doNotMatchRegularExpression = function (target, options) {
+        return baseRegularExpressionExtender(target, options, 'doNotMatchRegularExpression', ko.globalization.regularExpressionMessage, false);
     };
 
     /**
