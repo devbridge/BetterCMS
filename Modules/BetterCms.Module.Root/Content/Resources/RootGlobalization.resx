@@ -735,4 +735,7 @@
   <data name="Validation_DisallowHtml_Name_Message" xml:space="preserve">
     <value>Name field must not contain HTML.</value>
   </data>
+  <data name="Validation_PreventHtml_Message" xml:space="preserve">
+    <value>This field cannot contain HTML.</value>
+  </data>
 </root>
