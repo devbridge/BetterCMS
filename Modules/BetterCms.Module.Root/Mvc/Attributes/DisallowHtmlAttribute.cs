@@ -53,7 +53,7 @@ namespace BetterCms.Module.Root.Mvc.Attributes
         /// </returns>
         public IEnumerable<ModelClientValidationRule> GetClientValidationRules(ModelMetadata metadata, ControllerContext context)
         {
-            var rule = new ModelClientValidationRule { ErrorMessage = ErrorMessageString, ValidationType = clientValidationRule };
+            var rule = new ModelClientValidationRule { ErrorMessage = ErrorMessageString ?? "Field must not contain HTML.", ValidationType = clientValidationRule };
             rule.ValidationParameters.Add("pattern", RootModuleConstants.HtmlRegularExpression);
 
             yield return rule;
