@@ -634,7 +634,7 @@ bettercms.define('bcms.blog', ['bcms.jquery', 'bcms', 'bcms.modal', 'bcms.siteSe
         }
 
         AuthorViewModel.prototype.getDeleteConfirmationMessage = function () {
-            return $.format(globalization.deleteAuthorDialogTitle, this.name());
+            return $.format(globalization.deleteAuthorDialogTitle, antiXss.encodeHtml(this.name()));
         };
         
         AuthorViewModel.prototype.getSaveParams = function () {

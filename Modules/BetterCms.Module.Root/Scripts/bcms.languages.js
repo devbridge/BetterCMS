@@ -1,8 +1,8 @@
 ﻿/*jslint unparam: true, white: true, browser: true, devel: true */
 /*global bettercms */
 
-bettercms.define('bcms.languages', ['bcms.jquery', 'bcms', 'bcms.dynamicContent', 'bcms.siteSettings', 'bcms.ko.extenders', 'bcms.ko.grid', 'bcms.autocomplete'],
-function ($, bcms, dynamicContent, siteSettings, ko, kogrid, autocomplete) {
+bettercms.define('bcms.languages', ['bcms.jquery', 'bcms', 'bcms.dynamicContent', 'bcms.siteSettings', 'bcms.ko.extenders', 'bcms.ko.grid', 'bcms.autocomplete', 'bcms.antiXss'],
+function ($, bcms, dynamicContent, siteSettings, ko, kogrid, autocomplete, antiXss) {
     'use strict';
 
     var languages = {},
@@ -125,7 +125,7 @@ function ($, bcms, dynamicContent, siteSettings, ko, kogrid, autocomplete) {
         }
 
         LanguageViewModel.prototype.getDeleteConfirmationMessage = function () {
-            return $.format(globalization.deleteLanguageConfirmMessage, this.name());
+            return $.format(globalization.deleteLanguageConfirmMessage, antiXss.encodeHtml(this.name()));
         };
 
         LanguageViewModel.prototype.onAfterItemSaved = function (json) {

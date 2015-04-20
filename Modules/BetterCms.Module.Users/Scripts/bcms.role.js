@@ -1,8 +1,8 @@
 ﻿/*jslint unparam: true, white: true, browser: true, devel: true */
 /*global bettercms */
 
-bettercms.define('bcms.role', ['bcms.jquery', 'bcms', 'bcms.autocomplete', 'bcms.ko.extenders', 'bcms.ko.grid'],
-    function($, bcms, autocomplete, ko, kogrid) {
+bettercms.define('bcms.role', ['bcms.jquery', 'bcms', 'bcms.autocomplete', 'bcms.ko.extenders', 'bcms.ko.grid', 'bcms.antiXss'],
+    function ($, bcms, autocomplete, ko, kogrid, antiXss) {
         'use strict';
 
         var role = {},
@@ -82,7 +82,7 @@ bettercms.define('bcms.role', ['bcms.jquery', 'bcms', 'bcms.autocomplete', 'bcms
             }
 
             RoleViewModel.prototype.getDeleteConfirmationMessage = function () {
-                return $.format(globalization.deleteRoleConfirmMessage, this.name());
+                return $.format(globalization.deleteRoleConfirmMessage, antiXss.encodeHtml(this.name()));
             };
 
             RoleViewModel.prototype.getSaveParams = function () {

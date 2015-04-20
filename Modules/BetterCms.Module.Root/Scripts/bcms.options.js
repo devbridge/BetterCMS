@@ -1,8 +1,8 @@
 ﻿/*jslint unparam: true, white: true, browser: true, devel: true */
 /*global bettercms */
 
-bettercms.define('bcms.options', ['bcms.jquery', 'bcms', 'bcms.ko.extenders', 'bcms.ko.grid', 'bcms.datepicker'],
-    function ($, bcms, ko, kogrid, datepicker) {
+bettercms.define('bcms.options', ['bcms.jquery', 'bcms', 'bcms.ko.extenders', 'bcms.ko.grid', 'bcms.datepicker', 'bcms.antiXss'],
+    function ($, bcms, ko, kogrid, datepicker, antiXss) {
         'use strict';
 
         var options = {},
@@ -421,7 +421,7 @@ bettercms.define('bcms.options', ['bcms.jquery', 'bcms', 'bcms.ko.extenders', 'b
             };
 
             OptionViewModel.prototype.getDeleteConfirmationMessage = function () {
-                return $.format(globalization.deleteOptionConfirmMessage, this.key());
+                return $.format(globalization.deleteOptionConfirmMessage, antiXss.encodeHtml(this.key()));
             };
 
             OptionViewModel.prototype.changeFieldsEditing = function () {
