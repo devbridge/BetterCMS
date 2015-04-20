@@ -20,7 +20,7 @@
 
             $.validator.addMethod("jqdisallowhtml", function (value, element, params) {
                 if (!value) {
-                    return false;
+                    return true;
                 }
                 var match = new RegExp(params.pattern).exec(value);
                 return !match;
