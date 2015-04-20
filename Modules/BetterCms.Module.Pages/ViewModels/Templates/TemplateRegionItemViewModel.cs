@@ -1,7 +1,9 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations;
+using System.Web.Mvc;
 
 using BetterCms.Module.Root.Content.Resources;
+using BetterCms.Module.Root.Mvc.Attributes;
 using BetterCms.Module.Root.Mvc.Grids;
 
 using BetterModules.Core.Models;
@@ -32,6 +34,8 @@ namespace BetterCms.Module.Pages.ViewModels.Templates
         /// <value>
         /// The description.
         /// </value>
+        [AllowHtml]
+        [DisallowHtml(ErrorMessageResourceType = typeof(RootGlobalization), ErrorMessageResourceName = "Validation_DisallowHtml_Field_Message")]
         [StringLength(MaxLength.Name, ErrorMessageResourceType = typeof(RootGlobalization), ErrorMessageResourceName = "Validation_StringLengthAttribute_Message")]
         public string Description { get; set; }
 
@@ -41,6 +45,8 @@ namespace BetterCms.Module.Pages.ViewModels.Templates
         /// <value>
         /// The region identifier.
         /// </value>
+        [AllowHtml]
+        [DisallowHtml(ErrorMessageResourceType = typeof(RootGlobalization), ErrorMessageResourceName = "Validation_DisallowHtml_Field_Message")]
         [Required(ErrorMessageResourceType = typeof(RootGlobalization), ErrorMessageResourceName = "Validation_RequiredAttribute_Message")]
         [StringLength(MaxLength.Name, ErrorMessageResourceType = typeof(RootGlobalization), ErrorMessageResourceName = "Validation_StringLengthAttribute_Message")]
         public string Identifier { get; set; }
