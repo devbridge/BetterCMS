@@ -1825,6 +1825,15 @@ namespace BetterCms.Module.Root.Content.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to This field cannot contain HTML..
+        /// </summary>
+        public static string Validation_PreventHtml_Message {
+            get {
+                return ResourceManager.GetString("Validation_PreventHtml_Message", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Field must be a number with value between {1} and {2}..
         /// </summary>
         public static string Validation_RangeAttribute_Message {

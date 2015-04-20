@@ -106,8 +106,8 @@ function ($, bcms, dynamicContent, siteSettings, ko, kogrid, autocomplete) {
                 };
 
             self.hasNameFocus = ko.observable(false);
-            self.name = ko.observable().extend({ required: "", maxLength: { maxLength: ko.maxLength.name } });
-            self.code = ko.observable().extend({ required: "", maxLength: { maxLength: ko.maxLength.name } });
+            self.name = ko.observable().extend({ required: "", maxLength: { maxLength: ko.maxLength.name }, preventHtml: "" });
+            self.code = ko.observable().extend({ required: "", maxLength: { maxLength: ko.maxLength.name }, preventHtml: "" });
             self.shortCode = ko.observable();
             self.oldAutocompleteValue = '';
 
