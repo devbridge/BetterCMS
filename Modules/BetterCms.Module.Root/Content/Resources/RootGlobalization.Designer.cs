@@ -1789,6 +1789,24 @@ namespace BetterCms.Module.Root.Content.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Page URL must not contain HTML..
+        /// </summary>
+        public static string Validation_DisallowHtml_PageUrl_Message {
+            get {
+                return ResourceManager.GetString("Validation_DisallowHtml_PageUrl_Message", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Redirect URL must not contain HTML..
+        /// </summary>
+        public static string Validation_DisallowHtml_RedirectUrl_Message {
+            get {
+                return ResourceManager.GetString("Validation_DisallowHtml_RedirectUrl_Message", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Title field must not contain HTML..
         /// </summary>
         public static string Validation_DisallowHtml_Title_Message {
