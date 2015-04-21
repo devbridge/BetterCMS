@@ -1700,9 +1700,7 @@ a.bcms-btn-close {
         line-height: 29px;
         padding: 0 22px;
         margin-right: 5px;
-        border-style: solid solid none solid;
-        border-width: 1px;
-        border-color: #c6c6c6;
+        border: 1px solid #c6c6c6;
         background: #e5e5e5;
         cursor: pointer;
         color: #000;
@@ -1723,7 +1721,7 @@ a.bcms-btn-close {
 
     .bcms-tab-header > a.bcms-tab-active {
         background-color: #FFFFFF;
-        border-bottom: 1px solid #fff;
+        border-bottom-color: #ffffff;
     }
 
         .bcms-tab-header > a.bcms-tab-active:hover {
