@@ -1,4 +1,9 @@
-﻿body {
+﻿div.bcms-modal-body *,
+div.bcms-sidemenu * {
+    direction: ltr !important;
+}
+
+body {
     -webkit-text-size-adjust: 100%;
     -ms-text-size-adjust: 100%;
     -webkit-font-smoothing: antialiased;
