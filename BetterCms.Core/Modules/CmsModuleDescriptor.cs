@@ -29,6 +29,8 @@ namespace BetterCms.Core.Modules
 
         private string baseCssPath;
 
+        private const string cmsSchemaBase = "bcms_{0}";
+
         /// <summary>
         /// Initializes a new instance of the <see cref="CmsModuleDescriptor" /> class.
         /// </summary>
@@ -99,6 +101,14 @@ namespace BetterCms.Core.Modules
                 }
 
                 return baseModulePath;
+            }
+        }
+
+        public override string SchemaName
+        {
+            get
+            {
+                return string.Format(cmsSchemaBase, Name);
             }
         }
 

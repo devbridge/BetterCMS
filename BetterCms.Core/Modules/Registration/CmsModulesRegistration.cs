@@ -135,17 +135,6 @@ namespace BetterCms.Core.Modules.Registration
         }
 
         /// <summary>
-        /// Initializes all known modules.
-        /// </summary>
-        public override void InitializeModules()
-        {
-            base.InitializeModules();
-
-            // Apply Better CMS schema name pattern
-            SchemaNameProvider.SchemaNamePattern = "bcms_{0}";
-        }
-
-        /// <summary>
         /// Registers the types.
         /// </summary>
         /// <param name="registrationContext">The registration context.</param>
