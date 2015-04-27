@@ -744,4 +744,10 @@
   <data name="Validation_DisallowHtml_RedirectUrl_Message" xml:space="preserve">
     <value>Redirect URL must not contain HTML.</value>
   </data>
+  <data name="String" xml:space="preserve">
+    <value>Validation_PreventNonAlphanumeric_Message</value>
+  </data>
+  <data name="Validation_PreventNonAlphanumeric_Message" xml:space="preserve">
+    <value>Field invalid. Field can only contain alphanumeric characters: 'a-z', 'A-Z', '0-9'.</value>
+  </data>
 </root>

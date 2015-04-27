@@ -1708,6 +1708,15 @@ namespace BetterCms.Module.Root.Content.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Validation_PreventNonAlphanumeric_Message.
+        /// </summary>
+        public static string String {
+            get {
+                return ResourceManager.GetString("String", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Add Tags.
         /// </summary>
         public static string TagsTemplate_AddTags_Title {
@@ -1848,6 +1857,15 @@ namespace BetterCms.Module.Root.Content.Resources {
         public static string Validation_PreventHtml_Message {
             get {
                 return ResourceManager.GetString("Validation_PreventHtml_Message", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Field invalid. Field can only contain alphanumeric characters: &apos;a-z&apos;, &apos;A-Z&apos;, &apos;0-9&apos;..
+        /// </summary>
+        public static string Validation_PreventNonAlphanumeric_Message {
+            get {
+                return ResourceManager.GetString("Validation_PreventNonAlphanumeric_Message", resourceCulture);
             }
         }
         

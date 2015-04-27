@@ -21,7 +21,8 @@ namespace BetterCms.Module.Root.Registration
                     new JavaScriptModuleGlobalization(this, "requiredFieldMessage", () => RootGlobalization.Validation_FieldIsRequired_Message), 
                     new JavaScriptModuleGlobalization(this, "regularExpressionMessage", () => RootGlobalization.Validation_RegularExpression_Message), 
                     new JavaScriptModuleGlobalization(this, "invalidEmailMessage", () => RootGlobalization.Validation_Email_Message),
-                    new JavaScriptModuleGlobalization(this, "invalidKeyMessage", () => RootGlobalization.Validation_PreventHtml_Message)
+                    new JavaScriptModuleGlobalization(this, "invalidKeyMessage", () => RootGlobalization.Validation_PreventHtml_Message),
+                    new JavaScriptModuleGlobalization(this, "nonAlphanumericMessage", () => RootGlobalization.Validation_PreventNonAlphanumeric_Message)
                 };
         }
     }

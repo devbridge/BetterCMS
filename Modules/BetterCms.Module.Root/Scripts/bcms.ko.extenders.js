@@ -7,7 +7,8 @@ bettercms.define('bcms.ko.extenders', ['bcms.jquery', 'bcms', 'knockout', 'bcms.
         maximumLengthMessage: null,
         requiredFieldMessage: null,
         invalidEmailMessage: null,
-        invalidKeyMessage: null
+        invalidKeyMessage: null,
+        nonAlphanumericMessage: null
     },
 
     ko.maxLength = {
@@ -189,6 +190,17 @@ bettercms.define('bcms.ko.extenders', ['bcms.jquery', 'bcms', 'knockout', 'bcms.
             message: ko.globalization.invalidKeyMessage
     }, options);
         return ko.extenders.doNotMatchRegularExpression(target, options);
+    };
+
+    /**
+    * Extend knockout: add validation against non-alphanumeric
+    */
+    ko.extenders.preventNonAlphanumeric = function (target, options) {
+        options = $.extend({
+            pattern: "^[a-zA-Z0-9]*$",
+            message: ko.globalization.nonAlphanumericMessage
+        }, options);
+        return ko.extenders.regularExpression(target, options);
     };
 
     /**
