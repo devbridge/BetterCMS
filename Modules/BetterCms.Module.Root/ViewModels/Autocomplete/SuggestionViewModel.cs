@@ -1,9 +1,13 @@
-﻿namespace BetterCms.Module.Root.ViewModels.Autocomplete
+﻿using System.Web.Mvc;
+
+namespace BetterCms.Module.Root.ViewModels.Autocomplete
 {
     public class SuggestionViewModel
     {
+        [AllowHtml]
         public string Query { get; set; }
-        
+
+        [AllowHtml]
         public string ExistingItems { get; set; }
 
         public string[] ExistingItemsArray
