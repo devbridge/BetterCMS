@@ -68,9 +68,6 @@ namespace BetterCms.Core.Environment.ApplicationStart
                 throw new CmsException(message, ex);
             }
 
-            // Initialize web application
-            WebApplicationEntryPoint.PreStartWebApplication();
-            
             try
             {
                 logger.Info("Registering forms authentication redirect suppress module...");
