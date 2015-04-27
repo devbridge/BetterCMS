@@ -31,6 +31,20 @@
             $.validator.unobtrusive.adapters.add("disallowhtml", ["pattern"], function (opts) {
                 opts.rules["jqdisallowhtml"] = { message: opts.message, pattern: opts.params.pattern };
             });
+
+            $.validator.addMethod("jqdisallownonalphanumeric", function (value, element, params) {
+                if (!value) {
+                    return true;
+                }
+                var match = new RegExp(params.pattern).exec(value);
+                return match;
+            }, function (params) {
+                return params.message;
+            });
+
+            $.validator.unobtrusive.adapters.add("disallownonalphanumeric", ["pattern"], function (opts) {
+                opts.rules["jqdisallownonalphanumeric"] = { message: opts.message, pattern: opts.params.pattern };
+            });
         };
 
         /**
