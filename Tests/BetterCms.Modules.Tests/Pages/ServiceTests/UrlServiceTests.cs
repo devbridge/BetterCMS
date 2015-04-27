@@ -34,6 +34,8 @@ namespace BetterCms.Test.Module.Pages.ServiceTests
                     @"c/a/a/a/a/a/a/žaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa1/a",
                     @"dsdasd\asdasdasdas",
                     @"esdas$asdasdasdasd",
+                    @"/<script>",
+                    @"src=""test"""
                 };
 
         private static string[] validExternalUrls =
