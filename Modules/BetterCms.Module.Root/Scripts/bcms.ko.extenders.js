@@ -213,7 +213,7 @@ bettercms.define('bcms.ko.extenders', ['bcms.jquery', 'bcms', 'knockout', 'bcms.
             message: ko.globalization.activeDirectoryCompliantMessage,
             isConstructedRegex: true
         }, options);
-        return ko.extenders.regularExpression(target, options);
+        return ko.extenders.doNotMatchRegularExpression(target, options);
     };
 
     /**
