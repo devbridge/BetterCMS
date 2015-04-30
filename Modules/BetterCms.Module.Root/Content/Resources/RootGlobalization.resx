@@ -751,6 +751,6 @@
     <value>Field invalid. Field can only contain alphanumeric characters: 'a-z', 'A-Z', '0-9'.</value>
   </data>
   <data name="Validation_ActiveDirectoryCompliant_Message" xml:space="preserve">
-    <value>The field must not contain any of the following characters: " / \ [ ] : ; | = , + * ? &lt; &gt; %</value>
+    <value>The field must not contain any of the following characters: " / \\ [ ] : ; | = , + * ? &lt; &gt; %</value>
   </data>
 </root>
