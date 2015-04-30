@@ -38,7 +38,7 @@ namespace BetterCms.Module.Root.ViewModels.Tags
         /// The name.
         /// </value>
         [AllowHtml]
-        [DisallowNonAlphanumeric(ErrorMessageResourceType = typeof(RootGlobalization), ErrorMessageResourceName = "Validation_PreventNonAlphanumeric_Message")]
+        [DisallowNonActiveDirectoryNameCompliant(ErrorMessageResourceType = typeof(RootGlobalization), ErrorMessageResourceName = "Validation_ActiveDirectoryCompliant_TagMessage")]
         [Required(ErrorMessageResourceType = typeof(RootGlobalization), ErrorMessageResourceName = "Validation_RequiredAttribute_Message")]
         [StringLength(MaxLength.Name, ErrorMessageResourceType = typeof(RootGlobalization), ErrorMessageResourceName = "Validation_StringLengthAttribute_Message")]
         public string Name { get; set; }

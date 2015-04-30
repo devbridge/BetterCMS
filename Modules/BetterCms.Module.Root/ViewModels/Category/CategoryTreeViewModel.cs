@@ -35,7 +35,7 @@ namespace BetterCms.Module.Root.ViewModels.Category
         /// <value>
         /// The title.
         /// </value>
-        [DisallowNonAlphanumeric(ErrorMessageResourceType = typeof(RootGlobalization), ErrorMessageResourceName = "Validation_PreventNonAlphanumeric_Message")]
+        [DisallowNonActiveDirectoryNameCompliant(ErrorMessageResourceType = typeof(RootGlobalization), ErrorMessageResourceName = "Validation_ActiveDirectoryCompliant_CategoryMessage")]
         [StringLength(MaxLength.Name, ErrorMessageResourceType = typeof(RootGlobalization), ErrorMessageResourceName = "Validation_StringLengthAttribute_Message")]
         [Required(AllowEmptyStrings = false, ErrorMessageResourceType = typeof(RootGlobalization), ErrorMessageResourceName = "CategoryTree_Dialog_Title_RequiredMessage")]
         public string Title { get; set; }

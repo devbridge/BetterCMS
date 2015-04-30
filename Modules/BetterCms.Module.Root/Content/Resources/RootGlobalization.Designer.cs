@@ -1762,11 +1762,29 @@ namespace BetterCms.Module.Root.Content.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Category title must not contain any of the following characters: &quot; / \ [ ] : ; | = , + * ? &lt; &gt; %.
+        /// </summary>
+        public static string Validation_ActiveDirectoryCompliant_CategoryMessage {
+            get {
+                return ResourceManager.GetString("Validation_ActiveDirectoryCompliant_CategoryMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to The field must not contain any of the following characters: &quot; / \ [ ] : ; | = , + * ? &lt; &gt; %.
         /// </summary>
         public static string Validation_ActiveDirectoryCompliant_Message {
             get {
                 return ResourceManager.GetString("Validation_ActiveDirectoryCompliant_Message", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Tag must not contain any of the following characters: &quot; / \ [ ] : ; | = , + * ? &lt; &gt; %.
+        /// </summary>
+        public static string Validation_ActiveDirectoryCompliant_TagMessage {
+            get {
+                return ResourceManager.GetString("Validation_ActiveDirectoryCompliant_TagMessage", resourceCulture);
             }
         }
         
