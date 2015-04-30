@@ -1762,6 +1762,15 @@ namespace BetterCms.Module.Root.Content.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to The field must not contain any of the following characters: &quot; / \ [ ] : ; | = , + * ? &lt; &gt; %.
+        /// </summary>
+        public static string Validation_ActiveDirectoryCompliant_Message {
+            get {
+                return ResourceManager.GetString("Validation_ActiveDirectoryCompliant_Message", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Selected category &apos;{0}&apos; cannot be assigned..
         /// </summary>
         public static string Validation_Category_Unavailable_Message {

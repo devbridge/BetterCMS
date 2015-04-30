@@ -8,7 +8,8 @@ bettercms.define('bcms.ko.extenders', ['bcms.jquery', 'bcms', 'knockout', 'bcms.
         requiredFieldMessage: null,
         invalidEmailMessage: null,
         invalidKeyMessage: null,
-        nonAlphanumericMessage: null
+        nonAlphanumericMessage: null,
+        activeDirectoryCompliantMessage : null
     },
 
     ko.maxLength = {
@@ -204,6 +205,18 @@ bettercms.define('bcms.ko.extenders', ['bcms.jquery', 'bcms', 'knockout', 'bcms.
     };
 
     /**
+    * Extend knockout: add validation against non-username-compliant
+    */
+    ko.extenders.activeDirectoryCompliant = function (target, options) {
+        options = $.extend({
+            pattern: /[\\\/\"\[\]\:\;\|\=\,\+\*\?\<\>\%]/,
+            message: ko.globalization.activeDirectoryCompliantMessage,
+            isConstructedRegex: true
+        }, options);
+        return ko.extenders.regularExpression(target, options);
+    };
+
+    /**
     * Extend knockout: add regular expression validation
     */
     ko.extenders.email = function (target, options) {
@@ -220,13 +233,21 @@ bettercms.define('bcms.ko.extenders', ['bcms.jquery', 'bcms', 'knockout', 'bcms.
         return ko.extenders.koValidationExtender(ruleName, target, function (newValue) {
             var hasError;
 
+            var regExp;
+
+            if (options.isConstructedRegex === true && pattern) {
+                regExp = pattern;
+            } else {
+                regExp = new RegExp(pattern, "i");
+            }
+
             // if we're validating that the input SHOULD match the regexp
             if (shouldMatch) {
-                hasError = (newValue != null && pattern && !newValue.match(new RegExp(pattern, "i")));
+                hasError = (newValue != null && pattern && !newValue.match(regExp));
             }
             // if we're validating that the input SHOULD NOT match the regexp
             else {
-                hasError = (newValue != null && pattern && newValue.match(new RegExp(pattern, "i")) != null);
+                hasError = (newValue != null && pattern && newValue.match(regExp) != null);
             }
 
             var showMessage = hasError ? $.format(message, pattern) : '';
