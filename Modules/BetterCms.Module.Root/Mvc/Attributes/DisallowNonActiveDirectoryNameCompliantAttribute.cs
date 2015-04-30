@@ -34,7 +34,7 @@ namespace BetterCms.Module.Root.Mvc.Attributes
                 {
                     return true;
                 }
-                var regex = new Regex(RootModuleConstants.ActiveDirectoryNonCompliantExpressionCSharp);
+                var regex = new Regex(RootModuleConstants.ActiveDirectoryNonCompliantExpression);
                 return regex.IsMatch(input);
             }
             catch (Exception exception)
@@ -54,8 +54,7 @@ namespace BetterCms.Module.Root.Mvc.Attributes
         public IEnumerable<ModelClientValidationRule> GetClientValidationRules(ModelMetadata metadata, ControllerContext context)
         {
             var rule = new ModelClientValidationRule { ErrorMessage = ErrorMessageString ?? "The field must not contain any of the following characters: \" / \\ [ ] : ; | = , + * ? < > %", ValidationType = clientValidationRule };
-            rule.ValidationParameters.Add("pattern", RootModuleConstants.ActiveDirectoryNonCompliantExpressionJS);
-            rule.ValidationParameters.Add("isconstructedregex", true);
+            rule.ValidationParameters.Add("pattern", RootModuleConstants.ActiveDirectoryNonCompliantExpression);
 
             yield return rule;
         }

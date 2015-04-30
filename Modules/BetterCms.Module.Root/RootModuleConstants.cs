@@ -76,14 +76,9 @@
         public const string AlphanumericExpression = "^[a-zA-Z0-9]*$";
 
         /// <summary>
-        /// The active directory name regular expression for use in C#
+        /// The active directory name regular expression
         /// </summary>
-        public const string ActiveDirectoryNonCompliantExpressionCSharp = @"^[^\\\/\""\[\]\:\;\|\=\,\+\*\?\<\>\%]+$";
-
-        /// <summary>
-        /// The active directory name regular expression for use in JS
-        /// </summary>
-        public const string ActiveDirectoryNonCompliantExpressionJS = @"/[\\\/\""\[\]\:\;\|\=\,\+\*\?\<\>\%]/";
+        public const string ActiveDirectoryNonCompliantExpression = @"^[^\\\/\""\[\]\:\;\|\=\,\+\*\?\<\>\%]+$";
 
         /// <summary>
         /// The editable grid option cell template.
