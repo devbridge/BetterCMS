@@ -20,7 +20,7 @@ namespace BetterCms.Module.Pages.ViewModels.Widgets
         /// <value>
         /// The content name.
         /// </value>
-        [DisallowHtml(ErrorMessageResourceType = typeof(RootGlobalization), ErrorMessageResourceName = "Validation_DisallowHtml_Name_Message")]
+        [DisallowNonActiveDirectoryNameCompliant(ErrorMessageResourceType = typeof(RootGlobalization), ErrorMessageResourceName = "Validation_ActiveDirectoryCompliant_Message")]
         [Required(AllowEmptyStrings = false, ErrorMessageResourceType = typeof(PagesGlobalization), ErrorMessageResourceName = "HtmlContentWidget_ContentName_RequiredMessage")]
         [StringLength(MaxLength.Name, MinimumLength = 1, ErrorMessageResourceType = typeof(PagesGlobalization), ErrorMessageResourceName = "HtmlContentWidget_ContentName_MaxLengthMessage")]
         public override string Name
