@@ -69,7 +69,7 @@ bettercms.define('bcms.role', ['bcms.jquery', 'bcms', 'bcms.autocomplete', 'bcms
 
                 var self = this;
 
-                self.name = ko.observable().extend({ required: "", maxLength: { maxLength: ko.maxLength.name }, preventNonAlphanumeric : "" });
+                self.name = ko.observable().extend({ required: "", maxLength: { maxLength: ko.maxLength.name }, activeDirectoryCompliant: "" });    
                 self.description = ko.observable().extend({ maxLength: { maxLength: ko.maxLength.name } });
                 self.registerFields(self.name, self.description);
                 self.name(item.Name);
