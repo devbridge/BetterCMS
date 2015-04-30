@@ -31,6 +31,20 @@
             $.validator.unobtrusive.adapters.add("disallowhtml", ["pattern"], function (opts) {
                 opts.rules["jqdisallowhtml"] = { message: opts.message, pattern: opts.params.pattern };
             });
+
+            $.validator.addMethod("jqdisallownonactivedirectorynamecompliant", function (value, element, params) {
+                if (!value) {
+                    return true;
+                }
+                var match = new RegExp(params.pattern).exec(value);
+                return !match;
+            }, function (params) {
+                return params.message;
+            });
+
+            $.validator.unobtrusive.adapters.add("disallownonactivedirectorynamecompliant", ["pattern"], function (opts) {
+                opts.rules["jqdisallownonactivedirectorynamecompliant"] = { message: opts.message, pattern: opts.params.pattern };
+            });
         };
 
         /**

@@ -252,6 +252,7 @@
     <Compile Include="Models\Migrations\Migration201502101136.cs" />
     <Compile Include="Models\PagesView.cs" />
     <Compile Include="Mvc\Attributes\DisallowHtmlAttribute.cs" />
+    <Compile Include="Mvc\Attributes\DisallowNonActiveDirectoryNameCompliantAttribute.cs" />
     <Compile Include="Mvc\Attributes\DisallowNonAlphanumericAttribute.cs" />
     <Compile Include="Mvc\Extensions\HtmlAttributesUtility.cs" />
     <Compile Include="Mvc\Extensions\HtmlHelperExtensions.cs" />

@@ -211,7 +211,7 @@ bettercms.define('bcms.ko.extenders', ['bcms.jquery', 'bcms', 'knockout', 'bcms.
         options = $.extend({
             pattern: /[\\\/\"\[\]\:\;\|\=\,\+\*\?\<\>\%]/,
             message: ko.globalization.activeDirectoryCompliantMessage,
-            isConstructedRegex: true
+            isconstructedregex: true
         }, options);
         return ko.extenders.doNotMatchRegularExpression(target, options);
     };
@@ -235,7 +235,7 @@ bettercms.define('bcms.ko.extenders', ['bcms.jquery', 'bcms', 'knockout', 'bcms.
 
             var regExp;
 
-            if (options.isConstructedRegex === true && pattern) {
+            if (options.isconstructedregex === true && pattern) {
                 regExp = pattern;
             } else {
                 regExp = new RegExp(pattern, "i");
