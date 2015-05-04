@@ -1762,7 +1762,7 @@ namespace BetterCms.Module.Root.Content.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Category title must not contain any of the following characters: &quot; / \ [ ] : ; | = , + * ? &lt; &gt; %.
+        ///   Looks up a localized string similar to Category title must not contain any of the following characters: &quot; / [ ] : ; | = , + * ? &lt; &gt; % or backslash.
         /// </summary>
         public static string Validation_ActiveDirectoryCompliant_CategoryMessage {
             get {
@@ -1771,7 +1771,7 @@ namespace BetterCms.Module.Root.Content.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to The field must not contain any of the following characters: &quot; / \ [ ] : ; | = , + * ? &lt; &gt; %.
+        ///   Looks up a localized string similar to The field must not contain any of the following characters: &quot; / [ ] : ; | = , + * ? &lt; &gt; % or backslash.
         /// </summary>
         public static string Validation_ActiveDirectoryCompliant_Message {
             get {
@@ -1780,7 +1780,7 @@ namespace BetterCms.Module.Root.Content.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Tag must not contain any of the following characters: &quot; / \ [ ] : ; | = , + * ? &lt; &gt; %.
+        ///   Looks up a localized string similar to Tag must not contain any of the following characters: &quot; / [ ] : ; | = , + * ? &lt; &gt; % or backslash.
         /// </summary>
         public static string Validation_ActiveDirectoryCompliant_TagMessage {
             get {

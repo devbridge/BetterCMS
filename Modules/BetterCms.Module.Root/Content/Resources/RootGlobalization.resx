@@ -751,12 +751,12 @@
     <value>Field invalid. Field can only contain alphanumeric characters: 'a-z', 'A-Z', '0-9'.</value>
   </data>
   <data name="Validation_ActiveDirectoryCompliant_Message" xml:space="preserve">
-    <value>The field must not contain any of the following characters: " / &#92; [ ] : ; | = , + * ? &lt; &gt; %</value>
+    <value>The field must not contain any of the following characters: " / [ ] : ; | = , + * ? &lt; &gt; % or backslash</value>
   </data>
   <data name="Validation_ActiveDirectoryCompliant_TagMessage" xml:space="preserve">
-    <value>Tag must not contain any of the following characters: " / &#92; [ ] : ; | = , + * ? &lt; &gt; %</value>
+    <value>Tag must not contain any of the following characters: " / [ ] : ; | = , + * ? &lt; &gt; % or backslash</value>
   </data>
   <data name="Validation_ActiveDirectoryCompliant_CategoryMessage" xml:space="preserve">
-    <value>Category title must not contain any of the following characters: " / &#92; [ ] : ; | = , + * ? &lt; &gt; %</value>
+    <value>Category title must not contain any of the following characters: " / [ ] : ; | = , + * ? &lt; &gt; % or backslash</value>
   </data>
 </root>
