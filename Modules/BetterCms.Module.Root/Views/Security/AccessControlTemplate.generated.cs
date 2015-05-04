@@ -9,7 +9,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace BetterCms.Module.Root.Views.Security
+namespace ASP
 {
     using System;
     using System.Collections.Generic;
@@ -47,9 +47,9 @@ namespace BetterCms.Module.Root.Views.Security
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("RazorGenerator", "2.0.0.0")]
     [System.Web.WebPages.PageVirtualPathAttribute("~/Views/Security/AccessControlTemplate.cshtml")]
-    public partial class AccessControlTemplate : System.Web.Mvc.WebViewPage<dynamic>
+    public partial class _Views_Security_AccessControlTemplate_cshtml : System.Web.Mvc.WebViewPage<dynamic>
     {
-        public AccessControlTemplate()
+        public _Views_Security_AccessControlTemplate_cshtml()
         {
         }
         public override void Execute()
@@ -277,22 +277,36 @@ WriteLiteral(">");
             
             #line default
             #line hidden
-WriteLiteral("</span>\r\n                        <input");
+WriteLiteral("</span>\r\n                        <div");
+
+WriteLiteral(" class=\"bcms-input-box\"");
+
+WriteLiteral(">\r\n                            <input");
 
 WriteLiteral(" type=\"text\"");
 
 WriteLiteral(@" data-bind=""
-                            visible: isInAddMode() === 'user',
-                            css: { 'bcms-tag-validation-error': newItem.hasError() },
-                            hasfocus: isInAddMode() === 'user' && isExpanded(),
-                            value: newItem,
-                            valueUpdate: 'afterkeydown',
-                            enterPress: clickPlus,
-                            autocompleteList: '',
-                            escPress: clearItem""");
+                                visible: isInAddMode() === 'user',
+                                css: { 'bcms-tag-validation-error': newItem.hasError() },
+                                hasfocus: isInAddMode() === 'user' && isExpanded(),
+                                value: newItem,
+                                valueUpdate: 'afterkeydown',
+                                enterPress: clickPlus,
+                                autocompleteList: '',
+                                escPress: clearItem""");
 
-WriteLiteral(" />\r\n                    </div>                    \r\n                </div>\r\n    " +
-"            <div");
+WriteLiteral("/>\r\n                            <!-- ko if: newItem.hasError() -->\r\n             " +
+"               <span");
+
+WriteLiteral(" class=\"bcms-field-validation-error\"");
+
+WriteLiteral(">\r\n                                <span");
+
+WriteLiteral(" data-bind=\"text: newItem.validationMessage()\"");
+
+WriteLiteral("></span>\r\n                            </span>\r\n                            <!-- /" +
+"ko -->\r\n                        </div>\r\n                  </div>                " +
+"    \r\n                </div>\r\n                <div");
 
 WriteLiteral(" class=\"bcms-access-line bcms-clearfix\"");
 
@@ -315,28 +329,43 @@ WriteLiteral(" data-bind=\"visible: isInAddMode() !== \'role\', click: clickPlus
 WriteLiteral(">");
 
             
-            #line 54 "..\..\Views\Security\AccessControlTemplate.cshtml"
+            #line 61 "..\..\Views\Security\AccessControlTemplate.cshtml"
                                                                                          Write(RootGlobalization.AccessControl_UserAccess_AddNewRole);
 
             
             #line default
             #line hidden
-WriteLiteral("</span>\r\n                        <input");
+WriteLiteral("</span>\r\n                        <div");
+
+WriteLiteral(" class=\"bcms-input-box\"");
+
+WriteLiteral(">\r\n                            <input");
 
 WriteLiteral(" type=\"text\"");
 
 WriteLiteral(@" data-bind=""
-                            visible: isInAddMode() === 'role', 
-                            css: { 'bcms-tag-validation-error': newItem.hasError() },
-                            hasfocus: isInAddMode() === 'role' && isExpanded(),
-                            value: newItem,
-                            valueUpdate: 'afterkeydown',
-                            enterPress: clickPlus,
-                            autocompleteList: '',
-                            escPress: clearItem""");
+                                visible: isInAddMode() === 'role', 
+                                css: { 'bcms-tag-validation-error': newItem.hasError() },
+                                hasfocus: isInAddMode() === 'role' && isExpanded(),
+                                value: newItem,
+                                valueUpdate: 'afterkeydown',
+                                enterPress: clickPlus,
+                                autocompleteList: '',
+                                escPress: clearItem""");
 
-WriteLiteral(" />\r\n                    </div>                     \r\n                </div>\r\n   " +
-"         </div>\r\n        </div>\r\n    </div>\r\n</div>\r\n");
+WriteLiteral("/>\r\n                            <!-- ko if: newItem.hasError() -->\r\n             " +
+"               <span");
+
+WriteLiteral(" class=\"bcms-field-validation-error\"");
+
+WriteLiteral(">\r\n                                <span");
+
+WriteLiteral(" data-bind=\"text: newItem.validationMessage()\"");
+
+WriteLiteral("></span>\r\n                            </span>\r\n                            <!-- /" +
+"ko -->\r\n                       </div>\r\n                    </div>               " +
+"      \r\n                </div>\r\n            </div>\r\n        </div>\r\n    </div>\r\n" +
+"</div>\r\n");
 
         }
     }

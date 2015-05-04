@@ -37,30 +37,44 @@
                     <div class="bcms-access-value-add">
                         <div class="btn-acces-plus" data-bind="click: clickPlus">&nbsp;</div>
                         <span data-bind="visible: isInAddMode() !== 'user', click: clickPlus">@RootGlobalization.AccessControl_UserAccess_AddNewUser</span>
-                        <input type="text" data-bind="
-                            visible: isInAddMode() === 'user',
-                            css: { 'bcms-tag-validation-error': newItem.hasError() },
-                            hasfocus: isInAddMode() === 'user' && isExpanded(),
-                            value: newItem,
-                            valueUpdate: 'afterkeydown',
-                            enterPress: clickPlus,
-                            autocompleteList: '',
-                            escPress: clearItem" />
-                    </div>                    
+                        <div class="bcms-input-box">
+                            <input type="text" data-bind="
+                                visible: isInAddMode() === 'user',
+                                css: { 'bcms-tag-validation-error': newItem.hasError() },
+                                hasfocus: isInAddMode() === 'user' && isExpanded(),
+                                value: newItem,
+                                valueUpdate: 'afterkeydown',
+                                enterPress: clickPlus,
+                                autocompleteList: '',
+                                escPress: clearItem"/>
+                            <!-- ko if: newItem.hasError() -->
+                            <span class="bcms-field-validation-error">
+                                <span data-bind="text: newItem.validationMessage()"></span>
+                            </span>
+                            <!-- /ko -->
+                        </div>
+                  </div>                    
                 </div>
                 <div class="bcms-access-line bcms-clearfix" data-bind="with: roleAccessControl">
                     <div class="bcms-access-value-add">
                         <div class="btn-acces-plus" data-bind="click: clickPlus">&nbsp;</div>
                         <span data-bind="visible: isInAddMode() !== 'role', click: clickPlus">@RootGlobalization.AccessControl_UserAccess_AddNewRole</span>
-                        <input type="text" data-bind="
-                            visible: isInAddMode() === 'role', 
-                            css: { 'bcms-tag-validation-error': newItem.hasError() },
-                            hasfocus: isInAddMode() === 'role' && isExpanded(),
-                            value: newItem,
-                            valueUpdate: 'afterkeydown',
-                            enterPress: clickPlus,
-                            autocompleteList: '',
-                            escPress: clearItem" />
+                        <div class="bcms-input-box">
+                            <input type="text" data-bind="
+                                visible: isInAddMode() === 'role', 
+                                css: { 'bcms-tag-validation-error': newItem.hasError() },
+                                hasfocus: isInAddMode() === 'role' && isExpanded(),
+                                value: newItem,
+                                valueUpdate: 'afterkeydown',
+                                enterPress: clickPlus,
+                                autocompleteList: '',
+                                escPress: clearItem"/>
+                            <!-- ko if: newItem.hasError() -->
+                            <span class="bcms-field-validation-error">
+                                <span data-bind="text: newItem.validationMessage()"></span>
+                            </span>
+                            <!-- /ko -->
+                       </div>
                     </div>                     
                 </div>
             </div>
