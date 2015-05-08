@@ -1,26 +1,21 @@
-﻿@using Autofac
-@using BetterCms.Core.Services
-@using BetterCms.Module.Root
-@using BetterModules.Core.Web.Dependencies
+﻿@using BetterCms.Module.Api
+@using BetterCms.Module.Api.Operations.Pages.Pages.Search
 @{
-    var container = PerWebRequestContainerProvider.GetLifetimeScope(Context);
-    if (container != null && container.IsRegistered<ISecurityService>())
+    using (var container = ApiFactory.Create())
     {
-        var securityService = container.Resolve<ISecurityService>();
-        
-        var userIsAuthenticated = securityService.IsAuthorized(string.Empty);
-        if (userIsAuthenticated)
-        {
-            <p>User is authenticated!</p>
-        }
+        var results = container.Pages.Pages.Search(new SearchPagesRequest { SearchString = "test" });
 
-        var userInRole = securityService.IsAuthorized(
-            RootModuleConstants.UserRoles.MultipleRoles(
-                RootModuleConstants.UserRoles.EditContent,
-                RootModuleConstants.UserRoles.PublishContent));
-        if (userInRole)
+        <div>Showing @results.Data.Items.Count results of @results.Data.TotalCount</div>
+
+        foreach (var item in results.Data.Items)
         {
-            <p>User is authenticated and has EditContent or PublishContent role!</p>
+            var cssClass = item.IsDenied ? "bcms-search-result" : "bcms-search-result bcms-denied-search-result";
+
+            <article class="@cssClass">
+                <h3>@item.Title</h3>
+                <a href="@(item.Link ?? "#")">@item.FormattedUrl</a>
+                <p>@item.Snippet</p>
+            </article>
         }
     }
 }
