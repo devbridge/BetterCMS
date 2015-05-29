@@ -119,6 +119,15 @@ namespace BetterCms.Module.Api.Operations.Pages.Pages
         public List<Guid> FilterByCategories { get; set; }
 
         /// <summary>
+        /// Gets or sets the categories names.
+        /// </summary>
+        /// <value>
+        /// The tags.
+        /// </value>
+        [DataMember]
+        public List<string> FilterByCategoriesNames { get; set; }
+
+        /// <summary>
         /// Gets or sets the categories filter connector.
         /// </summary>
         /// <value>

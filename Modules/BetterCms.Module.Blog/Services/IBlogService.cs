@@ -22,7 +22,7 @@ namespace BetterCms.Module.Blog.Services
         /// <returns>
         /// Created blog URL
         /// </returns>
-        string CreateBlogPermalink(string title, List<string> unsavedUrls = null, Guid? categoryId = null);
+        string CreateBlogPermalink(string title, List<string> unsavedUrls = null, IEnumerable<Guid> categoryId = null);
 
         /// <summary>
         /// Saves the blog post.

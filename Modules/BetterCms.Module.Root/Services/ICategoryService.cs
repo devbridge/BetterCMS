@@ -28,5 +28,7 @@ namespace BetterCms.Module.Root.Services
         void DeleteCategoryNode(Guid id, int version, Guid? categoryTreeId = null);
 
         IEnumerable<Guid> GetChildCategoriesIds(Guid category);
+
+        IEnumerable<Guid> GetCategoriesIds(IEnumerable<string> categoriesNames);
     }
 }

@@ -10,6 +10,7 @@ bettercms.define('bcms.blog', ['bcms.jquery', 'bcms', 'bcms.modal', 'bcms.siteSe
             datePickers: '.bcms-datepicker',
             htmlEditor: 'bcms-contenthtml',
             firstForm: 'form:first',
+            secondForm: 'form:nth-child(2)',
             siteSettingsBlogsListForm: '#bcms-blogs-form',
             siteSettingsBlogsSearchButton: '#bcms-blogs-search-btn',
             siteSettingsBlogsSearchInput: '.bcms-search-query',
@@ -38,7 +39,7 @@ bettercms.define('bcms.blog', ['bcms.jquery', 'bcms', 'bcms.modal', 'bcms.siteSe
             importBlogPostsForm: '#bcms-import-blog-posts',
             fileUploadingTarget: '#bcms-import-form-target',
             fileUploadingResult: '#jsonResult',
-            categorySelection: '#CategoryId',
+            categorySelection: "input[name*='Categories']",
         },
         links = {
             loadSiteSettingsBlogsUrl: null,
@@ -218,6 +219,12 @@ bettercms.define('bcms.blog', ['bcms.jquery', 'bcms', 'bcms.modal', 'bcms.siteSe
             form = dialog.container.find(selectors.firstForm),
             categorySelector = form.find(selectors.categorySelection),
             getCategoryId = function () {
+                var categorySelector = dialog.container.find(selectors.secondForm).find(selectors.categorySelection);
+                if (categorySelector != null && categorySelector.length > 0) {
+                    var categories = categorySelector.map(function () { return $(this).val(); }).get();
+                    return categories;
+                }
+
                 return categorySelector != null ? categorySelector.val() : null;
             };
         

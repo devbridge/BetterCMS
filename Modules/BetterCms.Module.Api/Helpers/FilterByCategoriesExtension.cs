@@ -18,14 +18,26 @@ namespace BetterCms.Module.Api.Helpers
         public static IQueryable<TModel> ApplyCategoriesFilter<TModel>(this IQueryable<TModel> query, ICategoryService categoryService, IFilterByCategories categoriesFilter)
     where TModel : Entity, ICategorized
         {
-            if (categoriesFilter != null && categoriesFilter.FilterByCategories != null)
+            if (categoriesFilter != null && (categoriesFilter.FilterByCategories != null || categoriesFilter.FilterByCategoriesNames != null))
             {
-                var categories = categoriesFilter.FilterByCategories.Where(catId => catId != Guid.Empty).Distinct().ToArray();
+                List<Guid> categories = new List<Guid>();
 
-                if (categories.Length > 0)
+                if (categoriesFilter.FilterByCategories != null)
+                {
+                    categories = categoriesFilter.FilterByCategories.Where(catId => catId != Guid.Empty).Distinct().ToList();
+                }
+
+                if (categoriesFilter.FilterByCategoriesNames != null)
+                {
+                    var categoriesNames = categoriesFilter.FilterByCategoriesNames.Where(name => !string.IsNullOrEmpty(name)).Distinct().ToArray();
+                    var categoriesIds = categoryService.GetCategoriesIds(categoriesNames);
+                    categories.AddRange(categoriesIds);
+                }
+
+                if (categories.Count > 0)
                 {
                     if (categoriesFilter.FilterByCategoriesConnector == FilterConnector.And)
-                    {                    
+                    {
                         foreach (var category in categories)
                         {
                             var childCategories = categoryService.GetChildCategoriesIds(category).ToArray();
@@ -36,7 +48,7 @@ namespace BetterCms.Module.Api.Helpers
                     {
                         var allCategories = new List<Guid>();
                         foreach (var category in categories)
-                        {                            
+                        {
                             allCategories.AddRange(categoryService.GetChildCategoriesIds(category));
                         }
 

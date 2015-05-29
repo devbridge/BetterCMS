@@ -527,8 +527,7 @@ namespace BetterCms.Module.Api.Operations.Pages.Pages.Page.Properties
                 var pageUrl = request.Data.PageUrl;
                 if (string.IsNullOrEmpty(pageUrl) && !string.IsNullOrWhiteSpace(request.Data.Title))
                 {
-                    // TODO Categories Which category to use creating url?
-                    pageUrl = pageService.CreatePagePermalink(request.Data.Title, null, null, request.Data.LanguageId, request.Data.Categories.FirstOrDefault());
+                    pageUrl = pageService.CreatePagePermalink(request.Data.Title, null, null, request.Data.LanguageId, request.Data.Categories);
                 }
                 else
                 {

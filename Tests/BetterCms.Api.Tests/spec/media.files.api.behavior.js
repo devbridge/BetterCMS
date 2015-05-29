@@ -318,11 +318,19 @@ describe('media.files.api.behavior', function () {
     });
 
     it('03109.1: Should get files list, filtered by categories, using AND connector', function () {
-        filterByCategories('and', 1, ['IFilterByCategories File 2']);
+        filterByCategories('and', 1, ['IFilterByCategories File 2'], 'id');
     });
 
     it('03109.2: Should get files list, filtered by categories, using OR connector', function () {
-        filterByCategories('or', 2, ['IFilterByCategories File 1', 'IFilterByCategories File 2']);
+        filterByCategories('or', 2, ['IFilterByCategories File 1', 'IFilterByCategories File 2'], 'id');
+    });
+
+    it('03109.3: Should get files list, filtered by categories names, using AND connector', function () {
+        filterByCategories('and', 1, ['IFilterByCategories File 2'], 'name');
+    });
+
+    it('03109.4: Should get files list, filtered by categories names, using OR connector', function () {
+        filterByCategories('or', 2, ['IFilterByCategories File 1', 'IFilterByCategories File 2'], 'name');
     });
 
     it('03110: Should get a list with one file, filtered by all available columns', function () {
@@ -635,7 +643,7 @@ describe('media.files.api.behavior', function () {
         });
     }
 
-    function filterByCategories(connector, expectedCount, expectedTitles) {
+    function filterByCategories(connector, expectedCount, expectedTitles, filterBy) {
         var url = '/bcms-api/files/',
             result,
             ready = false;
@@ -646,9 +654,14 @@ describe('media.files.api.behavior', function () {
             },
             folderId: 'DEE811B5-5F39-4846-862B-A43500F478BE',
             filterByCategoriesConnector: connector,
-            filterByCategories: ['15A86920-78E5-4DDC-A259-A43500A2B573', 'FD36A148-DD10-44E0-A5C1-A43500B8A450'],
             includeArchived: true
         };
+
+        if (filterBy === 'id') {
+            data.filterByCategories = ['15A86920-78E5-4DDC-A259-A43500A2B573', 'FD36A148-DD10-44E0-A5C1-A43500B8A450'];
+        } else if(filterBy === 'name') {
+            data.filterByCategoriesNames = ['IFilterByCategories Category 1', 'IFilterByCategories Category 2'];
+        }
 
         runs(function () {
             api.get(url, data, function (json) {
