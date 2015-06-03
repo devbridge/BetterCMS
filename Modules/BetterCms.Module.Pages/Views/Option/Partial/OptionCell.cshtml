@@ -65,7 +65,7 @@
         <!-- ko if: isActive() -->
         <input style="width: 70%" class="bcms-editor-field-box" type="text" readonly="readonly" data-bind="value: @(Model.CustomValueBind)() || @(Model.ValueBind)(), 
             click: onItemSelect,
-            event: {blur: onBlurField, focus: onItemSelect},
+            event: {blur: onBlurFieldDelayed, focus: onItemSelect},
             enterPress: onSave, 
             escPress: onCancelEdit
             @(Model.AutoFocus ? ", hasfocus: isActive() && hasFocus" : "")" />

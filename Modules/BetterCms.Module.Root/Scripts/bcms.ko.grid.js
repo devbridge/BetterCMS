@@ -404,6 +404,12 @@ bettercms.define('bcms.ko.grid', ['bcms.jquery', 'bcms', 'bcms.ko.extenders', 'b
                 self.blurField();
             };
 
+            self.onBlurFieldDelayed = function (data, event) {
+                window.setTimeout(function () {
+                    self.onBlurField(data, event);
+                }, 250);
+            };
+
             self.registerFields = function() {
                 self.registeredFields = [];
                 if (arguments.length > 0) {
