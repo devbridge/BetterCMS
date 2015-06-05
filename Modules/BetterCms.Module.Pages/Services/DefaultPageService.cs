@@ -107,6 +107,10 @@ namespace BetterCms.Module.Pages.Services
             if (page != null)
             {
                 page.IsInSitemap = page.PagesView.IsInSitemap;
+                if (temporaryPageCache.ContainsKey(trimmed))
+                {
+                    temporaryPageCache.Remove(trimmed);
+                }
                 temporaryPageCache.Add(trimmed, page);
             }
 
@@ -132,6 +136,10 @@ namespace BetterCms.Module.Pages.Services
             if (pageProperties != null)
             {
                 pageProperties.IsInSitemap = pageProperties.PagesView.IsInSitemap;
+                if (temporaryPageCache.ContainsKey(pageProperties.PageUrlHash))
+                {
+                    temporaryPageCache.Remove(pageProperties.PageUrlHash);
+                }
                 temporaryPageCache.Add(pageProperties.PageUrlHash, pageProperties);
             }
         }
