@@ -147,7 +147,9 @@ namespace BetterCms.Module.MediaManager.Services
                     Task.Factory.ContinueWhenAll(
                         removeImageFileTasks.ToArray(),
                         result =>
-                            { storageService.RemoveFolder(image.FileUri); });
+                        {
+                            // TODO: add functionality to remove folder if it is empty
+                        });
 
                     removeImageFileTasks.ForEach(task => task.Start());
                 }
