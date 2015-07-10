@@ -2,9 +2,8 @@
 @using BetterCms.Module.Root
 @using BetterCms.Module.Root.Content.Resources
 @using BetterCms.Module.Root.Mvc
-@using BetterCms.Module.Pages.ViewModels.Widgets
 
-@model IList<WidgetCategoryViewModel>
+@model BetterCms.Module.Pages.ViewModels.Content.PageContentViewModel
 
 <div class="bcms-top-block-holder">
     @if ((ViewContext.Controller as CmsControllerBase).SecurityService.IsAuthorized(RootModuleConstants.UserRoles.Administration))
@@ -18,5 +17,6 @@
     </div>
 </div>
 <div class="bcms-content-sliders" id="bcms-advanced-contents-container">
-    @Html.Partial("~/Areas/bcms-pages/Views/Content/Partial/WidgetCategories.cshtml", Model)
+        @Html.Partial("~/Areas/bcms-pages/Views/Content/Partial/WidgetRecent.cshtml", Model.RecentWidgets)
+        @Html.Partial("~/Areas/bcms-pages/Views/Content/Partial/WidgetCategories.cshtml", Model.WidgetCategories)
 </div>

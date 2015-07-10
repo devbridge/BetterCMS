@@ -255,7 +255,7 @@
     <Compile Include="Command\Widget\GetSiteSettingsWidgets\GetSiteSettingsWidgetsCommand.cs" />
     <Compile Include="Command\Page\DeletePage\DeletePageCommand.cs" />
     <Compile Include="Command\Redirect\DeleteRedirect\DeleteRedirectCommand.cs" />
-    <Compile Include="Command\Widget\GetWidgetCategory\GetWidgetCategoryResponse.cs" />
+    <Compile Include="Command\Widget\GetWidgetCategory\GetRecentWidgetAndWidgetCategoryResponse.cs" />
     <Compile Include="Command\Page\GetPageForDelete\GetPageForDeleteCommand.cs" />
     <Compile Include="Command\Page\GetPagesList\GetPagesListCommand.cs" />
     <Compile Include="Command\Redirect\GetRedirectsList\GetRedirectsListCommand.cs" />
@@ -268,8 +268,8 @@
     <Compile Include="Command\Page\CreatePage\CreatePageCommand.cs">
       <ExcludeFromStyleCop>True</ExcludeFromStyleCop>
     </Compile>
-    <Compile Include="Command\Widget\GetWidgetCategory\GetWidgetCategoryCommand.cs" />
-    <Compile Include="Command\Widget\GetWidgetCategory\GetWidgetCategoryRequest.cs" />
+    <Compile Include="Command\Widget\GetWidgetCategory\GetRecentWidgetAndWidgetCategoryCommand.cs" />
+    <Compile Include="Command\Widget\GetWidgetCategory\GetRecentWidgetAndWidgetCategoryRequest.cs" />
     <Compile Include="Command\Page\GetPageProperties\GetPagePropertiesCommand.cs" />
     <Compile Include="Command\Page\GetPageSeo\GetPageSeoCommand.cs" />
     <Compile Include="Command\Content\InsertContent\InsertContentToPageCommand.cs" />
@@ -424,6 +424,11 @@
     <Compile Include="Registration\SeoJsModuleIncludeDescriptor.cs" />
     <Compile Include="Registration\PagePropertiesJsModuleIncludeDescriptor.cs" />
     <Compile Include="Services\DefaultPageService.cs" />
+    <Compile Include="Views\Content\Partial\WidgetRecent.generated.cs">
+      <DependentUpon>WidgetRecent.cshtml</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+    </Compile>
     <Compile Include="Views\Option\EditOptions.generated.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -797,6 +802,10 @@
     <Content Include="Views\Widgets\Partial\WidgetUsagesTemplate.cshtml">
       <Generator>RazorGenerator</Generator>
       <LastGenOutput>WidgetUsagesTemplate.generated.cs</LastGenOutput>
+    </Content>
+    <Content Include="Views\Content\Partial\WidgetRecent.cshtml">
+      <Generator>RazorGenerator</Generator>
+      <LastGenOutput>WidgetRecent.generated.cs</LastGenOutput>
     </Content>
     <None Include="Views\Shared\Partial\WarnMessageAboutDraft.cshtml">
       <Generator>RazorGenerator</Generator>

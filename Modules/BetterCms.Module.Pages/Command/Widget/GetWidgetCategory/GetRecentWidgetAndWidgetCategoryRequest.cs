@@ -2,7 +2,7 @@
 
 namespace BetterCms.Module.Pages.Command.Widget.GetWidgetCategory
 {
-    public class GetWidgetCategoryRequest
+    public class GetRecentWidgetAndWidgetCategoryRequest
     {
         /// <summary>
         /// Gets or sets the search query for the widget filtering.
