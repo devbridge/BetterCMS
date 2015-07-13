@@ -93,6 +93,7 @@ namespace BetterCms.Module.MediaManager.Command.Upload.ConfirmUpload
                         file.Description = originalMedia.Description;
                         file.IsArchived = originalMedia.IsArchived;
                         file.Folder = originalMedia.Folder;
+                        file.Image = originalMedia.Image;
                         if (file is MediaImage && originalMedia is MediaImage)
                         {
                             ((MediaImage)file).Caption = ((MediaImage)originalMedia).Caption;
