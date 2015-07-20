@@ -87,6 +87,7 @@ namespace BetterCms.Module.Root.Mvc.Helpers
         {
             if (styles != null)
             {
+                var includedCssResources = new List<string>();
                 var inlineCssBuilder = new StringBuilder();
                 var cssIncludesBuilder = new StringBuilder();
 
@@ -97,9 +98,10 @@ namespace BetterCms.Module.Root.Mvc.Helpers
                     {
                         foreach (var css in cssList)
                         {
-                            if (!string.IsNullOrWhiteSpace(css))
+                            if (!string.IsNullOrWhiteSpace(css) && !includedCssResources.Contains(css))
                             {
                                 inlineCssBuilder.AppendLine(css);
+                                includedCssResources.Add(css);
                             }
                         }
                     }
@@ -109,7 +111,11 @@ namespace BetterCms.Module.Root.Mvc.Helpers
                     {
                         foreach (var include in includes)
                         {
-                            cssIncludesBuilder.AppendLine(string.Format(@"<link rel=""stylesheet"" type=""text/css"" href=""{0}"" />", include));
+                            if (!includedCssResources.Contains(include))
+                            {
+                                cssIncludesBuilder.AppendLine(string.Format(@"<link rel=""stylesheet"" type=""text/css"" href=""{0}"" />", include));
+                                includedCssResources.Add(include);
+                            }
                         }
                     }
                 }
@@ -140,6 +146,7 @@ namespace BetterCms.Module.Root.Mvc.Helpers
         {
             if (scripts != null)
             {
+                var insertedJsResources = new List<string>();
                 var inlineJsBuilder = new StringBuilder();
                 var jsIncludesBuilder = new StringBuilder();
 
@@ -150,11 +157,12 @@ namespace BetterCms.Module.Root.Mvc.Helpers
                     {
                         foreach (var jScript in jScriptList)
                         {
-                            if (!string.IsNullOrWhiteSpace(jScript))
+                            if (!string.IsNullOrWhiteSpace(jScript) && !insertedJsResources.Contains(jScript))
                             {
                                 inlineJsBuilder.Append(@"<script type=""text/javascript"" language=""javascript"">");
                                 inlineJsBuilder.Append(jScript);
                                 inlineJsBuilder.AppendLine(@"</script>");
+                                insertedJsResources.Add(jScript);
                             }
                         }
                     }
@@ -164,7 +172,11 @@ namespace BetterCms.Module.Root.Mvc.Helpers
                     {
                         foreach (var include in includes)
                         {
-                            jsIncludesBuilder.AppendLine(string.Format(@"<script src=""{0}"" type=""text/javascript""></script>", include));
+                            if (!insertedJsResources.Contains(include))
+                            {
+                                jsIncludesBuilder.AppendLine(string.Format(@"<script src=""{0}"" type=""text/javascript""></script>", include));
+                                insertedJsResources.Add(include);
+                            }
                         }
                     }
                 }
