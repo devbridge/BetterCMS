@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections;
+using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
@@ -19,6 +21,7 @@ using BetterCms.Core.Web;
 using BetterCms.Module.MediaManager.Models;
 using BetterCms.Module.Root.Models;
 using BetterCms.Module.Root.Mvc;
+using BetterCms.Module.Root.Views.Language;
 
 using Common.Logging;
 
@@ -119,6 +122,193 @@ namespace BetterCms.Module.MediaManager.Services
                 repository.Delete(file);
                 unitOfWork.Commit();   
             }
+        }
+
+        public void DeleteFileByMovingToTrash(Guid fileId)
+        {
+            var filesToTrash = repository
+                .AsQueryable<MediaFile>(f => f.Id == fileId || f.Original.Id == fileId)
+                .Fetch(f => f.AccessRules)
+                .Fetch(f => f.Categories)
+                .Fetch(f => f.MediaTags)
+                .ToList();
+
+            var mainFile = filesToTrash.FirstOrDefault(t => t.Id == fileId);
+
+            if (mainFile == null)
+            {
+                throw new CmsException(string.Format("A file was not found by given id={0}", fileId));
+            }
+
+            TrashFiles(filesToTrash, false);
+            
+            Events.MediaManagerEvents.Instance.OnMediaFileDeleted(mainFile);
+        }
+
+        public void DeleteFolderByMovingToTrash(Guid folderId)
+        {
+            var folderToTrash = repository
+                .AsQueryable<MediaFolder>(f => f.Id == folderId)
+                .Fetch(f => f.Medias)
+                // Without ToList() only first one media item would be fetched
+                .ToList()
+                .FirstOrDefault();
+
+            if (folderToTrash == null)
+            {
+                throw new CmsException(string.Format("A folder was not found by given id={0}", folderId));
+            }
+
+            TrashFiles(new List<MediaFolder> { folderToTrash }, true);
+
+            Events.MediaManagerEvents.Instance.OnMediaFolderDeleted(folderToTrash);
+        }
+
+        private void TrashFiles(IEnumerable<Media> filesToTrash, bool deleteFoldersAndSubMedias)
+        {
+
+            unitOfWork.BeginTransaction();
+            var trashFolder = GetContentRoot(configuration.Storage.TrashFolder);
+            // in case of exception store moved files and restore them
+            var movedFilesDic = new Dictionary<Uri, Uri>();
+            try
+            {
+                foreach (var media in filesToTrash)
+                {
+                    if (media is MediaFile)
+                    {
+                        var mediaFile = (MediaFile)media;
+                        foreach (var category in mediaFile.Categories)
+                        {
+                            unitOfWork.Session.Delete(category);
+                        }
+                        while (mediaFile.AccessRules.Any())
+                        {
+                            var rule = mediaFile.AccessRules.First();
+                            mediaFile.RemoveRule(rule);
+                            unitOfWork.Session.Delete(rule);
+                        }
+                        foreach (var tag in mediaFile.MediaTags)
+                        {
+                            unitOfWork.Session.Delete(tag);
+                        }
+                        var sourceUri = mediaFile.FileUri;
+                        var destinationUri = new Uri(Path.Combine(trashFolder, GetFolderWithFileName(mediaFile.FileUri, mediaFile.Type)));
+
+                        // when only file properties are updated record on database is duplicated but file is not duplicated
+                        if (!movedFilesDic.ContainsValue(sourceUri))
+                        {
+                            storageService.CopyObject(sourceUri, destinationUri);
+                            movedFilesDic.Add(destinationUri, sourceUri);
+                        }
+
+                        mediaFile.FileUri = destinationUri;
+                        mediaFile.PublicUrl = GenerateTrashPublicUrl(mediaFile.FileUri, mediaFile.Type);
+
+                        if (mediaFile is MediaImage)
+                        {
+                            var mediaImage = (MediaImage)mediaFile;
+                            if (mediaImage.IsThumbnailUploaded.GetValueOrDefault())
+                            {
+                                var sourceImageUri = mediaImage.ThumbnailUri;
+                                var destinationImageUri = new Uri(Path.Combine(trashFolder, GetFolderWithFileName(mediaImage.ThumbnailUri, mediaImage.Type)));
+
+                                storageService.CopyObject(sourceImageUri, destinationImageUri);
+                                movedFilesDic.Add(destinationImageUri, sourceImageUri);
+
+                                mediaImage.ThumbnailUri = destinationImageUri;
+                                mediaImage.PublicThumbnailUrl = GenerateTrashPublicUrl(mediaImage.ThumbnailUri, mediaImage.Type);
+                            }
+                            if (mediaImage.IsOriginalUploaded.GetValueOrDefault())
+                            {
+                                var sourceImageUri = mediaImage.OriginalUri;
+                                var destinationImageUri = new Uri(Path.Combine(trashFolder, GetFolderWithFileName(mediaImage.OriginalUri, mediaImage.Type)));
+
+                                // original image can be duplicated so we only need to update reference
+                                if (!movedFilesDic.ContainsValue(sourceImageUri))
+                                {
+                                    storageService.CopyObject(sourceImageUri, destinationImageUri);
+                                    movedFilesDic.Add(destinationImageUri, sourceImageUri);
+                                }
+
+                                mediaImage.OriginalUri = destinationImageUri;
+                                mediaImage.PublicOriginallUrl = GenerateTrashPublicUrl(mediaImage.OriginalUri, mediaImage.Type);
+                            }
+                        }
+                        unitOfWork.Session.Delete(mediaFile);
+                    }
+                    else if (deleteFoldersAndSubMedias && media is MediaFolder)
+                    {
+                        var mediafolder = (MediaFolder)media;
+                        TrashFiles(mediafolder.Medias, true);
+                        unitOfWork.Session.Delete(mediafolder);
+                    }
+                }
+            }
+            catch (Exception e)
+            {
+                // Restore copied files.
+                try
+                {
+                    foreach (var movedFile in movedFilesDic.Keys)
+                    {
+                        storageService.RemoveObject(movedFile);
+                    }
+                }
+                catch (Exception exception)
+                {
+                    LogFailedRemoveFiles(movedFilesDic.Keys, exception);
+                }
+                throw;
+            }
+            unitOfWork.Commit();
+            try
+            {
+                foreach (var movedFile in movedFilesDic.Values)
+                {
+                    storageService.RemoveObject(movedFile);
+                }
+            }
+            catch (Exception e)
+            {
+                LogFailedRemoveFiles(movedFilesDic.Values, e);
+            }
+        }
+
+        private void LogFailedRemoveFiles(IEnumerable<Uri> movedFiles, Exception exception)
+        {
+            Log.Error("Failed to remove files: " + string.Join(", ", movedFiles), exception);
+            throw exception;
+        }
+
+        private string GenerateTrashPublicUrl(Uri fileUri, MediaType mediaType)
+        {
+            return Path.Combine(
+                GetContentPublicRoot(configuration.Storage.TrashFolder),
+                GetFolderWithFileName(fileUri, mediaType))
+                .Replace('\\', '/');
+        }
+
+        private string GetFolderWithFileName(Uri fileUri, MediaType mediaType)
+        {
+            return Path.Combine(mediaType.ToString().ToLower(), GetElementFromEnd(fileUri.Segments, 1), GetElementFromEnd(fileUri.Segments, 0));
+        }
+
+        /// <summary>
+        /// Gets element from the end of list.
+        /// </summary>
+        /// <typeparam name="TSource">Type of list item.</typeparam>
+        /// <param name="list">List to get element from.</param>
+        /// <param name="elementFromEnd">Element number counted from end of list.</param>
+        /// <returns>Element of list.</returns>
+        private static TSource GetElementFromEnd<TSource>(IList<TSource> list, int elementFromEnd)
+        {
+            ++elementFromEnd;
+            if (list.Count <= elementFromEnd || elementFromEnd < 0)
+            {
+                throw new ArgumentOutOfRangeException(string.Format("Failed to get element number {0} from array size of {1}.", elementFromEnd, list.Count));
+            }
+            return list[list.Count - elementFromEnd];
         }
 
         public virtual MediaFile UploadFile(MediaType type, Guid rootFolderId, string fileName, long fileLength, Stream fileStream, bool isTemporary = true, 

@@ -1,6 +1,8 @@
 ﻿using System;
 using System.IO;
 using System.Net;
+using System.Threading;
+using System.Threading.Tasks;
 
 using BetterCms.Core.Services.Caching;
 using BetterCms.Core.Services.Storage;
@@ -217,6 +219,34 @@ namespace BetterCms.Module.WindowsAzureStorage
             catch (Exception e)
             {
                 throw new StorageException(string.Format("Failed to delete object. Uri: {0}", uri), e);
+            }
+        }
+
+        public void MoveObject(Uri sourceUri, Uri destinationUri, bool createDirectoriesIfNotExists = true)
+        {
+            if (sourceUri.AbsoluteUri == destinationUri.AbsoluteUri)
+            {
+                throw new StorageException("Can't move, source file and destination file are the same.");
+            }
+            CheckUri(sourceUri);
+            CheckUri(destinationUri);
+
+            try
+            {
+                var client = cloudStorageAccount.CreateCloudBlobClient();
+                var container = client.GetContainerReference(containerName);
+                var source = container.GetBlockBlobReference(sourceUri.AbsoluteUri);
+                var target = container.GetBlockBlobReference(destinationUri.AbsoluteUri);
+                target.StartCopyFromBlob(source.Uri);
+                if (target.CopyState.Status != CopyStatus.Success)
+                {
+                    throw new StorageException(string.Format("Failed to move blob from {0} to {1}.", sourceUri.AbsolutePath, destinationUri.AbsolutePath));
+                }
+                RemoveObject(sourceUri);
+            }
+            catch (Exception e)
+            {
+                throw new StorageException(string.Format("Failed to move blob from {0} to {1}", sourceUri.AbsolutePath, destinationUri.AbsolutePath), e);
             }
         }
 

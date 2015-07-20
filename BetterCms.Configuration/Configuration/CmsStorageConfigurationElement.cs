@@ -21,6 +21,8 @@ namespace BetterCms.Configuration
 
         private const string MaximumFileNameLengthAttribute = "maxFileNameLength";
 
+        private const string TrashFolderAttribute = "trashFolder";
+
         [ConfigurationProperty(ContentRootAttribute, IsRequired = true)]
         public string ContentRoot
         {
@@ -110,6 +112,13 @@ namespace BetterCms.Configuration
                 return length;
             }
             set { this[MaximumFileNameLengthAttribute] = value; }
+        }
+
+        [ConfigurationProperty(TrashFolderAttribute, IsRequired = true)]
+        public string TrashFolder
+        {
+            get { return ParseEnvironmentValue(Convert.ToString(this[TrashFolderAttribute])); }
+            set { this[TrashFolderAttribute] = value; }
         }
 
         public KeyValueElement this[int index]

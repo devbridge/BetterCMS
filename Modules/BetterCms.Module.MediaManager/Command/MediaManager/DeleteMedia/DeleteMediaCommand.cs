@@ -1,7 +1,5 @@
-﻿using System.Linq;
-
-using BetterCms.Core.Mvc.Commands;
-using BetterCms.Module.MediaManager.Models;
+﻿using BetterCms.Core.Mvc.Commands;
+using BetterCms.Module.MediaManager.Services;
 using BetterCms.Module.Root.Mvc;
 
 namespace BetterCms.Module.MediaManager.Command.MediaManager.DeleteMedia
@@ -11,6 +9,17 @@ namespace BetterCms.Module.MediaManager.Command.MediaManager.DeleteMedia
     /// </summary>
     public class DeleteMediaCommand : CommandBase, ICommand<DeleteMediaCommandRequest, bool>
     {
+        private readonly IMediaFileService mediaFileService;
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="DeleteMediaCommand" /> class.
+        /// </summary>
+        /// <param name="mediaFileService">The media file service.</param>
+        public DeleteMediaCommand(IMediaFileService mediaFileService)
+        {
+            this.mediaFileService = mediaFileService;
+        }
+
         /// <summary>
         /// Executes the specified request.
         /// </summary>
@@ -18,63 +27,9 @@ namespace BetterCms.Module.MediaManager.Command.MediaManager.DeleteMedia
         /// <returns></returns>
         public bool Execute(DeleteMediaCommandRequest request)
         {
-            UnitOfWork.BeginTransaction();
-            var media = Repository.Delete<Media>(request.Id, request.Version, false);
-            DeleteMedias(media);
-            UnitOfWork.Commit();
-
-            // Notify.
-            if (media is MediaFolder)
-            {
-                Events.MediaManagerEvents.Instance.OnMediaFolderDeleted((MediaFolder)media);
-            }
-            else if (media is MediaFile)
-            {
-                Events.MediaManagerEvents.Instance.OnMediaFileDeleted((MediaFile)media);
-            }        
+            mediaFileService.DeleteFileByMovingToTrash(request.Id);
 
             return true;
-        }
-
-        /// <summary>
-        /// Deletes medias.
-        /// </summary>
-        /// <param name="media">The parent media.</param>
-        private void DeleteMedias(Media media)
-        {
-            if (media.MediaTags != null)
-            {
-                foreach (var mediaTag in media.MediaTags)
-                {
-                    Repository.Delete(mediaTag);
-                }                
-            }
-
-            if (media.Categories != null)
-            {
-                foreach (var category in media.Categories)
-                {
-                    Repository.Delete(category);
-                }
-            }
-
-            if (media is MediaFile)
-            {
-                MediaFile file = (MediaFile)media;
-                if (file.AccessRules != null)
-                {
-                    var rules = file.AccessRules.ToList();
-                    rules.ForEach(file.RemoveRule);
-                }
-            }
-
-            Repository.Delete(media);
-
-            var subItems = Repository.AsQueryable<Media>().Where(m => !m.IsDeleted && m.Folder != null && m.Folder.Id == media.Id).ToList();
-            foreach (var item in subItems)
-            {                
-                DeleteMedias(item);
-            }
         }
     }
 }

@@ -47,7 +47,7 @@ namespace BetterCms.Module.MediaManager.Controllers
         /// <summary>
         /// An action to delete a given folder.
         /// </summary>
-        /// <param name="id">The fodler id.</param>
+        /// <param name="id">The folder id.</param>
         /// <param name="version">The version.</param>
         /// <returns>
         /// Json with status.
