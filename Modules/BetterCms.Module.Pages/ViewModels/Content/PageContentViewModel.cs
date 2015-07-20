@@ -208,6 +208,14 @@ namespace BetterCms.Module.Pages.ViewModels.Content
         /// The list of the widget categories.
         /// </value>
         public IList<WidgetCategoryViewModel> WidgetCategories { get; set; }
+
+        /// <summary>
+        /// Gets or sets the recent widgets.
+        /// </summary>
+        /// <value>
+        /// The recent widgets.
+        /// </value>
+        public IList<WidgetViewModel> RecentWidgets { get; set; }
         
         /// <summary>
         /// Gets or sets a value indicating whether dialog should be opened in the read only mode.

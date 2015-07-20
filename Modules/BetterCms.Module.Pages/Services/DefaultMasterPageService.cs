@@ -12,6 +12,8 @@ using BetterCms.Module.Root.Models;
 using BetterCms.Module.Root.Services;
 using BetterCms.Module.Root.ViewModels.Option;
 
+using FluentNHibernate.Utils;
+
 namespace BetterCms.Module.Pages.Services
 {
     public class DefaultMasterPageService : IMasterPageService
@@ -200,7 +202,7 @@ namespace BetterCms.Module.Pages.Services
             return query.Where(mp => updatingIds.Contains(mp.Master.Id)).ToList();
         }
 
-        public int GetLastDynamicRegionNumber(Guid pageId)
+        public int GetLastDynamicRegionNumber()
         {
             ContentRegion crAlias = null;
             Region regionAlias = null;
@@ -215,8 +217,7 @@ namespace BetterCms.Module.Pages.Services
                 .Inner.JoinAlias(() => crAlias.Content, () => contentAlias)
                 .Inner.JoinAlias(() => contentAlias.PageContents, () => pcAlias)
 
-                .Where(() => pcAlias.Page.Id == pageId)
-                .And(() => contentAlias.GetType() == typeof(HtmlContent))
+                .Where(() => contentAlias.GetType() == typeof(HtmlContent))
                 .And(() => contentAlias.Status == ContentStatus.Draft
                     || contentAlias.Status == ContentStatus.Published)
                 .And(() => !crAlias.IsDeleted
@@ -233,8 +234,7 @@ namespace BetterCms.Module.Pages.Services
                 .Inner.JoinAlias(() => hAlias.Original, () => contentAlias)
                 .Inner.JoinAlias(() => contentAlias.PageContents, () => pcAlias)
 
-                .Where(() => pcAlias.Page.Id == pageId)
-                .And(() => contentAlias.GetType() == typeof(HtmlContent))
+                .Where(() => contentAlias.GetType() == typeof(HtmlContent))
                 .And(() => hAlias.Status == ContentStatus.Draft
                     && contentAlias.Status == ContentStatus.Published)
                 .And(() => !crAlias.IsDeleted

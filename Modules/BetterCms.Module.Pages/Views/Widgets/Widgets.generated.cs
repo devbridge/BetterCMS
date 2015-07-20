@@ -9,7 +9,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace BetterCms.Module.Pages.Views.Widgets
+namespace ASP
 {
     using System;
     using System.Collections.Generic;
@@ -95,9 +95,9 @@ namespace BetterCms.Module.Pages.Views.Widgets
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("RazorGenerator", "2.0.0.0")]
     [System.Web.WebPages.PageVirtualPathAttribute("~/Views/Widgets/Widgets.cshtml")]
-    public partial class Widgets : System.Web.Mvc.WebViewPage<SiteSettingWidgetListViewModel>
+    public partial class _Views_Widgets_Widgets_cshtml : System.Web.Mvc.WebViewPage<SiteSettingWidgetListViewModel>
     {
-        public Widgets()
+        public _Views_Widgets_Widgets_cshtml()
         {
         }
         public override void Execute()
@@ -125,6 +125,11 @@ WriteLiteral("\r\n");
             .SortColumnName("WidgetName")
             .HeaderAttributes(@style => "width: 245px;")
             .Encode(false);
+        // TODO Categories
+//        column.For(f => f.CategoryName)
+//            .Named(PagesGlobalization.SiteSettings_Widgets_CategoryColumn)
+//            .SortColumnName("CategoryName")
+//            .Attributes(@class => "bcms-category-name");
 
         column.For(f => Html.EditorFor(e => f.Status, "WidgetStatus"))
             .Named(PagesGlobalization.SiteSettings_Widgets_StatusColumn)

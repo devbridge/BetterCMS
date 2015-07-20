@@ -78,10 +78,10 @@ namespace BetterCms.Module.Pages.Controllers
         [BcmsAuthorize(RootModuleConstants.UserRoles.EditContent)]
         public ActionResult Widgets(string query)
         {
-            var request = new GetWidgetCategoryRequest { Filter = query };
-            var model = GetCommand<GetWidgetCategoryCommand>().ExecuteCommand(request);
+            var request = new GetRecentWidgetAndWidgetCategoryRequest { Filter = query };
+            var model = GetCommand<GetRecentWidgetAndWidgetCategoryCommand>().ExecuteCommand(request);
 
-            return PartialView(model.WidgetCategories);
+            return PartialView(new PageContentViewModel{ WidgetCategories = model.WidgetCategories, RecentWidgets = model.RecentWidgets});
         }
 
         // TODO: remove action; update command.
@@ -96,7 +96,7 @@ namespace BetterCms.Module.Pages.Controllers
         [BcmsAuthorize(RootModuleConstants.UserRoles.EditContent)]
         private ActionResult WidgetCategory(string categoryId)
         {
-            var result = GetCommand<GetWidgetCategoryCommand>().ExecuteCommand(new GetWidgetCategoryRequest
+            var result = GetCommand<GetRecentWidgetAndWidgetCategoryCommand>().ExecuteCommand(new GetRecentWidgetAndWidgetCategoryRequest
                                                                             {
                                                                                 CategoryId = categoryId.ToGuidOrDefault(),
                                                                                 Filter = null
@@ -129,8 +129,10 @@ namespace BetterCms.Module.Pages.Controllers
 
             if (model != null)
             {
-                var request = new GetWidgetCategoryRequest();
-                model.WidgetCategories = GetCommand<GetWidgetCategoryCommand>().ExecuteCommand(request).WidgetCategories;
+                var request = new GetRecentWidgetAndWidgetCategoryRequest();
+                var response = GetCommand<GetRecentWidgetAndWidgetCategoryCommand>().ExecuteCommand(request);
+                model.WidgetCategories = response.WidgetCategories;
+                model.RecentWidgets = response.RecentWidgets;
             }
 
             var view = RenderView("AddPageHtmlContent", model ?? new PageContentViewModel());

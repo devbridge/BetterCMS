@@ -6,6 +6,7 @@ using System.IO;
 using System.Linq;
 using System.Net;
 using System.Threading.Tasks;
+using System.Web;
 
 using BetterCms.Core.DataAccess;
 using BetterCms.Core.DataAccess.DataContext;
@@ -147,7 +148,9 @@ namespace BetterCms.Module.MediaManager.Services
                     Task.Factory.ContinueWhenAll(
                         removeImageFileTasks.ToArray(),
                         result =>
-                            { storageService.RemoveFolder(image.FileUri); });
+                        {
+                            // TODO: add functionality to remove folder if it is empty
+                        });
 
                     removeImageFileTasks.ForEach(task => task.Start());
                 }
@@ -190,80 +193,49 @@ namespace BetterCms.Module.MediaManager.Services
             overrideUrl = false; // TODO: temporary disabling feature #1055.
             using (var thumbnailFileStream = new MemoryStream())
             {
-                MediaImage originalImage;
-                string folderName;
-                string publicFileName;
+                var folderName = mediaFileService.CreateRandomFolderName();
 
                 fileStream = RotateImage(fileStream);
                 var size = GetSize(fileStream);
 
                 CreatePngThumbnail(fileStream, thumbnailFileStream, ThumbnailSize);
-                
+
                 if (!reuploadMediaId.HasDefaultValue())
                 {
                     // Re-uploading image: Get original image, folder name, file extension, file name
-                    originalImage = repository.First<MediaImage>(image => image.Id == reuploadMediaId);
-                    folderName = Path.GetFileName(Path.GetDirectoryName(originalImage.FileUri.OriginalString));
-                    MediaImage clonedOriginalImage = (MediaImage)originalImage.Clone();
-                    clonedOriginalImage.Original = originalImage;
-                    
-                    // Get original file stream
-                    using (var originalFileStream = DownloadFileStream(originalImage.PublicUrl))
-                    {
-                        // Get thumbnail file stream
-                        using (var originalThumbnailFileStream = DownloadFileStream(originalImage.PublicThumbnailUrl))
-                        {
-                            // Check is re-uploaded image has the same extension as original
-                            var reuploadedFileExtension = Path.GetExtension(fileName);
-                            if (reuploadedFileExtension != null && !reuploadedFileExtension.Equals(originalImage.OriginalFileExtension))
-                            {
-                                fileStream = UpdateCodec(fileStream, originalFileStream);
-                            }
+                    MediaImage reuploadImage = (MediaImage)repository.First<MediaImage>(image => image.Id == reuploadMediaId).Clone();
+                    reuploadImage.IsTemporary = true;
+                    var publicFileName = RemoveInvalidHtmlSymbols(MediaImageHelper.CreatePublicFileName(fileName, Path.GetExtension(fileName)));
 
-                            // Create version file name for current original image
-                            var historicalUrl = MediaImageHelper.CreateHistoricalVersionedFileName(
-                                clonedOriginalImage.OriginalFileName,
-                                clonedOriginalImage.OriginalFileExtension);
+                    // Create new original image and upload file stream to the storage
+                    reuploadImage = CreateImage(rootFolderId, fileName, Path.GetExtension(fileName), fileName, size, fileLength, thumbnailFileStream.Length);
+                    mediaImageVersionPathService.SetPathForNewOriginal(reuploadImage, folderName, publicFileName);
 
-                            // Update urls with version file name
-                            mediaImageVersionPathService.SetPathForArchive(clonedOriginalImage, folderName, historicalUrl);
+                    unitOfWork.BeginTransaction();
+                    repository.Save(reuploadImage);
+                    unitOfWork.Commit();
 
-                            unitOfWork.BeginTransaction();
-                            repository.Save(clonedOriginalImage);
-                            unitOfWork.Commit();
+                    StartTasksForImage(reuploadImage, fileStream, thumbnailFileStream, false);
 
-                            // Re-upload original and thumbnail images to version urls
-                            StartTasksForImage(clonedOriginalImage, originalFileStream, originalThumbnailFileStream, originalImage.IsEdited());
-                        }
-                    }
-
-                    UpdateImageProperties(originalImage, rootFolderId, originalImage.OriginalFileName, originalImage.OriginalFileExtension, originalImage.Title, size, fileLength,
-                        thumbnailFileStream.Length);
-
-                    if (!overrideUrl)
-                    {
-                        publicFileName = MediaImageHelper.CreateVersionedFileName(originalImage.OriginalFileName, GetVersion(originalImage));
-                        mediaImageVersionPathService.SetPathForNewOriginal(originalImage, folderName, publicFileName);
-                    }
+                    return reuploadImage;
                 }
                 else
                 {
                     // Uploading new image
-                    folderName = mediaFileService.CreateRandomFolderName();
-                    publicFileName = MediaImageHelper.CreatePublicFileName(fileName, Path.GetExtension(fileName));
+                    var publicFileName = RemoveInvalidHtmlSymbols(MediaImageHelper.CreatePublicFileName(fileName, Path.GetExtension(fileName)));
 
                     // Create new original image and upload file stream to the storage
-                    originalImage = CreateImage( rootFolderId, fileName, Path.GetExtension(fileName), fileName, size, fileLength, thumbnailFileStream.Length);
+                    MediaImage originalImage = CreateImage(rootFolderId, fileName, Path.GetExtension(fileName), fileName, size, fileLength, thumbnailFileStream.Length);
                     mediaImageVersionPathService.SetPathForNewOriginal(originalImage, folderName, publicFileName);
+
+                    unitOfWork.BeginTransaction();
+                    repository.Save(originalImage);
+                    unitOfWork.Commit();
+
+                    StartTasksForImage(originalImage, fileStream, thumbnailFileStream, false);
+
+                    return originalImage;
                 }
-
-                unitOfWork.BeginTransaction();
-                repository.Save(originalImage);
-                unitOfWork.Commit();
-
-                StartTasksForImage(originalImage, fileStream, thumbnailFileStream, false);
-
-                return originalImage;
             }
         }
 
@@ -277,7 +249,7 @@ namespace BetterCms.Module.MediaManager.Services
                 CreatePngThumbnail(fileStream, thumbnailFileStream, ThumbnailSize);
 
                 var folderName = mediaFileService.CreateRandomFolderName();
-                var publicFileName = MediaImageHelper.CreatePublicFileName(image.OriginalFileName, image.OriginalFileExtension);
+                var publicFileName = RemoveInvalidHtmlSymbols(MediaImageHelper.CreatePublicFileName(image.OriginalFileName, image.OriginalFileExtension));
 
                 // Create new original image and upload file stream to the storage
                 var originalImage = CreateImage(null, image.OriginalFileName, image.OriginalFileExtension, image.Title, size, image.Size, thumbnailFileStream.Length, image);
@@ -366,7 +338,9 @@ namespace BetterCms.Module.MediaManager.Services
             
             using (var fileStream = DownloadFileStream(image.PublicUrl))
             {
-                string publicUrlTemp = string.Empty, publicThumbnailUrlTemp = string.Empty, publicOriginallUrlTemp = string.Empty;
+                string publicUrlTemp = string.Empty, 
+                    publicThumbnailUrlTemp = string.Empty, 
+                    publicOriginallUrlTemp = string.Empty;
                 Uri fileUriTemp = null, thumbnailUriTemp = null, originalUriTemp = null;
 
                 if (overrideUrl)
@@ -384,7 +358,7 @@ namespace BetterCms.Module.MediaManager.Services
 
                 if (!overrideUrl)
                 {
-                    var publicFileName = MediaImageHelper.CreateVersionedFileName(originalImage.OriginalFileName, GetVersion(originalImage));
+                    var publicFileName = RemoveInvalidHtmlSymbols(MediaImageHelper.CreateVersionedFileName(originalImage.OriginalFileName, GetVersion(originalImage)));
                     mediaImageVersionPathService.SetPathForNewOriginal(originalImage, folderName, publicFileName, archivedImage.OriginalUri, archivedImage.PublicOriginallUrl);
                 }
                 else
@@ -446,7 +420,7 @@ namespace BetterCms.Module.MediaManager.Services
 
                 if (!overrideUrl)
                 {
-                    var publicFileName = MediaImageHelper.CreateVersionedFileName(image.OriginalFileName, GetVersion(image));
+                    var publicFileName = RemoveInvalidHtmlSymbols(MediaImageHelper.CreateVersionedFileName(image.OriginalFileName, GetVersion(image)));
                     mediaImageVersionPathService.SetPathForNewOriginal(image, folderName, publicFileName, archivedImage.OriginalUri, archivedImage.PublicOriginallUrl);
                 }
                 
@@ -508,7 +482,7 @@ namespace BetterCms.Module.MediaManager.Services
             if (previousOriginal != null)
             {
                 var folderName = Path.GetFileName(Path.GetDirectoryName(previousOriginal.FileUri.OriginalString));
-                var publicFileName = MediaImageHelper.CreatePublicFileName(previousOriginal.OriginalFileName, previousOriginal.OriginalFileExtension);
+                var publicFileName = RemoveInvalidHtmlSymbols(MediaImageHelper.CreatePublicFileName(previousOriginal.OriginalFileName, previousOriginal.OriginalFileExtension));
 
                 // Get original file stream
                 using (var fileStream = DownloadFileStream(previousOriginal.PublicUrl))
@@ -990,6 +964,13 @@ namespace BetterCms.Module.MediaManager.Services
             {
                 RemoveImageWithFiles(media.Id, media.Version, false, shouldNotUploadOriginal);
             }
+        }
+
+        private static string RemoveInvalidHtmlSymbols(string fileName)
+        {
+            var invalidFileNameChars = Path.GetInvalidFileNameChars().ToList();
+            invalidFileNameChars.AddRange(new[] { '+', ' ' });
+            return HttpUtility.UrlEncode(invalidFileNameChars.Aggregate(fileName, (current, invalidFileNameChar) => current.Replace(invalidFileNameChar, '_')));
         }
 
         #endregion
