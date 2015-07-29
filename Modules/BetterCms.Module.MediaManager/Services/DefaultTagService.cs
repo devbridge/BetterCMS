@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 
 using BetterModules.Core.DataAccess.DataContext;
-using BetterCms.Core.DataAccess.DataContext;
 using BetterCms.Core.Services;
 using BetterCms.Module.MediaManager.Models;
 using BetterCms.Module.Root.Models;
