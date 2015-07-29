@@ -40,7 +40,7 @@ namespace BetterCms.Module.Pages.Command.Content.GetInsertHtmlContent
 
             if (model.EnableInsertDynamicRegion)
             {
-                model.LastDynamicRegionNumber = masterPageService.GetLastDynamicRegionNumber(model.PageId);
+                model.LastDynamicRegionNumber = masterPageService.GetLastDynamicRegionNumber();
             }
 
             return model;

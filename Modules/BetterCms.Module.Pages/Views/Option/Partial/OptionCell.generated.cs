@@ -9,7 +9,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace BetterCms.Module.Pages.Views.Option.Partial
+namespace ASP
 {
     using System;
     using System.Collections.Generic;
@@ -41,9 +41,9 @@ namespace BetterCms.Module.Pages.Views.Option.Partial
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("RazorGenerator", "2.0.0.0")]
     [System.Web.WebPages.PageVirtualPathAttribute("~/Views/Option/Partial/OptionCell.cshtml")]
-    public partial class OptionCell : System.Web.Mvc.WebViewPage<BetterCms.Module.Pages.Mvc.EditableGrid.OptionValueEditableGridColumn>
+    public partial class _Views_Option_Partial_OptionCell_cshtml : System.Web.Mvc.WebViewPage<BetterCms.Module.Pages.Mvc.EditableGrid.OptionValueEditableGridColumn>
     {
-        public OptionCell()
+        public _Views_Option_Partial_OptionCell_cshtml()
         {
         }
         public override void Execute()
@@ -317,9 +317,9 @@ WriteLiteral("() || ");
             
             #line default
             #line hidden
-WriteLiteral("(), \r\n            click: onItemSelect,\r\n            event: {blur: onBlurField, fo" +
-"cus: onItemSelect},\r\n            enterPress: onSave, \r\n            escPress: onC" +
-"ancelEdit\r\n");
+WriteLiteral("(), \r\n            click: onItemSelect,\r\n            event: {blur: onBlurFieldDela" +
+"yed, focus: onItemSelect},\r\n            enterPress: onSave, \r\n            escPre" +
+"ss: onCancelEdit\r\n");
 
 WriteLiteral("            ");
 
