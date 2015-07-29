@@ -14,6 +14,7 @@ using BetterCms.Module.Pages.Command.Widget.GetWidgetUsages;
 using BetterCms.Module.Pages.Command.Widget.PreviewWidget;
 using BetterCms.Module.Pages.Command.Widget.SaveWidget;
 using BetterCms.Module.Pages.Content.Resources;
+using BetterCms.Module.Pages.ViewModels.Content;
 using BetterCms.Module.Pages.ViewModels.Filter;
 using BetterCms.Module.Pages.ViewModels.Widgets;
 
@@ -266,10 +267,10 @@ namespace BetterCms.Module.Pages.Controllers
         /// </returns>
         [HttpGet]
         [BcmsAuthorize(RootModuleConstants.UserRoles.EditContent)]
-        public ActionResult SelectWidget(GetWidgetCategoryRequest request)
+        public ActionResult SelectWidget(GetRecentWidgetAndWidgetCategoryRequest request)
         {
-            var model = GetCommand<GetWidgetCategoryCommand>().ExecuteCommand(request);
-            var view = model != null ? RenderView("SelectWidget", model.WidgetCategories) : string.Empty;
+            var model = GetCommand<GetRecentWidgetAndWidgetCategoryCommand>().ExecuteCommand(request);
+            var view = model != null ? RenderView("SelectWidget", new PageContentViewModel{ WidgetCategories = model.WidgetCategories, RecentWidgets = model.RecentWidgets }) : string.Empty;
 
             var result = ComboWireJson(model != null, view, model, JsonRequestBehavior.AllowGet);
             result.MaxJsonLength = int.MaxValue;

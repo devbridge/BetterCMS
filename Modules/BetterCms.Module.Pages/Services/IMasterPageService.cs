@@ -49,6 +49,6 @@ namespace BetterCms.Module.Pages.Services
             IList<Guid> newMasterIds,
             IEnumerable<Guid> childrenPageIds);
 
-        int GetLastDynamicRegionNumber(Guid pageId);
+        int GetLastDynamicRegionNumber();
     }
 }

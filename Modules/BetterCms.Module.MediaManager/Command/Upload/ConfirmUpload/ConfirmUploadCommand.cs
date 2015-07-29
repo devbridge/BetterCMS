@@ -76,44 +76,38 @@ namespace BetterCms.Module.MediaManager.Command.Upload.ConfirmUpload
                     var fileId = request.UploadedFiles.FirstOrDefault();
                     var file = Repository.FirstOrDefault<MediaFile>(fileId);
 
-                    if (file is MediaImage)
+                    if (!fileId.HasDefaultValue())
                     {
-                        UpdateMedia(request, folder, files);
-                    }
-                    else
-                    {
-                        if (!fileId.HasDefaultValue())
+                        var originalMedia = Repository.First<MediaFile>(request.ReuploadMediaId);
+                        if (cmsConfiguration.Security.AccessControlEnabled && !(originalMedia is IAccessControlDisabled))
                         {
-                            var originalMedia = Repository.First<MediaFile>(request.ReuploadMediaId);
-                            if (cmsConfiguration.Security.AccessControlEnabled && !(originalMedia is IAccessControlDisabled))
-                            {
-                                AccessControlService.DemandAccess(originalMedia, Context.Principal, AccessLevel.ReadWrite);
-                            }
-
-                            var historyItem = originalMedia.CreateHistoryItem();
-                            Repository.Save(historyItem);
-
-                            // Do not update access control, if reuploading
-                            updateAccessControl = false;
+                            AccessControlService.DemandAccess(originalMedia, Context.Principal, AccessLevel.ReadWrite);
+                        }
 
                             file.CopyDataTo(originalMedia);
+                        file.Original = originalMedia;
 
-                            originalMedia.Title = historyItem.Title;
-                            originalMedia.Description = historyItem.Description;
-                            originalMedia.IsArchived = historyItem.IsArchived;
-                            originalMedia.Folder = historyItem.Folder;
-                            originalMedia.Image = historyItem.Image;
-                            if (file is MediaImage && originalMedia is MediaImage)
-                            {
-                                ((MediaImage)originalMedia).Caption = ((MediaImage)historyItem).Caption;
-                                ((MediaImage)originalMedia).ImageAlign = ((MediaImage)historyItem).ImageAlign;
-                            }
+                        // Do not update access control, if re-uploading
+                        updateAccessControl = false;
 
-                            originalMedia.IsTemporary = false;
-                            originalMedia.PublishedOn = DateTime.Now;
-
-                            files.Add(originalMedia);
+                        file.Title = originalMedia.Title;
+                        file.Description = originalMedia.Description;
+                        file.IsArchived = originalMedia.IsArchived;
+                        file.Folder = originalMedia.Folder;
+                        file.Image = originalMedia.Image;
+                        if (file is MediaImage && originalMedia is MediaImage)
+                        {
+                            ((MediaImage)file).Caption = ((MediaImage)originalMedia).Caption;
+                            ((MediaImage)file).ImageAlign = ((MediaImage)originalMedia).ImageAlign;
                         }
+
+                        file.IsTemporary = false;
+                        file.PublishedOn = DateTime.Now;
+
+                        var temp = (MediaFile)file.Clone();
+                        originalMedia.CopyDataTo(file);
+                        temp.CopyDataTo(originalMedia);
+                        files.Add(originalMedia);
                     }
                 }
 

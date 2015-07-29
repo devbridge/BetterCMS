@@ -1,7 +1,10 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 
 using BetterModules.Core.DataAccess.DataContext;
+using BetterCms.Core.DataAccess.DataContext;
+using BetterCms.Core.Services;
 using BetterCms.Module.MediaManager.Models;
 using BetterCms.Module.Root.Models;
 
@@ -15,6 +18,7 @@ namespace BetterCms.Module.MediaManager.Services
     /// </summary>
     internal class DefaultTagService : ITagService
     {
+        private readonly ISecurityService securityService;  
         /// <summary>
         /// The unit of work.
         /// </summary>
@@ -24,9 +28,11 @@ namespace BetterCms.Module.MediaManager.Services
         /// Initializes a new instance of the <see cref="DefaultTagService" /> class.
         /// </summary>
         /// <param name="unitOfWork">The unit of work.</param>
-        public DefaultTagService(IUnitOfWork unitOfWork)
+        /// <param name="securityService">Security service get information about authorization.</param>
+        public DefaultTagService(IUnitOfWork unitOfWork, ISecurityService securityService)
         {
             this.unitOfWork = unitOfWork;
+            this.securityService = securityService;
         }
 
         /// <summary>
@@ -83,6 +89,7 @@ namespace BetterCms.Module.MediaManager.Services
 
                 if (tag == null)
                 {
+                    UpdateModifiedInformation(mediaTags[i]);
                     unitOfWork.Session.Delete(mediaTags[i]);
                 }
             }
@@ -122,11 +129,20 @@ namespace BetterCms.Module.MediaManager.Services
                         unitOfWork.Session.SaveOrUpdate(newTag);
                         newCreatedTags.Add(newTag);
                         mediaTag.Tag = newTag;
+                        UpdateModifiedInformation(mediaTag);
                     }
 
                     unitOfWork.Session.SaveOrUpdate(mediaTag);
                 }
             }
+        }
+
+        private void UpdateModifiedInformation(MediaTag mediaTag)
+        {
+            var media = mediaTag.Media;
+            media.ModifiedOn = DateTime.Now;
+            media.ModifiedByUser = securityService.CurrentPrincipalName;
+            unitOfWork.Session.SaveOrUpdate(media);
         }
     }
 }

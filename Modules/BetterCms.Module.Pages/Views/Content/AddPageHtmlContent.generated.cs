@@ -9,7 +9,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace BetterCms.Module.Pages.Views.Content
+namespace ASP
 {
     using System;
     using System.Collections.Generic;
@@ -65,9 +65,9 @@ namespace BetterCms.Module.Pages.Views.Content
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("RazorGenerator", "2.0.0.0")]
     [System.Web.WebPages.PageVirtualPathAttribute("~/Views/Content/AddPageHtmlContent.cshtml")]
-    public partial class AddPageHtmlContent : System.Web.Mvc.WebViewPage<BetterCms.Module.Pages.ViewModels.Content.PageContentViewModel>
+    public partial class _Views_Content_AddPageHtmlContent_cshtml : System.Web.Mvc.WebViewPage<BetterCms.Module.Pages.ViewModels.Content.PageContentViewModel>
     {
-        public AddPageHtmlContent()
+        public _Views_Content_AddPageHtmlContent_cshtml()
         {
         }
         public override void Execute()
@@ -268,7 +268,7 @@ WriteLiteral("            ");
 
             
             #line 33 "..\..\Views\Content\AddPageHtmlContent.cshtml"
-       Write(Html.Partial("Partial/SelectWidget", Model.WidgetCategories));
+       Write(Html.Partial("Partial/SelectWidget", Model));
 
             
             #line default

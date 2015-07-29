@@ -5,7 +5,9 @@ using System.Linq;
 using BetterModules.Core.DataAccess;
 using BetterModules.Core.DataAccess.DataContext;
 using BetterCms.Core.DataContracts;
+using BetterCms.Core.Models;
 using BetterCms.Core.Security;
+using BetterCms.Core.Services;
 using BetterCms.Module.MediaManager.Models;
 using BetterCms.Module.Pages.Models;
 using BetterCms.Module.Root.Models;
@@ -31,15 +33,19 @@ namespace BetterCms.Module.Pages.Services
         /// </summary>
         private readonly IRepository repository;
 
+        private readonly ISecurityService securityService;
+
         /// <summary>
         /// Initializes a new instance of the <see cref="DefaultTagService" /> class.
         /// </summary>
         /// <param name="unitOfWork">The unit of work.</param>
         /// <param name="repository">The repository.</param>
-        public DefaultTagService(IUnitOfWork unitOfWork, IRepository repository)
+        /// <param name="securityService">Security service get information about authorization.</param>
+        public DefaultTagService(IUnitOfWork unitOfWork, IRepository repository, ISecurityService securityService)
         {
             this.unitOfWork = unitOfWork;
             this.repository = repository;
+            this.securityService = securityService;
         }
 
         /// <summary>
@@ -79,7 +85,8 @@ namespace BetterCms.Module.Pages.Services
 
                 if (tag == null)
                 {
-                    unitOfWork.Session.Delete(pageTags[i]);                    
+                    UpdateModifiedInformation(pageTags[i]);
+                    unitOfWork.Session.Delete(pageTags[i]);
                 }
             }
 
@@ -121,6 +128,7 @@ namespace BetterCms.Module.Pages.Services
                         pageTag.Tag = newTag;
                     }
 
+                    UpdateModifiedInformation(pageTag);
                     unitOfWork.Session.SaveOrUpdate(pageTag);
                 }
             }
@@ -191,6 +199,7 @@ namespace BetterCms.Module.Pages.Services
                 var tag = trimmedTags.FirstOrDefault(s => s.ToLower() == sitemapTags[i].Tag.Name.ToLower());
                 if (tag == null)
                 {
+                    UpdateModifiedInformation(sitemapTags[i]);
                     unitOfWork.Session.Delete(sitemapTags[i]);
                 }
             }
@@ -234,6 +243,7 @@ namespace BetterCms.Module.Pages.Services
                     sitemapTag.Tag = newTag;
                 }
 
+                UpdateModifiedInformation(sitemapTag);
                 unitOfWork.Session.SaveOrUpdate(sitemapTag);
             }
         }
@@ -273,6 +283,7 @@ namespace BetterCms.Module.Pages.Services
                 var tag = trimmedTags.FirstOrDefault(s => s.ToLower() == mediaTags[i].Tag.Name.ToLower());
                 if (tag == null)
                 {
+                    UpdateModifiedInformation(mediaTags[i]);
                     unitOfWork.Session.Delete(mediaTags[i]);
                 }
             }
@@ -316,8 +327,31 @@ namespace BetterCms.Module.Pages.Services
                     mediaTag.Tag = newTag;
                 }
 
+                UpdateModifiedInformation(mediaTag);
                 unitOfWork.Session.SaveOrUpdate(mediaTag);
             }
+        }
+
+        private void UpdateModifiedInformation(SitemapTag mediaTag)
+        {
+            UpdateModifiedInformation(mediaTag.Sitemap);
+        }
+
+        private void UpdateModifiedInformation(PageTag mediaTag)
+        {
+            UpdateModifiedInformation(mediaTag.Page);
+        }
+
+        private void UpdateModifiedInformation(MediaTag mediaTag)
+        {
+            UpdateModifiedInformation(mediaTag.Media);
+        }
+
+        private void UpdateModifiedInformation(Entity entity)
+        {
+            entity.ModifiedOn = DateTime.Now;
+            entity.ModifiedByUser = securityService.CurrentPrincipalName;
+            unitOfWork.Session.SaveOrUpdate(entity);
         }
     }
 }

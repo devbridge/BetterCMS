@@ -367,6 +367,15 @@ namespace BetterCms.Module.Pages.Content.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Recent widgets.
+        /// </summary>
+        public static string AddPageContent_WidgetTab_RecentWidgets_Title {
+            get {
+                return ResourceManager.GetString("AddPageContent_WidgetTab_RecentWidgets_Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Register +.
         /// </summary>
         public static string AddPageContent_WidgetTab_RegisterButton {
