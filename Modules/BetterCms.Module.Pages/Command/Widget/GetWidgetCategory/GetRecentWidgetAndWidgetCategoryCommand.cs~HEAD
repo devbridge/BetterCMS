@@ -24,7 +24,7 @@ namespace BetterCms.Module.Pages.Command.Widget.GetWidgetCategory
     /// <summary>
     /// Command to get widget categories model.
     /// </summary>
-    public class GetWidgetCategoryCommand : CommandBase, ICommand<GetWidgetCategoryRequest, GetWidgetCategoryResponse>
+    public class GetRecentWidgetAndWidgetCategoryCommand : CommandBase, ICommand<GetRecentWidgetAndWidgetCategoryRequest, GetRecentWidgetAndWidgetCategoryResponse>
     {
         /// <summary>
         /// Executes the specified request.
@@ -32,7 +32,7 @@ namespace BetterCms.Module.Pages.Command.Widget.GetWidgetCategory
         /// <param name="request">The request.</param>
         /// <returns></returns>
         /// <exception cref="System.NotImplementedException"></exception>
-        public GetWidgetCategoryResponse Execute(GetWidgetCategoryRequest request)
+        public GetRecentWidgetAndWidgetCategoryResponse Execute(GetRecentWidgetAndWidgetCategoryRequest request)
         {
             IEnumerable<WidgetCategoryViewModel> categoriesFuture;
 
@@ -64,6 +64,26 @@ namespace BetterCms.Module.Pages.Command.Widget.GetWidgetCategory
             // Load list of contents
             var widgetsQuery = Repository.AsQueryable<Root.Models.Widget>().Where(f => !f.IsDeleted && f.Original == null && (f.Status == ContentStatus.Published || f.Status == ContentStatus.Draft));
 
+            var childContentsQuery = UnitOfWork.Session.Query<ChildContent>();
+            var pageContentsQuery = UnitOfWork.Session.Query<PageContent>();
+
+            var pageContentRecentWidgetsFuture = widgetsQuery.Where(t => pageContentsQuery.Any(z => z.Content.Id == t.Id))
+                .Select(t => new RecentWidget
+                {
+                    Widget = t,
+                    UsedOn = pageContentsQuery.Where(z => z.Content.Id == t.Id).Max(z => z.ModifiedOn)
+                })
+                .OrderByDescending(t => t.UsedOn).Take(6).ToFuture();
+
+
+            var childContentRecentWidgetsFuture = widgetsQuery.Where(t => childContentsQuery.Any(z => z.Child.Id == t.Id))
+                .Select(t => new RecentWidget
+                {
+                    Widget = t,
+                    UsedOn = childContentsQuery.Where(z => z.Child.Id == t.Id).Max(z => z.ModifiedOn)
+                })
+                .OrderByDescending(t => t.UsedOn).Take(6).ToFuture();
+            
             if (request.CategoryId.HasValue)
             {
                 if (request.CategoryId.Value.HasDefaultValue())
@@ -83,6 +103,8 @@ namespace BetterCms.Module.Pages.Command.Widget.GetWidgetCategory
 
             // Load all widgets
             var contentEntities = widgetsQuery.OrderBy(f => f.Name).ToFuture().ToList();
+            var pageContentRecentWidgets = pageContentRecentWidgetsFuture.ToList();
+            var childContentRecentWidgets = childContentRecentWidgetsFuture.ToList();
 
             // Load drafts for published widgets
             var ids = contentEntities.Where(c => c.Status == ContentStatus.Published).Select(c => c.Id).ToArray();
@@ -102,6 +124,8 @@ namespace BetterCms.Module.Pages.Command.Widget.GetWidgetCategory
 
             // Map to view models
             var contents = contentEntities.Select(f => CreateWidgetViewModel(f, drafts.FirstOrDefault(d => d.Original.Id == f.Id))).ToList();
+            var recentWidgets = LeaveTheMostRecentWidgets(pageContentRecentWidgets, childContentRecentWidgets)
+                                .Select(f => CreateWidgetViewModel(f.Widget, drafts.FirstOrDefault(d => d.Original.Id == f.Widget.Id))).ToList();
 
             List<WidgetCategoryViewModel> categories;
 
@@ -136,9 +160,10 @@ namespace BetterCms.Module.Pages.Command.Widget.GetWidgetCategory
             // Remove empty categories
             categories = categories.Where(c => c.Widgets.Any()).ToList();
 
-            return new GetWidgetCategoryResponse
+            return new GetRecentWidgetAndWidgetCategoryResponse
                        {
-                           WidgetCategories = categories
+                           WidgetCategories = categories,
+                           RecentWidgets = recentWidgets
                        };
         }
 
@@ -220,6 +245,30 @@ namespace BetterCms.Module.Pages.Command.Widget.GetWidgetCategory
             }
 
             return ContentStatus.Published.ToString();
+        }
+
+        private IEnumerable<RecentWidget> LeaveTheMostRecentWidgets(IEnumerable<RecentWidget> childContentRecentWidgets, IEnumerable<RecentWidget> pageContentRecentWidgets)
+        {
+            IEnumerable<RecentWidget> widgets = childContentRecentWidgets.Concat(pageContentRecentWidgets);
+            var cleanList = new List<RecentWidget>();
+            foreach (var widget in widgets.OrderByDescending(t => t.UsedOn))
+            {
+                if (!(cleanList.Any(t => t.Widget.Id == widget.Widget.Id)))
+                {
+                    cleanList.Add(widget);
+                    if (cleanList.Count == 6)
+                    {
+                        return cleanList;
+                    }
+                }
+            }
+            return cleanList;
+        }
+
+        private class RecentWidget
+        {
+            public Root.Models.Widget Widget { get; set; }
+            public DateTime UsedOn { get; set; }
         }
     }
 }

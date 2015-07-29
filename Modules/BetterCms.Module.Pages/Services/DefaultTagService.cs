@@ -5,7 +5,6 @@ using System.Linq;
 using BetterModules.Core.DataAccess;
 using BetterModules.Core.DataAccess.DataContext;
 using BetterCms.Core.DataContracts;
-using BetterCms.Core.Models;
 using BetterCms.Core.Security;
 using BetterCms.Core.Services;
 using BetterCms.Module.MediaManager.Models;
@@ -15,6 +14,7 @@ using BetterCms.Module.Root.Models;
 using NHibernate.Criterion;
 using NHibernate.Linq;
 using NHibernate.SqlCommand;
+using BetterModules.Core.Models;
 
 namespace BetterCms.Module.Pages.Services
 {

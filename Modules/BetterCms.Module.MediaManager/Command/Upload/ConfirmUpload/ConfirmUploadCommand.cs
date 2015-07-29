@@ -83,6 +83,7 @@ namespace BetterCms.Module.MediaManager.Command.Upload.ConfirmUpload
                         {
                             AccessControlService.DemandAccess(originalMedia, Context.Principal, AccessLevel.ReadWrite);
                         }
+<<<<<<< HEAD
 
                             file.CopyDataTo(originalMedia);
                         file.Original = originalMedia;
@@ -104,6 +105,28 @@ namespace BetterCms.Module.MediaManager.Command.Upload.ConfirmUpload
                         file.IsTemporary = false;
                         file.PublishedOn = DateTime.Now;
 
+=======
+
+                        file.Original = originalMedia;
+
+                        // Do not update access control, if re-uploading
+                        updateAccessControl = false;
+
+                        file.Title = originalMedia.Title;
+                        file.Description = originalMedia.Description;
+                        file.IsArchived = originalMedia.IsArchived;
+                        file.Folder = originalMedia.Folder;
+                        file.Image = originalMedia.Image;
+                        if (file is MediaImage && originalMedia is MediaImage)
+                        {
+                            ((MediaImage)file).Caption = ((MediaImage)originalMedia).Caption;
+                            ((MediaImage)file).ImageAlign = ((MediaImage)originalMedia).ImageAlign;
+                        }
+
+                        file.IsTemporary = false;
+                        file.PublishedOn = DateTime.Now;
+
+>>>>>>> upstream/master
                         var temp = (MediaFile)file.Clone();
                         originalMedia.CopyDataTo(file);
                         temp.CopyDataTo(originalMedia);
