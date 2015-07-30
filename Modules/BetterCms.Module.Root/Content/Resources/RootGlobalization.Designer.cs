@@ -484,7 +484,7 @@ namespace BetterCms.Module.Root.Content.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to CollapseAll.
+        ///   Looks up a localized string similar to Collapse All.
         /// </summary>
         public static string CategoryTree_Button_CollapseAll {
             get {
