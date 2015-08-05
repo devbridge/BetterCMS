@@ -102,18 +102,37 @@ namespace BetterCms.Module.Blog.Services
 
         private void WriteCategories()
         {
-            return; // TODO: https://github.com/devbridge/BetterCMS/issues/1235
             WriteStartCategories();
-            foreach (var category in posts.Where(p => p.Categories != null).SelectMany(p => p.Categories).Distinct())
+            var postsCategoriesTrees = posts.Where(t=>t.Categories != null)
+                                            .SelectMany(t => t.Categories)
+                                            .Select(t => t.Category.CategoryTree)
+                                            .Distinct()
+                                            .ToList();
+            var allPostsCategories = postsCategoriesTrees
+                                    .SelectMany(p => p.Categories)
+                                    .Distinct()
+                                    .ToList();
+            foreach (var categoriesTree in postsCategoriesTrees)
             {
-                WriteCategory(category.Category.Id.ToString(), 
-                    category.Category.Name, 
+                WriteCategory(categoriesTree.Id.ToString(), 
+                    categoriesTree.Title, 
+                    ContentTypes.Text, 
+                    categoriesTree.CreatedOn, 
+                    categoriesTree.ModifiedOn, 
+                    true, 
+                    null, 
+                    null);
+            }
+            foreach (var category in allPostsCategories)
+            {
+                WriteCategory(category.Id.ToString(), 
+                    category.Name, 
                     ContentTypes.Text, 
                     category.CreatedOn, 
                     category.ModifiedOn, 
                     true, 
-                    null, 
-                    null);
+                    null,
+                    (category.ParentCategory == null ? category.CategoryTree.Id : category.ParentCategory.Id).ToString());
             }
             WriteEndElement();
         }
