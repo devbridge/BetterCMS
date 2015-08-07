@@ -299,7 +299,7 @@ namespace BetterCms.Module.Blog.Services
 
                 var createdAuthors = new List<Author>();
                 var authors = ImportAuthors(blogPosts.Authors, createdAuthors, blogs);
-                var categories = ImportCategories(blogPosts.Categories, blogs, newTreeList, newCategoriesList);
+                var categories = ImportCategories(blogPosts.Categories, blogs, ref newTreeList, ref newCategoriesList);
 
                 unitOfWork.Commit();
 
@@ -488,8 +488,8 @@ namespace BetterCms.Module.Blog.Services
 
         private IDictionary<string, Guid> ImportCategories(BlogMLBlog.CategoryCollection categories, 
                                                            IEnumerable<BlogMLPost> blogs,
-                                                           IList<CategoryTree> newTreeList,
-                                                           IList<Category> newCategoriesList)
+                                                           ref List<CategoryTree> newCategoriesTreeList,
+                                                           ref List<Category> newCategoriesList)
         {
             var dictionary = new Dictionary<string, Guid>();
             if (categories.Count == 0)
@@ -520,12 +520,15 @@ namespace BetterCms.Module.Blog.Services
                     category.ParentRef = newIdsForCategories[category.ParentRef].ToString();
                 }
             }
+            var refrencedCategoriesIds = new List<Guid>();
             foreach (var blog in blogs)
             {
                 for (int i = 0; i < blog.Categories.Count; i++)
                 {
                     var category = blog.Categories[i];
-                    category.Ref = newIdsForCategories[category.Ref].ToString();
+                    var newCategoryId = newIdsForCategories[category.Ref];
+                    category.Ref = newCategoryId.ToString();
+                    refrencedCategoriesIds.Add(newCategoryId);
                 }
             }
 
@@ -544,14 +547,14 @@ namespace BetterCms.Module.Blog.Services
                 {
                     newTree.AvailableFor.Add(new CategoryTreeCategorizableItem{CategorizableItem = categorizableItem, CategoryTree = newTree});
                 }
-                newTreeList.Add(newTree);
+                newCategoriesTreeList.Add(newTree);
             }
 
             // create categories
             foreach (var category in categories.Where(t => !string.IsNullOrEmpty(t.ParentRef)))
             {
                 var categoryParentId = new Guid(category.ParentRef);
-                var newParentCategoryTree = newTreeList.FirstOrDefault(t=>t.Id == categoryParentId);
+                var newParentCategoryTree = newCategoriesTreeList.FirstOrDefault(t=>t.Id == categoryParentId);
                 var newCategory = new Category
                 {
                     Name = category.Title,
@@ -568,9 +571,9 @@ namespace BetterCms.Module.Blog.Services
             {
                 category.CategoryTree = newCategoriesList.First(t => t.Id.ToString() == categories.First(c => c.ID == category.Id.ToString()).ParentRef).CategoryTree;
             }
-            foreach (var tree in newTreeList)
+            foreach (var tree in newCategoriesTreeList)
             {
-                tree.Categories = newCategoriesList.Where(t => t.CategoryTree.Id == tree.Id).ToList();
+                tree.Categories = newCategoriesList.Where(t => t.CategoryTree != null && t.CategoryTree.Id == tree.Id).ToList();
             }
             foreach (var child in newCategoriesList)
             {
@@ -584,35 +587,22 @@ namespace BetterCms.Module.Blog.Services
                 }
             }
 
+            var asd = newCategoriesList.Where(t => t.CategoryTree == null).ToList();
+            // filter, save only categories who are related to imported blogs
+            newCategoriesTreeList = newCategoriesTreeList.Where(t => t.Categories.Any(z => refrencedCategoriesIds.Contains(z.Id))).ToList();
+            newCategoriesList = newCategoriesList.Where(t => t.CategoryTree != null && t.CategoryTree.Categories.Any(z => refrencedCategoriesIds.Contains(z.Id))).ToList();
             // save new records
             foreach (var category in newCategoriesList)
             {
                 dictionary.Add(category.Id.ToString(), category.Id);
                 unitOfWork.Session.Save(category);
             }
-            foreach (var tree in newTreeList)
+            foreach (var tree in newCategoriesTreeList)
             {
                 unitOfWork.Session.Save(tree);
             }
 
             return dictionary;
-        }
-
-        /// <summary>
-        /// Updates whole categories tree with new ids
-        /// </summary>
-        private void UpdateTree(BlogMLBlog.CategoryCollection categories, Dictionary<string, Guid> newIds)
-        {
-            UpdateTreeUp(categories, newIds);
-            UpdateTreeDown(categories, newIds);
-        }
-
-        private void UpdateTreeDown(BlogMLBlog.CategoryCollection categories, Dictionary<string, Guid> newIds)
-        {
-        }
-
-        private void UpdateTreeUp(BlogMLBlog.CategoryCollection categories, Dictionary<string, Guid> newIds)
-        {
         }
 
         public Uri ConstructFilePath(Guid guid)
