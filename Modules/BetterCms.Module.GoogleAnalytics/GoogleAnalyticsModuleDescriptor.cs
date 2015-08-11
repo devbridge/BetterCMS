@@ -88,7 +88,11 @@ namespace BetterCms.Module.GoogleAnalytics
         /// <param name="args">The args.</param>
         private void Events_PageRendering(PageRenderingEventArgs args)
         {
-            args.RenderPageData.JavaScripts.Add(new GoogleAnalyticsScriptAccessor(cmsConfiguration));
+            var googleAnalyticsAccessor = new GoogleAnalyticsScriptAccessor(cmsConfiguration, Id);
+            if (!args.RenderPageData.JavaScripts.Contains(googleAnalyticsAccessor))
+            {
+                args.RenderPageData.JavaScripts.Add(googleAnalyticsAccessor);
+            }
         }
 
     }
