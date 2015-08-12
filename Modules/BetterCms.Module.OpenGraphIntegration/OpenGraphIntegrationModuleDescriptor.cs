@@ -82,37 +82,46 @@ namespace BetterCms.Module.OpenGraphIntegration
             {
                 httpContextAccessor = container.Resolve<IHttpContextAccessor>();
             }
-            args.RenderPageData.Metadata.Add(new OpenGraphMetaDataProjection("title", args.RenderPageData.PageData.Title));
-            args.RenderPageData.Metadata.Add(new OpenGraphMetaDataProjection("url", httpContextAccessor.MapPublicPath(args.RenderPageData.PageData.PageUrl)));
+
+            var openGraphMetaTitle = new OpenGraphMetaDataProjection("title", args.RenderPageData.PageData.Title);
+            AddMetaDataIfNotExistsInArgs(args, openGraphMetaTitle);
+
+            var openGraphMetaUrl = new OpenGraphMetaDataProjection("url", httpContextAccessor.MapPublicPath(args.RenderPageData.PageData.PageUrl));
+            AddMetaDataIfNotExistsInArgs(args, openGraphMetaUrl);
 
             var pageModel = args.RenderPageData.GetPageModel();
 
             if (pageModel.MainImage != null)
             {
-                args.RenderPageData.Metadata.Add(
-                    new OpenGraphMetaDataProjection("image", pageModel.MainImage.PublicUrl));
+                var openGraphImage = new OpenGraphMetaDataProjection("image", pageModel.MainImage.PublicUrl);
+                AddMetaDataIfNotExistsInArgs(args, openGraphImage);
             }
             else
             {
                 if (pageModel.FeaturedImage != null)
                 {
-                    args.RenderPageData.Metadata.Add(
-                        new OpenGraphMetaDataProjection("image", pageModel.FeaturedImage.PublicUrl));
+                    var openGraphImage = new OpenGraphMetaDataProjection("image", pageModel.FeaturedImage.PublicUrl);
+                    AddMetaDataIfNotExistsInArgs(args, openGraphImage);
                 }
-                else
+                else if (pageModel.SecondaryImage != null)
                 {
-                    if (pageModel.SecondaryImage != null)
-                    {
-                        args.RenderPageData.Metadata.Add(
-                            new OpenGraphMetaDataProjection("image", pageModel.SecondaryImage.PublicUrl));
-                    }
-
+                    var openGraphImage = new OpenGraphMetaDataProjection("image", pageModel.SecondaryImage.PublicUrl);
+                    AddMetaDataIfNotExistsInArgs(args, openGraphImage);
                 }
             }
 
             if (!string.IsNullOrEmpty(pageModel.Description))
             {
-                args.RenderPageData.Metadata.Add(new OpenGraphMetaDataProjection("description", pageModel.Description));
+                var openGraphDescription = new OpenGraphMetaDataProjection("description", pageModel.Description);
+                AddMetaDataIfNotExistsInArgs(args, openGraphDescription);
+            }
+        }
+
+        private void AddMetaDataIfNotExistsInArgs(PageRenderingEventArgs args, OpenGraphMetaDataProjection item)
+        {
+            if (!args.RenderPageData.Metadata.Contains(item))
+            {
+                args.RenderPageData.Metadata.Add(item);
             }
         }
     }
