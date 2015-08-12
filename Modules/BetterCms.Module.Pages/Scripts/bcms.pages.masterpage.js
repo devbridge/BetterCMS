@@ -19,6 +19,7 @@ bettercms.define('bcms.pages.masterpage', ['bcms.jquery', 'bcms', 'bcms.siteSett
 
                 siteSettingsMasterPagesForm: "#bcms-master-pages-form",
                 siteSettingsMasterPageCreateButton: '#bcms-create-page-button',
+                siteSettingsMasterPageCreateButtonSidePanel: '#bcms-create-page-button-side-panel',
                 siteSettingsPageParentRow: 'tr:first',
                 siteSettingsPageTitleCell: '.bcms-page-title',
                 siteSettingsPageEditButton: '.bcms-grid-item-edit-button',
@@ -81,6 +82,10 @@ bettercms.define('bcms.pages.masterpage', ['bcms.jquery', 'bcms', 'bcms.siteSett
 
         function initializeListItems(container) {
             container.find(selectors.siteSettingsMasterPageCreateButton).on('click', function () {
+                addMasterPage(container);
+            });
+
+            container.find(selectors.siteSettingsMasterPageCreateButtonSidePanel).on('click', function () {
                 addMasterPage(container);
             });
 
@@ -175,6 +180,8 @@ bettercms.define('bcms.pages.masterpage', ['bcms.jquery', 'bcms', 'bcms.siteSett
                 grid.showHideEmptyRow(container);
             });
         };
+
+        module.addMasterPage = addMasterPage;
 
         return module;
     });

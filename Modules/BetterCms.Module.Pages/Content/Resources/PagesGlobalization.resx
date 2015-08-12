@@ -1170,6 +1170,9 @@
   <data name="AddNewPage_Language_Tooltip_Description" xml:space="preserve">
     <value>Choose language for current page, which will be used in sitemap and determines the language and culture of the page</value>
   </data>
+  <data name="Sidebar_CreateMasterPageButtonTitle" xml:space="preserve">
+    <value>Create Master</value>
+  </data>
   <data name="Sidebar_TranslatePageButtonTitle" xml:space="preserve">
     <value>Translate page</value>
   </data>
