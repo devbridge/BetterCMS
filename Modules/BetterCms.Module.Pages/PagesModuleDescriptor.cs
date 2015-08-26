@@ -385,7 +385,7 @@ namespace BetterCms.Module.Pages
                     new ButtonActionProjection(masterPagesJsModuleIncludeDescriptor, page => "addMasterPage")
                         {
                             Title = page => PagesGlobalization.Sidebar_CreateMasterPageButtonTitle,
-                            CssClass = page => "bcms-sidemenu-btn bcms-btn-add",
+                            CssClass = page => "bcms-sidemenu-btn bcms-btn-add js-redirect-to-new-page",
                             Order = 300,
                             ShouldBeRendered = page => page.IsMasterPage,
                             Id = page => "bcms-create-page-button-side-panel",

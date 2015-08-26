@@ -119,6 +119,10 @@ bettercms.define('bcms.pages.masterpage', ['bcms.jquery', 'bcms', 'bcms.siteSett
                     var template = $(selectors.siteSettingsPageRowTemplate),
                         newRow = $(template.html()).find(selectors.siteSettingsPageRowTemplateFirstRow);
 
+                    if (container.hasClass('js-redirect-to-new-page') && data.Data.IsMasterPage) {
+                        window.location.href = data.Data.PageUrl;
+                    }
+
                     newRow.find(selectors.siteSettingsPageTitleCell).html(data.Data.Title);
 
                     newRow.find(selectors.siteSettingsPageTitleCell).data('url', data.Data.PageUrl);
