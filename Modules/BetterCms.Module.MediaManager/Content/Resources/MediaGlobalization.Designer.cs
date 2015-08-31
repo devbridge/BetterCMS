@@ -1339,15 +1339,6 @@ namespace BetterCms.Module.MediaManager.Content.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Include history items.
-        /// </summary>
-        public static string MediaManager_IncludeHistoryItems_Message {
-            get {
-                return ResourceManager.GetString("MediaManager_IncludeHistoryItems_Message", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to In folder.
         /// </summary>
         public static string MediaManager_ItemParentFolder_Prefix {
@@ -1398,6 +1389,15 @@ namespace BetterCms.Module.MediaManager.Content.Resources {
         public static string MediaManager_SearchedInPath_Prefix {
             get {
                 return ResourceManager.GetString("MediaManager_SearchedInPath_Prefix", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Search in history items.
+        /// </summary>
+        public static string MediaManager_SearchInHistoryItems_Message {
+            get {
+                return ResourceManager.GetString("MediaManager_SearchInHistoryItems_Message", resourceCulture);
             }
         }
         

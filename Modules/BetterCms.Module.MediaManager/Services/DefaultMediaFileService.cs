@@ -212,9 +212,13 @@ namespace BetterCms.Module.MediaManager.Services
                             {
                                 var sourceImageUri = mediaImage.ThumbnailUri;
                                 var destinationImageUri = new Uri(Path.Combine(trashFolder, GetFolderWithFileName(mediaImage.ThumbnailUri, mediaImage.Type)));
-
-                                storageService.CopyObject(sourceImageUri, destinationImageUri);
-                                movedFilesDic.Add(destinationImageUri, sourceImageUri);
+                                
+                                // thumbnail image can be duplicated so we only need to update reference
+                                if (!movedFilesDic.ContainsValue(sourceImageUri))
+                                {
+                                    storageService.CopyObject(sourceImageUri, destinationImageUri);
+                                    movedFilesDic.Add(destinationImageUri, sourceImageUri);
+                                }
 
                                 mediaImage.ThumbnailUri = destinationImageUri;
                                 mediaImage.PublicThumbnailUrl = GenerateTrashPublicUrl(mediaImage.ThumbnailUri, mediaImage.Type);
@@ -235,14 +239,16 @@ namespace BetterCms.Module.MediaManager.Services
                                 mediaImage.PublicOriginallUrl = GenerateTrashPublicUrl(mediaImage.OriginalUri, mediaImage.Type);
                             }
                         }
-                        unitOfWork.Session.Delete(mediaFile);
                     }
                     else if (deleteFoldersAndSubMedias && media is MediaFolder)
                     {
                         var mediafolder = (MediaFolder)media;
-                        TrashFiles(mediafolder.Medias, true);
-                        unitOfWork.Session.Delete(mediafolder);
+                        if (mediafolder.Medias != null && mediafolder.Medias.Count > 0)
+                        {
+                            TrashFiles(mediafolder.Medias, true);
+                        }
                     }
+                    unitOfWork.Session.Delete(media);
                 }
             }
             catch (Exception e)

@@ -1779,7 +1779,7 @@ function ($, bcms, modal, siteSettings, forms, dynamicContent, messages, mediaUp
                 } else {
                     folderViewModel.noSearchResultFound('');
                 }
-                folderViewModel.canSearchInHistory(!folderViewModel.searchInHistory);
+                folderViewModel.canSearchInHistory(!folderViewModel.searchInHistory && !folderViewModel.gridOptions().includeHistoryItems());
                 folderViewModel.searchInHistory = false;
 
                 // Replace unobtrusive validator

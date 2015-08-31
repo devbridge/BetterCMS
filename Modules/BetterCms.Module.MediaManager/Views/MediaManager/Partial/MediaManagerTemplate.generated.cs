@@ -322,7 +322,7 @@ WriteLiteral(@"</span>
 
             
             #line 111 "..\..\Views\MediaManager\Partial\MediaManagerTemplate.cshtml"
-                                                                                                         Write(MediaGlobalization.MediaManager_IncludeHistoryItems_Message);
+                                                                                                         Write(MediaGlobalization.MediaManager_SearchInHistoryItems_Message);
 
             
             #line default

@@ -487,7 +487,7 @@ bettercms.define('bcms.pages.widgets', ['bcms.jquery', 'bcms', 'bcms.modal', 'bc
                         cache: false
                     })
                     .done(function (json) {
-                        onDeleteCompleted(json);
+                            onDeleteCompleted(json);
                     })
                     .fail(function (response) {
                         onDeleteCompleted(bcms.parseFailedResponse(response));
