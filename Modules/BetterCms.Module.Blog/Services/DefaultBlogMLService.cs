@@ -27,9 +27,11 @@ using BlogML.Xml;
 
 using Common.Logging;
 
+using FluentNHibernate.Conventions;
 using FluentNHibernate.Utils;
 
 using NHibernate.Linq;
+using NHibernate.Util;
 
 using ValidationException = BetterCms.Core.Exceptions.Mvc.ValidationException;
 
@@ -209,6 +211,31 @@ namespace BetterCms.Module.Blog.Services
 
             if (blogPosts != null && blogPosts.Posts != null)
             {
+                var existingCategoriesIds = new List<string>();
+                // old type imports had only id to ref categories new also has categories to recreate
+                var newCategoryImport = blogPosts.Categories.Count > 0;
+                var importWithCategories = blogPosts.Posts.Any(t => t.Categories.Any());
+                var importCategoriesIds = new List<Guid>();
+                foreach (var blogML in blogPosts.Posts)
+                {
+                    for (var i = 0; i < blogML.Categories.Count; i++)
+                    {
+                        Guid id;
+                        if (Guid.TryParse(blogML.Categories[i].Ref, out id))
+                        {
+                            importCategoriesIds.Add(id);
+                        }
+                    }
+                }
+                importCategoriesIds = importCategoriesIds.Distinct().ToList();
+                if (!newCategoryImport && importWithCategories)
+                {
+                    existingCategoriesIds = repository.AsQueryable<Category>().Where(t => importCategoriesIds.Contains(t.Id)).Select(t => t.Id.ToString()).ToList();
+                }
+                foreach (var category in blogPosts.Categories)
+                {
+                    existingCategoriesIds.Add(category.ID);
+                }
                 foreach (var blogML in blogPosts.Posts)
                 {
                     // Validate authors
@@ -224,13 +251,11 @@ namespace BetterCms.Module.Blog.Services
                     }
                     
                     // Validate categories
-                    if (blogML.Categories != null &&
-                        blogML.Categories.Count > 0 &&
-                        (blogPosts.Categories == null || blogPosts.Categories.All(c => c.ID != blogML.Categories[0].Ref)))
+                    var blogMlCategoryReference = BlogMlCategoryCollectionToEnumerable(blogML.Categories).FirstOrDefault(t => !existingCategoriesIds.Contains(t.Ref));
+                    if (blogMlCategoryReference != null)
                     {
-
                         var failedResult = CreateFailedResult(blogML);
-                        failedResult.ErrorMessage = string.Format(BlogGlobalization.ImportBlogPosts_CategoryByRefNotFound_Message, blogML.Categories[0].Ref);
+                        failedResult.ErrorMessage = string.Format(BlogGlobalization.ImportBlogPosts_CategoryByRefNotFound_Message, blogMlCategoryReference.Ref);
                         result.Add(failedResult);
 
                         continue;
@@ -273,6 +298,14 @@ namespace BetterCms.Module.Blog.Services
             }
 
             return result;
+        }
+
+        private IEnumerable<BlogMLCategoryReference> BlogMlCategoryCollectionToEnumerable(BlogMLPost.CategoryReferenceCollection collection)
+        {
+            for (int i = 0; i < collection.Count; i++)
+            {
+                yield return collection[i];
+            }
         }
 
         public List<BlogPostImportResult> ImportBlogs(BlogMLBlog blogPosts, List<BlogPostImportResult> modifications, 
@@ -497,8 +530,6 @@ namespace BetterCms.Module.Blog.Services
                 return dictionary;
             }
 
-            var availableFor = repository.AsQueryable<CategorizableItem>().ToFuture().ToList();
-
             var newIdsForCategories = new Dictionary<string, Guid>();
             // regenerate new ids for category tree
             foreach (var category in categories)
@@ -531,6 +562,12 @@ namespace BetterCms.Module.Blog.Services
                     refrencedCategoriesIds.Add(newCategoryId);
                 }
             }
+
+            Guid testParseGuid;
+            var oldIdsCategories = newIdsForCategories.Keys.Where(t => Guid.TryParse(t, out testParseGuid)).Select(t => new Guid(t)).ToList();
+            var existingCategoriesIdsFuture = repository.AsQueryable<Category>().Select(t => t.Id).Where(t => oldIdsCategories.Contains(t)).ToFuture();
+            var availableFor = repository.AsQueryable<CategorizableItem>().ToFuture().ToList();
+            var existingCategoriesIds = existingCategoriesIdsFuture.ToList();
 
             // creates categories trees
             foreach (var categoryTree in categories.Where(c => string.IsNullOrEmpty(c.ParentRef)))
@@ -587,7 +624,39 @@ namespace BetterCms.Module.Blog.Services
                 }
             }
 
-            var asd = newCategoriesList.Where(t => t.CategoryTree == null).ToList();
+            // generate category for empty category tree
+            foreach (var categoryTree in newCategoriesTreeList.Where(t => t.Categories != null && t.Categories.Count == 0))
+            {
+                var category = new Category
+                {
+                    Id = categoryTree.Id,
+                    CreatedOn = categoryTree.CreatedOn,
+                    ModifiedOn = categoryTree.ModifiedOn,
+                    Name = categoryTree.Title,
+                    CategoryTree = categoryTree
+                };
+                categoryTree.Id = Guid.NewGuid();
+                categoryTree.Categories.Add(category);
+                newCategoriesList.Add(category);
+            }
+
+            // removing referenced categories that they would not be saved and adding existing category id from db
+            foreach (var existingCategoriesId in existingCategoriesIds)
+            {
+                refrencedCategoriesIds.Remove(newIdsForCategories[existingCategoriesId.ToLowerInvariantString()]);
+                dictionary.Add(existingCategoriesId.ToString(), existingCategoriesId);
+                foreach (var blog in blogs)
+                {
+                    for (int i = 0; i < blog.Categories.Count; i++)
+                    {
+                        if (blog.Categories[i].Ref == newIdsForCategories[existingCategoriesId.ToLowerInvariantString()].ToLowerInvariantString())
+                        {
+                            blog.Categories[i].Ref = existingCategoriesId.ToLowerInvariantString();
+                        }
+                    }
+                }
+            }
+            
             // filter, save only categories who are related to imported blogs
             newCategoriesTreeList = newCategoriesTreeList.Where(t => t.Categories.Any(z => refrencedCategoriesIds.Contains(z.Id))).ToList();
             newCategoriesList = newCategoriesList.Where(t => t.CategoryTree != null && t.CategoryTree.Categories.Any(z => refrencedCategoriesIds.Contains(z.Id))).ToList();
