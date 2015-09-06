@@ -386,7 +386,7 @@ bettercms.define('bcms.pages.content', ['bcms.jquery', 'bcms', 'bcms.modal', 'bc
                     widgetVersion = widgetContainer.data('originalVersion'),
                     widgetName = widgetContainer.find(selectors.widgetName).text(),
                     onComplete = function (data) {
-                        messages.refreshBox(widgetContainer, data);
+                        messages.refreshBox(modal.last().container || widgetContainer, data);
                         widgetContainer.hideLoading();
                     };
 
