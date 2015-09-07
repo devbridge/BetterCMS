@@ -530,6 +530,20 @@ namespace BetterCms.Module.Blog.Services
                 return dictionary;
             }
 
+
+            // sort categories that parents would be first
+            for (int i = 0; i < categories.Count; i++)
+            {
+                for (int j = 0; j < categories.Count; j++)
+                {
+                    if (categories[i].ID == categories[j].ParentRef && i>j)
+                    {
+                        var tmp = categories[j];
+                        categories[j] = categories[i];
+                        categories[i] = tmp;
+                    }
+                }
+            }
             var newIdsForCategories = new Dictionary<string, Guid>();
             // regenerate new ids for category tree
             foreach (var category in categories)
