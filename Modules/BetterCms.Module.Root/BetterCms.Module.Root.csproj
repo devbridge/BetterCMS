@@ -1449,11 +1449,44 @@
     <EmbeddedResource Include="Scripts\ace\worker-html.js" />
     <EmbeddedResource Include="Scripts\ace\worker-xml.js" />
     <EmbeddedResource Include="Scripts\ckeditor\plugins\cms-togglelinewrap\plugin.js" />
+    <Content Include="Gulpfile.js" />
+    <Content Include="gulp\compile-sass\compile-sass.js" />
+    <Content Include="gulp\create-data-uri-vars\create-data-uri-vars.js" />
+    <Content Include="gulp\gulp.config.js" />
+    <Content Include="gulp\utils\utils.js" />
+    <Content Include="gulp\watch-files\watch-files.js" />
+    <Content Include="Scss\base_64\arrow-right-white.svg" />
+    <Content Include="Scss\base_64\arrow-right.svg" />
+    <Content Include="Scss\base_64\validation.svg" />
     <Content Include="Views\Web.config" />
     <Content Include="Views\Category\CategoryTreeEdit.cshtml">
       <Generator>RazorGenerator</Generator>
       <LastGenOutput>CategoryTreeEdit.generated.cs</LastGenOutput>
     </Content>
+    <Content Include="package.json" />
+    <Content Include="Scss\components\_forms.scss" />
+    <Content Include="Scss\components\_messages.scss" />
+    <Content Include="Scss\components\_normalize.scss" />
+    <Content Include="Scss\components\_tables.scss" />
+    <Content Include="Scss\core\_icons.scss" />
+    <Content Include="Scss\core\_mixins.scss" />
+    <Content Include="Scss\core\_variables.scss" />
+    <Content Include="Scss\baseTMP.scss" />
+    <Content Include="Scss\blogTMP.scss" />
+    <Content Include="Scss\installationTMP.scss" />
+    <Content Include="Scss\madiaTMP.scss" />
+    <Content Include="Scss\pagesTMP.scss" />
+    <Content Include="Scss\site\layout\_layout.scss" />
+    <Content Include="Scss\site\modules\_base.scss" />
+    <Content Include="Scss\site\modules\_blog.scss" />
+    <Content Include="Scss\site\modules\_installation.scss" />
+    <Content Include="Scss\site\modules\_media.scss" />
+    <Content Include="Scss\site\modules\_pages.scss" />
+    <Content Include="Scss\site\modules\_users.scss" />
+    <Content Include="Scss\usersTMP.scss" />
+    <Content Include="Scss\components\_modules.scss" />
+    <Content Include="Scss\components\_navigation.scss" />
+    <Content Include="Scss\components\_notifications.scss" />
     <None Include="Views\Category\CategoryTrees.cshtml">
       <Generator>RazorGenerator</Generator>
       <LastGenOutput>CategoryTrees.generated.cs</LastGenOutput>

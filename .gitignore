@@ -97,3 +97,10 @@ logs
 ._.DS_Store
 ._.*
 
+#node modules
+node_modules/
+npm-debug.log
+
+#webstorm
+*.sass-cache
+*.idea
