@@ -191,11 +191,12 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Content\Styles\bcms.installation.css" />
     <Content Include="BuildConfiguration.xml">
       <SubType>Designer</SubType>
     </Content>
     <EmbeddedResource Include="Models\Migrations\Migration201311181011.sqlserver.sql" />
+    <EmbeddedResource Include="Content\Styles\bcms.installation.css" />
+    <EmbeddedResource Include="Content\Styles\bcms.installation.min.css" />
     <Content Include="packages.config">
       <SubType>Designer</SubType>
     </Content>

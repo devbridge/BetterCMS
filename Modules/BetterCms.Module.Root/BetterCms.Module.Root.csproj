@@ -798,10 +798,11 @@
     <EmbeddedResource Include="Scripts\bcms.jquery-ui-1.9.0.js" />
     <EmbeddedResource Include="Scripts\bcms.jquery-1.7.2.js" />
     <EmbeddedResource Include="Scripts\bcms.sidemenu.js" />
-    <EmbeddedResource Include="Content\Styles\base.css" />
     <EmbeddedResource Include="Scripts\bcms.security.js" />
     <EmbeddedResource Include="Scripts\bcms.content.js" />
-    <Content Include="BuildConfiguration.xml" />
+    <Content Include="BuildConfiguration.xml">
+      <SubType>Designer</SubType>
+    </Content>
     <EmbeddedResource Include="Content\Styles\images\icn-zoom-notcompatible.png" />
     <EmbeddedResource Include="Scripts\bcms.knockout-2.2.1.js" />
     <EmbeddedResource Include="Scripts\bcms.require-2.1.5.js" />
@@ -815,7 +816,6 @@
     <EmbeddedResource Include="Content\Styles\images\message-ff.png" />
     <EmbeddedResource Include="Content\Styles\images\message-ie.png" />
     <EmbeddedResource Include="Content\Styles\images\msg-bg.jpg" />
-    <EmbeddedResource Include="Content\Styles\bcms.messages.css" />
     <EmbeddedResource Include="Scripts\bcms.dynamicContent.js" />
     <EmbeddedResource Include="Scripts\bcms.js" />
     <EmbeddedResource Include="Scripts\bcms.grid.js" />
@@ -1449,6 +1449,8 @@
     <EmbeddedResource Include="Scripts\ace\worker-html.js" />
     <EmbeddedResource Include="Scripts\ace\worker-xml.js" />
     <EmbeddedResource Include="Scripts\ckeditor\plugins\cms-togglelinewrap\plugin.js" />
+    <EmbeddedResource Include="Content\Styles\bcms.base.css" />
+    <EmbeddedResource Include="Content\Styles\bcms.base.min.css" />
     <Content Include="Gulpfile.js" />
     <Content Include="gulp\compile-sass\compile-sass.js" />
     <Content Include="gulp\create-data-uri-vars\create-data-uri-vars.js" />
@@ -1469,17 +1471,16 @@
     <Content Include="Scss\core\_icons.scss" />
     <Content Include="Scss\core\_mixins.scss" />
     <Content Include="Scss\core\_variables.scss" />
-    <Content Include="Scss\baseTMP.scss" />
-    <Content Include="Scss\blogTMP.scss" />
-    <Content Include="Scss\installationTMP.scss" />
-    <Content Include="Scss\pagesTMP.scss" />
+    <Content Include="Scss\blog.scss" />
+    <Content Include="Scss\installation.scss" />
+    <Content Include="Scss\pages.scss" />
     <Content Include="Scss\bcms-modules\base\_index.scss" />
     <Content Include="Scss\bcms-modules\pages\_index.scss" />
-    <Content Include="Scss\usersTMP.scss" />
+    <Content Include="Scss\users.scss" />
     <Content Include="Scss\structure\_modules.scss" />
     <Content Include="Scss\bcms-modules\pages\_navigation.scss" />
     <Content Include="Scss\bcms-modules\base\_notifications.scss" />
-    <Content Include="Scss\mediaTMP.scss" />
+    <Content Include="Scss\media.scss" />
     <Content Include="Scss\structure\_layout.scss" />
     <Content Include="Scss\bcms-modules\base\_controlpanel.scss" />
     <Content Include="Scss\structure\_tabs.scss" />
@@ -1494,6 +1495,7 @@
     <Content Include="Scss\bcms-modules\pages\_history.scss" />
     <Content Include="Scss\bcms-modules\pages\_editseo.scss" />
     <Content Include="Scss\bcms-modules\pages\_nodedropzone.scss" />
+    <Content Include="Scss\base.scss" />
     <None Include="Views\Category\CategoryTrees.cshtml">
       <Generator>RazorGenerator</Generator>
       <LastGenOutput>CategoryTrees.generated.cs</LastGenOutput>

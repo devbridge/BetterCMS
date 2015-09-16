@@ -15,8 +15,8 @@ function compileSass(source, destination) {
             includePaths: require('node-bourbon').includePaths,
             outputStyle: 'expanded'
         }))
+        .pipe($.rename({prefix: 'bcms.'}))
         .pipe(gulp.dest(destination))
-        .pipe($.sourcemaps.write(config.sass.map))
         .pipe(cssFilter)
         .pipe($.combineMediaQueries())
         .pipe($.csso())
@@ -28,10 +28,10 @@ function compileSass(source, destination) {
 function task() {
     utils.log('Compiling SASS');
 
-    compileSass('./Scss/**/baseTMP.scss', './Content/Styles');
-    compileSass('./Scss/**/blogTMP.scss', '../../Modules/BetterCms.Module.Blog/Content/Styles');
-    compileSass('./Scss/**/installationTMP.scss', '../../Modules/BetterCms.Module.Installation/Content/Styles');
-    compileSass('./Scss/**/mediaTMP.scss', '../../Modules/BetterCms.Module.MediaManager/Content/Styles');
-    compileSass('./Scss/**/pagesTMP.scss', '../../Modules/BetterCms.Module.Pages/Content/Styles');
-    compileSass('./Scss/**/usersTMP.scss', '../../Modules/BetterCms.Module.Users/Content/Styles');
+    compileSass('./Scss/**/base.scss', './Content/Styles');
+    compileSass('./Scss/**/blog.scss', '../../Modules/BetterCms.Module.Blog/Content/Styles');
+    compileSass('./Scss/**/installation.scss', '../../Modules/BetterCms.Module.Installation/Content/Styles');
+    compileSass('./Scss/**/media.scss', '../../Modules/BetterCms.Module.MediaManager/Content/Styles');
+    compileSass('./Scss/**/pages.scss', '../../Modules/BetterCms.Module.Pages/Content/Styles');
+    compileSass('./Scss/**/users.scss', '../../Modules/BetterCms.Module.Users/Content/Styles');
 }

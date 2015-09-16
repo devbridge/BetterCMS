@@ -278,7 +278,6 @@
       <SubType>Designer</SubType>
       <LastGenOutput>BlogGlobalization1.Designer.cs</LastGenOutput>
     </EmbeddedResource>
-    <EmbeddedResource Include="Content\Styles\bcms.blog.css" />
     <EmbeddedResource Include="Content\Styles\Images\sprite-blog.png" />
     <EmbeddedResource Include="Content\Styles\Images\bcms-no-image-1.png" />
     <EmbeddedResource Include="Content\Styles\Images\bcms-no-image-2.png" />
@@ -287,14 +286,15 @@
   <ItemGroup>
     <EmbeddedResource Include="Content\Styles\Images\icn-zoom-notcompatible.png" />
     <EmbeddedResource Include="Scripts\bcms.blog.js" />
-    <Content Include="BuildConfiguration.xml" />
+    <Content Include="BuildConfiguration.xml">
+      <SubType>Designer</SubType>
+    </Content>
     <EmbeddedResource Include="Scripts\bcms.blog.filter.js" />
     <EmbeddedResource Include="Models\Migrations\Migration201305271258.sqlserver.sql" />
     <EmbeddedResource Include="Content\example.blog.post.import.xml" />
     <EmbeddedResource Include="Models\Migrations\Migration201502101139.sqlserver.sql" />
-    <Content Include="Content\Styles\bcms.blog.min.css">
-      <DependentUpon>bcms.blog.css</DependentUpon>
-    </Content>
+    <EmbeddedResource Include="Content\Styles\bcms.blog.css" />
+    <EmbeddedResource Include="Content\Styles\bcms.blog.min.css" />
     <Content Include="Scripts\bcms.blog.min.js">
       <DependentUpon>bcms.blog.js</DependentUpon>
     </Content>

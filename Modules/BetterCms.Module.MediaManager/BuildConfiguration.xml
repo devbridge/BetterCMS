@@ -1,14 +1,11 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project xmlns="http://schemas.microsoft.com/developer/MsBuild/2003">
 
-  <UsingTask TaskName="CssCompressorTask" AssemblyFile="$(SolutionDir)Libs\YUICompressor-2.2.1.0\Yahoo.Yui.Compressor.Build.MsBuild.dll" />
-  <UsingTask TaskName="JavaScriptCompressorTask" AssemblyFile="$(SolutionDir)Libs\YUICompressor-2.2.1.0\Yahoo.Yui.Compressor.Build.MsBuild.dll" />
+ <UsingTask TaskName="JavaScriptCompressorTask" AssemblyFile="$(SolutionDir)Libs\YUICompressor-2.2.1.0\Yahoo.Yui.Compressor.Build.MsBuild.dll" />
 
   <Target Name="Minify">
 
     <ItemGroup>      
-      <CssFiles Include="$(ProjectDir)Content\Styles\bcms.media.css" />
-
       <JavaScriptFiles Include="$(ProjectDir)Scripts\bcms.contextMenu.js" />
       <JavaScriptFiles Include="$(ProjectDir)Scripts\bcms.html5Upload.js" />
       <JavaScriptFiles Include="$(ProjectDir)Scripts\bcms.jquery.jcrop.js" />
@@ -17,13 +14,7 @@
       <JavaScriptFiles Include="$(ProjectDir)Scripts\bcms.media.fileeditor.js" />
       <JavaScriptFiles Include="$(ProjectDir)Scripts\bcms.media.js" />
       <JavaScriptFiles Include="$(ProjectDir)Scripts\bcms.media.upload.js" />
-
     </ItemGroup>
-
-    <CssCompressorTask
-          SourceFiles="@(CssFiles)"
-          OutputFile="$(ProjectDir)Content\Styles\bcms.media.min.css"
-       />
 
     <JavaScriptCompressorTask
           SourceFiles="@(JavaScriptFiles)"
