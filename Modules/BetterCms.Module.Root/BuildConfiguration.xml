@@ -1,15 +1,11 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project xmlns="http://schemas.microsoft.com/developer/MsBuild/2003">
 
-  <UsingTask TaskName="CssCompressorTask" AssemblyFile="$(SolutionDir)Libs\YUICompressor-2.2.1.0\Yahoo.Yui.Compressor.Build.MsBuild.dll" />
   <UsingTask TaskName="JavaScriptCompressorTask" AssemblyFile="$(SolutionDir)Libs\YUICompressor-2.2.1.0\Yahoo.Yui.Compressor.Build.MsBuild.dll" />
 
   <Target Name="Minify">
 
     <ItemGroup>      
-      <CssFiles Include="$(ProjectDir)Content\Styles\base.css" />
-      <CssFiles Include="$(ProjectDir)Content\Styles\bcms.messages.css" />
-      
       <JavaScriptFiles Include="$(ProjectDir)Scripts\bcms.jquery-1.7.2.js" />
       <JavaScriptFiles Include="$(ProjectDir)Scripts\bcms.jquery-ui-1.9.0.js" />
       <JavaScriptFiles Include="$(ProjectDir)Scripts\bcms.jquery.unobtrusive-ajax.js" />
@@ -48,11 +44,6 @@
       <JavaScriptFiles Include="$(ProjectDir)Scripts\bcms.tags.js" />
       <JavaScriptFiles Include="$(ProjectDir)Scripts\bcms.multiple.select.js" />
     </ItemGroup>
-
-    <CssCompressorTask
-          SourceFiles="@(CssFiles)"
-          OutputFile="$(ProjectDir)Content\Styles\bcms.root.min.css"
-       />
 
     <JavaScriptCompressorTask
           SourceFiles="@(JavaScriptFiles)"

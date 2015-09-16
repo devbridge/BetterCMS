@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 
 using BetterCms.Core.DataContracts;
-
+using BetterCms.Core.Services;
 using BetterCms.Events;
 
 using BetterCms.Module.Root.Models;
@@ -33,16 +33,20 @@ namespace BetterCms.Module.Root.Services
         /// </summary>
         private readonly IUnitOfWork unitOfWork;
 
+        private readonly ISecurityService securityService;  
+
         /// <summary>
         /// Initializes a new instance of the <see cref="DefaultCategoryService" /> class.
         /// </summary>
         /// <param name="repository">The repository.</param>
         /// <param name="cmsConfiguration">The CMS configuration.</param>
         /// <param name="unitOfWork">The unit of work.</param>
-        public DefaultCategoryService(IRepository repository, IUnitOfWork unitOfWork)
+        /// <param name="securityService">Security service get information about authorization.</param>
+        public DefaultCategoryService(IRepository repository, IUnitOfWork unitOfWork, ISecurityService securityService)
         {
             this.repository = repository;
             this.unitOfWork = unitOfWork;
+            this.securityService = securityService;
         }
 
         public IEnumerable<Guid> GetSelectedCategoriesIds<TEntity, TEntityCategory>(Guid? entityId) 
@@ -107,11 +111,20 @@ namespace BetterCms.Module.Root.Services
                     // Remove categories
                     var removedCategories = entity.Categories.Where(c => !categories.Contains(c.Category.Id)).ToList();
 
+                    if (removedCategories.Any())
+                    {
+                        UpdateModifiedInformation(entity);
+                    }
                     foreach (var removedCategory in removedCategories)
                     {
                         //entity.RemoveCategory(removedCategory);
                         unitOfWork.Session.Delete(removedCategory);
                     }
+                }
+
+                if (newCategories.Any())
+                {
+                    UpdateModifiedInformation(entity);
                 }
 
                 // Attach new categories
@@ -226,6 +239,13 @@ namespace BetterCms.Module.Root.Services
 
             repository.Delete(node);
             deletedNodes.Add(node);
+        }
+
+        private void UpdateModifiedInformation(Entity entity)
+        {
+            entity.ModifiedOn = DateTime.Now;
+            entity.ModifiedByUser = securityService.CurrentPrincipalName;
+            unitOfWork.Session.SaveOrUpdate(entity);
         }
 
     }

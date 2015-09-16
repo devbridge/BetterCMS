@@ -664,7 +664,7 @@
     <value>Category has no items.</value>
   </data>
   <data name="CategoryTree_Button_CollapseAll" xml:space="preserve">
-    <value>CollapseAll</value>
+    <value>Collapse All</value>
   </data>
   <data name="CategoryTree_Button_ExpandAll" xml:space="preserve">
     <value>Expand All</value>

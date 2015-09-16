@@ -188,7 +188,7 @@ namespace BetterCms.Sandbox.Mvc4
 
         void Events_PageRendering(PageRenderingEventArgs args)
         {
-            args.RenderPageData.Metadata.Add(new MetaDataProjection("test-metadata", "hello world!"));
+           // args.RenderPageData.Metadata.Add(new MetaDataProjection("test-metadata", "hello world!"));
         }
 
         /// <summary>

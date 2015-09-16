@@ -140,8 +140,8 @@ namespace BetterCms.Module.MediaManager.Services
             file.OriginalFileName = fileName;
             file.OriginalFileExtension = Path.GetExtension(fileName);           
             file.Size = fileLength;
-            file.FileUri = GetFileUri(type, folderName, fileName);
-            file.PublicUrl = GetPublicFileUrl(type, folderName, fileName);
+            file.FileUri = GetFileUri(type, folderName, RemoveInvalidHtmlSymbols(fileName));
+            file.PublicUrl = GetPublicFileUrl(type, folderName, RemoveInvalidHtmlSymbols(fileName));
             file.IsTemporary = isTemporary;
             file.IsCanceled = false;
             file.IsUploaded = null;
@@ -234,8 +234,8 @@ namespace BetterCms.Module.MediaManager.Services
                 createHistoryItem = false;
             }
 
-            tempFile.FileUri = GetFileUri(type, folderName, fileName);
-            tempFile.PublicUrl = GetPublicFileUrl(type, folderName, fileName);
+            tempFile.FileUri = GetFileUri(type, folderName, RemoveInvalidHtmlSymbols(fileName));
+            tempFile.PublicUrl = GetPublicFileUrl(type, folderName, RemoveInvalidHtmlSymbols(fileName));
 
 
             tempFile.OriginalFileName = fileName;
@@ -541,6 +541,13 @@ namespace BetterCms.Module.MediaManager.Services
             unitOfWork.BeginTransaction();
             repository.Save(file);
             unitOfWork.Commit();
+        }
+
+        private static string RemoveInvalidHtmlSymbols(string fileName)
+        {
+            var invalidFileNameChars = Path.GetInvalidFileNameChars().ToList();
+            invalidFileNameChars.AddRange(new[] { '+', ' ' });
+            return HttpUtility.UrlEncode(invalidFileNameChars.Aggregate(fileName, (current, invalidFileNameChar) => current.Replace(invalidFileNameChar, '_')));
         }
     }
 }

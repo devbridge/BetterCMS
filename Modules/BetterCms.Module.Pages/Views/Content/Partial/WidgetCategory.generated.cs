@@ -9,7 +9,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace BetterCms.Module.Pages.Views.Content.Partial
+namespace ASP
 {
     using System;
     using System.Collections.Generic;
@@ -71,9 +71,9 @@ namespace BetterCms.Module.Pages.Views.Content.Partial
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("RazorGenerator", "2.0.0.0")]
     [System.Web.WebPages.PageVirtualPathAttribute("~/Views/Content/Partial/WidgetCategory.cshtml")]
-    public partial class WidgetCategory : System.Web.Mvc.WebViewPage<BetterCms.Module.Pages.ViewModels.Widgets.WidgetCategoryViewModel>
+    public partial class _Views_Content_Partial_WidgetCategory_cshtml : System.Web.Mvc.WebViewPage<BetterCms.Module.Pages.ViewModels.Widgets.WidgetCategoryViewModel>
     {
-        public WidgetCategory()
+        public _Views_Content_Partial_WidgetCategory_cshtml()
         {
         }
         public override void Execute()
@@ -241,8 +241,7 @@ WriteLiteral(">");
             
             #line default
             #line hidden
-WriteLiteral("</div>                                                 \r\n                        " +
-"</div>\r\n");
+WriteLiteral("</div>\r\n                        </div>\r\n");
 
             
             #line 39 "..\..\Views\Content\Partial\WidgetCategory.cshtml"

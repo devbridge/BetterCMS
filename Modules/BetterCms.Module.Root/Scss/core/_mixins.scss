@@ -1,0 +1,73 @@
+//module VIRTUAL BEFORE & AFTER ELEMENTS
+@mixin clearfix($extend: true) {
+    @if ($extend) {
+        @extend %clearfix;
+    } @else {
+        &:after {
+            content: '';
+            display: table;
+            clear: both;
+        }
+    }
+}
+
+@mixin vertical-align($block: inline-block, $align: middle) {
+    display: $block;
+    vertical-align: $align;
+}
+
+@mixin virtual($virtual: null, $content: null, $both: null) {
+    $ampersand: unquote('&');
+    @if ($ampersand) {
+        @if ($virtual == after) {
+            &:after {
+                content: '#{$content}';
+                @content;
+            }
+        } @else if ($virtual == before) {
+            &:before {
+                content: '#{$content}';
+                @content;
+            }
+        } @else if ($both == before after) {
+            &:before,
+            &:after {
+                content: '#{$content}';
+                @content;
+            }
+        }
+    } @else {
+        @warn "No parent exist! Add your ':#{$virtual}' element to existing class";
+    }
+}
+
+@mixin positioning($center: null, $center-y: null, $center-x: null) {
+    position: absolute;
+    @if $center {
+        @include transform(translate(-50%, -50%));
+        left: 50%;
+        top: 50%;
+    }
+    @if $center-y {
+        @include transform(translateY(-50%));
+        top: 50%;
+    }
+    @if $center-x {
+        @include transform(translateX(-50%));
+        left: 50%;
+    }
+}
+
+@mixin placeholder {
+    &::-webkit-input-placeholder {
+        @content;
+    }
+
+    &::-moz-placeholder {
+        @content;
+    }
+
+    &:-ms-input-placeholder {
+        @content;
+    }
+}

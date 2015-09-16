@@ -263,7 +263,6 @@
       <LastGenOutput>UsersGlobalization.Designer.cs</LastGenOutput>
       <SubType>Designer</SubType>
     </EmbeddedResource>
-    <EmbeddedResource Include="Content\Styles\bcms.users.css" />
     <Content Include="BuildConfiguration.xml">
       <SubType>Designer</SubType>
     </Content>
@@ -295,6 +294,8 @@
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Models\Migrations\Migration201403141036.sqlserver.sql" />
+    <EmbeddedResource Include="Content\Styles\bcms.users.css" />
+    <EmbeddedResource Include="Content\Styles\bcms.users.min.css" />
     <Content Include="packages.config">
       <SubType>Designer</SubType>
     </Content>

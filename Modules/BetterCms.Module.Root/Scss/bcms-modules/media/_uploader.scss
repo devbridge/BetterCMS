@@ -1,0 +1,180 @@
+@import '../../core/variables';
+
+.bcms-dropzone {
+    height: 150px;
+    margin-bottom: 15px;
+    border-radius: 2px;
+    border: 2px dashed #0383df;
+    background-color: #eeeeee;
+    text-align: center;
+}
+
+.bcms-dropzone:hover {
+    cursor: pointer;
+}
+
+.bcms-dropzone-active {
+    border: 2px solid #0C7EC7;
+    box-shadow: 0 0 10px 0 #daf5ff, inset 0 0 10px #daf5ff;
+}
+
+.bcms-dropzone-active .bcms-dropzone-infotext {
+    margin: 0;
+    line-height: 145px;
+    font-size: 24px;
+    font-weight: 400;
+}
+
+.bcms-dropzone-active .bcms-btn-upload-files {
+    display: none;
+}
+
+.bcms-dropzone-infotext {
+    text-align: center;
+    margin-top: 40px;
+    color: #0383df;
+    font-size: 20px;
+    font-weight: 700;
+}
+
+.bcms-upload-cancel-link {
+    float: right;
+    text-transform: uppercase;
+}
+
+.bcms-upload-cancel-link:hover {
+    text-decoration: underline;
+}
+
+.bcms-btn-upload-files {
+    position: relative;
+    display: inline-block;
+    margin: 15px 0;
+    overflow: hidden;
+    box-shadow: 0 0 1px 1px #292929;
+    background-color: #676767;
+    background-image: -webkit-linear-gradient(top, #676767 0, #555555 100%);
+    background-image: linear-gradient(to bottom, #676767 0, #555555 100%);
+}
+
+.bcms-btn-upload-files label:active {
+    box-shadow: 0 0 2px 1px #292929;
+    background: #555;
+}
+
+label.bcms-btn-upload-files-text {
+    display: block;
+    height: 33px;
+    line-height: 33px;
+    padding: 0 10px;
+    cursor: pointer;
+    font-size: 12px;
+    color: #fff;
+    white-space: nowrap;
+    text-transform: uppercase;
+}
+
+.bcms-upload-holder .bcms-upload-block:first-child {
+    border-top: 1px solid #e3e3e3;
+}
+
+.bcms-upload-block {
+    height: 39px;
+    background-color: #eff9fd;
+    border-style: none solid solid solid;
+    border-width: 1px;
+    border-color: #e3e3e3;
+    overflow: hidden;
+}
+
+.bcms-upload-block > div {
+    float: left;
+}
+
+.bcms-upload-file-titles {
+    width: 250px;
+    padding: 0 15px;
+    line-height: 39px;
+    font-size: 12px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.bcms-upload-bar-holder {
+    width: 304px;
+    padding-right: 15px;
+    line-height: 39px;
+    overflow: hidden;
+}
+
+.bcms-progress-bar {
+    display: inline-block;
+    vertical-align: middle;
+    width: 302px;
+    height: 10px;
+    border: 1px solid #cdcdcd;
+    box-shadow: inset 0 0 5px rgba(170,170,170,0.36);
+    background-color: #e3e3e3;
+}
+
+.bcms-progress-info {
+    display: inline-block;
+    vertical-align: middle;
+    margin-left: 10px;
+    line-height: 39px;
+    font-weight: 700;
+    font-size: 14px;
+}
+
+.bcms-progress {
+    height: 12px;
+    margin: -1px;
+    background-color: #0C7EC7;
+}
+
+.bcms-uploaded-info {
+    width: 40px;
+    text-align: right;
+    padding-right: 15px;
+    line-height: 39px;
+    font-weight: 700;
+}
+
+.bcms-upload-size-info {
+    width: 95px;
+    padding: 0 10px;
+    border-left: 1px solid #e3e3e3;
+    border-right: 1px solid #e3e3e3;
+    line-height: 39px;
+}
+
+.bcms-media-delete-holder {
+    position: relative;
+    width: 62px;
+    padding: 9px;
+}
+
+.bcms-upload-description {
+    font-size: 11px;
+    font-weight: 700;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}
+
+div.bcms-upload-failed {
+    background-color: #fcecec;
+}
+
+div.bcms-upload-failed .bcms-upload-description {
+    color: #d9000d;
+}
+
+div.bcms-upload-success {
+    background-color: #e8fae5;
+}
+
+div.bcms-upload-success .bcms-upload-description {
+    color: #117000;
+}

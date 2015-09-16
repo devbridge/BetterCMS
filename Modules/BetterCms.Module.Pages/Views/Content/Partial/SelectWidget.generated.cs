@@ -9,7 +9,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace BetterCms.Module.Pages.Views.Content.Partial
+namespace ASP
 {
     using System;
     using System.Collections.Generic;
@@ -29,12 +29,6 @@ namespace BetterCms.Module.Pages.Views.Content.Partial
     
     #line 1 "..\..\Views\Content\Partial\SelectWidget.cshtml"
     using BetterCms.Module.Pages.Content.Resources;
-    
-    #line default
-    #line hidden
-    
-    #line 5 "..\..\Views\Content\Partial\SelectWidget.cshtml"
-    using BetterCms.Module.Pages.ViewModels.Widgets;
     
     #line default
     #line hidden
@@ -59,9 +53,9 @@ namespace BetterCms.Module.Pages.Views.Content.Partial
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("RazorGenerator", "2.0.0.0")]
     [System.Web.WebPages.PageVirtualPathAttribute("~/Views/Content/Partial/SelectWidget.cshtml")]
-    public partial class SelectWidget : System.Web.Mvc.WebViewPage<IList<WidgetCategoryViewModel>>
+    public partial class _Views_Content_Partial_SelectWidget_cshtml : System.Web.Mvc.WebViewPage<BetterCms.Module.Pages.ViewModels.Content.PageContentViewModel>
     {
-        public SelectWidget()
+        public _Views_Content_Partial_SelectWidget_cshtml()
         {
         }
         public override void Execute()
@@ -75,13 +69,13 @@ WriteLiteral(" class=\"bcms-top-block-holder\"");
 WriteLiteral(">\r\n");
 
             
-            #line 10 "..\..\Views\Content\Partial\SelectWidget.cshtml"
+            #line 9 "..\..\Views\Content\Partial\SelectWidget.cshtml"
     
             
             #line default
             #line hidden
             
-            #line 10 "..\..\Views\Content\Partial\SelectWidget.cshtml"
+            #line 9 "..\..\Views\Content\Partial\SelectWidget.cshtml"
      if ((ViewContext.Controller as CmsControllerBase).SecurityService.IsAuthorized(RootModuleConstants.UserRoles.Administration))
     {
 
@@ -97,7 +91,7 @@ WriteLiteral(" id=\"bcms-create-advanced-content-button\"");
 WriteLiteral(">");
 
             
-            #line 12 "..\..\Views\Content\Partial\SelectWidget.cshtml"
+            #line 11 "..\..\Views\Content\Partial\SelectWidget.cshtml"
                                                                              Write(PagesGlobalization.AddPageContent_WidgetTab_AddNewButton);
 
             
@@ -114,7 +108,7 @@ WriteLiteral(" id=\"bcms-registeradvanced-content-button\"");
 WriteLiteral(">");
 
             
-            #line 13 "..\..\Views\Content\Partial\SelectWidget.cshtml"
+            #line 12 "..\..\Views\Content\Partial\SelectWidget.cshtml"
                                                                               Write(PagesGlobalization.AddPageContent_WidgetTab_RegisterButton);
 
             
@@ -123,7 +117,7 @@ WriteLiteral(">");
 WriteLiteral("</div>\r\n");
 
             
-            #line 14 "..\..\Views\Content\Partial\SelectWidget.cshtml"
+            #line 13 "..\..\Views\Content\Partial\SelectWidget.cshtml"
     }
 
             
@@ -141,14 +135,14 @@ WriteLiteral(" id=\"bcms-advanced-content-search\"");
 
 WriteLiteral(" class=\"bcms-editor-field-box\"");
 
-WriteAttribute("placeholder", Tuple.Create(" placeholder=\"", 861), Tuple.Create("\"", 910)
+WriteAttribute("placeholder", Tuple.Create(" placeholder=\"", 843), Tuple.Create("\"", 892)
             
-            #line 16 "..\..\Views\Content\Partial\SelectWidget.cshtml"
-                         , Tuple.Create(Tuple.Create("", 875), Tuple.Create<System.Object, System.Int32>(RootGlobalization.WaterMark_Search
+            #line 15 "..\..\Views\Content\Partial\SelectWidget.cshtml"
+                         , Tuple.Create(Tuple.Create("", 857), Tuple.Create<System.Object, System.Int32>(RootGlobalization.WaterMark_Search
             
             #line default
             #line hidden
-, 875), false)
+, 857), false)
 );
 
 WriteLiteral(" />\r\n        <div");
@@ -160,7 +154,7 @@ WriteLiteral(" id=\"bcms-advanced-content-search-btn\"");
 WriteLiteral(">");
 
             
-            #line 17 "..\..\Views\Content\Partial\SelectWidget.cshtml"
+            #line 16 "..\..\Views\Content\Partial\SelectWidget.cshtml"
                                                                       Write(PagesGlobalization.AddPageContent_WidgetTab_SearchButton);
 
             
@@ -174,11 +168,22 @@ WriteLiteral(" id=\"bcms-advanced-contents-container\"");
 
 WriteLiteral(">\r\n");
 
-WriteLiteral("    ");
+WriteLiteral("        ");
+
+            
+            #line 20 "..\..\Views\Content\Partial\SelectWidget.cshtml"
+   Write(Html.Partial("~/Areas/bcms-pages/Views/Content/Partial/WidgetRecent.cshtml", Model.RecentWidgets));
+
+            
+            #line default
+            #line hidden
+WriteLiteral("\r\n");
+
+WriteLiteral("        ");
 
             
             #line 21 "..\..\Views\Content\Partial\SelectWidget.cshtml"
-Write(Html.Partial("~/Areas/bcms-pages/Views/Content/Partial/WidgetCategories.cshtml", Model));
+   Write(Html.Partial("~/Areas/bcms-pages/Views/Content/Partial/WidgetCategories.cshtml", Model.WidgetCategories));
 
             
             #line default

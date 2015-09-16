@@ -1,0 +1,30 @@
+@import '../../node_modules/susy/sass/susy',
+'bourbon',
+'mixins',
+'icons';
+
+//module typo
+
+//module main colors
+
+//module borders
+
+//module maps/keys
+
+//module misc variables
+
+//module transitions
+
+//module bourbon config
+$prefix-for-webkit: true;
+$prefix-for-mozilla: true;
+$prefix-for-microsoft: false;
+$prefix-for-opera: false;
+$prefix-for-spec: true;
+
+//module susy config
+$susy: (
+        columns: 12,
+        container: 1160px,
+        gutters: (40/60)
+);

@@ -1,0 +1,180 @@
+@import '../../core/variables';
+
+//module sitemap "add new node"
+.bcms-sitemap-links-holder {
+    padding: 10px 20px;
+}
+
+.bcms-sidebar-search {
+    position: relative;
+    padding: 15px 30px 15px 0;
+}
+
+.bcms-sidebar-search .bcms-editor-field-box {
+    background-color: #fff;
+}
+
+.bcms-sidebar-search .bcms-btn-search {
+    margin-left: -5px;
+}
+
+.bcms-addnode-placement-holder {
+    min-height: 52px;
+    display: block;
+    padding: 0 0 4px;
+}
+
+.bcms-addnode-placement-holder .bcms-placement-node:hover {
+    border: 1px dashed #bdbdbd;
+    cursor: move;
+}
+
+.bcms-addnode-placement-holder-readonly {
+    min-height: 52px;
+    display: block;
+    padding: 0 0 4px;
+}
+
+.bcms-sitemap-holder {
+    padding: 0 20px;
+    margin-top: -8px;
+}
+
+.bcms-sitemap-filter-holder {
+    position: relative;
+    display: table-caption;
+    height: 62px;
+    margin-left: 10px;
+}
+
+.bcms-language-bar {
+    display: table;
+    height: 63px;
+}
+
+.bcms-sitemap-filter-holder .bcms-table-middle-box {
+    display: table-cell;
+    vertical-align: middle;
+    padding: 0 10px;
+}
+
+.bcms-sitemap-filter-holder .bcms-expand-link-holder {
+    position: absolute;
+    top: 25px;
+    right: 20px;
+    width: auto;
+}
+
+.bcms-sitemap-history {
+    height: 100%;
+    overflow: auto;
+}
+
+.bcms-sitemap-history .bcms-sitemap-filter-holder {
+    display: block;
+}
+
+.bcms-add-node-col {
+    border-top: 1px solid #C6C6C6;
+}
+
+.bcms-drop-area {
+    min-height: 65px;
+    padding-top: 20px;
+    margin: 0 20px 20px;
+    border: 2px dashed #0383df;
+    border-radius: 4px;
+}
+
+//module new placement
+//module left-sidebar
+.bcms-dropable-page-box {
+    position: relative;
+    padding: 15px;
+    margin-top: 8px;
+    margin-bottom: 8px;
+    border: 1px solid #bdbdbd;
+    border-radius: 4px;
+    background-color: #fff;
+    cursor: move;
+}
+
+.bcms-dropable-page-box:hover {
+    border: 1px dashed #a4a4a4;
+}
+
+.bcms-dropable-page-box:active {
+    opacity: 0.8;
+}
+
+.bcms-dropable-page-box .bcms-content-titles {
+    padding-bottom: 5px;
+}
+
+.bcms-dropable-page-box .bcms-dropable-text {
+    padding-bottom: 20px;
+}
+
+//module nodes tree
+.bcms-tree-holder > div {
+    position: relative;
+}
+
+//module editable node
+.bcms-edit-node {
+    display: none;
+}
+
+.bcms-edit-node-holder {
+    position: relative;
+    padding-bottom: 5px;
+}
+
+.bcms-edit-node-holder .bcms-tooltip-mark {
+    top: 1px;
+    left: -20px;
+}
+
+.bcms-placement-node-edit {
+    height: 67px;
+    padding-left: 30px;
+}
+
+.bcms-placement-node-edit:hover div.bcms-node-controls {
+    display: none;
+}
+
+.bcms-placement-node-edit .bcms-node-info {
+    display: none;
+}
+
+.bcms-placement-node-edit .bcms-edit-node {
+    display: block;
+}
+
+.bcms-node-controls {
+    display: none;
+    position: absolute;
+    top: 0;
+    right: 0;
+    padding: 12px 5px 10px;
+    box-sizing: border-box;
+}
+
+//module menu
+div.bcms-menu-left-col {
+    width: 50%;
+}
+
+div.bcms-add-node-col > .bcms-content-titles {
+    cursor: pointer;
+}
+
+div.bcms-add-node-col .bcms-placement-node {
+    width: 195px;
+    margin-bottom: 5px;
+}
+
+div.bcms-add-node-col .bcms-placement-dropzone {
+    margin-bottom: 5px;
+}

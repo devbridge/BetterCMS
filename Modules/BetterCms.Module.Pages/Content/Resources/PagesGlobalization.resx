@@ -180,6 +180,9 @@
   <data name="AddPageContent_WidgetTab_SearchButton" xml:space="preserve">
     <value>Search</value>
   </data>
+  <data name="AddPageContent_WidgetTab_RecentWidgets_Title" xml:space="preserve">
+    <value>Recent widgets</value>
+  </data>
   <data name="AddPageContent_WidgetTab_Title" xml:space="preserve">
     <value>Widgets</value>
   </data>

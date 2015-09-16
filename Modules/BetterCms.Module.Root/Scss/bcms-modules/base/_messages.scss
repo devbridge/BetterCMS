@@ -1,4 +1,6 @@
-﻿.bcms-msg-message-page {
+@import '../../core/variables';
+
+.bcms-msg-message-page {
     position: fixed;
     top: 0;
     left: 0;
@@ -25,9 +27,9 @@
     font-weight: 200;
 }
 
-    .bcms-msg-message-top span {
-        font-weight: 700;
-    }
+.bcms-msg-message-top span {
+    font-weight: 700;
+}
 
 .bcms-msg-message-lower {
     position: relative;
@@ -37,9 +39,9 @@
     text-align: center;
 }
 
-    .bcms-msg-message-lower span {
-        padding: 0 5px;
-    }
+.bcms-msg-message-lower span {
+    padding: 0 5px;
+}
 
 .bcms-msg-lower-upper {
     line-height: 1.5em;
@@ -76,11 +78,11 @@
     text-align: center;
 }
 
-    .bcms-msg-choose-browser a:hover {
-        color: #000000;
-        border: 1px dashed #ce2b27;
-        text-decoration: none;
-    }
+.bcms-msg-choose-browser a:hover {
+    color: #000000;
+    border: 1px dashed #ce2b27;
+    text-decoration: none;
+}
 
 .bcms-msg-download-chrome, .bcms-msg-download-ff {
     margin-right: 14px;
@@ -105,9 +107,9 @@
     cursor: pointer;
 }
 
-    .bcms-msg-message-close:hover {
-        text-decoration: underline;
-    }
+.bcms-msg-message-close:hover {
+    text-decoration: underline;
+}
 
 .bcms-msg-top-page {
     height: 74px;
@@ -147,18 +149,7 @@
     background: url('images/js.png') no-repeat center top;
 }
 
-
-
-
-
-
-
-
-
-/**
- * @author zhixin wen <wenzhixin2010@gmail.com>
- */
-
+//@author zhixin wen <wenzhixin2010@gmail.com>
 .ms-parent {
     display: inline-block;
     position: relative;

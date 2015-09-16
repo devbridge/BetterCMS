@@ -240,8 +240,7 @@ namespace BetterCms.Module.Pages
         {
             return new[]
                 {
-                    new CssIncludeDescriptor(this, "bcms.page.css"),
-                    new CssIncludeDescriptor(this, "bcms.navigation.css")
+                    new CssIncludeDescriptor(this, "bcms.pages.css")
                 };
         }
 
