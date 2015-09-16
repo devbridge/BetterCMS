@@ -1475,7 +1475,7 @@
     <Content Include="Scss\blogTMP.scss" />
     <Content Include="Scss\installationTMP.scss" />
     <Content Include="Scss\pagesTMP.scss" />
-    <Content Include="Scss\site\layout\_layout.scss" />
+    <Content Include="Scss\site\structure\_layout.scss" />
     <Content Include="Scss\site\modules\_base.scss" />
     <Content Include="Scss\site\modules\_blog.scss" />
     <Content Include="Scss\site\modules\_installation.scss" />
