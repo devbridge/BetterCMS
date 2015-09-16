@@ -1,0 +1,45 @@
+@import '../../core/variables';
+
+div.bcms-editseo-modal {
+    width: 760px;
+}
+
+.bcms-editseo-window {
+    width: 670px;
+    min-height: 100%;
+}
+
+.bcms-editseo-urlpath {
+    font-size: 12px;
+    color: #595959;
+}
+
+.bcms-edit-urlpath-box {
+    position: relative;
+    min-width: 503px;
+    max-width: 620px;
+    z-index: 1;
+    padding-bottom: 10px;
+    margin: -22px 0 0 0;
+}
+
+.bcms-permissions-column {
+    float: left;
+    width: 170px;
+    padding: 0 30px 20px 0;
+}
+
+.bcms-edit-check-field {
+    padding: 10px 0 0;
+}
+
+.bcms-edit-check-field input[type="checkbox"] {
+    margin: 0 5px 0 0;
+    vertical-align: middle;
+}
+
+.bcms-edit-label {
+    display: inline-block;
+    vertical-align: middle;
+    cursor: pointer;
+}

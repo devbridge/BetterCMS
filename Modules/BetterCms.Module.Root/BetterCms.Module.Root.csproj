@@ -1487,6 +1487,13 @@
     <Content Include="Scss\bcms-modules\installation\_index.scss" />
     <Content Include="Scss\bcms-modules\media\_index.scss" />
     <Content Include="Scss\bcms-modules\users\_index.scss" />
+    <Content Include="Scss\bcms-modules\media\_crop.scss" />
+    <Content Include="Scss\bcms-modules\media\_manager.scss" />
+    <Content Include="Scss\bcms-modules\media\_types.scss" />
+    <Content Include="Scss\bcms-modules\media\_uploader.scss" />
+    <Content Include="Scss\bcms-modules\pages\_history.scss" />
+    <Content Include="Scss\bcms-modules\pages\_editseo.scss" />
+    <Content Include="Scss\bcms-modules\pages\_nodedropzone.scss" />
     <None Include="Views\Category\CategoryTrees.cshtml">
       <Generator>RazorGenerator</Generator>
       <LastGenOutput>CategoryTrees.generated.cs</LastGenOutput>
