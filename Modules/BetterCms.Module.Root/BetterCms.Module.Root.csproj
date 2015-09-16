@@ -1474,7 +1474,6 @@
     <Content Include="Scss\baseTMP.scss" />
     <Content Include="Scss\blogTMP.scss" />
     <Content Include="Scss\installationTMP.scss" />
-    <Content Include="Scss\madiaTMP.scss" />
     <Content Include="Scss\pagesTMP.scss" />
     <Content Include="Scss\site\layout\_layout.scss" />
     <Content Include="Scss\site\modules\_base.scss" />
@@ -1487,6 +1486,7 @@
     <Content Include="Scss\components\_modules.scss" />
     <Content Include="Scss\components\_navigation.scss" />
     <Content Include="Scss\components\_notifications.scss" />
+    <Content Include="Scss\mediaTMP.scss" />
     <None Include="Views\Category\CategoryTrees.cshtml">
       <Generator>RazorGenerator</Generator>
       <LastGenOutput>CategoryTrees.generated.cs</LastGenOutput>
