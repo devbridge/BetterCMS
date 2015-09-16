@@ -1455,8 +1455,6 @@
     <Content Include="gulp\gulp.config.js" />
     <Content Include="gulp\utils\utils.js" />
     <Content Include="gulp\watch-files\watch-files.js" />
-    <Content Include="Scss\base_64\arrow-right-white.svg" />
-    <Content Include="Scss\base_64\arrow-right.svg" />
     <Content Include="Scss\base_64\validation.svg" />
     <Content Include="Views\Web.config" />
     <Content Include="Views\Category\CategoryTreeEdit.cshtml">
@@ -1487,6 +1485,8 @@
     <Content Include="Scss\components\_notifications.scss" />
     <Content Include="Scss\mediaTMP.scss" />
     <Content Include="Scss\site\structure\_layout.scss" />
+    <Content Include="Scss\components\_controlpanel.scss" />
+    <Content Include="Scss\components\_tabs.scss" />
     <None Include="Views\Category\CategoryTrees.cshtml">
       <Generator>RazorGenerator</Generator>
       <LastGenOutput>CategoryTrees.generated.cs</LastGenOutput>
@@ -1762,9 +1762,7 @@
   <ItemGroup>
     <EmbeddedResource Include="Scripts\ckeditor\plugins\wsc\README.md" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Scss\site\layout\" />
-  </ItemGroup>
+  <ItemGroup />
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
     <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>

@@ -14,11 +14,13 @@
 }
 
 //module components
-@import 'components/forms',
+@import 'components/normalize',
+'components/controlpanel',
+'components/forms',
 'components/messages',
 'components/modules',
-'components/normalize',
 'components/notifications',
+'components/tabs',
 'components/tables';
 
 //module styles
