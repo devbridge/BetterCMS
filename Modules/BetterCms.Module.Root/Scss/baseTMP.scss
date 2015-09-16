@@ -15,17 +15,19 @@
 
 //module components
 @import 'components/normalize',
-'components/controlpanel',
 'components/forms',
-'components/messages',
-'components/modules',
-'components/notifications',
-'components/tabs',
 'components/tables';
 
+//module structure
+@import 'structure/layout',
+'structure/modules',
+'structure/tabs';
+
 //module styles
-@import 'site/structure/layout',
-'site/modules/base';
+@import 'bcms-modules/base/controlpanel',
+'bcms-modules/base/messages',
+'bcms-modules/base/notifications',
+'bcms-modules/base/index';
 
 //module text & debug
 //@debug

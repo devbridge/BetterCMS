@@ -1463,7 +1463,7 @@
     </Content>
     <Content Include="package.json" />
     <Content Include="Scss\components\_forms.scss" />
-    <Content Include="Scss\components\_messages.scss" />
+    <Content Include="Scss\bcms-modules\base\_messages.scss" />
     <Content Include="Scss\components\_normalize.scss" />
     <Content Include="Scss\components\_tables.scss" />
     <Content Include="Scss\core\_icons.scss" />
@@ -1473,20 +1473,20 @@
     <Content Include="Scss\blogTMP.scss" />
     <Content Include="Scss\installationTMP.scss" />
     <Content Include="Scss\pagesTMP.scss" />
-    <Content Include="Scss\site\modules\_base.scss" />
-    <Content Include="Scss\site\modules\_blog.scss" />
-    <Content Include="Scss\site\modules\_installation.scss" />
-    <Content Include="Scss\site\modules\_media.scss" />
-    <Content Include="Scss\site\modules\_pages.scss" />
-    <Content Include="Scss\site\modules\_users.scss" />
+    <Content Include="Scss\bcms-modules\base\_index.scss" />
+    <Content Include="Scss\bcms-modules\pages\_index.scss" />
     <Content Include="Scss\usersTMP.scss" />
-    <Content Include="Scss\components\_modules.scss" />
-    <Content Include="Scss\components\_navigation.scss" />
-    <Content Include="Scss\components\_notifications.scss" />
+    <Content Include="Scss\structure\_modules.scss" />
+    <Content Include="Scss\bcms-modules\pages\_navigation.scss" />
+    <Content Include="Scss\bcms-modules\base\_notifications.scss" />
     <Content Include="Scss\mediaTMP.scss" />
-    <Content Include="Scss\site\structure\_layout.scss" />
-    <Content Include="Scss\components\_controlpanel.scss" />
-    <Content Include="Scss\components\_tabs.scss" />
+    <Content Include="Scss\structure\_layout.scss" />
+    <Content Include="Scss\bcms-modules\base\_controlpanel.scss" />
+    <Content Include="Scss\structure\_tabs.scss" />
+    <Content Include="Scss\bcms-modules\blog\_index.scss" />
+    <Content Include="Scss\bcms-modules\installation\_index.scss" />
+    <Content Include="Scss\bcms-modules\media\_index.scss" />
+    <Content Include="Scss\bcms-modules\users\_index.scss" />
     <None Include="Views\Category\CategoryTrees.cshtml">
       <Generator>RazorGenerator</Generator>
       <LastGenOutput>CategoryTrees.generated.cs</LastGenOutput>
