@@ -1475,7 +1475,6 @@
     <Content Include="Scss\blogTMP.scss" />
     <Content Include="Scss\installationTMP.scss" />
     <Content Include="Scss\pagesTMP.scss" />
-    <Content Include="Scss\site\structure\_layout.scss" />
     <Content Include="Scss\site\modules\_base.scss" />
     <Content Include="Scss\site\modules\_blog.scss" />
     <Content Include="Scss\site\modules\_installation.scss" />
@@ -1487,6 +1486,7 @@
     <Content Include="Scss\components\_navigation.scss" />
     <Content Include="Scss\components\_notifications.scss" />
     <Content Include="Scss\mediaTMP.scss" />
+    <Content Include="Scss\site\structure\_layout.scss" />
     <None Include="Views\Category\CategoryTrees.cshtml">
       <Generator>RazorGenerator</Generator>
       <LastGenOutput>CategoryTrees.generated.cs</LastGenOutput>
@@ -1762,7 +1762,9 @@
   <ItemGroup>
     <EmbeddedResource Include="Scripts\ckeditor\plugins\wsc\README.md" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="Scss\site\layout\" />
+  </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
     <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
