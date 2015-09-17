@@ -21,8 +21,12 @@ namespace BetterCms.Module.Blog.Mvc.PageHtmlRenderer
         /// <returns>HTML with replaced model values</returns>
         public override System.Text.StringBuilder GetReplacedHtml(System.Text.StringBuilder stringBuilder, Root.ViewModels.Cms.RenderPageViewModel model)
         {
-            var author = model.GetBlogPostAuthorModel();
-            stringBuilder = GetReplacedHtml(stringBuilder, author != null ? author.Name : null);
+            stringBuilder = GetReplacedHtml(stringBuilder,
+                () =>
+                    {
+                        var author = model.GetBlogPostAuthorModel();
+                        return author != null ? author.Name : null;
+                    });
 
             return stringBuilder;
         }
