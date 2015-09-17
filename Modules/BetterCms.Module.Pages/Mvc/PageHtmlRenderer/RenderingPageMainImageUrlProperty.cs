@@ -21,8 +21,12 @@ namespace BetterCms.Module.Pages.Mvc.PageHtmlRenderer
         /// <returns>HTML with replaced model values</returns>
         public override System.Text.StringBuilder GetReplacedHtml(System.Text.StringBuilder stringBuilder, Root.ViewModels.Cms.RenderPageViewModel model)
         {
-            var image = model.GetPageMainImageModel();
-            stringBuilder = GetReplacedHtml(stringBuilder, image != null ? image.PublicUrl : null);
+            stringBuilder = GetReplacedHtml(stringBuilder,
+                () =>
+                    {
+                        var image = model.GetPageMainImageModel();
+                        return image != null ? image.PublicUrl : null;
+                    });
 
             return stringBuilder;
         }

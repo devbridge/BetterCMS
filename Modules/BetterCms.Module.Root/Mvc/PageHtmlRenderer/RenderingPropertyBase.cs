@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
 
@@ -39,15 +40,25 @@ namespace BetterCms.Module.Root.Mvc.PageHtmlRenderer
         /// Gets the string builder with replaced HTML.
         /// </summary>
         /// <param name="stringBuilder">The string builder.</param>
-        /// <param name="replaceWith">The object to replace within string.</param>
+        /// <param name="getReplaceWith">The object to replace within string.</param>
         /// <returns>
         /// The string builder with replaced HTML.
         /// </returns>
-        protected StringBuilder GetReplacedHtml(StringBuilder stringBuilder, string replaceWith)
+        protected StringBuilder GetReplacedHtml(StringBuilder stringBuilder, Func<string> getReplaceWith)
         {
-            foreach (var match in FindAllMatches(stringBuilder))
+            if (getReplaceWith == null)
             {
-                stringBuilder.Replace(match.GlobalMatch, replaceWith);
+                return stringBuilder;
+            }
+
+            var matches = FindAllMatches(stringBuilder);
+            if (matches.Count > 0)
+            {
+                var replaceWith = getReplaceWith();
+                foreach (var match in matches)
+                {
+                    stringBuilder.Replace(match.GlobalMatch, replaceWith);
+                }
             }
 
             return stringBuilder;
@@ -102,7 +113,7 @@ namespace BetterCms.Module.Root.Mvc.PageHtmlRenderer
         /// <returns>
         /// List of all found matches
         /// </returns>
-        protected IEnumerable<PropertyMatch> FindAllMatches(StringBuilder stringBuilder)
+        protected IList<PropertyMatch> FindAllMatches(StringBuilder stringBuilder)
         {
             var matches = new List<PropertyMatch>();
             var pattern = string.Concat("{{", identifier, "(:([^\\:\\{\\}]*))*}}");

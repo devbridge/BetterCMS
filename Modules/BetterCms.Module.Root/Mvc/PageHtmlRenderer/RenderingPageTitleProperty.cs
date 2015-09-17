@@ -17,7 +17,7 @@
         /// <returns>HTML with replace</returns>
         public override System.Text.StringBuilder GetReplacedHtml(System.Text.StringBuilder stringBuilder, ViewModels.Cms.RenderPageViewModel model)
         {
-            return GetReplacedHtml(stringBuilder, model.Title);
+            return GetReplacedHtml(stringBuilder, () => model.Title);
         }
     }
 }
