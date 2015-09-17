@@ -1,5 +1,15 @@
 @import '../../core/variables';
 
+.bcms-version-number {
+    line-height: 21px;
+    margin-right: 10px;
+}
+
+.bcms-sidemenu-right .bcms-version-number {
+    margin-left: 10px;
+    float: right;
+}
+
 hr.bcms-sidebar-separator {
     border-style: solid none solid none;
     border-width: 1px;

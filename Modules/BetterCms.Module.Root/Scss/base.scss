@@ -24,9 +24,11 @@
 'structure/tabs';
 
 //module styles
-@import 'bcms-modules/base/controlpanel',
+@import 'bcms-modules/base/buttons',
+'bcms-modules/base/controlpanel',
 'bcms-modules/base/messages',
 'bcms-modules/base/notifications',
+'bcms-modules/base/overlays',
 'bcms-modules/base/index';
 
 //module text & debug

@@ -1505,6 +1505,8 @@
     <Content Include="Scss\bcms-modules\pages\_editseo.scss" />
     <Content Include="Scss\bcms-modules\pages\_nodedropzone.scss" />
     <Content Include="Scss\base.scss" />
+    <Content Include="Scss\bcms-modules\base\_buttons.scss" />
+    <Content Include="Scss\bcms-modules\base\_overlays.scss" />
     <None Include="Views\Category\CategoryTrees.cshtml">
       <Generator>RazorGenerator</Generator>
       <LastGenOutput>CategoryTrees.generated.cs</LastGenOutput>
