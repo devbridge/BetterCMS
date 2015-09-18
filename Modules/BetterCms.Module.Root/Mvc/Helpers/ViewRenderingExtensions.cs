@@ -102,6 +102,7 @@ namespace BetterCms.Module.Root.Mvc.Helpers
             newModel.CreatedByUser = pageModel.CreatedByUser;
             newModel.ModifiedByUser = pageModel.ModifiedByUser;
             newModel.IsMasterPage = pageModel.IsMasterPage;
+            newModel.LanguageCode = pageModel.LanguageCode;
 
             PopulateCollections(newModel, pageModel);
 

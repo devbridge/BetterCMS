@@ -49,6 +49,17 @@ namespace BetterCms.Test.Module.AmazonS3Storage
         }
 
         [Test]
+        public void Should_Move_Object()
+        {
+            Assert.Ignore("TODO: Fix when possible.");
+
+            var configuration = MockConfiguration();
+            var amazonStorageService = new AmazonS3StorageService(configuration);
+
+            ShouldMoveObject(configuration, amazonStorageService);
+        }
+
+        [Test]
         public void Should_Download_Url_Unsecured()
         {
             Assert.Ignore("TODO: Fix when possible.");

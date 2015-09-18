@@ -2,6 +2,8 @@
 using System.Web.Mvc;
 
 using BetterCms.Module.Pages.Content.Resources;
+using BetterCms.Module.Root.Content.Resources;
+using BetterCms.Module.Root.Mvc.Attributes;
 
 using BetterModules.Core.Models;
 
@@ -18,6 +20,7 @@ namespace BetterCms.Module.Pages.ViewModels.Widgets
         /// <value>
         /// The content name.
         /// </value>
+        [DisallowNonActiveDirectoryNameCompliant(ErrorMessageResourceType = typeof(RootGlobalization), ErrorMessageResourceName = "Validation_ActiveDirectoryCompliant_Message")]
         [Required(AllowEmptyStrings = false, ErrorMessageResourceType = typeof(PagesGlobalization), ErrorMessageResourceName = "HtmlContentWidget_ContentName_RequiredMessage")]
         [StringLength(MaxLength.Name, MinimumLength = 1, ErrorMessageResourceType = typeof(PagesGlobalization), ErrorMessageResourceName = "HtmlContentWidget_ContentName_MaxLengthMessage")]
         public override string Name

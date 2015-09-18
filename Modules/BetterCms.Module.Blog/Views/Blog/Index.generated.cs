@@ -9,7 +9,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace BetterCms.Module.Blog.Views.Blog
+namespace ASP
 {
     using System;
     using System.Collections.Generic;
@@ -101,9 +101,9 @@ namespace BetterCms.Module.Blog.Views.Blog
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("RazorGenerator", "2.0.0.0")]
     [System.Web.WebPages.PageVirtualPathAttribute("~/Views/Blog/Index.cshtml")]
-    public partial class Index : System.Web.Mvc.WebViewPage<BetterCms.Module.Blog.ViewModels.Filter.BlogsGridViewModel<SiteSettingBlogPostViewModel>>
+    public partial class _Views_Blog_Index_cshtml : System.Web.Mvc.WebViewPage<BetterCms.Module.Blog.ViewModels.Filter.BlogsGridViewModel<SiteSettingBlogPostViewModel>>
     {
-        public Index()
+        public _Views_Blog_Index_cshtml()
         {
         }
         public override void Execute()
@@ -128,7 +128,7 @@ WriteLiteral("\r\n");
             column.EmptyColumn();
         }
 
-        column.For(m => string.Format("<a class=\"bcms-tables-link bcms-blog-Title\" data-id=\"{0}\" data-url=\"{2}\">{1}</a>", m.Id, m.Title, m.PageUrl))
+        column.For(m => string.Format("<a class=\"bcms-tables-link bcms-blog-Title\" data-id=\"{0}\" data-url=\"{2}\">{1}</a>", m.Id, System.Web.Security.AntiXss.AntiXssEncoder.HtmlEncode(m.Title ?? "", true), m.PageUrl))
             .Named(BlogGlobalization.SiteSettings_Blogs_TitleColumn)
             .SortColumnName("Title")
             .Attributes()

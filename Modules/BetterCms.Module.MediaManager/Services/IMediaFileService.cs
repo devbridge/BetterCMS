@@ -12,6 +12,10 @@ namespace BetterCms.Module.MediaManager.Services
     {
         void RemoveFile(Guid fileId, int version, bool doNotCheckVersion = false);
 
+        void DeleteFileByMovingToTrash(Guid fileId);
+
+        void DeleteFolderByMovingToTrash(Guid folderId);
+
         MediaFile UploadFile(MediaType type, Guid rootFolderId, string fileName, long fileLength, Stream fileStream,
             bool isTemporary = true, string title = "", string description = "");
 

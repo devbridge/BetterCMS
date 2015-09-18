@@ -66,6 +66,21 @@
         public const string EmailRegularExpression = @"^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)+$";
 
         /// <summary>
+        /// The html regular expression
+        /// </summary>
+        public const string HtmlRegularExpression = "</?\\w+((\\s+\\w+(\\s*=\\s*(?:\".*?\"|'.*?'|[^'\">\\s]+))?)+\\s*|\\s*)/?>";
+        
+        /// <summary>
+        /// The alphanumeric regular expression
+        /// </summary>
+        public const string AlphanumericExpression = "^[a-zA-Z0-9]*$";
+
+        /// <summary>
+        /// The active directory name regular expression
+        /// </summary>
+        public const string ActiveDirectoryNonCompliantExpression = @"^[^\\\/\""\[\]\:\;\|\=\,\+\*\?\<\>\%]+$";
+
+        /// <summary>
         /// The editable grid option cell template.
         /// </summary>
         public const string EditableOptionValueCellTemplate = "~/Areas/bcms-pages/Views/Option/Partial/OptionCell.cshtml";

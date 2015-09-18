@@ -1,8 +1,8 @@
 ﻿/*jslint unparam: true, white: true, browser: true, devel: true */
 /*global bettercms */
 
-bettercms.define('bcms.autocomplete', ['bcms.jquery', 'bcms', 'bcms.jquery.autocomplete', 'bcms.ko.extenders'],
-    function($, bcms, jqAutoComplete, ko) {
+bettercms.define('bcms.autocomplete', ['bcms.jquery', 'bcms', 'bcms.jquery.autocomplete', 'bcms.ko.extenders', 'bcms.antiXss'],
+    function($, bcms, jqAutoComplete, ko, antiXss) {
         'use strict';
 
         var autocomplete = {},
@@ -23,7 +23,7 @@ bettercms.define('bcms.autocomplete', ['bcms.jquery', 'bcms', 'bcms.jquery.autoc
                 var result = typeof response === 'string' ? $.parseJSON(response) : response;
                 return {
                     suggestions: $.map(result.suggestions, function(dataItem) {
-                        return { value: dataItem.Value, data: dataItem.Key, jsonItem: dataItem };
+                        return { value: antiXss.encodeHtml(dataItem.Value), data: dataItem.Key, jsonItem: dataItem };
                     })
                 };
             }, onSearchStart = function (params, autocompleteViewModel) {
@@ -168,7 +168,7 @@ bettercms.define('bcms.autocomplete', ['bcms.jquery', 'bcms', 'bcms.jquery.autoc
                 self.isExpanded = ko.observable(true);
                 self.hasfocus = ko.observable(false);
                 self.items = ko.observableArray();
-                self.newItem = ko.observable().extend({ maxLength: { maxLength: ko.maxLength.name } });
+                self.newItem = ko.observable().extend({ maxLength: { maxLength: ko.maxLength.name }, activeDirectoryCompliant: "" });
 
                 self.expandCollapse = function () {
                     var isExpanded = !self.isExpanded();
@@ -204,7 +204,7 @@ bettercms.define('bcms.autocomplete', ['bcms.jquery', 'bcms', 'bcms.jquery.autoc
                     for (i = 0; i < self.items().length; i++) {
                         item = self.items()[i];
 
-                        if (item.name() == newItem) {
+                        if (item.name().toLowerCase() == newItem.toLowerCase()) {
                             item.isActive(true);
                             setTimeout(function() {
                                 item.isActive(false);

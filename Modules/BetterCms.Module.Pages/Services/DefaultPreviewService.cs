@@ -102,7 +102,14 @@ namespace BetterCms.Module.Pages.Services
 
             if (pageContent.Content != null)
             {
-                DemandAccess(user, RootModuleConstants.UserRoles.EditContent, RootModuleConstants.UserRoles.PublishContent);
+                if (pageContent.Content is Models.HtmlContentWidget || pageContent.Content is Models.ServerControlWidget)
+                {
+                    DemandAccess(user, RootModuleConstants.UserRoles.EditContent, RootModuleConstants.UserRoles.PublishContent, RootModuleConstants.UserRoles.Administration);
+                }
+                else
+                {
+                    DemandAccess(user, RootModuleConstants.UserRoles.EditContent, RootModuleConstants.UserRoles.PublishContent);
+                }
             }
 
             childContentService.RetrieveChildrenContentsRecursively(true, new[] { pageContent.Content });

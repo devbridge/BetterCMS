@@ -1,5 +1,5 @@
-﻿bettercms.define('bcms.pages.languages', ['bcms.jquery', 'bcms', 'bcms.modal', 'bcms.ko.extenders', 'bcms.autocomplete'],
-    function ($, bcms, modal, ko, autocomplete) {
+﻿bettercms.define('bcms.pages.languages', ['bcms.jquery', 'bcms', 'bcms.modal', 'bcms.ko.extenders', 'bcms.autocomplete', 'bcms.antiXss'],
+    function ($, bcms, modal, ko, autocomplete, antiXss) {
         'use strict';
 
         var pageLanguages = {
@@ -365,7 +365,7 @@
                     if (translation && translation.Id != self.currentPageId) {
                         viewModel = new pageLanguages.PageTranslationViewModel(self);
                         viewModel.id(translation.Id);
-                        viewModel.title(translation.Title);
+                        viewModel.title(antiXss.encodeHtml(translation.Title));
                         viewModel.url(translation.PageUrl);
                         viewModel.languageName(language.value || globalization.invariantLanguage);
                         viewModel.languageId(language.key);

@@ -42,6 +42,15 @@ namespace BetterCms.Test.Module.Core.ServiceTests.StorageTests
             ShouldCopyObject(configuration, ftpStorageService);
         }
 
+        [Test]
+        public void Should_Move_Object()
+        {
+            var configuration = MockConfiguration();
+            var ftpStorageService = new FtpStorageService(configuration);
+
+            ShouldMoveObject(configuration, ftpStorageService);
+        }
+
         /// <summary>
         /// Gets the storage configuration.
         /// </summary>

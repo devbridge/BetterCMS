@@ -345,7 +345,7 @@ namespace BetterCms.Module.Pages
                                 },
                                 new ButtonActionProjection(pagesJsModuleIncludeDescriptor, page => "clonePage")
                                 {
-                                    Order = 20,
+                                    Order = 30,
                                     Title = page => PagesGlobalization.Siderbar_ClonePageButtonTitle,
                                     CssClass = page => "bcms-sidemenu-btn bcms-btn-clone",
                                     AccessRole = RootModuleConstants.UserRoles.EditContent
@@ -355,6 +355,16 @@ namespace BetterCms.Module.Pages
                             Order = 50,
                             CssClass = page => "bcms-buttons-block"
                         }, 
+                        
+                    new ButtonActionProjection(masterPagesJsModuleIncludeDescriptor, page => "addMasterPage")
+                        {
+                            Title = page => PagesGlobalization.Sidebar_CreateMasterPageButtonTitle,
+                            CssClass = page => "bcms-sidemenu-btn bcms-btn-add js-redirect-to-new-page",
+                            Order = 300,
+                            ShouldBeRendered = page => page.IsMasterPage,
+                            Id = page => "bcms-create-page-button-side-panel",
+                            AccessRole = RootModuleConstants.UserRoles.EditContent
+                        },
                         
                     new ButtonActionProjection(pagesJsModuleIncludeDescriptor, page => "translatePage")
                         {

@@ -106,6 +106,10 @@
                         <div class="bcms-check-field"><input type="checkbox" data-bind="checked: gridOptions().includeArchived" /></div>
                         <span class="bcms-pointer" data-bind="click: gridOptions().changeIncludeArchived">@MediaGlobalization.MediaManager_IncludeArchived_Message</span>
                     </div>
+                    <div class="bcms-check-field-holder">&nbsp;
+                        <div class="bcms-check-field"><input type="checkbox" data-bind="checked: gridOptions().includeHistoryItems" /></div>
+                        <span class="bcms-pointer" data-bind="click: gridOptions().changeIncludeHistoryItems">@MediaGlobalization.MediaManager_SearchInHistoryItems_Message</span>
+                    </div>
                     <div class="bcms-btn-field-holder">
                         <div class="bcms-btn-links-small" data-bind="click: clearFilter">@RootGlobalization.Button_Filter_Clear</div>
                         <div class="bcms-btn-small" data-bind="click: searchWithFilter">@RootGlobalization.Button_Filter_Search</div>
