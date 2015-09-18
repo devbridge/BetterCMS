@@ -14,6 +14,8 @@ namespace BetterCms.Module.GoogleAnalytics
     {
         internal const string ModuleName = "google_analytics";
 
+        private const string ModuleId = "de5280e4-99e6-4c95-ac06-1c31312b82ec";
+
         private readonly ICmsConfiguration cmsConfiguration;
 
         /// <summary>
@@ -74,7 +76,7 @@ namespace BetterCms.Module.GoogleAnalytics
         /// <param name="args">The args.</param>
         private void Events_PageRendering(PageRenderingEventArgs args)
         {
-            var googleAnalyticsAccessor = new GoogleAnalyticsScriptAccessor(cmsConfiguration);
+            var googleAnalyticsAccessor = new GoogleAnalyticsScriptAccessor(cmsConfiguration, new Guid(ModuleId));
             if (!args.RenderPageData.JavaScripts.Contains(googleAnalyticsAccessor))
             {
                 args.RenderPageData.JavaScripts.Add(googleAnalyticsAccessor);

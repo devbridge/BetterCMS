@@ -10,9 +10,10 @@ namespace BetterCms.Module.GoogleAnalytics.Accessors
         private readonly Guid analyticsScriptGuid;
         private ICmsConfiguration cmsConfiguration;
 
-        public GoogleAnalyticsScriptAccessor(ICmsConfiguration cmsConfiguration)
+        public GoogleAnalyticsScriptAccessor(ICmsConfiguration cmsConfiguration, Guid analyticsScriptGuid)
         {
             this.cmsConfiguration = cmsConfiguration;
+            this.analyticsScriptGuid = analyticsScriptGuid;
         }
 
         public string[] GetCustomJavaScript(HtmlHelper html)
