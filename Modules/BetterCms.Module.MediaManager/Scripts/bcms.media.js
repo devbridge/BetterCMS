@@ -153,6 +153,7 @@ function ($, bcms, modal, siteSettings, forms, dynamicContent, messages, mediaUp
 
         self.searchQuery = ko.observable();
         self.includeArchived = ko.observable(false);
+        self.includeHistoryItems = ko.observable(false);
         self.isFilterVisible = ko.observable(false);
         self.column = ko.observable();
         self.isDescending = ko.observable(false);
@@ -160,6 +161,9 @@ function ($, bcms, modal, siteSettings, forms, dynamicContent, messages, mediaUp
         self.categories = new categories.CategoriesListViewModel(null, categorizableItemKey),
         self.isEdited = ko.computed(function () {
             if (self.includeArchived()) {
+                return true;
+            }
+            if (self.includeHistoryItems()) {
                 return true;
             }
             if (self.tags != null && self.tags.items() != null && self.tags.items().length > 0) {
@@ -177,6 +181,7 @@ function ($, bcms, modal, siteSettings, forms, dynamicContent, messages, mediaUp
 
         self.clearFilter = function () {
             self.includeArchived(false);
+            self.includeHistoryItems(false);
             self.tags.removeAll();
             self.categories.removeAll();
         };
@@ -191,6 +196,10 @@ function ($, bcms, modal, siteSettings, forms, dynamicContent, messages, mediaUp
 
         self.changeIncludeArchived = function () {
             self.includeArchived(!(self.includeArchived()));
+        };
+
+        self.changeIncludeHistoryItems = function () {
+            self.includeHistoryItems(!(self.includeHistoryItems()));
         };
 
         self.fromJson = function (options) {
@@ -335,7 +344,6 @@ function ($, bcms, modal, siteSettings, forms, dynamicContent, messages, mediaUp
         self.canSelectMedia = ko.observable(false);
         self.canInsertMedia = ko.observable(false);
         self.canInsertMediaWithOptions = ko.observable(false);
-        self.searchInHistory = false;
         self.canSearchInHistory = ko.observable(false);
         
         self.showPropertiesPreview = ko.observable(false);
@@ -409,8 +417,10 @@ function ($, bcms, modal, siteSettings, forms, dynamicContent, messages, mediaUp
         };
 
         self.searchWithFilter = function (searchInHistory) {
-            if (searchInHistory) {
-                self.searchInHistory = true;
+            if (searchInHistory === true) {
+                self.gridOptions().includeHistoryItems(true);
+            } else if (searchInHistory === false) {
+                self.gridOptions().includeHistoryItems(false);
             }
             self.searchMedia();
         };
@@ -492,7 +502,6 @@ function ($, bcms, modal, siteSettings, forms, dynamicContent, messages, mediaUp
                     parseJsonResults(json, self);
                     $(selectors.searchBox).focus();
                 };
-            params.SearchInHistory = self.searchInHistory;
             loadTabData(self, params, onComplete);
         };
 
@@ -1670,6 +1679,7 @@ function ($, bcms, modal, siteSettings, forms, dynamicContent, messages, mediaUp
             params.PageSize = folderViewModel.gridOptions().paging.pageSize;
             params.PageNumber = folderViewModel.gridOptions().paging.pageNumber();
             params.IncludeArchivedItems = folderViewModel.gridOptions().includeArchived();
+            params.SearchInHistory = folderViewModel.gridOptions().includeHistoryItems();
 
             if (folderViewModel.gridOptions().tags.items().length > 0) {
                 params.Tags = [];
@@ -1769,7 +1779,7 @@ function ($, bcms, modal, siteSettings, forms, dynamicContent, messages, mediaUp
                 } else {
                     folderViewModel.noSearchResultFound('');
                 }
-                folderViewModel.canSearchInHistory(!folderViewModel.searchInHistory);
+                folderViewModel.canSearchInHistory(!folderViewModel.searchInHistory && !folderViewModel.gridOptions().includeHistoryItems());
                 folderViewModel.searchInHistory = false;
 
                 // Replace unobtrusive validator

@@ -19,6 +19,7 @@ bettercms.define('bcms.pages.masterpage', ['bcms.jquery', 'bcms', 'bcms.siteSett
 
                 siteSettingsMasterPagesForm: "#bcms-master-pages-form",
                 siteSettingsMasterPageCreateButton: '#bcms-create-page-button',
+                siteSettingsMasterPageCreateButtonSidePanel: '#bcms-create-page-button-side-panel',
                 siteSettingsPageParentRow: 'tr:first',
                 siteSettingsPageTitleCell: '.bcms-page-title',
                 siteSettingsPageEditButton: '.bcms-grid-item-edit-button',
@@ -84,6 +85,10 @@ bettercms.define('bcms.pages.masterpage', ['bcms.jquery', 'bcms', 'bcms.siteSett
                 addMasterPage(container);
             });
 
+            container.find(selectors.siteSettingsMasterPageCreateButtonSidePanel).on('click', function () {
+                addMasterPage(container);
+            });
+
             container.find(selectors.siteSettingsRowCells).on('click', function () {
                 var editButton = $(this).parents(selectors.siteSettingsPageParentRow).find(selectors.siteSettingsPageEditButton);
                 if (editButton.length > 0) {
@@ -113,6 +118,10 @@ bettercms.define('bcms.pages.masterpage', ['bcms.jquery', 'bcms', 'bcms.siteSett
                 if (data.Data != null) {
                     var template = $(selectors.siteSettingsPageRowTemplate),
                         newRow = $(template.html()).find(selectors.siteSettingsPageRowTemplateFirstRow);
+
+                    if (container.hasClass('js-redirect-to-new-page') && data.Data.IsMasterPage) {
+                        window.location.href = data.Data.PageUrl;
+                    }
 
                     newRow.find(selectors.siteSettingsPageTitleCell).html(data.Data.Title);
 
@@ -175,6 +184,8 @@ bettercms.define('bcms.pages.masterpage', ['bcms.jquery', 'bcms', 'bcms.siteSett
                 grid.showHideEmptyRow(container);
             });
         };
+
+        module.addMasterPage = addMasterPage;
 
         return module;
     });

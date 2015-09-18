@@ -43,6 +43,15 @@ namespace BetterCms.Test.Module.WindowsAzureStorage
         }
 
         [Test]
+        public void Should_Move_Object()
+        {
+            var configuration = MockConfiguration();
+            var azureClient = new WindowsAzureStorageService(configuration);
+
+            ShouldMoveObject(configuration, azureClient);
+        }
+
+        [Test]
         public void Should_Download_Url_Unsecured()
         {
             var configuration = MockConfiguration();

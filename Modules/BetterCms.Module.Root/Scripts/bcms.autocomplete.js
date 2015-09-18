@@ -204,7 +204,7 @@ bettercms.define('bcms.autocomplete', ['bcms.jquery', 'bcms', 'bcms.jquery.autoc
                     for (i = 0; i < self.items().length; i++) {
                         item = self.items()[i];
 
-                        if (item.name() == newItem) {
+                        if (item.name().toLowerCase() == newItem.toLowerCase()) {
                             item.isActive(true);
                             setTimeout(function() {
                                 item.isActive(false);

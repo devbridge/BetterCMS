@@ -4,6 +4,9 @@ using BetterModules.Core.DataAccess;
 using BetterModules.Core.DataAccess.DataContext;
 using BetterCms.Module.MediaManager.Command.MediaManager.DeleteMedia;
 using BetterCms.Module.MediaManager.Models;
+using BetterCms.Module.MediaManager.Services;
+
+using Moq;
 
 using NHibernate.Linq;
 
@@ -27,7 +30,8 @@ namespace BetterCms.Test.Module.MediaManager.CommandTests
                     session.Flush();
                     session.Clear();
 
-                    var command = new DeleteMediaCommand();
+                    var storageService = (IMediaFileService)new Mock<IMediaFileService>();
+                    var command = new DeleteMediaCommand(storageService);
                     command.Repository = repository;
                     command.UnitOfWork = uow;
 

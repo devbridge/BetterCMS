@@ -69,6 +69,19 @@ namespace BetterCms.Module.MediaManager.Services
                 }
             }
 
+            // remove tags who are equal (tags are case insensitive)
+            for (int i = 0; i < trimmedTags.Count; i++)
+            {
+                for (int j = i + 1; j < trimmedTags.Count; j++)
+                {
+                    if (i != j && trimmedTags[i].ToLowerInvariant() == trimmedTags[j].ToLowerInvariant())
+                    {
+                        trimmedTags.RemoveAt(j);
+                        --j;
+                    }
+                }
+            }
+
             newCreatedTags = new List<Tag>();
 
             Tag tagAlias = null;
