@@ -1,41 +1,39 @@
 @import '../core/variables';
 
-//module Main Tabed View
+//module main tabbed view
 .bcms-tab-header {
     background: #303030;
     padding: 10px 60px 0;
+
+    > .bcms-tab {
+        @include transition(all 100ms ease);
+        background: $gray-l25;
+        color: $black;
+        cursor: pointer;
+        display: inline-block;
+        font-size: 14px;
+        font-weight: 700;
+        line-height: 30px;
+        margin-right: 5px;
+        max-width: 250px;
+        padding: 0 22px;
+        text-decoration: none;
+
+        &:hover {
+            background-color: #c0c0c0;
+        }
+    }
+
+    > a.bcms-tab-active {
+        background-color: $white;
+
+        &:hover {
+            background-color: $white;
+        }
+    }
 }
 
-.bcms-tab-header > .bcms-tab {
-    background: #e5e5e5;
-    color: #000;
-    cursor: pointer;
-    display: inline-block;
-    font-size: 14px;
-    font-weight: 700;
-    line-height: 30px;
-    margin-right: 5px;
-    max-width: 250px;
-    padding: 0 22px;
-    text-decoration: none;
-    transition: all 100ms ease;
-    -webkit-transition: all 100ms ease;
-
-}
-
-.bcms-tab-header > .bcms-tab:hover {
-    background-color: #c0c0c0;
-}
-
-.bcms-tab-header > a.bcms-tab-active {
-    background-color: #FFFFFF;
-}
-
-.bcms-tab-header > a.bcms-tab-active:hover {
-    background-color: #FFFFFF;
-}
-
-//module Inner Tabed View
+//module inner tabbed view
 .bcms-innertab-header {
     background: #eaeaea;
     border-bottom: 1px solid #c6c6c6;
@@ -44,36 +42,35 @@
     margin-top: -1px;
     padding: 25px 20px 0;
     position: relative;
-}
 
-.bcms-innertab-header > .bcms-tab {
-    background: #e5e5e5;
-    border: 1px solid #c6c6c6;
-    color: #000;
-    cursor: pointer;
-    display: inline-block;
-    font-size: 14px;
-    font-weight: 700;
-    height: 29px;
-    line-height: 29px;
-    margin-right: 5px;
-    padding: 0 22px;
-    text-decoration: none;
-    transition: all 0.1s ease-in-out;
-    -webkit-transition: all 0.1s ease-in-out;
-}
+    > .bcms-tab {
+        @include transition(all 100ms ease);
+        background: $gray-l25;
+        border: 1px solid #c6c6c6;
+        color: $black;
+        cursor: pointer;
+        display: inline-block;
+        font-size: 14px;
+        font-weight: 700;
+        height: 29px;
+        line-height: 29px;
+        margin-right: 5px;
+        padding: 0 22px;
+        text-decoration: none;
 
-.bcms-innertab-header > .bcms-tab:hover {
-    background-color: #c0c0c0;
-}
+        &:hover {
+            background-color: #c0c0c0;
+        }
+    }
 
-.bcms-innertab-header > a.bcms-tab-active {
-    background-color: #FFFFFF;
-    border-bottom: 1px solid #fff;
-}
+    > a.bcms-tab-active {
+        background-color: #FFFFFF;
+        border-bottom: 1px solid #fff;
 
-.bcms-innertab-header > a.bcms-tab-active:hover {
-    background-color: #FFFFFF;
+        &:hover {
+            background-color: #FFFFFF;
+        }
+    }
 }
 
 //module inner tabs for modal

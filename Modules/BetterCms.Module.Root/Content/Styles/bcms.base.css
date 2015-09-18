@@ -442,8 +442,11 @@ body {
 }
 
 .bcms-tab-header > .bcms-tab {
+  -webkit-transition: all 100ms ease;
+  -moz-transition: all 100ms ease;
+  transition: all 100ms ease;
   background: #e5e5e5;
-  color: #000;
+  color: #000000;
   cursor: pointer;
   display: inline-block;
   font-size: 14px;
@@ -453,8 +456,6 @@ body {
   max-width: 250px;
   padding: 0 22px;
   text-decoration: none;
-  transition: all 100ms ease;
-  -webkit-transition: all 100ms ease;
 }
 
 .bcms-tab-header > .bcms-tab:hover {
@@ -462,11 +463,11 @@ body {
 }
 
 .bcms-tab-header > a.bcms-tab-active {
-  background-color: #FFFFFF;
+  background-color: #ffffff;
 }
 
 .bcms-tab-header > a.bcms-tab-active:hover {
-  background-color: #FFFFFF;
+  background-color: #ffffff;
 }
 
 .bcms-innertab-header {
@@ -480,9 +481,12 @@ body {
 }
 
 .bcms-innertab-header > .bcms-tab {
+  -webkit-transition: all 100ms ease;
+  -moz-transition: all 100ms ease;
+  transition: all 100ms ease;
   background: #e5e5e5;
   border: 1px solid #c6c6c6;
-  color: #000;
+  color: #000000;
   cursor: pointer;
   display: inline-block;
   font-size: 14px;
@@ -492,8 +496,6 @@ body {
   margin-right: 5px;
   padding: 0 22px;
   text-decoration: none;
-  transition: all 0.1s ease-in-out;
-  -webkit-transition: all 0.1s ease-in-out;
 }
 
 .bcms-innertab-header > .bcms-tab:hover {
