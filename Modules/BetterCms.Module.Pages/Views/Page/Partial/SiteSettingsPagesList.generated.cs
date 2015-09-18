@@ -9,7 +9,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace BetterCms.Module.Pages.Views.Page.Partial
+namespace ASP
 {
     using System;
     using System.Collections.Generic;
@@ -95,9 +95,9 @@ namespace BetterCms.Module.Pages.Views.Page.Partial
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("RazorGenerator", "2.0.0.0")]
     [System.Web.WebPages.PageVirtualPathAttribute("~/Views/Page/Partial/SiteSettingsPagesList.cshtml")]
-    public partial class SiteSettingsPagesList : System.Web.Mvc.WebViewPage<BetterCms.Module.Pages.ViewModels.Filter.PagesGridViewModel<SiteSettingPageViewModel>>
+    public partial class _Views_Page_Partial_SiteSettingsPagesList_cshtml : System.Web.Mvc.WebViewPage<BetterCms.Module.Pages.ViewModels.Filter.PagesGridViewModel<SiteSettingPageViewModel>>
     {
-        public SiteSettingsPagesList()
+        public _Views_Page_Partial_SiteSettingsPagesList_cshtml()
         {
         }
         public override void Execute()
@@ -140,7 +140,7 @@ WriteLiteral("\r\n\r\n");
         }
 
         column.For(m => string.Format("<a class=\"bcms-tables-link bcms-page-title\" data-id=\"{0}\" data-url=\"{2}\"{3}>{1}</a>",
-            m.Id, m.Title, m.Url,
+            m.Id, System.Web.Security.AntiXss.AntiXssEncoder.HtmlEncode(m.Title ?? "", true), m.Url,
             (CmsContext.Config.EnableMultilanguage ? string.Format("data-language-id=\"{0}\"", m.LanguageId) : "")))
             .Named(PagesGlobalization.SiteSettings_Pages_TitleColumn)
             .SortColumnName("Title")

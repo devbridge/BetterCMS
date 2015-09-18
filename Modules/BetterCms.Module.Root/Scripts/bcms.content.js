@@ -4,7 +4,7 @@ window.cms = {};
 /*jslint unparam: true, white: true, browser: true, devel: true */
 /*global bettercms */
 
-bettercms.define('bcms.content', ['bcms.jquery', 'bcms', 'bcms.modal', 'bcms.redirect', 'bcms.store'], function ($, bcms, modal, redirect, store) {
+bettercms.define('bcms.content', ['bcms.jquery', 'bcms', 'bcms.modal', 'bcms.redirect', 'bcms.store', 'bcms.antiXss'], function ($, bcms, modal, redirect, store, antiXss) {
     'use strict';
 
     var content = {},
@@ -418,7 +418,7 @@ bettercms.define('bcms.content', ['bcms.jquery', 'bcms', 'bcms.modal', 'bcms.red
             $(regionViewModel.contents).each(function () {
                 var sortWrapper = $('<div class="bcms-sort-wrapper" />');
 
-                $('<div class="bcms-sort-content" />').html(this.title).appendTo(sortWrapper);
+                $('<div class="bcms-sort-content" />').html(antiXss.encodeHtml(this.title)).appendTo(sortWrapper);
                 sortWrapper.append('<div class="bcms-sort-overlay bcms-content-overlaybg" />');
 
                 // Store reference to content so it can be sorted later:

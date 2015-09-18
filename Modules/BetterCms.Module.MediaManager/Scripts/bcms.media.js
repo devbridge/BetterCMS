@@ -1544,7 +1544,7 @@ function ($, bcms, modal, siteSettings, forms, dynamicContent, messages, mediaUp
     * Called when file is selected from files list.
     */
     function insertFile(selectedMedia) {
-        addFileToEditor($.format(links.getFileUrl, selectedMedia.id()), selectedMedia.name());
+        addFileToEditor(window.location.origin + $.format(links.getFileUrl, selectedMedia.id()), selectedMedia.name());
 
         if (fileInsertDialog != null) {
             fileInsertDialog.close();

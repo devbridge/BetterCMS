@@ -156,6 +156,7 @@
       <HintPath>..\..\packages\ServiceStack.Common.3.9.71\lib\net35\ServiceStack.Interfaces.dll</HintPath>
     </Reference>
     <Reference Include="System" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Configuration" />
     <Reference Include="System.Core" />
     <Reference Include="System.Data.Services.Client" />
@@ -242,6 +243,8 @@
     <Compile Include="Pages\ServiceTests\SitemapServiceTests.cs" />
     <Compile Include="Pages\ServiceTests\UrlServiceTests.cs" />
     <Compile Include="Root\AccessControl\AccessControlServiceTests.cs" />
+    <Compile Include="Root\Attributes\TestViewModel.cs" />
+    <Compile Include="Root\Attributes\DisallowHtmlAttributeTests.cs" />
     <Compile Include="Root\HelperTests\PageHtmlRendererTests.cs" />
     <Compile Include="Root\ModelTests\MapTests\AccessRolesMapTest.cs" />
     <Compile Include="AmazonS3Storage\AmazonS3StorageServiceTest.cs" />

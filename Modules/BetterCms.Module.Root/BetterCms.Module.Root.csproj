@@ -250,6 +250,9 @@
     <Compile Include="Models\Migrations\Migration201502101035.cs" />
     <Compile Include="Models\Migrations\Migration201502101136.cs" />
     <Compile Include="Models\PagesView.cs" />
+    <Compile Include="Mvc\Attributes\DisallowHtmlAttribute.cs" />
+    <Compile Include="Mvc\Attributes\DisallowNonActiveDirectoryNameCompliantAttribute.cs" />
+    <Compile Include="Mvc\Attributes\DisallowNonAlphanumericAttribute.cs" />
     <Compile Include="Mvc\Extensions\HtmlAttributesUtility.cs" />
     <Compile Include="Mvc\Extensions\HtmlHelperExtensions.cs" />
     <Compile Include="Mvc\Extensions\StringExtensions.cs" />
@@ -362,6 +365,8 @@
     <Compile Include="Projections\PageContentProjectionFactory.cs" />
     <Compile Include="Projections\PageJavaScriptProjection.cs" />
     <Compile Include="Providers\ICustomOptionProvider.cs" />
+    <Compile Include="Registration\CustomValidationJsModuleIncludeDescriptor.cs" />
+    <Compile Include="Registration\AntiXssJsModuleIncludeDescriptor.cs" />
     <Compile Include="Registration\AuthenticationJavaScriptModuleDescriptor.cs" />
     <Compile Include="Registration\ContentJsModuleIncludeDescriptor.cs" />
     <Compile Include="Registration\ContentTreeJsModuleIncludeDescriptor.cs" />
@@ -1457,6 +1462,8 @@
     <EmbeddedResource Include="Scripts\ace\theme-kuroir.js" />
     <EmbeddedResource Include="Scripts\ace\worker-html.js" />
     <EmbeddedResource Include="Scripts\ace\worker-xml.js" />
+    <EmbeddedResource Include="Scripts\bcms.antiXss.js" />
+    <EmbeddedResource Include="Scripts\bcms.customValidation.js" />
     <EmbeddedResource Include="Scripts\ckeditor\plugins\cms-togglelinewrap\plugin.js" />
     <EmbeddedResource Include="Content\Styles\bcms.base.css" />
     <EmbeddedResource Include="Content\Styles\bcms.base.min.css" />

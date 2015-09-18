@@ -4,8 +4,8 @@
 bettercms.define('bcms.pages.widgets', ['bcms.jquery', 'bcms', 'bcms.modal', 'bcms.datepicker', 'bcms.htmlEditor',
         'bcms.dynamicContent', 'bcms.siteSettings', 'bcms.messages', 'bcms.preview', 'bcms.grid',
         'bcms.slides.jquery', 'bcms.redirect', 'bcms.pages.history', 'bcms.security', 'bcms.options', 'bcms.ko.extenders', 'bcms.codeEditor',
-        'bcms.pages', 'bcms.categories', 'bcms.forms', 'bcms.ko.grid'],
-    function ($, bcms, modal, datepicker, htmlEditor, dynamicContent, siteSettings, messages, preview, grid, slides, redirect, contentHistory, security, options, ko, codeEditor, pages, categories, forms, kogrid) {
+        'bcms.pages', 'bcms.categories', 'bcms.forms', 'bcms.ko.grid', 'bcms.antiXss'],
+    function ($, bcms, modal, datepicker, htmlEditor, dynamicContent, siteSettings, messages, preview, grid, slides, redirect, contentHistory, security, options, ko, codeEditor, pages, categories, forms, kogrid, antiXss) {
         'use strict';
 
         var widgets = {},
@@ -682,7 +682,7 @@ bettercms.define('bcms.pages.widgets', ['bcms.jquery', 'bcms', 'bcms.modal', 'bc
                                             if (this.type() == widgetUsageTypes.page || this.type() == widgetUsageTypes.masterPage) {
                                                 pages.openEditPageDialog(this.id(), function (pageData) {
                                                     newItem.url(pageData.Data.PageUrl);
-                                                    newItem.title(pageData.Data.Title);
+                                                    newItem.title(antiXss.encodeHtml(pageData.Data.Title));
                                                 });
                                             } else if (item.Type == widgetUsageTypes.htmlWidget) {
                                                 widgets.openEditHtmlContentWidgetDialog(this.id(), function(widgetData) {
@@ -771,8 +771,8 @@ bettercms.define('bcms.pages.widgets', ['bcms.jquery', 'bcms', 'bcms.modal', 'bc
             row.data('originalId', json.Data.OriginalId);
             row.data('version', json.Data.Version);
             row.data('originalVersion', json.Data.OriginalVersion);
-            row.find(selectors.widgetNameCell).html(json.Data.WidgetName);
-            row.find(selectors.widgetCategoryNameCell).html(json.Data.CategoryName);
+            row.find(selectors.widgetNameCell).html(antiXss.encodeHtml(json.Data.WidgetName));
+            row.find(selectors.widgetCategoryNameCell).html(antiXss.encodeHtml(json.Data.CategoryName));
 
             // Set widget type, if it's set
             if (json.Data.WidgetType) {

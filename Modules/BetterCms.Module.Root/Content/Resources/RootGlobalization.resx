@@ -723,4 +723,40 @@
   <data name="Validation_Category_Unavailable_Message" xml:space="preserve">
     <value>Selected category '{0}' cannot be assigned.</value>
   </data>
+  <data name="AntiXss_Contains_Html_Error" xml:space="preserve">
+    <value>The field must not contain html.</value>
+  </data>
+  <data name="Validation_DisallowHtml_Title_Message" xml:space="preserve">
+    <value>Title field must not contain HTML.</value>
+  </data>
+  <data name="Validation_DisallowHtml_Field_Message" xml:space="preserve">
+    <value>Field must not contain HTML.</value>
+  </data>
+  <data name="Validation_DisallowHtml_Name_Message" xml:space="preserve">
+    <value>Name field must not contain HTML.</value>
+  </data>
+  <data name="Validation_PreventHtml_Message" xml:space="preserve">
+    <value>This field cannot contain HTML.</value>
+  </data>
+  <data name="Validation_DisallowHtml_PageUrl_Message" xml:space="preserve">
+    <value>Page URL must not contain HTML.</value>
+  </data>
+  <data name="Validation_DisallowHtml_RedirectUrl_Message" xml:space="preserve">
+    <value>Redirect URL must not contain HTML.</value>
+  </data>
+  <data name="String" xml:space="preserve">
+    <value>Validation_PreventNonAlphanumeric_Message</value>
+  </data>
+  <data name="Validation_PreventNonAlphanumeric_Message" xml:space="preserve">
+    <value>Field invalid. Field can only contain alphanumeric characters: 'a-z', 'A-Z', '0-9'.</value>
+  </data>
+  <data name="Validation_ActiveDirectoryCompliant_Message" xml:space="preserve">
+    <value>The field must not contain any of the following characters: " / [ ] : ; | = , + * ? &lt; &gt; % or backslash</value>
+  </data>
+  <data name="Validation_ActiveDirectoryCompliant_TagMessage" xml:space="preserve">
+    <value>Tag must not contain any of the following characters: " / [ ] : ; | = , + * ? &lt; &gt; % or backslash</value>
+  </data>
+  <data name="Validation_ActiveDirectoryCompliant_CategoryMessage" xml:space="preserve">
+    <value>Category title must not contain any of the following characters: " / [ ] : ; | = , + * ? &lt; &gt; % or backslash</value>
+  </data>
 </root>

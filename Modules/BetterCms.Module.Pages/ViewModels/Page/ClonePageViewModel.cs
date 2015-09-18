@@ -1,5 +1,6 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations;
+using System.Web.Mvc;
 
 using BetterCms.Module.Pages.Content.Resources;
 using BetterCms.Module.Pages.Mvc.Attributes;
@@ -25,6 +26,7 @@ namespace BetterCms.Module.Pages.ViewModels.Page
         /// <value>
         /// The page title.
         /// </value>
+        [AllowHtml]
         [Required(AllowEmptyStrings = false, ErrorMessageResourceType = typeof(PagesGlobalization), ErrorMessageResourceName = "ClonePage_PageTitle_RequiredMessage")]
         [StringLength(MaxLength.Name, MinimumLength = 1, ErrorMessageResourceType = typeof(PagesGlobalization), ErrorMessageResourceName = "ClonePage_PageTitle_MaxLengthMessage")]
         public string PageTitle { get; set; }

@@ -151,6 +151,15 @@ namespace BetterCms.Module.Root.Content.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to The field must not contain html..
+        /// </summary>
+        public static string AntiXss_Contains_Html_Error {
+            get {
+                return ResourceManager.GetString("AntiXss_Contains_Html_Error", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Are you sure you want to log out?.
         /// </summary>
         public static string Authentication_LogOutConfirmationMessage {
@@ -1699,6 +1708,15 @@ namespace BetterCms.Module.Root.Content.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Validation_PreventNonAlphanumeric_Message.
+        /// </summary>
+        public static string String {
+            get {
+                return ResourceManager.GetString("String", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Add Tags.
         /// </summary>
         public static string TagsTemplate_AddTags_Title {
@@ -1744,6 +1762,33 @@ namespace BetterCms.Module.Root.Content.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Category title must not contain any of the following characters: &quot; / [ ] : ; | = , + * ? &lt; &gt; % or backslash.
+        /// </summary>
+        public static string Validation_ActiveDirectoryCompliant_CategoryMessage {
+            get {
+                return ResourceManager.GetString("Validation_ActiveDirectoryCompliant_CategoryMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The field must not contain any of the following characters: &quot; / [ ] : ; | = , + * ? &lt; &gt; % or backslash.
+        /// </summary>
+        public static string Validation_ActiveDirectoryCompliant_Message {
+            get {
+                return ResourceManager.GetString("Validation_ActiveDirectoryCompliant_Message", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Tag must not contain any of the following characters: &quot; / [ ] : ; | = , + * ? &lt; &gt; % or backslash.
+        /// </summary>
+        public static string Validation_ActiveDirectoryCompliant_TagMessage {
+            get {
+                return ResourceManager.GetString("Validation_ActiveDirectoryCompliant_TagMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Selected category &apos;{0}&apos; cannot be assigned..
         /// </summary>
         public static string Validation_Category_Unavailable_Message {
@@ -1758,6 +1803,51 @@ namespace BetterCms.Module.Root.Content.Resources {
         public static string Validation_CurrentUserHasNoRightsToUpdateOrDelete_Message {
             get {
                 return ResourceManager.GetString("Validation_CurrentUserHasNoRightsToUpdateOrDelete_Message", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Field must not contain HTML..
+        /// </summary>
+        public static string Validation_DisallowHtml_Field_Message {
+            get {
+                return ResourceManager.GetString("Validation_DisallowHtml_Field_Message", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Name field must not contain HTML..
+        /// </summary>
+        public static string Validation_DisallowHtml_Name_Message {
+            get {
+                return ResourceManager.GetString("Validation_DisallowHtml_Name_Message", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Page URL must not contain HTML..
+        /// </summary>
+        public static string Validation_DisallowHtml_PageUrl_Message {
+            get {
+                return ResourceManager.GetString("Validation_DisallowHtml_PageUrl_Message", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Redirect URL must not contain HTML..
+        /// </summary>
+        public static string Validation_DisallowHtml_RedirectUrl_Message {
+            get {
+                return ResourceManager.GetString("Validation_DisallowHtml_RedirectUrl_Message", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Title field must not contain HTML..
+        /// </summary>
+        public static string Validation_DisallowHtml_Title_Message {
+            get {
+                return ResourceManager.GetString("Validation_DisallowHtml_Title_Message", resourceCulture);
             }
         }
         
@@ -1785,6 +1875,24 @@ namespace BetterCms.Module.Root.Content.Resources {
         public static string Validation_MaximumLengthExceeded_Message {
             get {
                 return ResourceManager.GetString("Validation_MaximumLengthExceeded_Message", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to This field cannot contain HTML..
+        /// </summary>
+        public static string Validation_PreventHtml_Message {
+            get {
+                return ResourceManager.GetString("Validation_PreventHtml_Message", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Field invalid. Field can only contain alphanumeric characters: &apos;a-z&apos;, &apos;A-Z&apos;, &apos;0-9&apos;..
+        /// </summary>
+        public static string Validation_PreventNonAlphanumeric_Message {
+            get {
+                return ResourceManager.GetString("Validation_PreventNonAlphanumeric_Message", resourceCulture);
             }
         }
         

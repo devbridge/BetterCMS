@@ -1,13 +1,11 @@
 ﻿@using BetterCms.Module.Root.Content.Resources
 @using BetterCms.Module.Root.Mvc.Helpers
 @using BetterCms.Module.Root.ViewModels.Security
-
 @{
     UserAccessTemplateViewModel viewModel = (Model is UserAccessTemplateViewModel)
         ? (UserAccessTemplateViewModel)Model
         : new UserAccessTemplateViewModel();
 }
-
 <div id="bcms-accesscontrol-context">
     <div class="bcms-user-access" data-bind="with: accessControl">
         <div class="bcms-input-list-holder">
@@ -29,7 +27,7 @@
                         <div class="bcms-access-value"><input type="radio" value="3" data-bind="checked: AccessLevel, attr: { name: $parent.getPropertyIndexer($index(), 'AccessLevel') }" /></div>
                         <div class="bcms-access-value"><input type="radio" value="2" data-bind="checked: AccessLevel, attr: { name: $parent.getPropertyIndexer($index(), 'AccessLevel') }" /></div>
                         <div class="bcms-access-value"><input type="radio" value="1" data-bind="checked: AccessLevel, attr: { name: $parent.getPropertyIndexer($index(), 'AccessLevel') }" /></div>
-                    </div>                    
+                    </div>
                     <input type="hidden" data-bind="attr: { name: $parent.getPropertyIndexer($index(), 'Identity') }, value: Identity" />
                     <input type="hidden" data-bind="attr: { name: $parent.getPropertyIndexer($index(), 'IsForRole') }, valueBinder: IsForRole" />
                 </div>
@@ -37,31 +35,45 @@
                     <div class="bcms-access-value-add">
                         <div class="btn-acces-plus" data-bind="click: clickPlus">&nbsp;</div>
                         <span data-bind="visible: isInAddMode() !== 'user', click: clickPlus">@RootGlobalization.AccessControl_UserAccess_AddNewUser</span>
-                        <input type="text" data-bind="
-                            visible: isInAddMode() === 'user',
-                            css: { 'bcms-tag-validation-error': newItem.hasError() },
-                            hasfocus: isInAddMode() === 'user' && isExpanded(),
-                            value: newItem,
-                            valueUpdate: 'afterkeydown',
-                            enterPress: clickPlus,
-                            autocompleteList: '',
-                            escPress: clearItem" />
-                    </div>                    
+                        <div class="bcms-custom-input-box">
+                            <input type="text" class="bcms-add-tags-field" data-bind="
+                                visible: isInAddMode() === 'user',
+                                css: { 'bcms-tag-validation-error': newItem.hasError() },
+                                hasfocus: isInAddMode() === 'user' && isExpanded(),
+                                value: newItem,
+                                valueUpdate: 'afterkeydown',
+                                enterPress: clickPlus,
+                                autocompleteList: '',
+                                escPress: clearItem" />
+                            <!-- ko if: newItem.hasError() -->
+                            <span class="bcms-tag-field-validation-error">
+                                <span data-bind="text: newItem.validationMessage()"></span>
+                            </span>
+                            <!-- /ko -->
+                        </div>
+                    </div>
                 </div>
                 <div class="bcms-access-line bcms-clearfix" data-bind="with: roleAccessControl">
                     <div class="bcms-access-value-add">
                         <div class="btn-acces-plus" data-bind="click: clickPlus">&nbsp;</div>
                         <span data-bind="visible: isInAddMode() !== 'role', click: clickPlus">@RootGlobalization.AccessControl_UserAccess_AddNewRole</span>
-                        <input type="text" data-bind="
-                            visible: isInAddMode() === 'role', 
-                            css: { 'bcms-tag-validation-error': newItem.hasError() },
-                            hasfocus: isInAddMode() === 'role' && isExpanded(),
-                            value: newItem,
-                            valueUpdate: 'afterkeydown',
-                            enterPress: clickPlus,
-                            autocompleteList: '',
-                            escPress: clearItem" />
-                    </div>                     
+                        <div class="bcms-custom-input-box">
+                            <input type="text" class="bcms-add-tags-field" data-bind="
+                                visible: isInAddMode() === 'role',
+                                css: { 'bcms-tag-validation-error': newItem.hasError() },
+                                hasfocus: isInAddMode() === 'role' && isExpanded(),
+                                value: newItem,
+                                valueUpdate: 'afterkeydown',
+                                enterPress: clickPlus,
+                                autocompleteList: '',
+                                escPress: clearItem" />
+                            <!-- ko if: newItem.hasError() -->
+                            <span class="bcms-tag-field-validation-error">
+                                <span data-bind="text: newItem.validationMessage()"></span>
+                            </span>
+                            <!-- /ko -->
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
