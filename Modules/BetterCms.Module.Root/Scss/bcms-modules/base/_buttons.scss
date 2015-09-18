@@ -1,153 +1,116 @@
 @import '../../core/variables';
 
-.bcms-form-button {
-    padding: 10px;
-    margin: 10px 0;
-    font-size: 12px;
-    color: #FFFFFF;
-    cursor: pointer;
-    background: #1891e6;
-    background: -webkit-linear-gradient(top, #1891e6 0, #0c7bc8 100%);
-    background: linear-gradient(to bottom, #1891e6 0, #0c7bc8 100%);
-}
-
-//module Buttons
-.bcms-btn-main {
-    display: inline-block;
-    height: 32px;
-    line-height: 32px;
-    padding: 0 15px;
-    border: 1px solid #24597e;
+%btn-extender {
+    @include vertical-align();
+    border: 0;
     border-radius: 2px;
+    box-sizing: border-box;
     cursor: pointer;
-    vertical-align: middle;
-    color: #fff;
-    font-family: "Open Sans", sans-serif;
-    font-size: 16px;
-    text-transform: uppercase;
-    background: #1890E6;
-    background: -webkit-linear-gradient(top, #1890E6 0, #0D7BC9 100%);
-    background: linear-gradient(to bottom, #1890E6 0, #0D7BC9 100%);
-
-    &:active {
-        background: #0D7BC9;
-    }
-}
-
-.bcms-btn-small {
-    position: relative;
-    display: inline-block;
-    height: 28px;
-    line-height: 29px;
-    padding: 0 10px;
-    border: 1px solid #24597e;
-    border-radius: 2px;
-    cursor: pointer;
-    vertical-align: middle;
-    color: #fff;
-    font-family: "Open Sans", sans-serif;
-    font-size: 12px;
+    font-family: $font-base-family;
     overflow: hidden;
-    text-transform: uppercase;
-    background: #1890E6;
-    background: -webkit-linear-gradient(top, #1890E6 0, #0D7BC9 100%);
-    background: linear-gradient(to bottom, #1890E6 0, #0D7BC9 100%);
-
-    &:active {
-        background: #0D7BC9;
-    }
-}
-
-.bcms-btn-search {
-    position: absolute;
-    right: 0;
-    top: 15px;
-    width: 30px;
-    height: 30px;
-    line-height: 30px;
-    cursor: pointer;
-    vertical-align: middle;
-    background: url('images/sprite-base-2.png') no-repeat -23px -148px #303030;
-    text-indent: 9999px;
-    overflow: hidden;
-
-    &:hover {
-        background-color: #383838;
-    }
-}
-
-.bcms-btn-links-main {
-    display: inline-block;
-    height: 34px;
-    line-height: 34px;
-    padding: 0 10px;
-    cursor: pointer;
-    vertical-align: middle;
-    color: #0383df;
-    font-family: "Open Sans", sans-serif;
-    font-size: 14px;
-    font-weight: 600;
-    text-transform: uppercase;
-
-    &:hover {
-        color: #24597e;
-    }
-}
-
-.bcms-btn-links-small {
-    display: inline-block;
-    height: 34px;
-    line-height: 34px;
-    padding: 0 10px;
-    cursor: pointer;
-    vertical-align: middle;
-    color: #0383df;
-    font-family: "Open Sans", sans-serif;
-    font-size: 12px;
-    font-weight: 600;
-    text-transform: uppercase;
-
-    &:hover {
-        color: #24597e;
-    }
-}
-
-.bcms-btn-grid {
-    display: inline-block;
-    height: 36px;
-    line-height: 36px;
-    padding: 0 15px;
-    margin: 0 auto;
-    cursor: pointer;
-    vertical-align: middle;
-    color: #fff;
-    font-family: "Open Sans", sans-serif;
-    font-size: 14px;
-    font-weight: 600;
     text-align: center;
     text-transform: uppercase;
-    background: #676767;
-    background: -webkit-linear-gradient(top, #676767 0, #555555 100%);
-    background: linear-gradient(to bottom, #676767 0, #555555 100%);
+}
 
-    &:active {
-        background: #555555;
+%btn-links-extender {
+    color: $blue-main;
+    font-weight: 600;
+    padding: 0 10px;
+
+    &:hover {
+        color: $blue-l60;
     }
 }
 
-a.bcms-btn-close {
-    position: absolute;
-    top: 10px;
-    right: 10px;
-    height: 14px;
-    width: 15px;
-    background: url('images/sprite-base-1.png') no-repeat -9px -697px;
-    cursor: pointer;
-    overflow: hidden;
-    text-indent: 9999px;
-    text-decoration: none;
+.bcms-btn {
+    &-main {
+        @extend %btn-extender;
+        background: -webkit-linear-gradient(top, $blue-l30, $blue-l40);
+        background: linear-gradient(to bottom, $blue-l30, $blue-l40);
+        color: $white;
+        font-size: 16px;
+        line-height: 32px;
+        padding: 0 10px;
+
+        &:active {
+            background: $blue-l55;
+        }
+    }
+
+    &-small {
+        @extend %btn-extender;
+        background: -webkit-linear-gradient(top, $blue-l30, $blue-l40);
+        background: linear-gradient(to bottom, $blue-l30, $blue-l40);
+        color: $white;
+        font-size: 12px;
+        line-height: 30px;
+        padding: 0 10px;
+
+        &:active {
+            background: $blue-l55;
+        }
+    }
+
+    &-grid {
+        @extend %btn-extender;
+        background: -webkit-linear-gradient(top, $gray-l50, $gray-l60);
+        background: linear-gradient(to bottom, $gray-l50, $gray-l60);
+        color: $white;
+        font-size: 14px;
+        font-weight: 600;
+        line-height: 36px;
+        padding: 0 15px;
+
+        &:active {
+            background: $gray-l50;
+        }
+    }
+
+    &-links-main {
+        @extend %btn-extender;
+        @extend %btn-links-extender;
+        font-size: 14px;
+        line-height: 32px;
+    }
+
+    &-links-small {
+        @extend %btn-extender;
+        @extend %btn-links-extender;
+        font-size: 12px;
+        line-height: 30px;
+    }
+
+    &-search {
+        @include position(absolute, 1px 1px null null);
+        @include size(28px);
+        background: url('images/sprite-base-2.png') no-repeat -23px -148px $dark;
+        overflow: hidden;
+        text-indent: -999em;
+
+        &:hover {
+            background-color: #383838;
+        }
+    }
+
+    &-close {
+        @include position(absolute, 10px 10px null null);
+        @include size(15px 14px);
+        background: url('images/sprite-base-1.png') no-repeat -9px -697px;
+        cursor: pointer;
+        overflow: hidden;
+        text-decoration: none;
+        text-indent: -999em;
+    }
 }
 
-.bcms-btn-small.bcms-btn-gray {
-    border: 1px solid #787878;
-}
+//todo check if this button still relevant
+//.bcms-form-button {
+//    background: #1891e6;
+//    background: -webkit-linear-gradient(top, #1891e6 0, #0c7bc8 100%);
+//    background: linear-gradient(to bottom, #1891e6 0, #0c7bc8 100%);
+//    color: #FFFFFF;
+//    cursor: pointer;
+//    font-size: 12px;
+//    margin: 10px 0;
+//    padding: 10px;
+//}

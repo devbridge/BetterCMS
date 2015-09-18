@@ -1051,20 +1051,11 @@ div.bcms-tip-close {
 .bcms-search-block {
     position: relative;
     float: right;
-    padding-right: 30px;
 }
 
 .bcms-search-block > .bcms-editor-field-box {
-    width: 287px;
-    vertical-align: top;
-}
-
-.bcms-search-block > .bcms-editor-field-box:focus {
-    border-right: 0;
-}
-
-.bcms-search-block > .bcms-btn-search {
-    top: 0;
+    width: 300px;
+    padding-right: 35px;
 }
 
 //module Pages frames
@@ -1098,7 +1089,6 @@ div.bcms-tip-close {
     position: relative;
     margin-right: -1px;
     min-height: 30px;
-    line-height: 30px;
     left: -1px;
     padding: 15px 20px 5px 20px;
     background-color: #eaeaea;

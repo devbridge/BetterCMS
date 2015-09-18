@@ -24,7 +24,8 @@ $gray-l60: #555555;
 $blue-5: #eff9fd;
 $blue-l30: #1892E4;
 $blue-l40: #0C7FC7;
-$blue-l50: #0383df;
+$blue-main: #0383df;
+$blue-l55: #0D7BC9;
 $blue-l60: #24597e;
 
 //
@@ -34,8 +35,7 @@ $red-l70: #8E2626;
 //module borders
 $border-thin-gray: 1px solid $gray-l40;
 $border-thin-light-gray: 1px solid $gray-l20;
-
-//module maps/keys
+$border-thin-blue: 1px solid $blue-l60;
 
 //module misc variables
 
@@ -53,4 +53,6 @@ $susy: (
         columns: 12,
         container: 1160px,
         gutters: (40/60)
-)
+);
+
+//module maps/keys
