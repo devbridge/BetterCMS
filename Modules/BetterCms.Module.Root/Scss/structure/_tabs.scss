@@ -3,7 +3,6 @@
 //module Main Tabed View
 .bcms-tab-header {
     background: #303030;
-    height: 30px;
     padding: 10px 60px 0;
 }
 
@@ -17,13 +16,11 @@
     line-height: 30px;
     margin-right: 5px;
     max-width: 250px;
-    overflow: hidden;
     padding: 0 22px;
     text-decoration: none;
-    text-overflow: ellipsis;
     transition: all 100ms ease;
     -webkit-transition: all 100ms ease;
-    white-space: nowrap;
+
 }
 
 .bcms-tab-header > .bcms-tab:hover {
@@ -94,7 +91,9 @@
             left: $border-thin-gray;
         }
         position: relative;
+    }
 
+    .bcms-tab-active {
         @include virtual(after) {
             @include position(absolute, null 0 -1px 0);
             border-top: 1px solid $white;

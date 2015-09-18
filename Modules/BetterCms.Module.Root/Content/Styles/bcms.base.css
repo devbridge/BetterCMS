@@ -438,7 +438,6 @@ body {
 
 .bcms-tab-header {
   background: #303030;
-  height: 30px;
   padding: 10px 60px 0;
 }
 
@@ -452,13 +451,10 @@ body {
   line-height: 30px;
   margin-right: 5px;
   max-width: 250px;
-  overflow: hidden;
   padding: 0 22px;
   text-decoration: none;
-  text-overflow: ellipsis;
   transition: all 100ms ease;
   -webkit-transition: all 100ms ease;
-  white-space: nowrap;
 }
 
 .bcms-tab-header > .bcms-tab:hover {
@@ -526,7 +522,7 @@ body {
   position: relative;
 }
 
-.bcms-inner-tabs-holder .bcms-tab:after {
+.bcms-inner-tabs-holder .bcms-tab-active:after {
   content: "";
   position: absolute;
   right: 0;
