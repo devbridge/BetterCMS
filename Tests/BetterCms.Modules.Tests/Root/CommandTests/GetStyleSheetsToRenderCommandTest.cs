@@ -13,7 +13,7 @@ namespace BetterCms.Test.Module.Root.CommandTests
     [TestFixture]
     public class GetStyleSheetsToRenderCommandTest : TestBase
     {
-        private const string RootMinCss = "bcms.base.min.css";
+        private const string RootMinCss = "bcms.root.min.css";
         private const string PagesMinCss = "bcms.pages.min.css";
 
         [Test]

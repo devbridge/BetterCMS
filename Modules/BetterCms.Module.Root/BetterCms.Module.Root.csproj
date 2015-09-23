@@ -1465,8 +1465,8 @@
     <EmbeddedResource Include="Scripts\bcms.antiXss.js" />
     <EmbeddedResource Include="Scripts\bcms.customValidation.js" />
     <EmbeddedResource Include="Scripts\ckeditor\plugins\cms-togglelinewrap\plugin.js" />
-    <EmbeddedResource Include="Content\Styles\bcms.base.css" />
-    <EmbeddedResource Include="Content\Styles\bcms.base.min.css" />
+    <EmbeddedResource Include="Content\Styles\bcms.root.css" />
+    <EmbeddedResource Include="Content\Styles\bcms.root.min.css" />
     <Content Include="Gulpfile.js" />
     <Content Include="gulp\compile-sass\compile-sass.js" />
     <Content Include="gulp\create-data-uri-vars\create-data-uri-vars.js" />

@@ -30,7 +30,7 @@ namespace BetterCms.Test.Module.MediaManager.CommandTests
                     session.Flush();
                     session.Clear();
 
-                    var storageService = (IMediaFileService)new Mock<IMediaFileService>();
+                    var storageService = new Mock<IMediaFileService>().Object;
                     var command = new DeleteMediaCommand(storageService);
                     command.Repository = repository;
                     command.UnitOfWork = uow;
