@@ -9,9 +9,9 @@ CKEDITOR.editorConfig = function (config) {
     config.toolbar = [
 		['Undo', 'Redo'],
 		['Link', 'Unlink'],
-        ['Bold', 'Italic', 'Underline', 'Strike', 'BulletedList', 'SpecialChar'],
+        ['Bold', 'Italic', 'Underline', 'BulletedList', 'SpecialChar'],
 		['CmsImageManager', 'CmsFileManager', 'Image'],
-		//move to more item list ==>> ['Table', 'NumberedList', 'JustifyLeft', 'JustifyCenter', 'JustifyRight', 'JustifyBlock', 'Styles', 'Format', 'Font', 'FontSize'],
+		//move to more item list ==>> ['Table', 'Strike', 'NumberedList', 'JustifyLeft', 'JustifyCenter', 'JustifyRight', 'JustifyBlock', 'Styles', 'Format', 'Font', 'FontSize'],
         ['CmsDynamicRegion', 'CmsWidget', 'CmsModelValues'],
 		['Source', 'Maximize', 'CmsToggleLineWrap']
     ];

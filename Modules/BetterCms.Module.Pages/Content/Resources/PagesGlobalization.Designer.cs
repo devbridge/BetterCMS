@@ -2149,6 +2149,15 @@ namespace BetterCms.Module.Pages.Content.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to JavaScript &amp; CSS.
+        /// </summary>
+        public static string EditWidget_AdvancedOptionsTab_Title {
+            get {
+                return ResourceManager.GetString("EditWidget_AdvancedOptionsTab_Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Basic Properties.
         /// </summary>
         public static string EditWidget_BasicPropertiesTab_Title {

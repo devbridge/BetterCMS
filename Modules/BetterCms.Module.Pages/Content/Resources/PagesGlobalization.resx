@@ -1368,4 +1368,7 @@
   <data name="SaveWidget_ContentHasChildrenWidgetWithDynamicContents_ConfirmationMessage" xml:space="preserve">
     <value>You are trying to remove child widget which has children with dynamic regions. There are some children pages, which have contents created within these regions. If you delete this region, children page contents will be deleted also. &lt;br /&gt;&lt;br /&gt;Are you sure you want to continue?</value>
   </data>
+  <data name="EditWidget_AdvancedOptionsTab_Title" xml:space="preserve">
+    <value>JavaScript &amp; CSS</value>
+  </data>
 </root>

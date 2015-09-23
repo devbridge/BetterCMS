@@ -43,11 +43,6 @@ bettercms.define('bcms.pages.widgets', ['bcms.jquery', 'bcms', 'bcms.modal', 'bc
             },
             selectors = {
                 enableCustomCss: '#bcms-enable-custom-css',
-                customCssContainer: '#bcms-custom-css-container',
-                enableCustomJs: '#bcms-enable-custom-js',
-                customJsContainer: '#bcms-custom-js-container',
-                enableCustomHtml: '#bcms-enable-custom-html',
-                customHtmlContainer: '#bcms-custom-html-container',
                 desirableStatus: '#bcmsWidgetDesirableStatus',
                 destroyDraftVersionLink: '.bcms-messages-draft-destroy',
                 contentId: '#bcmsContentId',
@@ -339,18 +334,6 @@ bettercms.define('bcms.pages.widgets', ['bcms.jquery', 'bcms', 'bcms.modal', 'bc
                 dialog.container.find(selectors.widgetPreviewPageContentId).val(availablePreviewOnPageContentId);
             }
 
-            dialog.container.find(selectors.enableCustomCss).on('change', function () {
-                showHideCustomCssText(dialog, true);
-            });
-
-            dialog.container.find(selectors.enableCustomJs).on('change', function () {
-                showHideCustomJsText(dialog, true);
-            });
-
-            dialog.container.find(selectors.enableCustomHtml).on('change', function () {
-                showHideCustomHtmlText(dialog);
-            });
-
             dialog.container.find(selectors.destroyDraftVersionLink).on('click', function () {
                 var contentId = dialog.container.find(selectors.contentId).val(),
                     contentVersion = dialog.container.find(selectors.contentVersion).val();
@@ -370,12 +353,6 @@ bettercms.define('bcms.pages.widgets', ['bcms.jquery', 'bcms', 'bcms.modal', 'bc
             htmlEditor.enableInsertDynamicRegion(editorId, false, data.LastDynamicRegionNumber);
 
             codeEditor.initialize(dialog.container);
-
-            showHideCustomCssText(dialog);
-            showHideCustomJsText(dialog);
-            showHideCustomHtmlText(dialog);
-
-            
 
             return optionListViewModel;
         };
@@ -804,47 +781,6 @@ bettercms.define('bcms.pages.widgets', ['bcms.jquery', 'bcms', 'bcms.modal', 'bc
                 aceEditor.focus();
             }
         }
-
-        /**
-        * Shows/hides custom css field in a html content widget edit form
-        */
-        function showHideCustomCssText(dialog, focus) {
-            var container = dialog.container.find(selectors.customCssContainer);
-
-            if (dialog.container.find(selectors.enableCustomCss).attr('checked')) {
-                container.show();
-
-                if (focus) {
-                    focusAceEditor(container);
-                }
-            } else {
-                container.hide();
-            }
-        };
-
-        function showHideCustomJsText(dialog, focus) {
-            var container = dialog.container.find(selectors.customJsContainer);
-
-            if (dialog.container.find(selectors.enableCustomJs).attr('checked')) {
-                container.show();
-
-                if (focus) {
-                    focusAceEditor(container);
-                }
-            } else {
-                container.hide();
-            }
-        };
-
-        function showHideCustomHtmlText(dialog) {
-            var container = dialog.container.find(selectors.customHtmlContainer);
-
-            if (dialog.container.find(selectors.enableCustomHtml).attr('checked')) {
-                container.show();
-            } else {
-                container.hide();
-            }
-        };
 
         /**
         * Called when content view model is created
