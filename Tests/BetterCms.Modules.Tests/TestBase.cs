@@ -34,8 +34,8 @@ namespace BetterCms.Test.Module
         private ILifetimeScope container;
 
         private RandomTestDataProvider testDataProvider;
-        
-        static TestBase()
+
+        protected TestBase()
         {
             KnownAssemblies = new List<Assembly>(new[]
                                                      {
@@ -49,7 +49,7 @@ namespace BetterCms.Test.Module
                                                          typeof(UsersApiModuleDescriptor).Assembly,
                                                          typeof(ImagesGalleryModuleDescriptor).Assembly
                                                      });
-            CreateContainer();
+            container = CreateContainer();
 
             HtmlAgilityPackHelper.FixMissingTagClosings();
         }
