@@ -9,16 +9,14 @@ CKEDITOR.editorConfig = function (config) {
     config.toolbar = [
 		['Undo', 'Redo'],
 		['Link', 'Unlink'],
-		['CmsImageManager', 'CmsFileManager', 'Table', 'SpecialChar', 'HorizontalRule', 'Image'],
-	    ['JustifyLeft', 'JustifyCenter', 'JustifyRight', 'JustifyBlock'],
-		['Bold', 'Italic', 'Underline', 'Strike', 'Subscript', 'Superscript', 'RemoveFormat'],
-        ['TextColor', 'BGColor'],
-		['NumberedList', 'BulletedList', 'Outdent', 'Indent'],
-		['Styles', 'Format', 'Font', 'FontSize'],
-        ['CmsDynamicRegion', 'CmsModelValues', 'CmsWidget'],
-		['Source', 'Maximize', 'ShowBlocks', 'CmsToggleLineWrap']
+        ['Bold', 'Italic', 'Underline', 'Strike', 'BulletedList', 'SpecialChar'],
+		['CmsImageManager', 'CmsFileManager', 'Image'],
+		//move to more item list ==>> ['Table', 'NumberedList', 'JustifyLeft', 'JustifyCenter', 'JustifyRight', 'JustifyBlock', 'Styles', 'Format', 'Font', 'FontSize'],
+        ['CmsDynamicRegion', 'CmsWidget', 'CmsModelValues'],
+		['Source', 'Maximize', 'CmsToggleLineWrap']
     ];
 
+    config.height = 500;
     config.removePlugins = 'tabletools';
     config.disableNativeSpellChecker = false;
     config.allowedContent = true;
