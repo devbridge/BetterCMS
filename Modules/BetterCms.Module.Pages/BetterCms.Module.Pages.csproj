@@ -788,6 +788,8 @@
     <EmbeddedResource Include="Models\Migrations\Migration201312121313.sqlserver.sql" />
     <EmbeddedResource Include="Models\Migrations\Migration201502021540.sqlserver.sql" />
     <EmbeddedResource Include="Models\Migrations\Migration201502101138.sqlserver.sql" />
+    <Content Include="Content\Styles\bcms.pages.css" />
+    <Content Include="Content\Styles\bcms.pages.min.css" />
     <Content Include="packages.config">
       <SubType>Designer</SubType>
     </Content>

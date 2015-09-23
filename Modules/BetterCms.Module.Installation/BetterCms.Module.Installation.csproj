@@ -221,6 +221,8 @@
       <SubType>Designer</SubType>
     </Content>
     <EmbeddedResource Include="Models\Migrations\Migration201311181011.sqlserver.sql" />
+    <Content Include="Content\Styles\bcms.installation.css" />
+    <Content Include="Content\Styles\bcms.installation.min.css" />
     <Content Include="packages.config">
       <SubType>Designer</SubType>
     </Content>

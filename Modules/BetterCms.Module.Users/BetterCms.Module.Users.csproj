@@ -294,6 +294,8 @@
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Models\Migrations\Migration201403141036.sqlserver.sql" />
+    <Content Include="Content\Styles\bcms.users.css" />
+    <Content Include="Content\Styles\bcms.users.min.css" />
     <Content Include="packages.config">
       <SubType>Designer</SubType>
     </Content>
