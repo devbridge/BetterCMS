@@ -314,8 +314,7 @@ a.bcms-slider-next:active {
 
 .bcms-featured-grid {
     position: relative;
-    line-height: 1.5em;
-    padding-bottom: 5px;
+    padding: 5px 0;
     z-index: 5;
 }
 
@@ -339,7 +338,6 @@ a.bcms-slider-next:active {
     cursor: pointer;
     border: 1px solid #c6c6c6;
     background: #fff url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAwAAAAMCAYAAAEhcmxxAAAAkElEQVQoz2NgaXy0FIj/MwAJMGaA82BC/4H4GIzxHybNDOVwIiuD6/mDrByIL8HNB+IoqOAeIN6LLAE3Bu4QLHgpSMIKi4QizIhjSIIgZ/5EN78CiL8CsQJWi5H9gVWCD4jv43AdMgap4Uc2qQGP4hYgrgbiw+gBogDEH9EUtwIxD9Qj+9E1ILv7PzY52msAAM8HDCs6JdPsAAAAAElFTkSuQmCC") no-repeat 12px center;
-    font-size: 13px;
 }
 
 .bcms-filter-modified {
@@ -376,7 +374,7 @@ a.bcms-slider-next:active {
 
 .bcms-tags-block {
     position: absolute;
-    top: 29px;
+    top: 34px;
     left: 0;
     width: 450px;
     padding: 15px;

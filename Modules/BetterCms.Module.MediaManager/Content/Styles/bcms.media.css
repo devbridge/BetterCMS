@@ -143,10 +143,6 @@
   top: 24px;
 }
 
-            .bcms-file-manager-inner .bcms-input-list-holder:first-of-type .bcms-tooltip-mark {
-                top: 24px;
-            }
-
 .bcms-edit-file-info .bcms-input-list-holder:first-child {
   padding-top: 0;
 }

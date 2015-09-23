@@ -1,0 +1,116 @@
+@import '../../core/variables';
+
+%btn-extender {
+    @include vertical-align();
+    border: 0;
+    border-radius: 2px;
+    box-sizing: border-box;
+    cursor: pointer;
+    font-family: $font-base-family;
+    overflow: hidden;
+    text-align: center;
+    text-transform: uppercase;
+}
+
+%btn-links-extender {
+    color: $blue-main;
+    font-weight: 600;
+    padding: 0 10px;
+
+    &:hover {
+        color: $blue-l60;
+    }
+}
+
+.bcms-btn {
+    &-main {
+        @extend %btn-extender;
+        background: -webkit-linear-gradient(top, $blue-l30, $blue-l40);
+        background: linear-gradient(to bottom, $blue-l30, $blue-l40);
+        color: $white;
+        font-size: 16px;
+        line-height: 32px;
+        padding: 0 10px;
+
+        &:active {
+            background: $blue-l55;
+        }
+    }
+
+    &-small {
+        @extend %btn-extender;
+        background: -webkit-linear-gradient(top, $blue-l30, $blue-l40);
+        background: linear-gradient(to bottom, $blue-l30, $blue-l40);
+        color: $white;
+        font-size: 12px;
+        line-height: 30px;
+        padding: 0 10px;
+
+        &:active {
+            background: $blue-l55;
+        }
+    }
+
+    &-grid {
+        @extend %btn-extender;
+        background: -webkit-linear-gradient(top, $gray-l50, $gray-l60);
+        background: linear-gradient(to bottom, $gray-l50, $gray-l60);
+        color: $white;
+        font-size: 14px;
+        font-weight: 600;
+        line-height: 36px;
+        padding: 0 15px;
+
+        &:active {
+            background: $gray-l50;
+        }
+    }
+
+    &-links-main {
+        @extend %btn-extender;
+        @extend %btn-links-extender;
+        font-size: 14px;
+        line-height: 32px;
+    }
+
+    &-links-small {
+        @extend %btn-extender;
+        @extend %btn-links-extender;
+        font-size: 12px;
+        line-height: 30px;
+    }
+
+    &-search {
+        @include position(absolute, 1px 1px null null);
+        @include size(28px);
+        background: url('images/sprite-base-2.png') no-repeat -23px -148px $dark;
+        overflow: hidden;
+        text-indent: -999em;
+
+        &:hover {
+            background-color: #383838;
+        }
+    }
+
+    &-close {
+        @include position(absolute, 10px 10px null null);
+        @include size(15px 14px);
+        background: url('images/sprite-base-1.png') no-repeat -9px -697px;
+        cursor: pointer;
+        overflow: hidden;
+        text-decoration: none;
+        text-indent: -999em;
+    }
+}
+
+//todo check if this button still relevant
+//.bcms-form-button {
+//    background: #1891e6;
+//    background: -webkit-linear-gradient(top, #1891e6 0, #0c7bc8 100%);
+//    background: linear-gradient(to bottom, #1891e6 0, #0c7bc8 100%);
+//    color: #FFFFFF;
+//    cursor: pointer;
+//    font-size: 12px;
+//    margin: 10px 0;
+//    padding: 10px;
+//}

@@ -28,7 +28,7 @@ function compileSass(source, destination) {
 function task() {
     utils.log('Compiling SASS');
 
-    compileSass('./Scss/**/base.scss', './Content/Styles');
+    compileSass('./Scss/**/root.scss', './Content/Styles');
     compileSass('./Scss/**/blog.scss', '../../Modules/BetterCms.Module.Blog/Content/Styles');
     compileSass('./Scss/**/installation.scss', '../../Modules/BetterCms.Module.Installation/Content/Styles');
     compileSass('./Scss/**/media.scss', '../../Modules/BetterCms.Module.MediaManager/Content/Styles');

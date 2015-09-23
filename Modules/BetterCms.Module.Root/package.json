@@ -19,7 +19,7 @@
     "gulp-task-loader": "^1.0.8",
     "gulp-util": "^3.0.3",
     "gulp-watch": "^4.2.0",
-    "node-bourbon": "^4.2.2",
+    "node-bourbon": "^4.2.3",
     "run-sequence": "^1.0.2",
     "susy": "^2.2.6",
     "through2": "^0.6.3"

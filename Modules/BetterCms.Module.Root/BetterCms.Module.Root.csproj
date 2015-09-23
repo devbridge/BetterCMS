@@ -1511,7 +1511,15 @@
     <Content Include="Scss\bcms-modules\pages\_history.scss" />
     <Content Include="Scss\bcms-modules\pages\_editseo.scss" />
     <Content Include="Scss\bcms-modules\pages\_nodedropzone.scss" />
-    <Content Include="Scss\base.scss" />
+    <Content Include="Scss\bcms-modules\base\_buttons.scss" />
+    <Content Include="Scss\bcms-modules\base\_overlays.scss" />
+    <Content Include="Scss\root.scss" />
+    <Content Include="Scss\bcms-modules\root\_buttons.scss" />
+    <Content Include="Scss\bcms-modules\root\_controlpanel.scss" />
+    <Content Include="Scss\bcms-modules\root\_index.scss" />
+    <Content Include="Scss\bcms-modules\root\_messages.scss" />
+    <Content Include="Scss\bcms-modules\root\_notifications.scss" />
+    <Content Include="Scss\bcms-modules\root\_overlays.scss" />
     <None Include="Views\Category\CategoryTrees.cshtml">
       <Generator>RazorGenerator</Generator>
       <LastGenOutput>CategoryTrees.generated.cs</LastGenOutput>

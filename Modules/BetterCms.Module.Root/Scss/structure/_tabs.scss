@@ -1,110 +1,117 @@
 @import '../core/variables';
 
-//module Main Tabed View
+//module main tabbed view
 .bcms-tab-header {
-    padding: 10px 60px 0;
-    height: 30px;
     background: #303030;
-    border-bottom: 1px solid #c6c6c6;
+    padding: 10px 60px 0;
+
+    > .bcms-tab {
+        @include transition(all 100ms ease);
+        background: $gray-l25;
+        color: $black;
+        cursor: pointer;
+        display: inline-block;
+        font-size: 14px;
+        font-weight: 700;
+        line-height: 30px;
+        margin-right: 5px;
+        max-width: 250px;
+        padding: 0 22px;
+        text-decoration: none;
+
+        &:hover {
+            background-color: #c0c0c0;
+        }
+    }
+
+    > a.bcms-tab-active {
+        background-color: $white;
+
+        &:hover {
+            background-color: $white;
+        }
+    }
 }
 
-.bcms-tab-header > .bcms-tab {
-    display: inline-block;
-    height: 29px;
-    line-height: 29px;
-    padding: 0 22px;
-    margin-right: 5px;
-    border-style: solid solid none solid;
-    border-width: 1px;
-    border-color: #c6c6c6;
-    background: #e5e5e5;
-    cursor: pointer;
-    color: #000;
-    font-size: 14px;
-    font-weight: 700;
-    text-decoration: none;
-    -webkit-transition: all 0.1s ease-in-out;
-    transition: all 0.1s ease-in-out;
-    max-width: 250px;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
-}
-
-.bcms-tab-header > .bcms-tab:hover {
-    background-color: #c0c0c0;
-}
-
-.bcms-tab-header > a.bcms-tab-active {
-    background-color: #FFFFFF;
-    border-bottom: 1px solid #fff;
-}
-
-.bcms-tab-header > a.bcms-tab-active:hover {
-    background-color: #FFFFFF;
-}
-
-//module Inner Tabed View
+//module inner tabbed view
 .bcms-innertab-header {
-    position: relative;
-    padding: 25px 20px 0;
-    height: 30px;
-    margin-top: -1px;
-    left: -1px;
     background: #eaeaea;
     border-bottom: 1px solid #c6c6c6;
-}
+    height: 30px;
+    left: -1px;
+    margin-top: -1px;
+    padding: 25px 20px 0;
+    position: relative;
 
-.bcms-innertab-header > .bcms-tab {
-    display: inline-block;
-    height: 29px;
-    line-height: 29px;
-    padding: 0 22px;
-    margin-right: 5px;
-    border: 1px solid #c6c6c6;
-    background: #e5e5e5;
-    cursor: pointer;
-    color: #000;
-    font-size: 14px;
-    font-weight: 700;
-    text-decoration: none;
-    -webkit-transition: all 0.1s ease-in-out;
-    transition: all 0.1s ease-in-out;
-}
+    > .bcms-tab {
+        @include transition(all 100ms ease);
+        background: $gray-l25;
+        border: 1px solid #c6c6c6;
+        color: $black;
+        cursor: pointer;
+        display: inline-block;
+        font-size: 14px;
+        font-weight: 700;
+        height: 29px;
+        line-height: 29px;
+        margin-right: 5px;
+        padding: 0 22px;
+        text-decoration: none;
 
-.bcms-innertab-header > .bcms-tab:hover {
-    background-color: #c0c0c0;
-}
+        &:hover {
+            background-color: #c0c0c0;
+        }
+    }
 
-.bcms-innertab-header > a.bcms-tab-active {
-    background-color: #FFFFFF;
-    border-bottom: 1px solid #fff;
-}
+    > a.bcms-tab-active {
+        background-color: #FFFFFF;
+        border-bottom: 1px solid #fff;
 
-.bcms-innertab-header > a.bcms-tab-active:hover {
-    background-color: #FFFFFF;
+        &:hover {
+            background-color: #FFFFFF;
+        }
+    }
 }
 
 //module inner tabs for modal
 .bcms-inner-tabs-holder .bcms-tab-header {
-    padding-left: 10px;
     background: #ffffff;
+    border-bottom: 1px solid #c6c6c6;
+    padding-left: 10px;
 }
 
-.bcms-inner-tabs-holder .bcms-tab-single {
-    padding-top: 20px;
+.bcms-inner-tabs-holder {
+    .bcms-tab {
+        border: {
+            top: $border-thin-gray;
+            right: $border-thin-gray;
+            left: $border-thin-gray;
+        }
+        position: relative;
+    }
+
+    .bcms-tab-active {
+        @include virtual(after) {
+            @include position(absolute, null 0 -1px 0);
+            border-top: 1px solid $white;
+        }
+    }
+
+    .bcms-tab-single {
+        padding-top: 20px;
+    }
 }
 
 .bcms-inner-grid-box {
+    border: 1px solid #c6c6c6;
+    box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    cursor: pointer;
     float: left;
-    position: relative;
+    margin-left: 20px;
     max-width: 220px;
     padding: 8px 3px 3px;
-    margin-left: 20px;
-    cursor: pointer;
-    border: 1px solid #c6c6c6;
-    -moz-box-sizing: border-box;
-    box-sizing: border-box;
+    position: relative;
 }
 
 .bcms-inner-grid-box:first-child {
@@ -116,18 +123,18 @@
 }
 
 .bcms-inner-grid-box-active {
-    cursor: default;
-    border: 2px solid #0383df;
     background-color: #eff9fd;
+    border: 2px solid #0383df;
+    cursor: default;
 }
 
 .bcms-inner-grid-box-active .bcms-content-titles {
-    padding-right: 20px;
-    color: #0383df;
     background: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAA20lEQVQ4y2NgaHrEgIa1gLgPiK8D8Q8ovgYV08JQj8RhA+IpQPwXiP/jwCC5GUDMiW4ASPNuPBrR8V6oHrgBU0nQDMNTYAZoA/EfMgz4A9YLJPqJ0SDa8+R/xtZ36OL9DNDQhguCFIEUo2u+8urXfxDI2Y5iyHWQAT9hAiBJEAAphhmCrBlZHIp/ohiArlhr+nN8mkH4M4YXkA359/8/Ps0gfAVrIBJwNjKeADJAB1s0gjRNPPkJn+Y/YL0UJKSpVE3KFGcmZKwNDpymRzeA+BcQfwGHNkRMB109AFNqT2Ji6QGbAAAAAElFTkSuQmCC") no-repeat right center;
+    color: #0383df;
+    padding-right: 20px;
 }
 
 .bcms-inner-grid-box-notcompatible {
-    border: 1px solid #e64343;
     background-color: #fcecec;
+    border: 1px solid #e64343;
 }
