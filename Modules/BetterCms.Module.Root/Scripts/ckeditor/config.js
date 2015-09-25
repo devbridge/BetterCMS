@@ -4,22 +4,29 @@
  */
 
 CKEDITOR.editorConfig = function (config) {
-    config.extraPlugins = 'cms-imagemanager,cms-filemanager,cms-dynamicregion,cms-togglelinewrap,cms-modelvalues,aceeditor,cms-widget';
+    config.extraPlugins = 'cms-imagemanager,cms-filemanager,cms-dynamicregion,cms-togglelinewrap,cms-modelvalues,aceeditor,cms-widget,cms-option';
 
     config.toolbar = [
-		['Undo', 'Redo'],
-		['Link', 'Unlink'],
+        ['Undo', 'Redo'],
+        ['Link', 'Unlink'],
         ['Bold', 'Italic', 'Underline', 'BulletedList', 'SpecialChar'],
-		['CmsImageManager', 'CmsFileManager', 'Image'],
-		//move to more item list ==>> ['Table', 'Strike', 'NumberedList', 'JustifyLeft', 'JustifyCenter', 'JustifyRight', 'JustifyBlock', 'Styles', 'Format', 'Font', 'FontSize'],
-        ['CmsDynamicRegion', 'CmsWidget', 'CmsModelValues'],
-		['Source', 'Maximize', 'CmsToggleLineWrap']
+        ['CmsImageManager', 'CmsFileManager', 'Image'],
+        ['CmsDynamicRegion', 'CmsWidget', 'CmsOption', 'CmsModelValues'],
+        ['Source', 'Maximize', 'CmsToggleLineWrap']
+        //move to hidden items list ==>> ['Table', 'Strike', 'NumberedList', 'JustifyLeft', 'JustifyCenter', 'JustifyRight', 'JustifyBlock', 'Styles', 'Format', 'Font', 'FontSize'],
     ];
 
-    config.height = 500;
     config.removePlugins = 'tabletools';
     config.disableNativeSpellChecker = false;
     config.allowedContent = true;
     config.extraAllowedContent = 'div[class]';
     config.autoParagraph = false;
+    config.toolbarCanCollapse = true;
 };
+
+//todo check how to implement multiple toolbars
+//some info here: http://ckeditor.com/latest/samples/old/datafiltering.html
+//and here: http://docs.ckeditor.com/#!/api/CKEDITOR.config-cfg-customConfig
+//CKEDITOR.replace('CodeEditor', {
+//    customConfig: 'code-config.js'
+//});

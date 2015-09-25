@@ -1473,6 +1473,9 @@
     <Content Include="gulp\gulp.config.js" />
     <Content Include="gulp\utils\utils.js" />
     <Content Include="gulp\watch-files\watch-files.js" />
+    <EmbeddedResource Include="Scripts\ckeditor\code-config.js" />
+    <EmbeddedResource Include="Scripts\ckeditor\plugins\cms-option\plugin.js" />
+    <Content Include="Scss\base_64\bcms-editor-options.svg" />
     <Content Include="Scss\base_64\validation.svg" />
     <Content Include="Views\Web.config" />
     <Content Include="Views\Category\CategoryTreeEdit.cshtml">

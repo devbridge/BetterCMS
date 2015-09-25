@@ -155,7 +155,7 @@ WriteLiteral(">");
             
             #line default
             #line hidden
-WriteLiteral("</a>\r\n</div>\r\n<div");
+WriteLiteral("</a>\r\n</div>\r\n\r\n<div");
 
 WriteLiteral(" class=\"bcms-scroll-window\"");
 
@@ -164,7 +164,7 @@ WriteLiteral(">\r\n");
 WriteLiteral("    ");
 
             
-            #line 26 "..\..\Views\Widgets\EditHtmlContentWidget.cshtml"
+            #line 27 "..\..\Views\Widgets\EditHtmlContentWidget.cshtml"
 Write(Html.TabbedContentMessagesBox("bcms-edit-widget-messages"));
 
             
@@ -175,7 +175,7 @@ WriteLiteral("\r\n");
 WriteLiteral("    ");
 
             
-            #line 27 "..\..\Views\Widgets\EditHtmlContentWidget.cshtml"
+            #line 28 "..\..\Views\Widgets\EditHtmlContentWidget.cshtml"
 Write(Html.Partial("Partial/WarnMessageAboutDraft", Model));
 
             
@@ -184,13 +184,13 @@ Write(Html.Partial("Partial/WarnMessageAboutDraft", Model));
 WriteLiteral("\r\n");
 
             
-            #line 28 "..\..\Views\Widgets\EditHtmlContentWidget.cshtml"
+            #line 29 "..\..\Views\Widgets\EditHtmlContentWidget.cshtml"
     
             
             #line default
             #line hidden
             
-            #line 28 "..\..\Views\Widgets\EditHtmlContentWidget.cshtml"
+            #line 29 "..\..\Views\Widgets\EditHtmlContentWidget.cshtml"
      using (Html.BeginForm<WidgetsController>(c => c.EditHtmlContentWidget((string)null), FormMethod.Post, new { @id = "bcms-advanced-content-form", @class = "bcms-ajax-form" }))
     {
 
@@ -216,7 +216,7 @@ WriteLiteral(">\r\n");
 WriteLiteral("                    ");
 
             
-            #line 33 "..\..\Views\Widgets\EditHtmlContentWidget.cshtml"
+            #line 34 "..\..\Views\Widgets\EditHtmlContentWidget.cshtml"
                Write(Html.Tooltip(PagesGlobalization.HtmlContentWidget_ContentName_Tooltip_Description));
 
             
@@ -229,7 +229,7 @@ WriteLiteral(" class=\"bcms-content-titles\"");
 WriteLiteral(">");
 
             
-            #line 34 "..\..\Views\Widgets\EditHtmlContentWidget.cshtml"
+            #line 35 "..\..\Views\Widgets\EditHtmlContentWidget.cshtml"
                                                 Write(PagesGlobalization.HtmlContentWidget_ContentName_Title);
 
             
@@ -244,7 +244,7 @@ WriteLiteral(">\r\n");
 WriteLiteral("                        ");
 
             
-            #line 36 "..\..\Views\Widgets\EditHtmlContentWidget.cshtml"
+            #line 37 "..\..\Views\Widgets\EditHtmlContentWidget.cshtml"
                    Write(Html.TextBoxFor(model => model.Name, new { @class = "bcms-editor-field-box" }));
 
             
@@ -255,7 +255,7 @@ WriteLiteral("\r\n");
 WriteLiteral("                        ");
 
             
-            #line 37 "..\..\Views\Widgets\EditHtmlContentWidget.cshtml"
+            #line 38 "..\..\Views\Widgets\EditHtmlContentWidget.cshtml"
                    Write(Html.BcmsValidationMessageFor(m => m.Name));
 
             
@@ -272,7 +272,7 @@ WriteLiteral(">\r\n");
 WriteLiteral("                    ");
 
             
-            #line 42 "..\..\Views\Widgets\EditHtmlContentWidget.cshtml"
+            #line 43 "..\..\Views\Widgets\EditHtmlContentWidget.cshtml"
                Write(Html.Partial("~/Areas/bcms-root/Views/Category/CategoriesTemplate.cshtml", categoriesTemplateViewModel));
 
             
@@ -289,7 +289,7 @@ WriteLiteral(" class=\"bcms-content-titles\"");
 WriteLiteral(">");
 
             
-            #line 46 "..\..\Views\Widgets\EditHtmlContentWidget.cshtml"
+            #line 47 "..\..\Views\Widgets\EditHtmlContentWidget.cshtml"
                                                 Write(PagesGlobalization.HtmlContentWidget_CustomHTML_Title);
 
             
@@ -304,7 +304,7 @@ WriteLiteral(">\r\n");
 WriteLiteral("                        ");
 
             
-            #line 48 "..\..\Views\Widgets\EditHtmlContentWidget.cshtml"
+            #line 49 "..\..\Views\Widgets\EditHtmlContentWidget.cshtml"
                    Write(Html.TextAreaFor(model => model.PageContent, new { @class = "bcms-advanced-contenthtml", @id = Guid.NewGuid() }));
 
             
@@ -314,7 +314,7 @@ WriteLiteral("\r\n                    </div>\r\n                </div>\r\n      
 " </div>\r\n");
 
             
-            #line 53 "..\..\Views\Widgets\EditHtmlContentWidget.cshtml"
+            #line 54 "..\..\Views\Widgets\EditHtmlContentWidget.cshtml"
 
 
             
@@ -331,7 +331,7 @@ WriteLiteral(">\r\n");
 WriteLiteral("            ");
 
             
-            #line 55 "..\..\Views\Widgets\EditHtmlContentWidget.cshtml"
+            #line 56 "..\..\Views\Widgets\EditHtmlContentWidget.cshtml"
        Write(Html.Partial(PagesConstants.OptionsGridTemplate));
 
             
@@ -340,7 +340,7 @@ WriteLiteral("            ");
 WriteLiteral("\r\n        </div>\r\n");
 
             
-            #line 57 "..\..\Views\Widgets\EditHtmlContentWidget.cshtml"
+            #line 58 "..\..\Views\Widgets\EditHtmlContentWidget.cshtml"
 
 
             
@@ -367,7 +367,7 @@ WriteLiteral(" class=\"bcms-content-titles\"");
 WriteLiteral(">");
 
             
-            #line 61 "..\..\Views\Widgets\EditHtmlContentWidget.cshtml"
+            #line 62 "..\..\Views\Widgets\EditHtmlContentWidget.cshtml"
                                                 Write(PagesGlobalization.HtmlContentWidget_CustomCSS_Title);
 
             
@@ -378,7 +378,7 @@ WriteLiteral("</div>\r\n");
 WriteLiteral("                    ");
 
             
-            #line 62 "..\..\Views\Widgets\EditHtmlContentWidget.cshtml"
+            #line 63 "..\..\Views\Widgets\EditHtmlContentWidget.cshtml"
                Write(Html.TextAreaFor(model => model.CustomCSS, new { @class = "bcms-editor-field-area bcms-code-field bcms-code-field-css" }));
 
             
@@ -395,7 +395,7 @@ WriteLiteral(" class=\"bcms-content-titles\"");
 WriteLiteral(">");
 
             
-            #line 66 "..\..\Views\Widgets\EditHtmlContentWidget.cshtml"
+            #line 67 "..\..\Views\Widgets\EditHtmlContentWidget.cshtml"
                                                 Write(PagesGlobalization.HtmlContentWidget_CustomJS_Title);
 
             
@@ -406,7 +406,7 @@ WriteLiteral("</div>\r\n");
 WriteLiteral("                    ");
 
             
-            #line 67 "..\..\Views\Widgets\EditHtmlContentWidget.cshtml"
+            #line 68 "..\..\Views\Widgets\EditHtmlContentWidget.cshtml"
                Write(Html.TextAreaFor(model => model.CustomJS, new { @class = "bcms-editor-field-area bcms-code-field bcms-code-field-javascript" }));
 
             
@@ -415,105 +415,105 @@ WriteLiteral("                    ");
 WriteLiteral("\r\n                </div>\r\n            </div>\r\n        </div>\r\n");
 
             
-            #line 71 "..\..\Views\Widgets\EditHtmlContentWidget.cshtml"
+            #line 72 "..\..\Views\Widgets\EditHtmlContentWidget.cshtml"
 
         
             
             #line default
             #line hidden
             
-            #line 72 "..\..\Views\Widgets\EditHtmlContentWidget.cshtml"
+            #line 73 "..\..\Views\Widgets\EditHtmlContentWidget.cshtml"
    Write(Html.HiddenFor(model => model.Id, new { @id = "bcmsContentId" }));
 
             
             #line default
             #line hidden
             
-            #line 72 "..\..\Views\Widgets\EditHtmlContentWidget.cshtml"
+            #line 73 "..\..\Views\Widgets\EditHtmlContentWidget.cshtml"
                                                                          
         
             
             #line default
             #line hidden
             
-            #line 73 "..\..\Views\Widgets\EditHtmlContentWidget.cshtml"
+            #line 74 "..\..\Views\Widgets\EditHtmlContentWidget.cshtml"
    Write(Html.HiddenFor(model => model.Version, new { @id = "bcmsContentVersion" }));
 
             
             #line default
             #line hidden
             
-            #line 73 "..\..\Views\Widgets\EditHtmlContentWidget.cshtml"
+            #line 74 "..\..\Views\Widgets\EditHtmlContentWidget.cshtml"
                                                                                    
         
             
             #line default
             #line hidden
             
-            #line 74 "..\..\Views\Widgets\EditHtmlContentWidget.cshtml"
+            #line 75 "..\..\Views\Widgets\EditHtmlContentWidget.cshtml"
    Write(Html.HiddenFor(modal => modal.DesirableStatus, new { @class = "bcms-content-desirable-status" }));
 
             
             #line default
             #line hidden
             
-            #line 74 "..\..\Views\Widgets\EditHtmlContentWidget.cshtml"
+            #line 75 "..\..\Views\Widgets\EditHtmlContentWidget.cshtml"
                                                                                                          
         
             
             #line default
             #line hidden
             
-            #line 75 "..\..\Views\Widgets\EditHtmlContentWidget.cshtml"
+            #line 76 "..\..\Views\Widgets\EditHtmlContentWidget.cshtml"
    Write(Html.HiddenFor(modal => modal.PreviewOnPageContentId, new { @class = "bcms-preview-page-content-id" }));
 
             
             #line default
             #line hidden
             
-            #line 75 "..\..\Views\Widgets\EditHtmlContentWidget.cshtml"
+            #line 76 "..\..\Views\Widgets\EditHtmlContentWidget.cshtml"
                                                                                                                
         
             
             #line default
             #line hidden
             
-            #line 76 "..\..\Views\Widgets\EditHtmlContentWidget.cshtml"
+            #line 77 "..\..\Views\Widgets\EditHtmlContentWidget.cshtml"
    Write(Html.HiddenFor(model => model.EditInSourceMode, new { @id = "bcms-edit-in-source-mode" }));
 
             
             #line default
             #line hidden
             
-            #line 76 "..\..\Views\Widgets\EditHtmlContentWidget.cshtml"
+            #line 77 "..\..\Views\Widgets\EditHtmlContentWidget.cshtml"
                                                                                                   
         
             
             #line default
             #line hidden
             
-            #line 77 "..\..\Views\Widgets\EditHtmlContentWidget.cshtml"
+            #line 78 "..\..\Views\Widgets\EditHtmlContentWidget.cshtml"
    Write(Html.HiddenFor(modal => modal.IsUserConfirmed, new { @id = "bcms-user-confirmed-region-deletion" }));
 
             
             #line default
             #line hidden
             
-            #line 77 "..\..\Views\Widgets\EditHtmlContentWidget.cshtml"
+            #line 78 "..\..\Views\Widgets\EditHtmlContentWidget.cshtml"
                                                                                                             
         
             
             #line default
             #line hidden
             
-            #line 78 "..\..\Views\Widgets\EditHtmlContentWidget.cshtml"
+            #line 79 "..\..\Views\Widgets\EditHtmlContentWidget.cshtml"
    Write(Html.HiddenSubmit());
 
             
             #line default
             #line hidden
             
-            #line 78 "..\..\Views\Widgets\EditHtmlContentWidget.cshtml"
+            #line 79 "..\..\Views\Widgets\EditHtmlContentWidget.cshtml"
                             
     }
 
