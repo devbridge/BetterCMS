@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 
 using BetterCms.Core.DataContracts;
 using BetterCms.Core.DataContracts.Enums;
@@ -12,6 +13,7 @@ namespace BetterCms.Module.Root.Models
     {
         public ContentOption()
         {
+            Translations = new List<ContentOptionTranslation>();
             IsDeletable = true;
         }
 
@@ -26,6 +28,8 @@ namespace BetterCms.Module.Root.Models
         public virtual bool IsDeletable { get; set; }
 
         public virtual CustomOption CustomOption { get; set; }
+
+        public virtual IList<ContentOptionTranslation> Translations { get; set; }
 
         string IOption.Value
         {

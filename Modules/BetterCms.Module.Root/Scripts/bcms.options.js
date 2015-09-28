@@ -24,7 +24,8 @@ bettercms.define('bcms.options', ['bcms.jquery', 'bcms', 'bcms.ko.extenders', 'b
                 optionTypeJavaScriptUrl: null,
                 optionTypeCssUrl: null,
                 datePickerTooltipTitle: null,
-                optionValidationMessage: null
+                optionValidationMessage: null,
+                invariantLanguage: null
             },
             optionTypes = {
                 textType: 1,
@@ -85,7 +86,7 @@ bettercms.define('bcms.options', ['bcms.jquery', 'bcms', 'bcms.ko.extenders', 'b
 
             bcms.extendsClass(OptionsListViewModel, _super);
 
-            function OptionsListViewModel(container, items, customOptions) {
+            function OptionsListViewModel(container, items, customOptions, showLanguages, languages) {
                 var self = this;
                 self.customOptions = addCustomOptions(customOptions);
 
@@ -94,6 +95,18 @@ bettercms.define('bcms.options', ['bcms.jquery', 'bcms', 'bcms.ko.extenders', 'b
                 self.attachDatePickers = function() {
                     attachDatePickers(self);
                 };
+
+                self.onLanguageChanged = function (languageId) {
+                    if (languageId != self.languageId()) {
+                        self.languageId(languageId);
+                        bcms.logger.debug('Options language changed to "' + languageId + '".');
+                    }
+                }
+
+                self.showLanguages = ko.observable(showLanguages);
+                self.languages = ko.observableArray();
+                self.languageId = ko.observable("");
+                self.language = showLanguages ? new LanguageViewModel(languages, null, self.onLanguageChanged) : null;
             };
 
             OptionsListViewModel.prototype.createItem = function (item) {
@@ -513,10 +526,37 @@ bettercms.define('bcms.options', ['bcms.jquery', 'bcms', 'bcms.ko.extenders', 'b
         })(OptionViewModel);
 
         /**
+        * Language view model.
+        */
+        function LanguageViewModel(languages, languageId, onLanguageChanged) {
+            var self = this,
+                i, l;
+
+            self.languageId = ko.observable(languageId);
+
+            self.languages = [];
+            self.languages.push({ key: '', value: globalization.invariantLanguage });
+            for (i = 0, l = languages.length; i < l; i++) {
+                self.languages.push({
+                    key: languages[i].Key,
+                    value: languages[i].Value
+                });
+            }
+
+            self.languageId.subscribe(function (newValue) {
+                if ($.isFunction(onLanguageChanged)) {
+                    onLanguageChanged(newValue);
+                }
+            });
+
+            return self;
+        };
+
+        /**
         * Creates options list view model
         */
-        options.createOptionsViewModel = function(container, items, customOptions) {
-            return new OptionsListViewModel(container, items, customOptions);
+        options.createOptionsViewModel = function(container, items, customOptions, showLanguages, languages) {
+            return new OptionsListViewModel(container, items, customOptions, showLanguages, languages);
         };
 
         /**

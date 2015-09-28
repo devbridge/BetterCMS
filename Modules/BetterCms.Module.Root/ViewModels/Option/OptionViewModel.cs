@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections;
+using System.Collections.Generic;
 using System.Web.Mvc;
 
 using BetterCms.Core.DataContracts;
@@ -60,6 +62,14 @@ namespace BetterCms.Module.Root.ViewModels.Option
                 CustomOption.Identifier = value;
             }
         }
+
+        /// <summary>
+        /// Gets or sets the translations.
+        /// </summary>
+        /// <value>
+        /// The translations.
+        /// </value>
+        public IList<OptionTranslationViewModel> Translations { get; set; }
 
         /// <summary>
         /// Gets or sets the custom option.

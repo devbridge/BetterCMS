@@ -39,7 +39,8 @@ bettercms.define('bcms.pages.widgets', ['bcms.jquery', 'bcms', 'bcms.modal', 'bc
                 widgetUsagesDialogTitle: null,
                 widgetUsagesType_Page: null,
                 widgetUsagesType_HtmlWidget: null,
-                widgetUsagesType_MasterPage: null
+                widgetUsagesType_MasterPage: null,
+                invariantLanguage: null
             },
             selectors = {
                 enableCustomCss: '#bcms-enable-custom-css',
@@ -323,7 +324,9 @@ bettercms.define('bcms.pages.widgets', ['bcms.jquery', 'bcms', 'bcms.modal', 'bc
                 data = content.Data || {},
                 widgetOptions = data.Options,
                 customOptions = data.CustomOptions,
-                optionListViewModel = options.createOptionsViewModel(optionsContainer, widgetOptions, customOptions),
+                showLanguages = data.ShowLanguages,
+                languages = data.Languages,
+                optionListViewModel = options.createOptionsViewModel(optionsContainer, widgetOptions, customOptions, showLanguages, languages),
                 widgetEditViewModel = new WidgetEditViewModel(data);
                 
 
