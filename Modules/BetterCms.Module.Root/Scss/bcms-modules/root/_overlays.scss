@@ -1,22 +1,6 @@
 @import '../../core/variables';
 
 //module Content region
-//.bcms-region-overlay {
-//    position: absolute;
-//    display: none;
-//    min-height: 35px;
-//    border: 1px solid #fff;
-//}
-//
-//.bcms-region-overlay-inner {
-//    position: relative;
-//    height: 100%;
-//    width: 100%;
-//    margin: -1px;
-//    min-height: 35px;
-//    border: 1px dashed #009AEB;
-//}
-
 .bcms-on .bcms-region-overlay {
     display: block;
 }
@@ -26,6 +10,7 @@
     min-height: 35px;
     outline: 1px dashed #009aeb;
     position: absolute;
+    z-index: 100;
 }
 
 .bcms-region-button {
@@ -139,12 +124,9 @@ div.bcms-region-sortcancel:hover {
 .bcms-content-overlay {
     background: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAIAAAACCAYAAAEFsT2yAAAAEElEQVQI12NgYGDgZUAmeAEBpgA16fkHewAAAABJRU5ErkJggg==");
     display: none;
-    height: 100%;
-    left: 0;
-    position: absolute;
-    top: 0;
+    position: relative;
     width: 100%;
-    z-index: 7;
+    z-index: 5;
 }
 
 .bcms-content-actions {

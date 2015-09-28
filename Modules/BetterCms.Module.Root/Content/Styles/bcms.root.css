@@ -1387,6 +1387,7 @@ a.bcms-error-close {
   min-height: 35px;
   outline: 1px dashed #009aeb;
   position: absolute;
+  z-index: 100;
 }
 
 .bcms-region-button {
@@ -1499,12 +1500,9 @@ div.bcms-region-sortcancel:hover {
 .bcms-content-overlay {
   background: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAIAAAACCAYAAAEFsT2yAAAAEElEQVQI12NgYGDgZUAmeAEBpgA16fkHewAAAABJRU5ErkJggg==");
   display: none;
-  height: 100%;
-  left: 0;
-  position: absolute;
-  top: 0;
+  position: relative;
   width: 100%;
-  z-index: 7;
+  z-index: 5;
 }
 
 .bcms-content-actions {
