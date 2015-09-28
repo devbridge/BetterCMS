@@ -2,20 +2,104 @@
 @model BetterCms.Module.Root.ViewModels.Cms.RenderPageViewModel
 
 <script type="text/html" id="bcms-region-overlay-template">
-    <div class="bcms-region-overlay bcms-layer">
-        <div class="bcms-region-overlay-inner">
-            <div class="bcms-hidden-overlay-bg"></div>
-            @if (!Model.IsReadOnly && Model.HasEditRole)
-            {
-                <div class="bcms-region-actions">
-                    <div class="bcms-region-button bcms-region-sortdone" style="display: none;">@RootGlobalization.Button_Save</div>
-                    <div class="bcms-region-button bcms-region-contentstree" style="display: none;">@RootGlobalization.Button_Manage</div>
-                    <div class="bcms-region-button bcms-region-sortcancel" style="display: none;">@RootGlobalization.Button_Cancel</div>
-                    <div class="bcms-region-button bcms-region-addcontent"></div>
-                    <div class="bcms-region-button bcms-region-sortcontent"></div>
-                </div>
-                <div class="bcms-sorting-block"></div>
-            }
+    @*<div class="bcms-region-overlay bcms-layer">
+            <div class="bcms-region-overlay-inner">
+                <div class="bcms-hidden-overlay-bg"></div>
+                @if (!Model.IsReadOnly && Model.HasEditRole)
+                {
+                    <div class="bcms-region-actions">
+                        <div class="bcms-region-button bcms-region-sortdone" style="display: none;">@RootGlobalization.Button_Save</div>
+                        <div class="bcms-region-button bcms-region-contentstree" style="display: none;">@RootGlobalization.Button_Manage</div>
+                        <div class="bcms-region-button bcms-region-sortcancel" style="display: none;">@RootGlobalization.Button_Cancel</div>
+                        <div class="bcms-region-button bcms-region-addcontent"></div>
+                        <div class="bcms-region-button bcms-region-sortcontent"></div>
+                    </div>
+                    <div class="bcms-sorting-block"></div>
+                }
+            </div>
+        </div>*@
+    @*SHOW OVERLAY*@
+    <div class="bcms-region-overlay bcms-layer bcms-show-overlay">
+
+        <div class="bcms-sorting-block ui-sortable">
+            <div class="bcms-sort-wrapper">
+                <div class="bcms-sort-content">Content</div>
+                <div class="bcms-sort-overlay bcms-content-overlaybg"></div>
+            </div>
         </div>
+
+        <div class="bcms-content-overlay">
+            @*bcms-content-overlay count height and position from top only*@
+            <div class="bcms-content-actions">
+                <div class="bcms-content-button bcms-enter-child-content">
+                    <div class="bcms-content-icon"></div>
+                </div>
+                <div class="bcms-content-button bcms-content-history">
+                    <div class="bcms-content-icon"></div>
+                </div>
+                <div class="bcms-content-button bcms-content-edit">
+                    <div class="bcms-content-icon"></div>
+                </div>
+                <div class="bcms-content-button bcms-content-configure">
+                    <div class="bcms-content-icon"></div>
+                </div>
+
+                @if (!Model.IsReadOnly && Model.HasEditRole)
+                {
+                    <div class="bcms-content-button bcms-content-delete">
+                        <div class="bcms-content-icon"></div>
+                    </div>
+                }
+            </div>
+        </div>
+
+        <div class="bcms-region-actions">
+            <div class="bcms-region-button bcms-region-sortdone" style="display: none;">Save</div>
+            <div class="bcms-region-button bcms-region-contentstree" style="display: none;">Manage</div>
+            <div class="bcms-region-button bcms-region-sortcancel" style="display: none;">Cancel</div>
+            <div class="bcms-region-button bcms-region-addcontent" style="display: inline-block;"></div>
+            <div class="bcms-region-button bcms-region-sortcontent" style="display: inline-block;"></div>
+        </div>
+
+    </div>
+
+    @*SHOW CONTROLS*@
+    <div class="bcms-region-overlay bcms-layer">
+
+        <div class="bcms-sorting-block"></div>
+
+        <div class="bcms-content-overlay">
+            @*bcms-content-overlay count height and position from top only*@
+            <div class="bcms-content-actions">
+                <div class="bcms-content-button bcms-enter-child-content">
+                    <div class="bcms-content-icon"></div>
+                </div>
+                <div class="bcms-content-button bcms-content-history">
+                    <div class="bcms-content-icon"></div>
+                </div>
+                <div class="bcms-content-button bcms-content-edit">
+                    <div class="bcms-content-icon"></div>
+                </div>
+                <div class="bcms-content-button bcms-content-configure">
+                    <div class="bcms-content-icon"></div>
+                </div>
+
+                @if (!Model.IsReadOnly && Model.HasEditRole)
+                {
+                    <div class="bcms-content-button bcms-content-delete">
+                        <div class="bcms-content-icon"></div>
+                    </div>
+                }
+            </div>
+        </div>
+
+        <div class="bcms-region-actions">
+            <div class="bcms-region-button bcms-region-sortdone" style="display: none;">Save</div>
+            <div class="bcms-region-button bcms-region-contentstree" style="display: none;">Manage</div>
+            <div class="bcms-region-button bcms-region-sortcancel" style="display: none;">Cancel</div>
+            <div class="bcms-region-button bcms-region-addcontent" style="display: inline-block;"></div>
+            <div class="bcms-region-button bcms-region-sortcontent" style="display: inline-block;"></div>
+        </div>
+
     </div>
 </script>
