@@ -127,20 +127,14 @@ bettercms.define('bcms.content', ['bcms.jquery', 'bcms', 'bcms.modal', 'bcms.red
 
             var rectangle = $(this),
                 contentViewModel = rectangle.data('target'),
-                width = contentViewModel.width + 'px',
-                height = contentViewModel.height,
-                top = contentViewModel.top + 'px',
-                left = contentViewModel.left + 'px';
+                height = contentViewModel.height;
 
             if (height < 20) {
                 height = 20;
             }
 
             rectangle.css({
-                'width': width,
                 'height': height + 'px',
-                'top': top,
-                'left': left,
                 'opacity': 0
             });
         });
@@ -686,7 +680,7 @@ bettercms.define('bcms.content', ['bcms.jquery', 'bcms', 'bcms.modal', 'bcms.red
                 rectangle = $(template);
 
             rectangle.data('target', self);
-            rectangle.insertBefore(container);
+            self.region.overlay.append(rectangle);
             contentRectangles = contentRectangles.add(rectangle);
 
             if (bcms.editModeIsOn()) {
