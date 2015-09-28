@@ -1303,7 +1303,7 @@ namespace BetterCms.Module.Root.Content.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Multiline Text.
+        ///   Looks up a localized string similar to Multi-line Text.
         /// </summary>
         public static string OptionTypes_MultilineText_Title {
             get {

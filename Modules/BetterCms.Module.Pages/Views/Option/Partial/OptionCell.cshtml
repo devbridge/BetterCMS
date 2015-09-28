@@ -8,6 +8,11 @@
     @Html.Partial(RootModuleConstants.EditableGridCellTemplate)
 <!-- /ko -->
 
+@* Multi-line Text type *@
+<!-- ko if: !useDefaultValue() && type() == 21 -->
+    @Html.Partial(RootModuleConstants.EditableGridMultilineTextCellTemplate)
+<!-- /ko -->
+
 @* Boolean *@
 <!-- ko if: !useDefaultValue() && type() == 5  -->
     @Html.Partial(RootModuleConstants.EditableGridBooleanCellTemplate, new EditableGridBooleanColumn(Model.HeaderTitle, Model.SortColumn, Model.ValueBind)

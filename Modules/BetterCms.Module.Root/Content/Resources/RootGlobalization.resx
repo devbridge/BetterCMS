@@ -760,6 +760,6 @@
     <value>Category title must not contain any of the following characters: " / [ ] : ; | = , + * ? &lt; &gt; % or backslash</value>
   </data>
   <data name="OptionTypes_MultilineText_Title" xml:space="preserve">
-    <value>Multiline Text</value>
+    <value>Multi-line Text</value>
   </data>
 </root>
