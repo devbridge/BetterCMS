@@ -52,6 +52,7 @@ namespace BetterCms.Api.Tests.UnitTests
             Assert.AreEqual((int)CoreOptionType.Integer, (int)ApiOptionType.Integer);
             Assert.AreEqual((int)CoreOptionType.DateTime, (int)ApiOptionType.DateTime);
             Assert.AreEqual((int)CoreOptionType.Boolean, (int)ApiOptionType.Boolean);
+            Assert.AreEqual((int)CoreOptionType.MultilineText, (int)ApiOptionType.MultilineText);
             
             Assert.AreEqual((int)CoreOptionType.Custom, (int)ApiOptionType.Custom);
             Assert.AreEqual((int)CoreOptionType.CssUrl, (int)ApiOptionType.CssUrl);
