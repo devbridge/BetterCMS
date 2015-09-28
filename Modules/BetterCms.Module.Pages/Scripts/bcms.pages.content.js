@@ -34,7 +34,7 @@ bettercms.define('bcms.pages.content', ['bcms.jquery', 'bcms', 'bcms.modal', 'bc
                 widgetName: '.bcms-title-holder > .bcms-content-titles',
                 widgetIFramePreview: ".bcms-preview-box[data-as-image='False'] .bcms-zoom-overlay",
                 widgetImagePreview: ".bcms-preview-box[data-as-image='True'] .bcms-zoom-overlay",
-                anyTab: '.bcms-tab',
+                anyTab: '.bcms-tab-item',
 
                 widgetsContent: '.bcms-widgets',
 

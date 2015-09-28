@@ -1,12 +1,14 @@
 @import '../core/variables';
 
-//module main tabbed view
-.bcms-tab-header {
-    background: #303030;
-    padding: 10px 60px 0;
+//module tabbed view
+.bcms-tab {
+    &-header {
+        background: $dark;
+        padding: 10px 60px 0;
+    }
 
-    > .bcms-tab {
-        @include transition(all 100ms ease);
+    &-item {
+        @include transition(all 200ms ease);
         background: $gray-l25;
         color: $black;
         cursor: pointer;
@@ -20,85 +22,75 @@
         text-decoration: none;
 
         &:hover {
-            background-color: #c0c0c0;
+            background-color: $gray-l35;
+            text-decoration: none;
+        }
+
+        &.bcms-active {
+            background-color: $white;
+
+            &:hover {
+                background-color: $white;
+            }
         }
     }
 
-    > a.bcms-tab-active {
-        background-color: $white;
+    &-single {
+        display: none;
 
-        &:hover {
-            background-color: $white;
+        &:first-of-type {
+            display: block;
+        }
+    }
+
+    .bcms-inner-tabs-holder & {
+        &-header {
+
+            background: $white;
+            border-bottom: $border-thin-gray;
+            padding-left: 10px;
+        }
+
+        &-item {
+            border: {
+                top: $border-thin-gray;
+                right: $border-thin-gray;
+                left: $border-thin-gray;
+            }
+            position: relative;
+
+            &.bcms-active {
+                @include virtual(after) {
+                    @include position(absolute, null 0 -1px 0);
+                    border-top: 1px solid $white;
+                }
+            }
+        }
+
+        &-single {
+            padding-top: 20px;
         }
     }
 }
 
 //module inner tabbed view
-.bcms-innertab-header {
-    background: #eaeaea;
-    border-bottom: 1px solid #c6c6c6;
+.bcms-inner-tab-header {
+    background: $gray-l10;
+    border-bottom: $border-thin-gray;
     height: 30px;
     left: -1px;
     margin-top: -1px;
     padding: 25px 20px 0;
     position: relative;
 
-    > .bcms-tab {
-        @include transition(all 100ms ease);
-        background: $gray-l25;
-        border: 1px solid #c6c6c6;
-        color: $black;
-        cursor: pointer;
-        display: inline-block;
-        font-size: 14px;
-        font-weight: 700;
-        height: 29px;
+    > .bcms-tab-item {
+        border: $border-thin-gray;
         line-height: 29px;
-        margin-right: 5px;
-        padding: 0 22px;
-        text-decoration: none;
 
-        &:hover {
-            background-color: #c0c0c0;
+        &.bcms-active {
+            background-color: $white;
+            border-bottom: $border-thin-white;
         }
-    }
-
-    > a.bcms-tab-active {
-        background-color: #FFFFFF;
-        border-bottom: 1px solid #fff;
-
-        &:hover {
-            background-color: #FFFFFF;
-        }
-    }
-}
-
-//module inner tabs for modal
-.bcms-inner-tabs-holder .bcms-tab-header {
-    background: #ffffff;
-    border-bottom: 1px solid #c6c6c6;
-    padding-left: 10px;
-}
-
-.bcms-inner-tabs-holder {
-    .bcms-tab {
-        border: {
-            top: $border-thin-gray;
-            right: $border-thin-gray;
-            left: $border-thin-gray;
-        }
-        position: relative;
-    }
-
-    .bcms-tab-active {
-        @include virtual(after) {
-            @include position(absolute, null 0 -1px 0);
-            border-top: 1px solid $white;
-        }
-    }
-
-    .bcms-tab-single {
-        padding-top: 20px;
     }
 }
 
