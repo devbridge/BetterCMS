@@ -1371,16 +1371,32 @@ a.bcms-error-close {
 }
 
 .bcms-region-overlay {
+  position: absolute;
   display: none;
   min-height: 35px;
-  outline: 1px dashed #009aeb;
-  position: absolute;
+  outline: 1px dashed #1892E4;
   z-index: 100;
 }
 
+.bcms-region-overlay.bcms-show-overlay {
+  background-image: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAQAAAAECAIAAAFRlDm/AAAAHUlEQVQI12P4//8/AxRDqQcPHjAAMUIQyoFQEAAA0/UuXeg1e3EAAAAASUVORK5CYII=");
+  height: 100%;
+  width: 100%;
+}
+
+.bcms-region-actions {
+  position: absolute;
+  top: 0;
+  right: 0;
+  border-bottom: 1px dashed #1892E4;
+  border-left: 1px dashed #1892E4;
+  height: 26px;
+  z-index: 10;
+}
+
 .bcms-region-button {
-  background-color: #8e8e8e;
-  color: #fff;
+  background-color: #676767;
+  color: #ffffff;
   cursor: pointer;
   display: inline-block;
   font-size: 12px;
@@ -1396,24 +1412,6 @@ a.bcms-error-close {
   cursor: pointer;
 }
 
-.bcms-region-actions {
-  border-color: #009aeb;
-  border-style: none none dashed dashed;
-  border-width: 1px;
-  font-size: 0;
-  height: 26px;
-  position: absolute;
-  right: 0;
-  top: 0;
-  z-index: 10;
-}
-
-.bcms-show-overlay {
-  background-image: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAQAAAAECAIAAAFRlDm/AAAAHUlEQVQI12P4//8/AxRDqQcPHjAAMUIQyoFQEAAA0/UuXeg1e3EAAAAASUVORK5CYII=");
-  height: 100%;
-  width: 100%;
-}
-
 .bcms-show-overlay .bcms-sorting-block {
   display: block;
 }
@@ -1425,19 +1423,19 @@ a.bcms-error-close {
 }
 
 div.bcms-region-sortdone {
-  margin-left: 0;
   background-color: #009AEB;
+  margin-left: 0;
 }
 
 div.bcms-region-addcontent {
-  padding: 0 15px;
-  margin-left: 0;
   background: #009AEB url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAA4AAAAOCAYAAAAfSC3RAAAABHNCSVQICAgIfAhkiAAAAAlwSFlzAAALEgAACxIB0t1+/AAAABx0RVh0U29mdHdhcmUAQWRvYmUgRmlyZXdvcmtzIENTNui8sowAAAAWdEVYdENyZWF0aW9uIFRpbWUAMDcvMjYvMTJzxIU/AAAAMklEQVQokWP8//8/AxaALsiIroAJmy5iwBDSyMKAGRDYAIaaIeZHjMhlGE0ADAwMDAwAXswHHBrCtxsAAAAASUVORK5CYII=) no-repeat center center;
+  margin-left: 0;
+  padding: 0 15px;
 }
 
 div.bcms-region-sortcontent {
-  padding: 0 15px;
   background: #009AEB url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAA4AAAANCAYAAACZ3F9/AAAABHNCSVQICAgIfAhkiAAAAAlwSFlzAAALEgAACxIB0t1+/AAAABx0RVh0U29mdHdhcmUAQWRvYmUgRmlyZXdvcmtzIENTNui8sowAAAAWdEVYdENyZWF0aW9uIFRpbWUAMDcvMjYvMTJzxIU/AAAAJUlEQVQokWP8////fwYyABM5mijSyMLAwMBIdxtHAwePjUMkcAAfRgYeCyCNRwAAAABJRU5ErkJggg==) no-repeat center center;
+  padding: 0 15px;
 }
 
 div.bcms-region-contentstree:hover {
