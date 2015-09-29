@@ -37,7 +37,7 @@ namespace BetterCms.Module.Pages
     /// Pages module descriptor.
     /// </summary>
     public class PagesModuleDescriptor : CmsModuleDescriptor
-    {        
+    {
         /// <summary>
         /// The module name.
         /// </summary>
@@ -72,7 +72,7 @@ namespace BetterCms.Module.Pages
         /// bcms.pages.content.js java script module descriptor.
         /// </summary>
         private readonly PagesContentJsModuleIncludeDescriptor pagesContentJsModuleIncludeDescriptor;
-        
+
         /// <summary>
         /// bcms.pages.redirects.js java script module descriptor.
         /// </summary>
@@ -106,7 +106,8 @@ namespace BetterCms.Module.Pages
         /// <summary>
         /// Initializes a new instance of the <see cref="PagesModuleDescriptor" /> class.
         /// </summary>
-        public PagesModuleDescriptor(ICmsConfiguration configuration) : base(configuration)
+        public PagesModuleDescriptor(ICmsConfiguration configuration)
+            : base(configuration)
         {
             pagesJsModuleIncludeDescriptor = new PagesJsModuleIncludeDescriptor(this);
             pagePropertiesJsModuleIncludeDescriptor = new PagePropertiesJsModuleIncludeDescriptor(this);
@@ -118,7 +119,7 @@ namespace BetterCms.Module.Pages
             masterPagesJsModuleIncludeDescriptor = new MasterPagesJsModuleIncludeDescriptor(this);
             historyJsModuleIncludeDescriptor = new HistoryJsModuleIncludeDescriptor(this);
             sitemapJsModuleIncludeDescriptor = new SitemapJsModuleIncludeDescriptor(this);
-//            CategoryAccessors.Register<PageCategory, PageProperties>(PageProperties.CategorizableItemKeyForPages);
+            //            CategoryAccessors.Register<PageCategory, PageProperties>(PageProperties.CategorizableItemKeyForPages);
             CategoryAccessors.Register<PageCategoryAccessor>();
 
             RootEvents.Instance.PageRetrieved += Events_PageRetrieved;
@@ -211,7 +212,7 @@ namespace BetterCms.Module.Pages
 
             RegisterContentRendererType<HtmlContentAccessor, HtmlContent>(containerBuilder);
             RegisterContentRendererType<HtmlContentWidgetAccessor, HtmlContentWidget>(containerBuilder);
-            RegisterContentRendererType<ServerControlWidgetAccessor, ServerControlWidget>(containerBuilder);            
+            RegisterContentRendererType<ServerControlWidgetAccessor, ServerControlWidget>(containerBuilder);
 
             containerBuilder.RegisterType<DefaultPageService>().AsImplementedInterfaces().InstancePerLifetimeScope();
             containerBuilder.RegisterType<DefaultRedirectService>().AsImplementedInterfaces().InstancePerLifetimeScope();
@@ -250,7 +251,7 @@ namespace BetterCms.Module.Pages
         /// <returns>List of known client side modules in page module.</returns>
         [SuppressMessage("StyleCop.CSharp.NamingRules", "SA1305:FieldNamesMustNotUseHungarianNotation", Justification = "Reviewed. Suppression is OK here.")]
         public override IEnumerable<JsIncludeDescriptor> RegisterJsIncludes()
-        {            
+        {
             return new JsIncludeDescriptor[]
                 {
                     pagesJsModuleIncludeDescriptor,
@@ -312,22 +313,22 @@ namespace BetterCms.Module.Pages
                                 ShouldBeRendered = page => !page.IsMasterPage && !IsReadOnly(page)
                         }, 
                     
-                    new EditPagePropertiesButtonProjection(pagePropertiesJsModuleIncludeDescriptor, page => page.IsMasterPage ? "editMasterPageProperties" : "editPageProperties")
+                     new ButtonActionProjection(seoJsModuleIncludeDescriptor, page => "openEditSeoDialog")
                             {
                                 Order = 20,
-                                Title = page => page.IsMasterPage 
-                                    ? PagesGlobalization.Sidebar_EditMasterPagePropertiesButtonTitle
-                                    : PagesGlobalization.Sidebar_EditPagePropertiesButtonTitle,
-                                CssClass = page => "bcms-sidemenu-btn"
-                            },
-
-                    new ButtonActionProjection(seoJsModuleIncludeDescriptor, page => "openEditSeoDialog")
-                            {
-                                Order = 30,
                                 Title = page => PagesGlobalization.Sidebar_EditSeoButtonTitle,
                                 CssClass = page => page.HasSEO ? "bcms-sidemenu-btn bcms-btn-ok" : "bcms-sidemenu-btn bcms-btn-warn",
                                 AccessRole = RootModuleConstants.UserRoles.EditContent,
                                 ShouldBeRendered = page => !page.IsMasterPage
+                            },
+
+                    new EditPagePropertiesButtonProjection(pagePropertiesJsModuleIncludeDescriptor, page => page.IsMasterPage ? "editMasterPageProperties" : "editPageProperties")
+                            {
+                                Order = 30,
+                                Title = page => page.IsMasterPage 
+                                    ? PagesGlobalization.Sidebar_EditMasterPagePropertiesButtonTitle
+                                    : PagesGlobalization.Sidebar_EditPagePropertiesButtonTitle,
+                                CssClass = page => "bcms-sidemenu-btn"
                             },
 
                     new SeparatorProjection(40) { CssClass = page => "bcms-sidebar-separator" }, 

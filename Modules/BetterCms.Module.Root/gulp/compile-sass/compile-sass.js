@@ -34,4 +34,6 @@ function task() {
     compileSass('./Scss/**/media.scss', '../../Modules/BetterCms.Module.MediaManager/Content/Styles');
     compileSass('./Scss/**/pages.scss', '../../Modules/BetterCms.Module.Pages/Content/Styles');
     compileSass('./Scss/**/users.scss', '../../Modules/BetterCms.Module.Users/Content/Styles');
+    //temp local use only
+    //compileSass('./Scss/**/root.scss', '../../Sandbox/BetterCms.Sandbox.Mvc4/Areas/bcms-root/Content/Styles');
 }
