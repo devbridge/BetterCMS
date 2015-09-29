@@ -1930,13 +1930,43 @@ a.bcms-error-close {
 .bcms-region-addwidget {
   height: 26px;
   width: 30px;
-  background: #0383df url() no-repeat center;
+  background: #0383df url("data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHByZXNlcnZlQXNwZWN0UmF0aW89InhNaWRZTWlkIiB3aWR0aD0iMTYiIGhlaWdodD0iMTYiIHZpZXdCb3g9IjAgMCAxNiAxNiI+CiAgICA8cGF0aCBmaWxsPSIjZmZmZmZmIiBmaWxsLXJ1bGU9ImV2ZW5vZGQiIGQ9Ik0xNC4wMDAsMTYuMDAwIEwyLjAwMCwxNi4wMDAgQzAuODk1LDE2LjAwMCAwLjAwMCwxNS4xMDUgMC4wMDAsMTQuMDAwIEwwLjAwMCwyLjAwMCBDMC4wMDAsMC44OTUgMC44OTUsLTAuMDAwIDIuMDAwLC0wLjAwMCBMMTQuMDAwLC0wLjAwMCBDMTUuMTA1LC0wLjAwMCAxNi4wMDAsMC44OTUgMTYuMDAwLDIuMDAwIEwxNi4wMDAsMTQuMDAwIEMxNi4wMDAsMTUuMTA1IDE1LjEwNSwxNi4wMDAgMTQuMDAwLDE2LjAwMCBaTTE0LjAwMCw1LjAwMCBDMTQuMDAwLDMuODk1IDEzLjEwNSwzLjAwMCAxMi4wMDAsMy4wMDAgTDUuMDAwLDMuMDAwIEMzLjg5NSwzLjAwMCAzLjAwMCwzLjg5NSAzLjAwMCw1LjAwMCBMMy4wMDAsMTIuMDAwIEMzLjAwMCwxMy4xMDUgMy44OTUsMTQuMDAwIDUuMDAwLDE0LjAwMCBMMTIuMDAwLDE0LjAwMCBDMTMuMTA1LDE0LjAwMCAxNC4wMDAsMTMuMTA1IDE0LjAwMCwxMi4wMDAgTDE0LjAwMCw1LjAwMCBaIi8+CiAgICA8cGF0aCBmaWxsPSIjZmZmZmZmIiBmaWxsLXJ1bGU9ImV2ZW5vZGQiIGQ9Ik0xMS4wMDAsMTMuMDAwIEw2LjAwMCwxMy4wMDAgQzQuODk1LDEzLjAwMCA0LjAwMCwxMi4xMDUgNC4wMDAsMTEuMDAwIEw0LjAwMCw2LjAwMCBDNC4wMDAsNC44OTUgNC44OTUsNC4wMDAgNi4wMDAsNC4wMDAgTDExLjAwMCw0LjAwMCBDMTIuMTA1LDQuMDAwIDEzLjAwMCw0Ljg5NSAxMy4wMDAsNi4wMDAgTDEzLjAwMCwxMS4wMDAgQzEzLjAwMCwxMi4xMDUgMTIuMTA1LDEzLjAwMCAxMS4wMDAsMTMuMDAwIFpNMTIuMDAwLDguMDAwIEMxMi4wMDAsNi44OTUgMTEuMTA1LDYuMDAwIDEwLjAwMCw2LjAwMCBMOC4wMDAsNi4wMDAgQzYuODk1LDYuMDAwIDYuMDAwLDYuODk1IDYuMDAwLDguMDAwIEw2LjAwMCwxMC4wMDAgQzYuMDAwLDExLjEwNSA2Ljg5NSwxMi4wMDAgOC4wMDAsMTIuMDAwIEwxMC4wMDAsMTIuMDAwIEMxMS4xMDUsMTIuMDAwIDEyLjAwMCwxMS4xMDUgMTIuMDAwLDEwLjAwMCBMMTIuMDAwLDguMDAwIFoiLz4KICAgIDxwYXRoIGZpbGw9IiNmZmZmZmYiIGZpbGwtcnVsZT0iZXZlbm9kZCIgZD0iTTkuMDAwLDcuMDAwIEMxMC4xMDUsNy4wMDAgMTEuMDAwLDcuODk1IDExLjAwMCw5LjAwMCBDMTEuMDAwLDEwLjEwNSAxMC4xMDUsMTEuMDAwIDkuMDAwLDExLjAwMCBDNy44OTUsMTEuMDAwIDcuMDAwLDEwLjEwNSA3LjAwMCw5LjAwMCBDNy4wMDAsNy44OTUgNy44OTUsNy4wMDAgOS4wMDAsNy4wMDAgWiIvPgo8L3N2Zz4K") no-repeat center;
 }
 
 .bcms-region-sortcontent {
   height: 26px;
   width: 30px;
   background: #0383df url("data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHByZXNlcnZlQXNwZWN0UmF0aW89InhNaWRZTWlkIiB3aWR0aD0iMTQiIGhlaWdodD0iMTMiIHZpZXdCb3g9IjAgMCAxNCAxMyI+CiAgICA8cmVjdCB3aWR0aD0iMTQiIGhlaWdodD0iMyIgZmlsbD0iI2ZmZmZmZiIvPgogICAgPHJlY3QgeT0iMTAiIHdpZHRoPSIxNCIgaGVpZ2h0PSIzIiBmaWxsPSIjZmZmZmZmIi8+CiAgICA8cmVjdCB5PSI1IiB3aWR0aD0iMTQiIGhlaWdodD0iMyIgZmlsbD0iI2ZmZmZmZiIvPgo8L3N2Zz4K") no-repeat center;
+}
+
+.bcms-region-addcontent {
+  position: relative;
+}
+
+.bcms-region-addcontent.bcms-active {
+  background-color: #0265ad;
+}
+
+.bcms-region-addcontent.bcms-active .bcms-region-options-block {
+  display: block;
+}
+
+.bcms-region-options-block {
+  position: absolute;
+  top: 100%;
+  right: 0;
+  background-color: #0265ad;
+  display: none;
+  white-space: nowrap;
+}
+
+.bcms-region-pick-editor {
+  line-height: 18px;
+  padding: 5px 20px;
+}
+
+.bcms-region-pick-editor:hover {
+  background-color: #4e4e4e;
 }
 
 .bcms-region-contentstree,
