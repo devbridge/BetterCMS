@@ -300,7 +300,7 @@ bettercms.define('bcms.pages.content', ['bcms.jquery', 'bcms', 'bcms.modal', 'bc
             pagesContent.initializeCustomTextArea(settings.dialog);
 
             if (settings.isMarkdown) {
-                htmlEditor.initializeMarkdownEditor(settings.editorId, '', {}, settings.editInSourceMode);
+                htmlEditor.initializeMarkdownEditor(settings.editorId, '', {});
             }
 
             if (!settings.isMarkdown) {
@@ -316,39 +316,56 @@ bettercms.define('bcms.pages.content', ['bcms.jquery', 'bcms', 'bcms.modal', 'bc
         /**
         * Initializes content edit dialog form.
         */
-        pagesContent.initializeEditContentForm = function (dialog, editInSourceMode, enableInsertDynamicRegion, data, editorId, includeChildRegions, onSuccess) {
+        pagesContent.initializeEditContentForm = function (settings) {
+            settings = $.extend({
+                dialog: null,
+                editInSourceMode: false,
+                enableInsertDynamicRegion: false,
+                data: {},
+                editorId: null, 
+                includeChildRegions: false, 
+                onSuccess: function() {},
+                isMarkdown: false
+            }, settings);
+
             var canEdit = security.IsAuthorized(["BcmsEditContent"]),
                 canPublish = security.IsAuthorized(["BcmsPublishContent"]),
-                form = dialog.container.find(selectors.firstForm);
+                form = settings.dialog.container.find(selectors.firstForm);
 
-            htmlEditor.initializeHtmlEditor(editorId, data.ContentId, {}, editInSourceMode);
-            if (enableInsertDynamicRegion) {
-                htmlEditor.enableInsertDynamicRegion(editorId, true, data.LastDynamicRegionNumber);
+            pagesContent.initializeCustomTextArea(settings.dialog);
+
+            if (settings.isMarkdown) {
+                htmlEditor.initializeMarkdownEditor(settings.editorId, settings.data.ContentId, {});
             }
 
-            pagesContent.initializeCustomTextArea(dialog);
+            if (!settings.isMarkdown) {
+                htmlEditor.initializeHtmlEditor(settings.editorId, settings.data.ContentId, {}, settings.editInSourceMode);
+                if (settings.enableInsertDynamicRegion) {
+                    htmlEditor.enableInsertDynamicRegion(settings.editorId, true, settings.data.LastDynamicRegionNumber);
+                }
 
-            codeEditor.initialize(dialog.container);
+                codeEditor.initialize(settings.dialog.container);
+            }
 
-            dialog.container.find(selectors.destroyDraftVersionLink).on('click', function () {
-                var contentId = dialog.container.find(selectors.contentId).val(),
-                    pageContentId = dialog.container.find(selectors.pageContentId).val(),
-                    contentVersion = dialog.container.find(selectors.contentVersion).val();
+            settings.dialog.container.find(selectors.destroyDraftVersionLink).on('click', function () {
+                var contentId = settings.dialog.container.find(selectors.contentId).val(),
+                    pageContentId = settings.dialog.container.find(selectors.pageContentId).val(),
+                    contentVersion = settings.dialog.container.find(selectors.contentVersion).val();
 
-                history.destroyDraftVersion(contentId, contentVersion, includeChildRegions, dialog.container, function (publishedId, json) {
-                    dialog.close();
+                history.destroyDraftVersion(contentId, contentVersion, settings.includeChildRegions, settings.dialog.container, function (publishedId, json) {
+                    settings.dialog.close();
 
                     pagesContent.editPageContent(pageContentId, {
                         onCloseClick: function () {
                             // If is set what to do on success, do it, otherwise - reload the page
-                            if ($.isFunction(onSuccess)) {
-                                onSuccess(json);
+                            if ($.isFunction(settings.onSuccess)) {
+                                settings.onSuccess(json);
                             } else {
                                 redirect.ReloadWithAlert();
                             }
                         },
-                        onSuccess: onSuccess,
-                        includeChildRegions: includeChildRegions
+                        onSuccess: settings.onSuccess,
+                        includeChildRegions: settings.includeChildRegions
                     });
                 });
             });
@@ -367,7 +384,7 @@ bettercms.define('bcms.pages.content', ['bcms.jquery', 'bcms', 'bcms.modal', 'bc
                 });
             }
 
-            dialog.container.find(selectors.dataPickers).initializeDatepicker();
+            settings.dialog.container.find(selectors.dataPickers).initializeDatepicker();
         };
 
         /**
@@ -615,6 +632,7 @@ bettercms.define('bcms.pages.content', ['bcms.jquery', 'bcms', 'bcms.modal', 'bc
             }, opts);
 
             var canEdit = security.IsAuthorized(["BcmsEditContent"]),
+                isMarkdown = false,
                 onCloseClick = opts.onCloseClick,
                 onSuccess = opts.onSuccess,
                 includeChildRegions = (opts.includeChildRegions === true),
@@ -639,15 +657,28 @@ bettercms.define('bcms.pages.content', ['bcms.jquery', 'bcms', 'bcms.modal', 'bc
                                 if (json.Data.EditInSourceMode) {
                                     editInSourceMode = true;
                                 }
+                                if (json.Data.IsMarkdown) {
+                                    isMarkdown = true;
+                                }
                                 if (json.Data.EnableInsertDynamicRegion) {
                                     enableInsertDynamicRegion = true;
                                 }
                             }
-                            pagesContent.initializeEditContentForm(contentDialog, editInSourceMode, enableInsertDynamicRegion, json.Data, editorId, includeChildRegions, onSuccess);
+
+                            pagesContent.initializeEditContentForm({
+                                dialog: contentDialog,
+                                editInSourceMode: editInSourceMode,
+                                enableInsertDynamicRegion: enableInsertDynamicRegion,
+                                data: json.Data,
+                                editorId: editorId,
+                                includeChildRegions: includeChildRegions,
+                                onSuccess: onSuccess,
+                                isMarkdown: isMarkdown
+                            });
                         },
 
                         beforePost: function () {
-                            htmlEditor.updateEditorContent(editorId);
+                            htmlEditor.updateEditorContent(editorId, isMarkdown);
 
                             var editInSourceMode = htmlEditor.isSourceMode(editorId);
                             dialog.container.find(selectors.editInSourceModeHiddenField).val(editInSourceMode);

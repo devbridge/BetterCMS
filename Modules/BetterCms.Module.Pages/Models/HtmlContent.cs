@@ -39,6 +39,8 @@ namespace BetterCms.Module.Pages.Models
             copy.CustomJs = CustomJs;
             copy.UseCustomJs = UseCustomJs;
             copy.EditInSourceMode = EditInSourceMode;
+            copy.ContentTextMode = ContentTextMode;
+            copy.OriginalText = OriginalText;
 
             return copy;
         }

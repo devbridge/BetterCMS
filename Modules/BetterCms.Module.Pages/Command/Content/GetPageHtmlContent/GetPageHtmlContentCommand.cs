@@ -62,7 +62,7 @@ namespace BetterCms.Module.Pages.Command.Content.GetPageHtmlContent
                                                 ContentName = content.Name,
                                                 LiveFrom = content.ActivationDate,
                                                 LiveTo = content.ExpirationDate,
-                                                PageContent = content.Html,
+                                                PageContent = content.ContentTextMode == ContentTextMode.Html ? content.Html : content.OriginalText,
                                                 Version = pageContent.Version,
                                                 ContentVersion = pageContent.Content.Version,
                                                 CustomCss = content.CustomCss,
