@@ -1,8 +1,10 @@
 @import '../../core/variables';
 
-//module Content region
-.bcms-on .bcms-region-overlay {
-    display: block;
+//module content region
+.bcms-on {
+    .bcms-region-overlay {
+        display: block;
+    }
 }
 
 .bcms-region {
@@ -14,7 +16,8 @@
         z-index: 100;
 
         &.bcms-show-overlay {
-            background-image: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAQAAAAECAIAAAFRlDm/AAAAHUlEQVQI12P4//8/AxRDqQcPHjAAMUIQyoFQEAAA0/UuXeg1e3EAAAAASUVORK5CYII=");
+            @include size(100%);
+            background-image: url($icon-bcms-texture);
             height: 100%;
             width: 100%;
         }
@@ -26,110 +29,120 @@
             bottom: $border-overlay;
             left: $border-overlay;
         }
+        cursor: default;
         height: 26px;
         z-index: 10;
+    }
+
+    &-button {
+        @include transition(all 200ms);
+        @include vertical-align($align: top);
+        background-color: $blue-main;
+        box-sizing: border-box;
+        color: $white;
+        cursor: pointer;
+        font-size: 12px;
+        height: 26px;
+        line-height: 25px;
+        padding: 0 10px;
+
+        &:hover {
+            background-color: darken($blue-main, 10%);
+            cursor: pointer;
+        }
+    }
+
+    @each $name, $icon in $mange-controls {
+        &-#{$name} {
+            @include size(30px 26px);
+            background: $blue-main url($icon) no-repeat center;
+        }
+    }
+
+    &-contentstree,
+    &-sortcancel {
+        background-color: $gray-l50;
+
+        &:hover {
+            background-color: darken($gray-l50, 10%);
+        }
+    }
+}
+
+.bcms-content-overlay {
+    display: none;
+    position: relative;
+    width: 100%;
+    z-index: 5;
+
+    @include virtual(before) {
+        @include position(absolute, 0);
+        background-color: rgba($gray-l5, .2);
+    }
+}
+
+.bcms-show {
+    &-overlay {
+        .bcms-sort-block {
+            display: block;
+        }
+    }
+
+    &-controls {
+        .bcms-content-overlay {
+            @include size(100%);
+            display: block;
+        }
+    }
+}
+
+//module content sorting
+.bcms-sort {
+    &-block {
+        display: none;
+        height: 100%;
+        position: relative;
+        z-index: 5;
+    }
+
+    &-wrapper {
+        cursor: move;
+        height: 30px;
+        line-height: 30px;
+        margin-top: 10px;
+        overflow: hidden;
+        padding: 5px 10px;
+        position: relative;
+
+        &:first-child {
+            margin-top: 0;
+        }
+
+        @include virtual(before) {
+            @include position(absolute, 0);
+            background-color: rgba($gray-l5, .2);
+        }
+    }
+
+    &-wrapper-placeholder {
+        background-color: $black;
+        height: 30px;
+        margin-top: 10px;
+        opacity: .1;
+        padding: 5px 10px;
+        position: relative;
+        z-index: 10;
+    }
+
+    &-content {
+        color: $dark;
+        font-weight: 700;
+        text-transform: capitalize;
     }
 }
 
 ///////////////////////////////////////////////////////
-.bcms-region-button {
-    background-color: $gray-l50;
-    color: $white;
-    cursor: pointer;
-    display: inline-block;
-    font-size: 12px;
-    height: 26px;
-    line-height: 25px;
-    margin: 0 0 0 4px;
-    padding: 0 10px;
-    transition: all 150ms ease;
-
-    &:hover {
-        background-color: #0e5b90;
-        cursor: pointer;
-    }
-}
-
-.bcms-show-overlay .bcms-sorting-block {
-    display: block;
-}
-
-.bcms-show-controls .bcms-content-overlay {
-    display: block;
-    height: 100%;
-    width: 100%;
-}
-
-div.bcms-region-sortdone {
-    background-color: #009AEB;
-    margin-left: 0;
-}
-
-div.bcms-region-addcontent {
-    background: #009AEB url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAA4AAAAOCAYAAAAfSC3RAAAABHNCSVQICAgIfAhkiAAAAAlwSFlzAAALEgAACxIB0t1+/AAAABx0RVh0U29mdHdhcmUAQWRvYmUgRmlyZXdvcmtzIENTNui8sowAAAAWdEVYdENyZWF0aW9uIFRpbWUAMDcvMjYvMTJzxIU/AAAAMklEQVQokWP8//8/AxaALsiIroAJmy5iwBDSyMKAGRDYAIaaIeZHjMhlGE0ADAwMDAwAXswHHBrCtxsAAAAASUVORK5CYII=) no-repeat center center;
-    margin-left: 0;
-    padding: 0 15px;
-}
-
-div.bcms-region-sortcontent {
-    background: #009AEB url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAA4AAAANCAYAAACZ3F9/AAAABHNCSVQICAgIfAhkiAAAAAlwSFlzAAALEgAACxIB0t1+/AAAABx0RVh0U29mdHdhcmUAQWRvYmUgRmlyZXdvcmtzIENTNui8sowAAAAWdEVYdENyZWF0aW9uIFRpbWUAMDcvMjYvMTJzxIU/AAAAJUlEQVQokWP8////fwYyABM5mijSyMLAwMBIdxtHAwePjUMkcAAfRgYeCyCNRwAAAABJRU5ErkJggg==) no-repeat center center;
-    padding: 0 15px;
-}
-
-div.bcms-region-contentstree:hover {
-    background-color: #757575;
-}
-
-div.bcms-region-sortcancel:hover {
-    background-color: #757575;
-}
-
-//module Content sorting
-.bcms-sort-wrapper {
-    background: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAIAAAACCAYAAAEFsT2yAAAAEElEQVQI12NgYGDgZUAmeAEBpgA16fkHewAAAABJRU5ErkJggg==");
-    cursor: move;
-    height: 30px;
-    line-height: 30px;
-    margin-top: 10px;
-    overflow: hidden;
-    padding: 5px 10px;
-
-    &:first-child {
-        margin-top: 0;
-    }
-}
-
-.bcms-sort-wrapper-placeholder {
-    background-color: #000;
-    height: 30px;
-    margin-top: 10px;
-    opacity: .1;
-    padding: 5px 10px;
-    position: relative;
-    z-index: 10;
-}
-
-.bcms-sort-content {
-    color: #505050;
-    font-weight: 700;
-    text-transform: capitalize;
-}
-
-.bcms-sorting-block {
-    display: none;
-    height: 100%;
-    position: relative;
-    z-index: 5;
-}
-
-.bcms-content-overlay {
-    background: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAIAAAACCAYAAAEFsT2yAAAAEElEQVQI12NgYGDgZUAmeAEBpgA16fkHewAAAABJRU5ErkJggg==");
-    display: none;
-    position: relative;
-    width: 100%;
-    z-index: 5;
-}
-
+//module content action controls
 .bcms-content-actions {
     background: #0383df;
     border: 2px solid #9ed4f0;

@@ -1478,6 +1478,7 @@
     <Content Include="Scss\base_64\bcms-add-content.svg" />
     <Content Include="Scss\base_64\bcms-editor-options.svg" />
     <Content Include="Scss\base_64\bcms-mange.svg" />
+    <Content Include="Scss\base_64\bcms-texture.svg" />
     <Content Include="Scss\base_64\validation.svg" />
     <Content Include="Views\Web.config" />
     <Content Include="Views\Category\CategoryTreeEdit.cshtml">

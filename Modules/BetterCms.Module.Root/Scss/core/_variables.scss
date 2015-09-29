@@ -58,3 +58,8 @@ $susy: (
 );
 
 //module maps/keys
+$mange-controls: (
+                ('addcontent', $icon-bcms-add-content),
+                ('addwidget', null),
+                ('sortcontent' $icon-bcms-mange)
+);
