@@ -970,8 +970,8 @@ a.ui-state-default:hover {
 .bcms-sidemenu-body {
   background-color: #303030;
   min-height: 190px;
-  padding: 10px 10px 0;
   overflow: hidden;
+  padding: 10px 10px 0;
 }
 
 .bcms-sidemenu-body > hr {
@@ -993,6 +993,7 @@ a.ui-state-default:hover {
   background-image: linear-gradient(to bottom, #676767 0, #555555 100%);
   border-radius: 2px;
   box-shadow: 0 0 1px 1px rgba(0, 0, 0, 0.2);
+  box-sizing: border-box;
   color: #ffffff;
   cursor: pointer;
   font-size: 12px;
@@ -1204,10 +1205,10 @@ div.bcms-btn-gray:active {
 }
 
 div.bcms-btn-blog-add {
-  position: relative;
-  padding-right: 35px;
   background-color: #1892E4;
   background-image: linear-gradient(to bottom, #1892E4 0, #0C7FC7 100%);
+  padding-right: 35px;
+  position: relative;
 }
 
 div.bcms-btn-blog-add:active {
@@ -1215,14 +1216,14 @@ div.bcms-btn-blog-add:active {
 }
 
 div.bcms-btn-blog-add:after {
+  background: url("images/sprite-blog.png") no-repeat -7px 1px;
   content: "";
+  height: 20px;
+  margin-top: -10px;
   position: absolute;
   right: 6px;
   top: 50%;
   width: 20px;
-  height: 20px;
-  margin-top: -10px;
-  background: url("images/sprite-blog.png") no-repeat -7px 1px;
 }
 
 .bcms-version-number {
@@ -1231,27 +1232,27 @@ div.bcms-btn-blog-add:after {
 }
 
 .bcms-icn-pubdraft {
-  width: 16px;
+  background: url("images/sprite-base-2.png") no-repeat -3px -200px;
   height: 17px;
   margin: 0 auto;
   overflow: hidden;
   text-indent: 9999px;
-  background: url("images/sprite-base-2.png") no-repeat -3px -200px;
+  width: 16px;
 }
 
 .bcms-sidemenu-position-handle {
-  float: right;
   background-color: #515151;
-  width: 120px;
-  height: 20px;
-  cursor: pointer;
-  border-radius: 4px;
-  background-repeat: no-repeat;
-  background-position: 105px -70px;
-  padding: 0 0 0 5px;
-  line-height: 20px;
-  color: #fff;
   background-image: url("images/sprite-base-2.png");
+  background-position: 105px -70px;
+  background-repeat: no-repeat;
+  border-radius: 4px;
+  color: #fff;
+  cursor: pointer;
+  float: right;
+  height: 20px;
+  line-height: 20px;
+  padding: 0 0 0 5px;
+  width: 120px;
 }
 
 .bcms-sidemenu-position-handle:active {
@@ -1259,40 +1260,40 @@ div.bcms-btn-blog-add:after {
 }
 
 .bcms-logout-btn {
-  float: right;
-  width: 70px;
-  height: 26px;
-  color: #FFF;
-  text-transform: uppercase;
-  font-size: 11px;
-  line-height: 26px;
-  font-weight: bold;
-  text-align: center;
-  cursor: pointer;
-  box-shadow: 0 0 2px rgba(0, 0, 0, 0.3);
-  border-radius: 2px;
   background: #A63333;
   background-image: -webkit-linear-gradient(top, #A63333 0, #8E2626 100%);
   background-image: linear-gradient(to bottom, #A63333 0, #8E2626 100%);
+  border-radius: 2px;
+  box-shadow: 0 0 2px rgba(0, 0, 0, 0.3);
+  color: #FFF;
+  cursor: pointer;
+  float: right;
+  font-size: 11px;
+  font-weight: bold;
+  height: 26px;
+  line-height: 26px;
+  text-align: center;
+  text-transform: uppercase;
+  width: 70px;
 }
 
 .bcms-logout-btn:active {
-  box-shadow: none;
   background: #8E2626;
+  box-shadow: none;
 }
 
 .bcms-sidemenu-credentials {
+  left: 15px;
   position: absolute;
   top: 10px;
-  left: 15px;
   width: 145px;
 }
 
 .bcms-sidemenu-username {
-  color: #0F76BE;
-  line-height: 26px;
   background-color: #3b3b3b;
   border-radius: 2px;
+  color: #0F76BE;
+  line-height: 26px;
   padding: 0 10px;
   z-index: 5000;
 }
@@ -1306,14 +1307,14 @@ div.bcms-btn-blog-add:after {
 }
 
 .bcms-sidemenu-username a {
-  position: relative;
   display: block;
   overflow: hidden;
-  white-space: nowrap;
+  position: relative;
+  text-decoration: none;
   text-overflow: ellipsis;
   text-transform: capitalize;
-  text-decoration: none;
   transition: all 150ms ease;
+  white-space: nowrap;
 }
 
 .bcms-sidemenu-username a.bcms-view-page-as-public {
@@ -1339,31 +1340,31 @@ div.bcms-btn-blog-add:after {
 }
 
 .bcms-as-current {
-  padding: 0 10px 0 22px;
   color: white;
+  padding: 0 10px 0 22px;
 }
 
 .bcms-as-current:before {
-  top: 10px;
-  right: 0;
-  width: 9px;
-  height: 5px;
   background: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAkAAAAFCAYAAACXU8ZrAAAAM0lEQVQI12MwMjL6TwgzAAmG6Ojo/3gwA0wRLoVgOYbY2FiYIgZsCuCKYmJi0BXC+SB5AOKZQ7HWQLV/AAAAAElFTkSuQmCC") no-repeat center;
+  height: 5px;
+  right: 0;
+  top: 10px;
+  width: 9px;
 }
 
 .bcms-as-current:after {
-  left: 0;
-  width: 15px;
-  height: 10px;
   background: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAA8AAAAKCAYAAABrGwT5AAAA2ElEQVQoz3XRMUqDQRAF4A25gUjSBGwsxBsoxAMkKb2EYuENrAJibyOkSmn6pE2bHEBS2AsWoiDyq/ClyPy4LsnAMOyb994MswmpyEOM8WETr3jAQckthRf4xhx9HEWdo8LlLvFtTJqgWZg2A4c7NHLxVTR+0EYXKwwzg3b04aYWn+A3wGUQR/Guig2W/mKQ8JQBiyD14mCjQrzIuKuEc3xlk/a3/EAKvAreM47rxileojGuD5JlI3CYYa+8diu76BRn6ESd4hPXufG29bp4xHsYveE+jP5x1xJf+8rU3ne8AAAAAElFTkSuQmCC") no-repeat center;
+  height: 10px;
+  left: 0;
   margin-top: -5px;
+  width: 15px;
 }
 
 .bcms-as-user {
-  padding-left: 32px;
-  margin: 0 -10px;
-  color: #28add5;
   background-color: #444444;
+  color: #28add5;
+  margin: 0 -10px;
+  padding-left: 32px;
 }
 
 .bcms-as-user:hover {
@@ -1375,11 +1376,11 @@ div.bcms-btn-blog-add:after {
 }
 
 .bcms-as-user:after {
-  left: 12px;
-  width: 11px;
-  height: 14px;
   background: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAsAAAAOCAYAAAD5YeaVAAAAi0lEQVQoz43QsQmAMBCF4azhLMEpAtpkH3dwBHEPG7sE3EAcQMEUoi9wgSh3mOLniPcpqqrGRWU1yKNAs8n3X3gztRz2AvYcDgI+OewE7DhsBGw4nG6ITzpoGulv/JYfajSgFV00B7r+wp3wvqkuYfsDUzbiuRDPir68BB8Ra9SjCW1op+VO54n2+gHAH1Gb5zxVcQAAAABJRU5ErkJggg==") no-repeat center;
+  height: 14px;
+  left: 12px;
   margin-top: -7px;
+  width: 11px;
 }
 
 .bcms-as-public {
@@ -1396,24 +1397,24 @@ div.bcms-btn-blog-add:after {
 }
 
 .bcms-as-public:after {
-  left: 0;
   background: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAA8AAAAKCAYAAABrGwT5AAAA2klEQVQoz23QPUoDQBAF4A25gQTTBGwsxBsoxAOopZdQLLyBlSD2NkK+JqX2sU2bHEBS2AsWoiASFcZmIsuSYhn2/c3wSkSU+mEbY3wg8Io7bLXa1niKb0xxhJ2cUyxxttaM69z0gG4T2k08cIPOvxnnSfygjyEWuKoC+skHLiOiFOzhN8F5Ckf5XzYXzBMPHBc8VcAsRYdZ2KgxzyrtouAEX6tN6LWtprGXfOAZuytiHy9JjFeFVMZO4oFHbLRtb1aNTnCAQc4JPnFRB687b4h7vGfQG24xaLV/7jSOqr3kmscAAAAASUVORK5CYII=") no-repeat center;
-  width: 15px;
   height: 10px;
+  left: 0;
   margin-top: -5px;
+  width: 15px;
 }
 
 .bcms-sidemenu-openclosearrow {
-  height: 20px;
-  width: 50px;
-  margin: 0 auto;
   background: url("images/sprite-base-1.png") no-repeat center -548px;
-  padding-top: 30px;
-  text-transform: uppercase;
   color: #fff;
   font-size: 10px;
+  height: 20px;
+  margin: 0 auto;
   overflow: hidden;
+  padding-top: 30px;
   text-indent: 9999px;
+  text-transform: uppercase;
+  width: 50px;
 }
 
 .bcms-state-open .bcms-sidemenu-openclosearrow {
@@ -1429,24 +1430,24 @@ div.bcms-btn-blog-add:after {
 }
 
 .bcms-sidemenu-status {
-  padding: 1px 0;
   background: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAQAAAAECAIAAAFRlDm/AAAAIElEQVQI12PQ0NBgkJeXB2EQE4iReJZgIA8GDBAKIgQAu28HdVPQ4uUAAAAASUVORK5CYII=") repeat left top #000;
+  padding: 1px 0;
 }
 
 .bcms-sidemenu-separator {
-  width: 24px;
+  background-image: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABgAAAACCAYAAABCOhwFAAAABHNCSVQICAgIfAhkiAAAAAlwSFlzAAALEgAACxIB0t1+/AAAABZ0RVh0Q3JlYXRpb24gVGltZQAwNy8xNy8xMozYmIoAAAAcdEVYdFNvZnR3YXJlAEFkb2JlIEZpcmV3b3JrcyBDUzbovLKMAAAAIUlEQVQImWNMSEj4z0BDwKijo/OfiYmJgZGRkboGQ80DACggA7Gicq8rAAAAAElFTkSuQmCC");
   height: 2px;
   margin: 10px auto;
-  background-image: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABgAAAACCAYAAABCOhwFAAAABHNCSVQICAgIfAhkiAAAAAlwSFlzAAALEgAACxIB0t1+/AAAABZ0RVh0Q3JlYXRpb24gVGltZQAwNy8xNy8xMozYmIoAAAAcdEVYdFNvZnR3YXJlAEFkb2JlIEZpcmV3b3JrcyBDUzbovLKMAAAAIUlEQVQImWNMSEj4z0BDwKijo/OfiYmJgZGRkboGQ80DACggA7Gicq8rAAAAAElFTkSuQmCC");
+  width: 24px;
 }
 
 #bcms-sidemenu-handle {
-  position: absolute;
-  top: 0;
-  right: -50px;
-  width: 50px;
   background: #000000;
   border-radius: 0 4px 4px 0;
+  position: absolute;
+  right: -50px;
+  top: 0;
+  width: 50px;
   -moz-user-select: none;
   -webkit-user-select: none;
   user-select: none;
@@ -1458,13 +1459,13 @@ div.bcms-btn-blog-add:after {
 }
 
 #bcms-sidemenu-switch {
+  background-image: url("images/sprite-base-2.png");
+  background-position: 0 0;
+  background-repeat: no-repeat;
   cursor: pointer;
   height: 62px;
-  width: 32px;
   margin: 5px auto;
-  background-repeat: no-repeat;
-  background-position: 0 0;
-  background-image: url("images/sprite-base-2.png");
+  width: 32px;
 }
 
 .bcms-on #bcms-sidemenu-switch {
@@ -1472,24 +1473,24 @@ div.bcms-btn-blog-add:after {
 }
 
 #bcms-sidemenu-draghandle {
+  background: url("images/sprite-base-1.png") no-repeat -1px -665px;
   cursor: move;
-  width: 34px;
   height: 14px;
   margin: 5px auto;
-  background: url("images/sprite-base-1.png") no-repeat -1px -665px;
+  width: 34px;
 }
 
 .bcms-sidemenu-right#bcms-sidemenu {
-  right: 0;
+  border-radius: 0 0 0 4px;
   left: auto;
   padding: 5px 0 5px 5px;
-  border-radius: 0 0 0 4px;
+  right: 0;
 }
 
 .bcms-sidemenu-right #bcms-sidemenu-handle {
+  border-radius: 4px 0 0 4px;
   left: -50px;
   right: auto;
-  border-radius: 4px 0 0 4px;
 }
 
 .bcms-sidemenu-right .bcms-sidemenu-position-handle {
