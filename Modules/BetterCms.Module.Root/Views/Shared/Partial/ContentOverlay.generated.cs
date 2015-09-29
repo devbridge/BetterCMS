@@ -43,29 +43,23 @@ WriteLiteral(" type=\"text/html\"");
 
 WriteLiteral(" id=\"bcms-content-overlay\"");
 
-WriteLiteral(">\n    <div class=\"bcms-content-overlay\">\n        <div class=\"bcms-content-actions" +
-"\">\n            <div class=\"bcms-content-button bcms-content-edit-child\">\r\n      " +
-"          ");
-
-WriteLiteral("\r\n            </div>\n            <div class=\"bcms-content-button bcms-content-his" +
-"tory\">\n                ");
-
-WriteLiteral("\n            </div>\n            <div class=\"bcms-content-button bcms-content-edit" +
-"\">\n                ");
-
-WriteLiteral("\n            </div>\n            <div class=\"bcms-content-button bcms-content-conf" +
-"igure\">\n                ");
-
-WriteLiteral("\n            </div>\n");
+WriteLiteral(@">
+    <div class=""bcms-content-overlay"">
+        <div class=""bcms-content-actions"">
+            <div class=""bcms-content-button bcms-content-edit-child""></div>
+            <div class=""bcms-content-button bcms-content-history""></div>
+            <div class=""bcms-content-button bcms-content-edit""></div>
+            <div class=""bcms-content-button bcms-content-configure""></div>
+");
 
             
-            #line 17 "..\..\Views\Shared\Partial\ContentOverlay.cshtml"
+            #line 9 "..\..\Views\Shared\Partial\ContentOverlay.cshtml"
             
             
             #line default
             #line hidden
             
-            #line 17 "..\..\Views\Shared\Partial\ContentOverlay.cshtml"
+            #line 9 "..\..\Views\Shared\Partial\ContentOverlay.cshtml"
              if (!Model.IsReadOnly && Model.HasEditRole)
             {
 
@@ -76,18 +70,16 @@ WriteLiteral("                <div");
 
 WriteLiteral(" class=\"bcms-content-button bcms-content-delete\"");
 
-WriteLiteral(">\n                    ");
-
-WriteLiteral("\n                </div>\n");
+WriteLiteral("></div>\r\n");
 
             
-            #line 22 "..\..\Views\Shared\Partial\ContentOverlay.cshtml"
+            #line 12 "..\..\Views\Shared\Partial\ContentOverlay.cshtml"
             }
 
             
             #line default
             #line hidden
-WriteLiteral("        </div>\n    </div>\n</script>\n");
+WriteLiteral("        </div>\r\n    </div>\r\n</script>\r\n");
 
         }
     }

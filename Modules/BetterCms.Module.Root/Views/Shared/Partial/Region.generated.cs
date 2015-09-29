@@ -118,11 +118,9 @@ WriteLiteral("</div>\n                <div");
 
 WriteLiteral(" class=\"bcms-region-button bcms-region-addcontent\"");
 
-WriteLiteral("></div>\n                <div");
+WriteLiteral("></div>\n                ");
 
-WriteLiteral(" class=\"bcms-region-button bcms-region-addwidget\"");
-
-WriteLiteral("></div>\n                <div");
+WriteLiteral("\n                <div");
 
 WriteLiteral(" class=\"bcms-region-button bcms-region-sortcontent\"");
 
