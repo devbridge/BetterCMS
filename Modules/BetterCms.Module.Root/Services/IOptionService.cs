@@ -21,7 +21,7 @@ namespace BetterCms.Module.Root.Services
         /// <returns>
         /// List of option values view models, merged from options and option values
         /// </returns>
-        List<OptionValueEditViewModel> GetMergedOptionValuesForEdit(IEnumerable<IOption> options, IEnumerable<IOption> optionValues);
+        List<OptionValueEditViewModel> GetMergedOptionValuesForEdit(IEnumerable<IOptionEntity> options, IEnumerable<IOptionEntity> optionValues);
 
         /// <summary>
         /// Merges options and values and returns one list with option value view models for use (values are returned as objects).
@@ -31,7 +31,7 @@ namespace BetterCms.Module.Root.Services
         /// <returns>
         /// List of option values view models, merged from options and option values
         /// </returns>
-        List<IOptionValue> GetMergedOptionValues(IEnumerable<IOption> options, IEnumerable<IOption> optionValues);
+        List<IOptionValue> GetMergedOptionValues(IEnumerable<IOptionEntity> options, IEnumerable<IOptionEntity> optionValues);
         
         /// <summary>
         /// Merges options and values and returns one list with option value view models for use (values are returned as objects).
@@ -41,7 +41,7 @@ namespace BetterCms.Module.Root.Services
         /// <returns>
         /// List of option values view models, merged from options and option values
         /// </returns>
-        List<IOptionValue> GetMergedOptionValues(IEnumerable<IOptionValue> options, IEnumerable<IOption> optionValues);
+        List<IOptionValue> GetMergedOptionValues(IEnumerable<IOptionValue> options, IEnumerable<IOptionEntity> optionValues);
 
         /// <summary>
         /// Gets the merged master pages option values.
@@ -72,7 +72,7 @@ namespace BetterCms.Module.Root.Services
         /// <param name="entityCreator">The entity creator.</param>
         IList<TEntity> SaveOptionValues<TEntity>(IEnumerable<OptionValueEditViewModel> optionViewModels, IEnumerable<TEntity> savedOptionValues, 
             Func<TEntity> entityCreator)
-            where TEntity : Entity, IOption;
+            where TEntity : Entity, IOptionEntity;
 
         /// <summary>
         /// Validates the option value.

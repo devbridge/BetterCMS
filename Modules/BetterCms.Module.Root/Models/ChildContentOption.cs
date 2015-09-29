@@ -8,7 +8,7 @@ using BetterModules.Core.Models;
 namespace BetterCms.Module.Root.Models
 {
     [Serializable]
-    public class ChildContentOption : EquatableEntity<ChildContentOption>, IOption
+    public class ChildContentOption : EquatableEntity<ChildContentOption>, IOptionEntity
     {
         public virtual ChildContent ChildContent { get; set; }
 

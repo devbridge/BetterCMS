@@ -61,7 +61,7 @@ namespace BetterCms.Module.Root.Services
         /// <returns>
         /// List of option values view models, merged from options and option values
         /// </returns>
-        public List<OptionValueEditViewModel> GetMergedOptionValuesForEdit(IEnumerable<IOption> options, IEnumerable<IOption> optionValues)
+        public List<OptionValueEditViewModel> GetMergedOptionValuesForEdit(IEnumerable<IOptionEntity> options, IEnumerable<IOptionEntity> optionValues)
         {
             var optionModels = new List<OptionValueEditViewModel>();
 
@@ -69,7 +69,7 @@ namespace BetterCms.Module.Root.Services
             {
                 foreach (var optionValue in optionValues.Distinct())
                 {
-                    IOption option = null;
+                    IOptionEntity option = null;
                     if (options != null)
                     {
                         option = options.FirstOrDefault(
@@ -138,7 +138,7 @@ namespace BetterCms.Module.Root.Services
         /// <returns>
         /// List of option values view models, merged from options and option values
         /// </returns>
-        public List<IOptionValue> GetMergedOptionValues(IEnumerable<IOption> options, IEnumerable<IOption> optionValues)
+        public List<IOptionValue> GetMergedOptionValues(IEnumerable<IOptionEntity> options, IEnumerable<IOptionEntity> optionValues)
         {
             var optionModels = new List<OptionValueViewModel>();
 
@@ -175,7 +175,7 @@ namespace BetterCms.Module.Root.Services
         /// <returns>
         /// List of option values view models, merged from options and option values
         /// </returns>
-        public List<IOptionValue> GetMergedOptionValues(IEnumerable<IOptionValue> options, IEnumerable<IOption> optionValues)
+        public List<IOptionValue> GetMergedOptionValues(IEnumerable<IOptionValue> options, IEnumerable<IOptionEntity> optionValues)
         {
             var optionModels = new List<OptionValueViewModel>();
 
@@ -209,7 +209,7 @@ namespace BetterCms.Module.Root.Services
         /// </summary>
         /// <param name="option">The option.</param>
         /// <returns>Created option value view model</returns>
-        private OptionValueViewModel CreateOptionValueViewModel(IOption option)
+        private OptionValueViewModel CreateOptionValueViewModel(IOptionEntity option)
         {
             var value = GetValueSafe(option);
 
@@ -262,7 +262,7 @@ namespace BetterCms.Module.Root.Services
         public IList<TEntity> SaveOptionValues<TEntity>(
             IEnumerable<OptionValueEditViewModel> optionViewModels,
             IEnumerable<TEntity> optionValues,
-            Func<TEntity> entityCreator) where TEntity : Entity, IOption
+            Func<TEntity> entityCreator) where TEntity : Entity, IOptionEntity
         {
             var savedOptionValues = new List<TEntity>();
 
@@ -484,7 +484,7 @@ namespace BetterCms.Module.Root.Services
         /// </summary>
         /// <param name="option">The option.</param>
         /// <returns>Value, converted to correct type or null, if conversion is impossible</returns>
-        private object GetValueSafe(IOption option)
+        private object GetValueSafe(IOptionEntity option)
         {
             var value = option.Value;
             var type = option.Type;
@@ -872,7 +872,7 @@ namespace BetterCms.Module.Root.Services
             var pageOptions = allPagesOptions.Where(po => po.Page.Id == pageId);
 
             // Get lowest level options, when going up from master pages to layout
-            var masterOptions = GetMergedMasterPagesOptionValues(pageId, allPages, allPagesOptions, layoutOptions, new List<IOption>());
+            var masterOptions = GetMergedMasterPagesOptionValues(pageId, allPages, allPagesOptions, layoutOptions, new List<IOptionEntity>());
             return GetMergedOptionValuesForEdit(masterOptions, pageOptions);
         }
 
@@ -887,8 +887,8 @@ namespace BetterCms.Module.Root.Services
         /// <returns>
         /// List of master page option values
         /// </returns>
-        private List<IOption> GetMergedMasterPagesOptionValues(Guid? id, List<PageMasterPage> allPages, List<PageOption> allPagesOptions,
-            List<LayoutOption> layoutOptions, List<IOption> allMasterOptions)
+        private List<IOptionEntity> GetMergedMasterPagesOptionValues(Guid? id, List<PageMasterPage> allPages, List<PageOption> allPagesOptions,
+            List<LayoutOption> layoutOptions, List<IOptionEntity> allMasterOptions)
         {
             var page = allPages.FirstOrDefault(p => p.Id == id);
             if (page != null)
@@ -920,7 +920,7 @@ namespace BetterCms.Module.Root.Services
                 else if (page.LayoutId.HasValue)
                 {
                     // Returning layout options as master option values
-                    return layoutOptions.Cast<IOption>().ToList();
+                    return layoutOptions.Cast<IOptionEntity>().ToList();
                 }
             }
 

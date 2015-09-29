@@ -138,58 +138,6 @@ namespace BetterCms.Module.Root.ViewModels.Option
             }
         }
 
-        System.Guid IEntity.Id
-        {
-            get { throw new System.NotSupportedException(); }
-        }
-
-        bool IEntity.IsDeleted
-        {
-            get { throw new System.NotSupportedException(); }
-        }
-
-        System.DateTime IEntity.CreatedOn
-        {
-            get { throw new System.NotSupportedException(); }
-        }
-
-        System.DateTime IEntity.ModifiedOn
-        {
-            get { throw new System.NotSupportedException(); }
-        }
-
-        System.DateTime? IEntity.DeletedOn
-        {
-            get { throw new System.NotSupportedException(); }
-        }
-
-        string IEntity.CreatedByUser
-        {
-            get { throw new System.NotSupportedException(); }
-        }
-
-        string IEntity.ModifiedByUser
-        {
-            get { throw new System.NotSupportedException(); }
-        }
-
-        string IEntity.DeletedByUser
-        {
-            get { throw new System.NotSupportedException(); }
-        }
-
-        int IEntity.Version
-        {
-            get
-            {
-                throw new System.NotSupportedException();
-            }
-            set
-            {
-                throw new System.NotSupportedException();
-            }
-        }
-
         #endregion
     }
 }

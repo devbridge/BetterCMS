@@ -59,7 +59,7 @@ namespace BetterCms.Test.Module.Root.ServiceTests
                 var newOption1 = new LayoutOption { Key = option1.Key, Type = option1.Type, DefaultValue = option1.DefaultValue };
                 var newOption2 = new LayoutOption { Key = option2.Key, Type = option2.Type, DefaultValue = TestDataProvider.ProvideRandomString(100) };
                 var newOption3 = new LayoutOption { Key = TestDataProvider.ProvideRandomString(100), Type = OptionType.Text, DefaultValue = TestDataProvider.ProvideRandomString(100) };
-                var newOptions = new List<IOption> { newOption1, newOption2, newOption3 };
+                var newOptions = new List<IOptionEntity> { newOption1, newOption2, newOption3 };
 
                 optionService.SetOptions<LayoutOption, Layout>(layout, newOptions);
                 unitOfWork.Commit();
@@ -98,7 +98,7 @@ namespace BetterCms.Test.Module.Root.ServiceTests
                 session.Flush();
                 session.Clear();
 
-                optionService.SetOptions<LayoutOption, Layout>(layout, new List<IOption>());
+                optionService.SetOptions<LayoutOption, Layout>(layout, new List<IOptionEntity>());
                 unitOfWork.Commit();
             });
         }
