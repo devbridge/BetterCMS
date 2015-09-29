@@ -47,8 +47,10 @@ namespace BetterCms.Module.Pages.Services
 
         private readonly ICategoryService categoryService;
 
+        private readonly ICmsConfiguration cmsConfiguration;
+
         public DefaultWidgetService(IRepository repository, IUnitOfWork unitOfWork, IOptionService optionService, IContentService contentService,
-            IChildContentService childContentService, ICategoryService categoryService)
+            IChildContentService childContentService, ICategoryService categoryService, ICmsConfiguration cmsConfiguration)
         {
             this.repository = repository;
             this.unitOfWork = unitOfWork;
@@ -56,6 +58,7 @@ namespace BetterCms.Module.Pages.Services
             this.contentService = contentService;
             this.childContentService = childContentService;
             this.categoryService = categoryService;
+            this.cmsConfiguration = cmsConfiguration;
         }
 
         public void SaveHtmlContentWidget(EditHtmlContentWidgetViewModel model, IList<ContentOptionValuesViewModel> childContentOptionValues,
@@ -74,7 +77,7 @@ namespace BetterCms.Module.Pages.Services
             var widgetContent = GetHtmlContentWidgetFromRequest(model, treatNullsAsLists, !model.Id.HasDefaultValue());
             widget = GetWidgetForSave(widgetContent, model, createIfNotExists, out isCreatingNew);
 
-            optionService.SaveChildContentOptions(widget, childContentOptionValues, model.DesirableStatus);             
+            optionService.SaveChildContentOptions(widget, childContentOptionValues, model.DesirableStatus);
 
             repository.Save(widget);
             unitOfWork.Commit();
@@ -305,6 +308,21 @@ namespace BetterCms.Module.Pages.Services
                                         };
 
                     optionService.ValidateOptionValue(contentOption);
+
+                    if (cmsConfiguration.EnableMultilanguage)
+                    {
+                        var translations = requestContentOption.Translations.Select(x => new ContentOptionTranslation
+                        {
+                            ContentOption = contentOption,
+                            Language = repository.AsProxy<Language>(x.LanguageId.ToGuidOrDefault()),
+                            Value = x.OptionValue
+                        }).ToList();
+                        foreach (var translation in translations)
+                        {
+                            optionService.ValidateOptionValue(contentOption.Key, translation.Value, contentOption.Type, contentOption.CustomOption);
+                        }
+                        contentOption.Translations = translations;
+                    }
 
                     content.ContentOptions.Add(contentOption);
                 }

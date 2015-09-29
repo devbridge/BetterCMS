@@ -81,6 +81,15 @@ namespace BetterCms.Module.Root.Services
         void ValidateOptionValue(IOption option);
 
         /// <summary>
+        /// Validates the option value.
+        /// </summary>
+        /// <param name="key">The key.</param>
+        /// <param name="value">The value.</param>
+        /// <param name="type">The type.</param>
+        /// <param name="customOption">The custom option.</param>
+        void ValidateOptionValue(string key, string value, OptionType type, ICustomOption customOption);
+
+        /// <summary>
         /// Validates the uniqueness of the option keys.
         /// </summary>
         /// <param name="options">The options.</param>

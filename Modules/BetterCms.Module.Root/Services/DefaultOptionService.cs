@@ -449,18 +449,35 @@ namespace BetterCms.Module.Root.Services
         /// <param name="option">The option.</param>
         public void ValidateOptionValue(IOption option)
         {
-            if (option != null && !string.IsNullOrWhiteSpace(option.Value))
+            if (option != null)
             {
-                try
-                {
-                    ConvertValueToCorrectType(option.Value, option.Type, option.CustomOption);
-                }
-                catch
-                {
-                    var message = string.Format(RootGlobalization.Option_Invalid_Message, option.Key, option.Type.ToGlobalizationString());
+                ValidateOptionValue(option.Key, option.Value, option.Type, option.CustomOption);
+            }
+        }
 
-                    throw new ValidationException(() => message, message);
-                }
+        /// <summary>
+        /// Validates the option value.
+        /// </summary>
+        /// <param name="key">The key.</param>
+        /// <param name="value">The value.</param>
+        /// <param name="type">The type.</param>
+        /// <param name="customOption">The custom option.</param>
+        /// <exception cref="System.ComponentModel.DataAnnotations.ValidationException"></exception>
+        public void ValidateOptionValue(string key, string value, OptionType type, ICustomOption customOption)
+        {
+            if (string.IsNullOrWhiteSpace(value))
+            {
+                return;
+            }
+            try
+            {
+                ConvertValueToCorrectType(value, type, customOption);
+            }
+            catch
+            {
+                var message = string.Format(RootGlobalization.Option_Invalid_Message, key, type.ToGlobalizationString());
+
+                throw new ValidationException(() => message, message);
             }
         }
 
