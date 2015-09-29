@@ -19,7 +19,7 @@ bettercms.define('bcms.content', ['bcms.jquery', 'bcms', 'bcms.modal', 'bcms.red
             contentEditInnerDiv: '.bcms-content-edit .bcms-content-icon',
             contentHistory: '.bcms-content-history',
             contentConfigure: '.bcms-content-configure',
-            enterChildContent: '.bcms-enter-child-content',
+            enterChildContent: '.bcms-content-edit-child',
 
             regionsAndContents: '.bcms-region-start, .bcms-region-end, .bcms-content-start, .bcms-content-end',
             regionOverlay: '#bcms-region-overlay-template',
