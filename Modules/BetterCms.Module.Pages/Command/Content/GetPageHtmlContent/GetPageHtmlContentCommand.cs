@@ -5,6 +5,7 @@ using BetterCms.Core.DataContracts.Enums;
 using BetterCms.Core.Security;
 
 using BetterCms.Module.Pages.Models;
+using BetterCms.Module.Pages.Models.Enums;
 using BetterCms.Module.Pages.Services;
 using BetterCms.Module.Pages.ViewModels.Content;
 
@@ -71,7 +72,8 @@ namespace BetterCms.Module.Pages.Command.Content.GetPageHtmlContent
                                                 EditInSourceMode = content.EditInSourceMode,
                                                 EnableInsertDynamicRegion = pageContent.Page.IsMasterPage,
                                                 CurrentStatus = content.Status,
-                                                HasPublishedContent = content.Original != null
+                                                HasPublishedContent = content.Original != null,
+                                                IsMarkdown = content.ContentTextMode == ContentTextMode.Markdown
                                             };
 
             if (configuration.Security.AccessControlEnabled)

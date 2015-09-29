@@ -9,6 +9,7 @@ using BetterCms.Module.Pages.Accessors;
 using BetterCms.Module.Pages.Content.Resources;
 using BetterCms.Module.Pages.Helpers;
 using BetterCms.Module.Pages.Models;
+using BetterCms.Module.Pages.Models.Enums;
 using BetterCms.Module.Pages.Services;
 using BetterCms.Module.Pages.ViewModels.Content;
 
@@ -129,8 +130,18 @@ namespace BetterCms.Module.Pages.Command.Content.SavePageHtmlContent
                     CustomCss = model.CustomCss,
                     UseCustomJs = model.EanbledCustomJs,
                     CustomJs = model.CustomJs,
-                    EditInSourceMode = model.EditInSourceMode
+                    EditInSourceMode = model.EditInSourceMode,
+                    ContentTextMode = ContentTextMode.Html
                 };
+
+            if (model.IsMarkdown)
+            {
+                var md = new MarkdownDeep.Markdown();
+
+                contentToSave.Html = md.Transform(model.PageContent);
+                contentToSave.ContentTextMode = ContentTextMode.Markdown;
+                contentToSave.OriginalText = model.PageContent;
+            }
 
             // Preserve content if user is not authorized to change it.
             if (!SecurityService.IsAuthorized(RootModuleConstants.UserRoles.EditContent) && model.Id != default(Guid))

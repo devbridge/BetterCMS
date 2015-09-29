@@ -239,7 +239,9 @@ namespace BetterCms.Module.Root
         {
             return new[]
                        {
-                           new CssIncludeDescriptor(this, "bcms.root.css")
+                           new CssIncludeDescriptor(this, "bcms.root.css"),
+                           new CssIncludeDescriptor(this, "/file/bcms-root/scripts/markitup/skins/markitup/style.css"),
+                           new CssIncludeDescriptor(this, "/file/bcms-root/scripts/markitup/sets/markmin/style.css")
                        };
         }
 
@@ -289,7 +291,9 @@ namespace BetterCms.Module.Root
                     tagsJsModuleIncludeDescriptor,
                     categoriesJavaScriptModuleDescriptor,
                     languagesJsModuleIncludeDescriptor,
-                    new OptionsJsModuleIncludeDescriptor(this)
+                    new OptionsJsModuleIncludeDescriptor(this),
+                    new JsIncludeDescriptor(this, "bcms.markdown"),
+                    new JsIncludeDescriptor(this, "bcms.jquery.markitup", "markitup/bcms.jquery.markitup.js"),
                 };
         }
 

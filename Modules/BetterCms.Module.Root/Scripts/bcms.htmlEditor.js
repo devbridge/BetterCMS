@@ -1,7 +1,7 @@
 ﻿/*jslint unparam: true, white: true, browser: true, devel: true */
 /*global bettercms */
 
-bettercms.define('bcms.htmlEditor', ['bcms.jquery', 'bcms', 'ckeditor'], function ($, bcms) {
+bettercms.define('bcms.htmlEditor', ['bcms.jquery', 'bcms', 'ckeditor', 'bcms.markdown'], function ($, bcms, ckEditor, markdownEditor) {
     'use strict';
 
     var htmlEditor = {},
@@ -31,6 +31,10 @@ bettercms.define('bcms.htmlEditor', ['bcms.jquery', 'bcms', 'ckeditor'], functio
     * Html editor id
     */
     htmlEditor.id = null;
+
+    htmlEditor.initializeMarkdownEditor = function (id, editingContentId, options) {
+        markdownEditor.initializeInstance(id, editingContentId, options);
+    }
 
     htmlEditor.initializeHtmlEditor = function (id, editingContentId, options, startInSourceMode) {
         var editMode = startInSourceMode;
@@ -171,10 +175,14 @@ bettercms.define('bcms.htmlEditor', ['bcms.jquery', 'bcms', 'ckeditor'], functio
     htmlEditor.isSourceMode = function (textareaId) {
         var instance = htmlEditor.getInstance(textareaId);
 
-        return instance.mode === 'source';
+        return instance != null && instance.mode === 'source';
     };
 
-    htmlEditor.updateEditorContent = function (textareaId) {
+    htmlEditor.updateEditorContent = function (textareaId, isMarkdown) {
+        if (isMarkdown) {
+            return;
+        }
+
         // Put content from HTML editor to textarea:
         var instance = htmlEditor.getInstance(textareaId),
             id = textareaId || htmlEditor.id,

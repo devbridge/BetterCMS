@@ -85,6 +85,9 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\packages\Iesi.Collections.3.3.1.4000\lib\Net35\Iesi.Collections.dll</HintPath>
     </Reference>
+    <Reference Include="MarkdownDeep">
+      <HintPath>..\..\packages\MarkdownDeep.NET.1.5\lib\.NetFramework 3.5\MarkdownDeep.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="Microsoft.Web.Infrastructure, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <Private>True</Private>
@@ -208,8 +211,10 @@
     <Compile Include="Helpers\Extensions\RenderPageViewModelExtensions.cs" />
     <Compile Include="Helpers\UrlHelper.cs" />
     <Compile Include="Models\Accessors\PageCategoryAccessor.cs" />
+    <Compile Include="Models\Enums\ContentTextMode.cs" />
     <Compile Include="Models\Enums\WidgetUsageType.cs" />
     <Compile Include="Models\Migrations\Migration201502101138.cs" />
+    <Compile Include="Models\Migrations\Migration201509291600.cs" />
     <Compile Include="Models\PageCategory.cs" />
     <Compile Include="Models\Maps\PageCategoryMap.cs" />
     <Compile Include="Models\Maps\SitemapNodeTranslationMap.cs" />

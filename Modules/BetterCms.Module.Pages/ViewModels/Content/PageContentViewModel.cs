@@ -259,6 +259,14 @@ namespace BetterCms.Module.Pages.ViewModels.Content
         public bool IncludeChildRegions { get; set; }
 
         /// <summary>
+        /// Gets or sets a value indicating whether content type is markdown.
+        /// </summary>
+        /// <value>
+        /// <c>true</c> if content type is markdown; otherwise, <c>false</c>.
+        /// </value>
+        public bool IsMarkdown { get; set; }
+
+        /// <summary>
         /// Returns a <see cref="System.String" /> that represents this instance.
         /// </summary>
         /// <returns>

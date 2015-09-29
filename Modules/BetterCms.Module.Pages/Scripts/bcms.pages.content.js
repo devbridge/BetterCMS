@@ -45,6 +45,7 @@ bettercms.define('bcms.pages.content', ['bcms.jquery', 'bcms', 'bcms.modal', 'bc
                 aceEditorContainer: '.bcms-editor-field-area-container:first',
 
                 editInSourceModeHiddenField: '#bcms-edit-in-source-mode',
+                isMarkdownHiddenField: '#bcms-is-markdown',
                 firstForm: 'form:first',
                 datePickers: 'input.bcms-datepicker'
             },
@@ -97,6 +98,7 @@ bettercms.define('bcms.pages.content', ['bcms.jquery', 'bcms', 'bcms.modal', 'bc
         */
         pagesContent.onAddNewContent = function (data) {
             var editorId,
+                isMarkdown = data.isMarkdown || false,
                 regionViewModel = data.regionViewModel,
                 includeChildRegions = bcms.boolAsString(data.includeChildRegions),
                 onSuccess = data.onSuccess || function () {
@@ -123,14 +125,25 @@ bettercms.define('bcms.pages.content', ['bcms.jquery', 'bcms', 'bcms.modal', 'bc
                                     enableInsertDynamicRegion = true;
                                 }
                             }
-                            pagesContent.initializeAddNewContentForm(contentDialog, editInSourceMode, enableInsertDynamicRegion, editorId, data.Data, onSuccess, includeChildRegions);
+
+                            var settings = {
+                                dialog: contentDialog, 
+                                editInSourceMode: editInSourceMode, 
+                                enableInsertDynamicRegion: enableInsertDynamicRegion, 
+                                editorId: editorId,
+                                data: data.Data, onSuccess: onSuccess,
+                                includeChildRegions: includeChildRegions,
+                                isMarkdown: isMarkdown
+                            };
+                            pagesContent.initializeAddNewContentForm(settings);
                         },
 
                         beforePost: function () {
-                            htmlEditor.updateEditorContent(editorId);
+                            htmlEditor.updateEditorContent(editorId, isMarkdown);
 
                             var editInSourceMode = htmlEditor.isSourceMode(editorId);
                             dialog.container.find(selectors.editInSourceModeHiddenField).val(editInSourceMode);
+                            dialog.container.find(selectors.isMarkdownHiddenField).val(isMarkdown);
 
                             return true;
                         },
@@ -256,31 +269,48 @@ bettercms.define('bcms.pages.content', ['bcms.jquery', 'bcms', 'bcms.modal', 'bc
         /**
         * Initializes content dialog form.
         */
-        pagesContent.initializeAddNewContentForm = function (dialog, editInSourceMode, enableInsertDynamicRegion, editorId, data, onSuccess, includeChildRegions) {
+        pagesContent.initializeAddNewContentForm = function (settings) {
+
+            settings = $.extend({
+                enableInsertDynamicRegion: false,
+                editorId: null,
+                dialog: null,
+                data: {},
+                onSuccess: function () { },
+                includeChildRegions: false,
+                isMarkdown: false
+            }, settings);
+
             var onInsert = function () {
-                pagesContent.insertWidget(this, dialog, onSuccess, includeChildRegions);
+                pagesContent.insertWidget(this, settings.dialog, settings.onSuccess, settings.includeChildRegions);
             };
 
-            dialog.container.find(selectors.dataPickers).initializeDatepicker(globalization.datePickerTooltipTitle);
+            settings.dialog.container.find(selectors.dataPickers).initializeDatepicker(globalization.datePickerTooltipTitle);
 
-            initializeWidgetsTab(dialog, onInsert, editorId);
+            initializeWidgetsTab(settings.dialog, onInsert, settings.editorId);
 
-            dialog.container.find(selectors.anyTab).click(function () {
+            settings.dialog.container.find(selectors.anyTab).click(function () {
                 setTimeout(function () {
-                    dialog.setFocus();
+                    settings.dialog.setFocus();
                 }, 100);
             });
 
-            initializeWidgets(dialog.container, dialog, onInsert);
+            initializeWidgets(settings.dialog.container, settings.dialog, onInsert);
 
-            htmlEditor.initializeHtmlEditor(editorId, '', {}, editInSourceMode);
-            if (enableInsertDynamicRegion) {
-                htmlEditor.enableInsertDynamicRegion(editorId, true, data.LastDynamicRegionNumber);
+            pagesContent.initializeCustomTextArea(settings.dialog);
+
+            if (settings.isMarkdown) {
+                htmlEditor.initializeMarkdownEditor(settings.editorId, '', {}, settings.editInSourceMode);
             }
 
-            pagesContent.initializeCustomTextArea(dialog);
+            if (!settings.isMarkdown) {
+                htmlEditor.initializeHtmlEditor(settings.editorId, '', {}, settings.editInSourceMode);
+                if (settings.enableInsertDynamicRegion) {
+                    htmlEditor.enableInsertDynamicRegion(settings.editorId, true, settings.data.LastDynamicRegionNumber);
+                }
 
-            codeEditor.initialize(dialog.container);
+                codeEditor.initialize(settings.dialog.container);
+            }
         };
 
         /**
