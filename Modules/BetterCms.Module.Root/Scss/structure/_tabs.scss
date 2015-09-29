@@ -78,10 +78,13 @@
     background: $gray-l10;
     border-bottom: $border-thin-gray;
     height: 30px;
-    left: -1px;
-    margin-top: -1px;
     padding: 25px 20px 0;
     position: relative;
+
+    @include virtual(before) {
+        @include position(absolute, 0 null 0 -1px);
+        border-left: 1px solid $gray-l10;
+    }
 
     > .bcms-tab-item {
         border: $border-thin-gray;
@@ -106,6 +109,7 @@
     position: relative;
 }
 
+//todo convert to sass or remove if not used
 .bcms-inner-grid-box:first-child {
     margin-left: 0;
 }
@@ -130,3 +134,4 @@
     background-color: #fcecec;
     border: 1px solid #e64343;
 }
+//todo end of

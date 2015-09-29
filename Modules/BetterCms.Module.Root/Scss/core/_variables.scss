@@ -21,10 +21,12 @@ $gray-l40: #c6c6c6;
 $gray-l50: #676767;
 $gray-l60: #555555;
 //
+
+$blue-main: #0383df;
+$sky-blue: #9ed4f0;
 $blue-5: #eff9fd;
 $blue-l30: #1892E4;
 $blue-l40: #0C7FC7;
-$blue-main: #0383df;
 $blue-l55: #0D7BC9;
 $blue-l60: #24597e;
 
@@ -37,6 +39,8 @@ $border-thin-gray: 1px solid $gray-l40;
 $border-thin-light-gray: 1px solid $gray-l20;
 $border-thin-blue: 1px solid $blue-l60;
 $border-thin-white: 1px solid $white;
+$border-overlay: 1px dashed $blue-l30;
+$border-content-actions: 1px solid $sky-blue;
 
 //module misc variables
 
@@ -56,4 +60,4 @@ $susy: (
         gutters: (40/60)
 );
 
-//module maps/keys
+//module global maps/keys

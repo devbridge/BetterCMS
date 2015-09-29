@@ -19,7 +19,7 @@ bettercms.define('bcms.content', ['bcms.jquery', 'bcms', 'bcms.modal', 'bcms.red
             contentEditInnerDiv: '.bcms-content-edit .bcms-content-icon',
             contentHistory: '.bcms-content-history',
             contentConfigure: '.bcms-content-configure',
-            enterChildContent: '.bcms-enter-child-content',
+            enterChildContent: '.bcms-content-edit-child',
 
             regionsAndContents: '.bcms-region-start, .bcms-region-end, .bcms-content-start, .bcms-content-end',
             regionOverlay: '#bcms-region-overlay-template',
@@ -31,7 +31,7 @@ bettercms.define('bcms.content', ['bcms.jquery', 'bcms', 'bcms.modal', 'bcms.red
             regionSortCancelButtons: '.bcms-region-sortcancel',
             regionButtons: '.bcms-region-button',
             regionSortWrappers: '.bcms-sort-wrapper',
-            regionSortBlock: '.bcms-sorting-block',
+            regionSortBlock: '.bcms-sort-block',
             regionTreeButtons: '.bcms-region-contentstree',
 
             masterPagesPathContainer: '.bcms-layout-path',
@@ -425,7 +425,7 @@ bettercms.define('bcms.content', ['bcms.jquery', 'bcms', 'bcms.modal', 'bcms.red
             });
 
             regionViewModel.sortBlock.sortable({
-                connectWith: '.bcms-sorting-block',
+                connectWith: '.bcms-sort-block',
                 dropOnEmpty: true,
                 placeholder: "bcms-sort-wrapper-placeholder",
                 tolerance: "intersect"

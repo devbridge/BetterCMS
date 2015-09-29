@@ -49,7 +49,7 @@ WriteLiteral(" type=\"text/html\"");
 
 WriteLiteral(" id=\"bcms-region-overlay-template\"");
 
-WriteLiteral(">\r\n    <div class=\"bcms-region-overlay bcms-layer\">\r\n");
+WriteLiteral(">\n    <div class=\"bcms-region-overlay bcms-layer\">\n");
 
             
             #line 5 "..\..\Views\Shared\Partial\Region.cshtml"
@@ -69,7 +69,7 @@ WriteLiteral("            <div");
 
 WriteLiteral(" class=\"bcms-region-actions\"");
 
-WriteLiteral(">\r\n                <div");
+WriteLiteral(">\n                <div");
 
 WriteLiteral(" class=\"bcms-region-button bcms-region-sortdone\"");
 
@@ -84,7 +84,7 @@ WriteLiteral(">");
             
             #line default
             #line hidden
-WriteLiteral("</div>\r\n                <div");
+WriteLiteral("</div>\n                <div");
 
 WriteLiteral(" class=\"bcms-region-button bcms-region-contentstree\"");
 
@@ -99,7 +99,7 @@ WriteLiteral(">");
             
             #line default
             #line hidden
-WriteLiteral("</div>\r\n                <div");
+WriteLiteral("</div>\n                <div");
 
 WriteLiteral(" class=\"bcms-region-button bcms-region-sortcancel\"");
 
@@ -114,11 +114,13 @@ WriteLiteral(">");
             
             #line default
             #line hidden
-WriteLiteral("</div>\r\n                <div");
+WriteLiteral("</div>\n                <div");
 
 WriteLiteral(" class=\"bcms-region-button bcms-region-addcontent\"");
 
-WriteLiteral("></div>\r\n                <div");
+WriteLiteral("></div>\n                ");
+
+WriteLiteral("\n                <div");
 
 WriteLiteral(" class=\"bcms-region-button bcms-region-addmarkdown\"");
 
@@ -130,22 +132,26 @@ WriteLiteral("></div>\r\n                <div");
 
 WriteLiteral(" class=\"bcms-region-button bcms-region-sortcontent\"");
 
-WriteLiteral("></div>\r\n            </div>\r\n");
+WriteLiteral("></div>\n            </div>\n");
 
 WriteLiteral("            <div");
 
-WriteLiteral(" class=\"bcms-sorting-block\"");
+WriteLiteral(" class=\"bcms-sort-block\"");
 
-WriteLiteral("></div>\r\n");
+WriteLiteral("></div>\n");
 
             
+<<<<<<< HEAD
             #line 17 "..\..\Views\Shared\Partial\Region.cshtml"
+=======
+            #line 16 "..\..\Views\Shared\Partial\Region.cshtml"
+>>>>>>> dev
         }
 
             
             #line default
             #line hidden
-WriteLiteral("    </div>\r\n</script>");
+WriteLiteral("    </div>\n</script>");
 
         }
     }
