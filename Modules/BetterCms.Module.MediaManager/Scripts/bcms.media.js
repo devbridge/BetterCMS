@@ -1567,14 +1567,8 @@ function ($, bcms, modal, siteSettings, forms, dynamicContent, messages, mediaUp
     */
     function addFileToEditor(fileUrl, fileName) {
         if (contentEditor != null) {
-            if (contentEditor.mode == 'source') {
-                var file = '<a href="' + fileUrl + '">' + fileName + '</a>';
-                var oldData = contentEditor.getData();
-
-                contentEditor.setData(oldData + file);
-            } else {
-                contentEditor.insertHtml('<a href="' + fileUrl + '">' + fileName + '</a>');
-            }
+            var file = '<a href="' + fileUrl + '">' + fileName + '</a>';
+            contentEditor.addHtml(file);
         }
     };
 
