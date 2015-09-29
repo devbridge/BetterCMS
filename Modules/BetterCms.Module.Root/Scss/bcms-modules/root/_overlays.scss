@@ -67,13 +67,6 @@ $overlay-control-buttons: (
         }
     }
 
-    @each $name, $icon in $overlay-mange-controls {
-        &-#{$name} {
-            @include size(30px 26px);
-            background: $blue-main url($icon) no-repeat center;
-        }
-    }
-
     &-addcontent {
         position: relative;
 
@@ -108,6 +101,13 @@ $overlay-control-buttons: (
 
         &:hover {
             background-color: darken($gray-l50, 10%);
+        }
+    }
+
+    @each $name, $icon in $overlay-mange-controls {
+        &-#{$name} {
+            @include size(30px 26px);
+            background: $blue-main url($icon) no-repeat center;
         }
     }
 }
