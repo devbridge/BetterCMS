@@ -112,7 +112,7 @@ WriteLiteral(" class=\"bcms-tab-header\"");
 
 WriteLiteral(">\r\n    <a");
 
-WriteLiteral(" class=\"bcms-tab bcms-tab-active\"");
+WriteLiteral(" class=\"bcms-tab-item bcms-active\"");
 
 WriteLiteral(" data-name=\"#bcms-tab-1\"");
 
@@ -120,14 +120,14 @@ WriteLiteral(">");
 
             
             #line 21 "..\..\Views\Widgets\EditHtmlContentWidget.cshtml"
-                                                           Write(PagesGlobalization.EditWidget_BasicPropertiesTab_Title);
+                                                            Write(PagesGlobalization.EditWidget_BasicPropertiesTab_Title);
 
             
             #line default
             #line hidden
 WriteLiteral("</a>\r\n    <a");
 
-WriteLiteral(" class=\"bcms-tab\"");
+WriteLiteral(" class=\"bcms-tab-item\"");
 
 WriteLiteral(" data-name=\"#bcms-tab-2\"");
 
@@ -135,14 +135,14 @@ WriteLiteral(">");
 
             
             #line 22 "..\..\Views\Widgets\EditHtmlContentWidget.cshtml"
-                                           Write(PagesGlobalization.EditWidget_OptionsTab_Title);
+                                                Write(PagesGlobalization.EditWidget_OptionsTab_Title);
 
             
             #line default
             #line hidden
 WriteLiteral("</a>\r\n    <a");
 
-WriteLiteral(" class=\"bcms-tab\"");
+WriteLiteral(" class=\"bcms-tab-item\"");
 
 WriteLiteral(" data-name=\"#bcms-tab-3\"");
 
@@ -150,7 +150,7 @@ WriteLiteral(">");
 
             
             #line 23 "..\..\Views\Widgets\EditHtmlContentWidget.cshtml"
-                                           Write(PagesGlobalization.EditWidget_AdvancedOptionsTab_Title);
+                                                Write(PagesGlobalization.EditWidget_AdvancedOptionsTab_Title);
 
             
             #line default
