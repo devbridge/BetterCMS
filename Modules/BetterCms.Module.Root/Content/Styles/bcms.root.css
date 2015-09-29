@@ -1940,12 +1940,15 @@ a.bcms-error-close {
   position: absolute;
   top: 100%;
   right: 0;
-  background-color: #0265ad;
   display: none;
   white-space: nowrap;
 }
 
 .bcms-region-pick-editor {
+  -webkit-transition: all 200ms;
+  -moz-transition: all 200ms;
+  transition: all 200ms;
+  background-color: #0265ad;
   line-height: 18px;
   padding: 5px 20px;
 }

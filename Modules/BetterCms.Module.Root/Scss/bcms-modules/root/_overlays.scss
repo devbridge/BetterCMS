@@ -81,12 +81,14 @@ $overlay-control-buttons: (
 
     &-options-block {
         @include position(absolute, 100% 0 null null);
-        background-color: darken($blue-main, 10%);
+
         display: none;
         white-space: nowrap;
     }
 
     &-pick-editor {
+        @include transition(all 200ms);
+        background-color: darken($blue-main, 10%);
         line-height: 18px;
         padding: 5px 20px;
 
