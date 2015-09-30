@@ -1481,7 +1481,16 @@
     <Content Include="gulp\watch-files\watch-files.js" />
     <EmbeddedResource Include="Scripts\ckeditor\code-config.js" />
     <EmbeddedResource Include="Scripts\ckeditor\plugins\cms-option\plugin.js" />
+    <Content Include="Scss\base_64\bcms-add-content.svg" />
+    <Content Include="Scss\base_64\bcms-overlay-delete.svg" />
+    <Content Include="Scss\base_64\bcms-overlay-edit-child.svg" />
+    <Content Include="Scss\base_64\bcms-overlay-edit.svg" />
     <Content Include="Scss\base_64\bcms-editor-options.svg" />
+    <Content Include="Scss\base_64\bcms-overlay-history.svg" />
+    <Content Include="Scss\base_64\bcms-manage.svg" />
+    <Content Include="Scss\base_64\bcms-overlay-options.svg" />
+    <Content Include="Scss\base_64\bcms-overlay-widget.svg" />
+    <Content Include="Scss\base_64\bcms-texture.svg" />
     <Content Include="Scss\base_64\validation.svg" />
     <Content Include="Views\Web.config" />
     <Content Include="Views\Category\CategoryTreeEdit.cshtml">
@@ -1490,7 +1499,6 @@
     </Content>
     <Content Include="package.json" />
     <Content Include="Scss\components\_forms.scss" />
-    <Content Include="Scss\bcms-modules\base\_messages.scss" />
     <Content Include="Scss\components\_normalize.scss" />
     <Content Include="Scss\components\_tables.scss" />
     <Content Include="Scss\core\_icons.scss" />
@@ -1499,15 +1507,12 @@
     <Content Include="Scss\blog.scss" />
     <Content Include="Scss\installation.scss" />
     <Content Include="Scss\pages.scss" />
-    <Content Include="Scss\bcms-modules\base\_index.scss" />
     <Content Include="Scss\bcms-modules\pages\_index.scss" />
     <Content Include="Scss\users.scss" />
     <Content Include="Scss\structure\_modules.scss" />
     <Content Include="Scss\bcms-modules\pages\_navigation.scss" />
-    <Content Include="Scss\bcms-modules\base\_notifications.scss" />
     <Content Include="Scss\media.scss" />
     <Content Include="Scss\structure\_layout.scss" />
-    <Content Include="Scss\bcms-modules\base\_controlpanel.scss" />
     <Content Include="Scss\structure\_tabs.scss" />
     <Content Include="Scss\bcms-modules\blog\_index.scss" />
     <Content Include="Scss\bcms-modules\installation\_index.scss" />
@@ -1520,8 +1525,6 @@
     <Content Include="Scss\bcms-modules\pages\_history.scss" />
     <Content Include="Scss\bcms-modules\pages\_editseo.scss" />
     <Content Include="Scss\bcms-modules\pages\_nodedropzone.scss" />
-    <Content Include="Scss\bcms-modules\base\_buttons.scss" />
-    <Content Include="Scss\bcms-modules\base\_overlays.scss" />
     <Content Include="Scss\root.scss" />
     <Content Include="Scss\bcms-modules\root\_buttons.scss" />
     <Content Include="Scss\bcms-modules\root\_controlpanel.scss" />

@@ -1,26 +1,15 @@
 @model BetterCms.Module.Root.ViewModels.Cms.RenderPageViewModel
 <script type="text/html" id="bcms-content-overlay">
-    <div class="bcms-content-overlay bcms-layer">
+    <div class="bcms-content-overlay">
         <div class="bcms-content-actions">
-            <div class="bcms-content-button bcms-enter-child-content">
-                <div class="bcms-content-icon"></div>
-            </div>
-            <div class="bcms-content-button bcms-content-history">
-                <div class="bcms-content-icon"></div>
-            </div>
-            <div class="bcms-content-button bcms-content-edit">
-                <div class="bcms-content-icon"></div>
-            </div>
-            <div class="bcms-content-button bcms-content-configure">
-                <div class="bcms-content-icon"></div>
-            </div>
+            <div class="bcms-content-button bcms-content-edit-child"></div>
+            <div class="bcms-content-button bcms-content-history"></div>
+            <div class="bcms-content-button bcms-content-edit"></div>
+            <div class="bcms-content-button bcms-content-configure"></div>
             @if (!Model.IsReadOnly && Model.HasEditRole)
             {
-                <div class="bcms-content-button bcms-content-delete">
-                    <div class="bcms-content-icon"></div>
-                </div>
+                <div class="bcms-content-button bcms-content-delete"></div>
             }
         </div>
     </div>
 </script>
-

@@ -32,7 +32,7 @@ bettercms.define('bcms.pages.properties', ['bcms.jquery', 'bcms', 'bcms.modal', 
 
                 optionsTab: '#bcms-tab-4',
                 translationsTabContent: '#bcms-tab-5 .bcms-page-translations-content',
-                javascriptCssTabOpener: '.bcms-tab[data-name="#bcms-tab-2"]'
+                javascriptCssTabOpener: '.bcms-tab-item[data-name="#bcms-tab-2"]'
             },
             links = {
                 loadEditPropertiesDialogUrl: null,

@@ -4,15 +4,11 @@
 
 .bcms-sidebar-search {
   position: relative;
-  padding: 15px 30px 15px 0;
+  margin: 15px 0;
 }
 
 .bcms-sidebar-search .bcms-editor-field-box {
   background-color: #fff;
-}
-
-.bcms-sidebar-search .bcms-btn-search {
-  margin-left: -5px;
 }
 
 .bcms-addnode-placement-holder {

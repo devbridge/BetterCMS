@@ -8,16 +8,16 @@ bettercms.define('bcms.tabs', ['bcms.jquery', 'bcms'], function ($, bcms) {
 
     // Classes that are used to maintain various UI states:
         classes = {
-            activeTabLink: 'bcms-tab-active'
+            activeTabLink: 'bcms-active'
         },
 
     // Selectors used in the module to locate DOM elements:
         selectors = {
             tabContent: '.bcms-tab-single',
             firstTabContent: '.bcms-tab-single:first',
-            tabLink: '.bcms-tab',
-            firstTabLink: 'a.bcms-tab:first',
-            activeTabLink: '.bcms-tab-active',
+            tabLink: '.bcms-tab-item',
+            firstTabLink: 'a.bcms-tab-item:first',
+            activeTabLink: '.bcms-active',
             tabsHeader: '.bcms-tab-header:not(.bcms-tab-header-inner)'
         },
 

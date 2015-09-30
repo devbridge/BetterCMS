@@ -1,35 +1,38 @@
 ﻿@using BetterCms.Module.MediaManager.Content.Resources
 @using BetterCms.Module.Root.Mvc.Helpers
-
 @model BetterCms.Module.MediaManager.ViewModels.MediaManager.MediaManagerIndexViewModel
 
-<div class="bcms-innertab-header">
-    <a class="bcms-tab bcms-tab-active" data-name="#bcms-tab-1" id="bcms-tab-images">@MediaGlobalization.ImagesTab_Title</a>
-    @*<a class="bcms-tab" data-name="#bcms-tab-2" id="bcms-tab-videos">@MediaGlobalization.VideosTab_Title</a>
-    <a class="bcms-tab" data-name="#bcms-tab-3" id="bcms-tab-audios">@MediaGlobalization.AudiosTab_Title</a>*@
-    <a class="bcms-tab" data-name="#bcms-tab-4" id="bcms-tab-files">@MediaGlobalization.FilesTab_Title</a>
+<div class="bcms-inner-tab-header">
+    <a class="bcms-tab-item bcms-active" data-name="#bcms-tab-1" id="bcms-tab-images">@MediaGlobalization.ImagesTab_Title</a>
+    @*<a class="bcms-tab-item" data-name="#bcms-tab-2" id="bcms-tab-videos">@MediaGlobalization.VideosTab_Title</a>
+        <a class="bcms-tab-item" data-name="#bcms-tab-3" id="bcms-tab-audios">@MediaGlobalization.AudiosTab_Title</a>*@
+    <a class="bcms-tab-item" data-name="#bcms-tab-4" id="bcms-tab-files">@MediaGlobalization.FilesTab_Title</a>
 </div>
 
 @Html.TabbedContentMessagesBox()
 
-<div id="bcms-tab-1" class="bcms-tab-single">
-    @Html.Partial("Partial/MediaManagerTab")
-</div>
-@*<div id="bcms-tab-2" class="bcms-tab-single">
-    @Html.Partial("Partial/MediaManagerTab")
-</div>
-<div id="bcms-tab-3" class="bcms-tab-single">
-    @Html.Partial("Partial/MediaManagerTab")
-</div>*@
-<div id="bcms-tab-4" class="bcms-tab-single">
-    @* Added inner div, because sometimes there is a need for showing custom messages *@
-    <div>
-        @if (Model.CustomFilesMessages != null)
-        {
-            @Html.TabbedContentCustomMessagesBox(Model.CustomFilesMessages)
-        }
+<div class="bcms-no-ui">
+    <div id="bcms-tab-1" class="bcms-tab-single">
         @Html.Partial("Partial/MediaManagerTab")
     </div>
-</div>
 
+    @*<div id="bcms-tab-2" class="bcms-tab-single">
+            @Html.Partial("Partial/MediaManagerTab")
+        </div>
+
+        <div id="bcms-tab-3" class="bcms-tab-single">
+            @Html.Partial("Partial/MediaManagerTab")
+        </div>*@
+
+    <div id="bcms-tab-4" class="bcms-tab-single">
+        @* Added inner div, because sometimes there is a need for showing custom messages *@
+        <div>
+            @if (Model.CustomFilesMessages != null)
+            {
+                @Html.TabbedContentCustomMessagesBox(Model.CustomFilesMessages)
+            }
+            @Html.Partial("Partial/MediaManagerTab")
+        </div>
+    </div>
+</div>
 @Html.Partial("Partial/MediaManagerTemplate")

@@ -7,5 +7,37 @@ body {
 }
 
 body {
+    font-family: $font-base-family;
     margin: 0;
+}
+
+a,
+div,
+button {
+    &:focus {
+        outline: none;
+    }
+}
+
+//todo remove when iFrame implemented
+[class*="bcms-"] {
+    font-family: $font-base-family;
+}
+
+.bcms-modal {
+    form {
+        width: auto !important;
+        max-width: none !important;
+        height: auto !important;
+        color: inherit !important;
+        margin: auto !important;
+        padding: 0 !important;
+        background: none !important;
+    }
+}
+
+//todo end of
+
+.bcms-no-ui {
+    //this class used for any element which doesn't require any styling.
 }

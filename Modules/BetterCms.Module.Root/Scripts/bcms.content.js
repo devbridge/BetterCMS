@@ -19,7 +19,7 @@ bettercms.define('bcms.content', ['bcms.jquery', 'bcms', 'bcms.modal', 'bcms.red
             contentEditInnerDiv: '.bcms-content-edit .bcms-content-icon',
             contentHistory: '.bcms-content-history',
             contentConfigure: '.bcms-content-configure',
-            enterChildContent: '.bcms-enter-child-content',
+            enterChildContent: '.bcms-content-edit-child',
 
             regionsAndContents: '.bcms-region-start, .bcms-region-end, .bcms-content-start, .bcms-content-end',
             regionOverlay: '#bcms-region-overlay-template',
@@ -30,7 +30,7 @@ bettercms.define('bcms.content', ['bcms.jquery', 'bcms', 'bcms.modal', 'bcms.red
             regionSortCancelButtons: '.bcms-region-sortcancel',
             regionButtons: '.bcms-region-button',
             regionSortWrappers: '.bcms-sort-wrapper',
-            regionSortBlock: '.bcms-sorting-block',
+            regionSortBlock: '.bcms-sort-block',
             regionTreeButtons: '.bcms-region-contentstree',
 
             masterPagesPathContainer: '.bcms-layout-path',
@@ -127,20 +127,14 @@ bettercms.define('bcms.content', ['bcms.jquery', 'bcms', 'bcms.modal', 'bcms.red
 
             var rectangle = $(this),
                 contentViewModel = rectangle.data('target'),
-                width = contentViewModel.width + 'px',
-                height = contentViewModel.height,
-                top = contentViewModel.top + 'px',
-                left = contentViewModel.left + 'px';
+                height = contentViewModel.height;
 
             if (height < 20) {
                 height = 20;
             }
 
             rectangle.css({
-                'width': width,
                 'height': height + 'px',
-                'top': top,
-                'left': left,
                 'opacity': 0
             });
         });
@@ -430,7 +424,7 @@ bettercms.define('bcms.content', ['bcms.jquery', 'bcms', 'bcms.modal', 'bcms.red
             });
 
             regionViewModel.sortBlock.sortable({
-                connectWith: '.bcms-sorting-block',
+                connectWith: '.bcms-sort-block',
                 dropOnEmpty: true,
                 placeholder: "bcms-sort-wrapper-placeholder",
                 tolerance: "intersect"
@@ -686,7 +680,7 @@ bettercms.define('bcms.content', ['bcms.jquery', 'bcms', 'bcms.modal', 'bcms.red
                 rectangle = $(template);
 
             rectangle.data('target', self);
-            rectangle.insertBefore(container);
+            self.region.overlay.append(rectangle);
             contentRectangles = contentRectangles.add(rectangle);
 
             if (bcms.editModeIsOn()) {
