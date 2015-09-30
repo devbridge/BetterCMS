@@ -1476,6 +1476,11 @@
     <EmbeddedResource Include="Scripts\ckeditor\code-config.js" />
     <EmbeddedResource Include="Scripts\ckeditor\plugins\cms-option\plugin.js" />
     <Content Include="Scss\base_64\bcms-add-content.svg" />
+    <Content Include="Scss\base_64\bcms-add-new.svg" />
+    <Content Include="Scss\base_64\bcms-clone.svg" />
+    <Content Include="Scss\base_64\bcms-delete-x.svg" />
+    <Content Include="Scss\base_64\bcms-notification-ok.svg" />
+    <Content Include="Scss\base_64\bcms-notification-warn.svg" />
     <Content Include="Scss\base_64\bcms-overlay-delete.svg" />
     <Content Include="Scss\base_64\bcms-overlay-edit-child.svg" />
     <Content Include="Scss\base_64\bcms-overlay-edit.svg" />
@@ -1484,7 +1489,10 @@
     <Content Include="Scss\base_64\bcms-manage.svg" />
     <Content Include="Scss\base_64\bcms-overlay-options.svg" />
     <Content Include="Scss\base_64\bcms-overlay-widget.svg" />
+    <Content Include="Scss\base_64\bcms-panel-texture.svg" />
+    <Content Include="Scss\base_64\bcms-settings.svg" />
     <Content Include="Scss\base_64\bcms-texture.svg" />
+    <Content Include="Scss\base_64\bcms-translate.svg" />
     <Content Include="Scss\base_64\validation.svg" />
     <Content Include="Views\Web.config" />
     <Content Include="Views\Category\CategoryTreeEdit.cshtml">

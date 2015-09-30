@@ -49,6 +49,10 @@
         &:active {
             background: $blue-l55;
         }
+
+        &.bcms-btn-gray {
+            @include add-gradient($top: $gray-l45, $bottom: $gray-l46);
+        }
     }
 
     &-grid {
@@ -101,6 +105,21 @@
         text-decoration: none;
         text-indent: -999em;
     }
+}
+
+//todo need to update
+.bcms-btn-plus {
+    background: url('images/sprite-base-2.png') no-repeat -44px -179px;
+    cursor: pointer;
+    display: inline-block;
+    line-height: 16px;
+    margin-left: 5px;
+    vertical-align: middle;
+    width: 16px;
+}
+
+div.bcms-btn-plus-expand {
+    background-position: -64px -179px;
 }
 
 //todo check if this button still relevant

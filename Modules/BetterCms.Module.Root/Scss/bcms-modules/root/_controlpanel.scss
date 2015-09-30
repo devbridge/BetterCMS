@@ -1,11 +1,20 @@
 @import '../../core/variables';
 
+$control-panel-buttons: (
+                ('add', $icon-bcms-add-new, $blue-l30, $blue-l40),
+                ('clone', $icon-bcms-clone, $blue-l30, $blue-l40),
+                ('blog-add', $icon-bcms-add-new, $blue-l30, $blue-l40),
+                ('translate', $icon-bcms-translate, $blue-l30, $blue-l40),
+                ('settings', $icon-bcms-settings, $gray-l45, $gray-l46),
+                ('delete', $icon-bcms-delete-x, $red-l60, $red-l70)
+);
+
 //module control panel global
 .bcms-sidemenu {
     @include position(fixed, 100px null null -260px);
     @include user-select();
     background-color: $black;
-    border-radius: 0 0 4px 0;
+    border-radius: 0 0 2px 0;
     color: $gray-l60;
     font-family: $font-base-family;
     font-size: 12px;
@@ -16,7 +25,8 @@
     &-header {
         background-color: $dark;
         box-sizing: border-box;
-        display: inline-block;
+        float: left;
+        margin-bottom: 5px;
         padding: 10px;
         position: relative;
         width: 100%;
@@ -26,16 +36,18 @@
         background-color: $dark;
         min-height: 190px;
         overflow: hidden;
-        padding: 10px 10px 0;
+        padding: 10px;
 
         > hr {
             border: {
                 top: $border-hr-control-top;
                 right: 0;
-                bottom: $border-hr-control-bottom;
+                bottom: 0;
                 left: 0;
             }
-            margin: 0;
+            float: left;
+            margin: 10px 0 0;
+            width: 100%;
         }
     }
 
@@ -45,18 +57,17 @@
     }
 
     &-btn {
-        background-color: $gray-l50;
-        background-image: -webkit-linear-gradient(top, $gray-l50 0, $gray-l60 100%);
-        background-image: linear-gradient(to bottom, $gray-l50 0, $gray-l60 100%);
+        @include size(100% 32px);
+        @include add-gradient($top: $gray-l50, $bottom: $gray-l60);
         border-radius: 2px;
         box-shadow: 0 0 1px 1px rgba($black, .2);
         box-sizing: border-box;
         color: $white;
         cursor: pointer;
+        float: left;
         font-size: 12px;
-        height: 32px;
         line-height: 32px;
-        margin: 10px 0;
+        margin: 10px 0 0;
         overflow: hidden;
         padding: 0 10px;
 
@@ -67,223 +78,108 @@
     }
 }
 
+//module panel handle
+.bcms-sidemenu {
+    &-handle {
+        @include user-select();
+        @include position(absolute, 0 -50px null null);
+        background-color: $black;
+        border-radius: 0 2px 2px 0;
+        padding-top: 5px;
+        width: 50px;
+    }
+
+    &-toggler {
+        cursor: pointer;
+    }
+
+    &-separator {
+        border-top: $border-hr-control-top;
+        height: 0;
+        margin: 10px auto;
+        width: 100%;
+    }
+
+    &-status {
+        background: url($icon-bcms-panel-texture);
+        overflow: hidden;
+        padding: 0 9px;
+    }
+}
+
 .bcms-buttons-block {
-    margin-bottom: 10px;
+    @include clearfix();
+    float: left;
+    width: 100%;
 
     > .bcms-btn-edit {
-        float: left;
     }
 
     > .bcms-btn-add {
-        float: left;
-        margin-bottom: 10px;
+        @include span(6);
     }
 
-    > .bcms-btn-clone,
-    > .bcms-btn-translate {
-        float: right;
-
+    > .bcms-btn-clone {
+        @include span(6 last);
     }
+
 }
 
-div.bcms-btn-ok {
-    background: url('images/sprite-base-1.png') no-repeat left -265px #676767;
-    background: url('images/sprite-base-1.png') no-repeat left -265px, -webkit-linear-gradient(top, #676767 0, #555555 100%);
-    background: url('images/sprite-base-1.png') no-repeat left -265px, linear-gradient(to bottom, #676767 0, #555555 100%);
-    padding-left: 30px;
-}
+div {
+    //module control panel buttons
+    @each $name, $icon, $top-color, $bottom-color in $control-panel-buttons {
+        &.bcms-btn-#{$name} {
+            @include add-gradient($top: $top-color, $bottom: $bottom-color);
+            padding-right: 35px;
+            position: relative;
 
-div.bcms-btn-ok:active {
-    background: url('images/sprite-base-1.png') no-repeat left -265px #555;
-}
+            @include virtual(after) {
+                @include size(20px);
+                @include positioning($center-y: true);
+                right: 6px;
+                background: url($icon) no-repeat center;
+            }
+        }
+    }
 
-div.bcms-btn-warn {
-    background: url('images/sprite-base-1.png') no-repeat left -165px #676767;
-    background: url('images/sprite-base-1.png') no-repeat left -165px, -webkit-linear-gradient(top, #676767 0, #555555 100%);
-    background: url('images/sprite-base-1.png') no-repeat left -165px, linear-gradient(to bottom, #676767 0, #555555 100%);
-    padding-left: 30px;
-}
+    //module control panel buttons override
+    &.bcms-btn {
+        &-settings {
+            width: 100%;
+        }
 
-div.bcms-btn-warn:active {
-    background: url('images/sprite-base-1.png') no-repeat left -165px #555;
-}
+        &-delete {
+            @include span(6 last);
 
-div.bcms-btn-add {
-    background-color: #1892E4;
-    background-image: linear-gradient(to bottom, #1892E4 0, #0C7FC7 100%);
-    margin-bottom: 20px;
-    padding-right: 35px;
-    position: relative;
-}
+            + .bcms-btn-settings {
+                @include span(6);
+            }
+        }
 
-div.bcms-btn-add:active {
-    background-color: #0C7FC7;
-}
+        &-ok {
+            position: relative;
+            padding-left: 30px;
 
-div.bcms-btn-add:after {
-    background: url('images/sprite-base-1.png') no-repeat -7px 1px;
-    content: "";
-    height: 20px;
-    margin-top: -10px;
-    position: absolute;
-    right: 6px;
-    top: 50%;
-    width: 20px;
-}
+            @include virtual(before) {
+                @include size(16px);
+                @include positioning($center-y: true);
+                left: 9px;
+                background: url($icon-bcms-notification-ok) no-repeat center;
+            }
+        }
 
-div.bcms-btn-clone {
-    background-color: #1892E4;
-    background-image: linear-gradient(to bottom, #1892E4 0, #0C7FC7 100%);
-    padding-right: 35px;
-    position: relative;
-}
+        &-warn {
+            position: relative;
+            padding-left: 30px;
 
-div.bcms-btn-clone:active {
-    background-color: #0C7FC7;
-}
-
-div.bcms-btn-clone:after {
-    background: url('images/sprite-base-1.png') no-repeat -6px -219px;
-    content: "";
-    height: 20px;
-    margin-top: -10px;
-    position: absolute;
-    right: 6px;
-    top: 50%;
-    width: 20px;
-}
-
-div.bcms-btn-translate {
-    background-color: #1892E4;
-    background-image: linear-gradient(to bottom, #1892E4 0, #0C7FC7 100%);
-    padding-right: 35px;
-    position: relative;
-}
-
-div.bcms-btn-translate:active {
-    background-color: #0C7FC7;
-}
-
-div.bcms-btn-translate:after {
-    background: url('images/sprite-base-1.png') no-repeat 0 -1183px;
-    content: "";
-    height: 23px;
-    margin-top: -11px;
-    position: absolute;
-    right: 6px;
-    top: 50%;
-    width: 30px;
-}
-
-div.bcms-btn-settings {
-    background-color: #8E8E8E;
-    background-image: linear-gradient(to bottom, #8E8E8E 0, #787878 100%);
-    padding-right: 35px;
-    position: relative;
-}
-
-div.bcms-btn-settings:active {
-    background-color: #787878;
-}
-
-div.bcms-btn-settings:after {
-    background: url('images/sprite-base-1.png') no-repeat -7px -57px;
-    content: "";
-    height: 20px;
-    margin-top: -10px;
-    position: absolute;
-    right: 6px;
-    top: 50%;
-    width: 20px;
-}
-
-.bcms-btn-delete {
-    background-color: #A63333;
-    background-image: linear-gradient(to bottom, #A63333 0, #8E2626 100%);
-    padding-right: 35px;
-    position: relative;
-}
-
-.bcms-btn-delete:active {
-    background-color: #8E2626;
-}
-
-.bcms-btn-delete:after {
-    background: url('images/sprite-base-1.png') no-repeat -7px -114px;
-    content: "";
-    height: 20px;
-    margin-top: -10px;
-    position: absolute;
-    right: 6px;
-    top: 50%;
-    width: 20px;
-}
-
-.bcms-btn-plus {
-    background: url('images/sprite-base-2.png') no-repeat -44px -179px;
-    cursor: pointer;
-    display: inline-block;
-    line-height: 16px;
-    margin-left: 5px;
-    vertical-align: middle;
-    width: 16px;
-}
-
-div.bcms-btn-plus-expand {
-    background-position: -64px -179px;
-}
-
-div.bcms-btn-blue {
-    background: #1892E4;
-    background: -webkit-linear-gradient(top, #1892E4 0, #0C7FC7 100%);
-    background: linear-gradient(to bottom, #1892E4 0, #0C7FC7 100%);
-}
-
-div.bcms-btn-blue:active {
-    background: #0C7FC7;
-}
-
-div.bcms-btn-red {
-    background: #A63333;
-    background: -webkit-linear-gradient(top, #A63333 0, #8E2626 100%);
-    background: linear-gradient(to bottom, #A63333 0, #8E2626 100%);
-}
-
-div.bcms-btn-red:active {
-    background: #8E2626;
-}
-
-div.bcms-btn-gray {
-    background: #8E8E8E;
-    background: -webkit-linear-gradient(top, #8E8E8E 0, #787878 100%);
-    background: linear-gradient(to bottom, #8E8E8E 0, #787878 100%);
-}
-
-div.bcms-btn-gray:active {
-    background: #787878;
-}
-
-//module sidebar buttons for blog
-div.bcms-btn-blog-add {
-    background-color: #1892E4;
-    background-image: linear-gradient(to bottom, #1892E4 0, #0C7FC7 100%);
-    padding-right: 35px;
-    position: relative;
-}
-
-div.bcms-btn-blog-add:active {
-    background-color: #0C7FC7;
-}
-
-div.bcms-btn-blog-add:after {
-    background: url('images/sprite-blog.png') no-repeat -7px 1px;
-    content: "";
-    height: 20px;
-    margin-top: -10px;
-    position: absolute;
-    right: 6px;
-    top: 50%;
-    width: 20px;
+            @include virtual(before) {
+                @include size(16px);
+                @include positioning($center-y: true);
+                left: 9px;
+                background: url($icon-bcms-notification-warn) no-repeat center;
+            }
+        }
+    }
 }
 
 .bcms-version-number {
@@ -344,10 +240,10 @@ div.bcms-btn-blog-add:after {
 }
 
 .bcms-sidemenu-credentials {
-    left: 15px;
+    left: 10px;
     position: absolute;
     top: 10px;
-    width: 145px;
+    width: 155px;
 }
 
 .bcms-sidemenu-username {
@@ -466,20 +362,20 @@ div.bcms-btn-blog-add:after {
 }
 
 .bcms-sidemenu-openclosearrow {
-    background: url('images/sprite-base-1.png') no-repeat center -548px;
+    background: url('images/sprite-base-1.png') no-repeat center -552px;
+    box-sizing: border-box;
     color: #fff;
     font-size: 10px;
-    height: 20px;
-    margin: 0 auto;
+    height: 46px;
+    margin: 0 auto 5px;
     overflow: hidden;
-    padding-top: 30px;
     text-indent: 9999px;
     text-transform: uppercase;
     width: 50px;
 }
 
 .bcms-state-open .bcms-sidemenu-openclosearrow {
-    background-position: center -603px;
+    background-position: center -607px;
 }
 
 .bcms-sidemenu-right .bcms-sidemenu-openclosearrow {
@@ -488,35 +384,6 @@ div.bcms-btn-blog-add:after {
 
 .bcms-sidemenu-right.bcms-state-open .bcms-sidemenu-openclosearrow {
     background-position: 12px -437px;
-}
-
-.bcms-sidemenu-status {
-    background: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAQAAAAECAIAAAFRlDm/AAAAIElEQVQI12PQ0NBgkJeXB2EQE4iReJZgIA8GDBAKIgQAu28HdVPQ4uUAAAAASUVORK5CYII=') repeat left top #000;
-    padding: 1px 0;
-}
-
-.bcms-sidemenu-separator {
-    background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABgAAAACCAYAAABCOhwFAAAABHNCSVQICAgIfAhkiAAAAAlwSFlzAAALEgAACxIB0t1+/AAAABZ0RVh0Q3JlYXRpb24gVGltZQAwNy8xNy8xMozYmIoAAAAcdEVYdFNvZnR3YXJlAEFkb2JlIEZpcmV3b3JrcyBDUzbovLKMAAAAIUlEQVQImWNMSEj4z0BDwKijo/OfiYmJgZGRkboGQ80DACggA7Gicq8rAAAAAElFTkSuQmCC');
-    height: 2px;
-    margin: 10px auto;
-    width: 24px;
-}
-
-#bcms-sidemenu-handle {
-    background: #000000;
-    border-radius: 0 4px 4px 0;
-    position: absolute;
-    right: -50px;
-    top: 0;
-    width: 50px;
-    -moz-user-select: none;
-    -webkit-user-select: none;
-    user-select: none;
-}
-
-#bcms-sidemenu-hide {
-    cursor: pointer;
-    padding: 0 0 10px 0;
 }
 
 #bcms-sidemenu-switch {
@@ -581,11 +448,9 @@ div.bcms-btn-blog-add:after {
     display: block;
     font-size: 12px;
     height: 34px;
-    margin: 0 0 10px;
     overflow: hidden;
     padding: 8px 5px 8px 30px;
     white-space: nowrap;
-    width: 225px;
     -webkit-appearance: button;
     -webkit-padding-end: 30px;
     -webkit-padding-start: 30px;
@@ -606,3 +471,24 @@ div.bcms-btn-blog-add:after {
 select.bcms-select-published {
     background-position: 0 -34px;
 }
+
+//todo check do we really need it
+//div.bcms-btn-red {
+//    background: #A63333;
+//    background: -webkit-linear-gradient(top, #A63333 0, #8E2626 100%);
+//    background: linear-gradient(to bottom, #A63333 0, #8E2626 100%);
+//}
+//
+//div.bcms-btn-red:active {
+//    background: #8E2626;
+//}
+//
+//div.bcms-btn-blue {
+//    background: #1892E4;
+//    background: -webkit-linear-gradient(top, #1892E4 0, #0C7FC7 100%);
+//    background: linear-gradient(to bottom, #1892E4 0, #0C7FC7 100%);
+//}
+//
+//div.bcms-btn-blue:active {
+//    background: #0C7FC7;
+//}

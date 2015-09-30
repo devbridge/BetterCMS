@@ -314,7 +314,7 @@ namespace BetterCms.Module.Root
                         {
                             Title = page => RootGlobalization.Sidebar_SiteSettingsButtonTitle,
                             CssClass = page => "bcms-sidemenu-btn bcms-btn-settings",
-                            Order = 500,
+                            Order = 900,
                         }
                 };
         }

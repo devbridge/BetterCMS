@@ -378,7 +378,7 @@ namespace BetterCms.Module.Pages
 
                     new ButtonActionProjection(pagesJsModuleIncludeDescriptor, page => "deleteCurrentPage")
                         {
-                            Order = 900,
+                            Order = 800,
                             Title = page => PagesGlobalization.Sidebar_DeletePageButtonTitle,
                             CssClass = page => "bcms-sidemenu-btn bcms-btn-delete",
                             AccessRole = RootModuleConstants.UserRoles.DeleteContent

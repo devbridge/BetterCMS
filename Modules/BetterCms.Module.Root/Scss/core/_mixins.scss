@@ -72,6 +72,20 @@
     }
 }
 
+@mixin add-gradient($top: null, $bottom: null, $fallback: null) {
+    @if ($fallback == true) {
+        background-color: $bottom;
+    } @else {
+        background-image: -webkit-linear-gradient(top, $top 0, $bottom 100%);
+        background-image: linear-gradient(to bottom, $top 0, $bottom 100%);
+    }
+
+    &:active {
+        background-image: -webkit-linear-gradient(top, $bottom 0, $bottom 100%);
+        background-image: linear-gradient(to bottom, $bottom 0, $bottom 100%);
+    }
+}
+
 //module functions
 //class constructor
 //@mixin construct-button($get-map: null) {
