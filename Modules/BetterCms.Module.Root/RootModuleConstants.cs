@@ -26,6 +26,11 @@
         public const string EditableGridCellTemplate = "~/Areas/bcms-root/Views/Shared/EditableGrid/Partial/Cell.cshtml";
         
         /// <summary>
+        /// The editable grid cell template.
+        /// </summary>
+        public const string EditableGridMultilineTextCellTemplate = "~/Areas/bcms-root/Views/Shared/EditableGrid/Partial/MultilineTextCell.cshtml";
+        
+        /// <summary>
         /// The editable grid drop down cell template.
         /// </summary>
         public const string EditableGridDropDownCellTemplate = "~/Areas/bcms-root/Views/Shared/EditableGrid/Partial/DropDownCell.cshtml";

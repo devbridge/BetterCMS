@@ -16,6 +16,7 @@ bettercms.define('bcms.options', ['bcms.jquery', 'bcms', 'bcms.ko.extenders', 'b
             globalization = {
                 deleteOptionConfirmMessage: null,
                 optionTypeText: null,
+                optionTypeMultilineText: null,
                 optionTypeInteger: null,
                 optionTypeBoolean: null,
                 optionTypeDateTime: null,
@@ -32,6 +33,7 @@ bettercms.define('bcms.options', ['bcms.jquery', 'bcms', 'bcms.ko.extenders', 'b
                 floatType: 3,
                 dateTimeType: 4,
                 boolType: 5,
+                textMultilineType: 21,
                 javaScriptUrlType: 51,
                 cssUrlType: 52,
                 customType: 99
@@ -213,6 +215,7 @@ bettercms.define('bcms.options', ['bcms.jquery', 'bcms', 'bcms.ko.extenders', 'b
 
                 self.optionTypes = [];
                 self.optionTypes.push({ id: optionTypes.textType, name: globalization.optionTypeText });
+                self.optionTypes.push({ id: optionTypes.textMultilineType, name: globalization.optionTypeMultilineText });
                 self.optionTypes.push({ id: optionTypes.integerType, name: globalization.optionTypeInteger });
                 self.optionTypes.push({ id: optionTypes.floatType, name: globalization.optionTypeFloat });
                 self.optionTypes.push({ id: optionTypes.dateTimeType, name: globalization.optionTypeDateTime });

@@ -4,8 +4,13 @@
 @model BetterCms.Module.Pages.Mvc.EditableGrid.OptionValueEditableGridColumn
 
 @* Text type *@
-<!-- ko if: !useDefaultValue() && type() != 5 && type() != 4 && type() != 99 -->
+<!-- ko if: !useDefaultValue() && type() != 5 && type() != 4 && type() != 21 && type() != 99 -->
     @Html.Partial(RootModuleConstants.EditableGridCellTemplate)
+<!-- /ko -->
+
+@* Multi-line Text type *@
+<!-- ko if: !useDefaultValue() && type() == 21 -->
+    @Html.Partial(RootModuleConstants.EditableGridMultilineTextCellTemplate)
 <!-- /ko -->
 
 @* Boolean *@
