@@ -51,8 +51,8 @@ namespace ASP
         {
 WriteLiteral("\r\n");
 
-WriteLiteral("\r\n<!-- ko if: !useDefaultValue() && type() != 5 && type() != 4 && type() != 99 --" +
-">\r\n");
+WriteLiteral("\r\n<!-- ko if: !useDefaultValue() && type() != 5 && type() != 4 && type() != 21 &&" +
+" type() != 99 -->\r\n");
 
 WriteLiteral("    ");
 

@@ -12,16 +12,15 @@
         {
             <!-- /ko -->
             <!-- ko if: isActive() && (!@(Model.ValueBind).editingIsDisabled || !@(Model.ValueBind).editingIsDisabled()) -->
-            <input type="text" class="bcms-editor-field-box" data-bind="
-                   css { 'bcms-input-validation-error'
-                   !isnew() && @(Model.ValueBind) .haserror && @(Model.ValueBind) .haserror() },
-                   value @Model.ValueBind ,
-                   valueupdate 'afterkeydown',
-                   escpress oncanceledit,
-                   afterrender initinput($element, @Model.ValueBind ),
-                   event {blur onblurfield, focus onstopevent, click onstopevent}
-                   @(!string.IsNullOrWhiteSpace(Model.CustomBinding) ? string.Format(", {0}", Model.CustomBinding) : string.Empty)
-                   @(Model.AutoFocus ? ", hasfocus: isActive() && hasFocus" : string.Empty) " />
+            <textarea class="bcms-editor-field-area" data-bind="
+                css: { 'bcms-input-validation-error': !isNew() && @(Model.ValueBind).hasError && @(Model.ValueBind).hasError() },
+                value: @Model.ValueBind, 
+                valueUpdate: 'afterkeydown', 
+                escPress: onCancelEdit, 
+                afterRender: initInput($element, @Model.ValueBind),
+                event: {blur: onBlurField, focus: onStopEvent, click: onStopEvent}
+                @(!string.IsNullOrWhiteSpace(Model.CustomBinding) ? string.Format(", {0}", Model.CustomBinding) : string.Empty)
+                @(Model.AutoFocus ? ", hasfocus: isActive() && hasFocus" : string.Empty) "></textarea>
             <!-- ko if: !isNew() &&  @(Model.ValueBind).hasError && @(Model.ValueBind).hasError() -->
             <span class="bcms-field-validation-error">
                 <span data-bind="html: @(Model.ValueBind).validationMessage()"></span>
