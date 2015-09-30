@@ -1,19 +1,26 @@
-﻿using BetterModules.Core.DataAccess;
+﻿using System.Web.Http;
+using System.Web.Http.ModelBinding;
+
+using BetterCms.Module.Api.ApiExtensions;
+
+using BetterModules.Core.DataAccess;
 
 using ServiceStack.ServiceInterface;
 
 namespace BetterCms.Module.Api.Operations.Pages.Widgets.Widget.HtmlContentWidget.Options
 {
-    public class HtmlContentWidgetOptionsService : Service, IHtmlContentWidgetOptionsService
+    [RoutePrefix("bcms-api")]
+    public class HtmlContentWidgetOptionsController : ApiController, IHtmlContentWidgetOptionsService
     {
         private readonly IRepository repository;
 
-        public HtmlContentWidgetOptionsService(IRepository repository)
+        public HtmlContentWidgetOptionsController(IRepository repository)
         {
             this.repository = repository;
         }
 
-        public GetHtmlContentWidgetOptionsResponse Get(GetHtmlContentWidgetOptionsRequest request)
+        [Route("widgets/html-content/{WidgetId}/options")]
+        public GetHtmlContentWidgetOptionsResponse Get([ModelBinder(typeof(JsonModelBinder))]GetHtmlContentWidgetOptionsRequest request)
         {
             var results = WidgetOptionsHelper.GetWidgetOptionsResponse(repository, request.WidgetId, request);
 

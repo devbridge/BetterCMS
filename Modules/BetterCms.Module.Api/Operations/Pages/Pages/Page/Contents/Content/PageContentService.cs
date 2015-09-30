@@ -1,6 +1,9 @@
 ﻿using System;
 using System.Linq;
+using System.Web.Http;
+using System.Web.Http.ModelBinding;
 
+using BetterCms.Module.Api.ApiExtensions;
 using BetterCms.Module.Api.Extensions;
 using BetterCms.Module.Api.Operations.Pages.Pages.Page.Contents.Content.Options;
 
@@ -18,7 +21,7 @@ namespace BetterCms.Module.Api.Operations.Pages.Pages.Page.Contents.Content
     /// <summary>
     /// Default page content CRUD service.
     /// </summary>
-    public class PageContentService : Service, IPageContentService
+    public class PageContentController : ApiController, IPageContentService
     {
         /// <summary>
         /// The options service.
@@ -41,13 +44,13 @@ namespace BetterCms.Module.Api.Operations.Pages.Pages.Page.Contents.Content
         private readonly Module.Root.Services.IOptionService rootOptionService;
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="PageContentService" /> class.
+        /// Initializes a new instance of the <see cref="PageContentController" /> class.
         /// </summary>
         /// <param name="optionsService">The options service.</param>
         /// <param name="repository">The repository.</param>
         /// <param name="unitOfWork">The unit of work.</param>
         /// <param name="rootOptionService">The root option service.</param>
-        public PageContentService(IPageContentOptionsService optionsService, 
+        public PageContentController(IPageContentOptionsService optionsService, 
             IRepository repository, 
             IUnitOfWork unitOfWork,
             Module.Root.Services.IOptionService rootOptionService)
@@ -77,7 +80,8 @@ namespace BetterCms.Module.Api.Operations.Pages.Pages.Page.Contents.Content
         /// </summary>
         /// <param name="request">The request.</param>
         /// <returns><c>GetPageContentResponse</c> with a page content.</returns>
-        public GetPageContentResponse Get(GetPageContentRequest request)
+        [Route("bcms-api/pages/{PageId}/contents/{PageContentId}")]
+        public GetPageContentResponse Get([ModelBinder(typeof(JsonModelBinder))] GetPageContentRequest request)
         {
             var model =
                 repository.AsQueryable<PageContent>(content => content.Id == request.PageContentId && content.Page.Id == request.PageId)
@@ -126,6 +130,8 @@ namespace BetterCms.Module.Api.Operations.Pages.Pages.Page.Contents.Content
         /// </summary>
         /// <param name="request">The request.</param>
         /// <returns><c>PutPageContentResponse</c> with saved page content id.</returns>
+        [Route("bcms-api/pages/{PageId}/contents/{Id}")]
+        [UrlPopulator]
         public PutPageContentResponse Put(PutPageContentRequest request)
         {
             var isNew = !request.Id.HasValue || request.Id.Value.HasDefaultValue();
@@ -204,6 +210,8 @@ namespace BetterCms.Module.Api.Operations.Pages.Pages.Page.Contents.Content
         /// </summary>
         /// <param name="request">The request.</param>
         /// <returns><c>DeletePageContentResponse</c> with success status.</returns>
+        [Route("bcms-api/pages/{PageId}/contents/{Id}")]
+        [UrlPopulator]
         public DeletePageContentResponse Delete(DeletePageContentRequest request)
         {
             if (request.Data == null || request.Id.HasDefaultValue())

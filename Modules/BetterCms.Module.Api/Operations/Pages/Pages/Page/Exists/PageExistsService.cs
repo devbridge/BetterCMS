@@ -1,4 +1,8 @@
 ﻿using System.Linq;
+using System.Web.Http;
+using System.Web.Http.ModelBinding;
+
+using BetterCms.Module.Api.ApiExtensions;
 
 using BetterModules.Core.DataAccess;
 using BetterCms.Module.Pages.Services;
@@ -9,22 +13,22 @@ using ServiceStack.ServiceInterface;
 
 namespace BetterCms.Module.Api.Operations.Pages.Pages.Page.Exists
 {
-    public class PageExistsService : Service, IPageExistsService
+    public class PageExistsController : ApiController, IPageExistsService
     {
         private readonly IRepository repository;
 
         private readonly IUrlService urlService;
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="PageExistsService" /> class.
+        /// Initializes a new instance of the <see cref="PageExistsController" /> class.
         /// </summary>
-        public PageExistsService(IRepository repository, IUrlService urlService)
+        public PageExistsController(IRepository repository, IUrlService urlService)
         {
             this.repository = repository;
             this.urlService = urlService;
         }
-
-        public PageExistsResponse Get(PageExistsRequest request)
+        [Route("bcms-api/page-exists/{PageUrl}")]
+        public PageExistsResponse Get([ModelBinder(typeof(JsonModelBinder))] PageExistsRequest request)
         {
             var url = urlService.FixUrl(request.PageUrl);
 

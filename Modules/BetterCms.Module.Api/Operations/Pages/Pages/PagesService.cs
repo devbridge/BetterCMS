@@ -1,11 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Web.Http;
+using System.Web.Http.ModelBinding;
 
 using BetterModules.Core.DataAccess;
 using BetterCms.Core.DataContracts.Enums;
 using BetterCms.Core.Security;
-
+using BetterCms.Module.Api.ApiExtensions;
 using BetterCms.Module.Api.Helpers;
 using BetterCms.Module.Api.Infrastructure;
 using BetterCms.Module.Api.Operations.Pages.Pages.Page;
@@ -19,8 +21,6 @@ using BetterCms.Module.Root.Services;
 
 using NHibernate.Linq;
 
-using ServiceStack.ServiceInterface;
-
 using AccessLevel = BetterCms.Module.Api.Operations.Root.AccessLevel;
 
 namespace BetterCms.Module.Api.Operations.Pages.Pages
@@ -28,7 +28,7 @@ namespace BetterCms.Module.Api.Operations.Pages.Pages
     /// <summary>
     /// Default pages service for CRUD.
     /// </summary>
-    public class PagesService : Service, IPagesService
+    public class PagesController : ApiController, IPagesService
     {
         /// <summary>
         /// The repository.
@@ -71,7 +71,7 @@ namespace BetterCms.Module.Api.Operations.Pages.Pages
         /// <param name="searchPagesService">The search pages service.</param>
         /// <param name="accessControlService">The access control service.</param>
         /// <param name="pageService">The page service.</param>
-        public PagesService(
+        public PagesController(
             IRepository repository,
             IOptionService optionService,
             IMediaFileUrlResolver fileUrlResolver,
@@ -94,7 +94,8 @@ namespace BetterCms.Module.Api.Operations.Pages.Pages
         /// </summary>
         /// <param name="request">The request.</param>
         /// <returns><c>GetPagesResponse</c> with page list.</returns>
-        public GetPagesResponse Get(GetPagesRequest request)
+        [ValidationAtttibute]
+        public GetPagesResponse Get([ModelBinder(typeof(JsonModelBinder))] GetPagesRequest request)
         {
             request.Data.SetDefaultOrder("Title");
 

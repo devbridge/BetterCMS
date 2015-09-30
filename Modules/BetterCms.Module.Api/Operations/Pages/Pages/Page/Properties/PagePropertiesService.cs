@@ -1,13 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Web.Http;
+using System.Web.Http.ModelBinding;
 
 using BetterCms.Core.DataContracts.Enums;
 using BetterCms.Core.Exceptions.Api;
 using BetterCms.Core.Exceptions.Mvc;
 using BetterCms.Core.Security;
 using BetterCms.Core.Services;
-
+using BetterCms.Module.Api.ApiExtensions;
 using BetterCms.Module.Api.Extensions;
 using BetterCms.Module.Api.Helpers;
 using BetterCms.Module.Api.Operations.Root;
@@ -40,7 +42,7 @@ namespace BetterCms.Module.Api.Operations.Pages.Pages.Page.Properties
     /// <summary>
     /// Default page properties CRUD service.
     /// </summary>
-    public class PagePropertiesService : Service, IPagePropertiesService
+    public class PagePropertiesController : ApiController, IPagePropertiesService
     {
         /// <summary>
         /// The repository.
@@ -98,7 +100,7 @@ namespace BetterCms.Module.Api.Operations.Pages.Pages.Page.Properties
         private ICategoryService categoryService;
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="PagePropertiesService" /> class.
+        /// Initializes a new instance of the <see cref="PagePropertiesController" /> class.
         /// </summary>
         /// <param name="repository">The repository.</param>
         /// <param name="urlService">The URL service.</param>
@@ -110,7 +112,7 @@ namespace BetterCms.Module.Api.Operations.Pages.Pages.Page.Properties
         /// <param name="unitOfWork">The unit of work.</param>
         /// <param name="pageService">The page service.</param>
         /// <param name="securityService">The security service.</param>
-        public PagePropertiesService(
+        public PagePropertiesController(
             IRepository repository,
             IUrlService urlService,
             IOptionService optionService,
@@ -143,7 +145,10 @@ namespace BetterCms.Module.Api.Operations.Pages.Pages.Page.Properties
         /// <returns>
         ///   <c>GetPagePropertiesResponse</c> with a page properties data.
         /// </returns>
-        public GetPagePropertiesResponse Get(GetPagePropertiesRequest request)
+        [Route("bcms-api/page-properties/{PageId}")]
+        [Route("bcms-api/page-properties/by-url/{PageUrl}")]
+        [ValidationAtttibute]
+        public GetPagePropertiesResponse Get([ModelBinder(typeof(JsonModelBinder))] GetPagePropertiesRequest request)
         {
             var query = repository.AsQueryable<PageProperties>();
 
@@ -441,6 +446,7 @@ namespace BetterCms.Module.Api.Operations.Pages.Pages.Page.Properties
         /// </summary>
         /// <param name="request">The request.</param>
         /// <returns><c>PostPageResponse</c> with page data.</returns>
+        [Route("bcms-api/page-properties/")]
         public PostPagePropertiesResponse Post(PostPagePropertiesRequest request)
         {
             var result = Put(
@@ -458,6 +464,8 @@ namespace BetterCms.Module.Api.Operations.Pages.Pages.Page.Properties
         /// </summary>
         /// <param name="request">The request.</param>
         /// <returns><c>PutPageResponse</c> with created or updated item id.</returns>
+        [Route("bcms-api/page-properties/{Id}")]
+        [UrlPopulator]
         public PutPagePropertiesResponse Put(PutPagePropertiesRequest request)
         {
             if (request.Data.IsMasterPage)
@@ -658,6 +666,8 @@ namespace BetterCms.Module.Api.Operations.Pages.Pages.Page.Properties
         /// </summary>
         /// <param name="request">The request.</param>
         /// <returns><c>DeletePageResponse</c> with success status.</returns>
+        [Route("bcms-api/page-properties/{Id}")]
+        [UrlPopulator]
         public DeletePagePropertiesResponse Delete(DeletePagePropertiesRequest request)
         {
             var model = new DeletePageViewModel

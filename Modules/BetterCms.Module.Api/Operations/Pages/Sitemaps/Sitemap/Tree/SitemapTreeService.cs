@@ -1,9 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Web.Http;
+using System.Web.Http.ModelBinding;
 
 using BetterModules.Core.DataAccess;
 using BetterCms.Core.DataContracts.Enums;
+using BetterCms.Module.Api.ApiExtensions;
 using BetterCms.Module.Pages.Helpers;
 using BetterCms.Module.Root.Mvc;
 
@@ -13,19 +16,22 @@ using ServiceStack.ServiceInterface;
 
 namespace BetterCms.Module.Api.Operations.Pages.Sitemaps.Sitemap.Tree
 {
-    public class SitemapTreeService : Service, ISitemapTreeService
+    [RoutePrefix("bcms-api")]
+    public class SitemapTreeController : ApiController, ISitemapTreeService
     {
         private readonly IRepository repository;
 
         private readonly ICmsConfiguration cmsConfiguration;
 
-        public SitemapTreeService(IRepository repository, ICmsConfiguration cmsConfiguration)
+        public SitemapTreeController(IRepository repository, ICmsConfiguration cmsConfiguration)
         {
             this.repository = repository;
             this.cmsConfiguration = cmsConfiguration;
         }
 
-        public GetSitemapTreeResponse Get(GetSitemapTreeRequest request)
+        [Route("sitemaps/{SitemapId}/tree/")]
+        [ValidationAtttibute]
+        public GetSitemapTreeResponse Get([ModelBinder(typeof(JsonModelBinder))] GetSitemapTreeRequest request)
         {
             var pagesToFuture = SitemapHelper.GetPagesToFuture(cmsConfiguration.EnableMultilanguage, repository);
             var translationsToFuture = cmsConfiguration.EnableMultilanguage && request.Data.LanguageId.HasValue

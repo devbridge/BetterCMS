@@ -1,7 +1,10 @@
 ﻿using System.Linq;
+using System.Web.Http;
+using System.Web.Http.ModelBinding;
 
 using BetterModules.Core.DataAccess;
 using BetterCms.Core.DataContracts.Enums;
+using BetterCms.Module.Api.ApiExtensions;
 using BetterCms.Module.Api.Helpers;
 using BetterCms.Module.Api.Infrastructure;
 using BetterCms.Module.Api.Operations.Pages.Sitemaps.Sitemap.Nodes.Node;
@@ -13,7 +16,8 @@ namespace BetterCms.Module.Api.Operations.Pages.Sitemaps.Sitemap.Nodes
     /// <summary>
     /// Sitemap nodes service.
     /// </summary>
-    public class NodesService : Service, INodesService
+    [RoutePrefix("bcms-api")]
+    public class NodesController : ApiController, INodesService
     {
         /// <summary>
         /// The repository.
@@ -26,11 +30,11 @@ namespace BetterCms.Module.Api.Operations.Pages.Sitemaps.Sitemap.Nodes
         private readonly INodeService nodeService;
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="NodesService" /> class.
+        /// Initializes a new instance of the <see cref="NodesController" /> class.
         /// </summary>
         /// <param name="repository">The repository.</param>
         /// <param name="nodeService">The node service.</param>
-        public NodesService(IRepository repository, INodeService nodeService)
+        public NodesController(IRepository repository, INodeService nodeService)
         {
             this.repository = repository;
             this.nodeService = nodeService;
@@ -43,7 +47,9 @@ namespace BetterCms.Module.Api.Operations.Pages.Sitemaps.Sitemap.Nodes
         /// <returns>
         ///   <c>GetSitemapNodesResponse</c> with nodes list.
         /// </returns>
-        public GetSitemapNodesResponse Get(GetSitemapNodesRequest request)
+        [Route("sitemaps/{SitemapId}/nodes/")]
+        [ValidationAtttibute]
+        public GetSitemapNodesResponse Get([ModelBinder(typeof(JsonModelBinder))] GetSitemapNodesRequest request)
         {
             request.Data.SetDefaultOrder("Title");
 
@@ -80,6 +86,8 @@ namespace BetterCms.Module.Api.Operations.Pages.Sitemaps.Sitemap.Nodes
         /// <returns>
         ///   <c>PostSitemapNodeResponse</c> with a new sitemap node id.
         /// </returns>
+        [Route("sitemaps/{SitemapId}/nodes/")]
+        [UrlPopulator]
         public PostSitemapNodeResponse Post(PostSitemapNodeRequest request)
         {
             var result = nodeService.Put(

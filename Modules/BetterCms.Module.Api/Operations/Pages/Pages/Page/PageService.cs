@@ -1,11 +1,13 @@
 ﻿using System;
 using System.Linq;
+using System.Web.Http;
+using System.Web.Http.ModelBinding;
 
 using BetterModules.Core.DataAccess;
 using BetterModules.Core.DataAccess.DataContext;
 using BetterCms.Core.DataContracts.Enums;
 using BetterCms.Core.Security;
-
+using BetterCms.Module.Api.ApiExtensions;
 using BetterCms.Module.Api.Operations.Pages.Pages.Page.Contents;
 using BetterCms.Module.Api.Operations.Pages.Pages.Page.Contents.Content;
 using BetterCms.Module.Api.Operations.Pages.Pages.Page.Exists;
@@ -26,7 +28,7 @@ namespace BetterCms.Module.Api.Operations.Pages.Pages.Page
     /// <summary>
     /// Default page service for pages API.
     /// </summary>
-    public class PageService : Service, IPageService
+    public class PageController : ApiController, IPageService
     {
         /// <summary>
         /// The page properties service.
@@ -69,7 +71,7 @@ namespace BetterCms.Module.Api.Operations.Pages.Pages.Page
         private readonly IMediaFileUrlResolver fileUrlResolver;
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="PageService" /> class.
+        /// Initializes a new instance of the <see cref="PageController" /> class.
         /// </summary>
         /// <param name="repository">The repository.</param>
         /// <param name="unitOfWork">The unit of work.</param>
@@ -85,7 +87,7 @@ namespace BetterCms.Module.Api.Operations.Pages.Pages.Page
         /// <param name="sitemapService">The sitemap service.</param>
         /// <param name="tagService">The tag service.</param>
         /// <param name="accessControlService">The access control service.</param>
-        public PageService(
+        public PageController(
             IRepository repository,
             IUnitOfWork unitOfWork,
             IPagePropertiesService pagePropertiesService,
@@ -172,7 +174,10 @@ namespace BetterCms.Module.Api.Operations.Pages.Pages.Page
         /// </summary>
         /// <param name="request">The request.</param>
         /// <returns><c>GetPageResponse</c> with page properties.</returns>
-        public GetPageResponse Get(GetPageRequest request)
+        [Route("bcms-api/pages/{PageId}")]
+        [Route("bcms-api/pages/by-url/{PageUrl}")]
+        [ValidationAtttibute]
+        public GetPageResponse Get([ModelBinder(typeof(JsonModelBinder))] GetPageRequest request)
         {
             var query = repository.AsQueryable<PageProperties>();
 

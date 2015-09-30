@@ -1,10 +1,12 @@
 ﻿using System;
 using System.Linq;
+using System.Web.Http;
+using System.Web.Http.ModelBinding;
 
 using BetterModules.Core.DataAccess;
 using BetterModules.Core.DataAccess.DataContext;
 using BetterCms.Core.DataContracts.Enums;
-
+using BetterCms.Module.Api.ApiExtensions;
 using BetterCms.Module.Api.Extensions;
 using BetterCms.Module.Api.Operations.Pages.Widgets.Widget.ServerControlWidget.Options;
 using BetterCms.Module.Api.Operations.Root.Categories.Category;
@@ -15,7 +17,8 @@ using ISaveWidgetService = BetterCms.Module.Pages.Services.IWidgetService;
 
 namespace BetterCms.Module.Api.Operations.Pages.Widgets.Widget.ServerControlWidget
 {
-    public class ServerControlWidgetService : Service, IServerControlWidgetService
+    [RoutePrefix("bcms-api")]
+    public class ServerControlController : ApiController, IServerControlWidgetService
     {
         private readonly IRepository repository;
 
@@ -23,14 +26,15 @@ namespace BetterCms.Module.Api.Operations.Pages.Widgets.Widget.ServerControlWidg
 
         private readonly ISaveWidgetService widgetService;
 
-        public ServerControlWidgetService(IRepository repository, IServerControlWidgetOptionsService optionsService, ISaveWidgetService widgetService)
+        public ServerControlController(IRepository repository, IServerControlWidgetOptionsService optionsService, ISaveWidgetService widgetService)
         {
             this.repository = repository;
             this.optionsService = optionsService;
             this.widgetService = widgetService;
         }
 
-        public GetServerControlWidgetResponse Get(GetServerControlWidgetRequest request)
+        [Route("widgets/server-control/{WidgetId}")]
+        public GetServerControlWidgetResponse Get([ModelBinder(typeof(JsonModelBinder))] GetServerControlWidgetRequest request)
         {
             var model = repository
                 .AsQueryable<Module.Pages.Models.ServerControlWidget>(widget => widget.Id == request.WidgetId)
@@ -78,6 +82,7 @@ namespace BetterCms.Module.Api.Operations.Pages.Widgets.Widget.ServerControlWidg
             return response;
         }
 
+        [Route("widgets/server-control/")]
         public PostServerControlWidgetResponse Post(PostServerControlWidgetRequest request)
         {
             var result = Put(new PutServerControlWidgetRequest { Data = request.Data, User = request.User });
@@ -85,6 +90,8 @@ namespace BetterCms.Module.Api.Operations.Pages.Widgets.Widget.ServerControlWidg
             return new PostServerControlWidgetResponse { Data = result.Data };
         }
 
+        [Route("widgets/server-control/{Id}")]
+        [UrlPopulator]
         public PutServerControlWidgetResponse Put(PutServerControlWidgetRequest request)
         {
             var model = request.Data.ToServiceModel();
@@ -98,6 +105,8 @@ namespace BetterCms.Module.Api.Operations.Pages.Widgets.Widget.ServerControlWidg
             return new PutServerControlWidgetResponse { Data = widget.Id };
         }
 
+        [Route("widgets/server-control/{Id}")]
+        [UrlPopulator]
         public DeleteServerControlWidgetResponse Delete(DeleteServerControlWidgetRequest request)
         {
             var result = widgetService.DeleteWidget(request.Id, request.Data.Version);

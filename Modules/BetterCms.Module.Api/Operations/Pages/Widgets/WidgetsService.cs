@@ -1,8 +1,11 @@
 ﻿using System;
 using System.Linq;
+using System.Web.Http;
+using System.Web.Http.ModelBinding;
 
 using BetterModules.Core.DataAccess;
 using BetterCms.Core.DataContracts.Enums;
+using BetterCms.Module.Api.ApiExtensions;
 using BetterCms.Module.Api.Helpers;
 using BetterCms.Module.Api.Infrastructure;
 using BetterCms.Module.Api.Operations.Root.Categories.Category;
@@ -12,18 +15,21 @@ using ServiceStack.ServiceInterface;
 
 namespace BetterCms.Module.Api.Operations.Pages.Widgets
 {
-    public class WidgetsService : Service, IWidgetsService
+    [RoutePrefix("bcms-api")]
+    public class WidgetsController : ApiController, IWidgetsService
     {
         private readonly IRepository repository;
         private readonly ICategoryService categoryService;
 
-        public WidgetsService(IRepository repository, ICategoryService categoryService)
+        public WidgetsController(IRepository repository, ICategoryService categoryService)
         {
             this.repository = repository;
             this.categoryService = categoryService;
         }
 
-        public GetWidgetsResponse Get(GetWidgetsRequest request)
+        [Route("widgets")]
+        [ValidationAtttibute]
+        public GetWidgetsResponse Get([ModelBinder(typeof(JsonModelBinder))]GetWidgetsRequest request)
         {
             request.Data.SetDefaultOrder("Name");
 

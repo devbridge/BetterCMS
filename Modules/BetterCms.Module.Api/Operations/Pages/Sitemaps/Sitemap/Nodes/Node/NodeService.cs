@@ -1,12 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Web.Http;
+using System.Web.Http.ModelBinding;
 
 using BetterModules.Core.DataAccess;
 using BetterModules.Core.DataAccess.DataContext;
 using BetterCms.Core.DataContracts.Enums;
 using BetterCms.Core.Security;
 using BetterCms.Core.Services;
+using BetterCms.Module.Api.ApiExtensions;
 using BetterCms.Module.Pages.Models;
 using BetterCms.Module.Root.Models;
 using BetterCms.Module.Root.Mvc;
@@ -21,7 +24,8 @@ namespace BetterCms.Module.Api.Operations.Pages.Sitemaps.Sitemap.Nodes.Node
     /// <summary>
     /// Sitemap node service for CRUD operations.
     /// </summary>
-    public class NodeService : Service, INodeService
+    [RoutePrefix("bcms-api")]
+    public class NodeController : ApiController, INodeService
     {
         /// <summary>
         /// The repository.
@@ -54,7 +58,7 @@ namespace BetterCms.Module.Api.Operations.Pages.Sitemaps.Sitemap.Nodes.Node
         private readonly Module.Pages.Services.ISitemapService sitemapService;
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="NodeService" /> class.
+        /// Initializes a new instance of the <see cref="NodeController" /> class.
         /// </summary>
         /// <param name="repository">The repository.</param>
         /// <param name="unitOfWork">The unit of work.</param>
@@ -62,7 +66,7 @@ namespace BetterCms.Module.Api.Operations.Pages.Sitemaps.Sitemap.Nodes.Node
         /// <param name="accessControlService">The access control service.</param>
         /// <param name="securityService">The security service.</param>
         /// <param name="sitemapService">The sitemap service.</param>
-        public NodeService(
+        public NodeController(
             IRepository repository,
             IUnitOfWork unitOfWork,
             ICmsConfiguration cmsConfiguration,
@@ -85,7 +89,8 @@ namespace BetterCms.Module.Api.Operations.Pages.Sitemaps.Sitemap.Nodes.Node
         /// <returns>
         ///   <c>GetSitemapNodeResponse</c> with sitemap node data.
         /// </returns>
-        public GetNodeResponse Get(GetNodeRequest request)
+        [Route("sitemaps/{SitemapId}/nodes/{NodeId}")]
+        public GetNodeResponse Get([ModelBinder(typeof(JsonModelBinder))] GetNodeRequest request)
         {
             IEnumerable<NodeTranslationModel> translationsFuture = null;
             if (request.Data.IncludeTranslations)
@@ -157,6 +162,8 @@ namespace BetterCms.Module.Api.Operations.Pages.Sitemaps.Sitemap.Nodes.Node
         /// <returns>
         ///   <c>PutNodeResponse</c> with create or updated node id.
         /// </returns>
+        [Route("sitemaps/{SitemapId}/nodes/{Id}")]
+        [UrlPopulator]
         public PutNodeResponse Put(PutNodeRequest request)
         {
             var sitemapFuture = repository.AsQueryable<Module.Pages.Models.Sitemap>(e => e.Id == request.SitemapId)
@@ -246,6 +253,8 @@ namespace BetterCms.Module.Api.Operations.Pages.Sitemaps.Sitemap.Nodes.Node
         /// <returns>
         ///   <c>DeleteNodeResponse</c> with success status.
         /// </returns>
+        [Route("sitemaps/{SitemapId}/nodes/{Id}")]
+        [UrlPopulator]
         public DeleteNodeResponse Delete(DeleteNodeRequest request)
         {
             if (request.Data == null || request.SitemapId.HasDefaultValue() || request.Id.HasDefaultValue())

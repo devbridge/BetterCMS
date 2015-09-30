@@ -158,10 +158,10 @@ var api = (function() {
     obj.expectValidationExceptionIsThrown = function (result, fieldName, errorMessage, errorCode) {
         expect(result).toBeDefinedAndNotNull('JSON object should be retrieved.');
         expect(result.responseStatus).toBeDefinedAndNotNull('JSON responseStatus object should be retrieved.');
-        expect(result.responseStatus.errorCode).toBe(errorCode || 'Predicate', 'Correct error code \"' + (errorCode || 'Predicate') + '\" should be retrieved.');
+        expect(result.responseStatus.errorCode).toBe(errorCode || '400', 'Correct error code \"' + (errorCode || '400') + '\" should be retrieved.');
         expect(result.responseStatus.errors).toBeDefinedAndNotNull('responseStatus.errors should be retrieved.');
         expect(result.responseStatus.errors.length).toBeGreaterThan(0, 'responseStatus.errors should not be empty.');
-        expect(result.responseStatus.errors[0].fieldName).toBe(fieldName, errorMessage || fieldName + ' should be invalidated.');
+        expect(result.responseStatus.errors[0].fieldName).toBe('request.'+ fieldName, errorMessage || fieldName + ' should be invalidated.');
     };
 
     /**
