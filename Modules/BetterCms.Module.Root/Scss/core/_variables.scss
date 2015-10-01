@@ -35,9 +35,11 @@ $blue-l60: #24597e;
 //
 $red-l60: #A63333;
 $red-l70: #8E2626;
+//
+$green: #007633;
 
 //module borders
-$border-hr-control-top: 1px solid #606060;
+$border-hr-control-top: 1px solid $gray-l50;
 $border-hr-control-bottom: 1px solid #202020;
 $border-thin-gray: 1px solid $gray-l40;
 $border-thin-light-gray: 1px solid $gray-l20;

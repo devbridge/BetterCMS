@@ -158,6 +158,7 @@ a.bcms-remove-image {
     z-index: 1;
 }
 
+//module published with draft icon
 .bcms-icn-published {
     width: 17px;
     height: 17px;
@@ -185,7 +186,14 @@ a.bcms-remove-image {
     background: url('images/sprite-base-2.png') no-repeat -25px -200px;
 }
 
-
+.bcms-icn-pubdraft {
+    background: url('images/sprite-base-2.png') no-repeat -3px -200px;
+    height: 17px;
+    margin: 0 auto;
+    overflow: hidden;
+    text-indent: 9999px;
+    width: 16px;
+}
 
 //module Modal Dialog
 .bcms-scroll-window {

@@ -1482,6 +1482,9 @@
     <Content Include="Scss\base_64\bcms-cp-drag-handle.svg" />
     <Content Include="Scss\base_64\bcms-cp-hide-right.svg" />
     <Content Include="Scss\base_64\bcms-cp-hide.svg" />
+    <Content Include="Scss\base_64\bcms-cp-indicate-button.svg" />
+    <Content Include="Scss\base_64\bcms-cp-indicate-off.svg" />
+    <Content Include="Scss\base_64\bcms-cp-indicate-on.svg" />
     <Content Include="Scss\base_64\bcms-cp-notification-ok.svg" />
     <Content Include="Scss\base_64\bcms-cp-notification-warn.svg" />
     <Content Include="Scss\base_64\bcms-cp-pub-ok.svg" />

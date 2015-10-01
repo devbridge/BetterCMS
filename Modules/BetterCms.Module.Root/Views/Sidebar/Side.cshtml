@@ -4,11 +4,14 @@
 @model BetterCms.Module.Root.ViewModels.PageProjectionsViewModel
 
 <div class="bcms-sidemenu-handle" id="bcms-sidemenu-handle">
-    <div class="bcms-sidemenu-toggler" title="@RootGlobalization.Sidebar_OpenShowTitle" id="bcms-sidemenu-hide">
+    <div class="bcms-sidemenu-toggler" id="bcms-sidemenu-hide" title="@RootGlobalization.Sidebar_OpenShowTitle">
         <div class="bcms-sidemenu-openclosearrow">@RootGlobalization.Sidebar_Hide</div>
     </div>
     <div class="bcms-sidemenu-status">
-        <div title="@RootGlobalization.Sidebar_EditOnOffTitle" id="bcms-sidemenu-switch">&nbsp;</div>
+        <div class="bcms-sidemenu-switch" id="bcms-sidemenu-switch" title="@RootGlobalization.Sidebar_EditOnOffTitle">
+            <div class="bcms-sidemenu-on">On</div>
+            <div class="bcms-sidemenu-off">Off</div>
+        </div>
         @foreach (var projection in Model.Projections)
         {
             var renderSeparator = true;

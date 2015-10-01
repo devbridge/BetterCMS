@@ -65,17 +65,17 @@ WriteLiteral(">\r\n    <div");
 
 WriteLiteral(" class=\"bcms-sidemenu-toggler\"");
 
-WriteAttribute("title", Tuple.Create(" title=\"", 293), Tuple.Create("\"", 341)
+WriteLiteral(" id=\"bcms-sidemenu-hide\"");
+
+WriteAttribute("title", Tuple.Create(" title=\"", 317), Tuple.Create("\"", 365)
             
             #line 7 "..\..\Views\Sidebar\Side.cshtml"
-, Tuple.Create(Tuple.Create("", 301), Tuple.Create<System.Object, System.Int32>(RootGlobalization.Sidebar_OpenShowTitle
+, Tuple.Create(Tuple.Create("", 325), Tuple.Create<System.Object, System.Int32>(RootGlobalization.Sidebar_OpenShowTitle
             
             #line default
             #line hidden
-, 301), false)
+, 325), false)
 );
-
-WriteLiteral(" id=\"bcms-sidemenu-hide\"");
 
 WriteLiteral(">\r\n        <div");
 
@@ -96,28 +96,38 @@ WriteLiteral(" class=\"bcms-sidemenu-status\"");
 
 WriteLiteral(">\r\n        <div");
 
-WriteAttribute("title", Tuple.Create(" title=\"", 522), Tuple.Create("\"", 571)
-            
-            #line 11 "..\..\Views\Sidebar\Side.cshtml"
-, Tuple.Create(Tuple.Create("", 530), Tuple.Create<System.Object, System.Int32>(RootGlobalization.Sidebar_EditOnOffTitle
-            
-            #line default
-            #line hidden
-, 530), false)
-);
+WriteLiteral(" class=\"bcms-sidemenu-switch\"");
 
 WriteLiteral(" id=\"bcms-sidemenu-switch\"");
 
-WriteLiteral(">&nbsp;</div>\r\n");
+WriteAttribute("title", Tuple.Create(" title=\"", 577), Tuple.Create("\"", 626)
+            
+            #line 11 "..\..\Views\Sidebar\Side.cshtml"
+, Tuple.Create(Tuple.Create("", 585), Tuple.Create<System.Object, System.Int32>(RootGlobalization.Sidebar_EditOnOffTitle
+            
+            #line default
+            #line hidden
+, 585), false)
+);
+
+WriteLiteral(">\r\n            <div");
+
+WriteLiteral(" class=\"bcms-sidemenu-on\"");
+
+WriteLiteral(">On</div>\r\n            <div");
+
+WriteLiteral(" class=\"bcms-sidemenu-off\"");
+
+WriteLiteral(">Off</div>\r\n        </div>\r\n");
 
             
-            #line 12 "..\..\Views\Sidebar\Side.cshtml"
+            #line 15 "..\..\Views\Sidebar\Side.cshtml"
         
             
             #line default
             #line hidden
             
-            #line 12 "..\..\Views\Sidebar\Side.cshtml"
+            #line 15 "..\..\Views\Sidebar\Side.cshtml"
          foreach (var projection in Model.Projections)
         {
             var renderSeparator = true;
@@ -139,7 +149,7 @@ WriteLiteral(" class=\"bcms-sidemenu-separator\"");
 WriteLiteral(">&nbsp;</div>\r\n");
 
             
-            #line 23 "..\..\Views\Sidebar\Side.cshtml"
+            #line 26 "..\..\Views\Sidebar\Side.cshtml"
             }
             projection.Render(Model.Page, (ViewContext.Controller as CmsControllerBase).SecurityService, Html);
         }
@@ -153,14 +163,14 @@ WriteLiteral(" class=\"bcms-sidemenu-drag-handle\"");
 
 WriteLiteral(" id=\"bcms-sidemenu-draghandle\"");
 
-WriteAttribute("title", Tuple.Create(" title=\"", 1332), Tuple.Create("\"", 1376)
+WriteAttribute("title", Tuple.Create(" title=\"", 1471), Tuple.Create("\"", 1515)
             
-            #line 27 "..\..\Views\Sidebar\Side.cshtml"
-, Tuple.Create(Tuple.Create("", 1340), Tuple.Create<System.Object, System.Int32>(RootGlobalization.Sidebar_DragTitle
+            #line 30 "..\..\Views\Sidebar\Side.cshtml"
+, Tuple.Create(Tuple.Create("", 1479), Tuple.Create<System.Object, System.Int32>(RootGlobalization.Sidebar_DragTitle
             
             #line default
             #line hidden
-, 1340), false)
+, 1479), false)
 );
 
 WriteLiteral(">&nbsp;</div>\r\n</div>");

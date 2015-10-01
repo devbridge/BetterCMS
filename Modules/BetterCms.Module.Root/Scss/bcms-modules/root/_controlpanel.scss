@@ -9,6 +9,11 @@ $control-panel-buttons: (
                 ('delete', $icon-bcms-cp-delete, $red-l60, $red-l70)
 );
 
+$control-panel-switch-status: (
+                ('on', $icon-bcms-cp-indicate-on),
+                ('off' $icon-bcms-cp-indicate-off)
+);
+
 $control-panel-status: (
                 ('pubstatus', $icon-bcms-cp-pub-ok, $icon-bcms-cp-pub-warn),
                 ('seostatus', $icon-bcms-cp-seo-ok, $icon-bcms-cp-seo-warn)
@@ -109,6 +114,49 @@ $control-panel-status: (
 
     &-toggler {
         cursor: pointer;
+    }
+
+    &-switch {
+        background-color: $dark;
+        border: $border-hr-control-top;
+        border-radius: 2px;
+        box-shadow: inset 0 0 6px 1px rgba($black, .7);
+        box-sizing: border-box;
+        cursor: pointer;
+        height: 62px;
+        margin: 5px auto;
+        overflow: hidden;
+        position: relative;
+        width: 32px;
+
+        @include virtual(after) {
+            @include position(absolute, 0 0 null);
+            background: url($icon-bcms-cp-indicate-button) no-repeat center;
+            border: 1px solid #303030;
+            border-radius: 2px;
+            box-sizing: border-box;
+            height: 50%;
+            overflow: hidden;
+            width: 100%;
+
+            .bcms-on & {
+                bottom: 0;
+                top: auto;
+            }
+        }
+
+        .bcms-on & {
+            background-color: $green;
+        }
+    }
+
+    @each $name, $name-icon in $control-panel-switch-status {
+        &-#{$name} {
+            background: url($name-icon) no-repeat center;
+            height: 50%;
+            overflow: hidden;
+            text-indent: -999em;
+        }
     }
 
     &-separator {
@@ -302,16 +350,6 @@ div {
     margin-right: 10px;
 }
 
-//module published with draft icon
-.bcms-icn-pubdraft {
-    background: url('images/sprite-base-2.png') no-repeat -3px -200px;
-    height: 17px;
-    margin: 0 auto;
-    overflow: hidden;
-    text-indent: 9999px;
-    width: 16px;
-}
-
 .bcms-sidemenu-credentials {
     left: 10px;
     position: absolute;
@@ -432,20 +470,6 @@ div {
     left: 0;
     margin-top: -5px;
     width: 15px;
-}
-
-#bcms-sidemenu-switch {
-    background-image: url('images/sprite-base-2.png');
-    background-position: 0 0;
-    background-repeat: no-repeat;
-    cursor: pointer;
-    height: 62px;
-    margin: 5px auto;
-    width: 32px;
-}
-
-.bcms-on #bcms-sidemenu-switch {
-    background-position: -34px 0;
 }
 
 //todo update select to latest
