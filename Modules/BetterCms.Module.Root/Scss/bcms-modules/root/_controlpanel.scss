@@ -1,12 +1,12 @@
 @import '../../core/variables';
 
 $control-panel-buttons: (
-                ('add', $icon-bcms-add-new, $blue-l30, $blue-l40),
-                ('clone', $icon-bcms-clone, $blue-l30, $blue-l40),
-                ('blog-add', $icon-bcms-add-new, $blue-l30, $blue-l40),
-                ('translate', $icon-bcms-translate, $blue-l30, $blue-l40),
-                ('settings', $icon-bcms-settings, $gray-l45, $gray-l46),
-                ('delete', $icon-bcms-delete-x, $red-l60, $red-l70)
+                ('add', $icon-bcms-cp-add-new, $blue-l30, $blue-l40),
+                ('clone', $icon-bcms-cp-clone, $blue-l30, $blue-l40),
+                ('blog-add', $icon-bcms-cp-add-new, $blue-l30, $blue-l40),
+                ('translate', $icon-bcms-cp-translate, $blue-l30, $blue-l40),
+                ('settings', $icon-bcms-cp-settings, $gray-l45, $gray-l46),
+                ('delete', $icon-bcms-cp-delete, $red-l60, $red-l70)
 );
 
 //module control panel global
@@ -89,6 +89,19 @@ $control-panel-buttons: (
         width: 50px;
     }
 
+    &-openclosearrow {
+        background: url($icon-bcms-cp-show) no-repeat center;
+        height: 46px;
+        margin: 0 auto 5px;
+        overflow: hidden;
+        text-indent: -999em;
+        width: 50px;
+
+        .bcms-state-open & {
+            background-image: url($icon-bcms-cp-hide);
+        }
+    }
+
     &-toggler {
         cursor: pointer;
     }
@@ -101,9 +114,28 @@ $control-panel-buttons: (
     }
 
     &-status {
-        background: url($icon-bcms-panel-texture);
+        background: url($icon-bcms-cp-texture);
         overflow: hidden;
         padding: 0 9px;
+    }
+
+    &-drag-handle {
+        background: url($icon-bcms-cp-drag-handle) no-repeat center;
+        cursor: move;
+        height: 14px;
+        margin: 5px auto;
+    }
+}
+
+.bcms-sidemenu-right {
+    .bcms-sidemenu-openclosearrow {
+        background-image: url($icon-bcms-cp-show-right);
+    }
+
+    &.bcms-state-open {
+        .bcms-sidemenu-openclosearrow {
+            background-image: url($icon-bcms-cp-hide-right);
+        }
     }
 }
 
@@ -157,26 +189,26 @@ div {
         }
 
         &-ok {
-            position: relative;
             padding-left: 30px;
+            position: relative;
 
             @include virtual(before) {
                 @include size(16px);
                 @include positioning($center-y: true);
-                left: 9px;
-                background: url($icon-bcms-notification-ok) no-repeat center;
+                background: url($icon-bcms-cp-notification-ok) no-repeat center;
+                left: 7px;
             }
         }
 
         &-warn {
-            position: relative;
             padding-left: 30px;
+            position: relative;
 
             @include virtual(before) {
                 @include size(16px);
                 @include positioning($center-y: true);
+                background: url($icon-bcms-cp-notification-warn) no-repeat center;
                 left: 9px;
-                background: url($icon-bcms-notification-warn) no-repeat center;
             }
         }
     }
@@ -361,31 +393,6 @@ div {
     width: 15px;
 }
 
-.bcms-sidemenu-openclosearrow {
-    background: url('images/sprite-base-1.png') no-repeat center -552px;
-    box-sizing: border-box;
-    color: #fff;
-    font-size: 10px;
-    height: 46px;
-    margin: 0 auto 5px;
-    overflow: hidden;
-    text-indent: 9999px;
-    text-transform: uppercase;
-    width: 50px;
-}
-
-.bcms-state-open .bcms-sidemenu-openclosearrow {
-    background-position: center -607px;
-}
-
-.bcms-sidemenu-right .bcms-sidemenu-openclosearrow {
-    background-position: 12px -493px;
-}
-
-.bcms-sidemenu-right.bcms-state-open .bcms-sidemenu-openclosearrow {
-    background-position: 12px -437px;
-}
-
 #bcms-sidemenu-switch {
     background-image: url('images/sprite-base-2.png');
     background-position: 0 0;
@@ -398,14 +405,6 @@ div {
 
 .bcms-on #bcms-sidemenu-switch {
     background-position: -34px 0;
-}
-
-#bcms-sidemenu-draghandle {
-    background: url('images/sprite-base-1.png') no-repeat -1px -665px;
-    cursor: move;
-    height: 14px;
-    margin: 5px auto;
-    width: 34px;
 }
 
 //module Sidemenu positioned to the right

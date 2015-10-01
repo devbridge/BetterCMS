@@ -149,17 +149,19 @@ WriteLiteral(">&nbsp;</div>\r\n");
             #line hidden
 WriteLiteral("    </div>\r\n    <div");
 
-WriteAttribute("title", Tuple.Create(" title=\"", 1268), Tuple.Create("\"", 1312)
+WriteLiteral(" class=\"bcms-sidemenu-drag-handle\"");
+
+WriteLiteral(" id=\"bcms-sidemenu-draghandle\"");
+
+WriteAttribute("title", Tuple.Create(" title=\"", 1332), Tuple.Create("\"", 1376)
             
             #line 27 "..\..\Views\Sidebar\Side.cshtml"
-, Tuple.Create(Tuple.Create("", 1276), Tuple.Create<System.Object, System.Int32>(RootGlobalization.Sidebar_DragTitle
+, Tuple.Create(Tuple.Create("", 1340), Tuple.Create<System.Object, System.Int32>(RootGlobalization.Sidebar_DragTitle
             
             #line default
             #line hidden
-, 1276), false)
+, 1340), false)
 );
-
-WriteLiteral(" id=\"bcms-sidemenu-draghandle\"");
 
 WriteLiteral(">&nbsp;</div>\r\n</div>");
 
