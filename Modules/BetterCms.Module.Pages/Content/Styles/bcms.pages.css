@@ -454,32 +454,6 @@ div.bcms-editseo-modal {
   cursor: pointer;
 }
 
-.bcms-sidemenu-pubstatus {
-  margin: 0 auto;
-  width: 22px;
-  height: 22px;
-  background: url("images/sprite-pages-1.png") no-repeat center -69px;
-  padding-top: 15px;
-  margin-bottom: 10px;
-}
-
-div.bcms-pubstatus-warn {
-  background-position: center -4px;
-}
-
-.bcms-sidemenu-seostatus {
-  margin: 0 auto;
-  width: 22px;
-  height: 22px;
-  background: url("images/sprite-pages-1.png") no-repeat center -197px;
-  padding-top: 15px;
-  margin-bottom: 10px;
-}
-
-div.bcms-seostatus-warn {
-  background-position: center -132px;
-}
-
 .bcms-newcontent-top {
   height: 80px;
   padding-top: 20px;

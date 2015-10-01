@@ -1,33 +1,5 @@
 @import '../../core/variables';
 
-//module Seo & Publishing Status Indicators
-//fixme this should be moved to base control panel
-.bcms-sidemenu-pubstatus {
-    margin: 0 auto;
-    width: 22px;
-    height: 22px;
-    background: url('images/sprite-pages-1.png') no-repeat center -69px;
-    padding-top: 15px;
-    margin-bottom: 10px;
-}
-
-div.bcms-pubstatus-warn {
-    background-position: center -4px;
-}
-
-.bcms-sidemenu-seostatus {
-    margin: 0 auto;
-    width: 22px;
-    height: 22px;
-    background: url('images/sprite-pages-1.png') no-repeat center -197px;
-    padding-top: 15px;
-    margin-bottom: 10px;
-}
-
-div.bcms-seostatus-warn {
-    background-position: center -132px;
-}
-
 //module Add New tabbed content
 //module 1st tab
 .bcms-newcontent-top {

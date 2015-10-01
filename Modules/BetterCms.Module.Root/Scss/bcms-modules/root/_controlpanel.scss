@@ -9,6 +9,11 @@ $control-panel-buttons: (
                 ('delete', $icon-bcms-cp-delete, $red-l60, $red-l70)
 );
 
+$control-panel-status: (
+                ('pubstatus', $icon-bcms-cp-pub-ok, $icon-bcms-cp-pub-warn),
+                ('seostatus', $icon-bcms-cp-seo-ok, $icon-bcms-cp-seo-warn)
+);
+
 //module control panel global
 .bcms-sidemenu {
     @include position(fixed, 100px null null -260px);
@@ -116,7 +121,19 @@ $control-panel-buttons: (
     &-status {
         background: url($icon-bcms-cp-texture);
         overflow: hidden;
-        padding: 0 9px;
+        padding: 0 9px 5px;
+    }
+
+    @each $name, $icon, $warn-icon in $control-panel-status {
+        &-#{$name} {
+            @include size(21px 35px);
+            background: url($icon) no-repeat center;
+            margin: auto;
+
+            &.bcms-#{$name}-warn {
+                background-image: url($warn-icon);
+            }
+        }
     }
 
     &-drag-handle {
