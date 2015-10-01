@@ -300,7 +300,7 @@ namespace BetterCms.Module.Root
                     new ButtonActionProjection(authenticationJsModuleIncludeDescriptor, page => RootGlobalization.Sidebar_LogoutButton, page => "logout")
                         {
                             Order = 10,
-                            CssClass = page => "bcms-logout-btn",
+                            CssClass = page => "bcms-btn-logout",
                         },
                     new RenderActionProjection<AuthenticationController>(f => f.Info())
                 };
