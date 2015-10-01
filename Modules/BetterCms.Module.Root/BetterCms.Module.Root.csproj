@@ -1489,6 +1489,7 @@
     <Content Include="Scss\base_64\bcms-cp-notification-warn.svg" />
     <Content Include="Scss\base_64\bcms-cp-pub-ok.svg" />
     <Content Include="Scss\base_64\bcms-cp-pub-warn.svg" />
+    <Content Include="Scss\base_64\bcms-cp-select-arrow.svg" />
     <Content Include="Scss\base_64\bcms-cp-seo-ok.svg" />
     <Content Include="Scss\base_64\bcms-cp-seo-warn.svg" />
     <Content Include="Scss\base_64\bcms-cp-show-right.svg" />

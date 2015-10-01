@@ -1042,6 +1042,98 @@ a.ui-state-default:hover {
   box-shadow: 0 0 2px 1px rgba(0, 0, 0, 0.2);
 }
 
+.bcms-sidemenu-select {
+  background-image: -webkit-linear-gradient(top, #676767 0, #555555 100%);
+  background-image: linear-gradient(to bottom, #676767 0, #555555 100%);
+  border-radius: 2px;
+  box-shadow: 0 0 1px 1px #292929;
+  color: #ffffff;
+  cursor: pointer;
+  font-size: 12px;
+  height: 32px;
+  position: relative;
+}
+
+.bcms-sidemenu-select:active {
+  background-image: -webkit-linear-gradient(top, #555555 0, #555555 100%);
+  background-image: linear-gradient(to bottom, #555555 0, #555555 100%);
+}
+
+.bcms-sidemenu-select:after {
+  content: "";
+  height: 32px;
+  width: 32px;
+  position: absolute;
+  -webkit-transform: translateY(-50%);
+  -moz-transform: translateY(-50%);
+  transform: translateY(-50%);
+  top: 50%;
+  background: url("data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHByZXNlcnZlQXNwZWN0UmF0aW89InhNaWRZTWlkIiB3aWR0aD0iMTkiIGhlaWdodD0iMzIiIHZpZXdCb3g9IjAgMCAxOSAzMiI+CiAgICA8cGF0aCBmaWxsPSIjODk4OTg5IiBmaWxsLXJ1bGU9ImV2ZW5vZGQiIGQ9Ik0xNy4wMDAsMTcuMDAwIEwxNy4wMDAsMTguMDAwIEwxNi4wMDAsMTguMDAwIEwxNi4wMDAsMTkuMDAwIEwxNS4wMDAsMTkuMDAwIEwxNS4wMDAsMjAuMDAwIEwxNC4wMDAsMjAuMDAwIEwxNC4wMDAsMTkuMDAwIEwxMy4wMDAsMTkuMDAwIEwxMy4wMDAsMTguMDAwIEwxMi4wMDAsMTguMDAwIEwxMi4wMDAsMTcuMDAwIEwxMS4wMDAsMTcuMDAwIEwxMS4wMDAsMTYuMDAwIEwxOC4wMDAsMTYuMDAwIEwxOC4wMDAsMTcuMDAwIEwxNy4wMDAsMTcuMDAwIFoiLz4KICAgIDxyZWN0IGZpbGw9IiMzYzNjM2MiIGZpbGwtcnVsZT0iZXZlbm9kZCIgeD0iMTAiIHk9IjE1IiB3aWR0aD0iOSIgaGVpZ2h0PSIxIi8+CiAgICA8cmVjdCBmaWxsPSIjODk4OTg5IiBmaWxsLXJ1bGU9ImV2ZW5vZGQiIHg9IjEiIHdpZHRoPSIxIiBoZWlnaHQ9IjMyIi8+CiAgICA8cmVjdCBmaWxsPSIjM2MzYzNjIiBmaWxsLXJ1bGU9ImV2ZW5vZGQiIHdpZHRoPSIxIiBoZWlnaHQ9IjMyIi8+Cjwvc3ZnPg==") no-repeat left center;
+  right: 0;
+  z-index: 10;
+}
+
+.bcms-sidemenu-select:hover > div {
+  height: auto;
+}
+
+.bcms-sidemenu-select > div {
+  position: absolute;
+  top: 0;
+  right: 0;
+  left: 0;
+  height: 32px;
+  overflow: hidden;
+  z-index: 5;
+}
+
+.bcms-sidemenu-select > div > div {
+  line-height: 32px;
+  overflow: hidden;
+  padding: 0 5px 0 30px;
+  position: relative;
+}
+
+.bcms-sidemenu-select > div > div:last-child {
+  background-color: #555555;
+}
+
+.bcms-select-published {
+  position: relative;
+}
+
+.bcms-select-published:before {
+  content: "";
+  height: 16px;
+  width: 16px;
+  position: absolute;
+  -webkit-transform: translateY(-50%);
+  -moz-transform: translateY(-50%);
+  transform: translateY(-50%);
+  top: 50%;
+  background: url("data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHByZXNlcnZlQXNwZWN0UmF0aW89InhNaWRZTWlkIiB2aWV3Qm94PSIwIDAgMjEgMjEiPgogIDxwYXRoIGZpbGw9IiMzNmM2MjkiIGZpbGwtcnVsZT0iZXZlbm9kZCIgZD0iTTEwLjUxMCwyMS4wMDAgQzQuNzExLDIxLjAwMCAwLjAxMCwxNi4yOTkgMC4wMTAsMTAuNTAwIEMwLjAxMCw0LjcwMSA0LjcxMSwtMC4wMDAgMTAuNTEwLC0wLjAwMCBDMTYuMzA5LC0wLjAwMCAyMS4wMTAsNC43MDEgMjEuMDEwLDEwLjUwMCBDMjEuMDEwLDE2LjI5OSAxNi4zMDksMjEuMDAwIDEwLjUxMCwyMS4wMDAgWk0xMC41MTAsMi40MjMgQzYuMDQ5LDIuNDIzIDIuNDMzLDYuMDM5IDIuNDMzLDEwLjUwMCBDMi40MzMsMTQuOTYxIDYuMDQ5LDE4LjU3NyAxMC41MTAsMTguNTc3IEMxNC45NzEsMTguNTc3IDE4LjU4NywxNC45NjEgMTguNTg3LDEwLjUwMCBDMTguNTg3LDYuMDM5IDE0Ljk3MSwyLjQyMyAxMC41MTAsMi40MjMgWk05LjI3MiwxNC41ODEgQzkuMTIzLDE0LjczMCA4Ljg4MSwxNC43MzAgOC43MzIsMTQuNTgxIEw4LjYxMiwxNC40NjEgTDguNjExLDE0LjQ2MSBMOC40ODQsMTQuMzMzIEw3LjkyMiwxMy43NzEgQzcuOTIwLDEzLjc2OSA3LjkyMSwxMy43NjYgNy45MTksMTMuNzY0IEw1LjM0NSwxMS4xNzEgQzUuMTk1LDExLjAyMiA1LjE5NSwxMC43ODAgNS4zNDUsMTAuNjMxIEw2LjE1NCw5LjgyMSBDNi4zMDQsOS42NzIgNi41NDUsOS42NzIgNi42OTUsOS44MjEgTDkuMDA1LDEyLjE0OCBMMTMuODYxLDcuMjkyIEMxNC4wMTAsNy4xNDIgMTQuMjUyLDcuMTQyIDE0LjQwMSw3LjI5MiBMMTUuMjExLDguMTAxIEMxNS4zNjAsOC4yNTAgMTUuMzYwLDguNDkyIDE1LjIxMSw4LjY0MSBMOS4yNzIsMTQuNTgxIFoiLz4KPC9zdmc+Cg==") no-repeat center;
+  left: 9px;
+  z-index: 10;
+}
+
+.bcms-select-unpublished {
+  position: relative;
+}
+
+.bcms-select-unpublished:before {
+  content: "";
+  height: 16px;
+  width: 16px;
+  position: absolute;
+  -webkit-transform: translateY(-50%);
+  -moz-transform: translateY(-50%);
+  transform: translateY(-50%);
+  top: 50%;
+  background: url("data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHByZXNlcnZlQXNwZWN0UmF0aW89InhNaWRZTWlkIiB2aWV3Qm94PSIwIDAgMjEgMjEiPgogIDxwYXRoIGZpbGw9IiNlN2RhNGIiIGZpbGwtcnVsZT0iZXZlbm9kZCIgZD0iTTEwLjUwMCwyMS4wMDAgQzQuNzAxLDIxLjAwMCAwLjAwMCwxNi4yOTkgMC4wMDAsMTAuNTAwIEMwLjAwMCw0LjcwMSA0LjcwMSwtMC4wMDAgMTAuNTAwLC0wLjAwMCBDMTYuMjk5LC0wLjAwMCAyMS4wMDAsNC43MDEgMjEuMDAwLDEwLjUwMCBDMjEuMDAwLDE2LjI5OSAxNi4yOTksMjEuMDAwIDEwLjUwMCwyMS4wMDAgWk0xMC41MDAsMi4zMzMgQzUuOTkwLDIuMzMzIDIuMzMzLDUuOTkwIDIuMzMzLDEwLjUwMCBDMi4zMzMsMTUuMDEwIDUuOTkwLDE4LjY2NyAxMC41MDAsMTguNjY3IEMxNS4wMTAsMTguNjY3IDE4LjY2NywxNS4wMTAgMTguNjY3LDEwLjUwMCBDMTguNjY3LDUuOTkwIDE1LjAxMCwyLjMzMyAxMC41MDAsMi4zMzMgWk0xMC41MDAsMTUuNTU1IEM5Ljg1NiwxNS41NTUgOS4zMzMsMTUuMDMzIDkuMzMzLDE0LjM4OSBDOS4zMzMsMTMuNzQ1IDkuODU2LDEzLjIyMiAxMC41MDAsMTMuMjIyIEMxMS4xNDQsMTMuMjIyIDExLjY2NywxMy43NDUgMTEuNjY3LDE0LjM4OSBDMTEuNjY3LDE1LjAzMyAxMS4xNDQsMTUuNTU1IDEwLjUwMCwxNS41NTUgWk0xMC41MDAsMTEuNzE1IEM5Ljg1NiwxMS43MTUgOS4zMzMsMTEuMTkzIDkuMzMzLDEwLjU0OSBMOS4zMzMsNi42MTEgQzkuMzMzLDUuOTY3IDkuODU2LDUuNDQ0IDEwLjUwMCw1LjQ0NCBDMTEuMTQ0LDUuNDQ0IDExLjY2Nyw1Ljk2NyAxMS42NjcsNi42MTEgTDExLjY2NywxMC41NDkgQzExLjY2NywxMS4xOTMgMTEuMTQ0LDExLjcxNSAxMC41MDAsMTEuNzE1IFoiLz4KPC9zdmc+") no-repeat center;
+  left: 9px;
+  z-index: 10;
+}
+
 .bcms-sidemenu-handle {
   -webkit-user-select: none;
   -moz-user-select: none;
@@ -1598,27 +1690,7 @@ div.bcms-btn-logout:active {
 }
 
 .bcms-sidemenu-select {
-  background: url("images/bcms-sidebar-select.png") no-repeat 0 0 #676767;
-  background: url("images/bcms-sidebar-select.png") no-repeat 0 0, -webkit-linear-gradient(top, #676767 0, #555555 100%);
-  background-color: #676767;
-  border: 0;
-  border-radius: 2px;
-  box-shadow: 0 0 1px 1px #292929;
-  color: #fff;
-  cursor: pointer;
-  display: block;
-  font-size: 12px;
-  height: 34px;
-  overflow: hidden;
-  padding: 8px 5px 8px 30px;
   white-space: nowrap;
-  -webkit-appearance: button;
-  -webkit-padding-end: 30px;
-  -webkit-padding-start: 30px;
-  -webkit-user-select: none;
-  -moz-padding-start: 25px;
-  -moz-padding-end: 5px;
-  -moz-user-select: none;
 }
 
 .bcms-sidemenu-select option {

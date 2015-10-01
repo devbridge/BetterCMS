@@ -19,6 +19,11 @@ $control-panel-status: (
                 ('seostatus', $icon-bcms-cp-seo-ok, $icon-bcms-cp-seo-warn)
 );
 
+$control-panel-select-status: (
+                ('published', $icon-bcms-cp-notification-ok),
+                ('unpublished', $icon-bcms-cp-notification-warn)
+);
+
 //module control panel global
 .bcms-sidemenu {
     @include position(fixed, 100px null null -260px);
@@ -84,6 +89,67 @@ $control-panel-status: (
         &:active {
             background: $gray-l60;
             box-shadow: 0 0 2px 1px rgba($black, .2);
+        }
+    }
+
+    &-select {
+        @include add-gradient($top: $gray-l50, $bottom: $gray-l60);
+        border-radius: 2px;
+        box-shadow: 0 0 1px 1px #292929;
+        color: $white;
+        cursor: pointer;
+        font-size: 12px;
+        height: 32px;
+        position: relative;
+
+        @include virtual(after) {
+            @include size(32px);
+            @include positioning($center-y: true);
+            background: url($icon-bcms-cp-select-arrow) no-repeat left center;
+            right: 0;
+            z-index: 10;
+        }
+
+        //todo temp styles below update when js click implemented
+        &:hover {
+            > div {
+                height: auto;
+            }
+        }
+
+        > div {
+            @include position(absolute, 0 0 null);
+
+            height: 32px;
+            overflow: hidden;
+            z-index: 5;
+        }
+
+        > div > div {
+            line-height: 32px;
+            overflow: hidden;
+            padding: 0 5px 0 30px;
+            position: relative;
+
+            &:last-child {
+                background-color: $gray-l60;
+            }
+        }
+    }
+}
+
+.bcms-select {
+    @each $name, $icon in $control-panel-select-status {
+        &-#{$name} {
+            position: relative;
+
+            @include virtual(before) {
+                @include size(16px);
+                @include positioning($center-y: true);
+                background: url($icon) no-repeat center;
+                left: 9px;
+                z-index: 10;
+            }
         }
     }
 }
@@ -474,27 +540,12 @@ div {
 
 //todo update select to latest
 .bcms-sidemenu-select {
-    background: url('images/bcms-sidebar-select.png') no-repeat 0 0 #676767;
-    background: url('images/bcms-sidebar-select.png') no-repeat 0 0, -webkit-linear-gradient(top, #676767 0, #555555 100%);
-    background-color: #676767;
-    border: 0;
-    border-radius: 2px;
-    box-shadow: 0 0 1px 1px #292929;
-    color: #fff;
-    cursor: pointer;
-    display: block;
-    font-size: 12px;
-    height: 34px;
-    overflow: hidden;
-    padding: 8px 5px 8px 30px;
+    //background: url('images/bcms-sidebar-select.png') no-repeat 0 0 #676767;
+    //background: url('images/bcms-sidebar-select.png') no-repeat 0 0, -webkit-linear-gradient(top, #676767 0, #555555 100%);
+    //background-color: #676767;
+    //border: 0;
+
     white-space: nowrap;
-    -webkit-appearance: button;
-    -webkit-padding-end: 30px;
-    -webkit-padding-start: 30px;
-    -webkit-user-select: none;
-    -moz-padding-start: 25px;
-    -moz-padding-end: 5px;
-    -moz-user-select: none;
 }
 
 .bcms-sidemenu-select option {
