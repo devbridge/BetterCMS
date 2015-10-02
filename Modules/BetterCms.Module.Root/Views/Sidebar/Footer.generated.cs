@@ -47,7 +47,7 @@ WriteLiteral("<div");
 
 WriteLiteral(" class=\"bcms-sidemenu-footer\"");
 
-WriteLiteral(">\n    <span");
+WriteLiteral(">\r\n    <span");
 
 WriteLiteral(" class=\"bcms-version-number\"");
 
@@ -60,36 +60,37 @@ WriteLiteral(">");
             
             #line default
             #line hidden
-WriteLiteral("</span>\n    <div");
+WriteLiteral("</span>\r\n    <div");
 
-WriteAttribute("title", Tuple.Create(" title=\"", 156), Tuple.Create("\"", 209)
+WriteAttribute("title", Tuple.Create(" title=\"", 160), Tuple.Create("\"", 213)
             
             #line 5 "..\..\Views\Sidebar\Footer.cshtml"
-, Tuple.Create(Tuple.Create("", 164), Tuple.Create<System.Object, System.Int32>(RootGlobalization.Sidebar_Footer_DragTooltip
+, Tuple.Create(Tuple.Create("", 168), Tuple.Create<System.Object, System.Int32>(RootGlobalization.Sidebar_Footer_DragTooltip
             
             #line default
             #line hidden
-, 164), false)
+, 168), false)
 );
 
 WriteLiteral(" id=\"bcms-sidemenu-position-handle\"");
 
 WriteLiteral(" class=\"bcms-sidemenu-position-handle\"");
 
-WriteLiteral(">\n        <span");
+WriteLiteral(">\r\n        <span");
 
 WriteLiteral(" class=\"bcms-sidemenu-stick-text\"");
 
-WriteLiteral(">");
-
+WriteAttribute("title", Tuple.Create(" title=\"", 336), Tuple.Create("\"", 393)
             
             #line 6 "..\..\Views\Sidebar\Footer.cshtml"
-                                          Write(RootGlobalization.Sidebar_Footer_Right_DragTitle);
-
+, Tuple.Create(Tuple.Create("", 344), Tuple.Create<System.Object, System.Int32>(RootGlobalization.Sidebar_Footer_Right_DragTitle
             
             #line default
             #line hidden
-WriteLiteral("</span>\n    </div>\n</div>");
+, 344), false)
+);
+
+WriteLiteral("></span>\r\n    </div>\r\n</div>");
 
         }
     }

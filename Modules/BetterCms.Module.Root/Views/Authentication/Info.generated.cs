@@ -69,9 +69,7 @@ WriteLiteral(">");
             
             #line default
             #line hidden
-WriteLiteral("</div>\r\n\r\n");
-
-WriteLiteral("\r\n");
+WriteLiteral("</div>");
 
         }
     }

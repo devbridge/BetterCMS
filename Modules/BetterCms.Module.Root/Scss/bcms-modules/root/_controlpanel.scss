@@ -213,34 +213,16 @@ $control-panel-status: (
     }
 
     &-position-handle {
-        background-color: $gray-l60;
-        border-radius: 4px;
-        color: $white;
+        background: $gray-l60 url($icon-bcms-cp-stick-handle) no-repeat center;
+        border-radius: 2px;
         cursor: pointer;
         float: right;
-        font-size: 11px;
         height: 20px;
-        line-height: 20px;
-        padding: 0 5px;
-        position: relative;
-        width: 120px;
-
-        @include virtual(after) {
-            @include size(18px 10px);
-            @include positioning($center-y: true);
-            background: url($icon-bcms-cp-stick-handle) no-repeat center;
-            right: 5px;
-        }
+        width: 24px;
 
         .bcms-sidemenu-right & {
+            background-image: url($icon-bcms-cp-stick-handle-right);
             float: left;
-            text-align: right;
-
-            &:after {
-                background-image: url($icon-bcms-cp-stick-handle-right);
-                left: 5px;
-                right: auto;
-            }
         }
     }
 }
