@@ -1029,7 +1029,7 @@ a.ui-state-default:hover {
   border-radius: 0 2px 2px 0;
   min-height: 190px;
   overflow: hidden;
-  padding: 10px;
+  padding: 0 10px 10px;
 }
 
 .bcms-sidemenu-body > hr {
@@ -1269,16 +1269,22 @@ a.ui-state-default:hover {
   width: 100%;
 }
 
-.bcms-buttons-block > .bcms-btn-add {
-  width: 48.27586%;
-  float: left;
-  margin-right: 3.44828%;
+.bcms-buttons-block > a {
+  color: #ffffff;
 }
 
-.bcms-buttons-block > .bcms-btn-clone {
+.bcms-buttons-block > a:hover {
+  text-decoration: none;
+}
+
+.bcms-buttons-block > .bcms-sidemenu-btn {
   width: 48.27586%;
-  float: right;
-  margin-right: 0;
+  float: left;
+  margin-left: 3.44828%;
+}
+
+.bcms-buttons-block > .bcms-sidemenu-btn:first-child {
+  margin-left: 0;
 }
 
 div.bcms-btn-add {

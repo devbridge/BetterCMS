@@ -67,7 +67,7 @@ $control-panel-status: (
         border-radius: 0 2px 2px 0;
         min-height: 190px;
         overflow: hidden;
-        padding: 10px;
+        padding: 0 10px 10px;
 
         > hr {
             border: {
@@ -282,21 +282,25 @@ $control-panel-status: (
     float: left;
     width: 100%;
 
-    > .bcms-btn-edit {
+    > a {
+        color: $white;
+
+        &:hover {
+            text-decoration: none;
+        }
     }
 
-    > .bcms-btn-add {
-        @include span(6);
-    }
+    > .bcms-sidemenu-btn {
+        @include span(6 before);
 
-    > .bcms-btn-clone {
-        @include span(6 last);
+        &:first-child {
+            margin-left: 0;
+        }
     }
-
 }
 
+//module control panel buttons
 div {
-    //module control panel buttons
     @each $name, $icon, $top-color, $bottom-color in $control-panel-buttons {
         &.bcms-btn-#{$name} {
             @include add-gradient($top: $top-color, $bottom: $bottom-color);
@@ -372,24 +376,3 @@ div {
     line-height: 21px;
     margin-right: 10px;
 }
-
-//todo check do we really need it
-//div.bcms-btn-red {
-//    background: #A63333;
-//    background: -webkit-linear-gradient(top, #A63333 0, #8E2626 100%);
-//    background: linear-gradient(to bottom, #A63333 0, #8E2626 100%);
-//}
-//
-//div.bcms-btn-red:active {
-//    background: #8E2626;
-//}
-//
-//div.bcms-btn-blue {
-//    background: #1892E4;
-//    background: -webkit-linear-gradient(top, #1892E4 0, #0C7FC7 100%);
-//    background: linear-gradient(to bottom, #1892E4 0, #0C7FC7 100%);
-//}
-//
-//div.bcms-btn-blue:active {
-//    background: #0C7FC7;
-//}
