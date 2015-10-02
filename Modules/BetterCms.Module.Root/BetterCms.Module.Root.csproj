@@ -213,6 +213,7 @@
     <Compile Include="Models\ChildContentOption.cs" />
     <Compile Include="Models\ICategoryAccessor.cs" />
     <Compile Include="Models\Maps\WidgetCategoryMap.cs" />
+    <Compile Include="Models\Migrations\Migration201509281017.cs" />
     <Compile Include="Models\Migrations\Migration201502061445.cs" />
     <Compile Include="Models\WidgetCategories.cs" />
     <Compile Include="Models\IChildRegionContainer.cs" />
@@ -571,6 +572,11 @@
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>Header.cshtml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Shared\EditableGrid\Partial\MultilineTextCell.generated.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>MultilineTextCell.cshtml</DependentUpon>
     </Compile>
     <Compile Include="Views\Shared\EditableGrid\Partial\TopBlock.generated.cs">
       <AutoGen>True</AutoGen>
@@ -1567,6 +1573,10 @@
       <Generator>RazorGenerator</Generator>
       <LastGenOutput>CategoriesTemplate.generated.cs</LastGenOutput>
     </Content>
+    <None Include="Views\Shared\EditableGrid\Partial\MultilineTextCell.cshtml">
+      <Generator>RazorGenerator</Generator>
+      <LastGenOutput>MultilineTextCell.generated.cs</LastGenOutput>
+    </None>
     <None Include="Views\Shared\Partial\ContentsTree.cshtml">
       <LastGenOutput>ContentsTree.generated.cs</LastGenOutput>
       <Generator>RazorGenerator</Generator>
