@@ -1495,6 +1495,7 @@
     <Content Include="Scss\base_64\bcms-cp-show.svg" />
     <Content Include="Scss\base_64\bcms-cp-stick-handle-right.svg" />
     <Content Include="Scss\base_64\bcms-cp-stick-handle.svg" />
+    <Content Include="Scss\base_64\bcms-cp-user.svg" />
     <Content Include="Scss\base_64\bcms-overlay-delete.svg" />
     <Content Include="Scss\base_64\bcms-overlay-edit-child.svg" />
     <Content Include="Scss\base_64\bcms-overlay-edit.svg" />
