@@ -24,6 +24,7 @@ using BetterCms.Module.Pages.Services;
 
 using BetterCms.Module.Root;
 using BetterCms.Module.Root.Accessors;
+using BetterCms.Module.Root.Content.Resources;
 using BetterCms.Module.Root.Models;
 using BetterCms.Module.Root.Mvc.PageHtmlRenderer;
 using BetterCms.Module.Root.Services;
@@ -278,39 +279,29 @@ namespace BetterCms.Module.Pages
         {
             return new IPageActionProjection[]
                 {
-                    new DropDownListProjection(pagesJsModuleIncludeDescriptor, page => "changePublishStatus")
-                        {
-                            Items = new Func<IPage, DropDownListProjectionItem>[]
+                    new InheriteProjection(
+                        "div",
+                        new IPageActionProjection[]
+                            {
+                                new LinkToNewTabProjection
                                 {
-                                     page => new DropDownListProjectionItem
-                                         {
-                                             Order = 1,
-                                             Text = () => page.Status == PageStatus.Published
-                                                                ? PagesGlobalization.Sidebar_PageStatusPublished 
-                                                                : PagesGlobalization.Sidebar_PageStatusPublish,
-                                             Value = page.Status == PageStatus.Published
-                                                                ? "published"
-                                                                : "publish",
-                                             IsSelected = page.Status == PageStatus.Published
-                                         }, 
-
-                                     page => new DropDownListProjectionItem
-                                         {
-                                             Order = 2,
-                                             Text = () => page.Status == PageStatus.Published 
-                                                                ? PagesGlobalization.Sidebar_PageStatusUnpublish
-                                                                : PagesGlobalization.Sidebar_PageStatusUnpublished,
-                                                                    
-                                             Value = page.Status == PageStatus.Published
-                                                                ? "unpublish"
-                                                                : "unpublished",
-                                             IsSelected = page.Status != PageStatus.Published
-                                         }
+                                    InnerText = page => RootGlobalization.Authentication_ViewAsPublic_Public,
+                                    LinkAddress = page => page.PageUrl,
+                                    Order = 9,
+                                    CssClass = page => "bcms-sidemenu-btn bcms-as-public"
                                 },
-                                Order = 10,
-                                CssClass = page => page.Status != PageStatus.Published ? "bcms-sidemenu-select" : "bcms-sidemenu-select bcms-select-published",
-                                AccessRole = RootModuleConstants.UserRoles.PublishContent,
-                                ShouldBeRendered = page => !page.IsMasterPage && !IsReadOnly(page)
+                                new ButtonActionProjection(pagesJsModuleIncludeDescriptor, page => "changePublishStatus")
+                                {
+                                    Order = 10,
+                                    Title = page => page.Status == PageStatus.Published ? PagesGlobalization.Sidebar_PageStatusUnpublish : PagesGlobalization.Sidebar_PageStatusPublish,
+                                    CssClass = page => page.Status == PageStatus.Published ? "bcms-sidemenu-btn bcms-btn-ok" : "bcms-sidemenu-btn bcms-btn-warn",
+                                    AccessRole = RootModuleConstants.UserRoles.PublishContent,
+                                    ShouldBeRendered = page => !page.IsMasterPage && !IsReadOnly(page)
+                                }
+                             })
+                        {
+                            Order = 10,
+                            CssClass = page => "bcms-buttons-block"
                         }, 
                     
                      new ButtonActionProjection(seoJsModuleIncludeDescriptor, page => "openEditSeoDialog")

@@ -333,7 +333,7 @@ bettercms.define('bcms.pages', ['bcms.jquery', 'bcms', 'bcms.modal', 'bcms.siteS
         };
 
         page.changePublishStatus = function (sender) {
-            var publish = sender.val() == "publish",
+            var publish = !sender.hasClass('bcms-btn-ok'),
                 message = publish ? globalization.pageStatusChangeConfirmationMessagePublish : globalization.pageStatusChangeConfirmationMessageUnPublish,
                 data = { PageId: bcms.pageId, IsPublished: publish },
                 onComplete = function (json) {
@@ -349,6 +349,13 @@ bettercms.define('bcms.pages', ['bcms.jquery', 'bcms', 'bcms.modal', 'bcms.siteS
             modal.confirm({
                 content: message,
                 onAccept: function () {
+                    if (data.IsPublished) {
+                        sender.removeClass("bcms-btn-warn");
+                        sender.addClass("bcms-btn-ok");
+                    } else {
+                        sender.removeClass("bcms-btn-ok");
+                        sender.addClass("bcms-btn-warn");
+                    }
                     $.ajax({
                         type: 'POST',
                         url: links.changePublishStatusUrl,
@@ -365,12 +372,6 @@ bettercms.define('bcms.pages', ['bcms.jquery', 'bcms', 'bcms.modal', 'bcms.siteS
                     return true;
                 },
                 onClose: function () {
-                    // Restore previous value.
-                    if (publish) {
-                        sender.val("unpublished");
-                    } else {
-                        sender.val("published");
-                    }
                 }
             });
         };
