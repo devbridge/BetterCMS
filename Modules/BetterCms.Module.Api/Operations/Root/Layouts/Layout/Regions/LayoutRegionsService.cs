@@ -1,19 +1,26 @@
-﻿using BetterModules.Core.DataAccess;
+﻿using System.Web.Http;
+using System.Web.Http.ModelBinding;
+
+using BetterCms.Module.Api.ApiExtensions;
+
+using BetterModules.Core.DataAccess;
 
 using ServiceStack.ServiceInterface;
 
 namespace BetterCms.Module.Api.Operations.Root.Layouts.Layout.Regions
 {
-    public class LayoutRegionsService : Service, ILayoutRegionsService
+    [RoutePrefix("bcms-api")]
+    public class LayoutRegionsController : ApiController, ILayoutRegionsService
     {
         private readonly IRepository repository;
 
-        public LayoutRegionsService(IRepository repository)
+        public LayoutRegionsController(IRepository repository)
         {
             this.repository = repository;
         }
 
-        public GetLayoutRegionsResponse Get(GetLayoutRegionsRequest request)
+        [Route("layouts/{LayoutId}/regions")]
+        public GetLayoutRegionsResponse Get([ModelBinder(typeof(JsonModelBinder))]GetLayoutRegionsRequest request)
         {
             var listResponse = LayoutServiceHelper.GetLayoutRegionsResponse(repository, request.LayoutId, request);
 

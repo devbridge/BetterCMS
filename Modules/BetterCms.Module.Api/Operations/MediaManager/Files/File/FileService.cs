@@ -1,10 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Web.Http;
+using System.Web.Http.ModelBinding;
 
 using BetterCms.Core.Exceptions.Api;
 using BetterCms.Core.Security;
-
+using BetterCms.Module.Api.ApiExtensions;
 using BetterCms.Module.Api.Operations.Root;
 using BetterCms.Module.Api.Operations.Root.Categories.Category;
 using BetterCms.Module.MediaManager.Models;
@@ -28,7 +30,8 @@ using ITagService = BetterCms.Module.Pages.Services.ITagService;
 
 namespace BetterCms.Module.Api.Operations.MediaManager.Files.File
 {
-    public class FileService : Service, IFileService
+    [RoutePrefix("bcms-api")]
+    public class FileController : ApiController, IFileService
     {
         /// <summary>
         /// The repository.
@@ -68,7 +71,7 @@ namespace BetterCms.Module.Api.Operations.MediaManager.Files.File
         private readonly ICategoryService categoryService = null;
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="FileService" /> class.
+        /// Initializes a new instance of the <see cref="FileController" /> class.
         /// </summary>
         /// <param name="repository">The repository.</param>
         /// <param name="fileService">The file service.</param>
@@ -77,7 +80,7 @@ namespace BetterCms.Module.Api.Operations.MediaManager.Files.File
         /// <param name="tagService">The tag service.</param>
         /// <param name="mediaService">The media service.</param>
         /// <param name="accessControlService">The access control service.</param>
-        public FileService(
+        public FileController(
             IRepository repository,
             IMediaFileService fileService,
             IMediaFileUrlResolver fileUrlResolver,
@@ -104,7 +107,8 @@ namespace BetterCms.Module.Api.Operations.MediaManager.Files.File
         /// <returns>
         ///   <c>GetFileRequest</c> with an file.
         /// </returns>
-        public GetFileResponse Get(GetFileRequest request)
+        [Route("files/{FileId}")]
+        public GetFileResponse Get([ModelBinder(typeof(JsonModelBinder))]GetFileRequest request)
         {
             var model = repository
                 .AsQueryable<MediaFile>()
@@ -229,6 +233,8 @@ namespace BetterCms.Module.Api.Operations.MediaManager.Files.File
         /// <returns>
         ///   <c>PutFileResponse</c> with a file id.
         /// </returns>
+        [Route("files/{Id}")]
+        [UrlPopulator]
         public PutFileResponse Put(PutFileRequest request)
         {
             IEnumerable<MediaFolder> parentFolderFuture = null;
@@ -372,6 +378,8 @@ namespace BetterCms.Module.Api.Operations.MediaManager.Files.File
         /// <returns>
         ///   <c>DeleteFileResponse</c> with success status.
         /// </returns>
+        [Route("files/{Id}")]
+        [UrlPopulator]
         public DeleteFileResponse Delete(DeleteFileRequest request)
         {
             if (request.Data == null || request.Id.HasDefaultValue())

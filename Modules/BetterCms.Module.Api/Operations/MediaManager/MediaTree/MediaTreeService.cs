@@ -1,9 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Web.Http;
+using System.Web.Http.ModelBinding;
 
 using BetterModules.Core.DataAccess;
 using BetterCms.Core.Security;
+using BetterCms.Module.Api.ApiExtensions;
 using BetterCms.Module.Api.Infrastructure;
 using BetterCms.Module.Api.Operations.Root;
 using BetterCms.Module.MediaManager.Models;
@@ -15,7 +18,8 @@ using AccessLevel = BetterCms.Module.Api.Operations.Root.AccessLevel;
 
 namespace BetterCms.Module.Api.Operations.MediaManager.MediaTree
 {
-    public class MediaTreeService : Service, IMediaTreeService
+    [RoutePrefix("bcms-api")]
+    public class MediaTreeController : ApiController, IMediaTreeService
     {
         private readonly IRepository repository;
         
@@ -25,7 +29,7 @@ namespace BetterCms.Module.Api.Operations.MediaManager.MediaTree
         
         private readonly IAccessControlService accessControlService;
 
-        public MediaTreeService(IRepository repository, IMediaFileService fileService,
+        public MediaTreeController(IRepository repository, IMediaFileService fileService,
             IMediaFileUrlResolver fileUrlResolver, IAccessControlService accessControlService)
         {
             this.repository = repository;
@@ -34,7 +38,8 @@ namespace BetterCms.Module.Api.Operations.MediaManager.MediaTree
             this.accessControlService = accessControlService;
         }
 
-        public GetMediaTreeResponse Get(GetMediaTreeRequest request)
+        [Route("media-tree")]
+        public GetMediaTreeResponse Get([ModelBinder(typeof(JsonModelBinder))]GetMediaTreeRequest request)
         {
             var response = new GetMediaTreeResponse
                                {

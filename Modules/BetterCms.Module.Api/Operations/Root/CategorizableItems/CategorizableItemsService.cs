@@ -1,5 +1,8 @@
 ﻿using System.Linq;
+using System.Web.Http;
+using System.Web.Http.ModelBinding;
 
+using BetterCms.Module.Api.ApiExtensions;
 using BetterCms.Module.Api.Helpers;
 using BetterCms.Module.Api.Infrastructure;
 using BetterCms.Module.Root.Models;
@@ -10,19 +13,21 @@ using ServiceStack.ServiceInterface;
 
 namespace BetterCms.Module.Api.Operations.Root.CategorizableItems
 {
-    public class CategorizableItemsService : Service, ICategorizableItemsService
+    [RoutePrefix("bcms-api")]
+    public class CategorizableItemsController : ApiController, ICategorizableItemsService
     {
         /// <summary>
         /// The repository.
         /// </summary>
         private readonly IRepository repository;
 
-        public CategorizableItemsService(IRepository repository)
+        public CategorizableItemsController(IRepository repository)
         {
             this.repository = repository;
         }
 
-        public GetCategorizableItemsResponse Get(GetCategorizableItemsRequest request)
+        [Route("categorizable-items")]
+        public GetCategorizableItemsResponse Get([ModelBinder(typeof(JsonModelBinder))]GetCategorizableItemsRequest request)
         {
             request.Data.SetDefaultOrder("Name");
             var response = repository

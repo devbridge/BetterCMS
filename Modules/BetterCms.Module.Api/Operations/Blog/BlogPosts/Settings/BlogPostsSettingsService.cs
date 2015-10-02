@@ -1,9 +1,12 @@
 ﻿using System;
 using System.Linq;
+using System.Web.Http;
+using System.Web.Http.ModelBinding;
 
 using BetterModules.Core.DataAccess;
 using BetterModules.Core.DataAccess.DataContext;
 using BetterCms.Core.Exceptions.Api;
+using BetterCms.Module.Api.ApiExtensions;
 using BetterCms.Module.Blog.Models;
 using BetterCms.Module.Root.Models;
 
@@ -14,7 +17,8 @@ namespace BetterCms.Module.Api.Operations.Blog.BlogPosts.Settings
     /// <summary>
     /// The blog posts settings service.
     /// </summary>
-    public class BlogPostsSettingsService : Service, IBlogPostsSettingsService
+    [RoutePrefix("bcms-api")]
+    public class BlogPostsSettingsController : ApiController, IBlogPostsSettingsService
     {
         /// <summary>
         /// The repository.
@@ -27,11 +31,11 @@ namespace BetterCms.Module.Api.Operations.Blog.BlogPosts.Settings
         private readonly IUnitOfWork unitOfWork;
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="BlogPostsSettingsService" /> class.
+        /// Initializes a new instance of the <see cref="BlogPostsSettingsController" /> class.
         /// </summary>
         /// <param name="repository">The repository.</param>
         /// <param name="unitOfWork">The unit of work.</param>
-        public BlogPostsSettingsService(IRepository repository, IUnitOfWork unitOfWork)
+        public BlogPostsSettingsController(IRepository repository, IUnitOfWork unitOfWork)
         {
             this.repository = repository;
             this.unitOfWork = unitOfWork;
@@ -42,7 +46,8 @@ namespace BetterCms.Module.Api.Operations.Blog.BlogPosts.Settings
         /// </summary>
         /// <param name="request">The request.</param>
         /// <returns><c>GetBlogPostsSettingsResponse</c> with settings.</returns>
-        public GetBlogPostsSettingsResponse Get(GetBlogPostsSettingsRequest request)
+        [Route("blog-settings")]
+        public GetBlogPostsSettingsResponse Get([ModelBinder(typeof(JsonModelBinder))]GetBlogPostsSettingsRequest request)
         {
             return new GetBlogPostsSettingsResponse
                        {
@@ -72,6 +77,7 @@ namespace BetterCms.Module.Api.Operations.Blog.BlogPosts.Settings
         /// </summary>
         /// <param name="request">The request.</param>
         /// <returns><c>PutBlogPostsSettingsResponse</c> with success status.</returns>
+        [Route("blog-settings")]
         public PutBlogPostsSettingsResponse Put(PutBlogPostsSettingsRequest request)
         {
             var option = repository.AsQueryable<Option>().OrderByDescending(o => o.CreatedOn).FirstOrDefault(o => !o.IsDeleted) ?? new Option();

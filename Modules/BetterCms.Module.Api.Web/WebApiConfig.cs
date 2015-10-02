@@ -17,15 +17,15 @@ namespace BetterCms.Module.Api
         {
             config.MapHttpAttributeRoutes();
 
-            config.Routes.MapHttpRoute(
-                name: "DefaultApi",
-                routeTemplate: "bcms-api/{controller}"
-            );
+            //config.Routes.MapHttpRoute(
+            //    name: "DefaultApi",
+            //    routeTemplate: "bcms-api/{controller}"
+            //);
 
             config.Filters.Add(new ExceptionAttribute());
             config.Formatters.RemoveAt(0);
             config.Formatters.Insert(0, new ServiceStackTextFormatter());
-
+            var bla = ContextScopeProvider.CreateChildContainer();
             var resolver = new AutofacWebApiDependencyResolver(ContextScopeProvider.CreateChildContainer());
 
             config.DependencyResolver = resolver;

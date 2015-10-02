@@ -1,4 +1,8 @@
 ﻿using System.Linq;
+using System.Web.Http;
+using System.Web.Http.ModelBinding;
+
+using BetterCms.Module.Api.ApiExtensions;
 
 using BetterModules.Core.DataAccess;
 using BetterModules.Core.DataAccess.DataContext;
@@ -11,7 +15,8 @@ using ServiceStack.ServiceInterface;
 
 namespace BetterCms.Module.Api.Operations.Root.Layouts.Layout
 {
-    public class LayoutService : Service, ILayoutService
+    [RoutePrefix("bcms-api")]
+    public class LayoutController : ApiController, ILayoutService
     {
         private readonly ILayoutRegionsService layoutRegionService;
         
@@ -21,7 +26,7 @@ namespace BetterCms.Module.Api.Operations.Root.Layouts.Layout
 
         private readonly Module.Pages.Services.ILayoutService layoutService;
 
-        public LayoutService(ILayoutRegionsService layoutRegionService, IRepository repository, ILayoutOptionsService layoutOptionsService,
+        public LayoutController(ILayoutRegionsService layoutRegionService, IRepository repository, ILayoutOptionsService layoutOptionsService,
             Module.Pages.Services.ILayoutService layoutService)
         {
             this.layoutRegionService = layoutRegionService;
@@ -30,7 +35,8 @@ namespace BetterCms.Module.Api.Operations.Root.Layouts.Layout
             this.layoutService = layoutService;
         }
 
-        public GetLayoutResponse Get(GetLayoutRequest request)
+        [Route("layouts/{LayoutId}")]
+        public GetLayoutResponse Get([ModelBinder(typeof(JsonModelBinder))]GetLayoutRequest request)
         {
             var model = repository
                 .AsQueryable<Module.Root.Models.Layout>(layout => layout.Id == request.LayoutId)
@@ -64,6 +70,8 @@ namespace BetterCms.Module.Api.Operations.Root.Layouts.Layout
             return response;
         }
 
+        [Route("layouts/{Id}")]
+        [UrlPopulator]
         public PutLayoutResponse Put(PutLayoutRequest request)
         {
             var model = request.Data.ToServiceModel();
@@ -77,6 +85,8 @@ namespace BetterCms.Module.Api.Operations.Root.Layouts.Layout
             return new PutLayoutResponse { Data = result.Id };
         }
 
+        [Route("layouts/{Id}")]
+        [UrlPopulator]
         public DeleteLayoutResponse Delete(DeleteLayoutRequest request)
         {
             var result = layoutService.DeleteLayout(request.Id, request.Data.Version);

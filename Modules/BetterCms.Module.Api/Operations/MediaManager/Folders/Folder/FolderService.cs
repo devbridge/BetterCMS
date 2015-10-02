@@ -1,9 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Web.Http;
+using System.Web.Http.ModelBinding;
 
 using BetterCms.Core.Exceptions.Api;
-
+using BetterCms.Module.Api.ApiExtensions;
 using BetterCms.Module.MediaManager.Models;
 using BetterCms.Module.MediaManager.Services;
 using BetterCms.Module.Root.Mvc;
@@ -21,7 +23,8 @@ namespace BetterCms.Module.Api.Operations.MediaManager.Folders.Folder
     /// <summary>
     /// Default folder CRUD service.
     /// </summary>
-    public class FolderService : Service, IFolderService
+    [RoutePrefix("bcms-api")]
+    public class FolderController : ApiController, IFolderService
     {
         /// <summary>
         /// The repository.
@@ -39,12 +42,12 @@ namespace BetterCms.Module.Api.Operations.MediaManager.Folders.Folder
         private readonly IMediaService mediaService;
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="FolderService" /> class.
+        /// Initializes a new instance of the <see cref="FolderController" /> class.
         /// </summary>
         /// <param name="repository">The repository.</param>
         /// <param name="unitOfWork">The unit of work.</param>
         /// <param name="mediaService">The media service.</param>
-        public FolderService(IRepository repository, IUnitOfWork unitOfWork, IMediaService mediaService)
+        public FolderController(IRepository repository, IUnitOfWork unitOfWork, IMediaService mediaService)
         {
             this.repository = repository;
             this.unitOfWork = unitOfWork;
@@ -58,7 +61,8 @@ namespace BetterCms.Module.Api.Operations.MediaManager.Folders.Folder
         /// <returns>
         ///   <c>GetFolderRequest</c> with an folder.
         /// </returns>
-        public GetFolderResponse Get(GetFolderRequest request)
+        [Route("folders/{FolderId}")]
+        public GetFolderResponse Get([ModelBinder(typeof(JsonModelBinder))]GetFolderRequest request)
         {
             var model =
                 repository.AsQueryable<MediaFolder>(media => media.Id == request.FolderId && media.ContentType == Module.MediaManager.Models.MediaContentType.Folder)
@@ -88,6 +92,8 @@ namespace BetterCms.Module.Api.Operations.MediaManager.Folders.Folder
         /// <returns>
         ///   <c>PutFolderResponse</c> with a folder id.
         /// </returns>
+        [Route("folders/{Id}")]
+        [UrlPopulator]
         public PutFolderResponse Put(PutFolderRequest request)
         {
             IEnumerable<MediaFolder> parentFolderFuture = null;
@@ -188,6 +194,8 @@ namespace BetterCms.Module.Api.Operations.MediaManager.Folders.Folder
         /// <returns>
         ///   <c>DeleteFolderResponse</c> with success status.
         /// </returns>
+        [Route("folders/{Id}")]
+        [UrlPopulator]
         public DeleteFolderResponse Delete(DeleteFolderRequest request)
         {
             if (request.Data == null || request.Id.HasDefaultValue())

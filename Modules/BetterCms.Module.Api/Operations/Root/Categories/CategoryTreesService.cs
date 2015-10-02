@@ -1,5 +1,8 @@
 ﻿using System.Linq;
+using System.Web.Http;
+using System.Web.Http.ModelBinding;
 
+using BetterCms.Module.Api.ApiExtensions;
 using BetterCms.Module.Api.Helpers;
 using BetterCms.Module.Api.Infrastructure;
 using BetterCms.Module.Api.Operations.Root.Categories.Category;
@@ -17,7 +20,8 @@ namespace BetterCms.Module.Api.Operations.Root.Categories
     /// <summary>
     /// Default service implementation for categories CRUD.
     /// </summary>
-    public class CategoryTreesService : Service, ICategoryTreesService
+    [RoutePrefix("bcms-api")]
+    public class CategoryTreesController : ApiController, ICategoryTreesService
     {
         /// <summary>
         /// The repository.
@@ -30,11 +34,11 @@ namespace BetterCms.Module.Api.Operations.Root.Categories
         private readonly ICategoryTreeService categoryTreeService;
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="CategoryTreesService" /> class.
+        /// Initializes a new instance of the <see cref="CategoryTreesController" /> class.
         /// </summary>
         /// <param name="repository">The repository.</param>
         /// <param name="categoryTreeService">The category service.</param>
-        public CategoryTreesService(IRepository repository, ICategoryTreeService categoryTreeService)
+        public CategoryTreesController(IRepository repository, ICategoryTreeService categoryTreeService)
         {
             this.repository = repository;
             this.categoryTreeService = categoryTreeService;
@@ -47,7 +51,8 @@ namespace BetterCms.Module.Api.Operations.Root.Categories
         /// <returns>
         ///   <c>GetCategoriesResponse</c> with tags list.
         /// </returns>
-        public GetCategoryTreesResponse Get(GetCategoryTreesRequest request)
+        [Route("categorytrees")]
+        public GetCategoryTreesResponse Get([ModelBinder(typeof(JsonModelBinder))]GetCategoryTreesRequest request)
         {
             request.Data.SetDefaultOrder("Name");
 
@@ -89,6 +94,7 @@ namespace BetterCms.Module.Api.Operations.Root.Categories
         /// <returns>
         ///   <c>PostCategoryResponse</c> with a new category id.
         /// </returns>
+        [Route("categorytrees")]
         public PostCategoryTreeResponse Post(PostCategoryTreeRequest treeRequest)
         {
             var result = categoryTreeService.Put(

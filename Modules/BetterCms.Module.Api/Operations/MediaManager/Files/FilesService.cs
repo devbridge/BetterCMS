@@ -1,9 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Web.Http;
+using System.Web.Http.ModelBinding;
 
 using BetterModules.Core.DataAccess;
 using BetterCms.Core.Security;
+using BetterCms.Module.Api.ApiExtensions;
 using BetterCms.Module.Api.Helpers;
 using BetterCms.Module.Api.Infrastructure;
 using BetterCms.Module.Api.Operations.MediaManager.Files.File;
@@ -20,7 +23,8 @@ using AccessLevel = BetterCms.Module.Api.Operations.Root.AccessLevel;
 
 namespace BetterCms.Module.Api.Operations.MediaManager.Files
 {
-    public class FilesService : Service, IFilesService
+    [RoutePrefix("bcms-api")]
+    public class FilesController : ApiController, IFilesService
     {
         /// <summary>
         /// The repository.
@@ -49,7 +53,7 @@ namespace BetterCms.Module.Api.Operations.MediaManager.Files
 
         private readonly ICategoryService categoryService;
         /// <summary>
-        /// Initializes a new instance of the <see cref="FilesService"/> class.
+        /// Initializes a new instance of the <see cref="FilesController"/> class.
         /// </summary>
         /// <param name="repository">The repository.</param>
         /// <param name="mediaFileService">The media file service.</param>
@@ -57,7 +61,7 @@ namespace BetterCms.Module.Api.Operations.MediaManager.Files
         /// <param name="accessControlService">The access control service.</param>
         /// <param name="fileService">The file service.</param>
         /// <param name="uploadFileService">The upload file service.</param>
-        public FilesService(
+        public FilesController(
             IRepository repository,
             IMediaFileService mediaFileService,
             IMediaFileUrlResolver fileUrlResolver,
@@ -87,7 +91,9 @@ namespace BetterCms.Module.Api.Operations.MediaManager.Files
         /// <returns>
         ///   <c>GetFilesResponse</c> with files list.
         /// </returns>
-        public GetFilesResponse Get(GetFilesRequest request)
+        [Route("files")]
+        [ValidationAtttibute]
+        public GetFilesResponse Get([ModelBinder(typeof(JsonModelBinder))]GetFilesRequest request)
         {
             request.Data.SetDefaultOrder("Title");
 
@@ -234,6 +240,7 @@ namespace BetterCms.Module.Api.Operations.MediaManager.Files
         /// <returns>
         ///   <c>PostFilesResponse</c> with a new file id.
         /// </returns>
+        [Route("files")]
         public PostFileResponse Post(PostFileRequest request)
         {
             var result =

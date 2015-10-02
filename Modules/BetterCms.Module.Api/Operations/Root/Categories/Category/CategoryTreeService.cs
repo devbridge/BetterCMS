@@ -1,10 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Web.Http;
+using System.Web.Http.ModelBinding;
 
 using BetterCms.Core.Security;
 using BetterCms.Core.Services;
-
+using BetterCms.Module.Api.ApiExtensions;
 using BetterCms.Module.Api.Operations.Root.Categories.Category.Nodes;
 using BetterCms.Module.Api.Operations.Root.Categories.Category.Nodes.Node;
 using BetterCms.Module.Api.Operations.Root.Categories.Category.Tree;
@@ -26,7 +28,8 @@ namespace BetterCms.Module.Api.Operations.Root.Categories.Category
     /// <summary>
     /// Category service for CRUD operations.
     /// </summary>
-    public class CategoryTreeService : Service, ICategoryTreeService
+    [RoutePrefix("bcms-api")]
+    public class CategoryTreeController : ApiController, ICategoryTreeService
     {
         /// <summary>
         /// The repository.
@@ -84,7 +87,7 @@ namespace BetterCms.Module.Api.Operations.Root.Categories.Category
         private readonly ICategorizableItemsService categorizableItemsService;
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="CategoryTreeService" /> class.
+        /// Initializes a new instance of the <see cref="CategoryTreeController" /> class.
         /// </summary>
         /// <param name="repository">The repository.</param>
         /// <param name="unitOfWork">The unit of work.</param>
@@ -97,7 +100,7 @@ namespace BetterCms.Module.Api.Operations.Root.Categories.Category
         /// <param name="categoryTreeService">The category tree service</param>
         /// <param name="cmsConfiguration">The CMS configuration.</param>
         /// <param name="categorizableItemsService">The categorizable items service</param>
-        public CategoryTreeService(
+        public CategoryTreeController(
             IRepository repository,
             IUnitOfWork unitOfWork,
             INodesTreeService treeService,
@@ -186,7 +189,8 @@ namespace BetterCms.Module.Api.Operations.Root.Categories.Category
         /// <returns>
         ///   <c>GetCategoriesResponse</c> with category data.
         /// </returns>
-        public GetCategoryTreeResponse Get(GetCategoryTreeRequest request)
+        [Route("categorytrees/{CategoryTreeId}")]
+        public GetCategoryTreeResponse Get([ModelBinder(typeof(JsonModelBinder))]GetCategoryTreeRequest request)
         {
 //            var tagsFuture = repository.AsQueryable<CategoryTag>().Where(e => e.Category.Id == request.CategoryId).Select(e => e.Tag.Name).ToFuture();
 
@@ -268,6 +272,8 @@ namespace BetterCms.Module.Api.Operations.Root.Categories.Category
         /// <returns>
         ///   <c>PutCategoriesResponse</c> with updated category data.
         /// </returns>
+        [Route("categorytrees/{Id}")]
+        [UrlPopulator]
         public PutCategoryTreeResponse Put(PutCategoryTreeRequest request)
         {
             var serviceRequest = new SaveCategoryTreeRequest
@@ -321,6 +327,8 @@ namespace BetterCms.Module.Api.Operations.Root.Categories.Category
         /// <returns>
         ///   <c>DeleteCategoriesResponse</c> with success status.
         /// </returns>
+        [Route("categorytrees/{Id}")]
+        [UrlPopulator]
         public DeleteCategoryTreeResponse Delete(DeleteCategoryTreeRequest request)
         {
             if (request.Data == null || request.Id.HasDefaultValue())

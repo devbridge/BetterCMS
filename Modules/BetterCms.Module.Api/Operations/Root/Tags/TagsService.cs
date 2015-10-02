@@ -1,4 +1,8 @@
 ﻿using System.Linq;
+using System.Web.Http;
+using System.Web.Http.ModelBinding;
+
+using BetterCms.Module.Api.ApiExtensions;
 
 using BetterModules.Core.DataAccess;
 using BetterCms.Module.Api.Helpers;
@@ -13,7 +17,8 @@ namespace BetterCms.Module.Api.Operations.Root.Tags
     /// <summary>
     /// Default tags service contract implementation for REST.
     /// </summary>
-    public class TagsService : Service, ITagsService
+    [RoutePrefix("bcms-api")]
+    public class TagsController : ApiController, ITagsService
     {
         /// <summary>
         /// The repository.
@@ -26,11 +31,11 @@ namespace BetterCms.Module.Api.Operations.Root.Tags
         private readonly ITagService tagService;
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="TagsService" /> class.
+        /// Initializes a new instance of the <see cref="TagsController" /> class.
         /// </summary>
         /// <param name="repository">The repository.</param>
         /// <param name="tagService">The tag service.</param>
-        public TagsService(IRepository repository, ITagService tagService)
+        public TagsController(IRepository repository, ITagService tagService)
         {
             this.repository = repository;
             this.tagService = tagService;
@@ -43,7 +48,8 @@ namespace BetterCms.Module.Api.Operations.Root.Tags
         /// <returns>
         ///   <c>GetTagsResponse</c> with tags list.
         /// </returns>
-        public GetTagsResponse Get(GetTagsRequest request)
+        [Route("tags")]
+        public GetTagsResponse Get([ModelBinder(typeof(JsonModelBinder))]GetTagsRequest request)
         {
             request.Data.SetDefaultOrder("Name");
 
@@ -75,6 +81,7 @@ namespace BetterCms.Module.Api.Operations.Root.Tags
         /// <returns>
         ///   <c>PostTagsResponse</c> with a new tag id.
         /// </returns>
+        [Route("tags")]
         public PostTagResponse Post(PostTagRequest request)
         {
             var result =

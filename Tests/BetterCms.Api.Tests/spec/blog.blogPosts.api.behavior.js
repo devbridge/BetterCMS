@@ -246,10 +246,11 @@ describe('blog.blogPosts.api.behavior', function () {
             expect(layout.previewUrl).toBe('http://www.devbridge.com/Content/styles/images/responsive/logo.png', 'Correctly filtered layout.previewUrl should be retrieved.');
 
             // category
-            var category = result.category;
-            expect(category).toBeDefinedAndNotNull('JSON category object should be retrieved.');
-            api.expectBasePropertiesAreNotNull(category);
-            expect(category.name).toBe('Category for _0003_Blog_For_Tests_', 'Correctly filtered category.name should be retrieved.');
+            var categories = result.categories;
+            expect(categories).toBeDefinedAndNotNull('JSON category object should be retrieved.');
+            expect(categories.length).toBe(1, 'Categories count should be ' + 1 + '.');
+            //api.expectBasePropertiesAreNotNull(categories[0]);
+            expect(categories[0].name).toBe('Category for _0003_Blog_For_Tests_', 'Correctly filtered category.name should be retrieved.');
 
             // language
             var language = result.language;
@@ -395,8 +396,6 @@ describe('blog.blogPosts.api.behavior', function () {
                     { field: 'PublishedOn', value: '2013-07-25 18:13:56.000' },
                     { field: 'LayoutId', value: '0e991684003a43deb40f0ffeccddc6eb' },
                     { field: 'MasterPageId' },
-                    { field: 'CategoryId', value: '4e2095dbbfa4405e808aa206012c2486' },
-                    { field: 'CategoryName', value: '02108' },
                     { field: 'AuthorId', value: '58ee1671c9714f05b45ca206012c210b' },
                     { field: 'AuthorName', value: '02108' },
                     { field: 'MainImageId', value: 'ca4c9fb204554aecadbea206012c58a0' },
@@ -435,8 +434,8 @@ describe('blog.blogPosts.api.behavior', function () {
             expect(result.data.items[0].id).toBe('c1efcb1107ed4901abb3a206012b0b87', 'Correctly filtered items[0].id should be retrieved.');
 
             // Check if model properties count didn't changed. If so - update current test filter and another tests.
-            // data.filter.where.length + 2 <-- Because fields [Tags, AccessRules] cannnot be filtered by
-            expect(data.filter.where.length + 2).toBe(api.getCountOfProperties(result.data.items[0]), 'Retrieved result properties cound should be equal to filterting parameters count.');
+            // data.filter.where.length + 3 <-- Because fields [Tags, AccessRules, Categories] cannnot be filtered by
+            expect(data.filter.where.length + 3).toBe(api.getCountOfProperties(result.data.items[0]), 'Retrieved result properties cound should be equal to filterting parameters count.');
         });
     });
 
@@ -569,8 +568,6 @@ describe('blog.blogPosts.api.behavior', function () {
                     { field: 'PublishedOn', value: '2014-03-17 10:57:24.000' },
                     { field: 'LayoutId' },
                     { field: 'MasterPageId', value: '0eb7fcebf60e4227ab76a2f100b4c011' },
-                    { field: 'CategoryId', value: '210e1d69c13442329a85a2f100b40868' },
-                    { field: 'CategoryName', value: '02112' },
                     { field: 'AuthorId', value: '9c6d8902d39c4fc984b0a2f100b413df' },
                     { field: 'AuthorName', value: '02112' },
                     { field: 'MainImageId', value: 'b2e5f87a23834f438e50a2f100b46d79' },
@@ -609,8 +606,8 @@ describe('blog.blogPosts.api.behavior', function () {
             expect(result.data.items[0].id).toBe('98a7ba1fbadd419db331a2f100b48f93', 'Correctly filtered id should be retrieved.');
 
             // Check if model properties count didn't changed. If so - update current test filter and another tests.
-            // data.filter.where.length + 2 <-- Because fields [Tags, AccessRules] cannnot be filtered by
-            expect(data.filter.where.length + 2).toBe(api.getCountOfProperties(result.data.items[0]), 'Retrieved result properties cound should be equal to filterting parameters count.');
+            // data.filter.where.length + 3 <-- Because fields [Tags, AccessRules, Categories] cannnot be filtered by
+            expect(data.filter.where.length + 3).toBe(api.getCountOfProperties(result.data.items[0]), 'Retrieved result properties cound should be equal to filterting parameters count.');
         });
     });
 
@@ -841,8 +838,8 @@ describe('blog.blogPosts.api.behavior', function () {
         var data = {
             filter: {
                 where: [{ field: 'Title', operation: 'StartsWith', value: 'IFilterByTags' }]
-            },Should get blog post properties by id..
-Expected 0 to be 1, 'Categories count should be 1.'.
+            },//Should get blog post properties by id..
+//Expected 0 to be 1, 'Categories count should be 1.'.
             order: {
                 by: [{ field: 'Title' }]
             },

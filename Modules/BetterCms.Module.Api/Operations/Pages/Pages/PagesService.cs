@@ -28,6 +28,7 @@ namespace BetterCms.Module.Api.Operations.Pages.Pages
     /// <summary>
     /// Default pages service for CRUD.
     /// </summary>
+    [RoutePrefix("bcms-api")]
     public class PagesController : ApiController, IPagesService
     {
         /// <summary>
@@ -94,6 +95,7 @@ namespace BetterCms.Module.Api.Operations.Pages.Pages
         /// </summary>
         /// <param name="request">The request.</param>
         /// <returns><c>GetPagesResponse</c> with page list.</returns>
+        [Route("pages")]
         [ValidationAtttibute]
         public GetPagesResponse Get([ModelBinder(typeof(JsonModelBinder))] GetPagesRequest request)
         {

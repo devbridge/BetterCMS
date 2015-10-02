@@ -1,4 +1,8 @@
 ﻿using System.Linq;
+using System.Web.Http;
+using System.Web.Http.ModelBinding;
+
+using BetterCms.Module.Api.ApiExtensions;
 
 using BetterModules.Core.DataAccess;
 using BetterCms.Module.Api.Helpers;
@@ -13,7 +17,8 @@ namespace BetterCms.Module.Api.Operations.MediaManager.Folders
     /// <summary>
     /// Default folders service contract implementation for REST.
     /// </summary>
-    public class FoldersService : Service, IFoldersService
+    [RoutePrefix("bcms-api")]
+    public class FoldersController : ApiController, IFoldersService
     {
         /// <summary>
         /// The repository.
@@ -26,10 +31,10 @@ namespace BetterCms.Module.Api.Operations.MediaManager.Folders
         private readonly IFolderService folderService;
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="FoldersService" /> class.
+        /// Initializes a new instance of the <see cref="FoldersController" /> class.
         /// </summary>
         /// <param name="repository">The repository.</param>
-        public FoldersService(IRepository repository, IFolderService folderService)
+        public FoldersController(IRepository repository, IFolderService folderService)
         {
             this.repository = repository;
             this.folderService = folderService;
@@ -42,7 +47,8 @@ namespace BetterCms.Module.Api.Operations.MediaManager.Folders
         /// <returns>
         ///   <c>GetFoldersResponse</c> with folder list.
         /// </returns>
-        public GetFoldersResponse Get(GetFoldersRequest request)
+        [Route("folders")]
+        public GetFoldersResponse Get([ModelBinder(typeof(JsonModelBinder))]GetFoldersRequest request)
         {
             request.Data.SetDefaultOrder("Title");
 
@@ -89,6 +95,7 @@ namespace BetterCms.Module.Api.Operations.MediaManager.Folders
         /// <returns>
         ///   <c>PostFolderResponse</c> with a new folder id.
         /// </returns>
+        [Route("folders")]
         public PostFolderResponse Post(PostFolderRequest request)
         {
             var result =

@@ -1,4 +1,8 @@
 ﻿using System.Linq;
+using System.Web.Http;
+using System.Web.Http.ModelBinding;
+
+using BetterCms.Module.Api.ApiExtensions;
 
 using BetterModules.Core.DataAccess;
 using BetterCms.Module.Api.Helpers;
@@ -12,7 +16,8 @@ namespace BetterCms.Module.Api.Operations.Root.Languages
     /// <summary>
     /// Language service for languages list handling.
     /// </summary>
-    public class LanguagesService : Service, ILanguagesService
+    [RoutePrefix("bcms-api")]
+    public class LanguagesController : ApiController, ILanguagesService
     {
         /// <summary>
         /// The repository.
@@ -24,13 +29,14 @@ namespace BetterCms.Module.Api.Operations.Root.Languages
         /// </summary>
         private readonly ILanguageService languageService;
 
-        public LanguagesService(IRepository repository, ILanguageService languageService)
+        public LanguagesController(IRepository repository, ILanguageService languageService)
         {
             this.repository = repository;
             this.languageService = languageService;
         }
 
-        public GetLanguagesResponse Get(GetLanguagesRequest request)
+        [Route("languages")]
+        public GetLanguagesResponse Get([ModelBinder(typeof(JsonModelBinder))]GetLanguagesRequest request)
         {
             request.Data.SetDefaultOrder("Name");
 
@@ -56,6 +62,7 @@ namespace BetterCms.Module.Api.Operations.Root.Languages
                        };
         }
 
+        [Route("languages")]
         public PostLanguageResponse Post(PostLanguageRequest request)
         {
             var result =

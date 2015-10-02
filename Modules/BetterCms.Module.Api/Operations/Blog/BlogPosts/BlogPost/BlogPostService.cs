@@ -1,10 +1,12 @@
 ﻿using System;
 using System.Linq;
+using System.Web.Http;
+using System.Web.Http.ModelBinding;
 
 using BetterModules.Core.DataAccess;
 using BetterModules.Core.DataAccess.DataContext;
 using BetterCms.Core.DataContracts.Enums;
-
+using BetterCms.Module.Api.ApiExtensions;
 using BetterCms.Module.Api.Operations.Blog.BlogPosts.BlogPost.Properties;
 using BetterCms.Module.Api.Operations.Pages.Contents.Content.BlogPostContent;
 using BetterCms.Module.Blog.Models;
@@ -14,7 +16,8 @@ using ServiceStack.ServiceInterface;
 
 namespace BetterCms.Module.Api.Operations.Blog.BlogPosts.BlogPost
 {
-    public class BlogPostService : Service, IBlogPostService
+    [RoutePrefix("bcms-api")]
+    public class BlogPostController : ApiController, IBlogPostService
     {
         private readonly IRepository repository;
 
@@ -24,7 +27,7 @@ namespace BetterCms.Module.Api.Operations.Blog.BlogPosts.BlogPost
         
         private readonly IBlogPostContentService contentService;
 
-        public BlogPostService(IBlogPostPropertiesService propertiesService, IBlogPostContentService contentService,
+        public BlogPostController(IBlogPostPropertiesService propertiesService, IBlogPostContentService contentService,
             IRepository repository, IMediaFileUrlResolver fileUrlResolver)
         {
             this.propertiesService = propertiesService;
@@ -33,7 +36,8 @@ namespace BetterCms.Module.Api.Operations.Blog.BlogPosts.BlogPost
             this.fileUrlResolver = fileUrlResolver;
         }
 
-        public GetBlogPostResponse Get(GetBlogPostRequest request)
+        [Route("blog-posts/{BlogPostId}")]
+        public GetBlogPostResponse Get([ModelBinder(typeof(JsonModelBinder))]GetBlogPostRequest request)
         {
             var model = repository
                 .AsQueryable<Module.Blog.Models.BlogPost>(blogPost => blogPost.Id == request.BlogPostId)
