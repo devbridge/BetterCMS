@@ -85,14 +85,16 @@
     }
 
     &-search {
+        @include transition(background-color 200ms);
         @include position(absolute, 1px 1px null null);
         @include size(28px);
-        background: url('images/sprite-base-2.png') no-repeat -23px -148px $dark;
+        background: $dark url($icon-bcms-search) no-repeat center;
+        cursor: pointer;
         overflow: hidden;
         text-indent: -999em;
 
         &:hover {
-            background-color: #383838;
+            background-color: lighten($dark, 5%);
         }
     }
 
