@@ -251,13 +251,13 @@ html.bcms-noscroll {
 
 div.bcms-modal-close {
     width: 15px;
-    height: 14px;
+    height: 15px;
     position: absolute;
     margin-top: -7px;
     top: 50%;
     right: 20px;
     cursor: pointer;
-    background: url('images/sprite-base-1.png') no-repeat -10px -812px;
+    background: url($icon-bcms-close) no-repeat center;
     overflow: hidden;
     text-indent: 9999px;
     text-decoration: none;

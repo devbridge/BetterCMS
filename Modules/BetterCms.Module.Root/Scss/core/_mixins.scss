@@ -1,4 +1,3 @@
-//module VIRTUAL BEFORE & AFTER ELEMENTS
 @mixin clearfix($extend: true) {
     @if ($extend) {
         @extend %clearfix;

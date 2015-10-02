@@ -1475,6 +1475,7 @@
     <EmbeddedResource Include="Scripts\ckeditor\code-config.js" />
     <EmbeddedResource Include="Scripts\ckeditor\plugins\cms-option\plugin.js" />
     <Content Include="Scss\base_64\bcms-add-content.svg" />
+    <Content Include="Scss\base_64\bcms-close.svg" />
     <Content Include="Scss\base_64\bcms-cp-add-new.svg" />
     <Content Include="Scss\base_64\bcms-cp-clone.svg" />
     <Content Include="Scss\base_64\bcms-cp-delete.svg" />
