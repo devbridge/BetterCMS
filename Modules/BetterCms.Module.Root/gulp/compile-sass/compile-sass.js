@@ -18,7 +18,8 @@ function compileSass(source, destination) {
         .pipe($.rename({prefix: 'bcms.'}))
         .pipe(gulp.dest(destination))
         .pipe(cssFilter)
-        .pipe($.combineMediaQueries())
+        //todo fix media queries combine issue
+        //.pipe($.combineMediaQueries())
         .pipe($.csso())
         .pipe($.rename({suffix: '.min'}))
         .pipe(gulp.dest(destination))
