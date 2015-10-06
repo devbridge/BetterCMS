@@ -22,18 +22,23 @@
         */
         markdownEditor.initializeInstance = function (htmlEditor, id, editingContentId, options) {
 
-            /*var smartTagsList = [];
+            var smartTagsList = [],
+                i,
+                item;
+
             if (options.smartTags && options.smartTags.length > 0) {
-                $.each(options.smartTags, function(item) {
+                for (i = 0; i < options.smartTags.length; i ++) {
+                    item = options.smartTags[i];
+
                     smartTagsList.push({
-                        name: item.text,
-                        replaceWith: item.openWith || item.closeWith ? '' : item.title,
+                        name: item.title,
+                        replaceWith: item.openWith != null || item.closeWith != null ? '' : item.text,
                         placeHolder: item.placeholder,
                         openWith: item.openWith,
                         closeWith: item.closeWith
                     });
-                });
-            }*/
+                }
+            }
 
             options = $.extend({
                 previewParserPath: '',
@@ -129,7 +134,7 @@
                     { separator: '---------------' },
                     { name: 'Quotes', openWith: '-------\n', closeWith: '\n-------\n', className: 'markItUpButtonQuotes' },
                     { name: 'Code Block / Code', openWith: '``', closeWith: '``', className: 'markItUpButtonCode' },
-                    { name: 'Smart tags'/*, dropMenu: smartTagsList*/ }
+                    { name: 'Smart tags', dropMenu: smartTagsList }
                 ]
             }, options);
 

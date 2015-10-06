@@ -136,9 +136,7 @@ namespace BetterCms.Module.Pages.Command.Content.SavePageHtmlContent
 
             if (model.IsMarkdown)
             {
-                var md = new MarkdownDeep.Markdown();
-
-                contentToSave.Html = md.Transform(model.PageContent);
+                contentToSave.Html = MarkdownConverter.ToHtml(model.PageContent);
                 contentToSave.ContentTextMode = ContentTextMode.Markdown;
                 contentToSave.OriginalText = model.PageContent;
             }

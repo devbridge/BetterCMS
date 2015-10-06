@@ -53,7 +53,7 @@ bettercms.define('bcms.htmlEditor', ['bcms.jquery', 'bcms', 'ckeditor', 'bcms.ma
     function getSmartTags() {
         var tags = [];
 
-        /*tags.push({ text: "{{CmsPageTitle}}", title: htmlEditor.globalization.smartTagPageTitle });
+        tags.push({ text: "{{CmsPageTitle}}", title: htmlEditor.globalization.smartTagPageTitle });
         tags.push({ text: "{{CmsPageUrl}}", title: htmlEditor.globalization.smartTagPageUrl });
         tags.push({ text: "{{CmsPageId}}", title: htmlEditor.globalization.smartTagPageId });
         tags.push({
@@ -105,13 +105,17 @@ bettercms.define('bcms.htmlEditor', ['bcms.jquery', 'bcms', 'ckeditor', 'bcms.ma
             openWith: "{{CmsBlogExpirationDate:",
             closeWith: "}}",
             placeholder: "yyyy-MM-dd"
-        });*/
+        });
 
         return tags;
     }
 
     htmlEditor.initializeMarkdownEditor = function (id, editingContentId, options) {
-        markdownEditor.initializeInstance(htmlEditor, getSmartTags(), id, editingContentId, options);
+        options = $.extend({
+            smartTags: getSmartTags()
+        }, options);
+
+        markdownEditor.initializeInstance(htmlEditor, id, editingContentId, options);
     }
 
     htmlEditor.initializeHtmlEditor = function (id, editingContentId, options, startInSourceMode) {
@@ -252,7 +256,11 @@ bettercms.define('bcms.htmlEditor', ['bcms.jquery', 'bcms', 'ckeditor', 'bcms.ma
         instance.IsMasterPage = isMasterPage;
     };
 
-    htmlEditor.isSourceMode = function (textareaId) {
+    htmlEditor.isSourceMode = function (textareaId, isMarkdown) {
+        if (isMarkdown) {
+            return true;
+        }
+
         var instance = htmlEditor.getInstance(textareaId);
 
         return instance != null && instance.mode === 'source';

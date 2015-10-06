@@ -141,7 +141,7 @@ bettercms.define('bcms.pages.content', ['bcms.jquery', 'bcms', 'bcms.modal', 'bc
                         beforePost: function () {
                             htmlEditor.updateEditorContent(editorId, isMarkdown);
 
-                            var editInSourceMode = htmlEditor.isSourceMode(editorId);
+                            var editInSourceMode = htmlEditor.isSourceMode(editorId, isMarkdown);
                             dialog.container.find(selectors.editInSourceModeHiddenField).val(editInSourceMode);
                             dialog.container.find(selectors.isMarkdownHiddenField).val(isMarkdown);
 
@@ -680,7 +680,7 @@ bettercms.define('bcms.pages.content', ['bcms.jquery', 'bcms', 'bcms.modal', 'bc
                         beforePost: function () {
                             htmlEditor.updateEditorContent(editorId, isMarkdown);
 
-                            var editInSourceMode = htmlEditor.isSourceMode(editorId);
+                            var editInSourceMode = htmlEditor.isSourceMode(editorId, isMarkdown);
                             dialog.container.find(selectors.editInSourceModeHiddenField).val(editInSourceMode);
 
                             return true;
