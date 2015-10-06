@@ -20,8 +20,7 @@ namespace BetterCms.Module.Users.Api.Operations.Users.Users.User.Validate
             this.authenticationService = authenticationService;
         }
 
-        [Route("users/validate")]
-        public ValidateUserResponse Get([ModelBinder(typeof(JsonModelBinder))]ValidateUserRequest request)
+        public ValidateUserResponse Get(ValidateUserRequest request)
         {
             var userId = authenticationService.GetUserIdIfValid(request.Data.UserName, request.Data.Password);
             return new ValidateUserResponse

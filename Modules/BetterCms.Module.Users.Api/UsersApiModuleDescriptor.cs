@@ -1,4 +1,7 @@
-﻿using Autofac;
+﻿using System.Reflection;
+
+using Autofac;
+using Autofac.Integration.WebApi;
 
 using BetterCms.Core.Modules;
 
@@ -86,6 +89,7 @@ namespace BetterCms.Module.Users.Api
             containerBuilder.RegisterType<ValidateUserController>().As<IValidateUserService>().InstancePerLifetimeScope().PropertiesAutowired(PropertyWiringOptions.PreserveSetValues);
             containerBuilder.RegisterType<RolesController>().As<IRolesService>().InstancePerLifetimeScope().PropertiesAutowired(PropertyWiringOptions.PreserveSetValues);
             containerBuilder.RegisterType<RoleController>().As<IRoleService>().InstancePerLifetimeScope().PropertiesAutowired(PropertyWiringOptions.PreserveSetValues);
+            containerBuilder.RegisterApiControllers(Assembly.GetExecutingAssembly());
         }
     }
 }

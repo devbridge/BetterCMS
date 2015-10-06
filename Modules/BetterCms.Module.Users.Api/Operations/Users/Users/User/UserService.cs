@@ -123,9 +123,17 @@ namespace BetterCms.Module.Users.Api.Operations.Users.Users.User
             return new PutUserResponse { Data = user.Id };
         }
 
+
+        //TODO: Where and why this is used?
         ValidateUserResponse IUserService.Validate(ValidateUserRequest request)
         {
             return validateUserService.Get(request);
         }
+
+        [Route("users/validate")]
+        public ValidateUserResponse Get([ModelBinder(typeof(JsonModelBinder))] ValidateUserRequest request)
+        {
+            return validateUserService.Get(request);
+        } 
     }
 }

@@ -52,6 +52,9 @@
     <Reference Include="Autofac">
       <HintPath>..\..\packages\Autofac.3.1.5\lib\net40\Autofac.dll</HintPath>
     </Reference>
+    <Reference Include="Autofac.Integration.WebApi">
+      <HintPath>..\..\packages\Autofac.WebApi2.3.0.0\lib\net45\Autofac.Integration.WebApi.dll</HintPath>
+    </Reference>
     <Reference Include="BetterModules.Core, Version=1.0.0.31, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\..\packages\BetterModules.Core.1.0.0-rc9\lib\net40\BetterModules.Core.dll</HintPath>
       <Private>True</Private>
@@ -133,6 +136,10 @@
       <HintPath>..\..\packages\Microsoft.AspNet.WebPages.3.2.3\lib\net45\System.Web.Helpers.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="System.Web.Http, Version=5.2.3.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\packages\Microsoft.AspNet.WebApi.Core.5.2.3\lib\net45\System.Web.Http.dll</HintPath>
+    </Reference>
     <Reference Include="System.Web.Mvc">
       <HintPath>..\..\packages\Microsoft.AspNet.Mvc.5.2.3\lib\net45\System.Web.Mvc.dll</HintPath>
       <Private>True</Private>
@@ -167,6 +174,10 @@
     <ProjectReference Include="..\BetterCms.Module.Api.Abstractions\BetterCMS.Module.Api.Abstractions.csproj">
       <Project>{073e257b-a6a0-42fc-9102-8e920bf54e50}</Project>
       <Name>BetterCMS.Module.Api.Abstractions</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\BetterCms.Module.Api\BetterCms.Module.Api.csproj">
+      <Project>{5FF9D100-CF25-4899-8D23-8EB9F0C0E102}</Project>
+      <Name>BetterCms.Module.Api</Name>
     </ProjectReference>
     <ProjectReference Include="..\BetterCms.Module.Root\BetterCms.Module.Root.csproj">
       <Project>{66e7e4df-eeea-4b1e-8663-a1b430eb7375}</Project>
