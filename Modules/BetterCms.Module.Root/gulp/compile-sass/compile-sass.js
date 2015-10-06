@@ -1,6 +1,9 @@
 var gulp = require('gulp'),
-    $ = require('gulp-load-plugins')({lazy: true}),
+    $ = require('gulp-load-plugins')({
+        lazy: true
+    }),
     config = require('../gulp.config.js')(),
+    gcmq = require('gulp-group-css-media-queries'),
     utils = require('../utils/utils.js')();
 
 module.exports = task;
@@ -18,8 +21,7 @@ function compileSass(source, destination) {
         .pipe($.rename({prefix: 'bcms.'}))
         .pipe(gulp.dest(destination))
         .pipe(cssFilter)
-        //todo fix media queries combine issue
-        //.pipe($.combineMediaQueries())
+        .pipe(gcmq())
         .pipe($.csso())
         .pipe($.rename({suffix: '.min'}))
         .pipe(gulp.dest(destination))
