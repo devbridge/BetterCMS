@@ -26,6 +26,8 @@ bettercms.define('bcms.content', ['bcms.jquery', 'bcms', 'bcms.modal', 'bcms.red
 
             regionAddContentButtons: '.bcms-region-addcontent',
             regionAddMarkdownButtons: '.bcms-region-addmarkdown',
+            regionAddHtmlButtons: '.bcms-region-addhtml',
+            regionAddTextButtons: '.bcms-region-addtext',
             regionSortButtons: '.bcms-region-sortcontent',
             regionSortDoneButtons: '.bcms-region-sortdone',
             regionSortCancelButtons: '.bcms-region-sortcancel',
@@ -53,7 +55,8 @@ bettercms.define('bcms.content', ['bcms.jquery', 'bcms', 'bcms.modal', 'bcms.red
             masterPagesPathChildContentItem: 'bcms-path-child-content',
             masterPagesPathChildContentActiveItem: 'bcms-path-child-content-active',
             masterPagesPathPageItem: 'bcms-path-page',
-            editingOnClass: 'bcms-on'
+            editingOnClass: 'bcms-on',
+            buttonActive: 'bcms-active'
         },
         keys = {
             showMasterPagesPath: 'bcms.showMasterPagesPath',
@@ -585,11 +588,19 @@ bettercms.define('bcms.content', ['bcms.jquery', 'bcms', 'bcms.modal', 'bcms.red
             self.overlay = rectangle;
             self.sortBlock = this.overlay.find(selectors.regionSortBlock);
 
+            $(selectors.regionAddContentButtons, self.overlay).on('click', function () {
+                $(this).addClass(classes.buttonActive);
+            });
+
             $(selectors.regionAddMarkdownButtons, self.overlay).on('click', function() {
                 self.onAddMarkdown();
             });
 
-            $(selectors.regionAddContentButtons, self.overlay).on('click', function () {
+            $(selectors.regionAddHtmlButtons, self.overlay).on('click', function () {
+                self.onAddContent();
+            });
+
+            $(selectors.regionAddTextButtons, self.overlay).on('click', function () {
                 self.onAddContent();
             });
 

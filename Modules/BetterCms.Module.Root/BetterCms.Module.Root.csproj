@@ -722,7 +722,6 @@
   <ItemGroup>
     <EmbeddedResource Include="Content\Resources\RootGlobalization.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
-      <LastGenOutput>RootGlobalization.Designer.cs</LastGenOutput>
       <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="Content\themes\base\images\ui-bg_flat_0_aaaaaa_40x100.png" />
