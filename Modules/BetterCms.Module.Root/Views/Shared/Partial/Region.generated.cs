@@ -114,21 +114,58 @@ WriteLiteral(">");
             
             #line default
             #line hidden
-WriteLiteral("</div>\r\n                <div");
+WriteLiteral("</div>\r\n\r\n                <div");
 
 WriteLiteral(" class=\"bcms-region-button bcms-region-addcontent\"");
 
-WriteLiteral("></div>\r\n                <div");
+WriteLiteral(">\r\n                    <div");
 
-WriteLiteral(" class=\"bcms-region-button bcms-region-addmarkdown\"");
+WriteLiteral(" class=\"bcms-region-options-block\"");
 
-WriteLiteral(">M</div>\r\n                <div");
+WriteLiteral(">\r\n                        <div");
+
+WriteLiteral(" class=\"bcms-region-pick-editor bcms-region-addhtml\"");
+
+WriteLiteral(">");
+
+            
+            #line 14 "..\..\Views\Shared\Partial\Region.cshtml"
+                                                                            Write(RootGlobalization.Button_AddContent_Html);
+
+            
+            #line default
+            #line hidden
+WriteLiteral("</div>\r\n                        <div");
+
+WriteLiteral(" class=\"bcms-region-pick-editor bcms-region-addmarkdown\"");
+
+WriteLiteral(">");
+
+            
+            #line 15 "..\..\Views\Shared\Partial\Region.cshtml"
+                                                                                Write(RootGlobalization.Button_AddContent_Markdown);
+
+            
+            #line default
+            #line hidden
+WriteLiteral("</div>\r\n                        <div");
+
+WriteLiteral(" class=\"bcms-region-pick-editor bcms-region-addtext\"");
+
+WriteLiteral(">");
+
+            
+            #line 16 "..\..\Views\Shared\Partial\Region.cshtml"
+                                                                            Write(RootGlobalization.Button_AddContent_PlainText);
+
+            
+            #line default
+            #line hidden
+WriteLiteral("</div>\r\n                    </div>\r\n                </div>\r\n                <div");
 
 WriteLiteral(" class=\"bcms-region-button bcms-region-addwidget\"");
 
-WriteLiteral("></div>\r\n\r\n                ");
-
-WriteLiteral("\r\n                <div");
+WriteLiteral("></div>\r\n                <div");
 
 WriteLiteral(" class=\"bcms-region-button bcms-region-sortcontent\"");
 
@@ -141,7 +178,7 @@ WriteLiteral(" class=\"bcms-sort-block\"");
 WriteLiteral("></div>\r\n");
 
             
-            #line 26 "..\..\Views\Shared\Partial\Region.cshtml"
+            #line 23 "..\..\Views\Shared\Partial\Region.cshtml"
         }
 
             

@@ -26,6 +26,8 @@ bettercms.define('bcms.content', ['bcms.jquery', 'bcms', 'bcms.modal', 'bcms.red
 
             regionAddContentButtons: '.bcms-region-addcontent',
             regionAddMarkdownButtons: '.bcms-region-addmarkdown',
+            regionAddHtmlButtons: '.bcms-region-addhtml',
+            regionAddTextButtons: '.bcms-region-addtext',
             regionSortButtons: '.bcms-region-sortcontent',
             regionSortDoneButtons: '.bcms-region-sortdone',
             regionSortCancelButtons: '.bcms-region-sortcancel',
@@ -53,7 +55,8 @@ bettercms.define('bcms.content', ['bcms.jquery', 'bcms', 'bcms.modal', 'bcms.red
             masterPagesPathChildContentItem: 'bcms-path-child-content',
             masterPagesPathChildContentActiveItem: 'bcms-path-child-content-active',
             masterPagesPathPageItem: 'bcms-path-page',
-            editingOnClass: 'bcms-on'
+            editingOnClass: 'bcms-on',
+            buttonActive: 'bcms-active'
         },
         keys = {
             showMasterPagesPath: 'bcms.showMasterPagesPath',
@@ -75,12 +78,18 @@ bettercms.define('bcms.content', ['bcms.jquery', 'bcms', 'bcms.modal', 'bcms.red
         pageViewModel,
         opacityAnimationSpeed = 50,
         isSortMode = false,
+        isOpenedAddContent = false,
+        suspendCloseAddContent = false,
         masterPagesModel = null;
 
     // Assign objects to module
     content.selectors = selectors;
     content.links = links;
     content.globalization = globalization;
+
+    function closeAllAddContentButtons() {
+        $(selectors.regionAddContentButtons).removeClass(classes.buttonActive);
+    }
 
     /**
     * Shows overlay over content region:
@@ -585,11 +594,30 @@ bettercms.define('bcms.content', ['bcms.jquery', 'bcms', 'bcms.modal', 'bcms.red
             self.overlay = rectangle;
             self.sortBlock = this.overlay.find(selectors.regionSortBlock);
 
+            $(selectors.regionAddContentButtons, self.overlay).on('click', function () {
+                var icon = $(this),
+                    isOpened = icon.hasClass(classes.buttonActive);
+                closeAllAddContentButtons();
+
+                if (!isOpened) {
+                    $(this).addClass(classes.buttonActive);
+                    isOpenedAddContent = true;
+                    suspendCloseAddContent = true;
+                    setTimeout(function() {
+                        suspendCloseAddContent = false;
+                    }, 100);
+                }
+            });
+
             $(selectors.regionAddMarkdownButtons, self.overlay).on('click', function() {
                 self.onAddMarkdown();
             });
 
-            $(selectors.regionAddContentButtons, self.overlay).on('click', function () {
+            $(selectors.regionAddHtmlButtons, self.overlay).on('click', function () {
+                self.onAddContent();
+            });
+
+            $(selectors.regionAddTextButtons, self.overlay).on('click', function () {
                 self.onAddContent();
             });
 
@@ -1302,6 +1330,13 @@ bettercms.define('bcms.content', ['bcms.jquery', 'bcms', 'bcms.modal', 'bcms.red
     */
     content.init = function () {
         bcms.logger.debug('Initializing content module');
+
+        $('body').on('click', function () {
+            if (isOpenedAddContent && !suspendCloseAddContent) {
+                closeAllAddContentButtons();
+                isOpenedAddContent = false;
+            }
+        });
 
         masterPagesModel = new MasterPagesPathModel();
         masterPagesModel.initialize();
