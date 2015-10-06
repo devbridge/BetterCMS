@@ -33,7 +33,7 @@ bettercms.define('bcms.htmlEditor', ['bcms.jquery', 'bcms', 'ckeditor', 'bcms.ma
     htmlEditor.id = null;
 
     htmlEditor.initializeMarkdownEditor = function (id, editingContentId, options) {
-        markdownEditor.initializeInstance(id, editingContentId, options);
+        markdownEditor.initializeInstance(htmlEditor, id, editingContentId, options);
     }
 
     htmlEditor.initializeHtmlEditor = function (id, editingContentId, options, startInSourceMode) {

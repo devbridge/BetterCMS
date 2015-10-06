@@ -1486,7 +1486,11 @@ function ($, bcms, modal, siteSettings, forms, dynamicContent, messages, mediaUp
                 img = '<img src="' + imageUrl + '" alt="' + caption + '" style="float:' + align + '" class="' + cssClass + '" />';
             }
 
-            contentEditor.addHtml(img);
+            contentEditor.addHtml(img, {
+                src: imageUrl,
+                alt: caption,
+                imageAlign: align
+            });
         }
     };
 
@@ -1568,7 +1572,10 @@ function ($, bcms, modal, siteSettings, forms, dynamicContent, messages, mediaUp
     function addFileToEditor(fileUrl, fileName) {
         if (contentEditor != null) {
             var file = '<a href="' + fileUrl + '">' + fileName + '</a>';
-            contentEditor.addHtml(file);
+            contentEditor.addHtml(file, {
+                href: fileUrl,
+                html: fileName
+            });
         }
     };
 
