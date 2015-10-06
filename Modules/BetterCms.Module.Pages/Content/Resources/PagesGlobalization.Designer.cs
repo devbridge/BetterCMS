@@ -2887,7 +2887,7 @@ namespace BetterCms.Module.Pages.Content.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Delete this page.
+        ///   Looks up a localized string similar to Delete page.
         /// </summary>
         public static string Sidebar_DeletePageButtonTitle {
             get {

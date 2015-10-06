@@ -213,6 +213,7 @@
     <Compile Include="Models\ChildContentOption.cs" />
     <Compile Include="Models\ICategoryAccessor.cs" />
     <Compile Include="Models\Maps\WidgetCategoryMap.cs" />
+    <Compile Include="Models\Migrations\Migration201509281017.cs" />
     <Compile Include="Models\Migrations\Migration201502061445.cs" />
     <Compile Include="Models\WidgetCategories.cs" />
     <Compile Include="Models\IChildRegionContainer.cs" />
@@ -572,6 +573,11 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Header.cshtml</DependentUpon>
     </Compile>
+    <Compile Include="Views\Shared\EditableGrid\Partial\MultilineTextCell.generated.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>MultilineTextCell.cshtml</DependentUpon>
+    </Compile>
     <Compile Include="Views\Shared\EditableGrid\Partial\TopBlock.generated.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -794,7 +800,6 @@
     <EmbeddedResource Include="Scripts\bcms.modal.js" />
     <EmbeddedResource Include="Scripts\bcms.siteSettings.js" />
     <EmbeddedResource Include="Scripts\bcms.forms.js" />
-    <EmbeddedResource Include="Content\Styles\images\bcms-logo.png" />
     <EmbeddedResource Include="Content\Styles\images\bcms-no-image-1.png" />
     <EmbeddedResource Include="Content\Styles\images\bcms-no-image-2.png" />
     <EmbeddedResource Include="Content\Styles\images\bcms-no-image-3.png" />
@@ -1497,6 +1502,27 @@
     <EmbeddedResource Include="Scripts\markitup\skins\markitup\images\submenu.png" />
     <EmbeddedResource Include="Scripts\markitup\skins\markitup\style.css" />
     <Content Include="Scss\base_64\bcms-add-content.svg" />
+    <Content Include="Scss\base_64\bcms-close.svg" />
+    <Content Include="Scss\base_64\bcms-cp-add-new.svg" />
+    <Content Include="Scss\base_64\bcms-cp-clone.svg" />
+    <Content Include="Scss\base_64\bcms-cp-delete.svg" />
+    <Content Include="Scss\base_64\bcms-cp-drag-handle.svg" />
+    <Content Include="Scss\base_64\bcms-cp-hide-right.svg" />
+    <Content Include="Scss\base_64\bcms-cp-hide.svg" />
+    <Content Include="Scss\base_64\bcms-cp-indicate-button.svg" />
+    <Content Include="Scss\base_64\bcms-cp-indicate-off.svg" />
+    <Content Include="Scss\base_64\bcms-cp-indicate-on.svg" />
+    <Content Include="Scss\base_64\bcms-cp-notification-ok.svg" />
+    <Content Include="Scss\base_64\bcms-cp-notification-warn.svg" />
+    <Content Include="Scss\base_64\bcms-cp-pub-ok.svg" />
+    <Content Include="Scss\base_64\bcms-cp-pub-warn.svg" />
+    <Content Include="Scss\base_64\bcms-cp-seo-ok.svg" />
+    <Content Include="Scss\base_64\bcms-cp-seo-warn.svg" />
+    <Content Include="Scss\base_64\bcms-cp-show-right.svg" />
+    <Content Include="Scss\base_64\bcms-cp-show.svg" />
+    <Content Include="Scss\base_64\bcms-cp-stick-handle-right.svg" />
+    <Content Include="Scss\base_64\bcms-cp-stick-handle.svg" />
+    <Content Include="Scss\base_64\bcms-cp-user.svg" />
     <Content Include="Scss\base_64\bcms-overlay-delete.svg" />
     <Content Include="Scss\base_64\bcms-overlay-edit-child.svg" />
     <Content Include="Scss\base_64\bcms-overlay-edit.svg" />
@@ -1504,7 +1530,12 @@
     <Content Include="Scss\base_64\bcms-overlay-history.svg" />
     <Content Include="Scss\base_64\bcms-manage.svg" />
     <Content Include="Scss\base_64\bcms-overlay-options.svg" />
+    <Content Include="Scss\base_64\bcms-overlay-widget.svg" />
+    <Content Include="Scss\base_64\bcms-cp-texture.svg" />
+    <Content Include="Scss\base_64\bcms-search.svg" />
+    <Content Include="Scss\base_64\bcms-cp-settings.svg" />
     <Content Include="Scss\base_64\bcms-texture.svg" />
+    <Content Include="Scss\base_64\bcms-cp-translate.svg" />
     <Content Include="Scss\base_64\validation.svg" />
     <Content Include="Views\Web.config" />
     <Content Include="Views\Category\CategoryTreeEdit.cshtml">
@@ -1562,6 +1593,10 @@
       <Generator>RazorGenerator</Generator>
       <LastGenOutput>CategoriesTemplate.generated.cs</LastGenOutput>
     </Content>
+    <None Include="Views\Shared\EditableGrid\Partial\MultilineTextCell.cshtml">
+      <Generator>RazorGenerator</Generator>
+      <LastGenOutput>MultilineTextCell.generated.cs</LastGenOutput>
+    </None>
     <None Include="Views\Shared\Partial\ContentsTree.cshtml">
       <LastGenOutput>ContentsTree.generated.cs</LastGenOutput>
       <Generator>RazorGenerator</Generator>

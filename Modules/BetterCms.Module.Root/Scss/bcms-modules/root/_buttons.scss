@@ -25,45 +25,34 @@
 .bcms-btn {
     &-main {
         @extend %btn-extender;
-        background: -webkit-linear-gradient(top, $blue-l30, $blue-l40);
-        background: linear-gradient(to bottom, $blue-l30, $blue-l40);
+        @include add-gradient($top: $blue-l30, $bottom: $blue-l40);
         color: $white;
         font-size: 16px;
         line-height: 32px;
         padding: 0 10px;
-
-        &:active {
-            background: $blue-l55;
-        }
     }
 
     &-small {
         @extend %btn-extender;
-        background: -webkit-linear-gradient(top, $blue-l30, $blue-l40);
-        background: linear-gradient(to bottom, $blue-l30, $blue-l40);
+        @include add-gradient($top: $blue-l30, $bottom: $blue-l40);
         color: $white;
         font-size: 12px;
         line-height: 30px;
         padding: 0 10px;
 
-        &:active {
-            background: $blue-l55;
+        &.bcms-btn-gray {
+            @include add-gradient($top: $gray-l45, $bottom: $gray-l46);
         }
     }
 
     &-grid {
         @extend %btn-extender;
-        background: -webkit-linear-gradient(top, $gray-l50, $gray-l60);
-        background: linear-gradient(to bottom, $gray-l50, $gray-l60);
+        @include add-gradient($top: $gray-l50, $bottom: $gray-l60);
         color: $white;
         font-size: 14px;
         font-weight: 600;
         line-height: 36px;
         padding: 0 15px;
-
-        &:active {
-            background: $gray-l50;
-        }
     }
 
     &-links-main {
@@ -81,26 +70,43 @@
     }
 
     &-search {
+        @include transition(background-color 200ms);
         @include position(absolute, 1px 1px null null);
         @include size(28px);
-        background: url('images/sprite-base-2.png') no-repeat -23px -148px $dark;
+        background: $dark url($icon-bcms-search) no-repeat center;
+        cursor: pointer;
         overflow: hidden;
         text-indent: -999em;
 
         &:hover {
-            background-color: #383838;
+            background-color: lighten($dark, 5%);
         }
     }
 
     &-close {
         @include position(absolute, 10px 10px null null);
-        @include size(15px 14px);
-        background: url('images/sprite-base-1.png') no-repeat -9px -697px;
+        @include size(15px);
+        background: url($icon-bcms-close) no-repeat center;
         cursor: pointer;
         overflow: hidden;
         text-decoration: none;
         text-indent: -999em;
     }
+}
+
+//todo need to update
+.bcms-btn-plus {
+    background: url('images/sprite-base-2.png') no-repeat -44px -179px;
+    cursor: pointer;
+    display: inline-block;
+    line-height: 16px;
+    margin-left: 5px;
+    vertical-align: middle;
+    width: 16px;
+}
+
+div.bcms-btn-plus-expand {
+    background-position: -64px -179px;
 }
 
 //todo check if this button still relevant

@@ -126,7 +126,9 @@ WriteLiteral(">M</div>\r\n                <div");
 
 WriteLiteral(" class=\"bcms-region-button bcms-region-addwidget\"");
 
-WriteLiteral(">W</div>\r\n                <div");
+WriteLiteral("></div>\r\n\r\n                ");
+
+WriteLiteral("\r\n                <div");
 
 WriteLiteral(" class=\"bcms-region-button bcms-region-sortcontent\"");
 
@@ -139,7 +141,7 @@ WriteLiteral(" class=\"bcms-sort-block\"");
 WriteLiteral("></div>\r\n");
 
             
-            #line 17 "..\..\Views\Shared\Partial\Region.cshtml"
+            #line 26 "..\..\Views\Shared\Partial\Region.cshtml"
         }
 
             

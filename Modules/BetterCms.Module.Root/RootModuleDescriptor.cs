@@ -304,7 +304,7 @@ namespace BetterCms.Module.Root
                     new ButtonActionProjection(authenticationJsModuleIncludeDescriptor, page => RootGlobalization.Sidebar_LogoutButton, page => "logout")
                         {
                             Order = 10,
-                            CssClass = page => "bcms-logout-btn",
+                            CssClass = page => "bcms-btn-logout",
                         },
                     new RenderActionProjection<AuthenticationController>(f => f.Info())
                 };
@@ -318,7 +318,7 @@ namespace BetterCms.Module.Root
                         {
                             Title = page => RootGlobalization.Sidebar_SiteSettingsButtonTitle,
                             CssClass = page => "bcms-sidemenu-btn bcms-btn-settings",
-                            Order = 500,
+                            Order = 900,
                         }
                 };
         }

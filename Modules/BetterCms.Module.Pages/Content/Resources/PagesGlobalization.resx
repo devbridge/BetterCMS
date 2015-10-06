@@ -535,7 +535,7 @@
     <value>New page</value>
   </data>
   <data name="Sidebar_DeletePageButtonTitle" xml:space="preserve">
-    <value>Delete this page</value>
+    <value>Delete page</value>
   </data>
   <data name="Sidebar_EditPagePropertiesButtonTitle" xml:space="preserve">
     <value>Edit page properties</value>

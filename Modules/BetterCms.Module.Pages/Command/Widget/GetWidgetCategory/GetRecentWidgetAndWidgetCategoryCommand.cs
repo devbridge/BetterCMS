@@ -62,7 +62,10 @@ namespace BetterCms.Module.Pages.Command.Widget.GetWidgetCategory
             }
             
             // Load list of contents
-            var widgetsQuery = Repository.AsQueryable<Root.Models.Widget>().Where(f => !f.IsDeleted && f.Original == null && (f.Status == ContentStatus.Published || f.Status == ContentStatus.Draft));
+            var widgetsQuery = Repository.AsQueryable<Root.Models.Widget>()
+                                        .Where(f => !f.IsDeleted 
+                                                && (f.Original == null || !f.Original.IsDeleted) 
+                                                && (f.Status == ContentStatus.Published || f.Status == ContentStatus.Draft));
 
             var childContentsQuery = UnitOfWork.Session.Query<ChildContent>();
             var pageContentsQuery = UnitOfWork.Session.Query<PageContent>();
@@ -98,7 +101,8 @@ namespace BetterCms.Module.Pages.Command.Widget.GetWidgetCategory
 
             if (!string.IsNullOrWhiteSpace(request.Filter))
             {
-                widgetsQuery = widgetsQuery.Where(c => c.Name.ToLower().Contains(request.Filter.ToLowerInvariant()));
+                var filter = request.Filter.ToLowerInvariant();
+                widgetsQuery = widgetsQuery.Where(c => c.Name.ToLower().Contains(filter) || c.Categories.Any(a=>a.Category.Name.ToLower().Contains(filter)));
             }
 
             // Load all widgets
