@@ -12,8 +12,6 @@ using BetterCms.Module.Api.Operations.Pages.Contents.Content.BlogPostContent;
 using BetterCms.Module.Blog.Models;
 using BetterCms.Module.MediaManager.Services;
 
-using ServiceStack.ServiceInterface;
-
 namespace BetterCms.Module.Api.Operations.Blog.BlogPosts.BlogPost
 {
     [RoutePrefix("bcms-api")]

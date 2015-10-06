@@ -11,8 +11,6 @@ using BetterCms.Module.Api.Extensions;
 using BetterCms.Module.Api.Operations.Root.Layouts.Layout.Options;
 using BetterCms.Module.Api.Operations.Root.Layouts.Layout.Regions;
 
-using ServiceStack.ServiceInterface;
-
 namespace BetterCms.Module.Api.Operations.Root.Layouts.Layout
 {
     [RoutePrefix("bcms-api")]

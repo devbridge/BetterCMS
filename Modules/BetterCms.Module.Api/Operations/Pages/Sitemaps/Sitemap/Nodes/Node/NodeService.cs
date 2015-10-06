@@ -17,8 +17,6 @@ using BetterCms.Module.Root.Mvc.Helpers;
 
 using NHibernate.Linq;
 
-using ServiceStack.ServiceInterface;
-
 namespace BetterCms.Module.Api.Operations.Pages.Sitemaps.Sitemap.Nodes.Node
 {
     /// <summary>

@@ -26,7 +26,7 @@ using Lucene.Net.Search;
 
 using NUnit.Framework;
 
-using ServiceStack.Common.Extensions;
+//using ServiceStack.Common.Extensions;
 
 namespace BetterCms.Test.Module.LuceneSearch.ServiceTests
 {

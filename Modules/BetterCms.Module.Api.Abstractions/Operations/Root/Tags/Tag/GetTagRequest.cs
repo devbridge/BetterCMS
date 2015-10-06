@@ -3,15 +3,11 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Runtime.Serialization;
 
-using ServiceStack.ServiceHost;
-
 namespace BetterCms.Module.Api.Operations.Root.Tags.Tag
 {
     /// <summary>
     /// Request to get a tag.
     /// </summary>
-    [Route("/tags/{TagId}", Verbs = "GET")]
-    [Route("/tags/by-name/{TagName}", Verbs = "GET")]
     [DataContract]
     [Serializable]
     public class GetTagRequest : IValidatableObject

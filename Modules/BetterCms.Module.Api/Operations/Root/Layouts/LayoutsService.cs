@@ -9,8 +9,6 @@ using BetterCms.Module.Api.Helpers;
 using BetterCms.Module.Api.Infrastructure;
 using BetterCms.Module.Api.Operations.Root.Layouts.Layout;
 
-using ServiceStack.ServiceInterface;
-
 namespace BetterCms.Module.Api.Operations.Root.Layouts
 {
     [RoutePrefix("bcms-api")]

@@ -18,6 +18,8 @@ namespace BetterCms.Module.Api.ApiExtensions
         public ServiceStackTextFormatter()
         {
             JsConfig.DateHandler = JsonDateHandler.ISO8601;
+            JsConfig.EmitCamelCaseNames = true;
+            JsConfig.IncludeNullValues = true;
             SupportedMediaTypes.Add(new MediaTypeHeaderValue("application/json"));
 
             SupportedEncodings.Add(new UTF8Encoding(encoderShouldEmitUTF8Identifier: false, throwOnInvalidBytes: true));

@@ -20,8 +20,6 @@ using BetterCms.Module.Root.Services;
 
 using NHibernate.Linq;
 
-using ServiceStack.ServiceInterface;
-
 using AccessLevel = BetterCms.Module.Api.Operations.Root.AccessLevel;
 
 namespace BetterCms.Module.Api.Operations.Blog.BlogPosts

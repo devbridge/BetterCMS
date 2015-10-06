@@ -13,8 +13,6 @@ using BetterModules.Core.DataAccess;
 
 using NHibernate.Linq;
 
-using ServiceStack.ServiceInterface;
-
 namespace BetterCms.Module.Api.Operations.Root.Categories
 {
     /// <summary>

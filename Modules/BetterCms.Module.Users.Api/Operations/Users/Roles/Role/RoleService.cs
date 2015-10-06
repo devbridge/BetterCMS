@@ -9,8 +9,6 @@ using BetterModules.Core.DataAccess;
 using BetterModules.Core.DataAccess.DataContext;
 using BetterCms.Module.Api.Operations.Users.Roles.Role;
 
-using ServiceStack.ServiceInterface;
-
 namespace BetterCms.Module.Users.Api.Operations.Users.Roles.Role
 {
     [RoutePrefix("bcms-api")]

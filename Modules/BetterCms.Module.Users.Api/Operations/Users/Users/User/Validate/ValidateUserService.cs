@@ -1,12 +1,8 @@
 ﻿using System;
 using System.Web.Http;
-using System.Web.Http.ModelBinding;
 
-using BetterCms.Module.Api.ApiExtensions;
 using BetterCms.Module.Api.Operations.Users.Users.User.ValidateUser;
 using BetterCms.Module.Users.Services;
-
-using ServiceStack.ServiceInterface;
 
 namespace BetterCms.Module.Users.Api.Operations.Users.Users.User.Validate
 {

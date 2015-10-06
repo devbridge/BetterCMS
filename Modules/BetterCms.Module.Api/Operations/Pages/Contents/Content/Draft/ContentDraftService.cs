@@ -5,8 +5,6 @@ using BetterCms.Module.Api.ApiExtensions;
 using BetterCms.Module.Api.Operations.Pages.Pages;
 using BetterCms.Module.Pages.Services;
 
-using ServiceStack.ServiceInterface;
-
 namespace BetterCms.Module.Api.Operations.Pages.Contents.Content.Draft
 {
     public class ContentDraftController : ApiController, IContentDraftService

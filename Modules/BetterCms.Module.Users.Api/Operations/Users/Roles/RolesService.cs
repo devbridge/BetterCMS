@@ -11,8 +11,6 @@ using BetterCms.Module.Api.Infrastructure;
 using BetterCms.Module.Api.Operations.Users.Roles;
 using BetterCms.Module.Api.Operations.Users.Roles.Role;
 
-using ServiceStack.ServiceInterface;
-
 namespace BetterCms.Module.Users.Api.Operations.Users.Roles
 {
     [RoutePrefix("bcms-api")]

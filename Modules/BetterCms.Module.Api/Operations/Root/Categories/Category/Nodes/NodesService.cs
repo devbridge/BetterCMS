@@ -10,8 +10,6 @@ using BetterCms.Module.Api.Operations.Root.Categories.Category.Nodes.Node;
 
 using BetterModules.Core.DataAccess;
 
-using ServiceStack.ServiceInterface;
-
 namespace BetterCms.Module.Api.Operations.Root.Categories.Category.Nodes
 {
     /// <summary>

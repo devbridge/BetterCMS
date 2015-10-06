@@ -12,8 +12,6 @@ using BetterModules.Core.DataAccess;
 using BetterModules.Core.DataAccess.DataContext;
 using BetterModules.Core.Exceptions.DataTier;
 
-using ServiceStack.ServiceInterface;
-
 namespace BetterCms.Module.Api.Operations.Blog.Authors.Author
 {
     [RoutePrefix("bcms-api")]

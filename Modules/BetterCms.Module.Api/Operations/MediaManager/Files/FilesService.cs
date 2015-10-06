@@ -16,8 +16,7 @@ using BetterCms.Module.MediaManager.Models;
 using BetterCms.Module.MediaManager.Services;
 using BetterCms.Module.Root.Services;
 
-using ServiceStack.Common.Extensions;
-using ServiceStack.ServiceInterface;
+using NHibernate.Linq;
 
 using AccessLevel = BetterCms.Module.Api.Operations.Root.AccessLevel;
 

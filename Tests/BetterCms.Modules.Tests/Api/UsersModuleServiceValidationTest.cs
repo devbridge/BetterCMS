@@ -18,10 +18,10 @@ namespace BetterCms.Test.Module.Api
                 Assert.IsNotNull(api.Users.Role);
                 Assert.IsNotNull(api.Users.Roles);
 
-                Assert.AreEqual(api.Users.Users.GetType(), System.Type.GetType("BetterCms.Module.Users.Api.Operations.Users.Users.UsersService,BetterCms.Module.Users.Api"));
-                Assert.AreEqual(api.Users.User.GetType(), System.Type.GetType("BetterCms.Module.Users.Api.Operations.Users.Users.User.UserService,BetterCms.Module.Users.Api"));
-                Assert.AreEqual(api.Users.Role.GetType(), System.Type.GetType("BetterCms.Module.Users.Api.Operations.Users.Roles.Role.RoleService,BetterCms.Module.Users.Api"));
-                Assert.AreEqual(api.Users.Roles.GetType(), System.Type.GetType("BetterCms.Module.Users.Api.Operations.Users.Roles.RolesService,BetterCms.Module.Users.Api"));
+                Assert.AreEqual(api.Users.Users.GetType(), System.Type.GetType("BetterCms.Module.Users.Api.Operations.Users.Users.UsersController,BetterCms.Module.Users.Api"));
+                Assert.AreEqual(api.Users.User.GetType(), System.Type.GetType("BetterCms.Module.Users.Api.Operations.Users.Users.User.UserController,BetterCms.Module.Users.Api"));
+                Assert.AreEqual(api.Users.Role.GetType(), System.Type.GetType("BetterCms.Module.Users.Api.Operations.Users.Roles.Role.RoleController,BetterCms.Module.Users.Api"));
+                Assert.AreEqual(api.Users.Roles.GetType(), System.Type.GetType("BetterCms.Module.Users.Api.Operations.Users.Roles.RolesController,BetterCms.Module.Users.Api"));
             }
         }
     }

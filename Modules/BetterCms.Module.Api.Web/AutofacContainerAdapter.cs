@@ -2,11 +2,10 @@
 
 using Autofac;
 
-using ServiceStack.Configuration;
 
 namespace BetterCms.Module.Api
 {
-    public class AutofacContainerAdapter : IContainerAdapter
+    public class AutofacContainerAdapter //: IContainerAdapter
     {
         private readonly Func<ILifetimeScope> lifetimeScopeResolver;
 

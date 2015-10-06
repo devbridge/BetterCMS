@@ -9,6 +9,7 @@ using BetterCms.Module.Api.ApiExtensions;
 
 using BetterModules.Core.Dependencies;
 
+
 namespace BetterCms.Module.Api
 {
     public static class WebApiConfig
@@ -17,17 +18,11 @@ namespace BetterCms.Module.Api
         {
             config.MapHttpAttributeRoutes();
 
-            //config.Routes.MapHttpRoute(
-            //    name: "DefaultApi",
-            //    routeTemplate: "bcms-api/{controller}"
-            //);
-
             config.Filters.Add(new ExceptionAttribute());
             config.Formatters.RemoveAt(0);
             config.Formatters.Insert(0, new ServiceStackTextFormatter());
-            var bla = ContextScopeProvider.CreateChildContainer();
             var resolver = new AutofacWebApiDependencyResolver(ContextScopeProvider.CreateChildContainer());
-
+            
             config.DependencyResolver = resolver;
         }
     }

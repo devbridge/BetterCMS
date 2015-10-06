@@ -9,8 +9,6 @@ using BetterCms.Module.Api.Operations.Pages.Pages.Search;
 using BetterCms.Module.Search.Models;
 using BetterCms.Module.Search.Services;
 
-using ServiceStack.ServiceInterface;
-
 namespace BetterCms.Module.Search.Api.Operations.Pages.Pages
 {
     [RoutePrefix("bcms-api")]

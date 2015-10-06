@@ -8,8 +8,6 @@ using BetterCms.Core.DataContracts.Enums;
 using BetterCms.Module.Api.ApiExtensions;
 using BetterCms.Module.Api.Operations.Pages.Contents.Content.BlogPostContent;
 
-using ServiceStack.ServiceInterface;
-
 namespace BetterCms.Module.Api.Operations.Blog.BlogPosts.BlogPost.Content
 {
     [RoutePrefix("bcms-api")]

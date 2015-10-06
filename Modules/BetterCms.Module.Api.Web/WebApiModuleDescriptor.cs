@@ -83,7 +83,7 @@ namespace BetterCms.Module.Api
             using (var container = ContextScopeProvider.CreateChildContainer())
             {
                 var containerProvider = container.Resolve<PerWebRequestContainerProvider>();
-                new WebApiApplicationHost(() => containerProvider.CurrentScope).Init();
+                //new WebApiApplicationHost(() => containerProvider.CurrentScope).Init();
             }
 
             Logger.Info("OnHostStart: preparing web api completed.");

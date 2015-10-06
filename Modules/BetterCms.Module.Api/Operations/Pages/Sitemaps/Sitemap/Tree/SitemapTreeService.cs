@@ -12,8 +12,6 @@ using BetterCms.Module.Root.Mvc;
 
 using NHibernate.Linq;
 
-using ServiceStack.ServiceInterface;
-
 namespace BetterCms.Module.Api.Operations.Pages.Sitemaps.Sitemap.Tree
 {
     [RoutePrefix("bcms-api")]

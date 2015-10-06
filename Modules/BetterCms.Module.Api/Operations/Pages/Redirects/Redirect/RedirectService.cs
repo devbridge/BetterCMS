@@ -7,9 +7,6 @@ using BetterCms.Module.Api.ApiExtensions;
 using BetterModules.Core.DataAccess;
 using BetterModules.Core.DataAccess.DataContext;
 using BetterCms.Module.Api.Extensions;
-using BetterCms.Module.Api.Operations.Pages.Pages;
-
-using ServiceStack.ServiceInterface;
 
 namespace BetterCms.Module.Api.Operations.Pages.Redirects.Redirect
 {

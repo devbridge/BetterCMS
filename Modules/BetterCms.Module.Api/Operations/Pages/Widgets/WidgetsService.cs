@@ -11,8 +11,6 @@ using BetterCms.Module.Api.Infrastructure;
 using BetterCms.Module.Api.Operations.Root.Categories.Category;
 using BetterCms.Module.Root.Services;
 
-using ServiceStack.ServiceInterface;
-
 namespace BetterCms.Module.Api.Operations.Pages.Widgets
 {
     [RoutePrefix("bcms-api")]

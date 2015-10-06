@@ -9,8 +9,6 @@ using BetterCms.Module.Pages.Services;
 using BetterCms.Module.Root.Mvc;
 using BetterCms.Module.Root.Mvc.Helpers;
 
-using ServiceStack.ServiceInterface;
-
 namespace BetterCms.Module.Api.Operations.Pages.Pages.Page.Exists
 {
     public class PageExistsController : ApiController, IPageExistsService

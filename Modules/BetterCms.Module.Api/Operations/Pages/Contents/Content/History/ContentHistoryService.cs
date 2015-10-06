@@ -8,8 +8,6 @@ using BetterCms.Module.Api.Operations.Pages.Pages;
 using BetterCms.Module.Pages.Services;
 using BetterCms.Module.Root.Mvc.Grids.GridOptions;
 
-using ServiceStack.ServiceInterface;
-
 using CoreContentStatus = BetterCms.Core.DataContracts.Enums.ContentStatus;
 
 namespace BetterCms.Module.Api.Operations.Pages.Contents.Content.History

@@ -15,8 +15,6 @@ using BetterModules.Core.Exceptions.DataTier;
 
 using NHibernate.Linq;
 
-using ServiceStack.ServiceInterface;
-
 namespace BetterCms.Module.Api.Operations.Root.Languages.Language
 {
     /// <summary>

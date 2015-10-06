@@ -9,8 +9,6 @@ using BetterCms.Module.Root.Models;
 
 using BetterModules.Core.DataAccess;
 
-using ServiceStack.ServiceInterface;
-
 namespace BetterCms.Module.Api.Operations.Root.CategorizableItems
 {
     [RoutePrefix("bcms-api")]

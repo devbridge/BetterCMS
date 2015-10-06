@@ -5,8 +5,6 @@ using BetterCms.Module.Api.ApiExtensions;
 
 using BetterModules.Core.DataAccess;
 
-using ServiceStack.ServiceInterface;
-
 namespace BetterCms.Module.Api.Operations.Root.Layouts.Layout.Options
 {
     [RoutePrefix("bcms-api")]

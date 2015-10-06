@@ -15,88 +15,86 @@ using Common.Logging;
 using BetterModules.Core.Dependencies;
 using BetterModules.Core.Environment.Assemblies;
 
-using ServiceStack.ServiceInterface.Validation;
 using ServiceStack.Text;
-using ServiceStack.WebHost.Endpoints;
 
 namespace BetterCms.Module.Api
 {
-    public class WebApiApplicationHost : AppHostBase
+    public class WebApiApplicationHost
     {
-        private readonly Func<ILifetimeScope> containerProvider;
+        //private readonly Func<ILifetimeScope> containerProvider;
 
-        private static readonly ILog logger = LogManager.GetCurrentClassLogger();
+        //private static readonly ILog logger = LogManager.GetCurrentClassLogger();
 
-        public WebApiApplicationHost(Func<ILifetimeScope> containerProvider)
-            : base("Better CMS Web API Host", GetAssembliesWithServices())
-        {
-            this.containerProvider = containerProvider;
-        }
+        //public WebApiApplicationHost(Func<ILifetimeScope> containerProvider)
+        //    : base("Better CMS Web API Host", GetAssembliesWithServices())
+        //{
+        //    this.containerProvider = containerProvider;
+        //}
 
-        public override void Configure(Funq.Container container)
-        {
-            RequestBinders.Clear();
+        //public override void Configure(Funq.Container container)
+        //{
+        //    RequestBinders.Clear();
 
-            JsConfig.EmitCamelCaseNames = true;
-            JsConfig.IncludeNullValues = true;
-            JsConfig.DateHandler = JsonDateHandler.ISO8601;
+        //    JsConfig.EmitCamelCaseNames = true;
+        //    JsConfig.IncludeNullValues = true;
+        //    JsConfig.DateHandler = JsonDateHandler.ISO8601;
 
-            Plugins.Add(new ValidationFeature());
+        //    Plugins.Add(new ValidationFeature());
 
-            // Add custom request filter
-            RequestFilters.Add(GetRequestProcessor.DeserializeJsonFromGet);
+        //    // Add custom request filter
+        //    RequestFilters.Add(GetRequestProcessor.DeserializeJsonFromGet);
 
-            container.Adapter = new AutofacContainerAdapter(containerProvider);
-            container.RegisterValidators(typeof(GetTagRequestValidator).Assembly);
-        }
+        //    container.Adapter = new AutofacContainerAdapter(containerProvider);
+        //    container.RegisterValidators(typeof(GetTagRequestValidator).Assembly);
+        //}
 
-        private static Assembly[] GetAssembliesWithServices()
-        {
-            List<Assembly> assemblies = new List<Assembly>();
-            ICmsModulesRegistration modulesRegistry;
-            IAssemblyLoader assemblyLoader = null;
+        //private static Assembly[] GetAssembliesWithServices()
+        //{
+        //    List<Assembly> assemblies = new List<Assembly>();
+        //    ICmsModulesRegistration modulesRegistry;
+        //    IAssemblyLoader assemblyLoader = null;
 
-            using (var container = ContextScopeProvider.CreateChildContainer())
-            {
-                modulesRegistry = container.Resolve<ICmsModulesRegistration>();
-                if (modulesRegistry == null)
-                {
-                    throw new CmsApiException("Failed to resolve ICmsModulesRegistration.");
-                }
+        //    using (var container = ContextScopeProvider.CreateChildContainer())
+        //    {
+        //        modulesRegistry = container.Resolve<ICmsModulesRegistration>();
+        //        if (modulesRegistry == null)
+        //        {
+        //            throw new CmsApiException("Failed to resolve ICmsModulesRegistration.");
+        //        }
 
-                assemblyLoader = container.Resolve<IAssemblyLoader>();
-                if (assemblyLoader == null)
-                {
-                    throw new CmsApiException("Failed to resolve IAssemblyLoader.");
-                }
+        //        assemblyLoader = container.Resolve<IAssemblyLoader>();
+        //        if (assemblyLoader == null)
+        //        {
+        //            throw new CmsApiException("Failed to resolve IAssemblyLoader.");
+        //        }
 
-                foreach (var module in modulesRegistry.GetModules())
-                {
-                    try
-                    {
-                        var assembly = assemblyLoader.Load(module.ModuleDescriptor.AssemblyName);
-                        if (assembly != null)
-                        {
-                            var types = assemblyLoader.GetLoadableTypes(assembly);
-                            foreach (var type in types)
-                            {
-                                if (typeof(ServiceStack.ServiceInterface.Service).IsAssignableFrom(type) && type != null && type.IsPublic && type.IsClass
-                                    && !type.IsAbstract)
-                                {
-                                    assemblies.Add(assembly);
-                                    break;
-                                }
-                            }
-                        }
-                    }
-                    catch (Exception ex)
-                    {
-                        logger.ErrorFormat("Failed to check for ServiceStack services in the assembly {0}.", ex, module.ModuleDescriptor.AssemblyName);
-                    }
-                }
-            }
+        //        foreach (var module in modulesRegistry.GetModules())
+        //        {
+        //            try
+        //            {
+        //                var assembly = assemblyLoader.Load(module.ModuleDescriptor.AssemblyName);
+        //                if (assembly != null)
+        //                {
+        //                    var types = assemblyLoader.GetLoadableTypes(assembly);
+        //                    foreach (var type in types)
+        //                    {
+        //                        if (typeof(ServiceStack.ServiceInterface.Service).IsAssignableFrom(type) && type != null && type.IsPublic && type.IsClass
+        //                            && !type.IsAbstract)
+        //                        {
+        //                            assemblies.Add(assembly);
+        //                            break;
+        //                        }
+        //                    }
+        //                }
+        //            }
+        //            catch (Exception ex)
+        //            {
+        //                logger.ErrorFormat("Failed to check for ServiceStack services in the assembly {0}.", ex, module.ModuleDescriptor.AssemblyName);
+        //            }
+        //        }
+        //    }
 
-            return assemblies.ToArray();
-        }
+        //    return assemblies.ToArray();
+        //}
     }
 }

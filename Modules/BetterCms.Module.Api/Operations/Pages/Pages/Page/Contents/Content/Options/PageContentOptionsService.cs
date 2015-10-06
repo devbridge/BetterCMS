@@ -5,7 +5,6 @@ using BetterCms.Module.Api.ApiExtensions;
 
 using BetterModules.Core.DataAccess;
 using BetterCms.Module.Root.Services;
-using ServiceStack.ServiceInterface;
 
 namespace BetterCms.Module.Api.Operations.Pages.Pages.Page.Contents.Content.Options
 {

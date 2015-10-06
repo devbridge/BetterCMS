@@ -15,9 +15,6 @@ using BetterCms.Module.Api.Operations.Users.Users;
 using BetterCms.Module.Api.Operations.Users.Users.User;
 using BetterCms.Module.MediaManager.Services;
 
-using ServiceStack.ServiceInterface;
-
-using PredicateBuilder = ServiceStack.OrmLite.PredicateBuilder;
 using UserModel = BetterCms.Module.Api.Operations.Users.Users.UserModel;
 
 namespace BetterCms.Module.Users.Api.Operations.Users.Users

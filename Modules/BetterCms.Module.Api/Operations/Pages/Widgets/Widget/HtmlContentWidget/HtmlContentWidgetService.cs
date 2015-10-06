@@ -14,8 +14,6 @@ using BetterCms.Module.Api.Operations.Root.Categories.Category;
 using BetterCms.Module.Root.Services;
 using BetterCms.Module.Root.ViewModels.Option;
 
-using ServiceStack.ServiceInterface;
-
 using ISaveWidgetService = BetterCms.Module.Pages.Services.IWidgetService;
 using HtmlContentWidgetEntity = BetterCms.Module.Pages.Models.HtmlContentWidget;
 

@@ -12,8 +12,6 @@ using BetterCms.Module.Api.Operations.Root;
 using BetterCms.Module.MediaManager.Models;
 using BetterCms.Module.MediaManager.Services;
 
-using ServiceStack.ServiceInterface;
-
 using AccessLevel = BetterCms.Module.Api.Operations.Root.AccessLevel;
 
 namespace BetterCms.Module.Api.Operations.MediaManager.MediaTree

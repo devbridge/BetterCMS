@@ -11,12 +11,11 @@ using BetterCms.Module.Pages.Models;
 
 using NHibernate.Linq;
 
-using ServiceStack.ServiceInterface;
 
 namespace BetterCms.Module.Api.Operations.Pages.Sitemap
 {
     [Obsolete("Use everything from BetterCms.Module.Api.Operations.Pages.Sitemaps name space.")]
-    public class SitemapService : Service, ISitemapService
+    public class SitemapService : ISitemapService
     {
         private readonly IRepository repository;
 

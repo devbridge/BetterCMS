@@ -10,8 +10,6 @@ using BetterCms.Module.Api.Infrastructure;
 using BetterCms.Module.Api.Operations.MediaManager.Folders.Folder;
 using BetterCms.Module.MediaManager.Models;
 
-using ServiceStack.ServiceInterface;
-
 namespace BetterCms.Module.Api.Operations.MediaManager.Folders
 {
     /// <summary>

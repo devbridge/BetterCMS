@@ -12,8 +12,6 @@ using BetterCms.Module.Api.Operations.Users.Users.User.ValidateUser;
 using BetterCms.Module.MediaManager.Services;
 using BetterCms.Module.Users.Api.Extensions;
 
-using ServiceStack.ServiceInterface;
-
 namespace BetterCms.Module.Users.Api.Operations.Users.Users.User
 {
     [RoutePrefix("bcms-api")]

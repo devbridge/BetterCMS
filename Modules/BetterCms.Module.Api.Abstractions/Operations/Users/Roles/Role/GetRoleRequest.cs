@@ -3,12 +3,8 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Runtime.Serialization;
 
-using ServiceStack.ServiceHost;
-
 namespace BetterCms.Module.Api.Operations.Users.Roles.Role
 {
-    [Route("/roles/{RoleId}", Verbs = "GET")]
-    [Route("/roles/by-name/{RoleName}", Verbs = "GET")]
     [DataContract]
     [Serializable]
     public class GetRoleRequest : IValidatableObject

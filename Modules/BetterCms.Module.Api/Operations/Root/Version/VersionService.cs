@@ -1,7 +1,5 @@
 ﻿using System.Web.Http;
 
-using ServiceStack.ServiceInterface;
-
 namespace BetterCms.Module.Api.Operations.Root.Version
 {
     [RoutePrefix("bcms-api")]

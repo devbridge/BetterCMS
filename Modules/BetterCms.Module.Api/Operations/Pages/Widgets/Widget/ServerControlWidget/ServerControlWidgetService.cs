@@ -11,8 +11,6 @@ using BetterCms.Module.Api.Extensions;
 using BetterCms.Module.Api.Operations.Pages.Widgets.Widget.ServerControlWidget.Options;
 using BetterCms.Module.Api.Operations.Root.Categories.Category;
 
-using ServiceStack.ServiceInterface;
-
 using ISaveWidgetService = BetterCms.Module.Pages.Services.IWidgetService;
 
 namespace BetterCms.Module.Api.Operations.Pages.Widgets.Widget.ServerControlWidget

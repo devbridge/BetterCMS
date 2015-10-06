@@ -11,8 +11,6 @@ using BetterCms.Module.Api.Infrastructure;
 using BetterCms.Module.Api.Operations.Blog.Authors.Author;
 using BetterCms.Module.MediaManager.Services;
 
-using ServiceStack.ServiceInterface;
-
 namespace BetterCms.Module.Api.Operations.Blog.Authors
 {
     [RoutePrefix("bcms-api")]

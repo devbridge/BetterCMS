@@ -5,14 +5,11 @@ using System.Runtime.Serialization;
 
 using BetterCms.Module.Api.Infrastructure;
 
-using ServiceStack.ServiceHost;
-
 namespace BetterCms.Module.Api.Operations.Pages.Sitemaps.Sitemap.Nodes
 {
     /// <summary>
     /// Request to get sitemap data.
     /// </summary>
-    [Route("/sitemaps/{SitemapId}/nodes/", Verbs = "GET")]
     [Serializable]
     [DataContract]
     public class GetSitemapNodesRequest : RequestBase<DataOptions>, IValidatableObject

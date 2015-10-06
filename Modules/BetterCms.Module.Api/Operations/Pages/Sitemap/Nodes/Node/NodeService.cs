@@ -5,12 +5,10 @@ using BetterModules.Core.DataAccess;
 using BetterModules.Core.DataAccess.DataContext;
 using BetterCms.Core.DataContracts.Enums;
 
-using ServiceStack.ServiceInterface;
-
 namespace BetterCms.Module.Api.Operations.Pages.Sitemap.Nodes.Node
 {
     [Obsolete("Use everything from BetterCms.Module.Api.Operations.Pages.Sitemaps name space.")]
-    public class NodeService : Service, INodeService
+    public class NodeService : INodeService
     {
         private readonly IRepository repository;
 

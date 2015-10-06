@@ -10,8 +10,6 @@ using BetterCms.Module.Api.ApiExtensions;
 using BetterCms.Module.Blog.Models;
 using BetterCms.Module.Root.Models;
 
-using ServiceStack.ServiceInterface;
-
 namespace BetterCms.Module.Api.Operations.Blog.BlogPosts.Settings
 {
     /// <summary>

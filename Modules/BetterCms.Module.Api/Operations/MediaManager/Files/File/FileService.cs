@@ -23,8 +23,6 @@ using BetterModules.Core.Exceptions.DataTier;
 
 using NHibernate.Linq;
 
-using ServiceStack.ServiceInterface;
-
 using AccessLevel = BetterCms.Module.Api.Operations.Root.AccessLevel;
 using ITagService = BetterCms.Module.Pages.Services.ITagService;
 

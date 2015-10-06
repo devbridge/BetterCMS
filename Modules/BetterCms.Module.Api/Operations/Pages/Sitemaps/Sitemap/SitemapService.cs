@@ -21,10 +21,9 @@ using BetterCms.Module.Root.Models.Extensions;
 using BetterCms.Module.Root.Mvc;
 using BetterCms.Module.Root.Mvc.Helpers;
 
-using NHibernate.Linq;
+using FluentNHibernate.Conventions;
 
-using ServiceStack.Common;
-using ServiceStack.ServiceInterface;
+using NHibernate.Linq;
 
 using AccessLevel = BetterCms.Core.Security.AccessLevel;
 

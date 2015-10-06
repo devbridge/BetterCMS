@@ -19,8 +19,6 @@ using BetterCms.Module.Pages.Models;
 using BetterCms.Module.Pages.Services;
 using BetterCms.Module.Root.Mvc.Helpers;
 
-using ServiceStack.ServiceInterface;
-
 using ITagService = BetterCms.Module.Pages.Services.ITagService;
 
 namespace BetterCms.Module.Api.Operations.Pages.Pages.Page

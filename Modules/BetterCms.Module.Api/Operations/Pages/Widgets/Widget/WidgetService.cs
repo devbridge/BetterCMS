@@ -1,11 +1,9 @@
 ﻿using BetterCms.Module.Api.Operations.Pages.Widgets.Widget.HtmlContentWidget;
 using BetterCms.Module.Api.Operations.Pages.Widgets.Widget.ServerControlWidget;
 
-using ServiceStack.ServiceInterface;
-
 namespace BetterCms.Module.Api.Operations.Pages.Widgets.Widget
 {
-    public class WidgetService : Service, IWidgetService
+    public class WidgetService : IWidgetService
     {
         private readonly IHtmlContentWidgetService htmlContentService;
         private readonly IServerControlWidgetService serverControlService;

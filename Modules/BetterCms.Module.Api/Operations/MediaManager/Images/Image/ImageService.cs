@@ -20,8 +20,6 @@ using BetterModules.Core.Exceptions.DataTier;
 
 using NHibernate.Linq;
 
-using ServiceStack.ServiceInterface;
-
 using ITagService = BetterCms.Module.Pages.Services.ITagService;
 
 namespace BetterCms.Module.Api.Operations.MediaManager.Images.Image

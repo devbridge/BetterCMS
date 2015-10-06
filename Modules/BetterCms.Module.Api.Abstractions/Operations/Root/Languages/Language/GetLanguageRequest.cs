@@ -3,12 +3,8 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Runtime.Serialization;
 
-using ServiceStack.ServiceHost;
-
 namespace BetterCms.Module.Api.Operations.Root.Languages.Language
 {
-    [Route("/languages/{LanguageId}", Verbs = "GET")]
-    [Route("/languages/by-code/{LanguageCode}", Verbs = "GET")]
     [DataContract]
     [Serializable]
     public class GetLanguageRequest : IValidatableObject

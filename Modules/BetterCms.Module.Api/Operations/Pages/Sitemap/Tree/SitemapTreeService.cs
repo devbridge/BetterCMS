@@ -9,12 +9,10 @@ using BetterCms.Module.Root.Mvc;
 
 using NHibernate.Linq;
 
-using ServiceStack.ServiceInterface;
-
 namespace BetterCms.Module.Api.Operations.Pages.Sitemap.Tree
 {
     [Obsolete("Use everything from BetterCms.Module.Api.Operations.Pages.Sitemaps name space.")]
-    public class SitemapTreeService : Service, ISitemapTreeService
+    public class SitemapTreeService : ISitemapTreeService
     {
         private readonly IRepository repository;
 

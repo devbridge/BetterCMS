@@ -33,8 +33,6 @@ using BetterModules.Core.DataAccess;
 using BetterModules.Core.DataAccess.DataContext;
 using BetterModules.Core.DataAccess.DataContext.Fetching;
 
-using ServiceStack.ServiceInterface;
-
 using AccessLevel = BetterCms.Module.Api.Operations.Root.AccessLevel;
 
 namespace BetterCms.Module.Api.Operations.Pages.Pages.Page.Properties
