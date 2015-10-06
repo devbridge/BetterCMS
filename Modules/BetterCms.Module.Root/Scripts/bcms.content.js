@@ -78,12 +78,18 @@ bettercms.define('bcms.content', ['bcms.jquery', 'bcms', 'bcms.modal', 'bcms.red
         pageViewModel,
         opacityAnimationSpeed = 50,
         isSortMode = false,
+        isOpenedAddContent = false,
+        suspendCloseAddContent = false,
         masterPagesModel = null;
 
     // Assign objects to module
     content.selectors = selectors;
     content.links = links;
     content.globalization = globalization;
+
+    function closeAllAddContentButtons() {
+        $(selectors.regionAddContentButtons).removeClass(classes.buttonActive);
+    }
 
     /**
     * Shows overlay over content region:
@@ -589,7 +595,18 @@ bettercms.define('bcms.content', ['bcms.jquery', 'bcms', 'bcms.modal', 'bcms.red
             self.sortBlock = this.overlay.find(selectors.regionSortBlock);
 
             $(selectors.regionAddContentButtons, self.overlay).on('click', function () {
-                $(this).addClass(classes.buttonActive);
+                var icon = $(this),
+                    isOpened = icon.hasClass(classes.buttonActive);
+                closeAllAddContentButtons();
+
+                if (!isOpened) {
+                    $(this).addClass(classes.buttonActive);
+                    isOpenedAddContent = true;
+                    suspendCloseAddContent = true;
+                    setTimeout(function() {
+                        suspendCloseAddContent = false;
+                    }, 100);
+                }
             });
 
             $(selectors.regionAddMarkdownButtons, self.overlay).on('click', function() {
@@ -1313,6 +1330,13 @@ bettercms.define('bcms.content', ['bcms.jquery', 'bcms', 'bcms.modal', 'bcms.red
     */
     content.init = function () {
         bcms.logger.debug('Initializing content module');
+
+        $('body').on('click', function () {
+            if (isOpenedAddContent && !suspendCloseAddContent) {
+                closeAllAddContentButtons();
+                isOpenedAddContent = false;
+            }
+        });
 
         masterPagesModel = new MasterPagesPathModel();
         masterPagesModel.initialize();
