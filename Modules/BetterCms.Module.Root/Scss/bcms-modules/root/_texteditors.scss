@@ -1,0 +1,81 @@
+@import '../../core/variables';
+
+//module global styles
+textarea {
+    width: 100%;
+    display: block;
+    resize: vertical;
+    font-size: 12px;
+    border: $border-thin-gray;
+    font-family: $font-code-family;
+    line-height: 18px;
+    padding: 10px;
+    overflow: auto;
+    box-sizing: border-box;
+
+    &:focus {
+        outline: none;
+    }
+}
+
+//module markdown editor
+.markItUp {
+    &Header {
+        @include clearfix();
+        border: {
+            top: $border-thin-gray;
+            right: $border-thin-gray;
+            left: $border-thin-gray;
+        }
+        padding: 6px 8px;
+        background: $gray-l30;
+
+        > ul {
+            margin: 0;
+            padding: 0;
+        }
+
+        li {
+            height: 26px;
+            border: $border-thin-gray;
+            box-sizing: border-box;
+            margin-left: 6px;
+            min-width: 28px;
+
+            &:first-child {
+                margin-left: 0;
+            }
+        }
+    }
+
+    &Editor {
+        resize: none;
+        min-height: 300px;
+    }
+
+    &Footer {
+        @include clearfix();
+        border: {
+            right: $border-thin-gray;
+            bottom: $border-thin-gray;
+            left: $border-thin-gray;
+        }
+        padding: 6px 8px 2px;
+        position: relative;
+        background-color: $gray-l30;
+    }
+
+    &ResizeHandle {
+        overflow: hidden;
+        border: {
+            width: 10px 10px 0 0;
+            color: transparent $dark transparent transparent;
+            style: dashed solid dashed dashed;
+        }
+        margin-top: 6px;
+        margin-bottom: 2px;
+        cursor: se-resize;
+        float: right;
+        margin-right: -4px;
+    }
+}
