@@ -31,19 +31,82 @@ textarea {
         background: $gray-l30;
 
         > ul {
+            > li {
+                height: 26px;
+                border: $border-thin-gray;
+                float: left;
+                min-width: 28px;
+                margin-left: 6px;
+
+                &:first-child {
+                    margin-left: 0;
+                }
+
+                > a {
+                    text-indent: -999em;
+                    overflow: hidden;
+                }
+            }
+        }
+
+        ul {
             margin: 0;
             padding: 0;
         }
 
         li {
-            height: 26px;
-            border: $border-thin-gray;
+            @include transition(all 200ms);
             box-sizing: border-box;
-            margin-left: 6px;
-            min-width: 28px;
+            list-style: none;
+            position: relative;
 
-            &:first-child {
-                margin-left: 0;
+            &:hover {
+                background-color: $gray-l25;
+
+                ul {
+                    //fixme temp
+                    display: block !important;
+                }
+            }
+        }
+
+        a {
+            display: block;
+        }
+    }
+
+    &DropMenu {
+        > ul {
+            display: none;
+            position: absolute;
+            top: 100%;
+            max-height: 170px;
+            overflow-y: auto;
+            right: 0;
+            padding: 0;
+            width: 200px;
+            background-color: $white;
+            border: $border-thin-gray;
+            z-index: 50;
+
+            li {
+                margin: 3px;
+                padding: 0;
+            }
+
+            a {
+                @include transition(all 200ms);
+                padding: 3px 4px;
+                white-space: nowrap;
+                text-decoration: none;
+                color: $gray-l65;
+                font-size: 12px;
+
+                &:hover {
+                    border-color: $gray-l40;
+                    background-color: $gray-l30;
+                    box-shadow: inset 0 0 2px rgba($black, .1);
+                }
             }
         }
     }
@@ -78,4 +141,17 @@ textarea {
         float: right;
         margin-right: -4px;
     }
+
+    &Separator {
+        display: none;
+    }
 }
+
+//fixme check if we need this
+//.markItUpPreviewFrame	{
+//    overflow:auto;
+//    background-color:#FFF;
+//    width:99.9%;
+//    height:300px;
+//    margin:5px 0;
+//}

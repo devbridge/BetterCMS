@@ -240,7 +240,6 @@ namespace BetterCms.Module.Root
             return new[]
                        {
                            new CssIncludeDescriptor(this, "bcms.root.css"),
-                           new CssIncludeDescriptor(this, "/file/bcms-root/scripts/markitup/skins/markitup/style.css"),
                            new CssIncludeDescriptor(this, "/file/bcms-root/scripts/markitup/sets/markmin/style.css")
                        };
         }
