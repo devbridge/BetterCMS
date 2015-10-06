@@ -179,9 +179,6 @@
     <Compile Include="..\..\SharedAssemblyInfo.cs">
       <Link>Properties\SharedAssemblyInfo.cs</Link>
     </Compile>
-    <Compile Include="WebApiApplicationHost.cs" />
-    <Compile Include="AutofacContainerAdapter.cs" />
-    <Compile Include="Filters\GetRequestProcessor.cs" />
     <Compile Include="WebApiConfig.cs" />
     <Compile Include="WebApiModuleDescriptor.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

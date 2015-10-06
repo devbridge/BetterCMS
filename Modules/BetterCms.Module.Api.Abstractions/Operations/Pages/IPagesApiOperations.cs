@@ -28,9 +28,6 @@ namespace BetterCms.Module.Api.Operations.Pages
         
         IRedirectService Redirect { get; }
 
-        [Obsolete("Use SitemapNew method instead.")]
-        Sitemap.ISitemapService Sitemap { get; }
-
         ISitemapsService Sitemaps { get; }
 
         ISitemapService SitemapNew { get; }
