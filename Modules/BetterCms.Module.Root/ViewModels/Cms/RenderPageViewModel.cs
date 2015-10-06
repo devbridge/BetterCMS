@@ -50,6 +50,7 @@ namespace BetterCms.Module.Root.ViewModels.Cms
             if (rootPage != null && rootPage.Language != null)
             {
                 LanguageCode = rootPage.Language.Code;
+                LanguageId = rootPage.Language.Id;
             }
 
             PageData = page;
@@ -256,6 +257,14 @@ namespace BetterCms.Module.Root.ViewModels.Cms
         /// The language code.
         /// </value>
         public string LanguageCode { get; set; }
+
+        /// <summary>
+        /// Gets or sets the language identifier.
+        /// </summary>
+        /// <value>
+        /// The language identifier.
+        /// </value>
+        public Guid LanguageId { get; set; }
 
         /// <summary>
         /// Gets or sets the list of meta data projections.

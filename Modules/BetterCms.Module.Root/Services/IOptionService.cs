@@ -28,20 +28,22 @@ namespace BetterCms.Module.Root.Services
         /// </summary>
         /// <param name="options">The options.</param>
         /// <param name="optionValues">The option values.</param>
+        /// <param name="languageId">The language identifier.</param>
         /// <returns>
         /// List of option values view models, merged from options and option values
         /// </returns>
-        List<IOptionValue> GetMergedOptionValues(IEnumerable<IOptionEntity> options, IEnumerable<IOptionEntity> optionValues);
-        
+        List<IOptionValue> GetMergedOptionValues(IEnumerable<IOptionEntity> options, IEnumerable<IOptionEntity> optionValues, Guid? languageId = null);
+
         /// <summary>
         /// Merges options and values and returns one list with option value view models for use (values are returned as objects).
         /// </summary>
         /// <param name="options">The options.</param>
         /// <param name="optionValues">The option values.</param>
+        /// <param name="languageId">The language identifier.</param>
         /// <returns>
         /// List of option values view models, merged from options and option values
         /// </returns>
-        List<IOptionValue> GetMergedOptionValues(IEnumerable<IOptionValue> options, IEnumerable<IOptionEntity> optionValues);
+        List<IOptionValue> GetMergedOptionValues(IEnumerable<IOptionValue> options, IEnumerable<IOptionEntity> optionValues, Guid? languageId = null);
 
         /// <summary>
         /// Gets the merged master pages option values.

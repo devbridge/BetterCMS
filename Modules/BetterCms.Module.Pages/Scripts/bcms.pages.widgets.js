@@ -159,7 +159,7 @@ bettercms.define('bcms.pages.widgets', ['bcms.jquery', 'bcms', 'bcms.modal', 'bc
                         postSuccess: postSuccess,
 
                         formSerialize: function (form) {
-                            return widgets.serializeFormWithChildWidgetOptions(form, editorId);
+                            return widgets.serializeFormWithChildWidgetOptions(form, editorId, optionsViewModel);
                         },
                         formContentType: 'application/json; charset=utf-8'
                     });
@@ -223,7 +223,7 @@ bettercms.define('bcms.pages.widgets', ['bcms.jquery', 'bcms', 'bcms.modal', 'bc
                         },
 
                         formSerialize: function (form) {
-                            return widgets.serializeFormWithChildWidgetOptions(form, editorId, function(data) {
+                            return widgets.serializeFormWithChildWidgetOptions(form, editorId, optionsViewModel, function(data) {
                                 if (includeChildRegions) {
                                     data.IncludeChildRegions = true;
                                 }
@@ -269,7 +269,7 @@ bettercms.define('bcms.pages.widgets', ['bcms.jquery', 'bcms', 'bcms.modal', 'bc
                         postSuccess: onSaveCallback,
 
                         formSerialize: function (form) {
-                            return widgets.serializeFormWithChildWidgetOptions(form, null);
+                            return widgets.serializeFormWithChildWidgetOptions(form, null, optionsViewModel);
                         },
                         formContentType: 'application/json; charset=utf-8'
                     });
@@ -300,7 +300,7 @@ bettercms.define('bcms.pages.widgets', ['bcms.jquery', 'bcms', 'bcms.modal', 'bc
                         postSuccess: onSaveCallback,
 
                         formSerialize: function (form) {
-                            return widgets.serializeFormWithChildWidgetOptions(form, null);
+                            return widgets.serializeFormWithChildWidgetOptions(form, null, optionsViewModel);
                         },
                         formContentType: 'application/json; charset=utf-8'
                     });
@@ -947,7 +947,7 @@ bettercms.define('bcms.pages.widgets', ['bcms.jquery', 'bcms', 'bcms.modal', 'bc
         /**
          * Serializes content edit form with child widget options
          */
-        widgets.serializeFormWithChildWidgetOptions = function (form, htmlEditorId, onBeforeStringify) {
+        widgets.serializeFormWithChildWidgetOptions = function (form, htmlEditorId, optionsViewModel, onBeforeStringify) {
             var serializedForm = forms.serializeToObject(form, true),
                 childOptions = htmlEditorId != null ? getChildContentOptions(htmlEditorId) : null,
                 childContentOptionValues = [],
@@ -970,6 +970,10 @@ bettercms.define('bcms.pages.widgets', ['bcms.jquery', 'bcms', 'bcms.modal', 'bc
                 }
             }
 
+            if (optionsViewModel != null) {
+                serializedForm.Options = optionsViewModel.toJson();
+            }
+
             if (childOptions) {
                 for (i in childOptions) {
                     childContentOptionValues.push({
@@ -978,6 +982,7 @@ bettercms.define('bcms.pages.widgets', ['bcms.jquery', 'bcms', 'bcms.modal', 'bc
                     });
                 }
             }
+
 
             if ($.isFunction(onBeforeStringify)) {
                 onBeforeStringify(serializedForm, childContentOptionValues);

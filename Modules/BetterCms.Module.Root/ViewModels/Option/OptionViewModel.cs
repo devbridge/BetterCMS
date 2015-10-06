@@ -1,18 +1,17 @@
 ﻿using System;
-using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using System.Web.Mvc;
 
+using BetterCms.Core;
 using BetterCms.Core.DataContracts;
-
-using BetterModules.Core.DataContracts;
 
 namespace BetterCms.Module.Root.ViewModels.Option
 {
     /// <summary>
     /// Option view model
     /// </summary>
-    public class OptionViewModel : OptionViewModelBase, IOption
+    public class OptionViewModel : OptionViewModelBase, IOption, IMultilangualOption
     {
         /// <summary>
         /// Gets or sets the option default value.
@@ -70,6 +69,18 @@ namespace BetterCms.Module.Root.ViewModels.Option
         /// The translations.
         /// </value>
         public IList<OptionTranslationViewModel> Translations { get; set; }
+
+        IList<IOptionTranslation> IMultilangualOption.Translations
+        {
+            get
+            {
+                return Translations.Cast<IOptionTranslation>().ToList();
+            }
+            set
+            {
+                Translations = value.Cast<OptionTranslationViewModel>().ToList();
+            }
+        }
 
         /// <summary>
         /// Gets or sets the custom option.

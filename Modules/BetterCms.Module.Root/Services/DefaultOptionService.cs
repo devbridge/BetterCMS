@@ -5,6 +5,8 @@ using System.Linq;
 using System.Threading;
 using System.Web;
 
+using BetterCms.Core;
+
 using BetterModules.Core.DataAccess;
 using BetterCms.Core.DataContracts;
 using BetterCms.Core.DataContracts.Enums;
@@ -38,6 +40,11 @@ namespace BetterCms.Module.Root.Services
         private readonly ICacheService cacheService;
 
         /// <summary>
+        /// The CMS configuration.
+        /// </summary>
+        private readonly ICmsConfiguration cmsConfiguration;
+
+        /// <summary>
         /// The cache key.
         /// </summary>
         private const string CacheKey = "bcms-custom-options-list";
@@ -47,10 +54,11 @@ namespace BetterCms.Module.Root.Services
         /// </summary>
         /// <param name="repository">The repository.</param>
         /// <param name="cacheService">The cache service.</param>
-        public DefaultOptionService(IRepository repository, ICacheService cacheService)
+        public DefaultOptionService(IRepository repository, ICacheService cacheService, ICmsConfiguration cmsConfiguration)
         {
             this.repository = repository;
             this.cacheService = cacheService;
+            this.cmsConfiguration = cmsConfiguration;
         }
 
         /// <summary>
@@ -135,10 +143,11 @@ namespace BetterCms.Module.Root.Services
         /// </summary>
         /// <param name="options">The options.</param>
         /// <param name="optionValues">The option values.</param>
+        /// <param name="languageId">The language identifier.</param>
         /// <returns>
         /// List of option values view models, merged from options and option values
         /// </returns>
-        public List<IOptionValue> GetMergedOptionValues(IEnumerable<IOptionEntity> options, IEnumerable<IOptionEntity> optionValues)
+        public List<IOptionValue> GetMergedOptionValues(IEnumerable<IOptionEntity> options, IEnumerable<IOptionEntity> optionValues, Guid? languageId = null)
         {
             var optionModels = new List<OptionValueViewModel>();
 
@@ -146,7 +155,7 @@ namespace BetterCms.Module.Root.Services
             {
                 foreach (var optionValue in optionValues.Distinct())
                 {
-                    var optionViewModel = CreateOptionValueViewModel(optionValue);
+                    var optionViewModel = CreateOptionValueViewModel(optionValue, languageId);
                     optionModels.Add(optionViewModel);
                 }
             }
@@ -158,7 +167,7 @@ namespace BetterCms.Module.Root.Services
                     var optionViewModel = optionModels.FirstOrDefault(f => f.OptionKey.Equals(option.Key.Trim(), StringComparison.OrdinalIgnoreCase));
                     if (optionViewModel == null)
                     {
-                        optionViewModel = CreateOptionValueViewModel(option);
+                        optionViewModel = CreateOptionValueViewModel(option, languageId);
                         optionModels.Add(optionViewModel);
                     }
                 }
@@ -172,10 +181,11 @@ namespace BetterCms.Module.Root.Services
         /// </summary>
         /// <param name="options">The options.</param>
         /// <param name="optionValues">The option values.</param>
+        /// <param name="languageId"></param>
         /// <returns>
         /// List of option values view models, merged from options and option values
         /// </returns>
-        public List<IOptionValue> GetMergedOptionValues(IEnumerable<IOptionValue> options, IEnumerable<IOptionEntity> optionValues)
+        public List<IOptionValue> GetMergedOptionValues(IEnumerable<IOptionValue> options, IEnumerable<IOptionEntity> optionValues, Guid? languageId = null)
         {
             var optionModels = new List<OptionValueViewModel>();
 
@@ -208,8 +218,9 @@ namespace BetterCms.Module.Root.Services
         /// Creates the option value view model.
         /// </summary>
         /// <param name="option">The option.</param>
+        /// <param name="languageId">The language identifier.</param>
         /// <returns>Created option value view model</returns>
-        private OptionValueViewModel CreateOptionValueViewModel(IOptionEntity option)
+        private OptionValueViewModel CreateOptionValueViewModel(IOptionEntity option, Guid? languageId = null)
         {
             var value = GetValueSafe(option);
 
@@ -225,7 +236,15 @@ namespace BetterCms.Module.Root.Services
                         Id = option.CustomOption.Id
                     } : null,
                 };
-
+            if (cmsConfiguration.EnableMultilanguage && option is IMultilangualOption && languageId.HasValue)
+            {
+                var multilangualOption = (IMultilangualOption)option;
+                var translation = multilangualOption.Translations.FirstOrDefault(m => m.LanguageId == languageId.ToString());
+                if (translation != null)
+                {
+                    optionViewModel.OptionValue = translation.Value;
+                }
+            }
             return optionViewModel;
         }
         
@@ -395,6 +414,14 @@ namespace BetterCms.Module.Root.Services
                             var logMessage = string.Format("Cannot delete option {0}, because it's marked as non-deletable.", option.Id);
                             throw new ValidationException(() => message, logMessage);
                         }
+                        if (option is IMultilangualOption)
+                        {
+                            var multiLangOption = option as IMultilangualOption;
+                            foreach (var translation in multiLangOption.Translations.OfType<IEntity>())
+                            {
+                                repository.Delete(translation);
+                            }
+                        }
 
                         repository.Delete(option);
                     }
@@ -437,6 +464,28 @@ namespace BetterCms.Module.Root.Services
                     }
 
                     ValidateOptionValue(option);
+                    if (requestOption is IMultilangualOption && option is IMultilangualOption && cmsConfiguration.EnableMultilanguage)
+                    {
+                        var requestMultilangOption = requestOption as IMultilangualOption;
+
+                        if (option is ContentOption)
+                        {
+                            var contentOption = option as ContentOption;
+                            foreach (var t in requestMultilangOption.Translations)
+                            {
+                                var optionTranslation = contentOption.Translations.FirstOrDefault(x => ((IOptionTranslation)x).LanguageId == t.LanguageId);
+                                if (optionTranslation == null)
+                                {
+                                    optionTranslation = new ContentOptionTranslation();
+                                    var languageId = Guid.Parse(t.LanguageId);
+                                    optionTranslation.Language = repository.AsProxy<Language>(languageId);
+                                    optionTranslation.ContentOption = contentOption;
+                                    contentOption.Translations.Add(optionTranslation);
+                                }
+                                optionTranslation.Value = t.Value;
+                            }
+                        }
+                    }
                 }
 
                 optionContainer.Options = optionsList;

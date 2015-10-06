@@ -5,6 +5,8 @@ using BetterCms.Module.Root.Services;
 
 using BetterModules.Core.Web.Services.Caching;
 
+using Moq;
+
 using NUnit.Framework;
 
 namespace BetterCms.Test.Module.Root.ProjectionTests
@@ -24,7 +26,8 @@ namespace BetterCms.Test.Module.Root.ProjectionTests
                                                      TestDataProvider.CreateNewPageContentOption(pageContent)
                                                  };
 
-            var optionService = new DefaultOptionService(null, new HttpRuntimeCacheService());
+            var cmsConfiguration = new Mock<ICmsConfiguration>();
+            var optionService = new DefaultOptionService(null, new HttpRuntimeCacheService(), cmsConfiguration.Object);
             var optionValues = optionService.GetMergedOptionValues(pageContent.Options, null);
 
             PageContentProjection original = new PageContentProjection(

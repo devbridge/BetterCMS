@@ -99,14 +99,22 @@ bettercms.define('bcms.options', ['bcms.jquery', 'bcms', 'bcms.ko.extenders', 'b
                 self.onLanguageChanged = function (languageId) {
                     if (languageId != self.languageId()) {
                         self.languageId(languageId);
+                        self.changeLanguageForItems(self.items());
                         bcms.logger.debug('Options language changed to "' + languageId + '".');
                     }
                 }
-
+//                self.items = items;
                 self.showLanguages = ko.observable(showLanguages);
                 self.languages = ko.observableArray();
                 self.languageId = ko.observable("");
                 self.language = showLanguages ? new LanguageViewModel(languages, null, self.onLanguageChanged) : null;
+
+                self.changeLanguageForItems = function(items) {
+                    for (var i = 0; i < items.length; i++) {
+                        console.log(items[i]);
+                        items[i].activateTranslation(languageId);
+                    }
+                };
             };
 
             OptionsListViewModel.prototype.createItem = function (item) {
@@ -213,6 +221,7 @@ bettercms.define('bcms.options', ['bcms.jquery', 'bcms', 'bcms.ko.extenders', 'b
                 self.useDefaultValue = ko.observable(-1);
                 self.canEditOption = ko.observable(-1);
                 self.canDeleteOption = true;
+                self.translations = {};
 
                 // Additional values
                 self.typeName = ko.observable();
@@ -223,6 +232,7 @@ bettercms.define('bcms.options', ['bcms.jquery', 'bcms', 'bcms.ko.extenders', 'b
                 self.customOptionTitle = ko.observable();
                 self.customOptionDefaultTitle = ko.observable();
                 self.calcType = ko.observable();
+                self.translationsEnabled = false;
 
                 self.optionTypes = [];
                 self.optionTypes.push({ id: optionTypes.textType, name: globalization.optionTypeText });
@@ -387,7 +397,7 @@ bettercms.define('bcms.options', ['bcms.jquery', 'bcms', 'bcms.ko.extenders', 'b
                 self.canEditOption(item.CanEditOption !== false);
                 self.useDefaultValue(!self.canEditOption() && item.UseDefaultValue === true);
                 self.canDeleteOption = item.CanDeleteOption !== false;
-
+                self.translations = item.Translations;
                 // Disable editing and deletion
                 self.changeFieldsEditing();
                 

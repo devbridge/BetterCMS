@@ -16,6 +16,7 @@ using BetterCms.Module.Root.Models;
 using BetterCms.Module.Root.Mvc;
 using BetterCms.Module.Root.Mvc.Helpers;
 
+using BetterModules.Core.DataAccess.DataContext;
 using BetterModules.Core.Exceptions.DataTier;
 
 using NHibernate.Linq;
@@ -88,19 +89,7 @@ namespace BetterCms.Module.Root.Services
 
                 return updatedContent;
             }
-            
-            var originalContent =
-                repository.AsQueryable<Models.Content>()
-                          .Where(f => f.Id == updatedContent.Id && !f.IsDeleted)
-                          .Fetch(f => f.Original).ThenFetchMany(f => f.History)
-                          .Fetch(f => f.Original).ThenFetchMany(f => f.ContentOptions)
-                          .FetchMany(f => f.History)
-                          .FetchMany(f => f.ContentOptions)
-                          .FetchMany(f => f.ChildContents)
-                          .FetchMany(f => f.ContentRegions)            
-                          .ThenFetch(f => f.Region)
-                          .ToList()
-                          .FirstOrDefault();
+            var originalContent = GetOriginalContent(updatedContent.Id);
 
             if (originalContent == null)
             {
@@ -114,28 +103,9 @@ namespace BetterCms.Module.Root.Services
 
             originalContent = repository.UnProxy(originalContent);
 
-            if (originalContent.History != null)
-            {
-                originalContent.History = originalContent.History.Distinct().ToList();
-            }
-            else
+            if (originalContent.History == null)
             {
                 originalContent.History = new List<Models.Content>();
-            }
-
-            if (originalContent.ContentOptions != null)
-            {
-                originalContent.ContentOptions = originalContent.ContentOptions.Distinct().ToList();
-            }
-
-            if (originalContent.ContentRegions != null)
-            {
-                originalContent.ContentRegions = originalContent.ContentRegions.Distinct().ToList();
-            }
-            
-            if (originalContent.ChildContents != null)
-            {
-                originalContent.ChildContents = originalContent.ChildContents.Distinct().ToList();
             }
 
             childContentService.ValidateChildContentsCircularReferences(originalContent, updatedContent);
@@ -160,6 +130,54 @@ namespace BetterCms.Module.Root.Services
             }
 
             return originalContent;
+        }
+
+        private Models.Content GetOriginalContent(Guid id)
+        {
+            Models.Content contentAlias = null;
+            Models.Content historyAlias = null;
+            ContentOption contentOptionAlias = null;
+            ContentOptionTranslation contentOptionTranslationAlias = null;
+            ChildContent childContentAlias = null;
+            ContentRegion contentRegionAlias = null;
+            Region regionAlias = null;
+
+            var contentQuery = repository.AsQueryOver(() => contentAlias)
+                .Left.JoinAlias(() => contentAlias.ContentOptions, () => contentOptionAlias, () => !contentOptionAlias.IsDeleted)
+                .Left.JoinAlias(() => contentOptionAlias.Translations, () => contentOptionTranslationAlias, () => !contentOptionTranslationAlias.IsDeleted)
+                .Left.JoinAlias(() => contentAlias.ChildContents, () => childContentAlias, () => !childContentAlias.IsDeleted)
+                .Left.JoinAlias(() => contentAlias.History, () => historyAlias, () => !historyAlias.IsDeleted)
+                .Where(() => contentAlias.Id == id)
+                .Future();
+            var content = contentQuery.FirstOrDefault();
+            if (content == null)
+            {
+                throw new EntityNotFoundException(typeof(Models.Content), id);
+            }
+            IEnumerable<Models.Content> originalFuture = new List<Models.Content>();
+            if (content.Original != null)
+            {
+                var originalId = content.Original.Id;
+                originalFuture =
+                    repository.AsQueryOver(() => contentAlias)
+                        .Left.JoinAlias(() => contentAlias.History, () => historyAlias, () => !historyAlias.IsDeleted)
+                        .Left.JoinAlias(() => contentAlias.ContentOptions, () => contentOptionAlias, () => !contentOptionAlias.IsDeleted)
+                        .Left.JoinAlias(() => contentOptionAlias.Translations, () => contentOptionTranslationAlias, () => !contentOptionTranslationAlias.IsDeleted)
+                        .Left.JoinAlias(() => contentAlias.ChildContents, () => childContentAlias, () => !childContentAlias.IsDeleted)
+                        .Where(() => contentAlias.Id == originalId && !contentAlias.IsDeleted)
+                        .Future();
+            }
+            var contentRegionsFuture = repository.AsQueryOver(() => contentRegionAlias)
+                .Left.JoinAlias(() => contentRegionAlias.Region, () => regionAlias, () => !regionAlias.IsDeleted)
+                .Where(() => contentRegionAlias.Content.Id == id)
+                .Future();
+
+            var original = originalFuture.FirstOrDefault();
+            var contentRegions = contentRegionsFuture as IList<ContentRegion> ?? contentRegionsFuture.ToList();
+            content.Original = original;
+            content.ContentRegions = contentRegions;
+
+            return content;
         }
 
         private void SavePublishedContentWithStatusUpdate(Models.Content originalContent, Models.Content updatedContent, ContentStatus requestedStatus)

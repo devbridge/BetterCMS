@@ -100,7 +100,8 @@ WriteLiteral("\r\n");
                         ValueTextBind = "typeName"
                     },
                                         
-                new OptionValueEditableGridColumn(PagesGlobalization.Options_OptionDefaultValueColumn, "defaultValue", "customOptionDefaultTitle")
+//                new OptionValueEditableGridColumn(PagesGlobalization.Options_OptionDefaultValueColumn, "defaultValue", "customOptionDefaultTitle")
+                new OptionValueEditableGridColumn(PagesGlobalization.Options_OptionDefaultValueColumn, "displayValue", "customOptionDefaultTitle")
                     {
                         HeaderAttributes = "style=\"width: 250px;\"",
                         HiddenFieldName = "Options[{0}].OptionDefaultValue"
@@ -117,7 +118,7 @@ WriteLiteral("\r\n");
 WriteLiteral("\r\n\r\n");
 
             
-            #line 43 "..\..\Views\Option\EditOptions.cshtml"
+            #line 44 "..\..\Views\Option\EditOptions.cshtml"
 Write(Html.Partial(RootModuleConstants.EditableGridTemplate, gridViewModel));
 
             

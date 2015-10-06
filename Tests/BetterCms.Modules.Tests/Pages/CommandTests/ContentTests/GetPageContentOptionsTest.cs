@@ -41,8 +41,8 @@ namespace BetterCms.Test.Module.Pages.CommandTests.ContentTests
                 var repository = new DefaultRepository(unitOfWork);
                 command.UnitOfWork = unitOfWork;
                 command.Repository = repository;
-                command.OptionService = new DefaultOptionService(repository, new HttpRuntimeCacheService());
                 command.CmsConfiguration = Container.Resolve<ICmsConfiguration>();
+                command.OptionService = new DefaultOptionService(repository, new HttpRuntimeCacheService(), command.CmsConfiguration);
 
                 // Execute command
                 var result = command.Execute(pageContent.Id);
