@@ -11,7 +11,25 @@ bettercms.define('bcms.htmlEditor', ['bcms.jquery', 'bcms', 'ckeditor', 'bcms.ma
             imageButtonContainer: '.cke_button:has(.cke_button__image_icon)'
         },
         links = {},
-        globalization = {},
+        globalization = {
+            smartTagPageTitle: null,
+            smartTagPageUrl: null,
+            smartTagPageId: null,
+            smartTagPageCreatedOn: null,
+            smartTagPageModifiedOn: null,
+            smartTagPageOption: null,
+            smartTagWidgetOption: null,
+            smartTagPageMetaTitle: null,
+            smartTagPageMetaKeywords: null,
+            smartTagPageMetaDescription: null,
+            smartTagPageMainImageUrl: null,
+            smartTagPageSecondaryImageUrl: null,
+            smartTagPageFeaturedImageUrl: null,
+            smartTagPageCategory: null,
+            smartTagBlogAuthor: null,
+            smartTagBlogActivationDate: null,
+            smartTagBlogExpirationDate: null
+        },
         events = {
             insertImage: 'insertImage',
             insertFile: 'insertFile',
@@ -32,8 +50,68 @@ bettercms.define('bcms.htmlEditor', ['bcms.jquery', 'bcms', 'ckeditor', 'bcms.ma
     */
     htmlEditor.id = null;
 
+    function getSmartTags() {
+        var tags = [];
+
+        /*tags.push({ text: "{{CmsPageTitle}}", title: htmlEditor.globalization.smartTagPageTitle });
+        tags.push({ text: "{{CmsPageUrl}}", title: htmlEditor.globalization.smartTagPageUrl });
+        tags.push({ text: "{{CmsPageId}}", title: htmlEditor.globalization.smartTagPageId });
+        tags.push({
+            text: "{{CmsPageCreatedOn:yyyy-MM-dd}}",
+            title: htmlEditor.globalization.smartTagPageCreatedOn,
+            openWith: "{{CmsPageCreatedOn:",
+            closeWith: "}}",
+            placeholder: "yyyy-MM-dd"
+        });
+        tags.push({
+            text: "{{CmsPageModifiedOn:yyyy-MM-dd}}",
+            title: htmlEditor.globalization.smartTagPageModifiedOn,
+            openWith: "{{CmsPageModifiedOn:",
+            closeWith: "}}",
+            placeholder: "yyyy-MM-dd"
+        });
+        tags.push({
+            text: "{{CmsPageOption:OptionKey}}",
+            title: htmlEditor.globalization.smartTagPageOption,
+            openWith: "{{CmsPageOption:",
+            closeWith: "}}",
+            placeholder: "OptionKey"
+        });
+        tags.push({
+            text: "{{CmsWidgetOption:OptionKey}}",
+            title: htmlEditor.globalization.smartTagWidgetOption,
+            openWith: "{{CmsWidgetOption:",
+            closeWith: "}}",
+            placeholder: "OptionKey"
+        });
+        tags.push({ text: "{{CmsPageMetaTitle}}", title: htmlEditor.globalization.smartTagPageMetaTitle });
+        tags.push({ text: "{{CmsPageMetaKeywords}}", title: htmlEditor.globalization.smartTagPageMetaKeywords });
+        tags.push({ text: "{{CmsPageMetaDescription}}", title: htmlEditor.globalization.smartTagPageMetaDescription });
+        tags.push({ text: "{{CmsPageMainImageUrl}}", title: htmlEditor.globalization.smartTagPageMainImageUrl });
+        tags.push({ text: "{{CmsPageSecondaryImageUrl}}", title: htmlEditor.globalization.smartTagPageSecondaryImageUrl });
+        tags.push({ text: "{{CmsPageFeaturedImageUrl}}", title: htmlEditor.globalization.smartTagPageFeaturedImageUrl });
+        tags.push({ text: "{{CmsPageCategory}}", title: htmlEditor.globalization.smartTagPageCategory });
+        tags.push({ text: "{{CmsBlogAuthor}}", title: htmlEditor.globalization.smartTagBlogAuthor });
+        tags.push({
+            text: "{{CmsBlogActivationDate:yyyy-MM-dd}}",
+            title: htmlEditor.globalization.smartTagBlogActivationDate,
+            openWith: "{{CmsBlogActivationDate:",
+            closeWith: "}}",
+            placeholder: "yyyy-MM-dd"
+        });
+        tags.push({
+            text: "{{CmsBlogExpirationDate:yyyy-MM-dd}}",
+            title: htmlEditor.globalization.smartTagBlogExpirationDate,
+            openWith: "{{CmsBlogExpirationDate:",
+            closeWith: "}}",
+            placeholder: "yyyy-MM-dd"
+        });*/
+
+        return tags;
+    }
+
     htmlEditor.initializeMarkdownEditor = function (id, editingContentId, options) {
-        markdownEditor.initializeInstance(htmlEditor, id, editingContentId, options);
+        markdownEditor.initializeInstance(htmlEditor, getSmartTags(), id, editingContentId, options);
     }
 
     htmlEditor.initializeHtmlEditor = function (id, editingContentId, options, startInSourceMode) {
@@ -125,6 +203,8 @@ bettercms.define('bcms.htmlEditor', ['bcms.jquery', 'bcms', 'ckeditor', 'bcms.ma
                 instance.addHtml(text);
             }
         });
+
+        CKEDITOR.instances[id].smartTags = getSmartTags();
     };
 
     function closeMaximizedMode(instance) {

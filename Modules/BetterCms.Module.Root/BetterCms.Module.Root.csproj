@@ -1490,7 +1490,6 @@
     <EmbeddedResource Include="Scripts\markitup\sets\markmin\images\list-bullet.png" />
     <EmbeddedResource Include="Scripts\markitup\sets\markmin\images\list-numeric.png" />
     <EmbeddedResource Include="Scripts\markitup\sets\markmin\images\picture.png" />
-    <EmbeddedResource Include="Scripts\markitup\sets\markmin\images\preview.png" />
     <EmbeddedResource Include="Scripts\markitup\sets\markmin\images\quotes.png" />
     <EmbeddedResource Include="Scripts\markitup\sets\markmin\style.css" />
     <EmbeddedResource Include="Scripts\markitup\skins\markitup\images\handle.png" />
