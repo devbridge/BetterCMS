@@ -1496,10 +1496,6 @@
     <EmbeddedResource Include="Scripts\markitup\sets\markmin\images\picture.png" />
     <EmbeddedResource Include="Scripts\markitup\sets\markmin\images\quotes.png" />
     <EmbeddedResource Include="Scripts\markitup\sets\markmin\style.css" />
-    <EmbeddedResource Include="Scripts\markitup\skins\markitup\images\handle.png" />
-    <EmbeddedResource Include="Scripts\markitup\skins\markitup\images\menu.png" />
-    <EmbeddedResource Include="Scripts\markitup\skins\markitup\images\submenu.png" />
-    <EmbeddedResource Include="Scripts\markitup\skins\markitup\style.css" />
     <Content Include="Scss\base_64\bcms-add-content.svg" />
     <Content Include="Scss\base_64\bcms-close.svg" />
     <Content Include="Scss\base_64\bcms-cp-add-new.svg" />
