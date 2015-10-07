@@ -222,17 +222,14 @@ $overlay-control-buttons: (
             }
         }
     }
-}
 
-//todo inspect what is this for, as it looks like some old unused code.
-//.bcms-content-icon div {
-//    color: #9fd5ef;
-//    font-size: 20px;
-//    font-weight: bold;
-//    left: -13px;
-//    position: absolute;
-//    text-align: right;
-//    text-transform: uppercase;
-//    top: -11px;
-//    width: 42px;
-//}
+    &-edit {
+        &.bcms-active-draft {
+            background-color: $red-l70;
+
+            &:hover{
+                background-color: lighten($red-l70, 10%);
+            }
+        }
+    }
+}
