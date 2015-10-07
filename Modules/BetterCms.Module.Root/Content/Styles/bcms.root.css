@@ -994,12 +994,9 @@ a.ui-state-default:hover {
 }
 
 .bcms-user-profile {
-  display: inline-block;
-  max-width: 100%;
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
-  word-wrap: normal;
   background: url("data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHByZXNlcnZlQXNwZWN0UmF0aW89InhNaWRZTWlkIiB3aWR0aD0iMTEiIGhlaWdodD0iMTQiIHZpZXdCb3g9IjAgMCAxMSAxNCI+CiAgPHBhdGggZmlsbD0iI2ZmZmZmZiIgZmlsbC1ydWxlPSJldmVub2RkIiBkPSJNOS4yODYsMTQuMDAwIEwxLjcxNCwxNC4wMDAgQzAuNzY4LDE0LjAwMCAtMC4wMDAsMTMuMjMyIC0wLjAwMCwxMi4yODYgQy0wLjAwMCw5LjkxOSAxLjkxOSw4LjAwMCA0LjI4Niw4LjAwMCBMNi43MTQsOC4wMDAgQzkuMDgxLDguMDAwIDExLjAwMCw5LjkxOSAxMS4wMDAsMTIuMjg2IEMxMS4wMDAsMTMuMjMyIDEwLjIzMiwxNC4wMDAgOS4yODYsMTQuMDAwIFpNNS41MDAsNy4wMDAgQzMuNTY3LDcuMDAwIDIuMDAwLDUuNDMzIDIuMDAwLDMuNTAwIEMyLjAwMCwxLjU2NyAzLjU2NywtMC4wMDAgNS41MDAsLTAuMDAwIEM3LjQzMywtMC4wMDAgOS4wMDAsMS41NjcgOS4wMDAsMy41MDAgQzkuMDAwLDUuNDMzIDcuNDMzLDcuMDAwIDUuNTAwLDcuMDAwIFoiLz4KPC9zdmc+") no-repeat left center;
   box-sizing: border-box;
   color: #ffffff;
@@ -1007,7 +1004,7 @@ a.ui-state-default:hover {
   float: left;
   line-height: 26px;
   padding-left: 20px;
-  width: 150px;
+  max-width: 160px;
 }
 
 .bcms-sidemenu {
