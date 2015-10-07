@@ -86,7 +86,6 @@
 
             if (position !== currentCursorPosition || value !== currentValue) {
                 for (i = 0; i < widgetPositions.length; i++) {
-                    console.log("Current pos: %s, start: %s, end: %s", position, widgetPositions[i].start, widgetPositions[i].end);
                     if (position >= widgetPositions[i].start && position <= widgetPositions[i].end) {
                         isWidgetSelected = true;
                         break;
@@ -94,13 +93,12 @@
                 }
             }
 
+            /* TODO: uncomment when widget options icon will be implemented
             if (isWidgetSelected) {
                 $(selectors.widgetOptionsButton).show();
             } else {
                 $(selectors.widgetOptionsButton).hide();
-            }
-
-            console.log(isWidgetSelected);
+            }*/
 
             currentValue = value;
             currentCursorPosition = position;
@@ -181,25 +179,7 @@
          * Inserts a widget to the textarea
          */
         function editWidgetOptions(obj) {
-            var settings = {
-                selection: obj.selection,
-                caretPosition: obj.caretPosition,
-                scrollPosition: obj.scrollPosition,
-                textarea: obj.textarea
-            };
-
-            bcms.trigger(currentEditor.events.insertWidget, {
-                editor: {
-                    addHtml: function (html) {
-                        settings.selectionStart = settings.caretPosition + html.length;
-                        settings.selectionLength = 0;
-
-                        addBlockToTextarea(html, settings);
-                    },
-                    mode: 'source'
-                },
-                editorId: id
-            });
+            /* TODO: implement editing of child widget options */
         }
 
         /**
@@ -233,31 +213,33 @@
                 previewParserPath: '',
                 onShiftEnter: { keepDefault: false, openWith: '\n\n' },
                 markupSet: [
-                    { name: 'Heading 1', key: '1', openWith: '# ', placeHolder: 'Chapter', className: 'markItUpButtonH1' },
-                    { name: 'Heading 2', key: '2', openWith: '## ', placeHolder: 'Section', className: 'markItUpButtonH2' },
-                    { name: 'Heading 3', key: '3', openWith: '### ', placeHolder: 'Subsection', className: 'markItUpButtonH3' },
-                    { name: 'Heading 4', key: '4', openWith: '#### ', placeHolder: 'SubSubsection', className: 'markItUpButtonH4' },
-                    { name: 'Heading 5', key: '5', openWith: '##### ', placeHolder: 'SubSubsection', className: 'markItUpButtonH5' },
-                    { name: 'Heading 6', key: '6', openWith: '###### ', placeHolder: 'SubSubsection', className: 'markItUpButtonH6' },
+                    { name: 'Heading 1', key: '1', openWith: '# ', placeHolder: 'Your title here...', className: 'markItUpButtonH1' },
+                    { name: 'Heading 2', key: '2', openWith: '## ', placeHolder: 'Your title here...', className: 'markItUpButtonH2' },
+                    { name: 'Heading 3', key: '3', openWith: '### ', placeHolder: 'Your title here...', className: 'markItUpButtonH3' },
+                    { name: 'Heading 4', key: '4', openWith: '#### ', placeHolder: 'Your title here...', className: 'markItUpButtonH4' },
+                    { name: 'Heading 5', key: '5', openWith: '##### ', placeHolder: 'Your title here...', className: 'markItUpButtonH5' },
+                    { name: 'Heading 6', key: '6', openWith: '###### ', placeHolder: 'Your title here...', className: 'markItUpButtonH6' },
                     { name: 'Bold', key: 'B', openWith: '**', closeWith: '**', className: 'markItUpButtonBold' },
                     { name: 'Italic', key: 'I', openWith: "_", closeWith: "_", className: 'markItUpButtonItalic' },
-                    { name: 'Bulleted List', openWith: '- ', className: 'markItUpButtonListBullet' },
-                    { name: 'Numeric List', openWith: '+', className: 'markItUpButtonListNumeric' },
+                    { name: 'Bulleted List', openWith: '* ', className: 'markItUpButtonListBullet' },
+                    { name: 'Numeric List', openWith: '1. ', className: 'markItUpButtonListNumeric' },
                     { name: 'Picture', key: 'P', className: 'markItUpButtonPicture', beforeInsert: insertImage },
                     { name: 'Link', key: 'L', className: 'markItUpButtonLink', beforeInsert: insertFile },
                     { name: 'Widget', className: 'markItUpButtonWidget', beforeInsert: insertWidget },
-                    { name: 'Quotes', openWith: '-------\n', closeWith: '\n-------\n', className: 'markItUpButtonQuotes' },
-                    { name: 'Code Block / Code', openWith: '``', closeWith: '``', className: 'markItUpButtonCode' },
-                    { name: 'Smart tags', dropMenu: smartTagsList },
-                    { name: 'Widget options', className: 'markItUpButtonWidget markItUpButtonWidgetOption', beforeInsert: editWidgetOptions }
+                    { name: 'Quotes', openWith: '> ', className: 'markItUpButtonQuotes' },
+                    { name: 'Code Block / Code', openWith: '`', closeWith: '`', className: 'markItUpButtonCode' },
+                    { name: 'Smart tags', dropMenu: smartTagsList }
+                    //  TODO: uncomment when widget options icon will be implemented
+                    // { name: 'Widget options', className: 'markItUpButtonWidget markItUpButtonWidgetOption', beforeInsert: editWidgetOptions }
                 ]
             }, options);
 
             textarea = $('#' + id);
             textarea.markItUp(options);
 
-            setTimeout(function() {
-                $(selectors.widgetOptionsButton).hide();
+            setTimeout(function () {
+                //  TODO: uncomment when widget options icon will be implemented
+                //  $(selectors.widgetOptionsButton).hide();
                 textarea.on("keyup click focus", onCursorPositionChanged);
                 onCursorPositionChanged();
             }, 100);

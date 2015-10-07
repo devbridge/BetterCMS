@@ -118,6 +118,17 @@ bettercms.define('bcms.htmlEditor', ['bcms.jquery', 'bcms', 'ckeditor', 'bcms.ma
         markdownEditor.initializeInstance(htmlEditor, id, editingContentId, options);
     }
 
+    htmlEditor.editChildWidgetOptions = function (editor, widgetId, assignmentId, contentId, optionListViewModel, onCloseClick) {
+        bcms.trigger(htmlEditor.events.editChildWidgetOptions, {
+            editor: editor,
+            widgetId: widgetId,
+            assignmentId: assignmentId,
+            contentId: contentId,
+            onCloseClick: onCloseClick,
+            optionListViewModel: optionListViewModel
+        });
+    };
+
     htmlEditor.initializeHtmlEditor = function (id, editingContentId, options, startInSourceMode) {
         var editMode = startInSourceMode;
         if (!CKEDITOR) {
@@ -163,16 +174,7 @@ bettercms.define('bcms.htmlEditor', ['bcms.jquery', 'bcms', 'ckeditor', 'bcms.ma
             });
         };
 
-        CKEDITOR.instances[id].EditChildWidgetOptions = function (editor, widgetId, assignmentId, contentId, optionListViewModel, onCloseClick) {
-            bcms.trigger(htmlEditor.events.editChildWidgetOptions, {
-                editor: editor,
-                widgetId: widgetId,
-                assignmentId: assignmentId,
-                contentId: contentId,
-                onCloseClick: onCloseClick,
-                optionListViewModel: optionListViewModel
-            });
-        };
+        CKEDITOR.instances[id].EditChildWidgetOptions = htmlEditor.editChildWidgetOptions;
 
         CKEDITOR.instances[id].EditWidget = function (editor, contentId) {
             bcms.trigger(htmlEditor.events.editWidget, {
