@@ -1506,7 +1506,7 @@
     <Content Include="Scss\base_64\bcms-overlay-delete.svg" />
     <Content Include="Scss\base_64\bcms-overlay-edit-child.svg" />
     <Content Include="Scss\base_64\bcms-overlay-edit.svg" />
-    <Content Include="Scss\base_64\bcms-editor-options.svg" />
+    <Content Include="Scss\base_64\bcms-toolbar-options.svg" />
     <Content Include="Scss\base_64\bcms-overlay-history.svg" />
     <Content Include="Scss\base_64\bcms-manage.svg" />
     <Content Include="Scss\base_64\bcms-overlay-options.svg" />
