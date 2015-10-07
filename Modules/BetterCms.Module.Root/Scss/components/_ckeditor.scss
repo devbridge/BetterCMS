@@ -1,0 +1,213 @@
+@import '../core/variables';
+
+//module editor frame
+.cke {
+    &_chrome {
+        display: block;
+        border: $border-thin-gray;
+    }
+
+    &_inner {
+        display: block;
+    }
+
+    &_top,
+    &_contents,
+    &_bottom {
+        display: block;
+        overflow: hidden;
+    }
+
+    &_top {
+        border-bottom: $border-thin-gray;
+        padding: 6px 8px;
+        white-space: normal;
+        background-color: $gray-l30;
+    }
+
+    &_float {
+        .cke_top {
+            border: $border-thin-gray;
+        }
+    }
+
+    &_bottom {
+        padding: 6px 8px;
+        position: relative;
+        border-top: $border-thin-gray;
+        background: $gray-l30;
+    }
+
+    &_resizer {
+        width: 0;
+        height: 0;
+        overflow: hidden;
+        border-width: 10px 10px 0 0;
+        border-color: transparent #666 transparent transparent;
+        border-style: dashed solid dashed dashed;
+        float: right;
+        vertical-align: bottom;
+        margin-top: 6px;
+    }
+
+    &_wysiwyg_div {
+        display: block;
+        height: 100%;
+        overflow: auto;
+        padding: 0 8px;
+        outline-style: none;
+        box-sizing: border-box;
+    }
+}
+
+//module editor toolbar
+.cke_toolbar {
+    float: left;
+}
+
+/* The box that holds buttons. */
+.cke_toolgroup {
+    float: left;
+    margin: 0 6px;
+    border: $border-thin-gray;
+    background-color: $gray-l30;
+}
+
+/* A toolbar button . */
+a.cke_button {
+    display: inline-block;
+    height: 18px;
+    padding: 4px 6px;
+    outline: none;
+    cursor: default;
+    float: left;
+    border: 0;
+}
+
+/* This class is applied to the button when it is "active" (pushed).
+   This style indicates that the feature associated with the button is active
+   i.e. currently writing in bold or when spell checking is enabled. */
+a.cke_button_on {
+    box-shadow: 0 1px 5px rgba(0, 0, 0, .6) inset, 0 1px 0 rgba(0, 0, 0, .2);
+
+    background: #b5b5b5;
+    background-image: linear-gradient(to bottom, #aaa, #cacaca);
+    filter: progid:DXImageTransform.Microsoft.gradient(gradientType=0, startColorstr='#aaaaaa', endColorstr='#cacaca');
+}
+
+/* This class is applied to the button when the feature associated with the
+   button cannot be used (grayed-out).
+   i.e. paste button remains disabled when there is nothing in the clipboard to
+   be pasted. */
+.cke_button_disabled .cke_button_icon {
+    opacity: 0.3;
+}
+
+a.cke_button_on:hover,
+a.cke_button_on:focus,
+a.cke_button_on:active {
+    box-shadow: 0 1px 6px rgba(0, 0, 0, .7) inset, 0 1px 0 rgba(0, 0, 0, .2);
+}
+
+a.cke_button_off:hover,
+a.cke_button_off:focus,
+a.cke_button_off:active,
+a.cke_button_disabled:hover,
+a.cke_button_disabled:focus,
+a.cke_button_disabled:active {
+    box-shadow: 0 0 1px rgba(0, 0, 0, .3) inset;
+
+    background: #ccc;
+    background-image: linear-gradient(to bottom, #f2f2f2, #ccc);
+    filter: progid:DXImageTransform.Microsoft.gradient(gradientType=0, startColorstr='#f2f2f2', endColorstr='#cccccc');
+}
+
+/* The icon which is a visual representation of the button. */
+.cke_button_icon {
+    cursor: inherit;
+    background-repeat: no-repeat;
+    margin-top: 1px;
+    width: 16px;
+    height: 16px;
+    float: left;
+    display: inline-block;
+}
+
+/* The label of the button that stores the name of the feature. By default,
+   labels are invisible. They can be revealed on demand though. */
+.cke_button_label {
+    display: none;
+    padding-left: 3px;
+    margin-top: 1px;
+    line-height: 17px;
+    vertical-align: middle;
+    float: left;
+    cursor: default;
+    color: #474747;
+    text-shadow: 0 1px 0 rgba(255, 255, 255, .5);
+}
+
+/* The small arrow available on buttons that can be expanded
+   (e.g. the color buttons). */
+.cke_button_arrow {
+    /* Arrow in CSS */
+    display: inline-block;
+    margin: 8px 0 0 1px;
+    width: 0;
+    height: 0;
+    cursor: default;
+    vertical-align: top;
+    border-left: 3px solid transparent;
+    border-right: 3px solid transparent;
+    border-top: 3px solid #474747;
+}
+
+/* The vertical separator which is used within a single toolbar to split
+   buttons into sub-groups. */
+.cke_toolbar_separator {
+    float: left;
+    background-color: #c0c0c0;
+    background-color: rgba(0, 0, 0, .2);
+    margin: 5px 2px 0;
+    height: 18px;
+    width: 1px;
+
+    box-shadow: 1px 0 1px rgba(255, 255, 255, .5);
+}
+
+/* The dummy element that breaks toolbars.
+   Once it is placed, the very next toolbar is moved to the new row. */
+.cke_toolbar_break {
+    display: block;
+    clear: left;
+}
+
+/* The button, which when clicked hides (collapses) all the toolbars. */
+a.cke_toolbox_collapser {
+    width: 12px;
+    height: 11px;
+    float: right;
+    margin: 11px 0 0;
+    font-size: 0;
+    cursor: default;
+    text-align: center;
+    border: $border-thin-gray;
+    background-color: $gray-l30;
+
+    .cke_arrow {
+        display: inline-block;
+        height: 0;
+        width: 0;
+        border: {
+            style: solid;
+            width: 3px;
+            color: transparent transparent $dark transparent;
+        }
+    }
+}
+
+.cke_toolbox_collapser.cke_toolbox_collapser_min .cke_arrow {
+    margin-top: 4px;
+    border-bottom-color: transparent;
+    border-top-color: #474747;
+}

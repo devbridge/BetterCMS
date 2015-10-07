@@ -214,3 +214,105 @@ textarea {
 //    height:300px;
 //    margin:5px 0;
 //}
+
+//module CKEditor
+//.cke {
+//    &_path {
+//        margin: -2px 0 2px;
+//    }
+//
+//    &_path_item,
+//    &_path_empty {
+//        padding: 3px 4px;
+//        margin-right: 2px;
+//        cursor: default;
+//        text-decoration: none;
+//        outline: 0;
+//        border: 0;
+//        color: #4c4c4c;
+//        text-shadow: 0 1px 0 #fff;
+//        font-weight: bold;
+//        font-size: 11px;
+//    }
+//
+//    &_top {
+//        @include clearfix();
+//        display: block;
+//        border-bottom: 1px solid #c6c6c6;
+//        padding: 6px 8px;
+//        background: #f5f5f5;
+//    }
+//
+//    &_float .cke_top {
+//        border: 1px solid #c6c6c6;
+//        border-bottom-color: #999;
+//    }
+//
+//    &_bottom {
+//        @include clearfix();
+//        display: block;
+//        padding: 6px 8px 2px;
+//        position: relative;
+//        border-top: 1px solid #c6c6c6;
+//        background: #f5f5f5;
+//    }
+//
+//    &_toolgroup {
+//        float: left;
+//        margin: 0 6px 0 0;
+//        border: 1px solid #c6c6c6;
+//        background: #f5f5f5;
+//    }
+//
+//    &_button {
+//        height: 18px;
+//        padding: 4px 6px;
+//        outline: 0;
+//        cursor: pointer;
+//        float: left;
+//        border: 0;
+//
+//        &_label {
+//            display: none;
+//            padding-left: 3px;
+//            margin-top: 1px;
+//            line-height: 17px;
+//            vertical-align: middle;
+//            float: left;
+//            color: #474747;
+//            font-size: 12px;
+//            text-shadow: 0 1px 0 rgba(255, 255, 255, 0.5);
+//        }
+//    }
+//
+//    &_combo {
+//        &_button {
+//            display: inline-block;
+//            float: left;
+//            margin: 0 6px 0 0;
+//            border: 1px solid #c6c6c6;
+//            background: #f5f5f5;
+//            cursor: pointer;
+//        }
+//
+//        &_text {
+//            line-height: 26px;
+//            padding-left: 10px;
+//            text-overflow: ellipsis;
+//            overflow: hidden;
+//            font-size: 12px;
+//            float: left;
+//            color: #474747;
+//            text-shadow: 0 1px 0 rgba(255, 255, 255, 0.5);
+//        }
+//
+//        &_open {
+//            display: inline-block;
+//            font-size: 0;
+//            height: 19px;
+//            line-height: 17px;
+//            margin: 1px 7px 1px;
+//            width: 5px;
+//        }
+//    }
+//}
