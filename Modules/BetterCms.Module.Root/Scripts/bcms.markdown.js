@@ -223,14 +223,14 @@
                     { name: 'Italic', key: 'I', openWith: "_", closeWith: "_", className: 'markItUpButtonItalic' },
                     { name: 'Bulleted List', openWith: '* ', className: 'markItUpButtonListBullet' },
                     { name: 'Numeric List', openWith: '1. ', className: 'markItUpButtonListNumeric' },
-                    { name: 'Picture', key: 'P', className: 'markItUpButtonPicture', beforeInsert: insertImage },
-                    { name: 'Link', key: 'L', className: 'markItUpButtonLink', beforeInsert: insertFile },
-                    { name: 'Widget', className: 'markItUpButtonWidget', beforeInsert: insertWidget },
+                    { name: 'Picture', key: 'P', className: 'markItUpButtonPicture', afterInsert: insertImage },
+                    { name: 'Link', key: 'L', className: 'markItUpButtonLink', afterInsert: insertFile },
+                    { name: 'Widget', className: 'markItUpButtonWidget', afterInsert: insertWidget },
                     { name: 'Quotes', openWith: '> ', className: 'markItUpButtonQuotes' },
                     { name: 'Code Block / Code', openWith: '`', closeWith: '`', className: 'markItUpButtonCode' },
                     { name: 'Smart tags', dropMenu: smartTagsList }
                     //  TODO: uncomment when widget options icon will be implemented
-                    // { name: 'Widget options', className: 'markItUpButtonWidget markItUpButtonWidgetOption', beforeInsert: editWidgetOptions }
+                    // { name: 'Widget options', className: 'markItUpButtonWidget markItUpButtonWidgetOption', afterInsert: editWidgetOptions }
                 ]
             }, options);
 

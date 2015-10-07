@@ -45,7 +45,7 @@ bettercms.define('bcms.pages.content', ['bcms.jquery', 'bcms', 'bcms.modal', 'bc
                 aceEditorContainer: '.bcms-editor-field-area-container:first',
 
                 editInSourceModeHiddenField: '#bcms-edit-in-source-mode',
-                isMarkdownHiddenField: '#bcms-is-markdown',
+                contentTextModeHiddenField: '#bcms-content-text-mode',
                 firstForm: 'form:first',
                 datePickers: 'input.bcms-datepicker'
             },
@@ -98,7 +98,7 @@ bettercms.define('bcms.pages.content', ['bcms.jquery', 'bcms', 'bcms.modal', 'bc
         */
         pagesContent.onAddNewContent = function (data) {
             var editorId,
-                isMarkdown = data.isMarkdown || false,
+                contentTextMode = data.contentTextMode,
                 regionViewModel = data.regionViewModel,
                 includeChildRegions = bcms.boolAsString(data.includeChildRegions),
                 onSuccess = data.onSuccess || function () {
@@ -133,17 +133,18 @@ bettercms.define('bcms.pages.content', ['bcms.jquery', 'bcms', 'bcms.modal', 'bc
                                 editorId: editorId,
                                 data: data.Data, onSuccess: onSuccess,
                                 includeChildRegions: includeChildRegions,
-                                isMarkdown: isMarkdown
+                                contentTextMode: contentTextMode,
+                                isSimpleText: isSimpleText
                             };
                             pagesContent.initializeAddNewContentForm(settings);
                         },
 
                         beforePost: function () {
-                            htmlEditor.updateEditorContent(editorId, isMarkdown);
+                            htmlEditor.updateEditorContent(editorId, contentTextMode);
 
-                            var editInSourceMode = htmlEditor.isSourceMode(editorId, isMarkdown);
+                            var editInSourceMode = htmlEditor.isSourceMode(editorId, contentTextMode);
                             dialog.container.find(selectors.editInSourceModeHiddenField).val(editInSourceMode);
-                            dialog.container.find(selectors.isMarkdownHiddenField).val(isMarkdown);
+                            dialog.container.find(selectors.contentTextModeHiddenField).val(contentTextMode);
 
                             return true;
                         },
@@ -278,7 +279,7 @@ bettercms.define('bcms.pages.content', ['bcms.jquery', 'bcms', 'bcms.modal', 'bc
                 data: {},
                 onSuccess: function () { },
                 includeChildRegions: false,
-                isMarkdown: false
+                contentTextMode: content.contentTextModes.html
             }, settings);
 
             var onInsert = function () {
@@ -299,11 +300,11 @@ bettercms.define('bcms.pages.content', ['bcms.jquery', 'bcms', 'bcms.modal', 'bc
 
             pagesContent.initializeCustomTextArea(settings.dialog);
 
-            if (settings.isMarkdown) {
+            if (settings.contentTextMode == content.contentTextModes.markdown) {
                 htmlEditor.initializeMarkdownEditor(settings.editorId, '', {});
             }
 
-            if (!settings.isMarkdown) {
+            if (settings.contentTextMode == content.contentTextModes.html) {
                 htmlEditor.initializeHtmlEditor(settings.editorId, '', {}, settings.editInSourceMode);
                 if (settings.enableInsertDynamicRegion) {
                     htmlEditor.enableInsertDynamicRegion(settings.editorId, true, settings.data.LastDynamicRegionNumber);
@@ -325,7 +326,7 @@ bettercms.define('bcms.pages.content', ['bcms.jquery', 'bcms', 'bcms.modal', 'bc
                 editorId: null, 
                 includeChildRegions: false, 
                 onSuccess: function() {},
-                isMarkdown: false
+                contentTextMode: content.contentTextModes.html
             }, settings);
 
             var canEdit = security.IsAuthorized(["BcmsEditContent"]),
@@ -334,11 +335,11 @@ bettercms.define('bcms.pages.content', ['bcms.jquery', 'bcms', 'bcms.modal', 'bc
 
             pagesContent.initializeCustomTextArea(settings.dialog);
 
-            if (settings.isMarkdown) {
+            if (settings.contentTextMode == content.contentTextModes.markdown) {
                 htmlEditor.initializeMarkdownEditor(settings.editorId, settings.data.ContentId, {});
             }
-
-            if (!settings.isMarkdown) {
+             
+            if (settings.contentTextMode == content.contentTextModes.html) {
                 htmlEditor.initializeHtmlEditor(settings.editorId, settings.data.ContentId, {}, settings.editInSourceMode);
                 if (settings.enableInsertDynamicRegion) {
                     htmlEditor.enableInsertDynamicRegion(settings.editorId, true, settings.data.LastDynamicRegionNumber);
@@ -632,7 +633,7 @@ bettercms.define('bcms.pages.content', ['bcms.jquery', 'bcms', 'bcms.modal', 'bc
             }, opts);
 
             var canEdit = security.IsAuthorized(["BcmsEditContent"]),
-                isMarkdown = false,
+                contentTextMode = content.contentTextModes.html,
                 onCloseClick = opts.onCloseClick,
                 onSuccess = opts.onSuccess,
                 includeChildRegions = (opts.includeChildRegions === true),
@@ -657,8 +658,8 @@ bettercms.define('bcms.pages.content', ['bcms.jquery', 'bcms', 'bcms.modal', 'bc
                                 if (json.Data.EditInSourceMode) {
                                     editInSourceMode = true;
                                 }
-                                if (json.Data.IsMarkdown) {
-                                    isMarkdown = true;
+                                if (json.Data.ContentTextMode) {
+                                    contentTextMode = json.Data.ContentTextMode;
                                 }
                                 if (json.Data.EnableInsertDynamicRegion) {
                                     enableInsertDynamicRegion = true;
@@ -673,14 +674,14 @@ bettercms.define('bcms.pages.content', ['bcms.jquery', 'bcms', 'bcms.modal', 'bc
                                 editorId: editorId,
                                 includeChildRegions: includeChildRegions,
                                 onSuccess: onSuccess,
-                                isMarkdown: isMarkdown
+                                contentTextMode: contentTextMode
                             });
                         },
 
                         beforePost: function () {
-                            htmlEditor.updateEditorContent(editorId, isMarkdown);
+                            htmlEditor.updateEditorContent(editorId, contentTextMode);
 
-                            var editInSourceMode = htmlEditor.isSourceMode(editorId, isMarkdown);
+                            var editInSourceMode = htmlEditor.isSourceMode(editorId, contentTextMode);
                             dialog.container.find(selectors.editInSourceModeHiddenField).val(editInSourceMode);
 
                             return true;

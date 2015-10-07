@@ -12,6 +12,7 @@
       <JavaScriptFiles Include="$(ProjectDir)Scripts\bcms.jquery.validate.js" />
       <JavaScriptFiles Include="$(ProjectDir)Scripts\bcms.jquery.validate.unobtrusive.js" />
       <JavaScriptFiles Include="$(ProjectDir)Scripts\bcms.jquery.autocomplete.js" />
+      <JavaScriptFiles Include="$(ProjectDir)Scripts\bcms.jquery.markitup.js" />
       <JavaScriptFiles Include="$(ProjectDir)Scripts\bcms.autocomplete.js" />
       <JavaScriptFiles Include="$(ProjectDir)Scripts\bcms.slides.jquery.js" />
       <JavaScriptFiles Include="$(ProjectDir)Scripts\bcms.spinner.jquery.js" />      
@@ -44,7 +45,6 @@
       <JavaScriptFiles Include="$(ProjectDir)Scripts\bcms.tooltip.js" />
       <JavaScriptFiles Include="$(ProjectDir)Scripts\bcms.tags.js" />
       <JavaScriptFiles Include="$(ProjectDir)Scripts\bcms.multiple.select.js" />
-      <JavaScriptFiles Include="$(ProjectDir)Scripts\markitup\bcms.jquery.markitup.js" />
     </ItemGroup>
 
     <JavaScriptCompressorTask

@@ -73,7 +73,7 @@ namespace BetterCms.Module.Pages.Command.Content.GetPageHtmlContent
                                                 EnableInsertDynamicRegion = pageContent.Page.IsMasterPage,
                                                 CurrentStatus = content.Status,
                                                 HasPublishedContent = content.Original != null,
-                                                IsMarkdown = content.ContentTextMode == ContentTextMode.Markdown
+                                                ContentTextMode = content.ContentTextMode
                                             };
 
             if (configuration.Security.AccessControlEnabled)

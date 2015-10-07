@@ -6,6 +6,7 @@ using System.Web.Mvc;
 using BetterCms.Core.DataContracts.Enums;
 
 using BetterCms.Module.Pages.Content.Resources;
+using BetterCms.Module.Pages.Models.Enums;
 using BetterCms.Module.Pages.Mvc.Attributes;
 using BetterCms.Module.Pages.ViewModels.Widgets;
 
@@ -264,7 +265,7 @@ namespace BetterCms.Module.Pages.ViewModels.Content
         /// <value>
         /// <c>true</c> if content type is markdown; otherwise, <c>false</c>.
         /// </value>
-        public bool IsMarkdown { get; set; }
+        public ContentTextMode ContentTextMode { get; set; }
 
         /// <summary>
         /// Returns a <see cref="System.String" /> that represents this instance.

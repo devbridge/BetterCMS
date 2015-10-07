@@ -1480,7 +1480,7 @@
     <EmbeddedResource Include="Scripts\ckeditor\code-config.js" />
     <EmbeddedResource Include="Scripts\ckeditor\plugins\cms-option\plugin.js" />
     <EmbeddedResource Include="Scripts\bcms.markdown.js" />
-    <EmbeddedResource Include="Scripts\markitup\bcms.jquery.markitup.js" />
+    <EmbeddedResource Include="Scripts\bcms.jquery.markitup.js" />
     <EmbeddedResource Include="Scripts\markitup\sets\markmin\images\bold.png" />
     <EmbeddedResource Include="Scripts\markitup\sets\markmin\images\code.png" />
     <EmbeddedResource Include="Scripts\markitup\sets\markmin\images\h1.png" />

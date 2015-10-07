@@ -292,7 +292,7 @@ namespace BetterCms.Module.Root
                     languagesJsModuleIncludeDescriptor,
                     new OptionsJsModuleIncludeDescriptor(this),
                     new JsIncludeDescriptor(this, "bcms.markdown"),
-                    new JsIncludeDescriptor(this, "bcms.jquery.markitup", "markitup/bcms.jquery.markitup.js"),
+                    new JsIncludeDescriptor(this, "bcms.jquery.markitup")
                 };
         }
 

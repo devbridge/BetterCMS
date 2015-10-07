@@ -1,7 +1,7 @@
 ﻿/*jslint unparam: true, white: true, browser: true, devel: true */
 /*global bettercms */
 
-bettercms.define('bcms.htmlEditor', ['bcms.jquery', 'bcms', 'ckeditor', 'bcms.markdown'], function ($, bcms, ckEditor, markdownEditor) {
+bettercms.define('bcms.htmlEditor', ['bcms.jquery', 'bcms', 'ckeditor', 'bcms.markdown', 'bcms.content'], function ($, bcms, ckEditor, markdownEditor, bcmsContent) {
     'use strict';
 
     var htmlEditor = {},
@@ -258,8 +258,9 @@ bettercms.define('bcms.htmlEditor', ['bcms.jquery', 'bcms', 'ckeditor', 'bcms.ma
         instance.IsMasterPage = isMasterPage;
     };
 
-    htmlEditor.isSourceMode = function (textareaId, isMarkdown) {
-        if (isMarkdown) {
+    htmlEditor.isSourceMode = function (textareaId, contentTextMode) {
+        if (contentTextMode === bcmsContent.contentTextModes.markdown
+                || bcmsContent === bcmsContent.contentTextModes.simpleText) {
             return true;
         }
 
@@ -268,9 +269,10 @@ bettercms.define('bcms.htmlEditor', ['bcms.jquery', 'bcms', 'ckeditor', 'bcms.ma
         return instance != null && instance.mode === 'source';
     };
 
-    htmlEditor.updateEditorContent = function (textareaId, isMarkdown) {
-        if (isMarkdown) {
-            return;
+    htmlEditor.updateEditorContent = function (textareaId, contentTextMode) {
+        if (contentTextMode === bcmsContent.contentTextModes.markdown
+                || bcmsContent === bcmsContent.contentTextModes.simpleText) {
+            return true;
         }
 
         // Put content from HTML editor to textarea:

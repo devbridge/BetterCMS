@@ -68,7 +68,7 @@ WriteLiteral("\r\n");
 
             
             #line 8 "..\..\Views\Content\Partial\EditHtmlContent.cshtml"
-Write(Html.HiddenFor(model => model.IsMarkdown, new { @id = "bcms-is-markdown" }));
+Write(Html.HiddenFor(model => model.ContentTextMode, new { @id = "bcms-content-text-mode" }));
 
             
             #line default

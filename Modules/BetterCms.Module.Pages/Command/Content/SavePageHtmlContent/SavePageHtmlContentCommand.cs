@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Linq;
+using System.Web;
 
 using BetterCms.Core.DataContracts.Enums;
 using BetterCms.Core.Exceptions.Mvc;
@@ -134,10 +135,31 @@ namespace BetterCms.Module.Pages.Command.Content.SavePageHtmlContent
                     ContentTextMode = ContentTextMode.Html
                 };
 
-            if (model.IsMarkdown)
+            if (model.ContentTextMode == ContentTextMode.Markdown)
             {
-                contentToSave.Html = MarkdownConverter.ToHtml(model.PageContent);
+                if (!string.IsNullOrWhiteSpace(model.PageContent))
+                {
+                    contentToSave.Html = MarkdownConverter.ToHtml(model.PageContent);
+                }
+                else
+                {
+                    contentToSave.Html = string.Empty;
+                }
                 contentToSave.ContentTextMode = ContentTextMode.Markdown;
+                contentToSave.OriginalText = model.PageContent;
+            }
+            
+            if (model.ContentTextMode == ContentTextMode.SimpleText)
+            {
+                if (!string.IsNullOrWhiteSpace(model.PageContent))
+                {
+                    contentToSave.Html = HttpUtility.HtmlEncode(model.PageContent);
+                }
+                else
+                {
+                    contentToSave.Html = string.Empty;
+                }
+                contentToSave.ContentTextMode = ContentTextMode.SimpleText;
                 contentToSave.OriginalText = model.PageContent;
             }
 

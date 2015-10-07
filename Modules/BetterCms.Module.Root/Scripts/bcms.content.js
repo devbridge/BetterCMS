@@ -1,11 +1,10 @@
-﻿// TODO: remove after tests
-window.cms = {};
-
-/*jslint unparam: true, white: true, browser: true, devel: true */
+﻿/*jslint unparam: true, white: true, browser: true, devel: true */
 /*global bettercms */
 
 bettercms.define('bcms.content', ['bcms.jquery', 'bcms', 'bcms.modal', 'bcms.redirect', 'bcms.store', 'bcms.antiXss'], function ($, bcms, modal, redirect, store, antiXss) {
     'use strict';
+
+    window.cms = {};
 
     var content = {},
 
@@ -80,12 +79,18 @@ bettercms.define('bcms.content', ['bcms.jquery', 'bcms', 'bcms.modal', 'bcms.red
         isSortMode = false,
         isOpenedAddContent = false,
         suspendCloseAddContent = false,
-        masterPagesModel = null;
+        masterPagesModel = null,
+        contentTextModes = {
+            html: 1,
+            markdown: 2,
+            simpleText: 3
+        };
 
     // Assign objects to module
     content.selectors = selectors;
     content.links = links;
     content.globalization = globalization;
+    content.contentTextModes = contentTextModes;
 
     function closeAllAddContentButtons() {
         $(selectors.regionAddContentButtons).removeClass(classes.buttonActive);
@@ -558,7 +563,7 @@ bettercms.define('bcms.content', ['bcms.jquery', 'bcms', 'bcms.modal', 'bcms.red
                 }
             }
 
-            self.onAddContent = function(onSuccess, includeChildRegions) {
+            self.onAddHtml = function(onSuccess, includeChildRegions) {
                 bcms.trigger(bcms.events.addPageContent, {
                     regionViewModel: self,
                     onSuccess: onSuccess,
@@ -570,7 +575,15 @@ bettercms.define('bcms.content', ['bcms.jquery', 'bcms', 'bcms.modal', 'bcms.red
                 bcms.trigger(bcms.events.addPageContent, {
                     regionViewModel: self,
                     onSuccess: onSuccess,
-                    isMarkdown: true
+                    contentTextMode: contentTextModes.markdown
+                });
+            };
+
+            self.onAddSimpleText = function (onSuccess) {
+                bcms.trigger(bcms.events.addPageContent, {
+                    regionViewModel: self,
+                    onSuccess: onSuccess,
+                    contentTextMode: contentTextModes.simpleText
                 });
             };
 
@@ -614,11 +627,11 @@ bettercms.define('bcms.content', ['bcms.jquery', 'bcms', 'bcms.modal', 'bcms.red
             });
 
             $(selectors.regionAddHtmlButtons, self.overlay).on('click', function () {
-                self.onAddContent();
+                self.onAddHtml();
             });
 
             $(selectors.regionAddTextButtons, self.overlay).on('click', function () {
-                self.onAddContent();
+                self.onAddSimpleText();
             });
 
             $(selectors.regionSortButtons, self.overlay).on('click', function() {
@@ -917,7 +930,6 @@ bettercms.define('bcms.content', ['bcms.jquery', 'bcms', 'bcms.modal', 'bcms.red
 
         pageViewModel = new PageViewModel();
 
-        // TODO: remove after tests
         window.cms.page = pageViewModel;
         window.cms.path = masterPagesModel;
 
