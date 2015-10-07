@@ -71,6 +71,12 @@
     }
 }
 
+@mixin ellipsis() {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
 @mixin add-gradient($top: null, $bottom: null, $fallback: null) {
     @if ($fallback == true) {
         background-color: $bottom;
