@@ -2,24 +2,24 @@
 // markItUp!
 // By Jay Salvat - http://markitup.jaysalvat.com/
 // ------------------------------------------------------------------*/
-.markItUp .markItUpButtonH1 a {
-	background-image:url(images/h1.png); 
-}
-.markItUp .markItUpButtonH2 a {
-	background-image:url(images/h2.png); 
-}
-.markItUp .markItUpButtonH3 a {
-	background-image:url(images/h3.png); 
-}
-.markItUp .markItUpButtonH4 a {
-	background-image:url(images/h4.png); 
-}
-.markItUp .markItUpButtonH5 a {
-	background-image:url(images/h5.png); 
-}
-.markItUp .markItUpButtonH6 a {
-	background-image:url(images/h6.png); 
-}
+/*.markItUp .markItUpButtonH1 a {*/
+	/*background-image:url(images/h1.png); */
+/*}*/
+/*.markItUp .markItUpButtonH2 a {*/
+	/*background-image:url(images/h2.png); */
+/*}*/
+/*.markItUp .markItUpButtonH3 a {*/
+	/*background-image:url(images/h3.png); */
+/*}*/
+/*.markItUp .markItUpButtonH4 a {*/
+	/*background-image:url(images/h4.png); */
+/*}*/
+/*.markItUp .markItUpButtonH5 a {*/
+	/*background-image:url(images/h5.png); */
+/*}*/
+/*.markItUp .markItUpButtonH6 a {*/
+	/*background-image:url(images/h6.png); */
+/*}*/
 
 .markItUp .markItUpButtonBold a {
 	background-image:url(images/bold.png);

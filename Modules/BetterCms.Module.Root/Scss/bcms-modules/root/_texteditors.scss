@@ -1,5 +1,29 @@
 @import '../../core/variables';
 
+$toolbar-icons: (
+                ('H1', $icon-bcms-toolbar-h1),
+                ('H2', $icon-bcms-toolbar-h2),
+                ('H3', $icon-bcms-toolbar-h3),
+                ('H4', $icon-bcms-toolbar-h4),
+                ('H5', $icon-bcms-toolbar-h5),
+                ('H6', $icon-bcms-toolbar-h6),
+                ('Bold'),
+                ('Italic'),
+                ('ListBullet'),
+                ('ListNumeric'),
+                ('Picture'),
+                ('Link'),
+                ('Widget'),
+                ('Quotes'),
+                ('Code')
+);
+
+%toolbar-extender {
+    background: no-repeat center;
+    height: 100%;
+    display: block;
+}
+
 //module global styles
 textarea {
     width: 100%;
@@ -69,13 +93,23 @@ textarea {
                 }
             }
         }
-
-        a {
-            display: block;
-        }
     }
 
     &DropMenu {
+        > a {
+            color: $gray-l65;
+            font: {
+                family: $font-arial;
+                size: 12px;
+            }
+            line-height: 24px;
+            padding: 0 10px;
+
+            &:hover {
+                text-decoration: none;
+            }
+        }
+
         > ul {
             display: none;
             position: absolute;
@@ -101,6 +135,7 @@ textarea {
                 text-decoration: none;
                 color: $gray-l65;
                 font-size: 12px;
+                display: block;
 
                 &:hover {
                     border-color: $gray-l40;
@@ -144,6 +179,16 @@ textarea {
 
     &Separator {
         display: none;
+    }
+}
+
+@each $name, $icon in $toolbar-icons {
+    .markItUpButton#{$name} {
+        a {
+            @extend %toolbar-extender;
+            background-image: url($icon);
+            width: 28px;
+        }
     }
 }
 
