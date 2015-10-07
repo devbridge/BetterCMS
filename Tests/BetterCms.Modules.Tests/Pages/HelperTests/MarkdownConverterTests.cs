@@ -24,6 +24,29 @@ namespace BetterCms.Test.Module.Pages.HelperTests
             Assert.AreEqual(html, result);
         }
 
+        [Test]
+        public void Should_Strip_Widget_Paragraphs_Correctly()
+        {
+            string before = @"<p><widget data-id=""AFA0AFEF-6D71-4962-9EF4-324BB9344F92"" data-assign-id=""FCBD3A46-4A77-4FC9-B9CE-9515C9D6AF77"">Header Logo</widget>    </p>
+# {{CmsPageTitle}}
+<p>      <widget data-id=""AFA0AFEF-6D71-4962-9EF4-324BB9344F92"" data-assign-id=""FCBD3A46-4A77-4FC9-B9CE-9515C9D6AF77"">Header Logo</widget>   test    </p>
+<h1>{{CmsPageTitle}}</h1>
+<p>      <widget data-id=""AFA0AFEF-6D71-4962-9EF4-324BB9344F92"" data-assign-id=""FCBD3A46-4A77-4FC9-B9CE-9515C9D6AF77"">Header Logo</widget>           </p>";
+
+            string shouldBe = @"<widget data-id=""AFA0AFEF-6D71-4962-9EF4-324BB9344F92"" data-assign-id=""FCBD3A46-4A77-4FC9-B9CE-9515C9D6AF77"">Header Logo</widget>
+<h1>{{CmsPageTitle}}</h1>
+<p>      <widget data-id=""AFA0AFEF-6D71-4962-9EF4-324BB9344F92"" data-assign-id=""FCBD3A46-4A77-4FC9-B9CE-9515C9D6AF77"">Header Logo</widget>   test    </p>
+<h1>{{CmsPageTitle}}</h1>
+<widget data-id=""AFA0AFEF-6D71-4962-9EF4-324BB9344F92"" data-assign-id=""FCBD3A46-4A77-4FC9-B9CE-9515C9D6AF77"">Header Logo</widget>";
+
+            var after = MarkdownConverter.ToHtml(before);
+
+            after = ClearSpaces(after);
+            shouldBe = ClearSpaces(shouldBe);
+
+            Assert.AreEqual(after, shouldBe);
+        }
+
         private string ClearSpaces(string text)
         {
             text = text.Replace("\r", "");
