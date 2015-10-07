@@ -15,7 +15,7 @@ bettercms.define('bcms.content', ['bcms.jquery', 'bcms', 'bcms.modal', 'bcms.red
             contentOverlay: '#bcms-content-overlay',
             contentDelete: '.bcms-content-delete',
             contentEdit: '.bcms-content-edit',
-            contentEditInnerDiv: '.bcms-content-edit .bcms-content-icon',
+            contentEditInnerDiv: '.bcms-content-edit',
             contentHistory: '.bcms-content-history',
             contentConfigure: '.bcms-content-configure',
             enterChildContent: '.bcms-content-edit-child',
@@ -850,7 +850,7 @@ bettercms.define('bcms.content', ['bcms.jquery', 'bcms', 'bcms.modal', 'bcms.red
                 self.overlay.find(selectors.enterChildContent).remove();
             }
             if (self.visibleButtons.draft) {
-                self.overlay.find(selectors.contentEditInnerDiv).html('<div>*</div>');
+                self.overlay.find(selectors.contentEditInnerDiv).addClass('bcms-active-draft');
             }
         }
 

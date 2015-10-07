@@ -6,9 +6,9 @@ module.exports = function () {
 
     var config = {
         dataUri: {
-            src: ['Scss/base_64/*.{png,jpg,gif,svg}'],
+            src: ['Scss/base_64/**/*.{png,jpg,gif,svg,ttf}'],
             dest: 'Scss/core',
-            resultFile: '_icons.scss',
+            resultFile: '_assets.scss',
             varPrefix: '$icon-'
         },
 
