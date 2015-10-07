@@ -20,6 +20,7 @@ bettercms.define('bcms.pages.content', ['bcms.jquery', 'bcms', 'bcms.modal', 'bc
                 htmlEditor: '.bcms-contenthtml',
                 destroyDraftVersionLink: '.bcms-messages-draft-destroy',
                 pageContentUserConfirmationHiddenField: '#bcms-user-confirmed-region-deletion',
+                htmlContentContainer: '.bcms-scroll-window:first',
 
                 widgetsSearchButton: '#bcms-advanced-content-search-btn',
                 widgetsSearchInput: '#bcms-advanced-content-search',
@@ -116,7 +117,7 @@ bettercms.define('bcms.pages.content', ['bcms.jquery', 'bcms', 'bcms.modal', 'bc
                                 enableInsertDynamicRegion = false;
 
                             editorId = dialog.container.find(selectors.htmlEditor).attr('id');
-
+                            
                             if (data && data.Data) {
                                 if (data.Data.EditInSourceMode) {
                                     editInSourceMode = true;
@@ -133,8 +134,7 @@ bettercms.define('bcms.pages.content', ['bcms.jquery', 'bcms', 'bcms.modal', 'bc
                                 editorId: editorId,
                                 data: data.Data, onSuccess: onSuccess,
                                 includeChildRegions: includeChildRegions,
-                                contentTextMode: contentTextMode,
-                                isSimpleText: isSimpleText
+                                contentTextMode: contentTextMode
                             };
                             pagesContent.initializeAddNewContentForm(settings);
                         },
@@ -300,12 +300,22 @@ bettercms.define('bcms.pages.content', ['bcms.jquery', 'bcms', 'bcms.modal', 'bc
 
             pagesContent.initializeCustomTextArea(settings.dialog);
 
+            var editorHeight = modal.maximizeChildHeight(settings.dialog.container.find("#" + settings.editorId),
+                settings.dialog.container.find(selectors.htmlContentContainer));
+
             if (settings.contentTextMode == content.contentTextModes.markdown) {
                 htmlEditor.initializeMarkdownEditor(settings.editorId, '', {});
             }
 
+            if (settings.contentTextMode == content.contentTextModes.simpleText) {
+                htmlEditor.initializeMarkdownEditor(settings.editorId, '', { hideIcons: true });
+            }
+
             if (settings.contentTextMode == content.contentTextModes.html) {
-                htmlEditor.initializeHtmlEditor(settings.editorId, '', {}, settings.editInSourceMode);
+                htmlEditor.initializeHtmlEditor(settings.editorId, '', {
+                    height: editorHeight
+                }, settings.editInSourceMode);
+
                 if (settings.enableInsertDynamicRegion) {
                     htmlEditor.enableInsertDynamicRegion(settings.editorId, true, settings.data.LastDynamicRegionNumber);
                 }
@@ -335,12 +345,22 @@ bettercms.define('bcms.pages.content', ['bcms.jquery', 'bcms', 'bcms.modal', 'bc
 
             pagesContent.initializeCustomTextArea(settings.dialog);
 
+            var editorHeight = modal.maximizeChildHeight(settings.dialog.container.find("#" + settings.editorId),
+                settings.dialog.container.find(selectors.htmlContentContainer));
+
             if (settings.contentTextMode == content.contentTextModes.markdown) {
                 htmlEditor.initializeMarkdownEditor(settings.editorId, settings.data.ContentId, {});
             }
+
+            if (settings.contentTextMode == content.contentTextModes.simpleText) {
+                htmlEditor.initializeMarkdownEditor(settings.editorId, settings.data.ContentId, { hideIcons: true });
+            }
              
             if (settings.contentTextMode == content.contentTextModes.html) {
-                htmlEditor.initializeHtmlEditor(settings.editorId, settings.data.ContentId, {}, settings.editInSourceMode);
+                htmlEditor.initializeHtmlEditor(settings.editorId, settings.data.ContentId, {
+                    height: editorHeight
+                }, settings.editInSourceMode);
+
                 if (settings.enableInsertDynamicRegion) {
                     htmlEditor.enableInsertDynamicRegion(settings.editorId, true, settings.data.LastDynamicRegionNumber);
                 }

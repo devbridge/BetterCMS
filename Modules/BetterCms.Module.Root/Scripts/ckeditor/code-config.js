@@ -5,7 +5,7 @@ CKEDITOR.editorConfig = function (config) {
     config.toolbar = [
         ['Undo', 'Redo'],
         ['CmsImageManager', 'CmsFileManager', 'Image'],
-        ['CmsDynamicRegion', 'CmsWidget', 'CmsOption', 'CmsModelValues'],
+        ['CmsOption', 'CmsModelValues'],
         ['Maximize']
     ];
 

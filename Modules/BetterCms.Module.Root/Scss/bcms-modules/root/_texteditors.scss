@@ -7,21 +7,19 @@ $toolbar-icons: (
                 ('H4', $icon-bcms-toolbar-h4),
                 ('H5', $icon-bcms-toolbar-h5),
                 ('H6', $icon-bcms-toolbar-h6),
-                ('Bold'),
-                ('Italic'),
-                ('ListBullet'),
-                ('ListNumeric'),
-                ('Picture'),
-                ('Link'),
-                ('Widget'),
-                ('Quotes'),
-                ('Code')
+                ('Bold', $icon-bcms-toolbar-bold),
+                ('Italic', $icon-bcms-toolbar-italic),
+                ('ListBullet', $icon-bcms-toolbar-list),
+                ('ListNumeric', $icon-bcms-toolbar-number-list),
+                ('Picture', $icon-bcms-toolbar-image),
+                ('Link', $icon-bcms-toolbar-link),
+                ('Quotes', $icon-bcms-toolbar-quote),
+                ('Code', $icon-bcms-toolbar-code),
+                ('Widget', $icon-bcms-toolbar-widget)
 );
 
 %toolbar-extender {
     background: no-repeat center;
-    height: 100%;
-    display: block;
 }
 
 //module global styles
@@ -55,7 +53,7 @@ textarea {
         background: $gray-l30;
 
         > ul {
-            > li {
+            > .markItUpButton {
                 height: 26px;
                 border: $border-thin-gray;
                 float: left;
@@ -64,11 +62,6 @@ textarea {
 
                 &:first-child {
                     margin-left: 0;
-                }
-
-                > a {
-                    text-indent: -999em;
-                    overflow: hidden;
                 }
             }
         }
@@ -95,19 +88,30 @@ textarea {
         }
     }
 
-    &DropMenu {
-        > a {
-            color: $gray-l65;
+    &Button {
+        a {
             font: {
                 family: $font-arial;
                 size: 12px;
             }
-            line-height: 24px;
+            box-sizing: border-box;
             padding: 0 10px;
+            height: 100%;
+            display: block;
+            text-indent: -999em;
+            overflow: hidden;
+            line-height: 24px;
+            color: $gray-l65;
 
             &:hover {
                 text-decoration: none;
             }
+        }
+    }
+
+    &DropMenu {
+        > a {
+            text-indent: 0;
         }
 
         > ul {
@@ -132,10 +136,7 @@ textarea {
                 @include transition(all 200ms);
                 padding: 3px 4px;
                 white-space: nowrap;
-                text-decoration: none;
-                color: $gray-l65;
-                font-size: 12px;
-                display: block;
+                text-indent: 0;
 
                 &:hover {
                     border-color: $gray-l40;
@@ -188,6 +189,19 @@ textarea {
             @extend %toolbar-extender;
             background-image: url($icon);
             width: 28px;
+        }
+    }
+}
+
+//module buttons override
+.markItUpButton {
+    &Widget {
+        a {
+            width: auto;
+            //fixme remove important after sass review
+            padding-left: 25px !important;
+            text-indent: 0 !important;
+            background-position: 5px center;
         }
     }
 }

@@ -810,6 +810,40 @@ bettercms.define('bcms.modal', ['bcms.jquery', 'bcms', 'bcms.tabs', 'bcms.ko.ext
         }
     };
 
+    /**
+    * Maximizes dialog's child height up to maximum visible value.
+    */
+    modal.maximizeChildHeight = function (obj, contentContainer) {
+        var containerHeight = contentContainer.outerHeight(),
+            objectHeight = obj.outerHeight(),
+            childrenHeight = 0,
+            newHeight = obj.height(),
+            addHeight;
+
+        if (obj.length === 0 || contentContainer.length === 0 || objectHeight >= containerHeight) {
+            return newHeight;
+        }
+
+        $.each(contentContainer.children(), function () {
+            var child = $(this);
+            // console.log(child);
+            // console.log("Height: %s, isVisible: %s", child.outerHeight(), child.is(":visible"));
+            childrenHeight += child.outerHeight();
+        });
+
+        addHeight = containerHeight - childrenHeight - objectHeight;
+
+        console.log('Object: %s, Container: %s, Children height: %s',
+            objectHeight, containerHeight, childrenHeight);
+
+        if (addHeight > 0) {
+            newHeight = newHeight + addHeight;
+            obj.height(newHeight + 'px');
+        }
+
+        return newHeight;
+    };
+
     return modal;
 
 });

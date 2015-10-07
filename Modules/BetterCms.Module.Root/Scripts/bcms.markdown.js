@@ -212,7 +212,12 @@
             options = $.extend({
                 previewParserPath: '',
                 onShiftEnter: { keepDefault: false, openWith: '\n\n' },
-                markupSet: [
+                hideIcons: false,
+                markupSet: []
+            }, options);
+
+            if (!options.hideIcons) {
+                options.markupSet = [
                     { name: 'Heading 1', key: '1', openWith: '# ', placeHolder: 'Your title here...', className: 'markItUpButtonH1' },
                     { name: 'Heading 2', key: '2', openWith: '## ', placeHolder: 'Your title here...', className: 'markItUpButtonH2' },
                     { name: 'Heading 3', key: '3', openWith: '### ', placeHolder: 'Your title here...', className: 'markItUpButtonH3' },
@@ -231,8 +236,8 @@
                     { name: 'Smart tags', dropMenu: smartTagsList }
                     //  TODO: uncomment when widget options icon will be implemented
                     // { name: 'Widget options', className: 'markItUpButtonWidget markItUpButtonWidgetOption', afterInsert: editWidgetOptions }
-                ]
-            }, options);
+                ];
+            }
 
             textarea = $('#' + id);
             textarea.markItUp(options);
