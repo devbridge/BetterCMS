@@ -2,8 +2,19 @@
     function ($, bcms) {
         "use strict";
 
-        var markdownEditor = {};
+        var markdownEditor = {},
+            selectors = {
+                widgetOptionsButton: '.markItUpButtonWidgetOption'
+            },
+            currentEditor,
+            currentId,
+            currentCursorPosition,
+            currentValue,
+            widgetPositions = [];
 
+        /**
+         * Adds text block to the specified textarea
+         */
         function addBlockToTextarea(html, settings) {
             if (document.selection) {
                 var newSelection = document.selection.createRange();
@@ -17,14 +28,192 @@
             settings.textarea.focus();
         }
 
-        /*
-        * Initializes markdown editor instance
-        */
-        markdownEditor.initializeInstance = function (htmlEditor, id, editingContentId, options) {
+        /**
+         * Parses textarea and looks for widget positions
+         */
+        function recalculateWidgetPositions(html) {
+            var pattern = /<widget [^>]*>[^>.]*?<\/widget>/g,
+                match;
+            widgetPositions = [];
+
+            while ((match = pattern.exec(html)) != null) {
+                widgetPositions.push({
+                    start: match.index,
+                    end: match[0].length + match.index,
+                    value: match[0]
+                });
+            }
+        }
+
+        /**
+         * Gets current cursor position in the specified textarea
+         */
+        function getTextareaCursorPosition(textarea) {
+            var caretPosition;
+
+            if (document.selection) {
+                if (browser.msie) { // ie
+                    var range = document.selection.createRange(), rangeCopy = range.duplicate();
+                    rangeCopy.moveToElementText(textarea);
+                    caretPosition = -1;
+                    while (rangeCopy.inRange(range)) {
+                        rangeCopy.moveStart('character');
+                        caretPosition++;
+                    }
+                } else { // opera
+                    caretPosition = textarea.selectionStart;
+                }
+            } else { // gecko & webkit
+                caretPosition = textarea.selectionStart;
+            }
+
+            return caretPosition;
+        }
+
+        /**
+         * Called when cursor position changes: checks if widget option button should be enabled
+         */
+        function onCursorPositionChanged() {
+            var textarea = $('#' + currentId),
+                value = textarea.val(),
+                position = getTextareaCursorPosition(textarea.get(0)),
+                isWidgetSelected = false,
+                i;
+
+            if (value !== currentValue) {
+                recalculateWidgetPositions(value);
+            }
+
+            if (position !== currentCursorPosition || value !== currentValue) {
+                for (i = 0; i < widgetPositions.length; i++) {
+                    console.log("Current pos: %s, start: %s, end: %s", position, widgetPositions[i].start, widgetPositions[i].end);
+                    if (position >= widgetPositions[i].start && position <= widgetPositions[i].end) {
+                        isWidgetSelected = true;
+                        break;
+                    }
+                }
+            }
+
+            if (isWidgetSelected) {
+                $(selectors.widgetOptionsButton).show();
+            } else {
+                $(selectors.widgetOptionsButton).hide();
+            }
+
+            console.log(isWidgetSelected);
+
+            currentValue = value;
+            currentCursorPosition = position;
+        }
+
+        /**
+         * Inserts an image to the textarea
+         */
+        function insertImage(obj) {
+            var settings = {
+                selection: obj.selection,
+                caretPosition: obj.caretPosition,
+                scrollPosition: obj.scrollPosition,
+                textarea: obj.textarea
+            };
+
+            bcms.trigger(currentEditor.events.insertImage, {
+                addHtml: function (html, imgObject) {
+                    var markdown = $.format("![{0}]({1})", imgObject.alt, imgObject.src);
+
+                    settings.selectionStart = settings.caretPosition + 2;
+                    settings.selectionLength = imgObject.alt.length;
+
+                    addBlockToTextarea(markdown, settings);
+                }
+            });
+        }
+
+        /**
+         * Inserts a file to the textarea
+         */
+        function insertFile(obj) {
+            var settings = {
+                selection: obj.selection,
+                caretPosition: obj.caretPosition,
+                scrollPosition: obj.scrollPosition,
+                textarea: obj.textarea
+            };
+
+            bcms.trigger(currentEditor.events.insertFile, {
+                addHtml: function (html, fileObject) {
+                    var markdown = $.format("[{0}]({1})", fileObject.html, fileObject.href);
+
+                    settings.selectionStart = settings.caretPosition + 1;
+                    settings.selectionLength = fileObject.html.length;
+
+                    addBlockToTextarea(markdown, settings);
+                }
+            });
+        }
+
+        /**
+         * Inserts a widget to the textarea
+         */
+        function insertWidget(obj) {
+            var settings = {
+                selection: obj.selection,
+                caretPosition: obj.caretPosition,
+                scrollPosition: obj.scrollPosition,
+                textarea: obj.textarea
+            };
+
+            bcms.trigger(currentEditor.events.insertWidget, {
+                editor: {
+                    addHtml: function (html) {
+                        settings.selectionStart = settings.caretPosition + html.length;
+                        settings.selectionLength = 0;
+
+                        addBlockToTextarea(html, settings);
+                    },
+                    mode: 'source'
+                },
+                editorId: id
+            });
+        }
+
+        /**
+         * Inserts a widget to the textarea
+         */
+        function editWidgetOptions(obj) {
+            var settings = {
+                selection: obj.selection,
+                caretPosition: obj.caretPosition,
+                scrollPosition: obj.scrollPosition,
+                textarea: obj.textarea
+            };
+
+            bcms.trigger(currentEditor.events.insertWidget, {
+                editor: {
+                    addHtml: function (html) {
+                        settings.selectionStart = settings.caretPosition + html.length;
+                        settings.selectionLength = 0;
+
+                        addBlockToTextarea(html, settings);
+                    },
+                    mode: 'source'
+                },
+                editorId: id
+            });
+        }
+
+        /**
+         * Initializes markdown editor instance
+         */
+        markdownEditor.initializeInstance = function (editor, id, editingContentId, options) {
+
+            currentEditor = editor;
+            currentId = id;
 
             var smartTagsList = [],
                 i,
-                item;
+                item,
+                textarea;
 
             if (options.smartTags && options.smartTags.length > 0) {
                 for (i = 0; i < options.smartTags.length; i ++) {
@@ -50,107 +239,40 @@
                     { name: 'Heading 4', key: '4', openWith: '#### ', placeHolder: 'SubSubsection', className: 'markItUpButtonH4' },
                     { name: 'Heading 5', key: '5', openWith: '##### ', placeHolder: 'SubSubsection', className: 'markItUpButtonH5' },
                     { name: 'Heading 6', key: '6', openWith: '###### ', placeHolder: 'SubSubsection', className: 'markItUpButtonH6' },
-                    { separator: '---------------' },
                     { name: 'Bold', key: 'B', openWith: '**', closeWith: '**', className: 'markItUpButtonBold' },
                     { name: 'Italic', key: 'I', openWith: "_", closeWith: "_", className: 'markItUpButtonItalic' },
-                    { separator: '---------------' },
                     { name: 'Bulleted List', openWith: '- ', className: 'markItUpButtonListBullet' },
                     { name: 'Numeric List', openWith: '+', className: 'markItUpButtonListNumeric' },
-                    { separator: '---------------' },
-                    {
-                        name: 'Picture',
-                        key: 'P',
-                        className: 'markItUpButtonPicture',
-                        beforeInsert: function (obj) {
-                            var settings = {
-                                selection: obj.selection,
-                                caretPosition: obj.caretPosition,
-                                scrollPosition: obj.scrollPosition,
-                                textarea: obj.textarea
-                            };
-
-                            bcms.trigger(htmlEditor.events.insertImage, {
-                                addHtml: function (html, imgObject) {
-                                    var markdown = $.format("![{0}]({1})", imgObject.alt, imgObject.src);
-
-                                    settings.selectionStart = settings.caretPosition + 2;
-                                    settings.selectionLength = imgObject.alt.length;
-
-                                    addBlockToTextarea(markdown, settings);
-                                }
-                            });
-                        }
-                    },
-                    {
-                        name: 'Link',
-                        key: 'L',
-                        className: 'markItUpButtonLink',
-                        beforeInsert: function (obj) {
-                            var settings = {
-                                selection: obj.selection,
-                                caretPosition: obj.caretPosition,
-                                scrollPosition: obj.scrollPosition,
-                                textarea: obj.textarea
-                            };
-
-                            bcms.trigger(htmlEditor.events.insertFile, {
-                                addHtml: function (html, fileObject) {
-                                    var markdown = $.format("[{0}]({1})", fileObject.html, fileObject.href);
-
-                                    settings.selectionStart = settings.caretPosition + 1;
-                                    settings.selectionLength = fileObject.html.length;
-
-                                    addBlockToTextarea(markdown, settings);
-                                }
-                            });
-                        }
-                    },
-                    { separator: '---------------' },
-                    {
-                        name: 'Widget',
-                        className: 'markItUpButtonWidget',
-                        beforeInsert: function (obj) {
-                            var settings = {
-                                selection: obj.selection,
-                                caretPosition: obj.caretPosition,
-                                scrollPosition: obj.scrollPosition,
-                                textarea: obj.textarea
-                            };
-
-                            bcms.trigger(htmlEditor.events.insertWidget, {
-                                editor: {
-                                    addHtml: function (html) {
-                                        settings.selectionStart = settings.caretPosition + html.length;
-                                        settings.selectionLength = 0;
-
-                                        addBlockToTextarea(html, settings);
-                                    },
-                                    mode: 'source'
-                                },
-                                editorId: id
-                            });
-                        }
-                    },
-                    { separator: '---------------' },
+                    { name: 'Picture', key: 'P', className: 'markItUpButtonPicture', beforeInsert: insertImage },
+                    { name: 'Link', key: 'L', className: 'markItUpButtonLink', beforeInsert: insertFile },
+                    { name: 'Widget', className: 'markItUpButtonWidget', beforeInsert: insertWidget },
                     { name: 'Quotes', openWith: '-------\n', closeWith: '\n-------\n', className: 'markItUpButtonQuotes' },
                     { name: 'Code Block / Code', openWith: '``', closeWith: '``', className: 'markItUpButtonCode' },
-                    { name: 'Smart tags', dropMenu: smartTagsList }
+                    { name: 'Smart tags', dropMenu: smartTagsList },
+                    { name: 'Widget options', className: 'markItUpButtonWidget markItUpButtonWidgetOption', beforeInsert: editWidgetOptions }
                 ]
             }, options);
 
-            $('#' + id).markItUp(options);
+            textarea = $('#' + id);
+            textarea.markItUp(options);
+
+            setTimeout(function() {
+                $(selectors.widgetOptionsButton).hide();
+                textarea.on("keyup click focus", onCursorPositionChanged);
+                onCursorPositionChanged();
+            }, 100);
         };
 
         /**
-        * Initializes markdown editor module.
-        */
+         * Initializes markdown editor module.
+         */
         markdownEditor.init = function () {
             bcms.logger.debug('Initializing bcms.markdown module.');
         };
 
         /**
-        * Register initialization
-        */
+         * Register initialization
+         */
         bcms.registerInit(markdownEditor.init);
 
         return markdownEditor;
