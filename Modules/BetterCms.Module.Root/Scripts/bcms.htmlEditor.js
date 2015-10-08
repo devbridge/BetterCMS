@@ -37,6 +37,10 @@ bettercms.define('bcms.htmlEditor', ['bcms.jquery', 'bcms', 'ckeditor', 'bcms.ma
             insertWidget: 'insertWidget',
             editChildWidgetOptions: 'editChildWidgetOptions',
             editWidget: 'editWidget'
+        },
+        cmsEditorTypes = {
+            widget: 'widget',
+            page: 'page'
         };
 
     // Assign objects to module
@@ -44,6 +48,7 @@ bettercms.define('bcms.htmlEditor', ['bcms.jquery', 'bcms', 'ckeditor', 'bcms.ma
     htmlEditor.links = links;
     htmlEditor.globalization = globalization;
     htmlEditor.events = events;
+    htmlEditor.cmsEditorTypes = cmsEditorTypes;
 
     /**
     * Html editor id
@@ -53,10 +58,11 @@ bettercms.define('bcms.htmlEditor', ['bcms.jquery', 'bcms', 'ckeditor', 'bcms.ma
     function getSmartTags() {
         var tags = [];
 
-        tags.push({ text: "{{CmsPageTitle}}", title: htmlEditor.globalization.smartTagPageTitle });
-        tags.push({ text: "{{CmsPageUrl}}", title: htmlEditor.globalization.smartTagPageUrl });
-        tags.push({ text: "{{CmsPageId}}", title: htmlEditor.globalization.smartTagPageId });
+        tags.push({ id: 'pageTitle', text: "{{CmsPageTitle}}", title: htmlEditor.globalization.smartTagPageTitle });
+        tags.push({ id: 'pageUrl', text: "{{CmsPageUrl}}", title: htmlEditor.globalization.smartTagPageUrl });
+        tags.push({ id: 'pageId', text: "{{CmsPageId}}", title: htmlEditor.globalization.smartTagPageId });
         tags.push({
+            id: 'pageCreatedOn',
             text: "{{CmsPageCreatedOn:yyyy-MM-dd}}",
             title: htmlEditor.globalization.smartTagPageCreatedOn,
             openWith: "{{CmsPageCreatedOn:",
@@ -64,6 +70,7 @@ bettercms.define('bcms.htmlEditor', ['bcms.jquery', 'bcms', 'ckeditor', 'bcms.ma
             placeholder: "yyyy-MM-dd"
         });
         tags.push({
+            id: 'pageModifiedOn',
             text: "{{CmsPageModifiedOn:yyyy-MM-dd}}",
             title: htmlEditor.globalization.smartTagPageModifiedOn,
             openWith: "{{CmsPageModifiedOn:",
@@ -71,6 +78,7 @@ bettercms.define('bcms.htmlEditor', ['bcms.jquery', 'bcms', 'ckeditor', 'bcms.ma
             placeholder: "yyyy-MM-dd"
         });
         tags.push({
+            id: 'pageOption',
             text: "{{CmsPageOption:OptionKey}}",
             title: htmlEditor.globalization.smartTagPageOption,
             openWith: "{{CmsPageOption:",
@@ -78,21 +86,23 @@ bettercms.define('bcms.htmlEditor', ['bcms.jquery', 'bcms', 'ckeditor', 'bcms.ma
             placeholder: "OptionKey"
         });
         tags.push({
+            id: 'widgetOption',
             text: "{{CmsWidgetOption:OptionKey}}",
             title: htmlEditor.globalization.smartTagWidgetOption,
             openWith: "{{CmsWidgetOption:",
             closeWith: "}}",
             placeholder: "OptionKey"
         });
-        tags.push({ text: "{{CmsPageMetaTitle}}", title: htmlEditor.globalization.smartTagPageMetaTitle });
-        tags.push({ text: "{{CmsPageMetaKeywords}}", title: htmlEditor.globalization.smartTagPageMetaKeywords });
-        tags.push({ text: "{{CmsPageMetaDescription}}", title: htmlEditor.globalization.smartTagPageMetaDescription });
-        tags.push({ text: "{{CmsPageMainImageUrl}}", title: htmlEditor.globalization.smartTagPageMainImageUrl });
-        tags.push({ text: "{{CmsPageSecondaryImageUrl}}", title: htmlEditor.globalization.smartTagPageSecondaryImageUrl });
-        tags.push({ text: "{{CmsPageFeaturedImageUrl}}", title: htmlEditor.globalization.smartTagPageFeaturedImageUrl });
-        tags.push({ text: "{{CmsPageCategory}}", title: htmlEditor.globalization.smartTagPageCategory });
-        tags.push({ text: "{{CmsBlogAuthor}}", title: htmlEditor.globalization.smartTagBlogAuthor });
+        tags.push({ id: 'pageMetaTitle', text: "{{CmsPageMetaTitle}}", title: htmlEditor.globalization.smartTagPageMetaTitle });
+        tags.push({ id: 'pageMetaKeywords', text: "{{CmsPageMetaKeywords}}", title: htmlEditor.globalization.smartTagPageMetaKeywords });
+        tags.push({ id: 'pageMetaDescription', text: "{{CmsPageMetaDescription}}", title: htmlEditor.globalization.smartTagPageMetaDescription });
+        tags.push({ id: 'pageMainImageUrl', text: "{{CmsPageMainImageUrl}}", title: htmlEditor.globalization.smartTagPageMainImageUrl });
+        tags.push({ id: 'pageSecondaryImageUrl', text: "{{CmsPageSecondaryImageUrl}}", title: htmlEditor.globalization.smartTagPageSecondaryImageUrl });
+        tags.push({ id: 'pageFeaturedImageUrl', text: "{{CmsPageFeaturedImageUrl}}", title: htmlEditor.globalization.smartTagPageFeaturedImageUrl });
+        tags.push({ id: 'pageCategory', text: "{{CmsPageCategory}}", title: htmlEditor.globalization.smartTagPageCategory });
+        tags.push({ id: 'pageAuthor', text: "{{CmsBlogAuthor}}", title: htmlEditor.globalization.smartTagBlogAuthor });
         tags.push({
+            id: 'blogActivationDate',
             text: "{{CmsBlogActivationDate:yyyy-MM-dd}}",
             title: htmlEditor.globalization.smartTagBlogActivationDate,
             openWith: "{{CmsBlogActivationDate:",
@@ -100,6 +110,7 @@ bettercms.define('bcms.htmlEditor', ['bcms.jquery', 'bcms', 'ckeditor', 'bcms.ma
             placeholder: "yyyy-MM-dd"
         });
         tags.push({
+            id: 'blogExpirationDate',
             text: "{{CmsBlogExpirationDate:yyyy-MM-dd}}",
             title: htmlEditor.globalization.smartTagBlogExpirationDate,
             openWith: "{{CmsBlogExpirationDate:",
@@ -156,6 +167,8 @@ bettercms.define('bcms.htmlEditor', ['bcms.jquery', 'bcms', 'ckeditor', 'bcms.ma
         CKEDITOR.instances[id].contentId = editingContentId;
         CKEDITOR.instances[id].codeEditorMode = options.codeEditorMode;
         CKEDITOR.instances[id].aceEditorOptions = options.aceEditorOptions;
+        CKEDITOR.instances[id].cmsEditorTypes = cmsEditorTypes;
+        CKEDITOR.instances[id].cmsEditorType = options.cmsEditorType || cmsEditorTypes.page;
 
         CKEDITOR.instances[id].InsertImageClicked = function (editor) {
             bcms.trigger(htmlEditor.events.insertImage, editor);

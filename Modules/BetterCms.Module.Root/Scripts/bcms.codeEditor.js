@@ -31,13 +31,13 @@ bettercms.define('bcms.codeEditor', ['bcms.jquery', 'bcms', 'bcms.htmlEditor', '
     codeEditor.globalization = globalization;
     codeEditor.events = events;
 
-    function initCkEditor(textarea, mode) {
+    function initCkEditor(textarea, mode, options) {
         var configuration = $.extend({
                     aceEditorOptions: {
                         mode: mode
                     }
                 },
-                ckEditorConfig),
+                ckEditorConfig, options),
             id = textarea.attr('id'),
             isInitialized = textarea.data('isInitialized');
 
@@ -50,7 +50,7 @@ bettercms.define('bcms.codeEditor', ['bcms.jquery', 'bcms', 'bcms.htmlEditor', '
         }
     }
 
-    codeEditor.initialize = function (container) {
+    codeEditor.initialize = function (container, options) {
         if ($.browser.msie && parseInt($.browser.version, 10) <= 8) {
             bcms.logger.info('ACE editor is enabled only on IE versions > 8.');
             return;
@@ -62,11 +62,11 @@ bettercms.define('bcms.codeEditor', ['bcms.jquery', 'bcms', 'bcms.htmlEditor', '
         }
 
         container.find(selectors.inputFieldForJS).each(function () {
-            initCkEditor($(this), "ace/mode/javascript");
+            initCkEditor($(this), "ace/mode/javascript", options);
         });
 
         container.find(selectors.inputFieldForCSS).each(function () {
-            initCkEditor($(this), "ace/mode/css");
+            initCkEditor($(this), "ace/mode/css", options);
         });
     };
 

@@ -345,11 +345,15 @@ bettercms.define('bcms.pages.widgets', ['bcms.jquery', 'bcms', 'bcms.modal', 'bc
                 });
             });
 
-            htmlEditor.initializeHtmlEditor(editorId, data.Id, {}, editInSourceMode);
+            htmlEditor.initializeHtmlEditor(editorId, data.Id, {
+                cmsEditorType: htmlEditor.cmsEditorTypes.widget
+            }, editInSourceMode);
             htmlEditor.enableInsertDynamicRegion(editorId, false, data.LastDynamicRegionNumber);
 
             dialog.container.find(selectors.htmlWidgetJsCssTabOpener).on('click', function () {
-                codeEditor.initialize(dialog.container);
+                codeEditor.initialize(dialog.container, {
+                    cmsEditorType: htmlEditor.cmsEditorTypes.widget
+                });
             });
 
             return optionListViewModel;
