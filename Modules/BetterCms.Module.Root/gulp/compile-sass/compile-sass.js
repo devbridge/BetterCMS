@@ -36,7 +36,7 @@ function compileSass(source, destination, omitPrefix) {
 function task() {
     utils.log('Compiling SASS');
 
-    compileSass('./Scss/**/root.scss', './Content/Styles');
+    compileSass('./Scss/**/root.scss', './Content/Styles', true);
     compileSass('./Scss/**/blog.scss', '../../Modules/BetterCms.Module.Blog/Content/Styles');
     compileSass('./Scss/**/installation.scss', '../../Modules/BetterCms.Module.Installation/Content/Styles');
     compileSass('./Scss/**/media.scss', '../../Modules/BetterCms.Module.MediaManager/Content/Styles');

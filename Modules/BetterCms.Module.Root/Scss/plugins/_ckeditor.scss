@@ -116,10 +116,10 @@
     &_icon {
         background: {
             repeat: no-repeat;
-            position: center;
+            position: center !important;
         }
-        width: 16px;
-        height: 16px;
+        width: 18px;
+        height: 18px;
         float: left;
         display: block;
     }
@@ -127,7 +127,7 @@
     &_label {
         display: none;
         padding-left: 3px;
-        line-height: 18px;
+        line-height: 16px;
         float: left;
         color: $gray-l65;
     }
@@ -611,10 +611,6 @@ a {
 }
 
 //module custom
-.cke_button__cmsoption_icon {
-    background: url($bcms-toolbar-options) no-repeat center !important;
-}
-
 .cke_button__cmsoption_label {
     display: inline !important;
 }
@@ -629,12 +625,12 @@ a {
 }
 
 //module toolbar icons
-//$ck-toolbar-icons: (
-//                ('bold_icon', $bcms-editor-bold),
-//                ('italic_icon', $bcms-editor-italic),
+$ck-toolbar-icons: (
+              ('bold_icon', $bcms-editor-bold),
+              ('italic_icon', $bcms-editor-italic),
 //                ('strike_icon', $bcms-editor-strike),
-//                ('underline_icon', $bcms-editor-underline),
-//                ('blockquote_icon', $bcms-editor-blockquote),
+               ('underline_icon', $bcms-editor-underline),
+               ('blockquote_icon', $bcms-editor-blockquote),
 //                ('copy_icon', $bcms-editor-copy),
 //                ('cut_icon', $bcms-editor-cut),
 //                ('paste_icon', $bcms-editor-paste),
@@ -644,20 +640,20 @@ a {
 //                ('imagebutton_icon', $bcms-editor-imagebutton),
 //                ('horizontalrule_icon', $bcms-editor-horizontalrule),
 //                ('image_icon', $bcms-editor-image),
-//                ('cmsimage_icon', $bcms-editor-cmsimage),
+              ('cmsimage_icon', $bcms-editor-cmsimage),
 //                ('cmsdynamicregion_icon', $bcms-editor-cmsdynamicregion),
-//                ('cmswidget_icon', $bcms-editor-cmswidget),
+               ('cmswidget_icon', $bcms-editor-cmswidget),
 //                ('cmstogglelinebreak_icon', $bcms-editor-cmstogglelinebreak),
 //                ('justifyblock_icon', $bcms-editor-justifyblock),
 //                ('justifycenter_icon', $bcms-editor-justifycenter),
 //                ('justifyleft_icon', $bcms-editor-justifyleft),
 //                ('justifyright_icon', $bcms-editor-justifyright),
 //                ('anchor_icon', $bcms-editor-anchor),
-//                ('link_icon', $bcms-editor-link),
-//                ('unlink_icon', $bcms-editor-unlink),
-//                ('bulletedlist_icon', $bcms-editor-bulletedlist),
-//                ('numberedlist_icon', $bcms-editor-numberedlist),
-//                ('maximize_icon', $bcms-editor-maximize),
+               ('link_icon', $bcms-editor-link),
+                ('unlink_icon', $bcms-editor-unlink),
+              ('bulletedlist_icon', $bcms-editor-bulletedlist),
+              ('numberedlist_icon', $bcms-editor-numberedlist),
+                ('maximize_icon', $bcms-editor-maximize),
 //                ('pagebreak_icon', $bcms-editor-pagebreak),
 //                ('pastefromword_icon', $bcms-editor-pastefromword),
 //                ('pastetext_icon', $bcms-editor-pastetext),
@@ -665,16 +661,18 @@ a {
 //                ('preview_icon', $bcms-editor-preview),
 //                ('showblocks_icon', $bcms-editor-showblocks),
 //                ('source_icon', $bcms-editor-source),
-//                ('specialchar_icon', $bcms-editor-specialchar),
+                ('specialchar_icon', $bcms-editor-specialchar),
 //                ('table_icon', $bcms-editor-table),
-//                ('redo_icon', $bcms-editor-redo),
-//                ('undo_icon', $bcms-editor-undo)
-//);
-//
-//@each $name, $icon in $ck-toolbar-icons {
-//    .cke_button {
-//        &__#{$name} {
-//            background-image: url($icon);
-//        }
-//    }
-//}
+               ('redo_icon', $bcms-editor-redo),
+               ('undo_icon', $bcms-editor-undo),
+               ('templates_icon', $bcms-editor-templates),
+                ('cmsoption_icon', $bcms-editor-cmsoption)
+);
+
+@each $name, $icon in $ck-toolbar-icons {
+    .cke_button {
+        &__#{$name} {
+            background-image: url($icon) !important;
+        }
+    }
+}
