@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-using System.Web.Http.Controllers;
+﻿using System.Web.Http.Controllers;
 using System.Web.Http.ModelBinding;
 
 using ServiceStack.Text;
@@ -23,9 +19,8 @@ namespace BetterCms.Module.Api.ApiExtensions
                     var value = bindingContext.ValueProvider.GetValue(propertyInfo.Name.ToLowerInvariant());
                     if (value != null)
                     {
-                        var attemptedValue = value.AttemptedValue;
-                        var value1 = ServiceStack.Text.JsonSerializer.DeserializeFromString(attemptedValue, propertyInfo.PropertyType);
-                        propertyInfo.SetMethod().Invoke(instance, new[] { value1 });
+                        var deserializedValue = JsonSerializer.DeserializeFromString(value.AttemptedValue, propertyInfo.PropertyType);
+                        propertyInfo.SetMethod().Invoke(instance, new[] { deserializedValue });
                     }
                 }
                 else if (propertyName == "user")
@@ -33,9 +28,8 @@ namespace BetterCms.Module.Api.ApiExtensions
                     var value = bindingContext.ValueProvider.GetValue(propertyInfo.Name.ToLowerInvariant());
                     if (value != null)
                     {
-                        var attemptedValue = value.AttemptedValue;
-                        var value1 = ServiceStack.Text.JsonSerializer.DeserializeFromString(attemptedValue, propertyInfo.PropertyType);
-                        propertyInfo.SetMethod().Invoke(instance, new[] { value1 });
+                        var deserializedValue = JsonSerializer.DeserializeFromString(value.AttemptedValue, propertyInfo.PropertyType);
+                        propertyInfo.SetMethod().Invoke(instance, new[] { deserializedValue });
                     }
                 }
                 else
@@ -43,9 +37,8 @@ namespace BetterCms.Module.Api.ApiExtensions
                     var value = bindingContext.ValueProvider.GetValue(propertyInfo.Name.ToLowerInvariant());
                     if (value != null)
                     {
-                        var attemptedValue = value.AttemptedValue;
-                        var value1 = TypeSerializer.DeserializeFromString(attemptedValue, propertyInfo.PropertyType);
-                        propertyInfo.SetMethod().Invoke(instance, new[] { value1 });
+                        var deserializedValue = TypeSerializer.DeserializeFromString(value.AttemptedValue, propertyInfo.PropertyType);
+                        propertyInfo.SetMethod().Invoke(instance, new[] { deserializedValue });
                     }
                 }
             }

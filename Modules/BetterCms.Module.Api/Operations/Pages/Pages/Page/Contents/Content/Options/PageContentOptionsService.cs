@@ -8,6 +8,7 @@ using BetterCms.Module.Root.Services;
 
 namespace BetterCms.Module.Api.Operations.Pages.Pages.Page.Contents.Content.Options
 {
+    [RoutePrefix("bcms-api")]
     public class PageContentOptionsController : ApiController, IPageContentOptionsService
     {
         private readonly IRepository repository;
@@ -19,7 +20,7 @@ namespace BetterCms.Module.Api.Operations.Pages.Pages.Page.Contents.Content.Opti
             this.repository = repository;
             this.optionService = optionService;
         }
-        [Route("bcms-api/pages/contents/{PageContentId}/options")]
+        [Route("pages/contents/{PageContentId}/options")]
         public GetPageContentOptionsResponse Get([ModelBinder(typeof(JsonModelBinder))] GetPageContentOptionsRequest request)
         {
             var results = PageContentOptionsHelper.GetPageContentOptionsResponse(repository, request.PageContentId, request, optionService);

@@ -19,6 +19,7 @@ namespace BetterCms.Module.Api.Operations.Pages.Pages.Page.Contents.Content
     /// <summary>
     /// Default page content CRUD service.
     /// </summary>
+    [RoutePrefix("bcms-api")]
     public class PageContentController : ApiController, IPageContentService
     {
         /// <summary>
@@ -78,7 +79,7 @@ namespace BetterCms.Module.Api.Operations.Pages.Pages.Page.Contents.Content
         /// </summary>
         /// <param name="request">The request.</param>
         /// <returns><c>GetPageContentResponse</c> with a page content.</returns>
-        [Route("bcms-api/pages/{PageId}/contents/{PageContentId}")]
+        [Route("pages/{PageId}/contents/{PageContentId}")]
         public GetPageContentResponse Get([ModelBinder(typeof(JsonModelBinder))] GetPageContentRequest request)
         {
             var model =
@@ -128,7 +129,7 @@ namespace BetterCms.Module.Api.Operations.Pages.Pages.Page.Contents.Content
         /// </summary>
         /// <param name="request">The request.</param>
         /// <returns><c>PutPageContentResponse</c> with saved page content id.</returns>
-        [Route("bcms-api/pages/{PageId}/contents/{Id}")]
+        [Route("pages/{PageId}/contents/{Id}")]
         [UrlPopulator]
         public PutPageContentResponse Put(PutPageContentRequest request)
         {
@@ -208,7 +209,7 @@ namespace BetterCms.Module.Api.Operations.Pages.Pages.Page.Contents.Content
         /// </summary>
         /// <param name="request">The request.</param>
         /// <returns><c>DeletePageContentResponse</c> with success status.</returns>
-        [Route("bcms-api/pages/{PageId}/contents/{Id}")]
+        [Route("pages/{PageId}/contents/{Id}")]
         [UrlPopulator]
         public DeletePageContentResponse Delete(DeletePageContentRequest request)
         {

@@ -11,6 +11,7 @@ using BetterCms.Module.Pages.Services;
 
 namespace BetterCms.Module.Api.Operations.Pages.Pages.Page.Translations
 {
+    [RoutePrefix("bcms-api")]
     public class PageTranslationsController : ApiController, IPageTranslationsService
     {
         private readonly IRepository repository;
@@ -23,8 +24,8 @@ namespace BetterCms.Module.Api.Operations.Pages.Pages.Page.Translations
             this.urlService = urlService;
         }
 
-        [Route("bcms-api/pages/{PageId}/translations")]
-        [Route("bcms-api/pages/translations/by-url/{PageUrl}")]
+        [Route("pages/{PageId}/translations")]
+        [Route("pages/translations/by-url/{PageUrl}")]
         [ValidationAtttibute]
         public GetPageTranslationsResponse Get([ModelBinder(typeof(JsonModelBinder))] GetPageTranslationsRequest request)
         {

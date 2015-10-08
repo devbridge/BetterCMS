@@ -11,6 +11,7 @@ using BetterCms.Module.Root.Mvc.Helpers;
 
 namespace BetterCms.Module.Api.Operations.Pages.Pages.Page.Exists
 {
+    [RoutePrefix("bcms-api")]
     public class PageExistsController : ApiController, IPageExistsService
     {
         private readonly IRepository repository;
@@ -25,7 +26,7 @@ namespace BetterCms.Module.Api.Operations.Pages.Pages.Page.Exists
             this.repository = repository;
             this.urlService = urlService;
         }
-        [Route("bcms-api/page-exists/{PageUrl}")]
+        [Route("page-exists/{PageUrl}")]
         public PageExistsResponse Get([ModelBinder(typeof(JsonModelBinder))] PageExistsRequest request)
         {
             var url = urlService.FixUrl(request.PageUrl);

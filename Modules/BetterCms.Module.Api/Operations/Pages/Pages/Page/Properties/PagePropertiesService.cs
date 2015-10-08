@@ -40,6 +40,7 @@ namespace BetterCms.Module.Api.Operations.Pages.Pages.Page.Properties
     /// <summary>
     /// Default page properties CRUD service.
     /// </summary>
+    [RoutePrefix("bcms-api")]
     public class PagePropertiesController : ApiController, IPagePropertiesService
     {
         /// <summary>
@@ -143,8 +144,8 @@ namespace BetterCms.Module.Api.Operations.Pages.Pages.Page.Properties
         /// <returns>
         ///   <c>GetPagePropertiesResponse</c> with a page properties data.
         /// </returns>
-        [Route("bcms-api/page-properties/{PageId}")]
-        [Route("bcms-api/page-properties/by-url/{PageUrl}")]
+        [Route("page-properties/{PageId}")]
+        [Route("page-properties/by-url/{PageUrl}")]
         [ValidationAtttibute]
         public GetPagePropertiesResponse Get([ModelBinder(typeof(JsonModelBinder))] GetPagePropertiesRequest request)
         {
@@ -444,7 +445,7 @@ namespace BetterCms.Module.Api.Operations.Pages.Pages.Page.Properties
         /// </summary>
         /// <param name="request">The request.</param>
         /// <returns><c>PostPageResponse</c> with page data.</returns>
-        [Route("bcms-api/page-properties/")]
+        [Route("page-properties/")]
         public PostPagePropertiesResponse Post(PostPagePropertiesRequest request)
         {
             var result = Put(
@@ -462,7 +463,7 @@ namespace BetterCms.Module.Api.Operations.Pages.Pages.Page.Properties
         /// </summary>
         /// <param name="request">The request.</param>
         /// <returns><c>PutPageResponse</c> with created or updated item id.</returns>
-        [Route("bcms-api/page-properties/{Id}")]
+        [Route("page-properties/{Id}")]
         [UrlPopulator]
         public PutPagePropertiesResponse Put(PutPagePropertiesRequest request)
         {
@@ -664,7 +665,7 @@ namespace BetterCms.Module.Api.Operations.Pages.Pages.Page.Properties
         /// </summary>
         /// <param name="request">The request.</param>
         /// <returns><c>DeletePageResponse</c> with success status.</returns>
-        [Route("bcms-api/page-properties/{Id}")]
+        [Route("page-properties/{Id}")]
         [UrlPopulator]
         public DeletePagePropertiesResponse Delete(DeletePagePropertiesRequest request)
         {

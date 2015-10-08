@@ -26,6 +26,7 @@ namespace BetterCms.Module.Api.Operations.Pages.Pages.Page
     /// <summary>
     /// Default page service for pages API.
     /// </summary>
+    [RoutePrefix("bcms-api")]
     public class PageController : ApiController, IPageService
     {
         /// <summary>
@@ -172,8 +173,8 @@ namespace BetterCms.Module.Api.Operations.Pages.Pages.Page
         /// </summary>
         /// <param name="request">The request.</param>
         /// <returns><c>GetPageResponse</c> with page properties.</returns>
-        [Route("bcms-api/pages/{PageId}")]
-        [Route("bcms-api/pages/by-url/{PageUrl}")]
+        [Route("pages/{PageId}")]
+        [Route("pages/by-url/{PageUrl}")]
         [ValidationAtttibute]
         public GetPageResponse Get([ModelBinder(typeof(JsonModelBinder))] GetPageRequest request)
         {

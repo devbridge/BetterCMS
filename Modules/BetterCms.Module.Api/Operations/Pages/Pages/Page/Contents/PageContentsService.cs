@@ -11,6 +11,7 @@ using BetterCms.Module.Api.Operations.Pages.Pages.Page.Contents.Content;
 
 namespace BetterCms.Module.Api.Operations.Pages.Pages.Page.Contents
 {
+    [RoutePrefix("bcms-api")]
     public class PageContentsController : ApiController, IPageContentsService
     {
         private readonly IRepository repository;
@@ -23,7 +24,7 @@ namespace BetterCms.Module.Api.Operations.Pages.Pages.Page.Contents
             this.pageContentService = pageContentService;
         }
 
-        [Route("bcms-api/pages/{PageId}/contents")]
+        [Route("pages/{PageId}/contents")]
         [ValidationAtttibute]
         public GetPageContentsResponse Get([ModelBinder(typeof(JsonModelBinder))] GetPageContentsRequest request)
         {
@@ -71,7 +72,7 @@ namespace BetterCms.Module.Api.Operations.Pages.Pages.Page.Contents
             return new GetPageContentsResponse { Data = dataListResult };
         }
 
-        [Route("bcms-api/pages/{PageId}/contents/")]
+        [Route("pages/{PageId}/contents/")]
         [UrlPopulator]
         public PostPageContentResponse Post(PostPageContentRequest request)
         {
