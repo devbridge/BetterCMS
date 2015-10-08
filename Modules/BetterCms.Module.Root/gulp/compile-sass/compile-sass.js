@@ -37,14 +37,14 @@ function task() {
     utils.log('Compiling SASS');
 
     compileSass('./Scss/**/root.scss', './Content/Styles', true);
-    compileSass('./Scss/**/blog.scss', '../../Modules/BetterCms.Module.Blog/Content/Styles');
-    compileSass('./Scss/**/installation.scss', '../../Modules/BetterCms.Module.Installation/Content/Styles');
-    compileSass('./Scss/**/media.scss', '../../Modules/BetterCms.Module.MediaManager/Content/Styles');
-    compileSass('./Scss/**/pages.scss', '../../Modules/BetterCms.Module.Pages/Content/Styles');
-    compileSass('./Scss/**/users.scss', '../../Modules/BetterCms.Module.Users/Content/Styles');
+    compileSass('./Scss/**/blog.scss', '../../Modules/BetterCms.Module.Blog/Content/Styles', true);
+    compileSass('./Scss/**/installation.scss', '../../Modules/BetterCms.Module.Installation/Content/Styles', true);
+    compileSass('./Scss/**/media.scss', '../../Modules/BetterCms.Module.MediaManager/Content/Styles', true);
+    compileSass('./Scss/**/pages.scss', '../../Modules/BetterCms.Module.Pages/Content/Styles', true);
+    compileSass('./Scss/**/users.scss', '../../Modules/BetterCms.Module.Users/Content/Styles', true);
     compileSass('./Scss/**/editor.scss', './Scripts/ckeditor/skins/bettercms', false);
     //temp local use only
-    compileSass('./Scss/**/root.scss', '../../Sandbox/BetterCms.Sandbox.Mvc4/file/bcms-root/Content/Styles');
-    compileSass('./Scss/**/pages.scss', '../../Sandbox/BetterCms.Sandbox.Mvc4/file/bcms-pages/Content/Styles');
+    compileSass('./Scss/**/root.scss', '../../Sandbox/BetterCms.Sandbox.Mvc4/file/bcms-root/Content/Styles', true);
+    compileSass('./Scss/**/pages.scss', '../../Sandbox/BetterCms.Sandbox.Mvc4/file/bcms-pages/Content/Styles', true);
     compileSass('./Scss/**/editor.scss', '../../Sandbox/BetterCms.Sandbox.Mvc4/file/bcms-root/Scripts/ckeditor/skins/bettercms', false);
 }
