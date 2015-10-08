@@ -18,6 +18,8 @@ $gray-l25: #e5e5e5;
 $gray-l30: #f5f5f5;
 $gray-l35: #c0c0c0;
 $gray-l40: #c6c6c6;
+$gray-l45: #8E8E8E;
+$gray-l46: #787878;
 $gray-l50: #676767;
 $gray-l60: #555555;
 
@@ -33,14 +35,20 @@ $blue-l60: #24597e;
 //
 $red-l60: #A63333;
 $red-l70: #8E2626;
+//
+$green: #007633;
 
 //module borders
+$border-hr-control-top: 1px solid $gray-l50;
+$border-hr-control-bottom: 1px solid #202020;
 $border-thin-gray: 1px solid $gray-l40;
 $border-thin-light-gray: 1px solid $gray-l20;
 $border-thin-blue: 1px solid $blue-l60;
 $border-thin-white: 1px solid $white;
 $border-overlay: 1px dashed $blue-l30;
 $border-content-actions: 1px solid $sky-blue;
+
+//module images paths
 
 //module misc variables
 

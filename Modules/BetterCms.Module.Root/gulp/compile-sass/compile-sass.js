@@ -1,6 +1,9 @@
 var gulp = require('gulp'),
-    $ = require('gulp-load-plugins')({lazy: true}),
+    $ = require('gulp-load-plugins')({
+        lazy: true
+    }),
     config = require('../gulp.config.js')(),
+    gcmq = require('gulp-group-css-media-queries'),
     utils = require('../utils/utils.js')();
 
 module.exports = task;
@@ -18,7 +21,7 @@ function compileSass(source, destination) {
         .pipe($.rename({prefix: 'bcms.'}))
         .pipe(gulp.dest(destination))
         .pipe(cssFilter)
-        .pipe($.combineMediaQueries())
+        .pipe(gcmq())
         .pipe($.csso())
         .pipe($.rename({suffix: '.min'}))
         .pipe(gulp.dest(destination))
@@ -34,4 +37,7 @@ function task() {
     compileSass('./Scss/**/media.scss', '../../Modules/BetterCms.Module.MediaManager/Content/Styles');
     compileSass('./Scss/**/pages.scss', '../../Modules/BetterCms.Module.Pages/Content/Styles');
     compileSass('./Scss/**/users.scss', '../../Modules/BetterCms.Module.Users/Content/Styles');
+    //temp local use only
+    compileSass('./Scss/**/root.scss', '../../Sandbox/BetterCms.Sandbox.Mvc4/file/bcms-root/Content/Styles');
+    compileSass('./Scss/**/pages.scss', '../../Sandbox/BetterCms.Sandbox.Mvc4/file/bcms-pages/Content/Styles');
 }
