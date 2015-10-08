@@ -1,8 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Web.Mvc;
-
+using System.Threading.Tasks;
+using Microsoft.AspNet.Mvc;
+using Microsoft.AspNet.Mvc.ModelBinding;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
 
@@ -39,15 +40,15 @@ namespace BetterCms.Core.Mvc.Binders
 
     public class JSONDataBinder : IModelBinder
     {
-        public object BindModel(ControllerContext controllerContext, ModelBindingContext bindingContext)
+        public object BindModel(ActionContext controllerContext, ModelBindingContext bindingContext)
         {
             if (controllerContext != null 
                 && controllerContext.HttpContext != null 
                 && controllerContext.HttpContext.Request != null
-                && controllerContext.HttpContext.Request.InputStream != null)
+                && controllerContext.HttpContext.Request.Body != null)
             {
-                controllerContext.HttpContext.Request.InputStream.Position = 0;
-                var json = new StreamReader(controllerContext.HttpContext.Request.InputStream).ReadToEnd();
+                controllerContext.HttpContext.Request.Body.Position = 0;
+                var json = new StreamReader(controllerContext.HttpContext.Request.Body).ReadToEnd();
                 var type = bindingContext.ModelType;
 
                 var model = JsonConvert.DeserializeObject(json, type, 
@@ -59,6 +60,12 @@ namespace BetterCms.Core.Mvc.Binders
             }
 
             return null;
+        }
+
+        //TODO Implement async action
+        public Task<ModelBindingResult> BindModelAsync(ModelBindingContext bindingContext)
+        {
+            throw new NotImplementedException();
         }
     } 
 }

@@ -1,7 +1,5 @@
 ﻿using System.Collections.Generic;
 
-using Autofac;
-
 using BetterCms.Core.Modules.Projections;
 
 using BetterModules.Core.Environment.Assemblies;
@@ -9,6 +7,8 @@ using BetterModules.Core.Models;
 using BetterModules.Core.Modules.Registration;
 using BetterModules.Core.Web.Modules.Registration;
 using BetterModules.Core.Web.Mvc.Extensions;
+using Microsoft.Framework.DependencyInjection;
+using Microsoft.Framework.Logging;
 
 namespace BetterCms.Core.Modules.Registration
 {
@@ -56,9 +56,9 @@ namespace BetterCms.Core.Modules.Registration
         /// Initializes a new instance of the <see cref="CmsModulesRegistration" /> class.
         /// </summary>
         /// <param name="assemblyLoader">The assembly loader.</param>
-        /// <param name="controllerExtensions">The controller extensions.</param>
-        public CmsModulesRegistration(IAssemblyLoader assemblyLoader, IControllerExtensions controllerExtensions)
-            : base(assemblyLoader, controllerExtensions)
+        /// <param name="loggerFactory">The logger factory.</param>
+        public CmsModulesRegistration(IAssemblyLoader assemblyLoader, ILoggerFactory loggerFactory)
+            : base(assemblyLoader, loggerFactory)
         {
             knownCmsModules = new List<CmsModuleDescriptor>();
             knownJavaScriptModules = new Dictionary<string, JsIncludeDescriptor>();
@@ -139,7 +139,7 @@ namespace BetterCms.Core.Modules.Registration
         /// </summary>
         /// <param name="registrationContext">The registration context.</param>
         /// <param name="containerBuilder">The container builder.</param>
-        protected override void RegisterModuleDescriptor(ModuleRegistrationContext registrationContext, ContainerBuilder containerBuilder)
+        protected override void RegisterModuleDescriptor(ModuleRegistrationContext registrationContext, IServiceCollection services)
         {
             var descriptor = registrationContext.ModuleDescriptor as CmsModuleDescriptor;
             if (descriptor != null)
@@ -177,7 +177,7 @@ namespace BetterCms.Core.Modules.Registration
                 UpdateConcurrentBagWithEnumerator(knownSiteSettingsItems, siteSettingsProjections);
             }
 
-            base.RegisterModuleDescriptor(registrationContext, containerBuilder);
+            base.RegisterModuleDescriptor(registrationContext, services);
         }
 
         /// <summary>

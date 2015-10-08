@@ -1,13 +1,11 @@
 ﻿using System;
 using System.Net;
-using System.Web;
-using System.Web.Mvc;
-
-using Autofac;
 
 using BetterCms.Core.Services;
 
-using BetterModules.Core.Web.Dependencies;
+using Microsoft.AspNet.Authorization;
+using Microsoft.AspNet.Mvc;
+using AuthorizationContext = Microsoft.AspNet.Authorization.AuthorizationContext;
 
 namespace BetterCms.Core.Security
 {

@@ -1,7 +1,5 @@
 ﻿using System;
-using System.Web;
-
-using Microsoft.Web.Infrastructure.DynamicModuleHelper;
+using Microsoft.AspNet.Http;
 
 namespace BetterCms.Core.Security
 {

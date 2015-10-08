@@ -1,8 +1,9 @@
-﻿using System.Web.Mvc;
-using System.Xml.Serialization;
+﻿using System.Xml.Serialization;
+using Microsoft.AspNet.Mvc;
 
 namespace BetterCms.Core.ActionResults
 {
+    //TODO move to IActionResult
     public class XmlResult : ActionResult
     {
         private readonly object objectToSerialize;
@@ -19,30 +20,27 @@ namespace BetterCms.Core.ActionResults
         /// <summary>
         /// Gets the object to be serialized to XML.
         /// </summary>
-        public object ObjectToSerialize
-        {
-            get { return objectToSerialize; }
-        }
+        public object ObjectToSerialize => objectToSerialize;
 
         /// <summary>
         /// Serialises the object that was passed into the constructor to XML and writes the corresponding XML to the result stream.
         /// </summary>
         /// <param name="context">The controller context for the current request.</param>
-        public override void ExecuteResult(ControllerContext context)
+        public override void ExecuteResult(ActionContext context)
         {
             if (objectToSerialize != null)
             {
-                context.HttpContext.Response.Clear();
+                //context.HttpContext.Response.Clear();
                 var xs = new XmlSerializer(objectToSerialize.GetType());
                 context.HttpContext.Response.ContentType = "text/xml";
                 
                 if (objectToSerialize is IHaveCustomXmlSettings)
                 {
-                    xs.Serialize(context.HttpContext.Response.Output, objectToSerialize, ((IHaveCustomXmlSettings)objectToSerialize).Namespaces);
+                    xs.Serialize(context.HttpContext.Response.Body, objectToSerialize, ((IHaveCustomXmlSettings)objectToSerialize).Namespaces);
                 }
                 else
                 {
-                    xs.Serialize(context.HttpContext.Response.Output, objectToSerialize);
+                    xs.Serialize(context.HttpContext.Response.Body, objectToSerialize);
                 }
             }
         }

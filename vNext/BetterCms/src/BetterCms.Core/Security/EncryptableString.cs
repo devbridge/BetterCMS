@@ -1,10 +1,6 @@
 ﻿using System;
 using System.Data;
 
-using Autofac;
-
-using BetterModules.Core.Dependencies;
-
 using NHibernate;
 using NHibernate.SqlTypes;
 using NHibernate.UserTypes;
@@ -18,12 +14,9 @@ namespace BetterCms.Core.Security
     {
         private readonly ITextEncryptor encryptor;
 
-        public EncryptableString()
+        public EncryptableString(ITextEncryptor encryptor)
         {
-            using (var container = ContextScopeProvider.CreateChildContainer())
-            {
-                encryptor = container.Resolve<ITextEncryptor>();
-            }
+                this.encryptor = encryptor;
         }
 
         /// <summary>

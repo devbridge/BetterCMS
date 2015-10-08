@@ -4,6 +4,7 @@ using System.Web;
 
 using BetterCms.Core.DataContracts;
 using BetterCms.Core.Modules.Projections;
+using Microsoft.AspNet.Http;
 
 namespace BetterCms.Core.Services
 {
@@ -16,7 +17,7 @@ namespace BetterCms.Core.Services
         /// Gets current page.
         /// </summary>
         /// <returns>Current page object.</returns>
-        IPage GetCurrentPage(HttpContextBase httpContext);
+        IPage GetCurrentPage(HttpContext httpContext);
 
         /// <summary>
         /// Gets current page by given virtual path.

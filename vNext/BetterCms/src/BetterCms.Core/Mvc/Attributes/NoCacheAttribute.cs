@@ -1,6 +1,5 @@
 ﻿using System;
-using System.Web;
-using System.Web.Mvc;
+using Microsoft.AspNet.Mvc;
 
 namespace BetterCms.Core.Mvc.Attributes
 {
