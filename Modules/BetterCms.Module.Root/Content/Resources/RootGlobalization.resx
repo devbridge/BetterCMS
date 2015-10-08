@@ -822,4 +822,7 @@
   <data name="OptionTypes_MultilineText_Title" xml:space="preserve">
     <value>Multi-line Text</value>
   </data>
+  <data name="Button_AddContent_Widget" xml:space="preserve">
+    <value>Widget</value>
+  </data>
 </root>

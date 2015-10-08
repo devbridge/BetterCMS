@@ -27,6 +27,7 @@ bettercms.define('bcms.content', ['bcms.jquery', 'bcms', 'bcms.modal', 'bcms.red
             regionAddMarkdownButtons: '.bcms-region-addmarkdown',
             regionAddHtmlButtons: '.bcms-region-addhtml',
             regionAddTextButtons: '.bcms-region-addtext',
+            regionInsertWidgetButtons: '.bcms-region-insertwidget',
             regionSortButtons: '.bcms-region-sortcontent',
             regionSortDoneButtons: '.bcms-region-sortdone',
             regionSortCancelButtons: '.bcms-region-sortcancel',
@@ -587,6 +588,12 @@ bettercms.define('bcms.content', ['bcms.jquery', 'bcms', 'bcms.modal', 'bcms.red
                 });
             };
 
+            self.onInsertWidget = function () {
+                bcms.trigger(bcms.events.insertWidget, {
+                    regionViewModel: self
+                });
+            };
+
             if (self.isInvisible) {
                 return;
             }
@@ -632,6 +639,10 @@ bettercms.define('bcms.content', ['bcms.jquery', 'bcms', 'bcms.modal', 'bcms.red
 
             $(selectors.regionAddTextButtons, self.overlay).on('click', function () {
                 self.onAddSimpleText();
+            });
+
+            $(selectors.regionInsertWidgetButtons, self.overlay).on('click', function () {
+                self.onInsertWidget();
             });
 
             $(selectors.regionSortButtons, self.overlay).on('click', function() {

@@ -268,6 +268,15 @@ namespace BetterCms.Module.Root.Content.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Widget.
+        /// </summary>
+        public static string Button_AddContent_Widget {
+            get {
+                return ResourceManager.GetString("Button_AddContent_Widget", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Add New +.
         /// </summary>
         public static string Button_AddNew {
