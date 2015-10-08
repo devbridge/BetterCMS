@@ -91,6 +91,19 @@
     }
 }
 
+@mixin button() {
+    @include vertical-align();
+    border: 0;
+    border-radius: 2px;
+    box-sizing: border-box;
+    cursor: pointer;
+    font-family: $font-base-family;
+    overflow: hidden;
+    text-align: center;
+    text-transform: uppercase;
+    @content
+}
+
 //module functions
 //class constructor
 //@mixin construct-button($get-map: null) {

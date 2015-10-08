@@ -4024,22 +4024,28 @@ a.bcms-active-pager:hover {
 }
 
 .cke_bottom {
-  padding: 6px 8px;
+  padding: 0 5px;
+  height: 28px;
+  line-height: 28px;
   position: relative;
   border-top: 1px solid #c6c6c6;
   background: #f5f5f5;
 }
 
 .cke_resizer {
-  width: 0;
+  position: absolute;
+  right: 5px;
+  bottom: 5px;
   height: 0;
+  width: 0;
   overflow: hidden;
   border-width: 10px 10px 0 0;
-  border-color: transparent #666 transparent transparent;
+  border-color: transparent #303030 transparent transparent;
   border-style: dashed solid dashed dashed;
   float: right;
   vertical-align: bottom;
   margin-top: 6px;
+  cursor: se-resize;
 }
 
 .cke_wysiwyg_div {
@@ -4051,11 +4057,14 @@ a.bcms-active-pager:hover {
   box-sizing: border-box;
 }
 
+.cke_disabled {
+  opacity: .6;
+}
+
 .cke_toolbar {
   float: left;
 }
 
-/* The box that holds buttons. */
 .cke_toolgroup {
   float: left;
   margin: 0 6px;
@@ -4063,114 +4072,65 @@ a.bcms-active-pager:hover {
   background-color: #f5f5f5;
 }
 
-/* A toolbar button . */
-a.cke_button {
-  display: inline-block;
+.cke_button {
   height: 18px;
   padding: 4px 6px;
   outline: none;
-  cursor: default;
+  cursor: pointer;
   float: left;
-  border: 0;
+  background-color: #f5f5f5;
 }
 
-/* This class is applied to the button when it is "active" (pushed).
-   This style indicates that the feature associated with the button is active
-   i.e. currently writing in bold or when spell checking is enabled. */
-a.cke_button_on {
-  box-shadow: 0 1px 5px rgba(0, 0, 0, 0.6) inset, 0 1px 0 rgba(0, 0, 0, 0.2);
-  background: #b5b5b5;
-  background-image: linear-gradient(to bottom, #aaa, #cacaca);
-  filter: progid:DXImageTransform.Microsoft.gradient(gradientType=0, startColorstr='#aaaaaa', endColorstr='#cacaca');
+.cke_button:hover {
+  background-color: gainsboro;
 }
 
-/* This class is applied to the button when the feature associated with the
-   button cannot be used (grayed-out).
-   i.e. paste button remains disabled when there is nothing in the clipboard to
-   be pasted. */
-.cke_button_disabled .cke_button_icon {
-  opacity: 0.3;
+.cke_button_on {
+  box-shadow: inset 0 0 7px rgba(0, 0, 0, 0.5);
 }
 
-a.cke_button_on:hover,
-a.cke_button_on:focus,
-a.cke_button_on:active {
-  box-shadow: 0 1px 6px rgba(0, 0, 0, 0.7) inset, 0 1px 0 rgba(0, 0, 0, 0.2);
+.cke_button_on:hover {
+  background-color: #f5f5f5;
 }
 
-a.cke_button_off:hover,
-a.cke_button_off:focus,
-a.cke_button_off:active,
-a.cke_button_disabled:hover,
-a.cke_button_disabled:focus,
-a.cke_button_disabled:active {
-  box-shadow: 0 0 1px rgba(0, 0, 0, 0.3) inset;
-  background: #ccc;
-  background-image: linear-gradient(to bottom, #f2f2f2, #ccc);
-  filter: progid:DXImageTransform.Microsoft.gradient(gradientType=0, startColorstr='#f2f2f2', endColorstr='#cccccc');
+.cke_button_disabled {
+  opacity: .3;
 }
 
-/* The icon which is a visual representation of the button. */
+.cke_button_disabled:hover {
+  background-color: #f5f5f5;
+}
+
 .cke_button_icon {
-  cursor: inherit;
   background-repeat: no-repeat;
-  margin-top: 1px;
+  background-position: center;
   width: 16px;
   height: 16px;
   float: left;
-  display: inline-block;
+  display: block;
 }
 
-/* The label of the button that stores the name of the feature. By default,
-   labels are invisible. They can be revealed on demand though. */
 .cke_button_label {
   display: none;
   padding-left: 3px;
-  margin-top: 1px;
-  line-height: 17px;
-  vertical-align: middle;
+  line-height: 18px;
   float: left;
-  cursor: default;
   color: #474747;
-  text-shadow: 0 1px 0 rgba(255, 255, 255, 0.5);
 }
 
-/* The small arrow available on buttons that can be expanded
-   (e.g. the color buttons). */
 .cke_button_arrow {
-  /* Arrow in CSS */
   display: inline-block;
   margin: 8px 0 0 1px;
   width: 0;
   height: 0;
   cursor: default;
   vertical-align: top;
-  border-left: 3px solid transparent;
-  border-right: 3px solid transparent;
-  border-top: 3px solid #474747;
+  border-style: solid;
+  border-width: 3px;
+  border-color: transparent transparent #303030 transparent;
 }
 
-/* The vertical separator which is used within a single toolbar to split
-   buttons into sub-groups. */
-.cke_toolbar_separator {
-  float: left;
-  background-color: #c0c0c0;
-  background-color: rgba(0, 0, 0, 0.2);
-  margin: 5px 2px 0;
-  height: 18px;
-  width: 1px;
-  box-shadow: 1px 0 1px rgba(255, 255, 255, 0.5);
-}
-
-/* The dummy element that breaks toolbars.
-   Once it is placed, the very next toolbar is moved to the new row. */
-.cke_toolbar_break {
-  display: block;
-  clear: left;
-}
-
-/* The button, which when clicked hides (collapses) all the toolbars. */
-a.cke_toolbox_collapser {
+.cke_toolbox_collapser {
   width: 12px;
   height: 11px;
   float: right;
@@ -4182,7 +4142,7 @@ a.cke_toolbox_collapser {
   background-color: #f5f5f5;
 }
 
-a.cke_toolbox_collapser .cke_arrow {
+.cke_toolbox_collapser .cke_arrow {
   display: inline-block;
   height: 0;
   width: 0;
@@ -4191,10 +4151,317 @@ a.cke_toolbox_collapser .cke_arrow {
   border-color: transparent transparent #303030 transparent;
 }
 
-.cke_toolbox_collapser.cke_toolbox_collapser_min .cke_arrow {
+.cke_toolbox_collapser_min .cke_arrow {
   margin-top: 4px;
   border-bottom-color: transparent;
-  border-top-color: #474747;
+  border-top-color: #303030;
+}
+
+.cke_path_item {
+  display: inline-block;
+  margin-right: 6px;
+  cursor: default;
+  text-decoration: none;
+  color: #303030;
+  font-weight: bold;
+  font-size: 11px;
+  line-height: 18px;
+}
+
+.cke_voice_label {
+  display: none;
+}
+
+.cke_dialog {
+  visibility: visible;
+}
+
+.cke_dialog_close_button {
+  background-color: #8E2626;
+  position: absolute;
+  cursor: pointer;
+  text-align: center;
+  height: 20px;
+  width: 20px;
+  top: 4px;
+  z-index: 5;
+  right: 5px;
+}
+
+.cke_dialog_title {
+  font-weight: bold;
+  font-size: 13px;
+  cursor: move;
+  position: relative;
+  color: #303030;
+  border-bottom: 1px solid #c6c6c6;
+  padding: 6px 10px;
+  background-color: #f5f5f5;
+}
+
+.cke_dialog_body {
+  z-index: 1;
+  background-color: #f5f5f5;
+  border: 1px solid #c6c6c6;
+}
+
+.cke_dialog_body label {
+  font-size: 12px;
+}
+
+.cke_dialog_contents {
+  border-collapse: collapse;
+  background-color: #ffffff;
+  overflow: auto;
+  margin-top: 30px;
+  border-top: 1px solid #c6c6c6;
+}
+
+.cke_dialog_contents_body {
+  vertical-align: top;
+  overflow: auto;
+  padding: 10px;
+  margin-top: 22px;
+}
+
+.cke_dialog_footer {
+  border-top: 1px solid #c6c6c6;
+  text-align: right;
+  padding: 5px;
+  position: relative;
+  background-color: #f5f5f5;
+}
+
+.cke_dialog_footer_buttons {
+  width: auto;
+  display: inline;
+}
+
+.cke_dialog_spinner {
+  -webkit-animation: dialog_spinner 1s infinite linear;
+  -moz-animation: dialog_spinner 1s infinite linear;
+  animation: dialog_spinner 1s infinite linear;
+  border-radius: 50%;
+  border-style: solid;
+  border-width: 2px;
+  border-color: rgba(48, 48, 48, 0.8);
+  border-left-color: rgba(48, 48, 48, 0.6);
+  width: 12px;
+  height: 12px;
+  overflow: hidden;
+  text-indent: -9999em;
+}
+
+.cke_dialog_tabs {
+  height: 24px;
+  display: inline-block;
+  margin: 5px 0 0;
+  position: absolute;
+  z-index: 2;
+  left: 10px;
+}
+
+.cke_dialog_tab {
+  height: 16px;
+  padding: 4px 8px;
+  margin-right: 3px;
+  display: inline-block;
+  cursor: pointer;
+  line-height: 16px;
+  outline: none;
+  font-size: 12px;
+  color: #303030;
+  border: 1px solid #c6c6c6;
+  background-color: #f5f5f5;
+}
+
+.cke_dialog_tab:hover {
+  background-color: gainsboro;
+  text-decoration: none;
+}
+
+.cke_dialog_tab_selected {
+  background-color: #ffffff;
+  border-bottom-color: #ffffff;
+  cursor: default;
+}
+
+.cke_dialog_tab_selected:hover {
+  background-color: #ffffff;
+}
+
+.cke_dialog_tab_disabled {
+  opacity: .3;
+  cursor: default;
+}
+
+.cke_dialog iframe.cke_pasteframe {
+  width: 346px;
+  height: 130px;
+  background-color: #ffffff;
+  border: 1px solid #c6c6c6;
+}
+
+.cke_dialog .cke_centered {
+  text-align: center;
+}
+
+.cke_single_page .cke_dialog_tabs {
+  display: none;
+}
+
+.cke_single_page .cke_dialog_contents {
+  padding-top: 5px;
+  margin-top: 0;
+  border-top: none;
+}
+
+select.cke_dialog_ui_input_select, input.cke_dialog_ui_input_text, textarea.cke_dialog_ui_input_textarea {
+  box-sizing: border-box;
+  font-family: "Open Sans", sans-serif !important;
+  font-size: 14px;
+  color: #787878;
+  border: 1px solid #D1D1D1;
+  background: #F5F5F5;
+  padding: 5px 7px;
+  margin: 0;
+  width: 100%;
+}
+
+select.cke_dialog_ui_input_select:focus, input.cke_dialog_ui_input_text:focus, textarea.cke_dialog_ui_input_textarea:focus {
+  color: #303030;
+  border-color: #0383df;
+  outline: none;
+  background-color: #ffffff;
+}
+
+.cke_dialog_ui_hbox {
+  width: 100%;
+  vertical-align: top;
+}
+
+select.cke_dialog_ui_input_select {
+  height: 31px;
+  border-radius: 0;
+  width: auto;
+}
+
+textarea.cke_dialog_ui_input_textarea {
+  overflow: auto;
+  resize: none;
+}
+
+a.cke_dialog_ui_button {
+  display: inline-block;
+  vertical-align: middle;
+  border: 0;
+  border-radius: 2px;
+  box-sizing: border-box;
+  cursor: pointer;
+  font-family: "Open Sans", sans-serif !important;
+  overflow: hidden;
+  text-align: center;
+  text-transform: uppercase;
+  background-image: -webkit-linear-gradient(top, #8E8E8E 0, #787878 100%);
+  background-image: linear-gradient(to bottom, #8E8E8E 0, #787878 100%);
+  color: #ffffff;
+  font-size: 12px;
+  line-height: 30px;
+  padding: 0 10px;
+}
+
+a.cke_dialog_ui_button:active {
+  background-image: -webkit-linear-gradient(top, #787878 0, #787878 100%);
+  background-image: linear-gradient(to bottom, #787878 0, #787878 100%);
+}
+
+a.cke_dialog_ui_button:hover {
+  text-decoration: none;
+}
+
+a.cke_dialog_ui_button_ok {
+  display: inline-block;
+  vertical-align: middle;
+  border: 0;
+  border-radius: 2px;
+  box-sizing: border-box;
+  cursor: pointer;
+  font-family: "Open Sans", sans-serif !important;
+  overflow: hidden;
+  text-align: center;
+  text-transform: uppercase;
+  background-image: -webkit-linear-gradient(top, #1892E4 0, #0C7FC7 100%);
+  background-image: linear-gradient(to bottom, #1892E4 0, #0C7FC7 100%);
+  color: #ffffff;
+  font-size: 12px;
+  line-height: 30px;
+  padding: 0 10px;
+}
+
+a.cke_dialog_ui_button_ok:active {
+  background-image: -webkit-linear-gradient(top, #0C7FC7 0, #0C7FC7 100%);
+  background-image: linear-gradient(to bottom, #0C7FC7 0, #0C7FC7 100%);
+}
+
+a.cke_dialog_ui_button_ok.cke_disabled {
+  opacity: .6;
+  cursor: default;
+}
+
+a.cke_specialchar {
+  height: 24px;
+  width: 24px;
+  border: 1px solid #e3e3e3;
+  cursor: pointer;
+  color: #303030;
+  display: block;
+  text-align: center;
+}
+
+a.cke_specialchar:hover {
+  background-color: #e6e6e6;
+  text-decoration: none;
+}
+
+.cke_iframe_shim {
+  display: block;
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: -1;
+  width: 100%;
+  height: 100%;
+}
+
+@-webkit-keyframes dialog_spinner {
+  0% {
+    -webkit-transform: rotate(0deg);
+  }
+  100% {
+    -webkit-transform: rotate(360deg);
+  }
+}
+
+@-moz-keyframes dialog_spinner {
+  0% {
+    -moz-transform: rotate(0deg);
+  }
+  100% {
+    -moz-transform: rotate(360deg);
+  }
+}
+
+@keyframes dialog_spinner {
+  0% {
+    -webkit-transform: rotate(0deg);
+    -moz-transform: rotate(0deg);
+    transform: rotate(0deg);
+  }
+  100% {
+    -webkit-transform: rotate(360deg);
+    -moz-transform: rotate(360deg);
+    transform: rotate(360deg);
+  }
 }
 
 .cke_button__cmsoption_icon {

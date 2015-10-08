@@ -32,22 +32,25 @@
     }
 
     &_bottom {
-        padding: 6px 8px;
+        padding: 0 5px;
+        height: 28px;
+        line-height: 28px;
         position: relative;
         border-top: $border-thin-gray;
         background: $gray-l30;
     }
 
     &_resizer {
-        width: 0;
-        height: 0;
+        @include position(absolute, null 5px 5px null);
+        @include size(0);
         overflow: hidden;
         border-width: 10px 10px 0 0;
-        border-color: transparent #666 transparent transparent;
+        border-color: transparent $dark transparent transparent;
         border-style: dashed solid dashed dashed;
         float: right;
         vertical-align: bottom;
         margin-top: 6px;
+        cursor: se-resize;
     }
 
     &_wysiwyg_div {
@@ -58,6 +61,10 @@
         outline-style: none;
         box-sizing: border-box;
     }
+
+    &_disabled {
+        opacity: .6;
+    }
 }
 
 //module editor toolbar
@@ -65,7 +72,6 @@
     float: left;
 }
 
-/* The box that holds buttons. */
 .cke_toolgroup {
     float: left;
     margin: 0 6px;
@@ -73,117 +79,74 @@
     background-color: $gray-l30;
 }
 
-/* A toolbar button . */
-a.cke_button {
-    display: inline-block;
+//module editor buttons
+.cke_button {
     height: 18px;
     padding: 4px 6px;
     outline: none;
-    cursor: default;
+    cursor: pointer;
     float: left;
-    border: 0;
+    background-color: $gray-l30;
+
+    &:hover {
+        background-color: darken($gray-l30, 10%);
+    }
+
+    &_on {
+        box-shadow: inset 0 0 7px rgba($black, .5);
+
+        &:hover {
+            background-color: $gray-l30;
+        }
+    }
+
+    &_off {
+        //keep for reference in case we need it
+    }
+
+    &_disabled {
+        opacity: .3;
+
+        &:hover {
+            background-color: $gray-l30;
+        }
+    }
+
+    &_icon {
+        background: {
+            repeat: no-repeat;
+            position: center;
+        }
+        width: 16px;
+        height: 16px;
+        float: left;
+        display: block;
+    }
+
+    &_label {
+        display: none;
+        padding-left: 3px;
+        line-height: 18px;
+        float: left;
+        color: $gray-l65;
+    }
+
+    &_arrow {
+        display: inline-block;
+        margin: 8px 0 0 1px;
+        width: 0;
+        height: 0;
+        cursor: default;
+        vertical-align: top;
+        border: {
+            style: solid;
+            width: 3px;
+            color: transparent transparent $dark transparent;
+        }
+    }
 }
 
-/* This class is applied to the button when it is "active" (pushed).
-   This style indicates that the feature associated with the button is active
-   i.e. currently writing in bold or when spell checking is enabled. */
-a.cke_button_on {
-    box-shadow: 0 1px 5px rgba(0, 0, 0, .6) inset, 0 1px 0 rgba(0, 0, 0, .2);
-
-    background: #b5b5b5;
-    background-image: linear-gradient(to bottom, #aaa, #cacaca);
-    filter: progid:DXImageTransform.Microsoft.gradient(gradientType=0, startColorstr='#aaaaaa', endColorstr='#cacaca');
-}
-
-/* This class is applied to the button when the feature associated with the
-   button cannot be used (grayed-out).
-   i.e. paste button remains disabled when there is nothing in the clipboard to
-   be pasted. */
-.cke_button_disabled .cke_button_icon {
-    opacity: 0.3;
-}
-
-a.cke_button_on:hover,
-a.cke_button_on:focus,
-a.cke_button_on:active {
-    box-shadow: 0 1px 6px rgba(0, 0, 0, .7) inset, 0 1px 0 rgba(0, 0, 0, .2);
-}
-
-a.cke_button_off:hover,
-a.cke_button_off:focus,
-a.cke_button_off:active,
-a.cke_button_disabled:hover,
-a.cke_button_disabled:focus,
-a.cke_button_disabled:active {
-    box-shadow: 0 0 1px rgba(0, 0, 0, .3) inset;
-
-    background: #ccc;
-    background-image: linear-gradient(to bottom, #f2f2f2, #ccc);
-    filter: progid:DXImageTransform.Microsoft.gradient(gradientType=0, startColorstr='#f2f2f2', endColorstr='#cccccc');
-}
-
-/* The icon which is a visual representation of the button. */
-.cke_button_icon {
-    cursor: inherit;
-    background-repeat: no-repeat;
-    margin-top: 1px;
-    width: 16px;
-    height: 16px;
-    float: left;
-    display: inline-block;
-}
-
-/* The label of the button that stores the name of the feature. By default,
-   labels are invisible. They can be revealed on demand though. */
-.cke_button_label {
-    display: none;
-    padding-left: 3px;
-    margin-top: 1px;
-    line-height: 17px;
-    vertical-align: middle;
-    float: left;
-    cursor: default;
-    color: #474747;
-    text-shadow: 0 1px 0 rgba(255, 255, 255, .5);
-}
-
-/* The small arrow available on buttons that can be expanded
-   (e.g. the color buttons). */
-.cke_button_arrow {
-    /* Arrow in CSS */
-    display: inline-block;
-    margin: 8px 0 0 1px;
-    width: 0;
-    height: 0;
-    cursor: default;
-    vertical-align: top;
-    border-left: 3px solid transparent;
-    border-right: 3px solid transparent;
-    border-top: 3px solid #474747;
-}
-
-/* The vertical separator which is used within a single toolbar to split
-   buttons into sub-groups. */
-.cke_toolbar_separator {
-    float: left;
-    background-color: #c0c0c0;
-    background-color: rgba(0, 0, 0, .2);
-    margin: 5px 2px 0;
-    height: 18px;
-    width: 1px;
-
-    box-shadow: 1px 0 1px rgba(255, 255, 255, .5);
-}
-
-/* The dummy element that breaks toolbars.
-   Once it is placed, the very next toolbar is moved to the new row. */
-.cke_toolbar_break {
-    display: block;
-    clear: left;
-}
-
-/* The button, which when clicked hides (collapses) all the toolbars. */
-a.cke_toolbox_collapser {
+.cke_toolbox_collapser {
     width: 12px;
     height: 11px;
     float: right;
@@ -204,10 +167,302 @@ a.cke_toolbox_collapser {
             color: transparent transparent $dark transparent;
         }
     }
+
+    &_min {
+        .cke_arrow {
+            margin-top: 4px;
+            border: {
+                bottom-color: transparent;
+                top-color: $dark;
+            }
+        }
+    }
 }
 
-.cke_toolbox_collapser.cke_toolbox_collapser_min .cke_arrow {
-    margin-top: 4px;
-    border-bottom-color: transparent;
-    border-top-color: #474747;
+//module footer path
+.cke_path_item {
+    display: inline-block;
+    margin-right: 6px;
+    cursor: default;
+    text-decoration: none;
+    color: $dark;
+    font-weight: bold;
+    font-size: 11px;
+    line-height: 18px;
 }
+
+.cke_voice_label {
+    display: none;
+}
+
+//module editor dialog
+.cke_dialog {
+    visibility: visible;
+
+    &_close_button {
+        //fixme temp bg-color need to add image
+        background-color: $red-l70;
+        position: absolute;
+        cursor: pointer;
+        text-align: center;
+        height: 20px;
+        width: 20px;
+        top: 4px;
+        z-index: 5;
+        right: 5px;
+    }
+
+    &_title {
+        font-weight: bold;
+        font-size: 13px;
+        cursor: move;
+        position: relative;
+        color: $dark;
+        border-bottom: $border-thin-gray;
+        padding: 6px 10px;
+        background-color: $gray-l30;
+    }
+
+    &_body {
+        z-index: 1;
+        background-color: $gray-l30;
+        border: $border-thin-gray;
+
+        label {
+            font-size: 12px;
+        }
+    }
+
+    &_contents {
+        border-collapse: collapse;
+        background-color: $white;
+        overflow: auto;
+        margin-top: 30px;
+        border-top: $border-thin-gray;
+
+        &_body {
+            vertical-align: top;
+            overflow: auto;
+            padding: 10px;
+            margin-top: 22px;
+        }
+    }
+
+    &_footer {
+        border-top: $border-thin-gray;
+        text-align: right;
+        padding: 5px;
+        position: relative;
+        background-color: $gray-l30;
+    }
+
+    &_footer_buttons {
+        width: auto;
+        display: inline;
+    }
+
+    &_spinner {
+        @include animation(dialog_spinner 1s infinite linear);
+        border-radius: 50%;
+        border: {
+            style: solid;
+            width: 2px;
+            color: rgba($dark, .8);
+            left-color: rgba($dark, .6);
+        }
+        width: 12px;
+        height: 12px;
+        overflow: hidden;
+        text-indent: -9999em;
+    }
+
+    //module dialog tabs
+    &_tabs {
+        height: 24px;
+        display: inline-block;
+        margin: 5px 0 0;
+        position: absolute;
+        z-index: 2;
+        left: 10px;
+    }
+
+    &_tab {
+        height: 16px;
+        padding: 4px 8px;
+        margin-right: 3px;
+        display: inline-block;
+        cursor: pointer;
+        line-height: 16px;
+        outline: none;
+        font-size: 12px;
+        color: $dark;
+        border: $border-thin-gray;
+        background-color: $gray-l30;
+
+        &:hover {
+            background-color: darken($gray-l30, 10%);
+            text-decoration: none;
+        }
+
+        &_selected {
+            background-color: $white;
+            border-bottom-color: $white;
+            cursor: default;
+
+            &:hover {
+                background-color: $white;
+            }
+        }
+
+        &_disabled {
+            opacity: .3;
+            cursor: default;
+        }
+    }
+
+    iframe {
+        &.cke_pasteframe {
+            width: 346px;
+            height: 130px;
+            background-color: $white;
+            border: $border-thin-gray;
+        }
+    }
+
+    .cke_centered {
+        text-align: center;
+    }
+}
+
+.cke_single_page {
+    .cke_dialog_tabs {
+        display: none;
+    }
+
+    .cke_dialog_contents {
+        padding-top: 5px;
+        margin-top: 0;
+        border-top: none;
+    }
+}
+
+%text-field-extender {
+    box-sizing: border-box;
+    font-family: $font-base-family;
+    font-size: 14px;
+    color: #787878;
+    border: 1px solid #D1D1D1;
+    background: #F5F5F5;
+    padding: 5px 7px;
+    margin: 0;
+    width: 100%;
+
+    &:focus {
+        color: $dark;
+        border-color: $blue-main;
+        outline: none;
+        background-color: $white;
+    }
+}
+
+.cke_dialog_ui {
+    &_hbox {
+        width: 100%;
+        vertical-align: top;
+    }
+}
+
+select {
+    &.cke_dialog_ui {
+        &_input_select {
+            @extend %text-field-extender;
+            height: 31px;
+            border-radius: 0;
+            width: auto;
+        }
+    }
+}
+
+input {
+    &.cke_dialog_ui {
+        &_input_text {
+            @extend %text-field-extender;
+        }
+    }
+}
+
+textarea {
+    &.cke_dialog_ui {
+        &_input_textarea {
+            @extend %text-field-extender;
+            overflow: auto;
+            resize: none;
+        }
+    }
+}
+
+a {
+    &.cke_dialog_ui_button {
+        @include button() {
+            @include add-gradient($top: $gray-l45, $bottom: $gray-l46);
+            color: $white;
+            font-size: 12px;
+            line-height: 30px;
+            padding: 0 10px;
+        }
+
+        &:hover {
+            text-decoration: none;
+        }
+
+        &_ok {
+            @include button() {
+                @include add-gradient($top: $blue-l30, $bottom: $blue-l40);
+                color: $white;
+                font-size: 12px;
+                line-height: 30px;
+                padding: 0 10px;
+            }
+
+            &.cke_disabled {
+                opacity: .6;
+                cursor: default;
+            }
+        }
+    }
+
+    &.cke_specialchar {
+        @include size(24px);
+        border: $border-thin-light-gray;
+        cursor: pointer;
+        color: $dark;
+        display: block;
+        text-align: center;
+
+        &:hover {
+            background-color: darken($white, 10%);
+            text-decoration: none;
+        }
+    }
+}
+
+.cke_iframe_shim {
+    display: block;
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: -1;
+    width: 100%;
+    height: 100%;
+}
+
+@include keyframes(dialog_spinner) {
+    0% {
+        @include transform(rotate(0deg));
+    }
+    100% {
+        @include transform(rotate(360deg));
+    }
+}
+
+//module combo box
