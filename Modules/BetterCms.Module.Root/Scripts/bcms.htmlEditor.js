@@ -154,6 +154,8 @@ bettercms.define('bcms.htmlEditor', ['bcms.jquery', 'bcms', 'ckeditor', 'bcms.ma
 
         CKEDITOR.replace(id, options);
         CKEDITOR.instances[id].contentId = editingContentId;
+        CKEDITOR.instances[id].codeEditorMode = options.codeEditorMode;
+        CKEDITOR.instances[id].aceEditorOptions = options.aceEditorOptions;
 
         CKEDITOR.instances[id].InsertImageClicked = function (editor) {
             bcms.trigger(htmlEditor.events.insertImage, editor);
@@ -189,6 +191,7 @@ bettercms.define('bcms.htmlEditor', ['bcms.jquery', 'bcms', 'ckeditor', 'bcms.ma
             if (editor.mode == 'source') {
                 if (editor.aceEditor && $.isFunction(editor.aceEditor.insert)) {
                     editor.aceEditor.insert(html);
+                    editor.aceEditor.focus();
                 } else {
                     editor.setData(editor.getData() + html);
                 }
@@ -209,6 +212,10 @@ bettercms.define('bcms.htmlEditor', ['bcms.jquery', 'bcms', 'ckeditor', 'bcms.ma
                 instance.setMode('source');
                 instance.addHtml(text);
             }
+        });
+
+        CKEDITOR.instances[id].on('change', function() {
+            $('#' + this.name).val(CKEDITOR.instances[id].getData());
         });
 
         CKEDITOR.instances[id].smartTags = getSmartTags();
@@ -268,20 +275,6 @@ bettercms.define('bcms.htmlEditor', ['bcms.jquery', 'bcms', 'ckeditor', 'bcms.ma
         var instance = htmlEditor.getInstance(textareaId);
 
         return instance != null && instance.mode === 'source';
-    };
-
-    htmlEditor.updateEditorContent = function (textareaId, contentTextMode) {
-        if (contentTextMode === bcmsContent.contentTextModes.markdown
-                || contentTextMode === bcmsContent.contentTextModes.simpleText) {
-            return true;
-        }
-
-        // Put content from HTML editor to textarea:
-        var instance = htmlEditor.getInstance(textareaId),
-            id = textareaId || htmlEditor.id,
-            html = instance.getData();
-
-        $('#' + id).val(html);
     };
 
     htmlEditor.getInstance = function (textareaId) {

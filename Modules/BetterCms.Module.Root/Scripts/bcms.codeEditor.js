@@ -1,23 +1,54 @@
 ﻿/*jslint unparam: true, white: true, browser: true, devel: true */
 /*global bettercms */
 
-bettercms.define('bcms.codeEditor', ['bcms.jquery', 'bcms', 'ace'], function ($, bcms) {
+bettercms.define('bcms.codeEditor', ['bcms.jquery', 'bcms', 'bcms.htmlEditor', 'ace'], function ($, bcms, htmlEditor) {
     'use strict';
 
     var codeEditor = {},
         selectors = {
             inputFieldForJS: '.bcms-code-field-javascript',
             inputFieldForCSS: '.bcms-code-field-css',
+            alCodeEditors: '.bcms-code-field-javascript, .bcms-code-field-css'
         },
         links = {},
         globalization = {},
-        events = {};
+        events = {},
+        ckEditorConfig = {
+            extraPlugins: 'cms-imagemanager,cms-filemanager,cms-modelvalues,aceeditor,cms-option',
+
+            toolbar: [
+                ['CmsImageManager', 'CmsFileManager', 'Image'],
+                ['CmsOption', 'CmsModelValues'],
+                ['Maximize']
+            ],
+
+            codeEditorMode: true
+        };
 
     // Assign objects to module
     codeEditor.selectors = selectors;
     codeEditor.links = links;
     codeEditor.globalization = globalization;
     codeEditor.events = events;
+
+    function initCkEditor(textarea, mode) {
+        var configuration = $.extend({
+                    aceEditorOptions: {
+                        mode: mode
+                    }
+                },
+                ckEditorConfig),
+            id = textarea.attr('id'),
+            isInitialized = textarea.data('isInitialized');
+
+        if (!isInitialized) {
+            console.log('Init tab');
+            htmlEditor.initializeHtmlEditor(id, null, configuration, true);
+            textarea.data('isInitialized', true);
+        } else {
+            console.log('Skipping Init tab');
+        }
+    }
 
     codeEditor.initialize = function (container) {
         if ($.browser.msie && parseInt($.browser.version, 10) <= 8) {
@@ -30,44 +61,12 @@ bettercms.define('bcms.codeEditor', ['bcms.jquery', 'bcms', 'ace'], function ($,
             return;
         }
 
-        var initAceEditor = function (inputField, mode) {
-            inputField = $(inputField);
-            var id = inputField.attr('id'),
-                isReadOnly = inputField.attr('readonly') === 'readonly',
-                editorId = "aceEditor_" + id,
-                containerId = "aceEditor_container_" + id,
-                aceContainer = $('<div id="' + containerId + '" class="bcms-editor-field-area-container" style="padding:0;"><div id="' + editorId + '" style="width:100%; height:80px;"></div></div>');
-            
-            inputField.hide();
-            inputField.after(aceContainer);
-            
-            var aceEditor = ace.edit(editorId);
-            aceEditor.setReadOnly(isReadOnly);
-            aceEditor.getSession().setMode(mode);
-            aceEditor.setTheme("ace/theme/chrome");
-            aceEditor.setShowPrintMargin(0);
-            aceEditor.getSession().setValue(inputField.val());
-            aceEditor.getSession().setUseWrapMode(false);
-            ace.config.loadModule('ace/ext/language_tools', function () {
-                aceEditor.setOptions({
-                    enableBasicAutocompletion: true,
-                    enableSnippets: true,
-                    maxLines: 20,
-                    minLines: 5
-                });
-            });
-            aceEditor.getSession().on('change', function() {
-                inputField.val(aceEditor.getSession().getValue());
-            });
-            aceContainer.data('aceEditor', aceEditor);
-        };
-        
         container.find(selectors.inputFieldForJS).each(function () {
-            initAceEditor(this, "ace/mode/javascript");
+            initCkEditor($(this), "ace/mode/javascript");
         });
-        
+
         container.find(selectors.inputFieldForCSS).each(function () {
-            initAceEditor(this, "ace/mode/css");
+            initCkEditor($(this), "ace/mode/css");
         });
     };
 

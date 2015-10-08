@@ -85,6 +85,7 @@ bettercms.define('bcms.pages.widgets', ['bcms.jquery', 'bcms', 'bcms.modal', 'bc
 
                 widgetTab: '#bcms-tab-1',
                 optionsTab: '#bcms-tab-2',
+                htmlWidgetJsCssTabOpener: '.bcms-tab-item[data-name="#bcms-tab-3"]',
                 pageContentOptionsForm: '#bcms-options-form',
 
                 editInSourceModeHiddenField: '#bcms-edit-in-source-mode',
@@ -147,8 +148,6 @@ bettercms.define('bcms.pages.widgets', ['bcms.jquery', 'bcms', 'bcms.modal', 'bc
                         },
 
                         beforePost: function () {
-                            htmlEditor.updateEditorContent(editorId);
-
                             var editInSourceMode = htmlEditor.isSourceMode(editorId);
                             childDialog.container.find(selectors.editInSourceModeHiddenField).val(editInSourceMode);
 
@@ -197,8 +196,6 @@ bettercms.define('bcms.pages.widgets', ['bcms.jquery', 'bcms', 'bcms.modal', 'bc
                         },
 
                         beforePost: function () {
-                            htmlEditor.updateEditorContent(editorId);
-
                             var editInSourceMode = htmlEditor.isSourceMode(editorId);
                             childDialog.container.find(selectors.editInSourceModeHiddenField).val(editInSourceMode);
 
@@ -325,7 +322,6 @@ bettercms.define('bcms.pages.widgets', ['bcms.jquery', 'bcms', 'bcms.modal', 'bc
                 customOptions = data.CustomOptions,
                 optionListViewModel = options.createOptionsViewModel(optionsContainer, widgetOptions, customOptions),
                 widgetEditViewModel = new WidgetEditViewModel(data);
-                
 
             ko.applyBindings(optionListViewModel, optionsContainer.get(0));
             ko.applyBindings(widgetEditViewModel, widgetEditContainer.get(0));
@@ -352,7 +348,9 @@ bettercms.define('bcms.pages.widgets', ['bcms.jquery', 'bcms', 'bcms.modal', 'bc
             htmlEditor.initializeHtmlEditor(editorId, data.Id, {}, editInSourceMode);
             htmlEditor.enableInsertDynamicRegion(editorId, false, data.LastDynamicRegionNumber);
 
-            codeEditor.initialize(dialog.container);
+            dialog.container.find(selectors.htmlWidgetJsCssTabOpener).on('click', function () {
+                codeEditor.initialize(dialog.container);
+            });
 
             return optionListViewModel;
         };
@@ -771,16 +769,6 @@ bettercms.define('bcms.pages.widgets', ['bcms.jquery', 'bcms', 'bcms.modal', 'bc
             statusContainer.html(status);
             row.find(selectors.widgetStatusCell).html(statusContainer);
         };
-
-        /**
-        * Function tries to resolve ace editor container ithin given container and focuses the editor
-        */
-        function focusAceEditor(container) {
-            var aceEditor = container.find(selectors.aceEditorContainer).data('aceEditor');
-            if (aceEditor != null) {
-                aceEditor.focus();
-            }
-        }
 
         /**
         * Called when content view model is created

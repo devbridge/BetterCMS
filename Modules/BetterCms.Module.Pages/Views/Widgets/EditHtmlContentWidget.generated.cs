@@ -379,7 +379,7 @@ WriteLiteral("                    ");
 
             
             #line 63 "..\..\Views\Widgets\EditHtmlContentWidget.cshtml"
-               Write(Html.TextAreaFor(model => model.CustomCSS, new { @class = "bcms-editor-field-area bcms-code-field bcms-code-field-css" }));
+               Write(Html.TextAreaFor(model => model.CustomCSS, new { @class = "bcms-editor-field-area bcms-code-field bcms-code-field-css", @id = Guid.NewGuid() }));
 
             
             #line default
@@ -407,7 +407,7 @@ WriteLiteral("                    ");
 
             
             #line 68 "..\..\Views\Widgets\EditHtmlContentWidget.cshtml"
-               Write(Html.TextAreaFor(model => model.CustomJS, new { @class = "bcms-editor-field-area bcms-code-field bcms-code-field-javascript" }));
+               Write(Html.TextAreaFor(model => model.CustomJS, new { @class = "bcms-editor-field-area bcms-code-field bcms-code-field-javascript", id = Guid.NewGuid() }));
 
             
             #line default

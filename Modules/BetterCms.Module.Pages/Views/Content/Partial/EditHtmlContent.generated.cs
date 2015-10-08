@@ -285,7 +285,7 @@ WriteLiteral("    ");
 
             
             #line 44 "..\..\Views\Content\Partial\EditHtmlContent.cshtml"
-Write(Html.TextAreaFor(model => model.CustomCss, new { @class = "bcms-editor-field-area bcms-code-field bcms-code-field-css", @style = "width:820px;" }));
+Write(Html.TextAreaFor(model => model.CustomCss, new { @class = "bcms-editor-field-area bcms-code-field bcms-code-field-css", @style = "width:820px;", @id = Guid.NewGuid() }));
 
             
             #line default
@@ -354,7 +354,7 @@ WriteLiteral("    ");
 
             
             #line 54 "..\..\Views\Content\Partial\EditHtmlContent.cshtml"
-Write(Html.TextAreaFor(model => model.CustomJs, new { @class = "bcms-editor-field-area bcms-code-field bcms-code-field-javascript", @style = "width:820px;" }));
+Write(Html.TextAreaFor(model => model.CustomJs, new { @class = "bcms-editor-field-area bcms-code-field bcms-code-field-javascript", @style = "width:820px;", @id = Guid.NewGuid() }));
 
             
             #line default
