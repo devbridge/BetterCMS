@@ -20,7 +20,7 @@ bettercms.define('bcms.pages.content', ['bcms.jquery', 'bcms', 'bcms.modal', 'bc
                 htmlEditor: '.bcms-contenthtml',
                 destroyDraftVersionLink: '.bcms-messages-draft-destroy',
                 pageContentUserConfirmationHiddenField: '#bcms-user-confirmed-region-deletion',
-                htmlContentContainer: '.bcms-scroll-window:first',
+                htmlContentJsCssTabOpener: '.bcms-tab-item[data-name="#bcms-tab-2"]',
 
                 widgetsSearchButton: '#bcms-advanced-content-search-btn',
                 widgetsSearchInput: '#bcms-advanced-content-search',
@@ -38,12 +38,6 @@ bettercms.define('bcms.pages.content', ['bcms.jquery', 'bcms', 'bcms.modal', 'bc
                 anyTab: '.bcms-tab-item',
 
                 widgetsContent: '.bcms-widgets',
-
-                enableCustomJs: '#bcms-enable-custom-js',
-                enableCustomCss: '#bcms-enable-custom-css',
-                customJsContainer: '#bcms-custom-js-container',
-                customCssContainer: '#bcms-custom-css-container',
-                aceEditorContainer: '.bcms-editor-field-area-container:first',
 
                 editInSourceModeHiddenField: '#bcms-edit-in-source-mode',
                 contentTextModeHiddenField: '#bcms-content-text-mode',
@@ -295,10 +289,11 @@ bettercms.define('bcms.pages.content', ['bcms.jquery', 'bcms', 'bcms.modal', 'bc
 
             initializeWidgets(settings.dialog.container, settings.dialog, onInsert);
 
-            pagesContent.initializeCustomTextArea(settings.dialog);
+            settings.dialog.container.find(selectors.htmlContentJsCssTabOpener).on('click', function () {
+                codeEditor.initialize(settings.dialog.container);
+            });
 
-            var editorHeight = modal.maximizeChildHeight(settings.dialog.container.find("#" + settings.editorId),
-                settings.dialog.container.find(selectors.htmlContentContainer));
+            var editorHeight = modal.maximizeChildHeight(settings.dialog.container.find("#" + settings.editorId), settings.dialog);
 
             if (settings.contentTextMode == content.contentTextModes.markdown) {
                 htmlEditor.initializeMarkdownEditor(settings.editorId, '', {});
@@ -338,10 +333,11 @@ bettercms.define('bcms.pages.content', ['bcms.jquery', 'bcms', 'bcms.modal', 'bc
                 canPublish = security.IsAuthorized(["BcmsPublishContent"]),
                 form = settings.dialog.container.find(selectors.firstForm);
 
-            pagesContent.initializeCustomTextArea(settings.dialog);
+            settings.dialog.container.find(selectors.htmlContentJsCssTabOpener).on('click', function () {
+                codeEditor.initialize(settings.dialog.container);
+            });
 
-            var editorHeight = modal.maximizeChildHeight(settings.dialog.container.find("#" + settings.editorId),
-                settings.dialog.container.find(selectors.htmlContentContainer));
+            var editorHeight = modal.maximizeChildHeight(settings.dialog.container.find("#" + settings.editorId), settings.dialog);
 
             if (settings.contentTextMode == content.contentTextModes.markdown) {
                 htmlEditor.initializeMarkdownEditor(settings.editorId, settings.data.ContentId, {});
@@ -399,21 +395,6 @@ bettercms.define('bcms.pages.content', ['bcms.jquery', 'bcms', 'bcms.modal', 'bc
             }
 
             settings.dialog.container.find(selectors.dataPickers).initializeDatepicker();
-        };
-
-        /**
-       * Initializes custom css and js text fields.
-       */
-        pagesContent.initializeCustomTextArea = function (dialog) {
-            dialog.container.find(selectors.enableCustomCss).on('change', function () {
-                showHideCustomCssText(dialog, true);
-            });
-
-            dialog.container.find(selectors.enableCustomJs).on('change', function () {
-                showHideCustomJsText(dialog, true);
-            });
-            showHideCustomCssText(dialog);
-            showHideCustomJsText(dialog);
         };
 
         /**
@@ -818,62 +799,6 @@ bettercms.define('bcms.pages.content', ['bcms.jquery', 'bcms', 'bcms.modal', 'bc
                         return false;
                     }
                 });
-        };
-
-        /**
-        * Function tries to resolve ace editor container in given container and focuses the editor
-        */
-        function focusAceEditor(container) {
-            var aceEditor = container.find(selectors.aceEditorContainer).data('aceEditor');
-            if (aceEditor != null) {
-                aceEditor.focus();
-            }
-        }
-
-        /**
-        * IE11 fix: recall resize method after editors initialization
-        */
-        function resizeAceEditor(container) {
-            setTimeout(function () {
-                var aceEditor = container.find(selectors.aceEditorContainer).data('aceEditor');
-                if (aceEditor && $.isFunction(aceEditor.resize)) {
-                    aceEditor.resize(true);
-                    aceEditor.renderer.updateFull();
-                }
-            }, 20);
-        }
-
-        /**
-        * Shows/hides custom css field in a content edit form
-        */
-        function showHideCustomCssText(dialog, focus) {
-            var customCssContainer = dialog.container.find(selectors.customCssContainer);
-
-            if (dialog.container.find(selectors.enableCustomCss).attr('checked')) {
-                customCssContainer.show();
-                codeEditor.initialize(customCssContainer);
-                resizeAceEditor(customCssContainer);
-                if (focus) {
-                    focusAceEditor(customCssContainer);
-                }
-            } else {
-                customCssContainer.hide();
-            }
-        };
-
-        function showHideCustomJsText(dialog, focus) {
-            var customJsContainer = dialog.container.find(selectors.customJsContainer);
-
-            if (dialog.container.find(selectors.enableCustomJs).attr('checked')) {
-                customJsContainer.show();
-                codeEditor.initialize(customJsContainer);
-                resizeAceEditor(customJsContainer);
-                if (focus) {
-                    focusAceEditor(customJsContainer);
-                }
-            } else {
-                customJsContainer.hide();
-            }
         };
 
         /**

@@ -89,9 +89,11 @@ Edited by the Devbridge Better CMS team.
                                     bcms.logger.trace('going back to CKEditor Design view');
 
                                     // Set the data of the CKEditor to the value of ACE Editor.
-                                    editor.setData(aceEditor.getSession().getValue(), function() {
+                                    var currentValue = aceEditor.getSession().getValue();
+                                    editor.setData(currentValue, function () {
                                         bcms.logger.trace('change saved');
                                     }, false);
+                                    $('#' + editor.name).val(currentValue);
 
                                     // Destroy the editor.
                                     aceEditor.destroy();
@@ -149,8 +151,7 @@ Edited by the Devbridge Better CMS team.
 
                                 // Set the data of the CKEditor to the value of ACE Editor.
                                 var currentValue = aceEditor.getSession().getValue();
-
-                                editor.setData(aceEditor.getSession().getValue(), function() {
+                                editor.setData(currentValue, function () {
                                     bcms.logger.trace('change saved');
                                 }, false);
                                 $('#' + editor.name).val(currentValue);

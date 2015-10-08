@@ -813,8 +813,9 @@ bettercms.define('bcms.modal', ['bcms.jquery', 'bcms', 'bcms.tabs', 'bcms.ko.ext
     /**
     * Maximizes dialog's child height up to maximum visible value.
     */
-    modal.maximizeChildHeight = function (obj, contentContainer) {
-        var containerHeight = contentContainer.outerHeight(),
+    modal.maximizeChildHeight = function (obj, dialog) {
+        var contentContainer = dialog.container.find(selectors.scrollWindow).first(),
+            containerHeight = contentContainer.outerHeight(),
             objectHeight = obj.outerHeight(),
             childrenHeight = 0,
             newHeight = obj.height(),
