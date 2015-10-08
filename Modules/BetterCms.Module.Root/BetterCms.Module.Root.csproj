@@ -170,6 +170,11 @@
     <Compile Include="Commands\Language\GetLanguageList\GetLanguageListCommand.cs" />
     <Compile Include="Commands\Language\SaveLanguage\SaveLanguageCommand.cs" />
     <Compile Include="Commands\Language\SuggestLanguages\SuggestLanguagesCommand.cs" />
+    <Compile Include="Content\Resources\RootGlobalization.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>RootGlobalization.resx</DependentUpon>
+    </Compile>
     <Compile Include="Controllers\LanguageController.cs" />
     <Compile Include="Events\ContentEvents.cs" />
     <Compile Include="Events\CategoryEvents.cs" />
@@ -190,11 +195,6 @@
     <Compile Include="Commands\Tag\GetTag\GetTagCommand.cs" />
     <Compile Include="Commands\Tag\SaveTag\SaveTagCommand.cs" />
     <Compile Include="Commands\Tag\SearchTags\SearchTagsCommand.cs" />
-    <Compile Include="Content\Resources\RootGlobalization.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>RootGlobalization.resx</DependentUpon>
-    </Compile>
     <Compile Include="Controllers\AuthenticationController.cs" />
     <Compile Include="Controllers\CategoryController.cs" />
     <Compile Include="Controllers\CmsController.cs" />
@@ -723,6 +723,7 @@
     <EmbeddedResource Include="Content\Resources\RootGlobalization.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <SubType>Designer</SubType>
+      <LastGenOutput>RootGlobalization.Designer.cs</LastGenOutput>
     </EmbeddedResource>
     <EmbeddedResource Include="Content\themes\base\images\ui-bg_flat_0_aaaaaa_40x100.png" />
     <EmbeddedResource Include="Content\themes\base\images\ui-bg_flat_75_ffffff_40x100.png" />

@@ -126,7 +126,8 @@ bettercms.define('bcms.pages.content', ['bcms.jquery', 'bcms', 'bcms.modal', 'bc
                                 editInSourceMode: editInSourceMode, 
                                 enableInsertDynamicRegion: enableInsertDynamicRegion, 
                                 editorId: editorId,
-                                data: data.Data, onSuccess: onSuccess,
+                                data: data.Data,
+                                onSuccess: onSuccess,
                                 includeChildRegions: includeChildRegions,
                                 contentTextMode: contentTextMode
                             };
@@ -472,18 +473,31 @@ bettercms.define('bcms.pages.content', ['bcms.jquery', 'bcms', 'bcms.modal', 'bc
         /**
         * Inserts widget to CMS page
         */
-        pagesContent.insertWidget = function (self, dialog, onSuccess, includeChildRegions) {
-            var regionId = dialog.container.find(selectors.contentFormRegionId).val(),
-                parentPageContentId = dialog.container.find(selectors.parentPageContentId).val(),
-                widgetContainer = $(self).parents(selectors.widgetContainerBlock),
-                contentId = widgetContainer.data('originalId'),
-                url = $.format(links.insertContentToPageUrl, bcms.pageId, contentId, regionId, parentPageContentId, includeChildRegions);
-
-            if (!onSuccess) {
-                onSuccess = function () {
-                    redirect.ReloadWithAlert();
-                };
+        pagesContent.insertWidget = function (opts) {
+            if (!opts.regionViewModel) {
+                bcms.logger.error('Failed to insert the widget to the page. Missing region info.');
+                return;
             }
+
+            if (!opts.widget) {
+                bcms.logger.error('Failed to insert the widget to the page. Missing widget info.');
+                return;
+            }
+
+            opts = $.extend({
+                onSuccess: function() {
+                    redirect.ReloadWithAlert();
+                }
+            }, opts);
+
+            console.log(opts);
+
+            var url = $.format(links.insertContentToPageUrl,
+                    bcms.pageId,
+                    opts.widget.id,
+                    opts.regionViewModel.id,
+                    opts.regionViewModel.parentPageContentId,
+                    opts.includeChildRegions || false);
 
             $.ajax({
                 type: 'POST',
@@ -492,9 +506,11 @@ bettercms.define('bcms.pages.content', ['bcms.jquery', 'bcms', 'bcms.modal', 'bc
                 dataType: 'json',
                 cache: false,
                 beforeSend: function () {
-                    dialog.close();
+                    if (opts.widget.dialog) {
+                        opts.widget.dialog.close();
+                    }
 
-                    dialog = modal.info({
+                    opts.widget.dialog = modal.info({
                         title: globalization.insertingWidgetInfoHeader,
                         content: globalization.insertingWidgetInfoMessage,
                         disableCancel: true,
@@ -503,9 +519,12 @@ bettercms.define('bcms.pages.content', ['bcms.jquery', 'bcms', 'bcms.modal', 'bc
                 },
 
                 success: function (data) {
-                    dialog.close();
+                    if (opts.widget.dialog) {
+                        opts.widget.dialog.close();
+                    }
+
                     if (data && data.Success) {
-                        onSuccess(data);
+                        opts.onSuccess(data);
                     } else {
                         modal.alert({
                             title: globalization.errorTitle,
@@ -515,13 +534,18 @@ bettercms.define('bcms.pages.content', ['bcms.jquery', 'bcms', 'bcms.modal', 'bc
                 },
 
                 error: function () {
-                    dialog.close();
+                    if (opts.widget.dialog) {
+                        opts.widget.dialog.close();
+                    }
+
                     modal.alert({
                         title: globalization.errorTitle,
                         content: globalization.insertingWidgetErrorMessage
                     });
                 }
             });
+
+            return false;
         };
 
         /**
@@ -844,10 +868,15 @@ bettercms.define('bcms.pages.content', ['bcms.jquery', 'bcms', 'bcms.modal', 'bc
         * Inserts child widget to the content
         */
         function onWidgetInsert(opts) {
-            var htmlContentEditor = opts.editor;
-
-            if (!htmlContentEditor) {
+            if (!$.isFunction(opts.onInsert) && !opts.regionViewModel) {
                 return;
+            }
+
+            if (!$.isFunction(opts.onInsert)) {
+                opts.onInsert = function (widget) {
+                    opts.widget = widget;
+                    pagesContent.insertWidget(opts);
+                }
             }
 
             var dialog,
@@ -857,14 +886,16 @@ bettercms.define('bcms.pages.content', ['bcms.jquery', 'bcms', 'bcms.modal', 'bc
                         title = widgetContainer.find(selectors.widgetName).text(),
                         html = '<widget data-id="' + contentId + '" data-assign-id="' + bcms.createGuid() + '">' + title + '</widget>';
 
-                    if (htmlContentEditor.mode == 'source') {
-                        htmlContentEditor.addHtml(html);
-                    } else {
-                        var re = CKEDITOR.dom.element.createFromHtml(html, htmlContentEditor.document);
-                        htmlContentEditor.insertElement(re);
-                    }
+                    var result = opts.onInsert({
+                        id: contentId,
+                        title: title,
+                        html: html,
+                        dialog: dialog
+                    });
 
-                    dialog.close();
+                    if (result !== false) {
+                        dialog.close();
+                    }
                 };
 
             dialog = modal.open({
@@ -896,7 +927,7 @@ bettercms.define('bcms.pages.content', ['bcms.jquery', 'bcms', 'bcms.modal', 'bc
         bcms.on(bcms.events.sortPageContent, pagesContent.onSortPageContent);
         bcms.on(bcms.events.contentModelCreated, onContentModelCreated);
         bcms.on(htmlEditor.events.insertDynamicRegion, onDynamicRegionInsert);
-        bcms.on(htmlEditor.events.insertWidget, onWidgetInsert);
+        bcms.on(bcms.events.insertWidget, onWidgetInsert);
 
         /**
         * Register initialization

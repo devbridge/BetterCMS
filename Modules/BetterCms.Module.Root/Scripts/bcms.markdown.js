@@ -161,17 +161,13 @@
                 textarea: obj.textarea
             };
 
-            bcms.trigger(currentEditor.events.insertWidget, {
-                editor: {
-                    addHtml: function (html) {
-                        settings.selectionStart = settings.caretPosition + html.length;
-                        settings.selectionLength = 0;
+            bcms.trigger(bcms.events.insertWidget, {
+                onInsert: function(widget) {
+                    settings.selectionStart = settings.caretPosition + widget.html.length;
+                    settings.selectionLength = 0;
 
-                        addBlockToTextarea(html, settings);
-                    },
-                    mode: 'source'
-                },
-                editorId: id
+                    addBlockToTextarea(widget.html, settings);
+                }
             });
         }
 

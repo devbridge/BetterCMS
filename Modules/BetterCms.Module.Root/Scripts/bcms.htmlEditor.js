@@ -34,7 +34,6 @@ bettercms.define('bcms.htmlEditor', ['bcms.jquery', 'bcms', 'ckeditor', 'bcms.ma
             insertImage: 'insertImage',
             insertFile: 'insertFile',
             insertDynamicRegion: 'insertDynamicRegion',
-            insertWidget: 'insertWidget',
             editChildWidgetOptions: 'editChildWidgetOptions',
             editWidget: 'editWidget'
         },
@@ -183,9 +182,15 @@ bettercms.define('bcms.htmlEditor', ['bcms.jquery', 'bcms', 'ckeditor', 'bcms.ma
         };
 
         CKEDITOR.instances[id].InsertWidget = function (editor) {
-            bcms.trigger(htmlEditor.events.insertWidget, {
-                editor: editor,
-                editorId: id
+            bcms.trigger(bcms.events.insertWidget, {
+                onInsert: function(widget) {
+                    if (editor.mode === 'source') {
+                        editor.addHtml(widget.html);
+                    } else {
+                        var re = CKEDITOR.dom.element.createFromHtml(widget.html, editor.document);
+                        editor.insertElement(re);
+                    }
+                }
             });
         };
 

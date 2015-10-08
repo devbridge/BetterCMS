@@ -161,11 +161,22 @@ WriteLiteral(">");
             
             #line default
             #line hidden
-WriteLiteral("</div>\r\n                    </div>\r\n                </div>\r\n                <div");
+WriteLiteral("</div>\r\n                        <div");
 
-WriteLiteral(" class=\"bcms-region-button bcms-region-addwidget\"");
+WriteLiteral(" class=\"bcms-region-pick-editor bcms-region-insertwidget\"");
 
-WriteLiteral("></div>\r\n                <div");
+WriteLiteral(">");
+
+            
+            #line 17 "..\..\Views\Shared\Partial\Region.cshtml"
+                                                                                 Write(RootGlobalization.Button_AddContent_Widget);
+
+            
+            #line default
+            #line hidden
+WriteLiteral("</div>\r\n                    </div>\r\n                </div>\r\n                ");
+
+WriteLiteral("\r\n                <div");
 
 WriteLiteral(" class=\"bcms-region-button bcms-region-sortcontent\"");
 
@@ -178,7 +189,7 @@ WriteLiteral(" class=\"bcms-sort-block\"");
 WriteLiteral("></div>\r\n");
 
             
-            #line 23 "..\..\Views\Shared\Partial\Region.cshtml"
+            #line 24 "..\..\Views\Shared\Partial\Region.cshtml"
         }
 
             
