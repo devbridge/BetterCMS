@@ -42,12 +42,10 @@ bettercms.define('bcms.pages.widgets', ['bcms.jquery', 'bcms', 'bcms.modal', 'bc
                 widgetUsagesType_MasterPage: null
             },
             selectors = {
-                enableCustomCss: '#bcms-enable-custom-css',
                 desirableStatus: '#bcmsWidgetDesirableStatus',
                 destroyDraftVersionLink: '.bcms-messages-draft-destroy',
                 contentId: '#bcmsContentId',
                 contentVersion: '#bcmsContentVersion',
-                aceEditorContainer: '.bcms-editor-field-area-container:first',
 
                 messagesContainer: "#bcms-edit-widget-messages",
 
@@ -345,8 +343,11 @@ bettercms.define('bcms.pages.widgets', ['bcms.jquery', 'bcms', 'bcms.modal', 'bc
                 });
             });
 
+            var editorHeight = modal.maximizeChildHeight(dialog.container.find("#" + editorId), dialog);
+
             htmlEditor.initializeHtmlEditor(editorId, data.Id, {
-                cmsEditorType: htmlEditor.cmsEditorTypes.widget
+                cmsEditorType: htmlEditor.cmsEditorTypes.widget,
+                height: editorHeight
             }, editInSourceMode);
             htmlEditor.enableInsertDynamicRegion(editorId, false, data.LastDynamicRegionNumber);
 

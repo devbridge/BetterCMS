@@ -67,7 +67,7 @@ namespace BetterCms.Module.Pages.Command.Content.GetPageHtmlContent
                                                 ContentVersion = pageContent.Content.Version,
                                                 CustomCss = content.CustomCss,
                                                 CustomJs = content.CustomJs,
-                                                EanbledCustomJs = content.UseCustomJs,
+                                                EnabledCustomJs = content.UseCustomJs,
                                                 EnabledCustomCss = content.UseCustomCss,
                                                 EditInSourceMode = content.EditInSourceMode,
                                                 EnableInsertDynamicRegion = pageContent.Page.IsMasterPage,

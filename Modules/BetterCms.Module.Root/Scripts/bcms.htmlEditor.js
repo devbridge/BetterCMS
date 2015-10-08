@@ -213,6 +213,10 @@ bettercms.define('bcms.htmlEditor', ['bcms.jquery', 'bcms', 'ckeditor', 'bcms.ma
             }
         };
 
+        CKEDITOR.instances[id].on('change', function () {
+            $('#' + this.name).val(CKEDITOR.instances[id].getData());
+        });
+
         CKEDITOR.instances[id].on('instanceReady', function () {
             // Hide native image button container
             $(selectors.imageButtonContainer).hide();
@@ -224,11 +228,8 @@ bettercms.define('bcms.htmlEditor', ['bcms.jquery', 'bcms', 'ckeditor', 'bcms.ma
             if (editMode === true) {
                 instance.setMode('source');
                 instance.addHtml(text);
+                $('#' + this.name).val(text);
             }
-        });
-
-        CKEDITOR.instances[id].on('change', function() {
-            $('#' + this.name).val(CKEDITOR.instances[id].getData());
         });
 
         CKEDITOR.instances[id].smartTags = getSmartTags();

@@ -151,7 +151,7 @@ namespace BetterCms.Module.Pages.ViewModels.Content
         /// <value>
         ///   <c>true</c> if custom javascript is enabled; otherwise, <c>false</c>.
         /// </value>
-        public bool EanbledCustomJs { get; set; }
+        public bool EnabledCustomJs { get; set; }
 
         /// <summary>
         /// Gets or sets a value indicating whether to enable custom CSS.

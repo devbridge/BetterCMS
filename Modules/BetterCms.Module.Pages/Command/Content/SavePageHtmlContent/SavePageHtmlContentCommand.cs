@@ -129,7 +129,7 @@ namespace BetterCms.Module.Pages.Command.Content.SavePageHtmlContent
                     Html = model.PageContent ?? string.Empty,
                     UseCustomCss = model.EnabledCustomCss,
                     CustomCss = model.CustomCss,
-                    UseCustomJs = model.EanbledCustomJs,
+                    UseCustomJs = model.EnabledCustomJs,
                     CustomJs = model.CustomJs,
                     EditInSourceMode = model.EditInSourceMode,
                     ContentTextMode = ContentTextMode.Html

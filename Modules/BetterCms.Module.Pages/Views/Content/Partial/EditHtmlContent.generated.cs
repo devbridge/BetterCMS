@@ -158,7 +158,7 @@ WriteLiteral("            ");
 
             
             #line 22 "..\..\Views\Content\Partial\EditHtmlContent.cshtml"
-       Write(Html.DateTextBoxFor(model => model.LiveFrom, Model.LiveFrom, new Dictionary<string, object> {{"class", "bcms-editor-field-box bcms-datepicker"}, {"style", "width: 127px;"}}));
+       Write(Html.DateTextBoxFor(model => model.LiveFrom, Model.LiveFrom, new Dictionary<string, object> { { "class", "bcms-editor-field-box bcms-datepicker" }, { "style", "width: 127px;" } }));
 
             
             #line default
@@ -201,7 +201,7 @@ WriteLiteral("            ");
 
             
             #line 29 "..\..\Views\Content\Partial\EditHtmlContent.cshtml"
-       Write(Html.DateTextBoxFor(model => model.LiveTo, Model.LiveTo, new Dictionary<string, object> {{"class", "bcms-editor-field-box bcms-datepicker"}, {"style", "width: 127px;"}}));
+       Write(Html.DateTextBoxFor(model => model.LiveTo, Model.LiveTo, new Dictionary<string, object> { { "class", "bcms-editor-field-box bcms-datepicker" }, { "style", "width: 127px;" } }));
 
             
             #line default
@@ -217,7 +217,7 @@ WriteLiteral("            ");
             
             #line default
             #line hidden
-WriteLiteral("\r\n        </div>\r\n    </div>\r\n</div>\r\n<div");
+WriteLiteral("\r\n        </div>\r\n    </div>\r\n</div>\r\n\r\n<div");
 
 WriteLiteral(" class=\"bcms-text-editor-holder\"");
 
@@ -226,146 +226,8 @@ WriteLiteral(">\r\n");
 WriteLiteral("    ");
 
             
-            #line 35 "..\..\Views\Content\Partial\EditHtmlContent.cshtml"
+            #line 36 "..\..\Views\Content\Partial\EditHtmlContent.cshtml"
 Write(Html.TextAreaFor(model => model.PageContent, new { @class = "bcms-contenthtml", @id = Guid.NewGuid() }));
-
-            
-            #line default
-            #line hidden
-WriteLiteral("\r\n</div>\r\n\r\n<div");
-
-WriteLiteral(" class=\"bcms-edit-check-field\"");
-
-WriteLiteral(">\r\n");
-
-WriteLiteral("    ");
-
-            
-            #line 39 "..\..\Views\Content\Partial\EditHtmlContent.cshtml"
-Write(Html.CheckBoxFor(model => model.EnabledCustomCss, new { @id = "bcms-enable-custom-css" }));
-
-            
-            #line default
-            #line hidden
-WriteLiteral("\r\n    <div");
-
-WriteLiteral(" class=\"bcms-edit-label\"");
-
-WriteLiteral(">");
-
-            
-            #line 40 "..\..\Views\Content\Partial\EditHtmlContent.cshtml"
-                            Write(Html.Raw(PagesGlobalization.HtmlContent_EnableCustomCss_Title));
-
-            
-            #line default
-            #line hidden
-WriteLiteral("</div>\r\n</div>\r\n<div");
-
-WriteLiteral(" class=\"bcms-input-list-holder\"");
-
-WriteLiteral(" id=\"bcms-custom-css-container\"");
-
-WriteLiteral(">\r\n    <div");
-
-WriteLiteral(" class=\"bcms-content-titles\"");
-
-WriteLiteral(">");
-
-            
-            #line 43 "..\..\Views\Content\Partial\EditHtmlContent.cshtml"
-                                Write(PagesGlobalization.HtmlContent_CustomCss_Title);
-
-            
-            #line default
-            #line hidden
-WriteLiteral("</div>\r\n");
-
-WriteLiteral("    ");
-
-            
-            #line 44 "..\..\Views\Content\Partial\EditHtmlContent.cshtml"
-Write(Html.TextAreaFor(model => model.CustomCss, new { @class = "bcms-editor-field-area bcms-code-field bcms-code-field-css", @style = "width:820px;", @id = Guid.NewGuid() }));
-
-            
-            #line default
-            #line hidden
-WriteLiteral("\r\n");
-
-WriteLiteral("    ");
-
-            
-            #line 45 "..\..\Views\Content\Partial\EditHtmlContent.cshtml"
-Write(Html.BcmsValidationMessageFor(model => model.CustomCss));
-
-            
-            #line default
-            #line hidden
-WriteLiteral("\r\n</div>\r\n\r\n<div");
-
-WriteLiteral(" class=\"bcms-edit-check-field\"");
-
-WriteLiteral(">\r\n");
-
-WriteLiteral("    ");
-
-            
-            #line 49 "..\..\Views\Content\Partial\EditHtmlContent.cshtml"
-Write(Html.CheckBoxFor(model => model.EanbledCustomJs, new { @id = "bcms-enable-custom-js" }));
-
-            
-            #line default
-            #line hidden
-WriteLiteral("\r\n    <div");
-
-WriteLiteral(" class=\"bcms-edit-label\"");
-
-WriteLiteral(">");
-
-            
-            #line 50 "..\..\Views\Content\Partial\EditHtmlContent.cshtml"
-                            Write(Html.Raw(PagesGlobalization.HtmlContent_EnableCustomJs_Title));
-
-            
-            #line default
-            #line hidden
-WriteLiteral("</div>\r\n</div>\r\n<div");
-
-WriteLiteral(" class=\"bcms-input-list-holder\"");
-
-WriteLiteral(" id=\"bcms-custom-js-container\"");
-
-WriteLiteral(">\r\n    <div");
-
-WriteLiteral(" class=\"bcms-content-titles\"");
-
-WriteLiteral(">");
-
-            
-            #line 53 "..\..\Views\Content\Partial\EditHtmlContent.cshtml"
-                                Write(PagesGlobalization.HtmlContent_CustomJs_Title);
-
-            
-            #line default
-            #line hidden
-WriteLiteral("</div>\r\n");
-
-WriteLiteral("    ");
-
-            
-            #line 54 "..\..\Views\Content\Partial\EditHtmlContent.cshtml"
-Write(Html.TextAreaFor(model => model.CustomJs, new { @class = "bcms-editor-field-area bcms-code-field bcms-code-field-javascript", @style = "width:820px;", @id = Guid.NewGuid() }));
-
-            
-            #line default
-            #line hidden
-WriteLiteral("\r\n");
-
-WriteLiteral("    ");
-
-            
-            #line 55 "..\..\Views\Content\Partial\EditHtmlContent.cshtml"
-Write(Html.BcmsValidationMessageFor(model => model.CustomJs));
 
             
             #line default

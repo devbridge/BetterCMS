@@ -450,6 +450,16 @@
     <Compile Include="Registration\SeoJsModuleIncludeDescriptor.cs" />
     <Compile Include="Registration\PagePropertiesJsModuleIncludeDescriptor.cs" />
     <Compile Include="Services\DefaultPageService.cs" />
+    <Compile Include="Views\Content\Partial\EditHtmlContent.generated.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>EditHtmlContent.cshtml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Content\Partial\EditHtmlContentJsCss.generated.cs">
+      <DependentUpon>EditHtmlContentJsCss.cshtml</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+    </Compile>
     <Compile Include="Views\Content\Partial\WidgetRecent.generated.cs">
       <DependentUpon>WidgetRecent.cshtml</DependentUpon>
       <AutoGen>True</AutoGen>
@@ -504,11 +514,6 @@
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>PageContentOptions.cshtml</DependentUpon>
-    </Compile>
-    <Compile Include="Views\Content\Partial\EditHtmlContent.generated.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>EditHtmlContent.cshtml</DependentUpon>
     </Compile>
     <Compile Include="Views\Content\Partial\SelectWidget.generated.cs">
       <AutoGen>True</AutoGen>
@@ -764,8 +769,8 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Content\Resources\PagesGlobalization.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
-      <LastGenOutput>PagesGlobalization.Designer.cs</LastGenOutput>
       <SubType>Designer</SubType>
+      <LastGenOutput>PagesGlobalization.Designer.cs</LastGenOutput>
     </EmbeddedResource>
     <EmbeddedResource Include="Content\Styles\Images\icn-zoom.png" />
     <EmbeddedResource Include="Content\Styles\Images\loading.gif" />
@@ -834,6 +839,10 @@
     <Content Include="Views\Content\Partial\WidgetRecent.cshtml">
       <Generator>RazorGenerator</Generator>
       <LastGenOutput>WidgetRecent.generated.cs</LastGenOutput>
+    </Content>
+    <Content Include="Views\Content\Partial\EditHtmlContentJsCss.cshtml">
+      <Generator>RazorGenerator</Generator>
+      <LastGenOutput>EditHtmlContentJsCss.generated.cs</LastGenOutput>
     </Content>
     <None Include="Views\Shared\Partial\WarnMessageAboutDraft.cshtml">
       <Generator>RazorGenerator</Generator>
