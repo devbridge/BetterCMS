@@ -140,8 +140,6 @@ bettercms.define('bcms.pages.content', ['bcms.jquery', 'bcms', 'bcms.modal', 'bc
                         },
 
                         beforePost: function () {
-                            htmlEditor.updateEditorContent(editorId, contentTextMode);
-
                             var editInSourceMode = htmlEditor.isSourceMode(editorId, contentTextMode);
                             dialog.container.find(selectors.editInSourceModeHiddenField).val(editInSourceMode);
                             dialog.container.find(selectors.contentTextModeHiddenField).val(contentTextMode);
@@ -239,14 +237,13 @@ bettercms.define('bcms.pages.content', ['bcms.jquery', 'bcms', 'bcms.modal', 'bc
             });
         };
 
-        function initializeWidgetsTab(dialog, onInsert, editorId) {
+        function initializeWidgetsTab(dialog, onInsert) {
             dialog.container.find(selectors.widgetsSearchButton).on('click', function () {
                 pagesContent.updateWidgetCategoryList(dialog, onInsert);
             });
 
             dialog.container.find(selectors.widgetCreateButton).on('click', function () {
                 widgets.openCreateHtmlContentWidgetDialog(function (json) {
-                    htmlEditor.updateEditorContent(editorId);
                     // Reload search results after category was created.
                     pagesContent.updateWidgetCategoryList(dialog, onInsert);
                     messages.refreshBox(dialog.container, json);
@@ -288,7 +285,7 @@ bettercms.define('bcms.pages.content', ['bcms.jquery', 'bcms', 'bcms.modal', 'bc
 
             settings.dialog.container.find(selectors.dataPickers).initializeDatepicker(globalization.datePickerTooltipTitle);
 
-            initializeWidgetsTab(settings.dialog, onInsert, settings.editorId);
+            initializeWidgetsTab(settings.dialog, onInsert);
 
             settings.dialog.container.find(selectors.anyTab).click(function () {
                 setTimeout(function () {
@@ -319,8 +316,6 @@ bettercms.define('bcms.pages.content', ['bcms.jquery', 'bcms', 'bcms.modal', 'bc
                 if (settings.enableInsertDynamicRegion) {
                     htmlEditor.enableInsertDynamicRegion(settings.editorId, true, settings.data.LastDynamicRegionNumber);
                 }
-
-                codeEditor.initialize(settings.dialog.container);
             }
         };
 
@@ -364,8 +359,6 @@ bettercms.define('bcms.pages.content', ['bcms.jquery', 'bcms', 'bcms.modal', 'bc
                 if (settings.enableInsertDynamicRegion) {
                     htmlEditor.enableInsertDynamicRegion(settings.editorId, true, settings.data.LastDynamicRegionNumber);
                 }
-
-                codeEditor.initialize(settings.dialog.container);
             }
 
             settings.dialog.container.find(selectors.destroyDraftVersionLink).on('click', function () {
@@ -429,7 +422,7 @@ bettercms.define('bcms.pages.content', ['bcms.jquery', 'bcms', 'bcms.modal', 'bc
         pagesContent.updateWidgetCategoryList = function (dialog, onInsert) {
             $.ajax({
                 url: $.format(links.loadWidgetsUrl, dialog.container.find(selectors.widgetsSearchInput).val()),
-                cache: false,
+                cache: false
             }).done(function (data) {
                 dialog.container.find(selectors.widgetsContainer).html(data);
 
@@ -699,8 +692,6 @@ bettercms.define('bcms.pages.content', ['bcms.jquery', 'bcms', 'bcms.modal', 'bc
                         },
 
                         beforePost: function () {
-                            htmlEditor.updateEditorContent(editorId, contentTextMode);
-
                             var editInSourceMode = htmlEditor.isSourceMode(editorId, contentTextMode);
                             dialog.container.find(selectors.editInSourceModeHiddenField).val(editInSourceMode);
 
@@ -830,7 +821,7 @@ bettercms.define('bcms.pages.content', ['bcms.jquery', 'bcms', 'bcms.modal', 'bc
         };
 
         /**
-        * Function tries to resolve ace editor container ithin given container and focuses the editor
+        * Function tries to resolve ace editor container in given container and focuses the editor
         */
         function focusAceEditor(container) {
             var aceEditor = container.find(selectors.aceEditorContainer).data('aceEditor');
@@ -860,6 +851,7 @@ bettercms.define('bcms.pages.content', ['bcms.jquery', 'bcms', 'bcms.modal', 'bc
 
             if (dialog.container.find(selectors.enableCustomCss).attr('checked')) {
                 customCssContainer.show();
+                codeEditor.initialize(customCssContainer);
                 resizeAceEditor(customCssContainer);
                 if (focus) {
                     focusAceEditor(customCssContainer);
@@ -874,6 +866,7 @@ bettercms.define('bcms.pages.content', ['bcms.jquery', 'bcms', 'bcms.modal', 'bc
 
             if (dialog.container.find(selectors.enableCustomJs).attr('checked')) {
                 customJsContainer.show();
+                codeEditor.initialize(customJsContainer);
                 resizeAceEditor(customJsContainer);
                 if (focus) {
                     focusAceEditor(customJsContainer);
@@ -926,8 +919,7 @@ bettercms.define('bcms.pages.content', ['bcms.jquery', 'bcms', 'bcms.modal', 'bc
         * Inserts child widget to the content
         */
         function onWidgetInsert(opts) {
-            var htmlContentEditor = opts.editor,
-                editorId = opts.editorId;
+            var htmlContentEditor = opts.editor;
 
             if (!htmlContentEditor) {
                 return;
@@ -957,9 +949,9 @@ bettercms.define('bcms.pages.content', ['bcms.jquery', 'bcms', 'bcms.modal', 'bc
                     var url = links.selectWidgetUrl;
                     dynamicContent.bindDialog(dialog, url, {
                         contentAvailable: function (contentDialog) {
-                            initializeWidgetsTab(contentDialog, onInsert, editorId);
+                            initializeWidgetsTab(contentDialog, onInsert);
                             initializeWidgets(contentDialog.container, contentDialog, onInsert);
-                        },
+                        }
                     });
                 }
             });

@@ -1477,7 +1477,6 @@
     <Content Include="gulp\gulp.config.js" />
     <Content Include="gulp\utils\utils.js" />
     <Content Include="gulp\watch-files\watch-files.js" />
-    <EmbeddedResource Include="Scripts\ckeditor\code-config.js" />
     <EmbeddedResource Include="Scripts\ckeditor\plugins\cms-option\plugin.js" />
     <EmbeddedResource Include="Scripts\bcms.markdown.js" />
     <EmbeddedResource Include="Scripts\bcms.jquery.markitup.js" />

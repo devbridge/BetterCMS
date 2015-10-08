@@ -8,6 +8,11 @@ namespace BetterCms.Module.Pages.Models
     [Serializable]
     public class HtmlContent : Root.Models.Content, IHtmlContent, IDynamicContentContainer
     {
+        public HtmlContent()
+        {
+            ContentTextMode = ContentTextMode.Html;
+        }
+
         public virtual DateTime ActivationDate { get; set; }
 
         public virtual DateTime? ExpirationDate { get; set; }

@@ -23,10 +23,3 @@ CKEDITOR.editorConfig = function (config) {
     config.autoParagraph = false;
     config.toolbarCanCollapse = true;
 };
-
-//todo check how to implement multiple toolbars
-//some info here: http://ckeditor.com/latest/samples/old/datafiltering.html
-//and here: http://docs.ckeditor.com/#!/api/CKEDITOR.config-cfg-customConfig
-//CKEDITOR.replace('CodeEditor', {
-//    customConfig: 'code-config.js'
-//});

@@ -24,7 +24,6 @@ bettercms.define('bcms.pages.properties', ['bcms.jquery', 'bcms', 'bcms.modal', 
                 pagePropertiesMasterPageId: '#MasterPageId',
                 pagePropertiesActiveTemplateBox: '.bcms-inner-grid-box-active',
                 pagePropertiesTemplatePreviewLink: '.bcms-preview-template',
-                pagePropertiesAceEditorContainer: '.bcms-editor-field-area-container',
 
                 pagePropertiesForm: 'form:first',
                 pagePropertiesPageIsPublishedCheckbox: '#IsPagePublished',
@@ -151,32 +150,14 @@ bettercms.define('bcms.pages.properties', ['bcms.jquery', 'bcms', 'bcms.modal', 
                 }
             });
 
-            codeEditor.initialize(dialog.container);
-
-            // IE11 fix: recall resize method after editors initialization
             dialog.container.find(selectors.javascriptCssTabOpener).on('click', function () {
-                setTimeout(function () {
-                    dialog.container.find(selectors.pagePropertiesAceEditorContainer).each(function () {
-                        var editor = $(this).data('aceEditor');
-
-                        if (editor && $.isFunction(editor.resize)) {
-                            editor.resize(true);
-                            editor.renderer.updateFull();
-
-                            if (form.data('readonlyWithPublishing') == true || form.data('readonly') == true) {
-                                forms.setFieldsReadOnly(form);
-                            }
-                        }
-                    });
-                }, 20);
+                codeEditor.initialize(dialog.container);
             });
 
             // Translations tab
             if (content.Data.ShowTranslationsTab && (!content.Data.Languages || content.Data.Languages.length == 0)) {
                 dialog.container.find(selectors.translationsTabContent).addClass(classes.inactive);
             }
-
-            
 
             return pageViewModel;
         };

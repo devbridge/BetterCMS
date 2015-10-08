@@ -50,7 +50,6 @@ Edited by the Devbridge Better CMS team.
 
                             // Launch the editor and set the theme.
                             var aceEditor = ace.edit("aceEditor_" + editorID);
-                            aceEditor.getSession().setMode("ace/mode/html");
                             aceEditor.setTheme("ace/theme/chrome");
                             aceEditor.setShowPrintMargin(0);
                             aceEditor.setReadOnly(editor.readOnly);
@@ -63,6 +62,13 @@ Edited by the Devbridge Better CMS team.
                                 });
                             });
                             aceEditor.$blockScrolling = Infinity;
+
+                            if (editor.aceEditorOptions && editor.aceEditorOptions.mode) {
+                                aceEditor.getSession().setMode(editor.aceEditorOptions.mode);
+                            } else {
+                                aceEditor.getSession().setMode("ace/mode/html");
+                            }
+
                             // Set the z-index for ACEEditor really high.
                             $('#aceEditor_container_' + editorID).css('z-index', bcms.getHighestZindex() + 1);
 
@@ -71,7 +77,6 @@ Edited by the Devbridge Better CMS team.
                             var toggleLineWrapChange = function() {
                                 aceEditor.getSession().setUseWrapMode(!aceEditor.getSession().getUseWrapMode());
                             };
-
 
                             // This function checks to see if we are returning to design view.  If so, purge all the ACE stuff.
                             var returnToDesignView = function(e) {
@@ -143,9 +148,12 @@ Edited by the Devbridge Better CMS team.
                                 bcms.logger.trace('change detected');
 
                                 // Set the data of the CKEditor to the value of ACE Editor.
+                                var currentValue = aceEditor.getSession().getValue();
+
                                 editor.setData(aceEditor.getSession().getValue(), function() {
                                     bcms.logger.trace('change saved');
                                 }, false);
+                                $('#' + editor.name).val(currentValue);
 
                                 return false;
                             };
