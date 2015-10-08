@@ -4,21 +4,21 @@
     font-family: 'Open Sans';
     font-style: normal;
     font-weight: 400;
-    src: url($icon-OpenSans-Regular) format('truetype');
+    src: url($bcms-OpenSans-Regular) format('truetype');
 }
 
 @font-face {
     font-family: 'Open Sans';
     font-style: normal;
     font-weight: 600;
-    src: url($icon-OpenSans-Semibold) format('truetype');
+    src: url($bcms-OpenSans-Semibold) format('truetype');
 }
 
 @font-face {
     font-family: 'Open Sans';
     font-style: normal;
     font-weight: 700;
-    src: url($icon-OpenSans-Bold) format('truetype');
+    src: url($bcms-OpenSans-Bold) format('truetype');
 }
 
 %clearfix {

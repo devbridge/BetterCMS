@@ -9,7 +9,7 @@ module.exports = function () {
             src: ['Scss/base_64/**/*.{png,jpg,gif,svg,ttf}'],
             dest: 'Scss/core',
             resultFile: '_assets.scss',
-            varPrefix: '$icon-'
+            varPrefix: '$bcms-'
         },
 
         sass: {

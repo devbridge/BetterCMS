@@ -1,27 +1,27 @@
 @import '../../core/variables';
 
 $control-panel-buttons: (
-                ('add', $icon-bcms-cp-add-new, $blue-l30, $blue-l40),
-                ('clone', $icon-bcms-cp-clone, $blue-l30, $blue-l40),
-                ('blog-add', $icon-bcms-cp-add-new, $blue-l30, $blue-l40),
-                ('translate', $icon-bcms-cp-translate, $blue-l30, $blue-l40),
-                ('settings', $icon-bcms-cp-settings, $gray-l45, $gray-l46),
-                ('delete', $icon-bcms-cp-delete, $red-l60, $red-l70)
+                ('add', $bcms-cp-add-new, $blue-l30, $blue-l40),
+                ('clone', $bcms-cp-clone, $blue-l30, $blue-l40),
+                ('blog-add', $bcms-cp-add-new, $blue-l30, $blue-l40),
+                ('translate', $bcms-cp-translate, $blue-l30, $blue-l40),
+                ('settings', $bcms-cp-settings, $gray-l45, $gray-l46),
+                ('delete', $bcms-cp-delete, $red-l60, $red-l70)
 );
 
 $control-panel-switch-status: (
-                ('on', $icon-bcms-cp-indicate-on),
-                ('off' $icon-bcms-cp-indicate-off)
+                ('on', $bcms-cp-indicate-on),
+                ('off' $bcms-cp-indicate-off)
 );
 
 $control-panel-status: (
-                ('pubstatus', $icon-bcms-cp-pub-ok, $icon-bcms-cp-pub-warn),
-                ('seostatus', $icon-bcms-cp-seo-ok, $icon-bcms-cp-seo-warn)
+                ('pubstatus', $bcms-cp-pub-ok, $bcms-cp-pub-warn),
+                ('seostatus', $bcms-cp-seo-ok, $bcms-cp-seo-warn)
 );
 //module
 .bcms-user-profile {
     @include ellipsis();
-    background: url($icon-bcms-cp-user) no-repeat left center;
+    background: url($bcms-cp-user) no-repeat left center;
     box-sizing: border-box;
     color: $white;
     cursor: pointer;
@@ -121,7 +121,7 @@ $control-panel-status: (
     }
 
     &-openclosearrow {
-        background: url($icon-bcms-cp-show) no-repeat center;
+        background: url($bcms-cp-show) no-repeat center;
         height: 46px;
         margin: 0 auto 5px;
         overflow: hidden;
@@ -129,7 +129,7 @@ $control-panel-status: (
         width: 50px;
 
         .bcms-state-open & {
-            background-image: url($icon-bcms-cp-hide);
+            background-image: url($bcms-cp-hide);
         }
     }
 
@@ -152,7 +152,7 @@ $control-panel-status: (
 
         @include virtual(after) {
             @include position(absolute, 0 0 null);
-            background: url($icon-bcms-cp-indicate-button) no-repeat center;
+            background: url($bcms-cp-indicate-button) no-repeat center;
             border: 1px solid #303030;
             border-radius: 2px;
             box-sizing: border-box;
@@ -188,7 +188,7 @@ $control-panel-status: (
     }
 
     &-status {
-        background: url($icon-bcms-cp-texture);
+        background: url($bcms-cp-texture);
         overflow: hidden;
         padding: 0 9px 5px;
     }
@@ -206,14 +206,14 @@ $control-panel-status: (
     }
 
     &-drag-handle {
-        background: url($icon-bcms-cp-drag-handle) no-repeat center;
+        background: url($bcms-cp-drag-handle) no-repeat center;
         cursor: move;
         height: 14px;
         margin: 5px auto;
     }
 
     &-position-handle {
-        background: $gray-l60 url($icon-bcms-cp-stick-handle) no-repeat center;
+        background: $gray-l60 url($bcms-cp-stick-handle) no-repeat center;
         border-radius: 2px;
         cursor: pointer;
         float: right;
@@ -221,7 +221,7 @@ $control-panel-status: (
         width: 24px;
 
         .bcms-sidemenu-right & {
-            background-image: url($icon-bcms-cp-stick-handle-right);
+            background-image: url($bcms-cp-stick-handle-right);
             float: left;
         }
     }
@@ -230,12 +230,12 @@ $control-panel-status: (
 //module control panel right
 .bcms-sidemenu-right {
     .bcms-sidemenu-openclosearrow {
-        background-image: url($icon-bcms-cp-show-right);
+        background-image: url($bcms-cp-show-right);
     }
 
     &.bcms-state-open {
         .bcms-sidemenu-openclosearrow {
-            background-image: url($icon-bcms-cp-hide-right);
+            background-image: url($bcms-cp-hide-right);
         }
     }
 
@@ -319,7 +319,7 @@ div {
             @include virtual(before) {
                 @include size(16px);
                 @include positioning($center-y: true);
-                background: url($icon-bcms-cp-notification-ok) no-repeat center;
+                background: url($bcms-cp-notification-ok) no-repeat center;
                 left: 7px;
             }
         }
@@ -331,7 +331,7 @@ div {
             @include virtual(before) {
                 @include size(16px);
                 @include positioning($center-y: true);
-                background: url($icon-bcms-cp-notification-warn) no-repeat center;
+                background: url($bcms-cp-notification-warn) no-repeat center;
                 left: 9px;
             }
         }

@@ -1,21 +1,21 @@
 @import '../core/variables';
 
 $toolbar-icons: (
-                ('H1', $icon-bcms-toolbar-h1),
-                ('H2', $icon-bcms-toolbar-h2),
-                ('H3', $icon-bcms-toolbar-h3),
-                ('H4', $icon-bcms-toolbar-h4),
-                ('H5', $icon-bcms-toolbar-h5),
-                ('H6', $icon-bcms-toolbar-h6),
-                ('Bold', $icon-bcms-toolbar-bold),
-                ('Italic', $icon-bcms-toolbar-italic),
-                ('ListBullet', $icon-bcms-toolbar-list),
-                ('ListNumeric', $icon-bcms-toolbar-number-list),
-                ('Picture', $icon-bcms-toolbar-image),
-                ('Link', $icon-bcms-toolbar-link),
-                ('Quotes', $icon-bcms-toolbar-quote),
-                ('Code', $icon-bcms-toolbar-code),
-                ('Widget', $icon-bcms-toolbar-widget)
+                ('H1', $bcms-toolbar-h1),
+                ('H2', $bcms-toolbar-h2),
+                ('H3', $bcms-toolbar-h3),
+                ('H4', $bcms-toolbar-h4),
+                ('H5', $bcms-toolbar-h5),
+                ('H6', $bcms-toolbar-h6),
+                ('Bold', $bcms-toolbar-bold),
+                ('Italic', $bcms-toolbar-italic),
+                ('ListBullet', $bcms-toolbar-list),
+                ('ListNumeric', $bcms-toolbar-number-list),
+                ('Picture', $bcms-toolbar-image),
+                ('Link', $bcms-toolbar-link),
+                ('Quotes', $bcms-toolbar-quote),
+                ('Code', $bcms-toolbar-code),
+                ('Widget', $bcms-toolbar-widget)
 );
 
 %toolbar-extender {
