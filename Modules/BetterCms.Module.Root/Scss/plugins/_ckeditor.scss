@@ -457,15 +457,6 @@ a {
     height: 100%;
 }
 
-@include keyframes(dialog_spinner) {
-    0% {
-        @include transform(rotate(0deg));
-    }
-    100% {
-        @include transform(rotate(360deg));
-    }
-}
-
 //module combo box
 .cke_combo {
     float: left;
@@ -490,7 +481,7 @@ a {
     &_text {
         float: left;
         line-height: 26px;
-        padding-left: 10px;
+        padding: 0 10px;
         white-space: nowrap;
         font-size: 12px;
         color: $dark;
@@ -509,6 +500,14 @@ a {
         margin: 1px 7px 1px;
         width: 5px;
     }
+
+    &_combo_disabled {
+        .cke_combo_inlinelabel,
+        .cke_combo_open {
+            opacity: .3;
+        }
+    }
+
 }
 
 //////////////////////////////
@@ -527,19 +526,6 @@ a {
     border-top: 3px solid #474747;
 }
 
-.cke_hc .cke_combo_arrow {
-    font-size: 10px;
-    width: auto;
-    border: 0;
-    margin-top: 3px;
-}
-
-/* Disabled combo button styles. */
-.cke_combo_disabled .cke_combo_inlinelabel,
-.cke_combo_disabled .cke_combo_open {
-    opacity: 0.3;
-}
-
 //module custom
 .cke_button__cmsoption_icon {
     background: url($icon-bcms-toolbar-options) no-repeat center !important;
@@ -547,4 +533,13 @@ a {
 
 .cke_button__cmsoption_label {
     display: inline !important;
+}
+
+@include keyframes(dialog_spinner) {
+    0% {
+        @include transform(rotate(0deg));
+    }
+    100% {
+        @include transform(rotate(360deg));
+    }
 }

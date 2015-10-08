@@ -51,8 +51,11 @@
 'bcms-modules/root/messages',
 'bcms-modules/root/notifications',
 'bcms-modules/root/overlays',
-'bcms-modules/root/texteditors',
+'plugins/markitup',
 'bcms-modules/root/index';
+
+//module plugins
+@import 'plugins/markitup';
 
 //module text & debug
 //@debug
