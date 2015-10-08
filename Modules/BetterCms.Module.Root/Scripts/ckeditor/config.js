@@ -16,6 +16,7 @@ CKEDITOR.editorConfig = function (config) {
         //move to hidden items list ==>> ['Table', 'Strike', 'NumberedList', 'JustifyLeft', 'JustifyCenter', 'JustifyRight', 'JustifyBlock', 'Styles', 'Format', 'Font', 'FontSize'],
     ];
 
+    config.skin = 'bettercms';
     config.removePlugins = 'tabletools';
     config.disableNativeSpellChecker = false;
     config.allowedContent = true;

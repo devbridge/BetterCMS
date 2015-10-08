@@ -8,17 +8,22 @@ var gulp = require('gulp'),
 
 module.exports = task;
 
-function compileSass(source, destination) {
+function compileSass(source, destination, omitPrefix) {
     var cssFilter = $.filter('**/*.css');
 
-    gulp.src(source)
+    var pipe = gulp.src(source)
         .pipe($.plumber(config.plumber.info))
         .pipe($.sourcemaps.init())
         .pipe($.sass({
             includePaths: require('node-bourbon').includePaths,
             outputStyle: 'expanded'
-        }))
-        .pipe($.rename({prefix: 'bcms.'}))
+        }));
+
+    if (omitPrefix) {
+        pipe.pipe($.rename({prefix: 'bcms.'}))
+    }
+
+    pipe
         .pipe(gulp.dest(destination))
         .pipe(cssFilter)
         .pipe(gcmq())
@@ -37,7 +42,9 @@ function task() {
     compileSass('./Scss/**/media.scss', '../../Modules/BetterCms.Module.MediaManager/Content/Styles');
     compileSass('./Scss/**/pages.scss', '../../Modules/BetterCms.Module.Pages/Content/Styles');
     compileSass('./Scss/**/users.scss', '../../Modules/BetterCms.Module.Users/Content/Styles');
+    compileSass('./Scss/**/editor.scss', './Scripts/ckeditor/skins/bettercms', false);
     //temp local use only
     compileSass('./Scss/**/root.scss', '../../Sandbox/BetterCms.Sandbox.Mvc4/file/bcms-root/Content/Styles');
     compileSass('./Scss/**/pages.scss', '../../Sandbox/BetterCms.Sandbox.Mvc4/file/bcms-pages/Content/Styles');
+    compileSass('./Scss/**/editor.scss', '../../Sandbox/BetterCms.Sandbox.Mvc4/file/bcms-root/Scripts/ckeditor/skins/bettercms', false);
 }

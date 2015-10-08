@@ -1396,18 +1396,6 @@
     <EmbeddedResource Include="Scripts\ckeditor\plugins\wsc\dialogs\wsc.css" />
     <EmbeddedResource Include="Scripts\ckeditor\plugins\wsc\dialogs\wsc.js" />
     <EmbeddedResource Include="Scripts\ckeditor\plugins\wsc\dialogs\wsc_ie.js" />
-    <EmbeddedResource Include="Scripts\ckeditor\skins\moono\dialog.css" />
-    <EmbeddedResource Include="Scripts\ckeditor\skins\moono\editor.css" />
-    <EmbeddedResource Include="Scripts\ckeditor\skins\moono\icons.png" />
-    <EmbeddedResource Include="Scripts\ckeditor\skins\moono\images\arrow.png" />
-    <EmbeddedResource Include="Scripts\ckeditor\skins\moono\images\close.png" />
-    <EmbeddedResource Include="Scripts\ckeditor\skins\moono\images\hidpi\close.png" />
-    <EmbeddedResource Include="Scripts\ckeditor\skins\moono\images\hidpi\lock-open.png" />
-    <EmbeddedResource Include="Scripts\ckeditor\skins\moono\images\hidpi\lock.png" />
-    <EmbeddedResource Include="Scripts\ckeditor\skins\moono\images\hidpi\refresh.png" />
-    <EmbeddedResource Include="Scripts\ckeditor\skins\moono\images\lock-open.png" />
-    <EmbeddedResource Include="Scripts\ckeditor\skins\moono\images\lock.png" />
-    <EmbeddedResource Include="Scripts\ckeditor\skins\moono\images\refresh.png" />
     <EmbeddedResource Include="Scripts\ckeditor\styles.js" />
     <EmbeddedResource Include="Scripts\bcms.content.tree.js" />
     <EmbeddedResource Include="Scripts\bcms.store.js" />
@@ -1480,6 +1468,9 @@
     <EmbeddedResource Include="Scripts\ckeditor\plugins\cms-option\plugin.js" />
     <EmbeddedResource Include="Scripts\bcms.markdown.js" />
     <EmbeddedResource Include="Scripts\bcms.jquery.markitup.js" />
+    <EmbeddedResource Include="Scripts\ckeditor\skins\bettercms\skin.js" />
+    <EmbeddedResource Include="Scripts\ckeditor\skins\bettercms\editor.css" />
+    <EmbeddedResource Include="Scripts\ckeditor\skins\bettercms\dialog.css" />
     <Content Include="Scss\base_64\icons\bcms-add-content.svg" />
     <Content Include="Scss\base_64\icons\bcms-close.svg" />
     <Content Include="Scss\base_64\icons\bcms-cp-add-new.svg" />
@@ -1576,6 +1567,10 @@
     <Content Include="Scss\base_64\webfonts\OpenSans-Regular.ttf" />
     <Content Include="Scss\base_64\webfonts\OpenSans-Semibold.ttf" />
     <Content Include="Scss\core\_assets.scss" />
+    <Content Include="Scss\editor.scss" />
+    <Content Include="Scss\plugins\_ckeditor.scss" />
+    <Content Include="Scss\bcms-modules\root\_texteditors.scss" />
+    <Content Include="Scss\bcms-modules\root\_calendar.scss" />
     <None Include="Views\Category\CategoryTrees.cshtml">
       <Generator>RazorGenerator</Generator>
       <LastGenOutput>CategoryTrees.generated.cs</LastGenOutput>

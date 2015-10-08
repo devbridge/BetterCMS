@@ -54,18 +54,5 @@
 'bcms-modules/root/texteditors',
 'bcms-modules/root/index';
 
-//module text editors
-@import 'components/ckeditor';
-
-//todo create ckEditor adjustments SASS files and compile to theme folder
-//customization
-.cke_button__cmsoption_icon {
-    background: url($icon-bcms-toolbar-options) no-repeat center !important;
-}
-
-.cke_button__cmsoption_label {
-    display: inline !important;
-}
-
 //module text & debug
 //@debug
