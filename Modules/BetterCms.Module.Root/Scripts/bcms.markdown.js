@@ -176,6 +176,33 @@
         }
 
         /**
+         * Inserts a widget option to the textarea
+         */
+        function insertOption(obj, smartTags) {
+            var settings = {
+                selection: obj.selection,
+                caretPosition: obj.caretPosition,
+                scrollPosition: obj.scrollPosition,
+                textarea: obj.textarea
+            },
+            i,
+            html;
+
+            for (i = 0; i < smartTags.length; i ++) {
+                if (smartTags[i].id === 'pageOption') {
+
+                    html = smartTags[i].openWith + smartTags[i].placeholder + smartTags[i].closeWith;
+                    settings.selectionStart = smartTags[i].openWith.length;
+                    settings.selectionLength = smartTags[i].placeholder.length;
+
+                    addBlockToTextarea(html, settings);
+
+                    break;
+                }
+            }
+        }
+
+        /**
          * Inserts a widget to the textarea
          */
         function editWidgetOptions(obj) {
@@ -195,7 +222,7 @@
                 item,
                 textarea;
 
-            if (options.smartTags && options.smartTags.length > 0) {
+            if (options.smartTags.length > 0) {
                 for (i = 0; i < options.smartTags.length; i ++) {
                     item = options.smartTags[i];
 
@@ -231,6 +258,9 @@
                     { name: 'Picture', key: 'P', className: 'markItUpButtonPicture', afterInsert: insertImage },
                     { name: 'Link', key: 'L', className: 'markItUpButtonLink', afterInsert: insertFile },
                     { name: 'Widget', className: 'markItUpButtonWidget', afterInsert: insertWidget },
+                    { name: 'Widget Option', className: 'markItUpButtonOption', afterInsert: function(obj) {
+                        insertOption(obj, options.smartTags);
+                    } },
                     { name: 'Quotes', openWith: '> ', className: 'markItUpButtonQuotes' },
                     { name: 'Code Block / Code', openWith: '`', closeWith: '`', className: 'markItUpButtonCode' },
                     { name: 'Smart tags', dropMenu: smartTagsList }

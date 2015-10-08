@@ -42,11 +42,8 @@ bettercms.define('bcms.codeEditor', ['bcms.jquery', 'bcms', 'bcms.htmlEditor', '
             isInitialized = textarea.data('isInitialized');
 
         if (!isInitialized) {
-            console.log('Init tab');
             htmlEditor.initializeHtmlEditor(id, null, configuration, true);
             textarea.data('isInitialized', true);
-        } else {
-            console.log('Skipping Init tab');
         }
     }
 
