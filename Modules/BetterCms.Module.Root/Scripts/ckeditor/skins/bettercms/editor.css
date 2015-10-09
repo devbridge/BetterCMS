@@ -67,8 +67,6 @@
   border-color: transparent #474747 transparent transparent;
   border-style: dashed solid dashed dashed;
   float: right;
-  vertical-align: bottom;
-  margin-top: 6px;
   cursor: se-resize;
 }
 

@@ -2569,21 +2569,25 @@ textarea:focus {
   border-right: 1px solid #c6c6c6;
   border-bottom: 1px solid #c6c6c6;
   border-left: 1px solid #c6c6c6;
-  padding: 6px 8px 2px;
+  padding: 0 5px;
+  height: 28px;
+  line-height: 28px;
   position: relative;
   background-color: #f5f5f5;
 }
 
 .markItUpResizeHandle {
+  position: absolute;
+  right: 5px;
+  bottom: 5px;
+  height: 0;
+  width: 0;
   overflow: hidden;
   border-width: 10px 10px 0 0;
   border-color: transparent #474747 transparent transparent;
   border-style: dashed solid dashed dashed;
-  margin-top: 6px;
-  margin-bottom: 2px;
-  cursor: se-resize;
   float: right;
-  margin-right: -4px;
+  cursor: se-resize;
 }
 
 .markItUpSeparator {
@@ -4128,21 +4132,25 @@ textarea:focus {
   border-right: 1px solid #c6c6c6;
   border-bottom: 1px solid #c6c6c6;
   border-left: 1px solid #c6c6c6;
-  padding: 6px 8px 2px;
+  padding: 0 5px;
+  height: 28px;
+  line-height: 28px;
   position: relative;
   background-color: #f5f5f5;
 }
 
 .markItUpResizeHandle {
+  position: absolute;
+  right: 5px;
+  bottom: 5px;
+  height: 0;
+  width: 0;
   overflow: hidden;
   border-width: 10px 10px 0 0;
   border-color: transparent #474747 transparent transparent;
   border-style: dashed solid dashed dashed;
-  margin-top: 6px;
-  margin-bottom: 2px;
-  cursor: se-resize;
   float: right;
-  margin-right: -4px;
+  cursor: se-resize;
 }
 
 .markItUpSeparator {

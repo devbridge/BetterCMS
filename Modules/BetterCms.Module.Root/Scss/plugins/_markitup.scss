@@ -160,23 +160,22 @@ textarea {
             bottom: $border-thin-gray;
             left: $border-thin-gray;
         }
-        padding: 6px 8px 2px;
+        padding: 0 5px;
+        height: 28px;
+        line-height: 28px;
         position: relative;
         background-color: $gray-l30;
     }
 
     &ResizeHandle {
+        @include position(absolute, null 5px 5px null);
+        @include size(0);
         overflow: hidden;
-        border: {
-            width: 10px 10px 0 0;
-            color: transparent $gray-l65 transparent transparent;
-            style: dashed solid dashed dashed;
-        }
-        margin-top: 6px;
-        margin-bottom: 2px;
-        cursor: se-resize;
+        border-width: 10px 10px 0 0;
+        border-color: transparent $gray-l65 transparent transparent;
+        border-style: dashed solid dashed dashed;
         float: right;
-        margin-right: -4px;
+        cursor: se-resize;
     }
 
     &Separator {
