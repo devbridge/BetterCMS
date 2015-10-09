@@ -1,34 +1,17 @@
 ﻿using System;
-using System.Configuration;
+using System.Collections.Generic;
 using System.Reflection;
-
 using BetterModules.Core.Web.Configuration;
 
 namespace BetterCms.Configuration
 {
-    public class CmsConfigurationSection : DefaultWebConfigurationSection, ICmsConfiguration
+    public class CmsConfigurationSection : DefaultWebConfigurationSection//, ICmsConfiguration
     {
-        private const string VersionAttribute = "version";
-        private const string UseMinifiedResourcesAttribute = "useMinifiedResources";
-        private const string ResourcesBasePathAttribute = "resourcesBasePath";
-        private const string LoginUrlAttribute = "loginUrl";
-        private const string PageNotFoundUrlAttribute = "pageNotFoundUrl";
-        private const string UrlModeAttribute = "urlMode";
-        private const string StorageNode = "storage";
-        private const string SearchNode = "search";
-        private const string CacheNode = "cache";
-        private const string SecurityNode = "security";
-        private const string ModuleGalleryNode = "moduleGallery";
-        private const string WorkingDirectoryRootPathAttribute = "workingDirectoryRootPath";
-        private const string ArticleUrlPatternAttribute = "articleUrlPattern";
-        private const string ModulesNode = "modules";
-        private const string UrlPatternsNode = "urlPatterns";
-        private const string InstallationNode = "installation";
-        private const string UsersNode = "users";
-        private const string RenderContentEndingDivAttribute = "renderContentEndingDiv";
-        private const string ContentEndingDivCssClassNameAttribute = "contentEndingDivCssClassName";
-        private const string EnableMultilanguageAttribute = "enableMultilanguage";
-        private const string EnableMacrosAttribute = "enableMacros";
+        public CmsConfigurationSection()
+        {
+            UrlPatterns = new List<PatternElement>();
+            Modules = new List<ModuleElement>();
+        }
 
         /// <summary>
         /// The version backing field.
@@ -43,18 +26,17 @@ namespace BetterCms.Configuration
         /// <value>
         /// The Better CMS version.
         /// </value>
-        [ConfigurationProperty(VersionAttribute, DefaultValue = null, IsRequired = false)]
         public string Version
         {
             get
             {
-                if (string.IsNullOrEmpty(version))
-                {
-                    if (this[VersionAttribute] != null)
-                    {
-                        version = this[VersionAttribute].ToString();
-                    }
-                }
+                //if (string.IsNullOrEmpty(version))
+                //{
+                //    if (this[VersionAttribute] != null)
+                //    {
+                //        version = this[VersionAttribute].ToString();
+                //    }
+                //}
 
                 if (string.IsNullOrEmpty(version))
                 {
@@ -71,7 +53,7 @@ namespace BetterCms.Configuration
 
                 return version;
             }
-            set { this[VersionAttribute] = value; }
+            set { version = value; }
         }
 
         /// <summary>
@@ -80,25 +62,15 @@ namespace BetterCms.Configuration
         /// <value>
         /// The login URL.
         /// </value>
-        [ConfigurationProperty(LoginUrlAttribute, DefaultValue = "", IsRequired = false)]
-        public string LoginUrl
-        {
-            get { return Convert.ToString(this[LoginUrlAttribute]); }
-            set { this[LoginUrlAttribute] = value; }
-        }
+        public string LoginUrl { get; set; } = "";
 
         /// <summary>
         /// Gets the virtual root path (like "~/App_Data") of BetterCMS working directory. 
         /// </summary>
         /// <value>
         /// The virtual root path of BetterCMS working directory.
-        /// </value>        [ConfigurationProperty(WorkingDirectoryRootPathAttribute, DefaultValue = "", IsRequired = false)]
-        [ConfigurationProperty(WorkingDirectoryRootPathAttribute, IsRequired = true)]
-        public string WorkingDirectoryRootPath
-        {
-            get { return Convert.ToString(this[WorkingDirectoryRootPathAttribute]); }
-            set { this[WorkingDirectoryRootPathAttribute] = value; }
-        }
+        /// </value>
+        public string WorkingDirectoryRootPath { get; set; }
 
         /// <summary>
         /// Gets a value indicating whether CMS should use minified resources (*.min.js and *.min.css).
@@ -106,12 +78,7 @@ namespace BetterCms.Configuration
         /// <value>
         /// <c>true</c> if CMS should use minified resources; otherwise, <c>false</c>.
         /// </value>
-        [ConfigurationProperty(UseMinifiedResourcesAttribute, IsRequired = false, DefaultValue = false)]
-        public bool UseMinifiedResources
-        {
-            get { return Convert.ToBoolean(this[UseMinifiedResourcesAttribute]); }
-            set { this[UseMinifiedResourcesAttribute] = value; }
-        }
+        public bool UseMinifiedResources { get; set; } = false;
 
         /// <summary>
         /// Gets the CMS resources (*.js and *.css) base path.
@@ -119,12 +86,7 @@ namespace BetterCms.Configuration
         /// <value>
         /// The CMS content base path.
         /// </value>
-        [ConfigurationProperty(ResourcesBasePathAttribute, IsRequired = false, DefaultValue = null)]
-        public string ResourcesBasePath
-        {
-            get { return Convert.ToString(this[ResourcesBasePathAttribute]); }
-            set { this[ResourcesBasePathAttribute] = value; }
-        }
+        public string ResourcesBasePath { get; set; }
 
         /// <summary>
         /// Gets or sets the page not found layout.
@@ -132,12 +94,7 @@ namespace BetterCms.Configuration
         /// <value>
         /// The page not found layout.
         /// </value>
-        [ConfigurationProperty(PageNotFoundUrlAttribute, IsRequired = false)]
-        public string PageNotFoundUrl
-        {
-            get { return Convert.ToString(this[PageNotFoundUrlAttribute]); }
-            set { this[PageNotFoundUrlAttribute] = value; }
-        }
+        public string PageNotFoundUrl { get; set; }
 
         /// <summary>
         /// Gets or sets the URL mode.
@@ -145,12 +102,7 @@ namespace BetterCms.Configuration
         /// <value>
         /// The URL mode.
         /// </value>
-        [ConfigurationProperty(UrlModeAttribute, IsRequired = false, DefaultValue = TrailingSlashBehaviorType.TrailingSlash)]
-        public TrailingSlashBehaviorType UrlMode
-        {
-            get { return (TrailingSlashBehaviorType)this[UrlModeAttribute]; }
-            set { this[UrlModeAttribute] = value; }
-        }
+        public TrailingSlashBehaviorType UrlMode { get; set; } = TrailingSlashBehaviorType.TrailingSlash;
 
         /// <summary>
         /// Gets or sets the article url prefix.
@@ -158,11 +110,7 @@ namespace BetterCms.Configuration
         /// <value>
         /// The article url prefix.
         /// </value>
-        [ConfigurationProperty(ArticleUrlPatternAttribute, IsRequired = false)]
-        public string ArticleUrlPattern {
-            get {return Convert.ToString(this[ArticleUrlPatternAttribute]); }
-            set { this[ArticleUrlPatternAttribute] = value; }
-        }
+        public string ArticleUrlPattern { get; set; }
 
         /// <summary>
         /// Gets a value indicating whether to render content ending div.
@@ -170,12 +118,7 @@ namespace BetterCms.Configuration
         /// <value>
         /// <c>true</c> if to render content ending div; otherwise, <c>false</c>.
         /// </value>
-        [ConfigurationProperty(RenderContentEndingDivAttribute, IsRequired = false, DefaultValue = true)]
-        public bool RenderContentEndingDiv
-        {
-            get { return (bool)this[RenderContentEndingDivAttribute]; }
-            set { this[RenderContentEndingDivAttribute] = value; }
-        }
+        public bool RenderContentEndingDiv { get; set; } = true;
 
         /// <summary>
         /// Gets the name of the content ending div CSS class.
@@ -183,12 +126,7 @@ namespace BetterCms.Configuration
         /// <value>
         /// The name of the content ending div CSS class.
         /// </value>
-        [ConfigurationProperty(ContentEndingDivCssClassNameAttribute, IsRequired = false, DefaultValue = "custom-clearfix")]
-        public string ContentEndingDivCssClassName
-        {
-            get { return Convert.ToString(this[ContentEndingDivCssClassNameAttribute]); }
-            set { this[ContentEndingDivCssClassNameAttribute] = value; }
-        }
+        public string ContentEndingDivCssClassName { get; set; } = "custom-clearfix";
 
         /// <summary>
         /// Gets a value indicating whether to enable multilanguage.
@@ -196,12 +134,7 @@ namespace BetterCms.Configuration
         /// <value>
         ///   <c>true</c> if to enable multilanguage; otherwise, <c>false</c>.
         /// </value>
-        [ConfigurationProperty(EnableMultilanguageAttribute, IsRequired = false, DefaultValue = true)]
-        public bool EnableMultilanguage
-        {
-            get { return (bool)this[EnableMultilanguageAttribute]; }
-            set { this[EnableMultilanguageAttribute] = value; }
-        }
+        public bool EnableMultilanguage { get; set; } = true;
 
         /// <summary>
         /// Gets a value indicating whether macros are enabled.
@@ -209,12 +142,7 @@ namespace BetterCms.Configuration
         /// <value>
         /// <c>true</c> if macros are enabled; otherwise, <c>false</c>.
         /// </value>
-        [ConfigurationProperty(EnableMacrosAttribute, IsRequired = false, DefaultValue = false)]
-        public bool EnableMacros
-        {
-            get { return (bool)this[EnableMacrosAttribute]; }
-            set { this[EnableMacrosAttribute] = value; }
-        }
+        public bool EnableMacros { get; set; } = false;
 
         #endregion
 
@@ -226,19 +154,9 @@ namespace BetterCms.Configuration
         /// <value>
         /// The URL patterns.
         /// </value>
-        [ConfigurationProperty(UrlPatternsNode, IsRequired = false)]
-        public UrlPatternsCollection UrlPatterns
-        {
-            get { return (UrlPatternsCollection)this[UrlPatternsNode]; }
-            set { this[UrlPatternsNode] = value; }
-        }
-
-        [ConfigurationProperty(ModulesNode, IsRequired = false)]
-        public ModulesCollection Modules
-        {
-            get { return (ModulesCollection)this[ModulesNode]; }
-            set { this[ModulesNode] = value; }
-        }
+        public IList<PatternElement> UrlPatterns { get; set; }
+        
+        public IList<ModuleElement> Modules { get; set; }
 
         /// <summary>
         /// Gets or sets the configuration of CMS storage service.
@@ -246,90 +164,19 @@ namespace BetterCms.Configuration
         /// <value>
         /// The storage service configuration.
         /// </value>
-        [ConfigurationProperty(StorageNode, IsRequired = true)]
-        public CmsStorageConfigurationElement Storage
-        {
-            get { return (CmsStorageConfigurationElement)this[StorageNode]; }
-            set { this[StorageNode] = value; }
-        }
+        public CmsStorageConfigurationElement Storage { get; set; }
+        
+        public CmsSearchConfigurationElement Search { get; set; }
+        
+        public CmsCacheConfigurationElement Cache { get; set; }
+        
+        public CmsSecurityConfigurationElement Security { get; set; }        
+        
+        public CmsModuleGalleryConfigurationElement ModuleGallery { get; set; }
+        
+        public CmsInstallationConfigurationElement Installation { get; set; }
 
-        [ConfigurationProperty(SearchNode, IsRequired = false)]
-        public CmsSearchConfigurationElement Search
-        {
-            get { return (CmsSearchConfigurationElement)this[SearchNode]; }
-            set { this[SearchNode] = value; }
-        }
-
-        [ConfigurationProperty(CacheNode, IsRequired = true)]
-        public CmsCacheConfigurationElement Cache
-        {
-            get { return (CmsCacheConfigurationElement)this[CacheNode]; }
-            set { this[CacheNode] = value; }
-        }
-
-        [ConfigurationProperty(SecurityNode, IsRequired = true)]
-        public CmsSecurityConfigurationElement Security
-        {
-            get { return (CmsSecurityConfigurationElement)this[SecurityNode]; }
-            set { this[SecurityNode] = value; }
-        }        
-
-        [ConfigurationProperty(ModuleGalleryNode, IsRequired = true)]
-        public CmsModuleGalleryConfigurationElement ModuleGallery
-        {
-            get { return (CmsModuleGalleryConfigurationElement)this[ModuleGalleryNode]; }
-            set { this[ModuleGalleryNode] = value; }
-        }
-
-        [ConfigurationProperty(InstallationNode, IsRequired = false)]
-        public CmsInstallationConfigurationElement Installation
-        {
-            get { return (CmsInstallationConfigurationElement)this[InstallationNode]; }
-            set { this[InstallationNode] = value; }
-        }
-
-        [ConfigurationProperty(UsersNode, IsRequired = false)]
-        public CmsUsersConfigurationElement Users
-        {
-            get { return this[UsersNode] as CmsUsersConfigurationElement; }
-            set { this[UsersNode] = value; }
-        }
-
-        ICmsUsersConfiguration ICmsConfiguration.Users
-        {
-            get { return Users; }
-        }
-
-        ICmsStorageConfiguration ICmsConfiguration.Storage
-        {
-            get { return Storage; }
-        }
-
-        ICmsSearchConfiguration ICmsConfiguration.Search
-        {
-            get { return Search; }
-        }
-
-
-        ICmsCacheConfiguration ICmsConfiguration.Cache
-        {
-            get { return Cache; }
-        }
-
-        ICmsSecurityConfiguration ICmsConfiguration.Security
-        {
-            get { return Security; }
-        }
-
-        ICmsModuleGalleryConfiguration ICmsConfiguration.ModuleGallery
-        {
-            get { return ModuleGallery; }
-        }
-
-        ICmsInstallationConfiguration ICmsConfiguration.Installation
-        {
-            get { return Installation; }
-        }
+        public CmsUsersConfigurationElement Users { get; set; }
 
         #endregion
     }

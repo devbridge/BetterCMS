@@ -1,161 +1,74 @@
 ﻿using System;
-using System.Configuration;
-using System.Globalization;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace BetterCms.Configuration
 {
-    [ConfigurationCollection(typeof(KeyValueElement), AddItemName = "add", CollectionType = ConfigurationElementCollectionType.BasicMap)]
-    public class CmsStorageConfigurationElement : ConfigurationElementCollection, ICmsStorageConfiguration
+    public class CmsStorageConfigurationElement
+//: ConfigurationElementCollection, ICmsStorageConfiguration
     {
-        private const string ContentRootAttribute = "contentRoot";
-        
-        private const string SecuredContentRootAttribute = "securedContentRoot";
-
-        private const string PublicContentUrlRootAttribute = "contentRootUrl";
-        
-        private const string PublicSecuredContentUrlRootAttribute = "securedContentRootUrl";
-
-        private const string ServiceTypeAttribute = "serviceType";
-
-        private const string ProcessTimeoutAttribute = "processTimeout";
-
-        private const string MaximumFileNameLengthAttribute = "maxFileNameLength";
-
-        private const string TrashFolderAttribute = "trashFolder";
-
-        [ConfigurationProperty(ContentRootAttribute, IsRequired = true)]
-        public string ContentRoot
+        public CmsStorageConfigurationElement()
         {
-            get { return ParseEnvironmentValue(Convert.ToString(this[ContentRootAttribute])); }
-            set { this[ContentRootAttribute] = value; }
+            Options = new List<KeyValueElement>();
         }
 
-        [ConfigurationProperty(PublicContentUrlRootAttribute, IsRequired = false, DefaultValue = null)]
+        public string ContentRoot { get; set; }
+
+        private string publicContentUrlRoot;
+        
         public string PublicContentUrlRoot
         {
             get
             {
-                string urlRoot = (string)this[PublicContentUrlRootAttribute];                
-                if (string.IsNullOrEmpty(urlRoot))
-                {
-                    return ContentRoot;
-                }
-
-                return ParseEnvironmentValue(urlRoot);
+                return string.IsNullOrEmpty(publicContentUrlRoot) ? ContentRoot : ParseEnvironmentValue(publicContentUrlRoot);
             }
             set
             {
-                this[PublicContentUrlRootAttribute] = value;
+                publicContentUrlRoot = value;
             }
         }
 
-        [ConfigurationProperty(SecuredContentRootAttribute, IsRequired = false, DefaultValue = null)]
+        private string securedContentRoot;
+
         public string SecuredContentRoot
         {
             get
             {
-                string urlRoot = (string)this[SecuredContentRootAttribute];
-                if (string.IsNullOrEmpty(urlRoot))
-                {
-                    return ContentRoot;
-                }
-
-                return ParseEnvironmentValue(urlRoot);
+                return string.IsNullOrEmpty(securedContentRoot) ? ContentRoot : ParseEnvironmentValue(securedContentRoot);
             }
             set
             {
-                this[SecuredContentRootAttribute] = value;
+                securedContentRoot = value;
             }
         }
 
-        [ConfigurationProperty(PublicSecuredContentUrlRootAttribute, IsRequired = false, DefaultValue = null)]
+        private string publicSecuredContentUrlRoot;
+
         public string PublicSecuredContentUrlRoot
         {
             get
             {
-                string urlRoot = (string)this[PublicSecuredContentUrlRootAttribute];                
-                if (string.IsNullOrEmpty(urlRoot))
-                {
-                    return PublicContentUrlRootAttribute;
-                }
-
-                return ParseEnvironmentValue(urlRoot);
+                return string.IsNullOrEmpty(publicSecuredContentUrlRoot) ? ContentRoot : ParseEnvironmentValue(publicSecuredContentUrlRoot);
             }
             set
             {
-                this[PublicSecuredContentUrlRootAttribute] = value;
+                publicSecuredContentUrlRoot = value;
             }
         }
 
-        [ConfigurationProperty(ServiceTypeAttribute, IsRequired = false, DefaultValue = StorageServiceType.Ftp)]
-        public StorageServiceType ServiceType
-        {
-            get { return (StorageServiceType)this[ServiceTypeAttribute]; }
-            set { this[ServiceTypeAttribute] = value; }
-        }
+        public StorageServiceType ServiceType { get; set; } = StorageServiceType.Ftp;
 
-        [ConfigurationProperty(ProcessTimeoutAttribute, IsRequired = false, DefaultValue = "00:05:00")]
-        public TimeSpan ProcessTimeout
-        {
-            get { return (TimeSpan)this[ProcessTimeoutAttribute]; }
-            set { this[ProcessTimeoutAttribute] = value; }
-        }
+        public TimeSpan ProcessTimeout { get; set; } = TimeSpan.Parse("00:05:00");
 
-        [ConfigurationProperty(MaximumFileNameLengthAttribute, IsRequired = false, DefaultValue = 0)]
-        public int MaximumFileNameLength
-        {
-            get
-            {
-                int length;
-                Int32.TryParse(this[MaximumFileNameLengthAttribute].ToString(), out length);
-                
-                return length;
-            }
-            set { this[MaximumFileNameLengthAttribute] = value; }
-        }
+        public int MaximumFileNameLength { get; set; }
+        
+        public string TrashFolder { get; set; }
 
-        [ConfigurationProperty(TrashFolderAttribute, IsRequired = true)]
-        public string TrashFolder
-        {
-            get { return ParseEnvironmentValue(Convert.ToString(this[TrashFolderAttribute])); }
-            set { this[TrashFolderAttribute] = value; }
-        }
-
-        public KeyValueElement this[int index]
-        {
-            get
-            {
-                return (KeyValueElement)BaseGet(index);
-            }
-            set
-            {
-                if (BaseGet(index) != null)
-                {
-                    BaseRemoveAt(index);
-                }
-                BaseAdd(index, value);
-            }
-        }
-
-        protected override ConfigurationElement CreateNewElement()
-        {
-            return new KeyValueElement();
-        }
-
-        protected override object GetElementKey(ConfigurationElement element)
-        {
-            return (element as KeyValueElement).Key;
-        }
+        public IList<KeyValueElement> Options { get; set; }
 
         public string GetValue(string key)
         {
-            var element = (KeyValueElement)BaseGet(key);
-            return element == null ? null : ParseEnvironmentValue(element.Value);
-        }
-
-        public void Add(KeyValueElement element)
-        {
-            BaseAdd(element);
+            return Options.FirstOrDefault(x => x.Key == key)?.Value;
         }
 
         private string ParseEnvironmentValue(string value)

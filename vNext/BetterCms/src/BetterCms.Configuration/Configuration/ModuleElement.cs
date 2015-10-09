@@ -1,52 +1,54 @@
-﻿using System.Configuration;
+﻿using System.Collections.Generic;
+using System.Configuration;
 
 namespace BetterCms.Configuration
 {
-    [ConfigurationCollection(typeof(KeyValueElement), AddItemName = "add", CollectionType = ConfigurationElementCollectionType.BasicMap)]
-    public class ModuleElement : ConfigurationElementCollection
+    public class ModuleElement //: ConfigurationElementCollection
     {
-        [ConfigurationProperty("name", DefaultValue = "", IsKey = true, IsRequired = true)]
-        public string Name
+        public ModuleElement()
         {
-            get { return ((string)(base["name"])); }
-            set { base["name"] = value; }
+            Options = new List<KeyValueElement>();
         }
 
-        public KeyValueElement this[int index]
-        {
-            get
-            {
-                return (KeyValueElement)BaseGet(index);
-            }
-            set
-            {
-                if (BaseGet(index) != null)
-                {
-                    BaseRemoveAt(index);
-                }
-                BaseAdd(index, value);
-            }
-        }
+        public string Name { get; set; }
 
-        protected override ConfigurationElement CreateNewElement()
-        {
-            return new KeyValueElement();
-        }
+        public IList<KeyValueElement> Options { get; set; }
 
-        protected override object GetElementKey(ConfigurationElement element)
-        {
-            return (element as KeyValueElement).Key;
-        }
+        //public KeyValueElement this[int index]
+        //{
+        //    get
+        //    {
+        //        return (KeyValueElement)BaseGet(index);
+        //    }
+        //    set
+        //    {
+        //        if (BaseGet(index) != null)
+        //        {
+        //            BaseRemoveAt(index);
+        //        }
+        //        BaseAdd(index, value);
+        //    }
+        //}
 
-        public string GetValue(string key)
-        {
-            var element = (KeyValueElement)BaseGet(key);
-            return element == null ? null : element.Value;
-        }
+        //protected override ConfigurationElement CreateNewElement()
+        //{
+        //    return new KeyValueElement();
+        //}
 
-        public void Add(KeyValueElement element)
-        {
-            BaseAdd(element);
-        }
+        //protected override object GetElementKey(ConfigurationElement element)
+        //{
+        //    return (element as KeyValueElement).Key;
+        //}
+
+        //public string GetValue(string key)
+        //{
+        //    var element = (KeyValueElement)BaseGet(key);
+        //    return element == null ? null : element.Value;
+        //}
+
+        //public void Add(KeyValueElement element)
+        //{
+        //    BaseAdd(element);
+        //}
     }
 }

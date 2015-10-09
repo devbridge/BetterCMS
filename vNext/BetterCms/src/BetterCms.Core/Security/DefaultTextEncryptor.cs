@@ -2,8 +2,9 @@
 using System.IO;
 using System.Security.Cryptography;
 using System.Text;
-
+using BetterCms.Configuration;
 using BetterModules.Core.Exceptions;
+using Microsoft.Framework.OptionsModel;
 
 namespace BetterCms.Core.Security
 {
@@ -13,13 +14,13 @@ namespace BetterCms.Core.Security
 
         private readonly SymmetricAlgorithm cryptoProvider;        
 
-        private readonly ICmsConfiguration configuration;
+        private readonly CmsConfigurationSection configuration;
 
         private byte[] keyBytes;
 
-        public DefaultTextEncryptor(ICmsConfiguration configuration)
+        public DefaultTextEncryptor(IOptions<CmsConfigurationSection> configuration)
         {
-            this.configuration = configuration;
+            this.configuration = configuration.Options;
             cryptoProvider = new DESCryptoServiceProvider();
         }
 

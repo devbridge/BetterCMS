@@ -1,15 +1,7 @@
-using System;
-using System.Configuration;
-
 namespace BetterCms.Configuration
 {
-    public class AccessControlElement : ConfigurationElement
+    public class AccessControlElement
     {
-        private const string IdentityAttribute = "identity";
-
-        private const string AccessLevelAttribute = "accessLevel";
-
-        private const string IsRoleAttribute = "isRole";
 
         /// <summary>
         /// Gets or sets the role or user.
@@ -17,12 +9,7 @@ namespace BetterCms.Configuration
         /// <value>
         /// The role or user.
         /// </value>
-        [ConfigurationProperty(IdentityAttribute, IsRequired = true)]
-        public string Identity
-        {
-            get { return Convert.ToString(this[IdentityAttribute]); }
-            set { this[IdentityAttribute] = value; }
-        }
+        public string Identity { get; set; }
 
         /// <summary>
         /// Gets or sets the access level.
@@ -30,12 +17,7 @@ namespace BetterCms.Configuration
         /// <value>
         /// The access level.
         /// </value>
-        [ConfigurationProperty(AccessLevelAttribute, IsRequired = true)]
-        public string AccessLevel
-        {
-            get { return Convert.ToString(this[AccessLevelAttribute]); }
-            set { this[AccessLevelAttribute] = value; }
-        }
+        public string AccessLevel { get; set; }
 
 
         /// <summary>
@@ -44,12 +26,7 @@ namespace BetterCms.Configuration
         /// <value>
         ///   <c>true</c> if this access rule is role bases; otherwise, <c>false</c>.
         /// </value>
-        [ConfigurationProperty(IsRoleAttribute, IsRequired = false, DefaultValue = true)]
-        public bool IsRole
-        {
-            get { return Convert.ToBoolean(this[IsRoleAttribute]); }
-            set { this[IsRoleAttribute] = value; }
-        }
+        public bool IsRole { get; set; }
 
     }
 }

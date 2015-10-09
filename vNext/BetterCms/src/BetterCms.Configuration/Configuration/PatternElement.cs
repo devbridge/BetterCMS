@@ -1,27 +1,14 @@
-using System;
-using System.Configuration;
-
 namespace BetterCms.Configuration
 {
-    public class PatternElement : ConfigurationElement
+    public class PatternElement
     {
-        private const string ExpressionAttribute = "expression";
-        private const string NegateAttribute = "negate";
-        private const string DescriptionAttribute = "description";
-        private const string IgnoreCaseAttribute = "ignoreCase";
-
         /// <summary>
         /// Gets or sets the expression.
         /// </summary>
         /// <value>
         /// The expression.
         /// </value>
-        [ConfigurationProperty(ExpressionAttribute, DefaultValue = "", IsRequired = true)]
-        public string Expression
-        {
-            get { return Convert.ToString(this[ExpressionAttribute]); }
-            set { this[ExpressionAttribute] = value; }
-        }
+        public string Expression { get; set; } = "";
 
         /// <summary>
         /// Gets or sets a value indicating whether this <see cref="PatternElement"/> should be negated.
@@ -29,12 +16,7 @@ namespace BetterCms.Configuration
         /// <value>
         ///   <c>true</c> if negate; otherwise, <c>false</c>.
         /// </value>
-        [ConfigurationProperty(NegateAttribute, DefaultValue = false, IsRequired = false)]
-        public bool Negate
-        {
-            get { return Convert.ToBoolean(this[NegateAttribute]); }
-            set { this[NegateAttribute] = value; }
-        }
+        public bool Negate { get; set; } = false;
 
         /// <summary>
         /// Gets or sets the description.
@@ -42,12 +24,7 @@ namespace BetterCms.Configuration
         /// <value>
         /// The description.
         /// </value>
-        [ConfigurationProperty(DescriptionAttribute, DefaultValue = "", IsRequired = false)]
-        public string Description
-        {
-            get { return Convert.ToString(this[DescriptionAttribute]); }
-            set { this[DescriptionAttribute] = value; }
-        }
+        public string Description { get; set; } = "";
 
         /// <summary>
         /// Gets or sets a value indicating whether this <see cref="PatternElement"/> should be checked by ignoring case.
@@ -55,11 +32,6 @@ namespace BetterCms.Configuration
         /// <value>
         ///   <c>true</c> if ignore case; otherwise, <c>false</c>.
         /// </value>
-        [ConfigurationProperty(IgnoreCaseAttribute, DefaultValue = false, IsRequired = false)]
-        public bool IgnoreCase
-        {
-            get { return Convert.ToBoolean(this[IgnoreCaseAttribute]); }
-            set { this[IgnoreCaseAttribute] = value; }
-        }
+        public bool IgnoreCase { get; set; } = false;
     }
 }

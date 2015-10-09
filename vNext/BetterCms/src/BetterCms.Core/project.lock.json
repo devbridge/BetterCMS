@@ -3,6 +3,12 @@
   "version": 1,
   "targets": {
     "DNX,Version=v4.5.1": {
+      "BetterCms.Configuration/2.0.0-alpha1": {
+        "type": "project",
+        "dependencies": {
+          "BetterModules.Core.Web": "2.0.0-alpha1"
+        }
+      },
       "BetterModules.Core/2.0.0-alpha1": {
         "type": "package",
         "dependencies": {
@@ -1411,6 +1417,10 @@
     }
   },
   "libraries": {
+    "BetterCms.Configuration/2.0.0-alpha1": {
+      "type": "project",
+      "path": "../BetterCms.Configuration/project.json"
+    },
     "BetterModules.Core/2.0.0-alpha1": {
       "type": "package",
       "sha512": "6uFgt//xLle/LcJc7yGZYF18bsNOG/CY4jhn3QoOa1Gqfyr9kY5x+BoVqCMpTnGfU7YMNxORgWRXEZmtKh5OuA==",
@@ -3331,6 +3341,7 @@
   },
   "projectFileDependencyGroups": {
     "": [
+      "BetterCms.Configuration >= 2.0.0-alpha1",
       "BetterModules.Core.Web >= 2.0.0-alpha1"
     ],
     "DNX,Version=v4.5.1": []

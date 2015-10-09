@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using BetterCms.Configuration;
 using BetterCms.Core.Exceptions.Modules;
+using Microsoft.Framework.OptionsModel;
 using NuGet;
 
 namespace BetterCms.Core.Modules.Install
@@ -12,12 +14,12 @@ namespace BetterCms.Core.Modules.Install
 
         private readonly IPackageManager packageManager;
         
-        public DefaultModuleManager(IPackageRepository packageRepository, ICmsConfiguration cmsConfiguration)
+        public DefaultModuleManager(IPackageRepository packageRepository, IOptions<CmsConfigurationSection> cmsConfiguration)
         {
-            this.packageRepository = PackageRepositoryFactory.Default.CreateRepository(cmsConfiguration.ModuleGallery.FeedUrl);
+            this.packageRepository = PackageRepositoryFactory.Default.CreateRepository(cmsConfiguration.Options.ModuleGallery.FeedUrl);
             this.packageManager = new PackageManager(
                 this.packageRepository,
-                cmsConfiguration.WorkingDirectoryRootPath) { Logger = null };
+                cmsConfiguration.Options.WorkingDirectoryRootPath) { Logger = null };
         }
 
         /// <summary>

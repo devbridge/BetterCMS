@@ -1,22 +1,10 @@
-using System;
-using System.Configuration;
-
 namespace BetterCms.Configuration
 {
     /// <summary>
     /// Configuration custom role element for security.
     /// </summary>
-    public class CustomRoleElement : ConfigurationElement
+    public class CustomRoleElement
     {
-        /// <summary>
-        /// The permission attribute.
-        /// </summary>
-        private const string PermissionAttribute = "permission";
-
-        /// <summary>
-        /// The roles attribute.
-        /// </summary>
-        private const string RolesAttribute = "roles";
 
         /// <summary>
         /// Gets or sets the permission.
@@ -24,12 +12,7 @@ namespace BetterCms.Configuration
         /// <value>
         /// The permission.
         /// </value>
-        [ConfigurationProperty(PermissionAttribute, IsRequired = true)]
-        public string Permission
-        {
-            get { return Convert.ToString(this[PermissionAttribute]); }
-            set { this[PermissionAttribute] = value; }
-        }
+        public string Permission { get; set; }
 
         /// <summary>
         /// Gets or sets the roles.
@@ -37,11 +20,6 @@ namespace BetterCms.Configuration
         /// <value>
         /// The roles.
         /// </value>
-        [ConfigurationProperty(RolesAttribute, IsRequired = true)]
-        public string Roles
-        {
-            get { return Convert.ToString(this[RolesAttribute]); }
-            set { this[RolesAttribute] = value; }
-        }
+        public string Roles { get; set; }
     }
 }

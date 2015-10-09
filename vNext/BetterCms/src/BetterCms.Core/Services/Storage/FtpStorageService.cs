@@ -3,9 +3,10 @@ using System.Collections.Generic;
 using System.IO;
 using System.Net;
 using System.Security.Cryptography;
-
+using BetterCms.Configuration;
 using BetterCms.Core.Exceptions;
 using BetterCms.Core.Exceptions.Service;
+using Microsoft.Framework.OptionsModel;
 
 namespace BetterCms.Core.Services.Storage
 {
@@ -17,14 +18,14 @@ namespace BetterCms.Core.Services.Storage
         private readonly string ftpRoot;
         private readonly bool usePassiveMode;
 
-        public FtpStorageService(ICmsConfiguration config)
+        public FtpStorageService(IOptions<CmsConfigurationSection> config)
         {
             try
             {
-                var serviceSection = config.Storage;
+                var serviceSection = config.Options.Storage;
                 var mode = serviceSection.GetValue("UsePassiveMode");
 
-                rootUrl = config.Storage.ContentRoot;
+                rootUrl = config.Options.Storage.ContentRoot;
                 usePassiveMode = mode != null && bool.Parse(mode);
                 ftpRoot = serviceSection.GetValue("FtpRoot");
                 userName = serviceSection.GetValue("FtpUserName");

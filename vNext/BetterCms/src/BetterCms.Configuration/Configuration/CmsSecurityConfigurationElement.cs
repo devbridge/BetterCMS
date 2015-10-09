@@ -1,49 +1,19 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Configuration;
+using System.Linq;
 
 namespace BetterCms.Configuration
 {
     /// <summary>
     /// Security configuration element implementation.
     /// </summary>
-    public class CmsSecurityConfigurationElement : ConfigurationElement, ICmsSecurityConfiguration
+    public class CmsSecurityConfigurationElement //: ConfigurationElement, ICmsSecurityConfiguration
     {
-        /// <summary>
-        /// The 'accessControlEnabled' attribute name.
-        /// </summary>
-        private const string AccessControlEnabledAttribute = "accessControlEnabled";
-
-        /// <summary>
-        /// The 'fullAaccessControlListccessRoles' attribute name.
-        /// </summary>
-        private const string DefaultAccessRulesAttribute = "defaultAccessRules";
-
-        /// <summary>
-        /// The 'fullAccessRoles' attribute name.
-        /// </summary>
-        private const string FullAccessRolesAttribute = "fullAccessRoles";
-
-        /// <summary>
-        /// The 'customRoles' attribute name.
-        /// </summary>
-        private const string CustomRolesAttribute = "customRoles";
-
-        /// <summary>
-        /// The 'enableContentEncryption' attribute name.
-        /// </summary>
-        private const string EnableContentEncryptionAttribute = "encryptionEnabled";
-
-        /// <summary>
-        /// The 'contentEncryptionKey' attribute name.
-        /// </summary>
-        private const string ContentEncryptionKeyAttribute = "encryptionKey";
-
-        /// <summary>
-        /// The 'ignoreLocalFileSystemWarning' attribute name.
-        /// </summary>
-        private const string IgnoreLocalFileSystemWarningAttribute = "ignoreLocalFileSystemWarning";
-
+        public CmsSecurityConfigurationElement()
+        {
+            DefaultAccessRules = new List<AccessControlElement>();
+            CustomRoles = new List<CustomRoleElement>();
+        }
 
         /// <summary>
         /// Gets or sets the full access roles.
@@ -52,12 +22,7 @@ namespace BetterCms.Configuration
         /// <value>
         /// The full access roles.
         /// </value>
-        [ConfigurationProperty(FullAccessRolesAttribute, IsRequired = false, DefaultValue = "")]
-        public string FullAccessRoles
-        {
-            get { return Convert.ToString(this[FullAccessRolesAttribute]); }
-            set { this[FullAccessRolesAttribute] = value; }
-        }
+        public string FullAccessRoles { get; set; } = "";
 
         /// <summary>
         /// Gets a value indicating whether to use custom roles.
@@ -65,10 +30,7 @@ namespace BetterCms.Configuration
         /// <value>
         ///   <c>true</c> if custom roles are used; otherwise, <c>false</c>.
         /// </value>
-        public bool UseCustomRoles
-        {
-            get { return CustomRoles.Count > 0; }
-        }
+        public bool UseCustomRoles => CustomRoles.Count > 0;
 
         /// <summary>
         /// Gets a value indicating whether to a content encryption is enabled.
@@ -76,12 +38,7 @@ namespace BetterCms.Configuration
         /// <value>
         /// <c>true</c> if a content encryption is enabled; otherwise, <c>false</c>.
         /// </value>
-        [ConfigurationProperty(EnableContentEncryptionAttribute, IsRequired = false, DefaultValue = false)]
-        public bool EncryptionEnabled
-        {
-            get { return Convert.ToBoolean(this[EnableContentEncryptionAttribute]); }
-            set { this[EnableContentEncryptionAttribute] = value; }
-        }
+        public bool EncryptionEnabled { get; set; } = false;
 
         /// <summary>
         /// Gets the content encryption key.
@@ -89,12 +46,7 @@ namespace BetterCms.Configuration
         /// <value>
         /// The content encryption key.
         /// </value>
-        [ConfigurationProperty(ContentEncryptionKeyAttribute, IsRequired = false, DefaultValue = "")]
-        public string EncryptionKey
-        {
-            get { return Convert.ToString(this[ContentEncryptionKeyAttribute]); }
-            set { this[ContentEncryptionKeyAttribute] = value; }
-        }
+        public string EncryptionKey { get; set; } = "";
 
         /// <summary>
         /// Gets or sets a value indicating whether to ignore local file system security warning.
@@ -102,17 +54,7 @@ namespace BetterCms.Configuration
         /// <value>
         /// <c>true</c> if ignore local file system warning; otherwise, <c>false</c>.
         /// </value>
-        [ConfigurationProperty(IgnoreLocalFileSystemWarningAttribute, IsRequired = false, DefaultValue = false)]
-        public bool IgnoreLocalFileSystemWarning {
-            get
-            {
-                return (bool)this[IgnoreLocalFileSystemWarningAttribute];
-            }
-            set
-            {
-                this[IgnoreLocalFileSystemWarningAttribute] = value;
-            } 
-        }
+        public bool IgnoreLocalFileSystemWarning { get; set; } = false;
 
         /// <summary>
         /// Gets or sets a value indicating whether access control is enabled.
@@ -120,22 +62,9 @@ namespace BetterCms.Configuration
         /// <value>
         /// <c>true</c> if access control is enabled; otherwise, <c>false</c>.
         /// </value>
-        [ConfigurationProperty(AccessControlEnabledAttribute, IsRequired = false, DefaultValue = false)]
-        public bool AccessControlEnabled
-        {
-            get { return (bool)this[AccessControlEnabledAttribute]; }
-            set { this[AccessControlEnabledAttribute] = value; }
-        }
-
-        [ConfigurationProperty(DefaultAccessRulesAttribute, IsDefaultCollection = false)]
-        [ConfigurationCollection(typeof(AccessControlCollection))]
-        public AccessControlCollection DefaultAccessRules
-        {
-            get
-            {
-                return this[DefaultAccessRulesAttribute] as AccessControlCollection;
-            }
-        }
+        public bool AccessControlEnabled { get; set; } = false;
+        
+        public IList<AccessControlElement> DefaultAccessRules { get; set; }
 
         /// <summary>
         /// Gets the custom roles.
@@ -143,15 +72,7 @@ namespace BetterCms.Configuration
         /// <value>
         /// The custom roles.
         /// </value>
-        [ConfigurationProperty(CustomRolesAttribute, IsDefaultCollection = false)]
-        [ConfigurationCollection(typeof(CustomRolesCollection))]
-        public CustomRolesCollection CustomRoles
-        {
-            get
-            {
-                return this[CustomRolesAttribute] as CustomRolesCollection;
-            }
-        }
+        public IList<CustomRoleElement> CustomRoles { get; set; }
 
         /// <summary>
         /// Gets the custom roles.
@@ -159,14 +80,7 @@ namespace BetterCms.Configuration
         /// <returns>Permission mapping to roles.</returns>
         public Dictionary<string, string> GetCustomRoles()
         {
-            var roles = new Dictionary<string, string>();
-            for (var i = 0; i < CustomRoles.Count; i++)
-            {
-                var role = CustomRoles[i];
-                roles.Add(role.Permission, role.Roles);
-            }
-
-            return roles;
+            return CustomRoles.ToDictionary(role => role.Permission, role => role.Roles);
         }
 
         /// <summary>
@@ -176,7 +90,7 @@ namespace BetterCms.Configuration
         /// <returns>Translated role to custom role.</returns>
         public string Translate(string accessRole)
         {
-            var result = CustomRoles.GetElementByKey(accessRole);
+            var result = CustomRoles.FirstOrDefault(x => x.Permission == accessRole);
             return result != null
                 ? result.Roles
                 : accessRole;

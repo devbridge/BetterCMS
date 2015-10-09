@@ -1,14 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
-
-using Autofac;
-
+using BetterCms.Configuration;
 using BetterCms.Core.DataContracts;
 using BetterCms.Core.Exceptions;
 using BetterCms.Core.Modules.Projections;
 
 using BetterModules.Core.Web.Modules;
 using BetterModules.Core.Web.Mvc.Extensions;
+using Microsoft.Framework.OptionsModel;
 
 namespace BetterCms.Core.Modules
 {
@@ -35,9 +34,9 @@ namespace BetterCms.Core.Modules
         /// Initializes a new instance of the <see cref="CmsModuleDescriptor" /> class.
         /// </summary>
         /// <param name="configuration">The configuration.</param>
-        protected CmsModuleDescriptor(ICmsConfiguration configuration)
+        protected CmsModuleDescriptor(IOptions<CmsConfigurationSection> configuration)
         {
-            Configuration = configuration;
+            Configuration = configuration.Options;
         }
 
         /// <summary>
@@ -46,7 +45,7 @@ namespace BetterCms.Core.Modules
         /// <value>
         /// The CMS configuration.
         /// </value>
-        public virtual ICmsConfiguration Configuration { get; private set; }
+        public virtual CmsConfigurationSection Configuration { get; private set; }
 
         /// <summary>
         /// Gets the name of the module area.
