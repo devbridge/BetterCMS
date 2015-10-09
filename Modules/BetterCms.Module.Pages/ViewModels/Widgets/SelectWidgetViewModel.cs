@@ -1,16 +1,19 @@
 ﻿using System.Collections.Generic;
 
-using BetterCms.Module.Pages.ViewModels.Widgets;
-
-namespace BetterCms.Module.Pages.Command.Widget.GetWidgetCategory
+namespace BetterCms.Module.Pages.ViewModels.Widgets
 {
-    public class GetRecentWidgetAndWidgetCategoryResponse
+    public class SelectWidgetViewModel
     {
+        public SelectWidgetViewModel()
+        {
+            WidgetCategories = new List<WidgetCategoryViewModel>();
+        }
+
         /// <summary>
         /// Gets or sets the list of the widget categories.
         /// </summary>
         /// <value>
-        /// The widget category list.
+        /// The list of the widget categories.
         /// </value>
         public IList<WidgetCategoryViewModel> WidgetCategories { get; set; }
 

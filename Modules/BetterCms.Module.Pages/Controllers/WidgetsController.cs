@@ -270,7 +270,7 @@ namespace BetterCms.Module.Pages.Controllers
         public ActionResult SelectWidget(GetRecentWidgetAndWidgetCategoryRequest request)
         {
             var model = GetCommand<GetRecentWidgetAndWidgetCategoryCommand>().ExecuteCommand(request);
-            var view = model != null ? RenderView("SelectWidget", new PageContentViewModel{ WidgetCategories = model.WidgetCategories, RecentWidgets = model.RecentWidgets }) : string.Empty;
+            var view = model != null ? RenderView("SelectWidget", model) : string.Empty;
 
             var result = ComboWireJson(model != null, view, model, JsonRequestBehavior.AllowGet);
             result.MaxJsonLength = int.MaxValue;

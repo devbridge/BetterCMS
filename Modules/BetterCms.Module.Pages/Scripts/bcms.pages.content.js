@@ -264,6 +264,7 @@ bettercms.define('bcms.pages.content', ['bcms.jquery', 'bcms', 'bcms.modal', 'bc
         */
         pagesContent.initializeAddNewContentForm = function (settings) {
 
+            var codeEditorInitialized = false;
             settings = $.extend({
                 enableInsertDynamicRegion: false,
                 editorId: null,
@@ -274,13 +275,7 @@ bettercms.define('bcms.pages.content', ['bcms.jquery', 'bcms', 'bcms.modal', 'bc
                 contentTextMode: content.contentTextModes.html
             }, settings);
 
-            var onInsert = function () {
-                pagesContent.insertWidget(this, settings.dialog, settings.onSuccess, settings.includeChildRegions);
-            };
-
             settings.dialog.container.find(selectors.dataPickers).initializeDatepicker(globalization.datePickerTooltipTitle);
-
-            initializeWidgetsTab(settings.dialog, onInsert);
 
             settings.dialog.container.find(selectors.anyTab).click(function () {
                 setTimeout(function () {
@@ -288,10 +283,11 @@ bettercms.define('bcms.pages.content', ['bcms.jquery', 'bcms', 'bcms.modal', 'bc
                 }, 100);
             });
 
-            initializeWidgets(settings.dialog.container, settings.dialog, onInsert);
-
             settings.dialog.container.find(selectors.htmlContentJsCssTabOpener).on('click', function () {
-                codeEditor.initialize(settings.dialog.container);
+                if (!codeEditorInitialized) {
+                    codeEditor.initialize(settings.dialog.container, settings.dialog);
+                    codeEditorInitialized = true;
+                }
             });
 
             var editorHeight = modal.maximizeChildHeight(settings.dialog.container.find("#" + settings.editorId), settings.dialog);
@@ -319,6 +315,8 @@ bettercms.define('bcms.pages.content', ['bcms.jquery', 'bcms', 'bcms.modal', 'bc
         * Initializes content edit dialog form.
         */
         pagesContent.initializeEditContentForm = function (settings) {
+            var codeEditorInitialized = false;
+
             settings = $.extend({
                 dialog: null,
                 editInSourceMode: false,
@@ -335,7 +333,10 @@ bettercms.define('bcms.pages.content', ['bcms.jquery', 'bcms', 'bcms.modal', 'bc
                 form = settings.dialog.container.find(selectors.firstForm);
 
             settings.dialog.container.find(selectors.htmlContentJsCssTabOpener).on('click', function () {
-                codeEditor.initialize(settings.dialog.container);
+                if (!codeEditorInitialized) {
+                    codeEditor.initialize(settings.dialog.container, settings.dialog);
+                    codeEditorInitialized = true;
+                }
             });
 
             var editorHeight = modal.maximizeChildHeight(settings.dialog.container.find("#" + settings.editorId), settings.dialog);

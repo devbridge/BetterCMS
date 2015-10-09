@@ -319,7 +319,8 @@ bettercms.define('bcms.pages.widgets', ['bcms.jquery', 'bcms', 'bcms.modal', 'bc
                 widgetOptions = data.Options,
                 customOptions = data.CustomOptions,
                 optionListViewModel = options.createOptionsViewModel(optionsContainer, widgetOptions, customOptions),
-                widgetEditViewModel = new WidgetEditViewModel(data);
+                widgetEditViewModel = new WidgetEditViewModel(data),
+                codeEditorInitialized = false;
 
             ko.applyBindings(optionListViewModel, optionsContainer.get(0));
             ko.applyBindings(widgetEditViewModel, widgetEditContainer.get(0));
@@ -352,9 +353,12 @@ bettercms.define('bcms.pages.widgets', ['bcms.jquery', 'bcms', 'bcms.modal', 'bc
             htmlEditor.enableInsertDynamicRegion(editorId, false, data.LastDynamicRegionNumber);
 
             dialog.container.find(selectors.htmlWidgetJsCssTabOpener).on('click', function () {
-                codeEditor.initialize(dialog.container, {
-                    cmsEditorType: htmlEditor.cmsEditorTypes.widget
-                });
+                if (!codeEditorInitialized) {
+                    codeEditor.initialize(dialog.container, dialog, {
+                        cmsEditorType: htmlEditor.cmsEditorTypes.widget
+                    });
+                    codeEditorInitialized = true;
+                }
             });
 
             return optionListViewModel;
