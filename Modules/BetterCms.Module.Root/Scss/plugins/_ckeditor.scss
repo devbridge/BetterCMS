@@ -28,9 +28,10 @@ $ck-toolbar-icons: (
                 ('cmsoption_icon', $bcms-editor-cmsoption),
                 ('cmsimage_icon', $bcms-editor-cmsimage),
                 ('cmswidget_icon', $bcms-editor-cmswidget),
-                ('cmsdynamicregion_icon', $bcms-editor-cmsdynamicregion)
+                ('cmsdynamicregion_icon', $bcms-editor-cmsdynamicregion),
+                ('cmstogglelinebreak_icon', $bcms-editor-cmstogglelinebreak)
 );
-//
+
 //                ('pagebreak_icon', $bcms-editor-pagebreak),
 //                ('pastefromword_icon', $bcms-editor-pastefromword),
 //                ('pastetext_icon', $bcms-editor-pastetext),
@@ -42,7 +43,6 @@ $ck-toolbar-icons: (
 //                ('replace_icon', $bcms-editor-replace),
 //                ('imagebutton_icon', $bcms-editor-imagebutton),
 //                ('horizontalrule_icon', $bcms-editor-horizontalrule),
-//                ('cmstogglelinebreak_icon', $bcms-editor-cmstogglelinebreak),
 
 %text-field-extender {
     box-sizing: border-box;

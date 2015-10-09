@@ -727,66 +727,6 @@
       <SubType>Designer</SubType>
       <LastGenOutput>RootGlobalization.Designer.cs</LastGenOutput>
     </EmbeddedResource>
-    <EmbeddedResource Include="Content\themes\base\images\ui-bg_flat_0_aaaaaa_40x100.png" />
-    <EmbeddedResource Include="Content\themes\base\images\ui-bg_flat_75_ffffff_40x100.png" />
-    <EmbeddedResource Include="Content\themes\base\images\ui-bg_glass_55_fbf9ee_1x400.png" />
-    <EmbeddedResource Include="Content\themes\base\images\ui-bg_glass_65_ffffff_1x400.png" />
-    <EmbeddedResource Include="Content\themes\base\images\ui-bg_glass_75_dadada_1x400.png" />
-    <EmbeddedResource Include="Content\themes\base\images\ui-bg_glass_75_e6e6e6_1x400.png" />
-    <EmbeddedResource Include="Content\themes\base\images\ui-bg_glass_95_fef1ec_1x400.png" />
-    <EmbeddedResource Include="Content\themes\base\images\ui-bg_highlight-soft_75_cccccc_1x100.png" />
-    <EmbeddedResource Include="Content\themes\base\images\ui-icons_222222_256x240.png" />
-    <EmbeddedResource Include="Content\themes\base\images\ui-icons_2e83ff_256x240.png" />
-    <EmbeddedResource Include="Content\themes\base\images\ui-icons_454545_256x240.png" />
-    <EmbeddedResource Include="Content\themes\base\images\ui-icons_888888_256x240.png" />
-    <EmbeddedResource Include="Content\themes\base\images\ui-icons_cd0a0a_256x240.png" />
-    <EmbeddedResource Include="Content\themes\base\jquery-ui.css" />
-    <EmbeddedResource Include="Content\themes\base\jquery.ui.accordion.css" />
-    <EmbeddedResource Include="Content\themes\base\jquery.ui.all.css" />
-    <EmbeddedResource Include="Content\themes\base\jquery.ui.autocomplete.css" />
-    <EmbeddedResource Include="Content\themes\base\jquery.ui.base.css" />
-    <EmbeddedResource Include="Content\themes\base\jquery.ui.button.css" />
-    <EmbeddedResource Include="Content\themes\base\jquery.ui.core.css" />
-    <EmbeddedResource Include="Content\themes\base\jquery.ui.datepicker.css" />
-    <EmbeddedResource Include="Content\themes\base\jquery.ui.dialog.css" />
-    <EmbeddedResource Include="Content\themes\base\jquery.ui.menu.css" />
-    <EmbeddedResource Include="Content\themes\base\jquery.ui.progressbar.css" />
-    <EmbeddedResource Include="Content\themes\base\jquery.ui.resizable.css" />
-    <EmbeddedResource Include="Content\themes\base\jquery.ui.selectable.css" />
-    <EmbeddedResource Include="Content\themes\base\jquery.ui.slider.css" />
-    <EmbeddedResource Include="Content\themes\base\jquery.ui.spinner.css" />
-    <EmbeddedResource Include="Content\themes\base\jquery.ui.tabs.css" />
-    <EmbeddedResource Include="Content\themes\base\jquery.ui.theme.css" />
-    <EmbeddedResource Include="Content\themes\base\jquery.ui.tooltip.css" />
-    <EmbeddedResource Include="Content\themes\base\minified\images\ui-bg_flat_0_aaaaaa_40x100.png" />
-    <EmbeddedResource Include="Content\themes\base\minified\images\ui-bg_flat_75_ffffff_40x100.png" />
-    <EmbeddedResource Include="Content\themes\base\minified\images\ui-bg_glass_55_fbf9ee_1x400.png" />
-    <EmbeddedResource Include="Content\themes\base\minified\images\ui-bg_glass_65_ffffff_1x400.png" />
-    <EmbeddedResource Include="Content\themes\base\minified\images\ui-bg_glass_75_dadada_1x400.png" />
-    <EmbeddedResource Include="Content\themes\base\minified\images\ui-bg_glass_75_e6e6e6_1x400.png" />
-    <EmbeddedResource Include="Content\themes\base\minified\images\ui-bg_glass_95_fef1ec_1x400.png" />
-    <EmbeddedResource Include="Content\themes\base\minified\images\ui-bg_highlight-soft_75_cccccc_1x100.png" />
-    <EmbeddedResource Include="Content\themes\base\minified\images\ui-icons_222222_256x240.png" />
-    <EmbeddedResource Include="Content\themes\base\minified\images\ui-icons_2e83ff_256x240.png" />
-    <EmbeddedResource Include="Content\themes\base\minified\images\ui-icons_454545_256x240.png" />
-    <EmbeddedResource Include="Content\themes\base\minified\images\ui-icons_888888_256x240.png" />
-    <EmbeddedResource Include="Content\themes\base\minified\images\ui-icons_cd0a0a_256x240.png" />
-    <EmbeddedResource Include="Content\themes\base\minified\jquery-ui.min.css" />
-    <EmbeddedResource Include="Content\themes\base\minified\jquery.ui.accordion.min.css" />
-    <EmbeddedResource Include="Content\themes\base\minified\jquery.ui.autocomplete.min.css" />
-    <EmbeddedResource Include="Content\themes\base\minified\jquery.ui.button.min.css" />
-    <EmbeddedResource Include="Content\themes\base\minified\jquery.ui.core.min.css" />
-    <EmbeddedResource Include="Content\themes\base\minified\jquery.ui.datepicker.min.css" />
-    <EmbeddedResource Include="Content\themes\base\minified\jquery.ui.dialog.min.css" />
-    <EmbeddedResource Include="Content\themes\base\minified\jquery.ui.menu.min.css" />
-    <EmbeddedResource Include="Content\themes\base\minified\jquery.ui.progressbar.min.css" />
-    <EmbeddedResource Include="Content\themes\base\minified\jquery.ui.resizable.min.css" />
-    <EmbeddedResource Include="Content\themes\base\minified\jquery.ui.selectable.min.css" />
-    <EmbeddedResource Include="Content\themes\base\minified\jquery.ui.slider.min.css" />
-    <EmbeddedResource Include="Content\themes\base\minified\jquery.ui.spinner.min.css" />
-    <EmbeddedResource Include="Content\themes\base\minified\jquery.ui.tabs.min.css" />
-    <EmbeddedResource Include="Content\themes\base\minified\jquery.ui.theme.min.css" />
-    <EmbeddedResource Include="Content\themes\base\minified\jquery.ui.tooltip.min.css" />
     <EmbeddedResource Include="Scripts\bcms.authentication.js" />
     <EmbeddedResource Include="Scripts\bcms.datepicker.js" />
     <EmbeddedResource Include="Scripts\bcms.htmlEditor.js" />
@@ -1506,6 +1446,7 @@
     <Content Include="Scss\base_64\icons\editor-cmsdynamicregion.svg" />
     <Content Include="Scss\base_64\icons\editor-cmsimage.svg" />
     <Content Include="Scss\base_64\icons\editor-cmsoption.svg" />
+    <Content Include="Scss\base_64\icons\editor-cmstogglelinebreak.svg" />
     <Content Include="Scss\base_64\icons\editor-cmswidget.svg" />
     <Content Include="Scss\base_64\icons\editor-copy.svg" />
     <Content Include="Scss\base_64\icons\editor-cut.svg" />
@@ -1590,8 +1531,8 @@
     <Content Include="Scss\core\_assets.scss" />
     <Content Include="Scss\editor.scss" />
     <Content Include="Scss\plugins\_ckeditor.scss" />
-    <Content Include="Scss\bcms-modules\root\_calendar.scss" />
     <Content Include="Scss\plugins\_markitup.scss" />
+    <Content Include="Scss\plugins\_jquerycalendar.scss" />
     <None Include="Views\Category\CategoryTrees.cshtml">
       <Generator>RazorGenerator</Generator>
       <LastGenOutput>CategoryTrees.generated.cs</LastGenOutput>

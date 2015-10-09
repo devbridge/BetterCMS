@@ -1,4 +1,4 @@
-@import '../../core/variables';
+@import '../core/variables';
 
 .ui-datepicker-trigger {
     position: absolute;
@@ -22,42 +22,42 @@
 }
 
 .ui-widget {
-    font-family: 'Open Sans', sans-serif !important;
+    font-family: $font-base-family;
     font-size: 14px;
-}
 
-.ui-widget .ui-widget {
-    font-size: 14px;
-}
+    input,
+    select,
+    textarea,
+    button {
+        font-size: 14px;
+    }
 
-.ui-widget input,
-.ui-widget select,
-.ui-widget textarea,
-.ui-widget button {
-    font-size: 14px;
-}
+    &-content {
+        border: 1px solid #c6c6c6;
+        background: $white;
+        color: #222222;
 
-.ui-widget-content {
-    border: 1px solid #c6c6c6;
-    background: #ffffff;
-    color: #222222;
-}
+        a {
+            color: #222222;
+        }
+    }
 
-.ui-widget-content a {
-    color: #222222;
-}
+    &-header {
+        border: 1px solid #245b7d;
+        background: #1894e4;
+        color: $white;
+        font-weight: 700;
+        font-family: $font-base-family;
+        position: relative;
 
-.ui-widget-header {
-    border: 1px solid #245b7d;
-    background: #1894e4;
-    color: #ffffff;
-    font-weight: bold;
-    font-family: 'Open Sans', sans-serif !important;
-    position: relative;
-}
+        a {
+            color: #ffffff;
+        }
+    }
 
-.ui-widget-header a {
-    color: #ffffff;
+    .ui-widget {
+        font-size: 14px;
+    }
 }
 
 .ui-state-default,
