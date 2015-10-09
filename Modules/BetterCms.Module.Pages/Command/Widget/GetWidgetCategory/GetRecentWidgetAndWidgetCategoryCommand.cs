@@ -24,7 +24,7 @@ namespace BetterCms.Module.Pages.Command.Widget.GetWidgetCategory
     /// <summary>
     /// Command to get widget categories model.
     /// </summary>
-    public class GetRecentWidgetAndWidgetCategoryCommand : CommandBase, ICommand<GetRecentWidgetAndWidgetCategoryRequest, GetRecentWidgetAndWidgetCategoryResponse>
+    public class GetRecentWidgetAndWidgetCategoryCommand : CommandBase, ICommand<GetRecentWidgetAndWidgetCategoryRequest, SelectWidgetViewModel>
     {
         /// <summary>
         /// Executes the specified request.
@@ -32,7 +32,7 @@ namespace BetterCms.Module.Pages.Command.Widget.GetWidgetCategory
         /// <param name="request">The request.</param>
         /// <returns></returns>
         /// <exception cref="System.NotImplementedException"></exception>
-        public GetRecentWidgetAndWidgetCategoryResponse Execute(GetRecentWidgetAndWidgetCategoryRequest request)
+        public SelectWidgetViewModel Execute(GetRecentWidgetAndWidgetCategoryRequest request)
         {
             IEnumerable<WidgetCategoryViewModel> categoriesFuture;
 
@@ -164,7 +164,7 @@ namespace BetterCms.Module.Pages.Command.Widget.GetWidgetCategory
             // Remove empty categories
             categories = categories.Where(c => c.Widgets.Any()).ToList();
 
-            return new GetRecentWidgetAndWidgetCategoryResponse
+            return new SelectWidgetViewModel
                        {
                            WidgetCategories = categories,
                            RecentWidgets = recentWidgets

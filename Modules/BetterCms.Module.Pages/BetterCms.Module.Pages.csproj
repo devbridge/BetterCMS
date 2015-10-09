@@ -281,7 +281,6 @@
     <Compile Include="Command\Widget\GetSiteSettingsWidgets\GetSiteSettingsWidgetsCommand.cs" />
     <Compile Include="Command\Page\DeletePage\DeletePageCommand.cs" />
     <Compile Include="Command\Redirect\DeleteRedirect\DeleteRedirectCommand.cs" />
-    <Compile Include="Command\Widget\GetWidgetCategory\GetRecentWidgetAndWidgetCategoryResponse.cs" />
     <Compile Include="Command\Page\GetPageForDelete\GetPageForDeleteCommand.cs" />
     <Compile Include="Command\Page\GetPagesList\GetPagesListCommand.cs" />
     <Compile Include="Command\Redirect\GetRedirectsList\GetRedirectsListCommand.cs" />
@@ -450,6 +449,7 @@
     <Compile Include="Registration\SeoJsModuleIncludeDescriptor.cs" />
     <Compile Include="Registration\PagePropertiesJsModuleIncludeDescriptor.cs" />
     <Compile Include="Services\DefaultPageService.cs" />
+    <Compile Include="ViewModels\Widgets\SelectWidgetViewModel.cs" />
     <Compile Include="Views\Content\Partial\EditHtmlContent.generated.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>

@@ -54,7 +54,7 @@ namespace ASP
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("RazorGenerator", "2.0.0.0")]
     [System.Web.WebPages.PageVirtualPathAttribute("~/Views/Content/Partial/SelectWidget.cshtml")]
-    public partial class _Views_Content_Partial_SelectWidget_cshtml : System.Web.Mvc.WebViewPage<BetterCms.Module.Pages.ViewModels.Content.PageContentViewModel>
+    public partial class _Views_Content_Partial_SelectWidget_cshtml : System.Web.Mvc.WebViewPage<BetterCms.Module.Pages.ViewModels.Widgets.SelectWidgetViewModel>
     {
         public _Views_Content_Partial_SelectWidget_cshtml()
         {
@@ -136,14 +136,14 @@ WriteLiteral(" id=\"bcms-advanced-content-search\"");
 
 WriteLiteral(" class=\"bcms-editor-field-box\"");
 
-WriteAttribute("placeholder", Tuple.Create(" placeholder=\"", 843), Tuple.Create("\"", 892)
+WriteAttribute("placeholder", Tuple.Create(" placeholder=\"", 844), Tuple.Create("\"", 893)
             
             #line 15 "..\..\Views\Content\Partial\SelectWidget.cshtml"
-                         , Tuple.Create(Tuple.Create("", 857), Tuple.Create<System.Object, System.Int32>(RootGlobalization.WaterMark_Search
+                         , Tuple.Create(Tuple.Create("", 858), Tuple.Create<System.Object, System.Int32>(RootGlobalization.WaterMark_Search
             
             #line default
             #line hidden
-, 857), false)
+, 858), false)
 );
 
 WriteLiteral(" />\r\n        <div");

@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Web.Mvc;
 
@@ -8,7 +7,6 @@ using BetterCms.Core.DataContracts.Enums;
 using BetterCms.Module.Pages.Content.Resources;
 using BetterCms.Module.Pages.Models.Enums;
 using BetterCms.Module.Pages.Mvc.Attributes;
-using BetterCms.Module.Pages.ViewModels.Widgets;
 
 using BetterCms.Module.Root.ViewModels.Security;
 
@@ -21,11 +19,6 @@ namespace BetterCms.Module.Pages.ViewModels.Content
     /// </summary>
     public class PageContentViewModel : IAccessSecuredViewModel, IDraftDestroy
     {
-        public PageContentViewModel()
-        {
-            WidgetCategories = new List<WidgetCategoryViewModel>();
-        }
-
         /// <summary>
         /// Gets or sets the page content id.
         /// </summary>
@@ -202,22 +195,6 @@ namespace BetterCms.Module.Pages.ViewModels.Content
         /// </value>
         [AllowHtml]
         public string CustomCss { get; set; }
-
-        /// <summary>
-        /// Gets or sets the list of the widget categories.
-        /// </summary>
-        /// <value>
-        /// The list of the widget categories.
-        /// </value>
-        public IList<WidgetCategoryViewModel> WidgetCategories { get; set; }
-
-        /// <summary>
-        /// Gets or sets the recent widgets.
-        /// </summary>
-        /// <value>
-        /// The recent widgets.
-        /// </value>
-        public IList<WidgetViewModel> RecentWidgets { get; set; }
         
         /// <summary>
         /// Gets or sets a value indicating whether dialog should be opened in the read only mode.
