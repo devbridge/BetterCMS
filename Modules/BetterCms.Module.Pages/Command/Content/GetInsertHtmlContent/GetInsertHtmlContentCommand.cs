@@ -35,7 +35,9 @@ namespace BetterCms.Module.Pages.Command.Content.GetInsertHtmlContent
                     LiveFrom = DateTime.Today,
                     EnableInsertDynamicRegion = isMasterPage,
                     EditInSourceMode = isMasterPage,
-                    CanEditContent = true
+                    CanEditContent = true,
+                    EnabledCustomCss = true,
+                    EnabledCustomJs = true
                 };
 
             if (model.EnableInsertDynamicRegion)
