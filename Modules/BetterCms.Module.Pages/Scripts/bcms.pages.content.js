@@ -264,6 +264,7 @@ bettercms.define('bcms.pages.content', ['bcms.jquery', 'bcms', 'bcms.modal', 'bc
         */
         pagesContent.initializeAddNewContentForm = function (settings) {
 
+            var codeEditorInitialized = false;
             settings = $.extend({
                 enableInsertDynamicRegion: false,
                 editorId: null,
@@ -283,7 +284,10 @@ bettercms.define('bcms.pages.content', ['bcms.jquery', 'bcms', 'bcms.modal', 'bc
             });
 
             settings.dialog.container.find(selectors.htmlContentJsCssTabOpener).on('click', function () {
-                codeEditor.initialize(settings.dialog.container);
+                if (!codeEditorInitialized) {
+                    codeEditor.initialize(settings.dialog.container, settings.dialog);
+                    codeEditorInitialized = true;
+                }
             });
 
             var editorHeight = modal.maximizeChildHeight(settings.dialog.container.find("#" + settings.editorId), settings.dialog);
@@ -311,6 +315,8 @@ bettercms.define('bcms.pages.content', ['bcms.jquery', 'bcms', 'bcms.modal', 'bc
         * Initializes content edit dialog form.
         */
         pagesContent.initializeEditContentForm = function (settings) {
+            var codeEditorInitialized = false;
+
             settings = $.extend({
                 dialog: null,
                 editInSourceMode: false,
@@ -327,7 +333,10 @@ bettercms.define('bcms.pages.content', ['bcms.jquery', 'bcms', 'bcms.modal', 'bc
                 form = settings.dialog.container.find(selectors.firstForm);
 
             settings.dialog.container.find(selectors.htmlContentJsCssTabOpener).on('click', function () {
-                codeEditor.initialize(settings.dialog.container);
+                if (!codeEditorInitialized) {
+                    codeEditor.initialize(settings.dialog.container, settings.dialog);
+                    codeEditorInitialized = true;
+                }
             });
 
             var editorHeight = modal.maximizeChildHeight(settings.dialog.container.find("#" + settings.editorId), settings.dialog);

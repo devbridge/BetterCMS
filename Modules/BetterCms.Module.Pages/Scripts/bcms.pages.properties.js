@@ -89,7 +89,8 @@ bettercms.define('bcms.pages.properties', ['bcms.jquery', 'bcms', 'bcms.modal', 
                 accessControlViewModel = security.createUserAccessViewModel(content.Data.UserAccessList),
                 translationsViewModel = content.Data.Languages ? new pageLanguages.PageTranslationsListViewModel(content.Data.Translations, content.Data.Languages, content.Data.LanguageId, content.Data.PageId) : null,
                 pageViewModel = new PageViewModel(content.Data.Image, content.Data.SecondaryImage, content.Data.FeaturedImage, tagsViewModel, optionListViewModel, accessControlViewModel, translationsViewModel, categoriesModel),
-                form = dialog.container.find(selectors.pagePropertiesForm);
+                form = dialog.container.find(selectors.pagePropertiesForm),
+                codeEditorInitialized = false;
 
             ko.applyBindings(pageViewModel, form.get(0));
 
@@ -151,7 +152,10 @@ bettercms.define('bcms.pages.properties', ['bcms.jquery', 'bcms', 'bcms.modal', 
             });
 
             dialog.container.find(selectors.javascriptCssTabOpener).on('click', function () {
-                codeEditor.initialize(dialog.container);
+                if (!codeEditorInitialized) {
+                    codeEditor.initialize(dialog.container, dialog);
+                    codeEditorInitialized = true;
+                }
             });
 
             // Translations tab

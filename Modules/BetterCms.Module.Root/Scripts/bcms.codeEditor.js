@@ -1,7 +1,7 @@
 ﻿/*jslint unparam: true, white: true, browser: true, devel: true */
 /*global bettercms */
 
-bettercms.define('bcms.codeEditor', ['bcms.jquery', 'bcms', 'bcms.htmlEditor', 'ace'], function ($, bcms, htmlEditor) {
+bettercms.define('bcms.codeEditor', ['bcms.jquery', 'bcms', 'bcms.htmlEditor', 'bcms.modal', 'ace'], function ($, bcms, htmlEditor, modal) {
     'use strict';
 
     var codeEditor = {},
@@ -35,7 +35,8 @@ bettercms.define('bcms.codeEditor', ['bcms.jquery', 'bcms', 'bcms.htmlEditor', '
         var configuration = $.extend({
                     aceEditorOptions: {
                         mode: mode
-                    }
+                    },
+                    height: textarea.outerHeight()
                 },
                 ckEditorConfig, options),
             id = textarea.attr('id'),
@@ -47,7 +48,7 @@ bettercms.define('bcms.codeEditor', ['bcms.jquery', 'bcms', 'bcms.htmlEditor', '
         }
     }
 
-    codeEditor.initialize = function (container, options) {
+    codeEditor.initialize = function (container, dialog, options) {
         if ($.browser.msie && parseInt($.browser.version, 10) <= 8) {
             bcms.logger.info('ACE editor is enabled only on IE versions > 8.');
             return;
@@ -58,11 +59,21 @@ bettercms.define('bcms.codeEditor', ['bcms.jquery', 'bcms', 'bcms.htmlEditor', '
             return;
         }
 
+        var jsObjects = [],
+            cssObjects = [];
         container.find(selectors.inputFieldForJS).each(function () {
-            initCkEditor($(this), "ace/mode/javascript", options);
+            jsObjects.push($(this));
+        });
+        container.find(selectors.inputFieldForCSS).each(function () {
+            cssObjects.push($(this));
         });
 
-        container.find(selectors.inputFieldForCSS).each(function () {
+        modal.maximizeChildHeight($.merge(jsObjects, cssObjects), dialog);
+
+        $.each(jsObjects, function() {
+            initCkEditor($(this), "ace/mode/javascript", options);
+        });
+        $.each(cssObjects, function () {
             initCkEditor($(this), "ace/mode/css", options);
         });
     };

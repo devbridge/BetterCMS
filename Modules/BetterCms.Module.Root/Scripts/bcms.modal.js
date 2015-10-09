@@ -811,35 +811,58 @@ bettercms.define('bcms.modal', ['bcms.jquery', 'bcms', 'bcms.tabs', 'bcms.ko.ext
     };
 
     /**
-    * Maximizes dialog's child height up to maximum visible value.
+    * Maximizes dialog's provided child/children height up to maximum visible value.
     */
     modal.maximizeChildHeight = function (obj, dialog) {
-        var contentContainer = dialog.container.find(selectors.scrollWindow).first(),
+        if (obj.length === 0) {
+            return 0;
+        }
+
+        var objects = $.isArray(obj) ? obj : new Array(obj),
+            contentContainer = dialog.container.find(selectors.scrollWindow).first(),
             containerHeight = contentContainer.outerHeight(),
-            objectHeight = obj.outerHeight(),
+            objectsHeight = 0,
             childrenHeight = 0,
-            newHeight = obj.height(),
+            newHeight = 0,
             addHeight;
 
-        if (obj.length === 0 || contentContainer.length === 0 || objectHeight >= containerHeight) {
+        $.each(objects, function() {
+            objectsHeight += $(this).outerHeight();
+            newHeight += $(this).height();
+        });
+
+        if (contentContainer.length === 0 || objectsHeight >= containerHeight) {
             return newHeight;
         }
 
         $.each(contentContainer.children(), function () {
             var child = $(this);
-            // console.log(child);
-            // console.log("Height: %s, isVisible: %s", child.outerHeight(), child.is(":visible"));
+//            console.log(child);
+//            console.log("Height: %s, isVisible: %s", child.outerHeight(), child.is(":visible"));
+
             childrenHeight += child.outerHeight();
         });
+        // TODO: find a better solution for icon toolbars calculation!
+        childrenHeight += objects.length * 60;
 
-        addHeight = containerHeight - childrenHeight - objectHeight;
+        addHeight = containerHeight - childrenHeight;
+//        console.log('Container: %s, Objects(%s): %s, Other objects: %s, All children height: %s, Available height: %s',
+//            containerHeight, objects.length, objectsHeight, childrenHeight - objectsHeight, childrenHeight, addHeight);
 
-        console.log('Object: %s, Container: %s, Children height: %s',
-            objectHeight, containerHeight, childrenHeight);
+        if (objects.length > 1) {
+            addHeight = Math.floor(addHeight / objects.length);
+            //console.log('Available height for each object: %s', addHeight);
+        }
 
+        newHeight = 0;
         if (addHeight > 0) {
-            newHeight = newHeight + addHeight;
-            obj.height(newHeight + 'px');
+            $.each(objects, function () {
+                var newObjHeight = $(this).height() + addHeight;
+                newHeight += newObjHeight;
+               
+                //console.log("Changing textarea's height from %s to %s", $(this).height(), newObjHeight);
+                $(this).height(newObjHeight + 'px');
+            });
         }
 
         return newHeight;
