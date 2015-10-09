@@ -45,30 +45,30 @@ $ck-toolbar-icons: (
 //                ('horizontalrule_icon', $bcms-editor-horizontalrule),
 
 %text-field-extender {
+    background-color: $gray-l30;
+    border: $border-thin-gray;
     box-sizing: border-box;
+    color: $gray-l46;
     font-family: $font-base-family;
     font-size: 14px;
-    color: $gray-l46;
-    border: $border-thin-gray;
-    background-color: $gray-l30;
-    padding: 5px 7px;
     margin: 0;
+    padding: 5px 7px;
     width: 100%;
 
     &:focus {
-        color: $gray-l65;
-        border-color: $blue-main;
-        outline: none;
         background-color: $white;
+        border-color: $blue-main;
+        color: $gray-l65;
+        outline: none;
     }
 }
 
 //module editor frame
 .cke {
     &_chrome {
-        visibility: inherit !important;
-        display: block;
         border: $border-thin-gray;
+        display: block;
+        visibility: inherit !important;
     }
 
     &_inner {
@@ -83,12 +83,12 @@ $ck-toolbar-icons: (
     }
 
     &_top {
-        border-bottom: $border-thin-gray;
-        padding: 6px 8px 0;
-        white-space: normal;
-        position: relative;
-        min-height: 13px;
         background-color: $gray-l30;
+        border-bottom: $border-thin-gray;
+        min-height: 13px;
+        padding: 6px 8px 0;
+        position: relative;
+        white-space: normal;
     }
 
     &_float {
@@ -98,32 +98,32 @@ $ck-toolbar-icons: (
     }
 
     &_bottom {
-        padding: 0 5px;
+        background: $gray-l30;
+        border-top: $border-thin-gray;
         height: 28px;
         line-height: 28px;
+        padding: 0 5px;
         position: relative;
-        border-top: $border-thin-gray;
-        background: $gray-l30;
     }
 
     &_resizer {
         @include position(absolute, null 5px 5px null);
         @include size(0);
-        overflow: hidden;
-        border-width: 10px 10px 0 0;
         border-color: transparent $gray-l65 transparent transparent;
         border-style: dashed solid dashed dashed;
-        float: right;
+        border-width: 10px 10px 0 0;
         cursor: se-resize;
+        float: right;
+        overflow: hidden;
     }
 
     &_wysiwyg_div {
+        box-sizing: border-box;
         display: block;
         height: 100%;
+        outline-style: none;
         overflow: auto;
         padding: 0 8px;
-        outline-style: none;
-        box-sizing: border-box;
     }
 
     &_disabled {
@@ -138,19 +138,19 @@ $ck-toolbar-icons: (
 }
 
 .cke_toolgroup {
+    background-color: $gray-l30;
+    border: $border-thin-gray;
     float: left;
     margin-right: 6px;
-    border: $border-thin-gray;
-    background-color: $gray-l30;
 }
 
 .cke_button {
-    height: 18px;
-    padding: 4px 6px;
-    outline: none;
+    background-color: $gray-l30;
     cursor: pointer;
     float: left;
-    background-color: $gray-l30;
+    height: 18px;
+    outline: none;
+    padding: 4px 6px;
 
     &:hover {
         background-color: darken($gray-l30, 10%);
@@ -181,25 +181,25 @@ $ck-toolbar-icons: (
             repeat: no-repeat;
             position: center !important;
         }
-        width: 18px;
-        height: 18px;
-        float: left;
         display: block;
+        float: left;
+        height: 18px;
+        width: 18px;
     }
 
     &_label {
-        display: none;
-        padding-left: 3px;
-        line-height: 16px;
-        float: left;
         color: $gray-l65;
+        display: none;
+        float: left;
+        line-height: 16px;
+        padding-left: 3px;
     }
 
     &_arrow {
         @include size(0);
+        cursor: default;
         display: inline-block;
         margin: 8px 0 0 1px;
-        cursor: default;
         vertical-align: top;
         border: {
             style: solid;
@@ -212,18 +212,18 @@ $ck-toolbar-icons: (
 .cke_toolbox_collapser {
     @include position(absolute, null 8px 6px null);
     @include size(12px 11px);
-    overflow: hidden;
-    cursor: pointer;
-    text-align: center;
-    border: $border-thin-gray;
     background-color: $gray-l30;
+    border: $border-thin-gray;
+    cursor: pointer;
+    overflow: hidden;
+    text-align: center;
 
     .cke_arrow {
         @include size(0);
         display: block;
         margin: 1px auto 0;
-        text-indent: -999em;
         overflow: hidden;
+        text-indent: -999em;
         border: {
             style: solid;
             width: 3px;
@@ -244,14 +244,14 @@ $ck-toolbar-icons: (
 
 //module footer path
 .cke_path_item {
-    display: inline-block;
-    margin-right: 6px;
-    cursor: default;
-    text-decoration: none;
     color: $gray-l65;
-    font-weight: bold;
+    cursor: default;
+    display: inline-block;
     font-size: 11px;
+    font-weight: bold;
     line-height: 18px;
+    margin-right: 6px;
+    text-decoration: none;
 }
 
 .cke_voice_label {
@@ -265,14 +265,14 @@ $ck-toolbar-icons: (
     &_close_button {
         //fixme temp bg-color need to add image
         background: url($bcms-editor-close) no-repeat center;
-        position: absolute;
         cursor: pointer;
-        text-align: center;
         height: 20px;
-        width: 20px;
-        top: 10px;
-        z-index: 5;
+        position: absolute;
         right: 10px;
+        text-align: center;
+        top: 10px;
+        width: 20px;
+        z-index: 5;
 
         .cke_label {
             display: none;
@@ -280,20 +280,20 @@ $ck-toolbar-icons: (
     }
 
     &_title {
-        font-weight: bold;
-        font-size: 13px;
-        cursor: move;
-        position: relative;
-        color: $gray-l65;
-        border-bottom: $border-thin-gray;
-        padding: 6px 10px;
         background-color: $gray-l30;
+        border-bottom: $border-thin-gray;
+        color: $gray-l65;
+        cursor: move;
+        font-size: 13px;
+        font-weight: bold;
+        padding: 6px 10px;
+        position: relative;
     }
 
     &_body {
-        z-index: 1;
         background-color: $gray-l30;
         border: $border-thin-gray;
+        z-index: 1;
 
         label {
             font-size: 12px;
@@ -301,32 +301,32 @@ $ck-toolbar-icons: (
     }
 
     &_contents {
-        border-collapse: collapse;
         background-color: $white;
-        overflow: auto;
+        border-collapse: collapse;
+        border-top: $border-thin-gray;
         font-size: 12px;
         margin-top: 30px;
-        border-top: $border-thin-gray;
+        overflow: auto;
 
         &_body {
-            vertical-align: top;
+            margin-top: 22px;
             overflow: auto;
             padding: 10px;
-            margin-top: 22px;
+            vertical-align: top;
         }
     }
 
     &_footer {
+        background-color: $gray-l30;
         border-top: $border-thin-gray;
-        text-align: right;
         padding: 5px;
         position: relative;
-        background-color: $gray-l30;
+        text-align: right;
     }
 
     &_footer_buttons {
-        width: auto;
         display: inline;
+        width: auto;
     }
 
     &_spinner {
@@ -338,34 +338,34 @@ $ck-toolbar-icons: (
             color: rgba($dark, .8);
             left-color: rgba($dark, .6);
         }
-        width: 12px;
         height: 12px;
         overflow: hidden;
         text-indent: -9999em;
+        width: 12px;
     }
 
     //module dialog tabs
     &_tabs {
-        height: 24px;
         display: inline-block;
+        height: 24px;
+        left: 10px;
         margin: 5px 0 0;
         position: absolute;
         z-index: 2;
-        left: 10px;
     }
 
     &_tab {
-        height: 16px;
-        padding: 4px 8px;
-        margin-right: 3px;
-        display: inline-block;
-        cursor: pointer;
-        line-height: 16px;
-        outline: none;
-        font-size: 12px;
-        color: $gray-l65;
-        border: $border-thin-gray;
         background-color: $gray-l30;
+        border: $border-thin-gray;
+        color: $gray-l65;
+        cursor: pointer;
+        display: inline-block;
+        font-size: 12px;
+        height: 16px;
+        line-height: 16px;
+        margin-right: 3px;
+        outline: none;
+        padding: 4px 8px;
 
         &:hover {
             background-color: darken($gray-l30, 10%);
@@ -383,15 +383,15 @@ $ck-toolbar-icons: (
         }
 
         &_disabled {
-            opacity: .3;
             cursor: default;
+            opacity: .3;
         }
     }
 
     &_ui {
         &_hbox {
-            width: 100%;
             vertical-align: top;
+            width: 100%;
         }
     }
 
@@ -414,9 +414,9 @@ $ck-toolbar-icons: (
     }
 
     .cke_dialog_contents {
-        padding-top: 5px;
-        margin-top: 0;
         border-top: none;
+        margin-top: 0;
+        padding-top: 5px;
     }
 }
 
@@ -424,8 +424,8 @@ select {
     &.cke_dialog_ui {
         &_input_select {
             @extend %text-field-extender;
-            height: 31px;
             border-radius: 0;
+            height: 31px;
             width: auto;
         }
     }
@@ -473,8 +473,8 @@ a {
             }
 
             &.cke_disabled {
-                opacity: .6;
                 cursor: default;
+                opacity: .6;
             }
         }
     }
@@ -482,8 +482,8 @@ a {
     &.cke_specialchar {
         @include size(24px);
         border: $border-thin-light-gray;
-        cursor: pointer;
         color: $gray-l65;
+        cursor: pointer;
         display: block;
         text-align: center;
 
@@ -496,12 +496,12 @@ a {
 
 .cke_iframe_shim {
     display: block;
+    height: 100%;
+    left: 0;
     position: absolute;
     top: 0;
-    left: 0;
-    z-index: -1;
     width: 100%;
-    height: 100%;
+    z-index: -1;
 }
 
 //module combo box
@@ -513,26 +513,26 @@ a {
         display: none;
         float: left;
         line-height: 26px;
-        vertical-align: top;
         margin-right: 5px;
+        vertical-align: top;
     }
 
     &_button {
+        background-color: $gray-l30;
+        border: $border-thin-gray;
         box-sizing: border-box;
-        height: 28px;
         cursor: pointer;
         float: left;
-        border: $border-thin-gray;
-        background-color: $gray-l30;
+        height: 28px;
     }
 
     &_text {
         @include vertical-align();
+        color: $gray-l65;
+        font-size: 12px;
         line-height: 26px;
         padding: 0 10px;
         white-space: nowrap;
-        font-size: 12px;
-        color: $gray-l65;
 
         &:hover {
             text-decoration: none;
@@ -570,11 +570,11 @@ a {
 }
 
 .cke_panel {
-    visibility: visible;
-    height: 150px;
-    overflow: hidden;
     background-color: $white;
     border: $border-thin-gray;
+    height: 150px;
+    overflow: hidden;
+    visibility: visible;
 
     &_block {
         &:focus {
@@ -590,8 +590,8 @@ a {
     }
 
     &_container {
-        overflow-y: auto;
         overflow-x: hidden;
+        overflow-y: auto;
     }
 
     &_list {
@@ -607,21 +607,21 @@ a {
     &_listItem {
         a {
             @include transition(all 200ms);
+            box-sizing: border-box;
+            color: $gray-l65;
+            display: block;
             font-family: $font-arial;
             font-size: 12px;
-            box-sizing: border-box;
             height: 100%;
-            display: block;
-            text-decoration: none;
-            overflow: hidden;
             line-height: 24px;
-            color: $gray-l65;
+            overflow: hidden;
             padding: 3px 4px;
+            text-decoration: none;
             white-space: nowrap;
 
             &:hover {
-                border-color: $gray-l40;
                 background-color: $gray-l30;
+                border-color: $gray-l40;
                 box-shadow: inset 0 0 2px rgba($black, .1);
             }
         }
@@ -633,15 +633,15 @@ a {
 }
 
 .cke_menubutton {
-    display: block;
-    text-decoration: none;
     color: $gray-l65;
-    font-size: 12px;
+    display: block;
     font-family: $font-arial;
+    font-size: 12px;
+    text-decoration: none;
 
     &:hover {
-        text-decoration: none;
         background-color: darken($gray-l30, 10%);
+        text-decoration: none;
     }
 
     &_inner {
@@ -649,21 +649,21 @@ a {
     }
 
     &_icon {
-        display: table-cell;
         background-color: #D7D8D7;
+        display: table-cell;
         padding: 4px;
     }
 
     &_label {
         display: table-cell;
         padding: 0 6px;
-        width: 100%;
         vertical-align: middle;
+        width: 100%;
     }
 
     &_on {
-        border: $border-thin-gray;
         background-color: $gray-l30;
+        border: $border-thin-gray;
     }
 
     &_disabled {
@@ -672,17 +672,17 @@ a {
 }
 
 .cke_panel_grouptitle {
-    cursor: default;
-    font-size: 11px;
-    font-weight: bold;
-    white-space: nowrap;
-    margin: 0;
-    padding: 4px 6px;
-    color: #474747;
+    background: #cfd1cf;
     border-bottom: 1px solid #b6b6b6;
     border-radius: 2px 2px 0 0;
     box-shadow: 0 1px 0 #fff inset;
-    background: #cfd1cf;
+    color: #474747;
+    cursor: default;
+    font-size: 11px;
+    font-weight: bold;
+    margin: 0;
+    padding: 4px 6px;
+    white-space: nowrap;
 }
 
 .cke_panel_listItem p,
@@ -693,8 +693,8 @@ a {
 .cke_panel_listItem h5,
 .cke_panel_listItem h6,
 .cke_panel_listItem pre {
-    margin-top: 0;
     margin-bottom: 0;
+    margin-top: 0;
 }
 
 //module custom

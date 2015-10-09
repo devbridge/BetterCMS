@@ -25,16 +25,16 @@ $toolbar-icons: (
 
 //module global styles
 textarea {
-    width: 100%;
-    display: block;
-    resize: vertical;
-    font-size: 12px;
     border: $border-thin-gray;
-    font-family: $font-code-family;
-    line-height: 18px;
-    padding: 10px;
-    overflow: auto;
     box-sizing: border-box;
+    display: block;
+    font-family: $font-code-family;
+    font-size: 12px;
+    line-height: 18px;
+    overflow: auto;
+    padding: 10px;
+    resize: vertical;
+    width: 100%;
 
     &:focus {
         outline: none;
@@ -45,21 +45,21 @@ textarea {
 .markItUp {
     &Header {
         @include clearfix();
+        background-color: $gray-l30;
         border: {
             top: $border-thin-gray;
             right: $border-thin-gray;
             left: $border-thin-gray;
         }
         padding: 6px 8px;
-        background: $gray-l30;
 
         > ul {
             > .markItUpButton {
-                height: 26px;
                 border: $border-thin-gray;
                 float: left;
-                min-width: 28px;
+                height: 26px;
                 margin-left: 6px;
+                min-width: 28px;
 
                 &:first-child {
                     margin-left: 0;
@@ -96,13 +96,13 @@ textarea {
                 size: 12px;
             }
             box-sizing: border-box;
-            padding: 0 10px;
-            height: 100%;
-            display: block;
-            text-indent: -999em;
-            overflow: hidden;
-            line-height: 24px;
             color: $gray-l65;
+            display: block;
+            height: 100%;
+            line-height: 24px;
+            overflow: hidden;
+            padding: 0 10px;
+            text-indent: -999em;
 
             &:hover {
                 text-decoration: none;
@@ -116,16 +116,16 @@ textarea {
         }
 
         > ul {
-            display: none;
-            position: absolute;
-            top: 100%;
-            max-height: 170px;
-            overflow-y: auto;
-            right: 0;
-            padding: 0;
-            width: 200px;
             background-color: $white;
             border: $border-thin-gray;
+            display: none;
+            max-height: 170px;
+            overflow-y: auto;
+            padding: 0;
+            position: absolute;
+            right: 0;
+            top: 100%;
+            width: 200px;
             z-index: 50;
 
             li {
@@ -136,12 +136,12 @@ textarea {
             a {
                 @include transition(all 200ms);
                 padding: 3px 4px;
-                white-space: nowrap;
                 text-indent: 0;
+                white-space: nowrap;
 
                 &:hover {
-                    border-color: $gray-l40;
                     background-color: $gray-l30;
+                    border-color: $gray-l40;
                     box-shadow: inset 0 0 2px rgba($black, .1);
                 }
             }
@@ -149,8 +149,8 @@ textarea {
     }
 
     &Editor {
-        resize: none;
         min-height: 300px;
+        resize: none;
     }
 
     &Footer {
@@ -160,22 +160,22 @@ textarea {
             bottom: $border-thin-gray;
             left: $border-thin-gray;
         }
-        padding: 0 5px;
+        background-color: $gray-l30;
         height: 28px;
         line-height: 28px;
+        padding: 0 5px;
         position: relative;
-        background-color: $gray-l30;
     }
 
     &ResizeHandle {
         @include position(absolute, null 5px 5px null);
         @include size(0);
-        overflow: hidden;
-        border-width: 10px 10px 0 0;
         border-color: transparent $gray-l65 transparent transparent;
         border-style: dashed solid dashed dashed;
-        float: right;
+        border-width: 10px 10px 0 0;
         cursor: se-resize;
+        float: right;
+        overflow: hidden;
     }
 
     &Separator {
@@ -197,11 +197,11 @@ textarea {
 .markItUpButton {
     &Widget {
         a {
-            width: auto;
+            background-position: 5px center;
             //fixme remove important after sass review
             padding-left: 25px !important;
             text-indent: 0 !important;
-            background-position: 5px center;
+            width: auto;
         }
     }
 }

@@ -1,36 +1,36 @@
 @import '../core/variables';
 
 .ui-datepicker {
-    width: 200px;
-    padding: 1px;
     display: none;
     margin-top: -1px;
+    padding: 1px;
+    width: 200px;
 
     &-trigger {
-        position: absolute;
-        top: 6px;
-        right: 5px;
         cursor: pointer;
+        position: absolute;
+        right: 5px;
+        top: 6px;
     }
 
     &-title {
         cursor: default;
+        font-family: $font-base-family;
+        font-size: 14px;
         padding: 4px 0;
         text-align: center;
-        font-size: 14px;
-        font-family: $font-base-family;
         text-transform: uppercase;
     }
 
     table {
-        width: 100%;
-        font-size: 12px;
         border-collapse: collapse;
+        font-size: 12px;
+        width: 100%;
     }
 
     th {
-        text-align: center;
         border: 0;
+        text-align: center;
     }
 
     td {
@@ -47,11 +47,11 @@
     .ui-datepicker-prev,
     .ui-datepicker-next {
         @include size(25px 100%);
-        position: absolute;
-        cursor: pointer;
-        z-index: 2;
-        //todo add arrows
         background: $white;
+        cursor: pointer;
+        position: absolute;
+        //todo add arrows
+        z-index: 2;
     }
 
     .ui-datepicker-prev {
@@ -65,8 +65,8 @@
 
 .ui-icon {
     display: block;
-    text-indent: -999em;
     overflow: hidden;
+    text-indent: -999em;
 }
 
 .ui-widget {
@@ -81,8 +81,8 @@
     }
 
     &-content {
-        border: $border-thin-gray;
         background-color: $white;
+        border: $border-thin-gray;
         color: $dark;
 
         a {
@@ -95,9 +95,9 @@
             text-align: center;
 
             &:hover {
-                font-weight: normal;
                 background-color: $sky-blue;
                 color: $white;
+                font-weight: normal;
             }
         }
 

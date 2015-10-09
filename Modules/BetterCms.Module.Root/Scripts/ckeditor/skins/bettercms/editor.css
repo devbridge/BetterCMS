@@ -1,26 +1,26 @@
 .cke_dialog iframe.cke_pasteframe, select.cke_dialog_ui_input_select, input.cke_dialog_ui_input_text, textarea.cke_dialog_ui_input_textarea {
+  background-color: #f5f5f5;
+  border: 1px solid #c6c6c6;
   box-sizing: border-box;
+  color: #787878;
   font-family: "Open Sans", sans-serif !important;
   font-size: 14px;
-  color: #787878;
-  border: 1px solid #c6c6c6;
-  background-color: #f5f5f5;
-  padding: 5px 7px;
   margin: 0;
+  padding: 5px 7px;
   width: 100%;
 }
 
 .cke_dialog iframe.cke_pasteframe:focus, select.cke_dialog_ui_input_select:focus, input.cke_dialog_ui_input_text:focus, textarea.cke_dialog_ui_input_textarea:focus {
-  color: #474747;
-  border-color: #0383df;
-  outline: none;
   background-color: #ffffff;
+  border-color: #0383df;
+  color: #474747;
+  outline: none;
 }
 
 .cke_chrome {
-  visibility: inherit !important;
-  display: block;
   border: 1px solid #c6c6c6;
+  display: block;
+  visibility: inherit !important;
 }
 
 .cke_inner {
@@ -35,12 +35,12 @@
 }
 
 .cke_top {
-  border-bottom: 1px solid #c6c6c6;
-  padding: 6px 8px 0;
-  white-space: normal;
-  position: relative;
-  min-height: 13px;
   background-color: #f5f5f5;
+  border-bottom: 1px solid #c6c6c6;
+  min-height: 13px;
+  padding: 6px 8px 0;
+  position: relative;
+  white-space: normal;
 }
 
 .cke_float .cke_top {
@@ -48,12 +48,12 @@
 }
 
 .cke_bottom {
-  padding: 0 5px;
+  background: #f5f5f5;
+  border-top: 1px solid #c6c6c6;
   height: 28px;
   line-height: 28px;
+  padding: 0 5px;
   position: relative;
-  border-top: 1px solid #c6c6c6;
-  background: #f5f5f5;
 }
 
 .cke_resizer {
@@ -62,21 +62,21 @@
   bottom: 5px;
   height: 0;
   width: 0;
-  overflow: hidden;
-  border-width: 10px 10px 0 0;
   border-color: transparent #474747 transparent transparent;
   border-style: dashed solid dashed dashed;
-  float: right;
+  border-width: 10px 10px 0 0;
   cursor: se-resize;
+  float: right;
+  overflow: hidden;
 }
 
 .cke_wysiwyg_div {
+  box-sizing: border-box;
   display: block;
   height: 100%;
+  outline-style: none;
   overflow: auto;
   padding: 0 8px;
-  outline-style: none;
-  box-sizing: border-box;
 }
 
 .cke_disabled {
@@ -89,19 +89,19 @@
 }
 
 .cke_toolgroup {
+  background-color: #f5f5f5;
+  border: 1px solid #c6c6c6;
   float: left;
   margin-right: 6px;
-  border: 1px solid #c6c6c6;
-  background-color: #f5f5f5;
 }
 
 .cke_button {
-  height: 18px;
-  padding: 4px 6px;
-  outline: none;
+  background-color: #f5f5f5;
   cursor: pointer;
   float: left;
-  background-color: #f5f5f5;
+  height: 18px;
+  outline: none;
+  padding: 4px 6px;
 }
 
 .cke_button:hover {
@@ -127,26 +127,26 @@
 .cke_button_icon {
   background-repeat: no-repeat;
   background-position: center !important;
-  width: 18px;
-  height: 18px;
-  float: left;
   display: block;
+  float: left;
+  height: 18px;
+  width: 18px;
 }
 
 .cke_button_label {
-  display: none;
-  padding-left: 3px;
-  line-height: 16px;
-  float: left;
   color: #474747;
+  display: none;
+  float: left;
+  line-height: 16px;
+  padding-left: 3px;
 }
 
 .cke_button_arrow {
   height: 0;
   width: 0;
+  cursor: default;
   display: inline-block;
   margin: 8px 0 0 1px;
-  cursor: default;
   vertical-align: top;
   border-style: solid;
   border-width: 3px;
@@ -159,11 +159,11 @@
   bottom: 6px;
   height: 11px;
   width: 12px;
-  overflow: hidden;
-  cursor: pointer;
-  text-align: center;
-  border: 1px solid #c6c6c6;
   background-color: #f5f5f5;
+  border: 1px solid #c6c6c6;
+  cursor: pointer;
+  overflow: hidden;
+  text-align: center;
 }
 
 .cke_toolbox_collapser .cke_arrow {
@@ -171,8 +171,8 @@
   width: 0;
   display: block;
   margin: 1px auto 0;
-  text-indent: -999em;
   overflow: hidden;
+  text-indent: -999em;
   border-style: solid;
   border-width: 3px;
   border-color: transparent transparent #474747 transparent;
@@ -185,14 +185,14 @@
 }
 
 .cke_path_item {
-  display: inline-block;
-  margin-right: 6px;
-  cursor: default;
-  text-decoration: none;
   color: #474747;
-  font-weight: bold;
+  cursor: default;
+  display: inline-block;
   font-size: 11px;
+  font-weight: bold;
   line-height: 18px;
+  margin-right: 6px;
+  text-decoration: none;
 }
 
 .cke_voice_label {
@@ -205,14 +205,14 @@
 
 .cke_dialog_close_button {
   background: url("data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxMCIgaGVpZ2h0PSIxMCIgdmlld0JveD0iMCAwIDEwIDEwIiBlbmFibGUtYmFja2dyb3VuZD0ibmV3IDAgMCAxMCAxMCI+CiA8cGF0aCBmaWxsPSIjNDc0NzQ3IiBkPSJtOS45IDEuMTdjLjEzLjEzLjEzLjQgMCAuNTRsLTMuMDIgMy4wMmMtLjEzLjEzLS4xMy40IDAgLjU0bDMuMDIgMy4wMmMuMTMuMTMuMTMuNCAwIC41NGwtMS4wNyAxLjA3Yy0uMTMuMTMtLjQuMTMtLjU0IDBsLTMuMDItMy4wMmMtLjEzLS4xMy0uNC0uMTMtLjU0IDBsLTMuMDIgMy4wMmMtLjEzLjEzLS40LjEzLS41NCAwbC0xLjA3LTEuMDdjLS4xMy0uMTMtLjEzLS40IDAtLjU0bDMuMDItMy4wMmMuMTMtLjEzLjEzLS40IDAtLjU0bC0zLjAyLTMuMDJjLS4xMy0uMTMtLjEzLS40IDAtLjU0bDEuMDctMS4wN2MuMTMtLjEzLjQtLjEzLjU0IDBsMy4wMiAzLjAyYy4xMy4xMy40LjEzLjU0IDBsMy4wMi0zLjAyYy4xMy0uMTMuNC0uMTMuNTQgMGwxLjA3IDEuMDciLz4KPC9zdmc+Cg==") no-repeat center;
-  position: absolute;
   cursor: pointer;
-  text-align: center;
   height: 20px;
-  width: 20px;
-  top: 10px;
-  z-index: 5;
+  position: absolute;
   right: 10px;
+  text-align: center;
+  top: 10px;
+  width: 20px;
+  z-index: 5;
 }
 
 .cke_dialog_close_button .cke_label {
@@ -220,20 +220,20 @@
 }
 
 .cke_dialog_title {
-  font-weight: bold;
-  font-size: 13px;
-  cursor: move;
-  position: relative;
-  color: #474747;
-  border-bottom: 1px solid #c6c6c6;
-  padding: 6px 10px;
   background-color: #f5f5f5;
+  border-bottom: 1px solid #c6c6c6;
+  color: #474747;
+  cursor: move;
+  font-size: 13px;
+  font-weight: bold;
+  padding: 6px 10px;
+  position: relative;
 }
 
 .cke_dialog_body {
-  z-index: 1;
   background-color: #f5f5f5;
   border: 1px solid #c6c6c6;
+  z-index: 1;
 }
 
 .cke_dialog_body label {
@@ -241,32 +241,32 @@
 }
 
 .cke_dialog_contents {
-  border-collapse: collapse;
   background-color: #ffffff;
-  overflow: auto;
+  border-collapse: collapse;
+  border-top: 1px solid #c6c6c6;
   font-size: 12px;
   margin-top: 30px;
-  border-top: 1px solid #c6c6c6;
+  overflow: auto;
 }
 
 .cke_dialog_contents_body {
-  vertical-align: top;
+  margin-top: 22px;
   overflow: auto;
   padding: 10px;
-  margin-top: 22px;
+  vertical-align: top;
 }
 
 .cke_dialog_footer {
+  background-color: #f5f5f5;
   border-top: 1px solid #c6c6c6;
-  text-align: right;
   padding: 5px;
   position: relative;
-  background-color: #f5f5f5;
+  text-align: right;
 }
 
 .cke_dialog_footer_buttons {
-  width: auto;
   display: inline;
+  width: auto;
 }
 
 .cke_dialog_spinner {
@@ -278,33 +278,33 @@
   border-width: 2px;
   border-color: rgba(48, 48, 48, 0.8);
   border-left-color: rgba(48, 48, 48, 0.6);
-  width: 12px;
   height: 12px;
   overflow: hidden;
   text-indent: -9999em;
+  width: 12px;
 }
 
 .cke_dialog_tabs {
-  height: 24px;
   display: inline-block;
+  height: 24px;
+  left: 10px;
   margin: 5px 0 0;
   position: absolute;
   z-index: 2;
-  left: 10px;
 }
 
 .cke_dialog_tab {
-  height: 16px;
-  padding: 4px 8px;
-  margin-right: 3px;
-  display: inline-block;
-  cursor: pointer;
-  line-height: 16px;
-  outline: none;
-  font-size: 12px;
-  color: #474747;
-  border: 1px solid #c6c6c6;
   background-color: #f5f5f5;
+  border: 1px solid #c6c6c6;
+  color: #474747;
+  cursor: pointer;
+  display: inline-block;
+  font-size: 12px;
+  height: 16px;
+  line-height: 16px;
+  margin-right: 3px;
+  outline: none;
+  padding: 4px 8px;
 }
 
 .cke_dialog_tab:hover {
@@ -323,13 +323,13 @@
 }
 
 .cke_dialog_tab_disabled {
-  opacity: .3;
   cursor: default;
+  opacity: .3;
 }
 
 .cke_dialog_ui_hbox {
-  width: 100%;
   vertical-align: top;
+  width: 100%;
 }
 
 .cke_dialog iframe.cke_pasteframe {
@@ -346,14 +346,14 @@
 }
 
 .cke_single_page .cke_dialog_contents {
-  padding-top: 5px;
-  margin-top: 0;
   border-top: none;
+  margin-top: 0;
+  padding-top: 5px;
 }
 
 select.cke_dialog_ui_input_select {
-  height: 31px;
   border-radius: 0;
+  height: 31px;
   width: auto;
 }
 
@@ -415,16 +415,16 @@ a.cke_dialog_ui_button_ok:active {
 }
 
 a.cke_dialog_ui_button_ok.cke_disabled {
-  opacity: .6;
   cursor: default;
+  opacity: .6;
 }
 
 a.cke_specialchar {
   height: 24px;
   width: 24px;
   border: 1px solid #e3e3e3;
-  cursor: pointer;
   color: #474747;
+  cursor: pointer;
   display: block;
   text-align: center;
 }
@@ -436,12 +436,12 @@ a.cke_specialchar:hover {
 
 .cke_iframe_shim {
   display: block;
+  height: 100%;
+  left: 0;
   position: absolute;
   top: 0;
-  left: 0;
-  z-index: -1;
   width: 100%;
-  height: 100%;
+  z-index: -1;
 }
 
 .cke_combo {
@@ -453,27 +453,27 @@ a.cke_specialchar:hover {
   display: none;
   float: left;
   line-height: 26px;
-  vertical-align: top;
   margin-right: 5px;
+  vertical-align: top;
 }
 
 .cke_combo_button {
+  background-color: #f5f5f5;
+  border: 1px solid #c6c6c6;
   box-sizing: border-box;
-  height: 28px;
   cursor: pointer;
   float: left;
-  border: 1px solid #c6c6c6;
-  background-color: #f5f5f5;
+  height: 28px;
 }
 
 .cke_combo_text {
   display: inline-block;
   vertical-align: middle;
+  color: #474747;
+  font-size: 12px;
   line-height: 26px;
   padding: 0 10px;
   white-space: nowrap;
-  font-size: 12px;
-  color: #474747;
 }
 
 .cke_combo_text:hover {
@@ -506,11 +506,11 @@ a.cke_specialchar:hover {
 }
 
 .cke_panel {
-  visibility: visible;
-  height: 150px;
-  overflow: hidden;
   background-color: #ffffff;
   border: 1px solid #c6c6c6;
+  height: 150px;
+  overflow: hidden;
+  visibility: visible;
 }
 
 .cke_panel_block:focus {
@@ -526,8 +526,8 @@ a.cke_specialchar:hover {
 }
 
 .cke_panel_container {
-  overflow-y: auto;
   overflow-x: hidden;
+  overflow-y: auto;
 }
 
 .cke_panel_list {
@@ -544,22 +544,22 @@ a.cke_specialchar:hover {
   -webkit-transition: all 200ms;
   -moz-transition: all 200ms;
   transition: all 200ms;
+  box-sizing: border-box;
+  color: #474747;
+  display: block;
   font-family: "Arial", sans-serif;
   font-size: 12px;
-  box-sizing: border-box;
   height: 100%;
-  display: block;
-  text-decoration: none;
-  overflow: hidden;
   line-height: 24px;
-  color: #474747;
+  overflow: hidden;
   padding: 3px 4px;
+  text-decoration: none;
   white-space: nowrap;
 }
 
 .cke_panel_listItem a:hover {
-  border-color: #c6c6c6;
   background-color: #f5f5f5;
+  border-color: #c6c6c6;
   box-shadow: inset 0 0 2px rgba(0, 0, 0, 0.1);
 }
 
@@ -568,16 +568,16 @@ a.cke_specialchar:hover {
 }
 
 .cke_menubutton {
-  display: block;
-  text-decoration: none;
   color: #474747;
-  font-size: 12px;
+  display: block;
   font-family: "Arial", sans-serif;
+  font-size: 12px;
+  text-decoration: none;
 }
 
 .cke_menubutton:hover {
-  text-decoration: none;
   background-color: gainsboro;
+  text-decoration: none;
 }
 
 .cke_menubutton_inner {
@@ -585,21 +585,21 @@ a.cke_specialchar:hover {
 }
 
 .cke_menubutton_icon {
-  display: table-cell;
   background-color: #D7D8D7;
+  display: table-cell;
   padding: 4px;
 }
 
 .cke_menubutton_label {
   display: table-cell;
   padding: 0 6px;
-  width: 100%;
   vertical-align: middle;
+  width: 100%;
 }
 
 .cke_menubutton_on {
-  border: 1px solid #c6c6c6;
   background-color: #f5f5f5;
+  border: 1px solid #c6c6c6;
 }
 
 .cke_menubutton_disabled {
@@ -607,17 +607,17 @@ a.cke_specialchar:hover {
 }
 
 .cke_panel_grouptitle {
-  cursor: default;
-  font-size: 11px;
-  font-weight: bold;
-  white-space: nowrap;
-  margin: 0;
-  padding: 4px 6px;
-  color: #474747;
+  background: #cfd1cf;
   border-bottom: 1px solid #b6b6b6;
   border-radius: 2px 2px 0 0;
   box-shadow: 0 1px 0 #fff inset;
-  background: #cfd1cf;
+  color: #474747;
+  cursor: default;
+  font-size: 11px;
+  font-weight: bold;
+  margin: 0;
+  padding: 4px 6px;
+  white-space: nowrap;
 }
 
 .cke_panel_listItem p,
@@ -628,8 +628,8 @@ a.cke_specialchar:hover {
 .cke_panel_listItem h5,
 .cke_panel_listItem h6,
 .cke_panel_listItem pre {
-  margin-top: 0;
   margin-bottom: 0;
+  margin-top: 0;
 }
 
 .cke_button__cmsoption_label {
