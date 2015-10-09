@@ -13,8 +13,7 @@ CKEDITOR.editorConfig = function (config) {
         ['CmsImageManager', 'CmsFileManager', 'Image'],
         ['CmsDynamicRegion', 'CmsWidget', 'CmsOption', 'CmsModelValues'],
         ['Source', 'Maximize', 'CmsToggleLineWrap'],
-        //move to hidden items list ==>>
-        ['Table', 'Strike', 'NumberedList', 'JustifyLeft', 'JustifyCenter', 'JustifyRight', 'JustifyBlock', 'Styles', 'Format', 'Font', 'FontSize'],
+        //move to hidden items list ==>> ['Table', 'Strike', 'NumberedList', 'JustifyLeft', 'JustifyCenter', 'JustifyRight', 'JustifyBlock', 'Styles', 'Format', 'Font', 'FontSize'],
     ];
 
     config.skin = 'bettercms';
