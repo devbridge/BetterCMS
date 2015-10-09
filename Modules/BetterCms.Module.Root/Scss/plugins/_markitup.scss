@@ -14,7 +14,7 @@ $toolbar-icons: (
                 ('Picture', $bcms-editor-cmsimage),
                 ('Link', $bcms-editor-link),
                 ('Quotes', $bcms-editor-blockquote),
-                ('Code', $bcms-toolbar-code),
+                ('Code', $bcms-editor-source),
                 ('Widget', $bcms-editor-cmswidget),
                 ('Option', $bcms-editor-cmsoption)
 );
@@ -169,7 +169,7 @@ textarea {
         overflow: hidden;
         border: {
             width: 10px 10px 0 0;
-            color: transparent $dark transparent transparent;
+            color: transparent $gray-l65 transparent transparent;
             style: dashed solid dashed dashed;
         }
         margin-top: 6px;
