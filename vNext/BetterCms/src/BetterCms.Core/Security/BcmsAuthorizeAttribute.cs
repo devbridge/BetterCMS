@@ -4,6 +4,7 @@ using System.Net;
 using BetterCms.Core.Services;
 
 using Microsoft.AspNet.Authorization;
+using Microsoft.AspNet.Http;
 using Microsoft.AspNet.Mvc;
 using AuthorizationContext = Microsoft.AspNet.Authorization.AuthorizationContext;
 
@@ -32,7 +33,7 @@ namespace BetterCms.Core.Security
         /// true if the user is authorized; otherwise, false.
         /// </returns>
         /// <exception cref="System.ArgumentNullException">if httpContext is null.</exception>
-        protected override bool AuthorizeCore(HttpContextBase httpContext)
+        protected override bool AuthorizeCore(HttpContext httpContext)
         {
             if (httpContext == null)
             {

@@ -1,8 +1,8 @@
-﻿using BetterModules.Core.Web.Environment.Host;
+﻿//using BetterModules.Core.Web.Environment.Host;
 
-namespace BetterCms.Core.Environment.Host
-{
-    public interface ICmsHost : IWebApplicationHost
-    {
-    }
-}
+//namespace BetterCms.Core.Environment.Host
+//{
+//    public interface ICmsHost : IWebApplicationHost
+//    {
+//    }
+//}
