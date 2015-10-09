@@ -12,8 +12,9 @@ CKEDITOR.editorConfig = function (config) {
         ['Bold', 'Italic', 'Underline', 'BulletedList', 'SpecialChar'],
         ['CmsImageManager', 'CmsFileManager', 'Image'],
         ['CmsDynamicRegion', 'CmsWidget', 'CmsOption', 'CmsModelValues'],
-        ['Source', 'Maximize', 'CmsToggleLineWrap']
-        //move to hidden items list ==>> ['Table', 'Strike', 'NumberedList', 'JustifyLeft', 'JustifyCenter', 'JustifyRight', 'JustifyBlock', 'Styles', 'Format', 'Font', 'FontSize'],
+        ['Source', 'Maximize', 'CmsToggleLineWrap'],
+        //move to hidden items list ==>>
+        ['Table', 'Strike', 'NumberedList', 'JustifyLeft', 'JustifyCenter', 'JustifyRight', 'JustifyBlock', 'Styles', 'Format', 'Font', 'FontSize'],
     ];
 
     config.skin = 'bettercms';

@@ -1502,6 +1502,7 @@
     <Content Include="Scss\base_64\icons\editor-blockquote.svg" />
     <Content Include="Scss\base_64\icons\editor-bold.svg" />
     <Content Include="Scss\base_64\icons\editor-bulletedlist.svg" />
+    <Content Include="Scss\base_64\icons\editor-close.svg" />
     <Content Include="Scss\base_64\icons\editor-cmsdynamicregion.svg" />
     <Content Include="Scss\base_64\icons\editor-cmsimage.svg" />
     <Content Include="Scss\base_64\icons\editor-cmsoption.svg" />
@@ -1520,6 +1521,7 @@
     <Content Include="Scss\base_64\icons\editor-redo.svg" />
     <Content Include="Scss\base_64\icons\editor-source.svg" />
     <Content Include="Scss\base_64\icons\editor-specialchar.svg" />
+    <Content Include="Scss\base_64\icons\editor-strike.svg" />
     <Content Include="Scss\base_64\icons\editor-table.svg" />
     <Content Include="Scss\base_64\icons\editor-templates.svg" />
     <Content Include="Scss\base_64\icons\editor-underline.svg" />

@@ -6,6 +6,7 @@ $ck-toolbar-icons: (
                 ('bold_icon', $bcms-editor-bold),
                 ('italic_icon', $bcms-editor-italic),
                 ('underline_icon', $bcms-editor-underline),
+                ('strike_icon', $bcms-editor-strike),
                 ('blockquote_icon', $bcms-editor-blockquote),
                 ('link_icon', $bcms-editor-link),
                 ('unlink_icon', $bcms-editor-unlink),
@@ -29,7 +30,7 @@ $ck-toolbar-icons: (
                 ('cmswidget_icon', $bcms-editor-cmswidget),
                 ('cmsdynamicregion_icon', $bcms-editor-cmsdynamicregion)
 );
-//                ('strike_icon', $bcms-editor-strike),
+//
 //                ('pagebreak_icon', $bcms-editor-pagebreak),
 //                ('pastefromword_icon', $bcms-editor-pastefromword),
 //                ('pastetext_icon', $bcms-editor-pastetext),
@@ -83,7 +84,7 @@ $ck-toolbar-icons: (
 
     &_top {
         border-bottom: $border-thin-gray;
-        padding: 6px 8px;
+        padding: 6px 8px 0;
         white-space: normal;
         position: relative;
         min-height: 13px;
@@ -133,16 +134,16 @@ $ck-toolbar-icons: (
 //module editor toolbar
 .cke_toolbar {
     float: left;
+    margin-bottom: 6px;
 }
 
 .cke_toolgroup {
     float: left;
-    margin: 0 6px;
+    margin-right: 6px;
     border: $border-thin-gray;
     background-color: $gray-l30;
 }
 
-//module editor buttons
 .cke_button {
     height: 18px;
     padding: 4px 6px;
@@ -263,15 +264,19 @@ $ck-toolbar-icons: (
 
     &_close_button {
         //fixme temp bg-color need to add image
-        background-color: $red-l70;
+        background: url($bcms-editor-close) no-repeat center;
         position: absolute;
         cursor: pointer;
         text-align: center;
         height: 20px;
         width: 20px;
-        top: 4px;
+        top: 10px;
         z-index: 5;
-        right: 5px;
+        right: 10px;
+
+        .cke_label {
+            display: none;
+        }
     }
 
     &_title {
@@ -502,6 +507,7 @@ a {
 //module combo box
 .cke_combo {
     float: left;
+    margin-right: 6px;
 
     &_label {
         display: none;
@@ -565,7 +571,7 @@ a {
 
 .cke_panel {
     visibility: visible;
-    height: 100px;
+    height: 150px;
     overflow: hidden;
     background-color: $white;
     border: $border-thin-gray;
