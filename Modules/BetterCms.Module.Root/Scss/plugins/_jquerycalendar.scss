@@ -1,5 +1,10 @@
 @import '../core/variables';
 
+$datepicker-arrows: (
+                ('prev', $bcms-datepicker-arrow-left),
+                ('next', $bcms-datepicker-arrow-right)
+);
+
 .ui-datepicker {
     display: none;
     margin-top: -1px;
@@ -39,27 +44,25 @@
 
         a {
             display: block;
-            text-align: right;
+            padding: 1px 2px;
             text-decoration: none;
         }
     }
 
-    .ui-datepicker-prev,
-    .ui-datepicker-next {
-        @include size(25px 100%);
-        background: $white;
-        cursor: pointer;
-        position: absolute;
-        //todo add arrows
-        z-index: 2;
-    }
-
-    .ui-datepicker-prev {
-        left: 5px;
-    }
-
-    .ui-datepicker-next {
-        right: 5px;
+    @each $name, $icon in $datepicker-arrows {
+        .ui-datepicker-#{$name} {
+            @include size(25px 100%);
+            background: url($icon) no-repeat center;
+            cursor: pointer;
+            position: absolute;
+            z-index: 2;
+            @if ($name == 'prev') {
+                left: 5px;
+            }
+            @if ($name == 'next') {
+                right: 5px;
+            }
+        }
     }
 }
 

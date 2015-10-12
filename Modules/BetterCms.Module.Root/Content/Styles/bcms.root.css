@@ -4078,25 +4078,27 @@ textarea:focus {
 
 .ui-datepicker td a {
   display: block;
-  text-align: right;
+  padding: 1px 2px;
   text-decoration: none;
 }
 
-.ui-datepicker .ui-datepicker-prev,
-.ui-datepicker .ui-datepicker-next {
+.ui-datepicker .ui-datepicker-prev {
   height: 100%;
   width: 25px;
-  background: #ffffff;
+  background: url("data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI4Ljg1IiBoZWlnaHQ9IjE2IiB2aWV3Qm94PSIwIDAgOC44NSAxNiIgZW5hYmxlLWJhY2tncm91bmQ9Im5ldyAwIDAgOC44NSAxNiI+CiA8cGF0aCBmaWxsPSIjZmZmIiBkPSJtOC4wNSAxNS44N2wtNy45LTcuMzZjLS4wOS0uMDgtLjE1LS4yLS4xNS0uMzQgMC0uMTMuMDUtLjI2LjE0LS4zNWw3LjktNy42OWMuMTktLjE4LjQ5LS4xOC42Ny4wMS4xOS4xOS4xOC40OSAwIC42N2wtNy41NSA3LjM1IDcuNTQgNy4wMmMuMTkuMTguMi40OC4wMy42Ny0uMS4xLS4yMy4xNS0uMzUuMTUtLjEyIDAtLjI0LS4wNC0uMzMtLjEzIi8+Cjwvc3ZnPgo=") no-repeat center;
   cursor: pointer;
   position: absolute;
   z-index: 2;
-}
-
-.ui-datepicker .ui-datepicker-prev {
   left: 5px;
 }
 
 .ui-datepicker .ui-datepicker-next {
+  height: 100%;
+  width: 25px;
+  background: url("data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI4Ljg2IiBoZWlnaHQ9IjE2IiB2aWV3Qm94PSItOTYuMzYgNzc2LjAzIDguODYgMTYiIGVuYWJsZS1iYWNrZ3JvdW5kPSJuZXcgLTk2LjM2IDc3Ni4wMyA4Ljg2IDE2Ij4KIDxwYXRoIGZpbGw9IiNmZmYiIGQ9Im0tOTUuOTEgNzkyLjAzYy0uMTYgMC0uMjQtLjA4LS4zMi0uMTYtLjE2LS4xNi0uMTYtLjQ4IDAtLjY0bDcuNTQtNy4wNi03LjU0LTcuMzhjLS4xNi0uMTYtLjE2LS40OCAwLS42NHMuNDgtLjE2LjY0IDBsNy45NCA3LjdjLjA4LjA4LjE2LjI0LjE2LjMyIDAgLjA4LS4wOC4yNC0uMTYuMzJsLTcuOTQgNy4zOGMtLjA4LjE2LS4yNC4xNi0uMzIuMTYiLz4KPC9zdmc+Cg==") no-repeat center;
+  cursor: pointer;
+  position: absolute;
+  z-index: 2;
   right: 5px;
 }
 

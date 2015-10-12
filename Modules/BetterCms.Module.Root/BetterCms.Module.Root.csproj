@@ -1439,6 +1439,8 @@
     <Content Include="Scss\base_64\icons\cp-texture.svg" />
     <Content Include="Scss\base_64\icons\cp-translate.svg" />
     <Content Include="Scss\base_64\icons\cp-user.svg" />
+    <Content Include="Scss\base_64\icons\datepicker-arrow-left.svg" />
+    <Content Include="Scss\base_64\icons\datepicker-arrow-right.svg" />
     <Content Include="Scss\base_64\icons\editor-blockquote.svg" />
     <Content Include="Scss\base_64\icons\editor-bold.svg" />
     <Content Include="Scss\base_64\icons\editor-bulletedlist.svg" />
