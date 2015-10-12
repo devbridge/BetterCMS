@@ -2,13 +2,12 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
-using System.Web.Mvc;
-using System.Web.UI;
-using System.Web.UI.HtmlControls;
 
 using BetterCms.Core.DataContracts;
 
 using BetterModules.Core.Web.Modules;
+using Microsoft.AspNet.Mvc.Rendering;
+using Microsoft.AspNet.Mvc.ViewFeatures;
 
 namespace BetterCms.Core.Modules.Projections
 {
@@ -86,14 +85,14 @@ namespace BetterCms.Core.Modules.Projections
         /// </summary>
         /// <param name="page">The page.</param>
         /// <param name="html">The html helper.</param>
-        protected override void OnPreRender(HtmlControlRenderer controlRenderer, IPage page, HtmlHelper html)
+        protected override void OnPreRender(TagBuilder builder, IPage page, HtmlHelper html)
         {
-            base.OnPreRender(controlRenderer, page, html);
+            base.OnPreRender(builder, page, html);
 
             if (Items != null && Items.Any())
             {
-                var innerDiv = new HtmlGenericControl("div");
-                controlRenderer.Controls.Add(innerDiv);
+                var innerDiv = new TagBuilder("div");
+                
                 var items = Items
                     .Select(f => f(page))
                     .OrderBy(f => f.Order)
@@ -108,21 +107,23 @@ namespace BetterCms.Core.Modules.Projections
 
                 foreach (var item in items)
                 {
-                    var option = new HtmlGenericControl("div");
-                    option.Controls.Add(new LiteralControl(item.Text));
+                    var option = new TagBuilder("div");
+                    option.InnerHtml.Append(item.Text);
+                    //option.Controls.Add(new LiteralControl(item.Text));
                     option.Attributes["value"] = item.Value;
                     if (item.Selected)
                     {
                         option.Attributes["selected"] = "selected";
                     }
 
-                    innerDiv.Controls.Add(option);
+                    innerDiv.InnerHtml.Append(option);
                 }
+                builder.InnerHtml.Append(innerDiv);
             }
 
             if (OnChangeAction != null && parentModuleInclude != null)
             {
-                string cssClass = controlRenderer.Attributes["class"];
+                string cssClass = builder.Attributes["class"];
                 if (!string.IsNullOrEmpty(cssClass) && !cssClass.Contains(ModuleActionMarkerCssClass))
                 {
                     cssClass = string.Concat(cssClass, " ", ModuleActionMarkerCssClass);
@@ -132,9 +133,9 @@ namespace BetterCms.Core.Modules.Projections
                     cssClass = ModuleActionMarkerCssClass;
                 }
 
-                controlRenderer.Attributes["class"] = cssClass;
-                controlRenderer.Attributes.Add(ModuleNameAttribute, parentModuleInclude.Name);
-                controlRenderer.Attributes.Add(ModuleActionAttribute, OnChangeAction(page));
+                builder.Attributes["class"] = cssClass;
+                builder.Attributes.Add(ModuleNameAttribute, parentModuleInclude.Name);
+                builder.Attributes.Add(ModuleActionAttribute, OnChangeAction(page));
             }
         }
     }

@@ -164,16 +164,16 @@ namespace BetterCms.Core.Modules.Registration
                     }
                 }
 
-                var sidebarHeadProjections = descriptor.RegisterSidebarHeaderProjections(containerBuilder);
+                var sidebarHeadProjections = descriptor.RegisterSidebarHeaderProjections(services);
                 UpdateConcurrentBagWithEnumerator(knownSidebarHeadContentItems, sidebarHeadProjections);
 
-                var sidebarSideProjections = descriptor.RegisterSidebarSideProjections(containerBuilder);
+                var sidebarSideProjections = descriptor.RegisterSidebarSideProjections(services);
                 UpdateConcurrentBagWithEnumerator(knownSidebarContentItems, sidebarSideProjections);
 
-                var sidebarBodyProjections = descriptor.RegisterSidebarMainProjections(containerBuilder);
+                var sidebarBodyProjections = descriptor.RegisterSidebarMainProjections(services);
                 UpdateConcurrentBagWithEnumerator(knownSidebarBodyContentItems, sidebarBodyProjections);
 
-                var siteSettingsProjections = descriptor.RegisterSiteSettingsProjections(containerBuilder);
+                var siteSettingsProjections = descriptor.RegisterSiteSettingsProjections(services);
                 UpdateConcurrentBagWithEnumerator(knownSiteSettingsItems, siteSettingsProjections);
             }
 
@@ -190,10 +190,7 @@ namespace BetterCms.Core.Modules.Registration
         {
             if (enumerator != null)
             {
-                foreach (var item in enumerator)
-                {
-                    bag.Add(item);
-                }
+                bag.AddRange(enumerator);
             }
         }
     }

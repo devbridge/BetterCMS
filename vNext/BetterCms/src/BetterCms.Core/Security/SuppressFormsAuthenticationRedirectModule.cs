@@ -3,7 +3,7 @@ using Microsoft.AspNet.Http;
 
 namespace BetterCms.Core.Security
 {
-    public class SuppressFormsAuthenticationRedirectModule : IHttpModule
+    public class SuppressFormsAuthenticationRedirectModule //: IHttpModule
     {
         /// <summary>
         /// Indicates if module is starting.
@@ -17,10 +17,10 @@ namespace BetterCms.Core.Security
             context.Items[SuppressAuthenticationKey] = true;
         }
 
-        public static void SuppressAuthenticationRedirect(HttpContextBase context)
-        {
-            context.Items[SuppressAuthenticationKey] = true;
-        }
+        //public static void SuppressAuthenticationRedirect(HttpContextBase context)
+        //{
+        //    context.Items[SuppressAuthenticationKey] = true;
+        //}
 
         public void Init(HttpApplication context)
         {

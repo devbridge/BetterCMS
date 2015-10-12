@@ -7,6 +7,7 @@ using BetterCms.Core.Modules.Projections;
 
 using BetterModules.Core.Web.Modules;
 using BetterModules.Core.Web.Mvc.Extensions;
+using Microsoft.Framework.DependencyInjection;
 using Microsoft.Framework.OptionsModel;
 
 namespace BetterCms.Core.Modules
@@ -205,72 +206,80 @@ namespace BetterCms.Core.Modules
             return null;
         }
 
-        public virtual IEnumerable<IPageActionProjection> RegisterSidebarHeaderProjections(ContainerBuilder containerBuilder)
+        public virtual IEnumerable<IPageActionProjection> RegisterSidebarHeaderProjections(IServiceCollection services)
         {
             return null;
         }
 
-        public virtual IEnumerable<IPageActionProjection> RegisterSidebarSideProjections(ContainerBuilder containerBuilde)
+        public virtual IEnumerable<IPageActionProjection> RegisterSidebarSideProjections(IServiceCollection services)
         {
             return null;
         }
 
-        public virtual IEnumerable<IPageActionProjection> RegisterSidebarMainProjections(ContainerBuilder containerBuilder)
+        public virtual IEnumerable<IPageActionProjection> RegisterSidebarMainProjections(IServiceCollection services)
         {
             return null;
         }
 
-        public virtual IEnumerable<IPageActionProjection> RegisterSiteSettingsProjections(ContainerBuilder containerBuilder)
+        public virtual IEnumerable<IPageActionProjection> RegisterSiteSettingsProjections(IServiceCollection services)
         {
             return null;
         }
-
-        protected void RegisterContentRendererType<TContentRenderer, TContent>(ContainerBuilder containerBuilder) 
+        // TODO register multiple services with keys
+        protected void RegisterContentRendererType<TContentRenderer, TContent>(IServiceCollection services) 
             where TContentRenderer : ContentAccessor<TContent>
             where TContent : class, IContent
         {
             Type contentRendererType = typeof(TContentRenderer);
             Type contentType = typeof(TContent);
 
-            string key = ("ContentRenderer-" + contentType.Name).ToUpperInvariant();
-            containerBuilder
-                .RegisterType(contentRendererType)
-                .AsSelf()
-                .Keyed<IContentAccessor>(key)
-                .WithMetadata("ContentRendererType", contentRendererType)               
-                .InstancePerDependency();
+            services.AddTransient(contentRendererType);
+            services.AddTransient(typeof(IContentAccessor), contentRendererType);
+
+            //string key = ("ContentRenderer-" + contentType.Name).ToUpperInvariant();
+            //containerBuilder
+            //    .RegisterType(contentRendererType)
+            //    .AsSelf()
+            //    .Keyed<IContentAccessor>(key)
+            //    .WithMetadata("ContentRendererType", contentRendererType)               
+            //    .InstancePerDependency();
         }
 
-        protected void RegisterJavaScriptRendererType<TJavaScriptRenderer, TContent>(ContainerBuilder containerBuilder)
+        protected void RegisterJavaScriptRendererType<TJavaScriptRenderer, TContent>(IServiceCollection services)
             where TJavaScriptRenderer : IJavaScriptAccessor
             where TContent : class
         {
             Type jsRendererType = typeof(TJavaScriptRenderer);
             Type contentType = typeof(TContent);
 
-            string key = ("JavaScriptRenderer-" + contentType.Name).ToUpperInvariant();
-            containerBuilder
-                .RegisterType(jsRendererType)
-                .AsSelf()
-                .Keyed<IJavaScriptAccessor>(key)
-                .WithMetadata("JavaScriptRendererType", jsRendererType)
-                .InstancePerDependency();
+            services.AddTransient(jsRendererType);
+            services.AddTransient(typeof (IJavaScriptAccessor), jsRendererType);
+            //string key = ("JavaScriptRenderer-" + contentType.Name).ToUpperInvariant();
+            //containerBuilder
+            //    .RegisterType(jsRendererType)
+            //    .AsSelf()
+            //    .Keyed<IJavaScriptAccessor>(key)
+            //    .WithMetadata("JavaScriptRendererType", jsRendererType)
+            //    .InstancePerDependency();
         }
         
-        protected void RegisterStylesheetRendererType<TStyleSheetRenderer, TContent>(ContainerBuilder containerBuilder)
+        protected void RegisterStylesheetRendererType<TStyleSheetRenderer, TContent>(IServiceCollection services)
             where TStyleSheetRenderer : IStylesheetAccessor
             where TContent : class
         {
             Type styleRendererType = typeof(TStyleSheetRenderer);
             Type contentType = typeof(TContent);
 
-            string key = ("StyleSheetRenderer-" + contentType.Name).ToUpperInvariant();
-            containerBuilder
-                .RegisterType(styleRendererType)
-                .AsSelf()
-                .Keyed<IStylesheetAccessor>(key)
-                .WithMetadata("StylesheetRendererType", styleRendererType)
-                .InstancePerDependency();
+            services.AddTransient(styleRendererType);
+            services.AddTransient(typeof(IStylesheetAccessor), styleRendererType);
+
+            //string key = ("StyleSheetRenderer-" + contentType.Name).ToUpperInvariant();
+            //containerBuilder
+            //    .RegisterType(styleRendererType)
+            //    .AsSelf()
+            //    .Keyed<IStylesheetAccessor>(key)
+            //    .WithMetadata("StylesheetRendererType", styleRendererType)
+            //    .InstancePerDependency();
         }
     }
 }

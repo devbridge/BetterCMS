@@ -1,9 +1,9 @@
 ﻿using System;
-using System.Web.Mvc;
-
-using Common.Logging;
 
 using BetterModules.Core.Web.Modules;
+using Microsoft.AspNet.Mvc.Rendering;
+using Microsoft.AspNet.Mvc.ViewFeatures;
+using Microsoft.Framework.Logging;
 
 namespace BetterCms.Core.Modules.Projections
 {
@@ -15,7 +15,7 @@ namespace BetterCms.Core.Modules.Projections
         /// <summary>
         /// Current class logger.
         /// </summary>
-        private static readonly ILog Log = LogManager.GetCurrentClassLogger();
+        private readonly ILogger logger;
 
         /// <summary>
         /// Resource name.
@@ -38,11 +38,12 @@ namespace BetterCms.Core.Modules.Projections
         /// <param name="jsModuleInclude">The java script module.</param>
         /// <param name="name">The name.</param>
         /// <param name="resource">A function to retrieve resource in current culture.</param>
-        public JavaScriptModuleGlobalization(JsIncludeDescriptor jsModuleInclude, string name, Func<string> resource)
+        public JavaScriptModuleGlobalization(JsIncludeDescriptor jsModuleInclude, string name, Func<string> resource, ILoggerFactory loggerFactory)
         {
             this.jsModuleInclude = jsModuleInclude;
             this.name = name;
             this.resource = resource;
+            logger = loggerFactory.CreateLogger<JavaScriptModuleGlobalization>();
         }
 
         /// <summary>
@@ -64,17 +65,18 @@ namespace BetterCms.Core.Modules.Projections
                 var resourceObject = resource();
                 if (resourceObject != null)
                 {
-                    string globalization = string.Format("{0}.globalization.{1} = '{2}';", jsModuleInclude.FriendlyName, name, resourceObject.Replace("'", "\\'"));
+                    string globalization =
+                        $"{jsModuleInclude.FriendlyName}.globalization.{name} = '{resourceObject.Replace("'", "\\'")}';";
                     html.ViewContext.Writer.WriteLine(globalization);
                 }
                 else
                 {
-                    Log.WarnFormat("Resource object not found to globalize {0}.{1} from resource {2}.", jsModuleInclude, name, resource);
+                    logger.LogWarning("Resource object not found to globalize {0}.{1} from resource {2}.", jsModuleInclude, name, resource);
                 }
             }
             catch (Exception ex)
             {
-                Log.WarnFormat("Failed to render globalization for {0}.{1} from resource {2}.", ex, jsModuleInclude, name, jsModuleInclude);
+                logger.LogWarning("Failed to render globalization for {0}.{1} from resource {2}.", ex, jsModuleInclude, name, jsModuleInclude);
             }
         }        
     }

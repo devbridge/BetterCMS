@@ -1,6 +1,5 @@
-﻿using System.Web.Mvc;
-
-using BetterCms.Core.DataContracts;
+﻿using BetterCms.Core.DataContracts;
+using Microsoft.AspNet.Mvc.ViewFeatures;
 
 namespace BetterCms.Core.Modules.Projections
 {

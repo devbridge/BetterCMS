@@ -1,9 +1,9 @@
 using System;
 using System.Diagnostics.CodeAnalysis;
-using System.Web.Mvc;
-using System.Web.UI;
 
 using BetterCms.Core.DataContracts;
+using Microsoft.AspNet.Mvc.Rendering;
+using Microsoft.AspNet.Mvc.ViewFeatures;
 
 namespace BetterCms.Core.Modules.Projections
 {
@@ -81,22 +81,22 @@ namespace BetterCms.Core.Modules.Projections
         /// <summary>
         /// Called before render methods sends element to response output.
         /// </summary>
-        /// <param name="controlRenderer">The html control renderer.</param>
+        /// <param name="builder">The html control renderer.</param>
         /// <param name="page">The page.</param>
         /// <param name="html">The html helper.</param>
-        protected override void OnPreRender(HtmlControlRenderer controlRenderer, IPage page, HtmlHelper html)
+        protected override void OnPreRender(TagBuilder builder, IPage page, HtmlHelper html)
         {
-            base.OnPreRender(controlRenderer, page, html);
+            base.OnPreRender(builder, page, html);
 
-            if (Title != null)
-            {
-                string title = Title(page);
-                controlRenderer.Controls.Add(new LiteralControl(title));
-            }
+            //if (Title != null)
+            //{
+            //    string title = Title(page);
+            //    builder.Controls.Add(new LiteralControl(title));
+            //}
 
             if (OnClickAction != null && parentModuleInclude != null)
             {
-                string cssClass = controlRenderer.Attributes["class"];
+                string cssClass = builder.Attributes["class"];
                 if (!string.IsNullOrEmpty(cssClass) && !cssClass.Contains(ModuleActionMarkerCssClass))
                 {
                     cssClass = cssClass + " " + ModuleActionMarkerCssClass;
@@ -106,9 +106,9 @@ namespace BetterCms.Core.Modules.Projections
                     cssClass = ModuleActionMarkerCssClass;
                 }
 
-                controlRenderer.Attributes["class"] = cssClass;
-                controlRenderer.Attributes.Add(ModuleNameAttribute, parentModuleInclude.Name);
-                controlRenderer.Attributes.Add(ModuleActionAttribute, OnClickAction(page));
+                builder.Attributes["class"] = cssClass;
+                builder.Attributes.Add(ModuleNameAttribute, parentModuleInclude.Name);
+                builder.Attributes.Add(ModuleActionAttribute, OnClickAction(page));
             }            
         }
     }

@@ -1,11 +1,10 @@
 ﻿using System;
 using System.Linq.Expressions;
-using System.Web.Mvc;
 
 using BetterCms.Core.DataContracts;
 using BetterCms.Core.Services;
-
-using Microsoft.Web.Mvc;
+using Microsoft.AspNet.Mvc;
+using Microsoft.AspNet.Mvc.ViewFeatures;
 
 namespace BetterCms.Core.Modules.Projections
 {
@@ -61,6 +60,7 @@ namespace BetterCms.Core.Modules.Projections
         /// <returns><c>true</c> on success, otherwise <c>false</c>.</returns>
         public bool Render(IPage page, ISecurityService securityService, HtmlHelper html)
         {
+            //TODO we will need to replace this with ViewComponent rendering
             if (AccessRole != null && !securityService.IsAuthorized(AccessRole))
             {
                 return false;

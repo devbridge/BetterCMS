@@ -15,6 +15,8 @@ Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "BetterCms.Core", "src\Bette
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Core", "Core", "{C2538700-29ED-4384-BAFE-5FA97B1A445D}"
 EndProject
+Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "BetterCms.Configuration", "src\BetterCms.Configuration\BetterCms.Configuration.xproj", "{D6FD1270-AC27-432D-B562-B46668DAF80C}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -25,6 +27,10 @@ Global
 		{25EFB5BA-046D-4786-9B5C-179FE5023C23}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{25EFB5BA-046D-4786-9B5C-179FE5023C23}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{25EFB5BA-046D-4786-9B5C-179FE5023C23}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D6FD1270-AC27-432D-B562-B46668DAF80C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D6FD1270-AC27-432D-B562-B46668DAF80C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D6FD1270-AC27-432D-B562-B46668DAF80C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D6FD1270-AC27-432D-B562-B46668DAF80C}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -32,5 +38,6 @@ Global
 	GlobalSection(NestedProjects) = preSolution
 		{25EFB5BA-046D-4786-9B5C-179FE5023C23} = {C2538700-29ED-4384-BAFE-5FA97B1A445D}
 		{C2538700-29ED-4384-BAFE-5FA97B1A445D} = {DF595FE4-FC11-4AB1-AD1C-26990B14D666}
+		{D6FD1270-AC27-432D-B562-B46668DAF80C} = {C2538700-29ED-4384-BAFE-5FA97B1A445D}
 	EndGlobalSection
 EndGlobal

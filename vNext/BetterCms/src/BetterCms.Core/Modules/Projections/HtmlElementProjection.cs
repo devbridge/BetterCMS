@@ -1,9 +1,10 @@
 ﻿using System;
-using System.Web.Mvc;
-using System.Web.UI;
-
 using BetterCms.Core.DataContracts;
 using BetterCms.Core.Services;
+using Microsoft.AspNet.Mvc.Rendering;
+using Microsoft.AspNet.Mvc.ViewFeatures;
+using Microsoft.Extensions.WebEncoders;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace BetterCms.Core.Modules.Projections
 {
@@ -101,15 +102,13 @@ namespace BetterCms.Core.Modules.Projections
                 return false;
             }
 
-            using (HtmlControlRenderer control = new HtmlControlRenderer(Tag, isSelfClosing))
+            TagBuilder builder = new TagBuilder(Tag)
             {
-                OnPreRender(control, page, html);
-
-                using (HtmlTextWriter writer = new HtmlTextWriter(html.ViewContext.Writer))
-                {
-                    control.RenderControl(writer);
-                }
-            }
+                TagRenderMode = isSelfClosing ? TagRenderMode.SelfClosing : TagRenderMode.Normal
+            };
+            OnPreRender(builder, page, html);
+            var encoder = html.ViewContext.HttpContext.ApplicationServices.GetService<IHtmlEncoder>();
+            builder.WriteTo(html.ViewContext.Writer, encoder);
 
             return true;
         }
@@ -117,39 +116,32 @@ namespace BetterCms.Core.Modules.Projections
         /// <summary>
         /// Called before render methods sends element to response output.
         /// </summary>
-        /// <param name="controlRenderer">The html control renderer.</param>
+        /// <param name="builder">The html control renderer.</param>
         /// <param name="page">The page.</param>
         /// <param name="html">The html helper.</param>
-        protected virtual void OnPreRender(HtmlControlRenderer controlRenderer, IPage page, HtmlHelper html)
-        {            
+        protected virtual void OnPreRender(TagBuilder builder, IPage page, HtmlHelper html)
+        {
             if (Id != null)
             {
-                controlRenderer.Attributes["id"] = Id(page);
+                builder.Attributes["id"] = Id(page);
             }
 
             if (CssClass != null)
             {
-                string css = controlRenderer.Attributes["class"];
+                string css = builder.Attributes["class"];
 
-                if (!string.IsNullOrEmpty(css))
-                {
-                    css = string.Concat(css, " ", CssClass(page));
-                }
-                else
-                {
-                    css = CssClass(page);
-                }
+                css = !string.IsNullOrEmpty(css) ? string.Concat(css, " ", CssClass(page)) : CssClass(page);
 
-                controlRenderer.Attributes.Add("class", css);
+                builder.Attributes.Add("class", css);
             }
 
             if (Tooltip != null)
             {
                 string tooltip = Tooltip(page);
-                controlRenderer.Attributes.Add("title", tooltip);
+                builder.Attributes.Add("title", tooltip);
             }
 
-            controlRenderer.Attributes.Add("data-bcms-order", Order.ToString());
-        }   
+            builder.Attributes.Add("data-bcms-order", Order.ToString());
+        }
     }
 }

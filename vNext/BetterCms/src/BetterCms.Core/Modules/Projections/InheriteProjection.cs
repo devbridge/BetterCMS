@@ -1,13 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using System.Security.Principal;
-using System.Text;
-using System.Web.Mvc;
-using System.Web.UI;
 
 using BetterCms.Core.DataContracts;
 using BetterCms.Core.Services;
+using Microsoft.AspNet.Mvc.Rendering;
+using Microsoft.AspNet.Mvc.ViewFeatures;
+using Microsoft.Extensions.WebEncoders;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace BetterCms.Core.Modules.Projections
 {
@@ -15,7 +14,7 @@ namespace BetterCms.Core.Modules.Projections
     /// Projection to support action projections inheritance.
     /// </summary>
     public class InheriteProjection : HtmlElementProjection
-    {        
+    {
         /// <summary>
         /// Initializes a new instance of the <see cref="InheriteProjection" /> class.
         /// </summary>
@@ -62,25 +61,29 @@ namespace BetterCms.Core.Modules.Projections
                 return false;
             }
 
-            using (HtmlControlRenderer control = new HtmlControlRenderer(Tag))
+            var builder = new TagBuilder(Tag)
             {
-                OnPreRender(control, page, html);
+                TagRenderMode = TagRenderMode.StartTag
+            };
+            var encoder = html.ViewContext.HttpContext.ApplicationServices.GetService<IHtmlEncoder>();
+            OnPreRender(builder, page, html);
+            builder.WriteTo(html.ViewContext.Writer, encoder);
+            //control.RenderBeginTag(writer);
 
-                using (HtmlTextWriter writer = new HtmlTextWriter(html.ViewContext.Writer))
+            if (ChildProjections != null)
+            {
+                foreach (var htmlElementProjection in ChildProjections.OrderBy(f => f.Order))
                 {
-                    control.RenderBeginTag(writer);
-                    
-                    if (ChildProjections != null)
-                    {
-                        foreach (var htmlElementProjection in ChildProjections.OrderBy(f => f.Order))
-                        {
-                            htmlElementProjection.Render(page, securityService, html);
-                        }
-                    }
-
-                    control.RenderEndTag(writer);
+                    htmlElementProjection.Render(page, securityService, html);
                 }
             }
+
+            builder = new TagBuilder(Tag)
+            {
+                TagRenderMode = TagRenderMode.EndTag
+            };
+            builder.WriteTo(html.ViewContext.Writer, encoder);
+            //control.RenderEndTag(writer);
 
             return true;
         }

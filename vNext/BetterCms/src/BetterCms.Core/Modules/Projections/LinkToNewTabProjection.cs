@@ -1,7 +1,8 @@
 ﻿using System;
-using System.Web.Mvc;
 
 using BetterCms.Core.DataContracts;
+using Microsoft.AspNet.Mvc.Rendering;
+using Microsoft.AspNet.Mvc.ViewFeatures;
 
 namespace BetterCms.Core.Modules.Projections
 {
@@ -24,13 +25,13 @@ namespace BetterCms.Core.Modules.Projections
         /// </summary>
         /// <param name="page">The page.</param>
         /// <param name="html">The html helper.</param>
-        protected override void OnPreRender(HtmlControlRenderer controlRenderer, IPage page, HtmlHelper html)
+        protected override void OnPreRender(TagBuilder builder, IPage page, HtmlHelper html)
         {
-            base.OnPreRender(controlRenderer, page, html);
+            base.OnPreRender(builder, page, html);
 
-            controlRenderer.Attributes["href"] = LinkAddress(page);
-            controlRenderer.Attributes["target"] = "_blank";
-            controlRenderer.InnerText = InnerText(page);
+            builder.Attributes["href"] = LinkAddress(page);
+            builder.Attributes["target"] = "_blank";
+            builder.InnerHtml.Append(InnerText(page));
         }
     }
 }

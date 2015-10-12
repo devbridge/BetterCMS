@@ -40,15 +40,12 @@ namespace BetterCms.Core.Mvc.Binders
 
     public class JSONDataBinder : IModelBinder
     {
-        public object BindModel(ActionContext controllerContext, ModelBindingContext bindingContext)
+        public object BindModel(ActionContext actionContext, ModelBindingContext bindingContext)
         {
-            if (controllerContext != null 
-                && controllerContext.HttpContext != null 
-                && controllerContext.HttpContext.Request != null
-                && controllerContext.HttpContext.Request.Body != null)
+            if (actionContext?.HttpContext?.Request?.Body != null)
             {
-                controllerContext.HttpContext.Request.Body.Position = 0;
-                var json = new StreamReader(controllerContext.HttpContext.Request.Body).ReadToEnd();
+                actionContext.HttpContext.Request.Body.Position = 0;
+                var json = new StreamReader(actionContext.HttpContext.Request.Body).ReadToEnd();
                 var type = bindingContext.ModelType;
 
                 var model = JsonConvert.DeserializeObject(json, type, 

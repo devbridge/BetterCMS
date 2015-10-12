@@ -2,6 +2,7 @@
 
 namespace BetterCms.Core.Exceptions.Configuration
 {
+    //TODO check if this is still relevant
     [Serializable]
     public class ConfigurationLoaderException : CmsException
     {

@@ -1,6 +1,6 @@
-﻿using System.Web.Mvc;
-
-using BetterCms.Core.DataContracts;
+﻿using BetterCms.Core.DataContracts;
+using Microsoft.AspNet.Mvc.Rendering;
+using Microsoft.AspNet.Mvc.ViewFeatures;
 
 namespace BetterCms.Core.Modules.Projections
 {
@@ -39,16 +39,16 @@ namespace BetterCms.Core.Modules.Projections
         /// <summary>
         /// Called before render methods sends element to response output.
         /// </summary>
-        /// <param name="controlRenderer">The html control renderer.</param>
+        /// <param name="builder">The html tag builder.</param>
         /// <param name="page">The page.</param>
         /// <param name="html">The html helper.</param>
-        protected override void OnPreRender(HtmlControlRenderer controlRenderer, IPage page, HtmlHelper html)
+        protected override void OnPreRender(TagBuilder builder, IPage page, HtmlHelper html)
         {
-            controlRenderer.Attributes["rel"] = relation;
-            controlRenderer.Attributes["href"] = link;
+            builder.Attributes["rel"] = relation;
+            builder.Attributes["href"] = link;
             if (!string.IsNullOrWhiteSpace(type))
             {
-                controlRenderer.Attributes["type"] = type;
+                builder.Attributes["type"] = type;
             }
         }
     }
