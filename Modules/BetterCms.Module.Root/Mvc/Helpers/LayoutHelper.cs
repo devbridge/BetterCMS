@@ -76,14 +76,15 @@ namespace BetterCms.Module.Root.Mvc.Helpers
                     webPage.Write(result);
                 });
         }
-        
+
         /// <summary>
         /// Renders the page custom JavaScript.
         /// </summary>
         /// <param name="htmlHelper">The HTML helper.</param>
         /// <param name="styles">The styles.</param>
-        /// <returns></returns>
-        public static IHtmlString RenderPageCustomCss(this HtmlHelper htmlHelper, IEnumerable<IStylesheetAccessor> styles)
+        /// <param name="pageModel">The rendering page model.</param>
+        /// <returns>The rendering page custom CSS</returns>
+        public static IHtmlString RenderPageCustomCss(this HtmlHelper htmlHelper, IEnumerable<IStylesheetAccessor> styles, RenderPageViewModel pageModel = null)
         {
             if (styles != null)
             {
@@ -120,6 +121,12 @@ namespace BetterCms.Module.Root.Mvc.Helpers
                     }
                 }
 
+                if (pageModel != null)
+                {
+                    var pageHtmlHelper = new PageHtmlRenderer.PageHtmlRenderer(inlineCssBuilder, pageModel);
+                    inlineCssBuilder = pageHtmlHelper.GetReplacedHtml();
+                }
+
                 var inlineCss = inlineCssBuilder.ToString();
                 var includedCss = cssIncludesBuilder.ToString();
                 if (!string.IsNullOrWhiteSpace(inlineCss) || !string.IsNullOrWhiteSpace(includedCss))
@@ -135,14 +142,15 @@ namespace BetterCms.Module.Root.Mvc.Helpers
 
             return null;
         }
-        
+
         /// <summary>
         /// Renders the page custom JavaScript.
         /// </summary>
         /// <param name="htmlHelper">The HTML helper.</param>
         /// <param name="scripts">The scripts.</param>
-        /// <returns></returns>
-        public static IHtmlString RenderPageCustomJavaScript(this HtmlHelper htmlHelper, IEnumerable<IJavaScriptAccessor> scripts)
+        /// <param name="pageModel">The renderingpage model.</param>
+        /// <returns>Rendering page custom JavaScript</returns>
+        public static IHtmlString RenderPageCustomJavaScript(this HtmlHelper htmlHelper, IEnumerable<IJavaScriptAccessor> scripts, RenderPageViewModel pageModel = null)
         {
             if (scripts != null)
             {
@@ -179,6 +187,12 @@ namespace BetterCms.Module.Root.Mvc.Helpers
                             }
                         }
                     }
+                }
+
+                if (pageModel != null)
+                {
+                    var pageHtmlHelper = new PageHtmlRenderer.PageHtmlRenderer(inlineJsBuilder, pageModel);
+                    inlineJsBuilder = pageHtmlHelper.GetReplacedHtml();
                 }
 
                 var inlineJs = inlineJsBuilder.ToString();
