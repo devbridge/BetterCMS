@@ -120,6 +120,30 @@ bettercms.define('bcms.htmlEditor', ['bcms.jquery', 'bcms', 'ckeditor', 'bcms.ma
         return tags;
     }
 
+    function switchVisibilityAfter1stRow(toolbox, show) {
+        var inFirstRow = true,
+            elements = toolbox.getChildren(),
+            elementsCount = elements.count(),
+            elementIndex = 0,
+            element = elements.getItem(elementIndex),
+            position = 0,
+            newPosition;
+
+        if (element && element.$) {
+            position = $(element.$).position().top;
+        }
+        for (; elementIndex < elementsCount; element = elements.getItem(++elementIndex)) {
+            newPosition = element && element.$ ? $(element.$).position().top : 0;
+
+            inFirstRow = (inFirstRow && newPosition === position);
+
+            if (!inFirstRow) {
+                if (show) element.show();
+                else element.hide();
+            }
+        }
+    }
+
     htmlEditor.initializeMarkdownEditor = function (id, editingContentId, options) {
         options = $.extend({
             smartTags: getSmartTags()
@@ -222,7 +246,7 @@ bettercms.define('bcms.htmlEditor', ['bcms.jquery', 'bcms', 'ckeditor', 'bcms.ma
             $('#' + this.name).val(CKEDITOR.instances[id].getData());
         });
 
-        CKEDITOR.instances[id].on('instanceReady', function () {
+        CKEDITOR.instances[id].on('instanceReady', function (e) {
             // Hide native image button container
             $(selectors.imageButtonContainer).hide();
 
@@ -235,6 +259,68 @@ bettercms.define('bcms.htmlEditor', ['bcms.jquery', 'bcms', 'ckeditor', 'bcms.ma
                 instance.addHtml(text);
                 $('#' + this.name).val(text);
             }
+
+            var editor = e.editor;
+            var collapser = (function () {
+                try {
+                    var firstToolbarId = editor.toolbox.toolbars[0].id;
+                    var firstToolbar = CKEDITOR.document.getById(firstToolbarId);
+                    var toolbox = firstToolbar.getParent();
+                    var collapser = toolbox.getNext();
+                    return collapser;
+                }
+                catch (e) { }
+                return null;
+            })();
+
+            // Copied from editor/_source/plugins/toolbar/plugin.js & modified
+            editor.addCommand('toolbarCollapse',
+            {
+                exec: function(editor) {
+                    if (collapser == null) return;
+
+                    var toolbox = collapser.getPrevious(),
+                        contents = editor.ui.space('contents'),
+                        toolboxContainer = toolbox.getParent(),
+                        contentHeight = parseInt(contents.$.style.height, 10),
+                        previousHeight = toolboxContainer.$.offsetHeight,
+
+                        collapsed = toolbox.hasClass('iterate_tbx_hidden'); //!toolbox.isVisible();
+
+                    if (!collapsed) {
+                        switchVisibilityAfter1stRow(toolbox, false); // toolbox.hide();
+                        toolbox.addClass('iterate_tbx_hidden');
+                        if (!toolbox.isVisible()) toolbox.show(); // necessary 1st time if initially collapsed
+
+                        collapser.addClass('cke_toolbox_collapser_min');
+                        collapser.setAttribute('title', editor.lang.toolbarExpand);
+                    } else {
+                        switchVisibilityAfter1stRow(toolbox, true); // toolbox.show();
+                        toolbox.removeClass('iterate_tbx_hidden');
+
+                        collapser.removeClass('cke_toolbox_collapser_min');
+                        collapser.setAttribute('title', editor.lang.toolbarCollapse);
+                    }
+
+                    // Update collapser symbol.
+                    collapser.getFirst().setText(collapsed ?
+                        '\u25B2' : // BLACK UP-POINTING TRIANGLE
+                        '\u25C0'); // BLACK LEFT-POINTING TRIANGLE
+
+                    var dy = toolboxContainer.$.offsetHeight - previousHeight;
+                    contents.setStyle('height', (contentHeight - dy) + 'px');
+
+                    editor.fire('resize');
+                },
+
+                modes: {
+                    wysiwyg: 1,
+                    source: 1
+                }
+            });
+
+            // Make sure advanced toolbars initially collapsed
+            editor.execCommand('toolbarCollapse');
         });
 
         CKEDITOR.instances[id].smartTags = getSmartTags();

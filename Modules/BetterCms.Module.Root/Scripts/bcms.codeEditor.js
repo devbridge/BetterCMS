@@ -22,7 +22,8 @@ bettercms.define('bcms.codeEditor', ['bcms.jquery', 'bcms', 'bcms.htmlEditor', '
                 ['Maximize']
             ],
 
-            codeEditorMode: true
+            codeEditorMode: true,
+            toolbarCanCollapse: false
         };
 
     // Assign objects to module
