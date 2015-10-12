@@ -309,7 +309,7 @@ namespace BetterCms.Module.Pages.Services
 
                     optionService.ValidateOptionValue(contentOption);
 
-                    if (cmsConfiguration.EnableMultilanguage)
+                    if (cmsConfiguration.EnableMultilanguage && requestContentOption.Translations != null)
                     {
                         var translations = requestContentOption.Translations.Select(x => new ContentOptionTranslation
                         {

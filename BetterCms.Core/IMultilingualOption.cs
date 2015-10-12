@@ -4,7 +4,7 @@ using BetterCms.Core.DataContracts;
 
 namespace BetterCms.Core
 {
-    public interface IMultilangualOption
+    public interface IMultilingualOption
     {
         IList<IOptionTranslation> Translations { get; set; }
     }

@@ -11,7 +11,7 @@ namespace BetterCms.Module.Root.ViewModels.Option
     /// <summary>
     /// Option view model
     /// </summary>
-    public class OptionViewModel : OptionViewModelBase, IOption, IMultilangualOption
+    public class OptionViewModel : OptionViewModelBase, IOption, IMultilingualOption
     {
         /// <summary>
         /// Gets or sets the option default value.
@@ -70,7 +70,7 @@ namespace BetterCms.Module.Root.ViewModels.Option
         /// </value>
         public IList<OptionTranslationViewModel> Translations { get; set; }
 
-        IList<IOptionTranslation> IMultilangualOption.Translations
+        IList<IOptionTranslation> IMultilingualOption.Translations
         {
             get
             {

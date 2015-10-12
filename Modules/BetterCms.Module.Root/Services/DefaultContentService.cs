@@ -145,7 +145,7 @@ namespace BetterCms.Module.Root.Services
             var contentQuery = repository.AsQueryOver(() => contentAlias)
                 .Left.JoinAlias(() => contentAlias.ContentOptions, () => contentOptionAlias, () => !contentOptionAlias.IsDeleted)
                 .Left.JoinAlias(() => contentOptionAlias.Translations, () => contentOptionTranslationAlias, () => !contentOptionTranslationAlias.IsDeleted)
-                .Left.JoinAlias(() => contentAlias.ChildContents, () => childContentAlias, () => !childContentAlias.IsDeleted)
+//                .Left.JoinAlias(() => contentAlias.ChildContents, () => childContentAlias, () => !childContentAlias.IsDeleted)
                 .Left.JoinAlias(() => contentAlias.History, () => historyAlias, () => !historyAlias.IsDeleted)
                 .Where(() => contentAlias.Id == id)
                 .Future();
@@ -163,7 +163,7 @@ namespace BetterCms.Module.Root.Services
                         .Left.JoinAlias(() => contentAlias.History, () => historyAlias, () => !historyAlias.IsDeleted)
                         .Left.JoinAlias(() => contentAlias.ContentOptions, () => contentOptionAlias, () => !contentOptionAlias.IsDeleted)
                         .Left.JoinAlias(() => contentOptionAlias.Translations, () => contentOptionTranslationAlias, () => !contentOptionTranslationAlias.IsDeleted)
-                        .Left.JoinAlias(() => contentAlias.ChildContents, () => childContentAlias, () => !childContentAlias.IsDeleted)
+//                        .Left.JoinAlias(() => contentAlias.ChildContents, () => childContentAlias, () => !childContentAlias.IsDeleted)
                         .Where(() => contentAlias.Id == originalId && !contentAlias.IsDeleted)
                         .Future();
             }
@@ -531,7 +531,7 @@ namespace BetterCms.Module.Root.Services
 
         private void SetContentOptions(IOptionContainer<Models.Content> destination, IOptionContainer<Models.Content> source)
         {
-            optionService.SetOptions<ContentOption, Models.Content>(destination, source.Options);
+            optionService.SetOptions<ContentOption, Models.Content>(destination, source.Options, () => new ContentOptionTranslation());
         }
 
         private void SetContentRegions(Models.Content destination, Models.Content source)

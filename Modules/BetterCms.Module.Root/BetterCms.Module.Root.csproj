@@ -211,11 +211,14 @@
     <Compile Include="Models\CategoryTree.cs" />
     <Compile Include="Models\CategoryTreeCategorizableItem.cs" />
     <Compile Include="Models\ChildContentOption.cs" />
+    <Compile Include="Models\ChildContentOptionTranslation.cs" />
     <Compile Include="Models\ContentOptionTranslation.cs" />
     <Compile Include="Models\ICategoryAccessor.cs" />
+    <Compile Include="Models\Maps\ChildContentOptionTranslationMap.cs" />
     <Compile Include="Models\Maps\ContentOptionTranslationMap.cs" />
     <Compile Include="Models\Maps\WidgetCategoryMap.cs" />
     <Compile Include="Models\Migrations\Migration201502061445.cs" />
+    <Compile Include="Models\Migrations\Migration201510061845.cs" />
     <Compile Include="Models\Migrations\Migration201509241740.cs" />
     <Compile Include="Models\WidgetCategories.cs" />
     <Compile Include="Models\IChildRegionContainer.cs" />

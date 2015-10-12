@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System.Collections.Generic;
+using System.Linq;
 
 using BetterCms.Core.DataContracts.Enums;
 using BetterCms.Core.Exceptions.Mvc;
@@ -26,6 +27,22 @@ namespace BetterCms.Module.Pages.Command.Content.GetChildContentOptions
         public IOptionService OptionService { get; set; }
 
         /// <summary>
+        /// Gets or sets the CMS configuration.
+        /// </summary>
+        /// <value>
+        /// The CMS configuration.
+        /// </value>
+        public ICmsConfiguration CmsConfiguration { get; set; }
+
+        /// <summary>
+        /// Gets or sets the language service.
+        /// </summary>
+        /// <value>
+        /// The language service.
+        /// </value>
+        public ILanguageService LanguageService { get; set; }
+
+        /// <summary>
         /// Executes the specified request.
         /// </summary>
         /// <param name="request">The request.</param>
@@ -40,6 +57,7 @@ namespace BetterCms.Module.Pages.Command.Content.GetChildContentOptions
 
             var model = new ContentOptionValuesViewModel();
             var optionsLoaded = false;
+            var languagesFuture = CmsConfiguration.EnableMultilanguage ? LanguageService.GetLanguagesLookupValues() : new List<LookupKeyValue>();
 
             if (request.LoadOptions) { 
                 if (!request.AssignmentIdentifier.HasDefaultValue())
@@ -93,6 +111,9 @@ namespace BetterCms.Module.Pages.Command.Content.GetChildContentOptions
             }
 
             model.CustomOptions = OptionService.GetCustomOptions();
+            var languages = CmsConfiguration.EnableMultilanguage ? languagesFuture.ToList() : new List<LookupKeyValue>();
+            model.Languages = languages;
+            model.ShowLanguages = CmsConfiguration.EnableMultilanguage && languages.Any();
 
             return model;
         }

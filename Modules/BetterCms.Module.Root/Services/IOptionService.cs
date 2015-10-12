@@ -61,7 +61,8 @@ namespace BetterCms.Module.Root.Services
         /// <typeparam name="TEntity">The type of the option parent entity.</typeparam>
         /// <param name="optionContainer">The options container entity.</param>
         /// <param name="options">The list of new options.</param>
-        void SetOptions<TOption, TEntity>(IOptionContainer<TEntity> optionContainer, IEnumerable<IOption> options)
+        /// <param name="translationEntityCreator"></param>
+        void SetOptions<TOption, TEntity>(IOptionContainer<TEntity> optionContainer, IEnumerable<IOption> options, Func<IOptionTranslationEntity> translationEntityCreator = null)
             where TEntity : IEntity
             where TOption : IDeletableOption<TEntity>, new();
 
@@ -72,8 +73,9 @@ namespace BetterCms.Module.Root.Services
         /// <param name="optionViewModels">The option view models.</param>
         /// <param name="savedOptionValues">The list of saved option values.</param>
         /// <param name="entityCreator">The entity creator.</param>
-        IList<TEntity> SaveOptionValues<TEntity>(IEnumerable<OptionValueEditViewModel> optionViewModels, IEnumerable<TEntity> savedOptionValues, 
-            Func<TEntity> entityCreator)
+        /// <param name="translationEntityCreator"></param>
+        IList<TEntity> SaveOptionValues<TEntity>(IEnumerable<OptionValueEditViewModel> optionViewModels, IEnumerable<TEntity> savedOptionValues,
+            Func<TEntity> entityCreator, Func<IOptionTranslationEntity> translationEntityCreator = null)
             where TEntity : Entity, IOptionEntity;
 
         /// <summary>

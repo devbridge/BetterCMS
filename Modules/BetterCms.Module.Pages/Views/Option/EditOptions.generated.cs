@@ -101,7 +101,7 @@ WriteLiteral("\r\n");
                     },
                                         
 //                new OptionValueEditableGridColumn(PagesGlobalization.Options_OptionDefaultValueColumn, "defaultValue", "customOptionDefaultTitle")
-                new OptionValueEditableGridColumn(PagesGlobalization.Options_OptionDefaultValueColumn, "displayValue", "customOptionDefaultTitle")
+                new OptionValueEditableGridColumn(PagesGlobalization.Options_OptionDefaultValueColumn, "defaultValueBinding", "customOptionDefaultTitle")
                     {
                         HeaderAttributes = "style=\"width: 250px;\"",
                         HiddenFieldName = "Options[{0}].OptionDefaultValue"

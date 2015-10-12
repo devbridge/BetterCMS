@@ -7,9 +7,9 @@ using BetterModules.Core.Models;
 namespace BetterCms.Module.Root.Models
 {
     [Serializable]
-    public class ContentOptionTranslation : EquatableEntity<ContentOptionTranslation>, IOptionTranslationEntity
+    public class ChildContentOptionTranslation : EquatableEntity<ChildContentOptionTranslation>, IOptionTranslationEntity
     {
-        public virtual ContentOption ContentOption { get; set; }
+        public virtual ChildContentOption ChildContentOption { get; set; }
 
         public virtual Language Language { get; set; }
 
@@ -33,13 +33,7 @@ namespace BetterCms.Module.Root.Models
             {
                 return Language.Id.ToString();
             }
-//            set
-//            {
-//                throw new NotImplementedException();
-//            }
         }
-
-
 
         /// <summary>
         /// Returns a <see cref="System.String" /> that represents this instance.
@@ -49,7 +43,7 @@ namespace BetterCms.Module.Root.Models
         /// </returns>
         public override string ToString()
         {
-            return string.Format("{0}, ContentOption: {1}, Language: {2}, Value: {3}", base.ToString(), ContentOption, Language, Value);
+            return string.Format("{0}, ChildContentOption: {1}, Language: {2}, Value: {3}", base.ToString(), ChildContentOption, Language, Value);
         }
 
         ILanguage IOptionTranslationEntity.Language
@@ -68,11 +62,11 @@ namespace BetterCms.Module.Root.Models
         {
             get
             {
-                return ContentOption;
+                return ChildContentOption;
             }
             set
             {
-                ContentOption = (ContentOption)value;
+                ChildContentOption = (ChildContentOption)value;
             }
         }
     }

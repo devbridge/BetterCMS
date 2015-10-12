@@ -11,7 +11,7 @@ using BetterModules.Core.Models;
 namespace BetterCms.Module.Root.Models
 {
     [Serializable]
-    public class ContentOption : EquatableEntity<ContentOption>, IDeletableOption<Content>, IMultilangualOption
+    public class ContentOption : EquatableEntity<ContentOption>, IDeletableOption<Content>, IMultilingualOption
     {
         public ContentOption()
         {
@@ -33,7 +33,7 @@ namespace BetterCms.Module.Root.Models
 
         public virtual IList<ContentOptionTranslation> Translations { get; set; }
 
-        IList<IOptionTranslation> IMultilangualOption.Translations
+        IList<IOptionTranslation> IMultilingualOption.Translations
         {
             get
             {
