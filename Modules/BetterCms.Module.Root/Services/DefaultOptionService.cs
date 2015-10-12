@@ -171,6 +171,25 @@ namespace BetterCms.Module.Root.Services
                         }
                         optionModels.Add(optionValueViewModel);
                     }
+                    else if (cmsConfiguration.EnableMultilanguage && option is IMultilingualOption)
+                    {
+                        var optionModel = optionModels.First(f => f.OptionKey.Equals(option.Key.Trim(), StringComparison.OrdinalIgnoreCase));
+                        var multiLangOpt = option as IMultilingualOption;
+                        var translations = new List<OptionTranslationViewModel>();
+                        if (multiLangOpt.Translations != null)
+                        {
+                            foreach (var optionTranslation in multiLangOpt.Translations)
+                            {
+                                var translation = new OptionTranslationViewModel
+                                {
+                                    LanguageId = optionTranslation.LanguageId,
+                                    OptionValue = optionTranslation.Value
+                                };
+                                translations.Add(translation);
+                            }
+                        }
+                        optionModel.Translations = translations;
+                    }
                 }
             }
 
