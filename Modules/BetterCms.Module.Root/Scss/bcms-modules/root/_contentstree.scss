@@ -55,6 +55,15 @@ $contents-tree-controls: (
         }
     }
 
+    //&-content-header {
+    //    &:hover {
+    //        .bcms-tree-controls {
+    //            opacity: 1;
+    //            visibility: visible;
+    //        }
+    //    }
+    //}
+
     &-content {
         @include transition(background-color 150ms);
         background-color: $white;
@@ -64,6 +73,13 @@ $contents-tree-controls: (
         min-height: 50px;
         padding: 15px 15px 15px 30px;
         position: relative;
+
+        &:hover {
+            .bcms-tree-controls {
+                opacity: 1;
+                visibility: visible;
+            }
+        }
     }
 }
 
@@ -84,20 +100,20 @@ $contents-tree-controls: (
 }
 
 .bcms-contents-hover {
-    background-color: #f5f5f5;
+    background-color: $gray-l30;
 }
 
 //.bcms-contents-hover > div > .bcms-tree-controls {
 //    opacity: 1;
 //    visibility: visible;
 //}
-
+//
 .bcms-tree-controls {
     cursor: pointer;
     float: right;
-    //opacity: 0;
+    opacity: 0;
     transition: all 150ms ease;
-    //visibility: hidden;
+    visibility: hidden;
 }
 
 .bcms-tree-controls {
