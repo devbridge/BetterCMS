@@ -166,9 +166,8 @@ namespace BetterCms.Module.MediaManager.Services
 
         private void TrashFiles(IEnumerable<Media> filesToTrash, bool deleteFoldersAndSubMedias)
         {
-
             unitOfWork.BeginTransaction();
-            var trashFolder = GetContentRoot("~/trash");
+            var trashFolder = Path.Combine(GetContentRoot(configuration.Storage.ContentRoot), "trash");
             // in case of exception store moved files and restore them
             var movedFilesDic = new Dictionary<Uri, Uri>();
             try
