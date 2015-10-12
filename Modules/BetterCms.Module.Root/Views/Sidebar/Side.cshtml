@@ -2,12 +2,16 @@
 @using BetterCms.Module.Root.Content.Resources
 @using BetterCms.Module.Root.Mvc
 @model BetterCms.Module.Root.ViewModels.PageProjectionsViewModel
-<div id="bcms-sidemenu-handle">
-    <div title="@RootGlobalization.Sidebar_OpenShowTitle" id="bcms-sidemenu-hide">
+
+<div class="bcms-sidemenu-handle" id="bcms-sidemenu-handle">
+    <div class="bcms-sidemenu-toggler" id="bcms-sidemenu-hide" title="@RootGlobalization.Sidebar_OpenShowTitle">
         <div class="bcms-sidemenu-openclosearrow">@RootGlobalization.Sidebar_Hide</div>
     </div>
     <div class="bcms-sidemenu-status">
-        <div title="@RootGlobalization.Sidebar_EditOnOffTitle" id="bcms-sidemenu-switch">&nbsp;</div>
+        <div class="bcms-sidemenu-switch" id="bcms-sidemenu-switch" title="@RootGlobalization.Sidebar_EditOnOffTitle">
+            <div class="bcms-sidemenu-on">On</div>
+            <div class="bcms-sidemenu-off">Off</div>
+        </div>
         @foreach (var projection in Model.Projections)
         {
             var renderSeparator = true;
@@ -23,5 +27,5 @@
             projection.Render(Model.Page, (ViewContext.Controller as CmsControllerBase).SecurityService, Html);
         }
     </div>
-    <div title="@RootGlobalization.Sidebar_DragTitle" id="bcms-sidemenu-draghandle">&nbsp;</div>
+    <div class="bcms-sidemenu-drag-handle" id="bcms-sidemenu-draghandle" title="@RootGlobalization.Sidebar_DragTitle">&nbsp;</div>
 </div>

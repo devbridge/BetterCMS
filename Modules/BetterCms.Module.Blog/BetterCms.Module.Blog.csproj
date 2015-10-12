@@ -310,9 +310,6 @@
     <EmbeddedResource Include="Models\Migrations\Migration201502101139.sqlserver.sql" />
     <EmbeddedResource Include="Content\Styles\bcms.blog.css" />
     <EmbeddedResource Include="Content\Styles\bcms.blog.min.css" />
-    <Content Include="Scripts\bcms.blog.min.js">
-      <DependentUpon>bcms.blog.js</DependentUpon>
-    </Content>
     <Content Include="web.config" />
   </ItemGroup>
   <ItemGroup>
@@ -346,9 +343,6 @@
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Scripts\bcms.blog.min.js.map">
-      <DependentUpon>bcms.blog.min.js</DependentUpon>
-    </Content>
     <None Include="Views\Author\Partial\ImageCell.cshtml">
       <Generator>RazorGenerator</Generator>
       <LastGenOutput>ImageCell.generated.cs</LastGenOutput>

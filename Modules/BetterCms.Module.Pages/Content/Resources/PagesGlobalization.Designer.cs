@@ -178,7 +178,7 @@ namespace BetterCms.Module.Pages.Content.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to &lt;b&gt;The layout of this page is based on a template.&lt;/b&gt; Select a template from options below. If you need an additional template contact your system administrator to create a custom template..
+        ///   Looks up a localized string similar to &lt;b&gt;The layout of this page is based on a template.&lt;/b&gt; Select a template from options below. If you need an additional template contact your system administrator to create a custom template..
         /// </summary>
         public static string AddNewPage_Template_InfoMessage_Text {
             get {
@@ -1240,6 +1240,15 @@ namespace BetterCms.Module.Pages.Content.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Javascript &amp; CSS.
+        /// </summary>
+        public static string EditPageContent_AdvancedOptionsTab_Title {
+            get {
+                return ResourceManager.GetString("EditPageContent_AdvancedOptionsTab_Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to This is DRAFT version of the content. This copy currently is not live..
         /// </summary>
         public static string EditPageContent_Messages_DraftStatusWarnMessage {
@@ -2212,20 +2221,20 @@ namespace BetterCms.Module.Pages.Content.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Enable Custom CSS (If not Enabled, then &lt;b&gt;CSS&lt;/b&gt; will not be added to a Page).
+        ///   Looks up a localized string similar to Enable Custom CSS (If not Enabled, &lt;b&gt;CSS&lt;/b&gt; will not be added to a Page).
         /// </summary>
-        public static string HtmlContent_EnableCustomCss_Title {
+        public static string HtmlContent_RenderCustomCss_Title {
             get {
-                return ResourceManager.GetString("HtmlContent_EnableCustomCss_Title", resourceCulture);
+                return ResourceManager.GetString("HtmlContent_RenderCustomCss_Title", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Enable Custom JavaScript (If not Enabled, then &lt;b&gt;JavaScript&lt;/b&gt; will not be added to a Page).
+        ///   Looks up a localized string similar to Enable Custom JavaScript (If not Enabled, &lt;b&gt;JavaScript&lt;/b&gt; will not be added to a Page).
         /// </summary>
-        public static string HtmlContent_EnableCustomJs_Title {
+        public static string HtmlContent_RenderCustomJs_Title {
             get {
-                return ResourceManager.GetString("HtmlContent_EnableCustomJs_Title", resourceCulture);
+                return ResourceManager.GetString("HtmlContent_RenderCustomJs_Title", resourceCulture);
             }
         }
         
@@ -2320,29 +2329,29 @@ namespace BetterCms.Module.Pages.Content.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Custom CSS (If not Enabled, then &lt;b&gt;CSS&lt;/b&gt; will not be added to a Page).
+        ///   Looks up a localized string similar to Render Custom CSS (If not Enabled, &lt;b&gt;CSS&lt;/b&gt; will not be added to the Page).
         /// </summary>
-        public static string HtmlContentWidget_EnableCustomCSS_Title {
+        public static string HtmlContentWidget_RenderCustomCSS_Title {
             get {
-                return ResourceManager.GetString("HtmlContentWidget_EnableCustomCSS_Title", resourceCulture);
+                return ResourceManager.GetString("HtmlContentWidget_RenderCustomCSS_Title", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Custom HTML (If not Enabled, then &lt;b&gt;HTML&lt;/b&gt; will not be added to a Page).
+        ///   Looks up a localized string similar to Render HTML (If not Enabled, &lt;b&gt;HTML&lt;/b&gt; will not be added to the Page).
         /// </summary>
-        public static string HtmlContentWidget_EnableCustomHTML_Title {
+        public static string HtmlContentWidget_RenderCustomHTML_Title {
             get {
-                return ResourceManager.GetString("HtmlContentWidget_EnableCustomHTML_Title", resourceCulture);
+                return ResourceManager.GetString("HtmlContentWidget_RenderCustomHTML_Title", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Custom JavaScript (If not Enabled, then &lt;b&gt;JavaScript&lt;/b&gt; will not be added to a Page).
+        ///   Looks up a localized string similar to Render Custom JavaScript (If not Enabled, &lt;b&gt;JavaScript&lt;/b&gt; will not be added to the Page).
         /// </summary>
-        public static string HtmlContentWidget_EnableCustomJS_Title {
+        public static string HtmlContentWidget_RenderCustomJS_Title {
             get {
-                return ResourceManager.GetString("HtmlContentWidget_EnableCustomJS_Title", resourceCulture);
+                return ResourceManager.GetString("HtmlContentWidget_RenderCustomJS_Title", resourceCulture);
             }
         }
         
@@ -2887,7 +2896,7 @@ namespace BetterCms.Module.Pages.Content.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Delete this page.
+        ///   Looks up a localized string similar to Delete page.
         /// </summary>
         public static string Sidebar_DeletePageButtonTitle {
             get {

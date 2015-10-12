@@ -213,10 +213,10 @@ namespace BetterCms.Module.Pages.Services
 
             content.Name = request.Name;
             content.Html = request.PageContent ?? string.Empty;
-            content.UseHtml = !string.IsNullOrEmpty(request.PageContent);
-            content.UseCustomCss = !string.IsNullOrEmpty(request.CustomCSS);
+            content.UseHtml = request.EnableCustomHtml;
+            content.UseCustomCss = request.EnableCustomCSS;
             content.CustomCss = request.CustomCSS;
-            content.UseCustomJs = !string.IsNullOrEmpty(request.CustomJS);
+            content.UseCustomJs = request.EnableCustomJS;
             content.CustomJs = request.CustomJS;
             content.Version = request.Version;
             content.EditInSourceMode = request.EditInSourceMode;

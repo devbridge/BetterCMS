@@ -13,6 +13,7 @@ namespace ASP
 {
     using System;
     using System.Collections.Generic;
+    using System.Globalization;
     using System.IO;
     using System.Linq;
     using System.Net;
@@ -54,7 +55,7 @@ namespace ASP
         }
         public override void Execute()
         {
-WriteLiteral("\r\n");
+WriteLiteral("\n");
 
             
             #line 6 "..\..\Views\Shared\BaseLayout.cshtml"
@@ -64,7 +65,7 @@ WriteLiteral("\r\n");
             
             #line default
             #line hidden
-WriteLiteral("\r\n\r\n");
+WriteLiteral("\n\n");
 
             
             #line 10 "..\..\Views\Shared\BaseLayout.cshtml"
@@ -103,7 +104,7 @@ Write(Html.Partial("~/Areas/bcms-root/Views/Shared/Partial/SupportJavascript.csh
             
             #line default
             #line hidden
-WriteLiteral("\r\n");
+WriteLiteral("\n");
 
             
             #line 16 "..\..\Views\Shared\BaseLayout.cshtml"
@@ -112,7 +113,7 @@ Write(RenderBody());
             
             #line default
             #line hidden
-WriteLiteral("\r\n\r\n");
+WriteLiteral("\n\n");
 
             
             #line 18 "..\..\Views\Shared\BaseLayout.cshtml"
@@ -137,11 +138,11 @@ Write(Html.Partial("~/Areas/bcms-root/Views/Shared/Partial/MasterPagesPath.cshtm
             
             #line default
             #line hidden
-WriteLiteral("\r\n");
+WriteLiteral("\n");
 
 DefineSection("CmsMetaTitle", () => {
 
-WriteLiteral("\r\n    <title>");
+WriteLiteral("\n    <title>");
 
             
             #line 24 "..\..\Views\Shared\BaseLayout.cshtml"
@@ -150,15 +151,15 @@ WriteLiteral("\r\n    <title>");
             
             #line default
             #line hidden
-WriteLiteral("</title>\r\n");
+WriteLiteral("</title>\n");
 
 });
 
-WriteLiteral("\r\n");
+WriteLiteral("\n");
 
 DefineSection("CmsMeta", () => {
 
-WriteLiteral("    \r\n");
+WriteLiteral("    \n");
 
             
             #line 28 "..\..\Views\Shared\BaseLayout.cshtml"
@@ -183,13 +184,13 @@ WriteLiteral("    \r\n");
 
 DefineSection("CmsHeadStyles", () => {
 
-WriteLiteral("   \r\n    <style");
+WriteLiteral("   \n    <style");
 
 WriteLiteral(" type=\"text/css\"");
 
-WriteLiteral(">\r\n        .bcms-clearfix:after {\r\n            content: \"\";\r\n            visibili" +
-"ty: hidden;\r\n            display: block;\r\n            height: 0;\r\n            cl" +
-"ear: both;\r\n        }\r\n    </style>\r\n");
+WriteLiteral(">\n        .bcms-clearfix:after {\n            content: \"\";\n            visibility:" +
+" hidden;\n            display: block;\n            height: 0;\n            clear: b" +
+"oth;\n        }\n    </style>\n");
 
             
             #line 46 "..\..\Views\Shared\BaseLayout.cshtml"
@@ -201,35 +202,19 @@ WriteLiteral(">\r\n        .bcms-clearfix:after {\r\n            content: \"\";\
             #line 46 "..\..\Views\Shared\BaseLayout.cshtml"
      if (Model.CanManageContent)
     {
-
-            
-            #line default
-            #line hidden
-WriteLiteral("        <link");
-
-WriteLiteral(" href=\'//fonts.googleapis.com/css?family=Open+Sans:400italic,700italic,400,700\'");
-
-WriteLiteral(" rel=\'stylesheet\'");
-
-WriteLiteral(" type=\'text/css\'");
-
-WriteLiteral(" async />\r\n");
-
-            
-            #line 49 "..\..\Views\Shared\BaseLayout.cshtml"
         
             
             #line default
             #line hidden
             
-            #line 49 "..\..\Views\Shared\BaseLayout.cshtml"
+            #line 48 "..\..\Views\Shared\BaseLayout.cshtml"
    Write(Html.Action("RenderStyleSheetIncludes", "Rendering"));
 
             
             #line default
             #line hidden
             
-            #line 49 "..\..\Views\Shared\BaseLayout.cshtml"
+            #line 48 "..\..\Views\Shared\BaseLayout.cshtml"
                                                              
     }
 
@@ -238,31 +223,31 @@ WriteLiteral(" async />\r\n");
             #line hidden
 });
 
-WriteLiteral("\r\n");
+WriteLiteral("\n");
 
 DefineSection("CmsHeadScripts", () => {
 
-WriteLiteral("\r\n");
+WriteLiteral("\n");
 
 WriteLiteral("    ");
 
             
-            #line 54 "..\..\Views\Shared\BaseLayout.cshtml"
+            #line 53 "..\..\Views\Shared\BaseLayout.cshtml"
 Write(RenderSection("CmsHeadScripts", false));
 
             
             #line default
             #line hidden
-WriteLiteral("\r\n\r\n");
+WriteLiteral("\n\n");
 
             
-            #line 56 "..\..\Views\Shared\BaseLayout.cshtml"
+            #line 55 "..\..\Views\Shared\BaseLayout.cshtml"
     
             
             #line default
             #line hidden
             
-            #line 56 "..\..\Views\Shared\BaseLayout.cshtml"
+            #line 55 "..\..\Views\Shared\BaseLayout.cshtml"
      if (Model.CanManageContent)
     {
 
@@ -304,36 +289,36 @@ WriteLiteral(@">
                 loadBetterCmsScriptAsync('");
 
             
-            #line 86 "..\..\Views\Shared\BaseLayout.cshtml"
+            #line 85 "..\..\Views\Shared\BaseLayout.cshtml"
                                      Write(Model.RequireJsPath);
 
             
             #line default
             #line hidden
-WriteLiteral("\', function() {\r\n                    loadBetterCmsScriptAsync(\'");
+WriteLiteral("\', function() {\n                    loadBetterCmsScriptAsync(\'");
 
             
-            #line 87 "..\..\Views\Shared\BaseLayout.cshtml"
+            #line 86 "..\..\Views\Shared\BaseLayout.cshtml"
                                          Write(Model.MainJsPath);
 
             
             #line default
             #line hidden
-WriteLiteral("\');\r\n                });\r\n            })();\r\n        </script>\r\n");
+WriteLiteral("\');\n                });\n            })();\n        </script>\n");
 
-WriteLiteral("        <!--[if lt IE 9]>\r\n            <script src=\"");
+WriteLiteral("        <!--[if lt IE 9]>\n            <script src=\"");
 
             
-            #line 92 "..\..\Views\Shared\BaseLayout.cshtml"
+            #line 91 "..\..\Views\Shared\BaseLayout.cshtml"
                     Write(Model.Html5ShivJsPath);
 
             
             #line default
             #line hidden
-WriteLiteral("\"></script>\r\n        <![endif]-->\r\n");
+WriteLiteral("\"></script>\n        <![endif]-->\n");
 
             
-            #line 94 "..\..\Views\Shared\BaseLayout.cshtml"
+            #line 93 "..\..\Views\Shared\BaseLayout.cshtml"
     }
 
             
@@ -341,20 +326,20 @@ WriteLiteral("\"></script>\r\n        <![endif]-->\r\n");
             #line hidden
 });
 
-WriteLiteral("\r\n");
+WriteLiteral("\n");
 
 DefineSection("CmsScripts", () => {
 
-WriteLiteral("\r\n");
+WriteLiteral("\n");
 
             
-            #line 98 "..\..\Views\Shared\BaseLayout.cshtml"
+            #line 97 "..\..\Views\Shared\BaseLayout.cshtml"
     
             
             #line default
             #line hidden
             
-            #line 98 "..\..\Views\Shared\BaseLayout.cshtml"
+            #line 97 "..\..\Views\Shared\BaseLayout.cshtml"
      if (Model.CanManageContent)
     {
         
@@ -362,55 +347,69 @@ WriteLiteral("\r\n");
             #line default
             #line hidden
             
-            #line 100 "..\..\Views\Shared\BaseLayout.cshtml"
+            #line 99 "..\..\Views\Shared\BaseLayout.cshtml"
    Write(Html.Partial("Partial/Region"));
 
             
             #line default
             #line hidden
             
-            #line 100 "..\..\Views\Shared\BaseLayout.cshtml"
+            #line 99 "..\..\Views\Shared\BaseLayout.cshtml"
                                        
         
             
             #line default
             #line hidden
             
-            #line 101 "..\..\Views\Shared\BaseLayout.cshtml"
+            #line 100 "..\..\Views\Shared\BaseLayout.cshtml"
    Write(Html.Partial("Partial/ContentOverlay"));
 
             
             #line default
             #line hidden
             
-            #line 101 "..\..\Views\Shared\BaseLayout.cshtml"
+            #line 100 "..\..\Views\Shared\BaseLayout.cshtml"
                                                
         
             
             #line default
             #line hidden
             
-            #line 102 "..\..\Views\Shared\BaseLayout.cshtml"
+            #line 101 "..\..\Views\Shared\BaseLayout.cshtml"
    Write(Html.Action("Container", "Sidebar", Model));
 
             
             #line default
             #line hidden
             
-            #line 102 "..\..\Views\Shared\BaseLayout.cshtml"
+            #line 101 "..\..\Views\Shared\BaseLayout.cshtml"
                                                    
         
             
             #line default
             #line hidden
             
-            #line 103 "..\..\Views\Shared\BaseLayout.cshtml"
+            #line 102 "..\..\Views\Shared\BaseLayout.cshtml"
    Write(Html.Partial("Partial/Modal"));
 
             
             #line default
             #line hidden
             
+            #line 102 "..\..\Views\Shared\BaseLayout.cshtml"
+                                      
+        
+            
+            #line default
+            #line hidden
+            
+            #line 103 "..\..\Views\Shared\BaseLayout.cshtml"
+   Write(Html.Partial("Partial/Alert"));
+
+            
+            #line default
+            #line hidden
+            
             #line 103 "..\..\Views\Shared\BaseLayout.cshtml"
                                       
         
@@ -419,113 +418,99 @@ WriteLiteral("\r\n");
             #line hidden
             
             #line 104 "..\..\Views\Shared\BaseLayout.cshtml"
-   Write(Html.Partial("Partial/Alert"));
-
-            
-            #line default
-            #line hidden
-            
-            #line 104 "..\..\Views\Shared\BaseLayout.cshtml"
-                                      
-        
-            
-            #line default
-            #line hidden
-            
-            #line 105 "..\..\Views\Shared\BaseLayout.cshtml"
    Write(Html.Partial("Partial/Confirm"));
 
             
             #line default
             #line hidden
             
-            #line 105 "..\..\Views\Shared\BaseLayout.cshtml"
+            #line 104 "..\..\Views\Shared\BaseLayout.cshtml"
                                         
         
             
             #line default
             #line hidden
             
-            #line 106 "..\..\Views\Shared\BaseLayout.cshtml"
+            #line 105 "..\..\Views\Shared\BaseLayout.cshtml"
    Write(Html.Partial("Partial/Info"));
 
             
             #line default
             #line hidden
             
-            #line 106 "..\..\Views\Shared\BaseLayout.cshtml"
+            #line 105 "..\..\Views\Shared\BaseLayout.cshtml"
                                      
         
             
             #line default
             #line hidden
             
-            #line 107 "..\..\Views\Shared\BaseLayout.cshtml"
+            #line 106 "..\..\Views\Shared\BaseLayout.cshtml"
    Write(Html.Partial("Partial/Tooltip"));
 
             
             #line default
             #line hidden
             
-            #line 107 "..\..\Views\Shared\BaseLayout.cshtml"
+            #line 106 "..\..\Views\Shared\BaseLayout.cshtml"
                                         
         
             
             #line default
             #line hidden
             
-            #line 108 "..\..\Views\Shared\BaseLayout.cshtml"
+            #line 107 "..\..\Views\Shared\BaseLayout.cshtml"
    Write(Html.Partial("Partial/ImagePreview"));
 
             
             #line default
             #line hidden
             
-            #line 108 "..\..\Views\Shared\BaseLayout.cshtml"
+            #line 107 "..\..\Views\Shared\BaseLayout.cshtml"
                                              
         
             
             #line default
             #line hidden
             
-            #line 109 "..\..\Views\Shared\BaseLayout.cshtml"
+            #line 108 "..\..\Views\Shared\BaseLayout.cshtml"
    Write(Html.Partial("Partial/SiteSettingTab"));
 
             
             #line default
             #line hidden
             
-            #line 109 "..\..\Views\Shared\BaseLayout.cshtml"
+            #line 108 "..\..\Views\Shared\BaseLayout.cshtml"
                                                
         
             
             #line default
             #line hidden
             
-            #line 110 "..\..\Views\Shared\BaseLayout.cshtml"
+            #line 109 "..\..\Views\Shared\BaseLayout.cshtml"
    Write(Html.Partial("Partial/ContentsTree"));
 
             
             #line default
             #line hidden
             
-            #line 110 "..\..\Views\Shared\BaseLayout.cshtml"
+            #line 109 "..\..\Views\Shared\BaseLayout.cshtml"
                                              
     }
 
             
             #line default
             #line hidden
-WriteLiteral("\r\n");
+WriteLiteral("\n");
 
             
-            #line 113 "..\..\Views\Shared\BaseLayout.cshtml"
+            #line 112 "..\..\Views\Shared\BaseLayout.cshtml"
     
             
             #line default
             #line hidden
             
-            #line 113 "..\..\Views\Shared\BaseLayout.cshtml"
+            #line 112 "..\..\Views\Shared\BaseLayout.cshtml"
      if (Model.JavaScripts != null)
     {
         
@@ -533,14 +518,14 @@ WriteLiteral("\r\n");
             #line default
             #line hidden
             
-            #line 115 "..\..\Views\Shared\BaseLayout.cshtml"
+            #line 114 "..\..\Views\Shared\BaseLayout.cshtml"
    Write(Html.RenderPageCustomJavaScript(Model.JavaScripts));
 
             
             #line default
             #line hidden
             
-            #line 115 "..\..\Views\Shared\BaseLayout.cshtml"
+            #line 114 "..\..\Views\Shared\BaseLayout.cshtml"
                                                            
     }
 
@@ -549,31 +534,31 @@ WriteLiteral("\r\n");
             #line hidden
 });
 
-WriteLiteral("\r\n");
+WriteLiteral("\n");
 
 DefineSection("Styles", () => {
 
-WriteLiteral("\r\n");
+WriteLiteral("\n");
 
 WriteLiteral("    ");
 
             
-            #line 120 "..\..\Views\Shared\BaseLayout.cshtml"
+            #line 119 "..\..\Views\Shared\BaseLayout.cshtml"
 Write(RenderSection("Styles", false));
 
             
             #line default
             #line hidden
-WriteLiteral("\r\n\r\n");
+WriteLiteral("\n\n");
 
             
-            #line 122 "..\..\Views\Shared\BaseLayout.cshtml"
+            #line 121 "..\..\Views\Shared\BaseLayout.cshtml"
     
             
             #line default
             #line hidden
             
-            #line 122 "..\..\Views\Shared\BaseLayout.cshtml"
+            #line 121 "..\..\Views\Shared\BaseLayout.cshtml"
      if (Model.Stylesheets != null)
     {
         
@@ -581,14 +566,14 @@ WriteLiteral("\r\n\r\n");
             #line default
             #line hidden
             
-            #line 124 "..\..\Views\Shared\BaseLayout.cshtml"
+            #line 123 "..\..\Views\Shared\BaseLayout.cshtml"
    Write(Html.RenderPageCustomCss(Model.Stylesheets));
 
             
             #line default
             #line hidden
             
-            #line 124 "..\..\Views\Shared\BaseLayout.cshtml"
+            #line 123 "..\..\Views\Shared\BaseLayout.cshtml"
                                                     
     }
 
@@ -599,50 +584,50 @@ WriteLiteral("\r\n\r\n");
 
 DefineSection("HeadScripts", () => {
 
-WriteLiteral("\r\n");
+WriteLiteral("\n");
 
 WriteLiteral("    ");
 
             
-            #line 128 "..\..\Views\Shared\BaseLayout.cshtml"
+            #line 127 "..\..\Views\Shared\BaseLayout.cshtml"
 Write(RenderSection("HeadScripts", false));
 
             
             #line default
             #line hidden
-WriteLiteral("\r\n");
+WriteLiteral("\n");
 
 });
 
 DefineSection("Scripts", () => {
 
-WriteLiteral("\r\n");
+WriteLiteral("\n");
 
 WriteLiteral("    ");
 
             
-            #line 131 "..\..\Views\Shared\BaseLayout.cshtml"
+            #line 130 "..\..\Views\Shared\BaseLayout.cshtml"
 Write(RenderSection("Scripts", false));
 
             
             #line default
             #line hidden
-WriteLiteral("\r\n");
+WriteLiteral("\n");
 
 });
 
 DefineSection("DoctypeTag", () => {
 
-WriteLiteral(" \r\n");
+WriteLiteral(" \n");
 
             
-            #line 134 "..\..\Views\Shared\BaseLayout.cshtml"
+            #line 133 "..\..\Views\Shared\BaseLayout.cshtml"
     
             
             #line default
             #line hidden
             
-            #line 134 "..\..\Views\Shared\BaseLayout.cshtml"
+            #line 133 "..\..\Views\Shared\BaseLayout.cshtml"
      if (IsSectionDefined("DoctypeTag"))
     {
         
@@ -650,14 +635,14 @@ WriteLiteral(" \r\n");
             #line default
             #line hidden
             
-            #line 136 "..\..\Views\Shared\BaseLayout.cshtml"
+            #line 135 "..\..\Views\Shared\BaseLayout.cshtml"
    Write(RenderSection("DoctypeTag", false));
 
             
             #line default
             #line hidden
             
-            #line 136 "..\..\Views\Shared\BaseLayout.cshtml"
+            #line 135 "..\..\Views\Shared\BaseLayout.cshtml"
                                            
     }
     else
@@ -668,10 +653,10 @@ WriteLiteral(" \r\n");
             #line hidden
 WriteLiteral("        ");
 
-WriteLiteral("<!DOCTYPE html>\r\n");
+WriteLiteral("<!DOCTYPE html>\n");
 
             
-            #line 141 "..\..\Views\Shared\BaseLayout.cshtml"
+            #line 140 "..\..\Views\Shared\BaseLayout.cshtml"
     }
 
             
@@ -681,16 +666,16 @@ WriteLiteral("<!DOCTYPE html>\r\n");
 
 DefineSection("HtmlTag", () => {
 
-WriteLiteral(" \r\n");
+WriteLiteral(" \n");
 
             
-            #line 144 "..\..\Views\Shared\BaseLayout.cshtml"
+            #line 143 "..\..\Views\Shared\BaseLayout.cshtml"
     
             
             #line default
             #line hidden
             
-            #line 144 "..\..\Views\Shared\BaseLayout.cshtml"
+            #line 143 "..\..\Views\Shared\BaseLayout.cshtml"
      if (IsSectionDefined("HtmlTag"))
     {
         
@@ -698,14 +683,14 @@ WriteLiteral(" \r\n");
             #line default
             #line hidden
             
-            #line 146 "..\..\Views\Shared\BaseLayout.cshtml"
+            #line 145 "..\..\Views\Shared\BaseLayout.cshtml"
    Write(RenderSection("HtmlTag", false));
 
             
             #line default
             #line hidden
             
-            #line 146 "..\..\Views\Shared\BaseLayout.cshtml"
+            #line 145 "..\..\Views\Shared\BaseLayout.cshtml"
                                         
     }
     else
@@ -716,10 +701,10 @@ WriteLiteral(" \r\n");
             #line hidden
 WriteLiteral("        ");
 
-WriteLiteral("<html>\r\n");
+WriteLiteral("<html>\n");
 
             
-            #line 151 "..\..\Views\Shared\BaseLayout.cshtml"
+            #line 150 "..\..\Views\Shared\BaseLayout.cshtml"
     }
 
             
@@ -729,16 +714,16 @@ WriteLiteral("<html>\r\n");
 
 DefineSection("BodyTag", () => {
 
-WriteLiteral(" \r\n");
+WriteLiteral(" \n");
 
             
-            #line 154 "..\..\Views\Shared\BaseLayout.cshtml"
+            #line 153 "..\..\Views\Shared\BaseLayout.cshtml"
     
             
             #line default
             #line hidden
             
-            #line 154 "..\..\Views\Shared\BaseLayout.cshtml"
+            #line 153 "..\..\Views\Shared\BaseLayout.cshtml"
      if (IsSectionDefined("BodyTag"))
     {
         
@@ -746,14 +731,14 @@ WriteLiteral(" \r\n");
             #line default
             #line hidden
             
-            #line 156 "..\..\Views\Shared\BaseLayout.cshtml"
+            #line 155 "..\..\Views\Shared\BaseLayout.cshtml"
    Write(RenderSection("BodyTag", false));
 
             
             #line default
             #line hidden
             
-            #line 156 "..\..\Views\Shared\BaseLayout.cshtml"
+            #line 155 "..\..\Views\Shared\BaseLayout.cshtml"
                                         
     }
     else
@@ -767,23 +752,23 @@ WriteLiteral("        ");
 WriteLiteral("<body ");
 
             
-            #line 160 "..\..\Views\Shared\BaseLayout.cshtml"
+            #line 159 "..\..\Views\Shared\BaseLayout.cshtml"
            Write(Html.RenderBodyAttributes());
 
             
             #line default
             #line hidden
             
-            #line 160 "..\..\Views\Shared\BaseLayout.cshtml"
+            #line 159 "..\..\Views\Shared\BaseLayout.cshtml"
                                        Write(RenderSection("BodyAttributes", false));
 
             
             #line default
             #line hidden
-WriteLiteral(">\r\n");
+WriteLiteral(">\n");
 
             
-            #line 161 "..\..\Views\Shared\BaseLayout.cshtml"
+            #line 160 "..\..\Views\Shared\BaseLayout.cshtml"
     }
 
             

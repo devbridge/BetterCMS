@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Linq;
+using System.Web;
 
 using BetterCms.Core.DataContracts.Enums;
 using BetterCms.Core.Exceptions.Mvc;
@@ -9,6 +10,7 @@ using BetterCms.Module.Pages.Accessors;
 using BetterCms.Module.Pages.Content.Resources;
 using BetterCms.Module.Pages.Helpers;
 using BetterCms.Module.Pages.Models;
+using BetterCms.Module.Pages.Models.Enums;
 using BetterCms.Module.Pages.Services;
 using BetterCms.Module.Pages.ViewModels.Content;
 
@@ -127,10 +129,39 @@ namespace BetterCms.Module.Pages.Command.Content.SavePageHtmlContent
                     Html = model.PageContent ?? string.Empty,
                     UseCustomCss = model.EnabledCustomCss,
                     CustomCss = model.CustomCss,
-                    UseCustomJs = model.EanbledCustomJs,
+                    UseCustomJs = model.EnabledCustomJs,
                     CustomJs = model.CustomJs,
-                    EditInSourceMode = model.EditInSourceMode
+                    EditInSourceMode = model.EditInSourceMode,
+                    ContentTextMode = ContentTextMode.Html
                 };
+
+            if (model.ContentTextMode == ContentTextMode.Markdown)
+            {
+                if (!string.IsNullOrWhiteSpace(model.PageContent))
+                {
+                    contentToSave.Html = MarkdownConverter.ToHtml(model.PageContent);
+                }
+                else
+                {
+                    contentToSave.Html = string.Empty;
+                }
+                contentToSave.ContentTextMode = ContentTextMode.Markdown;
+                contentToSave.OriginalText = model.PageContent;
+            }
+            
+            if (model.ContentTextMode == ContentTextMode.SimpleText)
+            {
+                if (!string.IsNullOrWhiteSpace(model.PageContent))
+                {
+                    contentToSave.Html = HttpUtility.HtmlEncode(model.PageContent);
+                }
+                else
+                {
+                    contentToSave.Html = string.Empty;
+                }
+                contentToSave.ContentTextMode = ContentTextMode.SimpleText;
+                contentToSave.OriginalText = model.PageContent;
+            }
 
             // Preserve content if user is not authorized to change it.
             if (!SecurityService.IsAuthorized(RootModuleConstants.UserRoles.EditContent) && model.Id != default(Guid))

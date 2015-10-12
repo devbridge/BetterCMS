@@ -83,7 +83,7 @@ namespace BetterCms.Module.Pages.Controllers
             var request = new GetRecentWidgetAndWidgetCategoryRequest { Filter = query };
             var model = GetCommand<GetRecentWidgetAndWidgetCategoryCommand>().ExecuteCommand(request);
 
-            return PartialView(new PageContentViewModel{ WidgetCategories = model.WidgetCategories, RecentWidgets = model.RecentWidgets});
+            return PartialView(model);
         }
 
         // TODO: remove action; update command.
@@ -128,15 +128,6 @@ namespace BetterCms.Module.Pages.Controllers
                         ParentPageContentId = parentPageContentIdentifier
                     };
             var model = GetCommand<GetInsertHtmlContentCommand>().ExecuteCommand(addRequest);
-
-            if (model != null)
-            {
-                var request = new GetRecentWidgetAndWidgetCategoryRequest();
-                var response = GetCommand<GetRecentWidgetAndWidgetCategoryCommand>().ExecuteCommand(request);
-                model.WidgetCategories = response.WidgetCategories;
-                model.RecentWidgets = response.RecentWidgets;
-            }
-
             var view = RenderView("AddPageHtmlContent", model ?? new PageContentViewModel());
 
             var result = ComboWireJson(model != null, view, model, JsonRequestBehavior.AllowGet);

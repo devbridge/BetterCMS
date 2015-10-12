@@ -1,290 +1,360 @@
 @import '../../core/variables';
 
+$control-panel-buttons: (
+                ('add', $bcms-cp-add-new, $blue-l30, $blue-l40),
+                ('clone', $bcms-cp-clone, $blue-l30, $blue-l40),
+                ('blog-add', $bcms-cp-add-new, $blue-l30, $blue-l40),
+                ('translate', $bcms-cp-translate, $blue-l30, $blue-l40),
+                ('settings', $bcms-cp-settings, $gray-l45, $gray-l46),
+                ('delete', $bcms-cp-delete, $red-l60, $red-l70)
+);
+
+$control-panel-switch-status: (
+                ('on', $bcms-cp-indicate-on),
+                ('off' $bcms-cp-indicate-off)
+);
+
+$control-panel-status: (
+                ('pubstatus', $bcms-cp-pub-ok, $bcms-cp-pub-warn),
+                ('seostatus', $bcms-cp-seo-ok, $bcms-cp-seo-warn)
+);
+//module
+.bcms-user-profile {
+    @include ellipsis();
+    background: url($bcms-cp-user) no-repeat left center;
+    box-sizing: border-box;
+    color: $white;
+    cursor: pointer;
+    float: left;
+    line-height: 26px;
+    max-width: 160px;
+    padding-left: 20px;
+}
+
+//module control panel global
+.bcms-sidemenu {
+    @include position(fixed, 100px null null -260px);
+    @include user-select();
+    background-color: $black;
+    border-radius: 0 0 2px 0;
+    color: $gray-l60;
+    font-family: $font-base-family;
+    font-size: 12px;
+    padding: 5px 5px 0 0;
+    width: 255px;
+    z-index: 2000;
+
+    &.bcms-sidemenu-right {
+        border-radius: 0 0 0 2px;
+        left: auto;
+        padding: 5px 0 0 5px;
+        right: 0;
+    }
+
+    &-header {
+        background-color: $dark;
+        border-radius: 0 2px 2px 0;
+        box-sizing: border-box;
+        float: left;
+        margin-bottom: 5px;
+        padding: 10px;
+        position: relative;
+        width: 100%;
+    }
+
+    &-body {
+        background-color: $dark;
+        border-radius: 0 2px 2px 0;
+        min-height: 190px;
+        overflow: hidden;
+        padding: 0 10px 10px;
+
+        > hr {
+            border: {
+                top: $border-hr-control-top;
+                right: 0;
+                bottom: 0;
+                left: 0;
+            }
+            float: left;
+            margin: 10px 0 0;
+            width: 100%;
+        }
+    }
+
+    &-footer {
+        height: 20px;
+        padding: 10px;
+    }
+
+    &-btn {
+        @include size(100% 32px);
+        @include add-gradient($top: $gray-l50, $bottom: $gray-l60);
+        border-radius: 2px;
+        box-shadow: 0 0 1px 1px rgba($black, .2);
+        box-sizing: border-box;
+        color: $white;
+        cursor: pointer;
+        float: left;
+        font-size: 12px;
+        line-height: 32px;
+        margin: 10px 0 0;
+        overflow: hidden;
+        padding: 0 10px;
+
+        &:active {
+            background: $gray-l60;
+            box-shadow: 0 0 2px 1px rgba($black, .2);
+        }
+    }
+}
+
+//module panel handle
+.bcms-sidemenu {
+    &-handle {
+        @include user-select();
+        @include position(absolute, 0 -50px null null);
+        background-color: $black;
+        border-radius: 0 2px 2px 0;
+        padding-top: 5px;
+        width: 50px;
+    }
+
+    &-openclosearrow {
+        background: url($bcms-cp-show) no-repeat center;
+        height: 46px;
+        margin: 0 auto 5px;
+        overflow: hidden;
+        text-indent: -999em;
+        width: 50px;
+
+        .bcms-state-open & {
+            background-image: url($bcms-cp-hide);
+        }
+    }
+
+    &-toggler {
+        cursor: pointer;
+    }
+
+    &-switch {
+        background-color: $dark;
+        border: $border-hr-control-top;
+        border-radius: 2px;
+        box-shadow: inset 0 0 6px 1px rgba($black, .7);
+        box-sizing: border-box;
+        cursor: pointer;
+        height: 62px;
+        margin: 5px auto;
+        overflow: hidden;
+        position: relative;
+        width: 32px;
+
+        @include virtual(after) {
+            @include position(absolute, 0 0 null);
+            background: url($bcms-cp-indicate-button) no-repeat center;
+            border: 1px solid #303030;
+            border-radius: 2px;
+            box-sizing: border-box;
+            height: 50%;
+            overflow: hidden;
+            width: 100%;
+
+            .bcms-on & {
+                bottom: 0;
+                top: auto;
+            }
+        }
+
+        .bcms-on & {
+            background-color: $green;
+        }
+    }
+
+    @each $name, $name-icon in $control-panel-switch-status {
+        &-#{$name} {
+            background: url($name-icon) no-repeat center;
+            height: 50%;
+            overflow: hidden;
+            text-indent: -999em;
+        }
+    }
+
+    &-separator {
+        border-top: $border-hr-control-top;
+        height: 0;
+        margin: 10px auto;
+        width: 100%;
+    }
+
+    &-status {
+        background: url($bcms-cp-texture);
+        overflow: hidden;
+        padding: 0 9px 5px;
+    }
+
+    @each $name, $icon, $warn-icon in $control-panel-status {
+        &-#{$name} {
+            @include size(21px 35px);
+            background: url($icon) no-repeat center;
+            margin: auto;
+
+            &.bcms-#{$name}-warn {
+                background-image: url($warn-icon);
+            }
+        }
+    }
+
+    &-drag-handle {
+        background: url($bcms-cp-drag-handle) no-repeat center;
+        cursor: move;
+        height: 14px;
+        margin: 5px auto;
+    }
+
+    &-position-handle {
+        background: $gray-l60 url($bcms-cp-stick-handle) no-repeat center;
+        border-radius: 2px;
+        cursor: pointer;
+        float: right;
+        height: 20px;
+        width: 24px;
+
+        .bcms-sidemenu-right & {
+            background-image: url($bcms-cp-stick-handle-right);
+            float: left;
+        }
+    }
+}
+
+//module control panel right
+.bcms-sidemenu-right {
+    .bcms-sidemenu-openclosearrow {
+        background-image: url($bcms-cp-show-right);
+    }
+
+    &.bcms-state-open {
+        .bcms-sidemenu-openclosearrow {
+            background-image: url($bcms-cp-hide-right);
+        }
+    }
+
+    .bcms-sidemenu-handle {
+        border-radius: 2px 0 0 2px;
+        left: -50px;
+        right: auto;
+    }
+
+    .bcms-sidemenu-header {
+        border-radius: 2px 0 0 2px;
+    }
+
+    .bcms-sidemenu-body {
+        border-radius: 2px 0 0 2px;
+    }
+
+    .bcms-version-number {
+        float: right;
+        margin-left: 10px;
+    }
+}
+
+.bcms-buttons-block {
+    @include clearfix();
+    float: left;
+    width: 100%;
+
+    > a {
+        color: $white;
+
+        &:hover {
+            text-decoration: none;
+        }
+    }
+
+    > .bcms-sidemenu-btn {
+        @include span(6 before);
+
+        &:first-child {
+            margin-left: 0;
+        }
+    }
+}
+
+//module control panel buttons
+div {
+    @each $name, $icon, $top-color, $bottom-color in $control-panel-buttons {
+        &.bcms-btn-#{$name} {
+            @include add-gradient($top: $top-color, $bottom: $bottom-color);
+            padding-right: 35px;
+            position: relative;
+
+            @include virtual(after) {
+                @include size(20px);
+                @include positioning($center-y: true);
+                right: 6px;
+                background: url($icon) no-repeat center;
+            }
+        }
+    }
+
+    //module control panel buttons override
+    &.bcms-btn {
+        &-settings {
+            width: 100%;
+        }
+
+        &-delete {
+            @include span(6 last);
+
+            + .bcms-btn-settings {
+                @include span(6);
+            }
+        }
+
+        &-ok {
+            padding-left: 30px;
+            position: relative;
+
+            @include virtual(before) {
+                @include size(16px);
+                @include positioning($center-y: true);
+                background: url($bcms-cp-notification-ok) no-repeat center;
+                left: 7px;
+            }
+        }
+
+        &-warn {
+            padding-left: 30px;
+            position: relative;
+
+            @include virtual(before) {
+                @include size(16px);
+                @include positioning($center-y: true);
+                background: url($bcms-cp-notification-warn) no-repeat center;
+                left: 9px;
+            }
+        }
+
+        &-logout {
+            @include add-gradient($top: $red-l60, $bottom: $red-l70);
+            border-radius: 2px;
+            box-shadow: 0 0 2px rgba($black, .3);
+            color: $white;
+            cursor: pointer;
+            float: right;
+            font-size: 11px;
+            font-weight: bold;
+            height: 26px;
+            line-height: 26px;
+            text-align: center;
+            text-transform: uppercase;
+            width: 70px;
+        }
+    }
+}
+
 .bcms-version-number {
     line-height: 21px;
     margin-right: 10px;
-}
-
-.bcms-sidemenu-right .bcms-version-number {
-    margin-left: 10px;
-    float: right;
-}
-
-hr.bcms-sidebar-separator {
-    border-style: solid none solid none;
-    border-width: 1px;
-    border-top-color: #606060;
-    border-bottom-color: #202020;
-}
-
-#bcms-sidemenu {
-    position: fixed;
-    top: 100px;
-    left: -260px;
-    background: #000000;
-    width: 255px;
-    padding: 5px 5px 5px 0;
-    z-index: 2000;
-    border-radius: 0 0 4px 0;
-}
-
-.bcms-sidemenu {
-    font-family: "Open Sans", sans-serif;
-    font-size: 12px;
-    color: #7B7B7B;
-    -moz-user-select: none;
-    -webkit-user-select: none;
-    user-select: none;
-}
-
-.bcms-sidemenu-body {
-    background: #303030;
-    padding: 15px;
-    min-height: 190px;
-}
-
-.bcms-sidemenu-body hr {
-    margin-bottom: 18px;
-}
-
-.bcms-sidemenu-footer {
-    padding: 10px 15px 5px;
-    height: 20px;
-}
-
-.bcms-sidemenu-select {
-    display: block;
-    padding: 8px 5px 8px 30px;
-    margin: 0 0 16px;
-    -webkit-appearance: button;
-    -webkit-padding-end: 30px;
-    -webkit-padding-start: 30px;
-    -webkit-user-select: none;
-    -moz-padding-start: 25px;
-    -moz-padding-end: 5px;
-    -moz-user-select: none;
-    box-shadow: 0 0 1px 1px #292929;
-    background: url('images/bcms-sidebar-select.png') no-repeat 0 0 #676767;
-    background: url('images/bcms-sidebar-select.png') no-repeat 0 0, -webkit-linear-gradient(top, #676767 0, #555555 100%);
-    background-color: #676767;
-    border: 0;
-    border-radius: 2px;
-    color: #fff;
-    cursor: pointer;
-    overflow: hidden;
-    white-space: nowrap;
-    height: 34px;
-    width: 225px;
-    font-size: 12px;
-}
-
-.bcms-sidemenu-select option {
-    background: #676767;
-}
-
-.bcms-sidemenu-select:focus {
-    outline: none;
-}
-
-select.bcms-select-published {
-    background-position: 0 -34px;
-}
-
-.bcms-sidemenu-btn {
-    padding: 0 10px;
-    margin: 0 0 16px 0;
-    height: 33px;
-    line-height: 33px;
-    font-size: 12px;
-    color: #FFFFFF;
-    cursor: pointer;
-    overflow: hidden;
-    box-shadow: 0 0 1px 1px #292929;
-    border-radius: 2px;
-    background-color: #676767;
-    background-image: -webkit-linear-gradient(top, #676767 0, #555555 100%);
-    background-image: linear-gradient(to bottom, #676767 0, #555555 100%);
-}
-
-.bcms-sidemenu-btn:active {
-    box-shadow: 0 0 2px 1px #292929;
-    background: #555;
-}
-
-div.bcms-btn-ok {
-    padding-left: 30px;
-    background: url('images/sprite-base-1.png') no-repeat left -265px #676767;
-    background: url('images/sprite-base-1.png') no-repeat left -265px, -webkit-linear-gradient(top, #676767 0, #555555 100%);
-    background: url('images/sprite-base-1.png') no-repeat left -265px, linear-gradient(to bottom, #676767 0, #555555 100%);
-}
-
-div.bcms-btn-ok:active {
-    background: url('images/sprite-base-1.png') no-repeat left -265px #555;
-}
-
-div.bcms-btn-warn {
-    padding-left: 30px;
-    background: url('images/sprite-base-1.png') no-repeat left -165px #676767;
-    background: url('images/sprite-base-1.png') no-repeat left -165px, -webkit-linear-gradient(top, #676767 0, #555555 100%);
-    background: url('images/sprite-base-1.png') no-repeat left -165px, linear-gradient(to bottom, #676767 0, #555555 100%);
-}
-
-div.bcms-btn-warn:active {
-    background: url('images/sprite-base-1.png') no-repeat left -165px #555;
-}
-
-div.bcms-btn-add {
-    position: relative;
-    padding-right: 35px;
-    margin-bottom: 20px;
-    background-color: #1892E4;
-    background-image: linear-gradient(to bottom, #1892E4 0, #0C7FC7 100%);
-}
-
-div.bcms-btn-add:active {
-    background-color: #0C7FC7;
-}
-
-div.bcms-btn-add:after {
-    content: "";
-    position: absolute;
-    right: 6px;
-    top: 50%;
-    width: 20px;
-    height: 20px;
-    margin-top: -10px;
-    background: url('images/sprite-base-1.png') no-repeat -7px 1px;
-}
-
-div.bcms-btn-clone {
-    position: relative;
-    padding-right: 35px;
-    background-color: #1892E4;
-    background-image: linear-gradient(to bottom, #1892E4 0, #0C7FC7 100%);
-}
-
-div.bcms-btn-clone:active {
-    background-color: #0C7FC7;
-}
-
-div.bcms-btn-clone:after {
-    content: "";
-    position: absolute;
-    right: 6px;
-    top: 50%;
-    width: 20px;
-    height: 20px;
-    margin-top: -10px;
-    background: url('images/sprite-base-1.png') no-repeat -6px -219px;
-}
-
-div.bcms-btn-translate {
-    position: relative;
-    padding-right: 35px;
-    background-color: #1892E4;
-    background-image: linear-gradient(to bottom, #1892E4 0, #0C7FC7 100%);
-}
-
-div.bcms-btn-translate:active {
-    background-color: #0C7FC7;
-}
-
-div.bcms-btn-translate:after {
-    content: "";
-    position: absolute;
-    right: 6px;
-    top: 50%;
-    width: 30px;
-    height: 23px;
-    margin-top: -11px;
-    background: url('images/sprite-base-1.png') no-repeat 0 -1183px;
-}
-
-div.bcms-btn-settings {
-    position: relative;
-    padding-right: 35px;
-    margin-bottom: 20px;
-    background-color: #8E8E8E;
-    background-image: linear-gradient(to bottom, #8E8E8E 0, #787878 100%);
-}
-
-div.bcms-btn-settings:active {
-    background-color: #787878;
-}
-
-div.bcms-btn-settings:after {
-    content: "";
-    position: absolute;
-    right: 6px;
-    top: 50%;
-    width: 20px;
-    height: 20px;
-    margin-top: -10px;
-    background: url('images/sprite-base-1.png') no-repeat -7px -57px;
-}
-
-.bcms-btn-delete {
-    position: relative;
-    padding-right: 35px;
-    background-color: #A63333;
-    background-image: linear-gradient(to bottom, #A63333 0, #8E2626 100%);
-}
-
-.bcms-btn-delete:active {
-    background-color: #8E2626;
-}
-
-.bcms-btn-delete:after {
-    content: "";
-    position: absolute;
-    right: 6px;
-    top: 50%;
-    width: 20px;
-    height: 20px;
-    margin-top: -10px;
-    background: url('images/sprite-base-1.png') no-repeat -7px -114px;
-}
-
-.bcms-btn-plus {
-    display: inline-block;
-    vertical-align: middle;
-    width: 16px;
-    line-height: 16px;
-    margin-left: 5px;
-    background: url('images/sprite-base-2.png') no-repeat -44px -179px;
-    cursor: pointer;
-}
-
-div.bcms-btn-plus-expand {
-    background-position: -64px -179px;
-}
-
-div.bcms-btn-blue {
-    background: #1892E4;
-    background: -webkit-linear-gradient(top, #1892E4 0, #0C7FC7 100%);
-    background: linear-gradient(to bottom, #1892E4 0, #0C7FC7 100%);
-}
-
-div.bcms-btn-blue:active {
-    background: #0C7FC7;
-}
-
-div.bcms-btn-red {
-    background: #A63333;
-    background: -webkit-linear-gradient(top, #A63333 0, #8E2626 100%);
-    background: linear-gradient(to bottom, #A63333 0, #8E2626 100%);
-}
-
-div.bcms-btn-red:active {
-    background: #8E2626;
-}
-
-div.bcms-btn-gray {
-    background: #8E8E8E;
-    background: -webkit-linear-gradient(top, #8E8E8E 0, #787878 100%);
-    background: linear-gradient(to bottom, #8E8E8E 0, #787878 100%);
-}
-
-div.bcms-btn-gray:active {
-    background: #787878;
 }

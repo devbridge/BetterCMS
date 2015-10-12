@@ -23,6 +23,7 @@ namespace BetterCms.Module.Root.Registration
                     new JavaScriptModuleGlobalization(this, "optionValidationMessage", () => RootGlobalization.Option_Invalid_Message),
 
                     new JavaScriptModuleGlobalization(this, "optionTypeText", () => RootGlobalization.OptionTypes_Text_Title),
+                    new JavaScriptModuleGlobalization(this, "optionTypeMultilineText", () => RootGlobalization.OptionTypes_MultilineText_Title),
                     new JavaScriptModuleGlobalization(this, "optionTypeInteger", () => RootGlobalization.OptionTypes_Integer_Title),
                     new JavaScriptModuleGlobalization(this, "optionTypeBoolean", () => RootGlobalization.OptionTypes_Boolean_Title),
                     new JavaScriptModuleGlobalization(this, "optionTypeDateTime", () => RootGlobalization.OptionTypes_DateTime_Title),

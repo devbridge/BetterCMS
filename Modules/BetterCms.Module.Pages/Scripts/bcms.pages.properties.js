@@ -24,7 +24,6 @@ bettercms.define('bcms.pages.properties', ['bcms.jquery', 'bcms', 'bcms.modal', 
                 pagePropertiesMasterPageId: '#MasterPageId',
                 pagePropertiesActiveTemplateBox: '.bcms-inner-grid-box-active',
                 pagePropertiesTemplatePreviewLink: '.bcms-preview-template',
-                pagePropertiesAceEditorContainer: '.bcms-editor-field-area-container',
 
                 pagePropertiesForm: 'form:first',
                 pagePropertiesPageIsPublishedCheckbox: '#IsPagePublished',
@@ -90,7 +89,8 @@ bettercms.define('bcms.pages.properties', ['bcms.jquery', 'bcms', 'bcms.modal', 
                 accessControlViewModel = security.createUserAccessViewModel(content.Data.UserAccessList),
                 translationsViewModel = content.Data.Languages ? new pageLanguages.PageTranslationsListViewModel(content.Data.Translations, content.Data.Languages, content.Data.LanguageId, content.Data.PageId) : null,
                 pageViewModel = new PageViewModel(content.Data.Image, content.Data.SecondaryImage, content.Data.FeaturedImage, tagsViewModel, optionListViewModel, accessControlViewModel, translationsViewModel, categoriesModel),
-                form = dialog.container.find(selectors.pagePropertiesForm);
+                form = dialog.container.find(selectors.pagePropertiesForm),
+                codeEditorInitialized = false;
 
             ko.applyBindings(pageViewModel, form.get(0));
 
@@ -151,32 +151,17 @@ bettercms.define('bcms.pages.properties', ['bcms.jquery', 'bcms', 'bcms.modal', 
                 }
             });
 
-            codeEditor.initialize(dialog.container);
-
-            // IE11 fix: recall resize method after editors initialization
             dialog.container.find(selectors.javascriptCssTabOpener).on('click', function () {
-                setTimeout(function () {
-                    dialog.container.find(selectors.pagePropertiesAceEditorContainer).each(function () {
-                        var editor = $(this).data('aceEditor');
-
-                        if (editor && $.isFunction(editor.resize)) {
-                            editor.resize(true);
-                            editor.renderer.updateFull();
-
-                            if (form.data('readonlyWithPublishing') == true || form.data('readonly') == true) {
-                                forms.setFieldsReadOnly(form);
-                            }
-                        }
-                    });
-                }, 20);
+                if (!codeEditorInitialized) {
+                    codeEditor.initialize(dialog.container, dialog);
+                    codeEditorInitialized = true;
+                }
             });
 
             // Translations tab
             if (content.Data.ShowTranslationsTab && (!content.Data.Languages || content.Data.Languages.length == 0)) {
                 dialog.container.find(selectors.translationsTabContent).addClass(classes.inactive);
             }
-
-            
 
             return pageViewModel;
         };

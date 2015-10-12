@@ -24,7 +24,7 @@ namespace BetterCms.Module.Pages.Command.Widget.GetWidgetCategory
     /// <summary>
     /// Command to get widget categories model.
     /// </summary>
-    public class GetRecentWidgetAndWidgetCategoryCommand : CommandBase, ICommand<GetRecentWidgetAndWidgetCategoryRequest, GetRecentWidgetAndWidgetCategoryResponse>
+    public class GetRecentWidgetAndWidgetCategoryCommand : CommandBase, ICommand<GetRecentWidgetAndWidgetCategoryRequest, SelectWidgetViewModel>
     {
         /// <summary>
         /// Executes the specified request.
@@ -32,7 +32,7 @@ namespace BetterCms.Module.Pages.Command.Widget.GetWidgetCategory
         /// <param name="request">The request.</param>
         /// <returns></returns>
         /// <exception cref="System.NotImplementedException"></exception>
-        public GetRecentWidgetAndWidgetCategoryResponse Execute(GetRecentWidgetAndWidgetCategoryRequest request)
+        public SelectWidgetViewModel Execute(GetRecentWidgetAndWidgetCategoryRequest request)
         {
             IEnumerable<WidgetCategoryViewModel> categoriesFuture;
 
@@ -62,7 +62,10 @@ namespace BetterCms.Module.Pages.Command.Widget.GetWidgetCategory
             }
             
             // Load list of contents
-            var widgetsQuery = Repository.AsQueryable<Root.Models.Widget>().Where(f => !f.IsDeleted && f.Original == null && (f.Status == ContentStatus.Published || f.Status == ContentStatus.Draft));
+            var widgetsQuery = Repository.AsQueryable<Root.Models.Widget>()
+                                        .Where(f => !f.IsDeleted 
+                                                && (f.Original == null || !f.Original.IsDeleted) 
+                                                && (f.Status == ContentStatus.Published || f.Status == ContentStatus.Draft));
 
             var childContentsQuery = UnitOfWork.Session.Query<ChildContent>();
             var pageContentsQuery = UnitOfWork.Session.Query<PageContent>();
@@ -98,7 +101,8 @@ namespace BetterCms.Module.Pages.Command.Widget.GetWidgetCategory
 
             if (!string.IsNullOrWhiteSpace(request.Filter))
             {
-                widgetsQuery = widgetsQuery.Where(c => c.Name.ToLower().Contains(request.Filter.ToLowerInvariant()));
+                var filter = request.Filter.ToLowerInvariant();
+                widgetsQuery = widgetsQuery.Where(c => c.Name.ToLower().Contains(filter) || c.Categories.Any(a=>a.Category.Name.ToLower().Contains(filter)));
             }
 
             // Load all widgets
@@ -160,7 +164,7 @@ namespace BetterCms.Module.Pages.Command.Widget.GetWidgetCategory
             // Remove empty categories
             categories = categories.Where(c => c.Widgets.Any()).ToList();
 
-            return new GetRecentWidgetAndWidgetCategoryResponse
+            return new SelectWidgetViewModel
                        {
                            WidgetCategories = categories,
                            RecentWidgets = recentWidgets

@@ -1,4 +1,3 @@
-//module VIRTUAL BEFORE & AFTER ELEMENTS
 @mixin clearfix($extend: true) {
     @if ($extend) {
         @extend %clearfix;
@@ -70,6 +69,39 @@
     &:-ms-input-placeholder {
         @content;
     }
+}
+
+@mixin ellipsis() {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+@mixin add-gradient($top: null, $bottom: null, $fallback: null) {
+    @if ($fallback == true) {
+        background-color: $bottom;
+    } @else {
+        background-image: -webkit-linear-gradient(top, $top 0, $bottom 100%);
+        background-image: linear-gradient(to bottom, $top 0, $bottom 100%);
+    }
+
+    &:active {
+        background-image: -webkit-linear-gradient(top, $bottom 0, $bottom 100%);
+        background-image: linear-gradient(to bottom, $bottom 0, $bottom 100%);
+    }
+}
+
+@mixin button() {
+    @include vertical-align();
+    border: 0;
+    border-radius: 2px;
+    box-sizing: border-box;
+    cursor: pointer;
+    font-family: $font-base-family;
+    overflow: hidden;
+    text-align: center;
+    text-transform: uppercase;
+    @content
 }
 
 //module functions
