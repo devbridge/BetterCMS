@@ -495,8 +495,8 @@ a.cke_specialchar:hover {
   margin-top: 4px;
 }
 
-.cke_combo_combo_disabled .cke_combo_inlinelabel,
-.cke_combo_combo_disabled .cke_combo_open {
+.cke_combo_disabled .cke_combo_inlinelabel,
+.cke_combo_disabled .cke_combo_open {
   opacity: .3;
 }
 
