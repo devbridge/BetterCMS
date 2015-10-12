@@ -103,6 +103,11 @@ namespace BetterCms.Module.Root.Services
 
             originalContent = repository.UnProxy(originalContent);
 
+            if (originalContent.ContentOptions != null)
+            {
+                originalContent.ContentOptions = originalContent.ContentOptions.Distinct().ToList();
+            }
+
             if (originalContent.History == null)
             {
                 originalContent.History = new List<Models.Content>();

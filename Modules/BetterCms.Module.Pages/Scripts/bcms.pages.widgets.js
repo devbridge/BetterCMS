@@ -380,7 +380,9 @@ bettercms.define('bcms.pages.widgets', ['bcms.jquery', 'bcms', 'bcms.modal', 'bc
                 widgetEditContainer = dialog.container.find(selectors.widgetTab),
                 widgetOptions = data != null ? data.Options : null,
                 customOptions = data != null ? data.CustomOptions : null,
-                optionListViewModel = options.createOptionsViewModel(optionsContainer, widgetOptions, customOptions),
+                showLanguages = data != null ? data.ShowLanguages : null,
+                languages = data != null ? data.Languages : null,
+                optionListViewModel = options.createOptionsViewModel(optionsContainer, widgetOptions, customOptions, showLanguages, languages),
                 widgetEditViewModel = new WidgetEditViewModel(data);
 
             ko.applyBindings(optionListViewModel, optionsContainer.get(0));
