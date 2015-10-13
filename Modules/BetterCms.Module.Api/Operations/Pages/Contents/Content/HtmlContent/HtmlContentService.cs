@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Linq;
+using System.Web;
 
 using BetterCms.Core.DataContracts.Enums;
 
@@ -13,6 +14,8 @@ using BetterModules.Core.DataAccess.DataContext;
 using BetterModules.Core.Exceptions.DataTier;
 
 using ServiceStack.ServiceInterface;
+
+using ApiContentTextMode = BetterCms.Module.Api.Operations.Pages.ContentTextMode;
 
 namespace BetterCms.Module.Api.Operations.Pages.Contents.Content.HtmlContent
 {
@@ -81,6 +84,8 @@ namespace BetterCms.Module.Api.Operations.Pages.Contents.Content.HtmlContent
                         ActivationDate = content.ActivationDate,
                         ExpirationDate = content.ExpirationDate,
                         Html = content.Html,
+                        OriginalText = content.OriginalText,
+                        ContentTextMode = (ContentTextMode) content.ContentTextMode,
                         CustomCss = content.CustomCss,
                         UseCustomCss = content.UseCustomCss,
                         CustomJavaScript = content.CustomJs,
@@ -145,11 +150,27 @@ namespace BetterCms.Module.Api.Operations.Pages.Contents.Content.HtmlContent
                 ExpirationDate = TimeHelper.FormatEndDate(request.Data.ExpirationDate),
                 Name = request.Data.Name,
                 Html = request.Data.Html ?? string.Empty,
+                OriginalText = request.Data.OriginalText ?? string.Empty,
+                ContentTextMode = (Module.Pages.Models.Enums.ContentTextMode)request.Data.ContentTextMode,
                 UseCustomCss = request.Data.UseCustomCss,
                 CustomCss = request.Data.CustomCss,
                 UseCustomJs = request.Data.UseCustomJavaScript,
                 CustomJs = request.Data.CustomJavaScript
             };
+
+            if (request.Data.ContentTextMode == ContentTextMode.Markdown
+                && request.Data.Html == null
+                && request.Data.OriginalText != null)
+            {
+                contentToSave.Html = MarkdownConverter.ToHtml(request.Data.OriginalText);
+            }
+            
+            if (request.Data.ContentTextMode == ContentTextMode.SimpleText
+                && request.Data.Html == null
+                && request.Data.OriginalText != null)
+            {
+                contentToSave.Html = HttpUtility.HtmlEncode(request.Data.OriginalText);
+            }
 
             if (request.Data.IsPublished)
             {
