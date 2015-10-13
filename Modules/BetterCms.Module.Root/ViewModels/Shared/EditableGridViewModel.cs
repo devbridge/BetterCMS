@@ -38,9 +38,9 @@ namespace BetterCms.Module.Root.ViewModels.Shared
 
         public virtual List<EditableGridColumn> Columns { get; set; }
 
-        public virtual List<LookupKeyValue> Languages { get; set; }
-
         public virtual bool ShowLanguages { get; set; }
+
+        public virtual bool MultipleAddOptions { get; set; }
 
         public EditableGridViewModel()
         {

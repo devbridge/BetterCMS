@@ -10,7 +10,8 @@ bettercms.define('bcms.options', ['bcms.jquery', 'bcms', 'bcms.ko.extenders', 'b
                 datePickers: '.bcms-datepicker',
                 datePickerTrigger: '.ui-datepicker-trigger',
                 datePickerBox: '#ui-datepicker-div:first',
-                focusedElements: ':focus'
+                focusedElements: ':focus',
+                multioptionContainer: '#bcms-multi-opts'
             },
             links = {},
             globalization = {
@@ -89,8 +90,28 @@ bettercms.define('bcms.options', ['bcms.jquery', 'bcms', 'bcms.ko.extenders', 'b
             bcms.extendsClass(OptionsListViewModel, _super);
 
             function OptionsListViewModel(container, items, customOptions, showLanguages, languages) {
-                var self = this;
+                var self = this,
+                    ci, cl, cOption;
                 self.customOptions = addCustomOptions(customOptions);
+
+                self.optionTypes = [];
+                self.optionTypes.push({ id: optionTypes.textType, name: globalization.optionTypeText });
+                self.optionTypes.push({ id: optionTypes.textMultilineType, name: globalization.optionTypeMultilineText });
+                self.optionTypes.push({ id: optionTypes.integerType, name: globalization.optionTypeInteger });
+                self.optionTypes.push({ id: optionTypes.floatType, name: globalization.optionTypeFloat });
+                self.optionTypes.push({ id: optionTypes.dateTimeType, name: globalization.optionTypeDateTime });
+                self.optionTypes.push({ id: optionTypes.boolType, name: globalization.optionTypeBoolean });
+                self.optionTypes.push({ id: optionTypes.javaScriptUrlType, name: globalization.optionTypeJavaScriptUrl });
+                self.optionTypes.push({ id: optionTypes.cssUrlType, name: globalization.optionTypeCssUrl });
+
+                // Add custom options to types list
+                for (ci = 0, cl = self.customOptions.length; ci < cl; ci++) {
+                    cOption = {
+                        id: optionTypes.customType + ':' + self.customOptions[ci].identifier,
+                        name: self.customOptions[ci].title
+                    };
+                    self.optionTypes.push(cOption);
+                }
 
                 self.attachDatePickers = function () {
                     attachDatePickers(self);
@@ -112,8 +133,30 @@ bettercms.define('bcms.options', ['bcms.jquery', 'bcms', 'bcms.ko.extenders', 'b
                 self.languages = ko.observableArray();
                 self.languageId = ko.observable("");
                 self.language = showLanguages ? new LanguageViewModel(languages, null, self) : null;
+                self.selectedTypeId = 0;
+                self.isAddNewSelected = ko.observable(false);
+                self.suspendCloseAddItem = false;
+                self.addNewSelectedItem = function (type) {
+                    self.selectedTypeId = type;
+                    _super.prototype.addNewItem.call(self);
+                }
+                $('body').on('click', function () {
+
+                    if (self.isAddNewSelected() && !self.suspendCloseAddItem) {
+                        self.isAddNewSelected(false);
+                    }
+                });
 
                 _super.call(self, container, null, items, null);
+
+                //              Override methods
+                self.addNewItem = function () {
+                    self.suspendCloseAddItem = true;
+                    setTimeout(function () {
+                        self.suspendCloseAddItem = false;
+                    }, 100);
+                    self.isAddNewSelected(true);
+                };
             };
 
             OptionsListViewModel.prototype.createItem = function (item) {
@@ -135,6 +178,14 @@ bettercms.define('bcms.options', ['bcms.jquery', 'bcms', 'bcms.ko.extenders', 'b
                 }
             };
 
+            OptionsListViewModel.prototype.onAfterNewItemAdded = function (item) {
+                if (item.canEditOption() !== false && item.key.domElement) {
+                    $(item.key.domElement).focus();
+                }
+                item.calcType(this.selectedTypeId);
+                item.type(this.selectedTypeId);
+            };
+
             return OptionsListViewModel;
 
         })(kogrid.ListViewModel);
@@ -146,11 +197,6 @@ bettercms.define('bcms.options', ['bcms.jquery', 'bcms', 'bcms.ko.extenders', 'b
                 _super.call(this, container, items, customOptions, showLanguages, languages);
 
                 var self = this;
-
-                //                self.showLanguages = ko.observable(showLanguages);
-                //                self.languages = ko.observableArray();
-                //                self.languageId = ko.observable("");
-                //                self.language = showLanguages ? new LanguageViewModel(languages, null, self) : null;
 
                 self.attachDatePickers = function () {
                     attachDatePickers(self);
@@ -176,11 +222,11 @@ bettercms.define('bcms.options', ['bcms.jquery', 'bcms', 'bcms.ko.extenders', 'b
                 return newItem;
             };
 
-            OptionValuesListViewModel.prototype.onAfterNewItemAdded = function (item) {
-                if (item.canEditOption() !== false && item.key.domElement) {
-                    $(item.key.domElement).focus();
-                }
-            };
+            //            OptionValuesListViewModel.prototype.onAfterNewItemAdded = function (item) {
+            //                if (item.canEditOption() !== false && item.key.domElement) {
+            //                    $(item.key.domElement).focus();
+            //                }
+            //            };
 
             OptionsListViewModel.prototype.onLanguageChanged = function (languageId) {
                 if (languageId != this.languageId()) {
@@ -272,25 +318,6 @@ bettercms.define('bcms.options', ['bcms.jquery', 'bcms', 'bcms.ko.extenders', 'b
                 self.calcType = ko.observable();
                 self.translationsEnabled = false;
 
-                self.optionTypes = [];
-                self.optionTypes.push({ id: optionTypes.textType, name: globalization.optionTypeText });
-                self.optionTypes.push({ id: optionTypes.textMultilineType, name: globalization.optionTypeMultilineText });
-                self.optionTypes.push({ id: optionTypes.integerType, name: globalization.optionTypeInteger });
-                self.optionTypes.push({ id: optionTypes.floatType, name: globalization.optionTypeFloat });
-                self.optionTypes.push({ id: optionTypes.dateTimeType, name: globalization.optionTypeDateTime });
-                self.optionTypes.push({ id: optionTypes.boolType, name: globalization.optionTypeBoolean });
-                self.optionTypes.push({ id: optionTypes.javaScriptUrlType, name: globalization.optionTypeJavaScriptUrl });
-                self.optionTypes.push({ id: optionTypes.cssUrlType, name: globalization.optionTypeCssUrl });
-
-                // Add custom options to types list
-                for (ci = 0, cl = parent.customOptions.length; ci < cl; ci++) {
-                    cOption = {
-                        id: optionTypes.customType + ':' + parent.customOptions[ci].identifier,
-                        name: parent.customOptions[ci].title
-                    };
-                    self.optionTypes.push(cOption);
-                }
-
                 // NOTE: useDefaultValueBinding should be registered before defaultValue and type
                 // because in other case, when cancelling edit mode, it sets wrong values.
                 self.registerFields(self.useDefaultValueBinding, self.key, self.defaultValueBinding, self.valueBinding,
@@ -300,9 +327,9 @@ bettercms.define('bcms.options', ['bcms.jquery', 'bcms', 'bcms.ko.extenders', 'b
                     var i,
                         type = self.calcType();
 
-                    for (i = 0; i < self.optionTypes.length; i++) {
-                        if (self.optionTypes[i].id == type) {
-                            return self.optionTypes[i].name;
+                    for (i = 0; i < parent.optionTypes.length; i++) {
+                        if (parent.optionTypes[i].id == type) {
+                            return parent.optionTypes[i].name;
                         }
                     }
 
@@ -465,7 +492,8 @@ bettercms.define('bcms.options', ['bcms.jquery', 'bcms', 'bcms.ko.extenders', 'b
                 });
 
                 self.saveItem = function () {
-                    self.constructor.prototype.constructor.prototype.saveItem.call(this);
+                    //                    self.constructor.prototype.constructor.prototype.saveItem.call(this);
+                    _super.prototype.saveItem.call(self);
                     var newValue = self.defaultValueBinding();
                     if (!self.translationsEnabled) {
                         self.defaultValue(newValue);

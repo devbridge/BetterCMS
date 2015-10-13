@@ -80,6 +80,8 @@ WriteLiteral("\r\n");
   
     var gridViewModel = new EditableGridViewModel
     {
+        ShowLanguages = true,
+        MultipleAddOptions = true,
         ShowSearch = false,
         TopBlockClass = "bcms-top-block-holder",
         AddHiddenFields = true,
@@ -110,6 +112,7 @@ WriteLiteral("\r\n");
                         OptionsBind = "optionTypes",
                         ValueTextBind = "typeName",
                         HeaderAttributes = "style=\"width: 130px;\"",
+                        CanBeEdited = false
                     },
                                                             
                 new OptionValueEditableGridColumn(PagesGlobalization.EditOptionsValues_OptionValueColumn, "valueBinding", "customOptionTitle")
@@ -130,7 +133,7 @@ WriteLiteral("\r\n");
 WriteLiteral("\r\n\r\n");
 
             
-            #line 56 "..\..\Views\Option\EditOptionValues.cshtml"
+            #line 59 "..\..\Views\Option\EditOptionValues.cshtml"
 Write(Html.Partial(RootModuleConstants.EditableGridTemplate, gridViewModel));
 
             

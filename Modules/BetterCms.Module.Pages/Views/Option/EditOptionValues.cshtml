@@ -8,6 +8,8 @@
 @{
     var gridViewModel = new EditableGridViewModel
     {
+        ShowLanguages = true,
+        MultipleAddOptions = true,
         ShowSearch = false,
         TopBlockClass = "bcms-top-block-holder",
         AddHiddenFields = true,
@@ -38,6 +40,7 @@
                         OptionsBind = "optionTypes",
                         ValueTextBind = "typeName",
                         HeaderAttributes = "style=\"width: 130px;\"",
+                        CanBeEdited = false
                     },
                                                             
                 new OptionValueEditableGridColumn(PagesGlobalization.EditOptionsValues_OptionValueColumn, "valueBinding", "customOptionTitle")

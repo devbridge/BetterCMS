@@ -80,6 +80,8 @@ WriteLiteral("\r\n");
   
     var gridViewModel = new EditableGridViewModel
     {
+        ShowLanguages = true,
+        MultipleAddOptions = true,
         ShowSearch = false,
         TopBlockClass = "bcms-top-block-holder",
         SaveButtonTitle = RootGlobalization.Button_Ok,
@@ -97,7 +99,8 @@ WriteLiteral("\r\n");
                 new EditableGridDropDownColumn(PagesGlobalization.Options_OptionTypeColumn, null, "calcType")
                     {
                         OptionsBind = "optionTypes",
-                        ValueTextBind = "typeName"
+                        ValueTextBind = "typeName",
+                        CanBeEdited = false
                     },
                                         
 //                new OptionValueEditableGridColumn(PagesGlobalization.Options_OptionDefaultValueColumn, "defaultValue", "customOptionDefaultTitle")
@@ -118,7 +121,7 @@ WriteLiteral("\r\n");
 WriteLiteral("\r\n\r\n");
 
             
-            #line 44 "..\..\Views\Option\EditOptions.cshtml"
+            #line 47 "..\..\Views\Option\EditOptions.cshtml"
 Write(Html.Partial(RootModuleConstants.EditableGridTemplate, gridViewModel));
 
             
