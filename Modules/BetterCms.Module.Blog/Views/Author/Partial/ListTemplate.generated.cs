@@ -76,11 +76,11 @@ WriteLiteral("\r\n");
                         HeaderAttributes = "style=\"width: 105px;\"",
                         CellView = "Partial/ImageCell"
                     },
-                    
                 new EditableGridColumn(BlogGlobalization.SiteSettings_AuthorsTab_AuthorName_Title, "Name", "name")
                     {
                         AutoFocus = true
-                    }
+                    },
+                new EditableGridColumn(BlogGlobalization.SiteSettings_AuthorsTab_AuthorDescription_Title, "Description", "description")    
             }
     };
 

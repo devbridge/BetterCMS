@@ -38,12 +38,12 @@
 
                 <div class="bcms-tree-controls" data-bind="visible: !isBeingDragged()">
                     <!-- ko if: type == types.region -->
-                    <div class="bcms-contents-tree-add-block @*bcms-active*@" data-bind="click: addContent">
+                    <div class="bcms-contents-tree-add-block" data-bind="css: {'bcms-active': isOpened()}, click: toggleAddContent">
                         <div class="bcms-contents-tree-add-content">
-                            <div class="bcms-contents-tree-controls bcms-region-addhtml">HTML</div>
-                            <div class="bcms-contents-tree-controls bcms-region-addmarkdown">Markdown</div>
-                            <div class="bcms-contents-tree-controls bcms-region-addtext">Plain text</div>
-                            <div class="bcms-contents-tree-controls bcms-region-insertwidget">Widget</div>
+                            <div class="bcms-contents-tree-controls bcms-region-addhtml" data-bind="click: addContent">HTML</div>
+                            <div class="bcms-contents-tree-controls bcms-region-addmarkdown" data-bind="click: addMarkdown">Markdown</div>
+                            <div class="bcms-contents-tree-controls bcms-region-addtext" data-bind="click: addSimpleText">Plain text</div>
+                            <div class="bcms-contents-tree-controls bcms-region-insertwidget" data-bind="click: insertWidget">Widget</div>
                         </div>
                     </div>
                     <!-- /ko -->

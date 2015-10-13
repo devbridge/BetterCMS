@@ -429,4 +429,7 @@
   <data name="SiteSettings_BlogSettingsTab_Header" xml:space="preserve">
     <value>Blog Settings</value>
   </data>
+  <data name="SiteSettings_AuthorsTab_AuthorDescription_Title" xml:space="preserve">
+    <value>Description</value>
+  </data>
 </root>

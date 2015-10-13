@@ -64,6 +64,7 @@ namespace BetterCms.Module.Api.Operations.Blog.Authors
                         LastModifiedOn = author.ModifiedOn,
 
                         Name = author.Name,
+                        Description = author.Description,
 
                         ImageId = author.Image != null && !author.Image.IsDeleted ? author.Image.Id : (Guid?)null,
                         ImageUrl = author.Image != null && !author.Image.IsDeleted ? author.Image.PublicUrl : (string)null,

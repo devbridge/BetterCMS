@@ -637,12 +637,14 @@ bettercms.define('bcms.blog', ['bcms.jquery', 'bcms', 'bcms.modal', 'bcms.siteSe
             var self = this;
 
             self.name = ko.observable().extend({ required: "", maxLength: { maxLength: ko.maxLength.name }, activeDirectoryCompliant: "" });
+            self.description = ko.observable().extend({ maxLength: { maxLength: ko.maxLength.name }, activeDirectoryCompliant: "" });
             self.image = ko.observable(new AuthorImageViewModel(self));
             self.oldImageId = item.Image != null ? item.Image.ImageId : '';
 
-            self.registerFields(self.name, self.image().id, self.image().url, self.image().thumbnailUrl, self.image().tooltip);
+            self.registerFields(self.name, self.image().id, self.image().url, self.image().thumbnailUrl, self.image().tooltip, self.description);
 
             self.name(item.Name);
+            self.description(item.Description);
             self.image().setImage(item.Image || {});
         }
 
@@ -653,6 +655,7 @@ bettercms.define('bcms.blog', ['bcms.jquery', 'bcms', 'bcms.modal', 'bcms.siteSe
         AuthorViewModel.prototype.getSaveParams = function () {
             var params = _super.prototype.getSaveParams.call(this);
             params.Name = this.name();
+            params.Description = this.description();
             params.Image = {
                 ImageId: this.image().id()
             };

@@ -30,7 +30,9 @@ function ($, bcms, ko, modal, contentModule, redirect, antiXss) {
         contentStatuses = {
             draft: 2
         },
-        treeViewModel = null;
+        treeViewModel = null,
+        isOpenedAddContent = false,
+        suspendCloseAddContent = false;
 
     // Assign objects to module
     tree.selectors = selectors;
@@ -116,29 +118,25 @@ function ($, bcms, ko, modal, contentModule, redirect, antiXss) {
         return regions;
     }
 
+    function closeAllAddContentButtons() {
+        var items = treeViewModel.items(),
+                j = 0,
+                item;
+
+        for (; j < items.length; j++) {
+            item = items[j];
+            if (item.isOpened && $.isFunction(item.isOpened)) {
+                item.isOpened(false);
+            }
+        }
+
+    }
+
     function createRegionTreeItemViewModel(regionModel, parentContent, level) {
         var model = new TreeItemViewModel(),
             itemModel,
-            i;
-
-        model.itemId = bcms.createGuid();
-        model.title(regionModel.title);
-        model.model = regionModel;
-        model.type = treeItemTypes.region;
-        model.isInvisible = regionModel.isInvisible;
-        model.parentContent = parentContent;
-        model.level(level);
-
-        // Collect child contents
-        level++;
-        for (i = 0; i < regionModel.contents.length; i++) {
-            itemModel = createContentTreeItemViewModel(regionModel.contents[i], model, level);
-
-            model.items.push(itemModel);
-        }
-
-        model.addContent = function () {
-            regionModel.onAddHtml(function (json) {
+            i,
+            onAfterAddContent = function (json) {
                 treeViewModel.reloadPage = true;
 
                 var regionModels,
@@ -161,8 +159,56 @@ function ($, bcms, ko, modal, contentModule, redirect, antiXss) {
                 }
 
                 model.items.push(contentTreeItemViewModel);
-            }, true);
+            };
+
+        model.itemId = bcms.createGuid();
+        model.title(regionModel.title);
+        model.model = regionModel;
+        model.type = treeItemTypes.region;
+        model.isInvisible = regionModel.isInvisible;
+        model.parentContent = parentContent;
+        model.level(level);
+
+        // Collect child contents
+        level++;
+        for (i = 0; i < regionModel.contents.length; i++) {
+            itemModel = createContentTreeItemViewModel(regionModel.contents[i], model, level);
+
+            model.items.push(itemModel);
+        }
+
+        model.isOpened = ko.observable(false);
+
+        model.toggleAddContent = function () {
+            var isOpened = this.isOpened();
+            closeAllAddContentButtons();
+
+            if (!isOpened) {
+                this.isOpened(true);
+
+                isOpenedAddContent = true;
+                suspendCloseAddContent = true;
+                setTimeout(function() {
+                    suspendCloseAddContent = false;
+                }, 100);
+            }
         };
+
+        model.addContent = function () {
+            regionModel.onAddHtml(onAfterAddContent, true);
+        };
+
+        model.addMarkdown = function() {
+            regionModel.onAddMarkdown(onAfterAddContent, true);
+        }
+
+        model.addSimpleText = function () {
+            regionModel.onAddSimpleText(onAfterAddContent);
+        }
+
+        model.insertWidget = function () {
+            regionModel.onInsertWidget(onAfterAddContent);
+        }
 
         model.removeContent = function (contentViewModel) {
             model.items.remove(contentViewModel);
@@ -230,8 +276,8 @@ function ($, bcms, ko, modal, contentModule, redirect, antiXss) {
     }
 
     /*
-        * Regions/contents tree list view model
-        */
+    * Regions/contents tree list view model
+    */
     function TreeViewModel(pageModel) {
         var self = this,
             i,
@@ -286,8 +332,8 @@ function ($, bcms, ko, modal, contentModule, redirect, antiXss) {
     }
 
     /*
-        * Tree item (region or content) view model
-        */
+    * Tree item (region or content) view model
+    */
     function TreeItemViewModel() {
         var self = this;
 
@@ -427,8 +473,6 @@ function ($, bcms, ko, modal, contentModule, redirect, antiXss) {
                 }
             }
         });
-
-
     }
 
     /*
@@ -563,6 +607,16 @@ function ($, bcms, ko, modal, contentModule, redirect, antiXss) {
     }
 
     /**
+    * Is called everytime user clicks a mouse anywhere in the browser
+    */
+    function onBodyClick() {
+        if (isOpenedAddContent && !suspendCloseAddContent) {
+            closeAllAddContentButtons();
+            isOpenedAddContent = false;
+        }
+    }
+
+    /**
     * Initializes contents tree module.
     */
     tree.init = function () {
@@ -575,6 +629,7 @@ function ($, bcms, ko, modal, contentModule, redirect, antiXss) {
     * Subscribe to events
     */
     bcms.on(bcms.events.editContentsTree, onEditContentsTree);
+    bcms.on(bcms.events.bodyClick, onBodyClick);
 
     /**
     * Register initialization
