@@ -16,8 +16,8 @@ namespace BetterCms.Module.Blog.Services
 
         void DeleteAuthor(Guid authorId, int version);
 
-        Author CreateAuthor(string name, Guid? imageId);
+        Author CreateAuthor(string name, Guid? imageId, string description);
 
-        Author UpdateAuthor(Guid authorId, int version, string name, Guid? imageId);
+        Author UpdateAuthor(Guid authorId, int version, string name, Guid? imageId, string description);
     }
 }
