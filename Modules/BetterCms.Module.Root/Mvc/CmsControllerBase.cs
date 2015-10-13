@@ -7,7 +7,6 @@ using Autofac;
 
 using BetterCms.Core.Services;
 using BetterCms.Core.Web;
-using BetterCms.Module.Root.Mvc.Helpers;
 
 using BetterModules.Core.Web.Dependencies;
 using BetterModules.Core.Web.Mvc;

@@ -1,19 +1,29 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 
+using BetterCms.Module.Blog.Content.Resources;
 using BetterCms.Module.Blog.Services;
 using BetterCms.Module.Blog.ViewModels.Blog;
+using BetterCms.Module.Blog.ViewModels.Setting;
+
 using BetterCms.Module.Pages.Models;
+using BetterCms.Module.Pages.Models.Enums;
+
+using BetterCms.Module.Root.Content.Resources;
 using BetterCms.Module.Root.Models;
 using BetterCms.Module.Root.Mvc;
+using BetterCms.Module.Root.Mvc.Grids.GridOptions;
 
 using BetterModules.Core.Web.Mvc.Commands;
 
+using MvcContrib.Pagination;
+
 using NHibernate.Transform;
 
-namespace BetterCms.Module.Blog.Commands.GetTemplatesList
+namespace BetterCms.Module.Blog.Commands.GetBlogSettings
 {
-    public class GetTemplatesCommand : CommandBase, ICommand<bool, IList<BlogTemplateViewModel>>
+    public class GetBlogSettingsCommand : CommandBase, ICommand<bool, GetBlogSettingsCommandResponse>
     {
         /// <summary>
         /// The options service
@@ -26,11 +36,11 @@ namespace BetterCms.Module.Blog.Commands.GetTemplatesList
         private readonly ICmsConfiguration configuration;
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="GetTemplatesCommand" /> class.
+        /// Initializes a new instance of the <see cref="GetBlogSettingsCommand" /> class.
         /// </summary>
         /// <param name="optionService">The option service.</param>
         /// <param name="configuration">The configuration.</param>
-        public GetTemplatesCommand(IOptionService optionService, ICmsConfiguration configuration)
+        public GetBlogSettingsCommand(IOptionService optionService, ICmsConfiguration configuration)
         {
             this.optionService = optionService;
             this.configuration = configuration;
@@ -41,18 +51,43 @@ namespace BetterCms.Module.Blog.Commands.GetTemplatesList
         /// </summary>
         /// <param name="request">The request.</param>
         /// <returns>The list of blog template view models</returns>
-        public IList<BlogTemplateViewModel> Execute(bool request)
+        public GetBlogSettingsCommandResponse Execute(bool request)
+        {
+            // Get current default template
+            var option = optionService.GetDefaultOption();
+
+            var response = new GetBlogSettingsCommandResponse { GridOptions = new SearchableGridOptions() };
+
+            Guid? selectedTemplateId = null;
+            var textMode = ContentTextMode.Html;
+            if (option != null)
+            {
+                if (option.DefaultLayout != null || option.DefaultMasterPage != null)
+                {
+                    selectedTemplateId = option.DefaultLayout != null ? option.DefaultLayout.Id : option.DefaultMasterPage.Id;
+                }
+
+                textMode = option.DefaultContentTextMode;
+            }
+            response.Templates = LoadTemplates(selectedTemplateId);
+
+            var defaultEditMode = new SettingItemViewModel
+            {
+                Value = (int)textMode,
+                Name = BlogGlobalization.SiteSettings_BlogSettingsTab_DefaultEditMode_Title,
+                Key = BlogModuleConstants.BlogPostDefaultContentTextModeKey
+            };
+
+            var settings = new List<SettingItemViewModel> { defaultEditMode };
+            response.Items = new CustomPagination<SettingItemViewModel>(settings, settings.Count, 100, settings.Count);
+
+            return response;
+        }
+
+        private IList<BlogTemplateViewModel> LoadTemplates(Guid? selectedTemplateId)
         {
             BlogTemplateViewModel modelAlias = null;
             Layout layoutAlias = null;
-
-            // Get current default template
-            var option = optionService.GetDefaultOption();
-            System.Guid? selectedTemplateId = null;
-            if (option != null && (option.DefaultLayout != null || option.DefaultMasterPage != null))
-            {
-                selectedTemplateId = option.DefaultLayout != null ? option.DefaultLayout.Id : option.DefaultMasterPage.Id;
-            }
 
             // Load templates
             var templates = UnitOfWork.Session
@@ -104,26 +139,26 @@ namespace BetterCms.Module.Blog.Commands.GetTemplatesList
                 .Select(
                     page =>
                     new BlogTemplateViewModel
-                        {
-                            TemplateId = page.Id,
-                            Title = page.Title,
-                            PreviewUrl =
-                                page.Image != null
-                                    ? page.Image.PublicUrl
-                                    : page.FeaturedImage != null ? page.FeaturedImage.PublicUrl : page.SecondaryImage != null ? page.SecondaryImage.PublicUrl : null,
-                            IsMasterPage = true,
-                            IsCompatible =
-                                page.PageContents.Count(pageContent =>
-                                    !pageContent.IsDeleted && !pageContent.Content.IsDeleted
-                                        && pageContent.Content.ContentRegions.Count(contentRegion => !contentRegion.IsDeleted && !contentRegion.Region.IsDeleted
-                                            && contentRegion.Region.RegionIdentifier.ToLowerInvariant() == mainContentIdentifier).Equals(1)
-                                ).Equals(1)
+                    {
+                        TemplateId = page.Id,
+                        Title = page.Title,
+                        PreviewUrl =
+                            page.Image != null
+                                ? page.Image.PublicUrl
+                                : page.FeaturedImage != null ? page.FeaturedImage.PublicUrl : page.SecondaryImage != null ? page.SecondaryImage.PublicUrl : null,
+                        IsMasterPage = true,
+                        IsCompatible =
+                            page.PageContents.Count(pageContent =>
+                                !pageContent.IsDeleted && !pageContent.Content.IsDeleted
+                                    && pageContent.Content.ContentRegions.Count(contentRegion => !contentRegion.IsDeleted && !contentRegion.Region.IsDeleted
+                                        && contentRegion.Region.RegionIdentifier.ToLowerInvariant() == mainContentIdentifier).Equals(1)
+                            ).Equals(1)
 
-                                || page.PageContents.Count(pageContent => 
-                                    !pageContent.IsDeleted && !pageContent.Content.IsDeleted 
-                                        && pageContent.Content.ContentRegions.Count(contentRegion => !contentRegion.IsDeleted && !contentRegion.Region.IsDeleted).Equals(1)
-                                ).Equals(1)
-                        })
+                            || page.PageContents.Count(pageContent =>
+                                !pageContent.IsDeleted && !pageContent.Content.IsDeleted
+                                    && pageContent.Content.ContentRegions.Count(contentRegion => !contentRegion.IsDeleted && !contentRegion.Region.IsDeleted).Equals(1)
+                            ).Equals(1)
+                    })
                 .ToList()
                 .ForEach(templates.Add);
 

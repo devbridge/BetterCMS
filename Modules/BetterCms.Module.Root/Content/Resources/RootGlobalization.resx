@@ -825,4 +825,13 @@
   <data name="Button_AddContent_Widget" xml:space="preserve">
     <value>Widget</value>
   </data>
+  <data name="ContentEditMode_Html" xml:space="preserve">
+    <value>HTML</value>
+  </data>
+  <data name="ContentEditMode_Markdown" xml:space="preserve">
+    <value>Markdown</value>
+  </data>
+  <data name="ContentEditMode_SimpleText" xml:space="preserve">
+    <value>Simple Text</value>
+  </data>
 </root>

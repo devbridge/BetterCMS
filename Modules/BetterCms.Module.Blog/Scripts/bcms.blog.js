@@ -50,8 +50,9 @@ bettercms.define('bcms.blog', ['bcms.jquery', 'bcms', 'bcms.modal', 'bcms.siteSe
             loadAuthorsUrl: null,
             deleteAuthorsUrl: null,
             saveAuthorsUrl: null,
-            loadTemplatesUrl: null,
+            loadBlogPostSettingsUrl: null,
             saveDefaultTemplateUrl: null,
+            saveBlogPostSettingUrl: null,
             convertStringToSlugUrl: null,
             uploadBlogPostsImportFileUrl: null,
             startImportUrl: null,
@@ -65,7 +66,7 @@ bettercms.define('bcms.blog', ['bcms.jquery', 'bcms', 'bcms.modal', 'bcms.siteSe
             deleteAuthorDialogTitle: null,
             blogPostsTabTitle: null,
             authorsTabTitle: null,
-            templatesTabTitle: null,
+            settingsTabTitle: null,
             datePickerTooltipTitle: null,
             importBlogPostsTitle: null,
             closeButtonTitle: null,
@@ -73,7 +74,9 @@ bettercms.define('bcms.blog', ['bcms.jquery', 'bcms', 'bcms.modal', 'bcms.siteSe
             uploadButtonTitle: null,
             multipleFilesWarningMessage: null,
             pleaseSelectAFile: null,
-            noBlogPostsSelectedToImport: null
+            noBlogPostsSelectedToImport: null,
+            editModeHtmlTitle: null,
+            editModeMarkdownTitle: null
         },
         classes = {
             inactive: 'bcms-inactive'
@@ -503,9 +506,9 @@ bettercms.define('bcms.blog', ['bcms.jquery', 'bcms', 'bcms.modal', 'bcms.siteSe
 
         if (security.IsAuthorized(["BcmsEditContent"])) {
             var authors = new siteSettings.TabViewModel(globalization.authorsTabTitle, links.loadAuthorsTemplateUrl, initializeSiteSettingsAuthorsList, onShow);
-            var templates = new siteSettings.TabViewModel(globalization.templatesTabTitle, links.loadTemplatesUrl, initializeSiteSettingsTemplatesList, onShow);
+            var blogSettings = new siteSettings.TabViewModel(globalization.settingsTabTitle, links.loadBlogPostSettingsUrl, initializeBlogPostSettingsList, onShow);
             tabs.push(authors);
-            tabs.push(templates);
+            tabs.push(blogSettings);
         }
 
         siteSettings.initContentTabs(tabs);
@@ -673,17 +676,105 @@ bettercms.define('bcms.blog', ['bcms.jquery', 'bcms', 'bcms.modal', 'bcms.siteSe
     })(kogrid.ItemViewModel);
 
     /**
-    * Initializes site settings templates tab
+    * Blog settings list view model
     */
-    function initializeSiteSettingsTemplatesList(container, json) {
+    var SettingsListViewModel = (function (_super) {
+
+        bcms.extendsClass(SettingsListViewModel, _super);
+
+        function SettingsListViewModel(container, items, gridOptions) {
+            _super.call(this, container, links.loadAuthorsUrl, items, gridOptions);
+        }
+
+        SettingsListViewModel.prototype.createItem = function (item) {
+            var newItem = new SettingItemViewModel(this, item);
+            return newItem;
+        };
+
+        return SettingsListViewModel;
+
+    })(kogrid.ListViewModel);
+
+    /**
+    * Setting item view model
+    */
+    var SettingItemViewModel = (function (_super) {
+
+        bcms.extendsClass(SettingItemViewModel, _super);
+
+        function SettingItemViewModel(parent, item) {
+            _super.call(this, parent, item);
+
+            var self = this;
+
+            self.name = ko.observable();
+            self.key = ko.observable();
+            self.value = ko.observable().extend({ required: "" });
+            self.valueTitle = ko.observable();
+            
+            self.registerFields(self.value);
+
+            self.contentEditModes = [];
+            self.contentEditModes.push({
+                'id': 1,
+                'name': globalization.editModeHtmlTitle
+            });
+            self.contentEditModes.push({
+                'id': 2,
+                'name': globalization.editModeMarkdownTitle
+            });
+
+            self.value.subscribe(function(value) {
+                for (var i = 0; i < self.contentEditModes.length; i ++) {
+                    if (self.contentEditModes[i].id == value) {
+                        self.valueTitle(self.contentEditModes[i].name);
+                        break;
+                    }
+                }
+            });
+
+            self.key(item.Key);
+            self.name(item.Name);
+            self.value(item.Value);
+        }
+
+        SettingItemViewModel.prototype.getSaveParams = function () {
+            var params = _super.prototype.getSaveParams.call(this);
+            params.Value = this.value();
+            params.Key = this.key();
+
+            return params;
+        };
+
+        SettingItemViewModel.prototype.onAfterItemSaved = function (json) {
+            _super.prototype.onAfterItemSaved.call(this, json);
+
+            // this.valueTitle(json.Data.ValueTitle);
+        };
+
+        return SettingItemViewModel;
+
+    })(kogrid.ItemViewModel);
+
+    /**
+    * Initializes blog post settings tab
+    */
+    function initializeBlogPostSettingsList(container, json) {
         var html = json.Html,
-            templates = (json.Success == true) ? json.Data : null;
+            templates = (json.Success == true && json.Data) ? json.Data.Templates : null,
+            blogSettings = (json.Success == true && json.Data) ? json.Data.Items : null,
+            gridOptions = (json.Success == true && json.Data) ? json.Data.GridOptions : {},
+            model = {};
 
         container.html(html);
 
         blog.templatesViewModel = new TemplatesListViewModel(templates, container);
+        model.templates = blog.templatesViewModel;
 
-        ko.applyBindings(blog.templatesViewModel, container.get(0));
+        model.settings = new SettingsListViewModel(container, blogSettings, gridOptions);
+        model.settings.saveUrl = links.saveBlogPostSettingUrl;
+
+        ko.applyBindings(model, container.get(0));
     }
 
     /**

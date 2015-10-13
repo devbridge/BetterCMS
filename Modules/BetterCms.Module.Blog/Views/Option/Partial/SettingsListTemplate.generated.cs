@@ -28,35 +28,35 @@ namespace ASP
     using System.Web.UI;
     using System.Web.WebPages;
     
-    #line 1 "..\..\Views\Author\Partial\ListTemplate.cshtml"
+    #line 1 "..\..\Views\Option\Partial\SettingsListTemplate.cshtml"
     using BetterCms.Module.Blog.Content.Resources;
     
     #line default
     #line hidden
     
-    #line 2 "..\..\Views\Author\Partial\ListTemplate.cshtml"
+    #line 2 "..\..\Views\Option\Partial\SettingsListTemplate.cshtml"
     using BetterCms.Module.Root;
     
     #line default
     #line hidden
     
-    #line 3 "..\..\Views\Author\Partial\ListTemplate.cshtml"
+    #line 3 "..\..\Views\Option\Partial\SettingsListTemplate.cshtml"
     using BetterCms.Module.Root.Mvc.Grids;
     
     #line default
     #line hidden
     
-    #line 4 "..\..\Views\Author\Partial\ListTemplate.cshtml"
+    #line 4 "..\..\Views\Option\Partial\SettingsListTemplate.cshtml"
     using BetterCms.Module.Root.ViewModels.Shared;
     
     #line default
     #line hidden
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("RazorGenerator", "2.0.0.0")]
-    [System.Web.WebPages.PageVirtualPathAttribute("~/Views/Author/Partial/ListTemplate.cshtml")]
-    public partial class _Views_Author_Partial_ListTemplate_cshtml : System.Web.Mvc.WebViewPage<dynamic>
+    [System.Web.WebPages.PageVirtualPathAttribute("~/Views/Option/Partial/SettingsListTemplate.cshtml")]
+    public partial class _Views_Option_Partial_SettingsListTemplate_cshtml : System.Web.Mvc.WebViewPage<dynamic>
     {
-        public _Views_Author_Partial_ListTemplate_cshtml()
+        public _Views_Option_Partial_SettingsListTemplate_cshtml()
         {
         }
         public override void Execute()
@@ -64,22 +64,30 @@ namespace ASP
 WriteLiteral("\r\n");
 
             
-            #line 6 "..\..\Views\Author\Partial\ListTemplate.cshtml"
+            #line 6 "..\..\Views\Option\Partial\SettingsListTemplate.cshtml"
   
     var gridViewModel = new EditableGridViewModel
     {
+        CanAddNewItems = false,
+        CanDeleteItems = false,
+        CanEditItems = true,
+        ShowSearch = false,
+        AddPaging = false,
+        AddHiddenFields = false,
         TopBlockClass = "bcms-top-block-holder",
         Columns = new List<EditableGridColumn>
             {
-                new EditableGridColumn(BlogGlobalization.SiteSettings_AuthorsTab_AuthorImage_Title, "", "imageId")
+                new EditableGridColumn(BlogGlobalization.SiteSettings_BlogSettingsTab_SettingName_Title, "", "name")
                     {
-                        HeaderAttributes = "style=\"width: 105px;\"",
-                        CellView = "Partial/ImageCell"
+                        HeaderAttributes = "style=\"width: 250px;\"",
+                        CanBeEdited = false
                     },
-                    
-                new EditableGridColumn(BlogGlobalization.SiteSettings_AuthorsTab_AuthorName_Title, "Name", "name")
+
+                new EditableGridDropDownColumn(BlogGlobalization.SiteSettings_BlogSettingsTab_SettingValue_Title, null, "value")
                     {
-                        AutoFocus = true
+                        OptionsBind = "contentEditModes",
+                        ValueTextBind = "valueTitle",
+                        CanBeEdited = true
                     }
             }
     };
@@ -90,12 +98,14 @@ WriteLiteral("\r\n");
 WriteLiteral("\r\n\r\n");
 
             
-            #line 26 "..\..\Views\Author\Partial\ListTemplate.cshtml"
+            #line 34 "..\..\Views\Option\Partial\SettingsListTemplate.cshtml"
 Write(Html.Partial(RootModuleConstants.EditableGridTemplate, gridViewModel));
 
             
             #line default
             #line hidden
+WriteLiteral("\r\n");
+
         }
     }
 }
