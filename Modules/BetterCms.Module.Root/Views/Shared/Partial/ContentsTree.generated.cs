@@ -84,43 +84,61 @@ WriteLiteral(" type=\"text/html\"");
 
 WriteLiteral(" id=\"bcms-contents-tree-list-template\"");
 
-WriteLiteral(">\r\n    <!-- ko if: $data.length > 0 -->\r\n    <!-- ko foreach: $data -->\r\n    <div" +
-" data-bind=\"css:{\'bcms-contents-tree-sort-block\': type == types.content}, dragga" +
-"bleContent: type == types.content\">\r\n        <div data-bind=\"\r\n            css: " +
-"{\r\n                \'bcms-contents-tree-region\': type == types.region,\r\n         " +
-"       \'bcms-contents-tree-content\': type == types.content,\r\n                \'bc" +
-"ms-dragging\': isBeingDragged(),\r\n                \'bcms-contents-hover\': isHover(" +
-")\r\n            },\r\n            event: {\r\n                mouseleave: onMouseLeav" +
-"e, mouseenter: onMouseEnter\r\n            },\r\n            attr: {\r\n              " +
-"  \'data-item-id\': itemId\r\n            } \">\r\n\r\n            <div data-bind=\"css: {" +
-" \'bcms-contents-tree-region-header\': type == types.region, \'bcms-contents-tree-c" +
-"ontent-header\': type == types.content }\">\r\n                <span data-bind=\"text" +
-": title()\"></span>\r\n\r\n                <div class=\"bcms-tree-controls\" data-bind=" +
-"\"visible: !isBeingDragged()\">\r\n                    <!-- ko if: type == types.reg" +
-"ion -->\r\n                    <a class=\"bcms-tree-controls-add\" data-bind=\"click:" +
-" addContent\"></a>\r\n                    <!-- /ko -->\r\n                    <!-- ko" +
-" if: type == types.content -->\r\n                    <!-- ko if: model.visibleBut" +
-"tons.delete -->\r\n                    <a class=\"bcms-tree-controls-delete\" data-b" +
-"ind=\"click: deleteItem\"></a>\r\n                    <!-- /ko -->\r\n                " +
-"    <!-- ko if: model.visibleButtons.configure -->\r\n                    <a class" +
-"=\"bcms-tree-controls-config\" data-bind=\"click: configure\"></a>\r\n                " +
-"    <!-- /ko -->\r\n                    <!-- ko if: model.visibleButtons.edit -->\r" +
-"\n                    <a class=\"bcms-tree-controls-edit\" data-bind=\"click: editIt" +
-"em, css: {\'bcms-tree-controls-edit-draft\': draft()}\"></a>\r\n                    <" +
-"!-- /ko -->\r\n                    <!-- ko if: model.visibleButtons.history -->\r\n " +
-"                   <a class=\"bcms-tree-controls-history\" data-bind=\"click: histo" +
-"ry\"></a>\r\n                    <!-- /ko -->\r\n                    <!-- /ko -->\r\n  " +
-"              </div>\r\n            </div>\r\n\r\n            <!-- ko if: items().leng" +
-"th > 0 -->\r\n            <div data-bind=\"with: items()\">\r\n                <div da" +
-"ta-bind=\"template: { name: \'bcms-contents-tree-list-template\' }\"></div>\r\n       " +
-"         <!-- ko if: $parent != null && $parent.types && $parent.type == $parent" +
-".types.region && $data.length == 1 -->\r\n                <div style=\"padding: 0; " +
-"margin: 0;\" class=\"bcms-contents-tree-sort-block\" data-bind=\"draggableContent: t" +
-"rue\">&nbsp;</div>\r\n                <!-- /ko -->\r\n            </div>\r\n           " +
-" <!-- /ko -->\r\n            <!-- ko if: type == types.region && items().length ==" +
-" 0 -->\r\n            <div class=\"bcms-contents-tree-sort-block\" data-bind=\"dragga" +
-"bleContent:true\">&nbsp;</div>\r\n            <!-- /ko -->\r\n        </div>\r\n    </d" +
-"iv>\r\n    <!-- /ko -->\r\n    <!-- /ko -->\r\n</script>");
+WriteLiteral(@">
+    <!-- ko if: $data.length > 0 -->
+    <!-- ko foreach: $data -->
+    <div data-bind=""css:{'bcms-contents-tree-sort-block': type == types.content}, draggableContent: type == types.content"">
+        <div data-bind=""
+            css: {
+                'bcms-contents-tree-region': type == types.region,
+                'bcms-contents-tree-content': type == types.content,
+                'bcms-dragging': isBeingDragged(),
+                'bcms-contents-hover': isHover()
+            },
+            event: {
+                mouseleave: onMouseLeave, mouseenter: onMouseEnter
+            },
+            attr: {
+                'data-item-id': itemId
+            } "">
+
+            <div data-bind=""css: { 'bcms-contents-tree-region-header': type == types.region, 'bcms-contents-tree-content-header': type == types.content }"">
+                <span data-bind=""text: title()""></span>
+
+                <div class=""bcms-tree-controls"" data-bind=""visible: !isBeingDragged()"">
+                    <!-- ko if: type == types.region -->
+                    <div class=""bcms-contents-tree-add-block ");
+
+WriteLiteral("\" data-bind=\"click: addContent\">\r\n                        <div class=\"bcms-conten" +
+"ts-tree-add-content\">\r\n                            <div class=\"bcms-contents-tre" +
+"e-controls bcms-region-addhtml\">HTML</div>\r\n                            <div cla" +
+"ss=\"bcms-contents-tree-controls bcms-region-addmarkdown\">Markdown</div>\r\n       " +
+"                     <div class=\"bcms-contents-tree-controls bcms-region-addtext" +
+"\">Plain text</div>\r\n                            <div class=\"bcms-contents-tree-c" +
+"ontrols bcms-region-insertwidget\">Widget</div>\r\n                        </div>\r\n" +
+"                    </div>\r\n                    <!-- /ko -->\r\n                  " +
+"  <!-- ko if: type == types.content -->\r\n                    <!-- ko if: model.v" +
+"isibleButtons.delete -->\r\n                    <a class=\"bcms-tree-controls-delet" +
+"e\" data-bind=\"click: deleteItem\"></a>\r\n                    <!-- /ko -->\r\n       " +
+"             <!-- ko if: model.visibleButtons.configure -->\r\n                   " +
+" <a class=\"bcms-tree-controls-config\" data-bind=\"click: configure\"></a>\r\n       " +
+"             <!-- /ko -->\r\n                    <!-- ko if: model.visibleButtons." +
+"edit -->\r\n                    <a class=\"bcms-tree-controls-edit\" data-bind=\"clic" +
+"k: editItem, css: {\'bcms-tree-controls-edit-draft\': draft()}\"></a>\r\n            " +
+"        <!-- /ko -->\r\n                    <!-- ko if: model.visibleButtons.histo" +
+"ry -->\r\n                    <a class=\"bcms-tree-controls-history\" data-bind=\"cli" +
+"ck: history\"></a>\r\n                    <!-- /ko -->\r\n                    <!-- /k" +
+"o -->\r\n                </div>\r\n            </div>\r\n\r\n            <!-- ko if: ite" +
+"ms().length > 0 -->\r\n            <div data-bind=\"with: items()\">\r\n              " +
+"  <div data-bind=\"template: { name: \'bcms-contents-tree-list-template\' }\"></div>" +
+"\r\n                <!-- ko if: $parent != null && $parent.types && $parent.type =" +
+"= $parent.types.region && $data.length == 1 -->\r\n                <div style=\"pad" +
+"ding: 0; margin: 0;\" class=\"bcms-contents-tree-sort-block\" data-bind=\"draggableC" +
+"ontent: true\">&nbsp;</div>\r\n                <!-- /ko -->\r\n            </div>\r\n  " +
+"          <!-- /ko -->\r\n            <!-- ko if: type == types.region && items()." +
+"length == 0 -->\r\n            <div class=\"bcms-contents-tree-sort-block\" data-bin" +
+"d=\"draggableContent:true\">&nbsp;</div>\r\n            <!-- /ko -->\r\n        </div>" +
+"\r\n    </div>\r\n    <!-- /ko -->\r\n    <!-- /ko -->\r\n</script>");
 
         }
     }

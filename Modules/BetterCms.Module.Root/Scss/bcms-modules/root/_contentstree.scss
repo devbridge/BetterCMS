@@ -8,8 +8,7 @@ $contents-tree-controls: (
                 ('config', $bcms-manager-options),
                 ('history', $bcms-manager-history),
                 ('edit', $bcms-manager-edit),
-                ('delete', $bcms-manager-delete),
-                ('add', $bcms-manager-add-content)
+                ('delete', $bcms-manager-delete), //('add', $bcms-manager-add-content)
 );
 
 .bcms-tree-container {
@@ -35,12 +34,17 @@ $contents-tree-controls: (
         transition: background-color 200ms ease;
     }
 
+    &-region-header {
+        z-index: 1;
+    }
+
     @each $name, $color, $font-size, $icon in $content-headers {
         &-#{$name} {
             position: relative;
 
             > span {
                 color: $color;
+                cursor: default;
                 font-size: $font-size;
                 font-weight: 700;
                 text-transform: uppercase;
@@ -55,14 +59,37 @@ $contents-tree-controls: (
         }
     }
 
-    //&-content-header {
-    //    &:hover {
-    //        .bcms-tree-controls {
-    //            opacity: 1;
-    //            visibility: visible;
-    //        }
-    //    }
-    //}
+    &-add-block {
+        @include position(absolute, -15px -15px null null);
+        @include size(30px 26px);
+        background: $blue-main url($bcms-add-content) no-repeat center;
+
+        &.bcms-active {
+            background-color: darken($blue-main, 10%);
+        }
+    }
+
+    &-add-content {
+        @include position(absolute, 100% 0 null null);
+        display: none;
+
+        .bcms-active & {
+            display: block;
+        }
+    }
+
+    &-controls {
+        @include transition(all 200ms);
+        background-color: darken($blue-main, 10%);
+        color: $white;
+        line-height: 18px;
+        padding: 5px 20px;
+        white-space: nowrap;
+
+        &:hover {
+            background-color: darken($gray-l50, 10%);
+        }
+    }
 
     &-content {
         @include transition(background-color 150ms);
@@ -74,11 +101,9 @@ $contents-tree-controls: (
         padding: 15px 15px 15px 30px;
         position: relative;
 
-        &:hover {
-            .bcms-tree-controls {
-                opacity: 1;
-                visibility: visible;
-            }
+        &.bcms-contents-hover {
+            background-color: $gray-l30;
+            cursor: move;
         }
     }
 }
@@ -99,21 +124,21 @@ $contents-tree-controls: (
     margin: 15px 0 0;
 }
 
-.bcms-contents-hover {
-    background-color: $gray-l30;
+//.bcms-contents-hover {
+//    background-color: $gray-l30;
+//}
+
+.bcms-contents-hover > div > .bcms-tree-controls {
+    opacity: 1;
+    visibility: visible;
 }
 
-//.bcms-contents-hover > div > .bcms-tree-controls {
-//    opacity: 1;
-//    visibility: visible;
-//}
-//
 .bcms-tree-controls {
     cursor: pointer;
     float: right;
-    opacity: 0;
+    //opacity: 0;
     transition: all 150ms ease;
-    visibility: hidden;
+    //visibility: hidden;
 }
 
 .bcms-tree-controls {

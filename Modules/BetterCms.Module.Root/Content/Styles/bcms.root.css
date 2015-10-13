@@ -1326,11 +1326,16 @@ div.bcms-btn-logout:active {
 }
 
 .bcms-contents-tree-region-header {
+  z-index: 1;
+}
+
+.bcms-contents-tree-region-header {
   position: relative;
 }
 
 .bcms-contents-tree-region-header > span {
   color: #0383df;
+  cursor: default;
   font-size: 16px;
   font-weight: 700;
   text-transform: uppercase;
@@ -1355,6 +1360,7 @@ div.bcms-btn-logout:active {
 
 .bcms-contents-tree-content-header > span {
   color: #303030;
+  cursor: default;
   font-size: 14px;
   font-weight: 700;
   text-transform: uppercase;
@@ -1373,6 +1379,45 @@ div.bcms-btn-logout:active {
   left: -20px;
 }
 
+.bcms-contents-tree-add-block {
+  position: absolute;
+  top: -15px;
+  right: -15px;
+  height: 26px;
+  width: 30px;
+  background: #0383df url("data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxNCIgaGVpZ2h0PSIxNCIgdmlld0JveD0iMCAwIDE0IDE0Ij4KIDxnIGZpbGw9IiNmZmYiPgogIDxwYXRoIGQ9Im01IDBoNHYxNGgtNHoiLz4KICA8cGF0aCBkPSJtMCA1aDE0djRoLTE0eiIvPgogPC9nPgo8L3N2Zz4K") no-repeat center;
+}
+
+.bcms-contents-tree-add-block.bcms-active {
+  background-color: #0265ad;
+}
+
+.bcms-contents-tree-add-content {
+  position: absolute;
+  top: 100%;
+  right: 0;
+  display: none;
+}
+
+.bcms-active .bcms-contents-tree-add-content {
+  display: block;
+}
+
+.bcms-contents-tree-controls {
+  -webkit-transition: all 200ms;
+  -moz-transition: all 200ms;
+  transition: all 200ms;
+  background-color: #0265ad;
+  color: #ffffff;
+  line-height: 18px;
+  padding: 5px 20px;
+  white-space: nowrap;
+}
+
+.bcms-contents-tree-controls:hover {
+  background-color: #4e4e4e;
+}
+
 .bcms-contents-tree-content {
   -webkit-transition: background-color 150ms;
   -moz-transition: background-color 150ms;
@@ -1386,9 +1431,9 @@ div.bcms-btn-logout:active {
   position: relative;
 }
 
-.bcms-contents-tree-content:hover .bcms-tree-controls {
-  opacity: 1;
-  visibility: visible;
+.bcms-contents-tree-content.bcms-contents-hover {
+  background-color: #f5f5f5;
+  cursor: move;
 }
 
 .bcms-dragging {
@@ -1407,16 +1452,15 @@ div.bcms-btn-logout:active {
   margin: 15px 0 0;
 }
 
-.bcms-contents-hover {
-  background-color: #f5f5f5;
+.bcms-contents-hover > div > .bcms-tree-controls {
+  opacity: 1;
+  visibility: visible;
 }
 
 .bcms-tree-controls {
   cursor: pointer;
   float: right;
-  opacity: 0;
   transition: all 150ms ease;
-  visibility: hidden;
 }
 
 .bcms-tree-controls {
@@ -1455,10 +1499,6 @@ div.bcms-btn-logout:active {
 
 .bcms-tree-controls-delete {
   background: url("data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxNCIgaGVpZ2h0PSIxOCIgdmlld0JveD0iMCAwIDE0IDE4Ij4KIDxwYXRoIGZpbGw9IiMwMzgzZGYiIGZpbGwtcnVsZT0iZXZlbm9kZCIgZD0ibTAgNC45ODZ2LTEuMTE5YzAgMCAuMDAzLS44MDkgNC4wODMtMS4wNzZ2LTEuNDM4YzAtLjc0Ni42MTEtMS4zNTMgMS4zNjEtMS4zNTNoMy4xMTJjLjc1IDAgMS4zNjEuNjA3IDEuMzYxIDEuMzUzdjEuNDM4YzQuMDguMjY3IDQuMDgzIDEuMDc2IDQuMDgzIDEuMDc2djEuMTE5aC0xNG04LTIuOTkyaC0ydi45OThjLjQyMi0uMDExLjUxMiAwIDEgMCAuNDg4IDAgLjU3OC0uMDExIDEgMHYtLjk5OG0zLjk3NCAxNi4wMDZoLTkuOTQ4bC0xLjAyMy0xMS4wMTJoMTEuOTk0bC0xLjAyMyAxMS4wMTJtLTcuNjgzLTguNzMzYy0uMDE4LS4yOTQtLjI5LS41MTgtLjYxMi0uNTAyLS4zMTkuMDE2LS41NjQuMjY3LS41NDcuNTYxbC4zODcgNi4zOTRjLjAxNy4yODQuMjczLjUwNC41NzkuNTA0LjAxMSAwIC4wMjItLjAwMS4wMzMtLjAwMS4zMi0uMDE2LjU2NS0uMjY4LjU0Ny0uNTYybC0uMzg3LTYuMzk0bTMuMjg5LjAzYzAtLjI5NS0uMjU5LS41MzMtLjU4LS41MzMtLjMyIDAtLjU4LjIzOC0uNTguNTMzdjYuMzk0YzAgLjI5NC4yNi41MzMuNTguNTMzLjMyMSAwIC41OC0uMjM5LjU4LS41MzN2LTYuMzk0bTIuNzQxLS41MzJjLS4zMTUtLjAxNC0uNTk0LjIwOC0uNjEyLjUwMmwtLjM4NyA2LjM5NGMtLjAxOC4yOTQuMjI4LjU0Ni41NDcuNTYyLjAxMiAwIC4wMjIuMDAxLjAzMy4wMDEuMzA2IDAgLjU2Mi0uMjIuNTc5LS41MDRsLjM4Ny02LjM5NGMuMDE4LS4yOTMtLjIyNy0uNTQ1LS41NDctLjU2MSIvPgo8L3N2Zz4K") no-repeat center;
-}
-
-.bcms-tree-controls-add {
-  background: url("data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxNCIgaGVpZ2h0PSIxNCIgdmlld0JveD0iMCAwIDE0IDE0Ij4KIDxnIGZpbGw9IiMwMzgzZGYiPgogIDxwYXRoIGQ9Im01IDBoNHYxNGgtNHoiLz4KICA8cGF0aCBkPSJtMCA1aDE0djRoLTE0eiIvPgogPC9nPgo8L3N2Zz4K") no-repeat center;
 }
 
 .bcms-draggable-region {
@@ -2191,16 +2231,16 @@ a.bcms-error-close {
   background-color: #0265ad;
 }
 
-.bcms-region-addcontent.bcms-active .bcms-region-options-block {
-  display: block;
-}
-
 .bcms-region-options-block {
   position: absolute;
   top: 100%;
   right: 0;
   display: none;
   white-space: nowrap;
+}
+
+.bcms-active .bcms-region-options-block {
+  display: block;
 }
 
 .bcms-region-pick-editor {

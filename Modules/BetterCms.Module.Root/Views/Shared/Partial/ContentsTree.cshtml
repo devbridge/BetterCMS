@@ -38,7 +38,14 @@
 
                 <div class="bcms-tree-controls" data-bind="visible: !isBeingDragged()">
                     <!-- ko if: type == types.region -->
-                    <a class="bcms-tree-controls-add" data-bind="click: addContent"></a>
+                    <div class="bcms-contents-tree-add-block @*bcms-active*@" data-bind="click: addContent">
+                        <div class="bcms-contents-tree-add-content">
+                            <div class="bcms-contents-tree-controls bcms-region-addhtml">HTML</div>
+                            <div class="bcms-contents-tree-controls bcms-region-addmarkdown">Markdown</div>
+                            <div class="bcms-contents-tree-controls bcms-region-addtext">Plain text</div>
+                            <div class="bcms-contents-tree-controls bcms-region-insertwidget">Widget</div>
+                        </div>
+                    </div>
                     <!-- /ko -->
                     <!-- ko if: type == types.content -->
                     <!-- ko if: model.visibleButtons.delete -->
