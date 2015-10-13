@@ -19,8 +19,6 @@ namespace BetterCms
 
         TimeSpan ProcessTimeout { get; set; }
 
-        string TrashFolder { get; set; }
-
         string GetValue(string key);
     }
 }
