@@ -208,6 +208,7 @@
     <Compile Include="Models\Migrations\Migration201305271258.cs" />
     <Compile Include="Models\Migrations\Migration201305271234.cs" />
     <Compile Include="Models\Migrations\Migration201502101139.cs" />
+    <Compile Include="Models\Migrations\Migration201510131346.cs" />
     <Compile Include="Models\Option.cs" />
     <Compile Include="Models\Migrations\InitialSetup.cs" />
     <Compile Include="Models\Migrations\MigrationVersionMetaData.cs" />
