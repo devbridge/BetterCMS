@@ -72,18 +72,17 @@ $overlay-control-buttons: (
 
         &.bcms-active {
             background-color: darken($blue-main, 10%);
-
-            .bcms-region-options-block {
-                display: block;
-            }
         }
     }
 
     &-options-block {
         @include position(absolute, 100% 0 null null);
-
         display: none;
         white-space: nowrap;
+
+        .bcms-active & {
+            display: block;
+        }
     }
 
     &-pick-editor {
