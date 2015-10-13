@@ -28,35 +28,41 @@ namespace ASP
     using System.Web.UI;
     using System.Web.WebPages;
     
-    #line 1 "..\..\Views\Option\Partial\SettingsListTemplate.cshtml"
+    #line 1 "..\..\Views\Option\Settings.cshtml"
     using BetterCms.Module.Blog.Content.Resources;
     
     #line default
     #line hidden
     
-    #line 2 "..\..\Views\Option\Partial\SettingsListTemplate.cshtml"
+    #line 3 "..\..\Views\Option\Settings.cshtml"
     using BetterCms.Module.Root;
     
     #line default
     #line hidden
     
-    #line 3 "..\..\Views\Option\Partial\SettingsListTemplate.cshtml"
+    #line 4 "..\..\Views\Option\Settings.cshtml"
     using BetterCms.Module.Root.Mvc.Grids;
     
     #line default
     #line hidden
     
-    #line 4 "..\..\Views\Option\Partial\SettingsListTemplate.cshtml"
+    #line 2 "..\..\Views\Option\Settings.cshtml"
+    using BetterCms.Module.Root.Mvc.Helpers;
+    
+    #line default
+    #line hidden
+    
+    #line 5 "..\..\Views\Option\Settings.cshtml"
     using BetterCms.Module.Root.ViewModels.Shared;
     
     #line default
     #line hidden
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("RazorGenerator", "2.0.0.0")]
-    [System.Web.WebPages.PageVirtualPathAttribute("~/Views/Option/Partial/SettingsListTemplate.cshtml")]
-    public partial class _Views_Option_Partial_SettingsListTemplate_cshtml : System.Web.Mvc.WebViewPage<dynamic>
+    [System.Web.WebPages.PageVirtualPathAttribute("~/Views/Option/Settings.cshtml")]
+    public partial class _Views_Option_Settings_cshtml : System.Web.Mvc.WebViewPage<dynamic>
     {
-        public _Views_Option_Partial_SettingsListTemplate_cshtml()
+        public _Views_Option_Settings_cshtml()
         {
         }
         public override void Execute()
@@ -64,7 +70,16 @@ namespace ASP
 WriteLiteral("\r\n");
 
             
-            #line 6 "..\..\Views\Option\Partial\SettingsListTemplate.cshtml"
+            #line 7 "..\..\Views\Option\Settings.cshtml"
+Write(Html.TabbedContentMessagesBox());
+
+            
+            #line default
+            #line hidden
+WriteLiteral("\r\n\r\n");
+
+            
+            #line 9 "..\..\Views\Option\Settings.cshtml"
   
     var gridViewModel = new EditableGridViewModel
     {
@@ -75,6 +90,7 @@ WriteLiteral("\r\n");
         AddPaging = false,
         AddHiddenFields = false,
         TopBlockClass = "bcms-top-block-holder",
+        TopBlockTitle = BlogGlobalization.SiteSettings_BlogSettingsTab_Header,
         Columns = new List<EditableGridColumn>
             {
                 new EditableGridColumn(BlogGlobalization.SiteSettings_BlogSettingsTab_SettingName_Title, "", "name")
@@ -95,16 +111,22 @@ WriteLiteral("\r\n");
             
             #line default
             #line hidden
-WriteLiteral("\r\n\r\n");
+WriteLiteral("\r\n\r\n\r\n<div");
+
+WriteLiteral(" class=\"bcms-blog-templates-container\"");
+
+WriteLiteral(">\r\n");
+
+WriteLiteral("    ");
 
             
-            #line 34 "..\..\Views\Option\Partial\SettingsListTemplate.cshtml"
+            #line 40 "..\..\Views\Option\Settings.cshtml"
 Write(Html.Partial(RootModuleConstants.EditableGridTemplate, gridViewModel));
 
             
             #line default
             #line hidden
-WriteLiteral("\r\n");
+WriteLiteral("\r\n</div>");
 
         }
     }

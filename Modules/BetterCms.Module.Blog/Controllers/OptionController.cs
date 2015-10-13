@@ -1,12 +1,14 @@
-﻿using System;
-using System.Web.Mvc;
+﻿using System.Web.Mvc;
 
 using BetterCms.Core.Security;
+
 using BetterCms.Module.Blog.Commands.GetBlogSettings;
+using BetterCms.Module.Blog.Commands.GetTemplates;
 using BetterCms.Module.Blog.Commands.SaveBlogPostSetting;
 using BetterCms.Module.Blog.Commands.SaveDefaultTemplate;
 using BetterCms.Module.Blog.ViewModels.Blog;
 using BetterCms.Module.Blog.ViewModels.Setting;
+
 using BetterCms.Module.Root;
 using BetterCms.Module.Root.Mvc;
 
@@ -28,8 +30,20 @@ namespace BetterCms.Module.Blog.Controllers
         public ActionResult Settings()
         {
             var templates = GetCommand<GetBlogSettingsCommand>().ExecuteCommand(true);
-            var view = RenderView("Templates", null);
+            var view = RenderView("Settings", null);
             
+            return ComboWireJson(templates != null, view, templates, JsonRequestBehavior.AllowGet);
+        }
+
+        /// <summary>
+        /// Gets templates list.
+        /// </summary>
+        /// <returns>Template list.</returns>
+        public ActionResult Templates()
+        {
+            var templates = GetCommand<GetTemplatesCommand>().ExecuteCommand(true);
+            var view = RenderView("Templates");
+
             return ComboWireJson(templates != null, view, templates, JsonRequestBehavior.AllowGet);
         }
 

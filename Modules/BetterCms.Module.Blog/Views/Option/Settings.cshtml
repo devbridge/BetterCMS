@@ -1,7 +1,10 @@
 ﻿@using BetterCms.Module.Blog.Content.Resources
+@using BetterCms.Module.Root.Mvc.Helpers
 @using BetterCms.Module.Root
 @using BetterCms.Module.Root.Mvc.Grids
 @using BetterCms.Module.Root.ViewModels.Shared
+
+@Html.TabbedContentMessagesBox()
 
 @{
     var gridViewModel = new EditableGridViewModel
@@ -13,6 +16,7 @@
         AddPaging = false,
         AddHiddenFields = false,
         TopBlockClass = "bcms-top-block-holder",
+        TopBlockTitle = BlogGlobalization.SiteSettings_BlogSettingsTab_Header,
         Columns = new List<EditableGridColumn>
             {
                 new EditableGridColumn(BlogGlobalization.SiteSettings_BlogSettingsTab_SettingName_Title, "", "name")
@@ -31,4 +35,7 @@
     };
 }
 
-@Html.Partial(RootModuleConstants.EditableGridTemplate, gridViewModel)
+
+<div class="bcms-blog-templates-container">
+    @Html.Partial(RootModuleConstants.EditableGridTemplate, gridViewModel)
+</div>

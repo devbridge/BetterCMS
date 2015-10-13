@@ -415,12 +415,18 @@
     <value>Category with ID "{0}" wasn't found in the list of importing categories</value>
   </data>
   <data name="SiteSettings_BlogSettingsTab_SettingName_Title" xml:space="preserve">
-    <value>Name</value>
+    <value>Setting</value>
   </data>
   <data name="SiteSettings_BlogSettingsTab_SettingValue_Title" xml:space="preserve">
     <value>Value</value>
   </data>
   <data name="SiteSettings_BlogSettingsTab_DefaultEditMode_Title" xml:space="preserve">
     <value>Default content edit mode</value>
+  </data>
+  <data name="SiteSettings_Blogs_TemplatesTab_Title" xml:space="preserve">
+    <value>Layout</value>
+  </data>
+  <data name="SiteSettings_BlogSettingsTab_Header" xml:space="preserve">
+    <value>Blog Settings</value>
   </data>
 </root>

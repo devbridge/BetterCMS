@@ -2,9 +2,11 @@
 @using BetterCms.Module.Root.Content.Resources
 @using BetterCms.Module.Root.Mvc.Helpers
 
+@Html.TabbedContentMessagesBox()
+
 <div class="bcms-blog-templates-container">
     
-    <div class="bcms-top-block-holder" data-bind="with:templates">
+    <div class="bcms-top-block-holder">
         <div class="bcms-large-titles">@BlogGlobalization.SiteSettings_Templates_Title</div>
         <div class="bcms-search-block">
             <input type="text" class="bcms-editor-field-box" placeholder="@RootGlobalization.WaterMark_Search" data-bind="value: searchQuery, valueUpdate: 'afterkeydown', enterPress: search">
@@ -12,13 +14,7 @@
         </div>
     </div>
 
-    @Html.TabbedContentMessagesBox()
-
-    <div data-bind="with: settings">
-        @Html.Partial("Partial/SettingsListTemplate")
-    </div>
-
-    <div class="bcms-blog-templates-container" data-bind="with:templates">
+    <div class="bcms-blog-templates-container">
         <!-- ko foreach: templateRows -->
         <div class="bcms-blog-templates-holder">
             <!-- ko foreach: templates() -->

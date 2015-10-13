@@ -898,6 +898,15 @@ namespace BetterCms.Module.Blog.Content.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Layout.
+        /// </summary>
+        public static string SiteSettings_Blogs_TemplatesTab_Title {
+            get {
+                return ResourceManager.GetString("SiteSettings_Blogs_TemplatesTab_Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Posts Title.
         /// </summary>
         public static string SiteSettings_Blogs_TitleColumn {
@@ -916,7 +925,16 @@ namespace BetterCms.Module.Blog.Content.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Name.
+        ///   Looks up a localized string similar to Blog Settings.
+        /// </summary>
+        public static string SiteSettings_BlogSettingsTab_Header {
+            get {
+                return ResourceManager.GetString("SiteSettings_BlogSettingsTab_Header", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Setting.
         /// </summary>
         public static string SiteSettings_BlogSettingsTab_SettingName_Title {
             get {

@@ -55,15 +55,22 @@ namespace ASP
         }
         public override void Execute()
         {
-WriteLiteral("\r\n<div");
+WriteLiteral("\r\n");
+
+            
+            #line 5 "..\..\Views\Option\Templates.cshtml"
+Write(Html.TabbedContentMessagesBox());
+
+            
+            #line default
+            #line hidden
+WriteLiteral("\r\n\r\n<div");
 
 WriteLiteral(" class=\"bcms-blog-templates-container\"");
 
 WriteLiteral(">\r\n    \r\n    <div");
 
 WriteLiteral(" class=\"bcms-top-block-holder\"");
-
-WriteLiteral(" data-bind=\"with:templates\"");
 
 WriteLiteral(">\r\n        <div");
 
@@ -72,7 +79,7 @@ WriteLiteral(" class=\"bcms-large-titles\"");
 WriteLiteral(">");
 
             
-            #line 8 "..\..\Views\Option\Templates.cshtml"
+            #line 10 "..\..\Views\Option\Templates.cshtml"
                                   Write(BlogGlobalization.SiteSettings_Templates_Title);
 
             
@@ -88,14 +95,14 @@ WriteLiteral(" type=\"text\"");
 
 WriteLiteral(" class=\"bcms-editor-field-box\"");
 
-WriteAttribute("placeholder", Tuple.Create(" placeholder=\"", 454), Tuple.Create("\"", 503)
+WriteAttribute("placeholder", Tuple.Create(" placeholder=\"", 463), Tuple.Create("\"", 512)
             
-            #line 10 "..\..\Views\Option\Templates.cshtml"
-, Tuple.Create(Tuple.Create("", 468), Tuple.Create<System.Object, System.Int32>(RootGlobalization.WaterMark_Search
+            #line 12 "..\..\Views\Option\Templates.cshtml"
+, Tuple.Create(Tuple.Create("", 477), Tuple.Create<System.Object, System.Int32>(RootGlobalization.WaterMark_Search
             
             #line default
             #line hidden
-, 468), false)
+, 477), false)
 );
 
 WriteLiteral(" data-bind=\"value: searchQuery, valueUpdate: \'afterkeydown\', enterPress: search\"");
@@ -109,43 +116,15 @@ WriteLiteral(" data-bind=\"click: search\"");
 WriteLiteral(">");
 
             
-            #line 11 "..\..\Views\Option\Templates.cshtml"
+            #line 13 "..\..\Views\Option\Templates.cshtml"
                                                                                 Write(RootGlobalization.Button_Search);
 
             
             #line default
             #line hidden
-WriteLiteral("</div>\r\n        </div>\r\n    </div>\r\n\r\n");
-
-WriteLiteral("    ");
-
-            
-            #line 15 "..\..\Views\Option\Templates.cshtml"
-Write(Html.TabbedContentMessagesBox());
-
-            
-            #line default
-            #line hidden
-WriteLiteral("\r\n\r\n    <div");
-
-WriteLiteral(" data-bind=\"with: settings\"");
-
-WriteLiteral(">\r\n");
-
-WriteLiteral("        ");
-
-            
-            #line 18 "..\..\Views\Option\Templates.cshtml"
-   Write(Html.Partial("Partial/SettingsListTemplate"));
-
-            
-            #line default
-            #line hidden
-WriteLiteral("\r\n    </div>\r\n\r\n    <div");
+WriteLiteral("</div>\r\n        </div>\r\n    </div>\r\n\r\n    <div");
 
 WriteLiteral(" class=\"bcms-blog-templates-container\"");
-
-WriteLiteral(" data-bind=\"with:templates\"");
 
 WriteLiteral(">\r\n        <!-- ko foreach: templateRows -->\r\n        <div");
 
@@ -199,7 +178,7 @@ WriteLiteral(" class=\"bcms-blog-templates-active-text\"");
 WriteLiteral(">");
 
             
-            #line 37 "..\..\Views\Option\Templates.cshtml"
+            #line 33 "..\..\Views\Option\Templates.cshtml"
                                                             Write(BlogGlobalization.SiteSettings_Templates_DefaultTemplate);
 
             
@@ -215,7 +194,7 @@ WriteLiteral(" data-bind=\"click: select\"");
 WriteLiteral(">");
 
             
-            #line 40 "..\..\Views\Option\Templates.cshtml"
+            #line 36 "..\..\Views\Option\Templates.cshtml"
                                                                     Write(BlogGlobalization.SiteSettings_Templates_SelectButton);
 
             
@@ -229,7 +208,7 @@ WriteLiteral(" class=\"bcms-blog-templates-notcompatible-text\"");
 WriteLiteral(">");
 
             
-            #line 43 "..\..\Views\Option\Templates.cshtml"
+            #line 39 "..\..\Views\Option\Templates.cshtml"
                                                                    Write(BlogGlobalization.SiteSettings_Templates_IncompatibleTemplate);
 
             

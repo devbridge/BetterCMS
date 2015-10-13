@@ -57,7 +57,8 @@ bettercms.define('bcms.blog', ['bcms.jquery', 'bcms', 'bcms.modal', 'bcms.siteSe
             uploadBlogPostsImportFileUrl: null,
             startImportUrl: null,
             deleteUploadedFileUrl: null,
-            exportBlogPostsUrl: null
+            exportBlogPostsUrl: null,
+            loadTemplatesUrl: null
         },
         globalization = {
             createNewPostDialogTitle: null,
@@ -76,7 +77,8 @@ bettercms.define('bcms.blog', ['bcms.jquery', 'bcms', 'bcms.modal', 'bcms.siteSe
             pleaseSelectAFile: null,
             noBlogPostsSelectedToImport: null,
             editModeHtmlTitle: null,
-            editModeMarkdownTitle: null
+            editModeMarkdownTitle: null,
+            templatesTabTitle: null
         },
         classes = {
             inactive: 'bcms-inactive'
@@ -506,8 +508,10 @@ bettercms.define('bcms.blog', ['bcms.jquery', 'bcms', 'bcms.modal', 'bcms.siteSe
 
         if (security.IsAuthorized(["BcmsEditContent"])) {
             var authors = new siteSettings.TabViewModel(globalization.authorsTabTitle, links.loadAuthorsTemplateUrl, initializeSiteSettingsAuthorsList, onShow);
+            var templates = new siteSettings.TabViewModel(globalization.templatesTabTitle, links.loadTemplatesUrl, initializeSiteSettingsTemplatesList, onShow);
             var blogSettings = new siteSettings.TabViewModel(globalization.settingsTabTitle, links.loadBlogPostSettingsUrl, initializeBlogPostSettingsList, onShow);
             tabs.push(authors);
+            tabs.push(templates);
             tabs.push(blogSettings);
         }
 
@@ -759,20 +763,29 @@ bettercms.define('bcms.blog', ['bcms.jquery', 'bcms', 'bcms.modal', 'bcms.siteSe
     /**
     * Initializes blog post settings tab
     */
-    function initializeBlogPostSettingsList(container, json) {
+    function initializeSiteSettingsTemplatesList(container, json) {
         var html = json.Html,
-            templates = (json.Success == true && json.Data) ? json.Data.Templates : null,
-            blogSettings = (json.Success == true && json.Data) ? json.Data.Items : null,
-            gridOptions = (json.Success == true && json.Data) ? json.Data.GridOptions : {},
-            model = {};
+            templates = (json.Success == true) ? json.Data : null;
 
         container.html(html);
 
         blog.templatesViewModel = new TemplatesListViewModel(templates, container);
-        model.templates = blog.templatesViewModel;
 
-        model.settings = new SettingsListViewModel(container, blogSettings, gridOptions);
-        model.settings.saveUrl = links.saveBlogPostSettingUrl;
+        ko.applyBindings(blog.templatesViewModel, container.get(0));
+    }
+
+    /**
+    * Initializes blog post settings tab
+    */
+    function initializeBlogPostSettingsList(container, json) {
+        var html = json.Html,
+            blogSettings = (json.Success == true && json.Data) ? json.Data.Items : null,
+            gridOptions = (json.Success == true && json.Data) ? json.Data.GridOptions : {},
+            model = new SettingsListViewModel(container, blogSettings, gridOptions);
+
+        model.saveUrl = links.saveBlogPostSettingUrl;
+
+        container.html(html);
 
         ko.applyBindings(model, container.get(0));
     }

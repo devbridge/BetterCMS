@@ -37,6 +37,7 @@ namespace BetterCms.Module.Blog.Registration
                             new JavaScriptModuleLinkTo<BlogMLController>(this, "startImportUrl", c => c.StartImport(null)),
                             new JavaScriptModuleLinkTo<BlogMLController>(this, "deleteUploadedFileUrl", c => c.DeleteUploadedFile("{0}")),
                             new JavaScriptModuleLinkTo<BlogMLController>(this, "exportBlogPostsUrl", c => c.Export(null)),
+                            new JavaScriptModuleLinkTo<OptionController>(this, "loadTemplatesUrl", c => c.Templates())
                         };
 
             Globalization = new IActionProjection[]
@@ -56,7 +57,8 @@ namespace BetterCms.Module.Blog.Registration
                             new JavaScriptModuleGlobalization(this, "closeButtonTitle", () => RootGlobalization.Button_Close),
                             new JavaScriptModuleGlobalization(this, "noBlogPostsSelectedToImport", () => BlogGlobalization.ImportBlogPosts_NoBlogPostSelected_Message),
                             new JavaScriptModuleGlobalization(this, "editModeHtmlTitle", () => RootGlobalization.ContentEditMode_Html),
-                            new JavaScriptModuleGlobalization(this, "editModeMarkdownTitle", () => RootGlobalization.ContentEditMode_Markdown)
+                            new JavaScriptModuleGlobalization(this, "editModeMarkdownTitle", () => RootGlobalization.ContentEditMode_Markdown),
+                            new JavaScriptModuleGlobalization(this, "templatesTabTitle", () => BlogGlobalization.SiteSettings_Blogs_TemplatesTab_Title)
                         };
         }
     }

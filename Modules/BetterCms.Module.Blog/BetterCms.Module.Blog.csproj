@@ -165,7 +165,7 @@
     <Compile Include="Accessors\BlogPostContentAccessor.cs" />
     <Compile Include="Commands\DeleteBlogPostImportFile\DeleteBlogPostImportFileCommand.cs" />
     <Compile Include="Commands\ExportBlogPostsCommand\ExportBlogPostsCommand.cs" />
-    <Compile Include="Commands\GetBlogSettings\GetBlogSettingsCommandResponse.cs" />
+    <Compile Include="Commands\GetTemplates\GetTemplatesCommand.cs" />
     <Compile Include="Commands\SaveBlogPostSetting\SaveBlogPostSettingCommand.cs" />
     <Compile Include="Commands\SaveBlogPost\SaveBlogPostCommandRequest.cs" />
     <Compile Include="Commands\UploadBlogsImportFile\UploadBlogsImportFileCommand.cs" />
@@ -280,10 +280,10 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>BlogsFilterTemplate.cshtml</DependentUpon>
     </Compile>
-    <Compile Include="Views\Option\Partial\SettingsListTemplate.generated.cs">
+    <Compile Include="Views\Option\Settings.generated.cs">
+      <DependentUpon>Settings.cshtml</DependentUpon>
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>SettingsListTemplate.cshtml</DependentUpon>
     </Compile>
     <Compile Include="Views\Option\Templates.generated.cs">
       <AutoGen>True</AutoGen>
@@ -358,9 +358,9 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <None Include="Views\Option\Partial\SettingsListTemplate.cshtml">
+    <None Include="Views\Option\Settings.cshtml">
       <Generator>RazorGenerator</Generator>
-      <LastGenOutput>SettingsListTemplate.generated.cs</LastGenOutput>
+      <LastGenOutput>Settings.generated.cs</LastGenOutput>
     </None>
     <None Include="Views\Option\Templates.cshtml">
       <Generator>RazorGenerator</Generator>
