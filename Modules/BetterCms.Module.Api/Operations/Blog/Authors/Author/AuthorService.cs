@@ -67,6 +67,7 @@ namespace BetterCms.Module.Api.Operations.Blog.Authors.Author
                         LastModifiedOn = author.ModifiedOn,
 
                         Name = author.Name,
+                        Description = author.Description,
 
                         ImageId = author.Image != null && !author.Image.IsDeleted ? author.Image.Id : (Guid?)null,
                         ImageUrl = author.Image != null && !author.Image.IsDeleted ? author.Image.PublicUrl : (string)null,
@@ -115,6 +116,7 @@ namespace BetterCms.Module.Api.Operations.Blog.Authors.Author
             unitOfWork.BeginTransaction();
 
             authorToSave.Name = request.Data.Name;
+            authorToSave.Description = request.Data.Description;
             authorToSave.Image = request.Data.ImageId.HasValue ? repository.AsProxy<MediaImage>(request.Data.ImageId.Value) : null;
 
             repository.Save(authorToSave);
