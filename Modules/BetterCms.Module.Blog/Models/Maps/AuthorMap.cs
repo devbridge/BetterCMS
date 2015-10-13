@@ -10,6 +10,7 @@ namespace BetterCms.Module.Blog.Models.Maps
             Table("Authors");
 
             Map(x => x.Name).Not.Nullable().Length(MaxLength.Name);
+            Map(x => x.Description).Nullable().Length(MaxLength.Name);
 
             References(x => x.Image).Cascade.SaveUpdate().LazyLoad().Nullable();
         }

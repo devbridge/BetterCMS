@@ -40,6 +40,15 @@ namespace BetterCms.Module.Blog.ViewModels.Author
         public virtual string Name { get; set; }
 
         /// <summary>
+        /// Gets or sets the author description.
+        /// </summary>
+        /// <value>
+        /// The author description.
+        /// </value>
+        [StringLength(MaxLength.Name, ErrorMessageResourceType = typeof(RootGlobalization), ErrorMessageResourceName = "Validation_StringLengthAttribute_Message")]
+        public virtual string Description { get; set; }
+
+        /// <summary>
         /// Gets or sets the image view model.
         /// </summary>
         /// <value>

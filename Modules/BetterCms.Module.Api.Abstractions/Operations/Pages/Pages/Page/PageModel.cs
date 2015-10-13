@@ -78,10 +78,10 @@ namespace BetterCms.Module.Api.Operations.Pages.Pages.Page
         public IList<CategoryModel> Categories { get; set; }
 
         /// <summary>
-        /// Gets or sets the blog posts main image id.
+        /// Gets or sets the page main image id.
         /// </summary>
         /// <value>
-        /// The blog post main image id.
+        /// The page main image id.
         /// </value>
         [DataMember]
         public System.Guid? MainImageId { get; set; }
@@ -122,6 +122,78 @@ namespace BetterCms.Module.Api.Operations.Pages.Pages.Page
         /// </value>
         [DataMember]
         public string MainImageCaption { get; set; }
+
+        /// <summary>
+        /// Gets or sets the page featured image id.
+        /// </summary>
+        /// <value>
+        /// The page featured image id.
+        /// </value>
+        [DataMember]
+        public System.Guid? FeaturedImageId { get; set; }
+
+        /// <summary>
+        /// Gets or sets the featured image URL.
+        /// </summary>
+        /// <value>
+        /// The featured image URL.
+        /// </value>
+        [DataMember]
+        public string FeaturedImageUrl { get; set; }
+
+        /// <summary>
+        /// Gets or sets the featured image thumbnail URL.
+        /// </summary>
+        /// <value>
+        /// The featured image thumbnail URL.
+        /// </value>
+        [DataMember]
+        public string FeaturedImageThumbnailUrl { get; set; }
+
+        /// <summary>
+        /// Gets or sets the featured image caption.
+        /// </summary>
+        /// <value>
+        /// The featured image caption.
+        /// </value>
+        [DataMember]
+        public string FeaturedImageCaption { get; set; }
+
+        /// <summary>
+        /// Gets or sets the page secondary image id.
+        /// </summary>
+        /// <value>
+        /// The page secondary image id.
+        /// </value>
+        [DataMember]
+        public System.Guid? SecondaryImageId { get; set; }
+
+        /// <summary>
+        /// Gets or sets the secondary image URL.
+        /// </summary>
+        /// <value>
+        /// The secondary image URL.
+        /// </value>
+        [DataMember]
+        public string SecondaryImageUrl { get; set; }
+
+        /// <summary>
+        /// Gets or sets the secondary image thumbnail URL.
+        /// </summary>
+        /// <value>
+        /// The secondary image thumbnail URL.
+        /// </value>
+        [DataMember]
+        public string SecondaryImageThumbnailUrl { get; set; }
+
+        /// <summary>
+        /// Gets or sets the secondary image caption.
+        /// </summary>
+        /// <value>
+        /// The secondary image caption.
+        /// </value>
+        [DataMember]
+        public string SecondaryImageCaption { get; set; }
 
         /// <summary>
         /// Gets or sets a value indicating whether page is marked as archived.

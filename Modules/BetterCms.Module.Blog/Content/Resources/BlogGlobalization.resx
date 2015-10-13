@@ -414,4 +414,7 @@
   <data name="ImportBlogPosts_CategoryByRefNotFound_Message" xml:space="preserve">
     <value>Category with ID "{0}" wasn't found in the list of importing categories</value>
   </data>
+  <data name="SiteSettings_AuthorsTab_AuthorDescription_Title" xml:space="preserve">
+    <value>Description</value>
+  </data>
 </root>
