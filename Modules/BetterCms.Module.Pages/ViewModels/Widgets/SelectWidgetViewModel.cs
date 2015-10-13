@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 
 namespace BetterCms.Module.Pages.ViewModels.Widgets
 {
@@ -24,5 +25,20 @@ namespace BetterCms.Module.Pages.ViewModels.Widgets
         /// The recent widgets.
         /// </value>
         public IList<WidgetViewModel> RecentWidgets { get; set; }
+
+        /// <summary>
+        /// Returns a <see cref="System.String" /> that represents this instance.
+        /// </summary>
+        /// <returns>
+        /// A <see cref="System.String" /> that represents this instance.
+        /// </returns>
+        public override string ToString()
+        {
+            return String.Format(
+                "{0}, Categories: {1}, RecentWidgets: {2}",
+                base.ToString(),
+                WidgetCategories != null ? WidgetCategories.Count : 0,
+                RecentWidgets != null ? RecentWidgets.Count : 0);
+        }
     }
 }

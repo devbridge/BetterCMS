@@ -42,6 +42,8 @@ describe('pages.contents.api.behavior', function () {
             expect(content.customJavaScript).toBe("console.log('test')", 'Correctly filtered customJavaScript should be retrieved.');
             expect(content.useCustomJavaScript).toBe(true, 'Correctly filtered useCustomJavaScipt should be retrieved.');
             expect(content.isPublished).toBe(true, 'Correctly filtered isPublished should be retrieved.');
+            expect(content.contentTextMode).toBe("Html", 'Correctly filtered contentTextMode should be retrieved.');
+            expect(content.originalText).toBe("test", 'Correctly filtered originalText should be retrieved.');
             expect(new Date(content.publishedOn).getTime()).toBe(new Date('2014-07-15T13:32:46.0000000').getTime(), 'Correctly filtered publishedOn should be retrieved.');
             expect(content.publishedByUser).toBe('admin', 'Correctly filtered publishedByUser should be retrieved.');
 

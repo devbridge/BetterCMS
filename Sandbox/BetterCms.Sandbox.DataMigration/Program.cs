@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-
+using Autofac;
 using BetterCms.Configuration;
 
 using BetterCms.Core.Modules;
@@ -17,11 +17,16 @@ using BetterCms.Module.Installation;
 using BetterCms.Module.Search;
 using BetterCms.Module.Users;
 
+using BetterModules.Core;
+using BetterModules.Core.Configuration;
+
 using Common.Logging;
 
 using BetterModules.Core.DataAccess.DataContext.Migrations;
+using BetterModules.Core.Dependencies;
 using BetterModules.Core.Environment.Assemblies;
 using BetterModules.Core.Modules;
+using BetterModules.Core.Web.Configuration;
 
 namespace BetterCms.Sandbox.DataMigration
 {
@@ -70,6 +75,16 @@ namespace BetterCms.Sandbox.DataMigration
         {
             ICmsConfigurationLoader configurationLoader = new CmsConfigurationLoader();
             ICmsConfiguration cmsConfiguration = configurationLoader.LoadCmsConfiguration();
+
+            var builder = ApplicationContext.InitializeContainer(null, cmsConfiguration);
+            builder.RegisterInstance(cmsConfiguration)
+                    .As<IConfiguration>()
+                    .As<IWebConfiguration>()
+                    .As<ICmsConfiguration>()
+                    .SingleInstance();
+            ContextScopeProvider.RegisterTypes(builder);
+            ApplicationContext.LoadAssemblies();
+
             IVersionChecker versionChecker = new VersionCheckerStub();
             DefaultMigrationRunner runner = new DefaultMigrationRunner(new DefaultAssemblyLoader(), cmsConfiguration, versionChecker);
             runner.MigrateStructure(descriptors.Cast<ModuleDescriptor>().ToList());

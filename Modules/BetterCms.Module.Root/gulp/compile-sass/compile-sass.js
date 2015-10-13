@@ -45,6 +45,10 @@ function task() {
     compileSass('./Scss/**/editor.scss', './Scripts/ckeditor/skins/bettercms', true);
     //temp local use only
     compileSass('./Scss/**/root.scss', '../../Sandbox/BetterCms.Sandbox.Mvc4/file/bcms-root/Content/Styles');
+    compileSass('./Scss/**/blog.scss', '../../Sandbox/BetterCms.Sandbox.Mvc4/file/bcms-blog/Content/Styles');
+    compileSass('./Scss/**/installation.scss', '../../Sandbox/BetterCms.Sandbox.Mvc4/file/bcms-installation/Content/Styles');
+    compileSass('./Scss/**/media.scss', '../../Sandbox/BetterCms.Sandbox.Mvc4/file/bcms-media/Content/Styles');
     compileSass('./Scss/**/pages.scss', '../../Sandbox/BetterCms.Sandbox.Mvc4/file/bcms-pages/Content/Styles');
+    compileSass('./Scss/**/users.scss', '../../Sandbox/BetterCms.Sandbox.Mvc4/file/bcms-users/Content/Styles');
     compileSass('./Scss/**/editor.scss', '../../Sandbox/BetterCms.Sandbox.Mvc4/file/bcms-root/Scripts/ckeditor/skins/bettercms', true);
 }

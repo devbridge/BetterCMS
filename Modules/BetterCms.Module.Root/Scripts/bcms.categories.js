@@ -336,7 +336,7 @@
                     confirmDialog = modal.confirm({
                         content: message,
                         onAccept: function () {
-                            self.isDeleted(true);
+                            RemoveCategoryItemAndItsChildren(self);
                             confirmDialog.close();
                             return false;
                         }
@@ -892,6 +892,15 @@
                     // TODO: UserAccessList: userAccessList
                 };
             };
+        }
+
+        function RemoveCategoryItemAndItsChildren(catItem) {
+            var children = catItem.childNodes();
+            for (var i = 0; i < children.length; i++) {
+                RemoveCategoryItemAndItsChildren(children[i]);
+            }
+            catItem.isActive(false);
+            catItem.isDeleted(true);
         }
 
         function AddNodeMapController() {

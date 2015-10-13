@@ -90,6 +90,8 @@ namespace BetterCms.Module.Pages.Services
                 .Where(t => !t.IsDeleted)
                 .List<PageTag>();
 
+            // All page tag list
+            var finalTagList = new List<PageTag>();
             // Remove deleted tags:
             for (int i = pageTags.Count - 1; i >= 0; i--)
             {
@@ -98,8 +100,10 @@ namespace BetterCms.Module.Pages.Services
 
                 if (tag == null)
                 {
-                    UpdateModifiedInformation(pageTags[i]);
-                    unitOfWork.Session.Delete(pageTags[i]);
+                    var tagToRemove = pageTags[i];
+                    UpdateModifiedInformation(tagToRemove);
+                    unitOfWork.Session.Delete(tagToRemove);
+                    finalTagList.Add(tagToRemove);
                 }
             }
 
@@ -143,8 +147,10 @@ namespace BetterCms.Module.Pages.Services
 
                     UpdateModifiedInformation(pageTag);
                     unitOfWork.Session.SaveOrUpdate(pageTag);
+                    finalTagList.Add(pageTag);
                 }
             }
+            page.PageTags = finalTagList;
         }
 
         /// <summary>

@@ -1478,6 +1478,13 @@
     <Content Include="Scss\base_64\icons\editor-undo.svg" />
     <Content Include="Scss\base_64\icons\editor-unlink.svg" />
     <Content Include="Scss\base_64\icons\manage.svg" />
+    <Content Include="Scss\base_64\icons\manager-add-content.svg" />
+    <Content Include="Scss\base_64\icons\manager-content.svg" />
+    <Content Include="Scss\base_64\icons\manager-delete.svg" />
+    <Content Include="Scss\base_64\icons\manager-edit.svg" />
+    <Content Include="Scss\base_64\icons\manager-history.svg" />
+    <Content Include="Scss\base_64\icons\manager-options.svg" />
+    <Content Include="Scss\base_64\icons\manager-region.svg" />
     <Content Include="Scss\base_64\icons\overlay-delete.svg" />
     <Content Include="Scss\base_64\icons\overlay-edit-child.svg" />
     <Content Include="Scss\base_64\icons\overlay-edit.svg" />
@@ -1542,6 +1549,7 @@
     <Content Include="Scss\plugins\_ckeditor.scss" />
     <Content Include="Scss\plugins\_markitup.scss" />
     <Content Include="Scss\plugins\_jquerycalendar.scss" />
+    <Content Include="Scss\bcms-modules\root\_contentstree.scss" />
     <None Include="Views\Category\CategoryTrees.cshtml">
       <Generator>RazorGenerator</Generator>
       <LastGenOutput>CategoryTrees.generated.cs</LastGenOutput>

@@ -111,7 +111,7 @@
 
     @if (Model.JavaScripts != null)
     {
-        @Html.RenderPageCustomJavaScript(Model.JavaScripts)
+        @Html.RenderPageCustomJavaScript(Model.JavaScripts, Model)
     }
 }
 
@@ -120,7 +120,7 @@
 
     @if (Model.Stylesheets != null)
     {
-        @Html.RenderPageCustomCss(Model.Stylesheets)
+        @Html.RenderPageCustomCss(Model.Stylesheets, Model)
     }
 }
 @section HeadScripts {
