@@ -6,6 +6,7 @@
 @using BetterCms.Module.Root.Content.Resources
 @using BetterCms.Module.Root.Mvc.Helpers
 @using BetterCms.Module.Root.ViewModels.Security
+@using BetterCms.Module.Root.ViewModels.Shared
 @using Microsoft.Web.Mvc
 
 @model AddNewPageViewModel
@@ -77,7 +78,7 @@
         </div>
 
         <div id="bcms-tab-2" class="bcms-tab-single" data-bind="with: options">
-            @Html.Partial(PagesConstants.OptionValuesGridTemplate)
+            @Html.Partial(PagesConstants.OptionValuesGridTemplate, new EditableGridViewModel())
         </div>
     }
 </div>

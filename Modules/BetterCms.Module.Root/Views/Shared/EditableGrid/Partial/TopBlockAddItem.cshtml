@@ -3,14 +3,11 @@
 @if (Model.CanAddNewItems)
 {
     <div class="bcms-btn-links-main" data-bind="click: addNewItem">@Model.AddNewTitle</div>
-    if (Model.MultipleAddOptions)
-    {
         <div id="bcms-multi-opts" data-bind="visible: isAddNewSelected">
             <!-- ko foreach: optionTypes -->
             <div class="bcms-multi-opt-item" data-bind="text: name, click: $root.addNewSelectedItem.bind('$data', id)"></div>
             <!-- /ko -->
         </div>
-    }
 }
 else
 {

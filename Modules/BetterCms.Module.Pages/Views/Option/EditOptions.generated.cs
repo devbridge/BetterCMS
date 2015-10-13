@@ -66,28 +66,22 @@ namespace ASP
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("RazorGenerator", "2.0.0.0")]
     [System.Web.WebPages.PageVirtualPathAttribute("~/Views/Option/EditOptions.cshtml")]
-    public partial class _Views_Option_EditOptions_cshtml : System.Web.Mvc.WebViewPage<dynamic>
+    public partial class _Views_Option_EditOptions_cshtml : System.Web.Mvc.WebViewPage<EditableGridViewModel>
     {
         public _Views_Option_EditOptions_cshtml()
         {
         }
         public override void Execute()
         {
-WriteLiteral("\r\n");
-
             
-            #line 8 "..\..\Views\Option\EditOptions.cshtml"
+            #line 9 "..\..\Views\Option\EditOptions.cshtml"
   
-    var gridViewModel = new EditableGridViewModel
-    {
-        ShowLanguages = true,
-        MultipleAddOptions = true,
-        ShowSearch = false,
-        TopBlockClass = "bcms-top-block-holder",
-        SaveButtonTitle = RootGlobalization.Button_Ok,
-        AddHiddenFields = true,
-        ShowMessages = false,
-        Columns = new List<EditableGridColumn>
+    Model.ShowSearch = false;
+    Model.TopBlockClass = "bcms-top-block-holder";
+    Model.SaveButtonTitle = RootGlobalization.Button_Ok;
+    Model.AddHiddenFields = true;
+    Model.ShowMessages = false;
+    Model.Columns = new List<EditableGridColumn>
             {
                 new EditableGridColumn(PagesGlobalization.Options_OptionKeyColumn, null, "key")
                     {
@@ -103,7 +97,6 @@ WriteLiteral("\r\n");
                         CanBeEdited = false
                     },
                                         
-//                new OptionValueEditableGridColumn(PagesGlobalization.Options_OptionDefaultValueColumn, "defaultValue", "customOptionDefaultTitle")
                 new OptionValueEditableGridColumn(PagesGlobalization.Options_OptionDefaultValueColumn, "defaultValueBinding", "customOptionDefaultTitle")
                     {
                         HeaderAttributes = "style=\"width: 250px;\"",
@@ -112,8 +105,7 @@ WriteLiteral("\r\n");
                     
                 new EditableGridHiddenField("type", "Options[{0}].Type"),
                 new EditableGridHiddenField("customType", "Options[{0}].CustomType")
-            }
-    };
+            };
 
             
             #line default
@@ -121,8 +113,8 @@ WriteLiteral("\r\n");
 WriteLiteral("\r\n\r\n");
 
             
-            #line 47 "..\..\Views\Option\EditOptions.cshtml"
-Write(Html.Partial(RootModuleConstants.EditableGridTemplate, gridViewModel));
+            #line 42 "..\..\Views\Option\EditOptions.cshtml"
+Write(Html.Partial(RootModuleConstants.EditableGridTemplate, Model));
 
             
             #line default

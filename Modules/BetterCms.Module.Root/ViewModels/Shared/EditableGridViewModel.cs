@@ -40,8 +40,6 @@ namespace BetterCms.Module.Root.ViewModels.Shared
 
         public virtual bool ShowLanguages { get; set; }
 
-        public virtual bool MultipleAddOptions { get; set; }
-
         public EditableGridViewModel()
         {
             TopBlockView = RootModuleConstants.EditableGridTopBlockTemplate;

@@ -62,14 +62,6 @@ WriteLiteral(">");
             #line hidden
 WriteLiteral("</div>\r\n");
 
-            
-            #line 6 "..\..\Views\Shared\EditableGrid\Partial\TopBlockAddItem.cshtml"
-    if (Model.MultipleAddOptions)
-    {
-
-            
-            #line default
-            #line hidden
 WriteLiteral("        <div");
 
 WriteLiteral(" id=\"bcms-multi-opts\"");
@@ -85,8 +77,7 @@ WriteLiteral(" data-bind=\"text: name, click: $root.addNewSelectedItem.bind(\'$d
 WriteLiteral("></div>\r\n            <!-- /ko -->\r\n        </div>\r\n");
 
             
-            #line 13 "..\..\Views\Shared\EditableGrid\Partial\TopBlockAddItem.cshtml"
-    }
+            #line 11 "..\..\Views\Shared\EditableGrid\Partial\TopBlockAddItem.cshtml"
 }
 else
 {
@@ -101,7 +92,7 @@ WriteLiteral(" class=\"bcms-btn-links-main\"");
 WriteLiteral(">&nbsp;</div>\r\n");
 
             
-            #line 18 "..\..\Views\Shared\EditableGrid\Partial\TopBlockAddItem.cshtml"
+            #line 15 "..\..\Views\Shared\EditableGrid\Partial\TopBlockAddItem.cshtml"
 }
             
             #line default

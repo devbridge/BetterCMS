@@ -7,6 +7,7 @@
 @using BetterCms.Module.Root.Mvc.Extensions
 @using BetterCms.Module.Root.Mvc.Helpers
 @using BetterCms.Module.Root.ViewModels.Category
+@using BetterCms.Module.Root.ViewModels.Shared
 @using BetterCms.Module.Root.ViewModels.Tags
 @using Microsoft.Web.Mvc
 @using MvcContrib.EnumerableExtensions
@@ -206,7 +207,7 @@
         </div>
 
         <div id="bcms-tab-4" class="bcms-tab-single" data-bind="with: options">
-            @Html.Partial(PagesConstants.OptionValuesGridTemplate)
+            @Html.Partial(PagesConstants.OptionValuesGridTemplate, new EditableGridViewModel())
         </div>
 
         if (Model.ShowTranslationsTab)

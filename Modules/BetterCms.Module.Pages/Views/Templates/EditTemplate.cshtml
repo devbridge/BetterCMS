@@ -3,6 +3,7 @@
 @using BetterCms.Module.Pages.Controllers
 @using BetterCms.Module.Pages.ViewModels.Templates
 @using BetterCms.Module.Root.Mvc.Helpers
+@using BetterCms.Module.Root.ViewModels.Shared
 @using Microsoft.Web.Mvc
 
 @model TemplateEditViewModel
@@ -68,7 +69,7 @@
         </div>
         
         <div id="bcms-tab-3" class="bcms-tab-single">
-            @Html.Partial(PagesConstants.OptionsGridTemplate)
+            @Html.Partial(PagesConstants.OptionsGridTemplate, new EditableGridViewModel())
         </div>
             
         @Html.HiddenFor(model => model.Id)
