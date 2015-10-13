@@ -21,7 +21,8 @@ bettercms.define('bcms', ['bcms.jquery','bcms.store'], function ($, store) {
             sortPageContent: 'sortPageContent',
             contentModelCreated: 'contentModelCreated',
             pageCreated: 'pageCreated',
-            editContentsTree: 'editContentsTree'
+            editContentsTree: 'editContentsTree',
+            insertWidget: 'insertWidget'
         },
         eventListeners = {},
         contentStatus = {

@@ -73,7 +73,7 @@
         @include transition(background-color 200ms);
         @include position(absolute, 1px 1px null null);
         @include size(28px);
-        background: $dark url($icon-bcms-search) no-repeat center;
+        background: $dark url($bcms-search) no-repeat center;
         cursor: pointer;
         overflow: hidden;
         text-indent: -999em;
@@ -86,7 +86,7 @@
     &-close {
         @include position(absolute, 10px 10px null null);
         @include size(15px);
-        background: url($icon-bcms-close) no-repeat center;
+        background: url($bcms-close) no-repeat center;
         cursor: pointer;
         overflow: hidden;
         text-decoration: none;

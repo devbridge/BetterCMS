@@ -1,0 +1,216 @@
+@import '../core/variables';
+
+$toolbar-icons: (
+                ('H1', $bcms-toolbar-h1),
+                ('H2', $bcms-toolbar-h2),
+                ('H3', $bcms-toolbar-h3),
+                ('H4', $bcms-toolbar-h4),
+                ('H5', $bcms-toolbar-h5),
+                ('H6', $bcms-toolbar-h6),
+                ('Bold', $bcms-editor-bold),
+                ('Italic', $bcms-editor-italic),
+                ('ListBullet', $bcms-editor-bulletedlist),
+                ('ListNumeric', $bcms-editor-numberedlist),
+                ('Picture', $bcms-editor-cmsimage),
+                ('Link', $bcms-editor-link),
+                ('Quotes', $bcms-editor-blockquote),
+                ('Code', $bcms-editor-source),
+                ('Widget', $bcms-editor-cmswidget),
+                ('Option', $bcms-editor-cmsoption)
+);
+
+%toolbar-extender {
+    background: no-repeat center;
+}
+
+//module global styles
+textarea {
+    border: $border-thin-gray;
+    box-sizing: border-box;
+    display: block;
+    font-family: $font-code-family;
+    font-size: 12px;
+    line-height: 18px;
+    overflow: auto;
+    padding: 10px;
+    resize: vertical;
+    width: 100%;
+
+    &:focus {
+        outline: none;
+    }
+}
+
+//module markdown editor
+.markItUp {
+    &Header {
+        @include clearfix();
+        background-color: $gray-l30;
+        border: {
+            top: $border-thin-gray;
+            right: $border-thin-gray;
+            left: $border-thin-gray;
+        }
+        padding: 6px 8px;
+
+        > ul {
+            > .markItUpButton {
+                border: $border-thin-gray;
+                float: left;
+                height: 26px;
+                margin-left: 6px;
+                min-width: 28px;
+
+                &:first-child {
+                    margin-left: 0;
+                }
+            }
+        }
+
+        ul {
+            margin: 0;
+            padding: 0;
+        }
+
+        li {
+            @include transition(all 200ms);
+            box-sizing: border-box;
+            list-style: none;
+            position: relative;
+
+            &:hover {
+                background-color: $gray-l25;
+
+                ul {
+                    //fixme temp
+                    display: block !important;
+                }
+            }
+        }
+    }
+
+    &Button {
+        a {
+            font: {
+                family: $font-arial;
+                size: 12px;
+            }
+            box-sizing: border-box;
+            color: $gray-l65;
+            display: block;
+            height: 100%;
+            line-height: 24px;
+            overflow: hidden;
+            padding: 0 10px;
+            text-indent: -999em;
+
+            &:hover {
+                text-decoration: none;
+            }
+        }
+    }
+
+    &DropMenu {
+        > a {
+            text-indent: 0;
+        }
+
+        > ul {
+            background-color: $white;
+            border: $border-thin-gray;
+            display: none;
+            max-height: 170px;
+            overflow-y: auto;
+            padding: 0;
+            position: absolute;
+            right: 0;
+            top: 100%;
+            width: 200px;
+            z-index: 50;
+
+            li {
+                margin: 3px;
+                padding: 0;
+            }
+
+            a {
+                @include transition(all 200ms);
+                padding: 3px 4px;
+                text-indent: 0;
+                white-space: nowrap;
+
+                &:hover {
+                    background-color: $gray-l30;
+                    border-color: $gray-l40;
+                    box-shadow: inset 0 0 2px rgba($black, .1);
+                }
+            }
+        }
+    }
+
+    &Editor {
+        min-height: 300px;
+        resize: none;
+    }
+
+    &Footer {
+        @include clearfix();
+        border: {
+            right: $border-thin-gray;
+            bottom: $border-thin-gray;
+            left: $border-thin-gray;
+        }
+        background-color: $gray-l30;
+        height: 28px;
+        line-height: 28px;
+        padding: 0 5px;
+        position: relative;
+    }
+
+    &ResizeHandle {
+        @include position(absolute, null 5px 5px null);
+        @include size(0);
+        border-color: transparent $gray-l65 transparent transparent;
+        border-style: dashed solid dashed dashed;
+        border-width: 10px 10px 0 0;
+        cursor: se-resize;
+        float: right;
+        overflow: hidden;
+    }
+
+    &Separator {
+        display: none;
+    }
+}
+
+@each $name, $icon in $toolbar-icons {
+    .markItUpButton#{$name} {
+        a {
+            @extend %toolbar-extender;
+            background-image: url($icon);
+            width: 28px;
+        }
+    }
+}
+
+//module buttons override
+.markItUpButton {
+    &Widget {
+        a {
+            background-position: 5px center;
+            //fixme remove important after sass review
+            padding-left: 25px !important;
+            text-indent: 0 !important;
+            width: auto;
+        }
+    }
+}
+
+//fixme check if we need this
+//.markItUpPreviewFrame	{
+//    overflow:auto;
+//    background-color:#FFF;
+//    width:99.9%;
+//    height:300px;
+//    margin:5px 0;
+//}

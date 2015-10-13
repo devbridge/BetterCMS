@@ -31,6 +31,8 @@ namespace BetterCms.Module.Api.Extensions
                             PublishedOn = response.Data.PublishedOn,
                             PublishedByUser = response.Data.PublishedByUser,
                             Html = response.Data.Html,
+                            OriginalText = response.Data.OriginalText,
+                            ContentTextMode = response.Data.ContentTextMode,
                             CustomCss = response.Data.CustomCss,
                             UseCustomCss = response.Data.UseCustomCss,
                             CustomJavaScript = response.Data.CustomJavaScript,

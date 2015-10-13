@@ -1,11 +1,13 @@
 @import '../../node_modules/susy/sass/susy',
 'bourbon',
 'mixins',
-'icons';
+'assets';
 
 //module typo
 $font-base-size: 13px;
 $font-base-family: 'Open Sans', sans-serif !important;
+$font-arial: 'Arial', sans-serif;
+$font-code-family: 'Courier New', Courier, monospace;
 
 //module main colors
 $white: #ffffff;
@@ -22,7 +24,8 @@ $gray-l45: #8E8E8E;
 $gray-l46: #787878;
 $gray-l50: #676767;
 $gray-l60: #555555;
-
+$gray-l65: #474747;
+$a:#d1d1d1;
 //
 $blue-main: #0383df;
 $sky-blue: #9ed4f0;

@@ -142,7 +142,6 @@ bettercms.define('bcms.blog', ['bcms.jquery', 'bcms', 'bcms.modal', 'bcms.siteSe
                             permalinkValue = blogUrlField.val();
                             blogUrlField.val(null);
                         }
-                        htmlEditor.updateEditorContent();
                         
                         var editInSourceMode = htmlEditor.isSourceMode(selectors.htmlContentWidgetContentHtmlEditor);
                         blogViewModel.editInSourceMode(editInSourceMode);

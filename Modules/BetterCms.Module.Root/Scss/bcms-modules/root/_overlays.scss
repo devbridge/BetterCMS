@@ -2,17 +2,17 @@
 
 //module local maps/keys
 $overlay-mange-controls: (
-                ('addcontent', $icon-bcms-add-content),
-                ('addwidget', $icon-bcms-overlay-widget),
-                ('sortcontent' $icon-bcms-manage)
+                ('addcontent', $bcms-add-content),
+                ('addwidget', $bcms-overlay-widget),
+                ('sortcontent' $bcms-manage)
 );
 
 $overlay-control-buttons: (
-                ('history', $icon-bcms-overlay-history),
-                ('edit', $icon-bcms-overlay-edit),
-                ('configure', $icon-bcms-overlay-options),
-                ('delete', $icon-bcms-overlay-delete),
-                ('edit-child', $icon-bcms-overlay-edit-child)
+                ('history', $bcms-overlay-history),
+                ('edit', $bcms-overlay-edit),
+                ('configure', $bcms-overlay-options),
+                ('delete', $bcms-overlay-delete),
+                ('edit-child', $bcms-overlay-edit-child)
 );
 
 //module content region
@@ -32,7 +32,7 @@ $overlay-control-buttons: (
 
         &.bcms-show-overlay {
             @include size(100%);
-            background-image: url($icon-bcms-texture);
+            background-image: url($bcms-texture);
             height: 100%;
             width: 100%;
         }
@@ -222,17 +222,14 @@ $overlay-control-buttons: (
             }
         }
     }
-}
 
-//todo inspect what is this for, as it looks like some old unused code.
-//.bcms-content-icon div {
-//    color: #9fd5ef;
-//    font-size: 20px;
-//    font-weight: bold;
-//    left: -13px;
-//    position: absolute;
-//    text-align: right;
-//    text-transform: uppercase;
-//    top: -11px;
-//    width: 42px;
-//}
+    &-edit {
+        &.bcms-active-draft {
+            background-color: $red-l70;
+
+            &:hover {
+                background-color: lighten($red-l70, 10%);
+            }
+        }
+    }
+}

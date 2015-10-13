@@ -138,7 +138,7 @@ function ($, bcms, ko, modal, contentModule, redirect, antiXss) {
         }
 
         model.addContent = function () {
-            regionModel.onAddContent(function (json) {
+            regionModel.onAddHtml(function (json) {
                 treeViewModel.reloadPage = true;
 
                 var regionModels,

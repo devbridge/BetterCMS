@@ -109,7 +109,7 @@ namespace ASP
         }
         public override void Execute()
         {
-WriteLiteral("\n");
+WriteLiteral("\r\n");
 
             
             #line 15 "..\..\Views\Page\EditPageProperties.cshtml"
@@ -137,11 +137,11 @@ WriteLiteral("\n");
             
             #line default
             #line hidden
-WriteLiteral("\n\n<div");
+WriteLiteral("\r\n\r\n<div");
 
 WriteLiteral(" class=\"bcms-tab-header\"");
 
-WriteLiteral(">\n    <a");
+WriteLiteral(">\r\n    <a");
 
 WriteLiteral(" class=\"bcms-tab-item bcms-active\"");
 
@@ -156,7 +156,7 @@ WriteLiteral(">");
             
             #line default
             #line hidden
-WriteLiteral("</a>\n    <a");
+WriteLiteral("</a>\r\n    <a");
 
 WriteLiteral(" class=\"bcms-tab-item\"");
 
@@ -171,7 +171,7 @@ WriteLiteral(">");
             
             #line default
             #line hidden
-WriteLiteral("</a>\n    <a");
+WriteLiteral("</a>\r\n    <a");
 
 WriteLiteral(" class=\"bcms-tab-item\"");
 
@@ -186,7 +186,7 @@ WriteLiteral(">");
             
             #line default
             #line hidden
-WriteLiteral("</a>\n    <a");
+WriteLiteral("</a>\r\n    <a");
 
 WriteLiteral(" class=\"bcms-tab-item\"");
 
@@ -201,7 +201,7 @@ WriteLiteral(">");
             
             #line default
             #line hidden
-WriteLiteral("</a>\n");
+WriteLiteral("</a>\r\n");
 
             
             #line 36 "..\..\Views\Page\EditPageProperties.cshtml"
@@ -232,7 +232,7 @@ WriteLiteral(">");
             
             #line default
             #line hidden
-WriteLiteral("</a>\n");
+WriteLiteral("</a>\r\n");
 
             
             #line 39 "..\..\Views\Page\EditPageProperties.cshtml"
@@ -241,11 +241,11 @@ WriteLiteral("</a>\n");
             
             #line default
             #line hidden
-WriteLiteral("</div>\n\n<div");
+WriteLiteral("</div>\r\n\r\n<div");
 
 WriteLiteral(" class=\"bcms-scroll-window\"");
 
-WriteLiteral(">\n");
+WriteLiteral(">\r\n");
 
 WriteLiteral("    ");
 
@@ -256,7 +256,7 @@ Write(Html.TabbedContentMessagesBox());
             
             #line default
             #line hidden
-WriteLiteral("\n");
+WriteLiteral("\r\n");
 
             
             #line 44 "..\..\Views\Page\EditPageProperties.cshtml"
@@ -308,15 +308,15 @@ WriteLiteral(" id=\"bcms-tab-1\"");
 
 WriteLiteral(" class=\"bcms-tab-single\"");
 
-WriteLiteral(">\n            <div");
+WriteLiteral(">\r\n            <div");
 
 WriteLiteral(" class=\"bcms-padded-content\"");
 
-WriteLiteral(">\n                <div");
+WriteLiteral(">\r\n                <div");
 
 WriteLiteral(" class=\"bcms-input-list-holder\"");
 
-WriteLiteral(">\n");
+WriteLiteral(">\r\n");
 
 WriteLiteral("                    ");
 
@@ -327,7 +327,7 @@ WriteLiteral("                    ");
             
             #line default
             #line hidden
-WriteLiteral("\n                    <div");
+WriteLiteral("\r\n                    <div");
 
 WriteLiteral(" class=\"bcms-content-titles\"");
 
@@ -340,11 +340,11 @@ WriteLiteral(">");
             
             #line default
             #line hidden
-WriteLiteral("</div>\n\n                    <div");
+WriteLiteral("</div>\r\n\r\n                    <div");
 
 WriteLiteral(" class=\"bcms-input-box\"");
 
-WriteLiteral(">\n");
+WriteLiteral(">\r\n");
 
 WriteLiteral("                        ");
 
@@ -355,7 +355,7 @@ WriteLiteral("                        ");
             
             #line default
             #line hidden
-WriteLiteral("\n");
+WriteLiteral("\r\n");
 
 WriteLiteral("                        ");
 
@@ -366,7 +366,7 @@ WriteLiteral("                        ");
             
             #line default
             #line hidden
-WriteLiteral("\n                    </div>\n                </div>\n\n");
+WriteLiteral("\r\n                    </div>\r\n                </div>\r\n\r\n");
 
 WriteLiteral("                ");
 
@@ -377,15 +377,15 @@ WriteLiteral("                ");
             
             #line default
             #line hidden
-WriteLiteral("\n\n                <div");
+WriteLiteral("\r\n\r\n                <div");
 
 WriteLiteral(" class=\"bcms-page-images-holder\"");
 
-WriteLiteral(">\n                    <div");
+WriteLiteral(">\r\n                    <div");
 
 WriteLiteral(" class=\"bcms-input-list-holder\"");
 
-WriteLiteral(">\n");
+WriteLiteral(">\r\n");
 
 WriteLiteral("                        ");
 
@@ -396,7 +396,7 @@ WriteLiteral("                        ");
             
             #line default
             #line hidden
-WriteLiteral("\n                        <div");
+WriteLiteral("\r\n                        <div");
 
 WriteLiteral(" class=\"bcms-content-titles\"");
 
@@ -409,12 +409,12 @@ WriteLiteral(">");
             
             #line default
             #line hidden
-WriteLiteral("</div>\n                        <div");
+WriteLiteral("</div>\r\n                        <div");
 
 WriteLiteral(" class=\"bcms-uploaded-image\"");
 
-WriteLiteral(">\n                            <!-- ko if: image().url() -->\n                     " +
-"       <a");
+WriteLiteral(">\r\n                            <!-- ko if: image().url() -->\r\n                   " +
+"         <a");
 
 WriteLiteral(" class=\"bcms-remove-image\"");
 
@@ -429,16 +429,16 @@ WriteLiteral(">");
             
             #line default
             #line hidden
-WriteLiteral("</a>\n                            <a");
+WriteLiteral("</a>\r\n                            <a");
 
 WriteLiteral(" data-bind=\"click: image().preview.bind(image())\"");
 
-WriteLiteral(">\n                                <img");
+WriteLiteral(">\r\n                                <img");
 
 WriteLiteral(" data-bind=\"attr: { src: image().thumbnailUrl(), alt: image().tooltip() }\"");
 
-WriteLiteral(" />\n                            </a>\n                            <!-- /ko -->\n   " +
-"                     </div>\n                        <div");
+WriteLiteral(" />\r\n                            </a>\r\n                            <!-- /ko -->\r\n" +
+"                        </div>\r\n                        <div");
 
 WriteLiteral(" class=\"bcms-btn-small\"");
 
@@ -453,11 +453,11 @@ WriteLiteral(">");
             
             #line default
             #line hidden
-WriteLiteral("</div>\n                    </div>\n\n                    <div");
+WriteLiteral("</div>\r\n                    </div>\r\n\r\n                    <div");
 
 WriteLiteral(" class=\"bcms-input-list-holder\"");
 
-WriteLiteral(">\n");
+WriteLiteral(">\r\n");
 
 WriteLiteral("                        ");
 
@@ -468,7 +468,7 @@ WriteLiteral("                        ");
             
             #line default
             #line hidden
-WriteLiteral("\n                        <div");
+WriteLiteral("\r\n                        <div");
 
 WriteLiteral(" class=\"bcms-content-titles\"");
 
@@ -481,12 +481,12 @@ WriteLiteral(">");
             
             #line default
             #line hidden
-WriteLiteral("</div>\n                        <div");
+WriteLiteral("</div>\r\n                        <div");
 
 WriteLiteral(" class=\"bcms-uploaded-image\"");
 
-WriteLiteral(">\n                            <!-- ko if: featuredImage().url() -->\n             " +
-"               <a");
+WriteLiteral(">\r\n                            <!-- ko if: featuredImage().url() -->\r\n           " +
+"                 <a");
 
 WriteLiteral(" class=\"bcms-remove-image\"");
 
@@ -501,17 +501,17 @@ WriteLiteral(">");
             
             #line default
             #line hidden
-WriteLiteral("</a>\n                            <a");
+WriteLiteral("</a>\r\n                            <a");
 
 WriteLiteral(" data-bind=\"click: featuredImage().preview.bind(featuredImage())\"");
 
-WriteLiteral(">\n                                <img");
+WriteLiteral(">\r\n                                <img");
 
 WriteLiteral(" data-bind=\"attr: { src: featuredImage().thumbnailUrl(), alt: featuredImage().too" +
 "ltip() }\"");
 
-WriteLiteral(" />\n                            </a>\n                            <!-- /ko -->\n   " +
-"                     </div>\n                        <div");
+WriteLiteral(" />\r\n                            </a>\r\n                            <!-- /ko -->\r\n" +
+"                        </div>\r\n                        <div");
 
 WriteLiteral(" class=\"bcms-btn-small\"");
 
@@ -526,11 +526,11 @@ WriteLiteral(">");
             
             #line default
             #line hidden
-WriteLiteral("</div>\n                    </div>\n\n                    <div");
+WriteLiteral("</div>\r\n                    </div>\r\n\r\n                    <div");
 
 WriteLiteral(" class=\"bcms-input-list-holder\"");
 
-WriteLiteral(">\n");
+WriteLiteral(">\r\n");
 
 WriteLiteral("                        ");
 
@@ -541,7 +541,7 @@ WriteLiteral("                        ");
             
             #line default
             #line hidden
-WriteLiteral("\n                        <div");
+WriteLiteral("\r\n                        <div");
 
 WriteLiteral(" class=\"bcms-content-titles\"");
 
@@ -554,12 +554,12 @@ WriteLiteral(">");
             
             #line default
             #line hidden
-WriteLiteral("</div>\n                        <div");
+WriteLiteral("</div>\r\n                        <div");
 
 WriteLiteral(" class=\"bcms-uploaded-image\"");
 
-WriteLiteral(">\n                            <!-- ko if: secondaryImage().url() -->\n            " +
-"                <a");
+WriteLiteral(">\r\n                            <!-- ko if: secondaryImage().url() -->\r\n          " +
+"                  <a");
 
 WriteLiteral(" class=\"bcms-remove-image\"");
 
@@ -574,17 +574,17 @@ WriteLiteral(">");
             
             #line default
             #line hidden
-WriteLiteral("</a>\n                            <a");
+WriteLiteral("</a>\r\n                            <a");
 
 WriteLiteral(" data-bind=\"click: secondaryImage().preview.bind(secondaryImage())\"");
 
-WriteLiteral(">\n                                <img");
+WriteLiteral(">\r\n                                <img");
 
 WriteLiteral(" data-bind=\"attr: { src: secondaryImage().thumbnailUrl(), alt: secondaryImage().t" +
 "ooltip() }\"");
 
-WriteLiteral(" />\n                            </a>\n                            <!-- /ko -->\n   " +
-"                     </div>\n                        <div");
+WriteLiteral(" />\r\n                            </a>\r\n                            <!-- /ko -->\r\n" +
+"                        </div>\r\n                        <div");
 
 WriteLiteral(" class=\"bcms-btn-small\"");
 
@@ -599,13 +599,14 @@ WriteLiteral(">");
             
             #line default
             #line hidden
-WriteLiteral("</div>\n                    </div>\n                </div>\n\n                <div");
+WriteLiteral("</div>\r\n                    </div>\r\n                </div>\r\n\r\n                <di" +
+"v");
 
 WriteLiteral(" class=\"bcms-categories-box-holder\"");
 
 WriteLiteral(" data-bind=\"with: categories\"");
 
-WriteLiteral(">\n");
+WriteLiteral(">\r\n");
 
 WriteLiteral("                    ");
 
@@ -616,13 +617,13 @@ WriteLiteral("                    ");
             
             #line default
             #line hidden
-WriteLiteral("\n                </div>\n\n                <div");
+WriteLiteral("\r\n                </div>\r\n\r\n                <div");
 
 WriteLiteral(" class=\"bcms-tags-box-holder\"");
 
 WriteLiteral(" data-bind=\"with: tags\"");
 
-WriteLiteral(">\n");
+WriteLiteral(">\r\n");
 
 WriteLiteral("                    ");
 
@@ -633,7 +634,7 @@ WriteLiteral("                    ");
             
             #line default
             #line hidden
-WriteLiteral("\n                </div>\n\n");
+WriteLiteral("\r\n                </div>\r\n\r\n");
 
             
             #line 121 "..\..\Views\Page\EditPageProperties.cshtml"
@@ -664,7 +665,7 @@ WriteLiteral("\n                </div>\n\n");
             
             #line default
             #line hidden
-WriteLiteral("\n");
+WriteLiteral("\r\n");
 
             
             #line 126 "..\..\Views\Page\EditPageProperties.cshtml"
@@ -684,7 +685,7 @@ WriteLiteral("                    <div");
 
 WriteLiteral(" class=\"bcms-input-list-holder\"");
 
-WriteLiteral(">\n");
+WriteLiteral(">\r\n");
 
 WriteLiteral("                        ");
 
@@ -695,7 +696,7 @@ WriteLiteral("                        ");
             
             #line default
             #line hidden
-WriteLiteral("\n                        <div");
+WriteLiteral("\r\n                        <div");
 
 WriteLiteral(" class=\"bcms-content-titles\"");
 
@@ -708,11 +709,11 @@ WriteLiteral(">");
             
             #line default
             #line hidden
-WriteLiteral("</div>\n                        <div");
+WriteLiteral("</div>\r\n                        <div");
 
 WriteLiteral(" class=\"bcms-checkbox-holder\"");
 
-WriteLiteral(">\n");
+WriteLiteral(">\r\n");
 
             
             #line 132 "..\..\Views\Page\EditPageProperties.cshtml"
@@ -732,7 +733,7 @@ WriteLiteral(">\n");
             
             #line default
             #line hidden
-WriteLiteral("\n");
+WriteLiteral("\r\n");
 
 WriteLiteral("                            ");
 
@@ -743,7 +744,7 @@ WriteLiteral("                            ");
             
             #line default
             #line hidden
-WriteLiteral("\n                            <div");
+WriteLiteral("\r\n                            <div");
 
 WriteLiteral(" class=\"bcms-edit-label\"");
 
@@ -756,11 +757,11 @@ WriteLiteral(">");
             
             #line default
             #line hidden
-WriteLiteral("</div>\n                        </div>\n                        <div");
+WriteLiteral("</div>\r\n                        </div>\r\n                        <div");
 
 WriteLiteral(" class=\"bcms-checkbox-holder\"");
 
-WriteLiteral(">\n");
+WriteLiteral(">\r\n");
 
 WriteLiteral("                            ");
 
@@ -771,7 +772,7 @@ WriteLiteral("                            ");
             
             #line default
             #line hidden
-WriteLiteral("\n                            <div");
+WriteLiteral("\r\n                            <div");
 
 WriteLiteral(" class=\"bcms-edit-label\"");
 
@@ -784,11 +785,11 @@ WriteLiteral(">");
             
             #line default
             #line hidden
-WriteLiteral("</div>\n                        </div>\n                        <div");
+WriteLiteral("</div>\r\n                        </div>\r\n                        <div");
 
 WriteLiteral(" class=\"bcms-checkbox-holder\"");
 
-WriteLiteral(">\n");
+WriteLiteral(">\r\n");
 
 WriteLiteral("                            ");
 
@@ -799,7 +800,7 @@ WriteLiteral("                            ");
             
             #line default
             #line hidden
-WriteLiteral("\n                            <div");
+WriteLiteral("\r\n                            <div");
 
 WriteLiteral(" class=\"bcms-edit-label\"");
 
@@ -812,11 +813,11 @@ WriteLiteral(">");
             
             #line default
             #line hidden
-WriteLiteral("</div>\n                        </div>\n                        <div");
+WriteLiteral("</div>\r\n                        </div>\r\n                        <div");
 
 WriteLiteral(" class=\"bcms-checkbox-holder\"");
 
-WriteLiteral(">\n");
+WriteLiteral(">\r\n");
 
 WriteLiteral("                            ");
 
@@ -827,7 +828,7 @@ WriteLiteral("                            ");
             
             #line default
             #line hidden
-WriteLiteral("\n                            <div");
+WriteLiteral("\r\n                            <div");
 
 WriteLiteral(" class=\"bcms-edit-label\"");
 
@@ -840,13 +841,13 @@ WriteLiteral(">");
             
             #line default
             #line hidden
-WriteLiteral("</div>\n                        </div>\n                    </div>\n");
+WriteLiteral("</div>\r\n                        </div>\r\n                    </div>\r\n");
 
 WriteLiteral("                    <div");
 
 WriteLiteral(" class=\"bcms-input-list-holder\"");
 
-WriteLiteral(">\n");
+WriteLiteral(">\r\n");
 
 WriteLiteral("                        ");
 
@@ -857,7 +858,7 @@ WriteLiteral("                        ");
             
             #line default
             #line hidden
-WriteLiteral("\n                        <div");
+WriteLiteral("\r\n                        <div");
 
 WriteLiteral(" class=\"bcms-content-titles\"");
 
@@ -870,7 +871,7 @@ WriteLiteral(">");
             
             #line default
             #line hidden
-WriteLiteral("</div>\n");
+WriteLiteral("</div>\r\n");
 
 WriteLiteral("                        ");
 
@@ -881,7 +882,7 @@ WriteLiteral("                        ");
             
             #line default
             #line hidden
-WriteLiteral("\n                    </div>\n");
+WriteLiteral("\r\n                    </div>\r\n");
 
             
             #line 160 "..\..\Views\Page\EditPageProperties.cshtml"
@@ -899,7 +900,7 @@ WriteLiteral("                ");
             
             #line default
             #line hidden
-WriteLiteral("\n");
+WriteLiteral("\r\n");
 
 WriteLiteral("                ");
 
@@ -910,7 +911,7 @@ WriteLiteral("                ");
             
             #line default
             #line hidden
-WriteLiteral("\n");
+WriteLiteral("\r\n");
 
 WriteLiteral("                ");
 
@@ -921,7 +922,7 @@ WriteLiteral("                ");
             
             #line default
             #line hidden
-WriteLiteral("\n");
+WriteLiteral("\r\n");
 
 WriteLiteral("                ");
 
@@ -932,7 +933,7 @@ WriteLiteral("                ");
             
             #line default
             #line hidden
-WriteLiteral("\n");
+WriteLiteral("\r\n");
 
 WriteLiteral("                ");
 
@@ -943,7 +944,7 @@ WriteLiteral("                ");
             
             #line default
             #line hidden
-WriteLiteral("\n");
+WriteLiteral("\r\n");
 
 WriteLiteral("                ");
 
@@ -954,7 +955,7 @@ WriteLiteral("                ");
             
             #line default
             #line hidden
-WriteLiteral("\n");
+WriteLiteral("\r\n");
 
 WriteLiteral("                ");
 
@@ -965,7 +966,7 @@ WriteLiteral("                ");
             
             #line default
             #line hidden
-WriteLiteral("\n");
+WriteLiteral("\r\n");
 
 WriteLiteral("                ");
 
@@ -976,7 +977,7 @@ WriteLiteral("                ");
             
             #line default
             #line hidden
-WriteLiteral("\n");
+WriteLiteral("\r\n");
 
             
             #line 169 "..\..\Views\Page\EditPageProperties.cshtml"
@@ -1007,7 +1008,7 @@ WriteLiteral("\n");
             
             #line default
             #line hidden
-WriteLiteral("            </div>\n        </div>\n");
+WriteLiteral("            </div>\r\n        </div>\r\n");
 
             
             #line 175 "..\..\Views\Page\EditPageProperties.cshtml"
@@ -1022,15 +1023,15 @@ WriteLiteral(" id=\"bcms-tab-2\"");
 
 WriteLiteral(" class=\"bcms-tab-single\"");
 
-WriteLiteral(">\n            <div");
+WriteLiteral(">\r\n            <div");
 
 WriteLiteral(" class=\"bcms-padded-content\"");
 
-WriteLiteral(">\n                <div");
+WriteLiteral(">\r\n                <div");
 
 WriteLiteral(" class=\"bcms-input-list-holder\"");
 
-WriteLiteral(">\n");
+WriteLiteral(">\r\n");
 
 WriteLiteral("                    ");
 
@@ -1041,7 +1042,7 @@ WriteLiteral("                    ");
             
             #line default
             #line hidden
-WriteLiteral("\n                    <div");
+WriteLiteral("\r\n                    <div");
 
 WriteLiteral(" class=\"bcms-content-titles\"");
 
@@ -1054,22 +1055,22 @@ WriteLiteral(">");
             
             #line default
             #line hidden
-WriteLiteral("</div>\n");
+WriteLiteral("</div>\r\n");
 
 WriteLiteral("                    ");
 
             
             #line 181 "..\..\Views\Page\EditPageProperties.cshtml"
-               Write(Html.TextAreaFor(model => model.PageCSS, new { @class = "bcms-editor-field-area bcms-code-field bcms-code-field-css" }));
+               Write(Html.TextAreaFor(model => model.PageCSS, new { @class = "bcms-editor-field-area bcms-code-field bcms-code-field-css", @id = Guid.NewGuid() }));
 
             
             #line default
             #line hidden
-WriteLiteral("\n                </div>\n\n                <div");
+WriteLiteral("\r\n                </div>\r\n\r\n                <div");
 
 WriteLiteral(" class=\"bcms-input-list-holder\"");
 
-WriteLiteral(">\n");
+WriteLiteral(">\r\n");
 
 WriteLiteral("                    ");
 
@@ -1080,7 +1081,7 @@ WriteLiteral("                    ");
             
             #line default
             #line hidden
-WriteLiteral("\n                    <div");
+WriteLiteral("\r\n                    <div");
 
 WriteLiteral(" class=\"bcms-content-titles\"");
 
@@ -1093,18 +1094,18 @@ WriteLiteral(">");
             
             #line default
             #line hidden
-WriteLiteral("</div>\n");
+WriteLiteral("</div>\r\n");
 
 WriteLiteral("                    ");
 
             
             #line 187 "..\..\Views\Page\EditPageProperties.cshtml"
-               Write(Html.TextAreaFor(model => model.PageJavascript, new { @class = "bcms-editor-field-area bcms-code-field bcms-code-field-javascript" }));
+               Write(Html.TextAreaFor(model => model.PageJavascript, new { @class = "bcms-editor-field-area bcms-code-field bcms-code-field-javascript", id = Guid.NewGuid() }));
 
             
             #line default
             #line hidden
-WriteLiteral("\n                </div>\n            </div>\n        </div>\n");
+WriteLiteral("\r\n                </div>\r\n            </div>\r\n        </div>\r\n");
 
             
             #line 191 "..\..\Views\Page\EditPageProperties.cshtml"
@@ -1119,15 +1120,15 @@ WriteLiteral(" id=\"bcms-tab-3\"");
 
 WriteLiteral(" class=\"bcms-tab-single\"");
 
-WriteLiteral(">\n            <div");
+WriteLiteral(">\r\n            <div");
 
 WriteLiteral(" class=\"bcms-padded-content\"");
 
-WriteLiteral(">\n                <div");
+WriteLiteral(">\r\n                <div");
 
 WriteLiteral(" class=\"bcms-input-list-holder\"");
 
-WriteLiteral(">\n");
+WriteLiteral(">\r\n");
 
 WriteLiteral("                    ");
 
@@ -1138,7 +1139,7 @@ WriteLiteral("                    ");
             
             #line default
             #line hidden
-WriteLiteral("\n                    <div");
+WriteLiteral("\r\n                    <div");
 
 WriteLiteral(" class=\"bcms-content-titles\"");
 
@@ -1151,11 +1152,11 @@ WriteLiteral(">");
             
             #line default
             #line hidden
-WriteLiteral("</div>\n                </div>\n\n                <div");
+WriteLiteral("</div>\r\n                </div>\r\n\r\n                <div");
 
 WriteLiteral(" class=\"bcms-info-message-box\"");
 
-WriteLiteral(">\n                    <a");
+WriteLiteral(">\r\n                    <a");
 
 WriteLiteral(" class=\"bcms-btn-close\"");
 
@@ -1168,7 +1169,7 @@ WriteLiteral(">");
             
             #line default
             #line hidden
-WriteLiteral("</a>\n");
+WriteLiteral("</a>\r\n");
 
 WriteLiteral("                    ");
 
@@ -1179,7 +1180,7 @@ WriteLiteral("                    ");
             
             #line default
             #line hidden
-WriteLiteral("\n                </div>\n\n");
+WriteLiteral("\r\n                </div>\r\n\r\n");
 
 WriteLiteral("                ");
 
@@ -1190,7 +1191,7 @@ WriteLiteral("                ");
             
             #line default
             #line hidden
-WriteLiteral("\n            </div>\n        </div>\n");
+WriteLiteral("\r\n            </div>\r\n        </div>\r\n");
 
             
             #line 207 "..\..\Views\Page\EditPageProperties.cshtml"
@@ -1207,7 +1208,7 @@ WriteLiteral(" class=\"bcms-tab-single\"");
 
 WriteLiteral(" data-bind=\"with: options\"");
 
-WriteLiteral(">\n");
+WriteLiteral(">\r\n");
 
 WriteLiteral("            ");
 
@@ -1218,7 +1219,7 @@ WriteLiteral("            ");
             
             #line default
             #line hidden
-WriteLiteral("\n        </div>\n");
+WriteLiteral("\r\n        </div>\r\n");
 
             
             #line 211 "..\..\Views\Page\EditPageProperties.cshtml"
@@ -1235,7 +1236,7 @@ WriteLiteral(" id=\"bcms-tab-5\"");
 
 WriteLiteral(" class=\"bcms-tab-single\"");
 
-WriteLiteral(">\n\n");
+WriteLiteral(">\r\n\r\n");
 
             
             #line 216 "..\..\Views\Page\EditPageProperties.cshtml"
@@ -1266,17 +1267,17 @@ WriteLiteral(">\n\n");
             
             #line default
             #line hidden
-WriteLiteral("\n                <div");
+WriteLiteral("\r\n                <div");
 
 WriteLiteral(" class=\"bcms-padded-content bcms-page-translations-content\"");
 
-WriteLiteral(">\n                    <div");
+WriteLiteral(">\r\n                    <div");
 
 WriteLiteral(" class=\"bcms-input-list-holder\"");
 
 WriteLiteral(" data-bind=\"with: translations.language\"");
 
-WriteLiteral(">\n");
+WriteLiteral(">\r\n");
 
 WriteLiteral("                        ");
 
@@ -1287,7 +1288,7 @@ WriteLiteral("                        ");
             
             #line default
             #line hidden
-WriteLiteral("\n                        <div");
+WriteLiteral("\r\n                        <div");
 
 WriteLiteral(" class=\"bcms-content-titles\"");
 
@@ -1300,18 +1301,18 @@ WriteLiteral(">");
             
             #line default
             #line hidden
-WriteLiteral("</div>\n                        <select");
+WriteLiteral("</div>\r\n                        <select");
 
 WriteLiteral(" class=\"bcms-global-select\"");
 
 WriteLiteral(" data-bind=\"options: languages, optionsText: \'value\', optionsValue: \'key\', value:" +
 " languageId\"");
 
-WriteLiteral("></select>\n                    </div>\n\n                    <div");
+WriteLiteral("></select>\r\n                    </div>\r\n\r\n                    <div");
 
 WriteLiteral(" class=\"bcms-title-show-helper\"");
 
-WriteLiteral(">\n");
+WriteLiteral(">\r\n");
 
 WriteLiteral("                        ");
 
@@ -1322,7 +1323,7 @@ WriteLiteral("                        ");
             
             #line default
             #line hidden
-WriteLiteral("\n                        <div");
+WriteLiteral("\r\n                        <div");
 
 WriteLiteral(" class=\"bcms-content-titles\"");
 
@@ -1335,7 +1336,7 @@ WriteLiteral(">");
             
             #line default
             #line hidden
-WriteLiteral("</div>\n                    </div>\n                </div>\n\n");
+WriteLiteral("</div>\r\n                    </div>\r\n                </div>\r\n\r\n");
 
 WriteLiteral("                ");
 
@@ -1346,7 +1347,7 @@ WriteLiteral("                ");
             
             #line default
             #line hidden
-WriteLiteral("\n\n            </div>\n");
+WriteLiteral("\r\n\r\n            </div>\r\n");
 
             
             #line 237 "..\..\Views\Page\EditPageProperties.cshtml"
@@ -1371,7 +1372,7 @@ WriteLiteral("\n\n            </div>\n");
             
             #line default
             #line hidden
-WriteLiteral("</div>\n");
+WriteLiteral("</div>\r\n");
 
         }
     }

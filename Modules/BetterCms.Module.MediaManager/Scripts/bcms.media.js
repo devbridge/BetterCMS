@@ -1480,13 +1480,21 @@ function ($, bcms, modal, siteSettings, forms, dynamicContent, messages, mediaUp
                 align = "right";
             }
 
-            if (imageAlign == 2) {
-                img = '<img src="' + imageUrl + '" alt="' + caption + '"/>';
+            if (contentEditor.codeEditorMode) {
+                img = imageUrl;
             } else {
-                img = '<img src="' + imageUrl + '" alt="' + caption + '" style="float:' + align + '" class="' + cssClass + '" />';
+                if (imageAlign == 2) {
+                    img = '<img src="' + imageUrl + '" alt="' + caption + '"/>';
+                } else {
+                    img = '<img src="' + imageUrl + '" alt="' + caption + '" style="float:' + align + '" class="' + cssClass + '" />';
+                }
             }
 
-            contentEditor.addHtml(img);
+            contentEditor.addHtml(img, {
+                src: imageUrl,
+                alt: caption,
+                imageAlign: align
+            });
         }
     };
 
@@ -1567,14 +1575,17 @@ function ($, bcms, modal, siteSettings, forms, dynamicContent, messages, mediaUp
     */
     function addFileToEditor(fileUrl, fileName) {
         if (contentEditor != null) {
-            if (contentEditor.mode == 'source') {
-                var file = '<a href="' + fileUrl + '">' + fileName + '</a>';
-                var oldData = contentEditor.getData();
+            var file;
 
-                contentEditor.setData(oldData + file);
+            if (contentEditor.codeEditorMode) {
+                file = fileUrl;
             } else {
-                contentEditor.insertHtml('<a href="' + fileUrl + '">' + fileName + '</a>');
+                file = '<a href="' + fileUrl + '">' + fileName + '</a>';
             }
+            contentEditor.addHtml(file, {
+                href: fileUrl,
+                html: fileName
+            });
         }
     };
 

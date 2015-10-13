@@ -1,0 +1,721 @@
+@import '../core/variables';
+
+$ck-toolbar-icons: (
+                ('redo_icon', $bcms-editor-redo),
+                ('undo_icon', $bcms-editor-undo),
+                ('bold_icon', $bcms-editor-bold),
+                ('italic_icon', $bcms-editor-italic),
+                ('underline_icon', $bcms-editor-underline),
+                ('strike_icon', $bcms-editor-strike),
+                ('blockquote_icon', $bcms-editor-blockquote),
+                ('link_icon', $bcms-editor-link),
+                ('unlink_icon', $bcms-editor-unlink),
+                ('copy_icon', $bcms-editor-copy),
+                ('cut_icon', $bcms-editor-cut),
+                ('paste_icon', $bcms-editor-paste),
+                ('bulletedlist_icon', $bcms-editor-bulletedlist),
+                ('numberedlist_icon', $bcms-editor-numberedlist),
+                ('specialchar_icon', $bcms-editor-specialchar),
+                ('table_icon', $bcms-editor-table),
+                ('justifyblock_icon', $bcms-editor-justifyblock),
+                ('justifycenter_icon', $bcms-editor-justifycenter),
+                ('justifyleft_icon', $bcms-editor-justifyleft),
+                ('justifyright_icon', $bcms-editor-justifyright),
+                ('image_icon', $bcms-editor-cmsimage),
+                ('templates_icon', $bcms-editor-templates),
+                ('maximize_icon', $bcms-editor-maximize),
+                ('source_icon', $bcms-editor-source),
+                ('cmsoption_icon', $bcms-editor-cmsoption),
+                ('cmsimage_icon', $bcms-editor-cmsimage),
+                ('cmswidget_icon', $bcms-editor-cmswidget),
+                ('cmsdynamicregion_icon', $bcms-editor-cmsdynamicregion),
+                ('cmstogglelinebreak_icon', $bcms-editor-cmstogglelinebreak)
+);
+
+//                ('pagebreak_icon', $bcms-editor-pagebreak),
+//                ('pastefromword_icon', $bcms-editor-pastefromword),
+//                ('pastetext_icon', $bcms-editor-pastetext),
+//                ('placeholder_icon', $bcms-editor-placeholder),
+//                ('preview_icon', $bcms-editor-preview),
+//                ('showblocks_icon', $bcms-editor-showblocks),
+//                ('anchor_icon', $bcms-editor-anchor),
+//                ('docprops_icon', $bcms-editor-docprops),
+//                ('replace_icon', $bcms-editor-replace),
+//                ('imagebutton_icon', $bcms-editor-imagebutton),
+//                ('horizontalrule_icon', $bcms-editor-horizontalrule),
+
+%text-field-extender {
+    background-color: $gray-l30;
+    border: $border-thin-gray;
+    box-sizing: border-box;
+    color: $gray-l46;
+    font-family: $font-base-family;
+    font-size: 14px;
+    margin: 0;
+    padding: 5px 7px;
+    width: 100%;
+
+    &:focus {
+        background-color: $white;
+        border-color: $blue-main;
+        color: $gray-l65;
+        outline: none;
+    }
+}
+
+//module editor frame
+.cke {
+    &_chrome {
+        border: $border-thin-gray;
+        display: block;
+        visibility: inherit !important;
+    }
+
+    &_inner {
+        display: block;
+    }
+
+    &_top,
+    &_contents,
+    &_bottom {
+        display: block;
+        overflow: hidden;
+    }
+
+    &_top {
+        background-color: $gray-l30;
+        border-bottom: $border-thin-gray;
+        min-height: 13px;
+        padding: 6px 8px 0;
+        position: relative;
+        white-space: normal;
+    }
+
+    &_float {
+        .cke_top {
+            border: $border-thin-gray;
+        }
+    }
+
+    &_bottom {
+        background: $gray-l30;
+        border-top: $border-thin-gray;
+        height: 28px;
+        line-height: 28px;
+        padding: 0 5px;
+        position: relative;
+    }
+
+    &_resizer {
+        @include position(absolute, null 5px 5px null);
+        @include size(0);
+        border-color: transparent $gray-l65 transparent transparent;
+        border-style: dashed solid dashed dashed;
+        border-width: 10px 10px 0 0;
+        cursor: se-resize;
+        float: right;
+        overflow: hidden;
+    }
+
+    &_wysiwyg_div {
+        box-sizing: border-box;
+        display: block;
+        height: 100%;
+        outline-style: none;
+        overflow: auto;
+        padding: 0 8px;
+    }
+
+    &_disabled {
+        opacity: .6;
+    }
+}
+
+//module editor toolbar
+.cke_toolbar {
+    float: left;
+    margin-bottom: 6px;
+}
+
+.cke_toolgroup {
+    background-color: $gray-l30;
+    border: $border-thin-gray;
+    float: left;
+    margin-right: 6px;
+}
+
+.cke_button {
+    background-color: $gray-l30;
+    cursor: pointer;
+    float: left;
+    height: 18px;
+    outline: none;
+    padding: 4px 6px;
+
+    &:hover {
+        background-color: darken($gray-l30, 10%);
+    }
+
+    &_on {
+        box-shadow: inset 0 0 7px rgba($black, .5);
+
+        &:hover {
+            background-color: $gray-l30;
+        }
+    }
+
+    &_off {
+        //keep for reference in case we need it
+    }
+
+    &_disabled {
+        opacity: .3;
+
+        &:hover {
+            background-color: $gray-l30;
+        }
+    }
+
+    &_icon {
+        background: {
+            repeat: no-repeat;
+            position: center !important;
+        }
+        display: block;
+        float: left;
+        height: 18px;
+        width: 18px;
+    }
+
+    &_label {
+        color: $gray-l65;
+        display: none;
+        float: left;
+        line-height: 16px;
+        padding-left: 3px;
+    }
+
+    &_arrow {
+        @include size(0);
+        cursor: default;
+        display: inline-block;
+        margin: 8px 0 0 1px;
+        vertical-align: top;
+        border: {
+            style: solid;
+            width: 3px;
+            color: transparent transparent $gray-l65 transparent;
+        }
+    }
+}
+
+.cke_toolbox_collapser {
+    @include position(absolute, null 8px 6px null);
+    @include size(12px 11px);
+    background-color: $gray-l30;
+    border: $border-thin-gray;
+    cursor: pointer;
+    overflow: hidden;
+    text-align: center;
+
+    .cke_arrow {
+        @include size(0);
+        display: block;
+        margin: 1px auto 0;
+        overflow: hidden;
+        text-indent: -999em;
+        border: {
+            style: solid;
+            width: 3px;
+            color: transparent transparent $gray-l65 transparent;
+        }
+    }
+
+    &_min {
+        .cke_arrow {
+            margin-top: 4px;
+            border: {
+                bottom-color: transparent;
+                top-color: $gray-l65;
+            }
+        }
+    }
+}
+
+//module footer path
+.cke_path_item {
+    color: $gray-l65;
+    cursor: default;
+    display: inline-block;
+    font-size: 11px;
+    font-weight: bold;
+    line-height: 18px;
+    margin-right: 6px;
+    text-decoration: none;
+}
+
+.cke_voice_label {
+    display: none;
+}
+
+//module editor dialog
+.cke_dialog {
+    visibility: visible;
+
+    &_close_button {
+        //fixme temp bg-color need to add image
+        background: url($bcms-editor-close) no-repeat center;
+        cursor: pointer;
+        height: 20px;
+        position: absolute;
+        right: 10px;
+        text-align: center;
+        top: 10px;
+        width: 20px;
+        z-index: 5;
+
+        .cke_label {
+            display: none;
+        }
+    }
+
+    &_title {
+        background-color: $gray-l30;
+        border-bottom: $border-thin-gray;
+        color: $gray-l65;
+        cursor: move;
+        font-size: 13px;
+        font-weight: bold;
+        padding: 6px 10px;
+        position: relative;
+    }
+
+    &_body {
+        background-color: $gray-l30;
+        border: $border-thin-gray;
+        z-index: 1;
+
+        label {
+            font-size: 12px;
+        }
+    }
+
+    &_contents {
+        background-color: $white;
+        border-collapse: collapse;
+        border-top: $border-thin-gray;
+        font-size: 12px;
+        margin-top: 30px;
+        overflow: auto;
+
+        &_body {
+            margin-top: 22px;
+            overflow: auto;
+            padding: 10px;
+            vertical-align: top;
+        }
+    }
+
+    &_footer {
+        background-color: $gray-l30;
+        border-top: $border-thin-gray;
+        padding: 5px;
+        position: relative;
+        text-align: right;
+    }
+
+    &_footer_buttons {
+        display: inline;
+        width: auto;
+    }
+
+    &_spinner {
+        @include animation(dialog_spinner 1s infinite linear);
+        border-radius: 50%;
+        border: {
+            style: solid;
+            width: 2px;
+            color: rgba($dark, .8);
+            left-color: rgba($dark, .6);
+        }
+        height: 12px;
+        overflow: hidden;
+        text-indent: -9999em;
+        width: 12px;
+    }
+
+    //module dialog tabs
+    &_tabs {
+        display: inline-block;
+        height: 24px;
+        left: 10px;
+        margin: 5px 0 0;
+        position: absolute;
+        z-index: 2;
+    }
+
+    &_tab {
+        background-color: $gray-l30;
+        border: $border-thin-gray;
+        color: $gray-l65;
+        cursor: pointer;
+        display: inline-block;
+        font-size: 12px;
+        height: 16px;
+        line-height: 16px;
+        margin-right: 3px;
+        outline: none;
+        padding: 4px 8px;
+
+        &:hover {
+            background-color: darken($gray-l30, 10%);
+            text-decoration: none;
+        }
+
+        &_selected {
+            background-color: $white;
+            border-bottom-color: $white;
+            cursor: default;
+
+            &:hover {
+                background-color: $white;
+            }
+        }
+
+        &_disabled {
+            cursor: default;
+            opacity: .3;
+        }
+    }
+
+    &_ui {
+        &_hbox {
+            vertical-align: top;
+            width: 100%;
+        }
+    }
+
+    iframe {
+        &.cke_pasteframe {
+            @extend %text-field-extender;
+            height: 130px;
+            margin-top: 15px;
+        }
+    }
+
+    .cke_centered {
+        text-align: center;
+    }
+}
+
+.cke_single_page {
+    .cke_dialog_tabs {
+        display: none;
+    }
+
+    .cke_dialog_contents {
+        border-top: none;
+        margin-top: 0;
+        padding-top: 5px;
+    }
+}
+
+select {
+    &.cke_dialog_ui {
+        &_input_select {
+            @extend %text-field-extender;
+            border-radius: 0;
+            height: 31px;
+            width: auto;
+        }
+    }
+}
+
+input {
+    &.cke_dialog_ui {
+        &_input_text {
+            @extend %text-field-extender;
+        }
+    }
+}
+
+textarea {
+    &.cke_dialog_ui {
+        &_input_textarea {
+            @extend %text-field-extender;
+            overflow: auto;
+            resize: none;
+        }
+    }
+}
+
+a {
+    &.cke_dialog_ui_button {
+        @include button() {
+            @include add-gradient($top: $gray-l45, $bottom: $gray-l46);
+            color: $white;
+            font-size: 12px;
+            line-height: 30px;
+            padding: 0 10px;
+        }
+
+        &:hover {
+            text-decoration: none;
+        }
+
+        &_ok {
+            @include button() {
+                @include add-gradient($top: $blue-l30, $bottom: $blue-l40);
+                color: $white;
+                font-size: 12px;
+                line-height: 30px;
+                padding: 0 10px;
+            }
+
+            &.cke_disabled {
+                cursor: default;
+                opacity: .6;
+            }
+        }
+    }
+
+    &.cke_specialchar {
+        @include size(24px);
+        border: $border-thin-light-gray;
+        color: $gray-l65;
+        cursor: pointer;
+        display: block;
+        text-align: center;
+
+        &:hover {
+            background-color: darken($white, 10%);
+            text-decoration: none;
+        }
+    }
+}
+
+.cke_iframe_shim {
+    display: block;
+    height: 100%;
+    left: 0;
+    position: absolute;
+    top: 0;
+    width: 100%;
+    z-index: -1;
+}
+
+//module combo box
+.cke_combo {
+    float: left;
+    margin-right: 6px;
+
+    &_label {
+        display: none;
+        float: left;
+        line-height: 26px;
+        margin-right: 5px;
+        vertical-align: top;
+    }
+
+    &_button {
+        background-color: $gray-l30;
+        border: $border-thin-gray;
+        box-sizing: border-box;
+        cursor: pointer;
+        float: left;
+        height: 28px;
+    }
+
+    &_text {
+        @include vertical-align();
+        color: $gray-l65;
+        font-size: 12px;
+        line-height: 26px;
+        padding: 0 10px;
+        white-space: nowrap;
+
+        &:hover {
+            text-decoration: none;
+        }
+    }
+
+    &_open {
+        @include vertical-align();
+        cursor: default;
+        margin: 0 5px;
+    }
+
+    &_arrow {
+        border: {
+            style: solid;
+            width: 4px;
+            color: $gray-l65 transparent transparent transparent;
+        }
+
+        float: right;
+        margin-top: 4px;
+    }
+
+    &_disabled {
+        .cke_combo_inlinelabel,
+        .cke_combo_open {
+            opacity: .3;
+        }
+    }
+}
+
+.cke_combopanel {
+    height: 170px;
+    max-width: 200px;
+}
+
+.cke_panel {
+    background-color: $white;
+    border: $border-thin-gray;
+    height: 150px;
+    overflow: hidden;
+    visibility: visible;
+
+    &_block {
+        &:focus {
+            outline: none;
+        }
+    }
+
+    &_frame {
+        @include size(100%);
+        font-size: 12px;
+        overflow: auto;
+        overflow-x: hidden;
+    }
+
+    &_container {
+        overflow-x: hidden;
+        overflow-y: auto;
+    }
+
+    &_list {
+        list-style-type: none;
+        margin: 3px;
+        padding: 0;
+
+        &:focus {
+            outline: none;
+        }
+    }
+
+    &_listItem {
+        a {
+            @include transition(all 200ms);
+            box-sizing: border-box;
+            color: $gray-l65;
+            display: block;
+            font-family: $font-arial;
+            font-size: 12px;
+            height: 100%;
+            line-height: 24px;
+            overflow: hidden;
+            padding: 3px 4px;
+            text-decoration: none;
+            white-space: nowrap;
+
+            &:hover {
+                background-color: $gray-l30;
+                border-color: $gray-l40;
+                box-shadow: inset 0 0 2px rgba($black, .1);
+            }
+        }
+    }
+}
+
+.cke_menu_panel {
+    max-width: 200px;
+}
+
+.cke_menubutton {
+    color: $gray-l65;
+    display: block;
+    font-family: $font-arial;
+    font-size: 12px;
+    text-decoration: none;
+
+    &:hover {
+        background-color: darken($gray-l30, 10%);
+        text-decoration: none;
+    }
+
+    &_inner {
+        display: table-row;
+    }
+
+    &_icon {
+        background-color: #D7D8D7;
+        display: table-cell;
+        padding: 4px;
+    }
+
+    &_label {
+        display: table-cell;
+        padding: 0 6px;
+        vertical-align: middle;
+        width: 100%;
+    }
+
+    &_on {
+        background-color: $gray-l30;
+        border: $border-thin-gray;
+    }
+
+    &_disabled {
+        opacity: .6;
+    }
+}
+
+.cke_panel_grouptitle {
+    background: #cfd1cf;
+    border-bottom: 1px solid #b6b6b6;
+    border-radius: 2px 2px 0 0;
+    box-shadow: 0 1px 0 #fff inset;
+    color: #474747;
+    cursor: default;
+    font-size: 11px;
+    font-weight: bold;
+    margin: 0;
+    padding: 4px 6px;
+    white-space: nowrap;
+}
+
+.cke_panel_listItem p,
+.cke_panel_listItem h1,
+.cke_panel_listItem h2,
+.cke_panel_listItem h3,
+.cke_panel_listItem h4,
+.cke_panel_listItem h5,
+.cke_panel_listItem h6,
+.cke_panel_listItem pre {
+    margin-bottom: 0;
+    margin-top: 0;
+}
+
+//module custom
+.cke_button__cmsoption_label {
+    display: inline !important;
+}
+
+@include keyframes(dialog_spinner) {
+    0% {
+        @include transform(rotate(0deg));
+    }
+    100% {
+        @include transform(rotate(360deg));
+    }
+}
+
+//module toolbar icons
+@each $name, $icon in $ck-toolbar-icons {
+    .cke_button {
+        &__#{$name} {
+            background-image: url($icon) !important;
+        }
+    }
+}

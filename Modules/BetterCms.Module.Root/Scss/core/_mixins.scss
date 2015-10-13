@@ -71,6 +71,12 @@
     }
 }
 
+@mixin ellipsis() {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
 @mixin add-gradient($top: null, $bottom: null, $fallback: null) {
     @if ($fallback == true) {
         background-color: $bottom;
@@ -83,6 +89,19 @@
         background-image: -webkit-linear-gradient(top, $bottom 0, $bottom 100%);
         background-image: linear-gradient(to bottom, $bottom 0, $bottom 100%);
     }
+}
+
+@mixin button() {
+    @include vertical-align();
+    border: 0;
+    border-radius: 2px;
+    box-sizing: border-box;
+    cursor: pointer;
+    font-family: $font-base-family;
+    overflow: hidden;
+    text-align: center;
+    text-transform: uppercase;
+    @content
 }
 
 //module functions

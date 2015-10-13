@@ -1,5 +1,26 @@
 @import 'core/variables';
 
+@font-face {
+    font-family: 'Open Sans';
+    font-style: normal;
+    font-weight: 400;
+    src: url($bcms-OpenSans-Regular) format('truetype');
+}
+
+@font-face {
+    font-family: 'Open Sans';
+    font-style: normal;
+    font-weight: 600;
+    src: url($bcms-OpenSans-Semibold) format('truetype');
+}
+
+@font-face {
+    font-family: 'Open Sans';
+    font-style: normal;
+    font-weight: 700;
+    src: url($bcms-OpenSans-Bold) format('truetype');
+}
+
 %clearfix {
     @include clearfix($extend: false);
 }
@@ -25,22 +46,16 @@
 
 //module styles
 @import 'bcms-modules/root/buttons',
-'bcms-modules/root/calendar',
 'bcms-modules/root/controlpanel',
 'bcms-modules/root/messages',
 'bcms-modules/root/notifications',
 'bcms-modules/root/overlays',
+'plugins/markitup',
 'bcms-modules/root/index';
 
-//todo create ckEditor adjustments SASS files and compile to theme folder
-//customization
-.cke_button__cmsoption_icon {
-    background: url($icon-bcms-editor-options) no-repeat center !important;
-}
-
-.cke_button__cmsoption_label {
-    display: inline !important;
-}
+//module plugins
+@import 'plugins/markitup',
+'plugins/jquerycalendar';
 
 //module text & debug
 //@debug

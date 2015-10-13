@@ -45,7 +45,6 @@
     </style>
     @if (Model.CanManageContent)
     {
-        <link href='//fonts.googleapis.com/css?family=Open+Sans:400italic,700italic,400,700' rel='stylesheet' type='text/css' async />
         @Html.Action("RenderStyleSheetIncludes", "Rendering")
     }
 }
@@ -112,7 +111,7 @@
 
     @if (Model.JavaScripts != null)
     {
-        @Html.RenderPageCustomJavaScript(Model.JavaScripts)
+        @Html.RenderPageCustomJavaScript(Model.JavaScripts, Model)
     }
 }
 
@@ -121,7 +120,7 @@
 
     @if (Model.Stylesheets != null)
     {
-        @Html.RenderPageCustomCss(Model.Stylesheets)
+        @Html.RenderPageCustomCss(Model.Stylesheets, Model)
     }
 }
 @section HeadScripts {

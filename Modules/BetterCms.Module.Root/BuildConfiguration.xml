@@ -12,6 +12,7 @@
       <JavaScriptFiles Include="$(ProjectDir)Scripts\bcms.jquery.validate.js" />
       <JavaScriptFiles Include="$(ProjectDir)Scripts\bcms.jquery.validate.unobtrusive.js" />
       <JavaScriptFiles Include="$(ProjectDir)Scripts\bcms.jquery.autocomplete.js" />
+      <JavaScriptFiles Include="$(ProjectDir)Scripts\bcms.jquery.markitup.js" />
       <JavaScriptFiles Include="$(ProjectDir)Scripts\bcms.autocomplete.js" />
       <JavaScriptFiles Include="$(ProjectDir)Scripts\bcms.slides.jquery.js" />
       <JavaScriptFiles Include="$(ProjectDir)Scripts\bcms.spinner.jquery.js" />      
@@ -30,6 +31,7 @@
       <JavaScriptFiles Include="$(ProjectDir)Scripts\bcms.js" />
       <JavaScriptFiles Include="$(ProjectDir)Scripts\bcms.ko.extenders.js" />
       <JavaScriptFiles Include="$(ProjectDir)Scripts\bcms.ko.grid.js" />
+      <JavaScriptFiles Include="$(ProjectDir)Scripts\bcms.markdown.js" />
       <JavaScriptFiles Include="$(ProjectDir)Scripts\bcms.messages.js" />
       <JavaScriptFiles Include="$(ProjectDir)Scripts\bcms.modal.js" />
       <JavaScriptFiles Include="$(ProjectDir)Scripts\bcms.options.js" />
