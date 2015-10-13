@@ -117,28 +117,30 @@ WriteLiteral("\" data-bind=\"click: addContent\">\r\n                        <di
 "\">Plain text</div>\r\n                            <div class=\"bcms-contents-tree-c" +
 "ontrols bcms-region-insertwidget\">Widget</div>\r\n                        </div>\r\n" +
 "                    </div>\r\n                    <!-- /ko -->\r\n                  " +
-"  <!-- ko if: type == types.content -->\r\n                    <!-- ko if: model.v" +
-"isibleButtons.delete -->\r\n                    <a class=\"bcms-tree-controls-delet" +
-"e\" data-bind=\"click: deleteItem\"></a>\r\n                    <!-- /ko -->\r\n       " +
-"             <!-- ko if: model.visibleButtons.configure -->\r\n                   " +
-" <a class=\"bcms-tree-controls-config\" data-bind=\"click: configure\"></a>\r\n       " +
-"             <!-- /ko -->\r\n                    <!-- ko if: model.visibleButtons." +
-"edit -->\r\n                    <a class=\"bcms-tree-controls-edit\" data-bind=\"clic" +
-"k: editItem, css: {\'bcms-tree-controls-edit-draft\': draft()}\"></a>\r\n            " +
-"        <!-- /ko -->\r\n                    <!-- ko if: model.visibleButtons.histo" +
-"ry -->\r\n                    <a class=\"bcms-tree-controls-history\" data-bind=\"cli" +
-"ck: history\"></a>\r\n                    <!-- /ko -->\r\n                    <!-- /k" +
-"o -->\r\n                </div>\r\n            </div>\r\n\r\n            <!-- ko if: ite" +
-"ms().length > 0 -->\r\n            <div data-bind=\"with: items()\">\r\n              " +
-"  <div data-bind=\"template: { name: \'bcms-contents-tree-list-template\' }\"></div>" +
-"\r\n                <!-- ko if: $parent != null && $parent.types && $parent.type =" +
-"= $parent.types.region && $data.length == 1 -->\r\n                <div style=\"pad" +
-"ding: 0; margin: 0;\" class=\"bcms-contents-tree-sort-block\" data-bind=\"draggableC" +
-"ontent: true\">&nbsp;</div>\r\n                <!-- /ko -->\r\n            </div>\r\n  " +
-"          <!-- /ko -->\r\n            <!-- ko if: type == types.region && items()." +
-"length == 0 -->\r\n            <div class=\"bcms-contents-tree-sort-block\" data-bin" +
-"d=\"draggableContent:true\">&nbsp;</div>\r\n            <!-- /ko -->\r\n        </div>" +
-"\r\n    </div>\r\n    <!-- /ko -->\r\n    <!-- /ko -->\r\n</script>");
+"  <!-- ko if: type == types.content -->\r\n                    <div class=\"bcms-tr" +
+"ee-controls-box\">\r\n                        <!-- ko if: model.visibleButtons.dele" +
+"te -->\r\n                        <a class=\"bcms-tree-controls-delete\" data-bind=\"" +
+"click: deleteItem\"></a>\r\n                        <!-- /ko -->\r\n                 " +
+"       <!-- ko if: model.visibleButtons.configure -->\r\n                        <" +
+"a class=\"bcms-tree-controls-config\" data-bind=\"click: configure\"></a>\r\n         " +
+"               <!-- /ko -->\r\n                        <!-- ko if: model.visibleBu" +
+"ttons.edit -->\r\n                        <a class=\"bcms-tree-controls-edit\" data-" +
+"bind=\"click: editItem, css: {\'bcms-tree-controls-edit-draft\': draft()}\"></a>\r\n  " +
+"                      <!-- /ko -->\r\n                        <!-- ko if: model.vi" +
+"sibleButtons.history -->\r\n                        <a class=\"bcms-tree-controls-h" +
+"istory\" data-bind=\"click: history\"></a>\r\n                        <!-- /ko -->\r\n " +
+"                   </div>\r\n                    <!-- /ko -->\r\n                </d" +
+"iv>\r\n            </div>\r\n\r\n            <!-- ko if: items().length > 0 -->\r\n     " +
+"       <div data-bind=\"with: items()\">\r\n                <div data-bind=\"template" +
+": { name: \'bcms-contents-tree-list-template\' }\"></div>\r\n                <!-- ko " +
+"if: $parent != null && $parent.types && $parent.type == $parent.types.region && " +
+"$data.length == 1 -->\r\n                <div style=\"padding: 0; margin: 0;\" class" +
+"=\"bcms-contents-tree-sort-block\" data-bind=\"draggableContent: true\">&nbsp;</div>" +
+"\r\n                <!-- /ko -->\r\n            </div>\r\n            <!-- /ko -->\r\n  " +
+"          <!-- ko if: type == types.region && items().length == 0 -->\r\n         " +
+"   <div class=\"bcms-contents-tree-sort-block\" data-bind=\"draggableContent:true\">" +
+"&nbsp;</div>\r\n            <!-- /ko -->\r\n        </div>\r\n    </div>\r\n    <!-- /ko" +
+" -->\r\n    <!-- /ko -->\r\n</script>");
 
         }
     }

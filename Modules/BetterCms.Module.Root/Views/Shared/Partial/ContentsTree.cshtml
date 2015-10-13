@@ -48,18 +48,20 @@
                     </div>
                     <!-- /ko -->
                     <!-- ko if: type == types.content -->
-                    <!-- ko if: model.visibleButtons.delete -->
-                    <a class="bcms-tree-controls-delete" data-bind="click: deleteItem"></a>
-                    <!-- /ko -->
-                    <!-- ko if: model.visibleButtons.configure -->
-                    <a class="bcms-tree-controls-config" data-bind="click: configure"></a>
-                    <!-- /ko -->
-                    <!-- ko if: model.visibleButtons.edit -->
-                    <a class="bcms-tree-controls-edit" data-bind="click: editItem, css: {'bcms-tree-controls-edit-draft': draft()}"></a>
-                    <!-- /ko -->
-                    <!-- ko if: model.visibleButtons.history -->
-                    <a class="bcms-tree-controls-history" data-bind="click: history"></a>
-                    <!-- /ko -->
+                    <div class="bcms-tree-controls-box">
+                        <!-- ko if: model.visibleButtons.delete -->
+                        <a class="bcms-tree-controls-delete" data-bind="click: deleteItem"></a>
+                        <!-- /ko -->
+                        <!-- ko if: model.visibleButtons.configure -->
+                        <a class="bcms-tree-controls-config" data-bind="click: configure"></a>
+                        <!-- /ko -->
+                        <!-- ko if: model.visibleButtons.edit -->
+                        <a class="bcms-tree-controls-edit" data-bind="click: editItem, css: {'bcms-tree-controls-edit-draft': draft()}"></a>
+                        <!-- /ko -->
+                        <!-- ko if: model.visibleButtons.history -->
+                        <a class="bcms-tree-controls-history" data-bind="click: history"></a>
+                        <!-- /ko -->
+                    </div>
                     <!-- /ko -->
                 </div>
             </div>
