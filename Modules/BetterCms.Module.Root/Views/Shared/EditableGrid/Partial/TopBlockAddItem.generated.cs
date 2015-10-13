@@ -72,7 +72,7 @@ WriteLiteral(">\r\n            <!-- ko foreach: optionTypes -->\r\n            <
 
 WriteLiteral(" class=\"bcms-multi-opt-item\"");
 
-WriteLiteral(" data-bind=\"text: name, click: $root.addNewSelectedItem.bind(\'$data\', id)\"");
+WriteLiteral(" data-bind=\"text: name, click: $parent.addNewSelectedItem.bind(\'$data\', id)\"");
 
 WriteLiteral("></div>\r\n            <!-- /ko -->\r\n        </div>\r\n");
 
