@@ -572,11 +572,12 @@ bettercms.define('bcms.content', ['bcms.jquery', 'bcms', 'bcms.modal', 'bcms.red
                 });
             };
 
-            self.onAddMarkdown = function (onSuccess) {
+            self.onAddMarkdown = function (onSuccess, includeChildRegions) {
                 bcms.trigger(bcms.events.addPageContent, {
                     regionViewModel: self,
                     onSuccess: onSuccess,
-                    contentTextMode: contentTextModes.markdown
+                    contentTextMode: contentTextModes.markdown,
+                    includeChildRegions: includeChildRegions
                 });
             };
 
@@ -588,9 +589,10 @@ bettercms.define('bcms.content', ['bcms.jquery', 'bcms', 'bcms.modal', 'bcms.red
                 });
             };
 
-            self.onInsertWidget = function () {
+            self.onInsertWidget = function (onSuccess) {
                 bcms.trigger(bcms.events.insertWidget, {
-                    regionViewModel: self
+                    regionViewModel: self,
+                    onSuccess: onSuccess
                 });
             };
 
@@ -621,6 +623,7 @@ bettercms.define('bcms.content', ['bcms.jquery', 'bcms', 'bcms.modal', 'bcms.red
 
                 if (!isOpened) {
                     $(this).addClass(classes.buttonActive);
+
                     isOpenedAddContent = true;
                     suspendCloseAddContent = true;
                     setTimeout(function() {
@@ -1349,17 +1352,20 @@ bettercms.define('bcms.content', ['bcms.jquery', 'bcms', 'bcms.modal', 'bcms.red
     };
 
     /**
+    * Is called everytime user clicks a mouse anywhere in the browser
+    */
+    function onBodyClick() {
+        if (isOpenedAddContent && !suspendCloseAddContent) {
+            closeAllAddContentButtons();
+            isOpenedAddContent = false;
+        }
+    }
+
+    /**
     * Initializes contents module.
     */
     content.init = function () {
         bcms.logger.debug('Initializing content module');
-
-        $('body').on('click', function () {
-            if (isOpenedAddContent && !suspendCloseAddContent) {
-                closeAllAddContentButtons();
-                isOpenedAddContent = false;
-            }
-        });
 
         masterPagesModel = new MasterPagesPathModel();
         masterPagesModel.initialize();
@@ -1372,6 +1378,7 @@ bettercms.define('bcms.content', ['bcms.jquery', 'bcms', 'bcms.modal', 'bcms.red
     */
     bcms.on(bcms.events.editModeOff, onEditModeOff);
     bcms.on(bcms.events.editModeOn, onEditModeOn);
+    bcms.on(bcms.events.bodyClick, onBodyClick);
 
     /**
     * Register initialization
