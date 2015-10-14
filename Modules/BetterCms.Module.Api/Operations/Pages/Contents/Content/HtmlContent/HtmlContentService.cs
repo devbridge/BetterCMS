@@ -1,9 +1,12 @@
 ﻿using System;
 using System.Linq;
+using System.Web.Http;
+using System.Web.Http.ModelBinding;
 
 using BetterCms.Core.DataContracts.Enums;
-
+using BetterCms.Module.Api.ApiExtensions;
 using BetterCms.Module.Api.Extensions;
+using BetterCms.Module.Api.Operations.Pages.Pages;
 using BetterCms.Module.Pages.Helpers;
 using BetterCms.Module.Root.Mvc;
 using BetterCms.Module.Root.Services;
@@ -12,14 +15,13 @@ using BetterModules.Core.DataAccess;
 using BetterModules.Core.DataAccess.DataContext;
 using BetterModules.Core.Exceptions.DataTier;
 
-using ServiceStack.ServiceInterface;
-
 namespace BetterCms.Module.Api.Operations.Pages.Contents.Content.HtmlContent
 {
     /// <summary>
     /// Default html content CRUD service.
     /// </summary>
-    public class HtmlContentService : Service, IHtmlContentService
+    [RoutePrefix("bcms-api")]
+    public class HtmlContentController : ApiController, IHtmlContentService
     {
         /// <summary>
         /// The repository.
@@ -42,13 +44,13 @@ namespace BetterCms.Module.Api.Operations.Pages.Contents.Content.HtmlContent
         private readonly IOptionService optionService;
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="HtmlContentService" /> class.
+        /// Initializes a new instance of the <see cref="HtmlContentController" /> class.
         /// </summary>
         /// <param name="repository">The repository.</param>
         /// <param name="unitOfWork">The unit of work.</param>
         /// <param name="contentService">The content service.</param>
         /// <param name="optionService">The option service.</param>
-        public HtmlContentService(IRepository repository, IUnitOfWork unitOfWork,
+        public HtmlContentController(IRepository repository, IUnitOfWork unitOfWork,
             Module.Root.Services.IContentService contentService, IOptionService optionService)
         {
             this.repository = repository;
@@ -64,7 +66,8 @@ namespace BetterCms.Module.Api.Operations.Pages.Contents.Content.HtmlContent
         /// <returns>
         ///   <c>GetHtmlContentResponse</c> with html content.
         /// </returns>
-        public GetHtmlContentResponse Get(GetHtmlContentRequest request)
+        [Route("contents/html/{ContentId}")]
+        public GetHtmlContentResponse Get([ModelBinder(typeof(JsonModelBinder))]GetHtmlContentRequest request)
         {
             var model = repository
                 .AsQueryable<Module.Pages.Models.HtmlContent>(content => content.Id == request.ContentId)
@@ -110,6 +113,7 @@ namespace BetterCms.Module.Api.Operations.Pages.Contents.Content.HtmlContent
         /// <returns>
         ///   <c>PostHtmlContentResponse</c> with html content id.
         /// </returns>
+        [Route("contents/html")]
         public PostHtmlContentResponse Post(PostHtmlContentRequest request)
         {
             var result = Put(new PutHtmlContentRequest
@@ -128,6 +132,8 @@ namespace BetterCms.Module.Api.Operations.Pages.Contents.Content.HtmlContent
         /// <returns>
         ///   <c>PutHtmlContentResponse</c> with html content id.
         /// </returns>
+        [Route("contents/html/{Id}")]
+        [UrlPopulator]
         public PutHtmlContentResponse Put(PutHtmlContentRequest request)
         {
             var isNew = !request.Id.HasValue || request.Id.Value.HasDefaultValue();
@@ -222,6 +228,8 @@ namespace BetterCms.Module.Api.Operations.Pages.Contents.Content.HtmlContent
         /// <returns>
         ///   <c>DeleteHtmlContentResponse</c> with success status.
         /// </returns>
+        [Route("contents/html/{Id}")]
+        [UrlPopulator]
         public DeleteHtmlContentResponse Delete(DeleteHtmlContentRequest request)
         {
             if (request.Data == null || request.Id.HasDefaultValue())

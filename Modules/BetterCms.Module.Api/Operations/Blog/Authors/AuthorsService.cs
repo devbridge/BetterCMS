@@ -1,5 +1,9 @@
 ﻿using System;
 using System.Linq;
+using System.Web.Http;
+using System.Web.Http.ModelBinding;
+
+using BetterCms.Module.Api.ApiExtensions;
 
 using BetterModules.Core.DataAccess;
 using BetterCms.Module.Api.Helpers;
@@ -7,11 +11,10 @@ using BetterCms.Module.Api.Infrastructure;
 using BetterCms.Module.Api.Operations.Blog.Authors.Author;
 using BetterCms.Module.MediaManager.Services;
 
-using ServiceStack.ServiceInterface;
-
 namespace BetterCms.Module.Api.Operations.Blog.Authors
 {
-    public class AuthorsService : Service, IAuthorsService
+    [RoutePrefix("bcms-api")]
+    public class AuthorsController : ApiController, IAuthorsService
     {
         /// <summary>
         /// The repository.
@@ -29,12 +32,12 @@ namespace BetterCms.Module.Api.Operations.Blog.Authors
         private readonly IAuthorService authorService;
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="AuthorsService"/> class.
+        /// Initializes a new instance of the <see cref="AuthorsController"/> class.
         /// </summary>
         /// <param name="repository">The repository.</param>
         /// <param name="fileUrlResolver">The file URL resolver.</param>
         /// <param name="authorService">The author service.</param>
-        public AuthorsService(IRepository repository, IMediaFileUrlResolver fileUrlResolver, IAuthorService authorService)
+        public AuthorsController(IRepository repository, IMediaFileUrlResolver fileUrlResolver, IAuthorService authorService)
         {
             this.repository = repository;
             this.fileUrlResolver = fileUrlResolver;
@@ -48,7 +51,8 @@ namespace BetterCms.Module.Api.Operations.Blog.Authors
         /// <returns>
         ///   <c>GetAuthorsResponse</c> with authors list.
         /// </returns>
-        public GetAuthorsResponse Get(GetAuthorsRequest request)
+        [Route("authors")]
+        public GetAuthorsResponse Get([ModelBinder(typeof(JsonModelBinder))]GetAuthorsRequest request)
         {
             request.Data.SetDefaultOrder("Name");
 
@@ -91,6 +95,7 @@ namespace BetterCms.Module.Api.Operations.Blog.Authors
         /// <returns>
         ///   <c>PostAuthorsResponse</c> with a new author id.
         /// </returns>
+        [Route("authors")]
         public PostAuthorResponse Post(PostAuthorRequest request)
         {
             var result =

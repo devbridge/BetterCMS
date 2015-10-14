@@ -1,17 +1,19 @@
-﻿using ServiceStack.ServiceInterface;
+﻿using System.Web.Http;
 
 namespace BetterCms.Module.Api.Operations.Root.Version
 {
-    public class VersionService : Service, IVersionService
+    [RoutePrefix("bcms-api")]
+    public class VersionController : ApiController, IVersionService
     {
         private readonly ICmsConfiguration configuration;
 
-        public VersionService(ICmsConfiguration configuration)
+        public VersionController(ICmsConfiguration configuration)
         {
             this.configuration = configuration;
         }
 
-        public GetVersionResponse Get(GetVersionRequest request = null)
+        [Route("current-version")]
+        public GetVersionResponse Get([FromUri]GetVersionRequest request = null)
         {
             return new GetVersionResponse
                        {

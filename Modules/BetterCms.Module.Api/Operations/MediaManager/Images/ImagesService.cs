@@ -1,4 +1,8 @@
 ﻿using System.Linq;
+using System.Web.Http;
+using System.Web.Http.ModelBinding;
+
+using BetterCms.Module.Api.ApiExtensions;
 
 using BetterModules.Core.DataAccess;
 using BetterCms.Module.Api.Helpers;
@@ -9,14 +13,13 @@ using BetterCms.Module.MediaManager.Models;
 using BetterCms.Module.MediaManager.Services;
 using BetterCms.Module.Root.Services;
 
-using ServiceStack.ServiceInterface;
-
 namespace BetterCms.Module.Api.Operations.MediaManager.Images
 {
     /// <summary>
     /// Default images service contract implementation for REST.
     /// </summary>
-    public class ImagesService : Service, IImagesService
+    [RoutePrefix("bcms-api")]
+    public class ImagesController : ApiController, IImagesService
     {
         /// <summary>
         /// The repository.
@@ -35,12 +38,12 @@ namespace BetterCms.Module.Api.Operations.MediaManager.Images
 
         private readonly ICategoryService categoryService;
         /// <summary>
-        /// Initializes a new instance of the <see cref="ImagesService" /> class.
+        /// Initializes a new instance of the <see cref="ImagesController" /> class.
         /// </summary>
         /// <param name="repository">The repository.</param>
         /// <param name="fileUrlResolver">The file URL resolver.</param>
         /// <param name="imageService">The image service.</param>
-        public ImagesService(IRepository repository, IMediaFileUrlResolver fileUrlResolver, IImageService imageService, IUploadImageService uploadImageService, ICategoryService categoryService)
+        public ImagesController(IRepository repository, IMediaFileUrlResolver fileUrlResolver, IImageService imageService, IUploadImageService uploadImageService, ICategoryService categoryService)
         {
             this.repository = repository;
             this.fileUrlResolver = fileUrlResolver;
@@ -61,7 +64,9 @@ namespace BetterCms.Module.Api.Operations.MediaManager.Images
         /// <returns>
         ///   <c>GetImagesResponse</c> with images list.
         /// </returns>
-        public GetImagesResponse Get(GetImagesRequest request)
+        [Route("images")]
+        [ValidationAtttibute]
+        public GetImagesResponse Get([ModelBinder(typeof(JsonModelBinder))]GetImagesRequest request)
         {
             request.Data.SetDefaultOrder("Title");
 
@@ -160,6 +165,7 @@ namespace BetterCms.Module.Api.Operations.MediaManager.Images
         /// <returns>
         ///   <c>PostImagesResponse</c> with a new image id.
         /// </returns>
+        [Route("images")]
         public PostImageResponse Post(PostImageRequest request)
         {
             var result =

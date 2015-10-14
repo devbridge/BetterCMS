@@ -1,9 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Web.Http;
+using System.Web.Http.ModelBinding;
 
 using BetterCms.Core.Exceptions.Api;
-
+using BetterCms.Module.Api.ApiExtensions;
 using BetterCms.Module.Api.Operations.Root.Categories.Category;
 using BetterCms.Module.MediaManager.Models;
 using BetterCms.Module.MediaManager.Models.Extensions;
@@ -18,8 +20,6 @@ using BetterModules.Core.Exceptions.DataTier;
 
 using NHibernate.Linq;
 
-using ServiceStack.ServiceInterface;
-
 using ITagService = BetterCms.Module.Pages.Services.ITagService;
 
 namespace BetterCms.Module.Api.Operations.MediaManager.Images.Image
@@ -27,7 +27,8 @@ namespace BetterCms.Module.Api.Operations.MediaManager.Images.Image
     /// <summary>
     /// Default image CRUD service.
     /// </summary>
-    public class ImageService : Service, IImageService
+    [RoutePrefix("bcms-api")]
+    public class ImageController : ApiController, IImageService
     {
         /// <summary>
         /// The repository.
@@ -61,14 +62,14 @@ namespace BetterCms.Module.Api.Operations.MediaManager.Images.Image
         private readonly ICategoryService categoryService;
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="ImageService" /> class.
+        /// Initializes a new instance of the <see cref="ImageController" /> class.
         /// </summary>
         /// <param name="repository">The repository.</param>
         /// <param name="unitOfWork">The unit of work.</param>
         /// <param name="fileUrlResolver">The file URL resolver.</param>
         /// <param name="tagService">The tag service.</param>
         /// <param name="mediaService">The media service.</param>
-        public ImageService(IRepository repository, IUnitOfWork unitOfWork, IMediaFileUrlResolver fileUrlResolver, ITagService tagService, IMediaService mediaService, ICategoryService categoryService)
+        public ImageController(IRepository repository, IUnitOfWork unitOfWork, IMediaFileUrlResolver fileUrlResolver, ITagService tagService, IMediaService mediaService, ICategoryService categoryService)
         {
             this.repository = repository;
             this.unitOfWork = unitOfWork;
@@ -85,7 +86,8 @@ namespace BetterCms.Module.Api.Operations.MediaManager.Images.Image
         /// <returns>
         ///   <c>GetImageRequest</c> with an image.
         /// </returns>
-        public GetImageResponse Get(GetImageRequest request)
+        [Route("images/{ImageId}")]
+        public GetImageResponse Get([ModelBinder(typeof(JsonModelBinder))]GetImageRequest request)
         {
             var model = repository
                 .AsQueryable<MediaImage>(media => media.Id == request.ImageId && media.Type == Module.MediaManager.Models.MediaType.Image)
@@ -200,6 +202,8 @@ namespace BetterCms.Module.Api.Operations.MediaManager.Images.Image
         /// <returns>
         ///   <c>PutImageResponse</c> with a image id.
         /// </returns>
+        [Route("images/{Id}")]
+        [UrlPopulator]
         public PutImageResponse Put(PutImageRequest request)
         {
             IEnumerable<MediaFolder> parentFolderFuture = null;
@@ -340,6 +344,8 @@ namespace BetterCms.Module.Api.Operations.MediaManager.Images.Image
         /// <returns>
         ///   <c>DeleteImageResponse</c> with success status.
         /// </returns>
+        [Route("images/{Id}")]
+        [UrlPopulator]
         public DeleteImageResponse Delete(DeleteImageRequest request)
         {
             if (request.Data == null || request.Id.HasDefaultValue())

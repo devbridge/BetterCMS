@@ -1,9 +1,11 @@
 ﻿using System;
 using System.Linq;
+using System.Web.Http;
+using System.Web.Http.ModelBinding;
 
 using BetterCms.Core.Security;
 using BetterCms.Core.Services;
-
+using BetterCms.Module.Api.ApiExtensions;
 using BetterCms.Module.Root.Models;
 using BetterCms.Module.Root.Mvc;
 
@@ -12,14 +14,16 @@ using BetterModules.Core.DataAccess.DataContext;
 
 using NHibernate.Linq;
 
-using ServiceStack.ServiceInterface;
-
 namespace BetterCms.Module.Api.Operations.Root.Categories.Category.Nodes.Node
 {
     /// <summary>
     /// Category node service for CRUD operations.
     /// </summary>
-    public class NodeService : Service, INodeService
+    //TODO: !!!!!!!!!!!!!!!!!!!!!
+    //TODO: RENAME THIS TO "NodeController" ASAP WHEN API IS MIGRATED TO vNext, BECAUSE WEB API 2 DOESN'T WORKS WITH CONTROLLERS WITH SAME NAME IN DIFFERENT NAMESPACES
+    //TODO: !!!!!!!!!!!!!!!!!!!!!
+    [RoutePrefix("bcms-api")]
+    public class CategoryNodeController : ApiController, INodeService
     {
         /// <summary>
         /// The repository.
@@ -52,7 +56,7 @@ namespace BetterCms.Module.Api.Operations.Root.Categories.Category.Nodes.Node
         private readonly Module.Root.Services.ICategoryService categoryService;
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="NodeService" /> class.
+        /// Initializes a new instance of the <see cref="CategoryNodeController" /> class.
         /// </summary>
         /// <param name="repository">The repository.</param>
         /// <param name="unitOfWork">The unit of work.</param>
@@ -60,7 +64,7 @@ namespace BetterCms.Module.Api.Operations.Root.Categories.Category.Nodes.Node
         /// <param name="accessControlService">The access control service.</param>
         /// <param name="securityService">The security service.</param>
         /// <param name="categoryService">The category service.</param>
-        public NodeService(
+        public CategoryNodeController(
             IRepository repository,
             IUnitOfWork unitOfWork,
             ICmsConfiguration cmsConfiguration,
@@ -83,32 +87,33 @@ namespace BetterCms.Module.Api.Operations.Root.Categories.Category.Nodes.Node
         /// <returns>
         ///   <c>GetCategoryNodeResponse</c> with category node data.
         /// </returns>
-        public GetNodeResponse Get(GetNodeRequest request)
+        [Route("categorytrees/{CategoryTreeId}/nodes/{NodeId}")]
+        public GetNodeResponse Get([ModelBinder(typeof(JsonModelBinder))]GetNodeRequest request)
         {
-//            IEnumerable<NodeTranslationModel> translationsFuture = null;
-//            if (request.Data.IncludeTranslations)
-//            {
-//                translationsFuture =
-//                    repository.AsQueryable<Module.Root.Models.CategoryNodeTranslation>()
-//                        .Where(t => t.Node.Id == request.NodeId && !t.IsDeleted)
-//                        .Select(
-//                            t =>
-//                            new NodeTranslationModel
-//                                {
-//                                    Id = t.Id,
-//                                    Version = t.Version,
-//                                    CreatedBy = t.CreatedByUser,
-//                                    CreatedOn = t.CreatedOn,
-//                                    LastModifiedBy = t.ModifiedByUser,
-//                                    LastModifiedOn = t.ModifiedOn,
-//                                    Title = t.Title,
-//                                    Url = t.Url,
-//                                    UsePageTitleAsNodeTitle = t.UsePageTitleAsNodeTitle,
-//                                    Macro = t.Macro,
-//                                    LanguageId = t.Language.Id
-//                                })
-//                        .ToFuture();
-//            }
+            //            IEnumerable<NodeTranslationModel> translationsFuture = null;
+            //            if (request.Data.IncludeTranslations)
+            //            {
+            //                translationsFuture =
+            //                    repository.AsQueryable<Module.Root.Models.CategoryNodeTranslation>()
+            //                        .Where(t => t.Node.Id == request.NodeId && !t.IsDeleted)
+            //                        .Select(
+            //                            t =>
+            //                            new NodeTranslationModel
+            //                                {
+            //                                    Id = t.Id,
+            //                                    Version = t.Version,
+            //                                    CreatedBy = t.CreatedByUser,
+            //                                    CreatedOn = t.CreatedOn,
+            //                                    LastModifiedBy = t.ModifiedByUser,
+            //                                    LastModifiedOn = t.ModifiedOn,
+            //                                    Title = t.Title,
+            //                                    Url = t.Url,
+            //                                    UsePageTitleAsNodeTitle = t.UsePageTitleAsNodeTitle,
+            //                                    Macro = t.Macro,
+            //                                    LanguageId = t.Language.Id
+            //                                })
+            //                        .ToFuture();
+            //            }
 
             var model = repository
                 .AsQueryable<Module.Root.Models.Category>()
@@ -132,10 +137,10 @@ namespace BetterCms.Module.Api.Operations.Root.Categories.Category.Nodes.Node
                 .FirstOne();
 
             var response = new GetNodeResponse { Data = model };
-//            if (request.Data.IncludeTranslations && translationsFuture != null)
-//            {
-//                response.Translations = translationsFuture.ToList();
-//            }
+            //            if (request.Data.IncludeTranslations && translationsFuture != null)
+            //            {
+            //                response.Translations = translationsFuture.ToList();
+            //            }
 
             return response;
         }
@@ -147,25 +152,27 @@ namespace BetterCms.Module.Api.Operations.Root.Categories.Category.Nodes.Node
         /// <returns>
         ///   <c>PutNodeResponse</c> with create or updated node id.
         /// </returns>
+        [Route("categorytrees/{CategoryTreeId}/nodes/{Id}")]
+        [UrlPopulator]
         public PutNodeResponse Put(PutNodeRequest request)
         {
             var categoryFuture = repository.AsQueryable<CategoryTree>(e => e.Id == request.CategoryTreeId)
-//                .FetchMany(f => f.AccessRules)
+                //                .FetchMany(f => f.AccessRules)
                 .ToFuture();
 
             var node =
                 repository.AsQueryable<Module.Root.Models.Category>(e => e.CategoryTree.Id == request.CategoryTreeId && e.Id == request.Id)
-//                    .FetchMany(n => n.Translations)
-//                    .ToFuture()
-//                    .ToList()
+                //                    .FetchMany(n => n.Translations)
+                //                    .ToFuture()
+                //                    .ToList()
                     .FirstOrDefault();
 
             var category = categoryFuture.ToList().FirstOne();
 
-//            if (cmsConfiguration.Security.AccessControlEnabled)
-//            {
-//                accessControlService.DemandAccess(category, securityService.GetCurrentPrincipal(), AccessLevel.ReadWrite);
-//            }
+            //            if (cmsConfiguration.Security.AccessControlEnabled)
+            //            {
+            //                accessControlService.DemandAccess(category, securityService.GetCurrentPrincipal(), AccessLevel.ReadWrite);
+            //            }
 
             var isNew = node == null;
             if (isNew)
@@ -182,7 +189,7 @@ namespace BetterCms.Module.Api.Operations.Root.Categories.Category.Nodes.Node
 
             unitOfWork.BeginTransaction();
 
-//            categoryService.ArchiveCategory(category.Id);
+            //            categoryService.ArchiveCategory(category.Id);
 
             node.CategoryTree = category;
             node.Name = request.Data.Name;
@@ -220,13 +227,15 @@ namespace BetterCms.Module.Api.Operations.Root.Categories.Category.Nodes.Node
         /// <returns>
         ///   <c>DeleteNodeResponse</c> with success status.
         /// </returns>
+        [Route("categorytrees/{CategoryTreeId}/nodes/{Id}")]
+        [UrlPopulator]
         public DeleteNodeResponse Delete(DeleteNodeRequest request)
         {
             if (request.Data == null || request.CategoryTreeId.HasDefaultValue() || request.Id.HasDefaultValue())
             {
                 return new DeleteNodeResponse { Data = false };
             }
-            
+
             categoryService.DeleteCategoryNode(request.Id, request.Data.Version, request.CategoryTreeId);
 
             return new DeleteNodeResponse { Data = true };

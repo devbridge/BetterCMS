@@ -1,4 +1,8 @@
 ﻿using System.Linq;
+using System.Web.Http;
+using System.Web.Http.ModelBinding;
+
+using BetterCms.Module.Api.ApiExtensions;
 
 using BetterModules.Core.DataAccess;
 
@@ -7,23 +11,23 @@ using BetterCms.Module.Api.Infrastructure;
 using BetterCms.Module.Api.Operations.Users.Roles;
 using BetterCms.Module.Api.Operations.Users.Roles.Role;
 
-using ServiceStack.ServiceInterface;
-
 namespace BetterCms.Module.Users.Api.Operations.Users.Roles
 {
-    public class RolesService : Service, IRolesService
+    [RoutePrefix("bcms-api")]
+    public class RolesController : ApiController, IRolesService
     {
         private readonly IRepository repository;
 
         private readonly IRoleService roleService;
 
-        public RolesService(IRepository repository, IRoleService roleService)
+        public RolesController(IRepository repository, IRoleService roleService)
         {
             this.repository = repository;
             this.roleService = roleService;
         }
 
-        public GetRolesResponse Get(GetRolesRequest request)
+        [Route("roles")]
+        public GetRolesResponse Get([ModelBinder(typeof(JsonModelBinder))]GetRolesRequest request)
         {
             request.Data.SetDefaultOrder("Name");
 
@@ -47,6 +51,7 @@ namespace BetterCms.Module.Users.Api.Operations.Users.Roles
             return new GetRolesResponse { Data = listResponse };
         }
 
+        [Route("roles/")]
         public PostRoleResponse Post(PostRoleRequest request)
         {
             var result = roleService.Put(new PutRoleRequest

@@ -1,9 +1,6 @@
 ﻿<configuration>
   <location path="bcms-api">
     <system.web>
-      <httpHandlers>
-        <add path="*" type="ServiceStack.WebHost.Endpoints.ServiceStackHttpHandlerFactory, ServiceStack" verb="*" />
-      </httpHandlers>
       <authorization>
         <allow verbs="GET" users="*"/>
         <deny verbs="POST,PUT,DELETE" users="?"/>
@@ -12,9 +9,6 @@
     <system.webServer>
       <modules runAllManagedModulesForAllRequests="true" />
       <validation validateIntegratedModeConfiguration="false" />
-      <handlers>
-        <add path="*" name="ServiceStack.Factory" type="ServiceStack.WebHost.Endpoints.ServiceStackHttpHandlerFactory, ServiceStack" verb="*" preCondition="integratedMode" resourceType="Unspecified" allowPathInfo="true" />
-      </handlers>
     </system.webServer>
   </location>
 </configuration>

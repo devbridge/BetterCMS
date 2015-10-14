@@ -96,7 +96,7 @@ namespace BetterCms.Test.Module.Api
             TRequest request,
             Func<TRequest, TResponse> method)
             where TModel : ModelBase, new()
-            where TRequest : IReturn<TResponse>, new()
+            where TRequest : /*IReturn<TResponse>,*/ new()
             where TResponse : ResponseBase<TModel>, new()
         {
             var response = method.Invoke(request);

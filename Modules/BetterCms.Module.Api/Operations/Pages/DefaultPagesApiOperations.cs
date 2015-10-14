@@ -14,7 +14,7 @@ namespace BetterCms.Module.Api.Operations.Pages
     public class DefaultPagesApiOperations : IPagesApiOperations
     {
         public DefaultPagesApiOperations(IPagesService pages, IPageService page, IContentService content, IWidgetService widget, IWidgetsService widgets,
-            IRedirectsService redirects, IRedirectService redirect, Sitemap.ISitemapService sitemap, ISitemapsService sitemaps, ISitemapService sitemapNew)
+            IRedirectsService redirects, IRedirectService redirect, ISitemapsService sitemaps, ISitemapService sitemapNew)
         {
             Pages = pages;
             Page = page;
@@ -23,7 +23,6 @@ namespace BetterCms.Module.Api.Operations.Pages
             Widgets = widgets;
             Redirect = redirect;
             Redirects = redirects;
-            Sitemap = sitemap;
             Sitemaps = sitemaps;
             SitemapNew = sitemapNew;
         }
@@ -83,10 +82,5 @@ namespace BetterCms.Module.Api.Operations.Pages
             private set;
         }
 
-        public Sitemap.ISitemapService Sitemap
-        {
-            get;
-            private set;
-        }
     }
 }

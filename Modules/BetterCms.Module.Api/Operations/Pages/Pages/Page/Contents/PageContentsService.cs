@@ -1,24 +1,32 @@
 ﻿using System.Linq;
+using System.Web.Http;
+using System.Web.Http.ModelBinding;
 
 using BetterModules.Core.DataAccess;
 using BetterCms.Core.DataContracts.Enums;
+using BetterCms.Module.Api.ApiExtensions;
 using BetterCms.Module.Api.Helpers;
 using BetterCms.Module.Api.Infrastructure;
-
-using ServiceStack.ServiceInterface;
+using BetterCms.Module.Api.Operations.Pages.Pages.Page.Contents.Content;
 
 namespace BetterCms.Module.Api.Operations.Pages.Pages.Page.Contents
 {
-    public class PageContentsService : Service, IPageContentsService
+    [RoutePrefix("bcms-api")]
+    public class PageContentsController : ApiController, IPageContentsService
     {
         private readonly IRepository repository;
 
-        public PageContentsService(IRepository repository)
+        private readonly IPageContentService pageContentService;
+
+        public PageContentsController(IRepository repository, IPageContentService pageContentService)
         {
             this.repository = repository;
+            this.pageContentService = pageContentService;
         }
 
-        public GetPageContentsResponse Get(GetPageContentsRequest request)
+        [Route("pages/{PageId}/contents")]
+        [ValidationAtttibute]
+        public GetPageContentsResponse Get([ModelBinder(typeof(JsonModelBinder))] GetPageContentsRequest request)
         {
             request.Data.SetDefaultOrder("Order");
 
@@ -63,5 +71,13 @@ namespace BetterCms.Module.Api.Operations.Pages.Pages.Page.Contents
 
             return new GetPageContentsResponse { Data = dataListResult };
         }
+
+        [Route("pages/{PageId}/contents/")]
+        [UrlPopulator]
+        public PostPageContentResponse Post(PostPageContentRequest request)
+        {
+            return pageContentService.Post(request);
+        }
+
     }
 }

@@ -1,15 +1,18 @@
 ﻿using System;
 using System.Linq;
+using System.Web.Http;
+using System.Web.Http.ModelBinding;
+
+using BetterCms.Module.Api.ApiExtensions;
 
 using BetterModules.Core.DataAccess;
 using BetterModules.Core.DataAccess.DataContext;
 using BetterCms.Module.Api.Operations.Users.Roles.Role;
 
-using ServiceStack.ServiceInterface;
-
 namespace BetterCms.Module.Users.Api.Operations.Users.Roles.Role
 {
-    public class RoleService : Service, IRoleService
+    [RoutePrefix("bcms-api")]
+    public class RoleController : ApiController, IRoleService
     {
         private readonly IRepository repository;
         
@@ -17,14 +20,17 @@ namespace BetterCms.Module.Users.Api.Operations.Users.Roles.Role
 
         private readonly Services.IRoleService roleService;
 
-        public RoleService(IRepository repository, Services.IRoleService roleService, IUnitOfWork unitOfWork)
+        public RoleController(IRepository repository, Services.IRoleService roleService, IUnitOfWork unitOfWork)
         {
             this.repository = repository;
             this.unitOfWork = unitOfWork;
             this.roleService = roleService;
         }
 
-        public GetRoleResponse Get(GetRoleRequest request)
+        [Route("roles/{RoleId}")]
+        [Route("roles/by-name/{RoleName}")]
+        [ValidationAtttibute]
+        public GetRoleResponse Get([ModelBinder(typeof(JsonModelBinder))]GetRoleRequest request)
         {
             var query = repository
                 .AsQueryable<Models.Role>();
@@ -57,6 +63,8 @@ namespace BetterCms.Module.Users.Api.Operations.Users.Roles.Role
             return new GetRoleResponse { Data = model };
         }
 
+        [Route("roles/{Id}")]
+        [UrlPopulator]
         public PutRoleResponse Put(PutRoleRequest request)
         {
             bool isNew;
@@ -76,6 +84,8 @@ namespace BetterCms.Module.Users.Api.Operations.Users.Roles.Role
             return new PutRoleResponse { Data = role.Id };
         }
 
+        [Route("roles/{Id}")]
+        [UrlPopulator]
         public DeleteRoleResponse Delete(DeleteRoleRequest request)
         {
             unitOfWork.BeginTransaction();

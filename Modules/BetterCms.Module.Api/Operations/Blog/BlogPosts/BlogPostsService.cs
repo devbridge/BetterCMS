@@ -1,11 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Web.Http;
+using System.Web.Http.ModelBinding;
 
 using BetterModules.Core.DataAccess;
 using BetterCms.Core.DataContracts.Enums;
 using BetterCms.Core.Security;
-
+using BetterCms.Module.Api.ApiExtensions;
 using BetterCms.Module.Api.Helpers;
 using BetterCms.Module.Api.Infrastructure;
 using BetterCms.Module.Api.Operations.Blog.BlogPosts.BlogPost.Properties;
@@ -18,13 +20,12 @@ using BetterCms.Module.Root.Services;
 
 using NHibernate.Linq;
 
-using ServiceStack.ServiceInterface;
-
 using AccessLevel = BetterCms.Module.Api.Operations.Root.AccessLevel;
 
 namespace BetterCms.Module.Api.Operations.Blog.BlogPosts
 {
-    public class BlogPostsService : Service, IBlogPostsService
+    [RoutePrefix("bcms-api")]
+    public class BlogPostsController : ApiController, IBlogPostsService
     {
         /// <summary>
         /// The repository.
@@ -44,12 +45,12 @@ namespace BetterCms.Module.Api.Operations.Blog.BlogPosts
 
         private readonly ICategoryService categoryService;
         /// <summary>
-        /// Initializes a new instance of the <see cref="BlogPostsService"/> class.
+        /// Initializes a new instance of the <see cref="BlogPostsController"/> class.
         /// </summary>
         /// <param name="repository">The repository.</param>
         /// <param name="fileUrlResolver">The file URL resolver.</param>
         /// <param name="accessControlService">The access control service.</param>
-        public BlogPostsService(
+        public BlogPostsController(
             IRepository repository,
             IMediaFileUrlResolver fileUrlResolver,
             IAccessControlService accessControlService,
@@ -66,7 +67,9 @@ namespace BetterCms.Module.Api.Operations.Blog.BlogPosts
         /// </summary>
         /// <param name="request">The request.</param>
         /// <returns><c>GetBlogPostsResponse</c> with a list of blog posts.</returns>
-        public GetBlogPostsResponse Get(GetBlogPostsRequest request)
+        [Route("blog-posts")]
+        [ValidationAtttibute]
+        public GetBlogPostsResponse Get([ModelBinder(typeof(JsonModelBinder))]GetBlogPostsRequest request)
         {
             request.Data.SetDefaultOrder("Title");
 
@@ -106,7 +109,7 @@ namespace BetterCms.Module.Api.Operations.Blog.BlogPosts
                         CreatedOn = blogPost.CreatedOn,
                         LastModifiedBy = blogPost.ModifiedByUser,
                         LastModifiedOn = blogPost.ModifiedOn,
-
+                        
                         BlogPostUrl = blogPost.PageUrl,
                         Title = blogPost.Title,
                         IntroText = blogPost.Description,

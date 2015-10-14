@@ -2,9 +2,11 @@
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
+using System.Web.Http;
+using System.Web.Http.ModelBinding;
 
 using BetterCms.Core.Exceptions.Api;
-
+using BetterCms.Module.Api.ApiExtensions;
 using BetterCms.Module.Root.Mvc;
 
 using BetterModules.Core.DataAccess;
@@ -13,14 +15,13 @@ using BetterModules.Core.Exceptions.DataTier;
 
 using NHibernate.Linq;
 
-using ServiceStack.ServiceInterface;
-
 namespace BetterCms.Module.Api.Operations.Root.Languages.Language
 {
     /// <summary>
     /// Language service for CRUD.
     /// </summary>
-    public class LanguageService : Service, ILanguageService
+    [RoutePrefix("bcms-api")]
+    public class LanguageController : ApiController, ILanguageService
     {
         /// <summary>
         /// The repository.
@@ -33,11 +34,11 @@ namespace BetterCms.Module.Api.Operations.Root.Languages.Language
         private readonly IUnitOfWork unitOfWork;
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="LanguageService"/> class.
+        /// Initializes a new instance of the <see cref="LanguageController"/> class.
         /// </summary>
         /// <param name="repository">The repository.</param>
         /// <param name="unitOfWork">The unit of work.</param>
-        public LanguageService(IRepository repository, IUnitOfWork unitOfWork)
+        public LanguageController(IRepository repository, IUnitOfWork unitOfWork)
         {
             this.repository = repository;
             this.unitOfWork = unitOfWork;
@@ -48,7 +49,10 @@ namespace BetterCms.Module.Api.Operations.Root.Languages.Language
         /// </summary>
         /// <param name="request">The request.</param>
         /// <returns><c>GetLanguageResponse</c> with language data.</returns>
-        public GetLanguageResponse Get(GetLanguageRequest request)
+        [Route("languages/{LanguageId}")]
+        [Route("languages/by-code/{LanguageCode}")]
+        [ValidationAtttibute]
+        public GetLanguageResponse Get([ModelBinder(typeof(JsonModelBinder))]GetLanguageRequest request)
         {
             var query = repository.AsQueryable<Module.Root.Models.Language>();
 
@@ -87,6 +91,8 @@ namespace BetterCms.Module.Api.Operations.Root.Languages.Language
         /// </summary>
         /// <param name="request">The request.</param>
         /// <returns><c>PutLanguageResponse</c> with id of created/updated language.</returns>
+        [Route("languages/{Id}")]
+        [UrlPopulator]
         public PutLanguageResponse Put(PutLanguageRequest request)
         {
             var languages = repository.AsQueryable<Module.Root.Models.Language>()
@@ -140,6 +146,8 @@ namespace BetterCms.Module.Api.Operations.Root.Languages.Language
         /// </summary>
         /// <param name="request">The request.</param>
         /// <returns><c>DeleteLanguageResponse</c> with success status.</returns>
+        [Route("languages/{Id}")]
+        [UrlPopulator]
         public DeleteLanguageResponse Delete(DeleteLanguageRequest request)
         {
             if (request.Data == null || request.Id.HasDefaultValue())

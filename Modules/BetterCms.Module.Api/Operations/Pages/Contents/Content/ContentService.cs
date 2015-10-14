@@ -2,11 +2,9 @@
 using BetterCms.Module.Api.Operations.Pages.Contents.Content.History;
 using BetterCms.Module.Api.Operations.Pages.Contents.Content.HtmlContent;
 
-using ServiceStack.ServiceInterface;
-
 namespace BetterCms.Module.Api.Operations.Pages.Contents.Content
 {
-    public class ContentService : Service, IContentService
+    public class ContentService : IContentService
     {
         private readonly IHtmlContentService htmlService;
 

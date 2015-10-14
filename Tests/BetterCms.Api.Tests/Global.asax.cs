@@ -1,14 +1,17 @@
 ﻿using System;
 using System.Linq;
 using System.Security.Principal;
+using System.Web.Http;
 using System.Web.Mvc;
 using System.Web.Routing;
 using System.Web.Security;
 
 using BetterCms.Api.Tests.App_Start;
+using BetterCMS.Module;
 using BetterCms.Api.Tests.Tools;
 using BetterCms.Core;
 using BetterCms.Core.Environment.Host;
+using BetterCms.Module.Api;
 
 namespace BetterCms.Api.Tests
 {
@@ -22,11 +25,14 @@ namespace BetterCms.Api.Tests
         {
             cmsHost = CmsContext.RegisterHost();
 
+            GlobalConfiguration.Configure(WebApiConfig.Register);
+
+            //BetterCms.Module.Api.WebApiConfig.Register(GlobalConfiguration.Configuration);
             AreaRegistration.RegisterAllAreas();
             FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);
             RouteConfig.RegisterRoutes(RouteTable.Routes);
 
-            cmsHost.OnApplicationStart(this);
+           cmsHost.OnApplicationStart(this);
         }
 
         protected void Application_BeginRequest()

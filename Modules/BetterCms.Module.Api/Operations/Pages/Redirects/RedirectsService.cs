@@ -1,4 +1,8 @@
 ﻿using System.Linq;
+using System.Web.Http;
+using System.Web.Http.ModelBinding;
+
+using BetterCms.Module.Api.ApiExtensions;
 
 using BetterModules.Core.DataAccess;
 
@@ -6,23 +10,23 @@ using BetterCms.Module.Api.Helpers;
 using BetterCms.Module.Api.Infrastructure;
 using BetterCms.Module.Api.Operations.Pages.Redirects.Redirect;
 
-using ServiceStack.ServiceInterface;
-
 namespace BetterCms.Module.Api.Operations.Pages.Redirects
 {
-    public class RedirectsService : Service, IRedirectsService
+    [RoutePrefix("bcms-api")]       
+    public class RedirectsController : ApiController, IRedirectsService
     {
         private readonly IRepository repository;
         
         private readonly IRedirectService redirectService;
 
-        public RedirectsService(IRepository repository, IRedirectService redirectService)
+        public RedirectsController(IRepository repository, IRedirectService redirectService)
         {
             this.repository = repository;
             this.redirectService = redirectService;
         }
 
-        public GetRedirectsResponse Get(GetRedirectsRequest request)
+        [Route("redirects/")]
+        public GetRedirectsResponse Get([ModelBinder(typeof(JsonModelBinder))]GetRedirectsRequest request)
         {
             request.Data.SetDefaultOrder("PageUrl");
 
@@ -48,6 +52,7 @@ namespace BetterCms.Module.Api.Operations.Pages.Redirects
                        };
         }
 
+        [Route("redirects/")]
         public PostRedirectResponse Post(PostRedirectRequest request)
         {
             var result = redirectService.Put(new PutRedirectRequest

@@ -118,18 +118,20 @@ namespace BetterCms.Sandbox.Mvc4.Controllers
                 var sitemapId = GetSitemapId(api);
                 if (sitemapId.HasValue)
                 {
-                    var request = new Module.Api.Operations.Pages.Sitemap.Tree.GetSitemapTreeRequest { SitemapId = sitemapId.Value };
-                    request.Data.LanguageId = languageId ?? new Guid();
-                    var response = api.Pages.Sitemap.Tree.Get(request);
-                    if (response.Data.Count > 0)
-                    {
-                        model.ObsoleteMenuItems = response.Data.Select(mi => new MenuItemViewModel { Caption = mi.Title, Url = mi.Url, IsPublished = mi.PageIsPublished }).ToList();
-                    }
+                    //This is obsolete, Pages.Sitemap doesn't exists anymore
+                    
+                    //var request = new Module.Api.Operations.Pages.Sitemap.Tree.GetSitemapTreeRequest { SitemapId = sitemapId.Value };
+                    //request.Data.LanguageId = languageId ?? new Guid();
+                    //var response = api.Pages.Sitemap.Tree.Get(request);
+                    //if (response.Data.Count > 0)
+                    //{
+                    //    model.ObsoleteMenuItems = response.Data.Select(mi => new MenuItemViewModel { Caption = mi.Title, Url = mi.Url, IsPublished = mi.PageIsPublished }).ToList();
+                    //}
 
                     var request1 = new Module.Api.Operations.Pages.Sitemaps.Sitemap.Tree.GetSitemapTreeRequest { SitemapId = sitemapId.Value };
                     request1.Data.LanguageId = languageId ?? new Guid();
                     var response1 = api.Pages.SitemapNew.Tree.Get(request1);
-                    if (response.Data.Count > 0)
+                    if (response1.Data.Count > 0)
                     {
                         model.MenuItems = response1.Data.Select(mi => new MenuItemViewModel { Caption = mi.Title, Url = mi.Url, IsPublished = mi.PageIsPublished }).ToList();
                     }

@@ -1,27 +1,31 @@
 ﻿using System.Linq;
+using System.Web.Http;
+using System.Web.Http.ModelBinding;
+
+using BetterCms.Module.Api.ApiExtensions;
 
 using BetterModules.Core.DataAccess;
 using BetterCms.Module.Api.Helpers;
 using BetterCms.Module.Api.Infrastructure;
 using BetterCms.Module.Api.Operations.Root.Layouts.Layout;
 
-using ServiceStack.ServiceInterface;
-
 namespace BetterCms.Module.Api.Operations.Root.Layouts
 {
-    public class LayoutsService : Service, ILayoutsService
+    [RoutePrefix("bcms-api")]
+    public class LayoutsController : ApiController, ILayoutsService
     {
         private readonly IRepository repository;
         
         private readonly ILayoutService layoutService;
 
-        public LayoutsService(IRepository repository, ILayoutService layoutService)
+        public LayoutsController(IRepository repository, ILayoutService layoutService)
         {
             this.repository = repository;
             this.layoutService = layoutService;
         }
-        
-        public GetLayoutsResponse Get(GetLayoutsRequest request)
+
+        [Route("layouts")]
+        public GetLayoutsResponse Get([ModelBinder(typeof(JsonModelBinder))]GetLayoutsRequest request)
         {
             request.Data.SetDefaultOrder("Name");
 
@@ -48,6 +52,7 @@ namespace BetterCms.Module.Api.Operations.Root.Layouts
                        };
         }
 
+        [Route("layouts")]
         public PostLayoutResponse Post(PostLayoutRequest request)
         {
             var result = layoutService.Put(new PutLayoutRequest

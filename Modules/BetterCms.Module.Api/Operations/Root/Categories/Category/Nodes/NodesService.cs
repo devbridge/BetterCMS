@@ -1,20 +1,25 @@
 ﻿using System;
 using System.Linq;
+using System.Web.Http;
+using System.Web.Http.ModelBinding;
 
+using BetterCms.Module.Api.ApiExtensions;
 using BetterCms.Module.Api.Helpers;
 using BetterCms.Module.Api.Infrastructure;
 using BetterCms.Module.Api.Operations.Root.Categories.Category.Nodes.Node;
 
 using BetterModules.Core.DataAccess;
 
-using ServiceStack.ServiceInterface;
-
 namespace BetterCms.Module.Api.Operations.Root.Categories.Category.Nodes
 {
     /// <summary>
     /// Category nodes service.
     /// </summary>
-    public class NodesService : Service, INodesService
+    //TODO: !!!!!!!!!!!!!!!!!!!!!
+    //TODO: RENAME THIS TO "NodesController" ASAP WHEN API IS MIGRATED TO vNext, BECAUSE WEB API 2 DOESN'T WORKS WITH CONTROLLERS WITH SAME NAME IN DIFFERENT NAMESPACES
+    //TODO: !!!!!!!!!!!!!!!!!!!!!
+    [RoutePrefix("bcms-api")]
+    public class CategoryNodesController : ApiController, INodesService
     {
         /// <summary>
         /// The repository.
@@ -27,11 +32,11 @@ namespace BetterCms.Module.Api.Operations.Root.Categories.Category.Nodes
         private readonly INodeService nodeService;
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="NodesService" /> class.
+        /// Initializes a new instance of the <see cref="CategoryNodesController" /> class.
         /// </summary>
         /// <param name="repository">The repository.</param>
         /// <param name="nodeService">The node service.</param>
-        public NodesService(IRepository repository, INodeService nodeService)
+        public CategoryNodesController(IRepository repository, INodeService nodeService)
         {
             this.repository = repository;
             this.nodeService = nodeService;
@@ -44,7 +49,9 @@ namespace BetterCms.Module.Api.Operations.Root.Categories.Category.Nodes
         /// <returns>
         ///   <c>GetCategoryNodesResponse</c> with nodes list.
         /// </returns>
-        public GetCategoryNodesResponse Get(GetCategoryNodesRequest request)
+        [Route("categorytrees/{CategoryTreeId}/nodes/")]
+        [Route("categorytrees/nodes/")]
+        public GetCategoryNodesResponse Get([ModelBinder(typeof(JsonModelBinder))]GetCategoryNodesRequest request)
         {
             request.Data.SetDefaultOrder("Name");
 
@@ -82,6 +89,8 @@ namespace BetterCms.Module.Api.Operations.Root.Categories.Category.Nodes
         /// <returns>
         ///   <c>PostCategoryNodeResponse</c> with a new category node id.
         /// </returns>
+        [Route("categorytrees/{CategoryTreeId}/nodes/")]
+        [UrlPopulator]
         public PostCategoryNodeResponse Post(PostCategoryNodeRequest request)
         {
             var result = nodeService.Put(

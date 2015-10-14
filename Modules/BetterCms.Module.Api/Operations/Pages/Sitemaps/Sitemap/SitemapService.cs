@@ -1,12 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Web.Http;
+using System.Web.Http.ModelBinding;
 
 using BetterModules.Core.DataAccess;
 using BetterModules.Core.DataAccess.DataContext;
 using BetterCms.Core.DataContracts.Enums;
 using BetterCms.Core.Security;
 using BetterCms.Core.Services;
+using BetterCms.Module.Api.ApiExtensions;
 using BetterCms.Module.Api.Operations.Pages.Sitemaps.Sitemap.Nodes;
 using BetterCms.Module.Api.Operations.Pages.Sitemaps.Sitemap.Nodes.Node;
 using BetterCms.Module.Api.Operations.Pages.Sitemaps.Sitemap.Tree;
@@ -18,10 +21,9 @@ using BetterCms.Module.Root.Models.Extensions;
 using BetterCms.Module.Root.Mvc;
 using BetterCms.Module.Root.Mvc.Helpers;
 
-using NHibernate.Linq;
+using FluentNHibernate.Conventions;
 
-using ServiceStack.Common;
-using ServiceStack.ServiceInterface;
+using NHibernate.Linq;
 
 using AccessLevel = BetterCms.Core.Security.AccessLevel;
 
@@ -30,7 +32,8 @@ namespace BetterCms.Module.Api.Operations.Pages.Sitemaps.Sitemap
     /// <summary>
     /// Sitemap service for CRUD operations.
     /// </summary>
-    public class SitemapService : Service, ISitemapService
+    [RoutePrefix("bcms-api")]
+    public class SitemapController : ApiController, ISitemapService
     {
         /// <summary>
         /// The repository.
@@ -83,7 +86,7 @@ namespace BetterCms.Module.Api.Operations.Pages.Sitemaps.Sitemap
         private readonly INodeService nodeService;
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="SitemapService" /> class.
+        /// Initializes a new instance of the <see cref="SitemapController" /> class.
         /// </summary>
         /// <param name="repository">The repository.</param>
         /// <param name="unitOfWork">The unit of work.</param>
@@ -95,7 +98,7 @@ namespace BetterCms.Module.Api.Operations.Pages.Sitemaps.Sitemap
         /// <param name="securityService">The security service.</param>
         /// <param name="sitemapService">The sitemap service.</param>
         /// <param name="cmsConfiguration">The CMS configuration.</param>
-        public SitemapService(
+        public SitemapController(
             IRepository repository,
             IUnitOfWork unitOfWork,
             ISitemapTreeService treeService,
@@ -168,7 +171,8 @@ namespace BetterCms.Module.Api.Operations.Pages.Sitemaps.Sitemap
         /// <returns>
         ///   <c>GetSitemapsResponse</c> with sitemap data.
         /// </returns>
-        public GetSitemapResponse Get(GetSitemapRequest request)
+        [Route("sitemaps/{SitemapId}")]
+        public GetSitemapResponse Get([ModelBinder(typeof(JsonModelBinder))]GetSitemapRequest request)
         {
             var tagsFuture = repository.AsQueryable<SitemapTag>().Where(e => e.Sitemap.Id == request.SitemapId).Select(e => e.Tag.Name).ToFuture();
 
@@ -271,6 +275,8 @@ namespace BetterCms.Module.Api.Operations.Pages.Sitemaps.Sitemap
         /// <returns>
         ///   <c>PutSitemapsResponse</c> with updated sitemap data.
         /// </returns>
+        [Route("sitemaps/{Id}")]
+        [UrlPopulator]
         public PutSitemapResponse Put(PutSitemapRequest request)
         {
             IEnumerable<SitemapNode> nodesFuture = null;
@@ -378,6 +384,8 @@ namespace BetterCms.Module.Api.Operations.Pages.Sitemaps.Sitemap
         /// <returns>
         ///   <c>DeleteSitemapsResponse</c> with success status.
         /// </returns>
+        [Route("sitemaps/{Id}")]
+        [UrlPopulator]
         public DeleteSitemapResponse Delete(DeleteSitemapRequest request)
         {
             if (request.Data == null || request.Id.HasDefaultValue())

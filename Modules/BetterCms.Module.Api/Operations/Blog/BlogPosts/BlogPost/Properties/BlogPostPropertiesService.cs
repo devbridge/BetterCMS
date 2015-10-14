@@ -1,13 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Web.Http;
+using System.Web.Http.ModelBinding;
 
 using BetterModules.Core.DataAccess;
 using BetterModules.Core.DataAccess.DataContext;
 using BetterCms.Core.DataContracts.Enums;
 using BetterCms.Core.Exceptions.Api;
 using BetterCms.Core.Services;
-
+using BetterCms.Module.Api.ApiExtensions;
 using BetterCms.Module.Api.Extensions;
 using BetterCms.Module.Api.Operations.Root;
 
@@ -18,11 +20,10 @@ using BetterCms.Module.Pages.Models;
 using BetterCms.Module.Pages.Services;
 using BetterCms.Module.Pages.ViewModels.Page;
 
-using ServiceStack.ServiceInterface;
-
 namespace BetterCms.Module.Api.Operations.Blog.BlogPosts.BlogPost.Properties
 {
-    public class BlogPostPropertiesService : Service, IBlogPostPropertiesService
+    [RoutePrefix("bcms-api")]
+    public class BlogPostPropertiesController : ApiController, IBlogPostPropertiesService
     {
         private readonly IRepository repository;
 
@@ -38,7 +39,7 @@ namespace BetterCms.Module.Api.Operations.Blog.BlogPosts.BlogPost.Properties
 
         private readonly Module.Root.Services.IOptionService optionService;
 
-        public BlogPostPropertiesService(IRepository repository, IMediaFileUrlResolver fileUrlResolver,
+        public BlogPostPropertiesController(IRepository repository, IMediaFileUrlResolver fileUrlResolver,
             IBlogSaveService blogSaveService, ISecurityService securityService, IPageService pageService,
             Module.Root.Services.IOptionService optionService, BetterCms.Module.Root.Services.ICategoryService categoriesService)
         {
@@ -51,7 +52,8 @@ namespace BetterCms.Module.Api.Operations.Blog.BlogPosts.BlogPost.Properties
             this.categoriesService = categoriesService;
         }
 
-        public GetBlogPostPropertiesResponse Get(GetBlogPostPropertiesRequest request)
+        [Route("blog-post-properties/{BlogPostId}")]
+        public GetBlogPostPropertiesResponse Get([ModelBinder(typeof(JsonModelBinder))]GetBlogPostPropertiesRequest request)
         {
             var response = repository
                 .AsQueryable<Module.Blog.Models.BlogPost>(blogPost => blogPost.Id == request.BlogPostId)
@@ -309,6 +311,7 @@ namespace BetterCms.Module.Api.Operations.Blog.BlogPosts.BlogPost.Properties
                     .ToList();
         }
 
+        [Route("blog-post-properties/")]
         public PostBlogPostPropertiesResponse Post(PostBlogPostPropertiesRequest request)
         {
             var result = Put(
@@ -321,6 +324,8 @@ namespace BetterCms.Module.Api.Operations.Blog.BlogPosts.BlogPost.Properties
             return new PostBlogPostPropertiesResponse { Data = result.Data };
         }
 
+        [Route("blog-post-properties/{Id}")]
+        [UrlPopulator]
         public PutBlogPostPropertiesResponse Put(PutBlogPostPropertiesRequest request)
         {
             var serviceModel = request.Data.ToServiceModel();
@@ -340,6 +345,8 @@ namespace BetterCms.Module.Api.Operations.Blog.BlogPosts.BlogPost.Properties
             return new PutBlogPostPropertiesResponse { Data = response.Id };
         }
 
+        [Route("blog-post-properties/{Id}")]
+        [UrlPopulator]
         public DeleteBlogPostPropertiesResponse Delete(DeleteBlogPostPropertiesRequest request)
         {
             var model = new DeletePageViewModel

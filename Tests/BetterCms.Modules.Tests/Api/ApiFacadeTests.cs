@@ -48,10 +48,6 @@ namespace BetterCms.Test.Module.Api
                 Assert.IsNotNull(api.Pages.Widget.ServerControl);
                 Assert.IsNotNull(api.Pages.Widget.ServerControl.Options);
                 Assert.IsNotNull(api.Pages.Widgets);
-                Assert.IsNotNull(api.Pages.Sitemap);
-                Assert.IsNotNull(api.Pages.Sitemap.Node);
-                Assert.IsNotNull(api.Pages.Sitemap.Nodes);
-                Assert.IsNotNull(api.Pages.Sitemap.Tree);
                 Assert.IsNotNull(api.Pages.SitemapNew);
                 Assert.IsNotNull(api.Pages.SitemapNew.Node);
                 Assert.IsNotNull(api.Pages.SitemapNew.Nodes);

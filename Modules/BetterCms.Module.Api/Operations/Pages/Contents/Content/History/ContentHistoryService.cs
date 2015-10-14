@@ -1,25 +1,28 @@
 ﻿using System.Linq;
+using System.Web.Http;
+using System.Web.Http.ModelBinding;
 
+using BetterCms.Module.Api.ApiExtensions;
 using BetterCms.Module.Api.Helpers;
+using BetterCms.Module.Api.Operations.Pages.Pages;
 using BetterCms.Module.Pages.Services;
 using BetterCms.Module.Root.Mvc.Grids.GridOptions;
-
-using ServiceStack.ServiceInterface;
 
 using CoreContentStatus = BetterCms.Core.DataContracts.Enums.ContentStatus;
 
 namespace BetterCms.Module.Api.Operations.Pages.Contents.Content.History
 {
-    public class ContentHistoryService : Service, IContentHistoryService
+    public class ContentHistoryController : ApiController, IContentHistoryService
     {
         private readonly IHistoryService historyService;
 
-        public ContentHistoryService(IHistoryService historyService)
+        public ContentHistoryController(IHistoryService historyService)
         {
             this.historyService = historyService;
         }
 
-        public GetContentHistoryResponse Get(GetContentHistoryRequest request)
+        [Route("bcms-api/contents/{ContentId}/history")]
+        public GetContentHistoryResponse Get([ModelBinder(typeof(JsonModelBinder))] GetContentHistoryRequest request)
         {
             var results = historyService.GetContentHistory(request.ContentId, new SearchableGridOptions())
                 .AsQueryable()

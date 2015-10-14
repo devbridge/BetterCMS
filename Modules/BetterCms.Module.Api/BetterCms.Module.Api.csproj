@@ -61,13 +61,17 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\packages\Autofac.3.1.5\lib\net40\Autofac.dll</HintPath>
     </Reference>
-    <Reference Include="BetterModules.Core, Version=1.0.0.31, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\BetterModules.Core.1.0.0-rc9\lib\net40\BetterModules.Core.dll</HintPath>
-      <Private>True</Private>
+    <Reference Include="Autofac.Integration.WebApi, Version=3.0.0.0, Culture=neutral, PublicKeyToken=17863af14b0044da, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\packages\Autofac.WebApi2.3.0.0\lib\net45\Autofac.Integration.WebApi.dll</HintPath>
     </Reference>
-    <Reference Include="BetterModules.Core.Web, Version=1.0.0.31, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\BetterModules.Core.Web.1.0.0-rc9\lib\net40\BetterModules.Core.Web.dll</HintPath>
-      <Private>True</Private>
+    <Reference Include="BetterModules.Core, Version=1.0.0.29, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\packages\BetterModules.Core.1.0.0-rc8\lib\net40\BetterModules.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="BetterModules.Core.Web, Version=1.0.0.29, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\packages\BetterModules.Core.Web.1.0.0-rc8\lib\net40\BetterModules.Core.Web.dll</HintPath>
     </Reference>
     <Reference Include="Common.Logging, Version=2.1.2.0, Culture=neutral, PublicKeyToken=af08829b84f0328e, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
@@ -107,36 +111,8 @@
       <HintPath>..\..\packages\NHibernate.3.3.3.4001\lib\Net35\NHibernate.dll</HintPath>
     </Reference>
     <Reference Include="RazorGenerator.Mvc, Version=2.0.0.0, Culture=neutral, PublicKeyToken=7b26dc2a43f6a0d4, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\BetterModules.Core.Web.1.0.0-rc9\lib\net40\RazorGenerator.Mvc.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
-    <Reference Include="ServiceStack, Version=3.9.71.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\packages\ServiceStack.3.9.71\lib\net35\ServiceStack.dll</HintPath>
-    </Reference>
-    <Reference Include="ServiceStack.Common, Version=3.9.71.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\packages\ServiceStack.Common.3.9.71\lib\net35\ServiceStack.Common.dll</HintPath>
-    </Reference>
-    <Reference Include="ServiceStack.Interfaces, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\packages\ServiceStack.Common.3.9.71\lib\net35\ServiceStack.Interfaces.dll</HintPath>
-    </Reference>
-    <Reference Include="ServiceStack.OrmLite, Version=3.9.56.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\packages\ServiceStack.OrmLite.SqlServer.3.9.71\lib\net35\ServiceStack.OrmLite.dll</HintPath>
-    </Reference>
-    <Reference Include="ServiceStack.OrmLite.SqlServer, Version=3.9.56.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\packages\ServiceStack.OrmLite.SqlServer.3.9.71\lib\net35\ServiceStack.OrmLite.SqlServer.dll</HintPath>
-    </Reference>
-    <Reference Include="ServiceStack.Redis, Version=3.9.57.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\packages\ServiceStack.Redis.3.9.57\lib\net35\ServiceStack.Redis.dll</HintPath>
-    </Reference>
-    <Reference Include="ServiceStack.ServiceInterface, Version=3.9.71.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\packages\ServiceStack.3.9.71\lib\net35\ServiceStack.ServiceInterface.dll</HintPath>
+      <HintPath>..\..\packages\BetterModules.Core.Web.1.0.0-rc8\lib\net40\RazorGenerator.Mvc.dll</HintPath>
     </Reference>
     <Reference Include="ServiceStack.Text, Version=3.9.71.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
@@ -144,6 +120,11 @@
     </Reference>
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="System.Data.Linq" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Net.Http.Formatting, Version=5.2.3.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\packages\Microsoft.AspNet.WebApi.Client.5.2.3\lib\net45\System.Net.Http.Formatting.dll</HintPath>
+    </Reference>
     <Reference Include="System.Numerics" />
     <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.Transactions" />
@@ -152,15 +133,20 @@
       <HintPath>..\..\packages\Microsoft.AspNet.WebPages.3.2.3\lib\net45\System.Web.Helpers.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="System.Web.Http, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\Microsoft.AspNet.WebApi.Core.4.0.30506.0\lib\net40\System.Web.Http.dll</HintPath>
-    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Web.DynamicData" />
     <Reference Include="System.Web.Entity" />
     <Reference Include="System.Web.ApplicationServices" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.Web.Http, Version=5.2.3.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\packages\Microsoft.AspNet.WebApi.Core.5.2.3\lib\net45\System.Web.Http.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Http.WebHost, Version=5.2.3.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\packages\Microsoft.AspNet.WebApi.WebHost.5.2.3\lib\net45\System.Web.Http.WebHost.dll</HintPath>
+    </Reference>
     <Reference Include="System.Web.Mvc">
       <HintPath>..\..\packages\Microsoft.AspNet.Mvc.5.2.3\lib\net45\System.Web.Mvc.dll</HintPath>
       <Private>True</Private>
@@ -194,6 +180,12 @@
     <Compile Include="..\..\SharedAssemblyInfo.cs">
       <Link>Properties\SharedAssemblyInfo.cs</Link>
     </Compile>
+    <Compile Include="ApiExtensions\ErrorResponse.cs" />
+    <Compile Include="ApiExtensions\ExceptionAttribute.cs" />
+    <Compile Include="ApiExtensions\JsonModelBinder.cs" />
+    <Compile Include="ApiExtensions\ServiceStackTextFormatter.cs" />
+    <Compile Include="ApiExtensions\UrlPopulatorAttribute.cs" />
+    <Compile Include="ApiExtensions\ValidationAttribute.cs" />
     <Compile Include="ApiFactory.cs" />
     <Compile Include="DefaultApiFacade.cs" />
     <Compile Include="Extensions\BlogPostModelExtensions.cs" />
@@ -201,7 +193,6 @@
     <Compile Include="Extensions\LayoutModelExtensions.cs" />
     <Compile Include="Extensions\RedirectModelExtensions.cs" />
     <Compile Include="Extensions\WidgetModelExtensions.cs" />
-    <Compile Include="Filters\GetRequestProcessor.cs" />
     <Compile Include="Helpers\ContentTypeExtensions.cs" />
     <Compile Include="Helpers\FilterByCategoriesExtension.cs" />
     <Compile Include="Helpers\FilterByTagExtensions.cs" />
@@ -249,12 +240,6 @@
     <Compile Include="Operations\Pages\Pages\PagesService.cs" />
     <Compile Include="Operations\Pages\Pages\Page\PageService.cs" />
     <Compile Include="Operations\Pages\Pages\Page\Properties\PagePropertiesService.cs" />
-    <Compile Include="Operations\Pages\Sitemap\Nodes\NodesService.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Operations\Pages\Sitemap\Nodes\Node\NodeService.cs" />
-    <Compile Include="Operations\Pages\Sitemap\SitemapService.cs" />
-    <Compile Include="Operations\Pages\Sitemap\Tree\SitemapTreeService.cs" />
     <Compile Include="Operations\Pages\Widgets\Widget\HtmlContentWidget\HtmlContentWidgetService.cs" />
     <Compile Include="Operations\Pages\Widgets\Widget\HtmlContentWidget\Options\HtmlContentWidgetOptionsService.cs" />
     <Compile Include="Operations\Pages\Widgets\Widget\ServerControlWidget\Options\ServerControlWidgetOptionsService.cs" />

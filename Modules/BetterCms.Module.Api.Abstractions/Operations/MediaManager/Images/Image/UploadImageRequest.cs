@@ -3,8 +3,6 @@ using System.Runtime.Serialization;
 
 using BetterCms.Module.Api.Infrastructure;
 
-using ServiceStack.ServiceHost;
-
 namespace BetterCms.Module.Api.Operations.MediaManager.Images.Image
 {
     /// <summary>
@@ -12,7 +10,7 @@ namespace BetterCms.Module.Api.Operations.MediaManager.Images.Image
     /// </summary>
     [DataContract]
     [Serializable]
-    public class UploadImageRequest : RequestBase<UploadImageModel>, IReturn<UploadImageResponse>
+    public class UploadImageRequest : RequestBase<UploadImageModel>
     {
     }
 }

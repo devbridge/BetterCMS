@@ -1,29 +1,33 @@
 ﻿using System.Linq;
+using System.Web.Http;
+using System.Web.Http.ModelBinding;
 
 using BetterModules.Core.DataAccess;
 using BetterCms.Core.DataContracts.Enums;
-
+using BetterCms.Module.Api.ApiExtensions;
 using BetterCms.Module.Api.Helpers;
 using BetterCms.Module.Api.Infrastructure;
 using BetterCms.Module.Pages.Services;
 
-using ServiceStack.ServiceInterface;
-
 namespace BetterCms.Module.Api.Operations.Pages.Pages.Page.Translations
 {
-    public class PageTranslationsService : Service, IPageTranslationsService
+    [RoutePrefix("bcms-api")]
+    public class PageTranslationsController : ApiController, IPageTranslationsService
     {
         private readonly IRepository repository;
         
         private readonly IUrlService urlService;
 
-        public PageTranslationsService(IRepository repository, IUrlService urlService)
+        public PageTranslationsController(IRepository repository, IUrlService urlService)
         {
             this.repository = repository;
             this.urlService = urlService;
         }
 
-        public GetPageTranslationsResponse Get(GetPageTranslationsRequest request)
+        [Route("pages/{PageId}/translations")]
+        [Route("pages/translations/by-url/{PageUrl}")]
+        [ValidationAtttibute]
+        public GetPageTranslationsResponse Get([ModelBinder(typeof(JsonModelBinder))] GetPageTranslationsRequest request)
         {
             var languageGroupIdentifier = GetPageLanguageGroupIdentifier(request);
 

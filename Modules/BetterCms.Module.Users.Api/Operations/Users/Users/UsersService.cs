@@ -1,6 +1,10 @@
 ﻿using System;
 using System.Linq;
 using System.Linq.Expressions;
+using System.Web.Http;
+using System.Web.Http.ModelBinding;
+
+using BetterCms.Module.Api.ApiExtensions;
 
 using BetterModules.Core.DataAccess;
 
@@ -11,14 +15,12 @@ using BetterCms.Module.Api.Operations.Users.Users;
 using BetterCms.Module.Api.Operations.Users.Users.User;
 using BetterCms.Module.MediaManager.Services;
 
-using ServiceStack.ServiceInterface;
-
-using PredicateBuilder = ServiceStack.OrmLite.PredicateBuilder;
 using UserModel = BetterCms.Module.Api.Operations.Users.Users.UserModel;
 
 namespace BetterCms.Module.Users.Api.Operations.Users.Users
 {
-    public class UsersService : Service, IUsersService
+    [RoutePrefix("bcms-api")]
+    public class UsersController : ApiController, IUsersService
     {
         private readonly IRepository repository;
 
@@ -26,14 +28,15 @@ namespace BetterCms.Module.Users.Api.Operations.Users.Users
 
         private readonly IUserService userService;
 
-        public UsersService(IRepository repository, IMediaFileUrlResolver fileUrlResolver, IUserService userService)
+        public UsersController(IRepository repository, IMediaFileUrlResolver fileUrlResolver, IUserService userService)
         {
             this.repository = repository;
             this.fileUrlResolver = fileUrlResolver;
             this.userService = userService;
         }
 
-        public GetUsersResponse Get(GetUsersRequest request)
+        [Route("users")]
+        public GetUsersResponse Get([ModelBinder(typeof(JsonModelBinder))]GetUsersRequest request)
         {
             request.Data.SetDefaultOrder("UserName");
 
@@ -109,6 +112,7 @@ namespace BetterCms.Module.Users.Api.Operations.Users.Users
             return query;
         }
 
+        [Route("users/")]
         public PostUserResponse Post(PostUserRequest request)
         {
             var result = userService.Put(new PutUserRequest

@@ -1,6 +1,8 @@
 ﻿using System;
+using System.Reflection;
 
 using Autofac;
+using Autofac.Integration.WebApi;
 
 using BetterCms.Core.Modules;
 using BetterCms.Module.Api.Operations.Pages.Pages.Search;
@@ -70,7 +72,8 @@ namespace BetterCms.Module.Search.Api
         /// <param name="containerBuilder">The container builder.</param>        
         public override void RegisterModuleTypes(ModuleRegistrationContext context, ContainerBuilder containerBuilder)
         {
-            containerBuilder.RegisterType<SearchPagesService>().As<ISearchPagesService>().InstancePerLifetimeScope().PropertiesAutowired(PropertyWiringOptions.PreserveSetValues);
+            containerBuilder.RegisterType<SearchPagesController>().As<ISearchPagesService>().InstancePerLifetimeScope().PropertiesAutowired(PropertyWiringOptions.PreserveSetValues);
+            containerBuilder.RegisterApiControllers(Assembly.GetExecutingAssembly());
         }
     }
 }

@@ -35,7 +35,6 @@ namespace BetterCms.Module.Api
         public WebApiModuleDescriptor(ICmsConfiguration cmsConfiguration)
             : base(cmsConfiguration)
         {
-            WebCoreEvents.Instance.HostStart += ApplicationStart;
         }
 
         /// <summary>
@@ -74,19 +73,6 @@ namespace BetterCms.Module.Api
         public override void RegisterCustomRoutes(WebModuleRegistrationContext context, ContainerBuilder containerBuilder)
         {
             context.IgnoreRoute("bcms-api/{*pathInfo}");
-        }
-
-        private void ApplicationStart(SingleItemEventArgs<HttpApplication> args)
-        {
-            Logger.Info("OnHostStart: preparing web api...");
-
-            using (var container = ContextScopeProvider.CreateChildContainer())
-            {
-                var containerProvider = container.Resolve<PerWebRequestContainerProvider>();
-                new WebApiApplicationHost(() => containerProvider.CurrentScope).Init();
-            }
-
-            Logger.Info("OnHostStart: preparing web api completed.");
         }
     }
 }

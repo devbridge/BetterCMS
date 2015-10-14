@@ -1,25 +1,26 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Web.Http;
+using System.Web.Http.ModelBinding;
 
 using BetterModules.Core.DataAccess;
 using BetterModules.Core.DataAccess.DataContext;
 using BetterCms.Core.DataContracts.Enums;
-
+using BetterCms.Module.Api.ApiExtensions;
 using BetterCms.Module.Api.Extensions;
 using BetterCms.Module.Api.Operations.Pages.Widgets.Widget.HtmlContentWidget.Options;
 using BetterCms.Module.Api.Operations.Root.Categories.Category;
 using BetterCms.Module.Root.Services;
 using BetterCms.Module.Root.ViewModels.Option;
 
-using ServiceStack.ServiceInterface;
-
 using ISaveWidgetService = BetterCms.Module.Pages.Services.IWidgetService;
 using HtmlContentWidgetEntity = BetterCms.Module.Pages.Models.HtmlContentWidget;
 
 namespace BetterCms.Module.Api.Operations.Pages.Widgets.Widget.HtmlContentWidget
 {
-    public class HtmlContentWidgetService : Service, IHtmlContentWidgetService
+    [RoutePrefix("bcms-api")]
+    public class HtmlContentWidgetController : ApiController, IHtmlContentWidgetService
     {
         private readonly IRepository repository;
 
@@ -29,7 +30,7 @@ namespace BetterCms.Module.Api.Operations.Pages.Widgets.Widget.HtmlContentWidget
         
         private readonly IOptionService optionService;
 
-        public HtmlContentWidgetService(IRepository repository, IHtmlContentWidgetOptionsService optionsService,
+        public HtmlContentWidgetController(IRepository repository, IHtmlContentWidgetOptionsService optionsService,
             ISaveWidgetService widgetService, IOptionService optionService)
         {
             this.repository = repository;
@@ -38,7 +39,8 @@ namespace BetterCms.Module.Api.Operations.Pages.Widgets.Widget.HtmlContentWidget
             this.optionService = optionService;
         }
 
-        public GetHtmlContentWidgetResponse Get(GetHtmlContentWidgetRequest request)
+        [Route("widgets/html-content/{WidgetId}")]
+        public GetHtmlContentWidgetResponse Get([ModelBinder(typeof(JsonModelBinder))]GetHtmlContentWidgetRequest request)
         {
             var model = repository
                 .AsQueryable<Module.Pages.Models.HtmlContentWidget>(widget => widget.Id == request.WidgetId)
@@ -97,6 +99,7 @@ namespace BetterCms.Module.Api.Operations.Pages.Widgets.Widget.HtmlContentWidget
             return response;
         }
 
+        [Route("widgets/html-content/")]
         public PostHtmlContentWidgetResponse Post(PostHtmlContentWidgetRequest request)
         {
             var result = Put(new PutHtmlContentWidgetRequest
@@ -108,6 +111,8 @@ namespace BetterCms.Module.Api.Operations.Pages.Widgets.Widget.HtmlContentWidget
             return new PostHtmlContentWidgetResponse { Data = result.Data };
         }
 
+        [Route("widgets/html-content/{Id}")]
+        [UrlPopulator]
         public PutHtmlContentWidgetResponse Put(PutHtmlContentWidgetRequest request)
         {
             HtmlContentWidgetEntity widget;
@@ -129,6 +134,8 @@ namespace BetterCms.Module.Api.Operations.Pages.Widgets.Widget.HtmlContentWidget
             return new PutHtmlContentWidgetResponse { Data = widget.Id };
         }
 
+        [Route("widgets/html-content/{Id}")]
+        [UrlPopulator]
         public DeleteHtmlContentWidgetResponse Delete(DeleteHtmlContentWidgetRequest request)
         {
             var result = widgetService.DeleteWidget(request.Id, request.Data.Version);

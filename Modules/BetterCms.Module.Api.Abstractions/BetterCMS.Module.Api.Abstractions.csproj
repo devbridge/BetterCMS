@@ -40,27 +40,18 @@
     <StartupObject />
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="ServiceStack, Version=3.9.56.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\packages\ServiceStack.3.9.71\lib\net35\ServiceStack.dll</HintPath>
+    <Reference Include="Autofac">
+      <HintPath>..\..\packages\Autofac.3.1.3\lib\net40\Autofac.dll</HintPath>
     </Reference>
-    <Reference Include="ServiceStack.Common, Version=3.9.56.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\packages\ServiceStack.Common.3.9.71\lib\net35\ServiceStack.Common.dll</HintPath>
-    </Reference>
-    <Reference Include="ServiceStack.Interfaces, Version=3.9.56.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\packages\ServiceStack.Common.3.9.71\lib\net35\ServiceStack.Interfaces.dll</HintPath>
-    </Reference>
-    <Reference Include="ServiceStack.ServiceInterface, Version=3.9.56.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\packages\ServiceStack.3.9.71\lib\net35\ServiceStack.ServiceInterface.dll</HintPath>
+    <Reference Include="Autofac.Integration.WebApi">
+      <HintPath>..\..\packages\Autofac.WebApi2.3.0.0\lib\net45\Autofac.Integration.WebApi.dll</HintPath>
     </Reference>
     <Reference Include="ServiceStack.Text, Version=3.9.56.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\packages\ServiceStack.Text.3.9.71\lib\net35\ServiceStack.Text.dll</HintPath>
     </Reference>
     <Reference Include="System" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Core" />
     <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.Xml.Linq" />
@@ -240,7 +231,6 @@
     <Compile Include="Operations\Pages\Widgets\Widget\HtmlContentWidget\SaveHtmlContentWidgetModel.cs" />
     <Compile Include="Operations\Pages\Sitemaps\GetSitemapsModel.cs" />
     <Compile Include="Operations\Pages\Sitemaps\GetSitemapsRequest.cs" />
-    <Compile Include="Operations\Pages\Sitemaps\GetSitemapsRequestValidator.cs" />
     <Compile Include="Operations\Pages\Sitemaps\GetSitemapsResponse.cs" />
     <Compile Include="Operations\Pages\Sitemaps\ISitemapsService.cs" />
     <Compile Include="Operations\Pages\Sitemaps\PostSitemapRequest.cs" />
@@ -251,7 +241,6 @@
     <Compile Include="Operations\Pages\Sitemaps\Sitemap\GetSitemapResponse.cs" />
     <Compile Include="Operations\Pages\Sitemaps\Sitemap\ISitemapService.cs" />
     <Compile Include="Operations\Pages\Sitemaps\Sitemap\Nodes\GetSitemapNodesRequest.cs" />
-    <Compile Include="Operations\Pages\Sitemaps\Sitemap\Nodes\GetSitemapNodesRequestValidator.cs" />
     <Compile Include="Operations\Pages\Sitemaps\Sitemap\Nodes\GetSitemapNodesResponse.cs" />
     <Compile Include="Operations\Pages\Sitemaps\Sitemap\Nodes\INodesService.cs" />
     <Compile Include="Operations\Pages\Sitemaps\Sitemap\Nodes\Node\GetNodeRequest.cs" />
@@ -262,46 +251,10 @@
     <Compile Include="Operations\Pages\Sitemaps\Sitemap\SitemapModel.cs" />
     <Compile Include="Operations\Pages\Sitemaps\Sitemap\Tree\GetSitemapTreeModel.cs" />
     <Compile Include="Operations\Pages\Sitemaps\Sitemap\Tree\GetSitemapTreeRequest.cs" />
-    <Compile Include="Operations\Pages\Sitemaps\Sitemap\Tree\GetSitemapTreeRequestValidator.cs" />
     <Compile Include="Operations\Pages\Sitemaps\Sitemap\Tree\GetSitemapTreeResponse.cs" />
     <Compile Include="Operations\Pages\Sitemaps\Sitemap\Tree\ISitemapTreeService.cs" />
     <Compile Include="Operations\Pages\Sitemaps\Sitemap\Tree\SitemapTreeNodeModel.cs" />
     <Compile Include="Operations\Pages\Sitemaps\Sitemap\Tree\SitemapTreeNodeTranslationModel.cs" />
-    <Compile Include="Operations\Pages\Sitemap\GetSitemapsModel.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Operations\Pages\Sitemap\GetSitemapsRequest.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Operations\Pages\Sitemap\GetSitemapsRequestValidator.cs" />
-    <Compile Include="Operations\Pages\Sitemap\GetSitemapsResponse.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Operations\Pages\Sitemap\ISitemapService.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Operations\Pages\Sitemap\Nodes\GetSitemapNodesRequest.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Operations\Pages\Sitemap\Nodes\GetSitemapNodesRequestValidator.cs" />
-    <Compile Include="Operations\Pages\Sitemap\Nodes\GetSitemapNodesResponse.cs" />
-    <Compile Include="Operations\Pages\Sitemap\Nodes\INodesService.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Operations\Pages\Sitemap\Nodes\Node\GetSitemapNodeRequest.cs" />
-    <Compile Include="Operations\Pages\Sitemap\Nodes\Node\GetSitemapNodeResponse.cs" />
-    <Compile Include="Operations\Pages\Sitemap\Nodes\Node\INodeService.cs" />
-    <Compile Include="Operations\Pages\Sitemap\Nodes\SitemapNodeModel.cs" />
-    <Compile Include="Operations\Pages\Sitemap\SitemapModel.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Operations\Pages\Sitemap\Tree\GetSitemapTreeModel.cs" />
-    <Compile Include="Operations\Pages\Sitemap\Tree\GetSitemapTreeRequest.cs" />
-    <Compile Include="Operations\Pages\Sitemap\Tree\GetSitemapTreeRequestValidator.cs" />
-    <Compile Include="Operations\Pages\Sitemap\Tree\GetSitemapTreeResponse.cs" />
-    <Compile Include="Operations\Pages\Sitemap\Tree\ISitemapTreeService.cs" />
-    <Compile Include="Operations\Pages\Sitemap\Tree\SitemapTreeNodeModel.cs" />
-    <Compile Include="Operations\Pages\Sitemap\Tree\SitemapTreeNodeTranslationModel.cs" />
     <Compile Include="Operations\Pages\Widgets\Widget\ServerControlWidget\DeleteServerControlWidgetRequest.cs" />
     <Compile Include="Operations\Pages\Widgets\Widget\ServerControlWidget\DeleteServerControlWidgetResponse.cs" />
     <Compile Include="Operations\Pages\Widgets\Widget\ServerControlWidget\GetServerControlWidgetModel.cs" />
@@ -337,7 +290,6 @@
     <Compile Include="Operations\Blog\BlogPosts\BlogPost\Properties\TagModel.cs" />
     <Compile Include="Operations\Blog\BlogPosts\GetBlogPostsModel.cs" />
     <Compile Include="Operations\Blog\BlogPosts\GetBlogPostsRequest.cs" />
-    <Compile Include="Operations\Blog\BlogPosts\GetBlogPostsRequestValidator.cs" />
     <Compile Include="Operations\Blog\BlogPosts\GetBlogPostsResponse.cs" />
     <Compile Include="Operations\Blog\BlogPosts\IBlogPostsService.cs" />
     <Compile Include="Operations\Blog\IBlogApiOperations.cs" />
@@ -352,13 +304,11 @@
     <Compile Include="Operations\MediaManager\Files\File\TagModel.cs" />
     <Compile Include="Operations\MediaManager\Files\GetFilesModel.cs" />
     <Compile Include="Operations\MediaManager\Files\GetFilesRequest.cs" />
-    <Compile Include="Operations\MediaManager\Files\GetFilesRequestValidator.cs" />
     <Compile Include="Operations\MediaManager\Files\GetFilesResponse.cs" />
     <Compile Include="Operations\MediaManager\Files\IFilesService.cs" />
     <Compile Include="Operations\MediaManager\Files\MediaModel.cs" />
     <Compile Include="Operations\MediaManager\Images\GetImagesModel.cs" />
     <Compile Include="Operations\MediaManager\Images\GetImagesRequest.cs" />
-    <Compile Include="Operations\MediaManager\Images\GetImagesRequestValidator.cs" />
     <Compile Include="Operations\MediaManager\Images\GetImagesResponse.cs" />
     <Compile Include="Operations\MediaManager\Images\IImagesService.cs" />
     <Compile Include="Operations\MediaManager\Images\Image\GetImageModel.cs" />
@@ -393,7 +343,6 @@
     <Compile Include="Operations\Pages\IPagesApiOperations.cs" />
     <Compile Include="Operations\Pages\Pages\GetPagesModel.cs" />
     <Compile Include="Operations\Pages\Pages\GetPagesRequest.cs" />
-    <Compile Include="Operations\Pages\Pages\GetPagesRequestValidator.cs" />
     <Compile Include="Operations\Pages\Pages\GetPagesResponse.cs" />
     <Compile Include="Operations\Pages\Pages\IPagesService.cs" />
     <Compile Include="Operations\Pages\Pages\MetadataModel.cs" />
@@ -405,7 +354,6 @@
     <Compile Include="Operations\Pages\Pages\Page\Contents\Content\Options\IGetPageContentOptionsService.cs" />
     <Compile Include="Operations\Pages\Pages\Page\Contents\GetPageContentsModel.cs" />
     <Compile Include="Operations\Pages\Pages\Page\Contents\GetPageContentsRequest.cs" />
-    <Compile Include="Operations\Pages\Pages\Page\Contents\GetPageContentsRequestValidator.cs" />
     <Compile Include="Operations\Pages\Pages\Page\Contents\GetPageContentsResponse.cs" />
     <Compile Include="Operations\Pages\Pages\Page\Contents\IPageContentsService.cs" />
     <Compile Include="Operations\Pages\Pages\Page\Contents\PageContentModel.cs" />
@@ -414,14 +362,12 @@
     <Compile Include="Operations\Pages\Pages\Page\Exists\PageExistsResponse.cs" />
     <Compile Include="Operations\Pages\Pages\Page\Exists\PageModel.cs" />
     <Compile Include="Operations\Pages\Pages\Page\GetPageRequest.cs" />
-    <Compile Include="Operations\Pages\Pages\Page\GetPageRequestValidator.cs" />
     <Compile Include="Operations\Pages\Pages\Page\GetPageResponse.cs" />
     <Compile Include="Operations\Pages\Pages\Page\IPageService.cs" />
     <Compile Include="Operations\Pages\Pages\Page\PageModel.cs" />
     <Compile Include="Operations\Pages\Pages\Page\Properties\CategoryModel.cs" />
     <Compile Include="Operations\Pages\Pages\Page\Properties\GetPagePropertiesModel.cs" />
     <Compile Include="Operations\Pages\Pages\Page\Properties\GetPagePropertiesRequest.cs" />
-    <Compile Include="Operations\Pages\Pages\Page\Properties\GetPagePropertiesRequestValidator.cs" />
     <Compile Include="Operations\Pages\Pages\Page\Properties\GetPagePropertiesResponse.cs" />
     <Compile Include="Operations\Pages\Pages\Page\Properties\ImageModel.cs" />
     <Compile Include="Operations\Pages\Pages\Page\Properties\IPagePropertiesService.cs" />
@@ -433,7 +379,6 @@
     <Compile Include="Operations\Pages\Pages\Page\Properties\PageTranslationModel.cs" />
     <Compile Include="Operations\Pages\Pages\Page\Properties\TagModel.cs" />
     <Compile Include="Operations\Pages\Pages\Page\Translations\GetPageTranslationsRequest.cs" />
-    <Compile Include="Operations\Pages\Pages\Page\Translations\GetPageTranslationsRequestValidator.cs" />
     <Compile Include="Operations\Pages\Pages\Page\Translations\GetPageTranslationsResponse.cs" />
     <Compile Include="Operations\Pages\Pages\Page\Translations\IPageTranslationsService.cs" />
     <Compile Include="Operations\Pages\Pages\Page\Translations\PageTranslationModel.cs" />
@@ -451,7 +396,6 @@
     <Compile Include="Operations\Pages\Redirects\Redirect\IRedirectService.cs" />
     <Compile Include="Operations\Pages\Widgets\GetWidgetsModel.cs" />
     <Compile Include="Operations\Pages\Widgets\GetWidgetsRequest.cs" />
-    <Compile Include="Operations\Pages\Widgets\GetWidgetsRequestValidator.cs" />
     <Compile Include="Operations\Pages\Widgets\GetWidgetsResponse.cs" />
     <Compile Include="Operations\Pages\Widgets\IWidgetsService.cs" />
     <Compile Include="Operations\Pages\Widgets\WidgetModel.cs" />
@@ -507,7 +451,6 @@
     <Compile Include="Operations\Root\Categories\Category\Tree\NodesTreeNodeModel.cs" />
     <Compile Include="Operations\Root\Categories\Category\Tree\GetNodesTreeModel.cs" />
     <Compile Include="Operations\Root\Categories\Category\Tree\GetNodesTreeRequest.cs" />
-    <Compile Include="Operations\Root\Categories\Category\Tree\GetNodesTreeRequestValidator.cs" />
     <Compile Include="Operations\Root\Categories\Category\Tree\GetNodesTreeResponse.cs" />
     <Compile Include="Operations\Root\Categories\Category\Tree\INodesTreeService.cs" />
     <Compile Include="Operations\Root\Categories\GetCategoryTreesModel.cs" />
@@ -523,7 +466,6 @@
     <Compile Include="Operations\Root\Languages\Language\DeleteLanguageRequest.cs" />
     <Compile Include="Operations\Root\Languages\Language\DeleteLanguageResponse.cs" />
     <Compile Include="Operations\Root\Languages\Language\GetLanguageRequest.cs" />
-    <Compile Include="Operations\Root\Languages\Language\GetLanguageRequestValidator.cs" />
     <Compile Include="Operations\Root\Languages\Language\GetLanguageResponse.cs" />
     <Compile Include="Operations\Root\Languages\Language\ILanguageService.cs" />
     <Compile Include="Operations\Root\Languages\Language\PostLanguageRequest.cs" />
@@ -547,7 +489,6 @@
     <Compile Include="Operations\Root\Tags\PostTagRequest.cs" />
     <Compile Include="Operations\Root\Tags\PostTagResponse.cs" />
     <Compile Include="Operations\Root\Tags\SaveTagModel.cs" />
-    <Compile Include="Operations\Root\Tags\Tag\GetTagRequestValidator.cs" />
     <Compile Include="Operations\Root\Tags\Tag\DeleteTagRequest.cs" />
     <Compile Include="Operations\Root\Tags\Tag\DeleteTagResponse.cs" />
     <Compile Include="Operations\Users\Roles\GetRolesRequest.cs" />
@@ -558,7 +499,6 @@
     <Compile Include="Operations\Users\Roles\Role\DeleteRoleRequest.cs" />
     <Compile Include="Operations\Users\Roles\Role\DeleteRoleResponse.cs" />
     <Compile Include="Operations\Users\Roles\Role\GetRoleRequest.cs" />
-    <Compile Include="Operations\Users\Roles\Role\GetRoleRequestValidator.cs" />
     <Compile Include="Operations\Users\Roles\Role\GetRoleResponse.cs" />
     <Compile Include="Operations\Users\Roles\Role\IRoleService.cs" />
     <Compile Include="Operations\Users\Roles\Role\PutRoleRequest.cs" />
@@ -577,7 +517,6 @@
     <Compile Include="Operations\Users\Users\User\DeleteUserResponse.cs" />
     <Compile Include="Operations\Users\Users\User\GetUserModel.cs" />
     <Compile Include="Operations\Users\Users\User\GetUserRequest.cs" />
-    <Compile Include="Operations\Users\Users\User\GetUserRequestValidator.cs" />
     <Compile Include="Operations\Users\Users\User\GetUserResponse.cs" />
     <Compile Include="Operations\Users\Users\User\IUserService.cs" />
     <Compile Include="Operations\Users\Users\User\PutUserRequest.cs" />

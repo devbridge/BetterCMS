@@ -1,28 +1,33 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Web.Http;
+using System.Web.Http.ModelBinding;
+
+using BetterCms.Module.Api.ApiExtensions;
 
 using BetterModules.Core.DataAccess;
 
 using NHibernate.Linq;
 
-using ServiceStack.ServiceInterface;
-
 namespace BetterCms.Module.Api.Operations.Root.Categories.Category.Tree
 {
-    public class NodesTreeService : Service, INodesTreeService
+    [RoutePrefix("bcms-api")]
+    public class NodesTreeController : ApiController, INodesTreeService
     {
         private readonly IRepository repository;
 
         private readonly ICmsConfiguration cmsConfiguration;
 
-        public NodesTreeService(IRepository repository, ICmsConfiguration cmsConfiguration)
+        public NodesTreeController(IRepository repository, ICmsConfiguration cmsConfiguration)
         {
             this.repository = repository;
             this.cmsConfiguration = cmsConfiguration;
         }
 
-        public GetNodesTreeResponse Get(GetNodesTreeRequest request)
+        [Route("categorytrees/{CategoryTreeId}/tree/")]
+        [ValidationAtttibute]
+        public GetNodesTreeResponse Get([ModelBinder(typeof(JsonModelBinder))]GetNodesTreeRequest request)
         {
             var allNodes = repository
                 .AsQueryable<Module.Root.Models.Category>()

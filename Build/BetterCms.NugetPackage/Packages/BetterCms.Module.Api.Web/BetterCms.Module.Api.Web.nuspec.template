@@ -13,6 +13,9 @@
     <copyright>Better CMS is licensed under BETTER CMS LICENSE AGREEMENT (http://www.bettercms.com/license.txt).</copyright>
     <dependencies>
       <dependency id="BetterCms.Module.Api" version="[@BetterCMSVersion@]" />
+      <dependency id="ServiceStack.Text" version="[3.9.71]" />
+      <dependency id="Microsoft.AspNet.WebApi" version="5.2.3"/>
+      <dependency id="Autofac.WebApi2" version="3.0.0" />
     </dependencies>
   </metadata>
 </package>

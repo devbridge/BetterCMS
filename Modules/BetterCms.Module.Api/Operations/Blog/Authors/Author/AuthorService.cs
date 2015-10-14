@@ -1,6 +1,9 @@
 ﻿using System;
 using System.Linq;
+using System.Web.Http;
+using System.Web.Http.ModelBinding;
 
+using BetterCms.Module.Api.ApiExtensions;
 using BetterCms.Module.MediaManager.Models;
 using BetterCms.Module.MediaManager.Services;
 using BetterCms.Module.Root.Mvc;
@@ -9,11 +12,10 @@ using BetterModules.Core.DataAccess;
 using BetterModules.Core.DataAccess.DataContext;
 using BetterModules.Core.Exceptions.DataTier;
 
-using ServiceStack.ServiceInterface;
-
 namespace BetterCms.Module.Api.Operations.Blog.Authors.Author
 {
-    public class AuthorService : Service, IAuthorService
+    [RoutePrefix("bcms-api")]
+    public class AuthorController : ApiController, IAuthorService
     {
         /// <summary>
         /// The repository.
@@ -31,12 +33,12 @@ namespace BetterCms.Module.Api.Operations.Blog.Authors.Author
         private readonly IUnitOfWork unitOfWork;
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="AuthorService"/> class.
+        /// Initializes a new instance of the <see cref="AuthorController"/> class.
         /// </summary>
         /// <param name="repository">The repository.</param>
         /// <param name="fileUrlResolver">The file URL resolver.</param>
         /// <param name="unitOfWork">The unit of work.</param>
-        public AuthorService(IRepository repository, IMediaFileUrlResolver fileUrlResolver, IUnitOfWork unitOfWork)
+        public AuthorController(IRepository repository, IMediaFileUrlResolver fileUrlResolver, IUnitOfWork unitOfWork)
         {
             this.repository = repository;
             this.fileUrlResolver = fileUrlResolver;
@@ -50,7 +52,8 @@ namespace BetterCms.Module.Api.Operations.Blog.Authors.Author
         /// <returns>
         ///   <c>GetAuthorRequest</c> with an author.
         /// </returns>
-        public GetAuthorResponse Get(GetAuthorRequest request)
+        [Route("authors/{AuthorId}")]
+        public GetAuthorResponse Get([ModelBinder(typeof(JsonModelBinder))]GetAuthorRequest request)
         {
             var query = repository.AsQueryable<Module.Blog.Models.Author>();
             
@@ -91,6 +94,8 @@ namespace BetterCms.Module.Api.Operations.Blog.Authors.Author
         /// <returns>
         ///   <c>PutAuthorResponse</c> with a author id.
         /// </returns>
+        [Route("authors/{Id}")]
+        [UrlPopulator]
         public PutAuthorResponse Put(PutAuthorRequest request)
         {
             var authors = repository.AsQueryable<Module.Blog.Models.Author>()
@@ -144,6 +149,8 @@ namespace BetterCms.Module.Api.Operations.Blog.Authors.Author
         /// <returns>
         ///   <c>DeleteAuthorResponse</c> with success status.
         /// </returns>
+        [Route("authors/{Id}")]
+        [UrlPopulator]
         public DeleteAuthorResponse Delete(DeleteAuthorRequest request)
         {
             if (request.Data == null || request.Id.HasDefaultValue())

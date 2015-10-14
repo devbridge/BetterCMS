@@ -1,25 +1,28 @@
 ﻿using System.Linq;
+using System.Web.Http;
+using System.Web.Http.ModelBinding;
 
+using BetterCms.Module.Api.ApiExtensions;
 using BetterCms.Module.Api.Infrastructure;
 using BetterCms.Module.Api.Operations.Pages.Pages.Search;
 
 using BetterCms.Module.Search.Models;
 using BetterCms.Module.Search.Services;
 
-using ServiceStack.ServiceInterface;
-
 namespace BetterCms.Module.Search.Api.Operations.Pages.Pages
 {
-    public class SearchPagesService : Service, ISearchPagesService
+    [RoutePrefix("bcms-api")]
+    public class SearchPagesController : ApiController, ISearchPagesService
     {
         private readonly ISearchService searchService;
 
-        public SearchPagesService(ISearchService searchService)
+        public SearchPagesController(ISearchService searchService)
         {
             this.searchService = searchService;
         }
 
-        public SearchPagesResponse Get(SearchPagesRequest request)
+        [Route("pages/search/{SearchString}")]
+        public SearchPagesResponse Get([ModelBinder(typeof(JsonModelBinder))]SearchPagesRequest request)
         {
             var take = request.Data.Take ?? 10;
             var skip = request.Data.Skip > 0 ? request.Data.Skip : 0;

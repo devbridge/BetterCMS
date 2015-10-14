@@ -1,4 +1,8 @@
 ﻿using System.Linq;
+using System.Web.Http;
+using System.Web.Http.ModelBinding;
+
+using BetterCms.Module.Api.ApiExtensions;
 
 using BetterModules.Core.DataAccess;
 using BetterCms.Module.Api.Helpers;
@@ -8,14 +12,13 @@ using BetterCms.Module.Pages.Models;
 
 using NHibernate.Linq;
 
-using ServiceStack.ServiceInterface;
-
 namespace BetterCms.Module.Api.Operations.Pages.Sitemaps
 {
     /// <summary>
     /// Default service implementation for sitemaps CRUD.
     /// </summary>
-    public class SitemapsService : Service, ISitemapsService
+    [RoutePrefix("bcms-api")]
+    public class SitemapsController : ApiController, ISitemapsService
     {
         /// <summary>
         /// The repository.
@@ -28,11 +31,11 @@ namespace BetterCms.Module.Api.Operations.Pages.Sitemaps
         private readonly ISitemapService sitemapService;
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="SitemapsService" /> class.
+        /// Initializes a new instance of the <see cref="SitemapsController" /> class.
         /// </summary>
         /// <param name="repository">The repository.</param>
         /// <param name="sitemapService">The sitemap service.</param>
-        public SitemapsService(IRepository repository, ISitemapService sitemapService)
+        public SitemapsController(IRepository repository, ISitemapService sitemapService)
         {
             this.repository = repository;
             this.sitemapService = sitemapService;
@@ -45,7 +48,9 @@ namespace BetterCms.Module.Api.Operations.Pages.Sitemaps
         /// <returns>
         ///   <c>GetSitemapsResponse</c> with tags list.
         /// </returns>
-        public GetSitemapsResponse Get(GetSitemapsRequest request)
+        [Route("sitemaps")]
+        [ValidationAtttibute]
+        public GetSitemapsResponse Get([ModelBinder(typeof(JsonModelBinder))]GetSitemapsRequest request)
         {
             request.Data.SetDefaultOrder("Title");
 
@@ -86,6 +91,7 @@ namespace BetterCms.Module.Api.Operations.Pages.Sitemaps
         /// <returns>
         ///   <c>PostSitemapResponse</c> with a new sitemap id.
         /// </returns>
+        [Route("sitemaps")]
         public PostSitemapResponse Post(PostSitemapRequest request)
         {
             var result = sitemapService.Put(

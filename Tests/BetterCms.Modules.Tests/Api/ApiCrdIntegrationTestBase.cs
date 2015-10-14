@@ -19,7 +19,7 @@ namespace BetterCms.Test.Module.Api
         TDeleteRequest, TDeleteResponse> : ApiIntegrationTestBase
 
         where TGetResponse : ResponseBase<TModel>, new()
-        where TGetRequest : IReturn<TGetResponse>, new()
+        where TGetRequest : /*IReturn<TGetResponse>,*/ new()
 
         where TSaveModel : SaveModelBase, new()
         where TModel : ModelBase, new()

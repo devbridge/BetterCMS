@@ -1,4 +1,8 @@
 ﻿using System.Linq;
+using System.Web.Http;
+using System.Web.Http.ModelBinding;
+
+using BetterCms.Module.Api.ApiExtensions;
 
 using BetterModules.Core.DataAccess;
 using BetterModules.Core.DataAccess.DataContext;
@@ -8,11 +12,10 @@ using BetterCms.Module.Api.Operations.Users.Users.User.ValidateUser;
 using BetterCms.Module.MediaManager.Services;
 using BetterCms.Module.Users.Api.Extensions;
 
-using ServiceStack.ServiceInterface;
-
 namespace BetterCms.Module.Users.Api.Operations.Users.Users.User
 {
-    public class UserService : Service, IUserService
+    [RoutePrefix("bcms-api")]
+    public class UserController : ApiController, IUserService
     {
         private readonly IRepository repository;
         
@@ -22,7 +25,7 @@ namespace BetterCms.Module.Users.Api.Operations.Users.Users.User
 
         private readonly Services.IUserService userService;
 
-        public UserService(IRepository repository, IValidateUserService validateUserService,
+        public UserController(IRepository repository, IValidateUserService validateUserService,
             IMediaFileUrlResolver fileUrlResolver, Services.IUserService userService)
         {
             this.repository = repository;
@@ -31,7 +34,10 @@ namespace BetterCms.Module.Users.Api.Operations.Users.Users.User
             this.userService = userService;
         }
 
-        public GetUserResponse Get(GetUserRequest request)
+        [Route("users/{UserId}")]
+        [Route("users/by-username/{UserName}")]
+        [ValidationAtttibute]
+        public GetUserResponse Get([ModelBinder(typeof(JsonModelBinder))]GetUserRequest request)
         {
             var query = repository
                 .AsQueryable<Models.User>();
@@ -92,6 +98,8 @@ namespace BetterCms.Module.Users.Api.Operations.Users.Users.User
             return response;
         }
 
+        [Route("users/{Id}")]
+        [UrlPopulator]
         public DeleteUserResponse Delete(DeleteUserRequest request)
         {
             userService.DeleteUser(request.Id, request.Data.Version);
@@ -99,6 +107,8 @@ namespace BetterCms.Module.Users.Api.Operations.Users.Users.User
             return new DeleteUserResponse { Data = true };
         }
 
+        [Route("users/{Id}")]
+        [UrlPopulator]
         public PutUserResponse Put(PutUserRequest request)
         {
             var model = request.Data.ToServiceModel();
@@ -111,9 +121,17 @@ namespace BetterCms.Module.Users.Api.Operations.Users.Users.User
             return new PutUserResponse { Data = user.Id };
         }
 
+
+        //TODO: Where and why this is used?
         ValidateUserResponse IUserService.Validate(ValidateUserRequest request)
         {
             return validateUserService.Get(request);
         }
+
+        [Route("users/validate")]
+        public ValidateUserResponse Get([ModelBinder(typeof(JsonModelBinder))] ValidateUserRequest request)
+        {
+            return validateUserService.Get(request);
+        } 
     }
 }

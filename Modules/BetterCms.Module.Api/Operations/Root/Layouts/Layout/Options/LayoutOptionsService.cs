@@ -1,19 +1,24 @@
-﻿using BetterModules.Core.DataAccess;
+﻿using System.Web.Http;
+using System.Web.Http.ModelBinding;
 
-using ServiceStack.ServiceInterface;
+using BetterCms.Module.Api.ApiExtensions;
+
+using BetterModules.Core.DataAccess;
 
 namespace BetterCms.Module.Api.Operations.Root.Layouts.Layout.Options
 {
-    public class LayoutOptionsService : Service, ILayoutOptionsService
+    [RoutePrefix("bcms-api")]
+    public class LayoutOptionsController : ApiController, ILayoutOptionsService
     {
         private readonly IRepository repository;
 
-        public LayoutOptionsService(IRepository repository)
+        public LayoutOptionsController(IRepository repository)
         {
             this.repository = repository;
         }
 
-        public GetLayoutOptionsResponse Get(GetLayoutOptionsRequest request)
+        [Route("layouts/{LayoutId}/options")]
+        public GetLayoutOptionsResponse Get([ModelBinder(typeof(JsonModelBinder))]GetLayoutOptionsRequest request)
         {
             var results = LayoutServiceHelper.GetLayoutOptionsResponse(repository, request.LayoutId, request);
 
