@@ -168,7 +168,7 @@ namespace BetterCms.Module.MediaManager.Services
         private void TrashFiles(IEnumerable<Media> filesToTrash, bool deleteFoldersAndSubMedias)
         {
             unitOfWork.BeginTransaction();
-            var trashFolder = GetContentRoot(configuration.Storage.TrashFolder);
+            var trashFolder = Path.Combine(GetContentRoot(configuration.Storage.ContentRoot), "trash");
             // in case of exception store moved files and restore them
             var movedFilesDic = new Dictionary<Uri, Uri>();
             try
@@ -290,7 +290,7 @@ namespace BetterCms.Module.MediaManager.Services
         private string GenerateTrashPublicUrl(Uri fileUri, MediaType mediaType)
         {
             return Path.Combine(
-                GetContentPublicRoot(configuration.Storage.TrashFolder),
+                GetContentPublicRoot("~/trash"),
                 GetFolderWithFileName(fileUri, mediaType))
                 .Replace('\\', '/');
         }
