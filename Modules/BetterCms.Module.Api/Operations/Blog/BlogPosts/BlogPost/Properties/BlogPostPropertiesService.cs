@@ -9,6 +9,7 @@ using BetterCms.Core.Exceptions.Api;
 using BetterCms.Core.Services;
 
 using BetterCms.Module.Api.Extensions;
+using BetterCms.Module.Api.Operations.Pages;
 using BetterCms.Module.Api.Operations.Root;
 
 using BetterCms.Module.Blog.Models;
@@ -243,6 +244,8 @@ namespace BetterCms.Module.Api.Operations.Blog.BlogPosts.BlogPost.Properties
                     .Select(pc => new
                                   {
                                       Html = ((BlogPostContent)pc.Content).Html,
+                                      OriginalText = ((BlogPostContent)pc.Content).OriginalText,
+                                      ContentTextMode = ((BlogPostContent)pc.Content).ContentTextMode,
                                       ContentId = pc.Content.Id,
                                       PageContentId = pc.Id,
                                       RegionId = pc.Region.Id
@@ -254,6 +257,8 @@ namespace BetterCms.Module.Api.Operations.Blog.BlogPosts.BlogPost.Properties
                 if (includeHtml)
                 {
                     response.HtmlContent = content.Html;
+                    response.OriginalText = content.OriginalText;
+                    response.ContentTextMode = (ContentTextMode)content.ContentTextMode;
                 }
 
                 if (includeTechnicalInfo)

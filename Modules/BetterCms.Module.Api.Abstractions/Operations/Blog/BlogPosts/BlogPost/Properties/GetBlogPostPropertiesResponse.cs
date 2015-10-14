@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Runtime.Serialization;
 
 using BetterCms.Module.Api.Infrastructure;
+using BetterCms.Module.Api.Operations.Pages;
 using BetterCms.Module.Api.Operations.Root;
 
 namespace BetterCms.Module.Api.Operations.Blog.BlogPosts.BlogPost.Properties
@@ -19,6 +20,24 @@ namespace BetterCms.Module.Api.Operations.Blog.BlogPosts.BlogPost.Properties
         /// </value>
         [DataMember]
         public string HtmlContent { get; set; }
+
+        /// <summary>
+        /// Gets or sets the original text.
+        /// </summary>
+        /// <value>
+        /// The original text.
+        /// </value>
+        [DataMember]
+        public string OriginalText { get; set; }
+
+        /// <summary>
+        /// Gets or sets the content text mode.
+        /// </summary>
+        /// <value>
+        /// The content text mode.
+        /// </value>
+        [DataMember]
+        public ContentTextMode? ContentTextMode { get; set; }
 
         /// <summary>
         /// Gets or sets the layout.

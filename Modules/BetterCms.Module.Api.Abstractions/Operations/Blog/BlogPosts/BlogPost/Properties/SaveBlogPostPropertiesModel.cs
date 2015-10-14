@@ -3,12 +3,13 @@ using System.Collections.Generic;
 using System.Runtime.Serialization;
 
 using BetterCms.Module.Api.Infrastructure;
+using BetterCms.Module.Api.Operations.Pages;
 using BetterCms.Module.Api.Operations.Root;
 
 namespace BetterCms.Module.Api.Operations.Blog.BlogPosts.BlogPost.Properties
 {
     [DataContract]
-    [System.Serializable]
+    [Serializable]
     public class SaveBlogPostPropertiesModel : SaveModelBase
     {
         /// <summary>
@@ -54,7 +55,7 @@ namespace BetterCms.Module.Api.Operations.Blog.BlogPosts.BlogPost.Properties
         /// The page published date.
         /// </value>
         [DataMember]
-        public System.DateTime? PublishedOn { get; set; }
+        public DateTime? PublishedOn { get; set; }
 
         /// <summary>
         /// Gets or sets the page layout id.
@@ -63,7 +64,7 @@ namespace BetterCms.Module.Api.Operations.Blog.BlogPosts.BlogPost.Properties
         /// The page layout id.
         /// </value>
         [DataMember]
-        public System.Guid? LayoutId { get; set; }
+        public Guid? LayoutId { get; set; }
 
         /// <summary>
         /// Gets or sets the master page id.
@@ -72,7 +73,7 @@ namespace BetterCms.Module.Api.Operations.Blog.BlogPosts.BlogPost.Properties
         /// The master page id.
         /// </value>
         [DataMember]
-        public System.Guid? MasterPageId { get; set; }
+        public Guid? MasterPageId { get; set; }
 
         /// <summary>
         /// Gets or sets the category id.
@@ -90,7 +91,7 @@ namespace BetterCms.Module.Api.Operations.Blog.BlogPosts.BlogPost.Properties
         /// The blog post author id.
         /// </value>
         [DataMember]
-        public System.Guid? AuthorId { get; set; }
+        public Guid? AuthorId { get; set; }
 
         /// <summary>
         /// Gets or sets the blog posts main image id.
@@ -99,7 +100,7 @@ namespace BetterCms.Module.Api.Operations.Blog.BlogPosts.BlogPost.Properties
         /// The blog post main image id.
         /// </value>
         [DataMember]
-        public System.Guid? MainImageId { get; set; }
+        public Guid? MainImageId { get; set; }
 
         /// <summary>
         /// Gets or sets the featured image id.
@@ -108,7 +109,7 @@ namespace BetterCms.Module.Api.Operations.Blog.BlogPosts.BlogPost.Properties
         /// The featured image id.
         /// </value>
         [DataMember]
-        public System.Guid? FeaturedImageId { get; set; }
+        public Guid? FeaturedImageId { get; set; }
 
         /// <summary>
         /// Gets or sets the secondary image id.
@@ -117,7 +118,7 @@ namespace BetterCms.Module.Api.Operations.Blog.BlogPosts.BlogPost.Properties
         /// The secondary image id.
         /// </value>
         [DataMember]
-        public System.Guid? SecondaryImageId { get; set; }
+        public Guid? SecondaryImageId { get; set; }
 
         /// <summary>
         /// Gets or sets the blog post activation date.
@@ -126,7 +127,7 @@ namespace BetterCms.Module.Api.Operations.Blog.BlogPosts.BlogPost.Properties
         /// The blog post activation date.
         /// </value>
         [DataMember]
-        public System.DateTime ActivationDate { get; set; }
+        public DateTime ActivationDate { get; set; }
 
         /// <summary>
         /// Gets or sets the blog post expiration date.
@@ -135,7 +136,7 @@ namespace BetterCms.Module.Api.Operations.Blog.BlogPosts.BlogPost.Properties
         /// The blog post expiration date.
         /// </value>
         [DataMember]
-        public System.DateTime? ExpirationDate { get; set; }
+        public DateTime? ExpirationDate { get; set; }
 
         /// <summary>
         /// Gets or sets a value indicating whether blog post is marked as archived.
@@ -183,13 +184,31 @@ namespace BetterCms.Module.Api.Operations.Blog.BlogPosts.BlogPost.Properties
         public string HtmlContent { get; set; }
 
         /// <summary>
+        /// Gets or sets the original text.
+        /// </summary>
+        /// <value>
+        /// The original text.
+        /// </value>
+        [DataMember]
+        public string OriginalText { get; set; }
+
+        /// <summary>
+        /// Gets or sets the content text mode.
+        /// </summary>
+        /// <value>
+        /// The content text mode.
+        /// </value>
+        [DataMember]
+        public ContentTextMode ContentTextMode { get; set; }
+
+        /// <summary>
         /// Gets or sets the list of tags.
         /// </summary>
         /// <value>
         /// The list of tags.
         /// </value>
         [DataMember]
-        public System.Collections.Generic.List<string> Tags { get; set; }
+        public List<string> Tags { get; set; }
 
         /// <summary>
         /// Gets or sets the meta data.
@@ -225,7 +244,7 @@ namespace BetterCms.Module.Api.Operations.Blog.BlogPosts.BlogPost.Properties
         /// The access rules.
         /// </value>
         [DataMember]
-        public System.Collections.Generic.IList<AccessRuleModel> AccessRules { get; set; }
+        public IList<AccessRuleModel> AccessRules { get; set; }
 
         /// <summary>
         /// Gets or sets the list of child contents option values.
@@ -234,6 +253,6 @@ namespace BetterCms.Module.Api.Operations.Blog.BlogPosts.BlogPost.Properties
         /// The list of child contents option values.
         /// </value>
         [DataMember]
-        public System.Collections.Generic.IList<ChildContentOptionValuesModel> ChildContentsOptionValues { get; set; }
+        public IList<ChildContentOptionValuesModel> ChildContentsOptionValues { get; set; }
     }
 }

@@ -9,6 +9,7 @@ using BetterCms.Core.Security;
 using BetterCms.Module.Blog.Models;
 using BetterCms.Module.MediaManager.Models;
 using BetterCms.Module.Pages.Models;
+using BetterCms.Module.Pages.Models.Enums;
 using BetterCms.Module.Root.Models;
 using BetterCms.Module.Users;
 using BetterCms.Module.Users.Models;
@@ -161,6 +162,7 @@ namespace BetterCms.Tests.Helpers
             PopulateBaseFields(entity);
 
             entity.DefaultLayout = CreateNewLayout();
+            entity.DefaultContentTextMode = ContentTextMode.Html;
 
             return entity;
         }
@@ -517,6 +519,7 @@ namespace BetterCms.Tests.Helpers
             entity.Original = null;
             entity.PublishedByUser = ProvideRandomString(MaxLength.Name);
             entity.PublishedOn = ProvideRandomDateTime();
+            entity.ContentTextMode = ContentTextMode.Html;
         }
        
         public Media CreateNewMedia(MediaType type = MediaType.Image)
