@@ -468,6 +468,24 @@ bettercms.define('bcms.ko.grid', ['bcms.jquery', 'bcms', 'bcms.ko.extenders', 'b
                     }
                 }
             };
+
+            self.getCroppedText = function(text) {
+                var length = this.getCroppedTextLength();
+
+                if (text && text.length > length) {
+                    text = text.substring(0, 250) + this.getCroppedTextSuffix();
+                }
+
+                return text;
+            }
+        };
+
+        grid.ItemViewModel.prototype.getCroppedTextSuffix = function () {
+            return ' ...';
+        };
+
+        grid.ItemViewModel.prototype.getCroppedTextLength = function () {
+            return 250;
         };
 
         grid.ItemViewModel.prototype.onCancelEdit = function (data, event) {
