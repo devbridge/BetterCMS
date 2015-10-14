@@ -69,6 +69,7 @@ WriteLiteral("\r\n");
     var gridViewModel = new EditableGridViewModel
     {
         TopBlockClass = "bcms-top-block-holder",
+        ShowMessages = true,
         Columns = new List<EditableGridColumn>
             {
                 new EditableGridColumn(BlogGlobalization.SiteSettings_AuthorsTab_AuthorImage_Title, "", "imageId")
@@ -80,7 +81,7 @@ WriteLiteral("\r\n");
                     {
                         AutoFocus = true
                     },
-                new EditableGridColumn(BlogGlobalization.SiteSettings_AuthorsTab_AuthorDescription_Title, "Description", "description")    
+                new EditableGridMultilineColumn(BlogGlobalization.SiteSettings_AuthorsTab_AuthorDescription_Title, "Description", "description")    
             }
     };
 
@@ -90,7 +91,7 @@ WriteLiteral("\r\n");
 WriteLiteral("\r\n\r\n");
 
             
-            #line 26 "..\..\Views\Author\Partial\ListTemplate.cshtml"
+            #line 27 "..\..\Views\Author\Partial\ListTemplate.cshtml"
 Write(Html.Partial(RootModuleConstants.EditableGridTemplate, gridViewModel));
 
             
