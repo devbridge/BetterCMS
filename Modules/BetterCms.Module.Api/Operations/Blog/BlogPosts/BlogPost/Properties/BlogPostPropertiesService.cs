@@ -278,7 +278,7 @@ namespace BetterCms.Module.Api.Operations.Blog.BlogPosts.BlogPost.Properties
         private List<TagModel> LoadTags(Guid blogPostId)
         {
             return repository
-                .AsQueryable<Module.Pages.Models.PageTag>(pageTag => pageTag.Page.Id == blogPostId && !pageTag.Tag.IsDeleted)
+                .AsQueryable<PageTag>(pageTag => pageTag.Page.Id == blogPostId && !pageTag.Tag.IsDeleted)
                 .OrderBy(tag => tag.Tag.Name)
                 .Select(media =>
                     new TagModel

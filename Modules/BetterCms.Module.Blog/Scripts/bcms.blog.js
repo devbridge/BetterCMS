@@ -1,8 +1,8 @@
 ﻿/*jslint unparam: true, white: true, browser: true, devel: true */
 /*global bettercms */
 
-bettercms.define('bcms.blog', ['bcms.jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', 'bcms.dynamicContent', 'bcms.datepicker', 'bcms.htmlEditor', 'bcms.grid', 'bcms.pages', 'bcms.categories', 'bcms.ko.extenders', 'bcms.media', 'bcms.tags', 'bcms.ko.grid', 'bcms.messages', 'bcms.redirect', 'bcms.pages.history', 'bcms.preview', 'bcms.security', 'bcms.blog.filter', 'bcms.sidemenu', 'bcms.forms', 'bcms.pages.widgets', 'bcms.antiXss'],
-    function ($, bcms, modal, siteSettings, dynamicContent, datepicker, htmlEditor, grid, pages, categories, ko, media, tags, kogrid, messages, redirect, history, preview, security, filter, sidemenu, forms, widgets, antiXss) {
+bettercms.define('bcms.blog', ['bcms.jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', 'bcms.dynamicContent', 'bcms.datepicker', 'bcms.htmlEditor', 'bcms.grid', 'bcms.pages', 'bcms.categories', 'bcms.ko.extenders', 'bcms.media', 'bcms.tags', 'bcms.ko.grid', 'bcms.messages', 'bcms.redirect', 'bcms.pages.history', 'bcms.preview', 'bcms.security', 'bcms.blog.filter', 'bcms.sidemenu', 'bcms.forms', 'bcms.pages.widgets', 'bcms.antiXss', 'bcms.content'],
+    function ($, bcms, modal, siteSettings, dynamicContent, datepicker, htmlEditor, grid, pages, categories, ko, media, tags, kogrid, messages, redirect, history, preview, security, filter, sidemenu, forms, widgets, antiXss, bcmsContent) {
     'use strict';
 
     var blog = { },
@@ -39,7 +39,7 @@ bettercms.define('bcms.blog', ['bcms.jquery', 'bcms', 'bcms.modal', 'bcms.siteSe
             importBlogPostsForm: '#bcms-import-blog-posts',
             fileUploadingTarget: '#bcms-import-form-target',
             fileUploadingResult: '#jsonResult',
-            categorySelection: "input[name*='Categories']",
+            categorySelection: "input[name*='Categories']"
         },
         links = {
             loadSiteSettingsBlogsUrl: null,
@@ -217,6 +217,7 @@ bettercms.define('bcms.blog', ['bcms.jquery', 'bcms', 'bcms.modal', 'bcms.siteSe
         var data = content.Data,
             image = data.Image,
             tagsList = data.Tags,
+            contentTextMode = data.ContentTextMode,
             newPost = false,
             canEdit = security.IsAuthorized(["BcmsEditContent"]),
             canPublish = security.IsAuthorized(["BcmsPublishContent"]),
@@ -231,9 +232,19 @@ bettercms.define('bcms.blog', ['bcms.jquery', 'bcms', 'bcms.modal', 'bcms.siteSe
 
                 return categorySelector != null ? categorySelector.val() : null;
             };
-        
-        htmlEditor.initializeHtmlEditor(selectors.htmlEditor, data.ContentId, {}, data.EditInSourceMode);
-       
+
+        if (contentTextMode == bcmsContent.contentTextModes.markdown) {
+            htmlEditor.initializeMarkdownEditor(selectors.htmlEditor, '', {});
+        }
+
+        if (contentTextMode == bcmsContent.contentTextModes.simpleText) {
+            htmlEditor.initializeMarkdownEditor(selectors.htmlEditor, '', { hideIcons: true });
+        }
+
+        if (contentTextMode == bcmsContent.contentTextModes.html) {
+            htmlEditor.initializeHtmlEditor(selectors.htmlEditor, data.ContentId, {}, data.EditInSourceMode);
+        }
+
         if (data.Version == 0) {
             newPost = true;
         }
@@ -287,8 +298,6 @@ bettercms.define('bcms.blog', ['bcms.jquery', 'bcms', 'bcms.modal', 'bcms.siteSe
         }
         
         dialog.container.find(selectors.datePickers).initializeDatepicker(globalization.datePickerTooltipTitle);
-
-        
 
         return blogViewModel;
     }

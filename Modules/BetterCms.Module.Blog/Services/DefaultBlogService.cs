@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Security.Principal;
+using System.Web;
 
 using BetterModules.Core.DataAccess;
 using BetterModules.Core.DataAccess.DataContext;
@@ -23,6 +24,7 @@ using BetterCms.Module.MediaManager.Models;
 using BetterCms.Module.Pages.Content.Resources;
 using BetterCms.Module.Pages.Helpers;
 using BetterCms.Module.Pages.Models;
+using BetterCms.Module.Pages.Models.Enums;
 using BetterCms.Module.Pages.Services;
 using BetterCms.Module.Pages.ViewModels.Filter;
 
@@ -319,15 +321,24 @@ namespace BetterCms.Module.Blog.Services
                 Id = content != null ? content.Id : Guid.Empty,
                 Name = request.Title,
                 Html = request.Content ?? string.Empty,
+                OriginalText = request.OriginalText,
                 EditInSourceMode = request.EditInSourceMode,
                 ActivationDate = request.LiveFromDate,
-                ExpirationDate = TimeHelper.FormatEndDate(request.LiveToDate)
+                ExpirationDate = TimeHelper.FormatEndDate(request.LiveToDate),
+                ContentTextMode = request.ContentTextMode,
             };
 
             if (!updateActivationIfNotChanged && content != null)
             {
                 newContent.ActivationDate = TimeHelper.GetFirstIfTheSameDay(content.ActivationDate, newContent.ActivationDate);
                 newContent.ExpirationDate = TimeHelper.GetFirstIfTheSameDay(content.ExpirationDate, newContent.ExpirationDate);
+            }
+
+            if (request.ContentTextMode == ContentTextMode.Markdown
+                && request.Content == null
+                && request.OriginalText != null)
+            {
+                newContent.Html = MarkdownConverter.ToHtml(request.OriginalText);
             }
 
             // Preserve content if user is not authorized to change it.
@@ -344,6 +355,8 @@ namespace BetterCms.Module.Blog.Services
 
                 newContent.Name = contentToPublish.Name;
                 newContent.Html = contentToPublish.Html;
+                newContent.ContentTextMode = contentToPublish.ContentTextMode;
+                newContent.OriginalText = contentToPublish.OriginalText;
             }
 
             content = SaveContentWithStatusUpdate(isNew, newContent, request, principal);
@@ -376,8 +389,6 @@ namespace BetterCms.Module.Blog.Services
 
             pageContent.Content = content;
             blogPost.PageContents = new [] {pageContent};
-
-            
 
             IList<Tag> newTags = null;
             if (userCanEdit)

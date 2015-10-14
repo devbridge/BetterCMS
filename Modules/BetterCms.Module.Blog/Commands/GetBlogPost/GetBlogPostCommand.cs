@@ -10,7 +10,7 @@ using BetterCms.Module.Blog.ViewModels.Blog;
 using BetterCms.Module.MediaManager.Services;
 using BetterCms.Module.MediaManager.ViewModels;
 using BetterCms.Module.Pages.Models;
-
+using BetterCms.Module.Pages.Models.Enums;
 using BetterCms.Module.Root.Models;
 using BetterCms.Module.Root.Mvc;
 using BetterCms.Module.Root.Services;
@@ -59,6 +59,11 @@ namespace BetterCms.Module.Blog.Commands.GetBlogPost
         private readonly ICmsConfiguration cmsConfiguration;
 
         /// <summary>
+        /// The blog option service
+        /// </summary>
+        private readonly Services.IOptionService blogOptionService;
+
+        /// <summary>
         /// Initializes a new instance of the <see cref="GetBlogPostCommand" /> class.
         /// </summary>
         /// <param name="categoryService">The category service.</param>
@@ -67,9 +72,10 @@ namespace BetterCms.Module.Blog.Commands.GetBlogPost
         /// <param name="contentService">The content service.</param>
         /// <param name="fileUrlResolver">The file URL resolver.</param>
         /// <param name="cmsConfiguration">The CMS configuration.</param>
+        /// <param name="blogOptionService">The blog option service.</param>
         public GetBlogPostCommand(ICategoryService categoryService, IAuthorService authorService,
             ITagService tagService, IContentService contentService, IMediaFileUrlResolver fileUrlResolver,
-            ICmsConfiguration cmsConfiguration)
+            ICmsConfiguration cmsConfiguration, Services.IOptionService blogOptionService)
         {
             this.categoryService = categoryService;
             this.authorService = authorService;
@@ -77,14 +83,14 @@ namespace BetterCms.Module.Blog.Commands.GetBlogPost
             this.contentService = contentService;
             this.fileUrlResolver = fileUrlResolver;
             this.cmsConfiguration = cmsConfiguration;
+            this.blogOptionService = blogOptionService;
         }
 
         /// <summary>
         /// Executes the specified request.
         /// </summary>
         /// <param name="id">The page id.</param>
-        /// <returns></returns>
-        /// <exception cref="System.NotImplementedException"></exception>
+        /// <returns>Blog post model for create / edit</returns>
         public BlogPostViewModel Execute(Guid id)
         {
             var model = new BlogPostViewModel();
@@ -147,7 +153,6 @@ namespace BetterCms.Module.Blog.Commands.GetBlogPost
 
                     if (content != null)
                     {
-                        model.Content = content.Html;
                         model.ContentId = content.Id;
                         model.ContentVersion = content.Version;
                         model.LiveFromDate = content.ActivationDate;
@@ -155,6 +160,8 @@ namespace BetterCms.Module.Blog.Commands.GetBlogPost
                         model.EditInSourceMode = content.EditInSourceMode;
                         model.CurrentStatus = content.Status;
                         model.HasPublishedContent = content.Original != null;
+                        model.ContentTextMode = content.ContentTextMode;
+                        model.Content = content.ContentTextMode == ContentTextMode.Html ? content.Html : content.OriginalText;
                     }
                     else
                     {
@@ -171,6 +178,12 @@ namespace BetterCms.Module.Blog.Commands.GetBlogPost
             else
             {
                 model.LiveFromDate = DateTime.Today;
+
+                var option = blogOptionService.GetDefaultOption();
+                if (option != null)
+                {
+                    model.ContentTextMode = option.DefaultContentTextMode;
+                }
             }
 
             model.Authors = authorService.GetAuthors();

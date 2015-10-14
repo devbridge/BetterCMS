@@ -20,8 +20,6 @@ using BetterCms.Module.Root.Mvc;
 
 using Microsoft.Web.Mvc;
 
-using NHibernate.Util;
-
 namespace BetterCms.Module.Blog.Controllers
 {
     /// <summary>
