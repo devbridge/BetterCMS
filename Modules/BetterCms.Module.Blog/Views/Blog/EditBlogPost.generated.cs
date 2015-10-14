@@ -71,36 +71,30 @@ namespace ASP
     #line hidden
     
     #line 11 "..\..\Views\Blog\EditBlogPost.cshtml"
-    using BetterCms.Module.Root.Mvc.Extensions;
-    
-    #line default
-    #line hidden
-    
-    #line 12 "..\..\Views\Blog\EditBlogPost.cshtml"
     using BetterCms.Module.Root.Mvc.Helpers;
     
     #line default
     #line hidden
     
-    #line 13 "..\..\Views\Blog\EditBlogPost.cshtml"
+    #line 12 "..\..\Views\Blog\EditBlogPost.cshtml"
     using BetterCms.Module.Root.Mvc.UI;
     
     #line default
     #line hidden
     
-    #line 14 "..\..\Views\Blog\EditBlogPost.cshtml"
+    #line 13 "..\..\Views\Blog\EditBlogPost.cshtml"
     using BetterCms.Module.Root.ViewModels.Category;
     
     #line default
     #line hidden
     
-    #line 15 "..\..\Views\Blog\EditBlogPost.cshtml"
+    #line 14 "..\..\Views\Blog\EditBlogPost.cshtml"
     using BetterCms.Module.Root.ViewModels.Tags;
     
     #line default
     #line hidden
     
-    #line 17 "..\..\Views\Blog\EditBlogPost.cshtml"
+    #line 16 "..\..\Views\Blog\EditBlogPost.cshtml"
     using Microsoft.Web.Mvc;
     
     #line default
@@ -126,7 +120,7 @@ WriteLiteral("\r\n");
 WriteLiteral("\r\n");
 
             
-            #line 20 "..\..\Views\Blog\EditBlogPost.cshtml"
+            #line 19 "..\..\Views\Blog\EditBlogPost.cshtml"
  if (Model == null)
 {
     return;
@@ -136,22 +130,56 @@ WriteLiteral("\r\n");
             #line default
             #line hidden
             
-            #line 24 "..\..\Views\Blog\EditBlogPost.cshtml"
+            #line 23 "..\..\Views\Blog\EditBlogPost.cshtml"
   
     var canEdit = (ViewContext.Controller as CmsControllerBase).SecurityService.IsAuthorized(RootModuleConstants.UserRoles.EditContent);
     var tagsTemplateViewModel = new TagsTemplateViewModel
     {
-        TooltipDescription = BlogGlobalization.EditBlockPost_Tags_Tooltip_Description
+        TooltipDescription = BlogGlobalization.EditBlogPost_Tags_Tooltip_Description
     };
     var categoriesTemplateViewModel = new CategoryTemplateViewModel
     {
-        TooltipDescription = BlogGlobalization.EditBlockPost_Category_Tooltip_Description
+        TooltipDescription = BlogGlobalization.EditBlogPost_Category_Tooltip_Description
     };
 
             
             #line default
             #line hidden
 WriteLiteral("\r\n\r\n<div");
+
+WriteLiteral(" class=\"bcms-tab-header\"");
+
+WriteLiteral(">\r\n    <a");
+
+WriteLiteral(" class=\"bcms-tab-item bcms-active\"");
+
+WriteLiteral(" data-name=\"#bcms-tab-1\"");
+
+WriteLiteral(">");
+
+            
+            #line 36 "..\..\Views\Blog\EditBlogPost.cshtml"
+                                                            Write(BlogGlobalization.EditBlogPost_ContentTab_Title);
+
+            
+            #line default
+            #line hidden
+WriteLiteral("</a>\r\n    <a");
+
+WriteLiteral(" class=\"bcms-tab-item\"");
+
+WriteLiteral(" data-name=\"#bcms-tab-2\"");
+
+WriteLiteral(">");
+
+            
+            #line 37 "..\..\Views\Blog\EditBlogPost.cshtml"
+                                                Write(BlogGlobalization.EditBlogPost_PropertiesTab_Title);
+
+            
+            #line default
+            #line hidden
+WriteLiteral("</a>\r\n</div>\r\n\r\n<div");
 
 WriteLiteral(" class=\"bcms-scroll-window\"");
 
@@ -160,7 +188,7 @@ WriteLiteral(">\r\n");
 WriteLiteral("    ");
 
             
-            #line 37 "..\..\Views\Blog\EditBlogPost.cshtml"
+            #line 41 "..\..\Views\Blog\EditBlogPost.cshtml"
 Write(Html.TabbedContentMessagesBox());
 
             
@@ -169,13 +197,13 @@ Write(Html.TabbedContentMessagesBox());
 WriteLiteral("\r\n");
 
             
-            #line 38 "..\..\Views\Blog\EditBlogPost.cshtml"
+            #line 42 "..\..\Views\Blog\EditBlogPost.cshtml"
     
             
             #line default
             #line hidden
             
-            #line 38 "..\..\Views\Blog\EditBlogPost.cshtml"
+            #line 42 "..\..\Views\Blog\EditBlogPost.cshtml"
      if (Model.CurrentStatus == ContentStatus.Draft)
     {
 
@@ -207,7 +235,7 @@ WriteLiteral(">\r\n                <li>\r\n");
 WriteLiteral("                    ");
 
             
-            #line 47 "..\..\Views\Blog\EditBlogPost.cshtml"
+            #line 51 "..\..\Views\Blog\EditBlogPost.cshtml"
                Write(PagesGlobalization.EditPageContent_Messages_DraftStatusWarnMessage);
 
             
@@ -216,13 +244,13 @@ WriteLiteral("                    ");
 WriteLiteral("\r\n");
 
             
-            #line 48 "..\..\Views\Blog\EditBlogPost.cshtml"
+            #line 52 "..\..\Views\Blog\EditBlogPost.cshtml"
                     
             
             #line default
             #line hidden
             
-            #line 48 "..\..\Views\Blog\EditBlogPost.cshtml"
+            #line 52 "..\..\Views\Blog\EditBlogPost.cshtml"
                      if (Model.HasPublishedContent && canEdit)
                     {
                         
@@ -230,14 +258,14 @@ WriteLiteral("\r\n");
             #line default
             #line hidden
             
-            #line 50 "..\..\Views\Blog\EditBlogPost.cshtml"
+            #line 54 "..\..\Views\Blog\EditBlogPost.cshtml"
                    Write(Html.Raw(PagesGlobalization.EditPageContent_Messages_DraftStatusWarnMessage_Destroy));
 
             
             #line default
             #line hidden
             
-            #line 50 "..\..\Views\Blog\EditBlogPost.cshtml"
+            #line 54 "..\..\Views\Blog\EditBlogPost.cshtml"
                                                                                                              
                     }
 
@@ -253,7 +281,7 @@ WriteLiteral(" style=\"display: none\"");
 WriteLiteral(">\r\n            </ul>\r\n        </div>\r\n");
 
             
-            #line 57 "..\..\Views\Blog\EditBlogPost.cshtml"
+            #line 61 "..\..\Views\Blog\EditBlogPost.cshtml"
     }
 
             
@@ -262,291 +290,103 @@ WriteLiteral(">\r\n            </ul>\r\n        </div>\r\n");
 WriteLiteral("    ");
 
             
-            #line 58 "..\..\Views\Blog\EditBlogPost.cshtml"
-     using (Html.BeginForm<BlogController>(c => c.SaveBlogPost(null), FormMethod.Post, new {
-                                                                                               @id = "bcms-blog-post-form", 
-                                                                                               @class = "bcms-ajax-form",
-                                                                                               data_readonly = Model.IsReadOnly.ToString().ToLower()
-                                                                                           }))
+            #line 62 "..\..\Views\Blog\EditBlogPost.cshtml"
+     using (Html.BeginForm<BlogController>(c => c.SaveBlogPost(null), FormMethod.Post, new { @id = "bcms-blog-post-form", @class = "bcms-ajax-form", data_readonly = Model.IsReadOnly.ToString().ToLower() }))
     {
-        
-            
-            #line default
-            #line hidden
-            
-            #line 64 "..\..\Views\Blog\EditBlogPost.cshtml"
-   Write(Html.HiddenFor(model => model.Id, new { data_bind = "value: id()" }));
-
-            
-            #line default
-            #line hidden
-            
-            #line 64 "..\..\Views\Blog\EditBlogPost.cshtml"
-                                                                             
-        
-            
-            #line default
-            #line hidden
-            
-            #line 65 "..\..\Views\Blog\EditBlogPost.cshtml"
-   Write(Html.HiddenFor(model => model.Version, new { data_bind = "value: version()" }));
-
-            
-            #line default
-            #line hidden
-            
-            #line 65 "..\..\Views\Blog\EditBlogPost.cshtml"
-                                                                                       
-        
-            
-            #line default
-            #line hidden
-            
-            #line 66 "..\..\Views\Blog\EditBlogPost.cshtml"
-   Write(Html.HiddenFor(model => model.Image.ImageId, new { data_bind = "value: image().id()" }));
-
-            
-            #line default
-            #line hidden
-            
-            #line 66 "..\..\Views\Blog\EditBlogPost.cshtml"
-                                                                                                
-        
-            
-            #line default
-            #line hidden
-            
-            #line 67 "..\..\Views\Blog\EditBlogPost.cshtml"
-   Write(Html.HiddenFor(modal => modal.DesirableStatus, new { @class = "bcms-content-desirable-status" }));
-
-            
-            #line default
-            #line hidden
-            
-            #line 67 "..\..\Views\Blog\EditBlogPost.cshtml"
-                                                                                                                 
-        
-            
-            #line default
-            #line hidden
-            
-            #line 68 "..\..\Views\Blog\EditBlogPost.cshtml"
-   Write(Html.HiddenFor(model => model.EditInSourceMode, new { @data_bind = "value: editInSourceMode()" }));
-
-            
-            #line default
-            #line hidden
-            
-            #line 68 "..\..\Views\Blog\EditBlogPost.cshtml"
-                                                                                                          
-        
-            
-            #line default
-            #line hidden
-            
-            #line 69 "..\..\Views\Blog\EditBlogPost.cshtml"
-   Write(Html.HiddenFor(modal => modal.IsUserConfirmed, new { @id = "bcms-user-confirmed-region-deletion" }));
-
-            
-            #line default
-            #line hidden
-            
-            #line 69 "..\..\Views\Blog\EditBlogPost.cshtml"
-                                                                                                            
-        
-            
-            #line default
-            #line hidden
-            
-            #line 70 "..\..\Views\Blog\EditBlogPost.cshtml"
-   Write(Html.HiddenFor(modal => modal.ContentTextMode, new { @id = "bcms-user-confirmed-region-deletion" }));
-
-            
-            #line default
-            #line hidden
-            
-            #line 70 "..\..\Views\Blog\EditBlogPost.cshtml"
-                                                                                                            
-
 
             
             #line default
             #line hidden
 WriteLiteral("        <div");
 
-WriteLiteral(" class=\"bcms-new-blog-content\"");
+WriteLiteral(" class=\"bcms-padded-content\"");
 
-WriteLiteral(">\r\n\r\n            <div");
+WriteLiteral(">\r\n\r\n");
 
-WriteLiteral(" class=\"bcms-blog-left\"");
-
-WriteLiteral(">\r\n\r\n                <div");
-
-WriteLiteral(" class=\"bcms-input-list-holder\"");
-
-WriteLiteral(">\r\n");
-
-WriteLiteral("                    ");
+WriteLiteral("            ");
 
             
-            #line 77 "..\..\Views\Blog\EditBlogPost.cshtml"
-               Write(Html.Tooltip(BlogGlobalization.EditBlockPost_Title_Tooltip_Description));
-
-            
-            #line default
-            #line hidden
-WriteLiteral("\r\n                    <div");
-
-WriteLiteral(" class=\"bcms-content-titles\"");
-
-WriteLiteral(">");
-
-            
-            #line 78 "..\..\Views\Blog\EditBlogPost.cshtml"
-                                                Write(BlogGlobalization.EditBlockPost_Title_Title);
-
-            
-            #line default
-            #line hidden
-WriteLiteral("</div>\r\n                    <div");
-
-WriteLiteral(" class=\"bcms-input-box\"");
-
-WriteLiteral(">\r\n");
-
-WriteLiteral("                        ");
-
-            
-            #line 80 "..\..\Views\Blog\EditBlogPost.cshtml"
-                   Write(Html.TextBoxFor(m => m.Title, new { @class = "bcms-editor-field-box", @id = "bcms-editor-blog-title" }));
+            #line 66 "..\..\Views\Blog\EditBlogPost.cshtml"
+       Write(Html.HiddenFor(model => model.Id, new { data_bind = "value: id()" }));
 
             
             #line default
             #line hidden
 WriteLiteral("\r\n");
 
-WriteLiteral("                        ");
+WriteLiteral("            ");
 
             
-            #line 81 "..\..\Views\Blog\EditBlogPost.cshtml"
-                   Write(Html.BcmsValidationMessageFor(m => m.Title));
-
-            
-            #line default
-            #line hidden
-WriteLiteral("\r\n                    </div>\r\n                </div>\r\n\r\n");
-
-WriteLiteral("                ");
-
-            
-            #line 85 "..\..\Views\Blog\EditBlogPost.cshtml"
-           Write(Html.Partial("Partial/AddNewBlogEditPermalink"));
-
-            
-            #line default
-            #line hidden
-WriteLiteral("\r\n\r\n                <div");
-
-WriteLiteral(" class=\"bcms-input-list-holder\"");
-
-WriteLiteral(">\r\n");
-
-WriteLiteral("                    ");
-
-            
-            #line 88 "..\..\Views\Blog\EditBlogPost.cshtml"
-               Write(Html.Tooltip(BlogGlobalization.EditBlockPost_IntroText_Tooltip_Description));
-
-            
-            #line default
-            #line hidden
-WriteLiteral("\r\n                    <div");
-
-WriteLiteral(" class=\"bcms-content-titles\"");
-
-WriteLiteral(">");
-
-            
-            #line 89 "..\..\Views\Blog\EditBlogPost.cshtml"
-                                                Write(BlogGlobalization.EditBlockPost_IntroText_Title);
-
-            
-            #line default
-            #line hidden
-WriteLiteral("</div>\r\n                    <div");
-
-WriteLiteral(" class=\"bcms-textarea-box\"");
-
-WriteLiteral(">\r\n");
-
-WriteLiteral("                        ");
-
-            
-            #line 91 "..\..\Views\Blog\EditBlogPost.cshtml"
-                   Write(Html.TextAreaFor(m => m.IntroText, new { @style = "height: 170px;", @class = "bcms-editor-field-area" }));
+            #line 67 "..\..\Views\Blog\EditBlogPost.cshtml"
+       Write(Html.HiddenFor(model => model.Version, new { data_bind = "value: version()" }));
 
             
             #line default
             #line hidden
 WriteLiteral("\r\n");
 
-WriteLiteral("                        ");
+WriteLiteral("            ");
 
             
-            #line 92 "..\..\Views\Blog\EditBlogPost.cshtml"
-                   Write(Html.BcmsValidationMessageFor(m => m.IntroText));
-
-            
-            #line default
-            #line hidden
-WriteLiteral("\r\n                    </div>\r\n                </div>\r\n                <div");
-
-WriteLiteral(" class=\"bcms-input-list-holder\"");
-
-WriteLiteral(" id=\"bcms-blog-content-holder\"");
-
-WriteLiteral(">\r\n");
-
-WriteLiteral("                    ");
-
-            
-            #line 96 "..\..\Views\Blog\EditBlogPost.cshtml"
-               Write(Html.Tooltip(BlogGlobalization.EditBlockPost_Content_Tooltip_Description));
+            #line 68 "..\..\Views\Blog\EditBlogPost.cshtml"
+       Write(Html.HiddenFor(model => model.Image.ImageId, new { data_bind = "value: image().id()" }));
 
             
             #line default
             #line hidden
-WriteLiteral("\r\n                    <div");
+WriteLiteral("\r\n");
 
-WriteLiteral(" class=\"bcms-content-titles\"");
-
-WriteLiteral(">");
+WriteLiteral("            ");
 
             
-            #line 97 "..\..\Views\Blog\EditBlogPost.cshtml"
-                                                Write(BlogGlobalization.EditBlockPost_Content_Title);
+            #line 69 "..\..\Views\Blog\EditBlogPost.cshtml"
+       Write(Html.HiddenFor(modal => modal.DesirableStatus, new { @class = "bcms-content-desirable-status" }));
 
             
             #line default
             #line hidden
-WriteLiteral("</div>\r\n");
+WriteLiteral("\r\n");
 
-WriteLiteral("                    ");
+WriteLiteral("            ");
 
             
-            #line 98 "..\..\Views\Blog\EditBlogPost.cshtml"
-               Write(Html.TextAreaFor(model => model.Content, new { @id = "bcms-contenthtml" }));
+            #line 70 "..\..\Views\Blog\EditBlogPost.cshtml"
+       Write(Html.HiddenFor(model => model.EditInSourceMode, new { @data_bind = "value: editInSourceMode()" }));
 
             
             #line default
             #line hidden
-WriteLiteral("\r\n                </div>\r\n\r\n            </div>\r\n            <div");
+WriteLiteral("\r\n");
 
-WriteLiteral(" class=\"bcms-blog-right\"");
+WriteLiteral("            ");
 
-WriteLiteral(">\r\n\r\n                <div");
+            
+            #line 71 "..\..\Views\Blog\EditBlogPost.cshtml"
+       Write(Html.HiddenFor(modal => modal.IsUserConfirmed, new { @id = "bcms-user-confirmed-region-deletion" }));
 
-WriteLiteral(" class=\"bcms-blog-dates-holder\"");
+            
+            #line default
+            #line hidden
+WriteLiteral("\r\n");
+
+WriteLiteral("            ");
+
+            
+            #line 72 "..\..\Views\Blog\EditBlogPost.cshtml"
+       Write(Html.HiddenFor(modal => modal.ContentTextMode, new { @id = "bcms-user-confirmed-region-deletion" }));
+
+            
+            #line default
+            #line hidden
+WriteLiteral("\r\n\r\n            <div");
+
+WriteLiteral(" id=\"bcms-tab-1\"");
+
+WriteLiteral(" class=\"bcms-tab-single\"");
+
+WriteLiteral(">\r\n                <div");
+
+WriteLiteral(" class=\"bcms-newcontent-top\"");
 
 WriteLiteral(">\r\n                    <div");
 
@@ -557,8 +397,8 @@ WriteLiteral(">\r\n");
 WriteLiteral("                        ");
 
             
-            #line 106 "..\..\Views\Blog\EditBlogPost.cshtml"
-                   Write(Html.Tooltip(BlogGlobalization.EditBlockPost_LiveDates_Tooltip_Description));
+            #line 77 "..\..\Views\Blog\EditBlogPost.cshtml"
+                   Write(Html.Tooltip(BlogGlobalization.EditBlogPost_Title_Tooltip_Description));
 
             
             #line default
@@ -570,8 +410,63 @@ WriteLiteral(" class=\"bcms-content-titles\"");
 WriteLiteral(">");
 
             
-            #line 107 "..\..\Views\Blog\EditBlogPost.cshtml"
-                                                    Write(BlogGlobalization.EditBlockPost_LiveFrom_Title);
+            #line 78 "..\..\Views\Blog\EditBlogPost.cshtml"
+                                                    Write(BlogGlobalization.EditBlogPost_Title_Title);
+
+            
+            #line default
+            #line hidden
+WriteLiteral("</div>\r\n                        <div");
+
+WriteLiteral(" class=\"bcms-input-box\"");
+
+WriteLiteral(">\r\n");
+
+WriteLiteral("                            ");
+
+            
+            #line 80 "..\..\Views\Blog\EditBlogPost.cshtml"
+                       Write(Html.TextBoxFor(m => m.Title, new { @class = "bcms-editor-field-box", @id = "bcms-editor-blog-title", @style = "width: 523px;" }));
+
+            
+            #line default
+            #line hidden
+WriteLiteral("\r\n");
+
+WriteLiteral("                            ");
+
+            
+            #line 81 "..\..\Views\Blog\EditBlogPost.cshtml"
+                       Write(Html.BcmsValidationMessageFor(m => m.Title));
+
+            
+            #line default
+            #line hidden
+WriteLiteral("\r\n                        </div>\r\n                    </div>\r\n\r\n                 " +
+"   <div");
+
+WriteLiteral(" class=\"bcms-input-field-holder\"");
+
+WriteLiteral(">\r\n");
+
+WriteLiteral("                        ");
+
+            
+            #line 86 "..\..\Views\Blog\EditBlogPost.cshtml"
+                   Write(Html.Tooltip(BlogGlobalization.EditBlogPost_LiveDates_Tooltip_Description));
+
+            
+            #line default
+            #line hidden
+WriteLiteral("\r\n                        <div");
+
+WriteLiteral(" class=\"bcms-content-titles\"");
+
+WriteLiteral(">");
+
+            
+            #line 87 "..\..\Views\Blog\EditBlogPost.cshtml"
+                                                    Write(BlogGlobalization.EditBlogPost_LiveFrom_Title);
 
             
             #line default
@@ -585,8 +480,8 @@ WriteLiteral(">\r\n");
 WriteLiteral("                            ");
 
             
-            #line 109 "..\..\Views\Blog\EditBlogPost.cshtml"
-                       Write(Html.DateTextBoxFor(model => model.LiveFromDate, Model.LiveFromDate, new Dictionary<string, object> { { "class", "bcms-editor-field-box bcms-datepicker" }, {"style", "width: 127px;"} }));
+            #line 89 "..\..\Views\Blog\EditBlogPost.cshtml"
+                       Write(Html.DateTextBoxFor(model => model.LiveFromDate, Model.LiveFromDate, new Dictionary<string, object> { { "class", "bcms-editor-field-box bcms-datepicker" }, { "style", "width: 127px;" } }));
 
             
             #line default
@@ -596,7 +491,7 @@ WriteLiteral("\r\n");
 WriteLiteral("                            ");
 
             
-            #line 110 "..\..\Views\Blog\EditBlogPost.cshtml"
+            #line 90 "..\..\Views\Blog\EditBlogPost.cshtml"
                        Write(Html.BcmsValidationMessageFor(m => m.LiveFromDate));
 
             
@@ -614,8 +509,8 @@ WriteLiteral(" class=\"bcms-content-titles\"");
 WriteLiteral(">");
 
             
-            #line 114 "..\..\Views\Blog\EditBlogPost.cshtml"
-                                                    Write(BlogGlobalization.EditBlockPost_LiveTo_Title);
+            #line 94 "..\..\Views\Blog\EditBlogPost.cshtml"
+                                                    Write(BlogGlobalization.EditBlogPost_LiveTo_Title);
 
             
             #line default
@@ -629,8 +524,8 @@ WriteLiteral(">\r\n");
 WriteLiteral("                            ");
 
             
-            #line 116 "..\..\Views\Blog\EditBlogPost.cshtml"
-                       Write(Html.DateTextBoxFor(model => model.LiveToDate, Model.LiveToDate, new Dictionary<string, object> { { "class", "bcms-editor-field-box bcms-datepicker" }, {"style", "width: 127px;"} }));
+            #line 96 "..\..\Views\Blog\EditBlogPost.cshtml"
+                       Write(Html.DateTextBoxFor(model => model.LiveToDate, Model.LiveToDate, new Dictionary<string, object> { { "class", "bcms-editor-field-box bcms-datepicker" }, { "style", "width: 127px;" } }));
 
             
             #line default
@@ -640,24 +535,37 @@ WriteLiteral("\r\n");
 WriteLiteral("                            ");
 
             
-            #line 117 "..\..\Views\Blog\EditBlogPost.cshtml"
+            #line 97 "..\..\Views\Blog\EditBlogPost.cshtml"
                        Write(Html.BcmsValidationMessageFor(m => m.LiveToDate));
 
             
             #line default
             #line hidden
 WriteLiteral("\r\n                        </div>\r\n                    </div>\r\n                </d" +
-"iv>\r\n\r\n                <div");
+"iv>\r\n\r\n");
 
-WriteLiteral(" class=\"bcms-input-field-holder\"");
+WriteLiteral("                ");
+
+            
+            #line 102 "..\..\Views\Blog\EditBlogPost.cshtml"
+           Write(Html.Partial("Partial/AddNewBlogEditPermalink"));
+
+            
+            #line default
+            #line hidden
+WriteLiteral("\r\n\r\n                <div");
+
+WriteLiteral(" class=\"bcms-input-list-holder\"");
+
+WriteLiteral(" id=\"bcms-blog-content-holder\"");
 
 WriteLiteral(">\r\n");
 
 WriteLiteral("                    ");
 
             
-            #line 123 "..\..\Views\Blog\EditBlogPost.cshtml"
-               Write(Html.Tooltip(BlogGlobalization.EditBlockPost_FeaturedImage_Tooltip_Description));
+            #line 105 "..\..\Views\Blog\EditBlogPost.cshtml"
+               Write(Html.Tooltip(BlogGlobalization.EditBlogPost_Content_Tooltip_Description));
 
             
             #line default
@@ -669,116 +577,8 @@ WriteLiteral(" class=\"bcms-content-titles\"");
 WriteLiteral(">");
 
             
-            #line 124 "..\..\Views\Blog\EditBlogPost.cshtml"
-                                                Write(BlogGlobalization.EditBlockPost_FeaturedImage_Title);
-
-            
-            #line default
-            #line hidden
-WriteLiteral("</div>\r\n                    <div");
-
-WriteLiteral(" class=\"bcms-uploaded-image\"");
-
-WriteLiteral(">\r\n                        <!-- ko if: image().url() -->\r\n                       " +
-" <a");
-
-WriteLiteral(" class=\"bcms-remove-image\"");
-
-WriteLiteral(" data-bind=\"");
-
-            
-            #line 127 "..\..\Views\Blog\EditBlogPost.cshtml"
-                                                            Write(canEdit ? "click: image().remove.bind(image())" : string.Empty);
-
-            
-            #line default
-            #line hidden
-WriteLiteral("\"");
-
-WriteLiteral(">");
-
-            
-            #line 127 "..\..\Views\Blog\EditBlogPost.cshtml"
-                                                                                                                              Write(RootGlobalization.Button_Remove);
-
-            
-            #line default
-            #line hidden
-WriteLiteral("</a>\r\n                        <a");
-
-WriteLiteral(" data-bind=\"click: image().preview.bind(image())\"");
-
-WriteLiteral(">\r\n                            <img");
-
-WriteLiteral(" data-bind=\"attr: { src: image().thumbnailUrl(), alt: image().tooltip() }\"");
-
-WriteLiteral(" /></a>\r\n                        <!-- /ko -->\r\n                    </div>\r\n      " +
-"              <div");
-
-WriteLiteral(" class=\"bcms-upload-info\"");
-
-WriteLiteral(">\r\n                        <div");
-
-WriteLiteral(" class=\"bcms-upload-info-text\"");
-
-WriteLiteral(">");
-
-            
-            #line 133 "..\..\Views\Blog\EditBlogPost.cshtml"
-                                                      Write(BlogGlobalization.EditBlockPost_FeaturedImage_Description);
-
-            
-            #line default
-            #line hidden
-WriteLiteral("</div>\r\n                        <div");
-
-WriteLiteral(" class=\"bcms-btn-small\"");
-
-WriteLiteral(" data-bind=\"");
-
-            
-            #line 134 "..\..\Views\Blog\EditBlogPost.cshtml"
-                                                           Write(canEdit ? "click: image().select.bind(image())" : string.Empty);
-
-            
-            #line default
-            #line hidden
-WriteLiteral("\"");
-
-WriteLiteral(">");
-
-            
-            #line 134 "..\..\Views\Blog\EditBlogPost.cshtml"
-                                                                                                                             Write(BlogGlobalization.EditBlockPost_SelectImage_Button_Title);
-
-            
-            #line default
-            #line hidden
-WriteLiteral("</div>\r\n                    </div>\r\n                </div>\r\n\r\n                <di" +
-"v");
-
-WriteLiteral(" class=\"bcms-input-field-holder\"");
-
-WriteLiteral(">\r\n");
-
-WriteLiteral("                    ");
-
-            
-            #line 139 "..\..\Views\Blog\EditBlogPost.cshtml"
-               Write(Html.Tooltip(BlogGlobalization.EditBlockPost_Author_Tooltip_Description));
-
-            
-            #line default
-            #line hidden
-WriteLiteral("\r\n                    <div");
-
-WriteLiteral(" class=\"bcms-content-titles\"");
-
-WriteLiteral(">");
-
-            
-            #line 140 "..\..\Views\Blog\EditBlogPost.cshtml"
-                                                Write(BlogGlobalization.EditBlockPost_Author_Title);
+            #line 106 "..\..\Views\Blog\EditBlogPost.cshtml"
+                                                Write(BlogGlobalization.EditBlogPost_Content_Title);
 
             
             #line default
@@ -788,7 +588,218 @@ WriteLiteral("</div>\r\n");
 WriteLiteral("                    ");
 
             
-            #line 141 "..\..\Views\Blog\EditBlogPost.cshtml"
+            #line 107 "..\..\Views\Blog\EditBlogPost.cshtml"
+               Write(Html.TextAreaFor(model => model.Content, new { @id = "bcms-blogcontent" }));
+
+            
+            #line default
+            #line hidden
+WriteLiteral("\r\n                </div>\r\n            </div>\r\n\r\n            <div");
+
+WriteLiteral(" id=\"bcms-tab-2\"");
+
+WriteLiteral(" class=\"bcms-tab-single\"");
+
+WriteLiteral(">\r\n\r\n                <div");
+
+WriteLiteral(" class=\"bcms-input-list-holder\"");
+
+WriteLiteral(">\r\n");
+
+WriteLiteral("                    ");
+
+            
+            #line 114 "..\..\Views\Blog\EditBlogPost.cshtml"
+               Write(Html.Tooltip(BlogGlobalization.EditBlogPost_IntroText_Tooltip_Description));
+
+            
+            #line default
+            #line hidden
+WriteLiteral("\r\n                    <div");
+
+WriteLiteral(" class=\"bcms-content-titles\"");
+
+WriteLiteral(">");
+
+            
+            #line 115 "..\..\Views\Blog\EditBlogPost.cshtml"
+                                                Write(BlogGlobalization.EditBlogPost_IntroText_Title);
+
+            
+            #line default
+            #line hidden
+WriteLiteral("</div>\r\n                    <div");
+
+WriteLiteral(" class=\"bcms-textarea-box\"");
+
+WriteLiteral(">\r\n");
+
+WriteLiteral("                        ");
+
+            
+            #line 117 "..\..\Views\Blog\EditBlogPost.cshtml"
+                   Write(Html.TextAreaFor(m => m.IntroText, new { @style = "height: 170px;", @class = "bcms-editor-field-area" }));
+
+            
+            #line default
+            #line hidden
+WriteLiteral("\r\n");
+
+WriteLiteral("                        ");
+
+            
+            #line 118 "..\..\Views\Blog\EditBlogPost.cshtml"
+                   Write(Html.BcmsValidationMessageFor(m => m.IntroText));
+
+            
+            #line default
+            #line hidden
+WriteLiteral("\r\n                    </div>\r\n                </div>\r\n\r\n                <div");
+
+WriteLiteral(" class=\"bcms-page-images-holder\"");
+
+WriteLiteral(">\r\n                    <div");
+
+WriteLiteral(" class=\"bcms-input-list-holder\"");
+
+WriteLiteral(">\r\n");
+
+WriteLiteral("                        ");
+
+            
+            #line 124 "..\..\Views\Blog\EditBlogPost.cshtml"
+                   Write(Html.Tooltip(BlogGlobalization.EditBlogPost_FeaturedImage_Tooltip_Description));
+
+            
+            #line default
+            #line hidden
+WriteLiteral("\r\n                        <div");
+
+WriteLiteral(" class=\"bcms-content-titles\"");
+
+WriteLiteral(">");
+
+            
+            #line 125 "..\..\Views\Blog\EditBlogPost.cshtml"
+                                                    Write(BlogGlobalization.EditBlogPost_FeaturedImage_Title);
+
+            
+            #line default
+            #line hidden
+WriteLiteral("</div>\r\n                        <div");
+
+WriteLiteral(" class=\"bcms-uploaded-image\"");
+
+WriteLiteral(">\r\n                            <!-- ko if: image().url() -->\r\n                   " +
+"         <a");
+
+WriteLiteral(" class=\"bcms-remove-image\"");
+
+WriteLiteral(" data-bind=\"");
+
+            
+            #line 128 "..\..\Views\Blog\EditBlogPost.cshtml"
+                                                                Write(canEdit ? "click: image().remove.bind(image())" : string.Empty);
+
+            
+            #line default
+            #line hidden
+WriteLiteral("\"");
+
+WriteLiteral(">");
+
+            
+            #line 128 "..\..\Views\Blog\EditBlogPost.cshtml"
+                                                                                                                                  Write(RootGlobalization.Button_Remove);
+
+            
+            #line default
+            #line hidden
+WriteLiteral("</a>\r\n                            <a");
+
+WriteLiteral(" data-bind=\"click: image().preview.bind(image())\"");
+
+WriteLiteral(">\r\n                                <img");
+
+WriteLiteral(" data-bind=\"attr: { src: image().thumbnailUrl(), alt: image().tooltip() }\"");
+
+WriteLiteral(" />\r\n                            </a>\r\n                            <!-- /ko -->\r\n" +
+"                        </div>\r\n                        <div");
+
+WriteLiteral(" class=\"bcms-upload-info\"");
+
+WriteLiteral(">\r\n                            <div");
+
+WriteLiteral(" class=\"bcms-upload-info-text\"");
+
+WriteLiteral(">");
+
+            
+            #line 135 "..\..\Views\Blog\EditBlogPost.cshtml"
+                                                          Write(BlogGlobalization.EditBlogPost_FeaturedImage_Description);
+
+            
+            #line default
+            #line hidden
+WriteLiteral("</div>\r\n                            <div");
+
+WriteLiteral(" class=\"bcms-btn-small\"");
+
+WriteLiteral(" data-bind=\"");
+
+            
+            #line 136 "..\..\Views\Blog\EditBlogPost.cshtml"
+                                                               Write(canEdit ? "click: image().select.bind(image())" : string.Empty);
+
+            
+            #line default
+            #line hidden
+WriteLiteral("\"");
+
+WriteLiteral(">");
+
+            
+            #line 136 "..\..\Views\Blog\EditBlogPost.cshtml"
+                                                                                                                                 Write(BlogGlobalization.EditBlogPost_SelectImage_Button_Title);
+
+            
+            #line default
+            #line hidden
+WriteLiteral("</div>\r\n                        </div>\r\n                    </div>\r\n             " +
+"   </div>\r\n\r\n                <div");
+
+WriteLiteral(" class=\"bcms-input-list-holder\"");
+
+WriteLiteral(">\r\n");
+
+WriteLiteral("                    ");
+
+            
+            #line 142 "..\..\Views\Blog\EditBlogPost.cshtml"
+               Write(Html.Tooltip(BlogGlobalization.EditBlogPost_Author_Tooltip_Description));
+
+            
+            #line default
+            #line hidden
+WriteLiteral("\r\n                    <div");
+
+WriteLiteral(" class=\"bcms-content-titles\"");
+
+WriteLiteral(">");
+
+            
+            #line 143 "..\..\Views\Blog\EditBlogPost.cshtml"
+                                                Write(BlogGlobalization.EditBlogPost_Author_Title);
+
+            
+            #line default
+            #line hidden
+WriteLiteral("</div>\r\n");
+
+WriteLiteral("                    ");
+
+            
+            #line 144 "..\..\Views\Blog\EditBlogPost.cshtml"
                Write(Html.DropDownListFor(model => model.AuthorId, Model.Authors.ToSelectList(Model.AuthorId), string.Empty, new { @class = "bcms-global-select", @style = "width: 245px;" }));
 
             
@@ -796,7 +807,7 @@ WriteLiteral("                    ");
             #line hidden
 WriteLiteral("\r\n                </div>\r\n\r\n                <div");
 
-WriteLiteral(" class=\"bcms-blog-categories-holder\"");
+WriteLiteral(" class=\"bcms-categories-box-holder\"");
 
 WriteLiteral(" data-bind=\"with: categories\"");
 
@@ -805,7 +816,7 @@ WriteLiteral(">\r\n");
 WriteLiteral("                    ");
 
             
-            #line 145 "..\..\Views\Blog\EditBlogPost.cshtml"
+            #line 148 "..\..\Views\Blog\EditBlogPost.cshtml"
                Write(Html.Partial("~/Areas/bcms-root/Views/Category/CategoriesTemplate.cshtml", categoriesTemplateViewModel));
 
             
@@ -813,7 +824,7 @@ WriteLiteral("                    ");
             #line hidden
 WriteLiteral("\r\n                </div>\r\n\r\n                <div");
 
-WriteLiteral(" class=\"bcms-blog-tags-holder\"");
+WriteLiteral(" class=\"bcms-tags-box-holder\"");
 
 WriteLiteral(" data-bind=\"with: tags\"");
 
@@ -822,7 +833,7 @@ WriteLiteral(">\r\n");
 WriteLiteral("                    ");
 
             
-            #line 149 "..\..\Views\Blog\EditBlogPost.cshtml"
+            #line 152 "..\..\Views\Blog\EditBlogPost.cshtml"
                Write(Html.Partial("~/Areas/bcms-root/Views/Tags/TagsTemplate.cshtml", tagsTemplateViewModel));
 
             
@@ -831,13 +842,13 @@ WriteLiteral("                    ");
 WriteLiteral("\r\n                </div>\r\n            </div>\r\n        </div>\r\n");
 
             
-            #line 153 "..\..\Views\Blog\EditBlogPost.cshtml"
+            #line 156 "..\..\Views\Blog\EditBlogPost.cshtml"
     }
 
             
             #line default
             #line hidden
-WriteLiteral("</div>\r\n");
+WriteLiteral("</div>");
 
         }
     }
