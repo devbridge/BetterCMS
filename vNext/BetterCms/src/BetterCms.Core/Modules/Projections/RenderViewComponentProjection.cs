@@ -1,37 +1,26 @@
-﻿using System;
-using System.Linq.Expressions;
-
-using BetterCms.Core.DataContracts;
+﻿using BetterCms.Core.DataContracts;
 using BetterCms.Core.Services;
 using Microsoft.AspNet.Mvc;
+using Microsoft.AspNet.Mvc.Rendering;
 using Microsoft.AspNet.Mvc.ViewFeatures;
 
 namespace BetterCms.Core.Modules.Projections
 {
-    public class RenderActionProjection<TController> : IPageActionProjection where TController : Controller
+    public class RenderViewComponentProjection<TViewComponent> : IPageActionProjection where TViewComponent : ViewComponent
     {
         /// <summary>
-        /// The HTML action expression.
+        /// Initializes a new instance of the <see cref="RenderViewComponentProjection{TViewComponent}"/> class.
         /// </summary>
-        private Expression<Action<TController>> htmlActionExpression;
-
-        /// <summary>
-        /// Initializes a new instance of the <see cref="RenderActionProjection{TController}"/> class.
-        /// </summary>
-        /// <param name="htmlActionExpression">The HTML action expression.</param>
-        public RenderActionProjection(Expression<Action<TController>> htmlActionExpression)
+        public RenderViewComponentProjection()
         {
-            this.htmlActionExpression = htmlActionExpression;
         }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="RenderActionProjection{TController}"/> class.
+        /// Initializes a new instance of the <see cref="RenderViewComponentProjection{TViewComponent}"/> class.
         /// </summary>
-        /// <param name="htmlActionExpression">The HTML action expression.</param>
         /// <param name="order">The order.</param>
-        public RenderActionProjection(Expression<Action<TController>> htmlActionExpression, int order)
+        public RenderViewComponentProjection(int order)
         {
-            this.htmlActionExpression = htmlActionExpression;
             Order = order;
         }
 
@@ -57,17 +46,17 @@ namespace BetterCms.Core.Modules.Projections
         /// <param name="page">The page.</param>
         /// <param name="securityService"></param>
         /// <param name="html">The html helper.</param>
+        /// <param name="componentHelper">The View Component helper</param>
         /// <returns><c>true</c> on success, otherwise <c>false</c>.</returns>
-        public bool Render(IPage page, ISecurityService securityService, HtmlHelper html)
+        public bool Render(IPage page, ISecurityService securityService, HtmlHelper html, IViewComponentHelper componentHelper)
         {
-            //TODO we will need to replace this with ViewComponent rendering
             if (AccessRole != null && !securityService.IsAuthorized(AccessRole))
             {
                 return false;
             }
 
-            html.RenderAction(htmlActionExpression);
-
+            componentHelper.RenderInvoke<TViewComponent>();
+            
             return true;
         }
     }

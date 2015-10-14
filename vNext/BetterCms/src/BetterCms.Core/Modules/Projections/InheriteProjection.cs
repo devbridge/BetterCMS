@@ -3,6 +3,7 @@ using System.Linq;
 
 using BetterCms.Core.DataContracts;
 using BetterCms.Core.Services;
+using Microsoft.AspNet.Mvc;
 using Microsoft.AspNet.Mvc.Rendering;
 using Microsoft.AspNet.Mvc.ViewFeatures;
 using Microsoft.Extensions.WebEncoders;
@@ -53,8 +54,9 @@ namespace BetterCms.Core.Modules.Projections
         /// <param name="page">The page.</param>
         /// <param name="securityService"></param>
         /// <param name="html">The html helper.</param>
+        /// <param name="componentHelper">The View Component helper</param>
         /// <returns><c>true</c> on success, otherwise <c>false</c>.</returns>
-        public override bool Render(IPage page, ISecurityService securityService, HtmlHelper html)
+        public override bool Render(IPage page, ISecurityService securityService, HtmlHelper html, IViewComponentHelper componentHelper = null)
         {
             if (AccessRole != null && !securityService.IsAuthorized(AccessRole))
             {
@@ -74,7 +76,7 @@ namespace BetterCms.Core.Modules.Projections
             {
                 foreach (var htmlElementProjection in ChildProjections.OrderBy(f => f.Order))
                 {
-                    htmlElementProjection.Render(page, securityService, html);
+                    htmlElementProjection.Render(page, securityService, html, componentHelper);
                 }
             }
 

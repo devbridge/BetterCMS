@@ -1,5 +1,6 @@
 ﻿using BetterCms.Core.DataContracts;
 using BetterCms.Core.Services;
+using Microsoft.AspNet.Mvc;
 using Microsoft.AspNet.Mvc.Rendering;
 using Microsoft.AspNet.Mvc.ViewFeatures;
 
@@ -49,7 +50,8 @@ namespace BetterCms.Core.Modules.Projections
         /// <param name="page">The page.</param>
         /// <param name="securityService">The security service.</param>
         /// <param name="html">The html helper.</param>
+        /// <param name="componentHelper">The View Component helper</param>
         /// <returns><c>true</c> on success, otherwise <c>false</c>.</returns>
-        bool Render(IPage page, ISecurityService securityService, HtmlHelper html);
+        bool Render(IPage page, ISecurityService securityService, HtmlHelper html, IViewComponentHelper componentHelper);
     }
 }

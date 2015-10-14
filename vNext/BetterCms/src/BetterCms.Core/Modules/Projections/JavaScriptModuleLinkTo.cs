@@ -50,11 +50,11 @@ namespace BetterCms.Core.Modules.Projections
                 string url = HttpUtility.UrlDecode(html.BuildUrlFromExpression(urlExpression));
                 if (fullUrl)
                 {
-                    var requestUrl = html.ViewContext.HttpContext.Request.Path;
-                    if (requestUrl != null)
+                    var request = html.ViewContext.HttpContext.Request;
+                    if (request != null)
                     {
-                        bool isCustomPort = requestUrl.Scheme == Uri.UriSchemeHttp && requestUrl.Port != 80 || requestUrl.Scheme == Uri.UriSchemeHttps && requestUrl.Port != 433;
-                        url = string.Concat(requestUrl.Scheme, "://", requestUrl.Host, isCustomPort ? ":" + requestUrl.Port : string.Empty, url);
+                        //bool isCustomPort = request.Scheme == Uri.UriSchemeHttp && request. != 80 || request.Scheme == Uri.UriSchemeHttps && request.Port != 433;
+                        url = string.Concat(request.Scheme, "://", request.Host.ToUriComponent(), url);
                     }
                 }
                 string link = $"{descriptor.FriendlyName}.links.{linkName} = '{url}';";
