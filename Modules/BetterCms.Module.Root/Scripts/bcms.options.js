@@ -94,7 +94,7 @@ bettercms.define('bcms.options', ['bcms.jquery', 'bcms', 'bcms.ko.extenders', 'b
                     ci, cl, cOption;
                 self.customOptions = addCustomOptions(customOptions);
 
-                self.optionTypes = [];
+                self.optionTypes = ko.observableArray();
                 self.optionTypes.push({ id: optionTypes.textType, name: globalization.optionTypeText });
                 self.optionTypes.push({ id: optionTypes.textMultilineType, name: globalization.optionTypeMultilineText });
                 self.optionTypes.push({ id: optionTypes.integerType, name: globalization.optionTypeInteger });
@@ -133,28 +133,29 @@ bettercms.define('bcms.options', ['bcms.jquery', 'bcms', 'bcms.ko.extenders', 'b
                 self.languages = ko.observableArray();
                 self.languageId = ko.observable("");
                 self.language = showLanguages ? new LanguageViewModel(languages, null, self) : null;
-                self.selectedTypeId = 0;
+                self.suspendAddItemSubscribe = true;
+                self.selectedTypeId = ko.observable();
                 self.isAddNewSelected = ko.observable(false);
-                self.suspendCloseAddItem = false;
-                self.addNewSelectedItem = function (type) {
-                    self.selectedTypeId = type;
-                    _super.prototype.addNewItem.call(self);
-                }
-                $('body').on('click', function () {
-
-                    if (self.isAddNewSelected() && !self.suspendCloseAddItem) {
+                //                $('body').on('click', function () {
+                //
+                //                    if (self.isAddNewSelected() && !self.suspendCloseAddItem) {
+                //                        self.isAddNewSelected(false);
+                //                    }
+                //                });
+                self.selectedTypeId.subscribe(function () {
+                    if (!self.suspendAddItemSubscribe) {
                         self.isAddNewSelected(false);
+                        _super.prototype.addNewItem.call(self);
                     }
                 });
 
                 _super.call(self, container, null, items, null);
 
-                //              Override methods
+                //  Override methods
                 self.addNewItem = function () {
-                    self.suspendCloseAddItem = true;
-                    setTimeout(function () {
-                        self.suspendCloseAddItem = false;
-                    }, 100);
+                    self.suspendAddItemSubscribe = true;
+                    self.selectedTypeId(null);
+                    self.suspendAddItemSubscribe = false;
                     self.isAddNewSelected(true);
                 };
             };
@@ -182,8 +183,8 @@ bettercms.define('bcms.options', ['bcms.jquery', 'bcms', 'bcms.ko.extenders', 'b
                 if (item.canEditOption() !== false && item.key.domElement) {
                     $(item.key.domElement).focus();
                 }
-                item.calcType(this.selectedTypeId);
-                item.type(this.selectedTypeId);
+                item.calcType(this.selectedTypeId());
+                item.type(this.selectedTypeId());
             };
 
             return OptionsListViewModel;
@@ -326,10 +327,10 @@ bettercms.define('bcms.options', ['bcms.jquery', 'bcms', 'bcms.ko.extenders', 'b
                 self.getOptionTypeName = function () {
                     var i,
                         type = self.calcType();
-
-                    for (i = 0; i < parent.optionTypes.length; i++) {
-                        if (parent.optionTypes[i].id == type) {
-                            return parent.optionTypes[i].name;
+                    var optionTypesList = parent.optionTypes();
+                    for (i = 0; i < optionTypesList.length; i++) {
+                        if (optionTypesList[i].id == type) {
+                            return optionTypesList[i].name;
                         }
                     }
 

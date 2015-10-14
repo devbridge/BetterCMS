@@ -9,11 +9,9 @@
             <!-- /ko -->
         </div>*@
 
-    <div class="bcms-widget-option-box">
-        <select class="bcms-global-select" id="bcms-multi-opts" data-bind="visible: isAddNewSelected">
-            <!-- ko foreach: optionTypes -->
-            <option data-bind="text: name, click: $parent.addNewSelectedItem.bind('$data', id)"></option>
-            <!-- /ko -->
+    <div class="bcms-widget-option-box" data-bind="visible: isAddNewSelected">
+        <select class="bcms-global-select" id="bcms-multi-opts" data-bind="options: optionTypes, optionsText: 'name', optionsCaption: 'Choose type...', optionsValue: 'id', value: selectedTypeId">
+@*            <option data-bind="text: name, click: $parent.addNewSelectedItem.bind('$data', id)"></option>*@
         </select>
     </div>
 }
