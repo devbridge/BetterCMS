@@ -101,6 +101,7 @@ namespace BetterCms.Module.Api.Extensions
                         {
                             Version = response.Data.Version,
                             Name = response.Data.Name,
+                            Description = response.Data.Description,
                             ImageId = response.Data.ImageId
                         };
 

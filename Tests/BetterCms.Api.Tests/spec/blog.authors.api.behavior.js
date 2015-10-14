@@ -42,12 +42,14 @@ describe('blog.authors.api.behavior', function () {
             api.expectBasePropertiesAreNotNull(result.data.items[1]);
 
             expect(result.data.items[0].name).toBe('_0000_Author_2', 'Items[0] name should be _0000_Author_2');
+            expect(result.data.items[0].description).toBe('_0000_Author_2 description', 'Items[0] description should be _0000_Author_2 description');
             expect(result.data.items[0].imageId).toBeDefinedAndNotNull('Items[0] image id should be retrieved.');
             expect(result.data.items[0].imageUrl).toBeDefinedAndNotNull('Items[0] image URL should be retrieved.');
             expect(result.data.items[0].imageThumbnailUrl).toBeDefinedAndNotNull('Items[0] image thumbnail URL should be retrieved.');
             expect(result.data.items[0].imageCaption).toBe('Image caption for _0000_Author_2', 'Items[0] image caption should be \"Image caption for _0000_Author_2\"');
             
             expect(result.data.items[1].name).toBe('_0000_Author_3', 'Items[1] name should be _0000_Author_3');
+            expect(result.data.items[1].description).toBeNull();
             expect(result.data.items[1].imageId).toBeNull('Items[1] image id should be null');
             expect(result.data.items[1].imageUrl).toBeNull('Items[1] image URL should be null');
             expect(result.data.items[1].imageThumbnailUrl).toBeNull('Items[1] image thumbnail URL should be null');
@@ -101,6 +103,7 @@ describe('blog.authors.api.behavior', function () {
                     { field: 'LastModifiedBy', value: 'Better CMS test user' },
                     { field: 'Version', value: '2' },
                     { field: 'Name', value: '02002' },
+                    { field: 'Description', value: '02002DSCR' },
                     { field: 'ImageId', value: 'a19a6e5d7e4948a5b5e0a206012117bd' },
                     { field: 'ImageUrl', value: 'http://bettercms.sandbox.mvc4.local.net/uploads/image/b244cadb494d4121b896f21ac93483ef/1_1.jpg' },
                     { field: 'ImageThumbnailUrl', value: 'http://bettercms.sandbox.mvc4.local.net/uploads/image/b244cadb494d4121b896f21ac93483ef/t_1_1.png' },
