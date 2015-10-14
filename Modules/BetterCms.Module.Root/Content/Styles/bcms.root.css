@@ -1321,6 +1321,7 @@ div.bcms-btn-logout:active {
   min-height: 48px;
   padding: 15px 15px 15px 30px;
   position: relative;
+  z-index: 0;
 }
 
 .bcms-contents-tree-region-header {
