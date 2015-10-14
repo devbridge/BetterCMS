@@ -40,7 +40,7 @@ namespace BetterCms.Module.Root.Models.Migrations
                 .ToTable("ContentOptions").InSchema(SchemaName).PrimaryColumn("Id");
 
             Create
-                .ForeignKey("FK_Cms_ContentOptionTranslations_ContentOptionId_Cms_Languages_Id")
+                .ForeignKey("FK_Cms_ContentOptionTranslations_LanguageId_Cms_Languages_Id")
                 .FromTable("ContentOptionTranslations").InSchema(SchemaName).ForeignColumn("LanguageId")
                 .ToTable("Languages").InSchema(SchemaName).PrimaryColumn("Id");
 
