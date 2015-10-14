@@ -27,7 +27,8 @@ namespace BetterCms.Core.Services.Storage
 
         public override string ToString()
         {
-            return string.Format("{0}, Stream Length: {1}, MetaData: {2}, CreateDirectory: {3}", Uri, InputStream.Length, MetaData, CreateDirectory);
+            return
+                $"{Uri}, Stream Length: {InputStream.Length}, MetaData: {MetaData}, CreateDirectory: {CreateDirectory}";
         }
     }
 }

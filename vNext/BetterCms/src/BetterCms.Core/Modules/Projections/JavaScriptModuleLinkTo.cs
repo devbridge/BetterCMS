@@ -1,15 +1,17 @@
 ﻿using System;
 using System.Linq.Expressions;
-
+using BetterModules.Core.Web.Mvc.Extensions;
 using Microsoft.AspNet.Mvc;
-using Microsoft.AspNet.Mvc.ViewFeatures;
+using Microsoft.AspNet.Mvc.Rendering;
 using Microsoft.Framework.Logging;
 
 namespace BetterCms.Core.Modules.Projections
 {
-    public class JavaScriptModuleLinkTo<TController> : IActionProjection where TController : Controller
+    public class JavaScriptModuleLinkTo<TController> : IActionUrlProjection where TController : Controller
     {
         private readonly ILogger logger;
+
+        private readonly IControllerExtensions controllerExtensions;
 
         private string linkName;
 
@@ -26,13 +28,15 @@ namespace BetterCms.Core.Modules.Projections
         /// <param name="linkName">Name of the link.</param>
         /// <param name="urlExpression">The URL expression.</param>
         /// <param name="fullUrl">if set to <c>true</c> renders full URL.</param>
-        public JavaScriptModuleLinkTo(JsIncludeDescriptor descriptor, string linkName, Expression<Action<TController>> urlExpression, ILoggerFactory loggerFactory, bool fullUrl = false)
+        public JavaScriptModuleLinkTo(JsIncludeDescriptor descriptor, string linkName, Expression<Action<TController>> urlExpression, 
+            ILoggerFactory loggerFactory, IControllerExtensions controllerExtensions, bool fullUrl = false)
         {
             this.fullUrl = fullUrl;
             this.descriptor = descriptor;
             this.urlExpression = urlExpression;
             this.linkName = linkName;
             logger = loggerFactory.CreateLogger<JavaScriptModuleLinkTo<TController>>();
+            this.controllerExtensions = controllerExtensions;
         }
 
         /// <summary>
@@ -43,21 +47,23 @@ namespace BetterCms.Core.Modules.Projections
         /// </value>
         public int Order { get; set; }
 
-        public void Render(HtmlHelper html)
+        public void Render(IHtmlHelper html, IUrlHelper url)
         {
             try
             {
-                string url = HttpUtility.UrlDecode(html.BuildUrlFromExpression(urlExpression));
+                var actionName = ((MethodCallExpression) urlExpression.Body).Method.Name;
+                var controllerName = controllerExtensions.GetControllerName(typeof (TController));
+                string actionLink = url.Action(actionName, controllerName);
                 if (fullUrl)
                 {
                     var request = html.ViewContext.HttpContext.Request;
                     if (request != null)
                     {
                         //bool isCustomPort = request.Scheme == Uri.UriSchemeHttp && request. != 80 || request.Scheme == Uri.UriSchemeHttps && request.Port != 433;
-                        url = string.Concat(request.Scheme, "://", request.Host.ToUriComponent(), url);
+                        actionLink = string.Concat(request.Scheme, "://", request.Host.ToUriComponent(), actionLink);
                     }
                 }
-                string link = $"{descriptor.FriendlyName}.links.{linkName} = '{url}';";
+                string link = $"{descriptor.FriendlyName}.links.{linkName} = '{actionLink}';";
                 html.ViewContext.Writer.WriteLine(link);
             }
             catch (Exception ex)

@@ -24,6 +24,26 @@ namespace BetterCms.Core.Modules.Projections
     }
 
     /// <summary>
+    /// Defines the contract for action url projection rendering.
+    /// </summary>
+    public interface IActionUrlProjection
+    {
+        /// <summary>
+        /// Gets or sets the order.
+        /// </summary>
+        /// <value>
+        /// The order.
+        /// </value>
+        int Order { get; }
+
+        /// <summary>
+        /// Renders an action projection to given html output.
+        /// </summary>
+        /// <param name="html">The html helper.</param>
+        void Render(IHtmlHelper html, IUrlHelper url);
+    }
+
+    /// <summary>
     /// Defines the contract for action projection rendering.
     /// </summary>
     public interface IPageActionProjection

@@ -1,5 +1,6 @@
 ﻿using System;
 using Microsoft.AspNet.Http;
+using Microsoft.AspNet.Http.Extensions;
 
 namespace BetterCms.Core.Web
 {
@@ -17,24 +18,25 @@ namespace BetterCms.Core.Web
 
         public string GetAbsolutePath(string virtualPath = null)
         {
-            var request = httpContext.Request;
-            var originalUrl = virtualPath ?? request.ServerVariables["HTTP_X_ORIGINAL_URL"];
-            var host = request.Host;
+            //var request = httpContext.Request;
+            //var originalUrl = virtualPath ?? request.ServerVariables["HTTP_X_ORIGINAL_URL"];
+            //var host = request.Host;
 
-            if (!string.IsNullOrEmpty(originalUrl))
-            {
-                return new Uri($"http://{host}{originalUrl}", UriKind.Absolute).AbsolutePath;
-            }
+            //if (!string.IsNullOrEmpty(originalUrl))
+            //{
+            //    return new Uri($"http://{host}{originalUrl}", UriKind.Absolute).AbsolutePath;
+            //}
 
-            var originalUri = new Uri($"http://{host}{request.RawUrl}");
-            var path = originalUri.AbsolutePath;
+            //var originalUri = new Uri($"http://{host}{request.RawUrl}");
+            //var path = originalUri.AbsolutePath;
 
-            if (request.PathInfo.Length > 0)
-            {
-                path = path.Substring(0, path.Length - request.PathInfo.Length);
-            }
+            //if (request.PathInfo.Length > 0)
+            //{
+            //    path = path.Substring(0, path.Length - request.PathInfo.Length);
+            //}
 
-            return path;
+            //return path;
+            return httpContext.Request.GetEncodedUrl();
         }
     }
 }
