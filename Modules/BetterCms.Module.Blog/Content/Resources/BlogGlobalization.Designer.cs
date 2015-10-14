@@ -898,7 +898,16 @@ namespace BetterCms.Module.Blog.Content.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Layouts.
+        ///   Looks up a localized string similar to Settings.
+        /// </summary>
+        public static string SiteSettings_Blogs_SettingsTab_Title {
+            get {
+                return ResourceManager.GetString("SiteSettings_Blogs_SettingsTab_Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Layout.
         /// </summary>
         public static string SiteSettings_Blogs_TemplatesTab_Title {
             get {
@@ -912,6 +921,42 @@ namespace BetterCms.Module.Blog.Content.Resources {
         public static string SiteSettings_Blogs_TitleColumn {
             get {
                 return ResourceManager.GetString("SiteSettings_Blogs_TitleColumn", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Default content edit mode.
+        /// </summary>
+        public static string SiteSettings_BlogSettingsTab_DefaultEditMode_Title {
+            get {
+                return ResourceManager.GetString("SiteSettings_BlogSettingsTab_DefaultEditMode_Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Blog Settings.
+        /// </summary>
+        public static string SiteSettings_BlogSettingsTab_Header {
+            get {
+                return ResourceManager.GetString("SiteSettings_BlogSettingsTab_Header", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Setting.
+        /// </summary>
+        public static string SiteSettings_BlogSettingsTab_SettingName_Title {
+            get {
+                return ResourceManager.GetString("SiteSettings_BlogSettingsTab_SettingName_Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Value.
+        /// </summary>
+        public static string SiteSettings_BlogSettingsTab_SettingValue_Title {
+            get {
+                return ResourceManager.GetString("SiteSettings_BlogSettingsTab_SettingValue_Title", resourceCulture);
             }
         }
         

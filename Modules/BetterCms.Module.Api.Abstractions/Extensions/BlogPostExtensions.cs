@@ -3,6 +3,7 @@
 using BetterCms.Module.Api.Operations.Blog.Authors.Author;
 using BetterCms.Module.Api.Operations.Blog.BlogPosts.BlogPost.Properties;
 using BetterCms.Module.Api.Operations.Blog.BlogPosts.Settings;
+using BetterCms.Module.Api.Operations.Pages;
 
 namespace BetterCms.Module.Api.Extensions
 {
@@ -77,6 +78,8 @@ namespace BetterCms.Module.Api.Extensions
                             UseNoFollow = response.Data.UseNoFollow,
                             UseNoIndex = response.Data.UseNoIndex,
                             HtmlContent = response.HtmlContent,
+                            OriginalText = response.OriginalText,
+                            ContentTextMode = response.ContentTextMode ?? ContentTextMode.Html,
                             MetaData = response.MetaData,
                             Language = response.Language,
                             TechnicalInfo = response.TechnicalInfo,

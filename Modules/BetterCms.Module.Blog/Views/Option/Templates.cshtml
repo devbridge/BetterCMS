@@ -2,6 +2,8 @@
 @using BetterCms.Module.Root.Content.Resources
 @using BetterCms.Module.Root.Mvc.Helpers
 
+@Html.TabbedContentMessagesBox()
+
 <div class="bcms-blog-templates-container">
     
     <div class="bcms-top-block-holder">
@@ -12,8 +14,6 @@
         </div>
     </div>
 
-    @Html.TabbedContentMessagesBox()
-                    
     <div class="bcms-blog-templates-container">
         <!-- ko foreach: templateRows -->
         <div class="bcms-blog-templates-holder">

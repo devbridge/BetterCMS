@@ -11,7 +11,7 @@ using BetterModules.Core.Web.Mvc.Commands;
 
 using NHibernate.Transform;
 
-namespace BetterCms.Module.Blog.Commands.GetTemplatesList
+namespace BetterCms.Module.Blog.Commands.GetTemplates
 {
     public class GetTemplatesCommand : CommandBase, ICommand<bool, IList<BlogTemplateViewModel>>
     {
@@ -104,26 +104,26 @@ namespace BetterCms.Module.Blog.Commands.GetTemplatesList
                 .Select(
                     page =>
                     new BlogTemplateViewModel
-                        {
-                            TemplateId = page.Id,
-                            Title = page.Title,
-                            PreviewUrl =
-                                page.Image != null
-                                    ? page.Image.PublicUrl
-                                    : page.FeaturedImage != null ? page.FeaturedImage.PublicUrl : page.SecondaryImage != null ? page.SecondaryImage.PublicUrl : null,
-                            IsMasterPage = true,
-                            IsCompatible =
-                                page.PageContents.Count(pageContent =>
-                                    !pageContent.IsDeleted && !pageContent.Content.IsDeleted
-                                        && pageContent.Content.ContentRegions.Count(contentRegion => !contentRegion.IsDeleted && !contentRegion.Region.IsDeleted
-                                            && contentRegion.Region.RegionIdentifier.ToLowerInvariant() == mainContentIdentifier).Equals(1)
-                                ).Equals(1)
+                    {
+                        TemplateId = page.Id,
+                        Title = page.Title,
+                        PreviewUrl =
+                            page.Image != null
+                                ? page.Image.PublicUrl
+                                : page.FeaturedImage != null ? page.FeaturedImage.PublicUrl : page.SecondaryImage != null ? page.SecondaryImage.PublicUrl : null,
+                        IsMasterPage = true,
+                        IsCompatible =
+                            page.PageContents.Count(pageContent =>
+                                !pageContent.IsDeleted && !pageContent.Content.IsDeleted
+                                    && pageContent.Content.ContentRegions.Count(contentRegion => !contentRegion.IsDeleted && !contentRegion.Region.IsDeleted
+                                        && contentRegion.Region.RegionIdentifier.ToLowerInvariant() == mainContentIdentifier).Equals(1)
+                            ).Equals(1)
 
-                                || page.PageContents.Count(pageContent => 
-                                    !pageContent.IsDeleted && !pageContent.Content.IsDeleted 
-                                        && pageContent.Content.ContentRegions.Count(contentRegion => !contentRegion.IsDeleted && !contentRegion.Region.IsDeleted).Equals(1)
-                                ).Equals(1)
-                        })
+                            || page.PageContents.Count(pageContent =>
+                                !pageContent.IsDeleted && !pageContent.Content.IsDeleted
+                                    && pageContent.Content.ContentRegions.Count(contentRegion => !contentRegion.IsDeleted && !contentRegion.Region.IsDeleted).Equals(1)
+                            ).Equals(1)
+                    })
                 .ToList()
                 .ForEach(templates.Add);
 

@@ -1,0 +1,38 @@
+﻿@using BetterCms.Module.Blog.Content.Resources
+@using BetterCms.Module.Root.Mvc.Helpers
+@using BetterCms.Module.Root
+@using BetterCms.Module.Root.Mvc.Grids
+@using BetterCms.Module.Root.ViewModels.Shared
+
+@Html.TabbedContentMessagesBox()
+
+@{
+    var gridViewModel = new EditableGridViewModel
+    {
+        CanAddNewItems = false,
+        CanDeleteItems = false,
+        CanEditItems = true,
+        ShowSearch = false,
+        AddPaging = false,
+        AddHiddenFields = false,
+        TopBlockClass = "bcms-top-block-holder",
+        TopBlockTitle = BlogGlobalization.SiteSettings_BlogSettingsTab_Header,
+        Columns = new List<EditableGridColumn>
+            {
+                new EditableGridColumn(BlogGlobalization.SiteSettings_BlogSettingsTab_SettingName_Title, "", "name")
+                    {
+                        HeaderAttributes = "style=\"width: 250px;\"",
+                        CanBeEdited = false
+                    },
+
+                new EditableGridDropDownColumn(BlogGlobalization.SiteSettings_BlogSettingsTab_SettingValue_Title, null, "value")
+                    {
+                        OptionsBind = "contentEditModes",
+                        ValueTextBind = "valueTitle",
+                        CanBeEdited = true
+                    }
+            }
+    };
+}
+
+@Html.Partial(RootModuleConstants.EditableGridTemplate, gridViewModel)
