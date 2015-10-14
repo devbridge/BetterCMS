@@ -43,21 +43,21 @@ namespace ASP
         }
         public override void Execute()
         {
-WriteLiteral("\r\n");
+WriteLiteral("\n");
 
 WriteLiteral("<div");
 
-WriteAttribute("class", Tuple.Create(" class=\"", 126), Tuple.Create("\"", 154)
+WriteAttribute("class", Tuple.Create(" class=\"", 122), Tuple.Create("\"", 150)
             
             #line 5 "..\..\Views\Shared\EditableGrid\Partial\TopBlock.cshtml"
-, Tuple.Create(Tuple.Create("", 134), Tuple.Create<System.Object, System.Int32>(Model.TopBlockClass
+, Tuple.Create(Tuple.Create("", 130), Tuple.Create<System.Object, System.Int32>(Model.TopBlockClass
             
             #line default
             #line hidden
-, 134), false)
+, 130), false)
 );
 
-WriteLiteral(">\r\n");
+WriteLiteral(">\n");
 
             
             #line 6 "..\..\Views\Shared\EditableGrid\Partial\TopBlock.cshtml"
@@ -86,7 +86,7 @@ WriteLiteral(">");
             
             #line default
             #line hidden
-WriteLiteral("</div>\r\n");
+WriteLiteral("</div>\n");
 
             
             #line 9 "..\..\Views\Shared\EditableGrid\Partial\TopBlock.cshtml"
@@ -95,7 +95,7 @@ WriteLiteral("</div>\r\n");
             
             #line default
             #line hidden
-WriteLiteral("\r\n");
+WriteLiteral("\n");
 
 WriteLiteral("    ");
 
@@ -106,7 +106,7 @@ Write(Html.Partial(Model.TopBlockAddItemView, Model));
             
             #line default
             #line hidden
-WriteLiteral("\r\n\r\n");
+WriteLiteral("\n\n");
 
             
             #line 13 "..\..\Views\Shared\EditableGrid\Partial\TopBlock.cshtml"
@@ -124,26 +124,26 @@ WriteLiteral("\r\n\r\n");
             #line hidden
 WriteLiteral("        <div");
 
-WriteLiteral(" class=\"bcms-language-bar\"");
+WriteLiteral(" class=\"bcms-language-bar bcms-language-selector-box\"");
 
 WriteLiteral(" data-bind=\"visible: showLanguages, with: language\"");
 
-WriteLiteral(">\r\n            <div");
+WriteLiteral(">\n            <div");
 
 WriteLiteral(" class=\"bcms-filter-text bcms-table-middle-box\"");
 
-WriteLiteral(">Edit in language:</div>\r\n            <div");
+WriteLiteral(">Edit in language:</div>\n            <div");
 
 WriteLiteral(" class=\"bcms-table-middle-box\"");
 
-WriteLiteral(">\r\n                <select");
+WriteLiteral(">\n                <select");
 
 WriteLiteral(" class=\"bcms-global-select\"");
 
 WriteLiteral(" data-bind=\"options: languages, optionsText: \'value\', optionsValue: \'key\', value:" +
 " languageId\"");
 
-WriteLiteral("></select>\r\n            </div>\r\n        </div>\r\n");
+WriteLiteral("></select>\n            </div>\n        </div>\n");
 
             
             #line 21 "..\..\Views\Shared\EditableGrid\Partial\TopBlock.cshtml"
@@ -152,7 +152,7 @@ WriteLiteral("></select>\r\n            </div>\r\n        </div>\r\n");
             
             #line default
             #line hidden
-WriteLiteral("\r\n");
+WriteLiteral("\n");
 
             
             #line 23 "..\..\Views\Shared\EditableGrid\Partial\TopBlock.cshtml"
@@ -172,7 +172,7 @@ WriteLiteral("        <div");
 
 WriteLiteral(" class=\"bcms-search-block\"");
 
-WriteLiteral(">\r\n            <input");
+WriteLiteral(">\n            <input");
 
 WriteLiteral(" data-bind=\"value: options().searchQuery, valueUpdate: \'afterkeydown\', enterPress" +
 ": searchItems, hasfocus: options().hasFocus\"");
@@ -181,17 +181,17 @@ WriteLiteral(" type=\"text\"");
 
 WriteLiteral(" class=\"bcms-editor-field-box\"");
 
-WriteAttribute("placeholder", Tuple.Create(" placeholder=\"", 1084), Tuple.Create("\"", 1133)
+WriteAttribute("placeholder", Tuple.Create(" placeholder=\"", 1086), Tuple.Create("\"", 1135)
             
             #line 26 "..\..\Views\Shared\EditableGrid\Partial\TopBlock.cshtml"
-                                                                                                                       , Tuple.Create(Tuple.Create("", 1098), Tuple.Create<System.Object, System.Int32>(RootGlobalization.WaterMark_Search
+                                                                                                                       , Tuple.Create(Tuple.Create("", 1100), Tuple.Create<System.Object, System.Int32>(RootGlobalization.WaterMark_Search
             
             #line default
             #line hidden
-, 1098), false)
+, 1100), false)
 );
 
-WriteLiteral(" />\r\n            <div");
+WriteLiteral(" />\n            <div");
 
 WriteLiteral(" data-bind=\"click: searchItems\"");
 
@@ -206,7 +206,7 @@ WriteLiteral(">");
             
             #line default
             #line hidden
-WriteLiteral("</div>\r\n        </div>\r\n");
+WriteLiteral("</div>\n        </div>\n");
 
             
             #line 29 "..\..\Views\Shared\EditableGrid\Partial\TopBlock.cshtml"
@@ -215,7 +215,7 @@ WriteLiteral("</div>\r\n        </div>\r\n");
             
             #line default
             #line hidden
-WriteLiteral("\r\n");
+WriteLiteral("\n");
 
             
             #line 31 "..\..\Views\Shared\EditableGrid\Partial\TopBlock.cshtml"
@@ -231,13 +231,13 @@ WriteLiteral("\r\n");
             
             #line default
             #line hidden
-WriteLiteral("        <!-- ko with: options().paging -->\r\n");
+WriteLiteral("        <!-- ko with: options().paging -->\n");
 
 WriteLiteral("        <div");
 
 WriteLiteral(" class=\"bcms-featured-grid bcms-clearfix\"");
 
-WriteLiteral(">\r\n");
+WriteLiteral(">\n");
 
 WriteLiteral("            ");
 
@@ -248,9 +248,9 @@ WriteLiteral("            ");
             
             #line default
             #line hidden
-WriteLiteral("\r\n        </div>\r\n");
+WriteLiteral("\n        </div>\n");
 
-WriteLiteral("        <!-- /ko -->\r\n");
+WriteLiteral("        <!-- /ko -->\n");
 
             
             #line 38 "..\..\Views\Shared\EditableGrid\Partial\TopBlock.cshtml"

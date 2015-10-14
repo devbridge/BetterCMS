@@ -3840,6 +3840,15 @@ a.bcms-active-pager:hover {
   user-select: none;
 }
 
+.bcms-widget-option-box {
+  display: inline-block;
+  width: 150px;
+}
+
+.bcms-widget-option-box select {
+  width: 100%;
+}
+
 .markItUpButtonH1 a, .markItUpButtonH2 a, .markItUpButtonH3 a, .markItUpButtonH4 a, .markItUpButtonH5 a, .markItUpButtonH6 a, .markItUpButtonBold a, .markItUpButtonItalic a, .markItUpButtonListBullet a, .markItUpButtonListNumeric a, .markItUpButtonPicture a, .markItUpButtonLink a, .markItUpButtonQuotes a, .markItUpButtonCode a, .markItUpButtonWidget a, .markItUpButtonOption a {
   background: no-repeat center;
 }

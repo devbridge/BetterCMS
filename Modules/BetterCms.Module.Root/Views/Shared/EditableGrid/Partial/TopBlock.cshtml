@@ -12,7 +12,7 @@
 
     @if (Model.ShowLanguages)
     {
-        <div class="bcms-language-bar" data-bind="visible: showLanguages, with: language">
+        <div class="bcms-language-bar bcms-language-selector-box" data-bind="visible: showLanguages, with: language">
             <div class="bcms-filter-text bcms-table-middle-box">Edit in language:</div>
             <div class="bcms-table-middle-box">
                 <select class="bcms-global-select" data-bind="options: languages, optionsText: 'value', optionsValue: 'key', value: languageId"></select>

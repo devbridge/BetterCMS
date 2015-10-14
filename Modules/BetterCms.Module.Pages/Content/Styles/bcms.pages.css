@@ -3,8 +3,8 @@
 }
 
 .bcms-sidebar-search {
-  position: relative;
   margin: 15px 0;
+  position: relative;
 }
 
 .bcms-sidebar-search .bcms-editor-field-box {
@@ -12,8 +12,8 @@
 }
 
 .bcms-addnode-placement-holder {
-  min-height: 52px;
   display: block;
+  min-height: 52px;
   padding: 0 0 4px;
 }
 
@@ -23,38 +23,41 @@
 }
 
 .bcms-addnode-placement-holder-readonly {
-  min-height: 52px;
   display: block;
+  min-height: 52px;
   padding: 0 0 4px;
 }
 
 .bcms-sitemap-holder {
-  padding: 0 20px;
   margin-top: -8px;
+  padding: 0 20px;
 }
 
 .bcms-sitemap-filter-holder {
-  position: relative;
   display: table-caption;
   height: 62px;
   margin-left: 10px;
+  position: relative;
+}
+
+.bcms-language-selector-box {
+  float: right;
 }
 
 .bcms-language-bar {
   display: table;
-  height: 63px;
 }
 
-.bcms-sitemap-filter-holder .bcms-table-middle-box {
+.bcms-table-middle-box {
   display: table-cell;
-  vertical-align: middle;
   padding: 0 10px;
+  vertical-align: middle;
 }
 
 .bcms-sitemap-filter-holder .bcms-expand-link-holder {
   position: absolute;
-  top: 25px;
   right: 20px;
+  top: 25px;
   width: auto;
 }
 
@@ -72,22 +75,22 @@
 }
 
 .bcms-drop-area {
-  min-height: 65px;
-  padding-top: 20px;
-  margin: 0 20px 20px;
   border: 2px dashed #0383df;
   border-radius: 4px;
+  margin: 0 20px 20px;
+  min-height: 65px;
+  padding-top: 20px;
 }
 
 .bcms-dropable-page-box {
-  position: relative;
-  padding: 15px;
-  margin-top: 8px;
-  margin-bottom: 8px;
+  background-color: #fff;
   border: 1px solid #bdbdbd;
   border-radius: 4px;
-  background-color: #fff;
   cursor: move;
+  margin-bottom: 8px;
+  margin-top: 8px;
+  padding: 15px;
+  position: relative;
 }
 
 .bcms-dropable-page-box:hover {
@@ -115,13 +118,13 @@
 }
 
 .bcms-edit-node-holder {
-  position: relative;
   padding-bottom: 5px;
+  position: relative;
 }
 
 .bcms-edit-node-holder .bcms-tooltip-mark {
-  top: 1px;
   left: -20px;
+  top: 1px;
 }
 
 .bcms-placement-node-edit {
@@ -142,12 +145,12 @@
 }
 
 .bcms-node-controls {
-  display: none;
-  position: absolute;
-  top: 0;
-  right: 0;
-  padding: 12px 5px 10px;
   box-sizing: border-box;
+  display: none;
+  padding: 12px 5px 10px;
+  position: absolute;
+  right: 0;
+  top: 0;
 }
 
 div.bcms-menu-left-col {
@@ -159,8 +162,8 @@ div.bcms-add-node-col > .bcms-content-titles {
 }
 
 div.bcms-add-node-col .bcms-placement-node {
-  width: 195px;
   margin-bottom: 5px;
+  width: 195px;
 }
 
 div.bcms-add-node-col .bcms-placement-dropzone {
