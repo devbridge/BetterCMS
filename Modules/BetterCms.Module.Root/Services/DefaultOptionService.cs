@@ -110,7 +110,7 @@ namespace BetterCms.Module.Root.Services
                                 var translation = new OptionTranslationViewModel
                                 {
                                     LanguageId = optionTranslation.LanguageId,
-                                    OptionValue = optionTranslation.Value
+                                    OptionValue = ClearFixValueForEdit(optionValue.Type, optionTranslation.Value)
                                 };
                                 translations.Add(translation);
                             }
@@ -306,7 +306,7 @@ namespace BetterCms.Module.Root.Services
                 var translation = multilangualOption.Translations.FirstOrDefault(m => m.LanguageId == languageId.ToString());
                 if (translation != null)
                 {
-                    optionViewModel.OptionValue = translation.Value;
+                    optionViewModel.OptionValue = ConvertValueToCorrectType(translation.Value, option.Type, option.CustomOption);
                 }
             }
             return optionViewModel;
@@ -440,7 +440,7 @@ namespace BetterCms.Module.Root.Services
                                     optionTranslation.Option = optionValue;
                                     multilingualTranslations.Add(optionTranslation);
                                 }
-                                optionTranslation.Value = ((IOptionTranslation)t).Value;
+                                optionTranslation.Value = ClearFixValueForSave(optionValue.Key, optionValue.Type, ((IOptionTranslation)t).Value);
                                 ValidateOptionValue(optionValue.Key, optionTranslation.Value, optionValue.Type, optionValue.CustomOption);
                             }
                         }
@@ -499,7 +499,7 @@ namespace BetterCms.Module.Root.Services
                                     optionTranslation.Option = optionValue;
                                     multilingualTranslations.Add(optionTranslation);
                                 }
-                                optionTranslation.Value = ((IOptionTranslation)t).Value;
+                                optionTranslation.Value = ClearFixValueForSave(optionValue.Key, optionValue.Type, ((IOptionTranslation)t).Value);
                                 ValidateOptionValue(optionValue.Key, optionTranslation.Value, optionValue.Type, optionValue.CustomOption);
                             }
                         }
@@ -531,7 +531,6 @@ namespace BetterCms.Module.Root.Services
                     if (cmsConfiguration.EnableMultilanguage && multilangOptionValue != null && translationEntityCreator != null)
                     {
                         var multilingualTranslations = multilangOptionValue.Translations;
-                        var optionsToRemove = new List<IOptionTranslation>();
                         if (optionViewModel.ValueTranslations != null)
                         {
                             foreach (var t in optionViewModel.ValueTranslations)
@@ -546,7 +545,7 @@ namespace BetterCms.Module.Root.Services
                                     optionTranslation.Option = optionValue;
                                     multilingualTranslations.Add(optionTranslation);
                                 }
-                                optionTranslation.Value = ((IOptionTranslation)t).Value;
+                                optionTranslation.Value = ClearFixValueForSave(optionValue.Key, optionValue.Type, ((IOptionTranslation)t).Value);
                                 ValidateOptionValue(optionValue.Key, optionTranslation.Value, optionValue.Type, optionValue.CustomOption);
                             }
                         }

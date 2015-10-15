@@ -315,7 +315,7 @@ namespace BetterCms.Module.Pages.Services
                         {
                             ContentOption = contentOption,
                             Language = repository.AsProxy<Language>(x.LanguageId.ToGuidOrDefault()),
-                            Value = x.OptionValue
+                            Value = optionService.ClearFixValueForSave(requestContentOption.OptionKey, requestContentOption.Type, x.OptionValue)
                         }).ToList();
                         foreach (var translation in translations)
                         {
