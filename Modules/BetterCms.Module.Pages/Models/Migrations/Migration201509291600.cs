@@ -1,13 +1,7 @@
-﻿using System;
-
-using BetterCms.Module.Root.Models.Migrations;
-
-using BetterModules.Core.DataAccess.DataContext.Migrations;
+﻿using BetterModules.Core.DataAccess.DataContext.Migrations;
 using BetterModules.Core.Models;
 
 using FluentMigrator;
-
-using FluentNHibernate.Conventions.Helpers;
 
 namespace BetterCms.Module.Pages.Models.Migrations
 {

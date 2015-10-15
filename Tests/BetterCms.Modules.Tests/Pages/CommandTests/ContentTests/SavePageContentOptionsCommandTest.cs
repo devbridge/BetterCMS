@@ -1,6 +1,8 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 
+using Autofac;
+
 using BetterModules.Core.DataAccess;
 using BetterModules.Core.DataAccess.DataContext;
 using BetterCms.Core.DataContracts.Enums;
@@ -81,7 +83,7 @@ namespace BetterCms.Test.Module.Pages.CommandTests.ContentTests
                 var command = new SavePageContentOptionsCommand();
                 command.UnitOfWork = unitOfWork;
                 command.Repository = repository;
-                command.OptionService = new DefaultOptionService(repository, new HttpRuntimeCacheService());
+                command.OptionService = new DefaultOptionService(repository, new HttpRuntimeCacheService(), Container.Resolve<ICmsConfiguration>());
                 var result = command.Execute(request);
 
                 Assert.IsNotNull(result);

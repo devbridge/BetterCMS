@@ -30,7 +30,7 @@ namespace BetterCms.Module.Root.Models
             }
         }
 
-        IEnumerable<IOption> IChildContent.Options
+        IEnumerable<IOptionEntity> IChildContent.Options
         {
             get
             {

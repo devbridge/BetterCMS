@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 
 using BetterCms.Module.Root.Content.Resources;
+using BetterCms.Module.Root.Models;
 using BetterCms.Module.Root.Mvc.Grids;
 
 namespace BetterCms.Module.Root.ViewModels.Shared
@@ -36,6 +37,8 @@ namespace BetterCms.Module.Root.ViewModels.Shared
         public virtual bool ShowMessages { get; set; }
 
         public virtual List<EditableGridColumn> Columns { get; set; }
+
+        public virtual bool ShowLanguages { get; set; }
 
         public EditableGridViewModel()
         {

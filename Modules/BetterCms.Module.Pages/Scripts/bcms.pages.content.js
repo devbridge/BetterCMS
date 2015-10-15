@@ -162,7 +162,7 @@ bettercms.define('bcms.pages.content', ['bcms.jquery', 'bcms', 'bcms.modal', 'bc
                         },
 
                         formSerialize: function (form) {
-                            return widgets.serializeFormWithChildWidgetOptions(form, editorId, function (serializedData) {
+                            return widgets.serializeFormWithChildWidgetOptions(form, editorId, null, function (serializedData) {
                                 if (includeChildRegions) {
                                     serializedData.IncludeChildRegions = true;
                                 }
@@ -736,7 +736,7 @@ bettercms.define('bcms.pages.content', ['bcms.jquery', 'bcms', 'bcms.modal', 'bc
                         },
 
                         formSerialize: function (form) {
-                            return widgets.serializeFormWithChildWidgetOptions(form, editorId, function (serializedData) {
+                            return widgets.serializeFormWithChildWidgetOptions(form, editorId, null, function (serializedData) {
                                 if (includeChildRegions) {
                                     serializedData.IncludeChildRegions = true;
                                 }

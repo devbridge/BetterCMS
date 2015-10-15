@@ -4,40 +4,40 @@
 @using BetterCms.Module.Root.Content.Resources
 @using BetterCms.Module.Root.Mvc.Grids;
 @using BetterCms.Module.Root.ViewModels.Shared;
+@model EditableGridViewModel
 
 @{
-    var gridViewModel = new EditableGridViewModel
-    {
-        ShowSearch = false,
-        TopBlockClass = "bcms-top-block-holder",
-        SaveButtonTitle = RootGlobalization.Button_Ok,
-        AddHiddenFields = true,
-        ShowMessages = false,
-        Columns = new List<EditableGridColumn>
+    Model.ShowSearch = false;
+    Model.TopBlockClass = "bcms-top-block-holder";
+    Model.SaveButtonTitle = RootGlobalization.Button_Ok;
+    Model.AddHiddenFields = true;
+    Model.ShowMessages = false;
+    Model.Columns = new List<EditableGridColumn>
             {
                 new EditableGridColumn(PagesGlobalization.Options_OptionKeyColumn, null, "key")
                     {
-                        HeaderAttributes = "style=\"width: 250px;\"",
+                        HeaderAttributes = "style=\"width: 200px;\"",
                         AutoFocus = true,
                         HiddenFieldName = "Options[{0}].OptionKey"
                     },
 
                 new EditableGridDropDownColumn(PagesGlobalization.Options_OptionTypeColumn, null, "calcType")
                     {
+                        HeaderAttributes = "style=\"width: 100px;\"",
                         OptionsBind = "optionTypes",
-                        ValueTextBind = "typeName"
+                        ValueTextBind = "typeName",
+                        CanBeEdited = false
                     },
                                         
-                new OptionValueEditableGridColumn(PagesGlobalization.Options_OptionDefaultValueColumn, "defaultValue", "customOptionDefaultTitle")
+                new OptionValueEditableGridColumn(PagesGlobalization.Options_OptionDefaultValueColumn, "defaultValueBinding", "customOptionDefaultTitle")
                     {
-                        HeaderAttributes = "style=\"width: 250px;\"",
+//                        HeaderAttributes = "style=\"width: 350px;\"",
                         HiddenFieldName = "Options[{0}].OptionDefaultValue"
                     },
                     
                 new EditableGridHiddenField("type", "Options[{0}].Type"),
                 new EditableGridHiddenField("customType", "Options[{0}].CustomType")
-            }
-    };
+            };
 }
 
-@Html.Partial(RootModuleConstants.EditableGridTemplate, gridViewModel)
+@Html.Partial(RootModuleConstants.EditableGridTemplate, Model)

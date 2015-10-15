@@ -15,6 +15,7 @@ namespace BetterCms.Module.Root.Services
             List<PageContent> allPageContents, 
             IChildContent childContent = null,
             System.Guid? previewPageContentId = null,
+            System.Guid? languageId = null,
             bool retrieveCorrectVersion = true);
     }
 }

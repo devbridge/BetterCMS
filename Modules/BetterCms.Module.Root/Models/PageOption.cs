@@ -9,7 +9,7 @@ using BetterModules.Core.Models;
 namespace BetterCms.Module.Root.Models
 {
     [Serializable]
-    public class PageOption : EquatableEntity<PageOption>, IOption, IAccessSecuredObjectDependency
+    public class PageOption : EquatableEntity<PageOption>, IOptionEntity, IAccessSecuredObjectDependency
     {
         public virtual Page Page { get; set; }
 

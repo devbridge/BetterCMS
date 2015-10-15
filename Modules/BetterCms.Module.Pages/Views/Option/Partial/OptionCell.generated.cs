@@ -51,8 +51,8 @@ namespace ASP
         {
 WriteLiteral("\r\n");
 
-WriteLiteral("\r\n<!-- ko if: !useDefaultValue() && type() != 5 && type() != 4 && type() != 21 &&" +
-" type() != 99 -->\r\n");
+WriteLiteral("\r\n<!-- ko if: !useDefaultValueBinding() && type() != 5 && type() != 4 && type() !" +
+"= 21 && type() != 99 -->\r\n");
 
 WriteLiteral("    ");
 
@@ -65,7 +65,7 @@ Write(Html.Partial(RootModuleConstants.EditableGridCellTemplate));
             #line hidden
 WriteLiteral("\r\n<!-- /ko -->\r\n\r\n");
 
-WriteLiteral("\r\n<!-- ko if: !useDefaultValue() && type() == 21 -->\r\n");
+WriteLiteral("\r\n<!-- ko if: !useDefaultValueBinding() && type() == 21 -->\r\n");
 
 WriteLiteral("    ");
 
@@ -78,7 +78,7 @@ Write(Html.Partial(RootModuleConstants.EditableGridMultilineTextCellTemplate));
             #line hidden
 WriteLiteral("\r\n<!-- /ko -->\r\n\r\n");
 
-WriteLiteral("\r\n<!-- ko if: !useDefaultValue() && type() == 5  -->\r\n");
+WriteLiteral("\r\n<!-- ko if: !useDefaultValueBinding() && type() == 5  -->\r\n");
 
 WriteLiteral("    ");
 
@@ -98,7 +98,7 @@ Write(Html.Partial(RootModuleConstants.EditableGridBooleanCellTemplate, new Edit
             #line hidden
 WriteLiteral("\r\n<!-- /ko -->\r\n\r\n");
 
-WriteLiteral("\r\n<!-- ko if: !useDefaultValue() && type() == 4  -->\r\n<td ");
+WriteLiteral("\r\n<!-- ko if: !useDefaultValueBinding() && type() == 4  -->\r\n<td ");
 
             
             #line 30 "..\..\Views\Option\Partial\OptionCell.cshtml"
@@ -276,7 +276,7 @@ WriteLiteral("        <!-- /ko -->\r\n");
             #line hidden
 WriteLiteral("</td>\r\n<!-- /ko -->\r\n\r\n");
 
-WriteLiteral("\r\n<!-- ko if: !useDefaultValue() && type() == 99  -->\r\n<td ");
+WriteLiteral("\r\n<!-- ko if: !useDefaultValueBinding() && type() == 99  -->\r\n<td ");
 
             
             #line 67 "..\..\Views\Option\Partial\OptionCell.cshtml"
@@ -438,7 +438,7 @@ WriteLiteral("        <!-- /ko -->\r\n");
             #line hidden
 WriteLiteral("</td>\r\n<!-- /ko -->\r\n\r\n");
 
-WriteLiteral("\r\n<!-- ko if: useDefaultValue() && type() == 5  -->\r\n");
+WriteLiteral("\r\n<!-- ko if: useDefaultValueBinding() && type() == 5  -->\r\n");
 
 WriteLiteral("    ");
 
@@ -453,7 +453,7 @@ Write(Html.Partial(RootModuleConstants.EditableGridBooleanCellTemplate, new Edit
             
             #line default
             #line hidden
-WriteLiteral("\r\n<!-- /ko -->\r\n\r\n<!-- ko if: useDefaultValue() && type() != 5  -->\r\n<td ");
+WriteLiteral("\r\n<!-- /ko -->\r\n\r\n<!-- ko if: useDefaultValueBinding() && type() != 5  -->\r\n<td ");
 
             
             #line 103 "..\..\Views\Option\Partial\OptionCell.cshtml"

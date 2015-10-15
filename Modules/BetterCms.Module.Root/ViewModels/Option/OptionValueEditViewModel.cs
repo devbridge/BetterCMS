@@ -1,4 +1,5 @@
-﻿using System.Web.Mvc;
+﻿using System.Collections.Generic;
+using System.Web.Mvc;
 
 namespace BetterCms.Module.Root.ViewModels.Option
 {
@@ -36,6 +37,14 @@ namespace BetterCms.Module.Root.ViewModels.Option
         /// The custom option value title.
         /// </value>
         public string CustomOptionValueTitle { get; set; }
+
+        /// <summary>
+        /// Gets or sets the value translations.
+        /// </summary>
+        /// <value>
+        /// The value translations.
+        /// </value>
+        public IList<OptionTranslationViewModel> ValueTranslations { get; set; }
 
         /// <summary>
         /// Returns a <see cref="System.String" /> that represents this instance.

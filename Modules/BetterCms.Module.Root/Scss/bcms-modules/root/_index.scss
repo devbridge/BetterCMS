@@ -1154,3 +1154,13 @@ a.bcms-active-pager:hover {
     -moz-user-select: none;
     user-select: none;
 }
+
+//module tem for widget configuration
+.bcms-widget-option-box {
+    display: inline-block;
+    width: 150px;
+
+    select {
+        width: 100%;
+    }
+}

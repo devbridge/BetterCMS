@@ -4,6 +4,7 @@
 @using BetterCms.Module.Pages.ViewModels.Widgets
 @using BetterCms.Module.Root.Mvc.Helpers
 @using BetterCms.Module.Root.ViewModels.Category
+@using BetterCms.Module.Root.ViewModels.Shared
 @using Microsoft.Web.Mvc
 @model EditHtmlContentWidgetViewModel
 @if (Model == null)
@@ -59,7 +60,7 @@
         </div>
 
         <div id="bcms-tab-2" class="bcms-tab-single">
-            @Html.Partial(PagesConstants.OptionsGridTemplate)
+            @Html.Partial(PagesConstants.OptionsGridTemplate, new EditableGridViewModel{ShowLanguages = true})
         </div>
 
         <div id="bcms-tab-3" class="bcms-tab-single">

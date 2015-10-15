@@ -2,7 +2,7 @@
 
 namespace BetterCms.Core.DataContracts
 {
-    public interface IDeletableOption<TEntity> : IOption
+    public interface IDeletableOption<TEntity> : IOptionEntity
         where TEntity : IEntity
     {
         bool IsDeletable { get; set; }

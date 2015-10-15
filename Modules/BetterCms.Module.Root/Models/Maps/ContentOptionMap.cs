@@ -16,6 +16,7 @@ namespace BetterCms.Module.Root.Models.Maps
 
             References(x => x.Content).Cascade.SaveUpdate().LazyLoad();            
             References(x => x.CustomOption).Cascade.SaveUpdate().LazyLoad();
+            HasMany(x => x.Translations).Inverse().Cascade.SaveUpdate().LazyLoad().Where("IsDeleted = 0");
         }
     }
 }

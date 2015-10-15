@@ -12,6 +12,8 @@ using BetterModules.Core.DataAccess;
 using BetterModules.Core.DataAccess.DataContext;
 using BetterModules.Core.Web.Services.Caching;
 
+using Moq;
+
 using NHibernate;
 
 using NUnit.Framework;
@@ -29,7 +31,8 @@ namespace BetterCms.Test.Module.Root.ServiceTests
                 var unitOfWork = new DefaultUnitOfWork(session);
                 var repository = new DefaultRepository(unitOfWork);
 
-                var optionService = new DefaultOptionService(repository, new HttpRuntimeCacheService());
+                var cmsConfiguration = new Mock<ICmsConfiguration>();
+                var optionService = new DefaultOptionService(repository, new HttpRuntimeCacheService(), cmsConfiguration.Object);
 
                 // Create layout with options
                 var layout = TestDataProvider.CreateNewLayout();
@@ -59,7 +62,7 @@ namespace BetterCms.Test.Module.Root.ServiceTests
                 var newOption1 = new LayoutOption { Key = option1.Key, Type = option1.Type, DefaultValue = option1.DefaultValue };
                 var newOption2 = new LayoutOption { Key = option2.Key, Type = option2.Type, DefaultValue = TestDataProvider.ProvideRandomString(100) };
                 var newOption3 = new LayoutOption { Key = TestDataProvider.ProvideRandomString(100), Type = OptionType.Text, DefaultValue = TestDataProvider.ProvideRandomString(100) };
-                var newOptions = new List<IOption> { newOption1, newOption2, newOption3 };
+                var newOptions = new List<IOptionEntity> { newOption1, newOption2, newOption3 };
 
                 optionService.SetOptions<LayoutOption, Layout>(layout, newOptions);
                 unitOfWork.Commit();
@@ -82,8 +85,8 @@ namespace BetterCms.Test.Module.Root.ServiceTests
             {
                 var unitOfWork = new DefaultUnitOfWork(session);
                 var repository = new DefaultRepository(unitOfWork);
-
-                var optionService = new DefaultOptionService(repository, new HttpRuntimeCacheService());
+                var cmsConfiguration = new Mock<ICmsConfiguration>();
+                var optionService = new DefaultOptionService(repository, new HttpRuntimeCacheService(), cmsConfiguration.Object);
 
                 // Create layout with options
                 var layout = TestDataProvider.CreateNewLayout();
@@ -98,7 +101,7 @@ namespace BetterCms.Test.Module.Root.ServiceTests
                 session.Flush();
                 session.Clear();
 
-                optionService.SetOptions<LayoutOption, Layout>(layout, new List<IOption>());
+                optionService.SetOptions<LayoutOption, Layout>(layout, new List<IOptionEntity>());
                 unitOfWork.Commit();
             });
         }
@@ -112,8 +115,8 @@ namespace BetterCms.Test.Module.Root.ServiceTests
                 var repository = new DefaultRepository(unitOfWork);
 
                 var pages = CreateNestedOptions(session, 1);
-
-                var optionService = new DefaultOptionService(repository, new HttpRuntimeCacheService());
+                var cmsConfiguration = new Mock<ICmsConfiguration>();
+                var optionService = new DefaultOptionService(repository, new HttpRuntimeCacheService(), cmsConfiguration.Object);
                 var optionValues = optionService.GetMergedMasterPagesOptionValues(pages[0].Id, null, pages[0].Layout.Id);
 
                 Assert.AreEqual(optionValues.Count, 4);
@@ -133,8 +136,8 @@ namespace BetterCms.Test.Module.Root.ServiceTests
                 var repository = new DefaultRepository(unitOfWork);
 
                 var pages = CreateNestedOptions(session, 2);
-
-                var optionService = new DefaultOptionService(repository, new HttpRuntimeCacheService());
+                var cmsConfiguration = new Mock<ICmsConfiguration>();
+                var optionService = new DefaultOptionService(repository, new HttpRuntimeCacheService(), cmsConfiguration.Object);
                 var optionValues = optionService.GetMergedMasterPagesOptionValues(pages[1].Id, pages[1].MasterPage.Id, null);
 
                 Assert.AreEqual(optionValues.Count, 5);
@@ -156,7 +159,8 @@ namespace BetterCms.Test.Module.Root.ServiceTests
 
                 var pages = CreateNestedOptions(session, 3);
 
-                var optionService = new DefaultOptionService(repository, new HttpRuntimeCacheService());
+                var cmsConfiguration = new Mock<ICmsConfiguration>();
+                var optionService = new DefaultOptionService(repository, new HttpRuntimeCacheService(), cmsConfiguration.Object);
                 var optionValues = optionService.GetMergedMasterPagesOptionValues(pages[2].Id, pages[2].MasterPage.Id, null);
 
                 Assert.AreEqual(optionValues.Count, 5);

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 
 using BetterCms.Core.DataContracts.Enums;
@@ -25,6 +26,11 @@ namespace BetterCms.Module.Pages.Command.Widget.GetHtmlContentWidgetForEdit
         private readonly IContentService contentService;
 
         /// <summary>
+        /// The CMS configuration
+        /// </summary>
+        private readonly ICmsConfiguration cmsConfiguration;
+
+        /// <summary>
         /// The category service
         /// </summary>
         private readonly ICategoryService categoryService;
@@ -35,16 +41,25 @@ namespace BetterCms.Module.Pages.Command.Widget.GetHtmlContentWidgetForEdit
         private readonly IOptionService optionService;
 
         /// <summary>
+        /// The language service
+        /// </summary>
+        private readonly ILanguageService languageService;
+
+        /// <summary>
         /// Initializes a new instance of the <see cref="GetHtmlContentWidgetForEditCommand" /> class.
         /// </summary>
         /// <param name="categoryService">The category service.</param>
         /// <param name="contentService">The content service.</param>
         /// <param name="optionService">The option service.</param>
-        public GetHtmlContentWidgetForEditCommand(ICategoryService categoryService, IContentService contentService, IOptionService optionService)
+        /// <param name="cmsConfiguration">The CMS configuration.</param>
+        /// <param name="languageService"></param>
+        public GetHtmlContentWidgetForEditCommand(ICategoryService categoryService, IContentService contentService, IOptionService optionService, ICmsConfiguration cmsConfiguration, ILanguageService languageService)
         {
             this.categoryService = categoryService;
             this.contentService = contentService;
             this.optionService = optionService;
+            this.cmsConfiguration = cmsConfiguration;
+            this.languageService = languageService;
         }
 
         /// <summary>
@@ -58,8 +73,10 @@ namespace BetterCms.Module.Pages.Command.Widget.GetHtmlContentWidgetForEdit
 
             if (widgetId.HasValue && widgetId.Value != Guid.Empty)
             {
+                var languagesFuture = cmsConfiguration.EnableMultilanguage ? languageService.GetLanguagesLookupValues() : new List<LookupKeyValue>();
                 var htmlContentWidget = contentService.GetContentForEdit(widgetId.Value) as HtmlContentWidget;
 
+                var languages = cmsConfiguration.EnableMultilanguage ? languagesFuture.ToList() : new List<LookupKeyValue>();
                 if (htmlContentWidget != null)
                 {
                     model = new EditHtmlContentWidgetViewModel
@@ -77,7 +94,9 @@ namespace BetterCms.Module.Pages.Command.Widget.GetHtmlContentWidgetForEdit
                                     WidgetType = WidgetType.HtmlContent,
                                     PreviewImageUrl = null,
                                     CurrentStatus = htmlContentWidget.Status,
-                                    HasPublishedContent = htmlContentWidget.Original != null
+                                    HasPublishedContent = htmlContentWidget.Original != null,
+                                    ShowLanguages = cmsConfiguration.EnableMultilanguage && languages.Any(),
+                                    Languages = languages
                                 };
 
                     model.Options = htmlContentWidget.ContentOptions.Distinct()
@@ -95,7 +114,13 @@ namespace BetterCms.Module.Pages.Command.Widget.GetHtmlContentWidgetForEdit
                                                  Title = f.CustomOption.Title,
                                                  Id = f.CustomOption.Id
                                              }
-                                           : null
+                                           : null,
+                                        Translations = cmsConfiguration.EnableMultilanguage ? 
+                                            f.Translations.Select(x => new OptionTranslationViewModel
+                                            {
+                                                LanguageId = x.Language.Id.ToString(),
+                                                OptionValue = x.Value
+                                            }).ToList() : null
                                     })
                         .OrderBy(o => o.OptionKey)
                         .ToList();

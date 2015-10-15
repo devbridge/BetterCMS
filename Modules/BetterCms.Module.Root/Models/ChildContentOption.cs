@@ -1,5 +1,8 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 
+using BetterCms.Core;
 using BetterCms.Core.DataContracts;
 using BetterCms.Core.DataContracts.Enums;
 
@@ -8,8 +11,13 @@ using BetterModules.Core.Models;
 namespace BetterCms.Module.Root.Models
 {
     [Serializable]
-    public class ChildContentOption : EquatableEntity<ChildContentOption>, IOption
+    public class ChildContentOption : EquatableEntity<ChildContentOption>, IOptionEntity, IMultilingualOption
     {
+        public ChildContentOption()
+        {
+            Translations = new List<ChildContentOptionTranslation>();
+        }
+
         public virtual ChildContent ChildContent { get; set; }
 
         public virtual string Value { get; set; }
@@ -19,6 +27,20 @@ namespace BetterCms.Module.Root.Models
         public virtual OptionType Type { get; set; }
 
         public virtual CustomOption CustomOption { get; set; }
+
+        public virtual IList<ChildContentOptionTranslation> Translations { get; set; }
+
+        IList<IOptionTranslation> IMultilingualOption.Translations
+        {
+            get
+            {
+                return Translations.Cast<IOptionTranslation>().ToList();
+            }
+            set
+            {
+                Translations = value.Cast<ChildContentOptionTranslation>().ToList();
+            }
+        }
 
         ICustomOption IOption.CustomOption
         {

@@ -43,7 +43,8 @@ namespace BetterCms.Test.Module.Pages.CommandTests.WidgetTests
                     var unitOfWork = new DefaultUnitOfWork(session);
                     var repository = new DefaultRepository(unitOfWork);
                     var categoryService = new Mock<ICategoryService>();
-                    var widgetService = new DefaultWidgetService(repository, unitOfWork, null, null, null, categoryService.Object);
+                    var cmsConfiguration = new Mock<ICmsConfiguration>().Object;
+                    var widgetService = new DefaultWidgetService(repository, unitOfWork, null, null, null, categoryService.Object, cmsConfiguration);
                     var command = new GetSiteSettingsWidgetsCommand(widgetService);
 
                     var result = command.Execute(new WidgetsFilter

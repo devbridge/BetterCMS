@@ -211,10 +211,17 @@
     <Compile Include="Models\CategoryTree.cs" />
     <Compile Include="Models\CategoryTreeCategorizableItem.cs" />
     <Compile Include="Models\ChildContentOption.cs" />
+    <Compile Include="Models\ChildContentOptionTranslation.cs" />
+    <Compile Include="Models\ContentOptionTranslation.cs" />
     <Compile Include="Models\ICategoryAccessor.cs" />
+    <Compile Include="Models\Maps\ChildContentOptionTranslationMap.cs" />
+    <Compile Include="Models\Maps\ContentOptionTranslationMap.cs" />
     <Compile Include="Models\Maps\WidgetCategoryMap.cs" />
     <Compile Include="Models\Migrations\Migration201509281017.cs" />
     <Compile Include="Models\Migrations\Migration201502061445.cs" />
+    <Compile Include="Models\Migrations\Migration201510141900.cs" />
+    <Compile Include="Models\Migrations\Migration201510061845.cs" />
+    <Compile Include="Models\Migrations\Migration201509241740.cs" />
     <Compile Include="Models\WidgetCategories.cs" />
     <Compile Include="Models\IChildRegionContainer.cs" />
     <Compile Include="Models\Language.cs" />
@@ -454,6 +461,7 @@
     <Compile Include="ViewModels\Language\LanguageViewModel.cs" />
     <Compile Include="ViewModels\Option\ContentOptionValuesViewModel.cs" />
     <Compile Include="ViewModels\Option\CustomOptionViewModel.cs" />
+    <Compile Include="ViewModels\Option\OptionTranslationViewModel.cs" />
     <Compile Include="ViewModels\Option\OptionValueEditViewModel.cs" />
     <Compile Include="ViewModels\Option\OptionValueViewModel.cs" />
     <Compile Include="ViewModels\Option\OptionViewModel.cs" />
