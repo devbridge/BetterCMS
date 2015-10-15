@@ -66,22 +66,27 @@ namespace ASP
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("RazorGenerator", "2.0.0.0")]
     [System.Web.WebPages.PageVirtualPathAttribute("~/Views/Option/EditOptions.cshtml")]
-    public partial class _Views_Option_EditOptions_cshtml : System.Web.Mvc.WebViewPage<EditableGridViewModel>
+    public partial class _Views_Option_EditOptions_cshtml : System.Web.Mvc.WebViewPage<dynamic>
     {
         public _Views_Option_EditOptions_cshtml()
         {
         }
         public override void Execute()
         {
+WriteLiteral("\r\n");
+
             
-            #line 9 "..\..\Views\Option\EditOptions.cshtml"
+            #line 8 "..\..\Views\Option\EditOptions.cshtml"
   
-    Model.ShowSearch = false;
-    Model.TopBlockClass = "bcms-top-block-holder";
-    Model.SaveButtonTitle = RootGlobalization.Button_Ok;
-    Model.AddHiddenFields = true;
-    Model.ShowMessages = false;
-    Model.Columns = new List<EditableGridColumn>
+    var model = new EditableGridViewModel();
+
+    model.ShowSearch = false;
+    model.TopBlockClass = "bcms-top-block-holder";
+    model.SaveButtonTitle = RootGlobalization.Button_Ok;
+    model.AddHiddenFields = true;
+    model.ShowMessages = false;
+    model.TopBlockAddItemView = "~/Areas/bcms-pages/Views/Option/Partial/TopBlockAddItem.cshtml";
+    model.Columns = new List<EditableGridColumn>
             {
                 new EditableGridColumn(PagesGlobalization.Options_OptionKeyColumn, null, "key")
                     {
@@ -100,7 +105,6 @@ namespace ASP
                                         
                 new OptionValueEditableGridColumn(PagesGlobalization.Options_OptionDefaultValueColumn, "defaultValueBinding", "customOptionDefaultTitle")
                     {
-//                        HeaderAttributes = "style=\"width: 350px;\"",
                         HiddenFieldName = "Options[{0}].OptionDefaultValue"
                     },
                     
@@ -114,8 +118,8 @@ namespace ASP
 WriteLiteral("\r\n\r\n");
 
             
-            #line 43 "..\..\Views\Option\EditOptions.cshtml"
-Write(Html.Partial(RootModuleConstants.EditableGridTemplate, Model));
+            #line 44 "..\..\Views\Option\EditOptions.cshtml"
+Write(Html.Partial(RootModuleConstants.EditableGridTemplate, model));
 
             
             #line default

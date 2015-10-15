@@ -1,7 +1,6 @@
 ﻿@using BetterCms.Module.Pages
 @using BetterCms.Module.Pages.Controllers
 @using BetterCms.Module.Root.Mvc.Helpers
-@using BetterCms.Module.Root.ViewModels.Shared
 @using Microsoft.Web.Mvc
 
 @model BetterCms.Module.Root.ViewModels.Option.ContentOptionValuesViewModel
@@ -21,7 +20,7 @@
                     data_readonly = Model.IsReadOnly.ToString().ToLower()
                 }))
             {
-                @Html.Partial(PagesConstants.OptionValuesGridTemplate, new EditableGridViewModel { ShowLanguages = true })
+                @Html.Partial(PagesConstants.OptionValuesGridTemplate)
 
                 @Html.HiddenFor(model => model.OptionValuesContainerId)
             }

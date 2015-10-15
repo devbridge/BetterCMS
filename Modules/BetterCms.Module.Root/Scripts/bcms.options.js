@@ -92,24 +92,17 @@ bettercms.define('bcms.options', ['bcms.jquery', 'bcms', 'bcms.ko.extenders', 'b
             function OptionsListViewModel(container, items, customOptions, showLanguages, languages) {
                 var self = this,
                     ci, cl, cOption;
-
-                _super.call(self, container, null, items, null);
-
                 self.customOptions = addCustomOptions(customOptions);
 
-                self.addNewItemTypes.push({ id: optionTypes.textType, name: globalization.optionTypeText });
-                self.addNewItemTypes.push({ id: optionTypes.textMultilineType, name: globalization.optionTypeMultilineText });
-                self.addNewItemTypes.push({ id: optionTypes.integerType, name: globalization.optionTypeInteger });
-                self.addNewItemTypes.push({ id: optionTypes.floatType, name: globalization.optionTypeFloat });
-                self.addNewItemTypes.push({ id: optionTypes.dateTimeType, name: globalization.optionTypeDateTime });
-                self.addNewItemTypes.push({ id: optionTypes.boolType, name: globalization.optionTypeBoolean });
-                self.addNewItemTypes.push({ id: optionTypes.javaScriptUrlType, name: globalization.optionTypeJavaScriptUrl });
-                self.addNewItemTypes.push({ id: optionTypes.cssUrlType, name: globalization.optionTypeCssUrl });
-
                 self.optionTypes = ko.observableArray();
-                for (ci = 0, cl = self.addNewItemTypes().length; ci < cl; ci++) {
-                    self.optionTypes.push(self.addNewItemTypes()[ci]);
-                }
+                self.optionTypes.push({ id: optionTypes.textType, name: globalization.optionTypeText });
+                self.optionTypes.push({ id: optionTypes.textMultilineType, name: globalization.optionTypeMultilineText });
+                self.optionTypes.push({ id: optionTypes.integerType, name: globalization.optionTypeInteger });
+                self.optionTypes.push({ id: optionTypes.floatType, name: globalization.optionTypeFloat });
+                self.optionTypes.push({ id: optionTypes.dateTimeType, name: globalization.optionTypeDateTime });
+                self.optionTypes.push({ id: optionTypes.boolType, name: globalization.optionTypeBoolean });
+                self.optionTypes.push({ id: optionTypes.javaScriptUrlType, name: globalization.optionTypeJavaScriptUrl });
+                self.optionTypes.push({ id: optionTypes.cssUrlType, name: globalization.optionTypeCssUrl });
 
                 // Add custom options to types list
                 for (ci = 0, cl = self.customOptions.length; ci < cl; ci++) {
@@ -117,7 +110,7 @@ bettercms.define('bcms.options', ['bcms.jquery', 'bcms', 'bcms.ko.extenders', 'b
                         id: optionTypes.customType + ':' + self.customOptions[ci].identifier,
                         name: self.customOptions[ci].title
                     };
-                    self.addNewItemTypes.push(cOption);
+                    self.optionTypes.push(cOption);
                 }
 
                 self.attachDatePickers = function () {
@@ -141,14 +134,23 @@ bettercms.define('bcms.options', ['bcms.jquery', 'bcms', 'bcms.ko.extenders', 'b
                 self.languageId = ko.observable("");
                 self.language = showLanguages ? new LanguageViewModel(languages, null, self) : null;
                 self.suspendAddItemSubscribe = true;
-                
+                self.selectedTypeId = ko.observable();
+                self.isAddNewSelected = ko.observable(false);
+                //                $('body').on('click', function () {
+                //
+                //                    if (self.isAddNewSelected() && !self.suspendCloseAddItem) {
+                //                        self.isAddNewSelected(false);
+                //                    }
+                //                });
                 self.selectedTypeId.subscribe(function () {
                     if (!self.suspendAddItemSubscribe) {
                         self.isAddNewSelected(false);
                         _super.prototype.addNewItem.call(self);
                     }
                 });
-                
+
+                _super.call(self, container, null, items, null);
+
                 //  Override methods
                 self.addNewItem = function () {
                     self.suspendAddItemSubscribe = true;
@@ -325,7 +327,7 @@ bettercms.define('bcms.options', ['bcms.jquery', 'bcms', 'bcms.ko.extenders', 'b
                 self.getOptionTypeName = function () {
                     var i,
                         type = self.calcType();
-                    var optionTypesList = parent.addNewItemTypes();
+                    var optionTypesList = parent.optionTypes();
                     for (i = 0; i < optionTypesList.length; i++) {
                         if (optionTypesList[i].id == type) {
                             return optionTypesList[i].name;

@@ -3,10 +3,6 @@
 @if (Model.CanAddNewItems)
 {
     <div class="bcms-btn-links-main" data-bind="click: addNewItem">@Model.AddNewTitle</div>
-
-    <div class="bcms-widget-option-box" data-bind="visible: isAddNewSelected">
-        <select class="bcms-global-select" id="bcms-multi-opts" data-bind="options: addNewItemTypes, optionsText: 'name', optionsCaption: 'Choose type...', optionsValue: 'id', value: selectedTypeId"></select>
-    </div>
 }
 else
 {

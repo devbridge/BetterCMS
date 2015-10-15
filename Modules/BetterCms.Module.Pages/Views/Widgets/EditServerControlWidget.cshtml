@@ -2,10 +2,8 @@
 @using BetterCms.Module.Pages.Content.Resources
 @using BetterCms.Module.Pages.Controllers
 @using BetterCms.Module.Pages.ViewModels.Widgets
-@using BetterCms.Module.Root.Mvc.Extensions
 @using BetterCms.Module.Root.Mvc.Helpers
 @using BetterCms.Module.Root.ViewModels.Category
-@using BetterCms.Module.Root.ViewModels.Shared
 @using Microsoft.Web.Mvc
 
 @model EditServerControlWidgetViewModel
@@ -84,7 +82,7 @@
         </div>
                 
         <div id="bcms-tab-2" class="bcms-tab-single">
-            @Html.Partial(PagesConstants.OptionsGridTemplate, new EditableGridViewModel { ShowLanguages = true })
+            @Html.Partial(PagesConstants.OptionsGridTemplate)
         </div>
         
         @Html.HiddenFor(model => model.Id, new { @id = "bcmsContentId" })

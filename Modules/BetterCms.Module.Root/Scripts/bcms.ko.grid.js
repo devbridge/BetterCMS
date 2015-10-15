@@ -75,11 +75,6 @@ bettercms.define('bcms.ko.grid', ['bcms.jquery', 'bcms', 'bcms.ko.extenders', 'b
             self.items = ko.observableArray();
             self.options = ko.observable();
             self.container = container;
-
-            self.isAddNewSelected = ko.observable(false);
-            self.addNewItemTypes = ko.observableArray();
-            self.selectedTypeId = ko.observable();
-
             self.rowAdded = false;
             
             self.messagesDomId = function () {

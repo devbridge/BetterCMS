@@ -3,15 +3,16 @@
 @using BetterCms.Module.Root;
 @using BetterCms.Module.Root.Content.Resources
 @using BetterCms.Module.Root.Mvc.Grids;
-@using BetterCms.Module.Root.ViewModels.Shared;
-@model EditableGridViewModel
+@using BetterCms.Module.Root.ViewModels.Shared
+
 @{
-    Model.ShowSearch = false;
-    Model.TopBlockClass = "bcms-top-block-holder";
-    Model.AddHiddenFields = true;
-    Model.SaveButtonTitle = RootGlobalization.Button_Ok;
-    Model.ShowMessages = false;
-    Model.Columns = new List<EditableGridColumn> 
+    var model = new EditableGridViewModel();
+    model.ShowSearch = false;
+    model.TopBlockClass = "bcms-top-block-holder";
+    model.AddHiddenFields = true;
+    model.SaveButtonTitle = RootGlobalization.Button_Ok;
+    model.ShowMessages = false;
+    model.Columns = new List<EditableGridColumn> 
     { 
         new EditableGridColumn(PagesGlobalization.EditOptionsValues_OptionKeyColumn, null, "key")
         {
@@ -45,4 +46,4 @@
         new EditableGridHiddenField("customType", "OptionValues[{0}].CustomType") };
 }
 
-@Html.Partial(RootModuleConstants.EditableGridTemplate, Model)
+@Html.Partial(RootModuleConstants.EditableGridTemplate, model)

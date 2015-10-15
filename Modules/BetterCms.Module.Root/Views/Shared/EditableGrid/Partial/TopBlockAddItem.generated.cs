@@ -64,30 +64,6 @@ WriteLiteral("</div>\r\n");
 
             
             #line 6 "..\..\Views\Shared\EditableGrid\Partial\TopBlockAddItem.cshtml"
-
-
-            
-            #line default
-            #line hidden
-WriteLiteral("    <div");
-
-WriteLiteral(" class=\"bcms-widget-option-box\"");
-
-WriteLiteral(" data-bind=\"visible: isAddNewSelected\"");
-
-WriteLiteral(">\r\n        <select");
-
-WriteLiteral(" class=\"bcms-global-select\"");
-
-WriteLiteral(" id=\"bcms-multi-opts\"");
-
-WriteLiteral(" data-bind=\"options: addNewItemTypes, optionsText: \'name\', optionsCaption: \'Choos" +
-"e type...\', optionsValue: \'id\', value: selectedTypeId\"");
-
-WriteLiteral("></select>\r\n    </div>\r\n");
-
-            
-            #line 10 "..\..\Views\Shared\EditableGrid\Partial\TopBlockAddItem.cshtml"
 }
 else
 {
@@ -102,7 +78,7 @@ WriteLiteral(" class=\"bcms-btn-links-main\"");
 WriteLiteral(">&nbsp;</div>\r\n");
 
             
-            #line 14 "..\..\Views\Shared\EditableGrid\Partial\TopBlockAddItem.cshtml"
+            #line 10 "..\..\Views\Shared\EditableGrid\Partial\TopBlockAddItem.cshtml"
 }
             
             #line default

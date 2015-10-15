@@ -470,6 +470,11 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>EditOptions.cshtml</DependentUpon>
     </Compile>
+    <Compile Include="Views\Option\Partial\TopBlockAddItem.generated.cs">
+      <DependentUpon>TopBlockAddItem.cshtml</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+    </Compile>
     <Compile Include="Views\Sitemap\Sitemaps.generated.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -843,6 +848,10 @@
     <Content Include="Views\Content\Partial\EditHtmlContentJsCss.cshtml">
       <Generator>RazorGenerator</Generator>
       <LastGenOutput>EditHtmlContentJsCss.generated.cs</LastGenOutput>
+    </Content>
+    <Content Include="Views\Option\Partial\TopBlockAddItem.cshtml">
+      <Generator>RazorGenerator</Generator>
+      <LastGenOutput>TopBlockAddItem.generated.cs</LastGenOutput>
     </Content>
     <None Include="Views\Shared\Partial\WarnMessageAboutDraft.cshtml">
       <Generator>RazorGenerator</Generator>
