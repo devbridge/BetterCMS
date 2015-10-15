@@ -16,10 +16,12 @@
       <JavaScriptFiles Include="$(ProjectDir)Scripts\bcms.autocomplete.js" />
       <JavaScriptFiles Include="$(ProjectDir)Scripts\bcms.slides.jquery.js" />
       <JavaScriptFiles Include="$(ProjectDir)Scripts\bcms.spinner.jquery.js" />      
+      <JavaScriptFiles Include="$(ProjectDir)Scripts\bcms.antiXss.js" />
       <JavaScriptFiles Include="$(ProjectDir)Scripts\bcms.authentication.js" />
       <JavaScriptFiles Include="$(ProjectDir)Scripts\bcms.categories.js" />
       <JavaScriptFiles Include="$(ProjectDir)Scripts\bcms.content.js" />
       <JavaScriptFiles Include="$(ProjectDir)Scripts\bcms.content.tree.js" />
+      <JavaScriptFiles Include="$(ProjectDir)Scripts\bcms.customValidation.js" />
       <JavaScriptFiles Include="$(ProjectDir)Scripts\bcms.languages.js" />
       <JavaScriptFiles Include="$(ProjectDir)Scripts\bcms.datepicker.js" />
       <JavaScriptFiles Include="$(ProjectDir)Scripts\bcms.dynamicContent.js" />

@@ -3,16 +3,9 @@
 @if (Model.CanAddNewItems)
 {
     <div class="bcms-btn-links-main" data-bind="click: addNewItem">@Model.AddNewTitle</div>
-    @*<div id="bcms-multi-opts" data-bind="visible: isAddNewSelected">
-            <!-- ko foreach: optionTypes -->
-            <div class="bcms-multi-opt-item" data-bind="text: name, click: $parent.addNewSelectedItem.bind('$data', id)"></div>
-            <!-- /ko -->
-        </div>*@
 
     <div class="bcms-widget-option-box" data-bind="visible: isAddNewSelected">
-        <select class="bcms-global-select" id="bcms-multi-opts" data-bind="options: optionTypes, optionsText: 'name', optionsCaption: 'Choose type...', optionsValue: 'id', value: selectedTypeId">
-@*            <option data-bind="text: name, click: $parent.addNewSelectedItem.bind('$data', id)"></option>*@
-        </select>
+        <select class="bcms-global-select" id="bcms-multi-opts" data-bind="options: addNewItemTypes, optionsText: 'name', optionsCaption: 'Choose type...', optionsValue: 'id', value: selectedTypeId"></select>
     </div>
 }
 else
