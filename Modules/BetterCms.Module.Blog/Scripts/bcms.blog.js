@@ -8,7 +8,7 @@ bettercms.define('bcms.blog', ['bcms.jquery', 'bcms', 'bcms.modal', 'bcms.siteSe
     var blog = { },
         selectors = {
             datePickers: '.bcms-datepicker',
-            htmlEditor: 'bcms-contenthtml',
+            htmlEditor: 'bcms-blogcontent',
             firstForm: 'form:first',
             secondForm: 'form:nth-child(2)',
             siteSettingsBlogsListForm: '#bcms-blogs-form',
@@ -233,6 +233,8 @@ bettercms.define('bcms.blog', ['bcms.jquery', 'bcms', 'bcms.modal', 'bcms.siteSe
                 return categorySelector != null ? categorySelector.val() : null;
             };
 
+        var editorHeight = modal.maximizeChildHeight(dialog.container.find("#" + selectors.htmlEditor), dialog);
+
         if (contentTextMode == bcmsContent.contentTextModes.markdown) {
             htmlEditor.initializeMarkdownEditor(selectors.htmlEditor, '', {});
         }
@@ -242,7 +244,9 @@ bettercms.define('bcms.blog', ['bcms.jquery', 'bcms', 'bcms.modal', 'bcms.siteSe
         }
 
         if (contentTextMode == bcmsContent.contentTextModes.html) {
-            htmlEditor.initializeHtmlEditor(selectors.htmlEditor, data.ContentId, {}, data.EditInSourceMode);
+            htmlEditor.initializeHtmlEditor(selectors.htmlEditor, data.ContentId, {
+                 height: editorHeight
+            }, data.EditInSourceMode);
         }
 
         if (data.Version == 0) {

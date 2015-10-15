@@ -1542,6 +1542,7 @@
     <Content Include="Scss\plugins\_markitup.scss" />
     <Content Include="Scss\plugins\_jquerycalendar.scss" />
     <Content Include="Scss\bcms-modules\root\_contentstree.scss" />
+    <Content Include="Scss\bcms-modules\blog\_settings.scss" />
     <None Include="Views\Category\CategoryTrees.cshtml">
       <Generator>RazorGenerator</Generator>
       <LastGenOutput>CategoryTrees.generated.cs</LastGenOutput>
