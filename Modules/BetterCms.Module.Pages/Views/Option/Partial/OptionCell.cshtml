@@ -4,17 +4,17 @@
 @model BetterCms.Module.Pages.Mvc.EditableGrid.OptionValueEditableGridColumn
 
 @* Text type *@
-<!-- ko if: !useDefaultValue() && type() != 5 && type() != 4 && type() != 21 && type() != 99 -->
+<!-- ko if: !useDefaultValueBinding() && type() != 5 && type() != 4 && type() != 21 && type() != 99 -->
     @Html.Partial(RootModuleConstants.EditableGridCellTemplate)
 <!-- /ko -->
 
 @* Multi-line Text type *@
-<!-- ko if: !useDefaultValue() && type() == 21 -->
+<!-- ko if: !useDefaultValueBinding() && type() == 21 -->
     @Html.Partial(RootModuleConstants.EditableGridMultilineTextCellTemplate)
 <!-- /ko -->
 
 @* Boolean *@
-<!-- ko if: !useDefaultValue() && type() == 5  -->
+<!-- ko if: !useDefaultValueBinding() && type() == 5  -->
     @Html.Partial(RootModuleConstants.EditableGridBooleanCellTemplate, new EditableGridBooleanColumn(Model.HeaderTitle, Model.SortColumn, Model.ValueBind)
                                                                            {
                                                                                HiddenFieldName = Model.HiddenFieldName,
@@ -26,7 +26,7 @@
 <!-- /ko -->
 
 @* DateTime *@
-<!-- ko if: !useDefaultValue() && type() == 4  -->
+<!-- ko if: !useDefaultValueBinding() && type() == 4  -->
 <td @Html.Raw(Model.Attributes)>
     @if (Model.CanBeEdited)
     {
@@ -63,7 +63,7 @@
 <!-- /ko -->
 
 @* Custom *@
-<!-- ko if: !useDefaultValue() && type() == 99  -->
+<!-- ko if: !useDefaultValueBinding() && type() == 99  -->
 <td @Html.Raw(Model.Attributes)>
     @if (Model.CanBeEdited)
     {
@@ -91,7 +91,7 @@
 <!-- /ko -->
 
 @* Using default value *@
-<!-- ko if: useDefaultValue() && type() == 5  -->
+<!-- ko if: useDefaultValueBinding() && type() == 5  -->
     @Html.Partial(RootModuleConstants.EditableGridBooleanCellTemplate, new EditableGridBooleanColumn(null, null, Model.ValueBind)
                                                                            {
                                                                                CanBeEdited = false,
@@ -99,7 +99,7 @@
                                                                            })
 <!-- /ko -->
 
-<!-- ko if: useDefaultValue() && type() != 5  -->
+<!-- ko if: useDefaultValueBinding() && type() != 5  -->
 <td @Html.Raw(Model.Attributes)>
     <a class="bcms-tables-link" data-bind="text: @(Model.CustomValueBind)() || @(Model.ValueBind)()"></a>
 </td>

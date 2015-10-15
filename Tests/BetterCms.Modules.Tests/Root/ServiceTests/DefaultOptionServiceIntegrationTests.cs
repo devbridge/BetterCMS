@@ -32,7 +32,7 @@ namespace BetterCms.Test.Module.Root.ServiceTests
                 var repository = new DefaultRepository(unitOfWork);
 
                 var cmsConfiguration = new Mock<ICmsConfiguration>();
-                var optionService = new DefaultOptionService(null, new HttpRuntimeCacheService(), cmsConfiguration.Object);
+                var optionService = new DefaultOptionService(repository, new HttpRuntimeCacheService(), cmsConfiguration.Object);
 
                 // Create layout with options
                 var layout = TestDataProvider.CreateNewLayout();

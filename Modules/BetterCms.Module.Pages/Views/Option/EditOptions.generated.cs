@@ -85,13 +85,14 @@ namespace ASP
             {
                 new EditableGridColumn(PagesGlobalization.Options_OptionKeyColumn, null, "key")
                     {
-                        HeaderAttributes = "style=\"width: 250px;\"",
+                        HeaderAttributes = "style=\"width: 200px;\"",
                         AutoFocus = true,
                         HiddenFieldName = "Options[{0}].OptionKey"
                     },
 
                 new EditableGridDropDownColumn(PagesGlobalization.Options_OptionTypeColumn, null, "calcType")
                     {
+                        HeaderAttributes = "style=\"width: 100px;\"",
                         OptionsBind = "optionTypes",
                         ValueTextBind = "typeName",
                         CanBeEdited = false
@@ -99,7 +100,7 @@ namespace ASP
                                         
                 new OptionValueEditableGridColumn(PagesGlobalization.Options_OptionDefaultValueColumn, "defaultValueBinding", "customOptionDefaultTitle")
                     {
-                        HeaderAttributes = "style=\"width: 250px;\"",
+//                        HeaderAttributes = "style=\"width: 350px;\"",
                         HiddenFieldName = "Options[{0}].OptionDefaultValue"
                     },
                     
@@ -113,7 +114,7 @@ namespace ASP
 WriteLiteral("\r\n\r\n");
 
             
-            #line 42 "..\..\Views\Option\EditOptions.cshtml"
+            #line 43 "..\..\Views\Option\EditOptions.cshtml"
 Write(Html.Partial(RootModuleConstants.EditableGridTemplate, Model));
 
             

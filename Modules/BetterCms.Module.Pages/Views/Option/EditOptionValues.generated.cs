@@ -96,13 +96,13 @@ namespace ASP
         new OptionValueEditableGridColumn(PagesGlobalization.EditOptionsValues_OptionDefaultValueColumn, "defaultValueBinding", "customOptionDefaultTitle")
         {
             CanBeEdited = false, 
-            HeaderAttributes = "style=\"width: 130px;\""
+            HeaderAttributes = "style=\"width: 160px;\""
         }, 
         new EditableGridDropDownColumn(PagesGlobalization.EditOptionsValues_OptionTypeColumn, null, "calcType")
         {
             OptionsBind = "optionTypes", 
             ValueTextBind = "typeName", 
-            HeaderAttributes = "style=\"width: 130px;\"", 
+            HeaderAttributes = "style=\"width: 100px;\"", 
             CanBeEdited = false
         }, 
         new OptionValueEditableGridColumn(PagesGlobalization.EditOptionsValues_OptionValueColumn, "valueBinding", "customOptionTitle")

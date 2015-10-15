@@ -8,7 +8,7 @@ namespace BetterCms.Module.Root.Models.Maps
         {
             Table("ChildContentOptionTranslations");
 
-            Map(x => x.Value).Not.Nullable();
+            Map(x => x.Value).Nullable();
 
             References(x => x.ChildContentOption).Cascade.SaveUpdate().LazyLoad();
             References(x => x.Language).Cascade.SaveUpdate();
