@@ -142,35 +142,6 @@ namespace BetterCms.Test.Module
             storageService.RemoveObject(copyUri);
         }
 
-        /// <summary>
-        /// Should copy storage file successfuly.
-        /// </summary>
-        /// <param name="configuration">The configuration.</param>
-        /// <param name="storageService">The storage service.</param>
-        protected void ShouldMoveObject(ICmsConfiguration configuration, IStorageService storageService)
-        {
-            // Upload
-            var request = CreateUploadRequest(configuration);
-            storageService.UploadObject(request);
-            request.InputStream.Dispose();
-
-            // Move
-            string moveUrl = Path.Combine(configuration.Storage.ContentRoot, TestImageMoveFileName);
-            var moveUri = new Uri(moveUrl);
-            storageService.CopyObject(request.Uri, moveUri);
-
-            // Does not exists
-            var notExists = storageService.ObjectExists(request.Uri);
-            Assert.IsFalse(notExists);
-
-            // Exists
-            var exists = storageService.ObjectExists(moveUri);
-            Assert.IsTrue(exists);
-
-            // Remove
-            storageService.RemoveObject(moveUri);
-        }
-
         protected void ShouldDownloadUrlUnsecured(ICmsConfiguration configuration, IStorageService storageService)
         {
             // Upload
