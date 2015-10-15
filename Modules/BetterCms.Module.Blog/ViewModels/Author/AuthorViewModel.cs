@@ -45,7 +45,6 @@ namespace BetterCms.Module.Blog.ViewModels.Author
         /// <value>
         /// The author description.
         /// </value>
-        [StringLength(MaxLength.Name, ErrorMessageResourceType = typeof(RootGlobalization), ErrorMessageResourceName = "Validation_StringLengthAttribute_Message")]
         public virtual string Description { get; set; }
 
         /// <summary>

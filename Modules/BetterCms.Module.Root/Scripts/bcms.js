@@ -22,7 +22,8 @@ bettercms.define('bcms', ['bcms.jquery','bcms.store'], function ($, store) {
             contentModelCreated: 'contentModelCreated',
             pageCreated: 'pageCreated',
             editContentsTree: 'editContentsTree',
-            insertWidget: 'insertWidget'
+            insertWidget: 'insertWidget',
+            bodyClick: 'bodyClick'
         },
         eventListeners = {},
         contentStatus = {
@@ -443,6 +444,10 @@ bettercms.define('bcms', ['bcms.jquery','bcms.store'], function ($, store) {
             });
             browserInfo.css('display', 'block');
         }
+
+        $(document).on('click', function () {
+            app.trigger(app.events.bodyClick, $(this));
+        });
 
         // Handle unauthorized ajax errors
         $(document).ajaxError(handleUnauthorizedAjaxError);

@@ -165,6 +165,8 @@
     <Compile Include="Accessors\BlogPostContentAccessor.cs" />
     <Compile Include="Commands\DeleteBlogPostImportFile\DeleteBlogPostImportFileCommand.cs" />
     <Compile Include="Commands\ExportBlogPostsCommand\ExportBlogPostsCommand.cs" />
+    <Compile Include="Commands\GetTemplates\GetTemplatesCommand.cs" />
+    <Compile Include="Commands\SaveBlogPostSetting\SaveBlogPostSettingCommand.cs" />
     <Compile Include="Commands\SaveBlogPost\SaveBlogPostCommandRequest.cs" />
     <Compile Include="Commands\UploadBlogsImportFile\UploadBlogsImportFileCommand.cs" />
     <Compile Include="Commands\UploadBlogsImportFile\UploadBlogsImportFileResponse.cs" />
@@ -179,7 +181,7 @@
     <Compile Include="Commands\GetAuthorList\GetAuthorListCommand.cs" />
     <Compile Include="Commands\GetBlogPostList\GetBlogPostListCommand.cs" />
     <Compile Include="Commands\GetBlogPost\GetBlogPostCommand.cs" />
-    <Compile Include="Commands\GetTemplatesList\GetTemplatesCommand.cs" />
+    <Compile Include="Commands\GetBlogSettings\GetBlogSettingsCommand.cs" />
     <Compile Include="Commands\SaveAuthor\SaveAuthorCommand.cs" />
     <Compile Include="Commands\SaveBlogPost\SaveBlogPostCommand.cs" />
     <Compile Include="Commands\SaveBlogPost\SaveBlogPostCommandResponse.cs" />
@@ -204,10 +206,12 @@
     <Compile Include="Models\Maps\BlogPostContentMap.cs" />
     <Compile Include="Models\Maps\BlogPostMap.cs" />
     <Compile Include="Models\Maps\OptionMap.cs" />
+    <Compile Include="Models\Migrations\Migration201510131100.cs" />
     <Compile Include="Models\Migrations\Migration201312051034.cs" />
     <Compile Include="Models\Migrations\Migration201305271258.cs" />
     <Compile Include="Models\Migrations\Migration201305271234.cs" />
     <Compile Include="Models\Migrations\Migration201502101139.cs" />
+    <Compile Include="Models\Migrations\Migration201510141500.cs" />
     <Compile Include="Models\Migrations\Migration201510131346.cs" />
     <Compile Include="Models\Option.cs" />
     <Compile Include="Models\Migrations\InitialSetup.cs" />
@@ -242,6 +246,7 @@
     <Compile Include="ViewModels\Blog\SiteSettingBlogPostViewModel.cs" />
     <Compile Include="ViewModels\Filter\BlogsFilter.cs" />
     <Compile Include="ViewModels\Filter\BlogsGridViewModel.cs" />
+    <Compile Include="ViewModels\Setting\SettingItemViewModel.cs" />
     <Compile Include="Views\Author\Partial\ImageCell.generated.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -276,6 +281,11 @@
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>BlogsFilterTemplate.cshtml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Option\Settings.generated.cs">
+      <DependentUpon>Settings.cshtml</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
     </Compile>
     <Compile Include="Views\Option\Templates.generated.cs">
       <AutoGen>True</AutoGen>
@@ -350,6 +360,10 @@
     </None>
   </ItemGroup>
   <ItemGroup>
+    <None Include="Views\Option\Settings.cshtml">
+      <Generator>RazorGenerator</Generator>
+      <LastGenOutput>Settings.generated.cs</LastGenOutput>
+    </None>
     <None Include="Views\Option\Templates.cshtml">
       <Generator>RazorGenerator</Generator>
       <LastGenOutput>Templates.generated.cs</LastGenOutput>

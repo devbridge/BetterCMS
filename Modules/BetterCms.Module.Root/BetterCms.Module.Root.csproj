@@ -1,6 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
-  <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\TypeScript\Microsoft.TypeScript.Default.props" Condition="Exists('$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\TypeScript\Microsoft.TypeScript.Default.props')" />
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
@@ -34,7 +33,6 @@
     <OldToolsVersion>4.0</OldToolsVersion>
     <MvcProjectUpgradeChecked>true</MvcProjectUpgradeChecked>
     <TargetFrameworkProfile />
-    <TypeScriptToolsVersion>1.0</TypeScriptToolsVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -266,6 +264,7 @@
     <Compile Include="Mvc\Extensions\HtmlAttributesUtility.cs" />
     <Compile Include="Mvc\Extensions\HtmlHelperExtensions.cs" />
     <Compile Include="Mvc\Extensions\StringExtensions.cs" />
+    <Compile Include="Mvc\Grids\EditableGridMultilineColumn.cs" />
     <Compile Include="Mvc\PageHtmlRenderer\PageContentRenderHelper.cs" />
     <Compile Include="Mvc\PageHtmlRenderer\PageContentHtmlRenderer.cs" />
     <Compile Include="Mvc\PageHtmlRenderer\RenderingContentOptionProperty.cs" />
@@ -1551,6 +1550,7 @@
     <Content Include="Scss\plugins\_markitup.scss" />
     <Content Include="Scss\plugins\_jquerycalendar.scss" />
     <Content Include="Scss\bcms-modules\root\_contentstree.scss" />
+    <Content Include="Scss\bcms-modules\blog\_settings.scss" />
     <None Include="Views\Category\CategoryTrees.cshtml">
       <Generator>RazorGenerator</Generator>
       <LastGenOutput>CategoryTrees.generated.cs</LastGenOutput>
@@ -1852,7 +1852,6 @@
     <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
-  <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\TypeScript\Microsoft.TypeScript.targets" Condition="Exists('$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\TypeScript\Microsoft.TypeScript.targets')" />
   <Import Project="$(VSToolsPath)\WebApplications\Microsoft.WebApplication.targets" Condition="'$(VSToolsPath)' != ''" />
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v10.0\WebApplications\Microsoft.WebApplication.targets" Condition="false" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

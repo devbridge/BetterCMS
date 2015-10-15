@@ -85,6 +85,7 @@ namespace BetterCms.Test.Module.Api.Media.Files
                     OriginalFileName = TestDataProvider.ProvideRandomString(MaxLength.Name),
                     PublishedOn = TestDataProvider.ProvideRandomDateTime(),
                     Tags = new[] { TestDataProvider.ProvideRandomString(MaxLength.Name), TestDataProvider.ProvideRandomString(MaxLength.Name) },
+                    Categories = new[] { category.Id },
                     ThumbnailId = null,
                     AccessRules = new[]
                                      {           

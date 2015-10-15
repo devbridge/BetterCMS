@@ -20,7 +20,7 @@ using BetterCms.Module.Blog.Registration;
 using BetterCms.Module.Blog.Services;
 
 using BetterCms.Module.Pages.Accessors;
-using BetterCms.Module.Pages.Models;
+
 using BetterCms.Module.Root;
 using BetterCms.Module.Root.Accessors;
 using BetterCms.Module.Root.Mvc.PageHtmlRenderer;

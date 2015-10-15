@@ -817,6 +817,33 @@ namespace BetterCms.Module.Root.Content.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to HTML.
+        /// </summary>
+        public static string ContentEditMode_Html {
+            get {
+                return ResourceManager.GetString("ContentEditMode_Html", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Markdown.
+        /// </summary>
+        public static string ContentEditMode_Markdown {
+            get {
+                return ResourceManager.GetString("ContentEditMode_Markdown", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Simple Text.
+        /// </summary>
+        public static string ContentEditMode_SimpleText {
+            get {
+                return ResourceManager.GetString("ContentEditMode_SimpleText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Discard changes.
         /// </summary>
         public static string ContentsSort_ResetSortChanges_Button {

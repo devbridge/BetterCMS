@@ -7,7 +7,7 @@
         {
             <!-- ko if: !isActive() || (@(Model.ValueBind).editingIsDisabled && @(Model.ValueBind).editingIsDisabled()) -->
         }
-        <a class="bcms-tables-link" data-bind="text: @(Model.ValueBind)()"></a>
+        <a class="bcms-tables-link" data-bind="text: getCroppedText(@(Model.ValueBind)())"></a>
         @if (Model.CanBeEdited)
         {
             <!-- /ko -->

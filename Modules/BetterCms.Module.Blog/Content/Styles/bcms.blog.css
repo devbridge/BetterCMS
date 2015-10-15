@@ -251,3 +251,25 @@
 .bcms-download-sample-file {
   margin-top: -7px;
 }
+
+.bcms-blog-settings-holder:after {
+  content: '';
+  display: table;
+  clear: both;
+}
+
+.bcms-blog-settings-holder > .bcms-input-list-holder {
+  float: left;
+  width: 70%;
+}
+
+.bcms-blog-settings-holder > .bcms-page-images-holder {
+  box-sizing: border-box;
+  float: left;
+  padding-left: 30px;
+  width: 30%;
+}
+
+.bcms-blog-settings-holder .bcms-btn-small {
+  margin-top: 10px;
+}
