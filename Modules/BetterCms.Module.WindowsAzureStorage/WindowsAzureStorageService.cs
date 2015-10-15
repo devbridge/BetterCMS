@@ -221,34 +221,6 @@ namespace BetterCms.Module.WindowsAzureStorage
             }
         }
 
-        public void MoveObject(Uri sourceUri, Uri destinationUri, bool createDirectoriesIfNotExists = true)
-        {
-            if (sourceUri.AbsoluteUri == destinationUri.AbsoluteUri)
-            {
-                throw new StorageException("Can't move, source file and destination file are the same.");
-            }
-            CheckUri(sourceUri);
-            CheckUri(destinationUri);
-
-            try
-            {
-                var client = cloudStorageAccount.CreateCloudBlobClient();
-                var container = client.GetContainerReference(containerName);
-                var source = container.GetBlockBlobReference(sourceUri.AbsoluteUri);
-                var target = container.GetBlockBlobReference(destinationUri.AbsoluteUri);
-                target.StartCopyFromBlob(source.Uri);
-                if (target.CopyState.Status != CopyStatus.Success)
-                {
-                    throw new StorageException(string.Format("Failed to move blob from {0} to {1}.", sourceUri.AbsolutePath, destinationUri.AbsolutePath));
-                }
-                RemoveObject(sourceUri);
-            }
-            catch (Exception e)
-            {
-                throw new StorageException(string.Format("Failed to move blob from {0} to {1}", sourceUri.AbsolutePath, destinationUri.AbsolutePath), e);
-            }
-        }
-
         public void RemoveFolder(Uri uri)
         {
             CheckUri(uri);

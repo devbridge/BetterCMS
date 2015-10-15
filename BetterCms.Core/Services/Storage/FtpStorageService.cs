@@ -182,31 +182,6 @@ namespace BetterCms.Core.Services.Storage
             response.Close();            
         }
 
-        public void MoveObject(Uri sourceUri, Uri destinationUri, bool createDirectoriesIfNotExists = true)
-        {
-            if (sourceUri.AbsoluteUri == destinationUri.AbsoluteUri)
-            {
-                throw new StorageException("Can't move, source file and destination file are the same.");
-            }
-
-            CheckUri(sourceUri);
-            CheckUri(destinationUri);
-
-            if (createDirectoriesIfNotExists)
-            {
-                TryCreateDirectory(CutLastDirectoryFromUri(destinationUri.AbsoluteUri), true);
-            }
-
-            var absolutePath = ResolvePath(sourceUri.AbsoluteUri);
-            var serverUri = string.Format("{0}{1}", ftpRoot, absolutePath);
-            FtpWebRequest request = CreateFtpRequest(serverUri);
-            request.Method = WebRequestMethods.Ftp.Rename;
-
-            request.RenameTo = destinationUri.AbsolutePath;
-            FtpWebResponse response = (FtpWebResponse)request.GetResponse();
-            response.Close();
-        }
-
         public void RemoveFolder(Uri uri)
         {
             CheckUri(uri);

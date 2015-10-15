@@ -85,24 +85,6 @@ namespace BetterCms.Core.Services.Storage
             }
         }
 
-        public void MoveObject(Uri sourceUri, Uri destinationUri, bool createDirectoriesIfNotExists = true)
-        {
-            if (sourceUri.AbsoluteUri == destinationUri.AbsoluteUri)
-            {
-                throw new StorageException("Can't move, source file and destination file are the same.");
-            }
-
-            CheckUri(sourceUri);
-            CheckUri(destinationUri);
-            if (createDirectoriesIfNotExists)
-            {
-                var cleanedDestinationPath = destinationUri.LocalPath.Remove(destinationUri.LocalPath.TrimEnd('\\', '/').LastIndexOfAny(new[] { '\\', '/' }));
-                Directory.CreateDirectory(cleanedDestinationPath);
-            }
-
-            Directory.Move(sourceUri.LocalPath, destinationUri.LocalPath);
-        }
-
         public void RemoveFolder(Uri uri)
         {
             CheckUri(uri);
