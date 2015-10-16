@@ -407,45 +407,7 @@ namespace BetterCms.Module.Root.Services
                     var multilingualOption = optionValue as IMultilingualOption;
                     if (optionValue is IMultilingualOption && cmsConfiguration.EnableMultilanguage && translationEntityCreator != null)
                     {
-                        var multilingualTranslations = multilingualOption.Translations;
-                        var optionsToRemove = new List<IOptionTranslation>();
-                        if (optionViewModel.ValueTranslations != null)
-                        {
-                            foreach (var mt in multilingualTranslations)
-                            {
-                                if (optionViewModel.ValueTranslations.All(x => x.LanguageId != mt.LanguageId))
-                                {
-                                    optionsToRemove.Add(mt);
-                                }
-                            }
-
-                            foreach (var optionTranslation in optionsToRemove)
-                            {
-                                multilingualTranslations.Remove(optionTranslation);
-                                var optionTranslationEntity = optionTranslation as IOptionTranslationEntity;
-                                if (optionTranslationEntity != null)
-                                {
-                                    repository.Delete(optionTranslationEntity);
-                                }
-                            }
-
-                            foreach (var t in optionViewModel.ValueTranslations)
-                            {
-                                var optionTranslation = (IOptionTranslationEntity)multilingualTranslations.FirstOrDefault(x => x is IOptionTranslationEntity && x.LanguageId == t.LanguageId);
-                                if (optionTranslation == null)
-                                {
-                                    optionTranslation = translationEntityCreator();
-                                    var languageId = Guid.Parse(t.LanguageId);
-                                    optionTranslation.Language = repository.AsProxy<Language>(languageId);
-                                    optionTranslation.Option = optionValue;
-                                    multilingualTranslations.Add(optionTranslation);
-                                }
-                                optionTranslation.Value = ClearFixValueForSave(optionValue.Key, optionValue.Type, ((IOptionTranslation)t).Value);
-                                ValidateOptionValue(optionValue.Key, optionTranslation.Value, optionValue.Type, optionValue.CustomOption);
-                            }
-                        }
-
-                        multilingualOption.Translations = multilingualTranslations;
+                        multilingualOption.Translations = SetMultilangualTranslations(optionViewModel, multilingualOption.Translations, optionValue, translationEntityCreator);
                     }
                     if (optionViewModel.Type == OptionType.Custom)
                     {
@@ -465,44 +427,7 @@ namespace BetterCms.Module.Root.Services
 
                     if (cmsConfiguration.EnableMultilanguage && multilangOptionValue != null && translationEntityCreator != null)
                     {
-                        var multilingualTranslations = multilangOptionValue.Translations;
-                        var optionsToRemove = new List<IOptionTranslation>();
-                        if (optionViewModel.ValueTranslations != null)
-                        {
-                            foreach (var mt in multilingualTranslations)
-                            {
-                                if (optionViewModel.ValueTranslations.All(x => x.LanguageId != mt.LanguageId))
-                                {
-                                    optionsToRemove.Add(mt);
-                                }
-                            }
-
-                            foreach (var optionTranslation in optionsToRemove)
-                            {
-                                multilingualTranslations.Remove(optionTranslation);
-                                var optionTranslationEntity = optionTranslation as IOptionTranslationEntity;
-                                if (optionTranslationEntity != null)
-                                {
-                                    repository.Delete(optionTranslationEntity);
-                                }
-                            }
-
-                            foreach (var t in optionViewModel.ValueTranslations)
-                            {
-                                var optionTranslation =
-                                    (IOptionTranslationEntity)multilingualTranslations.FirstOrDefault(x => x is IOptionTranslationEntity && x.LanguageId == t.LanguageId);
-                                if (optionTranslation == null)
-                                {
-                                    optionTranslation = translationEntityCreator();
-                                    var languageId = Guid.Parse(t.LanguageId);
-                                    optionTranslation.Language = repository.AsProxy<Language>(languageId);
-                                    optionTranslation.Option = optionValue;
-                                    multilingualTranslations.Add(optionTranslation);
-                                }
-                                optionTranslation.Value = ClearFixValueForSave(optionValue.Key, optionValue.Type, ((IOptionTranslation)t).Value);
-                                ValidateOptionValue(optionValue.Key, optionTranslation.Value, optionValue.Type, optionValue.CustomOption);
-                            }
-                        }
+                        var multilingualTranslations = SetMultilangualTranslations(optionViewModel, multilangOptionValue.Translations, optionValue, translationEntityCreator);
 
                         if (multilingualTranslations.Any())
                         {
@@ -525,30 +450,12 @@ namespace BetterCms.Module.Root.Services
                 {
                     optionValue = entityCreator();
                     var multilangOptionValue = optionValue as IMultilingualOption;
-                    optionValue.Type = optionViewModel.Type;
-                    optionValue.CustomOption = optionViewModel.CustomOption;
-                    optionValue.Key = optionViewModel.OptionKey;
                     if (cmsConfiguration.EnableMultilanguage && multilangOptionValue != null && translationEntityCreator != null)
                     {
-                        var multilingualTranslations = multilangOptionValue.Translations;
-                        if (optionViewModel.ValueTranslations != null)
-                        {
-                            foreach (var t in optionViewModel.ValueTranslations)
-                            {
-                                var optionTranslation =
-                                    (IOptionTranslationEntity)multilingualTranslations.FirstOrDefault(x => x is IOptionTranslationEntity && x.LanguageId == t.LanguageId);
-                                if (optionTranslation == null)
-                                {
-                                    optionTranslation = translationEntityCreator();
-                                    var languageId = Guid.Parse(t.LanguageId);
-                                    optionTranslation.Language = repository.AsProxy<Language>(languageId);
-                                    optionTranslation.Option = optionValue;
-                                    multilingualTranslations.Add(optionTranslation);
-                                }
-                                optionTranslation.Value = ClearFixValueForSave(optionValue.Key, optionValue.Type, ((IOptionTranslation)t).Value);
-                                ValidateOptionValue(optionValue.Key, optionTranslation.Value, optionValue.Type, optionValue.CustomOption);
-                            }
-                        }
+                        optionValue.Type = optionViewModel.Type;
+                        optionValue.CustomOption = optionViewModel.CustomOption;
+                        optionValue.Key = optionViewModel.OptionKey;
+                        var multilingualTranslations = SetMultilangualTranslations(optionViewModel, multilangOptionValue.Translations, optionValue, translationEntityCreator);
 
                         if (multilingualTranslations.Any())
                         {
@@ -1332,6 +1239,47 @@ namespace BetterCms.Module.Root.Services
             /// The layout id.
             /// </value>
             public Guid? LayoutId { get; set; }
+        }
+
+        private IList<IOptionTranslation> SetMultilangualTranslations(OptionValueEditViewModel optionViewModel, IList<IOptionTranslation> multilingualTranslations, IOptionEntity optionValue, Func<IOptionTranslationEntity> translationEntityCreator)
+        {
+            var optionsToRemove = new List<IOptionTranslation>();
+            if (optionViewModel.ValueTranslations != null)
+            {
+                foreach (var mt in multilingualTranslations)
+                {
+                    if (optionViewModel.ValueTranslations.All(x => x.LanguageId != mt.LanguageId))
+                    {
+                        optionsToRemove.Add(mt);
+                    }
+                }
+
+                foreach (var optionTranslation in optionsToRemove)
+                {
+                    multilingualTranslations.Remove(optionTranslation);
+                    var optionTranslationEntity = optionTranslation as IOptionTranslationEntity;
+                    if (optionTranslationEntity != null)
+                    {
+                        repository.Delete(optionTranslationEntity);
+                    }
+                }
+
+                foreach (var t in optionViewModel.ValueTranslations)
+                {
+                    var optionTranslation = (IOptionTranslationEntity)multilingualTranslations.FirstOrDefault(x => x is IOptionTranslationEntity && x.LanguageId == t.LanguageId);
+                    if (optionTranslation == null)
+                    {
+                        optionTranslation = translationEntityCreator();
+                        var languageId = Guid.Parse(t.LanguageId);
+                        optionTranslation.Language = repository.AsProxy<Language>(languageId);
+                        optionTranslation.Option = optionValue;
+                        multilingualTranslations.Add(optionTranslation);
+                    }
+                    optionTranslation.Value = ClearFixValueForSave(optionValue.Key, optionValue.Type, ((IOptionTranslation)t).Value);
+                    ValidateOptionValue(optionValue.Key, optionTranslation.Value, optionValue.Type, optionValue.CustomOption);
+                }
+            }
+            return multilingualTranslations;
         }
     }
 }

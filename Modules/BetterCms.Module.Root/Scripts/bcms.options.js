@@ -297,7 +297,6 @@ bettercms.define('bcms.options', ['bcms.jquery', 'bcms', 'bcms.ko.extenders', 'b
                 self.valueBinding = ko.observable().extend({ optionValue: { self: self } }).extend({ notify: 'always' });
 
                 self.type = ko.observable();
-                //                self.useDefaultValue = ko.observable(-1);
                 self.useDefaultValueBinding = ko.observable(-1);
                 self.canEditOption = ko.observable(-1);
                 self.canDeleteOption = true;
@@ -464,13 +463,18 @@ bettercms.define('bcms.options', ['bcms.jquery', 'bcms', 'bcms.ko.extenders', 'b
                 }
                 self.calcType(self.getCalcType(self));
                 self.canEditOption(item.CanEditOption !== false);
-                self.useDefaultValueBinding(!self.canEditOption() && item.useDefaultValueBinding === true);
-                self.useDefaultValue(!self.canEditOption() && item.useDefaultValueBinding === true);
+                self.useDefaultValueBinding(!self.canEditOption() && item.UseDefaultValue === true);
+                self.useDefaultValue(!self.canEditOption() && item.UseDefaultValue === true);
                 self.canDeleteOption = item.CanDeleteOption !== false;
                 if (item.Translations != null) {
                     self.translations = item.Translations;
                 }
                 self.translationsEnabled = parent.showLanguages();
+                if (self.translationsEnabled) {
+                    if (item.UseDefaultValue && item.OptionValue == null) {
+                        self.valueBinding(item.OptionDefaultValue);
+                    }
+                }
                 if (item.ValueTranslations != null) {
                     self.valueTranslations = item.ValueTranslations;
                     self.valueTranslations.forEach(function (item) {
@@ -482,18 +486,41 @@ bettercms.define('bcms.options', ['bcms.jquery', 'bcms', 'bcms.ko.extenders', 'b
 
                 self.useDefaultValueBinding.subscribe(function (newValue) {
                     if (self.isActive()) {
-                        if (newValue) {
-                            self.value(self.defaultValue());
-                            self.customOptionTitle(self.customOptionDefaultTitle());
+                        if ((self.translationsEnabled && self.languageId == "") || !self.translationsEnabled) {
+                            if (newValue) {
+                                self.value(self.defaultValue());
+                                self.valueBinding(self.defaultValue());
+                                self.customOptionTitle(self.customOptionDefaultTitle());
+                            } else {
+                                self.value('');
+                                self.valueBinding('');
+                                self.customOptionTitle('');
+                            }
                         } else {
-                            self.value('');
-                            self.customOptionTitle('');
+                            var valueTranslation = self.getValueTranslation(self.languageId);
+                            var translation = self.getTranslation(self.languageId);
+                            if (newValue) {
+                                // remove translation if true
+                                if (valueTranslation != null) {
+                                    var index = self.valueTranslations.indexOf(valueTranslation);
+                                    if (index > -1) {
+                                        self.valueTranslations.splice(index, 1);
+                                    }
+                                }
+
+                                if (translation != null) {
+                                    self.valueBinding(translation.OptionValue);
+                                } else {
+                                    self.valueBinding(self.defaultValue());
+                                }
+                            } else {
+                                self.valueBinding('');
+                            }
                         }
                     }
                 });
 
                 self.saveItem = function () {
-                    //                    self.constructor.prototype.constructor.prototype.saveItem.call(this);
                     _super.prototype.saveItem.call(self);
                     var newValue = self.defaultValueBinding();
                     if (!self.translationsEnabled) {
@@ -654,7 +681,7 @@ bettercms.define('bcms.options', ['bcms.jquery', 'bcms', 'bcms.ko.extenders', 'b
                 };
 
                 self.saveItem = function () {
-                    self.constructor.prototype.constructor.prototype.saveItem.call(this);
+                    _super.prototype.saveItem.call(self);
                     var useDefaultValue = self.useDefaultValueBinding();
                     var newValue = self.valueBinding();
                     if (!self.translationsEnabled) {
@@ -724,13 +751,17 @@ bettercms.define('bcms.options', ['bcms.jquery', 'bcms', 'bcms.ko.extenders', 'b
 
             OptionValueViewModel.prototype.activateTranslation = function (languageId) {
                 if (languageId == "") {
-                    this.valueBinding(this.value());
+                    if (this.useDefaultValue() && this.value() == null) {
+                        this.valueBinding(this.defaultValue());
+                    } else {
+                        this.value();
+                    }
                     this.useDefaultValueBinding(this.useDefaultValue());
                     this.defaultValueBinding(this.defaultValue());
                 } else {
                     var valueTranslation = this.getValueTranslation(languageId);
                     if (valueTranslation == null) {
-                        this.valueBinding(this.value());
+                        this.valueBinding(this.defaultValue());
                         this.useDefaultValueBinding(this.useDefaultValue());
                     } else {
                         this.valueBinding(valueTranslation.OptionValue);

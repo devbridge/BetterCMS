@@ -33,10 +33,6 @@ namespace BetterCms.Module.Root.Models
             {
                 return Language.Id.ToString();
             }
-//            set
-//            {
-//                throw new NotImplementedException();
-//            }
         }
 
 
@@ -74,6 +70,20 @@ namespace BetterCms.Module.Root.Models
             {
                 ContentOption = (ContentOption)value;
             }
+        }
+
+        public virtual ContentOptionTranslation Clone()
+        {
+            return CopyDataTo(new ContentOptionTranslation());
+        }
+
+        public virtual ContentOptionTranslation CopyDataTo(ContentOptionTranslation contentOptionTranslation)
+        {
+            contentOptionTranslation.ContentOption = ContentOption;
+            contentOptionTranslation.Value = Value;
+            contentOptionTranslation.Language = Language;
+
+            return contentOptionTranslation;
         }
     }
 }
