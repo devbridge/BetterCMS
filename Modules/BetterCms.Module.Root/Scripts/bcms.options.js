@@ -184,7 +184,6 @@ bettercms.define('bcms.options', ['bcms.jquery', 'bcms', 'bcms.ko.extenders', 'b
                     $(item.key.domElement).focus();
                 }
                 item.calcType(this.selectedTypeId());
-                item.type(this.selectedTypeId());
             };
 
             return OptionsListViewModel;
@@ -522,7 +521,12 @@ bettercms.define('bcms.options', ['bcms.jquery', 'bcms', 'bcms.ko.extenders', 'b
 
                 self.saveItem = function () {
                     _super.prototype.saveItem.call(self);
-                    var newValue = self.defaultValueBinding();
+                    var newValue = "";
+                    if (self.type() != optionTypes.customType) {
+                        newValue = self.defaultValueBinding();
+                    } else {
+                        newValue = self.customOptionDefaultTitle();
+                    }
                     if (!self.translationsEnabled) {
                         self.defaultValue(newValue);
                         return;
@@ -619,12 +623,15 @@ bettercms.define('bcms.options', ['bcms.jquery', 'bcms', 'bcms.ko.extenders', 'b
 
                 if (languageId == "") {
                     this.defaultValueBinding(this.defaultValue());
+                    this.customOptionDefaultTitle(this.defaultValue());
                 } else {
                     var translation = this.getTranslation(languageId);
                     if (translation == null) {
                         this.defaultValueBinding(this.defaultValue());
+                        this.customOptionDefaultTitle(this.defaultValue());
                     } else {
                         this.defaultValueBinding(translation.OptionValue);
+                        this.customOptionDefaultTitle(translation.OptionValue);
                     }
                 }
             };
@@ -683,7 +690,14 @@ bettercms.define('bcms.options', ['bcms.jquery', 'bcms', 'bcms.ko.extenders', 'b
                 self.saveItem = function () {
                     _super.prototype.saveItem.call(self);
                     var useDefaultValue = self.useDefaultValueBinding();
-                    var newValue = self.valueBinding();
+
+                    var newValue = "";
+                    if (self.type() != optionTypes.customType) {
+                        newValue = self.valueBinding();
+                    } else {
+                        newValue = self.customOptionTitle();
+                    }
+
                     if (!self.translationsEnabled) {
                         self.defaultValue(newValue);
                         self.useDefaultValue(useDefaultValue);
@@ -753,6 +767,7 @@ bettercms.define('bcms.options', ['bcms.jquery', 'bcms', 'bcms.ko.extenders', 'b
                 if (languageId == "") {
                     if (this.useDefaultValue() && this.value() == null) {
                         this.valueBinding(this.defaultValue());
+                        this.customOptionTitle(this.defaultValue());
                     } else {
                         this.value();
                     }
@@ -762,16 +777,20 @@ bettercms.define('bcms.options', ['bcms.jquery', 'bcms', 'bcms.ko.extenders', 'b
                     var valueTranslation = this.getValueTranslation(languageId);
                     if (valueTranslation == null) {
                         this.valueBinding(this.defaultValue());
+                        this.customOptionTitle(this.defaultValue());
                         this.useDefaultValueBinding(this.useDefaultValue());
                     } else {
                         this.valueBinding(valueTranslation.OptionValue);
+                        this.customOptionTitle(valueTranslation.OptionValue);
                         this.useDefaultValueBinding(valueTranslation.UseDefaultValue);
                     }
                     var translation = this.getTranslation(languageId);
                     if (translation == null) {
                         this.defaultValueBinding(this.defaultValue());
+                        this.customOptionDefaultTitle(this.defaultValue());
                     } else {
                         this.defaultValueBinding(translation.OptionValue);
+                        this.customOptionDefaultTitle(translation.OptionValue);
                     }
                 }
             };
