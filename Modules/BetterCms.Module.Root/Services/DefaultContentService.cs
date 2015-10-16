@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text.RegularExpressions;
@@ -16,7 +17,6 @@ using BetterCms.Module.Root.Models;
 using BetterCms.Module.Root.Mvc;
 using BetterCms.Module.Root.Mvc.Helpers;
 
-using BetterModules.Core.DataAccess.DataContext;
 using BetterModules.Core.Exceptions.DataTier;
 
 using NHibernate.Linq;
@@ -103,11 +103,6 @@ namespace BetterCms.Module.Root.Services
 
             originalContent = repository.UnProxy(originalContent);
 
-            if (originalContent.ContentOptions != null)
-            {
-                originalContent.ContentOptions = originalContent.ContentOptions.Distinct().ToList();
-            }
-
             if (originalContent.History == null)
             {
                 originalContent.History = new List<Models.Content>();
@@ -139,48 +134,28 @@ namespace BetterCms.Module.Root.Services
 
         private Models.Content GetOriginalContent(Guid id)
         {
-            Models.Content contentAlias = null;
-            Models.Content historyAlias = null;
-            ContentOption contentOptionAlias = null;
-            ContentOptionTranslation contentOptionTranslationAlias = null;
-            ChildContent childContentAlias = null;
-            ContentRegion contentRegionAlias = null;
-            Region regionAlias = null;
-
-            var contentQuery = repository.AsQueryOver(() => contentAlias)
-                .Left.JoinAlias(() => contentAlias.ContentOptions, () => contentOptionAlias, () => !contentOptionAlias.IsDeleted)
-                .Left.JoinAlias(() => contentOptionAlias.Translations, () => contentOptionTranslationAlias, () => !contentOptionTranslationAlias.IsDeleted)
-//                .Left.JoinAlias(() => contentAlias.ChildContents, () => childContentAlias, () => !childContentAlias.IsDeleted)
-                .Left.JoinAlias(() => contentAlias.History, () => historyAlias, () => !historyAlias.IsDeleted)
-                .Where(() => contentAlias.Id == id)
-                .Future();
-            var content = contentQuery.FirstOrDefault();
+            var content = repository.AsQueryable<Models.Content>().Where(c => c.Id == id).Fetch(c => c.Original).FirstOrDefault();
             if (content == null)
             {
                 throw new EntityNotFoundException(typeof(Models.Content), id);
             }
-            IEnumerable<Models.Content> originalFuture = new List<Models.Content>();
+
+            var historyFuture = repository.AsQueryable<Models.Content>().Where(c => c.Original.Id == content.Id).ToFuture();
+            var contentOptionsFuture = repository.AsQueryable<ContentOption>().Where(co => co.Content.Id == content.Id).FetchMany(co => co.Translations).ToFuture();
+            var childContentsFuture = repository.AsQueryable<ChildContent>().Where(cc => cc.Parent.Id == content.Id).ToFuture();
+            var contentRegionsFuture = repository.AsQueryable<ContentRegion>().Where(cr => cr.Content.Id == content.Id).Fetch(cr => cr.Region).ToFuture();
             if (content.Original != null)
             {
-                var originalId = content.Original.Id;
-                originalFuture =
-                    repository.AsQueryOver(() => contentAlias)
-                        .Left.JoinAlias(() => contentAlias.History, () => historyAlias, () => !historyAlias.IsDeleted)
-                        .Left.JoinAlias(() => contentAlias.ContentOptions, () => contentOptionAlias, () => !contentOptionAlias.IsDeleted)
-                        .Left.JoinAlias(() => contentOptionAlias.Translations, () => contentOptionTranslationAlias, () => !contentOptionTranslationAlias.IsDeleted)
-//                        .Left.JoinAlias(() => contentAlias.ChildContents, () => childContentAlias, () => !childContentAlias.IsDeleted)
-                        .Where(() => contentAlias.Id == originalId && !contentAlias.IsDeleted)
-                        .Future();
-            }
-            var contentRegionsFuture = repository.AsQueryOver(() => contentRegionAlias)
-                .Left.JoinAlias(() => contentRegionAlias.Region, () => regionAlias, () => !regionAlias.IsDeleted)
-                .Where(() => contentRegionAlias.Content.Id == id)
-                .Future();
+                var originalHistoryFuture = repository.AsQueryable<Models.Content>().Where(c => c.Original.Id == content.Original.Id).ToFuture();
+                var originalContentOptionsFuture = repository.AsQueryable<ContentOption>().Where(co => co.Content.Id == content.Original.Id).FetchMany(co => co.Translations).ToFuture();
 
-            var original = originalFuture.FirstOrDefault();
-            var contentRegions = contentRegionsFuture as IList<ContentRegion> ?? contentRegionsFuture.ToList();
-            content.Original = original;
-            content.ContentRegions = contentRegions;
+                content.Original.History = originalHistoryFuture as IList<Models.Content> ?? originalHistoryFuture.ToList();
+                content.Original.ContentOptions = originalContentOptionsFuture as IList<ContentOption> ?? originalContentOptionsFuture.ToList();
+            }
+            content.History = historyFuture as IList<Models.Content> ?? historyFuture.ToList();
+            content.ContentOptions = contentOptionsFuture as IList<ContentOption> ?? contentOptionsFuture.ToList();
+            content.ChildContents = childContentsFuture as IList<ChildContent> ?? childContentsFuture.ToList();
+            content.ContentRegions = contentRegionsFuture as IList<ContentRegion> ?? contentRegionsFuture.ToList();
 
             return content;
         }

@@ -69,5 +69,19 @@ namespace BetterCms.Module.Root.Models
                 ChildContentOption = (ChildContentOption)value;
             }
         }
+
+        public virtual ChildContentOptionTranslation Clone()
+        {
+            return CopyDataTo(new ChildContentOptionTranslation());
+        }
+
+        private ChildContentOptionTranslation CopyDataTo(ChildContentOptionTranslation childContentOptionTranslation)
+        {
+            childContentOptionTranslation.ChildContentOption = ChildContentOption;
+            childContentOptionTranslation.Value = Value;
+            childContentOptionTranslation.Language = Language;
+
+            return childContentOptionTranslation;
+        }
     }
 }
