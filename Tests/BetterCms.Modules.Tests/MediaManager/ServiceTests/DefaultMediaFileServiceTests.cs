@@ -78,7 +78,7 @@ namespace BetterCms.Test.Module.MediaManager.ServiceTests
             securityService.Setup(x => x.CurrentPrincipalName).Returns("Test User");
 
             return new DefaultMediaFileService(storageService.Object, null, null, cmsConfiguration.Object, null,
-                null, urlResolver.Object, securityService.Object, null, accessControlService.Object);
+                null, urlResolver.Object, securityService.Object);
         }
     }
 }
