@@ -40,7 +40,7 @@ namespace BetterCms.Test.Module.MediaManager.CommandTests
                     session.Flush();
                     session.Clear();
 
-                    var mediafileService = new DefaultMediaFileService(storageService, repository, uow, cmsConfiguration, httpContextAccessor.Object, null, null, null, null, null);
+                    var mediafileService = new DefaultMediaFileService(storageService, repository, uow, cmsConfiguration, httpContextAccessor.Object, null, null, null);
                     var command = new DeleteMediaCommand(mediafileService);
                     command.Repository = repository;
                     command.UnitOfWork = uow;

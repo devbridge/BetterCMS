@@ -119,7 +119,7 @@ namespace BetterCms.Module.Pages.Command.Widget.GetHtmlContentWidgetForEdit
                                             f.Translations.Select(x => new OptionTranslationViewModel
                                             {
                                                 LanguageId = x.Language.Id.ToString(),
-                                                OptionValue = x.Value
+                                                OptionValue = optionService.ClearFixValueForEdit(f.Type, x.Value)
                                             }).ToList() : null
                                     })
                         .OrderBy(o => o.OptionKey)
