@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
@@ -12,7 +13,6 @@ using BetterCms.Core.Exceptions;
 using BetterCms.Core.Exceptions.DataTier;
 using BetterCms.Core.Security;
 using BetterCms.Core.Services;
-using BetterCms.Core.Services.Caching;
 using BetterCms.Core.Services.Storage;
 using BetterCms.Core.Web;
 
@@ -23,7 +23,7 @@ using BetterCms.Module.Root.Mvc;
 using Common.Logging;
 
 using NHibernate;
-using NHibernate.Hql.Ast.ANTLR;
+using NHibernate.Linq;
 
 namespace BetterCms.Module.MediaManager.Services
 {
@@ -32,7 +32,7 @@ namespace BetterCms.Module.MediaManager.Services
         private static readonly ILog Log = LogManager.GetCurrentClassLogger();
 
         private readonly IStorageService storageService;
-        
+
         private readonly IRepository repository;
 
         private readonly IUnitOfWork unitOfWork;
@@ -46,10 +46,6 @@ namespace BetterCms.Module.MediaManager.Services
         private readonly IMediaFileUrlResolver mediaFileUrlResolver;
 
         private readonly ISecurityService securityService;
-        
-        private readonly ICacheService cacheService;
-
-        private readonly IAccessControlService accessControlService;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="DefaultMediaFileService" /> class.
@@ -62,12 +58,9 @@ namespace BetterCms.Module.MediaManager.Services
         /// <param name="sessionFactoryProvider">The session factory provider.</param>
         /// <param name="mediaFileUrlResolver">The media file URL resolver.</param>
         /// <param name="securityService">The security service.</param>
-        /// <param name="cacheService">The cache service.</param>
-        /// <param name="accessControlService">The access control service.</param>
         public DefaultMediaFileService(IStorageService storageService, IRepository repository, IUnitOfWork unitOfWork,
             ICmsConfiguration configuration, IHttpContextAccessor httpContextAccessor, ISessionFactoryProvider sessionFactoryProvider,
-            IMediaFileUrlResolver mediaFileUrlResolver, ISecurityService securityService, ICacheService cacheService,
-            IAccessControlService accessControlService)
+            IMediaFileUrlResolver mediaFileUrlResolver, ISecurityService securityService)
         {
             this.sessionFactoryProvider = sessionFactoryProvider;
             this.httpContextAccessor = httpContextAccessor;
@@ -77,15 +70,12 @@ namespace BetterCms.Module.MediaManager.Services
             this.repository = repository;
             this.mediaFileUrlResolver = mediaFileUrlResolver;
             this.securityService = securityService;
-            this.cacheService = cacheService;
-            this.accessControlService = accessControlService;
         }
 
         public virtual void RemoveFile(Guid fileId, int version, bool doNotCheckVersion = false)
         {
-            var file = repository
-                .AsQueryable<MediaFile>(f => f.Id == fileId)
-                .FetchMany(f => f.AccessRules)
+            var file = EagerFetch.FetchMany(repository
+                    .AsQueryable<MediaFile>(f => f.Id == fileId), f => f.AccessRules)
                 .FirstOrDefault();
 
             if (file == null)
@@ -98,15 +88,15 @@ namespace BetterCms.Module.MediaManager.Services
                 if (file.IsUploaded.HasValue && file.IsUploaded.Value)
                 {
                     Task.Factory
-                        .StartNew(() => {})
+                        .StartNew(() => { })
                         .ContinueWith(task =>
-                            {
-                                storageService.RemoveObject(file.FileUri);
-                            })
+                        {
+                            storageService.RemoveObject(file.FileUri);
+                        })
                         .ContinueWith(task =>
-                            {
-                                storageService.RemoveFolder(file.FileUri);
-                            });
+                        {
+                            storageService.RemoveFolder(file.FileUri);
+                        });
                 }
             }
             finally
@@ -117,11 +107,11 @@ namespace BetterCms.Module.MediaManager.Services
                 }
                 file.AccessRules.ToList().ForEach(file.RemoveRule);
                 repository.Delete(file);
-                unitOfWork.Commit();   
+                unitOfWork.Commit();
             }
         }
 
-        public virtual MediaFile UploadFile(MediaType type, Guid rootFolderId, string fileName, long fileLength, Stream fileStream, bool isTemporary = true, 
+        public virtual MediaFile UploadFile(MediaType type, Guid rootFolderId, string fileName, long fileLength, Stream fileStream, bool isTemporary = true,
             string title = "", string description = "")
         {
             string folderName = CreateRandomFolderName();
@@ -137,7 +127,7 @@ namespace BetterCms.Module.MediaManager.Services
             }
             file.Type = type;
             file.OriginalFileName = fileName;
-            file.OriginalFileExtension = Path.GetExtension(fileName);           
+            file.OriginalFileExtension = Path.GetExtension(fileName);
             file.Size = fileLength;
             file.FileUri = GetFileUri(type, folderName, RemoveInvalidHtmlSymbols(fileName));
             file.PublicUrl = GetPublicFileUrl(type, folderName, RemoveInvalidHtmlSymbols(fileName));
@@ -156,28 +146,28 @@ namespace BetterCms.Module.MediaManager.Services
             Task fileUploadTask = UploadMediaFileToStorageAsync<MediaFile>(fileStream, file.FileUri, file.Id, (media, session) => { media.IsUploaded = true; }, media => { media.IsUploaded = false; }, false);
             fileUploadTask.ContinueWith(
                 task =>
+                {
+                    try
                     {
-                        try
-                        {
-                            // During uploading progress Cancel action can by executed. Need to remove uploaded files from the storage.
-                            ExecuteActionOnThreadSeparatedSessionWithNoConcurrencyTracking(
-                                session =>
+                        // During uploading progress Cancel action can by executed. Need to remove uploaded files from the storage.
+                        ExecuteActionOnThreadSeparatedSessionWithNoConcurrencyTracking(
+                            session =>
+                            {
+                                var media = session.Get<MediaFile>(file.Id);
+                                if (media != null)
+                                {
+                                    if (media.IsCanceled && media.IsUploaded.HasValue && media.IsUploaded.Value)
                                     {
-                                        var media = session.Get<MediaFile>(file.Id);
-                                        if (media != null)
-                                        {
-                                            if (media.IsCanceled && media.IsUploaded.HasValue && media.IsUploaded.Value)
-                                            {
-                                                RemoveFile(media.Id, media.Version);
-                                            }
-                                        }
-                                    });
-                        }
-                        catch (Exception ex)
-                        {
-                            Log.Error("Failed to cancel file upload.", ex);
-                        }
-                    });
+                                        RemoveFile(media.Id, media.Version);
+                                    }
+                                }
+                            });
+                    }
+                    catch (Exception ex)
+                    {
+                        Log.Error("Failed to cancel file upload.", ex);
+                    }
+                });
 
             fileUploadTask.ContinueWith((t) => { Log.Error("Error observed while executing parallel task in file uploading.", t.Exception); }, TaskContinuationOptions.OnlyOnFaulted);
 
@@ -245,7 +235,6 @@ namespace BetterCms.Module.MediaManager.Services
             tempFile.IsCanceled = false;
             tempFile.IsUploaded = null;
 
-
             unitOfWork.BeginTransaction();
             repository.Save(tempFile);
 
@@ -254,55 +243,29 @@ namespace BetterCms.Module.MediaManager.Services
                 unitOfWork.Commit();
             }
 
-
             if (waitForUploadResult)
             {
                 UploadMediaFileToStorageSync(fileStream, tempFile.FileUri, tempFile, media => { media.IsUploaded = true; media.IsTemporary = false; }, media => { media.IsUploaded = false; }, false);
 
-                var swapEntity = tempFile.Clone();
                 if (createHistoryItem)
                 {
-                    var originalEntity = repository.AsQueryable<MediaFile>().First(f => f.Id == reuploadMediaId);
-                    // swap
-                    tempFile.CopyDataTo(swapEntity);
-                    originalEntity.CopyDataTo(tempFile);
-                    swapEntity.CopyDataTo(originalEntity);
-                    tempFile.Original = originalEntity;
-                    unitOfWork.Session.SaveOrUpdate(originalEntity);
+                    SaveOriginalMediaFile(reuploadMediaId.Value, tempFile, unitOfWork.Session);
                 }
                 unitOfWork.Commit();
                 Events.MediaManagerEvents.Instance.OnMediaFileUpdated(tempFile);
             }
             else
             {
-                Action<MediaFile, ISession> action;
-                if (createHistoryItem)
+                Action<MediaFile, ISession> action = delegate(MediaFile mediaFile, ISession session)
                 {
-                    action = delegate(MediaFile mediaFile, ISession session)
+                    mediaFile.IsUploaded = true;
+                    mediaFile.IsTemporary = false;
+
+                    if (createHistoryItem)
                     {
-                        mediaFile.IsUploaded = true;
-                        mediaFile.IsTemporary = false;
-
-                        var swapEntity = mediaFile.Clone();
-                        var originalEntity = session.Get<MediaFile>(reuploadMediaId);
-                        // swap
-                        mediaFile.CopyDataTo(swapEntity);
-                        originalEntity.CopyDataTo(mediaFile);
-                        swapEntity.CopyDataTo(originalEntity);
-
-                        mediaFile.Original = originalEntity;
-
-                        session.SaveOrUpdate(originalEntity);
-                    };
-                }
-                else
-                {
-                    action = delegate(MediaFile mediaFile, ISession session)
-                    {
-                        mediaFile.IsUploaded = true;
-                        mediaFile.IsTemporary = false;
-                    };
-                }
+                        SaveOriginalMediaFile(reuploadMediaId.Value, mediaFile, session);
+                    }
+                };
 
                 Task fileUploadTask = UploadMediaFileToStorageAsync<MediaFile>(fileStream, tempFile.FileUri, tempFile.Id, action, media => { media.IsUploaded = false; }, false);
                 fileUploadTask.ContinueWith(
@@ -327,6 +290,56 @@ namespace BetterCms.Module.MediaManager.Services
             }
 
             return tempFile;
+        }
+
+        private void SaveOriginalMediaFile(Guid originalId, MediaFile mediaFile, ISession session)
+        {
+            var swapEntity = mediaFile.Clone();
+            session.Evict(swapEntity);
+
+            var originalEntity = session.Get<MediaFile>(originalId);
+
+            // swap
+            mediaFile.CopyDataTo(swapEntity, false);
+            originalEntity.CopyDataTo(mediaFile, false);
+            swapEntity.CopyDataTo(originalEntity, false);
+
+            mediaFile.Original = originalEntity;
+            session.SaveOrUpdate(originalEntity);
+
+            SwapMediaTags(mediaFile.MediaTags, originalEntity, session);
+            SwapMediaTags(originalEntity.MediaTags, mediaFile, session);
+
+            SwapMediaCategories(mediaFile.Categories, originalEntity, session);
+            SwapMediaCategories(originalEntity.Categories, mediaFile, session);
+        }
+
+        private void SwapMediaTags(IList<MediaTag> mediaTags, Media media, ISession session)
+        {
+            if (mediaTags == null)
+            {
+                return;
+            }
+
+            for (var i = 0; i < mediaTags.Count; i++)
+            {
+                mediaTags[i].Media = media;
+                session.SaveOrUpdate(mediaTags[i]);
+            }
+        }
+
+        private void SwapMediaCategories(IList<MediaCategory> mediaCategories, Media media, ISession session)
+        {
+            if (mediaCategories == null)
+            {
+                return;
+            }
+
+            for (var i = 0; i < mediaCategories.Count; i++)
+            {
+                mediaCategories[i].Media = media;
+                session.SaveOrUpdate(mediaCategories[i]);
+            }
         }
 
         public virtual string CreateRandomFolderName()
@@ -382,7 +395,7 @@ namespace BetterCms.Module.MediaManager.Services
                     updateMediaAfterFail(media);
 
                     // Log exception
-                    LogManager.GetCurrentClassLogger().Error("Failed to upload file.",  exc);
+                    LogManager.GetCurrentClassLogger().Error("Failed to upload file.", exc);
                 }
                 finally
                 {
