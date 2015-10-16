@@ -3842,6 +3842,7 @@ a.bcms-active-pager:hover {
 
 .bcms-widget-option-box {
   display: inline-block;
+  vertical-align: middle;
   width: 150px;
 }
 
