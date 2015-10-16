@@ -15,6 +15,7 @@ using BetterModules.Core.Web.Mvc.Commands;
 
 using FluentNHibernate.Testing.Values;
 
+using NHibernate;
 using NHibernate.Linq;
 
 namespace BetterCms.Module.Pages.Command.Content.GetPageContentOptions
@@ -88,10 +89,38 @@ namespace BetterCms.Module.Pages.Command.Content.GetPageContentOptions
                     {
                         SetIsReadOnly(model, accessRules.Cast<IAccessRule>().ToList());
                     }
+
+                    if (CmsConfiguration.EnableMultilanguage)
+                    {
+                        var pageLanguage = Repository.AsQueryable<Root.Models.Page>().Where(p => p.Id == pageContent.Page.Id).Select(x => x.Language).FirstOrDefault();
+                        if (pageLanguage != null)
+                        {
+                            SetTranslatedDefaultOptionValues(model.OptionValues, pageLanguage.Id);
+                        }
+                    }
                 }
             }
 
             return model;
-        }        
+        }
+
+        private void SetTranslatedDefaultOptionValues(IList<OptionValueEditViewModel> optionValues, Guid id)
+        {
+            foreach (var optionValueEditViewModel in optionValues)
+            {
+                if (optionValueEditViewModel.Translations != null)
+                {
+                    var translation = optionValueEditViewModel.Translations.FirstOrDefault(x => x.LanguageId == id.ToString());
+                    if (translation != null)
+                    {
+                        optionValueEditViewModel.OptionDefaultValue = translation.OptionValue;
+                        if (optionValueEditViewModel.UseDefaultValue)
+                        {
+                            optionValueEditViewModel.OptionValue = translation.OptionValue;
+                        }
+                    }
+                }
+            }
+        }
     }
 }
