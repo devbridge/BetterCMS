@@ -2,11 +2,11 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.Serialization;
-using System.Web.Mvc;
 
 using BetterCms.Core.DataContracts;
 using BetterCms.Core.DataContracts.Enums;
 using BetterCms.Core.Modules.Projections;
+using Microsoft.AspNet.Mvc.ViewFeatures;
 
 namespace BetterCms.Module.Root.Projections
 {

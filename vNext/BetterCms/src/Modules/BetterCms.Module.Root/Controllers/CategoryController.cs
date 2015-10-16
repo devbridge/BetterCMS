@@ -1,7 +1,4 @@
-﻿using System.Web.Mvc;
-
-using BetterCms.Core.Security;
-using BetterCms.Module.Root.Commands.Category.DeleteCategoryTree;
+﻿using BetterCms.Module.Root.Commands.Category.DeleteCategoryTree;
 using BetterCms.Module.Root.Commands.Category.GetCategoryTree;
 using BetterCms.Module.Root.Commands.Category.GetCategoryTreesList;
 using BetterCms.Module.Root.Commands.Category.SaveCategoryTree;
@@ -14,7 +11,6 @@ using BetterCms.Module.Root.ViewModels.Category;
 
 using BetterModules.Core.Web.Models;
 using Microsoft.AspNet.Mvc;
-using Microsoft.Web.Mvc;
 
 namespace BetterCms.Module.Root.Controllers
 {

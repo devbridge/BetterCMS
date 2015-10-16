@@ -7,10 +7,10 @@
 
   <Import Project="$(VSToolsPath)\DNX\Microsoft.DNX.Props" Condition="'$(VSToolsPath)' != ''" />
   <PropertyGroup Label="Globals">
-    <ProjectGuid>6ba6618c-4a54-4e34-b0d9-7330658c1b20</ProjectGuid>
+    <ProjectGuid>6d7f6b0d-12d7-46ef-8bc0-552cf11fa6a5</ProjectGuid>
     <RootNamespace>BetterCms.Module.Root</RootNamespace>
-    <BaseIntermediateOutputPath Condition="'$(BaseIntermediateOutputPath)'=='' ">..\..\artifacts\obj\$(MSBuildProjectName)</BaseIntermediateOutputPath>
-    <OutputPath Condition="'$(OutputPath)'=='' ">..\..\artifacts\bin\$(MSBuildProjectName)\</OutputPath>
+    <BaseIntermediateOutputPath Condition="'$(BaseIntermediateOutputPath)'=='' ">..\..\..\artifacts\obj\$(MSBuildProjectName)</BaseIntermediateOutputPath>
+    <OutputPath Condition="'$(OutputPath)'=='' ">..\..\..\artifacts\bin\$(MSBuildProjectName)\</OutputPath>
   </PropertyGroup>
 
   <PropertyGroup>

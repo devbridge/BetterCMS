@@ -1,16 +1,14 @@
 ﻿{
-    "version": "2.0.0-alpha1",
-    "description": "BetterCms Root Module",
-    "authors": [ "Devbridge Group" ],
-    "tags": [ "" ],
-    "projectUrl": "http://www.bettercms.com",
-    "licenseUrl": "http://www.bettercms.com/license.txt",
-
-    "dependencies": {
-        "BetterCms.Core": "2.0.0-*"
-    },
-
+  "version": "1.0.0-*",
+  "description": "BetterCms.Module.Root Class Library",
+  "authors": [ "user" ],
+  "tags": [ "" ],
+  "projectUrl": "",
+  "licenseUrl": "",
     "frameworks": {
         "dnx451": { }
+    },
+    "dependencies": {
+        "BetterCms.Core": "2.0.0-alpha1"
     }
 }
