@@ -43,13 +43,14 @@
     position: relative;
 }
 
-.bcms-language-selector-box {
-    float: right;
-}
-
 .bcms-language-bar {
     display: table;
-    //height: 63px;
+    margin-top: 15px;
+}
+
+.bcms-language-selector-box {
+    float: right;
+    margin-top: 0;
 }
 
 .bcms-table-middle-box {
