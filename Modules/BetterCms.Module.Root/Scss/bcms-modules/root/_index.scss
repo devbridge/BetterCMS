@@ -1157,7 +1157,7 @@ a.bcms-active-pager:hover {
 
 //module tem for widget configuration
 .bcms-widget-option-box {
-    display: inline-block;
+    @include vertical-align();
     width: 150px;
 
     select {
