@@ -16,10 +16,10 @@ namespace BetterCms.Core.Modules.Install
         
         public DefaultModuleManager(IPackageRepository packageRepository, IOptions<CmsConfigurationSection> cmsConfiguration)
         {
-            this.packageRepository = PackageRepositoryFactory.Default.CreateRepository(cmsConfiguration.Options.ModuleGallery.FeedUrl);
+            this.packageRepository = PackageRepositoryFactory.Default.CreateRepository(cmsConfiguration.Value.ModuleGallery.FeedUrl);
             this.packageManager = new PackageManager(
                 this.packageRepository,
-                cmsConfiguration.Options.WorkingDirectoryRootPath) { Logger = null };
+                cmsConfiguration.Value.WorkingDirectoryRootPath) { Logger = null };
         }
 
         /// <summary>

@@ -7,7 +7,7 @@
   "licenseUrl": "http://www.bettercms.com/license.txt",
 
     "dependencies": {
-        "BetterModules.Core.Web": "2.0.0-alpha1"
+        "BetterModules.Core.Web": "2.0.0-alpha2"
     },
 
   "frameworks": {

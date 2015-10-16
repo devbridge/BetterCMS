@@ -13,7 +13,7 @@ namespace BetterCms.Core.Environment.FileSystem
         private readonly IHostingEnvironment hostingEnvironment;
         public CmsWorkingDirectory(IOptions<CmsConfigurationSection> configuration, IHostingEnvironment hostingEnvironment, ILoggerFactory loggerFactory) : base(loggerFactory)
         {
-            this.configuration = configuration.Options;
+            this.configuration = configuration.Value;
             this.hostingEnvironment = hostingEnvironment;
         }
 

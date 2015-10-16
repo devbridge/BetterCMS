@@ -4,8 +4,8 @@ using BetterCms.Core.Services;
 using Microsoft.AspNet.Mvc;
 using Microsoft.AspNet.Mvc.Rendering;
 using Microsoft.AspNet.Mvc.ViewFeatures;
-using Microsoft.Extensions.WebEncoders;
-using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Framework.WebEncoders;
+using Microsoft.Framework.DependencyInjection;
 
 namespace BetterCms.Core.Modules.Projections
 {

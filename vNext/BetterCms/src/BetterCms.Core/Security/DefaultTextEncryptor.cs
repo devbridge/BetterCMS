@@ -20,7 +20,7 @@ namespace BetterCms.Core.Security
 
         public DefaultTextEncryptor(IOptions<CmsConfigurationSection> configuration)
         {
-            this.configuration = configuration.Options;
+            this.configuration = configuration.Value;
             cryptoProvider = new DESCryptoServiceProvider();
         }
 

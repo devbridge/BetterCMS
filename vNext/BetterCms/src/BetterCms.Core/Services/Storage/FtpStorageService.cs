@@ -22,10 +22,10 @@ namespace BetterCms.Core.Services.Storage
         {
             try
             {
-                var serviceSection = config.Options.Storage;
+                var serviceSection = config.Value.Storage;
                 var mode = serviceSection.GetValue("UsePassiveMode");
 
-                rootUrl = config.Options.Storage.ContentRoot;
+                rootUrl = config.Value.Storage.ContentRoot;
                 usePassiveMode = mode != null && bool.Parse(mode);
                 ftpRoot = serviceSection.GetValue("FtpRoot");
                 userName = serviceSection.GetValue("FtpUserName");

@@ -37,7 +37,7 @@ namespace BetterCms.Core.Modules
         /// <param name="configuration">The configuration.</param>
         protected CmsModuleDescriptor(IOptions<CmsConfigurationSection> configuration)
         {
-            Configuration = configuration.Options;
+            Configuration = configuration.Value;
         }
 
         /// <summary>

@@ -8,9 +8,6 @@
 
     "dependencies": {
         "BetterCms.Configuration": "2.0.0-alpha1",
-        "BetterModules.Core.Web": "2.0.0-alpha1",
-        "Microsoft.AspNet.Mvc": "6.0.0-rc1-16028",
-        "Microsoft.AspNet.Mvc.ViewFeatures": "6.0.0-rc1-16028",
         "NuGet.Core": "2.0.1"
     },
 
