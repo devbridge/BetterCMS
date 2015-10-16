@@ -6,8 +6,7 @@ using BetterCms.Module.Root.Mvc.Grids.Extensions;
 using BetterCms.Module.Root.ViewModels;
 using BetterCms.Module.Root.ViewModels.Category;
 using BetterCms.Module.Root.ViewModels.SiteSettings;
-
-using BetterModules.Core.Web.Mvc.Commands;
+using BetterModules.Core.Infrastructure.Commands;
 
 using NHibernate.Criterion;
 using NHibernate.Transform;
@@ -47,5 +46,7 @@ namespace BetterCms.Module.Root.Commands.Category.GetCategoryTreesList
 
             return new CategoryTreesGridViewModel<SiteSettingCategoryTreeViewModel>(sitemaps.ToList(), request, count.Value);
         }
+
+        public ICommandContext Context { get; set; }
     }
 }

@@ -1,17 +1,14 @@
 ﻿using System.Collections.Generic;
-using System.Web.Mvc;
-using System.Web.UI;
-
+using System.Linq;
 using BetterModules.Core.Web.Web.EmbeddedResources;
-
-using Microsoft.Web.Mvc;
+using Microsoft.AspNet.Mvc;
 
 namespace BetterCms.Module.Root.Controllers
 {
     /// <summary>
     /// Embedded resources accessor controller.
     /// </summary>
-    [ActionLinkArea(RootModuleDescriptor.RootAreaName)]
+    [Area(RootModuleDescriptor.RootAreaName)]
     public class EmbeddedResourcesController : Controller
     {        
         /// <summary>
@@ -22,7 +19,7 @@ namespace BetterCms.Module.Root.Controllers
         /// <summary>
         /// Embedded resources provider.
         /// </summary>
-        private readonly IEmbeddedResourcesProvider embeddedResourcesProvider;
+        private readonly IEmbeddedResourceProvider embeddedResourcesProvider;
 
         /// <summary>
         /// Initializes static members of the <see cref="EmbeddedResourcesController" /> class.
@@ -48,7 +45,7 @@ namespace BetterCms.Module.Root.Controllers
         /// Initializes a new instance of the <see cref="EmbeddedResourcesController" /> class.
         /// </summary>
         /// <param name="embeddedResourcesProvider">The embedded resources provider.</param>
-        public EmbeddedResourcesController(IEmbeddedResourcesProvider embeddedResourcesProvider)
+        public EmbeddedResourcesController(IEmbeddedResourceProvider embeddedResourcesProvider)
         {
             this.embeddedResourcesProvider = embeddedResourcesProvider;
         }
@@ -69,8 +66,8 @@ namespace BetterCms.Module.Root.Controllers
         /// Embedded resource file.
         /// </returns>
         [HttpGet]
-        [OutputCache(Location = OutputCacheLocation.Any, Duration = 31536000, VaryByParam = "area;folder1;folder2;folder3;folder4;folder5;folder6;file;resourceType")]
-        public ActionResult Index(string area = null, string folder1 = null, string folder2 = null, string folder3 = null, string folder4 = null, string folder5 = null, string folder6 = null, string file = null, string resourceType = null)
+        //[OutputCache(Location = OutputCacheLocation.Any, Duration = 31536000, VaryByParam = "area;folder1;folder2;folder3;folder4;folder5;folder6;file;resourceType")]
+        public IActionResult Index(string area = null, string folder1 = null, string folder2 = null, string folder3 = null, string folder4 = null, string folder5 = null, string folder6 = null, string file = null, string resourceType = null)
         {
             string contentType = GetContentType(resourceType);
             if (string.IsNullOrEmpty(contentType))
@@ -90,25 +87,20 @@ namespace BetterCms.Module.Root.Controllers
                                     };
 
             string virtualPath = "~/Areas/" + area + "/";
-            for (int i = 0; i < folders.Length; i++)
-            {
-                if (!string.IsNullOrEmpty(folders[i]))
-                {
-                    virtualPath += folders[i] + "/";
-                }
-            }
+            virtualPath = folders.Where(t => !string.IsNullOrEmpty(t)).Aggregate(virtualPath, (current, t) => current + (t + "/"));
 
             virtualPath += file + "." + resourceType;
 
-            if (!embeddedResourcesProvider.IsEmbeddedResourceVirtualPath(virtualPath))
-            {
-                Response.StatusCode = 404;
-                return new EmptyResult();
-            }
+            // TODO check for IsEmbeddedResourceVirtualPath
+            //if (!embeddedResourcesProvider.IsEmbeddedResourceVirtualPath(virtualPath))
+            //{
+            //    Response.StatusCode = 404;
+            //    return new EmptyResult();
+            //}
 
-            var virtualFile = embeddedResourcesProvider.GetEmbeddedResourceVirtualFile(virtualPath);
+            var virtualFile = embeddedResourcesProvider.GetFileInfo(virtualPath);
            
-            return File(virtualFile.Open(), contentType);
+            return File(virtualFile.CreateReadStream(), contentType);
         }
 
         /// <summary>

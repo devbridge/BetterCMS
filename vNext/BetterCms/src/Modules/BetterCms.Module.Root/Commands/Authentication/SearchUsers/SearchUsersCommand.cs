@@ -1,17 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Web.Security;
 
 using BetterCms.Configuration;
 using BetterCms.Module.Root.Models;
 using BetterCms.Module.Root.Mvc;
 using BetterCms.Module.Root.ViewModels.Autocomplete;
-
-using Common.Logging;
-
-using BetterModules.Core.Web.Mvc.Commands;
-using BetterModules.Core.Web.Services.Caching;
+using BetterModules.Core.Infrastructure.Commands;
+using Microsoft.Framework.Logging;
+using Microsoft.Framework.OptionsModel;
 
 namespace BetterCms.Module.Root.Commands.Authentication.SearchUsers
 {
@@ -28,12 +25,12 @@ namespace BetterCms.Module.Root.Commands.Authentication.SearchUsers
         /// <summary>
         /// Current class logger.
         /// </summary>
-        private static readonly ILog Log = LogManager.GetCurrentClassLogger();
+        private readonly ILogger logger;
 
         /// <summary>
         /// The configuration.
         /// </summary>
-        private readonly ICmsConfiguration configuration;
+        private readonly CmsConfigurationSection configuration;
 
         /// <summary>
         /// The cache service.
@@ -45,10 +42,12 @@ namespace BetterCms.Module.Root.Commands.Authentication.SearchUsers
         /// </summary>
         /// <param name="configuration">The configuration.</param>
         /// <param name="cacheService">The cache service.</param>
-        public SearchUsersCommand(ICmsConfiguration configuration, ICacheService cacheService)
+        /// <param name="loggerFactory">The logger factory</param>
+        public SearchUsersCommand(IOptions<CmsConfigurationSection> configuration, ICacheService cacheService, ILoggerFactory loggerFactory)
         {
-            this.configuration = configuration;
+            this.configuration = configuration.Value;
             this.cacheService = cacheService;
+            logger = loggerFactory.CreateLogger<SearchUsersCommand>();
         }
 
         /// <summary>
@@ -95,7 +94,7 @@ namespace BetterCms.Module.Root.Commands.Authentication.SearchUsers
             }
             catch (Exception ex)
             {
-                Log.Error("Error occurred while retrieving users.", ex);
+                logger.LogError("Error occurred while retrieving users.", ex);
             }
 
             if (!result.Any())

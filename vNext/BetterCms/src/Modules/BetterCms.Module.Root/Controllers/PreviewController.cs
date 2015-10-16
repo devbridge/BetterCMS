@@ -1,15 +1,12 @@
 ﻿using System.Collections.Generic;
-using System.Web.Mvc;
-
+using BetterCms.Configuration;
 using BetterCms.Core.Mvc.Attributes;
-using BetterCms.Core.Security;
-
 using BetterCms.Module.Root.Commands.GetPageToRender;
 using BetterCms.Module.Root.Mvc;
 using BetterCms.Module.Root.Mvc.Helpers;
 using BetterCms.Module.Root.Mvc.PageHtmlRenderer;
-
-using Microsoft.Web.Mvc;
+using Microsoft.AspNet.Mvc;
+using Microsoft.Framework.OptionsModel;
 
 namespace BetterCms.Module.Root.Controllers
 {
@@ -17,21 +14,21 @@ namespace BetterCms.Module.Root.Controllers
     /// Preview controller.
     /// </summary>
     [BcmsAuthorize(RootModuleConstants.UserRoles.EditContent)]
-    [ActionLinkArea(RootModuleDescriptor.RootAreaName)]
+    [Area(RootModuleDescriptor.RootAreaName)]
     public class PreviewController : CmsControllerBase
     {
         /// <summary>
         /// The CMS configuration.
         /// </summary>
-        private readonly ICmsConfiguration cmsConfiguration;
+        private readonly CmsConfigurationSection cmsConfiguration;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="PreviewController"/> class.
         /// </summary>
         /// <param name="cmsConfiguration">The CMS configuration.</param>
-        public PreviewController(ICmsConfiguration cmsConfiguration)
+        public PreviewController(IOptions<CmsConfigurationSection> cmsConfiguration)
         {
-            this.cmsConfiguration = cmsConfiguration;
+            this.cmsConfiguration = cmsConfiguration.Value;
         }
 
         /// <summary>

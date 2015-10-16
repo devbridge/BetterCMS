@@ -8,7 +8,7 @@ using BetterCms.Module.Root.Mvc;
 using BetterCms.Module.Root.ViewModels.Language;
 
 using BetterModules.Core.DataAccess.DataContext;
-using BetterModules.Core.Web.Mvc.Commands;
+using BetterModules.Core.Infrastructure.Commands;
 
 namespace BetterCms.Module.Root.Commands.Language.SaveLanguage
 {

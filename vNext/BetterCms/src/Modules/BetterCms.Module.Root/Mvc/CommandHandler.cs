@@ -4,12 +4,10 @@ using System.Text;
 using BetterCms.Core.Exceptions.Mvc;
 using BetterCms.Core.Exceptions.Service;
 using BetterCms.Module.Root.Content.Resources;
-
-using Common.Logging;
-
 using BetterModules.Core.Exceptions;
 using BetterModules.Core.Exceptions.DataTier;
-using BetterModules.Core.Web.Mvc.Commands;
+using BetterModules.Core.Infrastructure.Commands;
+using Microsoft.Framework.Logging;
 
 namespace BetterCms.Module.Root.Mvc
 {
@@ -18,10 +16,10 @@ namespace BetterCms.Module.Root.Mvc
     /// </summary>
     public static class CommandHandler
     {
-        /// <summary>
-        /// Current class logger.
-        /// </summary>
-        private static readonly ILog Log = LogManager.GetCurrentClassLogger();
+        ///// <summary>
+        ///// Current class logger.
+        ///// </summary>
+        //private readonly ILogger logger;
         
         /// <summary>
         /// Handles the command.
@@ -211,7 +209,7 @@ namespace BetterCms.Module.Root.Mvc
         /// <param name="request">The request.</param>
         private static void HandleValidationException(ValidationException ex, ICommandBase command, object request = null)
         {
-            Log.Trace(FormatCommandExceptionMessage(command, request), ex);
+            //logger.Trace(FormatCommandExceptionMessage(command, request), ex);
 
             string message = null;
             if (ex.Resource != null)
@@ -238,7 +236,7 @@ namespace BetterCms.Module.Root.Mvc
         /// <param name="request">The request.</param>
         private static void HandleConfirmationRequestException(ConfirmationRequestException ex, ICommandBase command, object request = null)
         {
-            Log.Trace(FormatCommandExceptionMessage(command, request), ex);
+            //logger.Trace(FormatCommandExceptionMessage(command, request), ex);
 
             throw ex;
         }
@@ -251,7 +249,7 @@ namespace BetterCms.Module.Root.Mvc
         /// <param name="request">The request.</param>
         private static void HandleConcurrentDataException(ConcurrentDataException ex, ICommandBase command, object request = null)
         {
-            Log.Trace(FormatCommandExceptionMessage(command, request), ex);
+            //logger.Trace(FormatCommandExceptionMessage(command, request), ex);
 
             string message = RootGlobalization.Message_ConcurentDataException;
 
@@ -269,7 +267,7 @@ namespace BetterCms.Module.Root.Mvc
         /// <param name="request">The request.</param>
         private static void HandleEntityNotFoundException(EntityNotFoundException ex, ICommandBase command, object request = null)
         {
-            Log.Trace(FormatCommandExceptionMessage(command, request), ex);
+            //logger.Trace(FormatCommandExceptionMessage(command, request), ex);
 
             string message = RootGlobalization.Message_EntityNotFoundException;
 
@@ -287,7 +285,7 @@ namespace BetterCms.Module.Root.Mvc
         /// <param name="request">The request.</param>
         private static void HandleSecurityException(SecurityException ex, ICommandBase command, object request = null)
         {
-            Log.Error(FormatCommandExceptionMessage(command, request), ex);
+            //logger.Error(FormatCommandExceptionMessage(command, request), ex);
             if (command.Context != null)
             {
                 command.Context.Messages.AddError(RootGlobalization.Message_AccessForbidden);
@@ -302,7 +300,7 @@ namespace BetterCms.Module.Root.Mvc
         /// <param name="request">The request.</param>
         private static void HandleCoreException(CoreException ex, ICommandBase command, object request = null)
         {
-            Log.Error(FormatCommandExceptionMessage(command, request), ex);
+            //logger.Error(FormatCommandExceptionMessage(command, request), ex);
             if (command.Context != null)
             {
                 command.Context.Messages.AddError(RootGlobalization.Message_InternalServerErrorPleaseRetry);
@@ -317,7 +315,7 @@ namespace BetterCms.Module.Root.Mvc
         /// <param name="request">The request.</param>
         private static void HandleException(Exception ex, ICommandBase command, object request = null)
         {
-            Log.Fatal(FormatCommandExceptionMessage(command, request), ex);
+            //logger.Fatal(FormatCommandExceptionMessage(command, request), ex);
             if (command.Context != null)
             {
                 command.Context.Messages.AddError(RootGlobalization.Message_InternalServerErrorPleaseRetry);

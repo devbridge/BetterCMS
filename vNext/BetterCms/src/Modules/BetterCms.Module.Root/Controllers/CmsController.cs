@@ -1,8 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
-using System.Web;
-using System.Web.Mvc;
 
 using BetterCms.Configuration;
 using BetterCms.Core.DataContracts.Enums;
@@ -12,27 +10,25 @@ using BetterCms.Module.Root.Commands.GetPageToRender;
 using BetterCms.Module.Root.Mvc;
 using BetterCms.Module.Root.Mvc.Helpers;
 using BetterCms.Module.Root.ViewModels.Cms;
-
-using Common.Logging;
-
-using BetterModules.Core.Web.Services.Caching;
-
-using Microsoft.Web.Mvc;
+using Microsoft.AspNet.Mvc;
+using Microsoft.Framework.Logging;
+using Microsoft.Framework.OptionsModel;
+using ILogger = Microsoft.Framework.Logging.ILogger;
 
 namespace BetterCms.Module.Root.Controllers
 {
-    [ActionLinkArea(RootModuleDescriptor.RootAreaName)]
+    [Area(RootModuleDescriptor.RootAreaName)]
     public class CmsController : CmsControllerBase
     {
         /// <summary>
         /// The configuration loader
         /// </summary>
-        private readonly ICmsConfiguration cmsConfiguration;
+        private readonly CmsConfigurationSection cmsConfiguration;
 
-        /// <summary>
-        /// The cache service
-        /// </summary>
-        private readonly ICacheService cacheService;
+        ///// <summary>
+        ///// The cache service
+        ///// </summary>
+        //private readonly ICacheService cacheService;
 
         /// <summary>
         /// The cache service
@@ -42,18 +38,18 @@ namespace BetterCms.Module.Root.Controllers
         /// <summary>
         /// Current class logger.
         /// </summary>
-        private static readonly ILog log = LogManager.GetCurrentClassLogger();
+        private readonly ILogger logger;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="CmsController" /> class.
         /// </summary>
         /// <param name="cmsConfiguration">The configuration loader.</param>
-        /// <param name="cacheService">The cache service.</param>
         /// <param name="accessControlService">The access control service.</param>
-        public CmsController(ICmsConfiguration cmsConfiguration, ICacheService cacheService, IAccessControlService accessControlService)
+        /// <param name="loggerFactory">The logger factory</param>
+        public CmsController(IOptions<CmsConfigurationSection> cmsConfiguration, IAccessControlService accessControlService, ILoggerFactory loggerFactory)
         {
-            this.cmsConfiguration = cmsConfiguration;
-            this.cacheService = cacheService;
+            this.cmsConfiguration = cmsConfiguration.Value;
+            logger = loggerFactory.CreateLogger<CmsController>();
             this.accessControlService = accessControlService;
         }
 
@@ -64,7 +60,7 @@ namespace BetterCms.Module.Root.Controllers
         /// Returns page or redirect or page not found result.
         /// </returns>
         [IgnoreAutoRoute]
-        public ActionResult Index()
+        public IActionResult Index()
         {
             var virtualPath = HttpUtility.UrlDecode(Http.GetAbsolutePath());
             bool pageNotFound = false;
@@ -132,7 +128,7 @@ namespace BetterCms.Module.Root.Controllers
                             }
                             catch (Exception ex)
                             {
-                               log.FatalFormat("Failed to pre-render the request model {0}.", ex, model.RenderPage);
+                               logger.FatalFormat("Failed to pre-render the request model {0}.", ex, model.RenderPage);
                             }
                             
                             Response.StatusCode = 403;
@@ -219,16 +215,16 @@ namespace BetterCms.Module.Root.Controllers
                                                          IsAuthenticated = principal != null && principal.Identity.IsAuthenticated
                                                      };
 
-            if (useCaching)
-            {
-                string cacheKey = "CMS_" + CalculateHash(virtualPath) + "_050cc001f75942648e57e58359140d1a";
-                model = cacheService.Get(cacheKey, cmsConfiguration.Cache.Timeout, () => GetCommand<GetPageToRenderCommand>().ExecuteCommand(request));
-            }
-            else
-            {
+            //if (useCaching)
+            //{
+            //    //string cacheKey = "CMS_" + CalculateHash(virtualPath) + "_050cc001f75942648e57e58359140d1a";
+            //    //model = cacheService.Get(cacheKey, cmsConfiguration.Cache.Timeout, () => GetCommand<GetPageToRenderCommand>().ExecuteCommand(request));
+            //}
+            //else
+            //{
                 var command = GetCommand<GetPageToRenderCommand>();
                 model = command.Execute(request);
-            }
+            //}
 
             return model;
         }
@@ -251,7 +247,7 @@ namespace BetterCms.Module.Root.Controllers
 
         private void LogPageNotFound(string virtualPath)
         {
-            log.InfoFormat("Failed to load page by URL: {0}. Page not found.", virtualPath);
+            logger.LogInformation("Failed to load page by URL: {0}. Page not found.", virtualPath);
 
             // Notifying, that page was not found.
             Events.RootEvents.Instance.OnPageNotFound(virtualPath);
@@ -259,7 +255,7 @@ namespace BetterCms.Module.Root.Controllers
         
         private void LogAccessForbidden(RenderPageViewModel model)
         {
-            log.WarnFormat("Failed to load page by URL: {0}. Access is forbidden.", model.PageUrl);
+            logger.LogWarning("Failed to load page by URL: {0}. Access is forbidden.", model.PageUrl);
 
             // Notifying, that page access was forbidden.
             Events.RootEvents.Instance.OnPageAccessForbidden(model);

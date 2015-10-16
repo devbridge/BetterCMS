@@ -1,8 +1,4 @@
-﻿using System.Web.Mvc;
-
-using BetterCms.Core.Security;
-
-using BetterCms.Module.Root.Commands.Language.DeleteLanguage;
+﻿using BetterCms.Module.Root.Commands.Language.DeleteLanguage;
 using BetterCms.Module.Root.Commands.Language.GetLanguageList;
 using BetterCms.Module.Root.Commands.Language.SaveLanguage;
 using BetterCms.Module.Root.Commands.Language.SuggestLanguages;
@@ -11,15 +7,14 @@ using BetterCms.Module.Root.Mvc;
 using BetterCms.Module.Root.Mvc.Grids.GridOptions;
 using BetterCms.Module.Root.ViewModels.Autocomplete;
 using BetterCms.Module.Root.ViewModels.Language;
-
-using Microsoft.Web.Mvc;
+using Microsoft.AspNet.Mvc;
 
 namespace BetterCms.Module.Root.Controllers
 {
     /// <summary>
     /// Multilanguage controller.
     /// </summary>
-    [ActionLinkArea(RootModuleDescriptor.RootAreaName)]
+    [Area(RootModuleDescriptor.RootAreaName)]
     [BcmsAuthorize]
     public class LanguageController : CmsControllerBase
     {
@@ -28,7 +23,7 @@ namespace BetterCms.Module.Root.Controllers
         /// </summary>
         /// <returns>Json result.</returns>
         [BcmsAuthorize(RootModuleConstants.UserRoles.Administration)]
-        public ActionResult ListTemplate()
+        public IActionResult ListTemplate()
         {
             var view = RenderView("List", null);
             var request = new SearchableGridOptions();
@@ -36,7 +31,7 @@ namespace BetterCms.Module.Root.Controllers
 
             var languages = GetCommand<GetLanguageListCommand>().ExecuteCommand(request);
 
-            return ComboWireJson(languages != null, view, languages, JsonRequestBehavior.AllowGet);
+            return ComboWireJson(languages != null, view, languages);
         }
 
         /// <summary>
@@ -45,7 +40,7 @@ namespace BetterCms.Module.Root.Controllers
         /// <param name="request">The request.</param>
         /// <returns>Json result.</returns>
         [BcmsAuthorize(RootModuleConstants.UserRoles.Administration)]
-        public ActionResult LanguagesList(SearchableGridOptions request)
+        public IActionResult LanguagesList(SearchableGridOptions request)
         {
             request.SetDefaultPaging();
             var model = GetCommand<GetLanguageListCommand>().ExecuteCommand(request);
@@ -59,7 +54,7 @@ namespace BetterCms.Module.Root.Controllers
         /// <returns>Json result.</returns>
         [HttpPost]
         [BcmsAuthorize(RootModuleConstants.UserRoles.Administration)]
-        public ActionResult SaveLanguage(LanguageViewModel model)
+        public IActionResult SaveLanguage(LanguageViewModel model)
         {
             var success = false;
             LanguageViewModel response = null;
@@ -88,7 +83,7 @@ namespace BetterCms.Module.Root.Controllers
         /// <returns>Json result.</returns>
         [HttpPost]
         [BcmsAuthorize(RootModuleConstants.UserRoles.Administration)]
-        public ActionResult DeleteLanguage(string id, string version)
+        public IActionResult DeleteLanguage(string id, string version)
         {
             var request = new LanguageViewModel { Id = id.ToGuidOrDefault(), Version = version.ToIntOrDefault() };
             var success = GetCommand<DeleteLanguageCommand>().ExecuteCommand(request);

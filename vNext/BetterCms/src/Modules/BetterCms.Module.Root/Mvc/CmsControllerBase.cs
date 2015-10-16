@@ -1,16 +1,9 @@
 ﻿using System;
-using System.Web;
-using System.Web.Mvc;
-using System.Web.Security;
-
-using Autofac;
-
 using BetterCms.Core.Services;
 using BetterCms.Core.Web;
-using BetterCms.Module.Root.Mvc.Helpers;
-
-using BetterModules.Core.Web.Dependencies;
 using BetterModules.Core.Web.Mvc;
+using Microsoft.AspNet.Mvc;
+using Microsoft.AspNet.Mvc.ViewFeatures;
 
 namespace BetterCms.Module.Root.Mvc
 {    
@@ -81,7 +74,7 @@ namespace BetterCms.Module.Root.Mvc
         /// The view result.
         /// </returns>
         [NonAction]
-        public virtual ActionResult View(object model, string contentType)
+        public virtual IActionResult View(object model, string contentType)
         {
             Response.ContentType = contentType;
 

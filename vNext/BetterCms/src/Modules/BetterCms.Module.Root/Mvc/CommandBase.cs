@@ -4,13 +4,14 @@ using BetterCms.Core.Security;
 using BetterCms.Core.Services;
 using BetterCms.Module.Root.Content.Resources;
 using BetterCms.Module.Root.ViewModels.Security;
+using BetterModules.Core.Infrastructure.Commands;
 
 namespace BetterCms.Module.Root.Mvc
 {
     /// <summary>
     /// A base class for commands.
     /// </summary>
-    public abstract class CommandBase : BetterModules.Core.Web.Mvc.Commands.CoreCommandBase
+    public abstract class CommandBase : CoreCommandBase
     {
         /// <summary>
         /// Gets or sets the security service.

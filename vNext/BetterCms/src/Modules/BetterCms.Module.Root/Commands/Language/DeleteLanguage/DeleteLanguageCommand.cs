@@ -7,7 +7,7 @@ using BetterCms.Module.Root.Mvc;
 using BetterCms.Module.Root.ViewModels.Language;
 
 using BetterModules.Core.Exceptions.DataTier;
-using BetterModules.Core.Web.Mvc.Commands;
+using BetterModules.Core.Infrastructure.Commands;
 
 namespace BetterCms.Module.Root.Commands.Language.DeleteLanguage
 {

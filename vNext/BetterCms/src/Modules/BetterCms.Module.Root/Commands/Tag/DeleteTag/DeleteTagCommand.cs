@@ -1,6 +1,5 @@
 ﻿using BetterCms.Module.Root.Mvc;
-
-using BetterModules.Core.Web.Mvc.Commands;
+using BetterModules.Core.Infrastructure.Commands;
 
 namespace BetterCms.Module.Root.Commands.Tag.DeleteTag
 {

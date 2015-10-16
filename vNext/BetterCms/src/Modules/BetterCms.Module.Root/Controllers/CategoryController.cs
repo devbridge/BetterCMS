@@ -13,7 +13,7 @@ using BetterCms.Module.Root.ViewModels;
 using BetterCms.Module.Root.ViewModels.Category;
 
 using BetterModules.Core.Web.Models;
-
+using Microsoft.AspNet.Mvc;
 using Microsoft.Web.Mvc;
 
 namespace BetterCms.Module.Root.Controllers
@@ -22,7 +22,7 @@ namespace BetterCms.Module.Root.Controllers
     /// Handles categories logic.
     /// </summary>
     [BcmsAuthorize]
-    [ActionLinkArea(RootModuleDescriptor.RootAreaName)]
+    [Area(RootModuleDescriptor.RootAreaName)]
     public class CategoryController : CmsControllerBase
     {
         [BcmsAuthorize(RootModuleConstants.UserRoles.EditContent, RootModuleConstants.UserRoles.Administration)]
@@ -33,7 +33,7 @@ namespace BetterCms.Module.Root.Controllers
 
             var view = RenderView("CategoryTrees", model);
 
-            return ComboWireJson(model != null, view, new {}, JsonRequestBehavior.AllowGet);
+            return ComboWireJson(model != null, view, new {});
         }
 
         [HttpGet]
@@ -43,7 +43,7 @@ namespace BetterCms.Module.Root.Controllers
             var model = GetCommand<GetCategoryTreeCommand>().ExecuteCommand(sitemapId.ToGuidOrDefault());
             var success = model != null;
             var view = RenderView("CategoryTreeEdit", model);
-            return ComboWireJson(success, view, model, JsonRequestBehavior.AllowGet);
+            return ComboWireJson(success, view, model);
         }
 
         [HttpPost]

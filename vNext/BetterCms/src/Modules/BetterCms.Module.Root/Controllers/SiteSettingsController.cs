@@ -1,5 +1,4 @@
 ﻿using System.Linq;
-using System.Web.Mvc;
 using BetterCms.Core.Exceptions;
 using BetterCms.Core.Modules.Registration;
 using BetterCms.Core.Security;
@@ -7,12 +6,9 @@ using BetterCms.Core.Services;
 using BetterCms.Module.Root.Models.SiteSettingsMenu;
 using BetterCms.Module.Root.Mvc;
 using BetterCms.Module.Root.ViewModels;
-
-using Common.Logging;
-
 using BetterModules.Core.Exceptions;
-
-using Microsoft.Web.Mvc;
+using Microsoft.AspNet.Mvc;
+using Microsoft.Framework.Logging;
 
 namespace BetterCms.Module.Root.Controllers
 {
@@ -20,13 +16,13 @@ namespace BetterCms.Module.Root.Controllers
     /// Site settings menu controller.
     /// </summary>
     [BcmsAuthorize]
-    [ActionLinkArea(RootModuleDescriptor.RootAreaName)]
+    [Area(RootModuleDescriptor.RootAreaName)]
     public class SiteSettingsController : CmsControllerBase
     {
         /// <summary>
         /// Current class logger.
         /// </summary>
-        private static readonly ILog Log = LogManager.GetCurrentClassLogger();
+        private readonly ILogger logger;
 
         /// <summary>
         /// A contract to manage modules registry.
@@ -43,17 +39,19 @@ namespace BetterCms.Module.Root.Controllers
         /// </summary>
         /// <param name="modulesRegistration">The modules registration.</param>
         /// <param name="pageAccessor">The page extensions.</param>
-        public SiteSettingsController(ICmsModulesRegistration modulesRegistration, IPageAccessor pageAccessor)
+        /// <param name="loggerFactory">The logger factory</param>
+        public SiteSettingsController(ICmsModulesRegistration modulesRegistration, IPageAccessor pageAccessor, ILoggerFactory loggerFactory)
         {
             this.modulesRegistration = modulesRegistration;
             this.pageAccessor = pageAccessor;
+            logger = loggerFactory.CreateLogger<SiteSettingsController>();
         }
 
         /// <summary>
         /// Renders site setting menu container partial view.
         /// </summary>
         /// <returns>Partial view of site settings menu container.</returns>
-        public ActionResult Container()
+        public IActionResult Container()
         {
             SiteSettingsContainerViewModel model = new SiteSettingsContainerViewModel();
 
@@ -69,7 +67,7 @@ namespace BetterCms.Module.Root.Controllers
             }
             catch (CoreException ex)
             {
-                Log.Error("Failed to load site settings container data.", ex);
+                logger.LogError("Failed to load site settings container data.", ex);
             }
 
             return View(model);

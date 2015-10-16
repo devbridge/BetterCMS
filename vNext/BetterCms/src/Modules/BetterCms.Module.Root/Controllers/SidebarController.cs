@@ -1,20 +1,15 @@
 ﻿using System.Diagnostics.CodeAnalysis;
 using System.Linq;
-using System.Web.Mvc;
-
-using BetterCms.Core.Exceptions;
+using BetterCms.Configuration;
 using BetterCms.Core.Modules.Registration;
-using BetterCms.Core.Security;
 using BetterCms.Module.Root.Models.Sidebar;
 using BetterCms.Module.Root.Mvc;
 using BetterCms.Module.Root.ViewModels;
 using BetterCms.Module.Root.ViewModels.Cms;
-
-using Common.Logging;
-
 using BetterModules.Core.Exceptions;
-
-using Microsoft.Web.Mvc;
+using Microsoft.AspNet.Mvc;
+using Microsoft.Framework.Logging;
+using Microsoft.Framework.OptionsModel;
 
 namespace BetterCms.Module.Root.Controllers
 {
@@ -22,13 +17,13 @@ namespace BetterCms.Module.Root.Controllers
     /// Side menu controller.
     /// </summary>
     [BcmsAuthorize]
-    [ActionLinkArea(RootModuleDescriptor.RootAreaName)]
+    [Area(RootModuleDescriptor.RootAreaName)]
     public class SidebarController : CmsControllerBase
     {
         /// <summary>
         /// Current class logger.
         /// </summary>
-        private static readonly ILog Log = LogManager.GetCurrentClassLogger();
+        private readonly ILogger logger;
 
         /// <summary>
         /// A contract to manage modules registry.
@@ -38,16 +33,16 @@ namespace BetterCms.Module.Root.Controllers
         /// <summary>
         /// The contract for BetterCMS application host.
         /// </summary>
-        private readonly ICmsConfiguration configuration;
+        private readonly CmsConfigurationSection configuration;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="SidebarController" /> class.
         /// </summary>
         /// <param name="modulesRegistration">The modules.</param>
         /// <param name="configuration">The CMS configuration.</param>
-        public SidebarController(ICmsModulesRegistration modulesRegistration, ICmsConfiguration configuration)
+        public SidebarController(ICmsModulesRegistration modulesRegistration, IOptions<CmsConfigurationSection> configuration)
         {
-            this.configuration = configuration;
+            this.configuration = configuration.Value;
             this.modulesRegistration = modulesRegistration;
         }
 
@@ -85,7 +80,7 @@ namespace BetterCms.Module.Root.Controllers
             }
             catch (CoreException ex)
             {
-                Log.Error(ex);
+                logger.LogError("Failed to render side menu container", ex);
             }                       
 
             return PartialView(model);

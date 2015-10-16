@@ -1,16 +1,16 @@
 ﻿{
     "version": "2.0.0-alpha1",
     "description": "BetterCms Root Module",
-    "authors": [ "user" ],
+    "authors": [ "Devbridge Group" ],
     "tags": [ "" ],
-    "projectUrl": "",
-    "licenseUrl": "",
+    "projectUrl": "http://www.bettercms.com",
+    "licenseUrl": "http://www.bettercms.com/license.txt",
 
     "dependencies": {
         "BetterCms.Core": "2.0.0-*"
     },
 
     "frameworks": {
-        "dnx451": {}
+        "dnx451": { }
     }
 }

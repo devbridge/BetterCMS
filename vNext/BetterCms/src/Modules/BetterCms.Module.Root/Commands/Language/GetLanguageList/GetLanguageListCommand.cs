@@ -9,8 +9,7 @@ using BetterCms.Module.Root.Mvc.Grids.Extensions;
 using BetterCms.Module.Root.Mvc.Grids.GridOptions;
 using BetterCms.Module.Root.ViewModels.Language;
 using BetterCms.Module.Root.ViewModels.SiteSettings;
-
-using BetterModules.Core.Web.Mvc.Commands;
+using BetterModules.Core.Infrastructure.Commands;
 
 namespace BetterCms.Module.Root.Commands.Language.GetLanguageList
 {

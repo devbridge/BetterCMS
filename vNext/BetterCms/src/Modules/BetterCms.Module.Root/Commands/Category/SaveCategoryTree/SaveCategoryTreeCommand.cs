@@ -5,8 +5,7 @@ using BetterCms.Module.Root.Mvc;
 using BetterCms.Module.Root.Services.Categories;
 using BetterCms.Module.Root.Services.Categories.Tree;
 using BetterCms.Module.Root.ViewModels.Category;
-
-using BetterModules.Core.Web.Mvc.Commands;
+using BetterModules.Core.Infrastructure.Commands;
 
 namespace BetterCms.Module.Root.Commands.Category.SaveCategoryTree
 {
@@ -29,13 +28,16 @@ namespace BetterCms.Module.Root.Commands.Category.SaveCategoryTree
         /// <param name="request">The request.</param>
         public CategoryTreeViewModel Execute(CategoryTreeViewModel request)
         {
-            var serviceRequest = new SaveCategoryTreeRequest();
+            var serviceRequest = new SaveCategoryTreeRequest
+            {
+                Id = request.Id,
+                Title = request.Title,
+                Version = request.Version,
+                Macro = request.Macro,
+                UseForCategorizableItems =
+                    request.CategorizableItems.Where(i => i.IsSelected).Select(i => i.Id).ToList()
+            };
 
-            serviceRequest.Id = request.Id;
-            serviceRequest.Title = request.Title;
-            serviceRequest.Version = request.Version;
-            serviceRequest.Macro = request.Macro;
-            serviceRequest.UseForCategorizableItems = request.CategorizableItems.Where(i => i.IsSelected).Select(i => i.Id).ToList();
 
             IList<CategoryNodeModel> rootNodes = new List<CategoryNodeModel>();
             if (request.RootNodes != null)

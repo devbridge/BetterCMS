@@ -1,8 +1,9 @@
-﻿using BetterCms.Module.Root.Mvc;
+﻿using BetterCms.Configuration;
+using BetterCms.Module.Root.Mvc;
 using BetterCms.Module.Root.Services;
 using BetterCms.Module.Root.ViewModels.Rendering;
-
-using BetterModules.Core.Web.Mvc.Commands;
+using BetterModules.Core.Infrastructure.Commands;
+using Microsoft.Framework.OptionsModel;
 
 namespace BetterCms.Module.Root.Commands.GetMainJsData
 {
@@ -16,17 +17,17 @@ namespace BetterCms.Module.Root.Commands.GetMainJsData
         /// <summary>
         /// The CMS configuration.
         /// </summary>
-        private readonly ICmsConfiguration cmsConfiguration;
+        private readonly CmsConfigurationSection cmsConfiguration;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="GetMainJsDataCommand" /> class.
         /// </summary>
         /// <param name="renderingService">The rendering service.</param>
         /// <param name="cmsConfiguration">The CMS configuration.</param>
-        public GetMainJsDataCommand(IRenderingService renderingService, ICmsConfiguration cmsConfiguration)
+        public GetMainJsDataCommand(IRenderingService renderingService, IOptions<CmsConfigurationSection> cmsConfiguration)
         {
             this.renderingService = renderingService;
-            this.cmsConfiguration = cmsConfiguration;
+            this.cmsConfiguration = cmsConfiguration.Value;
         }
 
         public RenderMainJsViewModel Execute()

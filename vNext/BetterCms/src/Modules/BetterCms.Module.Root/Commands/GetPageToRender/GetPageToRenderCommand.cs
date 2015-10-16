@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
-
+using BetterCms.Configuration;
 using BetterCms.Core.DataContracts;
 using BetterCms.Core.DataContracts.Enums;
 using BetterCms.Core.Modules.Projections;
@@ -16,12 +16,9 @@ using BetterCms.Module.Root.Projections;
 using BetterCms.Module.Root.Services;
 using BetterCms.Module.Root.ViewModels.Cms;
 using BetterCms.Module.Root.Models.Extensions;
-using BetterCms.Module.Root.ViewModels.Security;
-using BetterCms.Module.Root.Views.Language;
-
-using BetterModules.Core.Web.Mvc.Commands;
+using BetterModules.Core.Infrastructure.Commands;
 using BetterModules.Core.Web.Mvc.Extensions;
-
+using Microsoft.Framework.OptionsModel;
 using NHibernate.Linq;
 
 namespace BetterCms.Module.Root.Commands.GetPageToRender
@@ -34,7 +31,7 @@ namespace BetterCms.Module.Root.Commands.GetPageToRender
 
         private readonly PageStylesheetProjectionFactory pageStylesheetProjectionFactory;
         
-        private readonly ICmsConfiguration cmsConfiguration;
+        private readonly CmsConfigurationSection cmsConfiguration;
 
         private readonly RootModuleDescriptor rootModuleDescriptor;
 
@@ -46,14 +43,14 @@ namespace BetterCms.Module.Root.Commands.GetPageToRender
 
         public GetPageToRenderCommand(IPageAccessor pageAccessor, PageStylesheetProjectionFactory pageStylesheetProjectionFactory, 
             PageJavaScriptProjectionFactory pageJavaScriptProjectionFactory,
-            ICmsConfiguration cmsConfiguration, RootModuleDescriptor rootModuleDescriptor, IOptionService optionService,
+            IOptions<CmsConfigurationSection> cmsConfiguration, RootModuleDescriptor rootModuleDescriptor, IOptionService optionService,
             IContentProjectionService contentProjectionService, IChildContentService childContentService)
         {
             this.rootModuleDescriptor = rootModuleDescriptor;
             this.pageStylesheetProjectionFactory = pageStylesheetProjectionFactory;
             this.pageJavaScriptProjectionFactory = pageJavaScriptProjectionFactory;
             this.pageAccessor = pageAccessor;
-            this.cmsConfiguration = cmsConfiguration;
+            this.cmsConfiguration = cmsConfiguration.Value;
             this.optionService = optionService;
             this.contentProjectionService = contentProjectionService;
             this.childContentService = childContentService;

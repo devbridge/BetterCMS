@@ -4,8 +4,7 @@ using BetterCms.Core.Exceptions.Mvc;
 using BetterCms.Module.Root.Content.Resources;
 using BetterCms.Module.Root.Mvc;
 using BetterCms.Module.Root.ViewModels.Tags;
-
-using BetterModules.Core.Web.Mvc.Commands;
+using BetterModules.Core.Infrastructure.Commands;
 
 namespace BetterCms.Module.Root.Commands.Tag.SaveTag
 {

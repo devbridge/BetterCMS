@@ -1,21 +1,13 @@
 ﻿using System;
-using System.Web.Mvc;
-using System.Web.Security;
-
-using BetterCms.Core.Security;
-
 using BetterCms.Module.Root.Commands.Authentication.GetAuthenticationInfo;
 using BetterCms.Module.Root.Commands.Authentication.SearchRoles;
 using BetterCms.Module.Root.Commands.Authentication.SearchUsers;
-using BetterCms.Module.Root.Models;
 using BetterCms.Module.Root.Mvc;
 using BetterCms.Module.Root.ViewModels.Autocomplete;
 
-using Common.Logging;
-
 using BetterModules.Core.Web.Models;
-
-using Microsoft.Web.Mvc;
+using Microsoft.AspNet.Mvc;
+using Microsoft.Framework.Logging;
 
 namespace BetterCms.Module.Root.Controllers
 {
@@ -23,13 +15,18 @@ namespace BetterCms.Module.Root.Controllers
     /// User authentication handling controller.
     /// </summary>
     [BcmsAuthorize]
-    [ActionLinkArea(RootModuleDescriptor.RootAreaName)]
+    [Area(RootModuleDescriptor.RootAreaName)]
     public class AuthenticationController : CmsControllerBase
     {
         /// <summary>
         /// Current class logger.
         /// </summary>
-        private static readonly ILog Log = LogManager.GetCurrentClassLogger();
+        private readonly ILogger logger;
+
+        public AuthenticationController(ILoggerFactory loggerFactory)
+        {
+            logger = loggerFactory.CreateLogger<AuthenticationController>();
+        }
 
         /// <summary>
         /// Returns view with user information.
@@ -55,7 +52,7 @@ namespace BetterCms.Module.Root.Controllers
             }
             catch (Exception ex)
             {
-                Log.ErrorFormat("Failed to logout user {0}.", ex, User.Identity);
+                logger.LogError("Failed to logout user {0}.", ex, User.Identity);
             }
 
             return Redirect(FormsAuthentication.LoginUrl);

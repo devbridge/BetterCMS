@@ -1,21 +1,15 @@
-﻿using System.Web.Mvc;
-
-using BetterCms.Core.Security;
-
-using BetterCms.Module.Root.Commands.Tag.DeleteTag;
+﻿using BetterCms.Module.Root.Commands.Tag.DeleteTag;
 using BetterCms.Module.Root.Commands.Tag.GetTagList;
 using BetterCms.Module.Root.Commands.Tag.SaveTag;
 using BetterCms.Module.Root.Commands.Tag.SearchTags;
 using BetterCms.Module.Root.Content.Resources;
-using BetterCms.Module.Root.Models;
 using BetterCms.Module.Root.Mvc;
 using BetterCms.Module.Root.Mvc.Grids.GridOptions;
 using BetterCms.Module.Root.ViewModels.Autocomplete;
 using BetterCms.Module.Root.ViewModels.Tags;
 
 using BetterModules.Core.Web.Models;
-
-using Microsoft.Web.Mvc;
+using Microsoft.AspNet.Mvc;
 
 namespace BetterCms.Module.Root.Controllers
 {
@@ -23,7 +17,7 @@ namespace BetterCms.Module.Root.Controllers
     /// Handles site settings logic for Pages module.
     /// </summary>
     [BcmsAuthorize]
-    [ActionLinkArea(RootModuleDescriptor.RootAreaName)]
+    [Area(RootModuleDescriptor.RootAreaName)]
     public class TagsController : CmsControllerBase
     {
         /// <summary>

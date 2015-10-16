@@ -3,8 +3,7 @@
 using BetterCms.Module.Root.Models.Authentication;
 using BetterCms.Module.Root.Mvc;
 using BetterCms.Module.Root.Services;
-
-using BetterModules.Core.Web.Mvc.Commands;
+using BetterModules.Core.Infrastructure.Commands;
 
 namespace BetterCms.Module.Root.Commands.Authentication.GetAuthenticationInfo
 {
