@@ -407,7 +407,8 @@ namespace BetterCms.Module.Root.Services
                     var multilingualOption = optionValue as IMultilingualOption;
                     if (optionValue is IMultilingualOption && cmsConfiguration.EnableMultilanguage && translationEntityCreator != null)
                     {
-                        multilingualOption.Translations = SetMultilangualTranslations(optionViewModel, multilingualOption.Translations, optionValue, translationEntityCreator);
+                        var viewModelTranslations = optionViewModel.ValueTranslations != null ? optionViewModel.ValueTranslations.Cast<IOptionTranslation>().ToList() : null;
+                        multilingualOption.Translations = SetMultilangualTranslations(viewModelTranslations, multilingualOption.Translations, optionValue, translationEntityCreator);
                     }
                     if (optionViewModel.Type == OptionType.Custom)
                     {
@@ -427,7 +428,8 @@ namespace BetterCms.Module.Root.Services
 
                     if (cmsConfiguration.EnableMultilanguage && multilangOptionValue != null && translationEntityCreator != null)
                     {
-                        var multilingualTranslations = SetMultilangualTranslations(optionViewModel, multilangOptionValue.Translations, optionValue, translationEntityCreator);
+                        var viewModelTranslations = optionViewModel.ValueTranslations != null ? optionViewModel.ValueTranslations.Cast<IOptionTranslation>().ToList() : null;
+                        var multilingualTranslations = SetMultilangualTranslations(viewModelTranslations, multilangOptionValue.Translations, optionValue, translationEntityCreator);
 
                         if (multilingualTranslations.Any())
                         {
@@ -455,7 +457,8 @@ namespace BetterCms.Module.Root.Services
                         optionValue.Type = optionViewModel.Type;
                         optionValue.CustomOption = optionViewModel.CustomOption;
                         optionValue.Key = optionViewModel.OptionKey;
-                        var multilingualTranslations = SetMultilangualTranslations(optionViewModel, multilangOptionValue.Translations, optionValue, translationEntityCreator);
+                        var viewModelTranslations = optionViewModel.ValueTranslations != null ? optionViewModel.ValueTranslations.Cast<IOptionTranslation>().ToList() : null;
+                        var multilingualTranslations = SetMultilangualTranslations(viewModelTranslations, multilangOptionValue.Translations, optionValue, translationEntityCreator);
 
                         if (multilingualTranslations.Any())
                         {
@@ -601,24 +604,7 @@ namespace BetterCms.Module.Root.Services
                     var multilingualRequestOption = requestOption as IMultilingualOption;
                     if (multilingualRequestOption != null && multilingualOption != null && cmsConfiguration.EnableMultilanguage && translationEntityCreator != null)
                     {
-                        var multilingualTranslations = multilingualOption.Translations;
-
-                        foreach (var t in multilingualRequestOption.Translations)
-                        {
-                            var optionTranslation = (IOptionTranslationEntity)multilingualOption.Translations.FirstOrDefault(x => x is IOptionTranslationEntity && x.LanguageId == t.LanguageId);
-                            if (optionTranslation == null)
-                            {
-                                optionTranslation = translationEntityCreator();
-                                var languageId = Guid.Parse(t.LanguageId);
-                                optionTranslation.Language = repository.AsProxy<Language>(languageId);
-                                optionTranslation.Option = option;
-
-                                multilingualTranslations.Add(optionTranslation);
-                            }
-                            optionTranslation.Value = t.Value;
-                            ValidateOptionValue(option.Key, optionTranslation.Value, option.Type, option.CustomOption);
-                        }
-                        multilingualOption.Translations = multilingualTranslations;
+                        multilingualOption.Translations = SetMultilangualTranslations(multilingualRequestOption.Translations, multilingualOption.Translations, option, translationEntityCreator);
                     }
                 }
 
@@ -1241,14 +1227,14 @@ namespace BetterCms.Module.Root.Services
             public Guid? LayoutId { get; set; }
         }
 
-        private IList<IOptionTranslation> SetMultilangualTranslations(OptionValueEditViewModel optionViewModel, IList<IOptionTranslation> multilingualTranslations, IOptionEntity optionValue, Func<IOptionTranslationEntity> translationEntityCreator)
+        private IList<IOptionTranslation> SetMultilangualTranslations(IList<IOptionTranslation> translations, IList<IOptionTranslation> multilingualTranslations, IOptionEntity optionValue, Func<IOptionTranslationEntity> translationEntityCreator)
         {
             var optionsToRemove = new List<IOptionTranslation>();
-            if (optionViewModel.ValueTranslations != null)
+            if (translations != null)
             {
                 foreach (var mt in multilingualTranslations)
                 {
-                    if (optionViewModel.ValueTranslations.All(x => x.LanguageId != mt.LanguageId))
+                    if (translations.All(x => x.LanguageId != mt.LanguageId))
                     {
                         optionsToRemove.Add(mt);
                     }
@@ -1264,7 +1250,7 @@ namespace BetterCms.Module.Root.Services
                     }
                 }
 
-                foreach (var t in optionViewModel.ValueTranslations)
+                foreach (var t in translations)
                 {
                     var optionTranslation = (IOptionTranslationEntity)multilingualTranslations.FirstOrDefault(x => x is IOptionTranslationEntity && x.LanguageId == t.LanguageId);
                     if (optionTranslation == null)
