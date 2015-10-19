@@ -71,12 +71,13 @@ namespace BetterCms.Module.Pages.Command.Widget.GetHtmlContentWidgetForEdit
         {
             EditHtmlContentWidgetViewModel model = null;
 
+            var languagesFuture = cmsConfiguration.EnableMultilanguage ? languageService.GetLanguagesLookupValues() : new List<LookupKeyValue>();
+            var languages = cmsConfiguration.EnableMultilanguage ? languagesFuture.ToList() : new List<LookupKeyValue>();
+
             if (widgetId.HasValue && widgetId.Value != Guid.Empty)
             {
-                var languagesFuture = cmsConfiguration.EnableMultilanguage ? languageService.GetLanguagesLookupValues() : new List<LookupKeyValue>();
                 var htmlContentWidget = contentService.GetContentForEdit(widgetId.Value) as HtmlContentWidget;
 
-                var languages = cmsConfiguration.EnableMultilanguage ? languagesFuture.ToList() : new List<LookupKeyValue>();
                 if (htmlContentWidget != null)
                 {
                     model = new EditHtmlContentWidgetViewModel
@@ -94,9 +95,7 @@ namespace BetterCms.Module.Pages.Command.Widget.GetHtmlContentWidgetForEdit
                                     WidgetType = WidgetType.HtmlContent,
                                     PreviewImageUrl = null,
                                     CurrentStatus = htmlContentWidget.Status,
-                                    HasPublishedContent = htmlContentWidget.Original != null,
-                                    ShowLanguages = cmsConfiguration.EnableMultilanguage && languages.Any(),
-                                    Languages = languages
+                                    HasPublishedContent = htmlContentWidget.Original != null
                                 };
 
                     model.Options = htmlContentWidget.ContentOptions.Distinct()
@@ -143,7 +142,8 @@ namespace BetterCms.Module.Pages.Command.Widget.GetHtmlContentWidgetForEdit
             {
                 model = new EditHtmlContentWidgetViewModel();
             }
-
+            model.ShowLanguages = cmsConfiguration.EnableMultilanguage && languages.Any();
+            model.Languages = languages;
             model.Categories = categoryService.GetSelectedCategories<Root.Models.Widget, WidgetCategory>(widgetId).ToList();
             model.CustomOptions = optionService.GetCustomOptions();
             model.CanDestroyDraft = model.CurrentStatus == ContentStatus.Draft && model.HasPublishedContent;
