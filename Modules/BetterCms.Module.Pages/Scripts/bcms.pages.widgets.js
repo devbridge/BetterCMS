@@ -970,7 +970,7 @@ bettercms.define('bcms.pages.widgets', ['bcms.jquery', 'bcms', 'bcms.modal', 'bc
                 }
             }
 
-            if (optionsViewModel != null) {
+            if (optionsViewModel != null && optionsViewModel.serializeToObject != null) {
                 serializedForm.Options = optionsViewModel.serializeToObject();
             }
 

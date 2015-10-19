@@ -189,7 +189,7 @@ bettercms.define('bcms.blog', ['bcms.jquery', 'bcms', 'bcms.modal', 'bcms.siteSe
                     },
 
                     formSerialize: function (form) {
-                        return widgets.serializeFormWithChildWidgetOptions(form, selectors.htmlEditor, function (serializedData) {
+                        return widgets.serializeFormWithChildWidgetOptions(form, selectors.htmlEditor, null, function (serializedData) {
                             if (includeChildRegions) {
                                 serializedData.IncludeChildRegions = true;
                             }
