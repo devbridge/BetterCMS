@@ -7,7 +7,7 @@ using BetterCms.Module.Root.Models;
 namespace BetterCms.Module.MediaManager.Models
 {
     [Serializable]
-    public class MediaCategory : EquatableEntity<MediaCategory>, IEntityCategory
+    public class MediaCategory : EquatableEntity<MediaCategory>, IEntityCategory, IMediaProvider
     {
         public virtual Category Category { get; set; }
 

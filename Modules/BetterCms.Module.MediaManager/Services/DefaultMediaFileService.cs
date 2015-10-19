@@ -226,7 +226,6 @@ namespace BetterCms.Module.MediaManager.Services
             tempFile.FileUri = GetFileUri(type, folderName, RemoveInvalidHtmlSymbols(fileName));
             tempFile.PublicUrl = GetPublicFileUrl(type, folderName, RemoveInvalidHtmlSymbols(fileName));
 
-
             tempFile.OriginalFileName = fileName;
             tempFile.OriginalFileExtension = Path.GetExtension(fileName);
             tempFile.Size = fileLength;
@@ -251,6 +250,8 @@ namespace BetterCms.Module.MediaManager.Services
                 {
                     SaveOriginalMediaFile(reuploadMediaId.Value, tempFile, unitOfWork.Session);
                 }
+
+                repository.Save(tempFile);
                 unitOfWork.Commit();
                 Events.MediaManagerEvents.Instance.OnMediaFileUpdated(tempFile);
             }
@@ -292,54 +293,69 @@ namespace BetterCms.Module.MediaManager.Services
             return tempFile;
         }
 
-        private void SaveOriginalMediaFile(Guid originalId, MediaFile mediaFile, ISession session)
+        public void SwapOriginalMediaWithVersion(MediaFile originalEntity, MediaFile newVersion, ISession session = null)
         {
-            var swapEntity = mediaFile.Clone();
-            session.Evict(swapEntity);
-
-            var originalEntity = session.Get<MediaFile>(originalId);
+            var swapEntity = newVersion.Clone();
+            if (session != null)
+            {
+                session.Evict(swapEntity);
+            }
 
             // swap
-            mediaFile.CopyDataTo(swapEntity, false);
-            originalEntity.CopyDataTo(mediaFile, false);
+            newVersion.CopyDataTo(swapEntity, false);
+            originalEntity.CopyDataTo(newVersion, false);
             swapEntity.CopyDataTo(originalEntity, false);
 
-            mediaFile.Original = originalEntity;
+            newVersion.Original = originalEntity;
+
+            originalEntity.Categories = originalEntity.Categories ?? new List<MediaCategory>();
+            newVersion.Categories = newVersion.Categories ?? new List<MediaCategory>();
+
+            var catResult = SwapEntityCollections(originalEntity.Categories, newVersion.Categories, originalEntity, newVersion);
+            originalEntity.Categories = catResult.Item1;
+            newVersion.Categories = catResult.Item2;
+
+            originalEntity.MediaTags = originalEntity.MediaTags ?? new List<MediaTag>();
+            newVersion.MediaTags = newVersion.MediaTags ?? new List<MediaTag>();
+
+            var tagResult = SwapEntityCollections(originalEntity.MediaTags, newVersion.MediaTags, originalEntity, newVersion);
+            originalEntity.MediaTags = tagResult.Item1;
+            newVersion.MediaTags = tagResult.Item2;
+        }
+
+        private System.Tuple<IList<TEntity>, IList<TEntity>> SwapEntityCollections<TEntity>(IList<TEntity> collection1, 
+            IList<TEntity> collection2, MediaFile entity1, MediaFile entity2)
+            where TEntity : IMediaProvider
+        {
+            var list1 = new List<TEntity>(collection1);
+            var list2 = new List<TEntity>(collection2);
+
+            list1.ForEach(e => collection1.Remove(e));
+            list2.ForEach(e => collection2.Remove(e));
+
+            collection1 = new List<TEntity>();
+            collection2 = new List<TEntity>();
+
+            list2.ForEach(e =>
+            {
+                e.Media = entity1;
+                collection1.Add(e);
+            });
+            list1.ForEach(
+                e =>
+                {
+                    e.Media = entity2;
+                    collection2.Add(e);
+                });
+
+            return new System.Tuple<IList<TEntity>, IList<TEntity>>(collection1, collection2);
+        }
+
+        private void SaveOriginalMediaFile(Guid originalId, MediaFile mediaFile, ISession session)
+        {
+            var originalEntity = session.Get<MediaFile>(originalId);
+            SwapOriginalMediaWithVersion(originalEntity, mediaFile, session);
             session.SaveOrUpdate(originalEntity);
-
-            SwapMediaTags(mediaFile.MediaTags, originalEntity, session);
-            SwapMediaTags(originalEntity.MediaTags, mediaFile, session);
-
-            SwapMediaCategories(mediaFile.Categories, originalEntity, session);
-            SwapMediaCategories(originalEntity.Categories, mediaFile, session);
-        }
-
-        private void SwapMediaTags(IList<MediaTag> mediaTags, Media media, ISession session)
-        {
-            if (mediaTags == null)
-            {
-                return;
-            }
-
-            for (var i = 0; i < mediaTags.Count; i++)
-            {
-                mediaTags[i].Media = media;
-                session.SaveOrUpdate(mediaTags[i]);
-            }
-        }
-
-        private void SwapMediaCategories(IList<MediaCategory> mediaCategories, Media media, ISession session)
-        {
-            if (mediaCategories == null)
-            {
-                return;
-            }
-
-            for (var i = 0; i < mediaCategories.Count; i++)
-            {
-                mediaCategories[i].Media = media;
-                session.SaveOrUpdate(mediaCategories[i]);
-            }
         }
 
         public virtual string CreateRandomFolderName()

@@ -266,6 +266,10 @@ namespace BetterCms.Tests.Helpers
 
             entity.CategoryTree = tree;
 
+            if (tree.Categories == null)
+            {
+                tree.Categories = new List<Category>();
+            }
             tree.Categories.Add(entity);
 
             return entity;

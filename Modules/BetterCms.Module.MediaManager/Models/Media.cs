@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 using BetterCms.Core.DataContracts;
 using BetterCms.Core.Models;
@@ -124,7 +125,7 @@ namespace BetterCms.Module.MediaManager.Models
                 {
                     media.Categories = new List<MediaCategory>();
                 }
-                foreach (var mediaCategory in Categories)
+                foreach (var mediaCategory in Categories.Where(c => !c.IsDeleted))
                 {
                     var clonedMediaCategory = mediaCategory.Clone();
                     clonedMediaCategory.Media = media;
@@ -138,7 +139,7 @@ namespace BetterCms.Module.MediaManager.Models
                 {
                     media.MediaTags = new List<MediaTag>();
                 }
-                foreach (var mediaTag in MediaTags)
+                foreach (var mediaTag in MediaTags.Where(c => !c.IsDeleted))
                 {
                     var clonedMediaTag = mediaTag.Clone();
                     clonedMediaTag.Media = media;
