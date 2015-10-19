@@ -1,6 +1,4 @@
-﻿using System.Web.Mvc;
-
-namespace BetterCms.Module.Root.ViewModels.Option
+﻿namespace BetterCms.Module.Root.ViewModels.Option
 {
     public class OptionValueEditViewModel : OptionViewModel
     {
@@ -10,7 +8,7 @@ namespace BetterCms.Module.Root.ViewModels.Option
         /// <value>
         /// The option value.
         /// </value>
-        [AllowHtml]
+        //[AllowHtml]
         public string OptionValue { get; set; }
 
         /// <summary>

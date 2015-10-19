@@ -48,7 +48,7 @@ namespace BetterCms.Core.Modules.Projections
         /// <param name="html">The html helper.</param>
         /// <param name="componentHelper">The View Component helper</param>
         /// <returns><c>true</c> on success, otherwise <c>false</c>.</returns>
-        public bool Render(IPage page, ISecurityService securityService, HtmlHelper html, IViewComponentHelper componentHelper)
+        public bool Render(IPage page, ISecurityService securityService, IHtmlHelper html, IViewComponentHelper componentHelper)
         {
             if (AccessRole != null && !securityService.IsAuthorized(AccessRole))
             {

@@ -6,6 +6,7 @@ using System.Web;
 
 using BetterCms.Core.Modules;
 using BetterCms.Module.Root.ViewModels.Rendering;
+using Microsoft.AspNet.Mvc.Rendering;
 
 namespace BetterCms.Module.Root.Mvc.Helpers
 {

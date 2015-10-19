@@ -1,4 +1,5 @@
-﻿using BetterCms.Module.Root.Commands.Tag.DeleteTag;
+﻿using BetterCms.Core.Services;
+using BetterCms.Module.Root.Commands.Tag.DeleteTag;
 using BetterCms.Module.Root.Commands.Tag.GetTagList;
 using BetterCms.Module.Root.Commands.Tag.SaveTag;
 using BetterCms.Module.Root.Commands.Tag.SearchTags;
@@ -20,6 +21,10 @@ namespace BetterCms.Module.Root.Controllers
     [Area(RootModuleDescriptor.RootAreaName)]
     public class TagsController : CmsControllerBase
     {
+        public TagsController(ISecurityService securityService) : base(securityService)
+        {
+        }
+
         /// <summary>
         /// Renders a tag list for the site settings dialog.
         /// </summary>

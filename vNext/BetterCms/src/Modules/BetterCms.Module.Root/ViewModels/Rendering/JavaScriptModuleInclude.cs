@@ -51,7 +51,7 @@
         /// <value>
         /// A list of registered links.
         /// </value>
-        public ProjectionsViewModel Links { get; set; }
+        public UrlProjectionsViewModel Links { get; set; }
 
         /// <summary>
         /// Gets or sets the globalization.

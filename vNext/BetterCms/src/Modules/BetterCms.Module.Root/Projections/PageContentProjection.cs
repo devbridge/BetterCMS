@@ -6,6 +6,7 @@ using System.Runtime.Serialization;
 using BetterCms.Core.DataContracts;
 using BetterCms.Core.DataContracts.Enums;
 using BetterCms.Core.Modules.Projections;
+using Microsoft.AspNet.Mvc.Rendering;
 using Microsoft.AspNet.Mvc.ViewFeatures;
 
 namespace BetterCms.Module.Root.Projections
@@ -48,92 +49,27 @@ namespace BetterCms.Module.Root.Projections
             info.AddValue("contentAccessor", contentAccessor, contentAccessor.GetType());
         }
 
-        public virtual IPageContent PageContent
-        {
-            get
-            {
-                return pageContent;
-            }
-        }
-        public virtual Guid PageContentId
-        {
-            get
-            {
-                return pageContent.Id;
-            }
-        }
-        
-        public virtual Guid PageId
-        {
-            get
-            {
-                return pageContent.Page.Id;
-            }
-        }
+        public virtual IPageContent PageContent => pageContent;
 
-        public virtual int PageContentVersion
-        {
-            get
-            {
-                return pageContent.Version;
-            }
-        }
+        public virtual Guid PageContentId => pageContent.Id;
 
-        public virtual ContentStatus PageContentStatus
-        {
-            get
-            {
-                return content.Status;
-            }
-        }
+        public virtual Guid PageId => pageContent.Page.Id;
 
-        public virtual int Order
-        {
-            get
-            {
-                return pageContent.Order; 
-            }
-        }
+        public virtual int PageContentVersion => pageContent.Version;
 
-        public virtual Guid RegionId
-        {
-            get
-            {
-                return pageContent.Region.Id;
-            }
-        }
-        
-        public virtual string RegionIdentifier
-        {
-            get
-            {
-                return pageContent.Region.RegionIdentifier;
-            }
-        }
+        public virtual ContentStatus PageContentStatus => content.Status;
 
-        public virtual Guid ContentId
-        {
-            get
-            {
-                return content.Id;
-            }
-        }
+        public virtual int Order => pageContent.Order;
 
-        public virtual int ContentVersion
-        {
-            get
-            {
-                return content.Version;
-            }
-        }
+        public virtual Guid RegionId => pageContent.Region.Id;
 
-        public virtual IContent Content
-        {
-            get
-            {
-                return content;
-            }
-        }
+        public virtual string RegionIdentifier => pageContent.Region.RegionIdentifier;
+
+        public virtual Guid ContentId => content.Id;
+
+        public virtual int ContentVersion => content.Version;
+
+        public virtual IContent Content => content;
 
         public string GetContentWrapperType()
         {
@@ -145,27 +81,27 @@ namespace BetterCms.Module.Root.Projections
             return contentAccessor.GetTitle();
         }
 
-        public string GetHtml(HtmlHelper html)
+        public string GetHtml(IHtmlHelper html)
         {
             return contentAccessor.GetHtml(html);
         }
 
-        public string[] GetCustomStyles(HtmlHelper html)
+        public string[] GetCustomStyles(IHtmlHelper html)
         {
             return GetStylesAndScripts(accessor => accessor.GetCustomStyles(html));
         }
 
-        public string[] GetCustomJavaScript(HtmlHelper html)
+        public string[] GetCustomJavaScript(IHtmlHelper html)
         {
             return GetStylesAndScripts(accessor => accessor.GetCustomJavaScript(html));
         }
 
-        public string[] GetStylesResources(HtmlHelper html)
+        public string[] GetStylesResources(IHtmlHelper html)
         {
             return null;
         }
 
-        public string[] GetJavaScriptResources(HtmlHelper html)
+        public string[] GetJavaScriptResources(IHtmlHelper html)
         {
             return null;
         }
@@ -190,7 +126,7 @@ namespace BetterCms.Module.Root.Projections
             var contentArray = func.Invoke(contentAccessor);
             if (childProjections != null || childRegionContentProjections != null)
             {
-                var contentList = contentArray != null ? contentArray.ToList() : new List<string>();
+                var contentList = contentArray?.ToList() ?? new List<string>();
                 var allChildProjections = new List<PageContentProjection>();
                 if (childProjections != null)
                 {

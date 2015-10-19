@@ -40,7 +40,8 @@ namespace BetterCms.Module.Root.Controllers
         /// <param name="modulesRegistration">The modules registration.</param>
         /// <param name="pageAccessor">The page extensions.</param>
         /// <param name="loggerFactory">The logger factory</param>
-        public SiteSettingsController(ICmsModulesRegistration modulesRegistration, IPageAccessor pageAccessor, ILoggerFactory loggerFactory)
+        public SiteSettingsController(ICmsModulesRegistration modulesRegistration, IPageAccessor pageAccessor, 
+            ILoggerFactory loggerFactory, ISecurityService securityService) : base(securityService)
         {
             this.modulesRegistration = modulesRegistration;
             this.pageAccessor = pageAccessor;

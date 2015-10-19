@@ -4,15 +4,15 @@ using System.IO;
 using System.Linq;
 using System.Text;
 
-using System.Web;
-using System.Web.Mvc;
-using System.Web.Mvc.Html;
-using System.Web.WebPages;
-
 using BetterCms.Core.Modules;
 using BetterCms.Core.Modules.Projections;
 using BetterCms.Module.Root.Mvc.PageHtmlRenderer;
 using BetterCms.Module.Root.ViewModels.Cms;
+using Microsoft.AspNet.Html.Abstractions;
+using Microsoft.AspNet.Mvc;
+using Microsoft.AspNet.Mvc.Razor;
+using Microsoft.AspNet.Mvc.Rendering;
+using Microsoft.AspNet.Mvc.ViewFeatures;
 
 namespace BetterCms.Module.Root.Mvc.Helpers
 {
@@ -21,61 +21,61 @@ namespace BetterCms.Module.Root.Mvc.Helpers
     /// </summary>
     public static class LayoutHelper
     {
-        /// <summary>
-        /// Renders the section contents.
-        /// </summary>
-        /// <param name="htmlHelper">The HTML helper.</param>
-        /// <param name="webPage">The web page.</param>
-        /// <param name="model">The model.</param>
-        public static void RenderSectionContents(this HtmlHelper htmlHelper, WebPageBase webPage, RenderPageViewModel model)
-        {
-            var contentHtmlHelper = new PageContentRenderHelper(htmlHelper);
+        ///// <summary>
+        ///// Renders the section contents.
+        ///// </summary>
+        ///// <param name="htmlHelper">The HTML helper.</param>
+        ///// <param name="razorPage">The razor page.</param>
+        ///// <param name="model">The model.</param>
+        //public static void RenderSectionContents(this IHtmlHelper htmlHelper, RazorPage razorPage, RenderPageViewModel model)
+        //{
+        //    var contentHtmlHelper = new PageContentRenderHelper(htmlHelper);
 
-            foreach (var region in model.Regions)
-            {
-                var contentsBuilder = new StringBuilder();
-                var projections = model.Contents.Where(c => c.RegionId == region.RegionId).OrderBy(c => c.Order).ToList();
+        //    foreach (var region in model.Regions)
+        //    {
+        //        var contentsBuilder = new StringBuilder();
+        //        var projections = model.Contents.Where(c => c.RegionId == region.RegionId).OrderBy(c => c.Order).ToList();
 
-                using (new LayoutRegionWrapper(contentsBuilder, region, model.AreRegionsEditable))
-                {
-                    foreach (var projection in projections)
-                    {
-                        // Add content Html
-                        using (new RegionContentWrapper(contentsBuilder, projection, model.CanManageContent && model.AreRegionsEditable))
-                        {
-                            contentsBuilder = contentHtmlHelper.AppendHtml(contentsBuilder, projection, model);
-                        }
-                    }
-                }
+        //        using (new LayoutRegionWrapper(contentsBuilder, region, model.AreRegionsEditable))
+        //        {
+        //            foreach (var projection in projections)
+        //            {
+        //                // Add content Html
+        //                using (new RegionContentWrapper(contentsBuilder, projection, model.CanManageContent && model.AreRegionsEditable))
+        //                {
+        //                    contentsBuilder = contentHtmlHelper.AppendHtml(contentsBuilder, projection, model);
+        //                }
+        //            }
+        //        }
 
-                var pageHtmlHelper = new PageHtmlRenderer.PageHtmlRenderer(contentsBuilder, model);
-                if (model.AreRegionsEditable)
-                {
-                    pageHtmlHelper.ReplaceRegionRepresentationHtml();
-                }
-                var html = pageHtmlHelper.GetReplacedHtml().ToString();
+        //        var pageHtmlHelper = new PageHtmlRenderer.PageHtmlRenderer(contentsBuilder, model);
+        //        if (model.AreRegionsEditable)
+        //        {
+        //            pageHtmlHelper.ReplaceRegionRepresentationHtml();
+        //        }
+        //        var html = pageHtmlHelper.GetReplacedHtml().ToString();
 
-                RenderSectionAsLayoutRegion(webPage, html, region.RegionIdentifier);
-            }
-        }
+        //        RenderSectionAsLayoutRegion(razorPage, html, region.RegionIdentifier);
+        //    }
+        //}
 
-        /// <summary>
-        /// Renders the section as layout region.
-        /// </summary>
-        /// <param name="webPage">The web page.</param>
-        /// <param name="partialViewHtml">The partial view HTML.</param>
-        /// <param name="sectionName">Name of the section.</param>
-        private static void RenderSectionAsLayoutRegion(WebPageBase webPage, string partialViewHtml, string sectionName)
-        {
-            webPage.DefineSection(
-                sectionName,
-                () =>
-                {
-                    Action<TextWriter> writerAction = tw => tw.Write(partialViewHtml);
-                    var result = new HelperResult(writerAction);
-                    webPage.Write(result);
-                });
-        }
+        ///// <summary>
+        ///// Renders the section as layout region.
+        ///// </summary>
+        ///// <param name="razorPage">The razor page.</param>
+        ///// <param name="partialViewHtml">The partial view HTML.</param>
+        ///// <param name="sectionName">Name of the section.</param>
+        //private static void RenderSectionAsLayoutRegion(RazorPage razorPage, string partialViewHtml, string sectionName)
+        //{
+        //    razorPage.DefineSection(
+        //        sectionName,
+        //        async writer =>
+        //        {
+        //            //Action<TextWriter> writerAction = tw => tw.Write(partialViewHtml);
+        //            //var result = new HelperResult(writerAction);
+        //            await writer.WriteAsync(partialViewHtml);
+        //        });
+        //}
         
         /// <summary>
         /// Renders the page custom JavaScript.
@@ -83,7 +83,7 @@ namespace BetterCms.Module.Root.Mvc.Helpers
         /// <param name="htmlHelper">The HTML helper.</param>
         /// <param name="styles">The styles.</param>
         /// <returns></returns>
-        public static IHtmlString RenderPageCustomCss(this HtmlHelper htmlHelper, IEnumerable<IStylesheetAccessor> styles)
+        public static IHtmlContent RenderPageCustomCss(this IHtmlHelper htmlHelper, IEnumerable<IStylesheetAccessor> styles)
         {
             if (styles != null)
             {
@@ -142,7 +142,7 @@ namespace BetterCms.Module.Root.Mvc.Helpers
         /// <param name="htmlHelper">The HTML helper.</param>
         /// <param name="scripts">The scripts.</param>
         /// <returns></returns>
-        public static IHtmlString RenderPageCustomJavaScript(this HtmlHelper htmlHelper, IEnumerable<IJavaScriptAccessor> scripts)
+        public static IHtmlContent RenderPageCustomJavaScript(this IHtmlHelper htmlHelper, IEnumerable<IJavaScriptAccessor> scripts)
         {
             if (scripts != null)
             {
@@ -195,12 +195,12 @@ namespace BetterCms.Module.Root.Mvc.Helpers
         /// <summary>
         /// The render style sheets.
         /// </summary>
-        /// <param name="htmlHelper">The html helper.</param>
+        /// <param name="viewComponentHelper">The view component helper.</param>
         /// <typeparam name="T"></typeparam>
-        /// <returns>The <see cref="IHtmlString"/>.</returns>
-        public static IHtmlString RenderStyleSheets<T>(this HtmlHelper htmlHelper) where T : CmsModuleDescriptor
+        /// <returns>The <see cref="IHtmlContent"/>.</returns>
+        public static IHtmlContent RenderStyleSheets<T>(this IViewComponentHelper viewComponentHelper) where T : CmsModuleDescriptor
         {
-            return htmlHelper.Action("RenderModuleStyleSheetIncludes", "Rendering", new { moduleDescriptorType = typeof(T) });
+            return viewComponentHelper.Invoke("RenderModuleStyleSheetIncludes", "Rendering", new { moduleDescriptorType = typeof(T) });
         }
 
         /// <summary>
@@ -208,7 +208,7 @@ namespace BetterCms.Module.Root.Mvc.Helpers
         /// </summary>
         /// <param name="htmlHelper">The HTML helper.</param>
         /// <returns>Rendered body attributes, required for page work with CMS panel</returns>
-        public static IHtmlString RenderBodyAttributes(this HtmlHelper htmlHelper)
+        public static IHtmlContent RenderBodyAttributes(this IHtmlHelper htmlHelper)
         {
             var attributes = string.Empty;
             var model = htmlHelper.ViewContext.ViewData.Model as RenderPageViewModel;
@@ -239,26 +239,26 @@ namespace BetterCms.Module.Root.Mvc.Helpers
                 }
             }
 
-            return new MvcHtmlString(attributes);
+            return new HtmlString(attributes);
         }
 
-        /// <summary>
-        /// Renders the invisible regions:.
-        /// - Layout regions:
-        /// -- When switching from layout A to layout B, and layout B has nor regions, which were in layout A
-        /// -- When layout regions are deleted in Site Settings -> Page Layouts -> Templates
-        /// - Widget regions:
-        /// -- When region was deleted from the widget, and page has a content, assigned to that region
-        /// </summary>
-        /// <param name="htmlHelper">The HTML helper.</param>
-        /// <param name="model">The  model.</param>
-        /// <returns></returns>
-        public static MvcHtmlString RenderInvisibleRegions(this HtmlHelper htmlHelper, RenderPageViewModel model)
-        {
-            var childContentRenderHelper = new PageContentRenderHelper(htmlHelper);
-            var html = childContentRenderHelper.RenderInvisibleRegions(model);
+        ///// <summary>
+        ///// Renders the invisible regions:.
+        ///// - Layout regions:
+        ///// -- When switching from layout A to layout B, and layout B has nor regions, which were in layout A
+        ///// -- When layout regions are deleted in Site Settings -> Page Layouts -> Templates
+        ///// - Widget regions:
+        ///// -- When region was deleted from the widget, and page has a content, assigned to that region
+        ///// </summary>
+        ///// <param name="htmlHelper">The HTML helper.</param>
+        ///// <param name="model">The  model.</param>
+        ///// <returns></returns>
+        //public static HtmlString RenderInvisibleRegions(this IHtmlHelper htmlHelper, RenderPageViewModel model)
+        //{
+        //    var childContentRenderHelper = new PageContentRenderHelper(htmlHelper);
+        //    var html = childContentRenderHelper.RenderInvisibleRegions(model);
 
-            return new MvcHtmlString(html);
-        }
+        //    return new HtmlString(html);
+        //}
     }
 }

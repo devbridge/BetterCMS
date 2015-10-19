@@ -1,9 +1,13 @@
 ﻿using System;
+using System.Linq;
 using BetterCms.Core.Services;
 using BetterCms.Core.Web;
 using BetterModules.Core.Web.Mvc;
+using Microsoft.AspNet.Authentication;
+using Microsoft.AspNet.Authentication.Cookies;
 using Microsoft.AspNet.Mvc;
-using Microsoft.AspNet.Mvc.ViewFeatures;
+using Microsoft.Framework.OptionsModel;
+using Microsoft.Framework.DependencyInjection;
 
 namespace BetterCms.Module.Root.Mvc
 {    
@@ -23,19 +27,7 @@ namespace BetterCms.Module.Root.Mvc
         /// <value>
         /// The security service.
         /// </value>
-        public ISecurityService SecurityService
-        {
-            get
-            {
-                var container = PerWebRequestContainerProvider.GetLifetimeScope(HttpContext);
-                if (container != null && container.IsRegistered<ISecurityService>())
-                {
-                    return container.Resolve<ISecurityService>();
-                }
-
-                return null;
-            }
-        }
+        public ISecurityService SecurityService { get; }
 
         /// <summary>
         /// Gets or sets the HTTP context helper tool.
@@ -59,10 +51,11 @@ namespace BetterCms.Module.Root.Mvc
         /// <summary>
         /// Initializes a new instance of the <see cref="CmsControllerBase" /> class.
         /// </summary>
-        protected CmsControllerBase()
-        {     
-            HtmlHelper.ClientValidationEnabled = true;
-            HtmlHelper.UnobtrusiveJavaScriptEnabled = true;
+        protected CmsControllerBase(ISecurityService securityService)
+        {
+            SecurityService = securityService;
+            //HtmlHelper.ClientValidationEnabled = true;
+            //HtmlHelper.UnobtrusiveJavaScriptEnabled = true;
         }
 
         /// <summary>
@@ -87,6 +80,7 @@ namespace BetterCms.Module.Root.Mvc
         [NonAction]
         protected virtual ActionResult SignOutUserIfAuthenticated()
         {
+            var options = HttpContext.RequestServices.GetService<IOptions<CookieAuthenticationOptions>>().Value;
             if (User.Identity.IsAuthenticated)
             {
                 if (FormsAuthentication.IsEnabled)
@@ -94,17 +88,20 @@ namespace BetterCms.Module.Root.Mvc
                     FormsAuthentication.SignOut();
                 }
 
-                HttpCookie authCookie = Request.Cookies[FormsAuthentication.FormsCookieName];
+                //TODO get proper authentication scheme
+                HttpContext.Authentication.SignOutAsync(HttpContext.Authentication.GetAuthenticationSchemes().First().AuthenticationScheme);
+
+                //HttpCookie authCookie = Request.Cookies[FormsAuthentication.FormsCookieName];
                 HttpCookie roleCokie = Roles.Enabled ? Request.Cookies[Roles.CookieName] : null;
 
-                if (authCookie != null)
-                {
-                    Response.Cookies.Add(
-                        new HttpCookie(authCookie.Name)
-                            {
-                                Expires = DateTime.Now.AddDays(-10)
-                            });
-                }
+                //if (authCookie != null)
+                //{
+                //    Response.Cookies.Add(
+                //        new HttpCookie(authCookie.Name)
+                //            {
+                //                Expires = DateTime.Now.AddDays(-10)
+                //            });
+                //}
 
                 if (roleCokie != null)
                 {
@@ -116,7 +113,7 @@ namespace BetterCms.Module.Root.Mvc
                 }
             }
 
-            return Redirect(FormsAuthentication.LoginUrl);
+            return Redirect(options.LoginPath);
         }
     }
 }

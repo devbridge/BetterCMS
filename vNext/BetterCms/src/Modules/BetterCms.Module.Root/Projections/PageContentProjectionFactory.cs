@@ -1,33 +1,24 @@
 ﻿using System;
 using System.Collections.Generic;
 
-using Autofac;
-using Autofac.Core;
-
 using BetterModules.Core.DataAccess.DataContext;
 using BetterCms.Core.DataContracts;
 using BetterCms.Core.Modules.Projections;
 using BetterCms.Module.Root.Content.Resources;
-
-using Common.Logging;
-
-using BetterModules.Core.Web.Dependencies;
-
+using Microsoft.Framework.Logging;
 using NHibernate.Proxy.DynamicProxy;
 
 namespace BetterCms.Module.Root.Projections
 {
     public class PageContentProjectionFactory
     {
-        private static readonly ILog Log = LogManager.GetCurrentClassLogger();
-
-        private readonly PerWebRequestContainerProvider containerProvider;
+        private readonly ILogger logger;
         private readonly IUnitOfWork unitOfWork;
 
-        public PageContentProjectionFactory(PerWebRequestContainerProvider containerProvider, IUnitOfWork unitOfWork)
+        public PageContentProjectionFactory(IUnitOfWork unitOfWork, ILoggerFactory loggerFactory)
         {
-            this.containerProvider = containerProvider;
             this.unitOfWork = unitOfWork;
+            logger = loggerFactory.CreateLogger<PageContentProjectionFactory>();
         }
 
         public virtual TProjection Create<TProjection>(IPageContent pageContent, IContent content, IList<IOptionValue> options,
@@ -39,9 +30,11 @@ namespace BetterCms.Module.Root.Projections
 
             if (contentAccessor == null)
             {
-                Log.Error(string.Format("A content accessor was not found for the content type {0} with id={1}.", content.GetType().FullName, content.Id));
+                logger.LogError(
+                    $"A content accessor was not found for the content type {content.GetType().FullName} with id={content.Id}.");
 
-                contentAccessor = new EmptyContentAccessor(string.Format("<i style=\"color:red;\">{0}</i>", RootGlobalization.Message_FailedToRenderContent));
+                contentAccessor = new EmptyContentAccessor(
+                    $"<i style=\"color:red;\">{RootGlobalization.Message_FailedToRenderContent}</i>");
             }
 
             TProjection pageContentProjection = createProjectionDelegate.Invoke(pageContent, content, contentAccessor, childContentProjections, childRegionContentProjections);

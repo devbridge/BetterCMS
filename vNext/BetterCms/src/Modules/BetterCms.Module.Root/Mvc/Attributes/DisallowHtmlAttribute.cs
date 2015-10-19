@@ -2,7 +2,9 @@
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Text.RegularExpressions;
-using System.Web.Mvc;
+using Microsoft.AspNet.Mvc;
+using Microsoft.AspNet.Mvc.ModelBinding;
+using Microsoft.AspNet.Mvc.ModelBinding.Validation;
 
 namespace BetterCms.Module.Root.Mvc.Attributes
 {
@@ -10,7 +12,7 @@ namespace BetterCms.Module.Root.Mvc.Attributes
     /// Validates the field to not contain any HTML.
     /// </summary>
     [AttributeUsage(AttributeTargets.Property | AttributeTargets.Field, AllowMultiple = false)]
-    public class DisallowHtmlAttribute : ValidationAttribute, IClientValidatable
+    public class DisallowHtmlAttribute : ValidationAttribute, IClientModelValidator
     {
         /// <summary>
         /// The client validation rule.
@@ -46,14 +48,13 @@ namespace BetterCms.Module.Root.Mvc.Attributes
         /// <summary>
         /// When implemented in a class, returns client validation rules for that class.
         /// </summary>
-        /// <param name="metadata">The model metadata.</param>
-        /// <param name="context">The controller context.</param>
+        /// <param name="context">The client model validation context.</param>
         /// <returns>
         /// The client validation rules for this validator.
         /// </returns>
-        public IEnumerable<ModelClientValidationRule> GetClientValidationRules(ModelMetadata metadata, ControllerContext context)
+        public IEnumerable<ModelClientValidationRule> GetClientValidationRules(ClientModelValidationContext context)
         {
-            var rule = new ModelClientValidationRule { ErrorMessage = ErrorMessageString ?? "Field must not contain HTML.", ValidationType = clientValidationRule };
+            var rule = new ModelClientValidationRule (clientValidationRule, ErrorMessageString ?? "Field must not contain HTML.");
             rule.ValidationParameters.Add("pattern", RootModuleConstants.HtmlRegularExpression);
 
             yield return rule;

@@ -5,18 +5,19 @@ using BetterCms.Core.Modules.Projections;
 
 using BetterModules.Core.Web.Modules;
 using BetterModules.Core.Web.Mvc.Extensions;
+using Microsoft.Framework.Logging;
 
 namespace BetterCms.Module.Root.Registration
 {
     public class DatePickerJsModuleIncludeDescriptor : JsIncludeDescriptor
     {
-        public DatePickerJsModuleIncludeDescriptor(RootModuleDescriptor module)
+        public DatePickerJsModuleIncludeDescriptor(RootModuleDescriptor module, ILoggerFactory loggerFactory, IControllerExtensions controllerExtensions)
             : base(module, "bcms.datepicker")
         {
 
-            Links = new IActionProjection[]
+            Links = new IActionUrlProjection[]
                 { 
-                    new JavaScriptModuleLink(this, "calendarImageUrl", VirtualPath.Combine(module.CssBasePath, "images", "icn-calendar.png"))
+                    new JavaScriptModuleLink(this, "calendarImageUrl", VirtualPath.Combine(module.CssBasePath, "images", "icn-calendar.png"), loggerFactory)
                 };
 
             Globalization = new IActionProjection[]
@@ -77,8 +78,9 @@ namespace BetterCms.Module.Root.Registration
                             }
 
                             return datePattern;
-                        }),
-                    new JavaScriptModuleGlobalization(this, "currentCulture", () => Thread.CurrentThread.CurrentCulture.Name),
+                        },
+                        loggerFactory),
+                    new JavaScriptModuleGlobalization(this, "currentCulture", () => Thread.CurrentThread.CurrentCulture.Name, loggerFactory),
                 };
         }
     }

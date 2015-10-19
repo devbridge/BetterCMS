@@ -3,8 +3,6 @@ using System.Linq;
 using System.Linq.Expressions;
 using System.Reflection;
 
-using MvcContrib.Sorting;
-
 using SortAndPagingOptions = BetterCms.Module.Root.Mvc.Grids.GridOptions.GridOptions;
 
 namespace BetterCms.Module.Root.Mvc.Grids.Extensions

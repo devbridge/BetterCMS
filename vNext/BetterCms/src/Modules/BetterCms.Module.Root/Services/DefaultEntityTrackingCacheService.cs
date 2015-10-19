@@ -1,8 +1,5 @@
-﻿using System.Web;
-
-using BetterCms.Core.Web;
-
-using BetterModules.Core.Web.Web;
+﻿using Microsoft.AspNet.Http;
+using IHttpContextAccessor = BetterModules.Core.Web.Web.IHttpContextAccessor;
 
 namespace BetterCms.Module.Root.Services
 {
@@ -42,7 +39,7 @@ namespace BetterCms.Module.Root.Services
 
             if (context != null)
             {
-                if (context.Items.Contains(key))
+                if (context.Items.ContainsKey(key))
                 {
                     context.Items.Remove(key);
                 }
@@ -53,17 +50,12 @@ namespace BetterCms.Module.Root.Services
 
         private string CreateKey(System.Type type, System.Guid id)
         {
-            return string.Format("{0}_{1}", type, id);
+            return $"{type}_{id}";
         }
 
-        private HttpContextBase GetCurrentContext()
+        private HttpContext GetCurrentContext()
         {
-            if (contextAccessor != null)
-            {
-                return contextAccessor.GetCurrent();
-            }
-
-            return null;
+            return contextAccessor?.HttpContext;
         }
     }
 }

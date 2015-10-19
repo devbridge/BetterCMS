@@ -2,9 +2,6 @@
 
 using BetterCms.Module.Root.Content.Resources;
 
-using MvcContrib.Sorting;
-using MvcContrib.UI.Grid;
-
 namespace BetterCms.Module.Root.Mvc.Grids.TableRenderers
 {
     /// <summary>

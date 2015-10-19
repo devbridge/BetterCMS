@@ -3,6 +3,8 @@ using System.Runtime.Serialization;
 
 using BetterCms.Core.DataContracts;
 using BetterCms.Core.Modules.Projections;
+using Microsoft.AspNet.Mvc.Rendering;
+using Microsoft.AspNet.Mvc.ViewFeatures;
 
 namespace BetterCms.Module.Root.Projections
 {
@@ -36,7 +38,7 @@ namespace BetterCms.Module.Root.Projections
         /// </summary>
         /// <param name="html">The HTML.</param>
         /// <returns>Custom style</returns>
-        public string[] GetCustomStyles(System.Web.Mvc.HtmlHelper html)
+        public string[] GetCustomStyles(IHtmlHelper html)
         {
             return styleAccessor.GetCustomStyles(html);
         }
@@ -46,7 +48,7 @@ namespace BetterCms.Module.Root.Projections
         /// </summary>
         /// <param name="html">The HTML.</param>
         /// <returns>Array of style resources</returns>
-        public string[] GetStylesResources(System.Web.Mvc.HtmlHelper html)
+        public string[] GetStylesResources(IHtmlHelper html)
         {
             return styleAccessor.GetStylesResources(html);
         }

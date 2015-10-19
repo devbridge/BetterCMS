@@ -1,12 +1,13 @@
 ﻿using System;
 using BetterModules.Core.Web.Modules;
+using Microsoft.AspNet.Mvc;
 using Microsoft.AspNet.Mvc.Rendering;
 using Microsoft.AspNet.Mvc.ViewFeatures;
 using Microsoft.Framework.Logging;
 
 namespace BetterCms.Core.Modules.Projections
 {
-    public class JavaScriptModuleLink : IActionProjection
+    public class JavaScriptModuleLink : IActionUrlProjection
     {
         private readonly ILogger logger;
 
@@ -38,7 +39,7 @@ namespace BetterCms.Core.Modules.Projections
         /// </value>
         public int Order { get; set; }
 
-        public void Render(HtmlHelper html)
+        public void Render(IHtmlHelper html, IUrlHelper url)
         {
             try
             {

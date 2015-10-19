@@ -3,6 +3,7 @@ using System.Runtime.Serialization;
 
 using BetterCms.Core.DataContracts;
 using BetterCms.Core.Modules.Projections;
+using Microsoft.AspNet.Mvc.Rendering;
 
 namespace BetterCms.Module.Root.Projections
 {
@@ -36,7 +37,7 @@ namespace BetterCms.Module.Root.Projections
         /// </summary>
         /// <param name="html">The HTML.</param>
         /// <returns>Custom JavaScript</returns>
-        public string[] GetCustomJavaScript(System.Web.Mvc.HtmlHelper html)
+        public string[] GetCustomJavaScript(IHtmlHelper html)
         {
             return jsAccessor.GetCustomJavaScript(html);
         }
@@ -46,7 +47,7 @@ namespace BetterCms.Module.Root.Projections
         /// </summary>
         /// <param name="html">The HTML.</param>
         /// <returns>Array with JavaScript resources</returns>
-        public string[] GetJavaScriptResources(System.Web.Mvc.HtmlHelper html)
+        public string[] GetJavaScriptResources(IHtmlHelper html)
         {
             return jsAccessor.GetJavaScriptResources(html);
         }

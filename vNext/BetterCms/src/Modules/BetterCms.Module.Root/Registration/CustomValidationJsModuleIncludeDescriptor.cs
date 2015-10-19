@@ -8,7 +8,7 @@ namespace BetterCms.Module.Root.Registration
         public CustomValidationJsModuleIncludeDescriptor(CmsModuleDescriptor module)
             : base(module, "bcms.customValidation")
         {
-            Links = new IActionProjection[] {};
+            Links = new IActionUrlProjection[] {};
 
             Globalization = new IActionProjection[] { };
         }

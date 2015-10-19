@@ -1,16 +1,14 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
+﻿using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using System.Web.Mvc;
-
+using BetterCms.Configuration;
 using BetterCms.Core.DataContracts;
 using BetterCms.Core.Modules.Projections;
 using BetterCms.Module.Root.Mvc.PageHtmlRenderer;
 using BetterCms.Module.Root.ViewModels.Cms;
-
 using BetterModules.Core.Web.Mvc.Extensions;
+using Microsoft.AspNet.Mvc.Rendering;
+using Microsoft.Framework.OptionsModel;
 
 namespace BetterCms.Module.Root.Mvc.Helpers
 {
@@ -22,11 +20,10 @@ namespace BetterCms.Module.Root.Mvc.Helpers
         /// <param name="controller">The controller.</param>
         /// <param name="renderPageViewModel">The render page view model.</param>
         /// <returns>Renders page to string</returns>
-        public static string RenderPageToString(this CmsControllerBase controller, RenderPageViewModel renderPageViewModel)
+        public static string RenderPageToString(this CmsControllerBase controller, RenderPageViewModel renderPageViewModel, 
+            CmsConfigurationSection configuration, IHtmlHelper htmlHelper)
         {
-            var htmlHelper = GetHtmlHelper(controller);
-
-            return RenderRecursively(controller, renderPageViewModel, renderPageViewModel, htmlHelper).ToString();
+            return RenderRecursively(controller, renderPageViewModel, renderPageViewModel, configuration, htmlHelper).ToString();
         }
 
         /// <summary>
@@ -39,14 +36,15 @@ namespace BetterCms.Module.Root.Mvc.Helpers
         /// <returns>
         /// String builder with updated data
         /// </returns>
-        private static StringBuilder RenderRecursively(CmsControllerBase controller, RenderPageViewModel currentModel, RenderPageViewModel pageModel, HtmlHelper htmlHelper)
+        private static StringBuilder RenderRecursively(CmsControllerBase controller, RenderPageViewModel currentModel,
+            RenderPageViewModel pageModel, CmsConfigurationSection configuration, IHtmlHelper htmlHelper)
         {
             if (currentModel.MasterPage != null)
             {
-                var renderedMaster = RenderRecursively(controller, currentModel.MasterPage, pageModel, htmlHelper);
+                var renderedMaster = RenderRecursively(controller, currentModel.MasterPage, pageModel, configuration, htmlHelper);
 
                 var pageHtmlHelper = new PageHtmlRenderer.PageHtmlRenderer(renderedMaster, pageModel);
-                var contentHtmlHelper = new PageContentRenderHelper(htmlHelper);
+                var contentHtmlHelper = new PageContentRenderHelper(htmlHelper, configuration);
 
                 foreach (var region in currentModel.Regions)
                 {
@@ -58,7 +56,7 @@ namespace BetterCms.Module.Root.Mvc.Helpers
                         foreach (var projection in projections)
                         {
                             // Add Html
-                            using (new RegionContentWrapper(contentsBuilder, projection, currentModel.CanManageContent && currentModel.AreRegionsEditable))
+                            using (new RegionContentWrapper(contentsBuilder, projection, configuration, currentModel.CanManageContent && currentModel.AreRegionsEditable))
                             {
                                 // Pass current model as view data model
                                 htmlHelper.ViewData.Model = pageModel;
@@ -165,26 +163,26 @@ namespace BetterCms.Module.Root.Mvc.Helpers
             }
         }
 
-        /// <summary>
-        /// Gets fake HTML helper.
-        /// </summary>
-        /// <param name="controller">The controller.</param>
-        /// <returns>Fake HTML helper</returns>
-        private static HtmlHelper GetHtmlHelper(this Controller controller)
-        {
-            var viewContext = new ViewContext(controller.ControllerContext, new FakeView(), controller.ViewData, controller.TempData, TextWriter.Null);
-            return new HtmlHelper(viewContext, new ViewPage());
-        }
+        ///// <summary>
+        ///// Gets fake HTML helper.
+        ///// </summary>
+        ///// <param name="controller">The controller.</param>
+        ///// <returns>Fake HTML helper</returns>
+        //private static IHtmlHelper GetHtmlHelper(this Controller controller)
+        //{
+        //    var viewContext = new ViewContext(controller.ActionContext, new FakeView(), controller.ViewData, controller.TempData, TextWriter.Null);
+        //    return new HtmlHelper(viewContext, new ViewPage());
+        //}
 
-        /// <summary>
-        /// Fake razor view
-        /// </summary>
-        private class FakeView : IView
-        {
-            public void Render(ViewContext viewContext, TextWriter writer)
-            {
-                throw new InvalidOperationException();
-            }
-        }
+        ///// <summary>
+        ///// Fake razor view
+        ///// </summary>
+        //private class FakeView : IView
+        //{
+        //    public void Render(ViewContext viewContext, TextWriter writer)
+        //    {
+        //        throw new InvalidOperationException();
+        //    }
+        //}
     }
 }

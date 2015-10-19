@@ -1,8 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq.Expressions;
-using System.Web.Mvc;
-using System.Web.Mvc.Html;
+using Microsoft.AspNet.Mvc.ModelBinding;
+using Microsoft.AspNet.Mvc.Rendering;
+using Microsoft.AspNet.Mvc.ViewFeatures;
 
 namespace BetterCms.Module.Root.Mvc.Helpers
 {
@@ -19,7 +20,7 @@ namespace BetterCms.Module.Root.Mvc.Helpers
         /// <returns>
         /// Attributes, merged with view model property's validation attributes
         /// </returns>
-        public static Dictionary<string, object> MergeValidationAttributes<TModel, TProperty>(this HtmlHelper<TModel> htmlHelper,
+        public static Dictionary<string, object> MergeValidationAttributes<TModel, TProperty>(this IHtmlHelper<TModel> htmlHelper,
             Expression<Func<TModel, TProperty>> expression, Dictionary<string, object> attributes)
         {
             var metadata = ModelMetadata.FromLambdaExpression(expression, htmlHelper.ViewData);
@@ -48,12 +49,12 @@ namespace BetterCms.Module.Root.Mvc.Helpers
         /// <returns>
         /// HTML string with replaces CSS class name
         /// </returns>
-        public static MvcHtmlString BcmsValidationMessageFor<TModel, TProperty>(this HtmlHelper<TModel> htmlHelper, Expression<Func<TModel, TProperty>> expression, string validationMessage = null, object htmlAttributes = null)
+        public static HtmlString BcmsValidationMessageFor<TModel, TProperty>(this IHtmlHelper<TModel> htmlHelper, Expression<Func<TModel, TProperty>> expression, string validationMessage = null, object htmlAttributes = null)
         {
-            var result = htmlHelper.ValidationMessageFor(expression, validationMessage, htmlAttributes).ToHtmlString();
+            var result = htmlHelper.ValidationMessageFor(expression, validationMessage, htmlAttributes).ToString();
             result = result.Replace("field-validation-valid", "bcms-field-validation-valid");
 
-            return new MvcHtmlString(result);
+            return new HtmlString(result);
         }
     }
 }

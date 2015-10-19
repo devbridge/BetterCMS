@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using Microsoft.AspNet.Mvc.Rendering;
 using Microsoft.AspNet.Mvc.ViewFeatures;
 
 namespace BetterCms.Module.Root.Mvc.Extensions
@@ -13,11 +14,8 @@ namespace BetterCms.Module.Root.Mvc.Extensions
             {
                 return new Dictionary<string, object>();
             }
-            dictionary = htmlAttributes as IDictionary<string, object>;
-            if (dictionary == null)
-            {
-                dictionary = HtmlHelper.AnonymousObjectToHtmlAttributes(htmlAttributes).FixHtmlAttributes();
-            }
+            dictionary = htmlAttributes as IDictionary<string, object> ??
+                         HtmlHelper.AnonymousObjectToHtmlAttributes(htmlAttributes).FixHtmlAttributes();
             return dictionary;
         }
 

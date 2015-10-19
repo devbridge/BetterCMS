@@ -1,22 +1,22 @@
-﻿using System.Web;
-using System.Text;
-using System.Web.Mvc;
+﻿using System.Text;
+using Microsoft.AspNet.Html.Abstractions;
+using Microsoft.AspNet.Mvc.Rendering;
 
 namespace BetterCms.Module.Root.Mvc.Helpers
 {
     public static class PreviewHelper
     {
-        public static IHtmlString PreviewContentBox(this HtmlHelper html, string previewUrl, string openUrl, string title = "Content Preview", bool asImage = false)
+        public static IHtmlContent PreviewContentBox(this IHtmlHelper html, string previewUrl, string openUrl, string title = "Content Preview", bool asImage = false)
         {
             return PreviewBox(html, previewUrl, openUrl, title, "100%", "100%", "bcms-content-frame", asImage);                
         }
 
-        public static IHtmlString PreviewLayoutBox(this HtmlHelper html, string url, string title = "Layout Preview")
+        public static IHtmlContent PreviewLayoutBox(this IHtmlHelper html, string url, string title = "Layout Preview")
         {
             return PreviewBox(html, url, url, title, "930", "930", "bcms-layout-frame", false);            
         }
 
-        private static IHtmlString PreviewBox(HtmlHelper html, string previewUrl, string openUrl, string title, string width, string height, string frameCssClass, bool asImage)
+        private static IHtmlContent PreviewBox(IHtmlHelper html, string previewUrl, string openUrl, string title, string width, string height, string frameCssClass, bool asImage)
         {
             StringBuilder sb = new StringBuilder();
 
@@ -33,7 +33,7 @@ namespace BetterCms.Module.Root.Mvc.Helpers
             sb.AppendLine();
             sb.AppendLine("</div>");
 
-            return new MvcHtmlString(sb.ToString());
+            return new HtmlString(sb.ToString());
         }
     }
 }

@@ -18,7 +18,6 @@ using BetterCms.Module.Root.ViewModels.Option;
 
 using BetterModules.Core.DataContracts;
 using BetterModules.Core.Models;
-using BetterModules.Core.Web.Services.Caching;
 
 using NHibernate.Linq;
 using NHibernate.Proxy.DynamicProxy;

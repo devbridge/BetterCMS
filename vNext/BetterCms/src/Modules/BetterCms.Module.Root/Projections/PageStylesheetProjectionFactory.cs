@@ -1,15 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 
-using Autofac;
-using Autofac.Core;
-
 using BetterModules.Core.DataAccess;
 using BetterCms.Core.DataContracts;
 using BetterCms.Core.Exceptions;
 using BetterCms.Core.Modules.Projections;
-
-using BetterModules.Core.Web.Dependencies;
 
 using NHibernate.Proxy.DynamicProxy;
 
@@ -17,13 +12,11 @@ namespace BetterCms.Module.Root.Projections
 {
     public class PageStylesheetProjectionFactory
     {
-        private PerWebRequestContainerProvider containerProvider;
 
         private IRepository repository;
 
-        public PageStylesheetProjectionFactory(PerWebRequestContainerProvider containerProvider, IRepository repository)
+        public PageStylesheetProjectionFactory(IRepository repository)
         {
-            this.containerProvider = containerProvider;
             this.repository = repository;
         }
 

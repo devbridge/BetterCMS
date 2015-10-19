@@ -2,6 +2,7 @@
 using System.Linq;
 using BetterCms.Configuration;
 using BetterCms.Core.Modules.Registration;
+using BetterCms.Core.Services;
 using BetterCms.Module.Root.Models.Sidebar;
 using BetterCms.Module.Root.Mvc;
 using BetterCms.Module.Root.ViewModels;
@@ -40,7 +41,8 @@ namespace BetterCms.Module.Root.Controllers
         /// </summary>
         /// <param name="modulesRegistration">The modules.</param>
         /// <param name="configuration">The CMS configuration.</param>
-        public SidebarController(ICmsModulesRegistration modulesRegistration, IOptions<CmsConfigurationSection> configuration)
+        public SidebarController(ICmsModulesRegistration modulesRegistration, IOptions<CmsConfigurationSection> configuration, ISecurityService securityService)
+            :base(securityService)
         {
             this.configuration = configuration.Value;
             this.modulesRegistration = modulesRegistration;

@@ -1,8 +1,5 @@
 ﻿using System;
 
-using MvcContrib.Sorting;
-using MvcContrib.UI.Grid;
-
 namespace BetterCms.Module.Root.Mvc.Grids.GridOptions
 {
     [Serializable]

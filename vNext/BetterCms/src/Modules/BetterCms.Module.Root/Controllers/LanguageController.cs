@@ -1,4 +1,5 @@
-﻿using BetterCms.Module.Root.Commands.Language.DeleteLanguage;
+﻿using BetterCms.Core.Services;
+using BetterCms.Module.Root.Commands.Language.DeleteLanguage;
 using BetterCms.Module.Root.Commands.Language.GetLanguageList;
 using BetterCms.Module.Root.Commands.Language.SaveLanguage;
 using BetterCms.Module.Root.Commands.Language.SuggestLanguages;
@@ -18,6 +19,10 @@ namespace BetterCms.Module.Root.Controllers
     [BcmsAuthorize]
     public class LanguageController : CmsControllerBase
     {
+        public LanguageController(ISecurityService securityService) : base(securityService)
+        {
+        }
+
         /// <summary>
         /// Lists the template for displaying languages list.
         /// </summary>

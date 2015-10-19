@@ -5,36 +5,20 @@ namespace BetterCms.Module.Root.Models.Migrations
     [VersionTableMetaData]
     public class RootVersionTableMetaData : IVersionTableMetaData
     {
-        public string SchemaName
-        {
-            get
-            {
-                return RootModuleDescriptor.RootSchemaName;
-            }
-        }
+        public object ApplicationContext { get; set; }
 
-        public string TableName
-        {
-            get
-            {
-                return "VersionInfo";
-            }
-        }
+        public bool OwnsSchema => true;
 
-        public string ColumnName
-        {
-            get
-            {
-                return "Version";
-            }
-        }
+        public string SchemaName => RootModuleDescriptor.RootSchemaName;
 
-        public string UniqueIndexName
-        {
-            get
-            {
-                return "uc_VersionInfo_Verion_" + RootModuleDescriptor.ModuleName;
-            }
-        }
+        public string TableName => "VersionInfo";
+
+        public string ColumnName => "Version";
+
+        public string DescriptionColumnName => "Description";
+
+        public string UniqueIndexName => "uc_VersionInfo_Verion_" + RootModuleDescriptor.ModuleName;
+
+        public string AppliedOnColumnName => "AppliedOn";
     }
 }

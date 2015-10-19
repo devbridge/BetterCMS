@@ -7,6 +7,7 @@ using BetterCms.Module.Root.Models;
 using BetterCms.Module.Root.Mvc;
 using BetterCms.Module.Root.ViewModels.Autocomplete;
 using BetterModules.Core.Infrastructure.Commands;
+using Microsoft.Framework.OptionsModel;
 
 namespace BetterCms.Module.Root.Commands.Authentication.SearchRoles
 {
@@ -23,7 +24,7 @@ namespace BetterCms.Module.Root.Commands.Authentication.SearchRoles
         /// <summary>
         /// The configuration.
         /// </summary>
-        private readonly ICmsConfiguration configuration;
+        private readonly CmsConfigurationSection configuration;
 
         /// <summary>
         /// The cache service.
@@ -35,9 +36,9 @@ namespace BetterCms.Module.Root.Commands.Authentication.SearchRoles
         /// </summary>
         /// <param name="configuration">The configuration.</param>
         /// <param name="cacheService">The cache service.</param>
-        public SearchRolesCommand(ICmsConfiguration configuration, ICacheService cacheService)
+        public SearchRolesCommand(IOptions<CmsConfigurationSection> configuration, ICacheService cacheService)
         {
-            this.configuration = configuration;
+            this.configuration = configuration.Value;
             this.cacheService = cacheService;
         }
 

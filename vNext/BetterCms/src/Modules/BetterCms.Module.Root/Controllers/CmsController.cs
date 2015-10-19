@@ -6,11 +6,13 @@ using BetterCms.Configuration;
 using BetterCms.Core.DataContracts.Enums;
 using BetterCms.Core.Mvc.Attributes;
 using BetterCms.Core.Security;
+using BetterCms.Core.Services;
 using BetterCms.Module.Root.Commands.GetPageToRender;
 using BetterCms.Module.Root.Mvc;
 using BetterCms.Module.Root.Mvc.Helpers;
 using BetterCms.Module.Root.ViewModels.Cms;
 using Microsoft.AspNet.Mvc;
+using Microsoft.AspNet.Mvc.Rendering;
 using Microsoft.Framework.Logging;
 using Microsoft.Framework.OptionsModel;
 using ILogger = Microsoft.Framework.Logging.ILogger;
@@ -40,17 +42,21 @@ namespace BetterCms.Module.Root.Controllers
         /// </summary>
         private readonly ILogger logger;
 
+        private readonly IHtmlHelper htmlHelper;
+
         /// <summary>
         /// Initializes a new instance of the <see cref="CmsController" /> class.
         /// </summary>
         /// <param name="cmsConfiguration">The configuration loader.</param>
         /// <param name="accessControlService">The access control service.</param>
         /// <param name="loggerFactory">The logger factory</param>
-        public CmsController(IOptions<CmsConfigurationSection> cmsConfiguration, IAccessControlService accessControlService, ILoggerFactory loggerFactory)
+        public CmsController(IOptions<CmsConfigurationSection> cmsConfiguration, IAccessControlService accessControlService, 
+            ILoggerFactory loggerFactory, IHtmlHelper htmlHelper, ISecurityService securityService) : base(securityService)
         {
             this.cmsConfiguration = cmsConfiguration.Value;
             logger = loggerFactory.CreateLogger<CmsController>();
             this.accessControlService = accessControlService;
+            this.htmlHelper = htmlHelper;
         }
 
         /// <summary>
@@ -124,17 +130,17 @@ namespace BetterCms.Module.Root.Controllers
                             try
                             {
                                 // Pre-renders the given request model.
-                                this.RenderPageToString(model.RenderPage);
+                                this.RenderPageToString(model.RenderPage, cmsConfiguration, htmlHelper);
                             }
                             catch (Exception ex)
                             {
-                               logger.FatalFormat("Failed to pre-render the request model {0}.", ex, model.RenderPage);
+                               logger.LogCritical("Failed to pre-render the request model {0}.", ex, model.RenderPage);
                             }
                             
                             Response.StatusCode = 403;
                             LogAccessForbidden(model.RenderPage);
 
-                            throw new HttpException(403, "Access to the page forbidden.");
+                            //throw new HttpException(403, "Access to the page forbidden.");
                         }
 
                         // Notify.
@@ -143,7 +149,7 @@ namespace BetterCms.Module.Root.Controllers
                         if (model.RenderPage != null && model.RenderPage.MasterPage != null)
                         {
                             // Render page with hierarchical master pages
-                            return Content(this.RenderPageToString(model.RenderPage));
+                            return Content(this.RenderPageToString(model.RenderPage, cmsConfiguration, htmlHelper));
                         }
 
                         // Render regular MVC Razor view
@@ -151,17 +157,20 @@ namespace BetterCms.Module.Root.Controllers
                     }
                 }
             }
-            catch (HttpException)
-            {
-                throw;
-            }
+            //catch (HttpException)
+            //{
+            //    throw;
+            //}
             catch (Exception ex)
             {
-                throw new HttpException(500, "Failed to load a CMS page.", ex);
+                //throw new HttpException(500, "Failed to load a CMS page.", ex);
+                Response.StatusCode = 500;
             }
 
             LogPageNotFound(virtualPath);
-            throw new HttpException(404, "Page Not Found");
+            Response.StatusCode = 404;
+            return HttpNotFound();
+            //throw new HttpException(404, "Page Not Found");
         }
 
         private bool HasCurrentPrincipalAccess(IAccessSecuredObject page)

@@ -19,6 +19,7 @@ using BetterCms.Module.Root.Mvc.Helpers;
 using BetterModules.Core.Exceptions.DataTier;
 
 using NHibernate.Linq;
+using NHibernate.Util;
 
 namespace BetterCms.Module.Root.Services
 {
@@ -262,10 +263,7 @@ namespace BetterCms.Module.Root.Services
             }
 
             source.Categories.ForEach(destination.AddCategory);
-            if (destination.Categories != null)
-            {
-                destination.Categories.ForEach(e => e.SetEntity(destinationContent));
-            }
+            destination.Categories?.ForEach(e => e.SetEntity(destinationContent));
         }
 
         private void SavePreviewOrDraftContentWithStatusUpdate(Models.Content originalContent, Models.Content updatedContent, ContentStatus requestedStatus)

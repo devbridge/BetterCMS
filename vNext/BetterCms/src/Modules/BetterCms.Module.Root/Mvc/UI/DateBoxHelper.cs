@@ -2,14 +2,15 @@
 using System.Collections.Generic;
 using System.Linq.Expressions;
 using System.Threading;
-using System.Web.Mvc;
-using System.Web.Mvc.Html;
+using Microsoft.AspNet.Html.Abstractions;
+using Microsoft.AspNet.Mvc.Rendering;
+using Microsoft.AspNet.Mvc.ViewFeatures;
 
 namespace BetterCms.Module.Root.Mvc.UI
 {
     public static class DateBoxHelper
     {
-        public static MvcHtmlString DateTextBoxFor<TModel, TProperty>(this HtmlHelper<TModel> htmlHelper, Expression<Func<TModel, TProperty>> expression, DateTime? value, IDictionary<string, object> htmlAttributes = null)
+        public static IHtmlContent DateTextBoxFor<TModel, TProperty>(this IHtmlHelper<TModel> htmlHelper, Expression<Func<TModel, TProperty>> expression, DateTime? value, IDictionary<string, object> htmlAttributes = null)
         {
             if (value.HasValue)
             {
@@ -17,7 +18,8 @@ namespace BetterCms.Module.Root.Mvc.UI
                 htmlAttributes = htmlAttributes ?? new Dictionary<string, object>(1);
                 htmlAttributes["Value"] = date;
             }
-            return htmlHelper.TextBoxFor(expression, htmlAttributes);
+            //TODO what format should be used?
+            return htmlHelper.TextBoxFor(expression, "" ,htmlAttributes);
         }
     }
 }

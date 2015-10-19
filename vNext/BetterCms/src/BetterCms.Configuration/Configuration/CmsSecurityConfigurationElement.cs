@@ -11,7 +11,7 @@ namespace BetterCms.Configuration
     {
         public CmsSecurityConfigurationElement()
         {
-            DefaultAccessRules = new List<AccessControlElement>();
+            DefaultAccessRules = new AccessControlCollection();
             CustomRoles = new List<CustomRoleElement>();
         }
 
@@ -64,7 +64,7 @@ namespace BetterCms.Configuration
         /// </value>
         public bool AccessControlEnabled { get; set; } = false;
         
-        public IList<AccessControlElement> DefaultAccessRules { get; set; }
+        public AccessControlCollection DefaultAccessRules { get; set; }
 
         /// <summary>
         /// Gets the custom roles.

@@ -1,7 +1,5 @@
 ﻿using System;
-
-using Autofac;
-
+using BetterCms.Configuration;
 using BetterModules.Core.DataAccess.DataContext;
 
 using BetterCms.Core.Exceptions;
@@ -11,26 +9,32 @@ using BetterCms.Core.Services;
 using BetterCms.Module.Root.Content.Resources;
 
 using BetterModules.Core.DataContracts;
-using BetterModules.Core.Dependencies;
-
+using Microsoft.Framework.OptionsModel;
 using NHibernate.Proxy.DynamicProxy;
 
 namespace BetterCms.Module.Root.Services
 {
     public class DefaultEntityTrackingService : IEntityTrackingService
     {
-        private readonly ICmsConfiguration configuration;
+        private readonly CmsConfigurationSection configuration;
         private readonly IEntityTrackingCacheService cacheService;
+        private readonly IUnitOfWork unitOfWork;
+        private readonly IAccessControlService accessControlService;
+        private readonly ISecurityService securityService;
 
-        public DefaultEntityTrackingService(ICmsConfiguration configuration, IEntityTrackingCacheService cacheService)
+        public DefaultEntityTrackingService(IOptions<CmsConfigurationSection> configuration, IEntityTrackingCacheService cacheService, 
+            IUnitOfWork unitOfWork, IAccessControlService accessControlService, ISecurityService securityService)
         {
-            this.configuration = configuration;
+            this.configuration = configuration.Value;
             this.cacheService = cacheService;
+            this.unitOfWork = unitOfWork;
+            this.accessControlService = accessControlService;
+            this.securityService = securityService;
         }
 
         public void OnEntityUpdate(IEntity entity)
         {
-            CheckAccessControl(entity);   
+            CheckAccessControl(entity);
         }
 
         public void OnEntityDelete(IEntity entity)
@@ -68,40 +72,34 @@ namespace BetterCms.Module.Root.Services
 
             try
             {
-                using (var container = ContextScopeProvider.CreateChildContainer())
+                Type itemType;
+
+                if (item is IProxy)
                 {
-                    var unitOfWork = container.Resolve<IUnitOfWork>();
-                    Type itemType;
+                    itemType = item.GetType().BaseType;
+                }
+                else
+                {
+                    itemType = item.GetType();
+                }
 
-                    if (item is IProxy)
+                object securedObject;
+                if (!cacheService.GetEntity(itemType, item.Id, out securedObject))
+                {
+                    securedObject = unitOfWork.Session.Get(itemType, item.Id);
+                    cacheService.AddEntity(itemType, item.Id, securedObject);
+                }
+
+                if (securedObject != null)
+                {
+
+                    var principal = securityService.GetCurrentPrincipal();
+
+                    if (accessControlService.GetAccessLevel((IAccessSecuredObject)securedObject, principal) != AccessLevel.ReadWrite)
                     {
-                        itemType = item.GetType().BaseType;
-                    }
-                    else
-                    {
-                        itemType = item.GetType();
-                    }
-
-                    object securedObject;
-                    if (!cacheService.GetEntity(itemType, item.Id, out securedObject))
-                    {
-                        securedObject = unitOfWork.Session.Get(itemType, item.Id);
-                        cacheService.AddEntity(itemType, item.Id, securedObject);
-                    }
-
-                    if (securedObject != null)
-                    {
-                        var accessControlService = container.Resolve<IAccessControlService>();
-                        var securityService = container.Resolve<ISecurityService>();
-
-                        var principal = securityService.GetCurrentPrincipal();
-
-                        if (accessControlService.GetAccessLevel((IAccessSecuredObject)securedObject, principal) != AccessLevel.ReadWrite)
-                        {
-                            throw new ValidationException(
-                                () => string.Format(RootGlobalization.Validation_CurrentUserHasNoRightsToUpdateOrDelete_Message, principal.Identity.Name, item.Title),
-                                string.Format("Current user {0} has no rights to update or delete secured object {1}.", principal.Identity.Name, item));
-                        }
+                        throw new ValidationException(
+                            () => string.Format(RootGlobalization.Validation_CurrentUserHasNoRightsToUpdateOrDelete_Message, principal.Identity.Name, item.Title),
+                            $"Current user {principal.Identity.Name} has no rights to update or delete secured object {item}.");
                     }
                 }
             }

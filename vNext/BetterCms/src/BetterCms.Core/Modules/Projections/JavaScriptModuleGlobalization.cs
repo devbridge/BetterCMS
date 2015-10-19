@@ -58,7 +58,7 @@ namespace BetterCms.Core.Modules.Projections
         /// Renders java script module resource initialization. 
         /// </summary>
         /// <param name="html">Html helper.</param>
-        public void Render(HtmlHelper html)
+        public void Render(IHtmlHelper html)
         {
             try
             {

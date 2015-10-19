@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Diagnostics.CodeAnalysis;
 using BetterCms.Core.Mvc.Attributes;
+using BetterCms.Core.Services;
 using BetterCms.Module.Root.Commands.GetMainJsData;
 using BetterCms.Module.Root.Commands.GetProcessorJsData;
 using BetterCms.Module.Root.Commands.GetStyleSheetsToRender;
@@ -15,6 +16,10 @@ namespace BetterCms.Module.Root.Controllers
     [Area(RootModuleDescriptor.RootAreaName)]
     public class RenderingController : CmsControllerBase
     {
+        public RenderingController(ISecurityService securityService) : base(securityService)
+        {
+        }
+
         /// <summary>
         /// Renders bcms.main.js or bcms.main.min.js (entry point of the Better CMS client side).
         /// </summary>

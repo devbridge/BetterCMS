@@ -27,7 +27,9 @@ namespace BetterCms.Core.Modules.Projections
         /// <param name="descriptor">The java script module.</param>
         /// <param name="linkName">Name of the link.</param>
         /// <param name="urlExpression">The URL expression.</param>
+        /// <param name="controllerExtensions">Controller extensions</param>
         /// <param name="fullUrl">if set to <c>true</c> renders full URL.</param>
+        /// <param name="loggerFactory">The logger factory</param>
         public JavaScriptModuleLinkTo(JsIncludeDescriptor descriptor, string linkName, Expression<Action<TController>> urlExpression, 
             ILoggerFactory loggerFactory, IControllerExtensions controllerExtensions, bool fullUrl = false)
         {

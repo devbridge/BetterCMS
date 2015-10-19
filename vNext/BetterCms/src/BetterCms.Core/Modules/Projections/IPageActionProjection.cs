@@ -20,7 +20,7 @@ namespace BetterCms.Core.Modules.Projections
         /// Renders an action projection to given html output.
         /// </summary>
         /// <param name="html">The html helper.</param>
-        void Render(HtmlHelper html);
+        void Render(IHtmlHelper html);
     }
 
     /// <summary>
@@ -40,6 +40,7 @@ namespace BetterCms.Core.Modules.Projections
         /// Renders an action projection to given html output.
         /// </summary>
         /// <param name="html">The html helper.</param>
+        /// <param name="url">The url helper</param>
         void Render(IHtmlHelper html, IUrlHelper url);
     }
 
@@ -72,6 +73,6 @@ namespace BetterCms.Core.Modules.Projections
         /// <param name="html">The html helper.</param>
         /// <param name="componentHelper">The View Component helper</param>
         /// <returns><c>true</c> on success, otherwise <c>false</c>.</returns>
-        bool Render(IPage page, ISecurityService securityService, HtmlHelper html, IViewComponentHelper componentHelper);
+        bool Render(IPage page, ISecurityService securityService, IHtmlHelper html, IViewComponentHelper componentHelper);
     }
 }

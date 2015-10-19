@@ -99,7 +99,7 @@ namespace BetterCms.Module.Root.Commands.GetPageToRender
         {
             if (request.PreviewPageContentId == null && !request.IsAuthenticated && page.Status != PageStatus.Published)
             {
-                throw new HttpException(403, "403 Access Forbidden");
+                //throw new HttpException(403, "403 Access Forbidden");
             }
 
             // Preview and published pages can be accessible to users without content managing roles

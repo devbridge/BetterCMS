@@ -30,7 +30,7 @@ namespace BetterCms.Core.Modules.Projections
         /// <param name="builder">The html tag builder.</param>
         /// <param name="page">The page.</param>
         /// <param name="html">The html helper.</param>
-        protected override void OnPreRender(TagBuilder builder, IPage page, HtmlHelper html)
+        protected override void OnPreRender(TagBuilder builder, IPage page, IHtmlHelper html)
         {
             builder.Attributes["name"] = name;
             builder.Attributes["content"] = content;

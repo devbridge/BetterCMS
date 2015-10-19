@@ -92,7 +92,7 @@ namespace BetterCms.Core.Modules.Projections
         /// <param name="html">The HTML.</param>
         /// <param name="componentHelper">The View Component Helper</param>
         /// <returns><c>true</c> on success, otherwise <c>false</c>.</returns>
-        public virtual bool Render(IPage page, ISecurityService securityService, HtmlHelper html, IViewComponentHelper componentHelper = null)
+        public virtual bool Render(IPage page, ISecurityService securityService, IHtmlHelper html, IViewComponentHelper componentHelper = null)
         {
             if (ShouldBeRendered != null && !ShouldBeRendered.Invoke(page))
             {
@@ -109,8 +109,7 @@ namespace BetterCms.Core.Modules.Projections
                 TagRenderMode = isSelfClosing ? TagRenderMode.SelfClosing : TagRenderMode.Normal
             };
             OnPreRender(builder, page, html);
-            var encoder = html.ViewContext.HttpContext.ApplicationServices.GetService<IHtmlEncoder>();
-            builder.WriteTo(html.ViewContext.Writer, encoder);
+            builder.WriteTo(html.ViewContext.Writer, HtmlEncoder.Default);
 
             return true;
         }
@@ -121,7 +120,7 @@ namespace BetterCms.Core.Modules.Projections
         /// <param name="builder">The html control renderer.</param>
         /// <param name="page">The page.</param>
         /// <param name="html">The html helper.</param>
-        protected virtual void OnPreRender(TagBuilder builder, IPage page, HtmlHelper html)
+        protected virtual void OnPreRender(TagBuilder builder, IPage page, IHtmlHelper html)
         {
             if (Id != null)
             {

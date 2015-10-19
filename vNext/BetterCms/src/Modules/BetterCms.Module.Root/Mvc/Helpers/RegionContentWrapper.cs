@@ -1,9 +1,10 @@
 ﻿using System;
 using System.Text;
-
+using BetterCms.Configuration;
 using BetterCms.Core;
 using BetterCms.Core.DataContracts.Enums;
 using BetterCms.Module.Root.Projections;
+using Microsoft.Framework.OptionsModel;
 
 namespace BetterCms.Module.Root.Mvc.Helpers
 {
@@ -29,14 +30,15 @@ namespace BetterCms.Module.Root.Mvc.Helpers
         /// <param name="content">The region content.</param>
         /// <param name="allowContentManagement">if set to <c>true</c> allows content management.</param>
         /// <param name="isInvisible">if set to <c>true</c> [is invisible].</param>
-        public RegionContentWrapper(StringBuilder sb, PageContentProjection content, bool allowContentManagement, bool isInvisible = false)
+        public RegionContentWrapper(StringBuilder sb, PageContentProjection content, CmsConfigurationSection configuration,
+            bool allowContentManagement, bool isInvisible = false)
         {
             this.sb = sb;
             this.content = content;
             this.allowContentManagement = allowContentManagement;
 
-            clearFixClassName = CmsContext.Config.ContentEndingDivCssClassName;
-            renderClearFixDiv = CmsContext.Config.RenderContentEndingDiv;
+            clearFixClassName = configuration.ContentEndingDivCssClassName;
+            renderClearFixDiv = configuration.RenderContentEndingDiv;
             this.isInvisible = isInvisible;
 
             RenderOpeningTags();

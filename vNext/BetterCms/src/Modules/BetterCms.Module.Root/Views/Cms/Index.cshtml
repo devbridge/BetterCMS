@@ -1,5 +1,8 @@
-﻿@using BetterCms.Module.Root.Mvc.Helpers
+﻿@using BetterCms.Configuration
+@using BetterCms.Module.Root.Mvc.Helpers
 @using BetterCms.Module.Root.Mvc.PageHtmlRenderer
+@using BetterCms.Module.Root.Mvc.ViewComponents
+@using Microsoft.Framework.OptionsModel
 
 @model BetterCms.Module.Root.ViewModels.Cms.RenderPageViewModel
 
@@ -18,10 +21,11 @@
 
 @{
     // Render regions and contents.
-    Html.RenderSectionContents(this, Model);
+    Component.RenderInvoke<SectionContentsViewComponent>(Html, this, Model);
+    //Html.RenderSectionContents(this, Model);
     if (Model.RenderingPage == null)
     {
-        @Html.RenderInvisibleRegions(Model)
+        Component.Invoke<InvisibleRegionsViewComponent>(Html, Model);
     }
     else
     {

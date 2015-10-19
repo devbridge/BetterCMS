@@ -1,11 +1,13 @@
 ﻿using System.Collections.Generic;
 using BetterCms.Configuration;
 using BetterCms.Core.Mvc.Attributes;
+using BetterCms.Core.Services;
 using BetterCms.Module.Root.Commands.GetPageToRender;
 using BetterCms.Module.Root.Mvc;
 using BetterCms.Module.Root.Mvc.Helpers;
 using BetterCms.Module.Root.Mvc.PageHtmlRenderer;
 using Microsoft.AspNet.Mvc;
+using Microsoft.AspNet.Mvc.Rendering;
 using Microsoft.Framework.OptionsModel;
 
 namespace BetterCms.Module.Root.Controllers
@@ -22,13 +24,17 @@ namespace BetterCms.Module.Root.Controllers
         /// </summary>
         private readonly CmsConfigurationSection cmsConfiguration;
 
+        private readonly IHtmlHelper htmlHelper;
+
         /// <summary>
         /// Initializes a new instance of the <see cref="PreviewController"/> class.
         /// </summary>
         /// <param name="cmsConfiguration">The CMS configuration.</param>
-        public PreviewController(IOptions<CmsConfigurationSection> cmsConfiguration)
+        public PreviewController(IOptions<CmsConfigurationSection> cmsConfiguration, IHtmlHelper htmlHelper, ISecurityService securityService)
+            :base(securityService)
         {
             this.cmsConfiguration = cmsConfiguration.Value;
+            this.htmlHelper = htmlHelper;
         }
 
         /// <summary>
@@ -63,7 +69,7 @@ namespace BetterCms.Module.Root.Controllers
             if (model != null && model.RenderPage != null)
             {
                 // Render page with hierarchical master pages
-                var html = this.RenderPageToString(model.RenderPage);
+                var html = this.RenderPageToString(model.RenderPage, cmsConfiguration, htmlHelper);
                 html = PageHtmlRenderer.ReplaceRegionRepresentationHtml(html, string.Empty);
 
                 return Content(html);

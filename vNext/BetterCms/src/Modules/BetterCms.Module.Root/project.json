@@ -1,14 +1,15 @@
-﻿{
-  "version": "1.0.0-*",
-  "description": "BetterCms.Module.Root Class Library",
-  "authors": [ "user" ],
-  "tags": [ "" ],
-  "projectUrl": "",
-  "licenseUrl": "",
+{
+    "version": "1.0.0-*",
+    "description": "BetterCms.Module.Root Class Library",
+    "authors": [ "user" ],
+    "tags": [ "" ],
+    "projectUrl": "",
+    "licenseUrl": "",
+    "dependencies": {
+        "HtmlAgilityPack": "1.4.6",
+        "BetterCms.Core": "2.0.0-alpha1"
+    },
     "frameworks": {
         "dnx451": { }
-    },
-    "dependencies": {
-        "BetterCms.Core": "2.0.0-alpha1"
     }
 }

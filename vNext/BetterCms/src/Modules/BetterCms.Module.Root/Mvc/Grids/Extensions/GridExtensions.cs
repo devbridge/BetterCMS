@@ -3,13 +3,13 @@ using System.Collections.Generic;
 using System.Linq.Expressions;
 using System.Text;
 using System.Web;
-using System.Web.Mvc;
-using System.Web.Mvc.Html;
 
 using BetterCms.Module.Root.Content.Resources;
 using BetterCms.Module.Root.Mvc.Helpers;
-
-using MvcContrib.UI.Grid;
+using Microsoft.AspNet.Html.Abstractions;
+using Microsoft.AspNet.Mvc.ModelBinding;
+using Microsoft.AspNet.Mvc.Rendering;
+using Microsoft.AspNet.Mvc.ViewFeatures;
 
 namespace BetterCms.Module.Root.Mvc.Grids.Extensions
 {
@@ -92,7 +92,7 @@ namespace BetterCms.Module.Root.Mvc.Grids.Extensions
                 .HeaderAttributes(@style => "width: 145px;", @class => "bcms-tables-nohover");
         }
 
-        public static HtmlString HiddenGridOptions(this HtmlHelper html, GridOptions.GridOptions gridOptions)
+        public static HtmlString HiddenGridOptions(this IHtmlHelper html, GridOptions.GridOptions.GridOptions gridOptions)
         {
             var column = html.Hidden("Column", gridOptions.Column, new {@id = "bcms-grid-sort-column"});
             var direction = html.Hidden("Direction", gridOptions.Direction, new { @id = "bcms-grid-sort-direction" });
@@ -104,7 +104,7 @@ namespace BetterCms.Module.Root.Mvc.Grids.Extensions
         /// <summary>
         /// Creates column with in-line editing options
         /// </summary>
-        public static MvcHtmlString InlineEditColumn<TModel, TProperty>(this HtmlHelper<TModel> htmlHelper,
+        public static IHtmlContent InlineEditColumn<TModel, TProperty>(this IHtmlHelper<TModel> htmlHelper,
             Expression<Func<TModel, TProperty>> expression, string textBoxClassName, string hiddenFieldClassName)
         {
             return CreateInlineEditColumn(htmlHelper, expression, textBoxClassName, hiddenFieldClassName, null);
@@ -113,7 +113,7 @@ namespace BetterCms.Module.Root.Mvc.Grids.Extensions
         /// <summary>
         /// Creates column with in-line editing options and fields name pattern for auto-generated names.
         /// </summary>
-        public static MvcHtmlString InlineEditColumnWithNamePattern<TModel, TProperty>(this HtmlHelper<TModel> htmlHelper,
+        public static IHtmlContent InlineEditColumnWithNamePattern<TModel, TProperty>(this IHtmlHelper<TModel> htmlHelper,
             Expression<Func<TModel, TProperty>> expression, string textBoxClassName, string hiddenFieldClassName, string namePattern)
         {
             return CreateInlineEditColumn(htmlHelper, expression, textBoxClassName, hiddenFieldClassName, namePattern);
@@ -122,7 +122,7 @@ namespace BetterCms.Module.Root.Mvc.Grids.Extensions
         /// <summary>
         /// Creates non-editable column with text and hidden field with value.
         /// </summary>
-        public static MvcHtmlString ColumnWithHiddenField<TModel, TProperty>(this HtmlHelper<TModel> htmlHelper,
+        public static IHtmlContent ColumnWithHiddenField<TModel, TProperty>(this IHtmlHelper<TModel> htmlHelper,
             Expression<Func<TModel, TProperty>> expression, string namePattern)
         {
             var model = ModelMetadata.FromLambdaExpression(expression, htmlHelper.ViewData).Model;
@@ -141,7 +141,7 @@ namespace BetterCms.Module.Root.Mvc.Grids.Extensions
 
             // Hidden field
             var hiddenField = htmlHelper.HiddenFor(expression, inputAttributes);
-            return new MvcHtmlString(string.Concat(text, hiddenField.ToString()));
+            return new HtmlString(string.Concat(text, hiddenField.ToString()));
         }
 
         /// <summary>
@@ -157,7 +157,7 @@ namespace BetterCms.Module.Root.Mvc.Grids.Extensions
         /// <returns>
         /// MVC HTML string with link, text box and hidden field
         /// </returns>
-        private static MvcHtmlString CreateInlineEditColumn<TModel, TProperty>(this HtmlHelper<TModel> htmlHelper,
+        private static HtmlString CreateInlineEditColumn<TModel, TProperty>(this IHtmlHelper<TModel> htmlHelper,
             Expression<Func<TModel, TProperty>> expression, string textBoxClassName, string hiddenFieldClassName, string namePattern)
         {
             var model = ModelMetadata.FromLambdaExpression(expression, htmlHelper.ViewData).Model;
@@ -165,7 +165,7 @@ namespace BetterCms.Module.Root.Mvc.Grids.Extensions
 
             // Link
             TagBuilder link = new TagBuilder("a");
-            link.SetInnerText(text);
+            link.InnerHtml.Append(text);
             link.AddCssClass("bcms-tables-link bcms-grid-item-edit-button bcms-grid-item-info");
             link.AddCssClass(textBoxClassName);
 
@@ -196,10 +196,10 @@ namespace BetterCms.Module.Root.Mvc.Grids.Extensions
 
             // Div
             var div = new TagBuilder("div");
-            div.InnerHtml = string.Concat(link.ToString(TagRenderMode.Normal), textBox.ToString(), validationBox.ToString(), hiddenField.ToString());
+            div.InnerHtml.Append(string.Concat(link.ToString(), textBox.ToString(), validationBox.ToString(), hiddenField.ToString()));
             div.AddCssClass("bcms-input-box");
 
-            return new MvcHtmlString(div.ToString());
+            return new HtmlString(div.ToString());
         }
     }
 }

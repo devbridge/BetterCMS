@@ -2,7 +2,7 @@
 using BetterCms.Core.Modules.Projections;
 using BetterCms.Module.Root.Content.Resources;
 
-using BetterModules.Core.Web.Modules;
+using Microsoft.Framework.Logging;
 
 namespace BetterCms.Module.Root.Registration
 {
@@ -11,18 +11,18 @@ namespace BetterCms.Module.Root.Registration
     /// </summary>
     public class BcmsJsModuleIncludeDescriptor : JsIncludeDescriptor
     {
-        public BcmsJsModuleIncludeDescriptor(RootModuleDescriptor module)
+        public BcmsJsModuleIncludeDescriptor(RootModuleDescriptor module, ILoggerFactory loggerFactory)
             : base(module, "bcms")
         {
 
-            Links = new IActionProjection[]
+            Links = new IActionUrlProjection[]
                 {                       
                 };
 
             Globalization = new IActionProjection[]
                 {                    
-                    new JavaScriptModuleGlobalization(this, "sessionHasExpired", () => RootGlobalization.Message_SessionExpiredLoginToContinue_Message), 
-                    new JavaScriptModuleGlobalization(this, "failedToProcessRequest", () => RootGlobalization.Message_FailedToProcessRequest_Message),
+                    new JavaScriptModuleGlobalization(this, "sessionHasExpired", () => RootGlobalization.Message_SessionExpiredLoginToContinue_Message, loggerFactory), 
+                    new JavaScriptModuleGlobalization(this, "failedToProcessRequest", () => RootGlobalization.Message_FailedToProcessRequest_Message, loggerFactory)
                 };
         }
     }

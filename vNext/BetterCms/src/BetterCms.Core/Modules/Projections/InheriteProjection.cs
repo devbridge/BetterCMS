@@ -55,7 +55,7 @@ namespace BetterCms.Core.Modules.Projections
         /// <param name="html">The html helper.</param>
         /// <param name="componentHelper">The View Component helper</param>
         /// <returns><c>true</c> on success, otherwise <c>false</c>.</returns>
-        public override bool Render(IPage page, ISecurityService securityService, HtmlHelper html, IViewComponentHelper componentHelper = null)
+        public override bool Render(IPage page, ISecurityService securityService, IHtmlHelper html, IViewComponentHelper componentHelper = null)
         {
             if (AccessRole != null && !securityService.IsAuthorized(AccessRole))
             {
@@ -66,9 +66,8 @@ namespace BetterCms.Core.Modules.Projections
             {
                 TagRenderMode = TagRenderMode.StartTag
             };
-            var encoder = html.ViewContext.HttpContext.ApplicationServices.GetService<IHtmlEncoder>();
             OnPreRender(builder, page, html);
-            builder.WriteTo(html.ViewContext.Writer, encoder);
+            builder.WriteTo(html.ViewContext.Writer, HtmlEncoder.Default);
             //control.RenderBeginTag(writer);
 
             if (ChildProjections != null)
@@ -83,7 +82,7 @@ namespace BetterCms.Core.Modules.Projections
             {
                 TagRenderMode = TagRenderMode.EndTag
             };
-            builder.WriteTo(html.ViewContext.Writer, encoder);
+            builder.WriteTo(html.ViewContext.Writer, HtmlEncoder.Default);
             //control.RenderEndTag(writer);
 
             return true;

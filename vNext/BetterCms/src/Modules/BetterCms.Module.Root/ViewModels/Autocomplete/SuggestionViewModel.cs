@@ -1,13 +1,12 @@
-﻿using System.Web.Mvc;
-
-namespace BetterCms.Module.Root.ViewModels.Autocomplete
+﻿namespace BetterCms.Module.Root.ViewModels.Autocomplete
 {
     public class SuggestionViewModel
     {
-        [AllowHtml]
+        // TODO request validation is not supported in MVC6 https://github.com/aspnet/Mvc/issues/324
+        //[AllowHtml]
         public string Query { get; set; }
 
-        [AllowHtml]
+        //[AllowHtml]
         public string ExistingItems { get; set; }
 
         public string[] ExistingItemsArray
@@ -25,7 +24,7 @@ namespace BetterCms.Module.Root.ViewModels.Autocomplete
 
         public override string ToString()
         {
-            return string.Format("{0}, Query: {1}, ExistingItems: {2}", base.ToString(), Query, ExistingItems);
+            return $"{base.ToString()}, Query: {Query}, ExistingItems: {ExistingItems}";
         }
     }
 }

@@ -17,7 +17,7 @@ using BetterCms.Module.Root.ViewModels.Security;
 using BetterModules.Core.DataAccess;
 using BetterModules.Core.DataAccess.DataContext.Fetching;
 using BetterModules.Core.DataContracts;
-using BetterModules.Core.Web.Services.Caching;
+using Microsoft.Framework.OptionsModel;
 
 namespace BetterCms.Module.Root.Services
 {
@@ -32,7 +32,7 @@ namespace BetterCms.Module.Root.Services
 
         private readonly ICacheService cacheService;
 
-        private readonly ICmsConfiguration configuration;
+        private readonly CmsConfigurationSection configuration;
 
         private readonly ISecurityService securityService;
         
@@ -46,11 +46,11 @@ namespace BetterCms.Module.Root.Services
         /// <param name="configuration">The CMS configuration.</param>
         /// <param name="repository">The repository.</param>
         public DefaultAccessControlService(ISecurityService securityService, ICacheService cacheService,
-            ICmsConfiguration configuration, IRepository repository)
+            IOptions<CmsConfigurationSection> configuration, IRepository repository)
         {
             this.securityService = securityService;
             this.cacheService = cacheService;
-            this.configuration = configuration;
+            this.configuration = configuration.Value;
             this.repository = repository;
         }
 

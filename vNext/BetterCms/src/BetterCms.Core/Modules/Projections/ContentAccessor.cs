@@ -2,29 +2,30 @@
 using System.Collections.Generic;
 
 using BetterCms.Core.DataContracts;
+using Microsoft.AspNet.Mvc.Rendering;
 using Microsoft.AspNet.Mvc.ViewFeatures;
 
 namespace BetterCms.Core.Modules.Projections
 {
     public interface IJavaScriptAccessor
     {
-        string[] GetCustomJavaScript(HtmlHelper html);
+        string[] GetCustomJavaScript(IHtmlHelper html);
 
-        string[] GetJavaScriptResources(HtmlHelper html);
+        string[] GetJavaScriptResources(IHtmlHelper html);
     }
 
     public interface IStylesheetAccessor
     {
-        string[] GetCustomStyles(HtmlHelper html);
+        string[] GetCustomStyles(IHtmlHelper html);
 
-        string[] GetStylesResources(HtmlHelper html);
+        string[] GetStylesResources(IHtmlHelper html);
     }
 
     public interface IHtmlAccessor
     {
         string GetContentWrapperType();
 
-        string GetHtml(HtmlHelper html);
+        string GetHtml(IHtmlHelper html);
 
         string GetTitle();
     }
@@ -54,14 +55,14 @@ namespace BetterCms.Core.Modules.Projections
 
         public abstract string GetContentWrapperType();
 
-        public abstract string GetHtml(HtmlHelper html);
+        public abstract string GetHtml(IHtmlHelper html);
 
-        public abstract string[] GetCustomStyles(HtmlHelper html);
+        public abstract string[] GetCustomStyles(IHtmlHelper html);
 
-        public abstract string[] GetCustomJavaScript(HtmlHelper html);
+        public abstract string[] GetCustomJavaScript(IHtmlHelper html);
 
-        public abstract string[] GetStylesResources(HtmlHelper html);
+        public abstract string[] GetStylesResources(IHtmlHelper html);
 
-        public abstract string[] GetJavaScriptResources(HtmlHelper html);
+        public abstract string[] GetJavaScriptResources(IHtmlHelper html);
     }
 }

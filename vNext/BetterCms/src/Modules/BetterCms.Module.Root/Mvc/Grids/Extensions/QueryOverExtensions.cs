@@ -1,6 +1,4 @@
-﻿using MvcContrib.Sorting;
-
-using NHibernate;
+﻿using NHibernate;
 using NHibernate.Criterion;
 
 using SortAndPagingOptions = BetterCms.Module.Root.Mvc.Grids.GridOptions.GridOptions;

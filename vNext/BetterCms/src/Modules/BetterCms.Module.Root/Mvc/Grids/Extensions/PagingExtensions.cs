@@ -1,7 +1,7 @@
-﻿using System.Web;
-using System.Web.Mvc;
-
-using BetterCms.Module.Root.ViewModels.SiteSettings;
+﻿using BetterCms.Module.Root.ViewModels.SiteSettings;
+using Microsoft.AspNet.Html.Abstractions;
+using Microsoft.AspNet.Mvc.Rendering;
+using Microsoft.AspNet.Mvc.ViewFeatures;
 
 namespace BetterCms.Module.Root.Mvc.Grids.Extensions
 {
@@ -15,11 +15,11 @@ namespace BetterCms.Module.Root.Mvc.Grids.Extensions
         /// <param name="htmlHelper">The HTML helper.</param>
         /// <param name="model">The model.</param>
         /// <returns>Generated HTML string with paging</returns>
-        public static IHtmlString RenderPaging<TModel, TGridItem>(this HtmlHelper<TModel> htmlHelper, SearchableGridViewModel<TGridItem> model)
+        public static IHtmlContent RenderPaging<TModel, TGridItem>(this IHtmlHelper<TModel> htmlHelper, SearchableGridViewModel<TGridItem> model)
             where TGridItem : IEditableGridItem
         {
             var pages = PagerHelper.RenderPager(model);
-            return new MvcHtmlString(pages);
+            return new HtmlString(pages);
         }
     }
 }

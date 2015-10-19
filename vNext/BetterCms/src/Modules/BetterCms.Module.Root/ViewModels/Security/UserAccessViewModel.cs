@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Web.Mvc;
 
 using BetterCms.Core.Security;
 using BetterCms.Module.Root.Content.Resources;
@@ -12,7 +11,7 @@ namespace BetterCms.Module.Root.ViewModels.Security
     {
         public Guid Id { get; set; }        
 
-        [AllowHtml]
+        //[AllowHtml]
         [DisallowNonActiveDirectoryNameCompliantAttribute(ErrorMessageResourceType = typeof(RootGlobalization), ErrorMessageResourceName = "Validation_ActiveDirectoryCompliant_Message")]
         public string Identity { get; set; }
 

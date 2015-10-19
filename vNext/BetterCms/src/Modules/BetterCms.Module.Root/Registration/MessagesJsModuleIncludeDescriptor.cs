@@ -11,7 +11,7 @@ namespace BetterCms.Module.Root.Registration
             : base(module, "bcms.messages")
         {
 
-            Links = new IActionProjection[]
+            Links = new IActionUrlProjection[]
                 {                       
                 };
 

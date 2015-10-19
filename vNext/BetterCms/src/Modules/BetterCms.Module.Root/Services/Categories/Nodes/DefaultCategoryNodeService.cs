@@ -1,10 +1,11 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-
+using BetterCms.Configuration;
 using BetterCms.Module.Root.Models;
 using BetterCms.Module.Root.Mvc;
 
 using BetterModules.Core.DataAccess;
+using Microsoft.Framework.OptionsModel;
 
 namespace BetterCms.Module.Root.Services.Categories.Nodes
 {
@@ -12,12 +13,12 @@ namespace BetterCms.Module.Root.Services.Categories.Nodes
     {
         private readonly IRepository Repository;
 
-        private readonly ICmsConfiguration cmsConfiguration;
+        private readonly CmsConfigurationSection cmsConfiguration;
 
-        public DefaultCategoryNodeService(IRepository repository, ICmsConfiguration cmsConfiguration)
+        public DefaultCategoryNodeService(IRepository repository, IOptions<CmsConfigurationSection> cmsConfiguration)
         {
             Repository = repository;
-            this.cmsConfiguration = cmsConfiguration;
+            this.cmsConfiguration = cmsConfiguration.Value;
         }
 
         public Category SaveCategory(

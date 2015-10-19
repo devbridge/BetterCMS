@@ -1,11 +1,4 @@
 ﻿using System.Collections.Generic;
-using System.Linq;
-
-using Autofac;
-
-using BetterModules.Core.DataAccess;
-using BetterCms.Module.Root.Models;
-using BetterCms.Module.Root.ViewModels.Option;
 
 namespace BetterCms.Module.Root.Providers
 {

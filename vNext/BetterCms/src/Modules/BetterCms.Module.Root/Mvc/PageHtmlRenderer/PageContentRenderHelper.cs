@@ -3,8 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
-using System.Web.Mvc;
-
+using BetterCms.Configuration;
 using BetterCms.Core.Exceptions.Mvc;
 
 using BetterCms.Module.Root.Content.Resources;
@@ -15,8 +14,11 @@ using BetterCms.Module.Root.ViewModels.Cms;
 using BetterCms.Module.Root.ViewModels.Content;
 
 using HtmlAgilityPack;
-
+using Microsoft.AspNet.Mvc.Rendering;
+using Microsoft.AspNet.Mvc.ViewFeatures;
+using Microsoft.Framework.OptionsModel;
 using NHibernate.Linq;
+using NHibernate.Util;
 
 namespace BetterCms.Module.Root.Mvc.PageHtmlRenderer
 {
@@ -45,15 +47,19 @@ namespace BetterCms.Module.Root.Mvc.PageHtmlRenderer
         /// <summary>
         /// The HTML helper
         /// </summary>
-        private readonly HtmlHelper htmlHelper;
+        private readonly IHtmlHelper htmlHelper;
+
+        private readonly CmsConfigurationSection configuration;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="PageContentRenderHelper"/> class.
         /// </summary>
         /// <param name="htmlHelper">The HTML helper.</param>
-        public PageContentRenderHelper(HtmlHelper htmlHelper)
+        /// <param name="configuration">The Cms configuration</param>
+        public PageContentRenderHelper(IHtmlHelper htmlHelper, CmsConfigurationSection configuration)
         {
             this.htmlHelper = htmlHelper;
+            this.configuration = configuration;
         }
 
         /// <summary>
@@ -190,7 +196,7 @@ namespace BetterCms.Module.Root.Mvc.PageHtmlRenderer
                         foreach (var childRegionContentProjection in childRegionContentProjections)
                         {
                             // Add Html
-                            using (new RegionContentWrapper(contentsBuilder, childRegionContentProjection, pageModel.CanManageContent && canEditRegion))
+                            using (new RegionContentWrapper(contentsBuilder, childRegionContentProjection, configuration, pageModel.CanManageContent && canEditRegion))
                             {
                                 // Pass current model as view data model
                                 var modelBefore = htmlHelper.ViewData.Model;
@@ -269,7 +275,7 @@ namespace BetterCms.Module.Root.Mvc.PageHtmlRenderer
                 {
                     foreach (var projection in group)
                     {
-                        using (new RegionContentWrapper(contentsBuilder, projection.ContentProjection, true, true))
+                        using (new RegionContentWrapper(contentsBuilder, projection.ContentProjection, configuration, true, true))
                         {
                             RenderInvisibleRegionsRecursively(contentsBuilder, invisibleContentProjections, projection);
                         }

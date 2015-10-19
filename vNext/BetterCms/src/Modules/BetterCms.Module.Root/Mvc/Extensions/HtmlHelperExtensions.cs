@@ -2,16 +2,19 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using System.Web;
-using System.Web.Mvc;
+using Microsoft.AspNet.Mvc.Rendering;
+using Microsoft.AspNet.Mvc.ViewFeatures;
 
 namespace BetterCms.Module.Root.Mvc.Extensions
 {
     public static class HtmlHelperExtensions
     {
-        public static MvcHtmlString MultipleDropDown<TModel>(this HtmlHelper<TModel> htmlHelper, IEnumerable<SelectListItem> items, object htmlAttributes = null)
+        public static HtmlString MultipleDropDown<TModel>(this IHtmlHelper<TModel> htmlHelper, IEnumerable<SelectListItem> items, object htmlAttributes = null)
         {
-            var select = new TagBuilder("select");
+            var select = new TagBuilder("select")
+            {
+                TagRenderMode = TagRenderMode.Normal
+            };
             StringBuilder optionsBuilder = new StringBuilder();            
             select.MergeAttributes(HtmlAttributesUtility.ObjectToHtmlAttributesDictionary(htmlAttributes));
 
@@ -19,7 +22,10 @@ namespace BetterCms.Module.Root.Mvc.Extensions
 
             foreach (var item in items)
             {
-                var option = new TagBuilder("option");
+                var option = new TagBuilder("option")
+                {
+                    TagRenderMode = TagRenderMode.Normal
+                };
 
                 if (item.Selected)
                 {
@@ -27,14 +33,14 @@ namespace BetterCms.Module.Root.Mvc.Extensions
                 }
 
                 option.MergeAttribute("value", item.Value);
-                option.SetInnerText(item.Text);
+                option.InnerHtml.Append(item.Text);
 
-                optionsBuilder.AppendLine(option.ToString(TagRenderMode.Normal));
+                optionsBuilder.AppendLine(option.ToString());
             }
 
-            select.InnerHtml = optionsBuilder.ToString();
+            select.InnerHtml.Append(optionsBuilder.ToString());
 
-            return new MvcHtmlString(select.ToString(TagRenderMode.Normal));
+            return new HtmlString(select.ToString());
         }
     }
 }

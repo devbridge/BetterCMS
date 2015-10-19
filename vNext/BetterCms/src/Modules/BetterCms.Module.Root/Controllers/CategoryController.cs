@@ -1,4 +1,5 @@
-﻿using BetterCms.Module.Root.Commands.Category.DeleteCategoryTree;
+﻿using BetterCms.Core.Services;
+using BetterCms.Module.Root.Commands.Category.DeleteCategoryTree;
 using BetterCms.Module.Root.Commands.Category.GetCategoryTree;
 using BetterCms.Module.Root.Commands.Category.GetCategoryTreesList;
 using BetterCms.Module.Root.Commands.Category.SaveCategoryTree;
@@ -21,6 +22,10 @@ namespace BetterCms.Module.Root.Controllers
     [Area(RootModuleDescriptor.RootAreaName)]
     public class CategoryController : CmsControllerBase
     {
+        public CategoryController(ISecurityService securityService) : base(securityService)
+        {
+        }
+
         [BcmsAuthorize(RootModuleConstants.UserRoles.EditContent, RootModuleConstants.UserRoles.Administration)]
         public ActionResult CategoryTrees(CategoryTreesFilter request)
         {

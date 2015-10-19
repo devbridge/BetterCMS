@@ -1,4 +1,5 @@
 ﻿using BetterCms.Core.DataContracts;
+using Microsoft.AspNet.Mvc.Rendering;
 using Microsoft.AspNet.Mvc.ViewFeatures;
 
 namespace BetterCms.Core.Modules.Projections
@@ -23,27 +24,27 @@ namespace BetterCms.Core.Modules.Projections
             return null;
         }
 
-        public override string GetHtml(HtmlHelper html)
+        public override string GetHtml(IHtmlHelper html)
         {
             return string.Format(contentHtml);
         }
 
-        public override string[] GetCustomStyles(HtmlHelper html)
+        public override string[] GetCustomStyles(IHtmlHelper html)
         {
             return null;
         }
 
-        public override string[] GetCustomJavaScript(HtmlHelper html)
+        public override string[] GetCustomJavaScript(IHtmlHelper html)
         {
             return null;
         }
 
-        public override string[] GetStylesResources(HtmlHelper html)
+        public override string[] GetStylesResources(IHtmlHelper html)
         {
             return null;
         }
 
-        public override string[] GetJavaScriptResources(HtmlHelper html)
+        public override string[] GetJavaScriptResources(IHtmlHelper html)
         {
             return null;
         }

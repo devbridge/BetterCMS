@@ -2,11 +2,12 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Security.Principal;
-
+using BetterCms.Configuration;
 using BetterCms.Core.Services;
 
 using BetterModules.Core.Web.Security;
 using BetterModules.Core.Web.Web;
+using Microsoft.Framework.OptionsModel;
 
 namespace BetterCms.Module.Root.Services
 {
@@ -23,17 +24,17 @@ namespace BetterCms.Module.Root.Services
         /// <summary>
         /// The configuration service.
         /// </summary>
-        private readonly ICmsConfiguration configuration;
+        private readonly CmsConfigurationSection configuration;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="DefaultSecurityService" /> class.
         /// </summary>
         /// <param name="configuration">The configuration.</param>
         /// <param name="httpContextAccessor">The HTTP context accessor.</param>
-        public DefaultSecurityService(ICmsConfiguration configuration, IHttpContextAccessor httpContextAccessor)
+        public DefaultSecurityService(IOptions<CmsConfigurationSection> configuration, IHttpContextAccessor httpContextAccessor)
             : base(httpContextAccessor)
         {
-            this.configuration = configuration;
+            this.configuration = configuration.Value;
         }
 
         /// <summary>

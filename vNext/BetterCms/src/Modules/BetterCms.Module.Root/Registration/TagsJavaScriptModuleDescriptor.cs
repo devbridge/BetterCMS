@@ -4,6 +4,8 @@ using BetterCms.Module.Root.Content.Resources;
 using BetterCms.Module.Root.Controllers;
 
 using BetterModules.Core.Web.Modules;
+using BetterModules.Core.Web.Mvc.Extensions;
+using Microsoft.Framework.Logging;
 
 namespace BetterCms.Module.Root.Registration
 {
@@ -16,22 +18,24 @@ namespace BetterCms.Module.Root.Registration
         /// Initializes a new instance of the <see cref="TagsJsModuleIncludeDescriptor" /> class.
         /// </summary>
         /// <param name="module">The container module.</param>
-        public TagsJsModuleIncludeDescriptor(CmsModuleDescriptor module)
+        /// <param name="loggerFactory">The logger factory</param>
+        /// <param name="controllerExtensions">Controller extensions</param>
+        public TagsJsModuleIncludeDescriptor(CmsModuleDescriptor module, ILoggerFactory loggerFactory, IControllerExtensions controllerExtensions)
             : base(module, "bcms.tags")
         {
 
-            Links = new IActionProjection[]
+            Links = new IActionUrlProjection[]
                 {
-                    new JavaScriptModuleLinkTo<TagsController>(this, "loadSiteSettingsTagListUrl", c => c.ListTags(null)),
-                    new JavaScriptModuleLinkTo<TagsController>(this, "saveTagUrl", c => c.SaveTag(null)),
-                    new JavaScriptModuleLinkTo<TagsController>(this, "deleteTagUrl", c => c.DeleteTag(null)),
-                    new JavaScriptModuleLinkTo<TagsController>(this, "tagSuggestionServiceUrl", c => c.SuggestTags(null))
+                    new JavaScriptModuleLinkTo<TagsController>(this, "loadSiteSettingsTagListUrl", c => c.ListTags(null), loggerFactory, controllerExtensions),
+                    new JavaScriptModuleLinkTo<TagsController>(this, "saveTagUrl", c => c.SaveTag(null), loggerFactory, controllerExtensions),
+                    new JavaScriptModuleLinkTo<TagsController>(this, "deleteTagUrl", c => c.DeleteTag(null), loggerFactory, controllerExtensions),
+                    new JavaScriptModuleLinkTo<TagsController>(this, "tagSuggestionServiceUrl", c => c.SuggestTags(null), loggerFactory, controllerExtensions)
                 };
 
             Globalization = new IActionProjection[]
                 {      
-                    new JavaScriptModuleGlobalization(this, "confirmDeleteTagMessage", () => RootGlobalization.SiteSettings_Tags_DeleteTagMessage), 
-                    new JavaScriptModuleGlobalization(this, "confirmDeleteCategoryMessage", () => RootGlobalization.SiteSettings_Categories_DeleteCategoryMessage), 
+                    new JavaScriptModuleGlobalization(this, "confirmDeleteTagMessage", () => RootGlobalization.SiteSettings_Tags_DeleteTagMessage, loggerFactory), 
+                    new JavaScriptModuleGlobalization(this, "confirmDeleteCategoryMessage", () => RootGlobalization.SiteSettings_Categories_DeleteCategoryMessage, loggerFactory) 
                 };
         }
     }

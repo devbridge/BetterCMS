@@ -2,13 +2,15 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using System.Web;
-using System.Web.Mvc;
 
 using BetterCms.Core.Exceptions;
 using BetterCms.Core.Mvc;
-
+using BetterModules.Core.Infrastructure;
 using BetterModules.Core.Web.Mvc;
+using Microsoft.AspNet.Html.Abstractions;
+using Microsoft.AspNet.Mvc.Controllers;
+using Microsoft.AspNet.Mvc.Rendering;
+using Microsoft.AspNet.Mvc.ViewFeatures;
 
 namespace BetterCms.Module.Root.Mvc.Helpers
 {
@@ -21,7 +23,7 @@ namespace BetterCms.Module.Root.Mvc.Helpers
         private const string cssClassMessagesType2 = "bcms-messages-type-2";
         private const string cssClassCustomMessages = "bcms-custom-messages";
 
-        public static IHtmlString TabbedContentCustomMessagesBox(this HtmlHelper html, IMessagesIndicator messages, string id = null,
+        public static IHtmlContent TabbedContentCustomMessagesBox(this IHtmlHelper html, IMessagesIndicator messages, string id = null,
             IDictionary<string, string> attributes = null)
         {
             if (string.IsNullOrWhiteSpace(id))
@@ -32,13 +34,13 @@ namespace BetterCms.Module.Root.Mvc.Helpers
             return MessagesBox(html, id, attributes, cssClassMessagesType1 + " " + cssClassCustomMessages, messages);
         }
 
-        public static IHtmlString TabbedContentMessagesBox(this HtmlHelper html, string id = null, 
+        public static IHtmlContent TabbedContentMessagesBox(this IHtmlHelper html, string id = null, 
             IDictionary<string, string> attributes = null)
         {
             return MessagesBox(html, id, attributes, cssClassMessagesType1);
         }
 
-        public static IHtmlString SiteSettingsMessagesBox(this HtmlHelper html, string id = null,
+        public static IHtmlContent SiteSettingsMessagesBox(this IHtmlHelper html, string id = null,
             IDictionary<string, string> attributes = null)
         {
             return MessagesBox(html, id, attributes, cssClassMessagesType2);
@@ -57,7 +59,7 @@ namespace BetterCms.Module.Root.Mvc.Helpers
         /// </returns>
         /// <exception cref="CmsException">Unable to generate messages box.;Controller should inherit CmsControllerBase class.</exception>
         /// <exception cref="System.NotSupportedException">Controller should inherit CmsControllerBase class.</exception>
-        private static IHtmlString MessagesBox(this HtmlHelper html, string id,
+        private static IHtmlContent MessagesBox(this IHtmlHelper html, string id,
             IDictionary<string, string> attributes, string cssClass, IMessagesIndicator messages = null)
         {
             CmsControllerBase controller = html.ViewContext.Controller as CmsControllerBase;
@@ -105,7 +107,7 @@ namespace BetterCms.Module.Root.Mvc.Helpers
             
             sb.AppendLine("</div>");
 
-            return new MvcHtmlString(sb.ToString());
+            return new HtmlString(sb.ToString());
         }
 
         /// <summary>

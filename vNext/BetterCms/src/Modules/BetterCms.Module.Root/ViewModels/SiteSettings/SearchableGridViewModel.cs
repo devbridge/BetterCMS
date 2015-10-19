@@ -4,8 +4,6 @@ using System.Collections.Generic;
 using BetterCms.Module.Root.Mvc.Grids;
 using BetterCms.Module.Root.Mvc.Grids.GridOptions;
 
-using MvcContrib.Pagination;
-
 namespace BetterCms.Module.Root.ViewModels.SiteSettings
 {
     [Serializable]

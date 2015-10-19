@@ -1,4 +1,5 @@
 ﻿using System;
+using BetterCms.Core.Services;
 using BetterCms.Module.Root.Commands.Authentication.GetAuthenticationInfo;
 using BetterCms.Module.Root.Commands.Authentication.SearchRoles;
 using BetterCms.Module.Root.Commands.Authentication.SearchUsers;
@@ -23,7 +24,8 @@ namespace BetterCms.Module.Root.Controllers
         /// </summary>
         private readonly ILogger logger;
 
-        public AuthenticationController(ILoggerFactory loggerFactory)
+        public AuthenticationController(ILoggerFactory loggerFactory, ISecurityService securityService)
+            :base(securityService)
         {
             logger = loggerFactory.CreateLogger<AuthenticationController>();
         }
