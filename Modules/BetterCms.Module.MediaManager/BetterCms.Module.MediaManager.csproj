@@ -216,6 +216,7 @@
     <Compile Include="Models\Enum\MediaHistoryStatus.cs" />
     <Compile Include="Models\Extensions\MediaExtensions.cs" />
     <Compile Include="Models\Extensions\MediaFileExtensions.cs" />
+    <Compile Include="Models\IMediaProvider.cs" />
     <Compile Include="Models\Maps\MediaCategoryMap.cs" />
     <Compile Include="Models\Maps\MediaTagMap.cs" />
     <Compile Include="Models\MediaCategory.cs" />

@@ -444,7 +444,7 @@ namespace BetterCms.Module.Root.Commands.GetPageToRender
                 .Where(i => pageContentsIds.Contains(i.PageContent.Id)).ToFuture();
 
             var contentOptions = Repository.AsQueryable<ContentOption>()
-                .Where(i => contentsIds.Contains(i.Content.Id)).ToFuture();
+                .Where(i => contentsIds.Contains(i.Content.Id)).FetchMany(co => co.Translations).ToFuture();
 
             var contentRegions = Repository.AsQueryable<ContentRegion>()
                 .Where(i => contentsIds.Contains(i.Content.Id))

@@ -326,7 +326,7 @@ namespace BetterCms.Module.Root.Services
             }
 
             var childContentOptions = repository.AsQueryable<ChildContentOption>()
-                .Where(i => childContentIds.Contains(i.ChildContent.Id)).ToFuture();
+                .Where(i => childContentIds.Contains(i.ChildContent.Id)).FetchMany(x => x.Translations).ToFuture();
 
             var childChildContents = repository.AsQueryable<ChildContent>()
                 .Where(i => childIds.Contains(i.Parent.Id)).ToFuture().ToList();

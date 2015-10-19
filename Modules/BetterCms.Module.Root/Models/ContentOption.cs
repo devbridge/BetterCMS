@@ -86,13 +86,23 @@ namespace BetterCms.Module.Root.Models
             return CopyDataTo(new ContentOption());
         }
 
-        public virtual ContentOption CopyDataTo(ContentOption contentOption)
+        public virtual ContentOption CopyDataTo(ContentOption contentOption, bool copyCollections = true)
         {
             contentOption.Key = Key;
             contentOption.Type = Type;
             contentOption.DefaultValue = DefaultValue;
             contentOption.IsDeletable = IsDeletable;
             contentOption.Content = Content;
+
+            if (copyCollections && Translations != null)
+            {
+                foreach (var contentOptionTranslation in Translations)
+                {
+                    var clonedTranslation = contentOptionTranslation.Clone();
+                    clonedTranslation.ContentOption = contentOption;
+                    contentOption.Translations.Add(clonedTranslation);
+                }
+            }
 
             return contentOption;
         }
