@@ -7,7 +7,7 @@ using BetterModules.Core.Models;
 namespace BetterCms.Module.MediaManager.Models
 {
     [Serializable]
-    public class MediaTag : EquatableEntity<MediaTag>
+    public class MediaTag : EquatableEntity<MediaTag>, IMediaProvider 
     {
         public virtual Tag Tag { get; set; }
         public virtual Media Media { get; set; }

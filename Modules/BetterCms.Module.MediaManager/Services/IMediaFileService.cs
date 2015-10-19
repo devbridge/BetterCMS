@@ -35,5 +35,7 @@ namespace BetterCms.Module.MediaManager.Services
         string GetDownloadFileUrl(MediaType type, Guid id, string fileUrl);
 
         void SaveMediaFile(MediaFile file);
+
+        void SwapOriginalMediaWithVersion(MediaFile originalEntity, MediaFile newVersion, ISession session = null);
     }
 }

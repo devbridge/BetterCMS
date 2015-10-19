@@ -8,7 +8,7 @@ using BetterCms.Module.Api.Operations.Blog.BlogPosts.BlogPost.Properties;
 namespace BetterCms.Module.Api.Operations.Blog.BlogPosts.BlogPost
 {
     [DataContract]
-    [System.Serializable]
+    [Serializable]
     public class BlogPostModel : ModelBase
     {
         /// <summary>
@@ -63,7 +63,7 @@ namespace BetterCms.Module.Api.Operations.Blog.BlogPosts.BlogPost
         /// The page published date.
         /// </value>
         [DataMember]
-        public System.DateTime? PublishedOn { get; set; }
+        public DateTime? PublishedOn { get; set; }
 
         /// <summary>
         /// Gets or sets the page layout id.
@@ -72,7 +72,7 @@ namespace BetterCms.Module.Api.Operations.Blog.BlogPosts.BlogPost
         /// The page layout id.
         /// </value>
         [DataMember]
-        public System.Guid? LayoutId { get; set; }
+        public Guid? LayoutId { get; set; }
 
         /// <summary>
         /// Gets or sets the master page id.
@@ -81,7 +81,7 @@ namespace BetterCms.Module.Api.Operations.Blog.BlogPosts.BlogPost
         /// The master page id.
         /// </value>
         [DataMember]
-        public System.Guid? MasterPageId { get; set; }
+        public Guid? MasterPageId { get; set; }
 
         [DataMember]
         public List<CategoryModel> Categories { get; set; }
@@ -93,7 +93,7 @@ namespace BetterCms.Module.Api.Operations.Blog.BlogPosts.BlogPost
         /// The blog post author id.
         /// </value>
         [DataMember]
-        public System.Guid? AuthorId { get; set; }
+        public Guid? AuthorId { get; set; }
 
         /// <summary>
         /// Gets or sets the name of the author.
@@ -111,7 +111,7 @@ namespace BetterCms.Module.Api.Operations.Blog.BlogPosts.BlogPost
         /// The blog post main image id.
         /// </value>
         [DataMember]
-        public System.Guid? MainImageId { get; set; }
+        public Guid? MainImageId { get; set; }
 
         /// <summary>
         /// Gets or sets the main image URL.
@@ -157,7 +157,7 @@ namespace BetterCms.Module.Api.Operations.Blog.BlogPosts.BlogPost
         /// The page featured image id.
         /// </value>
         [DataMember]
-        public System.Guid? FeaturedImageId { get; set; }
+        public Guid? FeaturedImageId { get; set; }
 
         /// <summary>
         /// Gets or sets the featured image URL.
@@ -193,7 +193,7 @@ namespace BetterCms.Module.Api.Operations.Blog.BlogPosts.BlogPost
         /// The page secondary image id.
         /// </value>
         [DataMember]
-        public System.Guid? SecondaryImageId { get; set; }
+        public Guid? SecondaryImageId { get; set; }
 
         /// <summary>
         /// Gets or sets the secondary image URL.
@@ -229,7 +229,7 @@ namespace BetterCms.Module.Api.Operations.Blog.BlogPosts.BlogPost
         /// The blog post activation date.
         /// </value>
         [DataMember]
-        public System.DateTime ActivationDate { get; set; }
+        public DateTime ActivationDate { get; set; }
 
         /// <summary>
         /// Gets or sets the blog post expiration date.
@@ -238,7 +238,7 @@ namespace BetterCms.Module.Api.Operations.Blog.BlogPosts.BlogPost
         /// The blog post expiration date.
         /// </value>
         [DataMember]
-        public System.DateTime? ExpirationDate { get; set; }
+        public DateTime? ExpirationDate { get; set; }
 
         /// <summary>
         /// Gets or sets a value indicating whether blog post is marked as archived.
@@ -265,7 +265,7 @@ namespace BetterCms.Module.Api.Operations.Blog.BlogPosts.BlogPost
         /// The language id.
         /// </value>
         [DataMember]
-        public System.Guid? LanguageId { get; set; }
+        public Guid? LanguageId { get; set; }
 
         /// <summary>
         /// Gets or sets the language code.
@@ -283,6 +283,6 @@ namespace BetterCms.Module.Api.Operations.Blog.BlogPosts.BlogPost
         /// The language group identifier.
         /// </value>
         [DataMember]
-        public System.Guid? LanguageGroupIdentifier { get; set; }
+        public Guid? LanguageGroupIdentifier { get; set; }
     }
 }
