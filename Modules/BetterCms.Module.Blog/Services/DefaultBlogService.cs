@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Security.Principal;
-using System.Web;
 
 using BetterModules.Core.DataAccess;
 using BetterModules.Core.DataAccess.DataContext;
@@ -21,7 +20,6 @@ using BetterCms.Module.Blog.ViewModels.Blog;
 
 using BetterCms.Module.MediaManager.Models;
 
-using BetterCms.Module.Pages.Content.Resources;
 using BetterCms.Module.Pages.Helpers;
 using BetterCms.Module.Pages.Models;
 using BetterCms.Module.Pages.Models.Enums;
@@ -88,6 +86,7 @@ namespace BetterCms.Module.Blog.Services
         /// <param name="masterPageService">The master page service.</param>
         /// <param name="unitOfWork">The unit of work.</param>
         /// <param name="optionService">The option service.</param>
+        /// <param name="categoryService">The category service.</param>
         public DefaultBlogService(ICmsConfiguration configuration, IUrlService urlService, IRepository repository,
             IOptionService blogOptionService, IAccessControlService accessControlService, ISecurityService securityService,
             IContentService contentService, ITagService tagService,
@@ -291,7 +290,7 @@ namespace BetterCms.Module.Blog.Services
                 }
                 else
                 {
-                    blogPost.PageUrl = CreateBlogPermalink(request.Title, null, blogPost.Categories != null ? blogPost.Categories.Select(x => x.Id) : null);
+                    blogPost.PageUrl = CreateBlogPermalink(request.Title, null, request.Categories != null ? request.Categories.Select(c => Guid.Parse(c.Key)) : null);
                 }
 
                 blogPost.MetaTitle = request.MetaTitle ?? request.Title;
@@ -376,7 +375,7 @@ namespace BetterCms.Module.Blog.Services
                 return null;
             }
 
-            if (userCanEdit)
+            if (isNew || userCanEdit)
             {
                 categoryService.CombineEntityCategories<BlogPost, PageCategory>(blogPost, request.Categories);
             }

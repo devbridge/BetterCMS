@@ -537,6 +537,7 @@ namespace BetterCms.Module.Root.Services
             where TOption : IDeletableOption<TEntity>, new()
         {
             // Delete old ones
+            var removedOptions = new List<IDeletableOption<TEntity>>();
             if (optionContainer.Options != null)
             {
                 foreach (var option in optionContainer.Options.Distinct())
@@ -557,7 +558,7 @@ namespace BetterCms.Module.Root.Services
                                 repository.Delete(translation);
                             }
                         }
-
+                        removedOptions.Add(option);
                         repository.Delete(option);
                     }
                 }
@@ -571,7 +572,13 @@ namespace BetterCms.Module.Root.Services
                 var optionsList = new List<IDeletableOption<TEntity>>();
                 if (optionContainer.Options != null)
                 {
-                    optionsList.AddRange(optionContainer.Options);
+                    foreach (var option in optionContainer.Options)
+                    {
+                        if (!removedOptions.Contains(option))
+                        {
+                            optionsList.Add(option);
+                        }
+                    }
                 }
 
                 foreach (var requestOption in options)
