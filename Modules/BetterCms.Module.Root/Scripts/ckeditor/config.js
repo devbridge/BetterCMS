@@ -13,7 +13,8 @@ CKEDITOR.editorConfig = function (config) {
         ['CmsImageManager', 'CmsFileManager', 'Image'],
         ['CmsDynamicRegion', 'CmsWidget', 'CmsOption', 'CmsModelValues'],
         ['Source', 'Maximize', 'CmsToggleLineWrap'],
-        ['Table', 'Strike', 'NumberedList', 'JustifyLeft', 'JustifyCenter', 'JustifyRight', 'JustifyBlock', 'Styles', 'Format', 'Font', 'FontSize']
+        ['Table', 'Strike', 'NumberedList', 'JustifyLeft', 'JustifyCenter', 'JustifyRight', 'JustifyBlock', 'Styles', 'Format', 'Font', 'FontSize'],
+        ['Copy', 'Cut', 'Paste', 'PasteFromWord']
     ];
 
     config.skin = 'bettercms';
@@ -23,4 +24,6 @@ CKEDITOR.editorConfig = function (config) {
     config.extraAllowedContent = 'div[class]';
     config.autoParagraph = false;
     config.toolbarCanCollapse = true;
+    config.forcePasteAsPlainText = true;
+
 };
