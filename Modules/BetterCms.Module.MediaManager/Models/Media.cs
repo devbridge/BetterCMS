@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 using BetterCms.Core.DataContracts;
 using BetterCms.Core.Models;
@@ -12,9 +13,9 @@ namespace BetterCms.Module.MediaManager.Models
         public virtual string Title { get; set; }
 
         public virtual bool IsArchived { get; set; }
-        
+
         public virtual MediaType Type { get; set; }
-        
+
         public virtual MediaContentType ContentType { get; set; }
 
         public virtual MediaFolder Folder { get; set; }
@@ -105,6 +106,7 @@ namespace BetterCms.Module.MediaManager.Models
         /// Copies the data to.
         /// </summary>
         /// <param name="media">The media.</param>
+        /// <param name="copyCollections">if set to <c>true</c> copy collections.</param>
         /// <returns></returns>
         public virtual Media CopyDataTo(Media media, bool copyCollections = true)
         {
@@ -119,7 +121,11 @@ namespace BetterCms.Module.MediaManager.Models
 
             if (Categories != null && copyCollections)
             {
-                foreach (var mediaCategory in Categories)
+                if (media.Categories == null)
+                {
+                    media.Categories = new List<MediaCategory>();
+                }
+                foreach (var mediaCategory in Categories.Where(c => !c.IsDeleted))
                 {
                     var clonedMediaCategory = mediaCategory.Clone();
                     clonedMediaCategory.Media = media;
@@ -129,7 +135,11 @@ namespace BetterCms.Module.MediaManager.Models
 
             if (MediaTags != null && copyCollections)
             {
-                foreach (var mediaTag in MediaTags)
+                if (media.MediaTags == null)
+                {
+                    media.MediaTags = new List<MediaTag>();
+                }
+                foreach (var mediaTag in MediaTags.Where(c => !c.IsDeleted))
                 {
                     var clonedMediaTag = mediaTag.Clone();
                     clonedMediaTag.Media = media;

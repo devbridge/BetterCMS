@@ -86,6 +86,7 @@ namespace BetterCms.Module.Blog.Services
         /// <param name="masterPageService">The master page service.</param>
         /// <param name="unitOfWork">The unit of work.</param>
         /// <param name="optionService">The option service.</param>
+        /// <param name="categoryService">The category service.</param>
         public DefaultBlogService(ICmsConfiguration configuration, IUrlService urlService, IRepository repository,
             IOptionService blogOptionService, IAccessControlService accessControlService, ISecurityService securityService,
             IContentService contentService, ITagService tagService,
@@ -263,8 +264,6 @@ namespace BetterCms.Module.Blog.Services
                 blogPost.Title = request.Title;
                 blogPost.Description = request.IntroText;
                 blogPost.Author = request.AuthorId.HasValue ? repository.AsProxy<Author>(request.AuthorId.Value) : null;
-
-                categoryService.CombineEntityCategories<BlogPost, PageCategory>(blogPost, request.Categories);
                 
                 blogPost.Image = (request.Image != null && request.Image.ImageId.HasValue) ? repository.AsProxy<MediaImage>(request.Image.ImageId.Value) : null;
                 if (isNew || request.DesirableStatus == ContentStatus.Published)
@@ -291,7 +290,7 @@ namespace BetterCms.Module.Blog.Services
                 }
                 else
                 {
-                    blogPost.PageUrl = CreateBlogPermalink(request.Title, null, blogPost.Categories != null ? blogPost.Categories.Select(x => x.Id) : null);
+                    blogPost.PageUrl = CreateBlogPermalink(request.Title, null, request.Categories != null ? request.Categories.Select(c => Guid.Parse(c.Key)) : null);
                 }
 
                 blogPost.MetaTitle = request.MetaTitle ?? request.Title;
@@ -363,6 +362,11 @@ namespace BetterCms.Module.Blog.Services
             {
                 errorMessages = cancelEventArgs.CancellationErrorMessages.ToArray();
                 return null;
+            }
+
+            if (isNew || userCanEdit)
+            {
+                categoryService.CombineEntityCategories<BlogPost, PageCategory>(blogPost, request.Categories);
             }
 
             repository.Save(blogPost);
