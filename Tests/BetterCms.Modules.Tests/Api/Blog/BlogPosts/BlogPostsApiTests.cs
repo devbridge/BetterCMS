@@ -10,6 +10,7 @@ using BetterCms.Module.Api.Operations.Pages;
 using BetterCms.Module.Api.Operations.Root;
 
 using BetterCms.Module.Blog.Models;
+using BetterCms.Module.Pages.Helpers;
 
 using BetterCms.Module.Root;
 using BetterCms.Module.Root.Models;
@@ -37,6 +38,9 @@ namespace BetterCms.Test.Module.Api.Blog.BlogPosts
         private Page masterPage;
         private Region region;
         private IPrincipal principal;
+        private bool isNullUrl;
+        private string currentTitle;
+        private IList<Guid> categories;
         private bool isMarkdown;
         private bool isHtmlSet;
 
@@ -64,6 +68,7 @@ namespace BetterCms.Test.Module.Api.Blog.BlogPosts
             RunApiActionInTransaction(
                 (api, session) =>
                 {
+                    isNullUrl = true;
                     isMarkdown = false;
                     isHtmlSet = true;
 
@@ -86,6 +91,71 @@ namespace BetterCms.Test.Module.Api.Blog.BlogPosts
             Events.BlogEvents.Instance.BlogUpdated -= Instance_EntityUpdated;
             Events.BlogEvents.Instance.BlogDeleted -= Instance_EntityDeleted;
         }
+        
+        [Test]
+        public void Should_CRUD_BlogPost_WithLayout_TestPermalink_Successfully()
+        {
+            // Attach to events
+            Events.BlogEvents.Instance.BlogCreated += Instance_EntityCreated;
+            Events.BlogEvents.Instance.BlogUpdated += Instance_EntityUpdated;
+            Events.BlogEvents.Instance.BlogDeleted += Instance_EntityDeleted;
+
+            RunApiActionInTransaction(
+                (api, session) =>
+                {
+                    var permalinkCreation = UrlHelper.GeneratePageUrl;
+                    try
+                    {
+                        var failedToCheckCategory = true;
+                        UrlHelper.GeneratePageUrl = request =>
+                        {
+                            if ((request.CategoryId == null && categories != null)
+                                || (request.CategoryId != null && categories == null)
+                                || request.CategoryId.Count() != categories.Count
+                                || request.CategoryId.Any(c => categories.All(c1 => c1 != c)))
+                            {
+                                throw new Exception("Failed to check category");
+                            }
+
+                            failedToCheckCategory = false;
+                            return permalinkCreation(request);
+                        };
+                        
+
+                        isNullUrl = true;
+                        isMarkdown = false;
+                        isHtmlSet = true;
+                        masterPage = null;
+                        layout = TestDataProvider.CreateNewLayout();
+                        region = TestDataProvider.CreateNewRegion();
+
+                        var layoutRegion = new LayoutRegion { Layout = layout, Region = region };
+                        layout.LayoutRegions = new[] { layoutRegion };
+
+                        session.SaveOrUpdate(region);
+                        session.SaveOrUpdate(layout);
+                        session.SaveOrUpdate(layoutRegion);
+
+                        Run(
+                            session,
+                            api.Blog.BlogPost.Properties.Post,
+                            api.Blog.BlogPost.Properties.Get,
+                            api.Blog.BlogPost.Properties.Put,
+                            api.Blog.BlogPost.Properties.Delete);
+
+                        Assert.IsFalse(failedToCheckCategory, "Failed to check category passed to the URL creation function.");
+                    }
+                    finally
+                    {
+                        UrlHelper.GeneratePageUrl = permalinkCreation;
+                    }
+                });
+
+            // Detach from events
+            Events.BlogEvents.Instance.BlogCreated -= Instance_EntityCreated;
+            Events.BlogEvents.Instance.BlogUpdated -= Instance_EntityUpdated;
+            Events.BlogEvents.Instance.BlogDeleted -= Instance_EntityDeleted;
+        }
 
         [Test]
         public void Should_CRUD_BlogPost_WithLayout_Successfully_WithIdSpecified()
@@ -98,6 +168,7 @@ namespace BetterCms.Test.Module.Api.Blog.BlogPosts
             RunApiActionInTransaction(
                 (api, session) =>
                 {
+                    isNullUrl = false;
                     isMarkdown = false;
                     isHtmlSet = true;
 
@@ -124,9 +195,6 @@ namespace BetterCms.Test.Module.Api.Blog.BlogPosts
         [Test]
         public void Should_CRUD_BlogPost_WithMasterPage_Successfully()
         {
-            isMarkdown = false;
-            isHtmlSet = true;
-
             // Attach to events
             Events.BlogEvents.Instance.BlogCreated += Instance_EntityCreated;
             Events.BlogEvents.Instance.BlogUpdated += Instance_EntityUpdated;
@@ -135,6 +203,10 @@ namespace BetterCms.Test.Module.Api.Blog.BlogPosts
             RunApiActionInTransaction(
                 (api, session) =>
                 {
+                    isMarkdown = false;
+                    isHtmlSet = true;
+                    isNullUrl = false;
+
                     masterPage = TestDataProvider.CreateNewPage();
                     masterPage.IsMasterPage = true;
                     layout = null;
@@ -163,9 +235,6 @@ namespace BetterCms.Test.Module.Api.Blog.BlogPosts
         [Test]
         public void Should_CRUD_BlogPost_WithNoLayoutSpecified_Successfully()
         {
-            isMarkdown = false;
-            isHtmlSet = true;
-
             // Attach to events
             Events.BlogEvents.Instance.BlogCreated += Instance_EntityCreated;
             Events.BlogEvents.Instance.BlogUpdated += Instance_EntityUpdated;
@@ -174,6 +243,9 @@ namespace BetterCms.Test.Module.Api.Blog.BlogPosts
             RunApiActionInTransaction(
                 (api, session) =>
                 {
+                    isMarkdown = false;
+                    isHtmlSet = true;
+                    isNullUrl = false;
                     masterPage = null;
                     layout = null;
 
@@ -221,6 +293,7 @@ namespace BetterCms.Test.Module.Api.Blog.BlogPosts
                 {
                     isMarkdown = true;
                     isHtmlSet = false;
+                    isNullUrl = false;
 
                     masterPage = null;
                     layout = TestDataProvider.CreateNewLayout();
@@ -255,6 +328,7 @@ namespace BetterCms.Test.Module.Api.Blog.BlogPosts
                 {
                     isMarkdown = true;
                     isHtmlSet = true;
+                    isNullUrl = true;
 
                     masterPage = null;
                     layout = TestDataProvider.CreateNewLayout();
@@ -279,6 +353,7 @@ namespace BetterCms.Test.Module.Api.Blog.BlogPosts
         protected override SaveBlogPostPropertiesModel GetCreateModel(ISession session)
         {
             var blogPost = TestDataProvider.CreateNewBlogPost();
+            currentTitle = blogPost.Title;
 
             var widget = TestDataProvider.CreateNewHtmlContentWidget();
             session.SaveOrUpdate(widget);
@@ -303,7 +378,7 @@ namespace BetterCms.Test.Module.Api.Blog.BlogPosts
 
             var model = new SaveBlogPostPropertiesModel
                 {
-                    BlogPostUrl = string.Format("/{0}/", TestDataProvider.ProvideRandomString(200)),
+                    BlogPostUrl = isNullUrl ? null : string.Format("/{0}/", TestDataProvider.ProvideRandomString(200)),
                     Title = blogPost.Title,
                     IntroText = blogPost.Description,
                     IsPublished = true,
@@ -398,6 +473,7 @@ namespace BetterCms.Test.Module.Api.Blog.BlogPosts
                 };
 
             model.Categories = blogPost.Categories.Select(c => c.Category.Id).ToList();
+            categories = model.Categories;
 
             return model;
         }
@@ -481,7 +557,14 @@ namespace BetterCms.Test.Module.Api.Blog.BlogPosts
             }
 
             // Compare saving entity with retrieved after save entity
-            Assert.AreEqual(getResponse.Data.BlogPostUrl, model.BlogPostUrl);
+            if (isNullUrl)
+            {
+                Assert.AreEqual(getResponse.Data.BlogPostUrl, string.Format("/articles/{0}/", currentTitle));
+            }
+            else
+            {
+                Assert.AreEqual(getResponse.Data.BlogPostUrl, model.BlogPostUrl);
+            }
             Assert.AreEqual(getResponse.Data.Title, model.Title);
             Assert.AreEqual(getResponse.Data.IntroText, model.IntroText);
             Assert.AreEqual(getResponse.Data.IsPublished, model.IsPublished);
