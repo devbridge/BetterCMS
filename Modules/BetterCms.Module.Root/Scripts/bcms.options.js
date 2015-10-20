@@ -796,7 +796,7 @@ bettercms.define('bcms.options', ['bcms.jquery', 'bcms', 'bcms.ko.extenders', 'b
                         optionValue = this.ClearFixValue(valueTranslation.OptionValue);
                         this.valueBinding(optionValue);
                         this.customOptionTitle(optionValue);
-                        this.useDefaultValueBinding(optionValue);
+                        this.useDefaultValueBinding(valueTranslation.UseDefaultValue);
                     }
                     var translation = this.getTranslation(languageId);
                     if (translation == null) {
