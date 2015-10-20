@@ -1468,6 +1468,7 @@
     <Content Include="Scss\base_64\icons\editor-maximize.svg" />
     <Content Include="Scss\base_64\icons\editor-numberedlist.svg" />
     <Content Include="Scss\base_64\icons\editor-paste.svg" />
+    <Content Include="Scss\base_64\icons\editor-pastefromword.svg" />
     <Content Include="Scss\base_64\icons\editor-redo.svg" />
     <Content Include="Scss\base_64\icons\editor-source.svg" />
     <Content Include="Scss\base_64\icons\editor-specialchar.svg" />
@@ -1481,6 +1482,7 @@
     <Content Include="Scss\base_64\icons\manager-add-content.svg" />
     <Content Include="Scss\base_64\icons\manager-content.svg" />
     <Content Include="Scss\base_64\icons\manager-delete.svg" />
+    <Content Include="Scss\base_64\icons\manager-edit-draft.svg" />
     <Content Include="Scss\base_64\icons\manager-edit.svg" />
     <Content Include="Scss\base_64\icons\manager-history.svg" />
     <Content Include="Scss\base_64\icons\manager-options.svg" />

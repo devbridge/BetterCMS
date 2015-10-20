@@ -131,6 +131,9 @@ namespace BetterCms.Module.Pages.Command.Widget.GetWidgetCategory
             var recentWidgets = LeaveTheMostRecentWidgets(pageContentRecentWidgets, childContentRecentWidgets)
                                 .Select(f => CreateWidgetViewModel(f.Widget, drafts.FirstOrDefault(d => d.Original.Id == f.Widget.Id))).ToList();
 
+            // Remove duplicates, when draft and published versions are found
+            contents = contents.GroupBy(g => g.Id).Select(g => g.First()).ToList();
+
             List<WidgetCategoryViewModel> categories;
 
             // Load list of categories and move contents to categories.
