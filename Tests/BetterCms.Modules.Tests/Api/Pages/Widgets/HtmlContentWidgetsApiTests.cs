@@ -16,6 +16,8 @@ using NHibernate;
 
 using NUnit.Framework;
 
+using ServiceStack.Common;
+
 namespace BetterCms.Test.Module.Api.Pages.Widgets
 {
     public class HtmlContentWidgetsApiTests : ApiCrudIntegrationTestBase<
@@ -91,6 +93,12 @@ namespace BetterCms.Test.Module.Api.Pages.Widgets
 
             var content = TestDataProvider.CreateNewHtmlContentWidget();
 
+            var language1 = TestDataProvider.CreateNewLanguage();
+            session.SaveOrUpdate(language1);
+
+            var language2 = TestDataProvider.CreateNewLanguage();
+            session.SaveOrUpdate(language2);
+
             var assignmentId1 = Guid.NewGuid();
             var assignmentId2 = Guid.NewGuid();
             content.Html = string.Format("{0}{1}{3}{2}",
@@ -131,28 +139,41 @@ namespace BetterCms.Test.Module.Api.Pages.Widgets
                                       CustomTypeIdentifier = MediaManagerFolderOptionProvider.Identifier
                                   }
                               },
-                    ChildContentsOptionValues = new List<ChildContentOptionValuesModel>
+                    ChildContentsOptionValues = new List<MultilingualChildContentOptionValuesModel>
                                 {
-                                    new ChildContentOptionValuesModel
+                                    new MultilingualChildContentOptionValuesModel
                                     {
                                         AssignmentIdentifier = assignmentId1,
-                                        OptionValues = new List<OptionValueModel>
+                                        MultilingualOptionValues = new List<MultilingualOptionValueModel>
                                         {
-                                            new OptionValueModel
+                                            new MultilingualOptionValueModel
                                             {
                                                 Key = "O1",
                                                 Value = "V1",
                                                 UseDefaultValue = false,
-                                                Type = OptionType.Text
+                                                Type = OptionType.Text,
+                                                Translations = new List<OptionTranslationModel>
+                                                {
+                                                    new OptionTranslationModel
+                                                    {
+                                                        LanguageId = language1.Id.ToString(),
+                                                        Value = "V1_translated_lang1"
+                                                    },
+                                                    new OptionTranslationModel
+                                                    {
+                                                        LanguageId = language2.Id.ToString(),
+                                                        Value = "V1_translated_lang2"
+                                                    }
+                                                }
                                             }
                                         }
                                     },
-                                    new ChildContentOptionValuesModel
+                                    new MultilingualChildContentOptionValuesModel
                                     {
                                         AssignmentIdentifier = assignmentId2,
-                                        OptionValues = new List<OptionValueModel>
+                                        MultilingualOptionValues = new List<MultilingualOptionValueModel>
                                         {
-                                            new OptionValueModel
+                                            new MultilingualOptionValueModel
                                             {
                                                 Key = "O2",
                                                 Value = Guid.NewGuid().ToString(),
@@ -160,7 +181,7 @@ namespace BetterCms.Test.Module.Api.Pages.Widgets
                                                 Type = OptionType.Custom,
                                                 CustomTypeIdentifier = "media-images-folder"
                                             },
-                                            new OptionValueModel
+                                            new MultilingualOptionValueModel
                                             {
                                                 Key = "O3",
                                                 Value = Guid.NewGuid().ToString(),
@@ -234,14 +255,15 @@ namespace BetterCms.Test.Module.Api.Pages.Widgets
                 {
                     var o1 = getResponse.ChildContentsOptionValues.FirstOrDefault(c => c.AssignmentIdentifier == o.AssignmentIdentifier);
                     Assert.IsNotNull(o1);
-                    Assert.IsNotNull(o1.OptionValues);
-                    Assert.AreEqual(o1.OptionValues.Count(c => !c.UseDefaultValue), o.OptionValues.Count(c => !c.UseDefaultValue));
-                    Assert.IsTrue(o.OptionValues
+                    Assert.IsNotNull(o1.MultilingualOptionValues);
+                    Assert.AreEqual(o1.MultilingualOptionValues.Count(c => !c.UseDefaultValue), o.MultilingualOptionValues.Count(c => !c.UseDefaultValue));
+                    Assert.IsTrue(o.MultilingualOptionValues
                         .Where(c => !c.UseDefaultValue)
-                        .All(c => o1.OptionValues.All(c1 => c1.Key == c.Key 
+                        .All(c => o1.MultilingualOptionValues.All(c1 => c1.Key == c.Key 
                             && c.Value == c1.Value 
                             && c.CustomTypeIdentifier == c1.CustomTypeIdentifier
-                            && c.Type == c1.Type)));
+                            && c.Type == c1.Type
+                            && c1.Translations.All(t1 => c.Translations.Any(t2 => t1.LanguageId == t2.LanguageId && t1.Value == t2.Value)))));
                 });
         }
     }

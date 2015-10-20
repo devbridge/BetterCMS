@@ -313,6 +313,10 @@
       <Project>{073e257b-a6a0-42fc-9102-8e920bf54e50}</Project>
       <Name>BetterCMS.Module.Api.Abstractions</Name>
     </ProjectReference>
+    <ProjectReference Include="..\..\Modules\BetterCms.Module.Api.Web\BetterCms.Module.Api.Web.csproj">
+      <Project>{d12c4811-066a-49ea-9ae7-5e64b128779f}</Project>
+      <Name>BetterCms.Module.Api.Web</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\Modules\BetterCms.Module.Api\BetterCms.Module.Api.csproj">
       <Project>{5FF9D100-CF25-4899-8D23-8EB9F0C0E102}</Project>
       <Name>BetterCms.Module.Api</Name>

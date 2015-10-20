@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Runtime.Serialization;
 
 namespace BetterCms.Module.Api.Operations
@@ -24,6 +25,6 @@ namespace BetterCms.Module.Api.Operations
         /// The list of page content options.
         /// </value>
         [DataMember]
-        public IList<OptionValueModel> OptionValues { get; set; }
+        public virtual IList<OptionValueModel> OptionValues { get; set; }
     }
 }
