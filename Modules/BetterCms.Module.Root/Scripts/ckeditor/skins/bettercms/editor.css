@@ -632,10 +632,6 @@ a.cke_specialchar:hover {
   margin-top: 0;
 }
 
-.cke_button__cmsoption_label {
-  display: inline !important;
-}
-
 @-webkit-keyframes dialog_spinner {
   0% {
     -webkit-transform: rotate(0deg);

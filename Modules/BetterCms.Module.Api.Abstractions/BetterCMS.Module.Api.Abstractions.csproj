@@ -108,6 +108,8 @@
     <Compile Include="Infrastructure\RequestBase.cs" />
     <Compile Include="Infrastructure\ResponseBase.cs" />
     <Compile Include="Infrastructure\SaveModelBase.cs" />
+    <Compile Include="Operations\MultilingualChildContentOptionValuesModel.cs" />
+    <Compile Include="Operations\MultilingualOptionValueModel.cs" />
     <Compile Include="Operations\Blog\Authors\Author\DeleteAuthorRequest.cs" />
     <Compile Include="Operations\Blog\Authors\Author\DeleteAuthorResponse.cs" />
     <Compile Include="Operations\Blog\Authors\Author\PostAuthorRequest.cs" />
@@ -551,6 +553,7 @@
     <Compile Include="Operations\Root\Tags\Tag\GetTagRequestValidator.cs" />
     <Compile Include="Operations\Root\Tags\Tag\DeleteTagRequest.cs" />
     <Compile Include="Operations\Root\Tags\Tag\DeleteTagResponse.cs" />
+    <Compile Include="Operations\OptionTranslationModel.cs" />
     <Compile Include="Operations\Users\Roles\GetRolesRequest.cs" />
     <Compile Include="Operations\Users\Roles\GetRolesResponse.cs" />
     <Compile Include="Operations\Users\Roles\IRolesService.cs" />

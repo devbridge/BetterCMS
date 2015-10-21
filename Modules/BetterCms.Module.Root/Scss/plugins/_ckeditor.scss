@@ -698,10 +698,6 @@ a {
 }
 
 //module custom
-.cke_button__cmsoption_label {
-    display: inline !important;
-}
-
 @include keyframes(dialog_spinner) {
     0% {
         @include transform(rotate(0deg));
