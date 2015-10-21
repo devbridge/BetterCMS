@@ -834,10 +834,74 @@ WriteLiteral("                    ");
             
             #line default
             #line hidden
-WriteLiteral("\r\n                </div>\r\n            </div>\r\n        </div>\r\n");
+WriteLiteral("\r\n                </div>\r\n\r\n");
 
             
-            #line 142 "..\..\Views\Blog\EditBlogPost.cshtml"
+            #line 141 "..\..\Views\Blog\EditBlogPost.cshtml"
+                
+            
+            #line default
+            #line hidden
+            
+            #line 141 "..\..\Views\Blog\EditBlogPost.cshtml"
+                 if (Model.ShowLanguages)
+                {
+
+            
+            #line default
+            #line hidden
+WriteLiteral("                    <div");
+
+WriteLiteral(" class=\"bcms-input-list-holder\"");
+
+WriteLiteral(">\r\n");
+
+WriteLiteral("                        ");
+
+            
+            #line 144 "..\..\Views\Blog\EditBlogPost.cshtml"
+                   Write(Html.Tooltip(BlogGlobalization.EditBlogPost_Language_Tooltip));
+
+            
+            #line default
+            #line hidden
+WriteLiteral("\r\n                        <div");
+
+WriteLiteral(" class=\"bcms-content-titles\"");
+
+WriteLiteral(">");
+
+            
+            #line 145 "..\..\Views\Blog\EditBlogPost.cshtml"
+                                                    Write(BlogGlobalization.EditBlogPost_Language_Title);
+
+            
+            #line default
+            #line hidden
+WriteLiteral("</div>\r\n");
+
+WriteLiteral("                        ");
+
+            
+            #line 146 "..\..\Views\Blog\EditBlogPost.cshtml"
+                   Write(Html.DropDownListFor(model => model.LanguageId, Model.Languages.ToSelectList(Model.LanguageId), "Default language", new { @class = "bcms-global-select", @style = "width: 245px;" }));
+
+            
+            #line default
+            #line hidden
+WriteLiteral("\r\n                    </div>\r\n");
+
+            
+            #line 148 "..\..\Views\Blog\EditBlogPost.cshtml"
+                }
+
+            
+            #line default
+            #line hidden
+WriteLiteral("            </div>\r\n        </div>\r\n");
+
+            
+            #line 151 "..\..\Views\Blog\EditBlogPost.cshtml"
     }
 
             

@@ -137,6 +137,15 @@
                 <div class="bcms-tags-box-holder" data-bind="with: tags">
                     @Html.Partial("~/Areas/bcms-root/Views/Tags/TagsTemplate.cshtml", tagsTemplateViewModel)
                 </div>
+
+                @if (Model.ShowLanguages)
+                {
+                    <div class="bcms-input-list-holder">
+                        @Html.Tooltip(BlogGlobalization.EditBlogPost_Language_Tooltip)
+                        <div class="bcms-content-titles">@BlogGlobalization.EditBlogPost_Language_Title</div>
+                        @Html.DropDownListFor(model => model.LanguageId, Model.Languages.ToSelectList(Model.LanguageId), "Default language", new { @class = "bcms-global-select", @style = "width: 245px;" })
+                    </div>
+                }
             </div>
         </div>
     }

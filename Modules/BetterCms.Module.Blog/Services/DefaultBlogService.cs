@@ -380,6 +380,13 @@ namespace BetterCms.Module.Blog.Services
                 categoryService.CombineEntityCategories<BlogPost, PageCategory>(blogPost, request.Categories);
             }
 
+            var oldLanguageId = blogPost.Language != null ? blogPost.Language.Id : (Guid?)null;
+            var newLanguageId = request.LanguageId;
+            if (oldLanguageId != newLanguageId)
+            {
+                blogPost.Language = request.LanguageId.HasValue ? repository.AsProxy<Language>(request.LanguageId.Value) : null;
+            }
+
             repository.Save(blogPost);
             repository.Save(content);
             repository.Save(pageContent);

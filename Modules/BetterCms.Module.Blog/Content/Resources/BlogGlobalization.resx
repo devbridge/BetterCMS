@@ -438,4 +438,10 @@
   <data name="EditBlogPost_PropertiesTab_Title" xml:space="preserve">
     <value>Properties</value>
   </data>
+  <data name="EditBlogPost_Language_Title" xml:space="preserve">
+    <value>Choose post language</value>
+  </data>
+  <data name="EditBlogPost_Language_Tooltip" xml:space="preserve">
+    <value>Choose language for current page, which will be used in sitemap and determines the language and culture of the page</value>
+  </data>
 </root>
