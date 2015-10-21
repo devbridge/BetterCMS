@@ -163,6 +163,16 @@ bettercms.define('bcms.htmlEditor', ['bcms.jquery', 'bcms', 'ckeditor', 'bcms.ma
         });
     };
 
+    htmlEditor.getChildWidgetOptions = function(editorId) {
+        var editorInstance = htmlEditor.getInstance(editorId);
+
+        if (editorInstance) {
+            return editorInstance.childWidgetOptions;
+        }
+
+        return markdownEditor.getChildWidgetOptions(editorId);
+    }
+
     htmlEditor.initializeHtmlEditor = function (id, editingContentId, options, startInSourceMode) {
         var editMode = startInSourceMode;
         if (!CKEDITOR) {

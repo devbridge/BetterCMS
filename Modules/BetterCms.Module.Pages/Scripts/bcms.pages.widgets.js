@@ -931,25 +931,12 @@ bettercms.define('bcms.pages.widgets', ['bcms.jquery', 'bcms', 'bcms.modal', 'bc
                 });
         }
 
-        /*
-         * Returns child content options view models
-         */
-        function getChildContentOptions(htmlEditorId) {
-            var editorInstance = htmlEditor.getInstance(htmlEditorId);
-
-            if (editorInstance) {
-                return editorInstance.childWidgetOptions;
-            }
-
-            return null;
-        }
-
         /**
          * Serializes content edit form with child widget options
          */
         widgets.serializeFormWithChildWidgetOptions = function (form, htmlEditorId, optionsViewModel, onBeforeStringify) {
             var serializedForm = forms.serializeToObject(form, true),
-                childOptions = htmlEditorId != null ? getChildContentOptions(htmlEditorId) : null,
+                childOptions = htmlEditorId != null ? htmlEditor.getChildWidgetOptions(htmlEditorId) : null,
                 childContentOptionValues = [],
                 i, j, needFix, model;
 

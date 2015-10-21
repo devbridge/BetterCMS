@@ -115,7 +115,7 @@ namespace BetterCms.Module.Api.Operations.Pages.Widgets.Widget.HtmlContentWidget
         /// <value>
         /// The list of options.
         /// </value>
-        [DataMember]
+        [DataMember]    
         public IList<OptionModel> Options { get; set; }
 
         /// <summary>
@@ -125,6 +125,6 @@ namespace BetterCms.Module.Api.Operations.Pages.Widgets.Widget.HtmlContentWidget
         /// The list of child contents option values.
         /// </value>
         [DataMember]
-        public IList<ChildContentOptionValuesModel> ChildContentsOptionValues { get; set; }
+        public IList<MultilingualChildContentOptionValuesModel> ChildContentsOptionValues { get; set; }
     }
 }
