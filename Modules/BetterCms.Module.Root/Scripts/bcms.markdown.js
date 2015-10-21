@@ -6,7 +6,8 @@
                 childWidgetOptions: {}
             },
             selectors = {
-                widgetOptionsButton: '.markItUpButtonWidgetOption'
+                widgetOptionsButton: '.markItUpButtonWidgetOption',
+                iconsHeader: '.markItUpHeader'
             },
             htmlEditor,
             currentEditorId,
@@ -324,7 +325,10 @@
                 $(selectors.widgetOptionsButton).hide();
                 textarea.on("keyup click focus", onCursorPositionChanged);
                 onCursorPositionChanged();
-            }, 100);
+                if (options.hideIcons) {
+                    $(selectors.iconsHeader).hide();
+                }
+            }, 50);
         };
 
         /**

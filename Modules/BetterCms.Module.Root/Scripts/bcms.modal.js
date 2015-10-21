@@ -813,7 +813,11 @@ bettercms.define('bcms.modal', ['bcms.jquery', 'bcms', 'bcms.tabs', 'bcms.ko.ext
     /**
     * Maximizes dialog's provided child/children height up to maximum visible value.
     */
-    modal.maximizeChildHeight = function (obj, dialog) {
+    modal.maximizeChildHeight = function (obj, dialog, options) {
+        options = $.extend({
+            substractHeight: 60
+        }, options);
+
         if (obj.length === 0) {
             return 0;
         }
@@ -837,21 +841,14 @@ bettercms.define('bcms.modal', ['bcms.jquery', 'bcms', 'bcms.tabs', 'bcms.ko.ext
 
         $.each(contentContainer.children(), function () {
             var child = $(this);
-//            console.log(child);
-//            console.log("Height: %s, isVisible: %s", child.outerHeight(), child.is(":visible"));
-
             childrenHeight += child.outerHeight();
         });
-        // TODO: find a better solution for icon toolbars calculation!
-        childrenHeight += objects.length * 60;
+        childrenHeight += objects.length * options.substractHeight;
 
         addHeight = containerHeight - childrenHeight;
-//        console.log('Container: %s, Objects(%s): %s, Other objects: %s, All children height: %s, Available height: %s',
-//            containerHeight, objects.length, objectsHeight, childrenHeight - objectsHeight, childrenHeight, addHeight);
 
         if (objects.length > 1) {
             addHeight = Math.floor(addHeight / objects.length);
-            //console.log('Available height for each object: %s', addHeight);
         }
 
         newHeight = 0;
@@ -860,7 +857,6 @@ bettercms.define('bcms.modal', ['bcms.jquery', 'bcms', 'bcms.tabs', 'bcms.ko.ext
                 var newObjHeight = $(this).height() + addHeight;
                 newHeight += newObjHeight;
                
-                //console.log("Changing textarea's height from %s to %s", $(this).height(), newObjHeight);
                 $(this).height(newObjHeight + 'px');
             });
         }
