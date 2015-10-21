@@ -5,6 +5,7 @@ using BetterModules.Core.DataAccess.DataContext;
 using BetterCms.Core.DataContracts;
 using BetterCms.Core.Modules.Projections;
 using BetterCms.Module.Root.Content.Resources;
+using Microsoft.Framework.DependencyInjection;
 using Microsoft.Framework.Logging;
 using NHibernate.Proxy.DynamicProxy;
 
@@ -56,8 +57,6 @@ namespace BetterCms.Module.Root.Projections
             {
                 contentType = content.GetType();
             }
-
-            string key = "CONTENTRENDERER-" + contentType.Name.ToUpperInvariant();
 
             if (containerProvider.CurrentScope.IsRegisteredWithKey<IContentAccessor>(key))
             {

@@ -11,6 +11,7 @@ using BetterCms.Module.Root.Commands.GetPageToRender;
 using BetterCms.Module.Root.Mvc;
 using BetterCms.Module.Root.Mvc.Helpers;
 using BetterCms.Module.Root.ViewModels.Cms;
+using Microsoft.AspNet.Http.Extensions;
 using Microsoft.AspNet.Mvc;
 using Microsoft.AspNet.Mvc.Rendering;
 using Microsoft.Framework.Logging;
@@ -68,7 +69,7 @@ namespace BetterCms.Module.Root.Controllers
         [IgnoreAutoRoute]
         public IActionResult Index()
         {
-            var virtualPath = HttpUtility.UrlDecode(Http.GetAbsolutePath());
+            var virtualPath = Http.GetAbsolutePath();
             bool pageNotFound = false;
             CmsRequestViewModel model;
 
@@ -77,15 +78,15 @@ namespace BetterCms.Module.Root.Controllers
                 model = GetRequestModel(virtualPath);
 
                 // When URL rewrite occurs, checking child absolute path
-                if (model == null && Request.Url != null && Request.RawUrl != Request.Url.PathAndQuery)
-                {
-                    virtualPath = HttpUtility.UrlDecode(Http.GetAbsolutePath(Request.Url.AbsolutePath));
-                    model = GetRequestModel(virtualPath);
-                }
+                //if (model == null && Request.Url != null && Request.RawUrl != Request.Url.PathAndQuery)
+                //{
+                //    virtualPath = HttpUtility.UrlDecode(Http.GetAbsolutePath(Request.Url.AbsolutePath));
+                //    model = GetRequestModel(virtualPath);
+                //}
 
                 if (!string.IsNullOrWhiteSpace(cmsConfiguration.PageNotFoundUrl) && model == null)
                 {
-                    model = GetRequestModel(HttpUtility.UrlDecode(cmsConfiguration.PageNotFoundUrl));
+                    model = GetRequestModel(cmsConfiguration.PageNotFoundUrl);
                     pageNotFound = true;
                 }
 
@@ -110,16 +111,16 @@ namespace BetterCms.Module.Root.Controllers
                         switch (model.RenderPage.ForceAccessProtocol)
                         {
                             case ForceProtocolType.ForceHttp:
-                                if (Request.Url.Scheme.Equals("https"))
+                                if (Request.Scheme.Equals("https"))
                                 {
-                                    Response.Redirect(Request.Url.AbsoluteUri.Replace("https://", "http://"));
+                                    Response.Redirect(Request.GetEncodedUrl().Replace("https://", "http://"));
                                     return null;
                                 }
                                 break;
                             case ForceProtocolType.ForceHttps:
-                                if (!Request.Url.Scheme.Contains("https"))
+                                if (!Request.Scheme.Contains("https"))
                                 {
-                                    Response.Redirect(Request.Url.AbsoluteUri.Replace("http://", "https://"));
+                                    Response.Redirect(Request.GetEncodedUrl().Replace("http://", "https://"));
                                     return null;
                                 }
                                 break;
@@ -139,7 +140,7 @@ namespace BetterCms.Module.Root.Controllers
                             
                             Response.StatusCode = 403;
                             LogAccessForbidden(model.RenderPage);
-
+                            // TODO HttpExceptions are gone, we need to replace them
                             //throw new HttpException(403, "Access to the page forbidden.");
                         }
 
@@ -199,10 +200,18 @@ namespace BetterCms.Module.Root.Controllers
                 switch (cmsConfiguration.UrlMode)
                 {
                     case TrailingSlashBehaviorType.TrailingSlash:
-                        virtualPath = VirtualPathUtility.AppendTrailingSlash(virtualPath);
+                        //virtualPath = VirtualPathUtility.AppendTrailingSlash(virtualPath);
+                        if (!virtualPath.EndsWith("/"))
+                        {
+                            virtualPath += "/";
+                        }
                         break;
                     case TrailingSlashBehaviorType.NoTrailingSlash:
-                        virtualPath = VirtualPathUtility.RemoveTrailingSlash(virtualPath);
+                        //virtualPath = VirtualPathUtility.RemoveTrailingSlash(virtualPath);
+                        if (virtualPath.EndsWith("/"))
+                        {
+                            virtualPath.Remove(virtualPath.Length - 1);
+                        }
                         break;
                 }
             }

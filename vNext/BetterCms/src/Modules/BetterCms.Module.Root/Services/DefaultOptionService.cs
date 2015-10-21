@@ -18,7 +18,7 @@ using BetterCms.Module.Root.ViewModels.Option;
 
 using BetterModules.Core.DataContracts;
 using BetterModules.Core.Models;
-
+using Microsoft.Framework.WebEncoders;
 using NHibernate.Linq;
 using NHibernate.Proxy.DynamicProxy;
 
@@ -523,7 +523,7 @@ namespace BetterCms.Module.Root.Services
 
                 case OptionType.JavaScriptUrl:
                 case OptionType.CssUrl:
-                    return HttpUtility.UrlPathEncode(value);
+                    return UrlEncoder.Default.UrlEncode(value);
 
                 case OptionType.Integer:
                     int castedInt;

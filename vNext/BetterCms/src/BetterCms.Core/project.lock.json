@@ -5740,7 +5740,8 @@
       "BetterCms.Configuration >= 2.0.0-alpha1",
       "NuGet.Core >= 2.0.1",
       "Microsoft.AspNet.Authentication >= 1.0.0-beta8",
-      "Microsoft.AspNet.Authentication.Cookies >= 1.0.0-beta8"
+      "Microsoft.AspNet.Authentication.Cookies >= 1.0.0-beta8",
+      "Microsoft.Framework.Caching.Abstractions >= 1.0.0-beta8"
     ],
     "DNX,Version=v4.5.1": []
   }

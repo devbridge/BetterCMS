@@ -7,6 +7,7 @@ using BetterCms.Module.Root.Models;
 using BetterCms.Module.Root.Mvc;
 using BetterCms.Module.Root.ViewModels.Autocomplete;
 using BetterModules.Core.Infrastructure.Commands;
+using Microsoft.Framework.Caching.Distributed;
 using Microsoft.Framework.Logging;
 using Microsoft.Framework.OptionsModel;
 
@@ -35,18 +36,20 @@ namespace BetterCms.Module.Root.Commands.Authentication.SearchUsers
         /// <summary>
         /// The cache service.
         /// </summary>
-        private readonly ICacheService cacheService;
+        //private readonly ICacheService cacheService;
+
+        private readonly IDistributedCache cache;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="SearchUsersCommand" /> class.
         /// </summary>
         /// <param name="configuration">The configuration.</param>
-        /// <param name="cacheService">The cache service.</param>
+        /// <param name="cache">The cache service.</param>
         /// <param name="loggerFactory">The logger factory</param>
-        public SearchUsersCommand(IOptions<CmsConfigurationSection> configuration, ICacheService cacheService, ILoggerFactory loggerFactory)
+        public SearchUsersCommand(IOptions<CmsConfigurationSection> configuration, IDistributedCache cache, ILoggerFactory loggerFactory)
         {
             this.configuration = configuration.Value;
-            this.cacheService = cacheService;
+            this.cache = cache;
             logger = loggerFactory.CreateLogger<SearchUsersCommand>();
         }
 
@@ -59,7 +62,7 @@ namespace BetterCms.Module.Root.Commands.Authentication.SearchUsers
         /// </returns>
         public List<LookupKeyValue> Execute(SuggestionViewModel model)
         {
-            var allUserNames = cacheService.Get(CacheKey, TimeSpan.FromSeconds(30), GetAllUserNames);
+            var allUserNames = cache.Get(CacheKey, TimeSpan.FromSeconds(30), GetAllUserNames);
 
             var query = allUserNames
                 .Where(user => user.ToLower().Contains(model.Query.ToLower()));

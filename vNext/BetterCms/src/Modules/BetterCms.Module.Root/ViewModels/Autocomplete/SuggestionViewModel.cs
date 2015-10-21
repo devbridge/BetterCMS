@@ -2,7 +2,8 @@
 {
     public class SuggestionViewModel
     {
-        // TODO request validation is not supported in MVC6 https://github.com/aspnet/Mvc/issues/324
+        // TODO request validation is not supported and not recommended in MVC6 https://github.com/aspnet/Mvc/issues/324
+        // http://www.asp.net/aspnet/overview/web-development-best-practices/what-not-to-do-in-aspnet,-and-what-to-do-instead#validation
         //[AllowHtml]
         public string Query { get; set; }
 
