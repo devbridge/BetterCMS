@@ -2473,7 +2473,7 @@ a.bcms-error-close {
   background-color: #b63131;
 }
 
-.markItUpButtonH1 a, .markItUpButtonH2 a, .markItUpButtonH3 a, .markItUpButtonH4 a, .markItUpButtonH5 a, .markItUpButtonH6 a, .markItUpButtonBold a, .markItUpButtonItalic a, .markItUpButtonListBullet a, .markItUpButtonListNumeric a, .markItUpButtonPicture a, .markItUpButtonLink a, .markItUpButtonQuotes a, .markItUpButtonCode a, .markItUpButtonWidget a, .markItUpButtonOption a {
+.markItUpButtonH1 a, .markItUpButtonH2 a, .markItUpButtonH3 a, .markItUpButtonH4 a, .markItUpButtonH5 a, .markItUpButtonH6 a, .markItUpButtonBold a, .markItUpButtonItalic a, .markItUpButtonListBullet a, .markItUpButtonListNumeric a, .markItUpButtonPicture a, .markItUpButtonLink a, .markItUpButtonQuotes a, .markItUpButtonCode a, .markItUpButtonWidget a, .markItUpButtonWidgetOption a, .markItUpButtonOption a {
   background: no-repeat center;
 }
 
@@ -2700,12 +2700,17 @@ textarea:focus {
   width: 28px;
 }
 
+.markItUpButtonWidgetOption a {
+  background-image: url("data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxNCIgaGVpZ2h0PSIxMSIgdmlld0JveD0iMCAwIDE0IDExIiBlbmFibGUtYmFja2dyb3VuZD0ibmV3IDAgMCAxNCAxMSI+CiA8cGF0aCBmaWxsPSIjNDc0NzQ3IiBkPSJtMSAwYy0uNiAwLTEgLjQtMSAxdjljMCAuNi40IDEgMSAxaDEyYy42IDAgMS0uNCAxLTF2LTljMC0uNi0uNC0xLTEtMWgtMTJtMCAzaDEydjdoLTEydi03bTEgMXYxaDN2LTFoLTNtNSAwdjJoNXYtMmgtNW0tNSAzdjFoM3YtMWgtM201IDB2Mmg1di0yaC01Ii8+Cjwvc3ZnPgo=");
+  width: 28px;
+}
+
 .markItUpButtonOption a {
   background-image: url("data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxNCIgaGVpZ2h0PSIxNCIgdmlld0JveD0iLTI5NiAzOTAgMTQgMTQiIGVuYWJsZS1iYWNrZ3JvdW5kPSJuZXcgLTI5NiAzOTAgMTQgMTQiPgogPHBhdGggZmlsbD0iIzQ3NDc0NyIgZD0ibS0yODMuMSAzOTguNGgtLjdjLS4xLjQtLjMuOC0uNSAxLjJsLjcuN2MuNC40LjQgMS4xIDAgMS42bC0uNC40Yy0uNC40LTEuMS40LTEuNiAwbC0uNy0uN2MtLjQuMi0uOC40LTEuMi41di43YzAgLjYtLjUgMS4xLTEuMSAxLjFoLS42Yy0uNiAwLTEuMS0uNS0xLjEtMS4xdi0uN2MtLjQtLjEtLjgtLjMtMS4yLS41bC0uNy43Yy0uNC40LTEuMS40LTEuNiAwbC0uNC0uNGMtLjQtLjQtLjQtMS4xIDAtMS42bC43LS43Yy0uMi0uNC0uNC0uOC0uNS0xLjJoLS43Yy0uNiAwLTEuMS0uNS0xLjEtMS4xdi0uNmMwLS42LjUtMS4xIDEuMS0xLjFoLjdjLjEtLjQuMy0uOC41LTEuMmwtLjctLjdjLS40LS40LS40LTEuMSAwLTEuNmwuNC0uNGMuNC0uNCAxLjEtLjQgMS42IDBsLjYuNmMuNC0uMi44LS40IDEuMy0uNXYtLjhjMC0uNi41LTEuMSAxLjEtMS4xaC42Yy42IDAgMS4xLjUgMS4xIDEuMXYuOGMuNS4xLjkuMyAxLjMuNWwuNi0uNmMuNC0uNCAxLjEtLjQgMS42IDBsLjQuNGMuNC40LjQgMS4xIDAgMS42bC0uNy43Yy4yLjQuNC44LjUgMS4yaC43Yy42IDAgMS4xLjUgMS4xIDEuMXYuNmMwIC42LS41IDEuMS0xLjEgMS4xbS01LjktNC40Yy0xLjcgMC0zLjEgMS40LTMuMSAzLjEgMCAxLjcgMS40IDMuMSAzLjEgMy4xczMuMS0xLjQgMy4xLTMuMWMwLTEuOC0xLjQtMy4xLTMuMS0zLjFtMCA0LjRjLS44IDAtMS40LS42LTEuNC0xLjQgMC0uOC42LTEuNCAxLjQtMS40czEuNC42IDEuNCAxLjRjMCAuOC0uNiAxLjQtMS40IDEuNCIvPgo8L3N2Zz4K");
   width: 28px;
 }
 
-.markItUpButtonWidget a {
+.markItUpButtonWidgetOption a {
   background-position: 5px center;
   padding-left: 25px !important;
   text-indent: 0 !important;
@@ -3850,7 +3855,7 @@ a.bcms-active-pager:hover {
   width: 100%;
 }
 
-.markItUpButtonH1 a, .markItUpButtonH2 a, .markItUpButtonH3 a, .markItUpButtonH4 a, .markItUpButtonH5 a, .markItUpButtonH6 a, .markItUpButtonBold a, .markItUpButtonItalic a, .markItUpButtonListBullet a, .markItUpButtonListNumeric a, .markItUpButtonPicture a, .markItUpButtonLink a, .markItUpButtonQuotes a, .markItUpButtonCode a, .markItUpButtonWidget a, .markItUpButtonOption a {
+.markItUpButtonH1 a, .markItUpButtonH2 a, .markItUpButtonH3 a, .markItUpButtonH4 a, .markItUpButtonH5 a, .markItUpButtonH6 a, .markItUpButtonBold a, .markItUpButtonItalic a, .markItUpButtonListBullet a, .markItUpButtonListNumeric a, .markItUpButtonPicture a, .markItUpButtonLink a, .markItUpButtonQuotes a, .markItUpButtonCode a, .markItUpButtonWidget a, .markItUpButtonWidgetOption a, .markItUpButtonOption a {
   background: no-repeat center;
 }
 
@@ -4077,12 +4082,17 @@ textarea:focus {
   width: 28px;
 }
 
+.markItUpButtonWidgetOption a {
+  background-image: url("data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxNCIgaGVpZ2h0PSIxMSIgdmlld0JveD0iMCAwIDE0IDExIiBlbmFibGUtYmFja2dyb3VuZD0ibmV3IDAgMCAxNCAxMSI+CiA8cGF0aCBmaWxsPSIjNDc0NzQ3IiBkPSJtMSAwYy0uNiAwLTEgLjQtMSAxdjljMCAuNi40IDEgMSAxaDEyYy42IDAgMS0uNCAxLTF2LTljMC0uNi0uNC0xLTEtMWgtMTJtMCAzaDEydjdoLTEydi03bTEgMXYxaDN2LTFoLTNtNSAwdjJoNXYtMmgtNW0tNSAzdjFoM3YtMWgtM201IDB2Mmg1di0yaC01Ii8+Cjwvc3ZnPgo=");
+  width: 28px;
+}
+
 .markItUpButtonOption a {
   background-image: url("data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxNCIgaGVpZ2h0PSIxNCIgdmlld0JveD0iLTI5NiAzOTAgMTQgMTQiIGVuYWJsZS1iYWNrZ3JvdW5kPSJuZXcgLTI5NiAzOTAgMTQgMTQiPgogPHBhdGggZmlsbD0iIzQ3NDc0NyIgZD0ibS0yODMuMSAzOTguNGgtLjdjLS4xLjQtLjMuOC0uNSAxLjJsLjcuN2MuNC40LjQgMS4xIDAgMS42bC0uNC40Yy0uNC40LTEuMS40LTEuNiAwbC0uNy0uN2MtLjQuMi0uOC40LTEuMi41di43YzAgLjYtLjUgMS4xLTEuMSAxLjFoLS42Yy0uNiAwLTEuMS0uNS0xLjEtMS4xdi0uN2MtLjQtLjEtLjgtLjMtMS4yLS41bC0uNy43Yy0uNC40LTEuMS40LTEuNiAwbC0uNC0uNGMtLjQtLjQtLjQtMS4xIDAtMS42bC43LS43Yy0uMi0uNC0uNC0uOC0uNS0xLjJoLS43Yy0uNiAwLTEuMS0uNS0xLjEtMS4xdi0uNmMwLS42LjUtMS4xIDEuMS0xLjFoLjdjLjEtLjQuMy0uOC41LTEuMmwtLjctLjdjLS40LS40LS40LTEuMSAwLTEuNmwuNC0uNGMuNC0uNCAxLjEtLjQgMS42IDBsLjYuNmMuNC0uMi44LS40IDEuMy0uNXYtLjhjMC0uNi41LTEuMSAxLjEtMS4xaC42Yy42IDAgMS4xLjUgMS4xIDEuMXYuOGMuNS4xLjkuMyAxLjMuNWwuNi0uNmMuNC0uNCAxLjEtLjQgMS42IDBsLjQuNGMuNC40LjQgMS4xIDAgMS42bC0uNy43Yy4yLjQuNC44LjUgMS4yaC43Yy42IDAgMS4xLjUgMS4xIDEuMXYuNmMwIC42LS41IDEuMS0xLjEgMS4xbS01LjktNC40Yy0xLjcgMC0zLjEgMS40LTMuMSAzLjEgMCAxLjcgMS40IDMuMSAzLjEgMy4xczMuMS0xLjQgMy4xLTMuMWMwLTEuOC0xLjQtMy4xLTMuMS0zLjFtMCA0LjRjLS44IDAtMS40LS42LTEuNC0xLjQgMC0uOC42LTEuNCAxLjQtMS40czEuNC42IDEuNCAxLjRjMCAuOC0uNiAxLjQtMS40IDEuNCIvPgo8L3N2Zz4K");
   width: 28px;
 }
 
-.markItUpButtonWidget a {
+.markItUpButtonWidgetOption a {
   background-position: 5px center;
   padding-left: 25px !important;
   text-indent: 0 !important;

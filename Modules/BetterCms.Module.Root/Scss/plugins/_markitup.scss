@@ -16,6 +16,7 @@ $toolbar-icons: (
                 ('Quotes', $bcms-editor-blockquote),
                 ('Code', $bcms-editor-source),
                 ('Widget', $bcms-editor-cmswidget),
+                ('WidgetOption', $bcms-editor-cmswidget),
                 ('Option', $bcms-editor-cmsoption)
 );
 
@@ -195,22 +196,12 @@ textarea {
 
 //module buttons override
 .markItUpButton {
-    &Widget {
+    &WidgetOption {
         a {
             background-position: 5px center;
-            //fixme remove important after sass review
             padding-left: 25px !important;
             text-indent: 0 !important;
             width: auto;
         }
     }
 }
-
-//fixme check if we need this
-//.markItUpPreviewFrame	{
-//    overflow:auto;
-//    background-color:#FFF;
-//    width:99.9%;
-//    height:300px;
-//    margin:5px 0;
-//}
