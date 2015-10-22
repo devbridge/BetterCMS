@@ -2,15 +2,20 @@
     function ($, bcms) {
         "use strict";
 
-        var markdownEditor = {},
-            selectors = {
-                widgetOptionsButton: '.markItUpButtonWidgetOption'
+        var markdownEditor = {
+                childWidgetOptions: {}
             },
-            currentEditor,
-            currentId,
+            selectors = {
+                widgetOptionsButton: '.markItUpButtonWidgetOption',
+                iconsHeader: '.markItUpHeader'
+            },
+            htmlEditor,
+            currentEditorId,
             currentCursorPosition,
             currentValue,
-            widgetPositions = [];
+            currentContentId,
+            widgetPositions = [],
+            currentWidgetSelected = -1;
 
         /**
          * Adds text block to the specified textarea
@@ -74,10 +79,9 @@
          * Called when cursor position changes: checks if widget option button should be enabled
          */
         function onCursorPositionChanged() {
-            var textarea = $('#' + currentId),
+            var textarea = $('#' + currentEditorId),
                 value = textarea.val(),
                 position = getTextareaCursorPosition(textarea.get(0)),
-                isWidgetSelected = false,
                 i;
 
             if (value !== currentValue) {
@@ -85,23 +89,24 @@
             }
 
             if (position !== currentCursorPosition || value !== currentValue) {
+                currentWidgetSelected = -1;
                 for (i = 0; i < widgetPositions.length; i++) {
                     if (position >= widgetPositions[i].start && position <= widgetPositions[i].end) {
-                        isWidgetSelected = true;
+                        currentWidgetSelected = i;
                         break;
                     }
                 }
             }
 
-            /* TODO: uncomment when widget options icon will be implemented
-            if (isWidgetSelected) {
+            if (currentWidgetSelected > -1) {
                 $(selectors.widgetOptionsButton).show();
             } else {
                 $(selectors.widgetOptionsButton).hide();
-            }*/
+            }
 
             currentValue = value;
             currentCursorPosition = position;
+            // console.log("onCursorPositionChanged: %s, currentCursorPosition: %s", currentWidgetSelected, currentCursorPosition);
         }
 
         /**
@@ -115,7 +120,7 @@
                 textarea: obj.textarea
             };
 
-            bcms.trigger(currentEditor.events.insertImage, {
+            bcms.trigger(htmlEditor.events.insertImage, {
                 addHtml: function (html, imgObject) {
                     var markdown = $.format("![{0}]({1})", imgObject.alt, imgObject.src);
 
@@ -138,7 +143,7 @@
                 textarea: obj.textarea
             };
 
-            bcms.trigger(currentEditor.events.insertFile, {
+            bcms.trigger(htmlEditor.events.insertFile, {
                 addHtml: function (html, fileObject) {
                     var markdown = $.format("[{0}]({1})", fileObject.html, fileObject.href);
 
@@ -202,16 +207,60 @@
          * Inserts a widget to the textarea
          */
         function editWidgetOptions(obj) {
-            /* TODO: implement editing of child widget options */
+            if (currentWidgetSelected <= -1) {
+                return;
+            }
+            
+            var element = $(widgetPositions[currentWidgetSelected].value),
+                widgetId = element.data('id'),
+                assignId = element.data('assign-id'),
+                optionListViewModel = null;
+
+            if (!widgetId || !assignId) {
+                return;
+            }
+
+            if (markdownEditor.childWidgetOptions && 
+                markdownEditor.childWidgetOptions[currentEditorId] &&
+                markdownEditor.childWidgetOptions[currentEditorId][assignId]) {
+                optionListViewModel = markdownEditor.childWidgetOptions[currentEditorId][assignId];
+            }
+
+            bcms.trigger(htmlEditor.events.editChildWidgetOptions, {
+                // editor: editor,
+                widgetId: widgetId,
+                assignmentId: assignId,
+                contentId: currentContentId,
+                onCloseClick: function (viewModel) {
+                    if (!viewModel.isValid(true)) {
+                        return false;
+                    }
+
+                    markdownEditor.childWidgetOptions[currentEditorId][assignId] = viewModel;
+
+                    return true;
+                },
+                optionListViewModel: optionListViewModel
+            });
         }
+
+        /**
+         * Returns current editor's child widget options
+         */
+        markdownEditor.getChildWidgetOptions = function (editorId) {
+            return markdownEditor.childWidgetOptions[editorId];
+        };
 
         /**
          * Initializes markdown editor instance
          */
-        markdownEditor.initializeInstance = function (editor, id, editingContentId, options) {
+        markdownEditor.initializeInstance = function (editor, editorId, editingContentId, options) {
 
-            currentEditor = editor;
-            currentId = id;
+            htmlEditor = editor;
+            currentEditorId = editorId;
+            currentContentId = editingContentId;
+
+            markdownEditor.childWidgetOptions[currentEditorId] = {};
 
             var smartTagsList = [],
                 i,
@@ -259,21 +308,27 @@
                     } },
                     { name: 'Quotes', openWith: '> ', className: 'markItUpButtonQuotes' },
                     { name: 'Code Block / Code', openWith: '`', closeWith: '`', className: 'markItUpButtonCode' },
-                    { name: 'Smart tags', dropMenu: smartTagsList }
-                    //  TODO: uncomment when widget options icon will be implemented
-                    // { name: 'Widget options', className: 'markItUpButtonWidget markItUpButtonWidgetOption', afterInsert: editWidgetOptions }
+                    { name: 'Smart tags', dropMenu: smartTagsList },
+                    {
+                        name: 'Widget Options',
+                        className: 'markItUpButtonWidget markItUpButtonWidgetOption',
+                        // afterInsert: editWidgetOptions,
+                        beforeInsert: editWidgetOptions
+                    }
                 ];
             }
 
-            textarea = $('#' + id);
+            textarea = $('#' + editorId);
             textarea.markItUp(options);
 
             setTimeout(function () {
-                //  TODO: uncomment when widget options icon will be implemented
-                //  $(selectors.widgetOptionsButton).hide();
+                $(selectors.widgetOptionsButton).hide();
                 textarea.on("keyup click focus", onCursorPositionChanged);
                 onCursorPositionChanged();
-            }, 100);
+                if (options.hideIcons) {
+                    $(selectors.iconsHeader).hide();
+                }
+            }, 50);
         };
 
         /**

@@ -74,7 +74,7 @@ namespace BetterCms.Module.Api.Operations.Pages.Widgets.Widget.HtmlContentWidget
             {
                 response.ChildContentsOptionValues = optionService
                     .GetChildContentsOptionValues(request.WidgetId)
-                    .ToServiceModel();
+                    .ToMultilingualServiceModel();
             }
 
             if (request.Data.IncludeCategories)
@@ -122,7 +122,7 @@ namespace BetterCms.Module.Api.Operations.Pages.Widgets.Widget.HtmlContentWidget
             IList<ContentOptionValuesViewModel> childContents = null;
             if (request.Data.ChildContentsOptionValues != null)
             {
-                childContents = request.Data.ChildContentsOptionValues.ToViewModel();
+                childContents = request.Data.ChildContentsOptionValues.ToMultilingualViewModel();
             }
             widgetService.SaveHtmlContentWidget(model, childContents, out widget, out originalWidget, false, true);
 

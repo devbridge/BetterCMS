@@ -290,7 +290,11 @@ bettercms.define('bcms.pages.content', ['bcms.jquery', 'bcms', 'bcms.modal', 'bc
                 }
             });
 
-            var editorHeight = modal.maximizeChildHeight(settings.dialog.container.find("#" + settings.editorId), settings.dialog);
+            var maxHeightOpts = {};
+            if (settings.contentTextMode == content.contentTextModes.simpleText) {
+                maxHeightOpts.substractHeight = 20;
+            }
+            var editorHeight = modal.maximizeChildHeight(settings.dialog.container.find("#" + settings.editorId), settings.dialog, maxHeightOpts);
 
             if (settings.contentTextMode == content.contentTextModes.markdown) {
                 htmlEditor.initializeMarkdownEditor(settings.editorId, '', {});
@@ -339,7 +343,11 @@ bettercms.define('bcms.pages.content', ['bcms.jquery', 'bcms', 'bcms.modal', 'bc
                 }
             });
 
-            var editorHeight = modal.maximizeChildHeight(settings.dialog.container.find("#" + settings.editorId), settings.dialog);
+            var maxHeightOpts = {};
+            if (settings.contentTextMode == content.contentTextModes.simpleText) {
+                maxHeightOpts.substractHeight = 20;
+            }
+            var editorHeight = modal.maximizeChildHeight(settings.dialog.container.find("#" + settings.editorId), settings.dialog, maxHeightOpts);
 
             if (settings.contentTextMode == content.contentTextModes.markdown) {
                 htmlEditor.initializeMarkdownEditor(settings.editorId, settings.data.ContentId, {});

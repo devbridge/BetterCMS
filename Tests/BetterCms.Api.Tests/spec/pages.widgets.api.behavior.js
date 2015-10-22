@@ -135,7 +135,8 @@ describe('pages.widgets.api.behavior', function () {
             result,
             ready = false,
             data = {
-                includeCategories: true
+                includeCategories: true,
+                includeOptions: true
             };
 
         runs(function () {
@@ -169,6 +170,32 @@ describe('pages.widgets.api.behavior', function () {
 
             expect(category.id).toBeDefinedAndNotNull('categoryId should be retrieved.');
             expect(category.name).toBe('Category for _0004_Server_Widget_1', 'Correctly filtered categoryName should be retrieved.');
+
+            expect(result.options).toBeDefinedAndNotNull('JSON data object should be retrieved.');
+            expect(result.options.length).toBe(2, 'JSON data object should be retrieved.');
+
+            expect(result.options[0].key).toBe('Option 2', 'Correctly filtered items[0].key should be retrieved.');
+            expect(result.options[1].key).toBe('Option 1', 'Correctly filtered items[1].key should be retrieved.');
+
+            expect(result.options[0].defaultValue).toBe('1202', 'Correctly filtered items[0].key should be retrieved.');
+            expect(result.options[1].defaultValue).toBe('01202', 'Correctly filtered items[1].key should be retrieved.');
+
+            expect(result.options[0].type).toBe('Text', 'Correctly filtered items[0].key should be retrieved.');
+            expect(result.options[1].type).toBe('Text', 'Correctly filtered items[1].key should be retrieved.');
+
+            expect(result.options[0].translations).toBeDefinedAndNotNull('JSON data object should be retrieved.');
+            expect(result.options[0].translations.length).toBe(2, 'Returned array length should be 2.');
+
+            expect(result.options[0].translations[0].value).toBe('translated_1202', 'Correct value should be retrieved');
+            expect(result.options[0].translations[0].languageId).toBe('3d843d1e-59c2-4747-a9b0-ec58afdb21b9', 'Correct languageId should be retrvieved');
+            expect(result.options[0].translations[1].value).toBe('1202_translated', 'Correct value should be retrieved');
+            expect(result.options[0].translations[1].languageId).toBe('639bdd8a-8940-4d53-b258-cef358c56ff7', 'Correct languageId should be retrvieved');
+
+            expect(result.options[1].translations[0].value).toBe('01202_translated', 'Correct value should be retrieved');
+            expect(result.options[1].translations[0].languageId).toBe('639bdd8a-8940-4d53-b258-cef358c56ff7', 'Correct languageId should be retrvieved');
+            expect(result.options[1].translations[1].value).toBe('translated_01202', 'Correct value should be retrieved');
+            expect(result.options[1].translations[1].languageId).toBe('3d843d1e-59c2-4747-a9b0-ec58afdb21b9', 'Correct languageId should be retrvieved');
+            
         });
     });
     
@@ -288,6 +315,22 @@ describe('pages.widgets.api.behavior', function () {
             expect(result.data.items[0].type).toBe('Text', 'Correctly filtered items[0].key should be retrieved.');
             expect(result.data.items[1].type).toBe('Integer', 'Correctly filtered items[1].key should be retrieved.');
             expect(result.data.items[2].type).toBe('Float', 'Correctly filtered items[2].key should be retrieved.');
+
+            expect(result.data.items[0].translations).toBeDefinedAndNotNull('JSON object should be retrieved.');
+            expect(result.data.items[0].translations.length).toBe(1, 'Returned array length should be 1.');
+            expect(result.data.items[0].translations[0].value).toBe('A_translated', 'Correctly filtered items[0].translations[0].value should be retrieved.');
+            expect(result.data.items[0].translations[0].languageId).toBe('95990c1b-fbc7-4a8e-a887-a48edcac03ab', 'Correctly filtered items[0].translations[0].language should be retrieved.');
+
+            expect(result.data.items[1].translations).toBeDefinedAndNotNull('JSON object should be retrieved.');
+            expect(result.data.items[1].translations.length).toBe(1, 'Returned array length should be 1.');
+            expect(result.data.items[1].translations[0].value).toBe('18_translated', 'Correctly filtered items[0].translations[0].value should be retrieved.');
+            expect(result.data.items[1].translations[0].languageId).toBe('95990c1b-fbc7-4a8e-a887-a48edcac03ab', 'Correctly filtered items[0].translations[0].language should be retrieved.');
+
+            expect(result.data.items[2].translations).toBeDefinedAndNotNull('JSON object should be retrieved.');
+            expect(result.data.items[2].translations.length).toBe(1, 'Returned array length should be 1.');
+            expect(result.data.items[2].translations[0].value).toBe('12.5_translated', 'Correctly filtered items[0].translations[0].value should be retrieved.');
+            expect(result.data.items[2].translations[0].languageId).toBe('95990c1b-fbc7-4a8e-a887-a48edcac03ab', 'Correctly filtered items[0].translations[0].language should be retrieved.');
+
         });
     });
     
@@ -372,6 +415,22 @@ describe('pages.widgets.api.behavior', function () {
             expect(result.data.items[0].type).toBe('Text', 'Correctly filtered items[0].key should be retrieved.');
             expect(result.data.items[1].type).toBe('Integer', 'Correctly filtered items[1].key should be retrieved.');
             expect(result.data.items[2].type).toBe('Float', 'Correctly filtered items[2].key should be retrieved.');
+
+            expect(result.data.items[0].translations).toBeDefinedAndNotNull('JSON object should be retrieved.');
+            expect(result.data.items[0].translations.length).toBe(1, 'Returned array length should be 1.');
+            expect(result.data.items[0].translations[0].value).toBe('01207_translated', 'Correctly filtered items[0].translations[0].value should be retrieved.');
+            expect(result.data.items[0].translations[0].languageId).toBe('95990c1b-fbc7-4a8e-a887-a48edcac03ab', 'Correctly filtered items[0].translations[0].language should be retrieved.');
+
+            expect(result.data.items[1].translations).toBeDefinedAndNotNull('JSON object should be retrieved.');
+            expect(result.data.items[1].translations.length).toBe(1, 'Returned array length should be 1.');
+            expect(result.data.items[1].translations[0].value).toBe('1207_translated', 'Correctly filtered items[0].translations[0].value should be retrieved.');
+            expect(result.data.items[1].translations[0].languageId).toBe('95990c1b-fbc7-4a8e-a887-a48edcac03ab', 'Correctly filtered items[0].translations[0].language should be retrieved.');
+
+            expect(result.data.items[2].translations).toBeDefinedAndNotNull('JSON object should be retrieved.');
+            expect(result.data.items[2].translations.length).toBe(1, 'Returned array length should be 1.');
+            expect(result.data.items[2].translations[0].value).toBe('1207.5_translated', 'Correctly filtered items[0].translations[0].value should be retrieved.');
+            expect(result.data.items[2].translations[0].languageId).toBe('95990c1b-fbc7-4a8e-a887-a48edcac03ab', 'Correctly filtered items[0].translations[0].language should be retrieved.');
+
         });
     });
 
