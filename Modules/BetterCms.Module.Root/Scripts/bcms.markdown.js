@@ -240,7 +240,8 @@
 
                     return true;
                 },
-                optionListViewModel: optionListViewModel
+                optionListViewModel: optionListViewModel,
+                enableTranslations: htmlEditor.cmsEditorType == "widget"
             });
         }
 
