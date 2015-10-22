@@ -487,6 +487,10 @@ bettercms.define('bcms.ko.grid', ['bcms.jquery', 'bcms', 'bcms.ko.extenders', 'b
             return 250;
         };
 
+        grid.ItemViewModel.prototype.onCancelMouseDown = function (data, event) {
+            bcms.stopEventPropagation(event);
+        };
+
         grid.ItemViewModel.prototype.onCancelEdit = function (data, event) {
             this.isSelected = true;
             bcms.logger.trace('ko.grid.onCancelEdit: isSelected = true');
@@ -513,7 +517,7 @@ bettercms.define('bcms.ko.grid', ['bcms.jquery', 'bcms', 'bcms.ko.extenders', 'b
         };
 
         grid.ItemViewModel.prototype.blurField = function () {
-            this.cancelOrSaveItem();
+                this.cancelOrSaveItem();
         };
 
         grid.ItemViewModel.prototype.openItem = function () {
@@ -552,7 +556,10 @@ bettercms.define('bcms.ko.grid', ['bcms.jquery', 'bcms', 'bcms.ko.extenders', 'b
                     saveTimers.splice(i, 1);
                 }
             }
-        }
+        };
+        grid.ItemViewModel.prototype.addSaveTimer = function (self, saveTimer) {
+            saveTimers.push({ id: self.id, timer: saveTimer });
+        };
 
         grid.ItemViewModel.prototype.getDeleteParams = function() {
             return {
