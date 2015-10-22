@@ -229,7 +229,7 @@ namespace BetterCms.Module.Root.Services
                     {
                         optionViewModel = CreateOptionValueViewModel(option, languageId);
                         optionModels.Add(optionViewModel);
-                    } else if (optionViewModel.OptionValue == null && languageId != null && languageId == Guid.Empty)
+                    } else if (optionViewModel.OptionValue == null && languageId != null)
                     {
                         var optViewModel = CreateOptionValueViewModel(option, languageId);
                         optionViewModel.OptionValue = optViewModel.OptionValue;
