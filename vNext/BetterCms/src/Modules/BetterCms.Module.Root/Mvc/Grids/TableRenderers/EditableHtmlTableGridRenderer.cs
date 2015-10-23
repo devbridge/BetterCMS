@@ -1,5 +1,6 @@
 ﻿using System.Linq;
-
+using BetterCms.Core.Mvc.Grid;
+using BetterCms.Core.Mvc.Sorting;
 using BetterCms.Module.Root.Content.Resources;
 
 namespace BetterCms.Module.Root.Mvc.Grids.TableRenderers
@@ -69,11 +70,8 @@ namespace BetterCms.Module.Root.Mvc.Grids.TableRenderers
                                             ? SortDirection.Descending
                                             : SortDirection.Ascending;
 
-                var link = string.Format("<a class=\"{0} bcms-sort-arrow\" data-column=\"{1}\" data-direction=\"{2}\">{3}</a>",
-                    sortClass,
-                    sortOptions.Column,
-                    sortOptions.Direction,
-                    displayName);
+                var link =
+                    $"<a class=\"{sortClass} bcms-sort-arrow\" data-column=\"{sortOptions.Column}\" data-direction=\"{sortOptions.Direction}\">{displayName}</a>";
 
                 RenderText(link);
             }

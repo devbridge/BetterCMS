@@ -1,0 +1,199 @@
+@import '../../core/variables';
+
+$content-headers: (
+                ('region-header', $blue-main, 16px, $bcms-manager-region),
+                ('content-header', $dark, 14px, $bcms-manager-content)
+);
+$contents-tree-controls: (
+                ('config', $bcms-manager-options),
+                ('history', $bcms-manager-history),
+                ('edit', $bcms-manager-edit),
+                ('delete', $bcms-manager-delete)
+);
+
+.bcms-tree-container {
+    padding-bottom: 15px;
+
+    > h2 {
+        font-size: 20px;
+        font-weight: 600;
+        margin: 15px 0;
+    }
+}
+
+.bcms-contents-tree {
+    &-region {
+        background-color: $white;
+        border: $border-overlay;
+        box-sizing: border-box;
+        margin-top: 15px;
+        min-height: 48px;
+        padding: 15px 15px 15px 30px;
+        position: relative;
+        z-index: 0;
+    }
+
+    &-region-header {
+        z-index: 1;
+    }
+
+    @each $name, $color, $font-size, $icon in $content-headers {
+        &-#{$name} {
+            position: relative;
+
+            > span {
+                color: $color;
+                font-size: $font-size;
+                font-weight: 700;
+                text-transform: uppercase;
+
+                @include virtual(after) {
+                    @include positioning($center-y: true);
+                    @include size(16px);
+                    background: url($icon) no-repeat center;
+                    left: -20px;
+                }
+            }
+        }
+    }
+
+    &-region-header {
+        cursor: default;
+    }
+
+    &-content-header {
+        cursor: move;
+    }
+
+    &-add-block {
+        @include transition(background-color 150ms);
+        @include position(absolute, -15px -15px null null);
+        @include size(30px 26px);
+        background: $blue-main url($bcms-add-content) no-repeat center;
+        cursor: pointer;
+
+        &:hover,
+        &.bcms-active {
+            background-color: darken($blue-main, 10%);
+        }
+    }
+
+    &-add-content {
+        @include position(absolute, 100% 0 null null);
+        display: none;
+
+        .bcms-active & {
+            display: block;
+        }
+    }
+
+    &-controls {
+        @include transition(all 200ms);
+        background-color: darken($blue-main, 10%);
+        color: $white;
+        line-height: 18px;
+        padding: 5px 20px;
+        white-space: nowrap;
+
+        &:hover {
+            background-color: darken($gray-l50, 10%);
+        }
+    }
+
+    &-content {
+        @include transition(background-color 150ms);
+        background-color: $white;
+        border: $border-content-box;
+        box-shadow: 0 0 5px 0 rgba($black, .2);
+        margin-top: 15px;
+        padding: 15px 15px 15px 30px;
+        position: relative;
+
+        &.bcms-contents-hover {
+            background-color: $gray-l30;
+            cursor: move;
+        }
+    }
+}
+
+.bcms-tree-controls {
+    @include positioning($center-y: true);
+    height: 20px;
+    right: 0;
+
+    a {
+        @include size(18px);
+        cursor: pointer;
+        float: right;
+        margin-left: 15px;
+
+        &.bcms-tree-controls-edit-draft {
+            background-image: url($bcms-manager-edit-draft);
+        }
+    }
+
+    &-box {
+        @include transition(all 150ms);
+        cursor: pointer;
+        float: right;
+        opacity: 0;
+        visibility: hidden;
+    }
+
+    @each $name, $icon, $icon-hover in $contents-tree-controls {
+        &-#{$name} {
+            background: url($icon) no-repeat center;
+
+            &:hover {
+                //background-image: url($icon-hover);
+            }
+        }
+    }
+}
+
+.bcms-contents-hover {
+    > .bcms-contents-tree-content-header {
+        .bcms-tree-controls-box {
+            opacity: 1;
+            visibility: visible;
+        }
+    }
+}
+
+.bcms-dragging {
+    @include clearfix();
+    background-color: $gray-l30;
+    cursor: move;
+    min-height: 50px;
+    opacity: .8;
+    z-index: 9999;
+}
+
+.bcms-contents-tree-drop-area {
+    border: 1px dashed black;
+    color: black;
+    height: 48px;
+    margin: 15px 0 0;
+}
+
+//fixme check where this styles is used
+.bcms-draggable-region {
+    @include size(100% 39px);
+    background: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAQAAAAECAIAAAFRlDm/AAAAHUlEQVQI12P4//8/AxRDqQcPHjAAMUIQyoFQEAAA0/UuXeg1e3EAAAAASUVORK5CYII=') repeat 0 0;
+    border: $border-overlay;
+    box-sizing: border-box;
+    color: $blue-main;
+    font-size: 12px;
+    font-weight: 700;
+    line-height: 39px;
+    margin: 0 -2px 0 0;
+    padding-left: 34px;
+    position: relative;
+
+    @include virtual(after) {
+        @include size(15px 18px);
+        @include positioning($center-y: true);
+        background: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAA8AAAASCAYAAACEnoQPAAAAV0lEQVQ4y2NgmPX6Pw78D4hLgJgBJ8ajGYZridGMLolsQAclmv+TqhndkOGsmRCf+poJYeprJj6AIOJclGgGYW1CmvHhr0CcQHXNDEQkGB1cziakGR5gAEOrBIwBImPOAAAAAElFTkSuQmCC") no-repeat 0 0;
+        left: 11px;
+    }
+}

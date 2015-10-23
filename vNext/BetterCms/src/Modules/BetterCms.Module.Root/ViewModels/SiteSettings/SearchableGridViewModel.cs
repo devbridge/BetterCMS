@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
+using BetterCms.Core.Mvc.Pagination;
 using BetterCms.Module.Root.Mvc.Grids;
 using BetterCms.Module.Root.Mvc.Grids.GridOptions;
 

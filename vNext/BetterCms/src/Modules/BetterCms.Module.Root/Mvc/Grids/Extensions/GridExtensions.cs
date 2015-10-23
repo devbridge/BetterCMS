@@ -4,6 +4,8 @@ using System.Linq.Expressions;
 using System.Text;
 using System.Web;
 
+using BetterCms.Core.Mvc.Grid;
+using BetterCms.Core.Mvc.Pagination;
 using BetterCms.Module.Root.Content.Resources;
 using BetterCms.Module.Root.Mvc.Helpers;
 using Microsoft.AspNet.Html.Abstractions;
@@ -92,7 +94,7 @@ namespace BetterCms.Module.Root.Mvc.Grids.Extensions
                 .HeaderAttributes(@style => "width: 145px;", @class => "bcms-tables-nohover");
         }
 
-        public static HtmlString HiddenGridOptions(this IHtmlHelper html, GridOptions.GridOptions.GridOptions gridOptions)
+        public static HtmlString HiddenGridOptions(this IHtmlHelper html, GridOptions.GridOptions gridOptions)
         {
             var column = html.Hidden("Column", gridOptions.Column, new {@id = "bcms-grid-sort-column"});
             var direction = html.Hidden("Direction", gridOptions.Direction, new { @id = "bcms-grid-sort-direction" });

@@ -1,4 +1,6 @@
 ﻿using System;
+using BetterCms.Core.Mvc.Grid;
+using BetterCms.Core.Mvc.Sorting;
 
 namespace BetterCms.Module.Root.Mvc.Grids.GridOptions
 {

@@ -32,11 +32,6 @@ namespace BetterCms.Module.Root.Services
         private readonly IRepository repository;
 
         /// <summary>
-        /// The cache service.
-        /// </summary>
-        private readonly ICacheService cacheService;
-
-        /// <summary>
         /// The cache key.
         /// </summary>
         private const string CacheKey = "bcms-custom-options-list";
@@ -46,10 +41,9 @@ namespace BetterCms.Module.Root.Services
         /// </summary>
         /// <param name="repository">The repository.</param>
         /// <param name="cacheService">The cache service.</param>
-        public DefaultOptionService(IRepository repository, ICacheService cacheService)
+        public DefaultOptionService(IRepository repository)
         {
             this.repository = repository;
-            this.cacheService = cacheService;
         }
 
         /// <summary>
@@ -751,7 +745,8 @@ namespace BetterCms.Module.Root.Services
         /// </returns>
         public List<CustomOptionViewModel> GetCustomOptions()
         {
-            return cacheService.Get(CacheKey, TimeSpan.FromSeconds(30), LoadCustomOptions);
+            //TODO: use caching
+            return LoadCustomOptions();
         }
 
         /// <summary>
@@ -762,7 +757,8 @@ namespace BetterCms.Module.Root.Services
         /// </returns>
         public IEnumerable<CustomOptionViewModel> GetCustomOptionsFuture()
         {
-            return cacheService.Get(CacheKey, TimeSpan.FromSeconds(30), LoadCustomOptionsFuture);
+            //TODO: use caching
+            return LoadCustomOptionsFuture();
         }
 
         /// <summary>

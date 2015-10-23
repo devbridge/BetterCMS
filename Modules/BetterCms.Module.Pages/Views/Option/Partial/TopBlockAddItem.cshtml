@@ -1,0 +1,21 @@
+﻿@model BetterCms.Module.Root.ViewModels.Shared.EditableGridViewModel
+
+@if (Model.CanAddNewItems)
+{
+    <div class="bcms-btn-links-main" data-bind="click: addNewItem">@Model.AddNewTitle</div>
+
+    <div class="bcms-widget-option-box" data-bind="visible: isAddNewSelected">
+        <select class="bcms-global-select" id="bcms-multi-opts" data-bind="options: optionTypes, optionsText: 'name', optionsCaption: 'Choose type...', optionsValue: 'id', value: selectedTypeId"></select>
+    </div>
+
+    <div class="bcms-language-bar bcms-language-selector-box" data-bind="visible: showLanguages, with: language">
+        <div class="bcms-filter-text bcms-table-middle-box">Edit in language:</div>
+        <div class="bcms-table-middle-box">
+            <select class="bcms-global-select" data-bind="options: languages, optionsText: 'value', optionsValue: 'key', value: languageId"></select>
+        </div>
+    </div>
+}
+else
+{
+    <div class="bcms-btn-links-main">&nbsp;</div>
+}
