@@ -96,16 +96,12 @@ namespace BetterCms.Module.Root.Services.Categories.Nodes
 
         public void DeleteRelations(ICategory category)
         {
-            using (var session = sessionFactoryProvider.OpenSession())
+            var widgetRelations = Repository.AsQueryable<WidgetCategory>().Where(wc => wc.Category.Id == category.Id).ToList();
+            foreach (var widgetRelation in widgetRelations)
             {
-                var widgetRelations = Repository.AsQueryable<WidgetCategory>().Where(wc => wc.Category.Id == category.Id).ToList();
-                foreach (var widgetRelation in widgetRelations)
-                {
-                    Repository.Delete(widgetRelation);
-                }
-                unitOfWork.Commit();;
-                session.Close();
+                Repository.Delete(widgetRelation);
             }
+            unitOfWork.Commit();
         }
     }
 }
