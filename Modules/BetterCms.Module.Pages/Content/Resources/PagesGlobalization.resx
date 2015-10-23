@@ -604,10 +604,10 @@
     <value>Add New +</value>
   </data>
   <data name="SiteSettings_Redirects_PageUrlColumn" xml:space="preserve">
-    <value>Page URL</value>
+    <value>Source URL</value>
   </data>
   <data name="SiteSettings_Redirects_RedirectUrlColumn" xml:space="preserve">
-    <value>Redirected URL</value>
+    <value>Destination URL</value>
   </data>
   <data name="SiteSettings_Redirects_Search" xml:space="preserve">
     <value>Search</value>
