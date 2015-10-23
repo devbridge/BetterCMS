@@ -153,5 +153,23 @@
                 return string.Join(",", roles);
             }
         }
+
+        public static class Policies
+        {
+            /// <summary>
+            /// Policy that allows access for users with <see cref="UserRoles.Administration"/> role
+            /// </summary>
+            public const string AdministrationOnly = "BcmsAdministrationOnly";
+
+            /// <summary>
+            /// Policy that allows access for users with <see cref="UserRoles.EditContent"/> role 
+            /// </summary>
+            public const string CanEditContent = "BcmsCanEditContent";
+
+            /// <summary>
+            /// Policy that allows access for users with <see cref="UserRoles.EditContent"/> or <see cref="UserRoles.Administration"/> roles 
+            /// </summary>
+            public const string CanEditContentOrAdmin = "BcmsCanEditContentOrAdmin";
+        }
     }
 }

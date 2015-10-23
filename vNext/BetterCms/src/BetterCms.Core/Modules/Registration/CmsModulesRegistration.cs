@@ -138,7 +138,7 @@ namespace BetterCms.Core.Modules.Registration
         /// Registers the types.
         /// </summary>
         /// <param name="registrationContext">The registration context.</param>
-        /// <param name="containerBuilder">The container builder.</param>
+        /// <param name="services">The service collection.</param>
         protected override void RegisterModuleDescriptor(ModuleRegistrationContext registrationContext, IServiceCollection services)
         {
             var descriptor = registrationContext.ModuleDescriptor as CmsModuleDescriptor;
@@ -175,6 +175,8 @@ namespace BetterCms.Core.Modules.Registration
 
                 var siteSettingsProjections = descriptor.RegisterSiteSettingsProjections(services);
                 UpdateConcurrentBagWithEnumerator(knownSiteSettingsItems, siteSettingsProjections);
+
+                descriptor.RegisterAuthorizationPolicies(services);
             }
 
             base.RegisterModuleDescriptor(registrationContext, services);

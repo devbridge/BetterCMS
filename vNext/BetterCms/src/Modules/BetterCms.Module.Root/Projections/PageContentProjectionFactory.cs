@@ -1,11 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
-
-using BetterModules.Core.DataAccess.DataContext;
 using BetterCms.Core.DataContracts;
 using BetterCms.Core.Modules.Projections;
 using BetterCms.Module.Root.Content.Resources;
-using Microsoft.Framework.DependencyInjection;
+using BetterModules.Core.DataAccess.DataContext;
 using Microsoft.Framework.Logging;
 using NHibernate.Proxy.DynamicProxy;
 

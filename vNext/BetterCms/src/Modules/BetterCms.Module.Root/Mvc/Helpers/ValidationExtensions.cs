@@ -22,6 +22,7 @@ namespace BetterCms.Module.Root.Mvc.Helpers
         public static Dictionary<string, object> MergeValidationAttributes<TModel, TProperty>(this IHtmlHelper<TModel> htmlHelper,
             Expression<Func<TModel, TProperty>> expression, Dictionary<string, object> attributes)
         {
+            var validatorMetadata = htmlHelper.MetadataProvider.GetMetadataForProperty(typeof (TModel), String.Empty).ValidatorMetadata;
             var metadata = ModelMetadata.FromLambdaExpression(expression, htmlHelper.ViewData);
             var validationAttributes = htmlHelper.GetUnobtrusiveValidationAttributes(Guid.NewGuid().ToString(), metadata);
 

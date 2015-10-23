@@ -30,8 +30,6 @@ namespace BetterCms.Module.Root.Services
 
         private const string AccessLevelCacheKeyPrefix = "bcms-useraccess";
 
-        private readonly ICacheService cacheService;
-
         private readonly CmsConfigurationSection configuration;
 
         private readonly ISecurityService securityService;
@@ -45,11 +43,10 @@ namespace BetterCms.Module.Root.Services
         /// <param name="cacheService">The cache service.</param>
         /// <param name="configuration">The CMS configuration.</param>
         /// <param name="repository">The repository.</param>
-        public DefaultAccessControlService(ISecurityService securityService, ICacheService cacheService,
+        public DefaultAccessControlService(ISecurityService securityService,
             IOptions<CmsConfigurationSection> configuration, IRepository repository)
         {
             this.securityService = securityService;
-            this.cacheService = cacheService;
             this.configuration = configuration.Value;
             this.repository = repository;
         }
@@ -149,7 +146,8 @@ namespace BetterCms.Module.Root.Services
             }
             cacheKeyBuilder.Append(accessRulesHasher.ToString().GetHashCode());
 
-            object accessLevel = cacheService.Get(cacheKeyBuilder.ToString(), TimeSpan.FromSeconds(DefaultCacheTimeoutInSeconds), () => (object)GetAccessLevelInternal(accessRules, principal));
+            //TODO: use caching
+            object accessLevel = GetAccessLevelInternal(accessRules, principal);
 
             return (AccessLevel)accessLevel;
         }
@@ -374,15 +372,16 @@ namespace BetterCms.Module.Root.Services
         {
             IEnumerable<TEntity> list;
 
-            if (useCache)
-            {
-                var cacheKey = string.Format("CMS_{1}_{0}_C9E7517250F64F84ADC8-B991C8391306", principal.Identity.Name, typeof(TEntity));
-                list = cacheService.Get(cacheKey, new TimeSpan(0, 0, 0, DefaultCacheTimeoutInSeconds), LoadDeniedObjects<TEntity>);
-            }
-            else
-            {
+            //TODO: use caching
+            //if (useCache)
+            //{
+            //    var cacheKey = string.Format("CMS_{1}_{0}_C9E7517250F64F84ADC8-B991C8391306", principal.Identity.Name, typeof(TEntity));
+            //    list = cacheService.Get(cacheKey, new TimeSpan(0, 0, 0, DefaultCacheTimeoutInSeconds), LoadDeniedObjects<TEntity>);
+            //}
+            //else
+            //{
                 list = LoadDeniedObjects<TEntity>();
-            }
+            //}
 
             foreach (var entity in list)
             {

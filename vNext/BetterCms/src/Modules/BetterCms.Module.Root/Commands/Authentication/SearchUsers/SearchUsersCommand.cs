@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-
+using System.Runtime.Serialization.Formatters.Binary;
 using BetterCms.Configuration;
 using BetterCms.Module.Root.Models;
 using BetterCms.Module.Root.Mvc;
@@ -62,8 +62,9 @@ namespace BetterCms.Module.Root.Commands.Authentication.SearchUsers
         /// </returns>
         public List<LookupKeyValue> Execute(SuggestionViewModel model)
         {
-            var allUserNames = cache.Get(CacheKey, TimeSpan.FromSeconds(30), GetAllUserNames);
-
+            //TODO: use caching
+            var allUserNames = GetAllUserNames();
+            
             var query = allUserNames
                 .Where(user => user.ToLower().Contains(model.Query.ToLower()));
 

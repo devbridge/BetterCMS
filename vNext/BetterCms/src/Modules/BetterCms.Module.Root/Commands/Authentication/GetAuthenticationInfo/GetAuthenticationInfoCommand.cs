@@ -25,10 +25,12 @@ namespace BetterCms.Module.Root.Commands.Authentication.GetAuthenticationInfo
 
         public InfoViewModel Execute()
         {
-            var model = new InfoViewModel();
-            model.IsUserAuthenticated = Context.Principal.Identity.IsAuthenticated;
-            model.UserName = Context.Principal.Identity.Name;
-            model.EditUserProfileUrl = urlResolver.GetEditUserProfileUrl();
+            var model = new InfoViewModel
+            {
+                IsUserAuthenticated = Context.Principal.Identity.IsAuthenticated,
+                UserName = Context.Principal.Identity.Name,
+                EditUserProfileUrl = urlResolver.GetEditUserProfileUrl()
+            };
 
             return model;
         }

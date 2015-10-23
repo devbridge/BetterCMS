@@ -54,18 +54,7 @@ namespace BetterCms.Core.Modules
         /// <value>
         /// The name of the module area.
         /// </value>
-        public override string AreaName
-        {
-            get
-            {
-                if (areaName == null)
-                {
-                    areaName = ("bcms-" + Name).ToLowerInvariant();
-                }
-
-                return areaName;
-            }
-        }
+        public override string AreaName => areaName ?? (areaName = ("bcms-" + Name).ToLowerInvariant());
 
         /// <summary>
         /// Gets the base module path. Default value is /file/module-name/.
@@ -104,13 +93,7 @@ namespace BetterCms.Core.Modules
             }
         }
 
-        public override string SchemaName
-        {
-            get
-            {
-                return string.Format(cmsSchemaBase, Name);
-            }
-        }
+        public override string SchemaName => string.Format(cmsSchemaBase, Name);
 
         /// <summary>
         /// Gets the path of the module packed and minified JS file.
@@ -118,18 +101,9 @@ namespace BetterCms.Core.Modules
         /// <value>
         /// The path of the module packed and minified JS file.
         /// </value>
-        public virtual string MinifiedJsPath
-        {
-            get
-            {
-                if (minJsPath == null)
-                {
-                    minJsPath = VirtualPath.Combine(JsBasePath, string.Format("bcms.{0}.min.js", Name.ToLowerInvariant()));
-                }
-
-                return minJsPath;
-            }
-        }
+        public virtual string MinifiedJsPath => minJsPath ??
+                                                (minJsPath =
+                                                    VirtualPath.Combine(JsBasePath, string.Format("bcms.{0}.min.js", Name.ToLowerInvariant())));
 
         /// <summary>
         /// Gets the path of the module packed and minified CSS file.
@@ -137,18 +111,9 @@ namespace BetterCms.Core.Modules
         /// <value>
         /// The path of the module packed and minified CSS file.
         /// </value>
-        public virtual string MinifiedCssPath
-        {
-            get
-            {
-                if (minCssPath == null)
-                {
-                    minCssPath = VirtualPath.Combine(CssBasePath, string.Format("bcms.{0}.min.css", Name.ToLowerInvariant()));
-                }
-
-                return minCssPath;
-            }
-        }
+        public virtual string MinifiedCssPath => minCssPath ??
+                                                 (minCssPath =
+                                                     VirtualPath.Combine(CssBasePath, string.Format("bcms.{0}.min.css", Name.ToLowerInvariant())));
 
         /// <summary>
         /// Gets the JavaScript base path.
@@ -156,18 +121,7 @@ namespace BetterCms.Core.Modules
         /// <value>
         /// The JavaScript base path.
         /// </value>
-        public virtual string JsBasePath
-        {
-            get
-            {
-                if (baseJsPath == null)
-                {
-                    baseJsPath = VirtualPath.Combine(BaseModulePath, "scripts");
-                }
-
-                return baseJsPath;
-            }
-        }
+        public virtual string JsBasePath => baseJsPath ?? (baseJsPath = VirtualPath.Combine(BaseModulePath, "scripts"));
 
         /// <summary>
         /// Gets the CSS base path.
@@ -175,18 +129,7 @@ namespace BetterCms.Core.Modules
         /// <value>
         /// The CSS base path.
         /// </value>
-        public virtual string CssBasePath
-        {
-            get
-            {
-                if (baseCssPath == null)
-                {
-                    baseCssPath = VirtualPath.Combine(BaseModulePath, "content", "styles");
-                }
-
-                return baseCssPath;
-            }
-        }
+        public virtual string CssBasePath => baseCssPath ?? (baseCssPath = VirtualPath.Combine(BaseModulePath, "content", "styles"));
 
         /// <summary>
         /// Registers java script modules.
@@ -225,6 +168,12 @@ namespace BetterCms.Core.Modules
         {
             return null;
         }
+
+        public virtual void RegisterAuthorizationPolicies(IServiceCollection services)
+        {
+            
+        }
+
         // TODO register multiple services with keys
         protected void RegisterContentRendererType<TContentRenderer, TContent>(IServiceCollection services) 
             where TContentRenderer : ContentAccessor<TContent>

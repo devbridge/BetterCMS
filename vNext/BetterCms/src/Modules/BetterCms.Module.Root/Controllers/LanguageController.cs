@@ -8,6 +8,7 @@ using BetterCms.Module.Root.Mvc;
 using BetterCms.Module.Root.Mvc.Grids.GridOptions;
 using BetterCms.Module.Root.ViewModels.Autocomplete;
 using BetterCms.Module.Root.ViewModels.Language;
+using Microsoft.AspNet.Authorization;
 using Microsoft.AspNet.Mvc;
 
 namespace BetterCms.Module.Root.Controllers
@@ -16,7 +17,7 @@ namespace BetterCms.Module.Root.Controllers
     /// Multilanguage controller.
     /// </summary>
     [Area(RootModuleDescriptor.RootAreaName)]
-    [BcmsAuthorize]
+    [Authorize]
     public class LanguageController : CmsControllerBase
     {
         public LanguageController(ISecurityService securityService) : base(securityService)
@@ -27,7 +28,7 @@ namespace BetterCms.Module.Root.Controllers
         /// Lists the template for displaying languages list.
         /// </summary>
         /// <returns>Json result.</returns>
-        [BcmsAuthorize(RootModuleConstants.UserRoles.Administration)]
+        [Authorize(Policy = RootModuleConstants.Policies.AdministrationOnly)]
         public IActionResult ListTemplate()
         {
             var view = RenderView("List", null);
@@ -44,7 +45,7 @@ namespace BetterCms.Module.Root.Controllers
         /// </summary>
         /// <param name="request">The request.</param>
         /// <returns>Json result.</returns>
-        [BcmsAuthorize(RootModuleConstants.UserRoles.Administration)]
+        [Authorize(Policy = RootModuleConstants.Policies.AdministrationOnly)]
         public IActionResult LanguagesList(SearchableGridOptions request)
         {
             request.SetDefaultPaging();
@@ -58,7 +59,7 @@ namespace BetterCms.Module.Root.Controllers
         /// <param name="model">The model.</param>
         /// <returns>Json result.</returns>
         [HttpPost]
-        [BcmsAuthorize(RootModuleConstants.UserRoles.Administration)]
+        [Authorize(Policy = RootModuleConstants.Policies.AdministrationOnly)]
         public IActionResult SaveLanguage(LanguageViewModel model)
         {
             var success = false;
@@ -87,7 +88,7 @@ namespace BetterCms.Module.Root.Controllers
         /// <param name="version">The version.</param>
         /// <returns>Json result.</returns>
         [HttpPost]
-        [BcmsAuthorize(RootModuleConstants.UserRoles.Administration)]
+        [Authorize(Policy = RootModuleConstants.Policies.AdministrationOnly)]
         public IActionResult DeleteLanguage(string id, string version)
         {
             var request = new LanguageViewModel { Id = id.ToGuidOrDefault(), Version = version.ToIntOrDefault() };
@@ -108,7 +109,7 @@ namespace BetterCms.Module.Root.Controllers
         /// </summary>
         /// <param name="model">The model.</param>
         /// <returns>Suggested languages list</returns>
-        [BcmsAuthorize(RootModuleConstants.UserRoles.Administration)]
+        [Authorize(Policy = RootModuleConstants.Policies.AdministrationOnly)]
         public ActionResult SuggestLanguages(SuggestionViewModel model)
         {
             var suggestedLanguages = GetCommand<SuggestLanguagesCommand>().ExecuteCommand(model);

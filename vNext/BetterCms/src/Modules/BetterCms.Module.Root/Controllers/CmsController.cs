@@ -51,6 +51,8 @@ namespace BetterCms.Module.Root.Controllers
         /// <param name="cmsConfiguration">The configuration loader.</param>
         /// <param name="accessControlService">The access control service.</param>
         /// <param name="loggerFactory">The logger factory</param>
+        /// <param name="htmlHelper">The Html helper</param>
+        /// <param name="securityService">The security service</param>
         public CmsController(IOptions<CmsConfigurationSection> cmsConfiguration, IAccessControlService accessControlService, 
             ILoggerFactory loggerFactory, IHtmlHelper htmlHelper, ISecurityService securityService) : base(securityService)
         {

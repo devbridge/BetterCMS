@@ -1,9 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
-
 using BetterCms.Core.DataContracts;
 using Microsoft.AspNet.Mvc.Rendering;
-using Microsoft.AspNet.Mvc.ViewFeatures;
 
 namespace BetterCms.Core.Modules.Projections
 {

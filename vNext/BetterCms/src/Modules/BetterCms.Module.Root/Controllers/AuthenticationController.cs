@@ -7,15 +7,19 @@ using BetterCms.Module.Root.Mvc;
 using BetterCms.Module.Root.ViewModels.Autocomplete;
 
 using BetterModules.Core.Web.Models;
+using Microsoft.AspNet.Authentication.Cookies;
+using Microsoft.AspNet.Authorization;
 using Microsoft.AspNet.Mvc;
 using Microsoft.Framework.Logging;
+using Microsoft.Framework.OptionsModel;
 
 namespace BetterCms.Module.Root.Controllers
 {
     /// <summary>
     /// User authentication handling controller.
     /// </summary>
-    [BcmsAuthorize]
+    //TODO we will probably need to replace custom Authorization attribute with Authorization policies
+    [Authorize]
     [Area(RootModuleDescriptor.RootAreaName)]
     public class AuthenticationController : CmsControllerBase
     {
@@ -24,9 +28,12 @@ namespace BetterCms.Module.Root.Controllers
         /// </summary>
         private readonly ILogger logger;
 
-        public AuthenticationController(ILoggerFactory loggerFactory, ISecurityService securityService)
+        private readonly CookieAuthenticationOptions authenticationOptions;
+
+        public AuthenticationController(ILoggerFactory loggerFactory, ISecurityService securityService, IOptions<CookieAuthenticationOptions> authenticationOptions)
             :base(securityService)
         {
+            this.authenticationOptions = authenticationOptions.Value;
             logger = loggerFactory.CreateLogger<AuthenticationController>();
         }
 
@@ -34,7 +41,7 @@ namespace BetterCms.Module.Root.Controllers
         /// Returns view with user information.
         /// </summary>
         /// <returns>Rendered view with user information.</returns>
-        [BcmsAuthorize]
+        [Authorize]
         public ActionResult Info()
         {
             var model = GetCommand<GetAuthenticationInfoCommand>().Execute();
@@ -57,7 +64,7 @@ namespace BetterCms.Module.Root.Controllers
                 logger.LogError("Failed to logout user {0}.", ex, User.Identity);
             }
 
-            return Redirect(FormsAuthentication.LoginUrl);
+            return Redirect(authenticationOptions.LoginPath);
         }
 
         public ActionResult IsAuthorized(string roles)
@@ -65,7 +72,7 @@ namespace BetterCms.Module.Root.Controllers
             return Json(new WireJson { Success = SecurityService.IsAuthorized(roles) });
         }
 
-        [BcmsAuthorize(RootModuleConstants.UserRoles.Administration)]
+        [Authorize(Policy = RootModuleConstants.Policies.AdministrationOnly)]
         public ActionResult SuggestRoles(SuggestionViewModel model)
         {
             var suggestedRoles = GetCommand<SearchRolesCommand>().ExecuteCommand(model);
@@ -73,7 +80,7 @@ namespace BetterCms.Module.Root.Controllers
             return Json(new { suggestions = suggestedRoles });
         }
 
-        [BcmsAuthorize(RootModuleConstants.UserRoles.Administration)]
+        [Authorize(Policy = RootModuleConstants.Policies.AdministrationOnly)]
         public ActionResult SuggestUsers(SuggestionViewModel model)
         {
             var suggestedRoles = GetCommand<SearchUsersCommand>().ExecuteCommand(model);

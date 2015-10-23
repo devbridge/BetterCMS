@@ -10,6 +10,7 @@ using BetterCms.Module.Root.ViewModels.Autocomplete;
 using BetterCms.Module.Root.ViewModels.Tags;
 
 using BetterModules.Core.Web.Models;
+using Microsoft.AspNet.Authorization;
 using Microsoft.AspNet.Mvc;
 
 namespace BetterCms.Module.Root.Controllers
@@ -17,7 +18,7 @@ namespace BetterCms.Module.Root.Controllers
     /// <summary>
     /// Handles site settings logic for Pages module.
     /// </summary>
-    [BcmsAuthorize]
+    [Authorize]
     [Area(RootModuleDescriptor.RootAreaName)]
     public class TagsController : CmsControllerBase
     {
@@ -32,7 +33,7 @@ namespace BetterCms.Module.Root.Controllers
         /// <returns>
         /// Rendered tag list.
         /// </returns>
-        [BcmsAuthorize(RootModuleConstants.UserRoles.EditContent)]
+        [Authorize(Policy = RootModuleConstants.Policies.CanEditContent)]
         public ActionResult ListTags(SearchableGridOptions request)
         {
             request.SetDefaultPaging();
@@ -46,7 +47,7 @@ namespace BetterCms.Module.Root.Controllers
         /// <param name="tag">The tag data.</param>
         /// <returns>Json with status.</returns>
         [HttpPost]
-        [BcmsAuthorize(RootModuleConstants.UserRoles.EditContent)]
+        [Authorize(Policy = RootModuleConstants.Policies.CanEditContent)]
         public ActionResult SaveTag(TagItemViewModel tag)
         {
             if (ModelState.IsValid)
@@ -73,7 +74,7 @@ namespace BetterCms.Module.Root.Controllers
         /// Json with status.
         /// </returns>
         [HttpPost]
-        [BcmsAuthorize(RootModuleConstants.UserRoles.EditContent)]
+        [Authorize(Policy = RootModuleConstants.Policies.CanEditContent)]
         public ActionResult DeleteTag(TagItemViewModel tag)
         {
             bool success = GetCommand<DeleteTagCommand>().ExecuteCommand(                

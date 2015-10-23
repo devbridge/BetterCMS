@@ -83,16 +83,17 @@ namespace BetterCms.Module.Root.Mvc
             var options = HttpContext.RequestServices.GetService<IOptions<CookieAuthenticationOptions>>().Value;
             if (User.Identity.IsAuthenticated)
             {
-                if (FormsAuthentication.IsEnabled)
-                {
-                    FormsAuthentication.SignOut();
-                }
+                //if (FormsAuthentication.IsEnabled)
+                //{
+                //    FormsAuthentication.SignOut();
+                //}
 
                 //TODO get proper authentication scheme
-                HttpContext.Authentication.SignOutAsync(HttpContext.Authentication.GetAuthenticationSchemes().First().AuthenticationScheme);
+                HttpContext.Authentication.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme).Wait();
 
+                //TODO check if we still need to delete cookies manually
                 //HttpCookie authCookie = Request.Cookies[FormsAuthentication.FormsCookieName];
-                HttpCookie roleCokie = Roles.Enabled ? Request.Cookies[Roles.CookieName] : null;
+                //HttpCookie roleCokie = Roles.Enabled ? Request.Cookies[Roles.CookieName] : null;
 
                 //if (authCookie != null)
                 //{
@@ -103,14 +104,14 @@ namespace BetterCms.Module.Root.Mvc
                 //            });
                 //}
 
-                if (roleCokie != null)
-                {
-                    Response.Cookies.Add(
-                        new HttpCookie(roleCokie.Name)
-                            {
-                                Expires = DateTime.Now.AddDays(-10)
-                            });
-                }
+                //if (roleCokie != null)
+                //{
+                //    Response.Cookies.Add(
+                //        new HttpCookie(roleCokie.Name)
+                //            {
+                //                Expires = DateTime.Now.AddDays(-10)
+                //            });
+                //}
             }
 
             return Redirect(options.LoginPath);

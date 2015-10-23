@@ -22,6 +22,7 @@ using BetterModules.Core.Modules.Registration;
 using BetterModules.Core.Web.Modules.Registration;
 using BetterModules.Core.Web.Mvc.Extensions;
 using BetterModules.Events;
+using Microsoft.AspNet.Authorization;
 using Microsoft.Framework.DependencyInjection;
 using Microsoft.Framework.Logging;
 using Microsoft.Framework.OptionsModel;
@@ -131,13 +132,7 @@ namespace BetterCms.Module.Root
         /// <value>
         /// The name of the module area.
         /// </value>
-        public override string AreaName
-        {
-            get
-            {
-                return RootAreaName;
-            }
-        }
+        public override string AreaName => RootAreaName;
 
         /// <summary>
         /// Gets the name of the module database schema name.
@@ -145,13 +140,7 @@ namespace BetterCms.Module.Root
         /// <value>
         /// The name of the module database schema.
         /// </value>
-        public override string SchemaName
-        {
-            get
-            {
-                return RootSchemaName;
-            }
-        }
+        public override string SchemaName => RootSchemaName;
 
         /// <summary>
         /// Gets the order.
@@ -159,13 +148,7 @@ namespace BetterCms.Module.Root
         /// <value>
         /// The order.
         /// </value>
-        public override int Order
-        {
-            get
-            {
-                return int.MaxValue;
-            }
-        }
+        public override int Order => int.MaxValue;
 
         /// <summary>
         /// Registers module types.
@@ -352,7 +335,7 @@ namespace BetterCms.Module.Root
         /// <summary>
         /// Registers the site settings projections.
         /// </summary>
-        /// <param name="containerBuilder">The container builder.</param>
+        /// <param name="services">The service collection.</param>
         /// <returns>Settings action projections.</returns>
         public override IEnumerable<IPageActionProjection> RegisterSiteSettingsProjections(IServiceCollection services)
         {
@@ -381,6 +364,31 @@ namespace BetterCms.Module.Root
                             ShouldBeRendered = page => Configuration.EnableMultilanguage
                         }
                 };
+        }
+
+        public override void RegisterAuthorizationPolicies(IServiceCollection services)
+        {
+            var provider = services.BuildServiceProvider();
+            var securityService = provider.GetService<ISecurityService>();
+
+            services.Configure<AuthorizationOptions>(options =>
+            {
+                options.AddPolicy(RootModuleConstants.Policies.AdministrationOnly, builder =>
+                {
+                    builder.AddRequirements(
+                        new BcmsAuthorizeRequirement(securityService, RootModuleConstants.UserRoles.Administration));
+                });
+                options.AddPolicy(RootModuleConstants.Policies.CanEditContentOrAdmin, builder =>
+                {
+                    builder.AddRequirements(
+                        new BcmsAuthorizeRequirement(securityService, RootModuleConstants.UserRoles.Administration, RootModuleConstants.UserRoles.EditContent));
+                });
+                options.AddPolicy(RootModuleConstants.Policies.CanEditContent, builder =>
+                {
+                    builder.AddRequirements(
+                        new BcmsAuthorizeRequirement(securityService, RootModuleConstants.UserRoles.Administration));
+                });
+            });
         }
 
         /// <summary>

@@ -6,6 +6,7 @@ using BetterCms.Module.Root.Commands.GetPageToRender;
 using BetterCms.Module.Root.Mvc;
 using BetterCms.Module.Root.Mvc.Helpers;
 using BetterCms.Module.Root.Mvc.PageHtmlRenderer;
+using Microsoft.AspNet.Authorization;
 using Microsoft.AspNet.Mvc;
 using Microsoft.AspNet.Mvc.Rendering;
 using Microsoft.Framework.OptionsModel;
@@ -15,7 +16,7 @@ namespace BetterCms.Module.Root.Controllers
     /// <summary>
     /// Preview controller.
     /// </summary>
-    [BcmsAuthorize(RootModuleConstants.UserRoles.EditContent)]
+    [Authorize(Policy = RootModuleConstants.Policies.CanEditContent)]
     [Area(RootModuleDescriptor.RootAreaName)]
     public class PreviewController : CmsControllerBase
     {

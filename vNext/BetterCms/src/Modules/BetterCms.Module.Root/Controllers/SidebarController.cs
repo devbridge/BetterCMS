@@ -8,6 +8,7 @@ using BetterCms.Module.Root.Mvc;
 using BetterCms.Module.Root.ViewModels;
 using BetterCms.Module.Root.ViewModels.Cms;
 using BetterModules.Core.Exceptions;
+using Microsoft.AspNet.Authorization;
 using Microsoft.AspNet.Mvc;
 using Microsoft.Framework.Logging;
 using Microsoft.Framework.OptionsModel;
@@ -17,7 +18,7 @@ namespace BetterCms.Module.Root.Controllers
     /// <summary>
     /// Side menu controller.
     /// </summary>
-    [BcmsAuthorize]
+    [Authorize]
     [Area(RootModuleDescriptor.RootAreaName)]
     public class SidebarController : CmsControllerBase
     {

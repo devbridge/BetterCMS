@@ -27,19 +27,13 @@ namespace BetterCms.Module.Root.Commands.Authentication.SearchRoles
         private readonly CmsConfigurationSection configuration;
 
         /// <summary>
-        /// The cache service.
-        /// </summary>
-        private readonly ICacheService cacheService;
-
-        /// <summary>
         /// Initializes a new instance of the <see cref="SearchRolesCommand" /> class.
         /// </summary>
         /// <param name="configuration">The configuration.</param>
         /// <param name="cacheService">The cache service.</param>
-        public SearchRolesCommand(IOptions<CmsConfigurationSection> configuration, ICacheService cacheService)
+        public SearchRolesCommand(IOptions<CmsConfigurationSection> configuration)
         {
             this.configuration = configuration.Value;
-            this.cacheService = cacheService;
         }
 
         /// <summary>
@@ -51,7 +45,8 @@ namespace BetterCms.Module.Root.Commands.Authentication.SearchRoles
         /// </returns>
         public List<LookupKeyValue> Execute(SuggestionViewModel model)
         {
-            var allRoleNames = cacheService.Get(CacheKey, TimeSpan.FromSeconds(30), GetAllRoleNames);
+            //TODO: use caching
+            var allRoleNames = GetAllRoleNames();
 
             var query = allRoleNames
                 .Where(role => role.ToLower().Contains(model.Query.ToLower()));

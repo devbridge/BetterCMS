@@ -7,6 +7,7 @@ using BetterCms.Module.Root.Models.SiteSettingsMenu;
 using BetterCms.Module.Root.Mvc;
 using BetterCms.Module.Root.ViewModels;
 using BetterModules.Core.Exceptions;
+using Microsoft.AspNet.Authorization;
 using Microsoft.AspNet.Mvc;
 using Microsoft.Framework.Logging;
 
@@ -15,7 +16,7 @@ namespace BetterCms.Module.Root.Controllers
     /// <summary>
     /// Site settings menu controller.
     /// </summary>
-    [BcmsAuthorize]
+    [Authorize]
     [Area(RootModuleDescriptor.RootAreaName)]
     public class SiteSettingsController : CmsControllerBase
     {
