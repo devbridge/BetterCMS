@@ -1,10 +1,12 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 
+using BetterCms.Core.DataContracts;
 using BetterCms.Module.Root.Models;
 using BetterCms.Module.Root.Mvc;
 
 using BetterModules.Core.DataAccess;
+using BetterModules.Core.DataAccess.DataContext;
 
 namespace BetterCms.Module.Root.Services.Categories.Nodes
 {
@@ -14,10 +16,16 @@ namespace BetterCms.Module.Root.Services.Categories.Nodes
 
         private readonly ICmsConfiguration cmsConfiguration;
 
-        public DefaultCategoryNodeService(IRepository repository, ICmsConfiguration cmsConfiguration)
+        private readonly ISessionFactoryProvider sessionFactoryProvider;
+
+        private readonly IUnitOfWork unitOfWork;
+
+        public DefaultCategoryNodeService(IRepository repository, ICmsConfiguration cmsConfiguration, ISessionFactoryProvider sessionFactoryProvider, IUnitOfWork unitOfWork)
         {
             Repository = repository;
             this.cmsConfiguration = cmsConfiguration;
+            this.sessionFactoryProvider = sessionFactoryProvider;
+            this.unitOfWork = unitOfWork;
         }
 
         public Category SaveCategory(
@@ -84,6 +92,20 @@ namespace BetterCms.Module.Root.Services.Categories.Nodes
             }
 
             return category;
+        }
+
+        public void DeleteRelations(ICategory category)
+        {
+            using (var session = sessionFactoryProvider.OpenSession())
+            {
+                var widgetRelations = Repository.AsQueryable<WidgetCategory>().Where(wc => wc.Category.Id == category.Id).ToList();
+                foreach (var widgetRelation in widgetRelations)
+                {
+                    Repository.Delete(widgetRelation);
+                }
+                unitOfWork.Commit();;
+                session.Close();
+            }
         }
     }
 }

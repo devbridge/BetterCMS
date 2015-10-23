@@ -217,6 +217,7 @@
     <Compile Include="Models\Maps\ChildContentOptionTranslationMap.cs" />
     <Compile Include="Models\Maps\ContentOptionTranslationMap.cs" />
     <Compile Include="Models\Maps\WidgetCategoryMap.cs" />
+    <Compile Include="Models\Migrations\Migration201510231700.cs" />
     <Compile Include="Models\Migrations\Migration201509281017.cs" />
     <Compile Include="Models\Migrations\Migration201502061445.cs" />
     <Compile Include="Models\Migrations\Migration201510141900.cs" />
@@ -1421,6 +1422,7 @@
     <EmbeddedResource Include="Scripts\ckeditor\skins\bettercms\skin.js" />
     <EmbeddedResource Include="Scripts\ckeditor\skins\bettercms\editor.css" />
     <EmbeddedResource Include="Scripts\ckeditor\skins\bettercms\dialog.css" />
+    <EmbeddedResource Include="Models\Migrations\Migration201510231700.sqlserver.sql" />
     <Content Include="Scss\base_64\icons\add-content.svg" />
     <Content Include="Scss\base_64\icons\close.svg" />
     <Content Include="Scss\base_64\icons\cp-add-new.svg" />

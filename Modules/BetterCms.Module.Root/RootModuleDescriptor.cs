@@ -3,6 +3,7 @@
 using Autofac;
 
 using BetterCms.Core;
+using BetterCms.Core.DataContracts;
 using BetterCms.Core.Modules;
 using BetterCms.Core.Modules.Projections;
 
@@ -82,7 +83,8 @@ namespace BetterCms.Module.Root
             categoriesJavaScriptModuleDescriptor = new CategoriesJavaScriptModuleDescriptor(this);
             languagesJsModuleIncludeDescriptor = new LanguagesJsModuleIncludeDescriptor(this);
             CategoryAccessors.Register<WidgetCategoryAccessor>();
-            InitializeSecurity();            
+            InitializeSecurity();
+            AttachEvents();
         }
 
         /// <summary>
@@ -418,6 +420,20 @@ namespace BetterCms.Module.Root
             {
                 var tracker = container.Resolve<IEntityTrackingService>();
                 tracker.OnEntityDelete(args.Item);
+            }
+        }
+
+        private void AttachEvents()
+        {
+            Events.RootEvents.Instance.CategoryDeleted += OnCategoryDelete;
+        }
+
+        private void OnCategoryDelete(SingleItemEventArgs<ICategory> args)
+        {
+            using (var container = ContextScopeProvider.CreateChildContainer())
+            {
+                var categoryNodeService = container.Resolve<ICategoryNodeService>();
+                categoryNodeService.DeleteRelations(args.Item);
             }
         }
     }
