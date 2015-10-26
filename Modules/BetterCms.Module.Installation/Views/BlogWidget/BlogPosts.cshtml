@@ -1,0 +1,45 @@
+﻿@using BetterCms.Module.Installation.Models.Blog
+@model BlogItemsModel
+
+    @foreach (var item in Model.Items)
+    {
+        <section class="blog-post">
+            <h1><a href="@item.Url">@item.Title</a>
+            </h1>
+            @if (Model.ShowAuthor)
+            {
+                <span class="author">@item.Author</span>
+            }
+            @if (Model.ShowDate)
+            {
+                <time datetime="@item.PublishedOn.ToString("yyyy-MM-dd")">@item.PublishedOn.ToString("MMM d, yyyy")</time>
+            }
+            <br />
+            <span>
+                @if (item.Tags != null && Model.ShowTags)
+                {
+                    <span>Tags:</span>
+                    foreach (var tag in item.Tags)
+                    {
+                        <a href="@Request.Path?tagName=@tag" class="single-tag">@tag</a>
+                    }
+                }
+            </span>
+            <span>
+                @if (item.Categories != null && Model.ShowCategories)
+                {
+                    <span>Categories:</span>
+                    foreach (var category in item.Categories)
+                    {
+                        <a href="@Request.Path?categoryName=@category" class="single-category">@category</a>
+                    }
+                }
+            </span>
+            <article>
+                <p>@Html.Raw(item.IntroText)</p>
+
+                <a href="@item.Url">&lt; Read more &gt;</a>
+            </article>
+        </section>
+    }
+
