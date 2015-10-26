@@ -135,6 +135,7 @@ namespace BetterCms.Module.Root.Services.Categories.Tree
 
             foreach (var category in existingCategoryList)
             {
+                CategoryNodeService.DeleteRelations(category);
                 Repository.Delete(category);
                 deletedCategories.Add(category);
             }

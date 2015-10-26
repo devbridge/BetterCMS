@@ -101,7 +101,6 @@ namespace BetterCms.Module.Root.Services.Categories.Nodes
             {
                 Repository.Delete(widgetRelation);
             }
-            unitOfWork.Commit();
         }
     }
 }
