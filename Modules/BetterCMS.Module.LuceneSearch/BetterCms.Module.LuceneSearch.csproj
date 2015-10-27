@@ -60,6 +60,7 @@
     <Compile Include="Models\Migrations\MigrationVersionMetaData.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Services\IndexerService\DefaultIndexerService.cs" />
+    <Compile Include="Services\IndexerService\DocumentData.cs" />
     <Compile Include="Services\IndexerService\IIndexerService.cs" />
     <Compile Include="Services\IndexerService\PartialWordTermQueryParser.cs" />
     <Compile Include="Services\ScrapeService\DefaultScrapeService.cs" />
