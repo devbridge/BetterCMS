@@ -1,13 +1,15 @@
 ﻿@using BetterCms.Module.Newsletter.Content.Resources
-@using BetterCms.Module.Root;
 @using BetterCms.Module.Root.Mvc.Grids;
 @using BetterCms.Module.Root.ViewModels.Shared;
+@using BetterCms.Module.Root.Content.Resources
+@using BetterCms.Module.Root.Mvc.Helpers
 
 @{
     var gridViewModel = new EditableGridViewModel
     {
         ShowMessages = true,
         TopBlockTitle = NewsletterGlobalization.SiteSettings_NewsletterSubscribers_Title,
+        TopBlockAddItemView = "~/Areas/bcms.newsletter/Views/Subscriber/TopBlock.cshtml",
         Columns = new List<EditableGridColumn>
             {
                 new EditableGridColumn(NewsletterGlobalization.SiteSettings_NewsletterSubscribers_Email_Title, "Email", "email")
@@ -18,4 +20,138 @@
     };
 }
 
-@Html.Partial(RootModuleConstants.EditableGridTemplate, gridViewModel)
+<div class="@gridViewModel.TopBlockClass">
+        @if (!string.IsNullOrWhiteSpace(gridViewModel.TopBlockTitle))
+        {
+            <div class="bcms-large-titles">@gridViewModel.TopBlockTitle</div>
+        }
+
+        @if (gridViewModel.CanAddNewItems)
+        {
+            <div class="bcms-btn-links-main" data-bind="click: addNewItem">@gridViewModel.AddNewTitle</div>
+        }
+        else
+        {
+            <div class="bcms-btn-links-main">&nbsp;</div>
+        }
+        <div class="bcms-btn-links-main" id="download-subscribers-in-csv">@NewsletterGlobalization.Download_NewsletterSubscribers_Title</div>
+
+        @if (gridViewModel.ShowSearch)
+        {
+            <div class="bcms-search-block">
+                <input data-bind="value: options().searchQuery, valueUpdate: 'afterkeydown', enterPress: searchItems, hasfocus: options().hasFocus" type="text" class="bcms-editor-field-box" placeholder="@RootGlobalization.WaterMark_Search" />
+                <div data-bind="click: searchItems" class="bcms-btn-search">@RootGlobalization.Button_Search</div>
+            </div>
+        }
+
+        @if (gridViewModel.AddPaging)
+        {
+        <!-- ko with: options().paging -->
+            <div class="bcms-featured-grid bcms-clearfix">
+                @Html.Partial(gridViewModel.PagingView, gridViewModel)
+            </div>
+        <!-- /ko -->
+        }
+    </div>
+
+@if (gridViewModel.ShowMessages)
+{
+    @Html.SiteSettingsMessagesBox(null, new Dictionary<string, string> { { "data-bind", "attr: { id: messagesDomId() }" } })
+}
+
+@{
+    var visibleColumns = gridViewModel.Columns.Where(c => c.IsRendered).ToList();
+    var visibleColumnsCount = visibleColumns.Count;
+}
+
+<table class="bcms-tables">
+    <thead>
+        <tr>
+            <th class="bcms-tables-nohover">&nbsp;</th>
+            @foreach (var column in visibleColumns)
+            {
+                @Html.Partial(column.HeaderView, column)
+            }
+            <th class="bcms-tables-nohover" style="width: 145px;">&nbsp;</th>
+        </tr>
+    </thead>
+    <tbody>
+        <!-- ko foreach: items -->
+        <tr data-bind="click: onOpen, css: {'bcms-table-row-active' : isActive() || isSelectedForInsert()}, attr: {id: getRowId()}">
+            <!-- ko if: saving() || deleting() -->
+            @if (gridViewModel.CanEditItems)
+            {
+                <td class="bcms-tables-nohover">&nbsp;</td>
+                <!-- ko if: saving() -->
+                <td class="bcms-tables-nohover" colspan="@visibleColumnsCount">@RootGlobalization.Message_Saving</td>
+                <!-- /ko -->
+            }
+            @if (gridViewModel.CanEditItems)
+            {
+                <td class="bcms-tables-nohover" style="width: 145px;">&nbsp;</td>
+                <!-- ko if: deleting() -->
+                <td class="bcms-tables-nohover" colspan="@visibleColumnsCount">@RootGlobalization.Message_Deleting</td>
+                <!-- /ko -->
+            }
+            <!-- /ko -->
+            <!-- ko ifnot: saving() || deleting() -->
+            @if (gridViewModel.CanEditItems)
+            {
+                <td>
+                    <!-- ko if: !editingIsDisabled() -->
+                    <a class="bcms-icn-edit" data-bind="click: onEdit">@RootGlobalization.Button_Edit</a>
+                    <!-- /ko -->
+                </td>
+            }
+            else
+            {
+                <td>&nbsp;</td>
+            }
+            @foreach (var column in visibleColumns)
+            {
+                @Html.Partial(column.CellView, column)
+            }
+            <td>
+                @if (gridViewModel.CanDeleteItems)
+                {
+                    <!-- ko if: !isActive() && !deletingIsDisabled() -->
+                    <a class="bcms-icn-delete" data-bind="click: onDelete">@RootGlobalization.Button_Delete</a>
+                    <!-- /ko -->
+                }
+                @if (gridViewModel.CanEditItems)
+                {
+                    <!-- ko if: isActive() -->
+                    <div class="bcms-btn-small" data-bind="click: onSave">@gridViewModel.SaveButtonTitle</div>
+                    <div class="bcms-btn-links-small" data-bind="click: onCancelEdit">@RootGlobalization.Button_Cancel</div>
+                    <!-- /ko -->
+                }
+                @if (!gridViewModel.CanDeleteItems && !gridViewModel.CanEditItems)
+                {
+                    @:&nbsp;
+                }
+
+            </td>
+            <!-- /ko -->
+        </tr>
+        <!-- /ko -->
+        <!-- ko if: items().length == 0 -->
+        <tr>
+            <td colspan="@(visibleColumnsCount + 2)"><span class="bcms-table-no-data">@RootGlobalization.Grid_NoDataAvailable_Message</span></td>
+        </tr>
+        <!-- /ko -->
+    </tbody>
+</table>
+
+@if (gridViewModel.AddHiddenFields)
+{
+    <!-- ko foreach: items -->
+    foreach (var column in gridViewModel.Columns)
+    {
+        if (!string.IsNullOrWhiteSpace(column.HiddenFieldName))
+        {
+            <input type="hidden" name="" value="" data-bind="valueBinder: @(column.ValueBind)
+                   , attr {name hiddenfieldname('@(column.HiddenFieldName)', $index()) }">
+        }
+    }
+    <!-- /ko -->
+}
