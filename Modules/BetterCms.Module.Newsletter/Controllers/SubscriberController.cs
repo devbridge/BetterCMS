@@ -3,6 +3,7 @@
 using BetterCms.Core.Security;
 
 using BetterCms.Module.Newsletter.Command.DeleteSubscriber;
+using BetterCms.Module.Newsletter.Command.GetAllSubscribersCsv;
 using BetterCms.Module.Newsletter.Command.GetSubscriberList;
 using BetterCms.Module.Newsletter.Command.SaveSubscriber;
 using BetterCms.Module.Newsletter.Content.Resources;
@@ -113,5 +114,14 @@ namespace BetterCms.Module.Newsletter.Controllers
 
             return WireJson(success);
         }
+
+        [HttpGet]
+        [BcmsAuthorize(RootModuleConstants.UserRoles.Administration)]
+        public ActionResult DownoadInCsv()
+        {
+            var stream = GetCommand<GetAllSubscribersStreamCsvCommand>().ExecuteCommand(null);
+            return File(stream, "text/csv", "subscribers.csv");
+        }
+
     }
 }
