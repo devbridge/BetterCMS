@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 
+using BetterCMS.Module.LuceneSearch.Models;
 using BetterCMS.Module.LuceneSearch.Services.WebCrawlerService;
 using BetterCms.Module.Search.Models;
 
@@ -28,6 +29,11 @@ namespace BetterCms.Events
         /// Occurs before document is saved.
         /// </summary>
         public event DefaultEventHandler<SearchResultRetrievingEventArgs> SearchResultRetrieving;
+
+        /// <summary>
+        /// Occurs before index sources are saved to database and allows to inject additional index sources.
+        /// </summary>
+        public event DefaultEventHandler<FetchingNewUrlsEventArgs> FetchingNewUrls;
 
         public DocumentSavingEventArgs OnDocumentSaving(Document document, PageData pageData)
         {
@@ -60,6 +66,18 @@ namespace BetterCms.Events
             if (SearchResultRetrieving != null)
             {
                 SearchResultRetrieving(args);
+            }
+
+            return args;
+        }
+
+        public FetchingNewUrlsEventArgs OnFetchingNewUrls()
+        {
+            var args = new FetchingNewUrlsEventArgs { IndexSources = new List<IndexSource>() };
+
+            if (FetchingNewUrls != null)
+            {
+                FetchingNewUrls(args);
             }
 
             return args;

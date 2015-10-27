@@ -109,7 +109,7 @@ namespace BetterCms.Module.LuceneSearch
 
                     workers.ForEach(f => f.Start());
 
-                    Logger.Info("OnHostStart: preparing Lucene Search index workers completed.");
+                    Logger.InfoFormat("OnHostStart: started {0} Lucene Search workers.", workers.Count);
                 };
         }
         

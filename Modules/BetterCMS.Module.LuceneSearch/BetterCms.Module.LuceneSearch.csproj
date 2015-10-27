@@ -43,6 +43,7 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>LuceneGlobalization.resx</DependentUpon>
     </Compile>
+    <Compile Include="Events\FetchingNewUrlsEventArgs.cs" />
     <Compile Include="Events\LuceneEvents.cs" />
     <Compile Include="Helpers\HtmlAgilityPackHelper.cs" />
     <Compile Include="Helpers\LuceneSearchHelper.cs" />
