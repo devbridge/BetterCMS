@@ -35,6 +35,8 @@ using BetterCms.Module.Root.ViewModels.Option;
 
 using Common.Logging;
 
+using FluentNHibernate.Conventions;
+
 using NHibernate.Criterion;
 using NHibernate.Linq;
 
@@ -402,6 +404,11 @@ namespace BetterCms.Module.Blog.Services
                 newTags = SaveTags(blogPost, request);
             }
 
+            if (userCanEdit)
+            {
+                FillMetaInfo(blogPost);
+            }
+
             // Commit
             unitOfWork.Commit();
 
@@ -765,6 +772,31 @@ namespace BetterCms.Module.Blog.Services
             }
 
             return query;
+        }
+
+        private void FillMetaInfo(BlogPost blogPost)
+        {
+            if (string.IsNullOrEmpty(blogPost.MetaDescription) && !string.IsNullOrEmpty(blogPost.Description))
+            {
+                blogPost.MetaDescription = blogPost.Description;
+            }
+
+            if (string.IsNullOrEmpty(blogPost.MetaKeywords))
+            {
+                if (blogPost.PageTags != null && blogPost.PageTags.IsNotEmpty())
+                {
+                    blogPost.MetaKeywords += string.Join(", ", blogPost.PageTags.Select(x => x.Tag).Select(y => y.Name).ToList());
+                }
+
+                if (blogPost.Categories != null && blogPost.Categories.IsNotEmpty())
+                {
+                    if (!string.IsNullOrEmpty(blogPost.MetaKeywords))
+                    {
+                        blogPost.MetaKeywords += ", ";
+                    }
+                    blogPost.MetaKeywords += string.Join(", ", blogPost.Categories.Select(x => x.Category).Select(y => y.Name).ToList());
+                }
+            }
         }
     }
 }
