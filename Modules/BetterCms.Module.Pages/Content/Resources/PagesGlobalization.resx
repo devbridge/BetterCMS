@@ -1374,4 +1374,13 @@
   <data name="EditPageContent_AdvancedOptionsTab_Title" xml:space="preserve">
     <value>Javascript &amp; CSS</value>
   </data>
+  <data name="ContentHistory_ContentTab_Title" xml:space="preserve">
+    <value>Visual Preview</value>
+  </data>
+  <data name="ContentHistory_PropertiesTab_Title" xml:space="preserve">
+    <value>Data Preview</value>
+  </data>
+  <data name="ContentHistory_VersionPreviewNotAvailableMessage" xml:space="preserve">
+    <value>Preview is not available.</value>
+  </data>
 </root>

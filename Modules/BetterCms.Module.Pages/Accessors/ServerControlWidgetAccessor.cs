@@ -8,6 +8,7 @@ using BetterCms.Core.DataContracts;
 using BetterCms.Core.Exceptions;
 using BetterCms.Core.Modules.Projections;
 using BetterCms.Module.Pages.Models;
+using BetterCms.Module.Pages.ViewModels.History;
 using BetterCms.Module.Root.Mvc.Helpers;
 using BetterCms.Module.Root.ViewModels.Cms;
 
@@ -139,6 +140,21 @@ namespace BetterCms.Module.Pages.Accessors
             }
 
             return null;
+        }
+
+        public override PropertiesPreview GetHtmlPropertiesPreview()
+        {
+            return new PropertiesPreview
+            {
+                ViewName = "~/Areas/bcms-pages/Views/History/ServerWidgetPropertiesHistory.cshtml",
+                ViewModel = new ServerWidgetHistoryViewModel
+                {
+                    Name = Content.Name,
+                    Url = Content.Url,
+                    PreviewUrl = Content.PreviewUrl,
+                    // TODO: Categories = Content.Categories
+                }
+            };
         }
 
         //
