@@ -10,7 +10,7 @@ namespace BetterCms.Module.Pages.ViewModels.History
 
         public DateTime? ExpirationDate { get; set; }
 
-        public string Html { get; set; }
+        public string RowText { get; set; }
 
         public string CustomCss { get; set; }
 

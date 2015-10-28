@@ -6,6 +6,7 @@ using BetterCms.Core.DataContracts;
 using BetterCms.Core.Modules.Projections;
 
 using BetterCms.Module.Blog.Models;
+using BetterCms.Module.Pages.Models.Enums;
 using BetterCms.Module.Pages.ViewModels.History;
 
 namespace BetterCms.Module.Blog.Accessors
@@ -65,7 +66,7 @@ namespace BetterCms.Module.Blog.Accessors
                     Name = Content.Name,
                     ActivationDate = Content.ActivationDate,
                     ExpirationDate = Content.ExpirationDate,
-                    Html = Content.Html,
+                    RowText = Content.ContentTextMode == ContentTextMode.Html ? Content.Html : Content.OriginalText,
                     UseCustomCss = Content.UseCustomCss,
                     CustomCss = Content.CustomCss,
                     UseCustomJs = Content.UseCustomJs,

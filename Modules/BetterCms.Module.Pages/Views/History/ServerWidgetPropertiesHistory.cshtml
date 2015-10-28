@@ -2,13 +2,13 @@
 @model BetterCms.Module.Pages.ViewModels.History.ServerWidgetHistoryViewModel
 <div class="bcms-padded-content">
     <div class="bcms-input-list-holder">
-        <div class="bcms-content-titles">@PagesGlobalization.Widget_Title_Title:</div>
+        <div class="bcms-content-titles">@PagesGlobalization.Widget_Title_Title</div>
         <div class="bcms-input-box">
             @Html.TextBoxFor(model => model.Name, new { @readonly = "readonly", @class = "bcms-editor-field-box" })
         </div>
     </div>
     <div class="bcms-input-list-holder">
-        <div class="bcms-content-titles">@PagesGlobalization.Widget_Url_Title:</div>
+        <div class="bcms-content-titles">@PagesGlobalization.Widget_Url_Title</div>
         <div class="bcms-input-box">
             @Html.TextBoxFor(model => model.Url, new { @readonly = "readonly", @class = "bcms-editor-field-box" })
         </div>
@@ -17,13 +17,13 @@
 @*        @Html.Partial("~/Areas/bcms-root/Views/Category/CategoriesTemplate.cshtml", categoriesTemplateViewModel)*@
 @*    </div>*@
     <div class="bcms-input-list-holder">
-        <div class="bcms-content-titles">@PagesGlobalization.WidgetPreviewImageUrl_Title:</div>
+        <div class="bcms-content-titles">@PagesGlobalization.WidgetPreviewImageUrl_Title</div>
         <div class="bcms-input-box">
             @Html.TextBoxFor(model => model.PreviewUrl, new { @readonly = "readonly", @class = "bcms-editor-field-box" })
         </div>
     </div>
     <div class="bcms-input-list-holder">
-        <div class="bcms-content-titles">@PagesGlobalization.WidgetPreviewImage_Title:</div>
+        <div class="bcms-content-titles">@PagesGlobalization.WidgetPreviewImage_Title</div>
         <div class="bcms-preview-module-image">
             @if (!string.IsNullOrWhiteSpace(Model.PreviewUrl))
             {

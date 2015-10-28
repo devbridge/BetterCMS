@@ -55,7 +55,7 @@
             </div>
 
             <div class="bcms-file-alignment">
-                <div class="bcms-content-titles">@MediaGlobalization.ImageEditor_Dialog_AligmentTitle:</div>
+                <div class="bcms-content-titles">@MediaGlobalization.ImageEditor_Dialog_AligmentTitle</div>
                 <div class="bcms-alignment-controls">
                     <div class="bcms-align-center@(Model.ImageAlign == MediaImageAlign.Center ? "-active" : string.Empty)">
                         <input type="radio" id="aligncenter" name="ImageAlign" value="@((int)MediaImageAlign.Center)" @(Model.ImageAlign == MediaImageAlign.Center ? "checked" : string.Empty)>
@@ -86,7 +86,7 @@
             if (Model.Tags != null && Model.Tags.Count > 0)
             {
                 <div class="bcms-media-tags-box-holder bcms-clearfix">
-                    <div class="bcms-content-titles">@MediaGlobalization.ImageEditor_Dialog_Tags_Title:</div>
+                    <div class="bcms-content-titles">@MediaGlobalization.ImageEditor_Dialog_Tags_Title</div>
                     <div class="bcms-single-tag-holder">
                         @foreach (var tag in Model.Tags)
                         {

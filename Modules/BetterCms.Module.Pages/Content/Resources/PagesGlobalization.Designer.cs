@@ -2194,7 +2194,7 @@ namespace BetterCms.Module.Pages.Content.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Basic Properties.
+        ///   Looks up a localized string similar to Properties.
         /// </summary>
         public static string EditWidget_BasicPropertiesTab_Title {
             get {
@@ -2212,7 +2212,7 @@ namespace BetterCms.Module.Pages.Content.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Widget Options.
+        ///   Looks up a localized string similar to Options.
         /// </summary>
         public static string EditWidget_OptionsTab_Title {
             get {
@@ -2226,6 +2226,15 @@ namespace BetterCms.Module.Pages.Content.Resources {
         public static string EditWidget_PreviewImageNotFound_Message {
             get {
                 return ResourceManager.GetString("EditWidget_PreviewImageNotFound_Message", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Content.
+        /// </summary>
+        public static string HtmlContent_Content_Title {
+            get {
+                return ResourceManager.GetString("HtmlContent_Content_Title", resourceCulture);
             }
         }
         

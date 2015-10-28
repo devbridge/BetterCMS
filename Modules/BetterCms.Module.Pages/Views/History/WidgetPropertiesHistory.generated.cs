@@ -64,7 +64,7 @@ WriteLiteral(">");
             
             #line default
             #line hidden
-WriteLiteral(":</div>\r\n        <div");
+WriteLiteral("</div>\r\n        <div");
 
 WriteLiteral(" class=\"bcms-input-box\"");
 

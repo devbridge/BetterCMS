@@ -64,7 +64,7 @@ WriteLiteral(">");
             
             #line default
             #line hidden
-WriteLiteral(":</div>\r\n        <div");
+WriteLiteral("</div>\r\n        <div");
 
 WriteLiteral(" class=\"bcms-input-box\"");
 
@@ -96,7 +96,7 @@ WriteLiteral(">");
             
             #line default
             #line hidden
-WriteLiteral(":</div>\r\n        <div");
+WriteLiteral("</div>\r\n        <div");
 
 WriteLiteral(" class=\"bcms-input-box\"");
 
@@ -134,7 +134,7 @@ WriteLiteral(">");
             
             #line default
             #line hidden
-WriteLiteral(":</div>\r\n        <div");
+WriteLiteral("</div>\r\n        <div");
 
 WriteLiteral(" class=\"bcms-input-box\"");
 
@@ -166,7 +166,7 @@ WriteLiteral(">");
             
             #line default
             #line hidden
-WriteLiteral(":</div>\r\n        <div");
+WriteLiteral("</div>\r\n        <div");
 
 WriteLiteral(" class=\"bcms-preview-module-image\"");
 
@@ -190,14 +190,14 @@ WriteLiteral("                <div>\r\n                    <img");
 
 WriteLiteral(" id=\"bcms-widget-preview-image\"");
 
-WriteAttribute("src", Tuple.Create(" src=\"", 1663), Tuple.Create("\"", 1686)
+WriteAttribute("src", Tuple.Create(" src=\"", 1659), Tuple.Create("\"", 1682)
             
             #line 31 "..\..\Views\History\ServerWidgetPropertiesHistory.cshtml"
-, Tuple.Create(Tuple.Create("", 1669), Tuple.Create<System.Object, System.Int32>(Model.PreviewUrl
+, Tuple.Create(Tuple.Create("", 1665), Tuple.Create<System.Object, System.Int32>(Model.PreviewUrl
             
             #line default
             #line hidden
-, 1669), false)
+, 1665), false)
 );
 
 WriteLiteral(" alt=\"\"");
