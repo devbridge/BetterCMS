@@ -5,8 +5,10 @@ using System.Drawing.Imaging;
 using System.IO;
 using System.Linq;
 using System.Net;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Web;
+using System.Xml;
 
 using BetterModules.Core.DataAccess;
 using BetterModules.Core.DataAccess.DataContext;
@@ -17,6 +19,7 @@ using BetterCms.Core.Services.Storage;
 using BetterCms.Module.MediaManager.Content.Resources;
 using BetterCms.Module.MediaManager.Helpers;
 using BetterCms.Module.MediaManager.Models;
+using BetterCms.Module.MediaManager.Models.Enum;
 using BetterCms.Module.Root.Mvc;
 
 using Common.Logging;
@@ -191,50 +194,117 @@ namespace BetterCms.Module.MediaManager.Services
         public MediaImage UploadImage(Guid rootFolderId, string fileName, long fileLength, Stream fileStream, Guid reuploadMediaId, bool overrideUrl = true)
         {
             overrideUrl = false; // TODO: temporary disabling feature #1055.
-            using (var thumbnailFileStream = new MemoryStream())
-            {
-                var folderName = mediaFileService.CreateRandomFolderName();
 
+            var folderName = mediaFileService.CreateRandomFolderName();
+            var publicFileName = RemoveInvalidHtmlSymbols(MediaImageHelper.CreatePublicFileName(fileName, Path.GetExtension(fileName)));
+            var fileExtension = Path.GetExtension(fileName);
+            var type = ImageHelper.GetImageType(fileExtension);
+
+            MediaImage uploadImage = null;
+            MemoryStream thumbnailFileStream = null;
+            Size size;
+            Size thumbnailSize;
+            long thumbnailImageLength;
+
+            /* Upload standard raster type images */
+            if (type == ImageType.Raster)
+            {
+                thumbnailFileStream = new MemoryStream();
                 fileStream = RotateImage(fileStream);
-                var size = GetSize(fileStream);
+                size = GetSize(fileStream);
 
                 CreatePngThumbnail(fileStream, thumbnailFileStream, ThumbnailSize);
+                thumbnailImageLength = thumbnailFileStream.Length;
+                thumbnailSize = ThumbnailSize;
+            }
+            /* Upload vector graphics images */
+            else
+            {
+                size = Size.Empty;
+                ReadParametersFormVectorImage(fileStream, size);
+                thumbnailSize = size;
+                thumbnailImageLength = fileStream.Length;
+            }
 
+            try
+            {
                 if (!reuploadMediaId.HasDefaultValue())
                 {
                     // Re-uploading image: Get original image, folder name, file extension, file name
-                    MediaImage reuploadImage = (MediaImage)repository.First<MediaImage>(image => image.Id == reuploadMediaId).Clone();
-                    reuploadImage.IsTemporary = true;
-                    var publicFileName = RemoveInvalidHtmlSymbols(MediaImageHelper.CreatePublicFileName(fileName, Path.GetExtension(fileName)));
+                    uploadImage = (MediaImage)repository.First<MediaImage>(image => image.Id == reuploadMediaId).Clone();
+                    uploadImage.IsTemporary = true;
 
                     // Create new original image and upload file stream to the storage
-                    reuploadImage = CreateImage(rootFolderId, fileName, Path.GetExtension(fileName), fileName, size, fileLength, thumbnailFileStream.Length);
-                    mediaImageVersionPathService.SetPathForNewOriginal(reuploadImage, folderName, publicFileName);
+                    uploadImage = CreateImage(rootFolderId, fileName, fileExtension, Path.GetFileName(fileName), size, fileLength);
+                    SetThumbnailParameters(uploadImage, thumbnailSize, thumbnailImageLength);
+                    mediaImageVersionPathService.SetPathForNewOriginal(uploadImage, folderName, publicFileName);
 
                     unitOfWork.BeginTransaction();
-                    repository.Save(reuploadImage);
+                    repository.Save(uploadImage);
                     unitOfWork.Commit();
 
-                    StartTasksForImage(reuploadImage, fileStream, thumbnailFileStream, false);
-
-                    return reuploadImage;
+                    StartTasksForImage(uploadImage, fileStream, thumbnailFileStream, false);
                 }
                 else
                 {
                     // Uploading new image
-                    var publicFileName = RemoveInvalidHtmlSymbols(MediaImageHelper.CreatePublicFileName(fileName, Path.GetExtension(fileName)));
-
                     // Create new original image and upload file stream to the storage
-                    MediaImage originalImage = CreateImage(rootFolderId, fileName, Path.GetExtension(fileName), fileName, size, fileLength, thumbnailFileStream.Length);
-                    mediaImageVersionPathService.SetPathForNewOriginal(originalImage, folderName, publicFileName);
+                    uploadImage = CreateImage(
+                        rootFolderId,
+                        fileName,
+                        fileExtension,
+                        Path.GetFileName(fileName),
+                        size,
+                        fileLength);
+                    SetThumbnailParameters(uploadImage, thumbnailSize, thumbnailImageLength);
+                    mediaImageVersionPathService.SetPathForNewOriginal(uploadImage, folderName, publicFileName);
 
                     unitOfWork.BeginTransaction();
-                    repository.Save(originalImage);
+                    repository.Save(uploadImage);
                     unitOfWork.Commit();
 
-                    StartTasksForImage(originalImage, fileStream, thumbnailFileStream, false);
+                    StartTasksForImage(uploadImage, fileStream, thumbnailFileStream, false);
+                }
+            }
+            finally
+            {
+                if (thumbnailFileStream != null)
+                {
+                    thumbnailFileStream.Dispose();
+                }
+            }
 
-                    return originalImage;
+            return uploadImage;
+        }
+
+        private void ReadParametersFormVectorImage(Stream fileStream, Size size)
+        {
+            var xmlReaderSettings = new XmlReaderSettings();
+            xmlReaderSettings.DtdProcessing = DtdProcessing.Parse;
+            using (XmlReader reader = XmlReader.Create(fileStream, xmlReaderSettings))
+            {
+                reader.ReadToFollowing("svg");
+                var heightAttribute = reader.GetAttribute("height");
+                var widthAttribute = reader.GetAttribute("width");
+                var regex = new Regex(@"^\d+$");
+                /* Assume that attribute may look something like '1024px'. We need to match int value */
+                int value;
+                Match match;
+                if (widthAttribute != null)
+                {
+                    match = regex.Match(widthAttribute);
+                    if (int.TryParse(match.Value, out value))
+                    {
+                        size.Width = value;
+                    };
+                }
+                if (heightAttribute != null)
+                {
+                    match = regex.Match(heightAttribute);
+                    if (int.TryParse(match.Value, out value))
+                    {
+                        size.Height = value;
+                    };
                 }
             }
         }
@@ -252,7 +322,8 @@ namespace BetterCms.Module.MediaManager.Services
                 var publicFileName = RemoveInvalidHtmlSymbols(MediaImageHelper.CreatePublicFileName(image.OriginalFileName, image.OriginalFileExtension));
 
                 // Create new original image and upload file stream to the storage
-                var originalImage = CreateImage(null, image.OriginalFileName, image.OriginalFileExtension, image.Title, size, image.Size, thumbnailFileStream.Length, image);
+                var originalImage = CreateImage(null, image.OriginalFileName, image.OriginalFileExtension, Path.GetFileName(image.Title), size, image.Size, image);
+                SetThumbnailParameters(originalImage, ThumbnailSize, thumbnailFileStream.Length);
                 mediaImageVersionPathService.SetPathForNewOriginal(originalImage, folderName, publicFileName);
 
                 unitOfWork.BeginTransaction();
@@ -617,6 +688,13 @@ namespace BetterCms.Module.MediaManager.Services
             image.IsOriginalUploaded = null;
         }
 
+        private void SetThumbnailParameters(MediaImage image, Size size, long length)
+        {
+            image.ThumbnailWidth = size.Width;
+            image.ThumbnailHeight = size.Height;
+            image.ThumbnailSize = length;
+        }
+
         private MediaImage CreateImage(
             Guid? rootFolderId,
             string fileName,
@@ -624,7 +702,6 @@ namespace BetterCms.Module.MediaManager.Services
             string imageTitle,
             Size size,
             long fileLength,
-            long thumbnailImageLength,
             MediaImage filledInImage = null)
         {
             MediaImage image;
@@ -638,7 +715,7 @@ namespace BetterCms.Module.MediaManager.Services
                     image.Folder = repository.AsProxy<MediaFolder>((Guid)rootFolderId);
                 }
 
-                image.Title = Path.GetFileName(imageTitle);
+                image.Title = imageTitle;
                 image.Caption = null;
                 image.Size = fileLength;
                 image.IsTemporary = true;
@@ -665,10 +742,6 @@ namespace BetterCms.Module.MediaManager.Services
             image.OriginalWidth = size.Width;
             image.OriginalHeight = size.Height;
             image.OriginalSize = fileLength;
-
-            image.ThumbnailWidth = ThumbnailSize.Width;
-            image.ThumbnailHeight = ThumbnailSize.Height;
-            image.ThumbnailSize = thumbnailImageLength;
 
             image.ImageAlign = null;
 
