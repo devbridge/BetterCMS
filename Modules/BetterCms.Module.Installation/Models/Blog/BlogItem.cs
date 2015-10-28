@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 
+using BetterCms.Module.Api.Operations.Blog.BlogPosts.BlogPost.Properties;
+
 namespace BetterCms.Module.Installation.Models.Blog
 {
     public class BlogItem
@@ -17,9 +19,9 @@ namespace BetterCms.Module.Installation.Models.Blog
 
         public string ImageUrl { get; set; }
 
-        public List<string> Tags { get; set; }
+        public IList<string> Tags { get; set; }
 
-        public List<string> Categories { get; set; }
+        public IList<CategoryModel> Categories { get; set; }
 
         public override string ToString()
         {

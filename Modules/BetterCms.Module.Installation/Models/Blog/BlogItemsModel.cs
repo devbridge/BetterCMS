@@ -15,5 +15,9 @@ namespace BetterCms.Module.Installation.Models.Blog
         public bool ShowCategories { get; set; }
 
         public bool ShowPager { get; set; }
+
+        public int NumberOfPages { get; set; }
+
+        public int CurrentPage { get; set; }
     }
 }

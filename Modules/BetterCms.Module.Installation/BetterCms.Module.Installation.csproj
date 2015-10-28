@@ -168,6 +168,8 @@
     <Compile Include="Models\Blog\BlogItem.cs" />
     <Compile Include="Models\Blog\BlogItemsModel.cs" />
     <Compile Include="Models\Blog\CategoryItem.cs" />
+    <Compile Include="Models\Migrations\Migration201510281110.cs" />
+    <Compile Include="Models\Migrations\Migration201510280946.cs" />
     <Compile Include="Models\Migrations\Migration201510261332.cs" />
     <Compile Include="Models\Migrations\Migration201311181011.cs" />
     <Compile Include="Models\Migrations\InitialSetup.cs" />
@@ -179,6 +181,16 @@
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>BlogPosts.cshtml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\BlogWidget\GetCategories.generated.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>GetCategories.cshtml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Widgets\BlogPostCategoriesWidgetInvoker.generated.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>BlogPostCategoriesWidgetInvoker.cshtml</DependentUpon>
     </Compile>
     <Compile Include="Views\Widgets\BlogPostsWidgetInvoker.generated.cs">
       <AutoGen>True</AutoGen>
@@ -287,8 +299,14 @@
     <Content Include="fonts\glyphicons-halflings-regular.ttf" />
     <Content Include="fonts\glyphicons-halflings-regular.eot" />
     <Content Include="Scripts\jquery-1.10.2.min.map" />
-    <Content Include="Views\Widgets\BlogPostCategoriesWidgetInvoker.cshtml" />
-    <None Include="Views\BlogWidget\GetCategories.cshtml" />
+    <Content Include="Views\Widgets\BlogPostCategoriesWidgetInvoker.cshtml">
+      <Generator>RazorGenerator</Generator>
+      <LastGenOutput>BlogPostCategoriesWidgetInvoker.generated.cs</LastGenOutput>
+    </Content>
+    <None Include="Views\BlogWidget\GetCategories.cshtml">
+      <Generator>RazorGenerator</Generator>
+      <LastGenOutput>GetCategories.generated.cs</LastGenOutput>
+    </None>
     <None Include="Views\Widgets\BlogPostsWidgetInvoker.cshtml">
       <Generator>RazorGenerator</Generator>
       <LastGenOutput>BlogPostsWidgetInvoker.generated.cs</LastGenOutput>

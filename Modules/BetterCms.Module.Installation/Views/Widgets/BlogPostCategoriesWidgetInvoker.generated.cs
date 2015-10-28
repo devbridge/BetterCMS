@@ -28,31 +28,31 @@ namespace ASP
     using System.Web.UI;
     using System.Web.WebPages;
     
-    #line 2 "..\..\Views\Widgets\BlogPostsWidgetInvoker.cshtml"
+    #line 2 "..\..\Views\Widgets\BlogPostCategoriesWidgetInvoker.cshtml"
     using BetterCms.Module.Installation.Controllers;
     
     #line default
     #line hidden
     
-    #line 1 "..\..\Views\Widgets\BlogPostsWidgetInvoker.cshtml"
+    #line 1 "..\..\Views\Widgets\BlogPostCategoriesWidgetInvoker.cshtml"
     using Microsoft.Web.Mvc;
     
     #line default
     #line hidden
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("RazorGenerator", "2.0.0.0")]
-    [System.Web.WebPages.PageVirtualPathAttribute("~/Views/Widgets/BlogPostsWidgetInvoker.cshtml")]
-    public partial class _Views_Widgets_BlogPostsWidgetInvoker_cshtml : System.Web.Mvc.WebViewPage<BetterCms.Module.Root.ViewModels.Cms.RenderWidgetViewModel>
+    [System.Web.WebPages.PageVirtualPathAttribute("~/Views/Widgets/BlogPostCategoriesWidgetInvoker.cshtml")]
+    public partial class _Views_Widgets_BlogPostCategoriesWidgetInvoker_cshtml : System.Web.Mvc.WebViewPage<BetterCms.Module.Root.ViewModels.Cms.RenderWidgetViewModel>
     {
-        public _Views_Widgets_BlogPostsWidgetInvoker_cshtml()
+        public _Views_Widgets_BlogPostCategoriesWidgetInvoker_cshtml()
         {
         }
         public override void Execute()
         {
             
-            #line 4 "..\..\Views\Widgets\BlogPostsWidgetInvoker.cshtml"
+            #line 4 "..\..\Views\Widgets\BlogPostCategoriesWidgetInvoker.cshtml"
   
-    Html.RenderAction<BlogWidgetController>(c => c.BlogPosts(Model));
+    Html.RenderAction<BlogWidgetController>(c => c.GetCategories(Model));
 
             
             #line default

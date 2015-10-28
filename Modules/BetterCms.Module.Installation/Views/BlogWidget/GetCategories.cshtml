@@ -1,14 +1,14 @@
 ﻿@model IList<BetterCms.Module.Installation.Models.Blog.CategoryItem>
 
     @{
-        var categoryId = Request.Params["categoryId"] ?? null;
+        var blogCategory = Request.Params["blogCategory"] ?? null;
     }
 
     <div class="submenu">
-        <a href="@Request.Path" class="@(categoryId == null ? "submenu-active": null)">All</a>
+        <a href="@Request.Path" class="@(blogCategory == null ? "submenu-active" : null)">All</a>
         @foreach (var category in Model)
         {
-            var active = categoryId != null && categoryId.ToUpper() == category.Id.ToString("D").ToUpper();
-            <a href="@Request.Path?categoryId=@category.Id" class="@(active ? "submenu-active": null)">@category.Name</a>
+            var active = blogCategory != null && blogCategory.ToUpper() == category.Name.ToUpper();
+            <a href="@Request.Path?blogCategory=@category.Name" class="@(active ? "submenu-active": null)">@category.Name</a>
         }
     </div>

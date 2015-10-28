@@ -1,8 +1,6 @@
-﻿@using BetterCms.Core.Extensions
-@using Microsoft.Web.Mvc
+﻿@using Microsoft.Web.Mvc
 @using BetterCms.Module.Installation.Controllers
 @model BetterCms.Module.Root.ViewModels.Cms.RenderWidgetViewModel
 @{
-    //Html.RenderAction("BlogPosts", "BlogWidget", new { model = Model });
     Html.RenderAction<BlogWidgetController>(c => c.BlogPosts(Model));
 }

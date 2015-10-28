@@ -9,6 +9,7 @@ using BetterCms.Module.Api.Infrastructure;
 using BetterCms.Module.Api.Infrastructure.Enums;
 using BetterCms.Module.Api.Operations.Blog.BlogPosts;
 using BetterCms.Module.Api.Operations.Root.Categories;
+using BetterCms.Module.Api.Operations.Root.Categories.Category;
 using BetterCms.Module.Installation.Models.Blog;
 using BetterCms.Module.Root.Mvc;
 using BetterCms.Module.Root.ViewModels.Cms;
@@ -18,16 +19,31 @@ using Microsoft.Web.Mvc;
 namespace BetterCms.Module.Installation.Controllers
 {
     [ActionLinkArea(InstallationModuleDescriptor.ModuleAreaName)]
-    public class BlogWidgetController: CmsControllerBase
+    public class BlogWidgetController : CmsControllerBase
     {
         public ActionResult BlogPosts(RenderWidgetViewModel model)
         {
             IList<BlogItem> posts;
 
+            var isPagingEnabled = model.Options.Where(x => x.Key == "ShowPager").Select(x => x.CastValueOrDefault<bool>()).FirstOrDefault();
+            var pageSize = model.Options.Where(x => x.Key == "PageSize").Select(x => x.CastValueOrDefault<int>()).FirstOrDefault();
+            var page = Request.QueryString["blogpage"].ToIntOrDefault();
+            int postsCount = 0;
+
             using (var api = ApiFactory.Create())
             {
-                var pageSize = model.Options.Where(x => x.Key == "PageSize").Select(x => x.CastValueOrDefault<int>()).FirstOrDefault();
-                var request = new GetBlogPostsModel { Take = pageSize, IncludeTags = true };
+                var request = new GetBlogPostsModel { Take = pageSize, IncludeTags = true, IncludeCategories = true };
+
+                SortAndFilterRequest(request);
+
+                if (isPagingEnabled)
+                {
+                    var skipCount = page == 0 ? 0 : (page - 1) * pageSize;
+                    request.Skip = skipCount;
+                }
+
+                request.Take = pageSize;
+
                 var pages = api.Blog.BlogPosts.Get(new GetBlogPostsRequest { Data = request });
 
                 posts = pages.Data.Items.Select(
@@ -38,18 +54,22 @@ namespace BetterCms.Module.Installation.Controllers
                             Title = x.Title,
                             Url = x.BlogPostUrl,
                             Author = x.AuthorName,
-                            Tags = x.Tags
+                            Tags = x.Tags,
+                            Categories = x.Categories
                         }).ToList();
+                postsCount = pages.Data.TotalCount;
             }
 
-            BlogItemsModel items = new BlogItemsModel
+            var items = new BlogItemsModel
             {
                 Items = posts,
                 ShowAuthor = model.Options.Where(x => x.Key == "ShowAuthor").Select(x => x.CastValueOrDefault<bool>()).FirstOrDefault(),
                 ShowDate = model.Options.Where(x => x.Key == "ShowDate").Select(x => x.CastValueOrDefault<bool>()).FirstOrDefault(),
                 ShowCategories = model.Options.Where(x => x.Key == "ShowCategories").Select(x => x.CastValueOrDefault<bool>()).FirstOrDefault(),
                 ShowTags = model.Options.Where(x => x.Key == "ShowTags").Select(x => x.CastValueOrDefault<bool>()).FirstOrDefault(),
-                ShowPager = model.Options.Where(x => x.Key == "ShowPager").Select(x => x.CastValueOrDefault<bool>()).FirstOrDefault()
+                ShowPager = isPagingEnabled,
+                NumberOfPages = (int)Math.Ceiling((double)postsCount / pageSize),
+                CurrentPage = page > 0 ? page : 1
             };
 
             return View(items);
@@ -57,21 +77,40 @@ namespace BetterCms.Module.Installation.Controllers
 
         public ActionResult GetCategories(RenderWidgetViewModel model)
         {
+            var categories = new List<CategoryItem>();
             using (var api = ApiFactory.Create())
             {
-                var request = new GetCategoryTreesModel();
-                
+                var treeRequest = new GetCategoryTreesModel();
 
-                api.Root.Categories.Get(new GetCategoryTreesRequest { Data = request });
+                var treePages = api.Root.Categories.Get(new GetCategoryTreesRequest { Data = treeRequest });
+                var categoryTreeIds = treePages.Data.Items
+                    .Where(item => item.AvailableFor.Contains(new Guid("75E6C021-1D1F-459E-A416-D18477BF2020")))
+                    .Select(item => item.Id)
+                    .ToList();
+
+                foreach (var treeId in categoryTreeIds)
+                {
+                    var request = new GetCategoryTreeRequest { CategoryTreeId = treeId, Data = { IncludeNodes = true } };
+                    var pages = api.Root.Category.Get(request);
+
+                    categories.AddRange(pages.Nodes
+                        .Where(node => node.ParentId == null)
+                        .OrderBy(node => node.Name)
+                        .Select(node => new CategoryItem
+                    {
+                        Name = node.Name,
+                        Id = node.Id
+                    }));
+                }
             }
 
-            return View();
+            return View(categories);
         }
 
         private void SortAndFilterRequest(GetBlogPostsModel request)
         {
-            var tagName = Request.QueryString["tagName"];
-            var categoryName = Request.QueryString["categoryName"];
+            var tagName = Request.QueryString["blogtag"];
+            var categoryName = Request.QueryString["blogcategory"];
 
             var orFilter = new DataFilter(FilterConnector.Or);
             orFilter.Add("ExpirationDate", null);
