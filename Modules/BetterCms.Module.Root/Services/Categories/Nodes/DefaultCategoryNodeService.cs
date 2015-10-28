@@ -1,7 +1,9 @@
-﻿using System.Collections.Generic;
+﻿using System.Collections;
+using System.Collections.Generic;
 using System.Linq;
 
 using BetterCms.Core.DataContracts;
+using BetterCms.Module.Root.Accessors;
 using BetterCms.Module.Root.Models;
 using BetterCms.Module.Root.Mvc;
 
@@ -96,11 +98,22 @@ namespace BetterCms.Module.Root.Services.Categories.Nodes
 
         public void DeleteRelations(ICategory category)
         {
-            var widgetRelations = Repository.AsQueryable<WidgetCategory>().Where(wc => wc.Category.Id == category.Id).ToList();
-            foreach (var widgetRelation in widgetRelations)
+            var queries = new List<IEnumerable<IEntityCategory>>();
+            foreach (var categoryAccessor in CategoryAccessors.Accessors)
             {
-                Repository.Delete(widgetRelation);
+                queries.Add(categoryAccessor.QueryEntityCategories(Repository, category));
             }
+
+            foreach (var enumerable in queries)
+            {
+                var widgetRelations = enumerable as IList<IEntityCategory> ?? enumerable.ToList();
+                foreach (var widgetRelation in widgetRelations)
+                {
+                    Repository.Delete(widgetRelation);
+                }
+            }
+
+
         }
     }
 }
