@@ -208,6 +208,7 @@
     <Compile Include="Modules\JsShimConfigDescriptor.cs" />
     <Compile Include="Modules\Projections\JavaScriptModuleLink.cs" />
     <Compile Include="Modules\Projections\LinkToNewTabProjection.cs" />
+    <Compile Include="Modules\Projections\PropertiesPreview.cs" />
     <Compile Include="Modules\Registration\CmsModulesRegistration.cs" />
     <Compile Include="Modules\Registration\ICmsModulesRegistration.cs" />
     <Compile Include="Mvc\Binders\JSONDataBinder.cs" />

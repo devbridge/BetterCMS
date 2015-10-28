@@ -36,8 +36,8 @@ namespace BetterCms.Module.Pages.Command.Content.GetInsertHtmlContent
                     EnableInsertDynamicRegion = isMasterPage,
                     EditInSourceMode = isMasterPage,
                     CanEditContent = true,
-                    EnabledCustomCss = true,
-                    EnabledCustomJs = true
+                    EnabledCustomCss = false,
+                    EnabledCustomJs = false
                 };
 
             if (model.EnableInsertDynamicRegion)

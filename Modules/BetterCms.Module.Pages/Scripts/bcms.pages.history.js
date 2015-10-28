@@ -18,6 +18,7 @@ bettercms.define('bcms.pages.history', ['bcms.jquery', 'bcms', 'bcms.modal', 'bc
             firstRow: 'tr:first',
             gridRows: '#bcms-pagecontenthistory-form .bcms-history-cell tbody tr',
             versionPreviewContainer: '#bcms-history-preview',
+            versionPreviewPropertiesContainer: '#bcms-history-preview-properties',
             versionPreviewLoaderContainer: '.bcms-history-preview',
             versionPreviewTemplate: '#bcms-history-preview-template',
             pageContentHistoryForm: '#bcms-pagecontenthistory-form',
@@ -28,6 +29,7 @@ bettercms.define('bcms.pages.history', ['bcms.jquery', 'bcms', 'bcms.modal', 'bc
         links = {
             loadContentHistoryDialogUrl: null,
             loadContentVersionPreviewUrl: null,
+            loadContentVersionPreviewPropertiesUrl: null,
             restoreContentVersionUrl: null,
             destroyContentDraftVersionUrl: null
         },
@@ -36,6 +38,7 @@ bettercms.define('bcms.pages.history', ['bcms.jquery', 'bcms', 'bcms.modal', 'bc
             contentHistoryDialogTitle: null,
             contentVersionRestoreConfirmation: null,
             contentVersionDestroyDraftConfirmation: null,
+            versionPreviewNotAvailableMessage: null,
             restoreButtonTitle: null,
             closeButtonTitle: null
         };
@@ -50,19 +53,45 @@ bettercms.define('bcms.pages.history', ['bcms.jquery', 'bcms', 'bcms.modal', 'bc
     * Preview specified content version
     */
     function previewVersion(container, id) {
-        var url = $.format(links.loadContentVersionPreviewUrl, id),
-            iFrame = $(container.find(selectors.versionPreviewTemplate).html()),
+        var viewUrl = $.format(links.loadContentVersionPreviewUrl, id),
+            previewIFrame = $(container.find(selectors.versionPreviewTemplate).html()),
             previewContainer = container.find(selectors.versionPreviewContainer),
-            loaderContainer = container.find(selectors.versionPreviewLoaderContainer);
+            loaderContainer = container.find(selectors.versionPreviewContainer),
 
-        previewContainer.html(iFrame);
+            propertiesUrl = $.format(links.loadContentVersionPreviewPropertiesUrl, id),
+            previewPropertiesContainer = container.find(selectors.versionPreviewPropertiesContainer),
+            previewPropertiesLoaderContainer = container.find(selectors.versionPreviewPropertiesContainer),
+            
+            previewIsNotAvailableMessage = "<div class=\"bcms-history-preview\" id=\"bcms-history-preview-properties\" style=\"height: 100%\"><div class=\"bcms-history-info\" style=\"display: block;\">" +
+                                           globalization.versionPreviewNotAvailableMessage + "</div></div>";
+
+        previewContainer.html(previewIFrame);
         loaderContainer.showLoading();
+        previewPropertiesLoaderContainer.showLoading();
 
-        iFrame.on('load', function () {
+        previewIFrame.on('load', function () {
             loaderContainer.hideLoading();
         });
         
-        iFrame.attr('src', url);
+        previewIFrame.attr('src', viewUrl);
+
+        $.ajax({
+                type: 'GET',
+                cache: false,
+                url: propertiesUrl
+            })
+            .done(function(result) {
+                previewPropertiesLoaderContainer.hideLoading();
+                if (result === "") {
+                    previewPropertiesContainer.html(previewIsNotAvailableMessage);
+                } else {
+                    previewPropertiesContainer.html(result);
+                }
+            })
+            .fail(function() {
+                previewPropertiesLoaderContainer.hideLoading();
+                previewPropertiesContainer.html(previewIsNotAvailableMessage);
+            });
     }
 
     /**
