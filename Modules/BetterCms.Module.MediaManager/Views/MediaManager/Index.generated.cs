@@ -100,7 +100,7 @@ Write(Html.TabbedContentMessagesBox());
             
             #line default
             #line hidden
-WriteLiteral("\r\n<div");
+WriteLiteral("\r\n\r\n<div");
 
 WriteLiteral(" class=\"bcms-no-ui\"");
 
@@ -115,7 +115,7 @@ WriteLiteral(">\r\n");
 WriteLiteral("        ");
 
             
-            #line 15 "..\..\Views\MediaManager\Index.cshtml"
+            #line 16 "..\..\Views\MediaManager\Index.cshtml"
    Write(Html.Partial("Partial/MediaManagerTab"));
 
             
@@ -132,13 +132,13 @@ WriteLiteral(">\r\n        ");
 WriteLiteral("\r\n        <div>\r\n");
 
             
-            #line 21 "..\..\Views\MediaManager\Index.cshtml"
+            #line 22 "..\..\Views\MediaManager\Index.cshtml"
             
             
             #line default
             #line hidden
             
-            #line 21 "..\..\Views\MediaManager\Index.cshtml"
+            #line 22 "..\..\Views\MediaManager\Index.cshtml"
              if (Model.CustomFilesMessages != null)
             {
                 
@@ -146,14 +146,14 @@ WriteLiteral("\r\n        <div>\r\n");
             #line default
             #line hidden
             
-            #line 23 "..\..\Views\MediaManager\Index.cshtml"
+            #line 24 "..\..\Views\MediaManager\Index.cshtml"
            Write(Html.TabbedContentCustomMessagesBox(Model.CustomFilesMessages));
 
             
             #line default
             #line hidden
             
-            #line 23 "..\..\Views\MediaManager\Index.cshtml"
+            #line 24 "..\..\Views\MediaManager\Index.cshtml"
                                                                                
             }
 
@@ -163,16 +163,16 @@ WriteLiteral("\r\n        <div>\r\n");
 WriteLiteral("            ");
 
             
-            #line 25 "..\..\Views\MediaManager\Index.cshtml"
+            #line 26 "..\..\Views\MediaManager\Index.cshtml"
        Write(Html.Partial("Partial/MediaManagerTab"));
 
             
             #line default
             #line hidden
-WriteLiteral("\r\n        </div>\r\n    </div>\r\n</div>\r\n");
+WriteLiteral("\r\n        </div>\r\n    </div>\r\n</div>\r\n\r\n");
 
             
-            #line 29 "..\..\Views\MediaManager\Index.cshtml"
+            #line 31 "..\..\Views\MediaManager\Index.cshtml"
 Write(Html.Partial("Partial/MediaManagerTemplate"));
 
             

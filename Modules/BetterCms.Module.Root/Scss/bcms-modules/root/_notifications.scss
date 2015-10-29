@@ -40,16 +40,12 @@
 }
 
 .bcms-popinfo-frame {
+    @include positioning($center: true);
     width: 320px;
-    position: relative;
     padding: 20px;
     background-color: #eff9fd;
     border: 1px solid #818181;
     color: #000;
-    top: 50%;
-    left: 50%;
-    margin-left: -180px;
-    margin-top: -70px;
 }
 
 .bcms-popinfo-frame > h4 {

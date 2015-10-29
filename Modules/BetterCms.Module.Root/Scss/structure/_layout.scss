@@ -34,13 +34,15 @@ button {
     position: relative;
 }
 
-.bcms-padded-content {
-    max-width: 830px;
-    padding-left: 50px;
-}
+//fixme remove from html
+//.bcms-padded-content {
+//    max-width: 830px;
+//    padding-left: 50px;
+//}
 
 .bcms-modal {
     @include position(fixed, 0);
+    background-color: rgba($main-dark, .8);
     font-size: 13px;
     overflow: hidden;
 
@@ -132,8 +134,8 @@ button {
 .bcms-settings {
     &-menu {
         //fixme temp styles
-        position: absolute;
         left: 0;
+        position: absolute;
         top: 0;
     }
 }

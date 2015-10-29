@@ -61,7 +61,7 @@ WriteLiteral(@">
             ");
 
 WriteLiteral("\r\n            <div></div>\r\n        </div>\r\n        <!-- /ko -->\r\n    </div>\r\n</sc" +
-"ript>");
+"ript>\r\n");
 
         }
     }
