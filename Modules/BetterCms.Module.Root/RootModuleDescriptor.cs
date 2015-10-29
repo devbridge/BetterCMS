@@ -82,7 +82,7 @@ namespace BetterCms.Module.Root
             categoriesJavaScriptModuleDescriptor = new CategoriesJavaScriptModuleDescriptor(this);
             languagesJsModuleIncludeDescriptor = new LanguagesJsModuleIncludeDescriptor(this);
             CategoryAccessors.Register<WidgetCategoryAccessor>();
-            InitializeSecurity();            
+            InitializeSecurity();
         }
 
         /// <summary>

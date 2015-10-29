@@ -118,18 +118,17 @@ function ($, bcms, ko, modal, contentModule, redirect, antiXss) {
         return regions;
     }
 
-    function closeAllAddContentButtons() {
-        var items = treeViewModel.items(),
-                j = 0,
-                item;
+    function closeAllAddContentButtons(items) {
+        var j = 0,
+            item;
 
         for (; j < items.length; j++) {
             item = items[j];
+            closeAllAddContentButtons(item.items());
             if (item.isOpened && $.isFunction(item.isOpened)) {
                 item.isOpened(false);
             }
         }
-
     }
 
     function createRegionTreeItemViewModel(regionModel, parentContent, level) {
@@ -181,7 +180,7 @@ function ($, bcms, ko, modal, contentModule, redirect, antiXss) {
 
         model.toggleAddContent = function () {
             var isOpened = this.isOpened();
-            closeAllAddContentButtons();
+            closeAllAddContentButtons(treeViewModel.items());
 
             if (!isOpened) {
                 this.isOpened(true);
@@ -611,7 +610,7 @@ function ($, bcms, ko, modal, contentModule, redirect, antiXss) {
     */
     function onBodyClick() {
         if (isOpenedAddContent && !suspendCloseAddContent) {
-            closeAllAddContentButtons();
+            closeAllAddContentButtons(treeViewModel.items());
             isOpenedAddContent = false;
         }
     }

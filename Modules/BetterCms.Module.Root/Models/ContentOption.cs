@@ -93,6 +93,7 @@ namespace BetterCms.Module.Root.Models
             contentOption.DefaultValue = DefaultValue;
             contentOption.IsDeletable = IsDeletable;
             contentOption.Content = Content;
+            contentOption.CustomOption = CustomOption;
 
             if (copyCollections && Translations != null)
             {

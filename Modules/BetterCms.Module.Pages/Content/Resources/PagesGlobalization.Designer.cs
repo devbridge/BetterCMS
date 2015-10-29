@@ -3292,7 +3292,7 @@ namespace BetterCms.Module.Pages.Content.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Page URL.
+        ///   Looks up a localized string similar to Source URL.
         /// </summary>
         public static string SiteSettings_Redirects_PageUrlColumn {
             get {
@@ -3301,7 +3301,7 @@ namespace BetterCms.Module.Pages.Content.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Redirected URL.
+        ///   Looks up a localized string similar to Destination URL.
         /// </summary>
         public static string SiteSettings_Redirects_RedirectUrlColumn {
             get {

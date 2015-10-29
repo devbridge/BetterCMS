@@ -71,13 +71,13 @@ namespace BetterCms.Module.Pages.Command.Widget.GetServerControlWidgetForEdit
         public EditServerControlWidgetViewModel Execute(Guid? widgetId)
         {            
             EditServerControlWidgetViewModel model = null;
+            var languagesFuture = cmsConfiguration.EnableMultilanguage ? languageService.GetLanguagesLookupValues() : new List<LookupKeyValue>();
+            var languages = cmsConfiguration.EnableMultilanguage ? languagesFuture.ToList() : new List<LookupKeyValue>();
 
             if (widgetId.HasValue && widgetId.Value != Guid.Empty)
             {
-                var languagesFuture = cmsConfiguration.EnableMultilanguage ? languageService.GetLanguagesLookupValues() : new List<LookupKeyValue>();
                 var serverControlWidget = contentService.GetContentForEdit(widgetId.Value) as ServerControlWidget;
 
-                var languages = cmsConfiguration.EnableMultilanguage ? languagesFuture.ToList() : new List<LookupKeyValue>();
                 if (serverControlWidget != null)
                 {
                     model = new EditServerControlWidgetViewModel

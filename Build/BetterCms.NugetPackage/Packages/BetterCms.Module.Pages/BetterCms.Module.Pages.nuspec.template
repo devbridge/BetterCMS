@@ -15,6 +15,9 @@
       <dependency id="BetterCms.Core" version="[@BetterCMSVersion@]" />
       <dependency id="BetterCms.Module.Root" version="[@BetterCMSVersion@]" />
       <dependency id="BetterCms.Module.MediaManager" version="[@BetterCMSVersion@]" />
+      <dependency id="CSharpVerbalExpressions" version="0.1" />
+      <dependency id="HtmlTags" version="2.0.0.181" />
+      <dependency id="MarkdownSharp" version="1.13.0.0" />
     </dependencies>
   </metadata>
 </package>
