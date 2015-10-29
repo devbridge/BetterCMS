@@ -37,63 +37,9 @@
             display: block;
         }
     }
-
-    //fixme after new tabs implementation
-    //.bcms-inner-tabs-holder & {
-    //    &-header {
-    //
-    //        background: $white;
-    //        border-bottom: $border-thin-gray;
-    //        padding-left: 10px;
-    //    }
-    //
-    //    &-item {
-    //        border: {
-    //            top: $border-thin-gray;
-    //            right: $border-thin-gray;
-    //            left: $border-thin-gray;
-    //        }
-    //        position: relative;
-    //
-    //        &.bcms-active {
-    //            @include virtual(after) {
-    //                @include position(absolute, null 0 -1px 0);
-    //                border-top: 1px solid $white;
-    //            }
-    //        }
-    //    }
-    //
-    //    &-single {
-    //        padding-top: 20px;
-    //    }
-    //}
 }
 
 //module inner tabbed view
-//fixme after new tabs implementation
-//.bcms-inner-tab-header {
-//    background: $gray-l10;
-//    border-bottom: $border-thin-gray;
-//    height: 30px;
-//    padding: 25px 20px 0;
-//    position: relative;
-//
-//    @include virtual(before) {
-//        @include position(absolute, 0 null 0 -1px);
-//        border-left: 1px solid $gray-l10;
-//    }
-//
-//    > .bcms-tab-item {
-//        border: $border-thin-gray;
-//        line-height: 29px;
-//
-//        &.bcms-active {
-//            background-color: $white;
-//            border-bottom: $border-thin-white;
-//        }
-//    }
-//}
-
 .bcms-inner-grid-box {
     border: 1px solid #c6c6c6;
     box-sizing: border-box;

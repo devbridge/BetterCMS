@@ -63,7 +63,7 @@
         /// <summary>
         /// The editable grid top block class name
         /// </summary>
-        public const string EditableGridTopBlockClassName = "bcms-twocols-title-block";
+        public const string EditableGridTopBlockClassName = "bcms-top-block-holder";
 
         /// <summary>
         /// The email regular expression

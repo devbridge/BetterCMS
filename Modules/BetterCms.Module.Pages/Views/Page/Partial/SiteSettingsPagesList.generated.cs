@@ -198,7 +198,7 @@ Write(Html.SiteSettingsMessagesBox());
             #line hidden
 WriteLiteral("\n\n    <div");
 
-WriteLiteral(" class=\"bcms-twocols-title-block\"");
+WriteLiteral(" class=\"bcms-top-block-holder\"");
 
 WriteLiteral(">\n        <div");
 

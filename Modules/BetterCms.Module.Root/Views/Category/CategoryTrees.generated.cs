@@ -111,7 +111,7 @@ WriteLiteral("\n");
             
             #line default
             #line hidden
-WriteLiteral("    <div");
+WriteLiteral(" <div");
 
 WriteLiteral(" class=\"bcms-modal-frame-holder\"");
 
@@ -139,7 +139,7 @@ WriteLiteral("        ");
             #line hidden
 WriteLiteral("\n        <div");
 
-WriteLiteral(" class=\"bcms-twocols-title-block\"");
+WriteLiteral(" class=\"bcms-top-block-holder\"");
 
 WriteLiteral(">\n            <div");
 
@@ -214,7 +214,7 @@ WriteLiteral("                ");
             
             #line default
             #line hidden
-WriteLiteral("\n            </div>\n    </div>\n\n");
+WriteLiteral("\n            </div>\n        </div>\n\n");
 
 WriteLiteral("    ");
 
@@ -225,7 +225,7 @@ Write(Html.Grid(Model.Items).Sort(Model.GridOptions).Columns(columns).Attributes
             
             #line default
             #line hidden
-WriteLiteral("\n    </div>\n");
+WriteLiteral("\n</div>\n");
 
             
             #line 43 "..\..\Views\Category\CategoryTrees.cshtml"

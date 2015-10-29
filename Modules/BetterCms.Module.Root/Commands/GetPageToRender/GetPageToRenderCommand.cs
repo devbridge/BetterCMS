@@ -17,7 +17,7 @@ using BetterCms.Module.Root.Services;
 using BetterCms.Module.Root.ViewModels.Cms;
 using BetterCms.Module.Root.Models.Extensions;
 using BetterCms.Module.Root.ViewModels.Security;
-using BetterCms.Module.Root.Views.Language;
+using BetterCms.Module.Root.ViewModels.Language;
 
 using BetterModules.Core.Web.Mvc.Commands;
 using BetterModules.Core.Web.Mvc.Extensions;

@@ -495,7 +495,7 @@ button:focus {
 .bcms-modal-frame-holder {
   height: 100%;
   margin: auto;
-  max-width: 1024px;
+  max-width: 900px;
   position: relative;
 }
 
@@ -570,7 +570,7 @@ button:focus {
 
 .bcms-modal-edit-seo .bcms-modal-content {
   margin: auto;
-  width: 1024px;
+  width: 900px;
 }
 
 .bcms-modal form {
@@ -3378,21 +3378,6 @@ div.bcms-preview-box:hover .bcms-preview-box-image:after {
 .bcms-search-block > .bcms-editor-field-box {
   width: 300px;
   padding-right: 35px;
-}
-
-.bcms-twocols-title-block {
-  position: relative;
-  margin-right: -1px;
-  min-height: 30px;
-  left: -1px;
-  padding: 15px 20px 5px 20px;
-  background-color: #eaeaea;
-}
-
-.bcms-twocols-title-block .bcms-large-titles {
-  display: inline-block;
-  padding-bottom: 3px;
-  vertical-align: middle;
 }
 
 .bcms-pager {

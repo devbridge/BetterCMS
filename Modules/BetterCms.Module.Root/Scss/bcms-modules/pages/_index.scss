@@ -238,16 +238,6 @@ a.bcms-slider-next:active {
 }
 
 //module content
-.bcms-top-block-holder {
-    padding: 10px 20px 5px 20px;
-    min-height: 40px;
-}
-
-.bcms-top-block-holder .bcms-large-titles {
-    float: left;
-    padding-top: 5px;
-}
-
 .bcms-title-show-helper {
     position: relative;
 }
@@ -288,9 +278,9 @@ a.bcms-slider-next:active {
     z-index: 5;
 }
 
-.bcms-top-block-holder .bcms-featured-grid {
-    margin-top: 8px;
-}
+//.bcms-top-block-holder .bcms-featured-grid {
+//    margin-top: 8px;
+//}
 
 .bcms-grid-filtering {
     position: relative;
@@ -477,4 +467,18 @@ a.bcms-slider-next:active {
 
 .bcms-template-usage:hover:after {
     background-position: -60px -133px;
+}
+
+//module fixme updated styles
+.bcms-top-block-holder {
+    padding: 10px 0 5px;
+
+    .bcms-large-titles {
+        @include vertical-align();
+        padding-bottom: 5px;
+    }
+}
+
+.bcms-templates-holder {
+
 }

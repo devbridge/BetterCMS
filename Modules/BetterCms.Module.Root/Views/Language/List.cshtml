@@ -19,9 +19,11 @@
                 new EditableGridColumn(RootGlobalization.SiteSettings_Languages_Name_Title, "Name", "name")
                     {
                         CustomBinding = "attr: {tabindex: 100}, hasfocus: hasNameFocus"
-                    }  
+                    }
             }
     };
 }
 
-@Html.Partial(RootModuleConstants.EditableGridTemplate, gridViewModel)
+<div class="bcms-modal-frame-holder">
+    @Html.Partial(RootModuleConstants.EditableGridTemplate, gridViewModel)
+</div>

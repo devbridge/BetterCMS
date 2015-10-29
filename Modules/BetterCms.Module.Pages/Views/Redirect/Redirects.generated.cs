@@ -157,7 +157,7 @@ WriteLiteral("        ");
             #line hidden
 WriteLiteral("\r\n        <div");
 
-WriteLiteral(" class=\"bcms-twocols-title-block\"");
+WriteLiteral(" class=\"bcms-top-block-holder\"");
 
 WriteLiteral(">\r\n            <div");
 

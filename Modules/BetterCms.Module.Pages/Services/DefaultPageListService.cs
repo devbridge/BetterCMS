@@ -14,7 +14,7 @@ using BetterCms.Module.Root.Models;
 using BetterCms.Module.Root.Mvc;
 using BetterCms.Module.Root.Mvc.Grids.Extensions;
 using BetterCms.Module.Root.Services;
-using BetterCms.Module.Root.Views.Language;
+using BetterCms.Module.Root.ViewModels.Language;
 
 using NHibernate;
 using NHibernate.Criterion;
