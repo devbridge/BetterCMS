@@ -28,14 +28,15 @@ button {
     font-family: $font-base-family;
 }
 
+//todo end of
 .bcms-scroll-window {
-    position: relative;
     overflow: auto;
+    position: relative;
 }
 
 .bcms-padded-content {
-    padding-left: 50px;
     max-width: 830px;
+    padding-left: 50px;
 }
 
 .bcms-modal {
@@ -51,8 +52,8 @@ button {
     }
 
     &-content-padded {
-        position: relative;
         padding: $header-height 0 $footer-height;
+        position: relative;
     }
 
     &-body {
@@ -88,7 +89,6 @@ button {
 
     &-content {
         margin: auto;
-        max-width: $page-width;
     }
 
     &-footer {
@@ -105,6 +105,13 @@ button {
         right: 0;
     }
 
+    &-edit-seo {
+        .bcms-modal-content {
+            margin: auto;
+            width: $page-width;
+        }
+    }
+
     form {
         background: none !important;
         color: inherit !important;
@@ -116,8 +123,17 @@ button {
     }
 }
 
-//todo end of
-
 .bcms-no-ui {
     //this class used for any element which doesn't require any styling.
+}
+
+//module dialog frame
+
+.bcms-settings {
+    &-menu {
+        //fixme temp styles
+        position: absolute;
+        left: 0;
+        top: 0;
+    }
 }

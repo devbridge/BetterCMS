@@ -1,26 +1,23 @@
 //module tabbed view
 .bcms-tab {
     &-header {
-        background: $dark;
-        padding: 10px 60px 0;
+        background-color: $sky-blue;
+        height: $tab-height;
     }
 
     &-item {
         @include transition(all 200ms ease);
-        background: $gray-l25;
-        color: $black;
+        color: $main-text;
         cursor: pointer;
         display: inline-block;
-        font-size: 14px;
-        font-weight: 700;
-        line-height: 30px;
-        margin-right: 5px;
+        font-size: 16px;
+        line-height: $tab-height;
         max-width: 250px;
-        padding: 0 22px;
+        padding: 0 30px;
         text-decoration: none;
 
         &:hover {
-            background-color: $gray-l35;
+            background-color: $white;
             text-decoration: none;
         }
 
@@ -41,59 +38,61 @@
         }
     }
 
-    .bcms-inner-tabs-holder & {
-        &-header {
-
-            background: $white;
-            border-bottom: $border-thin-gray;
-            padding-left: 10px;
-        }
-
-        &-item {
-            border: {
-                top: $border-thin-gray;
-                right: $border-thin-gray;
-                left: $border-thin-gray;
-            }
-            position: relative;
-
-            &.bcms-active {
-                @include virtual(after) {
-                    @include position(absolute, null 0 -1px 0);
-                    border-top: 1px solid $white;
-                }
-            }
-        }
-
-        &-single {
-            padding-top: 20px;
-        }
-    }
+    //fixme after new tabs implementation
+    //.bcms-inner-tabs-holder & {
+    //    &-header {
+    //
+    //        background: $white;
+    //        border-bottom: $border-thin-gray;
+    //        padding-left: 10px;
+    //    }
+    //
+    //    &-item {
+    //        border: {
+    //            top: $border-thin-gray;
+    //            right: $border-thin-gray;
+    //            left: $border-thin-gray;
+    //        }
+    //        position: relative;
+    //
+    //        &.bcms-active {
+    //            @include virtual(after) {
+    //                @include position(absolute, null 0 -1px 0);
+    //                border-top: 1px solid $white;
+    //            }
+    //        }
+    //    }
+    //
+    //    &-single {
+    //        padding-top: 20px;
+    //    }
+    //}
 }
 
 //module inner tabbed view
-.bcms-inner-tab-header {
-    background: $gray-l10;
-    border-bottom: $border-thin-gray;
-    height: 30px;
-    padding: 25px 20px 0;
-    position: relative;
-
-    @include virtual(before) {
-        @include position(absolute, 0 null 0 -1px);
-        border-left: 1px solid $gray-l10;
-    }
-
-    > .bcms-tab-item {
-        border: $border-thin-gray;
-        line-height: 29px;
-
-        &.bcms-active {
-            background-color: $white;
-            border-bottom: $border-thin-white;
-        }
-    }
-}
+//fixme after new tabs implementation
+//.bcms-inner-tab-header {
+//    background: $gray-l10;
+//    border-bottom: $border-thin-gray;
+//    height: 30px;
+//    padding: 25px 20px 0;
+//    position: relative;
+//
+//    @include virtual(before) {
+//        @include position(absolute, 0 null 0 -1px);
+//        border-left: 1px solid $gray-l10;
+//    }
+//
+//    > .bcms-tab-item {
+//        border: $border-thin-gray;
+//        line-height: 29px;
+//
+//        &.bcms-active {
+//            background-color: $white;
+//            border-bottom: $border-thin-white;
+//        }
+//    }
+//}
 
 .bcms-inner-grid-box {
     border: 1px solid #c6c6c6;

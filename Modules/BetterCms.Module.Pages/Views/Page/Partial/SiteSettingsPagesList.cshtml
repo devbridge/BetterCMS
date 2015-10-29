@@ -69,43 +69,49 @@
         }
     };
 }
+<div class="bcms-modal-frame-holder">
+    @Html.SiteSettingsMessagesBox()
 
-<div class="bcms-twocols-title-block">
-    <div class="bcms-large-titles">@PagesGlobalization.SiteSettings_Pages_Title</div>
-    @if ((ViewContext.Controller as CmsControllerBase).SecurityService.IsAuthorized(RootModuleConstants.UserRoles.EditContent))
-    {
-        <div class="bcms-btn-links-main" id="bcms-create-page-button">@PagesGlobalization.SiteSettings_Pages_AddNew</div>
-    }
-    <div class="bcms-search-block">
-        @Html.TextBoxFor(m => m.SearchQuery, new { @class = "bcms-editor-field-box bcms-search-query", @placeholder = RootGlobalization.WaterMark_Search })
-        <div class="bcms-btn-search" id="bcms-pages-search-btn">@PagesGlobalization.SiteSettings_Pages_Search</div>
+    <div class="bcms-twocols-title-block">
+        <div class="bcms-large-titles">@PagesGlobalization.SiteSettings_Pages_Title</div>
+        @if ((ViewContext.Controller as CmsControllerBase).SecurityService.IsAuthorized(RootModuleConstants.UserRoles.EditContent))
+        {
+            <div class="bcms-btn-links-main" id="bcms-create-page-button">@PagesGlobalization.SiteSettings_Pages_AddNew</div>
+        }
+        <div class="bcms-search-block">
+            @Html.TextBoxFor(m => m.SearchQuery, new { @class = "bcms-editor-field-box bcms-search-query", @placeholder = RootGlobalization.WaterMark_Search })
+            <div class="bcms-btn-search" id="bcms-pages-search-btn">@PagesGlobalization.SiteSettings_Pages_Search</div>
+        </div>
+            
+        <div class="bcms-featured-grid bcms-clearfix">
+            @Html.RenderPaging(Model)
+            @Html.Partial("~/Areas/bcms-pages/Views/Filter/PagesFilterTemplate.cshtml", Model)
+        </div>
     </div>
-        
-    <div class="bcms-featured-grid bcms-clearfix">
-        @Html.RenderPaging(Model)
-        @Html.Partial("~/Areas/bcms-pages/Views/Filter/PagesFilterTemplate.cshtml", Model)
-    </div>
+
+    @Html.Grid(Model.Items).Sort(Model.GridOptions).Columns(columns).Attributes(@class => "bcms-tables").RenderUsing(new EditableHtmlTableGridRenderer<SiteSettingPageViewModel>())
 </div>
-
-@Html.SiteSettingsMessagesBox()
-
-@Html.Grid(Model.Items).Sort(Model.GridOptions).Columns(columns).Attributes(@class => "bcms-tables").RenderUsing(new EditableHtmlTableGridRenderer<SiteSettingPageViewModel>())
 
 <script type="text/html" id="bcms-pages-list-row-template">
     @Html.Grid(new List<SiteSettingPageViewModel> { new SiteSettingPageViewModel() }).Columns(columns).Attributes(@class => "bcms-tables").RenderUsing(new HtmlTableGridSingleRowRenderer<SiteSettingPageViewModel>())
 </script>
+
 <script type="text/html" id="bcms-boolean-true-template">
     @Html.Partial("EditorTemplates/SEOStatus", true)
 </script>
+
 <script type="text/html" id="bcms-boolean-false-template">
     @Html.Partial("EditorTemplates/SEOStatus", false)
 </script>
+
 <script type="text/html" id="bcms-pagestatus-published-template">
     @Html.Partial("EditorTemplates/PageStatus", PageStatus.Published)
 </script>
+
 <script type="text/html" id="bcms-pagestatus-unpublished-template">
     @Html.Partial("EditorTemplates/PageStatus", PageStatus.Unpublished)
 </script>
+
 <script type="text/html" id="bcms-pagestatus-draft-template">
     @Html.Partial("EditorTemplates/PageStatus", PageStatus.Draft)
 </script>

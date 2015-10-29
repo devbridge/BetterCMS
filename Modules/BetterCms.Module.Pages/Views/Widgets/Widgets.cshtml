@@ -58,28 +58,32 @@
 
 @using (Html.BeginForm<WidgetsController>(f => f.Widgets(null), FormMethod.Post, new { @id = "bcms-widgets-form", @class = "bcms-ajax-form" }))
 {
-    @Html.HiddenGridOptions(Model.GridOptions)
-    
-    <div class="bcms-twocols-title-block">
-        <div class="bcms-large-titles">@PagesGlobalization.SiteSettings_Widgets_Title</div>
-        <div class="bcms-btn-links-main" id="bcms-create-widget-button">@PagesGlobalization.SiteSettings_Widgets_AddNew</div>
-        <div class="bcms-btn-links-main" id="bcms-register-widget-button">@PagesGlobalization.SiteSettings_Widgets_RegisterNew</div>
-        <div class="bcms-search-block">
-            @Html.TextBoxFor(m => m.SearchQuery, new { @class = "bcms-editor-field-box bcms-search-query", @placeholder = RootGlobalization.WaterMark_Search })
-            <div class="bcms-btn-search" id="bcms-widget-search-btn">@PagesGlobalization.SiteSettings_Widgets_Search</div>
-        </div>
-        <div class="bcms-featured-grid bcms-clearfix">
-            @Html.RenderPaging(Model)
-        </div>
-    </div>    
-    
-    @Html.SiteSettingsMessagesBox()
+    <div class="bcms-modal-frame-holder">
+        @Html.SiteSettingsMessagesBox()
+        @Html.HiddenGridOptions(Model.GridOptions)
 
-    @(Html
+        <div class="bcms-twocols-title-block">
+            <div class="bcms-large-titles">@PagesGlobalization.SiteSettings_Widgets_Title</div>
+
+            <div class="bcms-btn-links-main" id="bcms-create-widget-button">@PagesGlobalization.SiteSettings_Widgets_AddNew</div>
+
+            <div class="bcms-btn-links-main" id="bcms-register-widget-button">@PagesGlobalization.SiteSettings_Widgets_RegisterNew</div>
+
+            <div class="bcms-search-block">
+                @Html.TextBoxFor(m => m.SearchQuery, new { @class = "bcms-editor-field-box bcms-search-query", @placeholder = RootGlobalization.WaterMark_Search })
+                <div class="bcms-btn-search" id="bcms-widget-search-btn">@PagesGlobalization.SiteSettings_Widgets_Search</div>
+            </div>
+
+            <div class="bcms-featured-grid bcms-clearfix">
+                @Html.RenderPaging(Model)
+            </div>
+        </div>
+             
+        @(Html
           .Grid(Model.Items)
           .Sort(Model.GridOptions)
           .Columns(columns)
-          .Attributes(@class => "bcms-tables")          
+          .Attributes(@class => "bcms-tables")
           .RowAttributes(delegate(GridRowViewData<SiteSettingWidgetItemViewModel> row)
                   {
                       return new Dictionary<string, object>
@@ -90,8 +94,9 @@
                                     {"data-version", row.Item.Version},
                                     {"data-original-version", row.Item.OriginalVersion}
                               };
-              })
+                  })
           .RenderUsing(new EditableHtmlTableGridRenderer<SiteSettingWidgetItemViewModel>()))
+    </div>
 }
 
 <script type="text/html" id="bcms-widget-list-row-template">
@@ -101,4 +106,3 @@
         .Attributes(@class => "bcms-tables")
         .RenderUsing(new HtmlTableGridSingleRowRenderer<SiteSettingWidgetItemViewModel>()))
 </script>
-

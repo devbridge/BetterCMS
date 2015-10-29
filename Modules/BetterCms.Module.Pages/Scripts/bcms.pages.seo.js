@@ -7,7 +7,7 @@ bettercms.define('bcms.pages.seo', ['bcms.jquery', 'bcms', 'bcms.modal', 'bcms.m
 
     var seo = {},
         classes = {
-            editSeoDialogClass: 'bcms-editseo-modal'
+            editSeoDialogClass: 'bcms-modal-edit-seo'
         },
         selectors = {
             pageUrlPath: '.bcms-editseo-urlpath',

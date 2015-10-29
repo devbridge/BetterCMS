@@ -473,13 +473,13 @@ button:focus {
 }
 
 .bcms-scroll-window {
-  position: relative;
   overflow: auto;
+  position: relative;
 }
 
 .bcms-padded-content {
-  padding-left: 50px;
   max-width: 830px;
+  padding-left: 50px;
 }
 
 .bcms-modal {
@@ -500,8 +500,8 @@ button:focus {
 }
 
 .bcms-modal-content-padded {
-  position: relative;
   padding: 55px 0 65px;
+  position: relative;
 }
 
 .bcms-modal-body {
@@ -545,7 +545,6 @@ button:focus {
 
 .bcms-modal-content {
   margin: auto;
-  max-width: 1024px;
 }
 
 .bcms-modal-footer {
@@ -569,6 +568,11 @@ button:focus {
   right: 0;
 }
 
+.bcms-modal-edit-seo .bcms-modal-content {
+  margin: auto;
+  width: 1024px;
+}
+
 .bcms-modal form {
   background: none !important;
   color: inherit !important;
@@ -577,6 +581,12 @@ button:focus {
   max-width: none !important;
   padding: 0 !important;
   width: auto !important;
+}
+
+.bcms-settings-menu {
+  position: absolute;
+  left: 0;
+  top: 0;
 }
 
 .bcms-inactive {
@@ -597,29 +607,26 @@ button:focus {
 }
 
 .bcms-tab-header {
-  background: #303030;
-  padding: 10px 60px 0;
+  background-color: #deeaf1;
+  height: 50px;
 }
 
 .bcms-tab-item {
   -webkit-transition: all 200ms ease;
   -moz-transition: all 200ms ease;
   transition: all 200ms ease;
-  background: #e5e5e5;
-  color: #000000;
+  color: #636363;
   cursor: pointer;
   display: inline-block;
-  font-size: 14px;
-  font-weight: 700;
-  line-height: 30px;
-  margin-right: 5px;
+  font-size: 16px;
+  line-height: 50px;
   max-width: 250px;
-  padding: 0 22px;
+  padding: 0 30px;
   text-decoration: none;
 }
 
 .bcms-tab-item:hover {
-  background-color: #c0c0c0;
+  background-color: #ffffff;
   text-decoration: none;
 }
 
@@ -637,59 +644,6 @@ button:focus {
 
 .bcms-tab-single:first-of-type {
   display: block;
-}
-
-.bcms-inner-tabs-holder .bcms-tab-header {
-  background: #ffffff;
-  border-bottom: 1px solid #c6c6c6;
-  padding-left: 10px;
-}
-
-.bcms-inner-tabs-holder .bcms-tab-item {
-  border-top: 1px solid #c6c6c6;
-  border-right: 1px solid #c6c6c6;
-  border-left: 1px solid #c6c6c6;
-  position: relative;
-}
-
-.bcms-inner-tabs-holder .bcms-tab-item.bcms-active:after {
-  content: "";
-  position: absolute;
-  right: 0;
-  bottom: -1px;
-  left: 0;
-  border-top: 1px solid #ffffff;
-}
-
-.bcms-inner-tabs-holder .bcms-tab-single {
-  padding-top: 20px;
-}
-
-.bcms-inner-tab-header {
-  background: #eaeaea;
-  border-bottom: 1px solid #c6c6c6;
-  height: 30px;
-  padding: 25px 20px 0;
-  position: relative;
-}
-
-.bcms-inner-tab-header:before {
-  content: "";
-  position: absolute;
-  top: 0;
-  bottom: 0;
-  left: -1px;
-  border-left: 1px solid #eaeaea;
-}
-
-.bcms-inner-tab-header > .bcms-tab-item {
-  border: 1px solid #c6c6c6;
-  line-height: 29px;
-}
-
-.bcms-inner-tab-header > .bcms-tab-item.bcms-active {
-  background-color: #ffffff;
-  border-bottom: 1px solid #ffffff;
 }
 
 .bcms-inner-grid-box {
@@ -2449,7 +2403,7 @@ a.bcms-error-close {
   position: absolute;
   top: 10px;
   left: 10px;
-  border: 1px solid #9ed4f0;
+  border: 1px solid #deeaf1;
   height: 42px;
 }
 
@@ -2460,7 +2414,7 @@ a.bcms-error-close {
   height: 42px;
   width: 42px;
   background-color: #0383df;
-  border-left: 1px solid #9ed4f0;
+  border-left: 1px solid #deeaf1;
   cursor: pointer;
   display: block;
   float: left;
@@ -3426,32 +3380,6 @@ div.bcms-preview-box:hover .bcms-preview-box-image:after {
   padding-right: 35px;
 }
 
-.bcms-columns-container {
-  display: table;
-  width: 100%;
-  height: 100%;
-  background-color: #eaeaea;
-}
-
-.bcms-leftcol {
-  display: table-cell;
-  position: relative;
-  min-height: 100%;
-  width: 25%;
-}
-
-.bcms-leftcol-inner {
-  margin: 70px 40px 0;
-}
-
-.bcms-rightcol {
-  display: table-cell;
-  min-height: 100%;
-  background-color: #fff;
-  border-left: 1px solid #c6c6c6;
-  vertical-align: top;
-}
-
 .bcms-twocols-title-block {
   position: relative;
   margin-right: -1px;
@@ -4188,13 +4116,13 @@ textarea:focus {
 }
 
 .ui-widget-content .ui-state-default:hover {
-  background-color: #9ed4f0;
+  background-color: #deeaf1;
   color: #ffffff;
   font-weight: normal;
 }
 
 .ui-widget-content .ui-state-active {
-  background: #9ed4f0;
+  background: #deeaf1;
 }
 
 .ui-widget-header {

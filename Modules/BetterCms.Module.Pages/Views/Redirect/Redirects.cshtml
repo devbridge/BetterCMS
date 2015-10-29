@@ -33,26 +33,28 @@
 
         column.InlineEditControlsColumn();
     };
-    
-    @Html.HiddenGridOptions(Model.GridOptions)
 
-    <div class="bcms-twocols-title-block">
-        <div class="bcms-large-titles">@PagesGlobalization.SiteSettings_Redirects_Title</div>
-        <div class="bcms-btn-links-main" id="bcms-create-redirect-button">@PagesGlobalization.SiteSettings_Redirects_AddNew</div>
-        <div class="bcms-search-block">
-            @Html.TextBoxFor(m => m.SearchQuery, new { @class = "bcms-editor-field-box bcms-search-query", @placeholder = RootGlobalization.WaterMark_Search })
-            <div class="bcms-btn-search" id="bcms-redirects-search-btn">@PagesGlobalization.SiteSettings_Redirects_Search</div>
+    <div class="bcms-modal-frame-holder">
+        @Html.SiteSettingsMessagesBox()
+        @Html.HiddenGridOptions(Model.GridOptions)
+        <div class="bcms-twocols-title-block">
+            <div class="bcms-large-titles">@PagesGlobalization.SiteSettings_Redirects_Title</div>
+    
+            <div class="bcms-btn-links-main" id="bcms-create-redirect-button">@PagesGlobalization.SiteSettings_Redirects_AddNew</div>
+    
+            <div class="bcms-search-block">
+                @Html.TextBoxFor(m => m.SearchQuery, new { @class = "bcms-editor-field-box bcms-search-query", @placeholder = RootGlobalization.WaterMark_Search })
+                <div class="bcms-btn-search" id="bcms-redirects-search-btn">@PagesGlobalization.SiteSettings_Redirects_Search</div>
+            </div>
+    
+            <div class="bcms-featured-grid bcms-clearfix">
+                @Html.RenderPaging(Model)
+            </div>
         </div>
-        <div class="bcms-featured-grid bcms-clearfix">
-            @Html.RenderPaging(Model)
-        </div>
+    
+        @Html.Grid(Model.Items).Sort(Model.GridOptions).Columns(columns).Attributes(@class => "bcms-tables").RenderUsing(new    EditableHtmlTableGridRenderer<SiteSettingRedirectViewModel>())
+        @Html.HiddenSubmit()
     </div>
-    
-    @Html.SiteSettingsMessagesBox()
-    
-    @Html.Grid(Model.Items).Sort(Model.GridOptions).Columns(columns).Attributes(@class => "bcms-tables").RenderUsing(new EditableHtmlTableGridRenderer<SiteSettingRedirectViewModel>())
-
-    @Html.HiddenSubmit()
 }
 
 <script type="text/html" id="bcms-editable-row-template">

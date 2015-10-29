@@ -1,16 +1,21 @@
 ﻿<script type="text/html" id="bcms-site-setting-tab-template">
-    <div class="bcms-inner-tab-header">
-        <!-- ko foreach: tabs -->
-        <a class="bcms-tab-item" data-bind="
-            text: title, 
-            attr: {'data-name': href}, 
+    <div class="bcms-tab-header">
+        <div class="bcms-modal-frame-holder">
+            <!-- ko foreach: tabs -->
+            <a class="bcms-tab-item" data-bind="
+            text: title,
+            attr: {'data-name': href},
             click: tabClick, clickBubble: true"></a>
+            <!-- /ko -->
+        </div>
+    </div>
+
+    <div class="bcms-modal-frame-holder">
+        <!-- ko foreach: tabs -->
+        <div class="bcms-tab-single" data-bind="attr: {id: tabId}, stopBinding: true">
+            @* Creating child Div, because parent binding is stopped *@
+            <div></div>
+        </div>
         <!-- /ko -->
     </div>
-    <!-- ko foreach: tabs -->
-    <div class="bcms-tab-single" data-bind="attr: {id: tabId}, stopBinding: true">
-        @* Creating child Div, because parent binding is stopped *@
-        <div></div>
-    </div>
-    <!-- /ko -->
 </script>

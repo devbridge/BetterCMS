@@ -1518,7 +1518,6 @@
     <Content Include="Scss\bcms-modules\pages\_navigation.scss" />
     <Content Include="Scss\media.scss" />
     <Content Include="Scss\structure\_layout.scss" />
-    <Content Include="Scss\structure\_tabs.scss" />
     <Content Include="Scss\bcms-modules\blog\_index.scss" />
     <Content Include="Scss\bcms-modules\installation\_index.scss" />
     <Content Include="Scss\bcms-modules\media\_index.scss" />
@@ -1554,6 +1553,7 @@
     <Content Include="Scss\core\_normalize.scss" />
     <Content Include="Scss\modules\_autocomplete.scss" />
     <Content Include="Scss\structure\_global.scss" />
+    <Content Include="Scss\modules\_tabs.scss" />
     <None Include="Views\Category\CategoryTrees.cshtml">
       <Generator>RazorGenerator</Generator>
       <LastGenOutput>CategoryTrees.generated.cs</LastGenOutput>

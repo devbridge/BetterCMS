@@ -13,9 +13,12 @@
     };
 }
 <div class="bcms-tab-header">
-    <a class="bcms-tab-item bcms-active" data-name="#bcms-tab-1">Properties</a>
-    <a class="bcms-tab-item" data-name="#bcms-tab-2">Nodes</a>
+    <div class="bcms-modal-frame-holder">
+        <a class="bcms-tab-item bcms-active" data-name="#bcms-tab-1">Properties</a>
+        <a class="bcms-tab-item" data-name="#bcms-tab-2">Nodes</a>
+    </div>
 </div>
+
 <div id="bcms-sitemap-addnode">
     @Html.TabbedContentMessagesBox()
     @* Form is required for unobtrusive validation. *@
@@ -42,13 +45,12 @@
                 </div>
                 @if (Model.AccessControlEnabled)
                 {
-                    @Html.Partial(RootModuleConstants.AccessControlTemplate)
+                @Html.Partial(RootModuleConstants.AccessControlTemplate)
                 }
             </div>
         </div>
         <div id="bcms-tab-2" class="bcms-tab-single">
             <div class="bcms-scroll-window">
-
                 <div class="bcms-columns-container">
                     <div class="bcms-sitemap-filter-holder" data-bind="with: sitemap">
                         <div class="bcms-language-bar" style="display: none;" data-bind="visible: showLanguages, with: language">
@@ -57,17 +59,14 @@
                                 <select class="bcms-global-select" data-bind="options: languages, optionsText: 'value', optionsValue: 'key', value: languageId"></select>
                             </div>
                         </div>
-
                         <div class="bcms-expand-link-holder" @* data-bind="droppable: 'emptyListZone'" TODO: check later. NOTE: jQuery error is raised on leave over. *@>
                             <div class="bcms-expand-link" data-bind="click: expandAll">@NavigationGlobalization.Sitemap_Button_ExpandAll</div>
                             <div class="bcms-expand-link" data-bind="click: collapseAll">@NavigationGlobalization.Sitemap_Button_CollapseAll</div>
                         </div>
                     </div>
-
                     <div class="bcms-leftcol bcms-add-node-col">
                         <div class="bcms-sitemap-links-holder" data-bind="template: { name: 'bcms-navigation-pagelinks-template' }"></div>
                     </div>
-
                     <div class="bcms-rightcol">
                         <div class="bcms-sitemap-holder bcms-sitemap-edit">
                             <div class="bcms-addnode-placement-holder@(Model.IsReadOnly ? "-readonly" : string.Empty)">
@@ -76,7 +75,6 @@
                         </div>
                     </div>
                 </div>
-
             </div>
         </div>
     }

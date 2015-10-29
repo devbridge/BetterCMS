@@ -11,7 +11,6 @@
 @using BetterCms.Module.Root.ViewModels.Tags
 @using Microsoft.Web.Mvc
 @using MvcContrib.EnumerableExtensions
-
 @model EditPagePropertiesViewModel
 @if (Model == null)
 {
@@ -28,16 +27,17 @@
         TooltipDescription = PagesGlobalization.EditPageProperties_BasicPropertiesTab_Category_Tooltip_Description
     };
 }
-
 <div class="bcms-tab-header">
-    <a class="bcms-tab-item bcms-active" data-name="#bcms-tab-1">@PagesGlobalization.EditPageProperties_BasicPropertiesTab_Title</a>
-    <a class="bcms-tab-item" data-name="#bcms-tab-2">@PagesGlobalization.EditPageProperties_AdvancedPropertiesTab_Title</a>
-    <a class="bcms-tab-item" data-name="#bcms-tab-3">@PagesGlobalization.EditPageProperties_LayoutPropertiesTab_Title</a>
-    <a class="bcms-tab-item" data-name="#bcms-tab-4">@PagesGlobalization.EditPageProperties_OptionsTab_Title</a>
-    @if (Model.ShowTranslationsTab)
-    {
-        <a class="bcms-tab-item" data-name="#bcms-tab-5">@PagesGlobalization.EditPageProperties_TranslationsTab_Title</a>
-    }
+    <div class="bcms-modal-frame-holder">
+        <a class="bcms-tab-item bcms-active" data-name="#bcms-tab-1">@PagesGlobalization.EditPageProperties_BasicPropertiesTab_Title</a>
+        <a class="bcms-tab-item" data-name="#bcms-tab-2">@PagesGlobalization.EditPageProperties_AdvancedPropertiesTab_Title</a>
+        <a class="bcms-tab-item" data-name="#bcms-tab-3">@PagesGlobalization.EditPageProperties_LayoutPropertiesTab_Title</a>
+        <a class="bcms-tab-item" data-name="#bcms-tab-4">@PagesGlobalization.EditPageProperties_OptionsTab_Title</a>
+        @if (Model.ShowTranslationsTab)
+        {
+            <a class="bcms-tab-item" data-name="#bcms-tab-5">@PagesGlobalization.EditPageProperties_TranslationsTab_Title</a>
+        }
+    </div>
 </div>
 
 <div class="bcms-scroll-window">
@@ -58,7 +58,6 @@
                 <div class="bcms-input-list-holder">
                     @Html.Tooltip(PagesGlobalization.EditPageProperties_BasicPropertiesTab_PageName_Tooltip_Description)
                     <div class="bcms-content-titles">@PagesGlobalization.EditPageProperties_BasicPropertiesTab_PageName_Title</div>
-
                     <div class="bcms-input-box">
                         @Html.TextBoxFor(model => model.PageName, new { @class = "bcms-editor-field-box" })
                         @Html.BcmsValidationMessageFor(f => f.PageName)
@@ -66,7 +65,6 @@
                 </div>
 
                 @Html.Partial("Partial/PagePropertiesEditPermalink")
-
                 <div class="bcms-page-images-holder">
                     <div class="bcms-input-list-holder">
                         @Html.Tooltip(PagesGlobalization.EditPageProperties_BasicPropertiesTab_PageImage_Tooltip_Description)
@@ -110,7 +108,6 @@
                         <div class="bcms-btn-small" data-bind="click: secondaryImage().select.bind(secondaryImage())">@PagesGlobalization.EditPageProperties_BasicPropertiesTab_SelectImage_ButtonTitle</div>
                     </div>
                 </div>
-
                 <div class="bcms-categories-box-holder" data-bind="with: categories">
                     @Html.Partial("~/Areas/bcms-root/Views/Category/CategoriesTemplate.cshtml", categoriesTemplateViewModel)
                 </div>
@@ -118,12 +115,10 @@
                 <div class="bcms-tags-box-holder" data-bind="with: tags">
                     @Html.Partial("~/Areas/bcms-root/Views/Tags/TagsTemplate.cshtml", tagsTemplateViewModel)
                 </div>
-
                 @if (Model.AccessControlEnabled)
                 {
                     @Html.Partial(RootModuleConstants.AccessControlTemplate)
                 }
-
                 @if (!Model.IsMasterPage)
                 {
                     <div class="bcms-input-list-holder">
@@ -140,14 +135,17 @@
                             @Html.CheckBoxFor(model => model.IsPagePublished, options)
                             <div class="bcms-edit-label">@PagesGlobalization.EditPageProperties_AdvancedPropertiesTab_Privacy_VisibleToEveryone</div>
                         </div>
+
                         <div class="bcms-checkbox-holder">
                             @Html.CheckBoxFor(model => model.UseNoFollow)
                             <div class="bcms-edit-label">@PagesGlobalization.EditPageProperties_AdvancedPropertiesTab_UseNoFollow</div>
                         </div>
+
                         <div class="bcms-checkbox-holder">
                             @Html.CheckBoxFor(model => model.UseNoIndex)
                             <div class="bcms-edit-label">@PagesGlobalization.EditPageProperties_AdvancedPropertiesTab_UseNoIndex</div>
                         </div>
+
                         <div class="bcms-checkbox-holder">
                             @Html.CheckBoxFor(model => model.IsArchived)
                             <div class="bcms-edit-label">@PagesGlobalization.EditPageProperties_AdvancedPropertiesTab_IsArchived</div>
@@ -201,7 +199,6 @@
                     <a class="bcms-btn-close">@RootGlobalization.Button_Close</a>
                     @Html.Raw(PagesGlobalization.EditPageProperties_LayoutPropertiesTab_InfoMessage)
                 </div>
-
                 @Html.Partial("Partial/TemplatesList", Model.Templates)
             </div>
         </div>
@@ -213,12 +210,10 @@
         if (Model.ShowTranslationsTab)
         {
             <div id="bcms-tab-5" class="bcms-tab-single">
-
                 @if (Model.TranslationMessages != null)
                 {
                     @Html.TabbedContentCustomMessagesBox(Model.TranslationMessages)
                 }
-
                 <div class="bcms-padded-content bcms-page-translations-content">
                     <div class="bcms-input-list-holder" data-bind="with: translations.language">
                         @Html.Tooltip(PagesGlobalization.EditPageProperties_TranslationsTab_Language_Tooltip_Description)
@@ -231,9 +226,7 @@
                         <div class="bcms-content-titles">@PagesGlobalization.EditPageTranslations_OtherLanguages_Title</div>
                     </div>
                 </div>
-
                 @Html.Partial("Partial/TranslationsGrid")
-
             </div>
         }
 
