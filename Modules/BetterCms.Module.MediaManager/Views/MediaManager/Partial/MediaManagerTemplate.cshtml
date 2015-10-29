@@ -15,14 +15,12 @@
             <div class="bcms-breadcrumbs-holder">
                 <div data-bind="foreach: path().pathFolders()"><a class="bcms-breadcrumbs-root" href="#" data-bind="    text: pathName(), click: openMedia.bind($data, $root)"></a></div>
             </div>
+
             <div class="bcms-clearfix">
                 <div class="bcms-media-controls-holder">
-                    <a id="bcms-list-view" class="bcms-select-list" data-bind="click: switchViewStyle, css: { 'bcms-select-active': !isGrid() }"></a>
-                    <a id="bcms-grid-view" class="bcms-select-grid" data-bind="click: switchViewStyle, css: { 'bcms-select-active': isGrid() }"></a>
-                    @if ((ViewContext.Controller as CmsControllerBase).SecurityService.IsAuthorized(RootModuleConstants.UserRoles.EditContent))
+                            @if ((ViewContext.Controller as CmsControllerBase).SecurityService.IsAuthorized(RootModuleConstants.UserRoles.EditContent))
                 {
                     <!-- ko if: !isSearchResults() -->
-                <div class="bcms-vertical-separator"></div>
                 <a class="bcms-media-new-folder" data-bind="click: addNewFolder">@MediaGlobalization.MediaManager_NewFolder</a>
                 <a class="bcms-media-new-file" data-bind="click: uploadMedia, text: uploadButtonTitle()"></a>
                     <!-- /ko -->
@@ -117,7 +115,7 @@
             </div>
         </div>
      
-        <div id="bcms-view-container" data-bind="css: { 'bcms-list': !isGrid(), 'bcms-grid': isGrid() }" class="bcms-list">
+        <div id="bcms-view-container" class="bcms-list">
             <div class="bcms-media-sorting-block">
                 <div class="bcms-media-col-1"></div>
                 <div class="bcms-media-col-2">
@@ -241,6 +239,7 @@
                     }
                         <!-- /ko -->
                     </div>
+
                     <div class="bcms-media-items-block">
                         <div data-bind="css: iconClassNames(), click: onIconClicked.bind($data, $root)">
                             <!-- ko if: getImageThumbnailUrl() && !isProcessing() -->
@@ -268,6 +267,7 @@
                             <!-- /ko -->
                         </div>
                     </div>
+
                     <div class="bcms-media-edit-controls">
                         <!-- ko if: isImage() -->
                         <div class="bcms-media-name" data-bind="text: name()"></div>
