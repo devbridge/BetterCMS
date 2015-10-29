@@ -13,6 +13,7 @@ $font-code-family: 'Courier New', Courier, monospace;
 $white: #ffffff;
 $black: #000000;
 $dark: #303030;
+$main-dark: #303646;
 $gray-l5: #aaaaaa;
 $gray-l10: #eaeaea;
 $gray-l20: #e3e3e3;
@@ -25,7 +26,6 @@ $gray-l46: #787878;
 $gray-l50: #676767;
 $gray-l60: #555555;
 $gray-l65: #474747;
-$a:#d1d1d1;
 //
 $blue-main: #0383df;
 $sky-blue: #9ed4f0;
@@ -55,6 +55,10 @@ $border-content-box: 1px solid $gray-l45;
 //module images paths
 
 //module misc variables
+$page-width: 1024px;
+$page-frame-gutters: 20px;
+$header-height: 55px;
+$footer-height: 65px;
 
 //module transitions
 

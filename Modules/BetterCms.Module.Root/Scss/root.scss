@@ -1,4 +1,6 @@
-@import 'core/variables';
+@import 'core/assets',
+'core/mixins',
+'core/variables';
 
 @font-face {
     font-family: 'Open Sans';
@@ -35,13 +37,13 @@
 }
 
 //module components
-@import 'components/normalize',
-'components/forms',
-'components/tables';
+@import 'core/normalize',
+'modules/formelements',
+'modules/tables';
 
 //module structure
 @import 'structure/layout',
-'structure/modules',
+'structure/global',
 'structure/tabs';
 
 //module styles

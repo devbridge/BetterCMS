@@ -1,5 +1,3 @@
-@import '../../core/variables';
-
 .bcms-loader {
     position: absolute;
     left: 50%;
@@ -193,95 +191,6 @@ a.bcms-remove-image {
     overflow: hidden;
     text-indent: 9999px;
     width: 16px;
-}
-
-//module Modal Dialog
-.bcms-scroll-window {
-    position: relative;
-    overflow: auto;
-}
-
-.bcms-padded-content {
-    padding-left: 50px;
-    max-width: 830px;
-}
-
-html.bcms-noscroll {
-    overflow: hidden;
-}
-
-.bcms-modal {
-    font-size: 13px;
-    overflow: hidden;
-    width: 100%;
-    height: 100%;
-    position: fixed;
-    top: 0;
-    left: 0;
-    background-image: url('images/modal-back.png');
-}
-
-.bcms-modal-body {
-    position: relative;
-    width: 940px;
-    background: #FFF;
-    margin: 0 auto;
-}
-
-.bcms-modal-header {
-    position: absolute;
-    background: #303030;
-    width: 100%;
-    height: 50px;
-    line-height: 50px;
-    padding: 0 60px;
-    top: 0;
-    left: 0;
-    z-index: 6;
-    box-sizing: border-box;
-    -moz-box-sizing: border-box;
-}
-
-.bcms-modal-title {
-    color: #0383df;
-    font-size: 20px;
-    font-weight: 700;
-}
-
-div.bcms-modal-close {
-    width: 15px;
-    height: 15px;
-    position: absolute;
-    margin-top: -7px;
-    top: 50%;
-    right: 20px;
-    cursor: pointer;
-    background: url($bcms-close) no-repeat center;
-    overflow: hidden;
-    text-indent: 9999px;
-    text-decoration: none;
-}
-
-.bcms-modal-content-padded {
-    position: relative;
-    padding: 50px 0 74px;
-}
-
-.bcms-modal-footer {
-    position: absolute;
-    height: 74px;
-    width: 100%;
-    padding: 20px 20px 20px 60px;
-    background-color: #303030;
-    bottom: 0;
-    left: 0;
-    box-sizing: border-box;
-    -moz-box-sizing: border-box;
-    z-index: 6;
-}
-
-.bcms-modal-cmslogo {
-    float: right;
 }
 
 //module image dialog

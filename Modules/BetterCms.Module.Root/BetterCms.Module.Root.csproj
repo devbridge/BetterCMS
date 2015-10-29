@@ -1508,9 +1508,6 @@
       <LastGenOutput>CategoryTreeEdit.generated.cs</LastGenOutput>
     </Content>
     <Content Include="package.json" />
-    <Content Include="Scss\components\_forms.scss" />
-    <Content Include="Scss\components\_normalize.scss" />
-    <Content Include="Scss\components\_tables.scss" />
     <Content Include="Scss\core\_mixins.scss" />
     <Content Include="Scss\core\_variables.scss" />
     <Content Include="Scss\blog.scss" />
@@ -1518,7 +1515,6 @@
     <Content Include="Scss\pages.scss" />
     <Content Include="Scss\bcms-modules\pages\_index.scss" />
     <Content Include="Scss\users.scss" />
-    <Content Include="Scss\structure\_modules.scss" />
     <Content Include="Scss\bcms-modules\pages\_navigation.scss" />
     <Content Include="Scss\media.scss" />
     <Content Include="Scss\structure\_layout.scss" />
@@ -1553,6 +1549,11 @@
     <Content Include="Scss\plugins\_jquerycalendar.scss" />
     <Content Include="Scss\bcms-modules\root\_contentstree.scss" />
     <Content Include="Scss\bcms-modules\blog\_settings.scss" />
+    <Content Include="Scss\modules\_formelements.scss" />
+    <Content Include="Scss\modules\_tables.scss" />
+    <Content Include="Scss\core\_normalize.scss" />
+    <Content Include="Scss\modules\_autocomplete.scss" />
+    <Content Include="Scss\structure\_global.scss" />
     <None Include="Views\Category\CategoryTrees.cshtml">
       <Generator>RazorGenerator</Generator>
       <LastGenOutput>CategoryTrees.generated.cs</LastGenOutput>

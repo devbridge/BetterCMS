@@ -1,3 +1,7 @@
+@import 'core/assets',
+'core/mixins',
+'core/variables';
+
 //module styles
 @import 'bcms-modules/blog/index',
 'bcms-modules/blog/settings';

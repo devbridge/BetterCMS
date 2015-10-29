@@ -1,9 +1,13 @@
-@import '../core/variables';
-
 html,
 body {
     height: 100%;
     width: 100%;
+}
+
+html {
+    &.bcms-noscroll {
+        overflow: hidden;
+    }
 }
 
 body {
@@ -24,7 +28,83 @@ button {
     font-family: $font-base-family;
 }
 
+.bcms-scroll-window {
+    position: relative;
+    overflow: auto;
+}
+
+.bcms-padded-content {
+    padding-left: 50px;
+    max-width: 830px;
+}
+
 .bcms-modal {
+    @include position(fixed, 0);
+    font-size: 13px;
+    overflow: hidden;
+
+    &-frame-holder {
+        height: 100%;
+        margin: auto;
+        max-width: $page-width;
+        position: relative;
+    }
+
+    &-content-padded {
+        position: relative;
+        padding: $header-height 0 $footer-height;
+    }
+
+    &-body {
+        background: $white;
+        margin: auto;
+        position: relative;
+    }
+
+    &-header {
+        @include position(absolute, 0 0 null);
+        background: $main-dark;
+        box-sizing: border-box;
+        height: $header-height;
+        line-height: $header-height;
+        padding: 0 $page-frame-gutters;
+        z-index: 6;
+    }
+
+    &-title {
+        color: $white;
+        font-size: 20px;
+    }
+
+    &-close {
+        @include size(15px);
+        @include positioning($center-y: true);
+        background: url($bcms-close) no-repeat center;
+        cursor: pointer;
+        overflow: hidden;
+        right: 0;
+        text-indent: -999em;
+    }
+
+    &-content {
+        margin: auto;
+        max-width: $page-width;
+    }
+
+    &-footer {
+        @include position(absolute, null 0 0);
+        background-color: $main-dark;
+        box-sizing: border-box;
+        height: $footer-height;
+        padding: 18px $page-frame-gutters;
+        z-index: 6;
+    }
+
+    &-cmslogo {
+        @include positioning($center-y: true);
+        right: 0;
+    }
+
     form {
         background: none !important;
         color: inherit !important;

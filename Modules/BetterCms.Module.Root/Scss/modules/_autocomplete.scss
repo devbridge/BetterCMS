@@ -1,6 +1,3 @@
-@import '../core/variables';
-
-//module auto-complete styles
 .autocomplete {
     &-suggestions {
         background-color: $white;
@@ -26,19 +23,5 @@
     &-selected {
         background-color: $gray-l30;
         color: $black;
-    }
-}
-
-//module BetterCms helper styles
-.bcms-inactive {
-    position: relative;
-
-    @include virtual(after) {
-        @include size(100%);
-        @include position(absolute, 0 null null 0);
-        background-color: $white;
-        cursor: default;
-        opacity: .3;
-        z-index: 99;
     }
 }
