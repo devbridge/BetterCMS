@@ -168,6 +168,7 @@
     <Compile Include="Models\Blog\BlogItem.cs" />
     <Compile Include="Models\Blog\BlogItemsModel.cs" />
     <Compile Include="Models\Blog\CategoryItem.cs" />
+    <Compile Include="Models\Migrations\Migration201510291304.cs" />
     <Compile Include="Models\Migrations\Migration201510281110.cs" />
     <Compile Include="Models\Migrations\Migration201510280946.cs" />
     <Compile Include="Models\Migrations\Migration201510261332.cs" />

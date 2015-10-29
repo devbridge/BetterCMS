@@ -44,7 +44,7 @@
     </section>
 }
 
-@if (Model.ShowPager)
+@if (Model.ShowPager && Model.Items.Count > 0)
 {
     <section class="blog-pager">
         @for (int i = 1; i <= Model.NumberOfPages; i++)

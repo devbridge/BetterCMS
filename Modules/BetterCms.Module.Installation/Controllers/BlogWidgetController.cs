@@ -28,7 +28,7 @@ namespace BetterCms.Module.Installation.Controllers
             var isPagingEnabled = model.Options.Where(x => x.Key == "ShowPager").Select(x => x.CastValueOrDefault<bool>()).FirstOrDefault();
             var pageSize = model.Options.Where(x => x.Key == "PageSize").Select(x => x.CastValueOrDefault<int>()).FirstOrDefault();
             var page = Request.QueryString["blogpage"].ToIntOrDefault();
-            int postsCount = 0;
+            int postsCount;
 
             using (var api = ApiFactory.Create())
             {
@@ -80,11 +80,20 @@ namespace BetterCms.Module.Installation.Controllers
             var categories = new List<CategoryItem>();
             using (var api = ApiFactory.Create())
             {
-                var treeRequest = new GetCategoryTreesModel();
+                var useSpecificCategoryTree = model.Options.Where(x => x.Key == "UseSpecificCategoryTree").Select(x => x.CastValueOrDefault<bool>()).FirstOrDefault();
+                var categoryTreeName = model.Options.Where(x => x.Key == "CategoryTreeName").Select(x => x.CastValueOrDefault<string>()).FirstOrDefault();
 
+                var treeRequest = new GetCategoryTreesModel();
                 var treePages = api.Root.Categories.Get(new GetCategoryTreesRequest { Data = treeRequest });
-                var categoryTreeIds = treePages.Data.Items
-                    .Where(item => item.AvailableFor.Contains(new Guid("75E6C021-1D1F-459E-A416-D18477BF2020")))
+
+                var query = treePages.Data.Items.Where(item => item.AvailableFor.Contains(new Guid("75E6C021-1D1F-459E-A416-D18477BF2020")));
+
+                if (useSpecificCategoryTree)
+                {
+                    query = query.Where(item => item.Name == categoryTreeName);
+                }
+
+                var categoryTreeIds = query
                     .Select(item => item.Id)
                     .ToList();
 

@@ -322,7 +322,7 @@ WriteLiteral("\r\n");
 
             
             #line 47 "..\..\Views\BlogWidget\BlogPosts.cshtml"
- if (Model.ShowPager)
+ if (Model.ShowPager && Model.Items.Count > 0)
 {
 
             
@@ -352,22 +352,22 @@ WriteLiteral(">\r\n");
             #line hidden
 WriteLiteral("                <a");
 
-WriteAttribute("href", Tuple.Create(" href=\"", 1603), Tuple.Create("\"", 1635)
+WriteAttribute("href", Tuple.Create(" href=\"", 1628), Tuple.Create("\"", 1660)
             
             #line 54 "..\..\Views\BlogWidget\BlogPosts.cshtml"
-, Tuple.Create(Tuple.Create("", 1610), Tuple.Create<System.Object, System.Int32>(Request.Path
+, Tuple.Create(Tuple.Create("", 1635), Tuple.Create<System.Object, System.Int32>(Request.Path
             
             #line default
             #line hidden
-, 1610), false)
-, Tuple.Create(Tuple.Create("", 1623), Tuple.Create("?blogpage=", 1623), true)
+, 1635), false)
+, Tuple.Create(Tuple.Create("", 1648), Tuple.Create("?blogpage=", 1648), true)
             
             #line 54 "..\..\Views\BlogWidget\BlogPosts.cshtml"
-, Tuple.Create(Tuple.Create("", 1633), Tuple.Create<System.Object, System.Int32>(i
+, Tuple.Create(Tuple.Create("", 1658), Tuple.Create<System.Object, System.Int32>(i
             
             #line default
             #line hidden
-, 1633), false)
+, 1658), false)
 );
 
 WriteLiteral(" class=\"blog-page\"");
@@ -396,22 +396,22 @@ WriteLiteral("</a>\r\n");
             #line hidden
 WriteLiteral("                <a");
 
-WriteAttribute("href", Tuple.Create(" href=\"", 1775), Tuple.Create("\"", 1807)
+WriteAttribute("href", Tuple.Create(" href=\"", 1800), Tuple.Create("\"", 1832)
             
             #line 58 "..\..\Views\BlogWidget\BlogPosts.cshtml"
-, Tuple.Create(Tuple.Create("", 1782), Tuple.Create<System.Object, System.Int32>(Request.Path
+, Tuple.Create(Tuple.Create("", 1807), Tuple.Create<System.Object, System.Int32>(Request.Path
             
             #line default
             #line hidden
-, 1782), false)
-, Tuple.Create(Tuple.Create("", 1795), Tuple.Create("?blogpage=", 1795), true)
+, 1807), false)
+, Tuple.Create(Tuple.Create("", 1820), Tuple.Create("?blogpage=", 1820), true)
             
             #line 58 "..\..\Views\BlogWidget\BlogPosts.cshtml"
-, Tuple.Create(Tuple.Create("", 1805), Tuple.Create<System.Object, System.Int32>(i
+, Tuple.Create(Tuple.Create("", 1830), Tuple.Create<System.Object, System.Int32>(i
             
             #line default
             #line hidden
-, 1805), false)
+, 1830), false)
 );
 
 WriteLiteral(" class=\"blog-page\"");
