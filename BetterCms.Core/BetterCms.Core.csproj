@@ -202,6 +202,7 @@
     <Compile Include="Exceptions\Api\CmsApiException.cs" />
     <Compile Include="Exceptions\Api\CmsApiValidationException.cs" />
     <Compile Include="Exceptions\Mvc\ConfirmationRequestException.cs" />
+    <Compile Include="Extensions\IOptionValueExtensions.cs" />
     <Compile Include="IMultilingualOption.cs" />
     <Compile Include="Modules\CssIncludeDescriptor.cs" />
     <Compile Include="Modules\JsIncludeDescriptor.cs" />
