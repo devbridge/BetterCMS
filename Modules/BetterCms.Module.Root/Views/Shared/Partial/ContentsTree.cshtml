@@ -1,7 +1,6 @@
 ﻿@using BetterCms.Module.Root.Content.Resources
 <script type="text/html" id="bcms-contents-tree-template">
     <div class="bcms-scroll-window" id="bcms-contents-tree">
-        <div class="bcms-padded-content">
             <div class="bcms-tree-container" data-bind="visible: visibleItems().length > 0, with: visibleItems()">
                 <h2 data-bind="visible: $parent.invisibleItems().length > 0">@RootGlobalization.ContentsTree_VisibleItems_Title</h2>
                 <div data-bind='template: { name: "bcms-contents-tree-list-template" }'></div>
@@ -11,7 +10,6 @@
                 <h2>@RootGlobalization.ContentsTree_InvisibleItems_Title</h2>
                 <div data-bind='template: { name: "bcms-contents-tree-list-template" }'></div>
             </div>
-        </div>
     </div>
 </script>
 

@@ -8,55 +8,50 @@
 @using BetterCms.Module.Root.ViewModels.Security
 @using BetterCms.Module.Root.ViewModels.Shared
 @using Microsoft.Web.Mvc
-
 @model AddNewPageViewModel
 
 <div class="bcms-tab-header">
-    <a class="bcms-tab-item bcms-active" data-name="#bcms-tab-1">@PagesGlobalization.AddNewPage_Title</a>
-    <a class="bcms-tab-item" data-name="#bcms-tab-2">@PagesGlobalization.AddNewPage_Options</a>
+    <div class="bcms-modal-frame-holder">
+        <a class="bcms-tab-item bcms-active" data-name="#bcms-tab-1">@PagesGlobalization.AddNewPage_Title</a>
+        <a class="bcms-tab-item" data-name="#bcms-tab-2">@PagesGlobalization.AddNewPage_Options</a>
+    </div>
 </div>
 
 <div class="bcms-scroll-window">
-    @Html.TabbedContentMessagesBox()
-
-    @using (Html.BeginForm<PageController>(f => f.AddNewPage(null, null), FormMethod.Post, new { @class = "bcms-ajax-form" }))
-    {
-        <div id="bcms-tab-1" class="bcms-tab-single">
-            <div class="bcms-padded-content">
-
-                <div class="bcms-input-list-holder">
-                    @Html.Tooltip(PagesGlobalization.AddNewPage_PageTitle_Tooltip_Description)
-                    <div class="bcms-content-titles">@PagesGlobalization.AddNewPage_PageTitle</div>
-                    <div class="bcms-input-box">
-                        @Html.TextBoxFor(f => f.PageTitle, new { @class = "bcms-editor-field-box", @id = "PageTitle" })
-                        @Html.BcmsValidationMessageFor(f => f.PageTitle)
+    <div class="bcms-modal-frame-holder">
+        @Html.TabbedContentMessagesBox()
+        @using (Html.BeginForm<PageController>(f => f.AddNewPage(null, null), FormMethod.Post, new { @class = "bcms-ajax-form" }))
+        {
+            <div id="bcms-tab-1" class="bcms-tab-single">
+                <div class="bcms-padded-content">
+                    <div class="bcms-input-list-holder">
+                        @Html.Tooltip(PagesGlobalization.AddNewPage_PageTitle_Tooltip_Description)
+                        <div class="bcms-content-titles">@PagesGlobalization.AddNewPage_PageTitle</div>
+                        <div class="bcms-input-box">
+                            @Html.TextBoxFor(f => f.PageTitle, new { @class = "bcms-editor-field-box", @id = "PageTitle" })
+                            @Html.BcmsValidationMessageFor(f => f.PageTitle)
+                        </div>
                     </div>
-                </div>
-
-                @Html.Partial("Partial/AddNewPageEditPermalink")
-
-                <div class="bcms-addpage-title">
-                    @Html.Tooltip(PagesGlobalization.AddNewPage_Template_Tooltip_Description)
-                    <div class="bcms-content-titles">@PagesGlobalization.AddNewPage_Template</div>
-                </div>
-
-                <div class="bcms-info-message-box">
-                    <a class="bcms-btn-close" id="bcms-addnewpage-closeinfomessage">@RootGlobalization.Button_Close</a>
-                    @Html.Raw(PagesGlobalization.AddNewPage_Template_InfoMessage_Text)
-                </div>
-
-                @Html.Partial("Partial/TemplatesList", Model.Templates)
-                @Html.HiddenFor(f => f.TemplateId, new { @id = "TemplateId" })
-                @Html.HiddenFor(f => f.MasterPageId, new { @id = "MasterPageId" })
-                @Html.HiddenFor(f => f.ParentPageUrl)
-                @Html.HiddenFor(f => f.CreateMasterPage)
-                @if (Model.Languages != null && Model.Languages.Any())
+                    @Html.Partial("Partial/AddNewPageEditPermalink")
+                    <div class="bcms-addpage-title">
+                        @Html.Tooltip(PagesGlobalization.AddNewPage_Template_Tooltip_Description)
+                        <div class="bcms-content-titles">@PagesGlobalization.AddNewPage_Template</div>
+                    </div>
+                    <div class="bcms-info-message-box">
+                        <a class="bcms-btn-close" id="bcms-addnewpage-closeinfomessage">@RootGlobalization.Button_Close</a>
+                        @Html.Raw(PagesGlobalization.AddNewPage_Template_InfoMessage_Text)
+                    </div>
+                    @Html.Partial("Partial/TemplatesList", Model.Templates)
+                    @Html.HiddenFor(f => f.TemplateId, new { @id = "TemplateId" })
+                    @Html.HiddenFor(f => f.MasterPageId, new { @id = "MasterPageId" })
+                    @Html.HiddenFor(f => f.ParentPageUrl)
+                    @Html.HiddenFor(f => f.CreateMasterPage)
+                    @if (Model.Languages != null && Model.Languages.Any())
                 {
                     @Html.HiddenFor(model => model.LanguageId, new { data_bind = "value: language.languageId()" })
                 }
-                @Html.HiddenSubmit()
-
-                @if (Model.AccessControlEnabled)
+                    @Html.HiddenSubmit()
+                    @if (Model.AccessControlEnabled)
                 {
                     var viewModel = new UserAccessTemplateViewModel
                                         {
@@ -65,8 +60,8 @@
                                         };
                     @Html.Partial(RootModuleConstants.AccessControlTemplate, viewModel)
                 }
-                
-                @if (Model.ShowLanguages)
+
+                    @if (Model.ShowLanguages)
                 {
                     <div class="bcms-input-list-holder" data-bind="with: language">
                         @Html.Tooltip(PagesGlobalization.AddNewPage_Language_Tooltip_Description)
@@ -74,11 +69,12 @@
                         <select class="bcms-global-select" data-bind="options: languages, optionsText: 'value', optionsValue: 'key', value: languageId"></select>
                     </div>
                 }
+                </div>
             </div>
-        </div>
 
-        <div id="bcms-tab-2" class="bcms-tab-single" data-bind="with: options">
-            @Html.Partial(PagesConstants.OptionValuesGridTemplate, new EditableGridViewModel())
-        </div>
-    }
+            <div id="bcms-tab-2" class="bcms-tab-single" data-bind="with: options">
+                @Html.Partial(PagesConstants.OptionValuesGridTemplate, new EditableGridViewModel())
+            </div>
+        }
+    </div>
 </div>

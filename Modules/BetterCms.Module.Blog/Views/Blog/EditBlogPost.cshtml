@@ -27,31 +27,35 @@
     };
 }
 <div class="bcms-tab-header">
-    <a class="bcms-tab-item bcms-active" data-name="#bcms-tab-1">@BlogGlobalization.EditBlogPost_ContentTab_Title</a>
-    <a class="bcms-tab-item" data-name="#bcms-tab-2">@BlogGlobalization.EditBlogPost_PropertiesTab_Title</a>
+    <div class="bcms-modal-frame-holder">
+        <a class="bcms-tab-item bcms-active" data-name="#bcms-tab-1">@BlogGlobalization.EditBlogPost_ContentTab_Title</a>
+        <a class="bcms-tab-item" data-name="#bcms-tab-2">@BlogGlobalization.EditBlogPost_PropertiesTab_Title</a>
+    </div>
 </div>
+
 <div class="bcms-scroll-window">
-    @Html.TabbedContentMessagesBox()
-    @if (Model.CurrentStatus == ContentStatus.Draft)
-    {
-        <div class="bcms-messages-type-1">
-            <ul class="bcms-success-messages" style="display: none"></ul>
-            <ul class="bcms-info-messages" style="display: none"></ul>
-            <ul class="bcms-warning-messages">
-                <li>
-                    @PagesGlobalization.EditPageContent_Messages_DraftStatusWarnMessage
-                    @if (Model.HasPublishedContent && canEdit)
+    <div class="bcms-modal-frame-holder">
+        @Html.TabbedContentMessagesBox()
+        @if (Model.CurrentStatus == ContentStatus.Draft)
+        {
+            <div class="bcms-messages-type-1">
+                <ul class="bcms-success-messages" style="display: none"></ul>
+                <ul class="bcms-info-messages" style="display: none"></ul>
+                <ul class="bcms-warning-messages">
+                    <li>
+                        @PagesGlobalization.EditPageContent_Messages_DraftStatusWarnMessage
+                        @if (Model.HasPublishedContent && canEdit)
                     {
-                        @Html.Raw(PagesGlobalization.EditPageContent_Messages_DraftStatusWarnMessage_Destroy)
+                    @Html.Raw(PagesGlobalization.EditPageContent_Messages_DraftStatusWarnMessage_Destroy)
                     }
-                </li>
-            </ul>
-            <ul class="bcms-error-messages" style="display: none"></ul>
-        </div>
-    }
-    @using (Html.BeginForm<BlogController>(c => c.SaveBlogPost(null), FormMethod.Post, new { @id = "bcms-blog-post-form", @class = "bcms-ajax-form", data_readonly = Model.IsReadOnly.ToString().ToLower() }))
-    {
-        <div class="bcms-padded-content">
+                    </li>
+                </ul>
+                <ul class="bcms-error-messages" style="display: none"></ul>
+            </div>
+        }
+
+        @using (Html.BeginForm<BlogController>(c => c.SaveBlogPost(null), FormMethod.Post, new { @id = "bcms-blog-post-form", @class = "bcms-ajax-form", data_readonly = Model.IsReadOnly.ToString().ToLower() }))
+        {
             @Html.HiddenFor(model => model.Id, new { data_bind = "value: id()" })
             @Html.HiddenFor(model => model.Version, new { data_bind = "value: version()" })
             @Html.HiddenFor(model => model.Image.ImageId, new { data_bind = "value: image().id()" })
@@ -140,13 +144,13 @@
 
                 @if (Model.ShowLanguages)
                 {
-                    <div class="bcms-input-list-holder">
-                        @Html.Tooltip(BlogGlobalization.EditBlogPost_Language_Tooltip)
-                        <div class="bcms-content-titles">@BlogGlobalization.EditBlogPost_Language_Title</div>
-                        @Html.DropDownListFor(model => model.LanguageId, Model.Languages.ToSelectList(Model.LanguageId), "Default language", new { @class = "bcms-global-select", @style = "width: 245px;" })
-                    </div>
+                <div class="bcms-input-list-holder">
+                    @Html.Tooltip(BlogGlobalization.EditBlogPost_Language_Tooltip)
+                    <div class="bcms-content-titles">@BlogGlobalization.EditBlogPost_Language_Title</div>
+                    @Html.DropDownListFor(model => model.LanguageId, Model.Languages.ToSelectList(Model.LanguageId), "Default language", new { @class = "bcms-global-select", @style = "width: 245px;" })
+                </div>
                 }
             </div>
-        </div>
-    }
+        }
+    </div>
 </div>

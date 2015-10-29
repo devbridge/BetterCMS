@@ -4,12 +4,15 @@
 @using BetterCms.Module.Root.Mvc.Helpers
 @using Microsoft.Web.Mvc
 <div class="bcms-tab-header">
-    <a class="bcms-sitemaps-arrow-left" data-bind="css: { 'bcms-sitemaps-arrow-inactive': !slider.canSlideLeft() }, click: slider.slideLeft, visible: slider.showSliders"></a>
-    <!-- ko foreach: tabs -->
+    <div class="bcms-modal-frame-holder">
+        <a class="bcms-sitemaps-arrow-left" data-bind="css: { 'bcms-sitemaps-arrow-inactive': !slider.canSlideLeft() }, click: slider.slideLeft, visible: slider.showSliders"></a>
+        <!-- ko foreach: tabs -->
         <a class="bcms-tab-item" data-bind="text: newPageViewModel.sitemap.title(), css: { 'bcms-active': isActive }, click: activate, attr: { id: tabId }, visible: isVisible"></a>
-    <!-- /ko -->
-    <a class="bcms-sitemaps-arrow-right" data-bind="css: { 'bcms-sitemaps-arrow-inactive': !slider.canSlideRight() }, click: slider.slideRight, visible: slider.showSliders"></a>
+        <!-- /ko -->
+        <a class="bcms-sitemaps-arrow-right" data-bind="css: { 'bcms-sitemaps-arrow-inactive': !slider.canSlideRight() }, click: slider.slideRight, visible: slider.showSliders"></a>
+    </div>
 </div>
+
 <div class="bcms-scroll-window" id="bcms-sitemap-addnewpage" data-bind="with: activeNewPageViewModel">
     @Html.SiteSettingsMessagesBox()
     <div class="bcms-tab-single" style="display: block; height: 100%;">
@@ -63,4 +66,5 @@
         </div>
     </div>
 </div>
+
 @Html.Partial("Partial/SitemapTemplate", new SitemapNodeViewModel())

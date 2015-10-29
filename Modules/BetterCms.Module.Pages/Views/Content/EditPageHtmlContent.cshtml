@@ -17,7 +17,6 @@
     @Html.TabbedContentMessagesBox()
     @Html.Partial("Partial/WarnMessageAboutDraft", Model)
 
-    <div class="bcms-padded-content">
         @using (Html.BeginForm<ContentController>(c => c.SavePageHtmlContent(null), FormMethod.Post,
                 new
                     {
@@ -44,6 +43,4 @@
                 @Html.Partial("Partial/EditHtmlContentJsCss", Model)
             </div>
         }
-
-    </div>
     </div>

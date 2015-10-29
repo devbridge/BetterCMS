@@ -1,7 +1,8 @@
 ﻿@using BetterCms.Module.Pages.Content.Resources
 @using BetterCms.Module.Root.Mvc.UI
 @model BetterCms.Module.Pages.ViewModels.History.HtmlContentHistoryViewModel
-<div class="bcms-padded-content">
+
+
     <div class="bcms-newcontent-top">
         <div class="bcms-input-field-holder">
             <div class="bcms-content-titles">@PagesGlobalization.AddPageContent_RegularContentTab_ContentName_Title</div>
@@ -26,4 +27,3 @@
         <div class="bcms-content-titles">@PagesGlobalization.HtmlContent_Content_Title</div>
         @Html.TextAreaFor(model => model.RowText, new { @readonly = "readonly", @class = "bcms-editor-field-area bcms-code-field ", style = "height: 500px;" })
     </div>
-</div>
