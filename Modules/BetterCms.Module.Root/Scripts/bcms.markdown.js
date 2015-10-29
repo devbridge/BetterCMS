@@ -304,14 +304,14 @@
                     { name: 'Picture', key: 'P', className: 'markItUpButtonPicture', afterInsert: insertImage },
                     { name: 'Link', key: 'L', className: 'markItUpButtonLink', afterInsert: insertFile },
                     { name: 'Widget', className: 'markItUpButtonWidget', afterInsert: insertWidget },
-                    { name: 'Widget Option', className: 'markItUpButtonOption', afterInsert: function(obj) {
+                    { name: 'Insert Option', className: 'markItUpButtonOption', afterInsert: function(obj) {
                         insertOption(obj, options.smartTags);
                     } },
                     { name: 'Quotes', openWith: '> ', className: 'markItUpButtonQuotes' },
                     { name: 'Code Block / Code', openWith: '`', closeWith: '`', className: 'markItUpButtonCode' },
                     { name: 'Smart tags', dropMenu: smartTagsList },
                     {
-                        name: 'Widget Options',
+                        name: 'Insert Option',
                         className: 'markItUpButtonWidget markItUpButtonWidgetOption',
                         // afterInsert: editWidgetOptions,
                         beforeInsert: editWidgetOptions
