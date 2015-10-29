@@ -8,13 +8,9 @@ function ($, bcms, modal, siteSettings, forms, dynamicContent, messages, mediaUp
     var media = {},
         selectors = {
             tabImagesContainer: '#bcms-tab-1',
-            tabVideosContainer: '#bcms-tab-2',
-            tabAudiosContainer: '#bcms-tab-3',
-            tabFilesContainer: '#bcms-tab-4',
+            tabFilesContainer: '#bcms-tab-2',
 
             tabImagesSelector: '#bcms-tab-images',
-            tabVideosSelector: '#bcms-tab-videos',
-            tabAudiosSelector: '#bcms-tab-audios',
             tabFilesSelector: '#bcms-tab-files',
 
             templateDataBind: '.bcms-data-bind-container',
@@ -1888,38 +1884,6 @@ function ($, bcms, modal, siteSettings, forms, dynamicContent, messages, mediaUp
                     firstVisibleInputField.focus();
                 }
             };
-
-        // Attach to audios tab selector
-        dialogContainer.find(selectors.tabAudiosSelector).on('click', function () {
-            var tabContainer = dialogContainer.find(selectors.tabAudiosContainer);
-            if (audiosViewModel == null) {
-                audiosViewModel = new MediaItemsViewModel(tabContainer, links.loadAudiosUrl, dialogContainer);
-                audiosViewModel.spinContainer = tabContainer.parents(selectors.spinContainer);
-
-                loadTabData(audiosViewModel, null, function (json) {
-                    initializeTab(json, audiosViewModel);
-                    selectSearch();
-                });
-            } else {
-                selectSearch();
-            }
-        });
-
-        // Attach to videos tab selector
-        dialogContainer.find(selectors.tabVideosSelector).on('click', function () {
-            var tabContainer = dialogContainer.find(selectors.tabVideosContainer);
-            if (videosViewModel == null) {
-                videosViewModel = new MediaItemsViewModel(tabContainer, links.loadVideosUrl, dialogContainer);
-                videosViewModel.spinContainer = tabContainer.parents(selectors.spinContainer);
-
-                loadTabData(videosViewModel, null, function(json) {
-                    initializeTab(json, videosViewModel);
-                    selectSearch();
-                });
-            } else {
-                selectSearch();
-            }
-        });
 
         // Attach to files tab selector
         dialogContainer.find(selectors.tabFilesSelector).on('click', function () {
