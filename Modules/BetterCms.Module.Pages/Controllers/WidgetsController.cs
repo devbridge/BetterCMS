@@ -78,9 +78,9 @@ namespace BetterCms.Module.Pages.Controllers
         public ActionResult CreateHtmlContentWidget()
         {
             var model = GetCommand<GetHtmlContentWidgetForEditCommand>().ExecuteCommand(null);
-            model.EnableCustomCSS = true;
+            model.EnableCustomCSS = false;
             model.EnableCustomHtml = true;
-            model.EnableCustomJS = true;
+            model.EnableCustomJS = false;
             model.EditInSourceMode = true;
 
             var view = RenderView("EditHtmlContentWidget", model);

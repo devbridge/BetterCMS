@@ -308,7 +308,7 @@ namespace BetterCms.Module.Pages
                             {
                                 Order = 20,
                                 Title = page => PagesGlobalization.Sidebar_EditSeoButtonTitle,
-                                CssClass = page => page.HasSEO ? "bcms-sidemenu-btn bcms-btn-ok" : "bcms-sidemenu-btn bcms-btn-warn",
+                                CssClass = page => "bcms-sidemenu-btn",
                                 AccessRole = RootModuleConstants.UserRoles.EditContent,
                                 ShouldBeRendered = page => !page.IsMasterPage
                             },
@@ -401,19 +401,6 @@ namespace BetterCms.Module.Pages
                               CssClass = page => page.Status == PageStatus.Published 
                                                     ? "bcms-sidemenu-pubstatus"
                                                     : "bcms-sidemenu-pubstatus bcms-pubstatus-warn",
-                              ShouldBeRendered = page => !page.IsMasterPage
-                          }, 
-
-                      new HtmlElementProjection("div")
-                          {
-                              Id = page => "bcms-sidemenu-seostatus",
-                              Tooltip = page => page.HasSEO 
-                                                    ? PagesGlobalization.Sidebar_PageStatusSeoOkTooltip
-                                                    : PagesGlobalization.Sidebar_PageStatusNoSeoTooltip,
-                              Order = 20,
-                              CssClass = page => page.HasSEO 
-                                                    ? "bcms-sidemenu-seostatus"
-                                                    : "bcms-sidemenu-seostatus bcms-seostatus-warn",
                               ShouldBeRendered = page => !page.IsMasterPage
                           }
                 };

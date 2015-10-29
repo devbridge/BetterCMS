@@ -258,7 +258,6 @@ namespace BetterCms.Module.Root.Commands.GetPageToRender
         private Page CollectPageData(IQueryable<Page> query)
         {
             var page = query
-                .Fetch(f => f.PagesView)
                 .Fetch(f => f.Language)
                 .Fetch(f => f.MasterPage)
                 .FetchMany(f => f.MasterPages)

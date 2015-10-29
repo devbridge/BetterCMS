@@ -136,7 +136,6 @@ namespace BetterCms.Module.Pages.Services
             var pageProperties = page as PageProperties;
             if (pageProperties != null)
             {
-                pageProperties.IsInSitemap = pageProperties.PagesView.IsInSitemap;
                 if (temporaryPageCache.ContainsKey(pageProperties.PageUrlHash))
                 {
                     temporaryPageCache.Remove(pageProperties.PageUrlHash);
