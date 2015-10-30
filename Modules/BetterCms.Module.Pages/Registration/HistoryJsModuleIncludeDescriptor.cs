@@ -23,6 +23,7 @@ namespace BetterCms.Module.Pages.Registration
                 {
                     new JavaScriptModuleLinkTo<HistoryController>(this, "loadContentHistoryDialogUrl", controller => controller.ContentHistory("{0}")),
                     new JavaScriptModuleLinkTo<HistoryController>(this, "loadContentVersionPreviewUrl", controller => controller.ContentVersion("{0}")),
+                    new JavaScriptModuleLinkTo<HistoryController>(this, "loadContentVersionPreviewPropertiesUrl", controller => controller.ContentVersionProperties("{0}")),
                     new JavaScriptModuleLinkTo<HistoryController>(this, "restoreContentVersionUrl", controller => controller.RestorePageContentVersion("{0}", "{1}", "{3}")),
                     new JavaScriptModuleLinkTo<HistoryController>(this, "destroyContentDraftVersionUrl", controller => controller.DestroyContentDraft("{0}", "{1}", "{2}"))
                 };
@@ -35,6 +36,7 @@ namespace BetterCms.Module.Pages.Registration
                      new JavaScriptModuleGlobalization(this, "restoreButtonTitle", () => PagesGlobalization.ContentHistory_Restore_AcceptButtonTitle),
                      new JavaScriptModuleGlobalization(this, "destroyButtonTitle", () => PagesGlobalization.ContentHistory_Destroy_AcceptButtonTitle),
                      new JavaScriptModuleGlobalization(this, "closeButtonTitle", () => RootGlobalization.Button_Close),
+                     new JavaScriptModuleGlobalization(this, "versionPreviewNotAvailableMessage", () => PagesGlobalization.ContentHistory_VersionPreviewNotAvailableMessage),
                 };
         }
     }

@@ -10,7 +10,9 @@ namespace BetterCms.Module.Installation
     public class InstallationModuleDescriptor : CmsModuleDescriptor
     {
         internal const string ModuleName = "installation";
-        
+
+        internal const string ModuleAreaName = "bcms-installation";
+
         internal const string ModuleSchemaName = "bcms_installation";
 
         /// <summary>

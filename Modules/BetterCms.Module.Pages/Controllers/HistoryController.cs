@@ -1,11 +1,14 @@
-﻿using System.Web.Mvc;
+﻿using System;
+using System.Web.Mvc;
 
 using BetterCms.Core.Exceptions.Mvc;
 using BetterCms.Core.Security;
 using BetterCms.Module.Pages.Command.History.DestroyContentDraft;
 using BetterCms.Module.Pages.Command.History.GetContentHistory;
 using BetterCms.Module.Pages.Command.History.GetContentVersion;
+using BetterCms.Module.Pages.Command.History.GetContentVersionProperties;
 using BetterCms.Module.Pages.Command.History.RestoreContentVersion;
+using BetterCms.Module.Pages.Content.Resources;
 using BetterCms.Module.Pages.ViewModels.Content;
 using BetterCms.Module.Root;
 using BetterCms.Module.Root.Models;
@@ -68,6 +71,23 @@ namespace BetterCms.Module.Pages.Controllers
             var model = GetCommand<GetContentVersionCommand>().ExecuteCommand(id.ToGuidOrDefault());
 
             return View(model);
+        }
+
+        /// <summary>
+        /// Shows content properties preview.
+        /// </summary>
+        /// <param name="id">The id.</param>
+        /// <returns>Content properties preview.</returns>
+        [HttpGet]
+        [BcmsAuthorize(RootModuleConstants.UserRoles.EditContent, RootModuleConstants.UserRoles.PublishContent, RootModuleConstants.UserRoles.Administration)]
+        public ActionResult ContentVersionProperties(string id)
+        {
+            var result = GetCommand<GetContentVersionPropertiesCommand>().ExecuteCommand(id.ToGuidOrDefault());
+            if (result != null)
+            {
+                return View(result.ViewName, result.ViewModel);
+            }
+            return null;
         }
 
         /// <summary>
