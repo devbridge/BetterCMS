@@ -41,6 +41,7 @@ using NHibernate.Criterion;
 using NHibernate.Linq;
 
 using RootOptionService = BetterCms.Module.Root.Services.IOptionService;
+using ConfigurationHelper = BetterCms.Module.Blog.Helpers.ConfigurationHelper;
 
 namespace BetterCms.Module.Blog.Services
 {
@@ -404,7 +405,7 @@ namespace BetterCms.Module.Blog.Services
                 newTags = SaveTags(blogPost, request);
             }
 
-            if (userCanEdit)
+            if (userCanEdit && ConfigurationHelper.IsFillSeoDataFromArticlePropertiesEnabled(configuration))
             {
                 FillMetaInfo(blogPost);
             }
