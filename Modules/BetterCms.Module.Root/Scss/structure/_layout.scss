@@ -133,9 +133,27 @@ button {
 
 .bcms-settings {
     &-menu {
-        //fixme temp styles
-        left: 0;
-        position: absolute;
-        top: 0;
+        @include position(absolute, 0 null 0 0);
+        background-color: $gray-l30;
+    }
+
+    &-link {
+        color: $gray-light;
+        display: block;
+        font-size: 12px;
+        font-weight: 400;
+        line-height: 38px;
+        padding-left: 40px;
+        text-decoration: none;
+        text-transform: uppercase;
+        width: 210px;
+
+        &:hover,
+        &-active {
+            background-color: $white;
+            color: $black;
+            text-decoration: none;
+        }
+
     }
 }

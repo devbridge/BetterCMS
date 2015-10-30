@@ -87,18 +87,6 @@ WriteLiteral("></div>\r\n");
                 {
                     if (!lastItemIsHr)
                     {
-
-            
-            #line default
-            #line hidden
-WriteLiteral("                        <div");
-
-WriteLiteral(" class=\"bcms-settings-separator\"");
-
-WriteLiteral("></div>\r\n");
-
-            
-            #line 20 "..\..\Views\SiteSettings\Container.cshtml"
                         lastItemIsHr = true;
                     }
                 }
@@ -109,21 +97,6 @@ WriteLiteral("></div>\r\n");
                         lastItemIsHr = false;
                     }
                 }
-            }
-            if (!lastItemIsHr)
-            {
-
-            
-            #line default
-            #line hidden
-WriteLiteral("                <div");
-
-WriteLiteral(" class=\"bcms-settings-separator\"");
-
-WriteLiteral("></div>\r\n");
-
-            
-            #line 34 "..\..\Views\SiteSettings\Container.cshtml"
             }
         
             

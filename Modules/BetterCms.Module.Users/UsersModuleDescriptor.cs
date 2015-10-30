@@ -193,7 +193,7 @@ namespace BetterCms.Module.Users
                         {
                             Order = 4100,
                             Title = page => UsersGlobalization.SiteSettings_UserMenuItem,
-                            CssClass = page => "bcms-sidebar-link",
+                            CssClass = page => "bcms-settings-link",
                             AccessRole = RootModuleConstants.UserRoles.ManageUsers
                         }                                      
                 };

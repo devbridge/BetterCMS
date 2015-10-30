@@ -419,7 +419,7 @@ namespace BetterCms.Module.Pages
                         {
                             Order = 1000,
                             Title = page => PagesGlobalization.SiteSettings_PagesMenuItem,
-                            CssClass = page => "bcms-sidebar-link",
+                            CssClass = page => "bcms-settings-link",
                             AccessRole = RootModuleConstants.UserRoles.MultipleRoles(RootModuleConstants.UserRoles.EditContent, RootModuleConstants.UserRoles.PublishContent, RootModuleConstants.UserRoles.DeleteContent)
                         },
                     
@@ -431,7 +431,7 @@ namespace BetterCms.Module.Pages
                         {
                             Order = 3000,
                             Title = page => PagesGlobalization.SiteSettings_WidgetsMenuItem,
-                            CssClass = page => "bcms-sidebar-link",
+                            CssClass = page => "bcms-settings-link",
                             AccessRole = RootModuleConstants.UserRoles.Administration
                         },
                         
@@ -439,7 +439,7 @@ namespace BetterCms.Module.Pages
                         {
                             Order = 3100,
                             Title = page => PagesGlobalization.SiteSettings_TemplatesMenuItem,
-                            CssClass = page => "bcms-sidebar-link",
+                            CssClass = page => "bcms-settings-link",
                             AccessRole = RootModuleConstants.UserRoles.Administration
                         },
 
@@ -449,7 +449,7 @@ namespace BetterCms.Module.Pages
                         {
                             Order = 4000,
                             Title = page => PagesGlobalization.SiteSettings_Redirects,
-                            CssClass = page => "bcms-sidebar-link",
+                            CssClass = page => "bcms-settings-link",
                             AccessRole = RootModuleConstants.UserRoles.EditContent
                         },
 
@@ -457,7 +457,7 @@ namespace BetterCms.Module.Pages
                         {
                             Order = 4500,
                             Title = page => NavigationGlobalization.SiteSettings_SitemapMenuItem,
-                            CssClass = page => "bcms-sidebar-link",
+                            CssClass = page => "bcms-settings-link",
                             AccessRole = RootModuleConstants.UserRoles.EditContent
                         }                                      
                 };

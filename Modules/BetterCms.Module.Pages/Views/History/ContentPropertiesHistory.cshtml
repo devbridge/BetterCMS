@@ -1,6 +1,7 @@
 ﻿@using BetterCms.Module.Pages.Content.Resources
 @using BetterCms.Module.Root.Mvc.UI
 @model BetterCms.Module.Pages.ViewModels.History.HtmlContentHistoryViewModel
+
 <div class="bcms-padded-content">
     <div class="bcms-newcontent-top">
         <div class="bcms-input-field-holder">
@@ -22,6 +23,7 @@
             </div>
         </div>
     </div>
+
     <div class="bcms-input-list-holder">
         <div class="bcms-content-titles">@PagesGlobalization.HtmlContent_Content_Title</div>
         @Html.TextAreaFor(model => model.RowText, new { @readonly = "readonly", @class = "bcms-editor-field-area bcms-code-field ", @style = "width:820px;", @id = Guid.NewGuid() })
@@ -31,16 +33,19 @@
         <div class="bcms-content-titles">@PagesGlobalization.HtmlContent_CustomCss_Title</div>
         @Html.TextAreaFor(model => model.CustomCss, new { @readonly = "readonly", @class = "bcms-editor-field-area bcms-code-field bcms-code-field-css", @style = "width:820px;", @id = Guid.NewGuid() })
     </div>
+
     <div class="bcms-input-list-holder">
         <div class="bcms-edit-check-field">
             @Html.CheckBoxFor(model => model.UseCustomCss, new { @disabled = "disabled" })
             <div class="bcms-edit-label">@Html.Raw(PagesGlobalization.HtmlContent_RenderCustomCss_Title)</div>
         </div>
     </div>
+
     <div class="bcms-input-list-holder">
         <div class="bcms-content-titles">@PagesGlobalization.HtmlContent_CustomJs_Title</div>
         @Html.TextAreaFor(model => model.CustomJs, new { @readonly = "readonly", @class = "bcms-editor-field-area bcms-code-field bcms-code-field-javascript", @style = "width:820px;", @id = Guid.NewGuid() })
     </div>
+
     <div class="bcms-input-list-holder">
         <div class="bcms-edit-check-field">
             @Html.CheckBoxFor(model => model.UseCustomJs, new { @disabled = "disabled" })

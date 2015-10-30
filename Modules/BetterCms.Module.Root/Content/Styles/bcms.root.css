@@ -580,9 +580,30 @@ button:focus {
 }
 
 .bcms-settings-menu {
-  left: 0;
   position: absolute;
   top: 0;
+  bottom: 0;
+  left: 0;
+  background-color: #f5f5f5;
+}
+
+.bcms-settings-link {
+  color: #a1a1a1;
+  display: block;
+  font-size: 12px;
+  font-weight: 400;
+  line-height: 38px;
+  padding-left: 40px;
+  text-decoration: none;
+  text-transform: uppercase;
+  width: 210px;
+}
+
+.bcms-settings-link:hover,
+.bcms-settings-link-active {
+  background-color: #ffffff;
+  color: #000000;
+  text-decoration: none;
 }
 
 .bcms-inactive {
