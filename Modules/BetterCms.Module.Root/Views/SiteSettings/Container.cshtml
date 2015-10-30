@@ -1,32 +1,34 @@
 ﻿@using BetterCms.Core.Modules.Projections
 @using BetterCms.Module.Root.Mvc
 @model BetterCms.Module.Root.Models.SiteSettingsMenu.SiteSettingsContainerViewModel
+
 <div id="bcms-site-settings" class="bcms-scroll-window">
     <div id="bcms-site-settings-tabs-placeholder"> </div>
-    <div id="bcms-site-settings-placeholder"> </div>
 
-    <div class="bcms-settings-menu" id="bcms-site-settings-menu">
-        <!---<div class="bcms-links-block">  !-->
-        <div class="bcms-settings-separator"></div>
-        @{
-            var lastItemIsHr = true;
-            foreach (var menuItem in Model.MenuItems.Projections)
-            {
-                if (menuItem is SeparatorProjection)
+    <div class="bcms-settings-frame">
+        <div class="bcms-settings-menu" id="bcms-site-settings-menu">
+            @{
+                var lastItemIsHr = true;
+                foreach (var menuItem in Model.MenuItems.Projections)
                 {
-                    if (!lastItemIsHr)
+                    if (menuItem is SeparatorProjection)
                     {
-                        lastItemIsHr = true;
+                        if (!lastItemIsHr)
+                        {
+                            lastItemIsHr = true;
+                        }
                     }
-                }
-                else
-                {
-                    if (menuItem.Render(Model.MenuItems.Page, (ViewContext.Controller as CmsControllerBase).SecurityService, Html))
+                    else
                     {
-                        lastItemIsHr = false;
+                        if (menuItem.Render(Model.MenuItems.Page, (ViewContext.Controller as CmsControllerBase).SecurityService, Html))
+                        {
+                            lastItemIsHr = false;
+                        }
                     }
                 }
             }
-        }
+        </div>
+
+        <div class="bcms-settings-window" id="bcms-site-settings-placeholder"> </div>
     </div>
 </div>

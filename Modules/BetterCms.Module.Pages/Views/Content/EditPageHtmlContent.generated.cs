@@ -109,7 +109,7 @@ WriteLiteral(">");
             
             #line default
             #line hidden
-WriteLiteral("</a>\r\n    </div>\r\n</div>\r\n<div");
+WriteLiteral("</a>\r\n    </div>\r\n</div>\r\n\r\n<div");
 
 WriteLiteral(" class=\"bcms-scroll-window\"");
 
@@ -122,7 +122,7 @@ WriteLiteral(">\r\n");
 WriteLiteral("        ");
 
             
-            #line 18 "..\..\Views\Content\EditPageHtmlContent.cshtml"
+            #line 19 "..\..\Views\Content\EditPageHtmlContent.cshtml"
    Write(Html.TabbedContentMessagesBox());
 
             
@@ -133,7 +133,7 @@ WriteLiteral("\r\n");
 WriteLiteral("        ");
 
             
-            #line 19 "..\..\Views\Content\EditPageHtmlContent.cshtml"
+            #line 20 "..\..\Views\Content\EditPageHtmlContent.cshtml"
    Write(Html.Partial("Partial/WarnMessageAboutDraft", Model));
 
             
@@ -142,13 +142,13 @@ WriteLiteral("        ");
 WriteLiteral("\r\n\r\n");
 
             
-            #line 21 "..\..\Views\Content\EditPageHtmlContent.cshtml"
+            #line 22 "..\..\Views\Content\EditPageHtmlContent.cshtml"
         
             
             #line default
             #line hidden
             
-            #line 21 "..\..\Views\Content\EditPageHtmlContent.cshtml"
+            #line 22 "..\..\Views\Content\EditPageHtmlContent.cshtml"
          using (Html.BeginForm<ContentController>(c => c.SavePageHtmlContent(null), FormMethod.Post,
         new
         {
@@ -157,7 +157,6 @@ WriteLiteral("\r\n\r\n");
             data_readonly = Model.IsReadOnly.ToString().ToLowerInvariant()
         }))
         {
-
 
             
             #line default
