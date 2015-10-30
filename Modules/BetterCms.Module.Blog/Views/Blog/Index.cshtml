@@ -68,7 +68,6 @@
 
 @using (Html.BeginForm<BlogController>(f => f.Index(null), FormMethod.Post, new { @id = "bcms-blogs-form", @class = "bcms-ajax-form" }))
 {
-    <div class="bcms-modal-frame-holder">
     @Html.SiteSettingsMessagesBox()
 
     @Html.HiddenGridOptions(Model.GridOptions)
@@ -103,18 +102,20 @@
     </div>
     
     @Html.Grid(Model.Items).Sort(Model.GridOptions).Columns(columns).Attributes(@class => "bcms-tables").RenderUsing(new EditableHtmlTableGridRenderer<SiteSettingBlogPostViewModel>())
-    </div>
 }
 
 <script type="text/html" id="bcms-blogs-list-row-template">
     @Html.Grid(new List<SiteSettingBlogPostViewModel> { new SiteSettingBlogPostViewModel() }).Columns(columns).Attributes(@class => "bcms-tables").RenderUsing(new HtmlTableGridSingleRowRenderer<SiteSettingBlogPostViewModel>())
 </script>
+
 <script type="text/html" id="bcms-pagestatus-published-template">
     @Html.Partial("EditorTemplates/PageStatus", PageStatus.Published)
 </script>
+
 <script type="text/html" id="bcms-pagestatus-unpublished-template">
     @Html.Partial("EditorTemplates/PageStatus", PageStatus.Unpublished)
 </script>
+
 <script type="text/html" id="bcms-pagestatus-draft-template">
     @Html.Partial("EditorTemplates/PageStatus", PageStatus.Draft)
 </script>

@@ -20,7 +20,6 @@
 }
 @using (Html.BeginForm<CategoryController>(f => f.CategoryTrees(null), FormMethod.Post, new { @id = "bcms-categorytrees-form", @class = "bcms-ajax-form" }))
 {
- <div class="bcms-modal-frame-holder">
         @Html.SiteSettingsMessagesBox()
         @Html.HiddenGridOptions(Model.GridOptions)
         <div class="bcms-top-block-holder">
@@ -39,8 +38,8 @@
         </div>
 
     @Html.Grid(Model.Items).Sort(Model.GridOptions).Columns(columns).Attributes(@class => "bcms-tables").RenderUsing(new EditableHtmlTableGridRenderer<SiteSettingCategoryTreeViewModel>())
-</div>
 }
+
 <script type="text/html" id="bcms-categorytree-list-row-template">
     @Html.Grid(new List<SiteSettingCategoryTreeViewModel> { new SiteSettingCategoryTreeViewModel() }).Columns(columns).Attributes(@class => "bcms-tables").RenderUsing(new HtmlTableGridSingleRowRenderer<SiteSettingCategoryTreeViewModel>())
 </script>

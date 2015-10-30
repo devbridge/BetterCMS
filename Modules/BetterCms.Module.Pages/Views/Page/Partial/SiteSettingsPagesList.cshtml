@@ -69,10 +69,10 @@
         }
     };
 }
-<div class="bcms-modal-frame-holder">
-    @Html.SiteSettingsMessagesBox()
 
-    <div class="bcms-top-block-holder">
+@Html.SiteSettingsMessagesBox()
+
+<div class="bcms-top-block-holder">
         <div class="bcms-large-titles">@PagesGlobalization.SiteSettings_Pages_Title</div>
         @if ((ViewContext.Controller as CmsControllerBase).SecurityService.IsAuthorized(RootModuleConstants.UserRoles.EditContent))
         {
@@ -87,10 +87,10 @@
             @Html.RenderPaging(Model)
             @Html.Partial("~/Areas/bcms-pages/Views/Filter/PagesFilterTemplate.cshtml", Model)
         </div>
-    </div>
-
-    @Html.Grid(Model.Items).Sort(Model.GridOptions).Columns(columns).Attributes(@class => "bcms-tables").RenderUsing(new EditableHtmlTableGridRenderer<SiteSettingPageViewModel>())
 </div>
+
+@Html.Grid(Model.Items).Sort(Model.GridOptions).Columns(columns).Attributes(@class => "bcms-tables").RenderUsing(new EditableHtmlTableGridRenderer<SiteSettingPageViewModel>())
+
 
 <script type="text/html" id="bcms-pages-list-row-template">
     @Html.Grid(new List<SiteSettingPageViewModel> { new SiteSettingPageViewModel() }).Columns(columns).Attributes(@class => "bcms-tables").RenderUsing(new HtmlTableGridSingleRowRenderer<SiteSettingPageViewModel>())

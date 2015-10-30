@@ -108,24 +108,16 @@ namespace ASP
             
             #line default
             #line hidden
-WriteLiteral("\n");
+WriteLiteral("\n\n");
 
             
-            #line 23 "..\..\Views\Sitemap\Sitemaps.cshtml"
+            #line 24 "..\..\Views\Sitemap\Sitemaps.cshtml"
  using (Html.BeginForm<SitemapController>(f => f.Sitemaps(null), FormMethod.Post, new { @id = "bcms-sitemaps-form", @class = "bcms-ajax-form" }))
 {
-
+        
             
             #line default
             #line hidden
-WriteLiteral("    <div");
-
-WriteLiteral(" class=\"bcms-modal-frame-holder\"");
-
-WriteLiteral(">\r\n");
-
-WriteLiteral("        ");
-
             
             #line 26 "..\..\Views\Sitemap\Sitemaps.cshtml"
    Write(Html.SiteSettingsMessagesBox());
@@ -133,10 +125,13 @@ WriteLiteral("        ");
             
             #line default
             #line hidden
-WriteLiteral("\r\n");
-
-WriteLiteral("        ");
-
+            
+            #line 26 "..\..\Views\Sitemap\Sitemaps.cshtml"
+                                       
+        
+            
+            #line default
+            #line hidden
             
             #line 27 "..\..\Views\Sitemap\Sitemaps.cshtml"
    Write(Html.HiddenGridOptions(Model.GridOptions));
@@ -144,7 +139,14 @@ WriteLiteral("        ");
             
             #line default
             #line hidden
-WriteLiteral("\r\n        <div");
+            
+            #line 27 "..\..\Views\Sitemap\Sitemaps.cshtml"
+                                                  
+
+            
+            #line default
+            #line hidden
+WriteLiteral("        <div");
 
 WriteLiteral(" class=\"bcms-top-block-holder\"");
 
@@ -221,10 +223,15 @@ WriteLiteral("                ");
             
             #line default
             #line hidden
-WriteLiteral("\r\n            </div>\r\n        </div>\r\n     \r\n");
+WriteLiteral("\r\n            </div>\r\n        </div>\r\n");
 
-WriteLiteral("        ");
-
+            
+            #line 42 "..\..\Views\Sitemap\Sitemaps.cshtml"
+     
+        
+            
+            #line default
+            #line hidden
             
             #line 43 "..\..\Views\Sitemap\Sitemaps.cshtml"
    Write(Html.Grid(Model.Items).Sort(Model.GridOptions).Columns(columns).Attributes(@class => "bcms-tables").RenderUsing(new EditableHtmlTableGridRenderer<SiteSettingSitemapViewModel>()));
@@ -232,10 +239,9 @@ WriteLiteral("        ");
             
             #line default
             #line hidden
-WriteLiteral("\r\n    </div>\r\n");
-
             
-            #line 45 "..\..\Views\Sitemap\Sitemaps.cshtml"
+            #line 43 "..\..\Views\Sitemap\Sitemaps.cshtml"
+                                                                                                                                                                                          
 }
 
             
@@ -252,7 +258,7 @@ WriteLiteral(">\r\n");
 WriteLiteral("    ");
 
             
-            #line 48 "..\..\Views\Sitemap\Sitemaps.cshtml"
+            #line 47 "..\..\Views\Sitemap\Sitemaps.cshtml"
 Write(Html.Grid(new List<SiteSettingSitemapViewModel> { new SiteSettingSitemapViewModel() }).Columns(columns).Attributes(@class => "bcms-tables").RenderUsing(new HtmlTableGridSingleRowRenderer<SiteSettingSitemapViewModel>()));
 
             

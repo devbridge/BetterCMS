@@ -14,7 +14,6 @@
 </div>
 
 <div id="bcms-categorytree-addnode">
-    <div class="bcms-modal-frame-holder">
         @Html.TabbedContentMessagesBox()
         @* Form is required for unobtrusive validation. *@
         @using (Html.BeginForm<CategoryController>(f => f.EditCategoryTree(null), FormMethod.Post, new
@@ -90,7 +89,6 @@
                 </div>
             </div>
         }
-    </div>
 </div>
 
 @Html.Partial("Partial/CategoryTreeTemplate", new CategoryTreeNodeViewModel())

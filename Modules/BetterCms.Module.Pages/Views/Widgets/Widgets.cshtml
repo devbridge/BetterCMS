@@ -30,11 +30,6 @@
             .SortColumnName("WidgetName")
             .HeaderAttributes(@style => "width: 245px;")
             .Encode(false);
-        // TODO Categories
-//        column.For(f => f.CategoryName)
-//            .Named(PagesGlobalization.SiteSettings_Widgets_CategoryColumn)
-//            .SortColumnName("CategoryName")
-//            .Attributes(@class => "bcms-category-name");
 
         column.For(f => Html.EditorFor(e => f.Status, "WidgetStatus"))
             .Named(PagesGlobalization.SiteSettings_Widgets_StatusColumn)
@@ -58,7 +53,6 @@
 
 @using (Html.BeginForm<WidgetsController>(f => f.Widgets(null), FormMethod.Post, new { @id = "bcms-widgets-form", @class = "bcms-ajax-form" }))
 {
-    <div class="bcms-modal-frame-holder">
         @Html.SiteSettingsMessagesBox()
         @Html.HiddenGridOptions(Model.GridOptions)
 
@@ -96,7 +90,6 @@
                               };
                   })
           .RenderUsing(new EditableHtmlTableGridRenderer<SiteSettingWidgetItemViewModel>()))
-    </div>
 }
 
 <script type="text/html" id="bcms-widget-list-row-template">

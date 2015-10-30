@@ -181,13 +181,7 @@ WriteLiteral("\n\n");
             
             #line default
             #line hidden
-WriteLiteral("\n<div");
-
-WriteLiteral(" class=\"bcms-modal-frame-holder\"");
-
-WriteLiteral(">\n");
-
-WriteLiteral("    ");
+WriteLiteral("\n\n");
 
             
             #line 73 "..\..\Views\Page\Partial\SiteSettingsPagesList.cshtml"
@@ -196,7 +190,7 @@ Write(Html.SiteSettingsMessagesBox());
             
             #line default
             #line hidden
-WriteLiteral("\n\n    <div");
+WriteLiteral("\n\n<div");
 
 WriteLiteral(" class=\"bcms-top-block-holder\"");
 
@@ -309,9 +303,7 @@ WriteLiteral("            ");
             
             #line default
             #line hidden
-WriteLiteral("\n        </div>\n    </div>\n\n");
-
-WriteLiteral("    ");
+WriteLiteral("\n        </div>\n</div>\n\n");
 
             
             #line 92 "..\..\Views\Page\Partial\SiteSettingsPagesList.cshtml"
@@ -320,7 +312,7 @@ Write(Html.Grid(Model.Items).Sort(Model.GridOptions).Columns(columns).Attributes
             
             #line default
             #line hidden
-WriteLiteral("\n</div>\n\n<script");
+WriteLiteral("\n\n\n<script");
 
 WriteLiteral(" type=\"text/html\"");
 

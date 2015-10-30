@@ -26,7 +26,7 @@
 
         column.InlineEditControlsColumn();
     };
-    <div class="bcms-modal-frame-holder">     
+       
         @Html.SiteSettingsMessagesBox()
         @Html.HiddenGridOptions(Model.GridOptions)
         <div class="bcms-top-block-holder">
@@ -46,7 +46,6 @@
 
         @Html.Grid(Model.Items).Sort(Model.GridOptions).Columns(columns).Attributes(@class => "bcms-tables").RenderUsing(new EditableHtmlTableGridRenderer<TagItemViewModel>())
         @Html.HiddenSubmit()
-    </div>
 }
 
 <script type="text/html" id="bcms-editable-row-template">
