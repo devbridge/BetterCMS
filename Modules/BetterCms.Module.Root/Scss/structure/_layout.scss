@@ -59,14 +59,14 @@ button {
     }
 
     &-body {
-        background: $white;
+        background-color: $white;
         margin: auto;
         position: relative;
     }
 
     &-header {
         @include position(absolute, 0 0 null);
-        background: $main-dark;
+        background-color: $main-dark;
         box-sizing: border-box;
         height: $header-height;
         line-height: $header-height;
@@ -133,7 +133,7 @@ button {
 
 .bcms-settings {
     &-menu {
-        @include position(absolute, 0 null 0 0);
+        //@include position(absolute, 0 null 0 0);
         background-color: $gray-l30;
     }
 

@@ -51,11 +51,12 @@ WriteLiteral(" id=\"bcms-contents-tree-template\"");
 
 WriteLiteral(@">
     <div class=""bcms-scroll-window"" id=""bcms-contents-tree"">
+        <div class=""bcms-modal-frame-holder"">
             <div class=""bcms-tree-container"" data-bind=""visible: visibleItems().length > 0, with: visibleItems()"">
                 <h2 data-bind=""visible: $parent.invisibleItems().length > 0"">");
 
             
-            #line 5 "..\..\Views\Shared\Partial\ContentsTree.cshtml"
+            #line 6 "..\..\Views\Shared\Partial\ContentsTree.cshtml"
                                                                         Write(RootGlobalization.ContentsTree_VisibleItems_Title);
 
             
@@ -69,14 +70,15 @@ WriteLiteral(@"</h2>
                 <h2>");
 
             
-            #line 10 "..\..\Views\Shared\Partial\ContentsTree.cshtml"
+            #line 11 "..\..\Views\Shared\Partial\ContentsTree.cshtml"
                Write(RootGlobalization.ContentsTree_InvisibleItems_Title);
 
             
             #line default
             #line hidden
 WriteLiteral("</h2>\r\n                <div data-bind=\'template: { name: \"bcms-contents-tree-list" +
-"-template\" }\'></div>\r\n            </div>\r\n    </div>\r\n</script>\r\n\r\n<script");
+"-template\" }\'></div>\r\n            </div>\r\n        </div>\r\n    </div>\r\n</script>\r" +
+"\n\r\n<script");
 
 WriteLiteral(" type=\"text/html\"");
 

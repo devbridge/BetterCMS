@@ -901,7 +901,7 @@ button:focus {
 }
 
 .bcms-modal-body {
-  background: #ffffff;
+  background-color: #ffffff;
   margin: auto;
   position: relative;
 }
@@ -911,7 +911,7 @@ button:focus {
   top: 0;
   right: 0;
   left: 0;
-  background: #303646;
+  background-color: #303646;
   box-sizing: border-box;
   height: 55px;
   line-height: 55px;
@@ -980,10 +980,6 @@ button:focus {
 }
 
 .bcms-settings-menu {
-  position: absolute;
-  top: 0;
-  bottom: 0;
-  left: 0;
   background-color: #f5f5f5;
 }
 

@@ -73,13 +73,15 @@ namespace ASP
         }
         public override void Execute()
         {
-WriteLiteral("\n");
-
 WriteLiteral("<div");
 
 WriteLiteral(" class=\"bcms-tab-header\"");
 
-WriteLiteral(">\n    <a");
+WriteLiteral(">\r\n    <div");
+
+WriteLiteral(" class=\"bcms-modal-frame-holder\"");
+
+WriteLiteral(">\r\n        <a");
 
 WriteLiteral(" class=\"bcms-tab-item bcms-active\"");
 
@@ -89,12 +91,12 @@ WriteLiteral(">");
 
             
             #line 11 "..\..\Views\Content\AddPageHtmlContent.cshtml"
-                                                            Write(PagesGlobalization.AddPageContent_RegularContentTab_Title);
+                                                                Write(PagesGlobalization.AddPageContent_RegularContentTab_Title);
 
             
             #line default
             #line hidden
-WriteLiteral("</a>\n    <a");
+WriteLiteral("</a>\r\n        <a");
 
 WriteLiteral(" class=\"bcms-tab-item\"");
 
@@ -104,44 +106,48 @@ WriteLiteral(">");
 
             
             #line 12 "..\..\Views\Content\AddPageHtmlContent.cshtml"
-                                                Write(PagesGlobalization.EditPageContent_AdvancedOptionsTab_Title);
+                                                    Write(PagesGlobalization.EditPageContent_AdvancedOptionsTab_Title);
 
             
             #line default
             #line hidden
-WriteLiteral("</a>\n</div>\n");
+WriteLiteral("</a>\r\n    </div>\r\n</div>\r\n\r\n");
 
             
-            #line 14 "..\..\Views\Content\AddPageHtmlContent.cshtml"
+            #line 16 "..\..\Views\Content\AddPageHtmlContent.cshtml"
    ViewBag.CanEdit = (ViewContext.Controller as CmsControllerBase).SecurityService.IsAuthorized(RootModuleConstants.UserRoles.EditContent); 
             
             #line default
             #line hidden
-WriteLiteral("\n<div");
+WriteLiteral("\r\n\r\n<div");
 
 WriteLiteral(" class=\"bcms-scroll-window\"");
 
-WriteLiteral(">\n");
+WriteLiteral(">\r\n    <div");
 
-WriteLiteral("    ");
+WriteLiteral(" class=\"bcms-modal-frame-holder\"");
+
+WriteLiteral(">\r\n");
+
+WriteLiteral("        ");
 
             
-            #line 16 "..\..\Views\Content\AddPageHtmlContent.cshtml"
-Write(Html.TabbedContentMessagesBox());
+            #line 20 "..\..\Views\Content\AddPageHtmlContent.cshtml"
+   Write(Html.TabbedContentMessagesBox());
 
             
             #line default
             #line hidden
-WriteLiteral("\n\n");
+WriteLiteral("\r\n\r\n");
 
             
-            #line 18 "..\..\Views\Content\AddPageHtmlContent.cshtml"
+            #line 22 "..\..\Views\Content\AddPageHtmlContent.cshtml"
         
             
             #line default
             #line hidden
             
-            #line 18 "..\..\Views\Content\AddPageHtmlContent.cshtml"
+            #line 22 "..\..\Views\Content\AddPageHtmlContent.cshtml"
          using (Html.BeginForm<ContentController>(c => c.SavePageHtmlContent(null), FormMethod.Post, new { @id = "bcms-content-form", @class = "bcms-ajax-form" }))
         {
 
@@ -154,87 +160,87 @@ WriteLiteral(" id=\"bcms-tab-1\"");
 
 WriteLiteral(" class=\"bcms-tab-single\"");
 
-WriteLiteral(">\n");
-
-WriteLiteral("                ");
-
-            
-            #line 21 "..\..\Views\Content\AddPageHtmlContent.cshtml"
-           Write(Html.Partial("Partial/EditHtmlContent", Model));
-
-            
-            #line default
-            #line hidden
-WriteLiteral("\n");
-
-WriteLiteral("                ");
-
-            
-            #line 22 "..\..\Views\Content\AddPageHtmlContent.cshtml"
-           Write(Html.HiddenFor(model => model.Id, new { @id = "bcmsPageContentId" }));
-
-            
-            #line default
-            #line hidden
-WriteLiteral("\n");
-
-WriteLiteral("                ");
-
-            
-            #line 23 "..\..\Views\Content\AddPageHtmlContent.cshtml"
-           Write(Html.HiddenFor(model => model.ContentId, new { @id = "bcmsContentId" }));
-
-            
-            #line default
-            #line hidden
-WriteLiteral("\n");
-
-WriteLiteral("                ");
-
-            
-            #line 24 "..\..\Views\Content\AddPageHtmlContent.cshtml"
-           Write(Html.HiddenFor(model => model.ParentPageContentId, new { @id = "bcmsParentPageContentId" }));
-
-            
-            #line default
-            #line hidden
-WriteLiteral("\n");
+WriteLiteral(">\r\n");
 
 WriteLiteral("                ");
 
             
             #line 25 "..\..\Views\Content\AddPageHtmlContent.cshtml"
-           Write(Html.HiddenFor(model => model.PageId));
+           Write(Html.Partial("Partial/EditHtmlContent", Model));
 
             
             #line default
             #line hidden
-WriteLiteral("\n");
+WriteLiteral("\r\n");
 
 WriteLiteral("                ");
 
             
             #line 26 "..\..\Views\Content\AddPageHtmlContent.cshtml"
-           Write(Html.HiddenFor(model => model.RegionId, new { @id = "bcmsContentToRegionId" }));
+           Write(Html.HiddenFor(model => model.Id, new { @id = "bcmsPageContentId" }));
 
             
             #line default
             #line hidden
-WriteLiteral("\n");
+WriteLiteral("\r\n");
 
 WriteLiteral("                ");
 
             
             #line 27 "..\..\Views\Content\AddPageHtmlContent.cshtml"
+           Write(Html.HiddenFor(model => model.ContentId, new { @id = "bcmsContentId" }));
+
+            
+            #line default
+            #line hidden
+WriteLiteral("\r\n");
+
+WriteLiteral("                ");
+
+            
+            #line 28 "..\..\Views\Content\AddPageHtmlContent.cshtml"
+           Write(Html.HiddenFor(model => model.ParentPageContentId, new { @id = "bcmsParentPageContentId" }));
+
+            
+            #line default
+            #line hidden
+WriteLiteral("\r\n");
+
+WriteLiteral("                ");
+
+            
+            #line 29 "..\..\Views\Content\AddPageHtmlContent.cshtml"
+           Write(Html.HiddenFor(model => model.PageId));
+
+            
+            #line default
+            #line hidden
+WriteLiteral("\r\n");
+
+WriteLiteral("                ");
+
+            
+            #line 30 "..\..\Views\Content\AddPageHtmlContent.cshtml"
+           Write(Html.HiddenFor(model => model.RegionId, new { @id = "bcmsContentToRegionId" }));
+
+            
+            #line default
+            #line hidden
+WriteLiteral("\r\n");
+
+WriteLiteral("                ");
+
+            
+            #line 31 "..\..\Views\Content\AddPageHtmlContent.cshtml"
            Write(Html.HiddenFor(modal => modal.DesirableStatus, new { @class = "bcms-content-desirable-status" }));
 
             
             #line default
             #line hidden
-WriteLiteral("\n            </div>\n");
+WriteLiteral("\r\n            </div>\r\n");
 
             
-            #line 29 "..\..\Views\Content\AddPageHtmlContent.cshtml"
+            #line 33 "..\..\Views\Content\AddPageHtmlContent.cshtml"
 
 
             
@@ -246,27 +252,27 @@ WriteLiteral(" id=\"bcms-tab-2\"");
 
 WriteLiteral(" class=\"bcms-tab-single\"");
 
-WriteLiteral(">\n");
+WriteLiteral(">\r\n");
 
 WriteLiteral("                ");
 
             
-            #line 31 "..\..\Views\Content\AddPageHtmlContent.cshtml"
+            #line 35 "..\..\Views\Content\AddPageHtmlContent.cshtml"
            Write(Html.Partial("Partial/EditHtmlContentJsCss", Model));
 
             
             #line default
             #line hidden
-WriteLiteral("\n            </div>\n");
+WriteLiteral("\r\n            </div>\r\n");
 
             
-            #line 33 "..\..\Views\Content\AddPageHtmlContent.cshtml"
+            #line 37 "..\..\Views\Content\AddPageHtmlContent.cshtml"
         }
 
             
             #line default
             #line hidden
-WriteLiteral("</div>");
+WriteLiteral("    </div>\r\n</div>");
 
         }
     }

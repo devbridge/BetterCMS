@@ -4,16 +4,20 @@
 @using BetterCms.Module.Root.Mvc
 @using BetterCms.Module.Root.Mvc.Helpers
 @using Microsoft.Web.Mvc
-
 @model BetterCms.Module.Pages.ViewModels.Content.PageContentViewModel
 
 <div class="bcms-tab-header">
-    <a class="bcms-tab-item bcms-active" data-name="#bcms-tab-1">@PagesGlobalization.AddPageContent_RegularContentTab_Title</a>
-    <a class="bcms-tab-item" data-name="#bcms-tab-2">@PagesGlobalization.EditPageContent_AdvancedOptionsTab_Title</a>
+    <div class="bcms-modal-frame-holder">
+        <a class="bcms-tab-item bcms-active" data-name="#bcms-tab-1">@PagesGlobalization.AddPageContent_RegularContentTab_Title</a>
+        <a class="bcms-tab-item" data-name="#bcms-tab-2">@PagesGlobalization.EditPageContent_AdvancedOptionsTab_Title</a>
+    </div>
 </div>
+
 @{ ViewBag.CanEdit = (ViewContext.Controller as CmsControllerBase).SecurityService.IsAuthorized(RootModuleConstants.UserRoles.EditContent); }
+
 <div class="bcms-scroll-window">
-    @Html.TabbedContentMessagesBox()
+    <div class="bcms-modal-frame-holder">
+        @Html.TabbedContentMessagesBox()
 
         @using (Html.BeginForm<ContentController>(c => c.SavePageHtmlContent(null), FormMethod.Post, new { @id = "bcms-content-form", @class = "bcms-ajax-form" }))
         {
@@ -31,4 +35,5 @@
                 @Html.Partial("Partial/EditHtmlContentJsCss", Model)
             </div>
         }
+    </div>
 </div>

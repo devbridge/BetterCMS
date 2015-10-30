@@ -2,28 +2,29 @@
 @using BetterCms.Module.Pages.Controllers
 @using BetterCms.Module.Root.Mvc.Helpers
 @using Microsoft.Web.Mvc
-
 @model BetterCms.Module.Pages.ViewModels.Content.PageContentViewModel
 @if (Model == null)
 {
     return;
 }
 <div class="bcms-tab-header">
-    <a class="bcms-tab-item bcms-active" data-name="#bcms-tab-1">@PagesGlobalization.EditPageContent_RegularContentTab_Title</a>
-    <a class="bcms-tab-item" data-name="#bcms-tab-2">@PagesGlobalization.EditPageContent_AdvancedOptionsTab_Title</a>
+    <div class="bcms-modal-frame-holder">
+        <a class="bcms-tab-item bcms-active" data-name="#bcms-tab-1">@PagesGlobalization.EditPageContent_RegularContentTab_Title</a>
+        <a class="bcms-tab-item" data-name="#bcms-tab-2">@PagesGlobalization.EditPageContent_AdvancedOptionsTab_Title</a>
+    </div>
 </div>
-
 <div class="bcms-scroll-window">
-    @Html.TabbedContentMessagesBox()
-    @Html.Partial("Partial/WarnMessageAboutDraft", Model)
+    <div class="bcms-modal-frame-holder">
+        @Html.TabbedContentMessagesBox()
+        @Html.Partial("Partial/WarnMessageAboutDraft", Model)
 
         @using (Html.BeginForm<ContentController>(c => c.SavePageHtmlContent(null), FormMethod.Post,
-                new
-                    {
-                        @id = "bcms-content-form",
-                        @class = "bcms-ajax-form",
-                        data_readonly = Model.IsReadOnly.ToString().ToLowerInvariant()
-                    }))
+        new
+        {
+            @id = "bcms-content-form",
+            @class = "bcms-ajax-form",
+            data_readonly = Model.IsReadOnly.ToString().ToLowerInvariant()
+        }))
         {
 
             <div id="bcms-tab-1" class="bcms-tab-single">
@@ -38,9 +39,10 @@
                 @Html.HiddenFor(modal => modal.DesirableStatus, new { @class = "bcms-content-desirable-status" })
                 @Html.HiddenFor(modal => modal.IsUserConfirmed, new { @id = "bcms-user-confirmed-region-deletion" })
             </div>
-            
+
             <div id="bcms-tab-2" class="bcms-tab-single">
                 @Html.Partial("Partial/EditHtmlContentJsCss", Model)
             </div>
         }
     </div>
+</div>
