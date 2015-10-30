@@ -54,12 +54,17 @@ WriteLiteral(@">
             <!-- /ko -->
         </div>
     </div>
+</script>
+<script");
 
-    <!-- ko foreach: tabs -->
-    <div class=""bcms-tab-single"" data-bind=""attr: {id: tabId}, stopBinding: true"">
-        ");
+WriteLiteral(" type=\"text/html\"");
 
-WriteLiteral("\r\n        <div></div>\r\n    </div>\r\n    <!-- /ko -->\r\n</script>\r\n");
+WriteLiteral(" id=\"bcms-site-setting-tab-frame-template\"");
+
+WriteLiteral(">\r\n    <!-- ko foreach: tabs -->\r\n    <div class=\"bcms-tab-single\" data-bind=\"att" +
+"r: {id: tabId}, stopBinding: true\">\r\n        ");
+
+WriteLiteral("\r\n        <div></div>\r\n    </div>\r\n    <!-- /ko -->\r\n</script>");
 
         }
     }

@@ -57,6 +57,10 @@ WriteLiteral(" class=\"bcms-scroll-window\"");
 
 WriteLiteral(">\r\n    <div");
 
+WriteLiteral(" id=\"bcms-site-settings-tabs-placeholder\"");
+
+WriteLiteral("> </div>\r\n    <div");
+
 WriteLiteral(" id=\"bcms-site-settings-placeholder\"");
 
 WriteLiteral("> </div>\r\n\r\n    <div");
@@ -102,7 +106,7 @@ WriteLiteral("></div>\r\n");
             
             #line default
             #line hidden
-WriteLiteral("\r\n    </div>\r\n</div>\r\n");
+WriteLiteral("\r\n    </div>\r\n</div>");
 
         }
     }
