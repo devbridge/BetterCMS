@@ -61,12 +61,10 @@ WriteLiteral(" type=\"text/html\"");
 
 WriteLiteral(" id=\"bcms-site-setting-tab-frame-template\"");
 
-WriteLiteral(">\r\n     <div class=\"bcms-modal-frame-holder\">\r\n        <!-- ko foreach: tabs -->\r" +
-"\n        <div class=\"bcms-tab-single\" data-bind=\"attr: {id: tabId}, stopBinding:" +
-" true\">\r\n            ");
+WriteLiteral(">\r\n    <!-- ko foreach: tabs -->\r\n    <div class=\"bcms-tab-single\" data-bind=\"att" +
+"r: {id: tabId}, stopBinding: true\">\r\n        ");
 
-WriteLiteral("\r\n            <div></div>\r\n        </div>\r\n        <!-- /ko -->\r\n    </div>\r\n</sc" +
-"ript>\r\n");
+WriteLiteral("\r\n        <div></div>\r\n    </div>\r\n    <!-- /ko -->\r\n</script>");
 
         }
     }
