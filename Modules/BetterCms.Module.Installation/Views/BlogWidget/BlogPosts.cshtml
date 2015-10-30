@@ -1,0 +1,63 @@
+﻿@using BetterCms.Module.Installation.Models.Blog
+@model BlogItemsModel
+
+@foreach (var item in Model.Items)
+{
+    <section class="blog-post">
+        <h2>
+            <a href="@item.Url">@item.Title</a>
+        </h2>
+        @if (Model.ShowAuthor)
+        {
+            <span class="author">@item.Author</span>
+        }
+        @if (Model.ShowDate)
+        {
+            <time datetime="@item.PublishedOn.ToString("yyyy-MM-dd")">@item.PublishedOn.ToString("MMM d, yyyy")</time>
+        }
+        <br />
+        <span>
+            @if (item.Tags.Count > 0 && Model.ShowTags)
+            {
+                <span>Tags:</span>
+                foreach (var tag in item.Tags)
+                {
+                    <a href="@Request.Path?blogtag=@tag" class="single-tag">@tag</a>
+                }
+            }
+        </span>
+        <span>
+            @if (item.Categories.Count > 0 && Model.ShowCategories)
+            {
+                <span>Categories:</span>
+                foreach (var category in item.Categories)
+                {
+                    <a href="@Request.Path?blogcategory=@category.Name" class="single-category">@category.Name</a>
+                }
+            }
+        </span>
+        <article>
+            <p>@Html.Raw(item.IntroText)</p>
+
+            <a href="@item.Url">&lt; Read more &gt;</a>
+        </article>
+    </section>
+}
+
+@if (Model.ShowPager && Model.Items.Count > 0)
+{
+    <section class="blog-pager">
+        @for (int i = 1; i <= Model.NumberOfPages; i++)
+        {
+            if (Model.CurrentPage == i)
+            {
+                <a href="@Request.Path?blogpage=@i" class="blog-page" style="pointer-events: none; cursor: default">@i</a>
+            }
+            else
+            {
+                <a href="@Request.Path?blogpage=@i" class="blog-page">@i</a>
+            }
+        }
+    </section>
+}
+

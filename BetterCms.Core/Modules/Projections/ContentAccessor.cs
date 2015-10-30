@@ -31,6 +31,7 @@ namespace BetterCms.Core.Modules.Projections
 
     public interface IContentAccessor : IHtmlAccessor, IStylesheetAccessor, IJavaScriptAccessor
     {
+        PropertiesPreview GetHtmlPropertiesPreview();
     }
 
     [Serializable]
@@ -63,5 +64,10 @@ namespace BetterCms.Core.Modules.Projections
         public abstract string[] GetStylesResources(HtmlHelper html);
 
         public abstract string[] GetJavaScriptResources(HtmlHelper html);
+
+        public virtual PropertiesPreview GetHtmlPropertiesPreview()
+        {
+            return null;
+        }
     }
 }

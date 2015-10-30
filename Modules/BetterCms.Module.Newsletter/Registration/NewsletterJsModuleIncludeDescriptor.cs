@@ -23,6 +23,7 @@ namespace BetterCms.Module.Newsletter.Registration
                     new JavaScriptModuleLinkTo<SubscriberController>(this, "loadSubscribersUrl", c => c.SubscribersList(null)),
                     new JavaScriptModuleLinkTo<SubscriberController>(this, "saveSubscriberUrl", c => c.SaveSubscriber(null)),
                     new JavaScriptModuleLinkTo<SubscriberController>(this, "deleteSubscriberUrl", c => c.DeleteSubscriber(null, null)),
+                    new JavaScriptModuleLinkTo<SubscriberController>(this, "downoadCsvUrl", c => c.DownoadInCsv()),
                 };
 
             Globalization = new IActionProjection[]

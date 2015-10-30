@@ -202,12 +202,14 @@
     <Compile Include="Exceptions\Api\CmsApiException.cs" />
     <Compile Include="Exceptions\Api\CmsApiValidationException.cs" />
     <Compile Include="Exceptions\Mvc\ConfirmationRequestException.cs" />
+    <Compile Include="Extensions\IOptionValueExtensions.cs" />
     <Compile Include="IMultilingualOption.cs" />
     <Compile Include="Modules\CssIncludeDescriptor.cs" />
     <Compile Include="Modules\JsIncludeDescriptor.cs" />
     <Compile Include="Modules\JsShimConfigDescriptor.cs" />
     <Compile Include="Modules\Projections\JavaScriptModuleLink.cs" />
     <Compile Include="Modules\Projections\LinkToNewTabProjection.cs" />
+    <Compile Include="Modules\Projections\PropertiesPreview.cs" />
     <Compile Include="Modules\Registration\CmsModulesRegistration.cs" />
     <Compile Include="Modules\Registration\ICmsModulesRegistration.cs" />
     <Compile Include="Mvc\Binders\JSONDataBinder.cs" />

@@ -5,12 +5,15 @@ bettercms.define('bcms.newsletter', ['bcms.jquery', 'bcms', 'bcms.siteSettings',
         'use strict';
 
         var newsletter = {},
-            selectors = {},
+            selectors = {
+                downloadSubscribersInCsv: '#download-subscribers-in-csv'
+            },
             links = {
                 loadSiteSettingsSubscribersUrl: null,
                 loadSubscribersUrl: null,
                 saveSubscriberUrl: null,
-                deleteSubscriberUrl: null
+                deleteSubscriberUrl: null,
+                downoadCsvUrl: null
             },
             globalization = {
                 deleteSubscriberDialogTitle: null
@@ -95,6 +98,10 @@ bettercms.define('bcms.newsletter', ['bcms.jquery', 'bcms', 'bcms.siteSettings',
             if (firstVisibleInputField) {
                 firstVisibleInputField.focus();
             }
+
+            $(container.find(selectors.downloadSubscribersInCsv)).on('click', function() {
+                window.location.href = links.downoadCsvUrl;
+            });
         }
 
         /**

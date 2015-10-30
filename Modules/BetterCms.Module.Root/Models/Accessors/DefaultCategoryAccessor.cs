@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System.Collections.Generic;
+using System.Linq;
 
 using BetterCms.Core.DataContracts;
 
@@ -6,6 +7,7 @@ using BetterModules.Core.DataAccess;
 using BetterModules.Core.DataAccess.DataContext;
 
 using NHibernate;
+using NHibernate.Linq;
 
 namespace BetterCms.Module.Root.Models.Accessors
 {
@@ -30,6 +32,11 @@ namespace BetterCms.Module.Root.Models.Accessors
         {
             var query = repository.AsQueryable<T>().Where(ec => (CategoryTree)ec.Category.CategoryTree == categoryTree).ToRowCountFutureValue();
             return query;
+        }
+
+        public IEnumerable<IEntityCategory> QueryEntityCategories(IRepository repository, ICategory category)
+        {
+            return repository.AsQueryable<T>().Where(c => c.Category.Id == category.Id).ToFuture();
         }
     }
 }

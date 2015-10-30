@@ -282,6 +282,11 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>BlogsFilterTemplate.cshtml</DependentUpon>
     </Compile>
+    <Compile Include="Views\History\BlogPropertiesHistory.generated.cs">
+      <DependentUpon>BlogPropertiesHistory.cshtml</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+    </Compile>
     <Compile Include="Views\Option\Settings.generated.cs">
       <DependentUpon>Settings.cshtml</DependentUpon>
       <AutoGen>True</AutoGen>
@@ -360,6 +365,10 @@
     </None>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Views\History\BlogPropertiesHistory.cshtml">
+      <Generator>RazorGenerator</Generator>
+      <LastGenOutput>BlogPropertiesHistory.generated.cs</LastGenOutput>
+    </Content>
     <None Include="Views\Option\Settings.cshtml">
       <Generator>RazorGenerator</Generator>
       <LastGenOutput>Settings.generated.cs</LastGenOutput>

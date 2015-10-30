@@ -754,6 +754,15 @@ namespace BetterCms.Module.Pages.Content.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Visual Preview.
+        /// </summary>
+        public static string ContentHistory_ContentTab_Title {
+            get {
+                return ResourceManager.GetString("ContentHistory_ContentTab_Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Destroy.
         /// </summary>
         public static string ContentHistory_Destroy_AcceptButtonTitle {
@@ -790,6 +799,15 @@ namespace BetterCms.Module.Pages.Content.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Data Preview.
+        /// </summary>
+        public static string ContentHistory_PropertiesTab_Title {
+            get {
+                return ResourceManager.GetString("ContentHistory_PropertiesTab_Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Restore.
         /// </summary>
         public static string ContentHistory_Restore_AcceptButtonTitle {
@@ -813,6 +831,15 @@ namespace BetterCms.Module.Pages.Content.Resources {
         public static string ContentHistory_SelectVersionToPreviewMessage {
             get {
                 return ResourceManager.GetString("ContentHistory_SelectVersionToPreviewMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Preview is not available..
+        /// </summary>
+        public static string ContentHistory_VersionPreviewNotAvailableMessage {
+            get {
+                return ResourceManager.GetString("ContentHistory_VersionPreviewNotAvailableMessage", resourceCulture);
             }
         }
         
@@ -2176,7 +2203,7 @@ namespace BetterCms.Module.Pages.Content.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Basic Properties.
+        ///   Looks up a localized string similar to Properties.
         /// </summary>
         public static string EditWidget_BasicPropertiesTab_Title {
             get {
@@ -2194,7 +2221,7 @@ namespace BetterCms.Module.Pages.Content.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Widget Options.
+        ///   Looks up a localized string similar to Options.
         /// </summary>
         public static string EditWidget_OptionsTab_Title {
             get {
@@ -2208,6 +2235,15 @@ namespace BetterCms.Module.Pages.Content.Resources {
         public static string EditWidget_PreviewImageNotFound_Message {
             get {
                 return ResourceManager.GetString("EditWidget_PreviewImageNotFound_Message", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Content.
+        /// </summary>
+        public static string HtmlContent_Content_Title {
+            get {
+                return ResourceManager.GetString("HtmlContent_Content_Title", resourceCulture);
             }
         }
         
@@ -3265,7 +3301,7 @@ namespace BetterCms.Module.Pages.Content.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Page URL.
+        ///   Looks up a localized string similar to Source URL.
         /// </summary>
         public static string SiteSettings_Redirects_PageUrlColumn {
             get {
@@ -3274,7 +3310,7 @@ namespace BetterCms.Module.Pages.Content.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Redirected URL.
+        ///   Looks up a localized string similar to Destination URL.
         /// </summary>
         public static string SiteSettings_Redirects_RedirectUrlColumn {
             get {
