@@ -190,6 +190,9 @@
     <Compile Include="Command\Layout\GetLayoutUserAccess\GetLayoutUserAccessCommandRequest.cs" />
     <Compile Include="Command\Page\AddNewPage\AddNewPageCommand.cs" />
     <Compile Include="Command\Page\AddNewPage\AddNewPageCommandRequest.cs" />
+    <Compile Include="Command\Page\CheckForMissingContent\CheckForMissingContentCommand.cs" />
+    <Compile Include="Command\Page\CheckForMissingContent\CheckForMissingContentRequest.cs" />
+    <Compile Include="Command\Page\CheckForMissingContent\CheckForMissingContentResponse.cs" />
     <Compile Include="Command\Page\ClonePageWithLanguage\ClonePageWithLanguageCommand.cs" />
     <Compile Include="Command\Page\GetPageForCloningWithLanguage\GetPageForCloningWithLanguageCommandRequest.cs" />
     <Compile Include="Command\Page\GetPageForCloningWithLanguage\GetPageForCloningWithLanguageCommand.cs" />

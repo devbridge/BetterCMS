@@ -10,6 +10,7 @@ using BetterCms.Module.MediaManager.ViewModels;
 using BetterCms.Module.Pages.Command.Layout.GetLayoutOptions;
 using BetterCms.Module.Pages.Command.Layout.GetLayoutUserAccess;
 using BetterCms.Module.Pages.Command.Page.AddNewPage;
+using BetterCms.Module.Pages.Command.Page.CheckForMissingContent;
 using BetterCms.Module.Pages.Command.Page.ClonePage;
 using BetterCms.Module.Pages.Command.Page.ClonePageWithLanguage;
 using BetterCms.Module.Pages.Command.Page.CreatePage;
@@ -467,6 +468,14 @@ namespace BetterCms.Module.Pages.Controllers
             var view = RenderView("SearchUntranslatedPages", model);
 
             return ComboWireJson(model != null, view, model, JsonRequestBehavior.AllowGet);
+        }
+
+        [HttpGet]
+        [BcmsAuthorize(RootModuleConstants.UserRoles.EditContent, RootModuleConstants.UserRoles.PublishContent, RootModuleConstants.UserRoles.Administration)]
+        public ActionResult CheckForMissingContent(string pageId, string templateId, string masterPageId)
+        {
+            var model = GetCommand<CheckForMissingContentCommand>().ExecuteCommand(new CheckForMissingContentRequest { PageId = pageId.ToGuidOrDefault(), TemplateId = templateId.ToGuidOrDefault(), MasterPageId = masterPageId.ToGuidOrDefault()});
+            return WireJson(model != null, model,JsonRequestBehavior.AllowGet);
         }
     }
 }
