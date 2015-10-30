@@ -292,7 +292,7 @@ bettercms.define('bcms.htmlEditor', ['bcms.jquery', 'bcms', 'ckeditor', 'bcms.ma
 
                     var toolbox = collapser.getPrevious(),
                         contents = editor.ui.space('contents'),
-                        toolboxContainer = toolbox.getParent(),
+                        toolboxContainer = toolbox.getParent().getParent(),
                         contentHeight = parseInt(contents.$.style.height, 10),
                         previousHeight = toolboxContainer.$.offsetHeight,
 
@@ -304,13 +304,13 @@ bettercms.define('bcms.htmlEditor', ['bcms.jquery', 'bcms', 'ckeditor', 'bcms.ma
                         if (!toolbox.isVisible()) toolbox.show(); // necessary 1st time if initially collapsed
 
                         collapser.addClass('cke_toolbox_collapser_min');
-                        collapser.setAttribute('title', editor.lang.toolbarExpand);
+                        collapser.setAttribute('title', editor.lang.toolbar.toolbarExpand);
                     } else {
                         switchVisibilityAfter1stRow(toolbox, true); // toolbox.show();
                         toolbox.removeClass('iterate_tbx_hidden');
 
                         collapser.removeClass('cke_toolbox_collapser_min');
-                        collapser.setAttribute('title', editor.lang.toolbarCollapse);
+                        collapser.setAttribute('title', editor.lang.toolbar.toolbarCollapse);
                     }
 
                     // Update collapser symbol.
