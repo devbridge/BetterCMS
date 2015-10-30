@@ -12,10 +12,12 @@ bettercms.define('bcms.siteSettings', ['bcms.jquery', 'bcms', 'bcms.modal', 'bcm
             container: '#bcms-site-settings',
             menu: '#bcms-site-settings-menu',
             placeHolder: '#bcms-site-settings-placeholder',
+            tabsPlaceHolder: '#bcms-site-settings-tabs-placeholder',
             firstMenuButton: '#bcms-site-settings-menu .bcms-onclick-action:first',
             loaderContainer: '.bcms-rightcol',
             mainContainer: '.bcms-rightcol',
             tabsTemplate: '#bcms-site-setting-tab-template',
+            tabsFrameTemplate: '#bcms-site-setting-tab-frame-template',
             tabsTemplateChildDiv: 'div',
             modalMessages: '#bcms-modal-messages'
         },
@@ -77,6 +79,7 @@ bettercms.define('bcms.siteSettings', ['bcms.jquery', 'bcms', 'bcms.modal', 'bcm
             siteSettingsModalWindow.maximizeHeight();
 
             if (!doNotInitTabs) {
+                siteSettingsModalWindow.container.find(selectors.tabsPlaceHolder).empty();
                 tabs.initTabPanel(siteSettingsModalWindow.container);
             }
 
@@ -216,11 +219,14 @@ bettercms.define('bcms.siteSettings', ['bcms.jquery', 'bcms', 'bcms.modal', 'bcm
             skipInit: true
         }),
             tabsViewModel = new siteSettings.TabListViewModel(tabViewModels, panel),
-            content = $($(selectors.tabsTemplate).html());
+            header = $($(selectors.tabsTemplate).html()),
+            frame = $($(selectors.tabsFrameTemplate).html()),
+            tabHolder = siteSettingsModalWindow.container.find(selectors.tabsPlaceHolder);
 
-        siteSettings.setContent(content, null, true);
+        tabHolder.html(header);
+        siteSettings.setContent(frame, null, true);
         
-        ko.applyBindings(tabsViewModel, siteSettingsModalWindow.container.find(selectors.placeHolder).get(0));
+        ko.applyBindings(tabsViewModel, siteSettingsModalWindow.container.find(selectors.container).get(0));
 
         if (tabViewModels.length > 0) {
             tabViewModels[0].tabClick();
