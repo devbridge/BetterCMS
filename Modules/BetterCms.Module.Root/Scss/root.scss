@@ -39,7 +39,9 @@
 //module components
 @import 'core/normalize',
 'modules/formelements',
-'modules/tables';
+'modules/tables',
+'modules/messages',
+'modules/autocomplete';
 
 //module structure
 @import 'structure/layout',
@@ -50,7 +52,6 @@
 @import 'bcms-modules/root/buttons',
 'bcms-modules/root/controlpanel',
 'bcms-modules/root/contentstree',
-'bcms-modules/root/messages',
 'bcms-modules/root/notifications',
 'bcms-modules/root/overlays',
 'plugins/markitup',

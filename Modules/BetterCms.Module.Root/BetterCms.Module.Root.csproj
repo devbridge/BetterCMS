@@ -1533,7 +1533,6 @@
     <Content Include="Scss\bcms-modules\root\_buttons.scss" />
     <Content Include="Scss\bcms-modules\root\_controlpanel.scss" />
     <Content Include="Scss\bcms-modules\root\_index.scss" />
-    <Content Include="Scss\bcms-modules\root\_messages.scss" />
     <Content Include="Scss\bcms-modules\root\_notifications.scss" />
     <Content Include="Scss\bcms-modules\root\_overlays.scss" />
     <Content Include="Scss\base_64\webfonts\OpenSans-Bold.ttf" />
@@ -1554,6 +1553,7 @@
     <Content Include="Scss\modules\_autocomplete.scss" />
     <Content Include="Scss\structure\_global.scss" />
     <Content Include="Scss\modules\_tabs.scss" />
+    <Content Include="Scss\modules\_messages.scss" />
     <None Include="Views\Category\CategoryTrees.cshtml">
       <Generator>RazorGenerator</Generator>
       <LastGenOutput>CategoryTrees.generated.cs</LastGenOutput>

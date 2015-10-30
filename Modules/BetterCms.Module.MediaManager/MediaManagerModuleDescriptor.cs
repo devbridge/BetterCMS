@@ -220,7 +220,7 @@ namespace BetterCms.Module.MediaManager
                         {
                             Order = 2400,
                             Title = page => MediaGlobalization.SiteSettings_MediaManagerMenuItem,
-                            CssClass = page => "bcms-sidebar-link",
+                            CssClass = page => "bcms-settings-link",
                             AccessRole = RootModuleConstants.UserRoles.MultipleRoles(RootModuleConstants.UserRoles.Administration, RootModuleConstants.UserRoles.EditContent, RootModuleConstants.UserRoles.DeleteContent)
                         }                                      
                 };

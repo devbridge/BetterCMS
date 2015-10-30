@@ -126,11 +126,6 @@ WriteLiteral("\n");
             .SortColumnName("WidgetName")
             .HeaderAttributes(@style => "width: 245px;")
             .Encode(false);
-        // TODO Categories
-//        column.For(f => f.CategoryName)
-//            .Named(PagesGlobalization.SiteSettings_Widgets_CategoryColumn)
-//            .SortColumnName("CategoryName")
-//            .Attributes(@class => "bcms-category-name");
 
         column.For(f => Html.EditorFor(e => f.Status, "WidgetStatus"))
             .Named(PagesGlobalization.SiteSettings_Widgets_StatusColumn)
@@ -157,40 +152,43 @@ WriteLiteral("\n");
 WriteLiteral("\n\n");
 
             
-            #line 59 "..\..\Views\Widgets\Widgets.cshtml"
+            #line 54 "..\..\Views\Widgets\Widgets.cshtml"
  using (Html.BeginForm<WidgetsController>(f => f.Widgets(null), FormMethod.Post, new { @id = "bcms-widgets-form", @class = "bcms-ajax-form" }))
 {
-
+        
             
             #line default
             #line hidden
-WriteLiteral("    <div");
-
-WriteLiteral(" class=\"bcms-modal-frame-holder\"");
-
-WriteLiteral(">\r\n");
-
-WriteLiteral("        ");
-
             
-            #line 62 "..\..\Views\Widgets\Widgets.cshtml"
+            #line 56 "..\..\Views\Widgets\Widgets.cshtml"
    Write(Html.SiteSettingsMessagesBox());
 
             
             #line default
             #line hidden
-WriteLiteral("\r\n");
-
-WriteLiteral("        ");
-
             
-            #line 63 "..\..\Views\Widgets\Widgets.cshtml"
+            #line 56 "..\..\Views\Widgets\Widgets.cshtml"
+                                       
+        
+            
+            #line default
+            #line hidden
+            
+            #line 57 "..\..\Views\Widgets\Widgets.cshtml"
    Write(Html.HiddenGridOptions(Model.GridOptions));
 
             
             #line default
             #line hidden
-WriteLiteral("\r\n\r\n        <div");
+            
+            #line 57 "..\..\Views\Widgets\Widgets.cshtml"
+                                                  
+
+
+            
+            #line default
+            #line hidden
+WriteLiteral("        <div");
 
 WriteLiteral(" class=\"bcms-top-block-holder\"");
 
@@ -201,7 +199,7 @@ WriteLiteral(" class=\"bcms-large-titles\"");
 WriteLiteral(">");
 
             
-            #line 66 "..\..\Views\Widgets\Widgets.cshtml"
+            #line 60 "..\..\Views\Widgets\Widgets.cshtml"
                                       Write(PagesGlobalization.SiteSettings_Widgets_Title);
 
             
@@ -216,7 +214,7 @@ WriteLiteral(" id=\"bcms-create-widget-button\"");
 WriteLiteral(">");
 
             
-            #line 68 "..\..\Views\Widgets\Widgets.cshtml"
+            #line 62 "..\..\Views\Widgets\Widgets.cshtml"
                                                                        Write(PagesGlobalization.SiteSettings_Widgets_AddNew);
 
             
@@ -231,7 +229,7 @@ WriteLiteral(" id=\"bcms-register-widget-button\"");
 WriteLiteral(">");
 
             
-            #line 70 "..\..\Views\Widgets\Widgets.cshtml"
+            #line 64 "..\..\Views\Widgets\Widgets.cshtml"
                                                                          Write(PagesGlobalization.SiteSettings_Widgets_RegisterNew);
 
             
@@ -246,7 +244,7 @@ WriteLiteral(">\r\n");
 WriteLiteral("                ");
 
             
-            #line 73 "..\..\Views\Widgets\Widgets.cshtml"
+            #line 67 "..\..\Views\Widgets\Widgets.cshtml"
            Write(Html.TextBoxFor(m => m.SearchQuery, new { @class = "bcms-editor-field-box bcms-search-query", @placeholder = RootGlobalization.WaterMark_Search }));
 
             
@@ -261,7 +259,7 @@ WriteLiteral(" id=\"bcms-widget-search-btn\"");
 WriteLiteral(">");
 
             
-            #line 74 "..\..\Views\Widgets\Widgets.cshtml"
+            #line 68 "..\..\Views\Widgets\Widgets.cshtml"
                                                                     Write(PagesGlobalization.SiteSettings_Widgets_Search);
 
             
@@ -276,18 +274,23 @@ WriteLiteral(">\r\n");
 WriteLiteral("                ");
 
             
-            #line 78 "..\..\Views\Widgets\Widgets.cshtml"
+            #line 72 "..\..\Views\Widgets\Widgets.cshtml"
            Write(Html.RenderPaging(Model));
 
             
             #line default
             #line hidden
-WriteLiteral("\r\n            </div>\r\n        </div>\r\n             \r\n");
-
-WriteLiteral("        ");
+WriteLiteral("\r\n            </div>\r\n        </div>\r\n");
 
             
-            #line 82 "..\..\Views\Widgets\Widgets.cshtml"
+            #line 75 "..\..\Views\Widgets\Widgets.cshtml"
+             
+        
+            
+            #line default
+            #line hidden
+            
+            #line 76 "..\..\Views\Widgets\Widgets.cshtml"
     Write(Html
           .Grid(Model.Items)
           .Sort(Model.GridOptions)
@@ -309,10 +312,9 @@ WriteLiteral("        ");
             
             #line default
             #line hidden
-WriteLiteral("\r\n    </div>\r\n");
-
             
-            #line 100 "..\..\Views\Widgets\Widgets.cshtml"
+            #line 92 "..\..\Views\Widgets\Widgets.cshtml"
+                                                                                            
 }
 
             
@@ -329,7 +331,7 @@ WriteLiteral(">\n");
 WriteLiteral("    ");
 
             
-            #line 103 "..\..\Views\Widgets\Widgets.cshtml"
+            #line 96 "..\..\Views\Widgets\Widgets.cshtml"
 Write(Html
         .Grid(new List<SiteSettingWidgetItemViewModel> {new SiteSettingWidgetItemViewModel()})
         .Columns(columns)

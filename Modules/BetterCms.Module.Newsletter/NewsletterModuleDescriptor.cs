@@ -138,7 +138,7 @@ namespace BetterCms.Module.Newsletter
                         {
                             Order = 9999,
                             Title = page => NewsletterGlobalization.SiteSettings_NewsletterSubscribersMenuItem,
-                            CssClass = page => "bcms-sidebar-link",
+                            CssClass = page => "bcms-settings-link",
                             AccessRole = RootModuleConstants.UserRoles.MultipleRoles(RootModuleConstants.UserRoles.Administration)
                         }
                 };

@@ -129,33 +129,35 @@ WriteLiteral("\n\n");
             
             #line default
             #line hidden
-WriteLiteral("    <div");
+            
+            #line 37 "..\..\Views\Redirect\Redirects.cshtml"
+Write(Html.SiteSettingsMessagesBox());
 
-WriteLiteral(" class=\"bcms-modal-frame-holder\"");
+            
+            #line default
+            #line hidden
+            
+            #line 37 "..\..\Views\Redirect\Redirects.cshtml"
+                               
 
-WriteLiteral(">\r\n");
-
-WriteLiteral("        ");
-
+            
+            #line default
+            #line hidden
             
             #line 38 "..\..\Views\Redirect\Redirects.cshtml"
-   Write(Html.SiteSettingsMessagesBox());
+Write(Html.HiddenGridOptions(Model.GridOptions));
 
             
             #line default
             #line hidden
-WriteLiteral("\r\n");
-
-WriteLiteral("        ");
-
             
-            #line 39 "..\..\Views\Redirect\Redirects.cshtml"
-   Write(Html.HiddenGridOptions(Model.GridOptions));
+            #line 38 "..\..\Views\Redirect\Redirects.cshtml"
+                                          
 
             
             #line default
             #line hidden
-WriteLiteral("\r\n        <div");
+WriteLiteral("<div");
 
 WriteLiteral(" class=\"bcms-top-block-holder\"");
 
@@ -166,7 +168,7 @@ WriteLiteral(" class=\"bcms-large-titles\"");
 WriteLiteral(">");
 
             
-            #line 41 "..\..\Views\Redirect\Redirects.cshtml"
+            #line 40 "..\..\Views\Redirect\Redirects.cshtml"
                                       Write(PagesGlobalization.SiteSettings_Redirects_Title);
 
             
@@ -181,7 +183,7 @@ WriteLiteral(" id=\"bcms-create-redirect-button\"");
 WriteLiteral(">");
 
             
-            #line 43 "..\..\Views\Redirect\Redirects.cshtml"
+            #line 42 "..\..\Views\Redirect\Redirects.cshtml"
                                                                          Write(PagesGlobalization.SiteSettings_Redirects_AddNew);
 
             
@@ -196,7 +198,7 @@ WriteLiteral(">\r\n");
 WriteLiteral("                ");
 
             
-            #line 46 "..\..\Views\Redirect\Redirects.cshtml"
+            #line 45 "..\..\Views\Redirect\Redirects.cshtml"
            Write(Html.TextBoxFor(m => m.SearchQuery, new { @class = "bcms-editor-field-box bcms-search-query", @placeholder = RootGlobalization.WaterMark_Search }));
 
             
@@ -211,7 +213,7 @@ WriteLiteral(" id=\"bcms-redirects-search-btn\"");
 WriteLiteral(">");
 
             
-            #line 47 "..\..\Views\Redirect\Redirects.cshtml"
+            #line 46 "..\..\Views\Redirect\Redirects.cshtml"
                                                                        Write(PagesGlobalization.SiteSettings_Redirects_Search);
 
             
@@ -226,38 +228,46 @@ WriteLiteral(">\r\n");
 WriteLiteral("                ");
 
             
-            #line 51 "..\..\Views\Redirect\Redirects.cshtml"
+            #line 50 "..\..\Views\Redirect\Redirects.cshtml"
            Write(Html.RenderPaging(Model));
 
             
             #line default
             #line hidden
-WriteLiteral("\r\n            </div>\r\n        </div>\r\n    \r\n");
-
-WriteLiteral("        ");
+WriteLiteral("\r\n            </div>\r\n        </div>\r\n");
 
             
-            #line 55 "..\..\Views\Redirect\Redirects.cshtml"
-   Write(Html.Grid(Model.Items).Sort(Model.GridOptions).Columns(columns).Attributes(@class => "bcms-tables").RenderUsing(new    EditableHtmlTableGridRenderer<SiteSettingRedirectViewModel>()));
+            #line 53 "..\..\Views\Redirect\Redirects.cshtml"
+    
 
             
             #line default
             #line hidden
-WriteLiteral("\r\n");
+            
+            #line 54 "..\..\Views\Redirect\Redirects.cshtml"
+Write(Html.Grid(Model.Items).Sort(Model.GridOptions).Columns(columns).Attributes(@class => "bcms-tables").RenderUsing(new    EditableHtmlTableGridRenderer<SiteSettingRedirectViewModel>()));
 
-WriteLiteral("        ");
+            
+            #line default
+            #line hidden
+            
+            #line 54 "..\..\Views\Redirect\Redirects.cshtml"
+                                                                                                                                                                                      
+    
 
+            
+            #line default
+            #line hidden
             
             #line 56 "..\..\Views\Redirect\Redirects.cshtml"
-   Write(Html.HiddenSubmit());
+Write(Html.HiddenSubmit());
 
             
             #line default
             #line hidden
-WriteLiteral("\r\n    </div>\r\n");
-
             
-            #line 58 "..\..\Views\Redirect\Redirects.cshtml"
+            #line 56 "..\..\Views\Redirect\Redirects.cshtml"
+                    
 }
 
             
@@ -274,7 +284,7 @@ WriteLiteral(">\n");
 WriteLiteral("    ");
 
             
-            #line 61 "..\..\Views\Redirect\Redirects.cshtml"
+            #line 60 "..\..\Views\Redirect\Redirects.cshtml"
 Write(Html.Grid(new List<SiteSettingRedirectViewModel> {new SiteSettingRedirectViewModel()}).Columns(columns).Attributes(@class => "bcms-tables").RenderUsing(new HtmlTableGridSingleRowRenderer<SiteSettingRedirectViewModel>()));
 
             

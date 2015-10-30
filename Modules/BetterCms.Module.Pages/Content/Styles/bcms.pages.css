@@ -654,36 +654,6 @@ a.bcms-slider-next:active {
   font-weight: 600;
 }
 
-.bcms-menu-settings {
-  padding: 0 20px 0 35px;
-}
-
-.bcms-settings-separator {
-  padding: 0;
-  margin: 0;
-  border-style: solid none solid none;
-  border-width: 1px;
-  border-color: #c0c0c0 #fff #fff;
-}
-
-.bcms-sidebar-link {
-  display: block;
-  line-height: 20px;
-  padding: 5px 0 5px 20px;
-  color: #010101;
-  font-size: 12px;
-  font-weight: 400;
-  text-decoration: none;
-}
-
-.bcms-sidebar-link:hover {
-  color: #24597e;
-}
-
-.bcms-sidebar-link-active {
-  color: #24597e;
-}
-
 .bcms-title-show-helper {
   position: relative;
 }

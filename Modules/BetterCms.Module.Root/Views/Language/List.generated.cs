@@ -88,22 +88,16 @@ WriteLiteral("\r\n");
             
             #line default
             #line hidden
-WriteLiteral("\r\n\r\n<div");
-
-WriteLiteral(" class=\"bcms-modal-frame-holder\"");
-
-WriteLiteral(">\r\n");
-
-WriteLiteral("    ");
+WriteLiteral("\r\n\r\n");
 
             
-            #line 28 "..\..\Views\Language\List.cshtml"
+            #line 27 "..\..\Views\Language\List.cshtml"
 Write(Html.Partial(RootModuleConstants.EditableGridTemplate, gridViewModel));
 
             
             #line default
             #line hidden
-WriteLiteral("\r\n</div>");
+WriteLiteral("\r\n");
 
         }
     }

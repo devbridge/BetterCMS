@@ -334,21 +334,21 @@ namespace BetterCms.Module.Root
                         {
                             Order = 2000,
                             Title = page => RootGlobalization.SiteSettings_CategoriesMenuItem,
-                            CssClass = page => "bcms-sidebar-link",
+                            CssClass = page => "bcms-settings-link",
                             AccessRole = RootModuleConstants.UserRoles.MultipleRoles(RootModuleConstants.UserRoles.EditContent, RootModuleConstants.UserRoles.Administration)
                         },
                    new LinkActionProjection(tagsJsModuleIncludeDescriptor, page => "loadSiteSettingsTagList")
                         {
                             Order = 2100,
                             Title = page => RootGlobalization.SiteSettings_TagsMenuItem,
-                            CssClass = page => "bcms-sidebar-link",
+                            CssClass = page => "bcms-settings-link",
                             AccessRole = RootModuleConstants.UserRoles.EditContent
                         },
                     new LinkActionProjection(languagesJsModuleIncludeDescriptor, page => "loadSiteSettingsLanguagesList")
                         {
                             Order = 2200,
                             Title = page => RootGlobalization.SiteSettings_LanguagesMenuItem,
-                            CssClass = page => "bcms-sidebar-link",
+                            CssClass = page => "bcms-settings-link",
                             AccessRole = RootModuleConstants.UserRoles.Administration,
                             ShouldBeRendered = page => CmsContext.Config.EnableMultilanguage
                         }

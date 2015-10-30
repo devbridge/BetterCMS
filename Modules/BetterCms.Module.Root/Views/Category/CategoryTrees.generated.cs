@@ -107,37 +107,39 @@ WriteLiteral("\n");
             #line 21 "..\..\Views\Category\CategoryTrees.cshtml"
  using (Html.BeginForm<CategoryController>(f => f.CategoryTrees(null), FormMethod.Post, new { @id = "bcms-categorytrees-form", @class = "bcms-ajax-form" }))
 {
-
+        
             
             #line default
             #line hidden
-WriteLiteral(" <div");
-
-WriteLiteral(" class=\"bcms-modal-frame-holder\"");
-
-WriteLiteral(">\n");
-
-WriteLiteral("        ");
-
             
-            #line 24 "..\..\Views\Category\CategoryTrees.cshtml"
+            #line 23 "..\..\Views\Category\CategoryTrees.cshtml"
    Write(Html.SiteSettingsMessagesBox());
 
             
             #line default
             #line hidden
-WriteLiteral("\n");
-
-WriteLiteral("        ");
-
             
-            #line 25 "..\..\Views\Category\CategoryTrees.cshtml"
+            #line 23 "..\..\Views\Category\CategoryTrees.cshtml"
+                                       
+        
+            
+            #line default
+            #line hidden
+            
+            #line 24 "..\..\Views\Category\CategoryTrees.cshtml"
    Write(Html.HiddenGridOptions(Model.GridOptions));
 
             
             #line default
             #line hidden
-WriteLiteral("\n        <div");
+            
+            #line 24 "..\..\Views\Category\CategoryTrees.cshtml"
+                                                  
+
+            
+            #line default
+            #line hidden
+WriteLiteral("        <div");
 
 WriteLiteral(" class=\"bcms-top-block-holder\"");
 
@@ -148,7 +150,7 @@ WriteLiteral(" class=\"bcms-large-titles\"");
 WriteLiteral(">");
 
             
-            #line 27 "..\..\Views\Category\CategoryTrees.cshtml"
+            #line 26 "..\..\Views\Category\CategoryTrees.cshtml"
                                       Write(RootGlobalization.SiteSettings_CategoryTrees_Title);
 
             
@@ -163,7 +165,7 @@ WriteLiteral(" id=\"bcms-create-categorytree-button\"");
 WriteLiteral(">");
 
             
-            #line 29 "..\..\Views\Category\CategoryTrees.cshtml"
+            #line 28 "..\..\Views\Category\CategoryTrees.cshtml"
                                                                              Write(RootGlobalization.SiteSettings_CategoryTrees_AddNewCategoryTree);
 
             
@@ -178,7 +180,7 @@ WriteLiteral(">\n");
 WriteLiteral("                ");
 
             
-            #line 32 "..\..\Views\Category\CategoryTrees.cshtml"
+            #line 31 "..\..\Views\Category\CategoryTrees.cshtml"
            Write(Html.TextBoxFor(m => m.SearchQuery, new { @class = "bcms-editor-field-box bcms-search-query", @placeholder = RootGlobalization.WaterMark_Search }));
 
             
@@ -193,7 +195,7 @@ WriteLiteral(" id=\"bcms-categorytrees-search-btn\"");
 WriteLiteral(">");
 
             
-            #line 33 "..\..\Views\Category\CategoryTrees.cshtml"
+            #line 32 "..\..\Views\Category\CategoryTrees.cshtml"
                                                                            Write(RootGlobalization.SiteSettings_CategoryTrees_Search);
 
             
@@ -208,33 +210,37 @@ WriteLiteral(">\n");
 WriteLiteral("                ");
 
             
-            #line 37 "..\..\Views\Category\CategoryTrees.cshtml"
+            #line 36 "..\..\Views\Category\CategoryTrees.cshtml"
            Write(Html.RenderPaging(Model));
 
             
             #line default
             #line hidden
-WriteLiteral("\n            </div>\n        </div>\n\n");
-
-WriteLiteral("    ");
+WriteLiteral("\n            </div>\n        </div>\n");
 
             
-            #line 41 "..\..\Views\Category\CategoryTrees.cshtml"
+            #line 39 "..\..\Views\Category\CategoryTrees.cshtml"
+
+    
+            
+            #line default
+            #line hidden
+            
+            #line 40 "..\..\Views\Category\CategoryTrees.cshtml"
 Write(Html.Grid(Model.Items).Sort(Model.GridOptions).Columns(columns).Attributes(@class => "bcms-tables").RenderUsing(new EditableHtmlTableGridRenderer<SiteSettingCategoryTreeViewModel>()));
 
             
             #line default
             #line hidden
-WriteLiteral("\n</div>\n");
-
             
-            #line 43 "..\..\Views\Category\CategoryTrees.cshtml"
+            #line 40 "..\..\Views\Category\CategoryTrees.cshtml"
+                                                                                                                                                                                           
 }
 
             
             #line default
             #line hidden
-WriteLiteral("<script");
+WriteLiteral("\n<script");
 
 WriteLiteral(" type=\"text/html\"");
 
@@ -245,13 +251,13 @@ WriteLiteral(">\n");
 WriteLiteral("    ");
 
             
-            #line 45 "..\..\Views\Category\CategoryTrees.cshtml"
+            #line 44 "..\..\Views\Category\CategoryTrees.cshtml"
 Write(Html.Grid(new List<SiteSettingCategoryTreeViewModel> { new SiteSettingCategoryTreeViewModel() }).Columns(columns).Attributes(@class => "bcms-tables").RenderUsing(new HtmlTableGridSingleRowRenderer<SiteSettingCategoryTreeViewModel>()));
 
             
             #line default
             #line hidden
-WriteLiteral("\n</script>");
+WriteLiteral("\n</script>\n");
 
         }
     }
