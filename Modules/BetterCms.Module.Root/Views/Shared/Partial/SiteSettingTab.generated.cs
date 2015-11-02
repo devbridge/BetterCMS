@@ -52,16 +52,9 @@ WriteLiteral(@">
             click: tabClick, clickBubble: true""></a>
         <!-- /ko -->
     </div>
-</script>
-
-<script");
-
-WriteLiteral(" type=\"text/html\"");
-
-WriteLiteral(" id=\"bcms-site-setting-tab-frame-template\"");
-
-WriteLiteral(">\r\n    <!-- ko foreach: tabs -->\r\n    <div class=\"bcms-tab-single\" data-bind=\"att" +
-"r: {id: tabId}, stopBinding: true\">\r\n        ");
+    <!-- ko foreach: tabs -->
+    <div class=""bcms-tab-single"" data-bind=""attr: {id: tabId}, stopBinding: true"">
+        ");
 
 WriteLiteral("\r\n        <div></div>\r\n    </div>\r\n    <!-- /ko -->\r\n</script>\r\n");
 
