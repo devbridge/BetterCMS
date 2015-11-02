@@ -39,6 +39,7 @@ a {
 //todo end of
 .bcms-scroll-window {
     overflow: auto;
+    padding: $header-height 0 $footer-height;
     position: relative;
 }
 
@@ -62,8 +63,8 @@ a {
     }
 
     &-content-padded {
-        padding: $header-height 0 $footer-height;
-        position: relative;
+        //  padding: $header-height 0 $footer-height;
+        //  position: relative;
     }
 
     &-body {
@@ -141,14 +142,16 @@ a {
 
 .bcms-settings {
     &-frame {
+        @include size($page-width 100%);
         display: table;
         margin: auto;
-        width: $settings-frame;
+        table-layout: fixed;
     }
 
     &-menu {
         @include vertical-align($block: table-cell, $align: top);
         background-color: $gray-l30;
+        padding-top: 40px;
         width: $settings-sidebar;
     }
 

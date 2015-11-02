@@ -473,7 +473,7 @@ bettercms.define('bcms.modal', ['bcms.jquery', 'bcms', 'bcms.tabs', 'bcms.ko.ext
                 return;
             }
 
-            var viewportHeight = $(window).height(),
+            var viewportHeight = $(window).outerHeight(),
                 elemOuter = this.container.find(selectors.elemOuter),
                 elemHeader = this.container.find(selectors.elemHeader),
                 elemFooter = this.container.find(selectors.elemFooter),

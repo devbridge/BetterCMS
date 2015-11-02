@@ -882,6 +882,7 @@ a:hover {
 
 .bcms-scroll-window {
   overflow: auto;
+  padding: 55px 0 65px;
   position: relative;
 }
 
@@ -899,12 +900,7 @@ a:hover {
 .bcms-modal-frame-holder {
   height: 100%;
   margin: auto;
-  max-width: 900px;
-  position: relative;
-}
-
-.bcms-modal-content-padded {
-  padding: 55px 0 65px;
+  max-width: 1150px;
   position: relative;
 }
 
@@ -974,7 +970,7 @@ a:hover {
 
 .bcms-modal-edit-seo .bcms-modal-content {
   margin: auto;
-  width: 900px;
+  width: 1150px;
 }
 
 .bcms-modal form {
@@ -988,16 +984,19 @@ a:hover {
 }
 
 .bcms-settings-frame {
+  height: 100%;
+  width: 1150px;
   display: table;
   margin: auto;
-  width: 1090px;
+  table-layout: fixed;
 }
 
 .bcms-settings-menu {
   display: table-cell;
   vertical-align: top;
   background-color: #f5f5f5;
-  width: 190px;
+  padding-top: 40px;
+  width: 220px;
 }
 
 .bcms-settings-window {
