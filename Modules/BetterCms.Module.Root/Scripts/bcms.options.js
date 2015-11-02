@@ -519,9 +519,9 @@ bettercms.define('bcms.options', ['bcms.jquery', 'bcms', 'bcms.ko.extenders', 'b
                     _super.prototype.saveItem.call(self);
                     var newValue = "";
                     if (self.type() != optionTypes.customType) {
-                        newValue = self.defaultValueBinding();
+                        newValue = self.defaultValueBinding().toString();
                     } else {
-                        newValue = self.customOptionDefaultTitle();
+                        newValue = self.customOptionDefaultTitle().toString();
                     }
                     if (!self.translationsEnabled) {
                         self.defaultValue(newValue);
@@ -723,9 +723,9 @@ bettercms.define('bcms.options', ['bcms.jquery', 'bcms', 'bcms.ko.extenders', 'b
 
                     var newValue = "";
                     if (self.type() != optionTypes.customType) {
-                        newValue = self.valueBinding();
+                        newValue = self.valueBinding().toString();
                     } else {
-                        newValue = self.customOptionTitle();
+                        newValue = self.customOptionTitle().toString();
                     }
 
                     if (!self.translationsEnabled) {
