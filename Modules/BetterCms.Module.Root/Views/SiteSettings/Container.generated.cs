@@ -57,10 +57,6 @@ WriteLiteral(" class=\"bcms-scroll-window\"");
 
 WriteLiteral(">\r\n    <div");
 
-WriteLiteral(" id=\"bcms-site-settings-tabs-placeholder\"");
-
-WriteLiteral("> </div>\r\n    <div");
-
 WriteLiteral(" id=\"bcms-site-settings-placeholder\"");
 
 WriteLiteral("> </div>\r\n\r\n    <div");
@@ -76,13 +72,13 @@ WriteLiteral(" class=\"bcms-settings-separator\"");
 WriteLiteral("></div>\r\n");
 
             
-            #line 12 "..\..\Views\SiteSettings\Container.cshtml"
+            #line 11 "..\..\Views\SiteSettings\Container.cshtml"
         
             
             #line default
             #line hidden
             
-            #line 12 "..\..\Views\SiteSettings\Container.cshtml"
+            #line 11 "..\..\Views\SiteSettings\Container.cshtml"
           
             var lastItemIsHr = true;
             foreach (var menuItem in Model.MenuItems.Projections)
@@ -102,7 +98,7 @@ WriteLiteral(" class=\"bcms-settings-separator\"");
 WriteLiteral("></div>\r\n");
 
             
-            #line 21 "..\..\Views\SiteSettings\Container.cshtml"
+            #line 20 "..\..\Views\SiteSettings\Container.cshtml"
                         lastItemIsHr = true;
                     }
                 }
@@ -127,7 +123,7 @@ WriteLiteral(" class=\"bcms-settings-separator\"");
 WriteLiteral("></div>\r\n");
 
             
-            #line 35 "..\..\Views\SiteSettings\Container.cshtml"
+            #line 34 "..\..\Views\SiteSettings\Container.cshtml"
             }
         
             
