@@ -143,7 +143,7 @@ namespace ASP
             #line hidden
 WriteLiteral("\r\n<div");
 
-WriteLiteral(" class=\"bcms-tab-header\"");
+WriteLiteral(" class=\"bcms-tab-header bcms-js-tab-header\"");
 
 WriteLiteral(">\r\n    <div");
 
@@ -151,7 +151,7 @@ WriteLiteral(" class=\"bcms-modal-frame-holder\"");
 
 WriteLiteral(">\r\n        <a");
 
-WriteLiteral(" class=\"bcms-tab-item bcms-active\"");
+WriteLiteral(" class=\"bcms-tab-ui bcms-tab-item bcms-active\"");
 
 WriteLiteral(" data-name=\"#bcms-tab-1\"");
 
@@ -159,14 +159,14 @@ WriteLiteral(">");
 
             
             #line 32 "..\..\Views\Page\EditPageProperties.cshtml"
-                                                                Write(PagesGlobalization.EditPageProperties_BasicPropertiesTab_Title);
+                                                                            Write(PagesGlobalization.EditPageProperties_BasicPropertiesTab_Title);
 
             
             #line default
             #line hidden
 WriteLiteral("</a>\r\n        <a");
 
-WriteLiteral(" class=\"bcms-tab-item\"");
+WriteLiteral(" class=\"bcms-tab-ui bcms-tab-item\"");
 
 WriteLiteral(" data-name=\"#bcms-tab-2\"");
 
@@ -174,14 +174,14 @@ WriteLiteral(">");
 
             
             #line 33 "..\..\Views\Page\EditPageProperties.cshtml"
-                                                    Write(PagesGlobalization.EditPageProperties_LayoutPropertiesTab_Title);
+                                                                Write(PagesGlobalization.EditPageProperties_LayoutPropertiesTab_Title);
 
             
             #line default
             #line hidden
 WriteLiteral("</a>\r\n        <a");
 
-WriteLiteral(" class=\"bcms-tab-item\"");
+WriteLiteral(" class=\"bcms-tab-ui bcms-tab-item\"");
 
 WriteLiteral(" data-name=\"#bcms-tab-3\"");
 
@@ -189,14 +189,14 @@ WriteLiteral(">");
 
             
             #line 34 "..\..\Views\Page\EditPageProperties.cshtml"
-                                                    Write(PagesGlobalization.EditPageProperties_OptionsTab_Title);
+                                                                Write(PagesGlobalization.EditPageProperties_OptionsTab_Title);
 
             
             #line default
             #line hidden
 WriteLiteral("</a>\r\n        <a");
 
-WriteLiteral(" class=\"bcms-tab-item\"");
+WriteLiteral(" class=\"bcms-tab-ui bcms-tab-item\"");
 
 WriteLiteral(" data-name=\"#bcms-tab-4\"");
 
@@ -204,7 +204,7 @@ WriteLiteral(">");
 
             
             #line 35 "..\..\Views\Page\EditPageProperties.cshtml"
-                                                    Write(PagesGlobalization.EditPageProperties_AdvancedPropertiesTab_Title);
+                                                                Write(PagesGlobalization.EditPageProperties_AdvancedPropertiesTab_Title);
 
             
             #line default
@@ -227,7 +227,7 @@ WriteLiteral("</a>\r\n");
             #line hidden
 WriteLiteral("            <a");
 
-WriteLiteral(" class=\"bcms-tab-item\"");
+WriteLiteral(" class=\"bcms-tab-ui bcms-tab-item\"");
 
 WriteLiteral(" data-name=\"#bcms-tab-5\"");
 
@@ -235,7 +235,7 @@ WriteLiteral(">");
 
             
             #line 38 "..\..\Views\Page\EditPageProperties.cshtml"
-                                                        Write(PagesGlobalization.EditPageProperties_TranslationsTab_Title);
+                                                                    Write(PagesGlobalization.EditPageProperties_TranslationsTab_Title);
 
             
             #line default

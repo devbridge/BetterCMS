@@ -12,7 +12,7 @@
 
 .cke_dialog iframe.cke_pasteframe:focus, select.cke_dialog_ui_input_select:focus, input.cke_dialog_ui_input_text:focus, textarea.cke_dialog_ui_input_textarea:focus {
   background-color: #ffffff;
-  border-color: #0383df;
+  border-color: #0d7ce7;
   color: #474747;
   outline: none;
 }

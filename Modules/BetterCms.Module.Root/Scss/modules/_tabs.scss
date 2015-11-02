@@ -5,7 +5,7 @@
         height: $tab-height;
     }
 
-    &-item {
+    &-ui {
         @include transition(all 200ms ease);
         color: $main-text;
         cursor: pointer;
@@ -40,42 +40,70 @@
 }
 
 //module inner tabbed view
-.bcms-inner-grid-box {
-    border: 1px solid #c6c6c6;
-    box-sizing: border-box;
-    -moz-box-sizing: border-box;
-    cursor: pointer;
-    float: left;
-    margin-left: 20px;
-    max-width: 220px;
-    padding: 8px 3px 3px;
-    position: relative;
+.bcms-inner {
+    &-navigation {
+        @include clearfix();
+        border-bottom: $border-nav-bottom;
+        box-sizing: border-box;
+        position: relative;
+    }
+
+    &-navigation-ui {
+        @include transition(color 200ms);
+        color: $light-text;
+        cursor: pointer;
+        float: left;
+        font: {
+            weight: 700;
+            size: 16px;
+        }
+        margin-right: 40px;
+        padding: 25px 0 15px;
+        position: relative;
+
+        &:hover {
+            color: darken($light-text, 10%);
+        }
+
+        @include virtual(after) {
+            @include transition(border-color 200ms);
+            @include position(absolute, null 0 0);
+            border-bottom: $border-thick-transparent;
+        }
+
+        &.bcms-active {
+            color: $blue-main;
+
+            &:after {
+                border-color: $blue-main;
+            }
+        }
+    }
 }
 
 //todo convert to sass or remove if not used
-.bcms-inner-grid-box:first-child {
-    margin-left: 0;
-}
-
-.bcms-inner-grid-box .bcms-content-titles {
-    padding: 0 4px;
-}
-
-.bcms-inner-grid-box-active {
-    background-color: #eff9fd;
-    border: 2px solid #0383df;
-    cursor: default;
-}
-
-.bcms-inner-grid-box-active .bcms-content-titles {
-    background: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAA20lEQVQ4y2NgaHrEgIa1gLgPiK8D8Q8ovgYV08JQj8RhA+IpQPwXiP/jwCC5GUDMiW4ASPNuPBrR8V6oHrgBU0nQDMNTYAZoA/EfMgz4A9YLJPqJ0SDa8+R/xtZ36OL9DNDQhguCFIEUo2u+8urXfxDI2Y5iyHWQAT9hAiBJEAAphhmCrBlZHIp/ohiArlhr+nN8mkH4M4YXkA359/8/Ps0gfAVrIBJwNjKeADJAB1s0gjRNPPkJn+Y/YL0UJKSpVE3KFGcmZKwNDpymRzeA+BcQfwGHNkRMB109AFNqT2Ji6QGbAAAAAElFTkSuQmCC") no-repeat right center;
-    color: #0383df;
-    padding-right: 20px;
-}
-
-.bcms-inner-grid-box-notcompatible {
-    background-color: #fcecec;
-    border: 1px solid #e64343;
-}
-
+//.bcms-inner-grid-box:first-child {
+//    margin-left: 0;
+//}
+//
+//.bcms-inner-grid-box .bcms-content-titles {
+//    padding: 0 4px;
+//}
+//
+//.bcms-inner-grid-box-active {
+//    background-color: #eff9fd;
+//    border: 2px solid #0383df;
+//    cursor: default;
+//}
+//
+//.bcms-inner-grid-box-active .bcms-content-titles {
+//    background: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAA20lEQVQ4y2NgaHrEgIa1gLgPiK8D8Q8ovgYV08JQj8RhA+IpQPwXiP/jwCC5GUDMiW4ASPNuPBrR8V6oHrgBU0nQDMNTYAZoA/EfMgz4A9YLJPqJ0SDa8+R/xtZ36OL9DNDQhguCFIEUo2u+8urXfxDI2Y5iyHWQAT9hAiBJEAAphhmCrBlZHIp/ohiArlhr+nN8mkH4M4YXkA359/8/Ps0gfAVrIBJwNjKeADJAB1s0gjRNPPkJn+Y/YL0UJKSpVE3KFGcmZKwNDpymRzeA+BcQfwGHNkRMB109AFNqT2Ji6QGbAAAAAElFTkSuQmCC") no-repeat right center;
+//    color: #0383df;
+//    padding-right: 20px;
+//}
+//
+//.bcms-inner-grid-box-notcompatible {
+//    background-color: #fcecec;
+//    border: 1px solid #e64343;
+//}
 //todo end of

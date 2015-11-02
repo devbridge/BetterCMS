@@ -51,15 +51,11 @@ namespace ASP
         {
 WriteLiteral("<div");
 
-WriteLiteral(" class=\"bcms-tab-header\"");
+WriteLiteral(" class=\"bcms-inner-navigation bcms-js-tab-header\"");
 
-WriteLiteral(">\r\n    <div");
+WriteLiteral(">\r\n    <a");
 
-WriteLiteral(" class=\"bcms-modal-frame-holder\"");
-
-WriteLiteral(">\r\n        <a");
-
-WriteLiteral(" class=\"bcms-tab-item bcms-active\"");
+WriteLiteral(" class=\"bcms-inner-navigation-ui bcms-tab-item bcms-active\"");
 
 WriteLiteral(" data-name=\"#bcms-tab-1\"");
 
@@ -68,15 +64,15 @@ WriteLiteral(" id=\"bcms-tab-images\"");
 WriteLiteral(">");
 
             
-            #line 7 "..\..\Views\MediaManager\Index.cshtml"
-                                                                                     Write(MediaGlobalization.ImagesTab_Title);
+            #line 6 "..\..\Views\MediaManager\Index.cshtml"
+                                                                                                          Write(MediaGlobalization.ImagesTab_Title);
 
             
             #line default
             #line hidden
-WriteLiteral("</a>\r\n        <a");
+WriteLiteral("</a>\r\n    <a");
 
-WriteLiteral(" class=\"bcms-tab-item\"");
+WriteLiteral(" class=\"bcms-inner-navigation-ui bcms-tab-item\"");
 
 WriteLiteral(" data-name=\"#bcms-tab-2\"");
 
@@ -85,16 +81,16 @@ WriteLiteral(" id=\"bcms-tab-files\"");
 WriteLiteral(">");
 
             
-            #line 8 "..\..\Views\MediaManager\Index.cshtml"
-                                                                        Write(MediaGlobalization.FilesTab_Title);
+            #line 7 "..\..\Views\MediaManager\Index.cshtml"
+                                                                                             Write(MediaGlobalization.FilesTab_Title);
 
             
             #line default
             #line hidden
-WriteLiteral("</a>\r\n    </div>\r\n</div>\r\n\r\n");
+WriteLiteral("</a>\r\n</div>\r\n\r\n");
 
             
-            #line 12 "..\..\Views\MediaManager\Index.cshtml"
+            #line 10 "..\..\Views\MediaManager\Index.cshtml"
 Write(Html.TabbedContentMessagesBox());
 
             
@@ -115,7 +111,7 @@ WriteLiteral(">\r\n");
 WriteLiteral("        ");
 
             
-            #line 16 "..\..\Views\MediaManager\Index.cshtml"
+            #line 14 "..\..\Views\MediaManager\Index.cshtml"
    Write(Html.Partial("Partial/MediaManagerTab"));
 
             
@@ -132,13 +128,13 @@ WriteLiteral(">\r\n        ");
 WriteLiteral("\r\n        <div>\r\n");
 
             
-            #line 22 "..\..\Views\MediaManager\Index.cshtml"
+            #line 20 "..\..\Views\MediaManager\Index.cshtml"
             
             
             #line default
             #line hidden
             
-            #line 22 "..\..\Views\MediaManager\Index.cshtml"
+            #line 20 "..\..\Views\MediaManager\Index.cshtml"
              if (Model.CustomFilesMessages != null)
             {
                 
@@ -146,14 +142,14 @@ WriteLiteral("\r\n        <div>\r\n");
             #line default
             #line hidden
             
-            #line 24 "..\..\Views\MediaManager\Index.cshtml"
+            #line 22 "..\..\Views\MediaManager\Index.cshtml"
            Write(Html.TabbedContentCustomMessagesBox(Model.CustomFilesMessages));
 
             
             #line default
             #line hidden
             
-            #line 24 "..\..\Views\MediaManager\Index.cshtml"
+            #line 22 "..\..\Views\MediaManager\Index.cshtml"
                                                                                
             }
 
@@ -163,7 +159,7 @@ WriteLiteral("\r\n        <div>\r\n");
 WriteLiteral("            ");
 
             
-            #line 26 "..\..\Views\MediaManager\Index.cshtml"
+            #line 24 "..\..\Views\MediaManager\Index.cshtml"
        Write(Html.Partial("Partial/MediaManagerTab"));
 
             
@@ -172,7 +168,7 @@ WriteLiteral("            ");
 WriteLiteral("\r\n        </div>\r\n    </div>\r\n</div>\r\n\r\n");
 
             
-            #line 31 "..\..\Views\MediaManager\Index.cshtml"
+            #line 29 "..\..\Views\MediaManager\Index.cshtml"
 Write(Html.Partial("Partial/MediaManagerTemplate"));
 
             

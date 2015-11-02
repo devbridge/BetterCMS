@@ -13,7 +13,7 @@ bettercms.define('bcms.grid', ['bcms.jquery', 'bcms'], function ($, bcms) {
             hiddenSortColumnField: '#bcms-grid-sort-column',
             hiddenSortDirectionField: '#bcms-grid-sort-direction',
             hiddenPageNumberField: '#bcms-grid-page-number',
-            formLoaderContainer: '.bcms-rightcol:first',
+            formLoaderContainer: '.bcms-js-settings-window:first',
             pageNumbers: '.bcms-pager-no, .bcms-pager-prev, .bcms-pager-next',
             scrollWindow: '.bcms-scroll-window:first'
         },

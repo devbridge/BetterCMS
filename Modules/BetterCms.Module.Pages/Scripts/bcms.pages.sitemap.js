@@ -43,7 +43,7 @@ bettercms.define('bcms.pages.sitemap', ['bcms.jquery', 'bcms', 'bcms.modal', 'bc
                 secondTabButton: '.bcms-tab-item[data-name="#bcms-tab-2"]',
                 leftColumn: '.bcms-leftcol',
                 
-                tabsSlider: '.bcms-tab-header:first',
+                tabsSlider: '.bcms-js-tab-header:first',
                 tabsSliderLeftArrow: '.bcms-sitemaps-arrow-left',
                 tabsSliderRightArrow: '.bcms-sitemaps-arrow-right'
             },

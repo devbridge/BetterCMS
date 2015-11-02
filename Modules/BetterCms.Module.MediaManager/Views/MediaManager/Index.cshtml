@@ -2,11 +2,9 @@
 @using BetterCms.Module.Root.Mvc.Helpers
 @model BetterCms.Module.MediaManager.ViewModels.MediaManager.MediaManagerIndexViewModel
 
-<div class="bcms-tab-header">
-    <div class="bcms-modal-frame-holder">
-        <a class="bcms-tab-item bcms-active" data-name="#bcms-tab-1" id="bcms-tab-images">@MediaGlobalization.ImagesTab_Title</a>
-        <a class="bcms-tab-item" data-name="#bcms-tab-2" id="bcms-tab-files">@MediaGlobalization.FilesTab_Title</a>
-    </div>
+<div class="bcms-inner-navigation bcms-js-tab-header">
+    <a class="bcms-inner-navigation-ui bcms-tab-item bcms-active" data-name="#bcms-tab-1" id="bcms-tab-images">@MediaGlobalization.ImagesTab_Title</a>
+    <a class="bcms-inner-navigation-ui bcms-tab-item" data-name="#bcms-tab-2" id="bcms-tab-files">@MediaGlobalization.FilesTab_Title</a>
 </div>
 
 @Html.TabbedContentMessagesBox()

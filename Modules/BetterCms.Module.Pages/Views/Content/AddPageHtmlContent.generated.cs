@@ -75,7 +75,7 @@ namespace ASP
         {
 WriteLiteral("<div");
 
-WriteLiteral(" class=\"bcms-tab-header\"");
+WriteLiteral(" class=\"bcms-tab-header bcms-js-tab-header\"");
 
 WriteLiteral(">\r\n    <div");
 
@@ -83,7 +83,7 @@ WriteLiteral(" class=\"bcms-modal-frame-holder\"");
 
 WriteLiteral(">\r\n        <a");
 
-WriteLiteral(" class=\"bcms-tab-item bcms-active\"");
+WriteLiteral(" class=\"bcms-tab-ui bcms-tab-item bcms-active\"");
 
 WriteLiteral(" data-name=\"#bcms-tab-1\"");
 
@@ -91,14 +91,14 @@ WriteLiteral(">");
 
             
             #line 11 "..\..\Views\Content\AddPageHtmlContent.cshtml"
-                                                                Write(PagesGlobalization.AddPageContent_RegularContentTab_Title);
+                                                                            Write(PagesGlobalization.AddPageContent_RegularContentTab_Title);
 
             
             #line default
             #line hidden
 WriteLiteral("</a>\r\n        <a");
 
-WriteLiteral(" class=\"bcms-tab-item\"");
+WriteLiteral(" class=\"bcms-tab-ui bcms-tab-item\"");
 
 WriteLiteral(" data-name=\"#bcms-tab-2\"");
 
@@ -106,7 +106,7 @@ WriteLiteral(">");
 
             
             #line 12 "..\..\Views\Content\AddPageHtmlContent.cshtml"
-                                                    Write(PagesGlobalization.EditPageContent_AdvancedOptionsTab_Title);
+                                                                Write(PagesGlobalization.EditPageContent_AdvancedOptionsTab_Title);
 
             
             #line default

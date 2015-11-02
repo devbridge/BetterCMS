@@ -13,8 +13,8 @@ bettercms.define('bcms.siteSettings', ['bcms.jquery', 'bcms', 'bcms.modal', 'bcm
             menu: '#bcms-site-settings-menu',
             placeHolder: '#bcms-site-settings-placeholder',
             firstMenuButton: '#bcms-site-settings-menu .bcms-onclick-action:first',
-            loaderContainer: '.bcms-rightcol',
-            mainContainer: '.bcms-rightcol',
+            loaderContainer: '.bcms-js-settings-window',
+            mainContainer: '.bcms-js-settings-window',
             tabsTemplate: '#bcms-site-setting-tab-template',
             tabsTemplateChildDiv: 'div',
             modalMessages: '#bcms-modal-messages'

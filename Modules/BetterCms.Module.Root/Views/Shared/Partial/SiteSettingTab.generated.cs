@@ -44,24 +44,26 @@ WriteLiteral(" type=\"text/html\"");
 WriteLiteral(" id=\"bcms-site-setting-tab-template\"");
 
 WriteLiteral(@">
-    <div class=""bcms-tab-header"">
-        <div class=""bcms-modal-frame-holder"">
-            <!-- ko foreach: tabs -->
-            <a class=""bcms-tab-item"" data-bind=""
+    <div class=""bcms-inner-navigation bcms-js-tab-header"">
+        <!-- ko foreach: tabs -->
+        <a class=""bcms-inner-navigation-ui bcms-tab-item"" data-bind=""
             text: title,
             attr: {'data-name': href},
             click: tabClick, clickBubble: true""></a>
-            <!-- /ko -->
-        </div>
+        <!-- /ko -->
     </div>
+</script>
 
-    <div class=""bcms-modal-frame-holder"">
-        <!-- ko foreach: tabs -->
-        <div class=""bcms-tab-single"" data-bind=""attr: {id: tabId}, stopBinding: true"">
-            ");
+<script");
 
-WriteLiteral("\r\n            <div></div>\r\n        </div>\r\n        <!-- /ko -->\r\n    </div>\r\n</sc" +
-"ript>\r\n");
+WriteLiteral(" type=\"text/html\"");
+
+WriteLiteral(" id=\"bcms-site-setting-tab-frame-template\"");
+
+WriteLiteral(">\r\n    <!-- ko foreach: tabs -->\r\n    <div class=\"bcms-tab-single\" data-bind=\"att" +
+"r: {id: tabId}, stopBinding: true\">\r\n        ");
+
+WriteLiteral("\r\n        <div></div>\r\n    </div>\r\n    <!-- /ko -->\r\n</script>\r\n");
 
         }
     }

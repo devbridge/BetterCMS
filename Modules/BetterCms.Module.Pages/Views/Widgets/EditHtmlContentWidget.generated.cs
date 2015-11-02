@@ -79,7 +79,7 @@ namespace ASP
         }
         public override void Execute()
         {
-WriteLiteral("\r\n");
+WriteLiteral("\n");
 
             
             #line 11 "..\..\Views\Widgets\EditHtmlContentWidget.cshtml"
@@ -102,13 +102,13 @@ WriteLiteral("\r\n");
             
             #line default
             #line hidden
-WriteLiteral("\r\n<div");
+WriteLiteral("\n<div");
 
-WriteLiteral(" class=\"bcms-tab-header\"");
+WriteLiteral(" class=\"bcms-tab-header bcms-js-tab-header\"");
 
 WriteLiteral(">\r\n    <a");
 
-WriteLiteral(" class=\"bcms-tab-item bcms-active\"");
+WriteLiteral(" class=\"bcms-tab-ui bcms-tab-item bcms-active\"");
 
 WriteLiteral(" data-name=\"#bcms-tab-1\"");
 
@@ -116,14 +116,14 @@ WriteLiteral(">");
 
             
             #line 22 "..\..\Views\Widgets\EditHtmlContentWidget.cshtml"
-                                                            Write(PagesGlobalization.EditWidget_BasicPropertiesTab_Title);
+                                                                        Write(PagesGlobalization.EditWidget_BasicPropertiesTab_Title);
 
             
             #line default
             #line hidden
 WriteLiteral("</a>\r\n    <a");
 
-WriteLiteral(" class=\"bcms-tab-item\"");
+WriteLiteral(" class=\"bcms-tab-ui bcms-tab-item\"");
 
 WriteLiteral(" data-name=\"#bcms-tab-2\"");
 
@@ -131,14 +131,14 @@ WriteLiteral(">");
 
             
             #line 23 "..\..\Views\Widgets\EditHtmlContentWidget.cshtml"
-                                                Write(PagesGlobalization.EditWidget_OptionsTab_Title);
+                                                            Write(PagesGlobalization.EditWidget_OptionsTab_Title);
 
             
             #line default
             #line hidden
 WriteLiteral("</a>\r\n    <a");
 
-WriteLiteral(" class=\"bcms-tab-item\"");
+WriteLiteral(" class=\"bcms-tab-ui bcms-tab-item\"");
 
 WriteLiteral(" data-name=\"#bcms-tab-3\"");
 
@@ -146,16 +146,16 @@ WriteLiteral(">");
 
             
             #line 24 "..\..\Views\Widgets\EditHtmlContentWidget.cshtml"
-                                                Write(PagesGlobalization.EditWidget_AdvancedOptionsTab_Title);
+                                                            Write(PagesGlobalization.EditWidget_AdvancedOptionsTab_Title);
 
             
             #line default
             #line hidden
-WriteLiteral("</a>\r\n</div>\r\n\r\n<div");
+WriteLiteral("</a>\r\n</div>\n\n<div");
 
 WriteLiteral(" class=\"bcms-scroll-window\"");
 
-WriteLiteral(">\r\n");
+WriteLiteral(">\n");
 
 WriteLiteral("    ");
 
@@ -166,7 +166,7 @@ Write(Html.TabbedContentMessagesBox("bcms-edit-widget-messages"));
             
             #line default
             #line hidden
-WriteLiteral("\r\n");
+WriteLiteral("\n");
 
 WriteLiteral("    ");
 
@@ -177,7 +177,7 @@ Write(Html.Partial("Partial/WarnMessageAboutDraft", Model));
             
             #line default
             #line hidden
-WriteLiteral("\r\n");
+WriteLiteral("\n");
 
             
             #line 30 "..\..\Views\Widgets\EditHtmlContentWidget.cshtml"
@@ -199,15 +199,15 @@ WriteLiteral(" id=\"bcms-tab-1\"");
 
 WriteLiteral(" class=\"bcms-tab-single\"");
 
-WriteLiteral(">\r\n            <div");
+WriteLiteral(">\n            <div");
 
 WriteLiteral(" class=\"bcms-padded-content\"");
 
-WriteLiteral(">\r\n                <div");
+WriteLiteral(">\n                <div");
 
 WriteLiteral(" class=\"bcms-input-list-holder\"");
 
-WriteLiteral(">\r\n");
+WriteLiteral(">\n");
 
 WriteLiteral("                    ");
 
@@ -218,7 +218,7 @@ WriteLiteral("                    ");
             
             #line default
             #line hidden
-WriteLiteral("\r\n                    <div");
+WriteLiteral("\n                    <div");
 
 WriteLiteral(" class=\"bcms-content-titles\"");
 
@@ -231,11 +231,11 @@ WriteLiteral(">");
             
             #line default
             #line hidden
-WriteLiteral("</div>\r\n                    <div");
+WriteLiteral("</div>\n                    <div");
 
 WriteLiteral(" class=\"bcms-input-box\"");
 
-WriteLiteral(">\r\n");
+WriteLiteral(">\n");
 
 WriteLiteral("                        ");
 
@@ -246,7 +246,7 @@ WriteLiteral("                        ");
             
             #line default
             #line hidden
-WriteLiteral("\r\n");
+WriteLiteral("\n");
 
 WriteLiteral("                        ");
 
@@ -257,11 +257,11 @@ WriteLiteral("                        ");
             
             #line default
             #line hidden
-WriteLiteral("\r\n                    </div>\r\n                </div>\r\n\r\n                <div");
+WriteLiteral("\n                    </div>\n                </div>\n\n                <div");
 
 WriteLiteral(" class=\"bcms-input-list-holder\"");
 
-WriteLiteral(">\r\n                    <div");
+WriteLiteral(">\n                    <div");
 
 WriteLiteral(" class=\"bcms-content-titles\"");
 
@@ -274,11 +274,11 @@ WriteLiteral(">");
             
             #line default
             #line hidden
-WriteLiteral("</div>\r\n                    <div");
+WriteLiteral("</div>\n                    <div");
 
 WriteLiteral(" class=\"bcms-poptext-editor-holder\"");
 
-WriteLiteral(">\r\n");
+WriteLiteral(">\n");
 
 WriteLiteral("                        ");
 
@@ -289,15 +289,15 @@ WriteLiteral("                        ");
             
             #line default
             #line hidden
-WriteLiteral("\r\n                    </div>\r\n                </div>\r\n\r\n                <div");
+WriteLiteral("\n                    </div>\n                </div>\n\n                <div");
 
 WriteLiteral(" class=\"bcms-input-list-holder\"");
 
-WriteLiteral(">\r\n                    <div");
+WriteLiteral(">\n                    <div");
 
 WriteLiteral(" class=\"bcms-edit-check-field\"");
 
-WriteLiteral(">\r\n");
+WriteLiteral(">\n");
 
 WriteLiteral("                        ");
 
@@ -308,7 +308,7 @@ WriteLiteral("                        ");
             
             #line default
             #line hidden
-WriteLiteral("\r\n                        <div");
+WriteLiteral("\n                        <div");
 
 WriteLiteral(" class=\"bcms-edit-label\"");
 
@@ -321,14 +321,13 @@ WriteLiteral(">");
             
             #line default
             #line hidden
-WriteLiteral("</div>\r\n                    </div>\r\n                </div>\r\n\r\n                <di" +
-"v");
+WriteLiteral("</div>\n                    </div>\n                </div>\n\n                <div");
 
 WriteLiteral(" class=\"bcms-tags-box-holder\"");
 
 WriteLiteral(" data-bind=\"with: categories\"");
 
-WriteLiteral(">\r\n");
+WriteLiteral(">\n");
 
 WriteLiteral("                    ");
 
@@ -339,7 +338,7 @@ WriteLiteral("                    ");
             
             #line default
             #line hidden
-WriteLiteral("\r\n                </div>\r\n            </div>\r\n        </div>\r\n");
+WriteLiteral("\n                </div>\n            </div>\n        </div>\n");
 
             
             #line 62 "..\..\Views\Widgets\EditHtmlContentWidget.cshtml"
@@ -354,7 +353,7 @@ WriteLiteral(" id=\"bcms-tab-2\"");
 
 WriteLiteral(" class=\"bcms-tab-single\"");
 
-WriteLiteral(">\r\n");
+WriteLiteral(">\n");
 
 WriteLiteral("            ");
 
@@ -365,7 +364,7 @@ WriteLiteral("            ");
             
             #line default
             #line hidden
-WriteLiteral("\r\n        </div>\r\n");
+WriteLiteral("\n        </div>\n");
 
             
             #line 66 "..\..\Views\Widgets\EditHtmlContentWidget.cshtml"
@@ -380,15 +379,15 @@ WriteLiteral(" id=\"bcms-tab-3\"");
 
 WriteLiteral(" class=\"bcms-tab-single\"");
 
-WriteLiteral(">\r\n            <div");
+WriteLiteral(">\n            <div");
 
 WriteLiteral(" class=\"bcms-padded-content\"");
 
-WriteLiteral(">\r\n                <div");
+WriteLiteral(">\n                <div");
 
 WriteLiteral(" class=\"bcms-input-list-holder\"");
 
-WriteLiteral(">\r\n                    <div");
+WriteLiteral(">\n                    <div");
 
 WriteLiteral(" class=\"bcms-content-titles\"");
 
@@ -401,7 +400,7 @@ WriteLiteral(">");
             
             #line default
             #line hidden
-WriteLiteral("</div>\r\n");
+WriteLiteral("</div>\n");
 
 WriteLiteral("                    ");
 
@@ -412,15 +411,15 @@ WriteLiteral("                    ");
             
             #line default
             #line hidden
-WriteLiteral("\r\n                </div>\r\n\r\n                <div");
+WriteLiteral("\n                </div>\n\n                <div");
 
 WriteLiteral(" class=\"bcms-input-list-holder\"");
 
-WriteLiteral(">\r\n                    <div");
+WriteLiteral(">\n                    <div");
 
 WriteLiteral(" class=\"bcms-edit-check-field\"");
 
-WriteLiteral(">\r\n");
+WriteLiteral(">\n");
 
 WriteLiteral("                        ");
 
@@ -431,7 +430,7 @@ WriteLiteral("                        ");
             
             #line default
             #line hidden
-WriteLiteral("\r\n                        <div");
+WriteLiteral("\n                        <div");
 
 WriteLiteral(" class=\"bcms-edit-label\"");
 
@@ -444,12 +443,11 @@ WriteLiteral(">");
             
             #line default
             #line hidden
-WriteLiteral("</div>\r\n                    </div>\r\n                </div>\r\n\r\n                <di" +
-"v");
+WriteLiteral("</div>\n                    </div>\n                </div>\n\n                <div");
 
 WriteLiteral(" class=\"bcms-input-list-holder\"");
 
-WriteLiteral(">\r\n                    <div");
+WriteLiteral(">\n                    <div");
 
 WriteLiteral(" class=\"bcms-content-titles\"");
 
@@ -462,7 +460,7 @@ WriteLiteral(">");
             
             #line default
             #line hidden
-WriteLiteral("</div>\r\n");
+WriteLiteral("</div>\n");
 
 WriteLiteral("                    ");
 
@@ -473,15 +471,15 @@ WriteLiteral("                    ");
             
             #line default
             #line hidden
-WriteLiteral("\r\n                </div>\r\n\r\n                <div");
+WriteLiteral("\n                </div>\n\n                <div");
 
 WriteLiteral(" class=\"bcms-input-list-holder\"");
 
-WriteLiteral(">\r\n                    <div");
+WriteLiteral(">\n                    <div");
 
 WriteLiteral(" class=\"bcms-edit-check-field\"");
 
-WriteLiteral(">\r\n");
+WriteLiteral(">\n");
 
 WriteLiteral("                        ");
 
@@ -492,7 +490,7 @@ WriteLiteral("                        ");
             
             #line default
             #line hidden
-WriteLiteral("\r\n                        <div");
+WriteLiteral("\n                        <div");
 
 WriteLiteral(" class=\"bcms-edit-label\"");
 
@@ -505,8 +503,8 @@ WriteLiteral(">");
             
             #line default
             #line hidden
-WriteLiteral("</div>\r\n                    </div>\r\n                </div>\r\n            </div>\r\n " +
-"       </div>\r\n");
+WriteLiteral("</div>\n                    </div>\n                </div>\n            </div>\n     " +
+"   </div>\n");
 
             
             #line 94 "..\..\Views\Widgets\EditHtmlContentWidget.cshtml"
@@ -614,7 +612,7 @@ WriteLiteral("</div>\r\n                    </div>\r\n                </div>\r\n
             
             #line default
             #line hidden
-WriteLiteral("</div>\r\n");
+WriteLiteral("</div>\n");
 
         }
     }

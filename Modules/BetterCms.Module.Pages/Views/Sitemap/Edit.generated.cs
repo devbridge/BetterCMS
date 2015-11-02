@@ -92,7 +92,7 @@ namespace ASP
             #line hidden
 WriteLiteral("\r\n<div");
 
-WriteLiteral(" class=\"bcms-tab-header\"");
+WriteLiteral(" class=\"bcms-tab-header bcms-js-tab-header\"");
 
 WriteLiteral(">\r\n    <div");
 
@@ -100,13 +100,13 @@ WriteLiteral(" class=\"bcms-modal-frame-holder\"");
 
 WriteLiteral(">\r\n        <a");
 
-WriteLiteral(" class=\"bcms-tab-item bcms-active\"");
+WriteLiteral(" class=\"bcms-tab-ui bcms-tab-item bcms-active\"");
 
 WriteLiteral(" data-name=\"#bcms-tab-1\"");
 
 WriteLiteral(">Properties</a>\r\n        <a");
 
-WriteLiteral(" class=\"bcms-tab-item\"");
+WriteLiteral(" class=\"bcms-tab-ui bcms-tab-item\"");
 
 WriteLiteral(" data-name=\"#bcms-tab-2\"");
 
@@ -368,8 +368,8 @@ WriteLiteral(">");
             
             #line default
             #line hidden
-WriteLiteral("</div>\r\n                            </div>\r\n                        </div>\r\n     " +
-"                   <div");
+WriteLiteral("</div>\r\n                            </div>\r\n                        </div>\r\n\r\n   " +
+"                     <div");
 
 WriteLiteral(" class=\"bcms-leftcol bcms-add-node-col\"");
 
@@ -379,7 +379,8 @@ WriteLiteral(" class=\"bcms-sitemap-links-holder\"");
 
 WriteLiteral(" data-bind=\"template: { name: \'bcms-navigation-pagelinks-template\' }\"");
 
-WriteLiteral("></div>\r\n                        </div>\r\n                        <div");
+WriteLiteral("></div>\r\n                        </div>\r\n                        \r\n              " +
+"          <div");
 
 WriteLiteral(" class=\"bcms-rightcol\"");
 
@@ -389,15 +390,15 @@ WriteLiteral(" class=\"bcms-sitemap-holder bcms-sitemap-edit\"");
 
 WriteLiteral(">\r\n                                <div");
 
-WriteAttribute("class", Tuple.Create(" class=\"", 4298), Tuple.Create("\"", 4383)
-, Tuple.Create(Tuple.Create("", 4306), Tuple.Create("bcms-addnode-placement-holder", 4306), true)
+WriteAttribute("class", Tuple.Create(" class=\"", 4369), Tuple.Create("\"", 4454)
+, Tuple.Create(Tuple.Create("", 4377), Tuple.Create("bcms-addnode-placement-holder", 4377), true)
             
-            #line 73 "..\..\Views\Sitemap\Edit.cshtml"
-, Tuple.Create(Tuple.Create("", 4335), Tuple.Create<System.Object, System.Int32>(Model.IsReadOnly ? "-readonly" : string.Empty
+            #line 75 "..\..\Views\Sitemap\Edit.cshtml"
+, Tuple.Create(Tuple.Create("", 4406), Tuple.Create<System.Object, System.Int32>(Model.IsReadOnly ? "-readonly" : string.Empty
             
             #line default
             #line hidden
-, 4335), false)
+, 4406), false)
 );
 
 WriteLiteral(">\r\n");
@@ -405,7 +406,7 @@ WriteLiteral(">\r\n");
 WriteLiteral("                                    ");
 
             
-            #line 74 "..\..\Views\Sitemap\Edit.cshtml"
+            #line 76 "..\..\Views\Sitemap\Edit.cshtml"
                                Write(Html.Partial("Partial/Sitemap", new SitemapNodeViewModel()));
 
             
@@ -416,7 +417,7 @@ WriteLiteral("\r\n                                </div>\r\n                    
 "\n            </div>\r\n");
 
             
-            #line 81 "..\..\Views\Sitemap\Edit.cshtml"
+            #line 83 "..\..\Views\Sitemap\Edit.cshtml"
         }
 
             
@@ -425,7 +426,7 @@ WriteLiteral("\r\n                                </div>\r\n                    
 WriteLiteral("    </div>\r\n</div>\r\n\r\n");
 
             
-            #line 85 "..\..\Views\Sitemap\Edit.cshtml"
+            #line 87 "..\..\Views\Sitemap\Edit.cshtml"
 Write(Html.Partial("Partial/SitemapTemplate", new SitemapNodeViewModel()));
 
             
@@ -440,7 +441,7 @@ WriteLiteral(" id=\"bcms-navigation-pagelinks-template\"");
 WriteLiteral(">\r\n    <div class=\"bcms-plain-text\">");
 
             
-            #line 88 "..\..\Views\Sitemap\Edit.cshtml"
+            #line 90 "..\..\Views\Sitemap\Edit.cshtml"
                             Write(NavigationGlobalization.Sitemap_EditDialog_PageLink_Header);
 
             
@@ -450,7 +451,7 @@ WriteLiteral("</div>\r\n    <div class=\"bcms-sidebar-search\">\r\n        <inpu
 "bcms-editor-field-box\" placeholder=\"");
 
             
-            #line 90 "..\..\Views\Sitemap\Edit.cshtml"
+            #line 92 "..\..\Views\Sitemap\Edit.cshtml"
                                                                  Write(NavigationGlobalization.Sitemap_EditDialog_AddPageLink_SearchPlaceHolder);
 
             
@@ -461,7 +462,7 @@ WriteLiteral("\"\r\n               data-bind=\"hasfocus: hasfocus, value: search
 "n-search\" data-bind=\"click: searchForPageLinks\">");
 
             
-            #line 92 "..\..\Views\Sitemap\Edit.cshtml"
+            #line 94 "..\..\Views\Sitemap\Edit.cshtml"
                                                                       Write(NavigationGlobalization.Sitemap_EditDialog_AddPageLink_SearchButton);
 
             
@@ -470,7 +471,7 @@ WriteLiteral("\"\r\n               data-bind=\"hasfocus: hasfocus, value: search
 WriteLiteral("</div>\r\n    </div>\r\n    <div class=\"bcms-addnode-placement-holder");
 
             
-            #line 94 "..\..\Views\Sitemap\Edit.cshtml"
+            #line 96 "..\..\Views\Sitemap\Edit.cshtml"
                                          Write(Model.IsReadOnly ? "-readonly" : string.Empty);
 
             
@@ -487,7 +488,7 @@ WriteLiteral(">\r\n    <!-- ko if: isVisible() || isCustom() -->\r\n    <div cla
 "node\" data-bind=\"");
 
             
-            #line 99 "..\..\Views\Sitemap\Edit.cshtml"
+            #line 101 "..\..\Views\Sitemap\Edit.cshtml"
                                             Write(!Model.IsReadOnly ? "draggable: $parentContext.$index, " : string.Empty);
 
             

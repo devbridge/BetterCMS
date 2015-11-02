@@ -58,7 +58,7 @@ bettercms.define('bcms.pages', ['bcms.jquery', 'bcms', 'bcms.modal', 'bcms.siteS
 
                 clonePageForm: 'form:first',
                 cloneWithLanguageGoToPagePropertiesLink: '#bcms-open-page-translations',
-                pagePropertiesTranslationsTab: '.bcms-tab-header .bcms-tab-item[data-name="#bcms-tab-5"]',
+                pagePropertiesTranslationsTab: '.bcms-js-tab-header .bcms-tab-item[data-name="#bcms-tab-5"]',
                 languageSelection: '#LanguageId'
             },
             links = {

@@ -32,7 +32,7 @@ bettercms.define('bcms.modal', ['bcms.jquery', 'bcms', 'bcms.tabs', 'bcms.ko.ext
             elemOuter: '.bcms-modal-body',
             elemHeader: '.bcms-modal-header',
             elemFooter: '.bcms-modal-footer',
-            elemTabsHeader: '.bcms-tab-header',
+            elemTabsHeader: '.bcms-js-tab-header',
             elemContent: '.bcms-scroll-window',
             readonly: '[data-readonly=true]'
         },

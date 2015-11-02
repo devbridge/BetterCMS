@@ -57,79 +57,58 @@ WriteLiteral(" class=\"bcms-scroll-window\"");
 
 WriteLiteral(">\r\n    <div");
 
-WriteLiteral(" id=\"bcms-site-settings-placeholder\"");
+WriteLiteral(" class=\"bcms-settings-frame\"");
 
-WriteLiteral("> </div>\r\n\r\n    <div");
+WriteLiteral(">\r\n        <div");
 
 WriteLiteral(" class=\"bcms-settings-menu\"");
 
 WriteLiteral(" id=\"bcms-site-settings-menu\"");
 
-WriteLiteral(">\r\n        <!---<div class=\"bcms-links-block\">  !-->\r\n        <div");
-
-WriteLiteral(" class=\"bcms-settings-separator\"");
-
-WriteLiteral("></div>\r\n");
+WriteLiteral(">\r\n");
 
             
-            #line 11 "..\..\Views\SiteSettings\Container.cshtml"
-        
+            #line 8 "..\..\Views\SiteSettings\Container.cshtml"
+            
             
             #line default
             #line hidden
             
-            #line 11 "..\..\Views\SiteSettings\Container.cshtml"
-          
-            var lastItemIsHr = true;
-            foreach (var menuItem in Model.MenuItems.Projections)
-            {
-                if (menuItem is SeparatorProjection)
+            #line 8 "..\..\Views\SiteSettings\Container.cshtml"
+              
+                var lastItemIsHr = true;
+                foreach (var menuItem in Model.MenuItems.Projections)
                 {
-                    if (!lastItemIsHr)
+                    if (menuItem is SeparatorProjection)
                     {
-
-            
-            #line default
-            #line hidden
-WriteLiteral("                        <div");
-
-WriteLiteral(" class=\"bcms-settings-separator\"");
-
-WriteLiteral("></div>\r\n");
-
-            
-            #line 20 "..\..\Views\SiteSettings\Container.cshtml"
-                        lastItemIsHr = true;
+                        if (!lastItemIsHr)
+                        {
+                            lastItemIsHr = true;
+                        }
+                    }
+                    else
+                    {
+                        if (menuItem.Render(Model.MenuItems.Page, (ViewContext.Controller as CmsControllerBase).SecurityService, Html))
+                        {
+                            lastItemIsHr = false;
+                        }
                     }
                 }
-                else
-                {
-                    if (menuItem.Render(Model.MenuItems.Page, (ViewContext.Controller as CmsControllerBase).SecurityService, Html))
-                    {
-                        lastItemIsHr = false;
-                    }
-                }
-            }
-            if (!lastItemIsHr)
-            {
-
+            
             
             #line default
             #line hidden
-WriteLiteral("                <div");
+WriteLiteral("\r\n        </div>\r\n\r\n        <div");
 
-WriteLiteral(" class=\"bcms-settings-separator\"");
+WriteLiteral(" class=\"bcms-settings-window bcms-js-settings-window\"");
 
-WriteLiteral("></div>\r\n");
+WriteLiteral(" id=\"bcms-spinner-target-1\"");
 
-            
-            #line 34 "..\..\Views\SiteSettings\Container.cshtml"
-            }
-        
-            
-            #line default
-            #line hidden
-WriteLiteral("\r\n    </div>\r\n</div>\r\n");
+WriteLiteral(">\r\n            <div");
+
+WriteLiteral(" id=\"bcms-site-settings-placeholder\"");
+
+WriteLiteral("> </div>\r\n        </div>\r\n    </div>\r\n</div>\r\n");
 
         }
     }

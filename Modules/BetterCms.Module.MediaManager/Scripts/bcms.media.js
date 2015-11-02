@@ -15,7 +15,7 @@ function ($, bcms, modal, siteSettings, forms, dynamicContent, messages, mediaUp
 
             templateDataBind: '.bcms-data-bind-container',
             firstForm: 'form:first',
-            spinContainer: '.bcms-rightcol:first',
+            spinContainer: '.bcms-js-settings-window:first',
             insertContentContainer: '.bcms-insert-content-modal:first',
             searchBox: '#bcms-search-input',
             fileListMessageBox: '#bcms-site-settings-media-messages-',

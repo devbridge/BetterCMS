@@ -4,11 +4,11 @@
 @using BetterCms.Module.Root.Mvc.Helpers
 @using Microsoft.Web.Mvc
 
-<div class="bcms-tab-header">
+<div class="bcms-tab-header bcms-js-tab-header">
     <div class="bcms-modal-frame-holder">
         <a class="bcms-sitemaps-arrow-left" data-bind="css: { 'bcms-sitemaps-arrow-inactive': !slider.canSlideLeft() }, click: slider.slideLeft, visible: slider.showSliders"></a>
         <!-- ko foreach: tabs -->
-        <a class="bcms-tab-item" data-bind="text: newPageViewModel.sitemap.title(), css: { 'bcms-active': isActive }, click: activate, attr: { id: tabId }, visible: isVisible"></a>
+        <a class="bcms-tab-ui bcms-tab-item" data-bind="text: newPageViewModel.sitemap.title(), css: { 'bcms-active': isActive }, click: activate, attr: { id: tabId }, visible: isVisible"></a>
         <!-- /ko -->
         <a class="bcms-sitemaps-arrow-right" data-bind="css: { 'bcms-sitemaps-arrow-inactive': !slider.canSlideRight() }, click: slider.slideRight, visible: slider.showSliders"></a>
     </div>
@@ -32,6 +32,7 @@
                         <div class="bcms-expand-link" data-bind="click: collapseAll">@NavigationGlobalization.Sitemap_Button_CollapseAll</div>
                     </div>
                 </div>
+
                 <div class="bcms-leftcol bcms-leftcol-helper">
                     <div class="bcms-sidebar-info-block">
                         <!-- ko if: !linkIsDropped() -->
@@ -56,6 +57,7 @@
                         <div class="bcms-btn-main" data-bind="click: skipClicked, visible: !linkIsDropped()">@NavigationGlobalization.Sitemap_AddNewPageDialog_SkipButton</div>
                     </div>
                 </div>
+
                 <div class="bcms-rightcol">
                     <div class="bcms-placement-holder bcms-sitemap-newpage">
                         @* Form is required for unobtrusive validation. *@

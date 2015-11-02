@@ -7,12 +7,13 @@
 {
     return;
 }
-<div class="bcms-tab-header">
+<div class="bcms-tab-header bcms-js-tab-header">
     <div class="bcms-modal-frame-holder">
-        <a class="bcms-tab-item bcms-active" data-name="#bcms-tab-1">@PagesGlobalization.EditPageContent_RegularContentTab_Title</a>
-        <a class="bcms-tab-item" data-name="#bcms-tab-2">@PagesGlobalization.EditPageContent_AdvancedOptionsTab_Title</a>
+        <a class="bcms-tab-ui bcms-tab-item bcms-active" data-name="#bcms-tab-1">@PagesGlobalization.EditPageContent_RegularContentTab_Title</a>
+        <a class="bcms-tab-ui bcms-tab-item" data-name="#bcms-tab-2">@PagesGlobalization.EditPageContent_AdvancedOptionsTab_Title</a>
     </div>
 </div>
+
 <div class="bcms-scroll-window">
     <div class="bcms-modal-frame-holder">
         @Html.TabbedContentMessagesBox()

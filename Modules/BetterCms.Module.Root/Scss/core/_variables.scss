@@ -16,9 +16,15 @@ $dark: #303030;
 $main-dark: #303646;
 $gray-l30: #f5f5f5;
 $gray-light: #a1a1a1;
+$gray-l: #dfdfdf;
+$blue-main: #0d7ce7;
+
+//module new borders
+$border-nav-bottom: 1px solid $gray-l;
 
 //module text colors
 $main-text: #636363;
+$light-text: #a6a6a6;
 
 ///
 ///
@@ -39,7 +45,7 @@ $gray-l50: #676767;
 $gray-l60: #555555;
 $gray-l65: #474747;
 //
-$blue-main: #0383df;
+
 $sky-blue: #deeaf1;
 $blue-5: #eff9fd;
 $blue-l30: #1892E4;
@@ -63,15 +69,18 @@ $border-thin-white: 1px solid $white;
 $border-overlay: 1px dashed $blue-l30;
 $border-content-actions: 1px solid $sky-blue;
 $border-content-box: 1px solid $gray-l45;
+$border-thick-transparent: 2px solid transparent;
 
 //module images paths
 
 //module misc variables
 $page-width: 900px;
+$settings-sidebar: 190px;
 $page-frame-gutters: 20px;
 $header-height: 55px;
 $footer-height: 65px;
 $tab-height: 50px;
+$settings-frame: ($page-width + $settings-sidebar);
 
 //module transitions
 

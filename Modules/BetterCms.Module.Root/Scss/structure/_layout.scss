@@ -23,6 +23,14 @@ button {
     }
 }
 
+a {
+    text-decoration: none;
+
+    &:hover {
+        text-decoration: none;
+    }
+}
+
 //todo remove when iFrame implemented
 [class*="bcms-"] {
     font-family: $font-base-family;
@@ -132,9 +140,21 @@ button {
 //module dialog frame
 
 .bcms-settings {
+    &-frame {
+        display: table;
+        margin: auto;
+        width: $settings-frame;
+    }
+
     &-menu {
-        //@include position(absolute, 0 null 0 0);
+        @include vertical-align($block: table-cell, $align: top);
         background-color: $gray-l30;
+        width: $settings-sidebar;
+    }
+
+    &-window {
+        @include vertical-align($block: table-cell, $align: top);
+        padding-left: 30px;
     }
 
     &-link {

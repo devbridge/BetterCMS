@@ -75,7 +75,7 @@ namespace ASP
         {
 WriteLiteral("<div");
 
-WriteLiteral(" class=\"bcms-tab-header\"");
+WriteLiteral(" class=\"bcms-tab-header bcms-js-tab-header\"");
 
 WriteLiteral(">\r\n    <div");
 
@@ -83,7 +83,7 @@ WriteLiteral(" class=\"bcms-modal-frame-holder\"");
 
 WriteLiteral(">\r\n        <a");
 
-WriteLiteral(" class=\"bcms-tab-item bcms-active\"");
+WriteLiteral(" class=\"bcms-tab-ui bcms-tab-item bcms-active\"");
 
 WriteLiteral(" data-name=\"#bcms-tab-1\"");
 
@@ -91,14 +91,14 @@ WriteLiteral(">");
 
             
             #line 11 "..\..\Views\Category\CategoryTreeEdit.cshtml"
-                                                                Write(RootGlobalization.CategoryTree_EditDialog_PropertiesTab_Title);
+                                                                            Write(RootGlobalization.CategoryTree_EditDialog_PropertiesTab_Title);
 
             
             #line default
             #line hidden
 WriteLiteral("</a>\r\n        <a");
 
-WriteLiteral(" class=\"bcms-tab-item\"");
+WriteLiteral(" class=\"bcms-tab-ui bcms-tab-item\"");
 
 WriteLiteral(" data-name=\"#bcms-tab-2\"");
 
@@ -106,7 +106,7 @@ WriteLiteral(">");
 
             
             #line 12 "..\..\Views\Category\CategoryTreeEdit.cshtml"
-                                                    Write(RootGlobalization.CategoryTree_EditDialog_NodesTab_Title);
+                                                                Write(RootGlobalization.CategoryTree_EditDialog_NodesTab_Title);
 
             
             #line default
@@ -443,15 +443,15 @@ WriteLiteral(" class=\"bcms-sitemap-holder bcms-sitemap-edit\"");
 
 WriteLiteral(">\r\n                                <div");
 
-WriteAttribute("class", Tuple.Create(" class=\"", 4579), Tuple.Create("\"", 4664)
-, Tuple.Create(Tuple.Create("", 4587), Tuple.Create("bcms-addnode-placement-holder", 4587), true)
+WriteAttribute("class", Tuple.Create(" class=\"", 4622), Tuple.Create("\"", 4707)
+, Tuple.Create(Tuple.Create("", 4630), Tuple.Create("bcms-addnode-placement-holder", 4630), true)
             
             #line 83 "..\..\Views\Category\CategoryTreeEdit.cshtml"
-, Tuple.Create(Tuple.Create("", 4616), Tuple.Create<System.Object, System.Int32>(Model.IsReadOnly ? "-readonly" : string.Empty
+, Tuple.Create(Tuple.Create("", 4659), Tuple.Create<System.Object, System.Int32>(Model.IsReadOnly ? "-readonly" : string.Empty
             
             #line default
             #line hidden
-, 4616), false)
+, 4659), false)
 );
 
 WriteLiteral(">\r\n");

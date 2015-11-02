@@ -12,10 +12,10 @@
         TooltipDescription = NavigationGlobalization.Sitemap_EditDialog_AddTags_Tooltip_Description
     };
 }
-<div class="bcms-tab-header">
+<div class="bcms-tab-header bcms-js-tab-header">
     <div class="bcms-modal-frame-holder">
-        <a class="bcms-tab-item bcms-active" data-name="#bcms-tab-1">Properties</a>
-        <a class="bcms-tab-item" data-name="#bcms-tab-2">Nodes</a>
+        <a class="bcms-tab-ui bcms-tab-item bcms-active" data-name="#bcms-tab-1">Properties</a>
+        <a class="bcms-tab-ui bcms-tab-item" data-name="#bcms-tab-2">Nodes</a>
     </div>
 </div>
 
@@ -65,9 +65,11 @@
                                 <div class="bcms-expand-link" data-bind="click: collapseAll">@NavigationGlobalization.Sitemap_Button_CollapseAll</div>
                             </div>
                         </div>
+
                         <div class="bcms-leftcol bcms-add-node-col">
                             <div class="bcms-sitemap-links-holder" data-bind="template: { name: 'bcms-navigation-pagelinks-template' }"></div>
                         </div>
+                        
                         <div class="bcms-rightcol">
                             <div class="bcms-sitemap-holder bcms-sitemap-edit">
                                 <div class="bcms-addnode-placement-holder@(Model.IsReadOnly ? "-readonly" : string.Empty)">

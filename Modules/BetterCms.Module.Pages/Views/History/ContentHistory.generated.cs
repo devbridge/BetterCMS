@@ -142,7 +142,7 @@ WriteLiteralTo(__razor_helper_writer, ">");
 
 #line default
 #line hidden
-WriteLiteralTo(__razor_helper_writer, "</a>\r\n");
+WriteLiteralTo(__razor_helper_writer, "</a>\n");
 
 
 #line 18 "..\..\Views\History\ContentHistory.cshtml"
@@ -207,7 +207,7 @@ WriteLiteralTo(__razor_helper_writer, ">");
 
 #line default
 #line hidden
-WriteLiteralTo(__razor_helper_writer, "</a>\r\n");
+WriteLiteralTo(__razor_helper_writer, "</a>\n");
 
 
 #line 25 "..\..\Views\History\ContentHistory.cshtml"
@@ -220,7 +220,7 @@ WriteLiteralTo(__razor_helper_writer, "</a>\r\n");
 #line hidden
 WriteLiteralTo(__razor_helper_writer, "    ");
 
-WriteLiteralTo(__razor_helper_writer, "&nbsp;\r\n");
+WriteLiteralTo(__razor_helper_writer, "&nbsp;\n");
 
 
 #line 29 "..\..\Views\History\ContentHistory.cshtml"
@@ -263,7 +263,7 @@ WriteLiteralTo(__razor_helper_writer, "<div class=\"bcms-archived-state\">");
 
 #line default
 #line hidden
-WriteLiteralTo(__razor_helper_writer, "</div>\r\n");
+WriteLiteralTo(__razor_helper_writer, "</div>\n");
 
 
 #line 38 "..\..\Views\History\ContentHistory.cshtml"
@@ -286,7 +286,7 @@ WriteLiteralTo(__razor_helper_writer, "<div class=\"bcms-draft-state\">");
 
 #line default
 #line hidden
-WriteLiteralTo(__razor_helper_writer, "</div>\r\n");
+WriteLiteralTo(__razor_helper_writer, "</div>\n");
 
 
 #line 43 "..\..\Views\History\ContentHistory.cshtml"
@@ -309,7 +309,7 @@ WriteLiteralTo(__razor_helper_writer, "<div class=\"bcms-published-state\">");
 
 #line default
 #line hidden
-WriteLiteralTo(__razor_helper_writer, "</div>\r\n");
+WriteLiteralTo(__razor_helper_writer, "</div>\n");
 
 
 #line 48 "..\..\Views\History\ContentHistory.cshtml"
@@ -323,7 +323,7 @@ WriteLiteralTo(__razor_helper_writer, "</div>\r\n");
 #line hidden
 WriteLiteralTo(__razor_helper_writer, "    ");
 
-WriteLiteralTo(__razor_helper_writer, "statusName\r\n");
+WriteLiteralTo(__razor_helper_writer, "statusName\n");
 
 
 #line 53 "..\..\Views\History\ContentHistory.cshtml"
@@ -345,13 +345,13 @@ WriteLiteralTo(__razor_helper_writer, "statusName\r\n");
         }
         public override void Execute()
         {
-WriteLiteral("\r\n");
+WriteLiteral("\n");
 
-WriteLiteral("\r\n");
+WriteLiteral("\n");
 
-WriteLiteral("\r\n");
+WriteLiteral("\n");
 
-WriteLiteral("\r\n");
+WriteLiteral("\n");
 
             
             #line 57 "..\..\Views\History\ContentHistory.cshtml"
@@ -406,13 +406,13 @@ WriteLiteral("\r\n");
             
             #line default
             #line hidden
-WriteLiteral("\r\n\r\n<div");
+WriteLiteral("\n\n<div");
 
-WriteLiteral(" class=\"bcms-tab-header\"");
+WriteLiteral(" class=\"bcms-tab-header bcms-js-tab-header\"");
 
 WriteLiteral(">\r\n    <a");
 
-WriteLiteral(" class=\"bcms-tab-item bcms-active\"");
+WriteLiteral(" class=\"bcms-tab-ui bcms-tab-item bcms-active\"");
 
 WriteLiteral(" data-name=\"#bcms-tab-1\"");
 
@@ -420,14 +420,14 @@ WriteLiteral(">");
 
             
             #line 107 "..\..\Views\History\ContentHistory.cshtml"
-                                                            Write(PagesGlobalization.ContentHistory_ContentTab_Title);
+                                                                        Write(PagesGlobalization.ContentHistory_ContentTab_Title);
 
             
             #line default
             #line hidden
 WriteLiteral("</a>\r\n    <a");
 
-WriteLiteral(" class=\"bcms-tab-item\"");
+WriteLiteral(" class=\"bcms-tab-ui bcms-tab-item\"");
 
 WriteLiteral(" data-name=\"#bcms-tab-2\"");
 
@@ -435,20 +435,20 @@ WriteLiteral(">");
 
             
             #line 108 "..\..\Views\History\ContentHistory.cshtml"
-                                                Write(PagesGlobalization.ContentHistory_PropertiesTab_Title);
+                                                            Write(PagesGlobalization.ContentHistory_PropertiesTab_Title);
 
             
             #line default
             #line hidden
-WriteLiteral("</a>\r\n</div>\r\n<div");
+WriteLiteral("</a>\r\n</div>\n<div");
 
 WriteLiteral(" class=\"bcms-scroll-window\"");
 
-WriteLiteral(">\r\n    <div");
+WriteLiteral(">\n    <div");
 
 WriteLiteral(" class=\"bcms-history-preview-holder\"");
 
-WriteLiteral(">\r\n");
+WriteLiteral(">\n");
 
 WriteLiteral("        ");
 
@@ -459,11 +459,11 @@ WriteLiteral("        ");
             
             #line default
             #line hidden
-WriteLiteral("\r\n        <div");
+WriteLiteral("\n        <div");
 
 WriteLiteral(" style=\"height: 100%; overflow: auto;\"");
 
-WriteLiteral(">\r\n            <div");
+WriteLiteral(">\n            <div");
 
 WriteLiteral(" id=\"bcms-tab-1\"");
 
@@ -471,7 +471,7 @@ WriteLiteral(" class=\"bcms-tab-single\"");
 
 WriteLiteral(" style=\"height: 100%\"");
 
-WriteLiteral(">\r\n                <div");
+WriteLiteral(">\n                <div");
 
 WriteLiteral(" class=\"bcms-history-preview\"");
 
@@ -479,7 +479,7 @@ WriteLiteral(" id=\"bcms-history-preview\"");
 
 WriteLiteral(" style=\"height: 100%\"");
 
-WriteLiteral(">\r\n                    <div");
+WriteLiteral(">\n                    <div");
 
 WriteLiteral(" class=\"bcms-history-info\"");
 
@@ -494,13 +494,13 @@ WriteLiteral(">");
             
             #line default
             #line hidden
-WriteLiteral("</div>\r\n                </div>\r\n            </div>\r\n            <div");
+WriteLiteral("</div>\n                </div>\n            </div>\n            <div");
 
 WriteLiteral(" id=\"bcms-tab-2\"");
 
 WriteLiteral(" class=\"bcms-tab-single\"");
 
-WriteLiteral(">\r\n                <div");
+WriteLiteral(">\n                <div");
 
 WriteLiteral(" class=\"bcms-history-preview\"");
 
@@ -508,7 +508,7 @@ WriteLiteral(" id=\"bcms-history-preview-properties\"");
 
 WriteLiteral(" style=\"height: 100%\"");
 
-WriteLiteral(">\r\n                    <div");
+WriteLiteral(">\n                    <div");
 
 WriteLiteral(" class=\"bcms-history-info\"");
 
@@ -523,12 +523,12 @@ WriteLiteral(">");
             
             #line default
             #line hidden
-WriteLiteral("</div>\r\n                </div>\r\n            </div>\r\n        </div>\r\n    </div>\r\n " +
-"   <div");
+WriteLiteral("</div>\n                </div>\n            </div>\n        </div>\n    </div>\n    <d" +
+"iv");
 
 WriteLiteral(" class=\"bcms-history-table-holder\"");
 
-WriteLiteral(">\r\n\r\n");
+WriteLiteral(">\n\n");
 
             
             #line 128 "..\..\Views\History\ContentHistory.cshtml"
@@ -577,7 +577,7 @@ WriteLiteral("            <div");
 
 WriteLiteral(" class=\"bcms-history-table-top\"");
 
-WriteLiteral(">\r\n                <div");
+WriteLiteral(">\n                <div");
 
 WriteLiteral(" class=\"bcms-large-titles\"");
 
@@ -590,11 +590,11 @@ WriteLiteral(">");
             
             #line default
             #line hidden
-WriteLiteral("</div>\r\n                <div");
+WriteLiteral("</div>\n                <div");
 
 WriteLiteral(" class=\"bcms-search-block\"");
 
-WriteLiteral(">\r\n");
+WriteLiteral(">\n");
 
 WriteLiteral("                    ");
 
@@ -605,7 +605,7 @@ WriteLiteral("                    ");
             
             #line default
             #line hidden
-WriteLiteral("\r\n                    <div");
+WriteLiteral("\n                    <div");
 
 WriteLiteral(" class=\"bcms-btn-search\"");
 
@@ -620,7 +620,7 @@ WriteLiteral(">");
             
             #line default
             #line hidden
-WriteLiteral("</div>\r\n                </div>\r\n            </div>\r\n");
+WriteLiteral("</div>\n                </div>\n            </div>\n");
 
             
             #line 140 "..\..\Views\History\ContentHistory.cshtml"
@@ -661,14 +661,14 @@ WriteLiteral("</div>\r\n                </div>\r\n            </div>\r\n");
             
             #line default
             #line hidden
-WriteLiteral("    </div>\r\n</div>\r\n\r\n<script");
+WriteLiteral("    </div>\n</div>\n\n<script");
 
 WriteLiteral(" type=\"text/html\"");
 
 WriteLiteral(" id=\"bcms-history-preview-template\"");
 
-WriteLiteral(">\r\n    <iframe src=\"\" style=\"width: 100%; height: 100%; border: 0px;\"></iframe>\r\n" +
-"</script>\r\n");
+WriteLiteral(">\n    <iframe src=\"\" style=\"width: 100%; height: 100%; border: 0px;\"></iframe>\n</" +
+"script>\n");
 
         }
     }
