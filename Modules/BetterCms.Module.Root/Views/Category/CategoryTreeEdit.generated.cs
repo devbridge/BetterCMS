@@ -397,8 +397,8 @@ WriteLiteral(" class=\"bcms-filter-text bcms-table-middle-box bcms-btn-links-mai
 
 WriteLiteral(" data-bind=\"click: addNewNode\"");
 
-WriteLiteral(">Add New +</div>\r\n                            </div>\r\n\r\n                         " +
-"   <div");
+WriteLiteral(">Add New</div>\r\n                            </div>\r\n\r\n                           " +
+" <div");
 
 WriteLiteral(" class=\"bcms-expand-link-holder\"");
 
@@ -443,15 +443,15 @@ WriteLiteral(" class=\"bcms-sitemap-holder bcms-sitemap-edit\"");
 
 WriteLiteral(">\r\n                                <div");
 
-WriteAttribute("class", Tuple.Create(" class=\"", 4622), Tuple.Create("\"", 4707)
-, Tuple.Create(Tuple.Create("", 4630), Tuple.Create("bcms-addnode-placement-holder", 4630), true)
+WriteAttribute("class", Tuple.Create(" class=\"", 4620), Tuple.Create("\"", 4705)
+, Tuple.Create(Tuple.Create("", 4628), Tuple.Create("bcms-addnode-placement-holder", 4628), true)
             
             #line 83 "..\..\Views\Category\CategoryTreeEdit.cshtml"
-, Tuple.Create(Tuple.Create("", 4659), Tuple.Create<System.Object, System.Int32>(Model.IsReadOnly ? "-readonly" : string.Empty
+, Tuple.Create(Tuple.Create("", 4657), Tuple.Create<System.Object, System.Int32>(Model.IsReadOnly ? "-readonly" : string.Empty
             
             #line default
             #line hidden
-, 4659), false)
+, 4657), false)
 );
 
 WriteLiteral(">\r\n");

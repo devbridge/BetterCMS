@@ -46,11 +46,8 @@
             </div>
         </div>
 
-        @*wait for approval iiner grid scroll*@
-        <div class="bcms-scroll-window">
-            @Html.Grid(Model.Items).Sort(Model.GridOptions).Columns(columns).Attributes(@class => "bcms-tables").RenderUsing(new EditableHtmlTableGridRenderer<TagItemViewModel>())
-            @Html.HiddenSubmit()
-        </div>
+        @Html.Grid(Model.Items).Sort(Model.GridOptions).Columns(columns).Attributes(@class => "bcms-tables").RenderUsing(new EditableHtmlTableGridRenderer<TagItemViewModel>())
+        @Html.HiddenSubmit()
     }
 
     <script type="text/html" id="bcms-editable-row-template">

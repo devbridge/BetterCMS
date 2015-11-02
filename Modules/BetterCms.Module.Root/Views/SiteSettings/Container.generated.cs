@@ -108,7 +108,7 @@ WriteLiteral(">\r\n            <div");
 
 WriteLiteral(" id=\"bcms-site-settings-placeholder\"");
 
-WriteLiteral("> </div>\r\n        </div>\r\n    </div>\r\n</div>\r\n");
+WriteLiteral("> </div>\r\n        </div>\r\n    </div>\r\n</div>");
 
         }
     }

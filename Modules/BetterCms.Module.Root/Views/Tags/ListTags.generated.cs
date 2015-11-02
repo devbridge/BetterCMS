@@ -247,41 +247,28 @@ WriteLiteral("\r\n            </div>\r\n        </div>\r\n");
             #line hidden
             
             #line 49 "..\..\Views\Tags\ListTags.cshtml"
-                                               
+   Write(Html.Grid(Model.Items).Sort(Model.GridOptions).Columns(columns).Attributes(@class => "bcms-tables").RenderUsing(new EditableHtmlTableGridRenderer<TagItemViewModel>()));
 
             
             #line default
             #line hidden
-WriteLiteral("        <div");
-
-WriteLiteral(" class=\"bcms-scroll-window\"");
-
-WriteLiteral(">\r\n");
-
-WriteLiteral("            ");
-
             
-            #line 51 "..\..\Views\Tags\ListTags.cshtml"
-       Write(Html.Grid(Model.Items).Sort(Model.GridOptions).Columns(columns).Attributes(@class => "bcms-tables").RenderUsing(new EditableHtmlTableGridRenderer<TagItemViewModel>()));
+            #line 49 "..\..\Views\Tags\ListTags.cshtml"
+                                                                                                                                                                               
+        
+            
+            #line default
+            #line hidden
+            
+            #line 50 "..\..\Views\Tags\ListTags.cshtml"
+   Write(Html.HiddenSubmit());
 
             
             #line default
             #line hidden
-WriteLiteral("\r\n");
-
-WriteLiteral("            ");
-
             
-            #line 52 "..\..\Views\Tags\ListTags.cshtml"
-       Write(Html.HiddenSubmit());
-
-            
-            #line default
-            #line hidden
-WriteLiteral("\r\n        </div>\r\n");
-
-            
-            #line 54 "..\..\Views\Tags\ListTags.cshtml"
+            #line 50 "..\..\Views\Tags\ListTags.cshtml"
+                            
     }
 
             
@@ -298,7 +285,7 @@ WriteLiteral(">\r\n");
 WriteLiteral("        ");
 
             
-            #line 57 "..\..\Views\Tags\ListTags.cshtml"
+            #line 54 "..\..\Views\Tags\ListTags.cshtml"
    Write(Html.Grid(new List<TagItemViewModel> { new TagItemViewModel() }).Columns(columns).Attributes(@class => "bcms-tables").RenderUsing(new HtmlTableGridSingleRowRenderer<TagItemViewModel>()));
 
             

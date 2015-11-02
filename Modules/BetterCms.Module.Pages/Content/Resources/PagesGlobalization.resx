@@ -166,7 +166,7 @@
     <value>Select the template you would like to use for your new page.</value>
   </data>
   <data name="AddPageContent_WidgetTab_AddNewButton" xml:space="preserve">
-    <value>Add New +</value>
+    <value>Add New</value>
   </data>
   <data name="AddPageContent_WidgetTab_DeleteButton" xml:space="preserve">
     <value>Delete</value>
@@ -574,7 +574,7 @@
     <value>Pages</value>
   </data>
   <data name="SiteSettings_Pages_AddNew" xml:space="preserve">
-    <value>Add New +</value>
+    <value>Add New</value>
   </data>
   <data name="SiteSettings_Pages_CreatedColumn" xml:space="preserve">
     <value>Created</value>
@@ -601,7 +601,7 @@
     <value>Redirects</value>
   </data>
   <data name="SiteSettings_Redirects_AddNew" xml:space="preserve">
-    <value>Add New +</value>
+    <value>Add New</value>
   </data>
   <data name="SiteSettings_Redirects_PageUrlColumn" xml:space="preserve">
     <value>Page URL</value>
@@ -628,7 +628,7 @@
     <value>Widgets</value>
   </data>
   <data name="SiteSettings_Widgets_AddNew" xml:space="preserve">
-    <value>Add New +</value>
+    <value>Add New</value>
   </data>
   <data name="SiteSettings_Widgets_CategoryColumn" xml:space="preserve">
     <value>Category</value>
@@ -682,7 +682,7 @@
     <value>A page successfully cloned. Redirecting to {0}.</value>
   </data>
   <data name="Options_AddNew" xml:space="preserve">
-    <value>Add New +</value>
+    <value>Add New</value>
   </data>
   <data name="Options_OptionDefaultValueColumn" xml:space="preserve">
     <value>Default Value</value>

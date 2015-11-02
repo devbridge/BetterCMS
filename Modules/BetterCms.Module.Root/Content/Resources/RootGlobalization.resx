@@ -172,7 +172,7 @@
     <value>to one of the following modern browsers:</value>
   </data>
   <data name="Button_AddNew" xml:space="preserve">
-    <value>Add New +</value>
+    <value>Add New</value>
   </data>
   <data name="Button_Browse" xml:space="preserve">
     <value>Browse</value>
@@ -448,7 +448,7 @@
     <value>Categories</value>
   </data>
   <data name="SiteSettings_Categories_AddNewCategory" xml:space="preserve">
-    <value>Add New +</value>
+    <value>Add New</value>
   </data>
   <data name="SiteSettings_Categories_DeleteCategoryMessage" xml:space="preserve">
     <value>Are you sure you want to delete the "{0}" category?</value>
@@ -466,7 +466,7 @@
     <value>Tags</value>
   </data>
   <data name="SiteSettings_Tags_AddNewTag" xml:space="preserve">
-    <value>Add New +</value>
+    <value>Add New</value>
   </data>
   <data name="SiteSettings_Tags_DeleteTagMessage" xml:space="preserve">
     <value>Are you sure you want to delete the "{0}" tag?</value>
@@ -631,7 +631,7 @@
     <value>Visible regions</value>
   </data>
   <data name="SiteSettings_CategoryTrees_AddNewCategoryTree" xml:space="preserve">
-    <value>Add New +</value>
+    <value>Add New</value>
   </data>
   <data name="SiteSettings_CategoryTrees_Search" xml:space="preserve">
     <value>Search</value>
