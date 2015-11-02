@@ -46,10 +46,6 @@ button {
     font-size: 13px;
     overflow: hidden;
 
-    &-settings-frame {
-
-    }
-
     &-frame-holder {
         height: 100%;
         margin: auto;
@@ -136,28 +132,9 @@ button {
 //module dialog frame
 
 .bcms-settings {
-    &-frame {
-        display: table;
-        height: 100%;
-        margin: auto;
-        width: ($page-width + $settings-menu);
-    }
-
     &-menu {
-        @include vertical-align($block: table-cell, $align: top);
+        //@include position(absolute, 0 null 0 0);
         background-color: $gray-l30;
-        position: relative;
-        width: $settings-menu;
-
-        @include virtual(before) {
-            @include position(absolute, -100% 0);
-            background-color: $gray-l30;
-            z-index: -1;
-        }
-    }
-
-    &-window {
-        @include vertical-align($block: table-cell, $align: top);
     }
 
     &-link {

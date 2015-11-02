@@ -13,7 +13,6 @@
         <a class="bcms-tab-item" data-name="#bcms-tab-2">@PagesGlobalization.EditPageContent_AdvancedOptionsTab_Title</a>
     </div>
 </div>
-
 <div class="bcms-scroll-window">
     <div class="bcms-modal-frame-holder">
         @Html.TabbedContentMessagesBox()
@@ -27,6 +26,7 @@
             data_readonly = Model.IsReadOnly.ToString().ToLowerInvariant()
         }))
         {
+
             <div id="bcms-tab-1" class="bcms-tab-single">
                 @Html.Partial("Partial/EditHtmlContent", Model)
                 @Html.HiddenFor(model => model.Id, new { @id = "bcmsPageContentId" })

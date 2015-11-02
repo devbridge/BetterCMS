@@ -979,35 +979,8 @@ button:focus {
   width: auto !important;
 }
 
-.bcms-settings-frame {
-  display: table;
-  height: 100%;
-  margin: auto;
-  width: 1110px;
-}
-
 .bcms-settings-menu {
-  display: table-cell;
-  vertical-align: top;
   background-color: #f5f5f5;
-  position: relative;
-  width: 210px;
-}
-
-.bcms-settings-menu:before {
-  content: "";
-  position: absolute;
-  top: -100%;
-  right: 0;
-  bottom: -100%;
-  left: 0;
-  background-color: #f5f5f5;
-  z-index: -1;
-}
-
-.bcms-settings-window {
-  display: table-cell;
-  vertical-align: top;
 }
 
 .bcms-settings-link {

@@ -59,56 +59,54 @@ WriteLiteral(">\r\n    <div");
 
 WriteLiteral(" id=\"bcms-site-settings-tabs-placeholder\"");
 
+WriteLiteral("> </div>\r\n    <div");
+
+WriteLiteral(" id=\"bcms-site-settings-placeholder\"");
+
 WriteLiteral("> </div>\r\n\r\n    <div");
-
-WriteLiteral(" class=\"bcms-settings-frame\"");
-
-WriteLiteral(">\r\n        <div");
 
 WriteLiteral(" class=\"bcms-settings-menu\"");
 
 WriteLiteral(" id=\"bcms-site-settings-menu\"");
 
-WriteLiteral(">\r\n");
+WriteLiteral(">\r\n        <!---<div class=\"bcms-links-block\">  !-->\r\n        <div");
+
+WriteLiteral(" class=\"bcms-settings-separator\"");
+
+WriteLiteral("></div>\r\n");
 
             
-            #line 10 "..\..\Views\SiteSettings\Container.cshtml"
-            
+            #line 11 "..\..\Views\SiteSettings\Container.cshtml"
+        
             
             #line default
             #line hidden
             
-            #line 10 "..\..\Views\SiteSettings\Container.cshtml"
-              
-                var lastItemIsHr = true;
-                foreach (var menuItem in Model.MenuItems.Projections)
+            #line 11 "..\..\Views\SiteSettings\Container.cshtml"
+          
+            var lastItemIsHr = true;
+            foreach (var menuItem in Model.MenuItems.Projections)
+            {
+                if (menuItem is SeparatorProjection)
                 {
-                    if (menuItem is SeparatorProjection)
+                    if (!lastItemIsHr)
                     {
-                        if (!lastItemIsHr)
-                        {
-                            lastItemIsHr = true;
-                        }
-                    }
-                    else
-                    {
-                        if (menuItem.Render(Model.MenuItems.Page, (ViewContext.Controller as CmsControllerBase).SecurityService, Html))
-                        {
-                            lastItemIsHr = false;
-                        }
+                        lastItemIsHr = true;
                     }
                 }
-            
+                else
+                {
+                    if (menuItem.Render(Model.MenuItems.Page, (ViewContext.Controller as CmsControllerBase).SecurityService, Html))
+                    {
+                        lastItemIsHr = false;
+                    }
+                }
+            }
+        
             
             #line default
             #line hidden
-WriteLiteral("\r\n        </div>\r\n\r\n        <div");
-
-WriteLiteral(" class=\"bcms-settings-window\"");
-
-WriteLiteral(" id=\"bcms-site-settings-placeholder\"");
-
-WriteLiteral("> </div>\r\n    </div>\r\n</div>\r\n");
+WriteLiteral("\r\n    </div>\r\n</div>");
 
         }
     }
