@@ -194,75 +194,54 @@ WriteLiteral("\n\n<div");
 
 WriteLiteral(" class=\"bcms-top-block-holder\"");
 
-WriteLiteral(">\n        <div");
+WriteLiteral(">\n    <div");
+
+WriteLiteral(" class=\"bcms-clearfix\"");
+
+WriteLiteral(">\r\n        <div");
 
 WriteLiteral(" class=\"bcms-large-titles\"");
 
 WriteLiteral(">");
 
             
-            #line 76 "..\..\Views\Page\Partial\SiteSettingsPagesList.cshtml"
+            #line 77 "..\..\Views\Page\Partial\SiteSettingsPagesList.cshtml"
                                   Write(PagesGlobalization.SiteSettings_Pages_Title);
 
             
             #line default
             #line hidden
-WriteLiteral("</div>\n");
+WriteLiteral("</div>\r\n\r\n        <div");
 
-            
-            #line 77 "..\..\Views\Page\Partial\SiteSettingsPagesList.cshtml"
-        
-            
-            #line default
-            #line hidden
-            
-            #line 77 "..\..\Views\Page\Partial\SiteSettingsPagesList.cshtml"
-         if ((ViewContext.Controller as CmsControllerBase).SecurityService.IsAuthorized(RootModuleConstants.UserRoles.EditContent))
-        {
+WriteLiteral(" class=\"bcms-top-block-inner\"");
 
-            
-            #line default
-            #line hidden
-WriteLiteral("            <div");
-
-WriteLiteral(" class=\"bcms-btn-links-main\"");
-
-WriteLiteral(" id=\"bcms-create-page-button\"");
-
-WriteLiteral(">");
-
-            
-            #line 79 "..\..\Views\Page\Partial\SiteSettingsPagesList.cshtml"
-                                                                     Write(PagesGlobalization.SiteSettings_Pages_AddNew);
-
-            
-            #line default
-            #line hidden
-WriteLiteral("</div>\n");
-
-            
-            #line 80 "..\..\Views\Page\Partial\SiteSettingsPagesList.cshtml"
-        }
-
-            
-            #line default
-            #line hidden
-WriteLiteral("        <div");
-
-WriteLiteral(" class=\"bcms-search-block\"");
-
-WriteLiteral(">\n");
+WriteLiteral(">\r\n");
 
 WriteLiteral("            ");
 
             
-            #line 82 "..\..\Views\Page\Partial\SiteSettingsPagesList.cshtml"
-       Write(Html.TextBoxFor(m => m.SearchQuery, new { @class = "bcms-editor-field-box bcms-search-query", @placeholder = RootGlobalization.WaterMark_Search }));
+            #line 80 "..\..\Views\Page\Partial\SiteSettingsPagesList.cshtml"
+       Write(Html.Partial("~/Areas/bcms-pages/Views/Filter/PagesFilterTemplate.cshtml", Model));
 
             
             #line default
             #line hidden
-WriteLiteral("\n            <div");
+WriteLiteral("\r\n\r\n            <div");
+
+WriteLiteral(" class=\"bcms-search-block\"");
+
+WriteLiteral(">\r\n");
+
+WriteLiteral("                ");
+
+            
+            #line 83 "..\..\Views\Page\Partial\SiteSettingsPagesList.cshtml"
+           Write(Html.TextBoxFor(m => m.SearchQuery, new { @class = "bcms-search-field-box bcms-search-query", @placeholder = RootGlobalization.WaterMark_Search }));
+
+            
+            #line default
+            #line hidden
+WriteLiteral("\r\n                <div");
 
 WriteLiteral(" class=\"bcms-btn-search\"");
 
@@ -271,42 +250,71 @@ WriteLiteral(" id=\"bcms-pages-search-btn\"");
 WriteLiteral(">");
 
             
-            #line 83 "..\..\Views\Page\Partial\SiteSettingsPagesList.cshtml"
-                                                               Write(PagesGlobalization.SiteSettings_Pages_Search);
+            #line 84 "..\..\Views\Page\Partial\SiteSettingsPagesList.cshtml"
+                                                                   Write(PagesGlobalization.SiteSettings_Pages_Search);
 
             
             #line default
             #line hidden
-WriteLiteral("</div>\n        </div>\n            \n        <div");
+WriteLiteral("</div>\r\n            </div>\r\n");
+
+            
+            #line 86 "..\..\Views\Page\Partial\SiteSettingsPagesList.cshtml"
+            
+            
+            #line default
+            #line hidden
+            
+            #line 86 "..\..\Views\Page\Partial\SiteSettingsPagesList.cshtml"
+             if ((ViewContext.Controller as CmsControllerBase).SecurityService.IsAuthorized(RootModuleConstants.UserRoles.EditContent))
+            {
+
+            
+            #line default
+            #line hidden
+WriteLiteral("                <div");
+
+WriteLiteral(" class=\"bcms-btn-main\"");
+
+WriteLiteral(" id=\"bcms-create-page-button\"");
+
+WriteLiteral(">");
+
+            
+            #line 88 "..\..\Views\Page\Partial\SiteSettingsPagesList.cshtml"
+                                                                   Write(PagesGlobalization.SiteSettings_Pages_AddNew);
+
+            
+            #line default
+            #line hidden
+WriteLiteral("</div>\r\n");
+
+            
+            #line 89 "..\..\Views\Page\Partial\SiteSettingsPagesList.cshtml"
+            }
+
+            
+            #line default
+            #line hidden
+WriteLiteral("        </div>\r\n    </div>\n\n    <div");
 
 WriteLiteral(" class=\"bcms-top-block-pager\"");
 
 WriteLiteral(">\n");
 
-WriteLiteral("            ");
+WriteLiteral("        ");
 
             
-            #line 87 "..\..\Views\Page\Partial\SiteSettingsPagesList.cshtml"
-       Write(Html.RenderPaging(Model));
-
-            
-            #line default
-            #line hidden
-WriteLiteral("\n");
-
-WriteLiteral("            ");
-
-            
-            #line 88 "..\..\Views\Page\Partial\SiteSettingsPagesList.cshtml"
-       Write(Html.Partial("~/Areas/bcms-pages/Views/Filter/PagesFilterTemplate.cshtml", Model));
+            #line 94 "..\..\Views\Page\Partial\SiteSettingsPagesList.cshtml"
+   Write(Html.RenderPaging(Model));
 
             
             #line default
             #line hidden
-WriteLiteral("\n        </div>\n</div>\n\n");
+WriteLiteral("\n    </div>\n</div>\n\n");
 
             
-            #line 92 "..\..\Views\Page\Partial\SiteSettingsPagesList.cshtml"
+            #line 98 "..\..\Views\Page\Partial\SiteSettingsPagesList.cshtml"
 Write(Html.Grid(Model.Items).Sort(Model.GridOptions).Columns(columns).Attributes(@class => "bcms-tables").RenderUsing(new EditableHtmlTableGridRenderer<SiteSettingPageViewModel>()));
 
             
@@ -323,7 +331,7 @@ WriteLiteral(">\n");
 WriteLiteral("    ");
 
             
-            #line 96 "..\..\Views\Page\Partial\SiteSettingsPagesList.cshtml"
+            #line 102 "..\..\Views\Page\Partial\SiteSettingsPagesList.cshtml"
 Write(Html.Grid(new List<SiteSettingPageViewModel> { new SiteSettingPageViewModel() }).Columns(columns).Attributes(@class => "bcms-tables").RenderUsing(new HtmlTableGridSingleRowRenderer<SiteSettingPageViewModel>()));
 
             
@@ -340,7 +348,7 @@ WriteLiteral(">\n");
 WriteLiteral("    ");
 
             
-            #line 100 "..\..\Views\Page\Partial\SiteSettingsPagesList.cshtml"
+            #line 106 "..\..\Views\Page\Partial\SiteSettingsPagesList.cshtml"
 Write(Html.Partial("EditorTemplates/SEOStatus", true));
 
             
@@ -357,7 +365,7 @@ WriteLiteral(">\n");
 WriteLiteral("    ");
 
             
-            #line 104 "..\..\Views\Page\Partial\SiteSettingsPagesList.cshtml"
+            #line 110 "..\..\Views\Page\Partial\SiteSettingsPagesList.cshtml"
 Write(Html.Partial("EditorTemplates/SEOStatus", false));
 
             
@@ -374,7 +382,7 @@ WriteLiteral(">\n");
 WriteLiteral("    ");
 
             
-            #line 108 "..\..\Views\Page\Partial\SiteSettingsPagesList.cshtml"
+            #line 114 "..\..\Views\Page\Partial\SiteSettingsPagesList.cshtml"
 Write(Html.Partial("EditorTemplates/PageStatus", PageStatus.Published));
 
             
@@ -391,7 +399,7 @@ WriteLiteral(">\n");
 WriteLiteral("    ");
 
             
-            #line 112 "..\..\Views\Page\Partial\SiteSettingsPagesList.cshtml"
+            #line 118 "..\..\Views\Page\Partial\SiteSettingsPagesList.cshtml"
 Write(Html.Partial("EditorTemplates/PageStatus", PageStatus.Unpublished));
 
             
@@ -408,7 +416,7 @@ WriteLiteral(">\n");
 WriteLiteral("    ");
 
             
-            #line 116 "..\..\Views\Page\Partial\SiteSettingsPagesList.cshtml"
+            #line 122 "..\..\Views\Page\Partial\SiteSettingsPagesList.cshtml"
 Write(Html.Partial("EditorTemplates/PageStatus", PageStatus.Draft));
 
             

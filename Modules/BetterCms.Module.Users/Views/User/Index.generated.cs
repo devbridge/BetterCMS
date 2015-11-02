@@ -91,96 +91,109 @@ namespace ASP
         }
         public override void Execute()
         {
-WriteLiteral("\n");
+WriteLiteral("    ");
 
             
-            #line 13 "..\..\Views\User\Index.cshtml"
-  
-    Action<ColumnBuilder<UserItemViewModel>> columns = column =>
-    {
-        column.EditButtonColumn();
-
-        column.For(m => string.Format("<a class=\"bcms-tables-link bcms-grid-item-edit-button bcms-user-name\">{0}</a>", m.UserName))
-            .Named(UsersGlobalization.SiteSettings_Users_NameColumn)
-            .SortColumnName("UserName")
-            .Encode(false);
-
-        column.For(m => m.FullName)
-           .Named(UsersGlobalization.SiteSettings_Users_FullNameColumn)
-           .SortColumnName("FullName")
-           .Attributes(@class => "bcms-user-fullName");
-        
-        column.For(m => m.Email)
-           .Named(UsersGlobalization.SiteSettings_Users_EmailColumn)
-           .SortColumnName("Email")
-           .Attributes(@class => "bcms-user-email");
+            #line 11 "..\..\Views\User\Index.cshtml"
       
+        Action<ColumnBuilder<UserItemViewModel>> columns = column =>
+        {
+            column.EditButtonColumn();
 
-        column.DeleteButtonColumn();
-    };
+            column.For(m => string.Format("<a class=\"bcms-tables-link bcms-grid-item-edit-button bcms-user-name\">{0}</a>", m.UserName))
+                .Named(UsersGlobalization.SiteSettings_Users_NameColumn)
+                .SortColumnName("UserName")
+                .Encode(false);
 
+            column.For(m => m.FullName)
+               .Named(UsersGlobalization.SiteSettings_Users_FullNameColumn)
+               .SortColumnName("FullName")
+               .Attributes(@class => "bcms-user-fullName");
+
+            column.For(m => m.Email)
+               .Named(UsersGlobalization.SiteSettings_Users_EmailColumn)
+               .SortColumnName("Email")
+               .Attributes(@class => "bcms-user-email");
+
+
+            column.DeleteButtonColumn();
+        };
+    
             
             #line default
             #line hidden
-WriteLiteral("\n    \n");
+WriteLiteral("\r\n\r\n");
 
             
-            #line 38 "..\..\Views\User\Index.cshtml"
- using (Html.BeginForm<UserController>(f => f.Index(null), FormMethod.Post, new { @id = "bcms-users-form", @class = "bcms-ajax-form" }))
-{
+            #line 36 "..\..\Views\User\Index.cshtml"
     
             
             #line default
             #line hidden
             
-            #line 40 "..\..\Views\User\Index.cshtml"
-Write(Html.HiddenGridOptions(Model.GridOptions));
+            #line 36 "..\..\Views\User\Index.cshtml"
+     using (Html.BeginForm<UserController>(f => f.Index(null), FormMethod.Post, new { @id = "bcms-users-form", @class = "bcms-ajax-form" }))
+    {
+        
+            
+            #line default
+            #line hidden
+            
+            #line 38 "..\..\Views\User\Index.cshtml"
+   Write(Html.SiteSettingsMessagesBox("bcms-users-messages"));
 
             
             #line default
             #line hidden
             
-            #line 40 "..\..\Views\User\Index.cshtml"
-                                              
+            #line 38 "..\..\Views\User\Index.cshtml"
+                                                            
+        
+            
+            #line default
+            #line hidden
+            
+            #line 39 "..\..\Views\User\Index.cshtml"
+   Write(Html.HiddenGridOptions(Model.GridOptions));
 
             
             #line default
             #line hidden
-WriteLiteral("    <div");
+            
+            #line 39 "..\..\Views\User\Index.cshtml"
+                                                  
+
+            
+            #line default
+            #line hidden
+WriteLiteral("        <div");
 
 WriteLiteral(" class=\"bcms-top-block-holder\"");
 
-WriteLiteral(">\n        <div");
+WriteLiteral(">\r\n            <div");
 
-WriteLiteral(" class=\"bcms-btn-links-main\"");
+WriteLiteral(" class=\"bcms-clearfix\"");
 
-WriteLiteral(" id=\"bcms-create-user-button\"");
+WriteLiteral(">\r\n                <div");
 
-WriteLiteral(">");
+WriteLiteral(" class=\"bcms-top-block-inner\"");
 
-            
-            #line 42 "..\..\Views\User\Index.cshtml"
-                                                                 Write(UsersGlobalization.User_Dialog_AddNew);
-
-            
-            #line default
-            #line hidden
-WriteLiteral("</div>\n        <div");
+WriteLiteral(">\r\n                    <div");
 
 WriteLiteral(" class=\"bcms-search-block\"");
 
-WriteLiteral(">\n");
+WriteLiteral(">\r\n");
 
-WriteLiteral("            ");
+WriteLiteral("                        ");
 
             
             #line 44 "..\..\Views\User\Index.cshtml"
-       Write(Html.TextBoxFor(m => m.SearchQuery, new { @class = "bcms-editor-field-box", @placeholder = RootGlobalization.WaterMark_Search }));
+                   Write(Html.TextBoxFor(m => m.SearchQuery, new { @class = "bcms-search-field-box", @placeholder = RootGlobalization.WaterMark_Search }));
 
             
             #line default
             #line hidden
-WriteLiteral("\n            <div");
+WriteLiteral("\r\n                        <div");
 
 WriteLiteral(" class=\"bcms-btn-search\"");
 
@@ -190,82 +203,83 @@ WriteLiteral(">");
 
             
             #line 45 "..\..\Views\User\Index.cshtml"
-                                                               Write(UsersGlobalization.User_Dialog_Search);
+                                                                           Write(UsersGlobalization.User_Dialog_Search);
 
             
             #line default
             #line hidden
-WriteLiteral("</div>\n        </div>  \n        <div");
+WriteLiteral("</div>\r\n                    </div>\r\n\r\n                    <div");
 
-WriteLiteral(" class=\"bcms-top-block-pager\"");
+WriteLiteral(" class=\"bcms-btn-main\"");
 
-WriteLiteral(">\n");
+WriteLiteral(" id=\"bcms-create-user-button\"");
 
-WriteLiteral("            ");
+WriteLiteral(">");
 
             
             #line 48 "..\..\Views\User\Index.cshtml"
-       Write(Html.RenderPaging(Model));
+                                                                       Write(UsersGlobalization.User_Dialog_AddNew);
 
             
             #line default
             #line hidden
-WriteLiteral("\n        </div>\n    </div>\n");
+WriteLiteral("</div>\r\n                </div>\r\n            </div>\r\n\r\n            <div");
 
-            
-            #line 51 "..\..\Views\User\Index.cshtml"
+WriteLiteral(" class=\"bcms-top-block-pager\"");
 
-    
-            
-            #line default
-            #line hidden
-            
-            #line 52 "..\..\Views\User\Index.cshtml"
-Write(Html.SiteSettingsMessagesBox("bcms-users-messages"));
+WriteLiteral(">\r\n");
 
-            
-            #line default
-            #line hidden
-            
-            #line 52 "..\..\Views\User\Index.cshtml"
-                                                        
-    
-            
-            #line default
-            #line hidden
+WriteLiteral("                ");
+
             
             #line 53 "..\..\Views\User\Index.cshtml"
-Write(Html.Grid(Model.Items).Sort(Model.GridOptions).Columns(columns).Attributes(@class => "bcms-tables").RenderUsing(new EditableHtmlTableGridRenderer<UserItemViewModel>()));
+           Write(Html.RenderPaging(Model));
+
+            
+            #line default
+            #line hidden
+WriteLiteral("\r\n            </div>\r\n        </div>\r\n");
+
+            
+            #line 56 "..\..\Views\User\Index.cshtml"
+
+        
+            
+            #line default
+            #line hidden
+            
+            #line 57 "..\..\Views\User\Index.cshtml"
+   Write(Html.Grid(Model.Items).Sort(Model.GridOptions).Columns(columns).Attributes(@class => "bcms-tables").RenderUsing(new EditableHtmlTableGridRenderer<UserItemViewModel>()));
 
             
             #line default
             #line hidden
             
-            #line 53 "..\..\Views\User\Index.cshtml"
-                                                                                                                                                                            
-}
+            #line 57 "..\..\Views\User\Index.cshtml"
+                                                                                                                                                                                
+    }
 
             
             #line default
             #line hidden
-WriteLiteral("\n<script");
+WriteLiteral("    <script");
 
 WriteLiteral(" type=\"text/html\"");
 
 WriteLiteral(" id=\"bcms-users-list-row-template\"");
 
-WriteLiteral(">\n");
+WriteLiteral(">\r\n");
 
-WriteLiteral("    ");
+WriteLiteral("        ");
 
             
-            #line 57 "..\..\Views\User\Index.cshtml"
-Write(Html.Grid(new List<UserItemViewModel> {new UserItemViewModel()}).Columns(columns).Attributes(@class => "bcms-tables").RenderUsing(new HtmlTableGridSingleRowRenderer<UserItemViewModel>()));
+            #line 60 "..\..\Views\User\Index.cshtml"
+   Write(Html.Grid(new List<UserItemViewModel> { new UserItemViewModel() }).Columns(columns).Attributes(@class => "bcms-tables").RenderUsing(new HtmlTableGridSingleRowRenderer<UserItemViewModel>()));
 
             
             #line default
             #line hidden
-WriteLiteral("\n</script>\n");
+WriteLiteral("\r\n    </script>\r\n");
 
         }
     }

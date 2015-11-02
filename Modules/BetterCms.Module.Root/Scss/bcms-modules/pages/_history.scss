@@ -1,27 +1,27 @@
 .bcms-history-preview-holder {
-    position: relative;
-    height: 100%;
-    padding-bottom: 251px;
     box-sizing: border-box;
     -moz-box-sizing: border-box;
+    height: 100%;
+    padding-bottom: 251px;
+    position: relative;
 }
 
 .bcms-history-preview {
-    width: 100%;
     height: 100%;
+    width: 100%;
 }
 
 .bcms-history-info {
-    position: absolute;
-    left: 0;
-    top: 50%;
-    width: 100%;
-    margin-top: -139px;
-    line-height: 1.5em;
     color: #24597e;
     font-size: 19px;
     font-weight: 700;
+    left: 0;
+    line-height: 1.5em;
+    margin-top: -139px;
+    position: absolute;
     text-align: center;
+    top: 50%;
+    width: 100%;
 }
 
 .bcms-history-content {
@@ -29,22 +29,22 @@
 }
 
 .bcms-history-table-holder {
-    position: absolute;
     bottom: 0;
     left: 0;
+    position: absolute;
     right: 0;
 }
 
 .bcms-history-table-top {
-    padding: 10px 15px;
     background-color: #e3e3e3;
     border-top: 4px solid #7a7a7a;
+    padding: 10px 15px;
 }
 
-.bcms-history-table-top .bcms-large-titles {
-    display: inline-block;
-    padding: 5px;
-}
+//.bcms-history-table-top .bcms-large-titles {
+//    display: inline-block;
+//    padding: 5px;
+//}
 
 .bcms-history-grid thead tr {
     display: block;
@@ -68,13 +68,13 @@
 }
 
 .bcms-scroll-tbody tr:hover a.bcms-icn-restore {
-    color: #303030;
     background-position: right -1121px;
+    color: #303030;
 }
 
 .bcms-scroll-tbody tr:hover a.bcms-icn-restore:active {
-    color: #df2200;
     background-position: right -1151px;
+    color: #df2200;
 }
 
 .bcms-scroll-tbody tbody td {

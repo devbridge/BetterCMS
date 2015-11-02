@@ -2,9 +2,5 @@
 
 @if (Model.CanAddNewItems)
 {
-    <div class="bcms-btn-links-main" data-bind="click: addNewItem">@Model.AddNewTitle</div>
-}
-else
-{
-    <div class="bcms-btn-links-main">&nbsp;</div>
+    <div class="bcms-btn-main" data-bind="click: addNewItem">@Model.AddNewTitle</div>
 }

@@ -331,7 +331,7 @@ namespace BetterCms.Module.Pages.Content.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Add New +.
+        ///   Looks up a localized string similar to Add New.
         /// </summary>
         public static string AddPageContent_WidgetTab_AddNewButton {
             get {
@@ -2401,7 +2401,7 @@ namespace BetterCms.Module.Pages.Content.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Add New +.
+        ///   Looks up a localized string similar to Add New.
         /// </summary>
         public static string Options_AddNew {
             get {
@@ -3076,7 +3076,7 @@ namespace BetterCms.Module.Pages.Content.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Add New +.
+        ///   Looks up a localized string similar to Add New.
         /// </summary>
         public static string SiteSettings_Pages_AddNew {
             get {
@@ -3283,7 +3283,7 @@ namespace BetterCms.Module.Pages.Content.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Add New +.
+        ///   Looks up a localized string similar to Add New.
         /// </summary>
         public static string SiteSettings_Redirects_AddNew {
             get {
@@ -3418,7 +3418,7 @@ namespace BetterCms.Module.Pages.Content.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Add New +.
+        ///   Looks up a localized string similar to Add New.
         /// </summary>
         public static string SiteSettings_Widgets_AddNew {
             get {

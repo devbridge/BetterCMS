@@ -73,20 +73,26 @@
 @Html.SiteSettingsMessagesBox()
 
 <div class="bcms-top-block-holder">
+    <div class="bcms-clearfix">
         <div class="bcms-large-titles">@PagesGlobalization.SiteSettings_Pages_Title</div>
-        @if ((ViewContext.Controller as CmsControllerBase).SecurityService.IsAuthorized(RootModuleConstants.UserRoles.EditContent))
-        {
-            <div class="bcms-btn-links-main" id="bcms-create-page-button">@PagesGlobalization.SiteSettings_Pages_AddNew</div>
-        }
-        <div class="bcms-search-block">
-            @Html.TextBoxFor(m => m.SearchQuery, new { @class = "bcms-editor-field-box bcms-search-query", @placeholder = RootGlobalization.WaterMark_Search })
-            <div class="bcms-btn-search" id="bcms-pages-search-btn">@PagesGlobalization.SiteSettings_Pages_Search</div>
-        </div>
-            
-        <div class="bcms-top-block-pager">
-            @Html.RenderPaging(Model)
+
+        <div class="bcms-top-block-inner">
             @Html.Partial("~/Areas/bcms-pages/Views/Filter/PagesFilterTemplate.cshtml", Model)
+
+            <div class="bcms-search-block">
+                @Html.TextBoxFor(m => m.SearchQuery, new { @class = "bcms-search-field-box bcms-search-query", @placeholder = RootGlobalization.WaterMark_Search })
+                <div class="bcms-btn-search" id="bcms-pages-search-btn">@PagesGlobalization.SiteSettings_Pages_Search</div>
+            </div>
+            @if ((ViewContext.Controller as CmsControllerBase).SecurityService.IsAuthorized(RootModuleConstants.UserRoles.EditContent))
+            {
+                <div class="bcms-btn-main" id="bcms-create-page-button">@PagesGlobalization.SiteSettings_Pages_AddNew</div>
+            }
         </div>
+    </div>
+
+    <div class="bcms-top-block-pager">
+        @Html.RenderPaging(Model)
+    </div>
 </div>
 
 @Html.Grid(Model.Items).Sort(Model.GridOptions).Columns(columns).Attributes(@class => "bcms-tables").RenderUsing(new EditableHtmlTableGridRenderer<SiteSettingPageViewModel>())

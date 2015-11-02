@@ -394,7 +394,7 @@ namespace BetterCms.Module.Users.Content.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Add New +.
+        ///   Looks up a localized string similar to Add New.
         /// </summary>
         public static string Role_Dialog_AddNew {
             get {
@@ -574,7 +574,7 @@ namespace BetterCms.Module.Users.Content.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Add New +.
+        ///   Looks up a localized string similar to Add New.
         /// </summary>
         public static string User_Dialog_AddNew {
             get {

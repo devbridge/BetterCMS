@@ -745,7 +745,7 @@ namespace BetterCms.Module.Blog.Content.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Add New +.
+        ///   Looks up a localized string similar to Add New.
         /// </summary>
         public static string SiteSettings_Blogs_AddNew {
             get {

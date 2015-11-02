@@ -241,6 +241,13 @@ WriteLiteral("\r\n            </div>\r\n        </div>\r\n");
             
             #line 48 "..\..\Views\Tags\ListTags.cshtml"
 
+        
+            
+            #line default
+            #line hidden
+            
+            #line 49 "..\..\Views\Tags\ListTags.cshtml"
+                                               
 
             
             #line default
@@ -254,7 +261,7 @@ WriteLiteral(">\r\n");
 WriteLiteral("            ");
 
             
-            #line 50 "..\..\Views\Tags\ListTags.cshtml"
+            #line 51 "..\..\Views\Tags\ListTags.cshtml"
        Write(Html.Grid(Model.Items).Sort(Model.GridOptions).Columns(columns).Attributes(@class => "bcms-tables").RenderUsing(new EditableHtmlTableGridRenderer<TagItemViewModel>()));
 
             
@@ -265,7 +272,7 @@ WriteLiteral("\r\n");
 WriteLiteral("            ");
 
             
-            #line 51 "..\..\Views\Tags\ListTags.cshtml"
+            #line 52 "..\..\Views\Tags\ListTags.cshtml"
        Write(Html.HiddenSubmit());
 
             
@@ -274,13 +281,13 @@ WriteLiteral("            ");
 WriteLiteral("\r\n        </div>\r\n");
 
             
-            #line 53 "..\..\Views\Tags\ListTags.cshtml"
+            #line 54 "..\..\Views\Tags\ListTags.cshtml"
     }
 
             
             #line default
             #line hidden
-WriteLiteral("    <script");
+WriteLiteral("\r\n    <script");
 
 WriteLiteral(" type=\"text/html\"");
 
@@ -291,7 +298,7 @@ WriteLiteral(">\r\n");
 WriteLiteral("        ");
 
             
-            #line 55 "..\..\Views\Tags\ListTags.cshtml"
+            #line 57 "..\..\Views\Tags\ListTags.cshtml"
    Write(Html.Grid(new List<TagItemViewModel> { new TagItemViewModel() }).Columns(columns).Attributes(@class => "bcms-tables").RenderUsing(new HtmlTableGridSingleRowRenderer<TagItemViewModel>()));
 
             

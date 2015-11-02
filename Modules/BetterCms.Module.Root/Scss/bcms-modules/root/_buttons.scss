@@ -11,11 +11,10 @@
 
 %btn-links-extender {
     color: $blue-main;
-    font-weight: 600;
-    padding: 0 10px;
+    margin: 0 20px 0 0;
 
     &:hover {
-        color: $blue-l60;
+        color: darken($blue-main, 10%);
     }
 }
 
@@ -59,8 +58,8 @@
     &-links-main {
         @extend %btn-extender;
         @extend %btn-links-extender;
-        font-size: 14px;
-        line-height: 32px;
+        font-size: 12px;
+        line-height: $form-element-height;
     }
 
     &-links-small {

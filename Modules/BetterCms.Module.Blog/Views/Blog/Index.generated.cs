@@ -213,60 +213,21 @@ WriteLiteral("    <div");
 
 WriteLiteral(" class=\"bcms-top-block-holder\"");
 
-WriteLiteral(">\n");
+WriteLiteral(">\n        <div");
+
+WriteLiteral(" class=\"bcms-clearfix\"");
+
+WriteLiteral(">\r\n");
 
             
-            #line 76 "..\..\Views\Blog\Index.cshtml"
-        
+            #line 77 "..\..\Views\Blog\Index.cshtml"
             
-            #line default
-            #line hidden
-            
-            #line 76 "..\..\Views\Blog\Index.cshtml"
-          
-            if (canEdit)
-            {
-
             
             #line default
             #line hidden
-WriteLiteral("                <div");
-
-WriteLiteral(" class=\"bcms-btn-links-main\"");
-
-WriteLiteral(" id=\"bcms-create-blog-button\"");
-
-WriteLiteral(">");
-
             
-            #line 79 "..\..\Views\Blog\Index.cshtml"
-                                                                         Write(BlogGlobalization.SiteSettings_Blogs_AddNew);
-
-            
-            #line default
-            #line hidden
-WriteLiteral("</div>\n");
-
-            
-            #line 80 "..\..\Views\Blog\Index.cshtml"
-            }
-            else
-            {
-
-            
-            #line default
-            #line hidden
-WriteLiteral("                <div");
-
-WriteLiteral(" class=\"bcms-btn-links-main\"");
-
-WriteLiteral(">&nbsp;</div>\n");
-
-            
-            #line 84 "..\..\Views\Blog\Index.cshtml"
-            }
-
-            if (canPublish && canEdit)
+            #line 77 "..\..\Views\Blog\Index.cshtml"
+             if (canPublish && canEdit)
             {
 
             
@@ -281,13 +242,13 @@ WriteLiteral(" id=\"bcms-import-blogs\"");
 WriteLiteral(">");
 
             
-            #line 88 "..\..\Views\Blog\Index.cshtml"
+            #line 79 "..\..\Views\Blog\Index.cshtml"
                                                                    Write(BlogGlobalization.SiteSettings_Blogs_Import);
 
             
             #line default
             #line hidden
-WriteLiteral("</div>\n");
+WriteLiteral("</div>\r\n");
 
 WriteLiteral("                <div");
 
@@ -298,37 +259,41 @@ WriteLiteral(" id=\"bcms-export-blogs\"");
 WriteLiteral(">");
 
             
-            #line 89 "..\..\Views\Blog\Index.cshtml"
+            #line 80 "..\..\Views\Blog\Index.cshtml"
                                                                    Write(BlogGlobalization.SiteSettings_Blogs_Export);
 
             
             #line default
             #line hidden
-WriteLiteral("</div>\n");
+WriteLiteral("</div>\r\n");
 
             
-            #line 90 "..\..\Views\Blog\Index.cshtml"
+            #line 81 "..\..\Views\Blog\Index.cshtml"
             }
-        
-            
-            #line default
-            #line hidden
-WriteLiteral("\n\n        <div");
-
-WriteLiteral(" class=\"bcms-search-block\"");
-
-WriteLiteral(">\n");
-
-WriteLiteral("            ");
-
-            
-            #line 94 "..\..\Views\Blog\Index.cshtml"
-       Write(Html.TextBoxFor(m => m.SearchQuery, new { @class = "bcms-editor-field-box bcms-search-query", @placeholder = RootGlobalization.WaterMark_Search }));
 
             
             #line default
             #line hidden
 WriteLiteral("\n            <div");
+
+WriteLiteral(" class=\"bcms-top-block-inner\"");
+
+WriteLiteral(">\r\n                <div");
+
+WriteLiteral(" class=\"bcms-search-block\"");
+
+WriteLiteral(">\r\n");
+
+WriteLiteral("                    ");
+
+            
+            #line 85 "..\..\Views\Blog\Index.cshtml"
+               Write(Html.TextBoxFor(m => m.SearchQuery, new { @class = "bcms-search-field-box bcms-search-query", @placeholder = RootGlobalization.WaterMark_Search }));
+
+            
+            #line default
+            #line hidden
+WriteLiteral("\r\n                    <div");
 
 WriteLiteral(" class=\"bcms-btn-search\"");
 
@@ -337,13 +302,53 @@ WriteLiteral(" id=\"bcms-blogs-search-btn\"");
 WriteLiteral(">");
 
             
-            #line 95 "..\..\Views\Blog\Index.cshtml"
-                                                               Write(BlogGlobalization.SiteSettings_Blogs_Search);
+            #line 86 "..\..\Views\Blog\Index.cshtml"
+                                                                       Write(BlogGlobalization.SiteSettings_Blogs_Search);
 
             
             #line default
             #line hidden
-WriteLiteral("</div>\n        </div>\n        \n        <div");
+WriteLiteral("</div>\r\n                </div>\r\n\r\n");
+
+            
+            #line 89 "..\..\Views\Blog\Index.cshtml"
+                
+            
+            #line default
+            #line hidden
+            
+            #line 89 "..\..\Views\Blog\Index.cshtml"
+                 if (canEdit)
+                {
+
+            
+            #line default
+            #line hidden
+WriteLiteral("                    <div");
+
+WriteLiteral(" class=\"bcms-btn-main\"");
+
+WriteLiteral(" id=\"bcms-create-blog-button\"");
+
+WriteLiteral(">");
+
+            
+            #line 91 "..\..\Views\Blog\Index.cshtml"
+                                                                       Write(BlogGlobalization.SiteSettings_Blogs_AddNew);
+
+            
+            #line default
+            #line hidden
+WriteLiteral("</div>\r\n");
+
+            
+            #line 92 "..\..\Views\Blog\Index.cshtml"
+                }
+
+            
+            #line default
+            #line hidden
+WriteLiteral("            </div>\n        </div>\n\n        <div");
 
 WriteLiteral(" class=\"bcms-top-block-pager\"");
 
@@ -352,7 +357,7 @@ WriteLiteral(">\n");
 WriteLiteral("            ");
 
             
-            #line 99 "..\..\Views\Blog\Index.cshtml"
+            #line 97 "..\..\Views\Blog\Index.cshtml"
        Write(Html.RenderPaging(Model));
 
             
@@ -363,7 +368,7 @@ WriteLiteral("\n");
 WriteLiteral("            ");
 
             
-            #line 100 "..\..\Views\Blog\Index.cshtml"
+            #line 98 "..\..\Views\Blog\Index.cshtml"
        Write(Html.Partial("~/Areas/bcms-blog/Views/Blog/Partial/BlogsFilterTemplate.cshtml", Model));
 
             
@@ -372,21 +377,21 @@ WriteLiteral("            ");
 WriteLiteral("\n        </div>\n    </div>\n");
 
             
-            #line 103 "..\..\Views\Blog\Index.cshtml"
+            #line 101 "..\..\Views\Blog\Index.cshtml"
     
     
             
             #line default
             #line hidden
             
-            #line 104 "..\..\Views\Blog\Index.cshtml"
+            #line 102 "..\..\Views\Blog\Index.cshtml"
 Write(Html.Grid(Model.Items).Sort(Model.GridOptions).Columns(columns).Attributes(@class => "bcms-tables").RenderUsing(new EditableHtmlTableGridRenderer<SiteSettingBlogPostViewModel>()));
 
             
             #line default
             #line hidden
             
-            #line 104 "..\..\Views\Blog\Index.cshtml"
+            #line 102 "..\..\Views\Blog\Index.cshtml"
                                                                                                                                                                                        
 }
 
@@ -404,7 +409,7 @@ WriteLiteral(">\n");
 WriteLiteral("    ");
 
             
-            #line 108 "..\..\Views\Blog\Index.cshtml"
+            #line 106 "..\..\Views\Blog\Index.cshtml"
 Write(Html.Grid(new List<SiteSettingBlogPostViewModel> { new SiteSettingBlogPostViewModel() }).Columns(columns).Attributes(@class => "bcms-tables").RenderUsing(new HtmlTableGridSingleRowRenderer<SiteSettingBlogPostViewModel>()));
 
             
@@ -421,7 +426,7 @@ WriteLiteral(">\n");
 WriteLiteral("    ");
 
             
-            #line 112 "..\..\Views\Blog\Index.cshtml"
+            #line 110 "..\..\Views\Blog\Index.cshtml"
 Write(Html.Partial("EditorTemplates/PageStatus", PageStatus.Published));
 
             
@@ -438,7 +443,7 @@ WriteLiteral(">\n");
 WriteLiteral("    ");
 
             
-            #line 116 "..\..\Views\Blog\Index.cshtml"
+            #line 114 "..\..\Views\Blog\Index.cshtml"
 Write(Html.Partial("EditorTemplates/PageStatus", PageStatus.Unpublished));
 
             
@@ -455,7 +460,7 @@ WriteLiteral(">\n");
 WriteLiteral("    ");
 
             
-            #line 120 "..\..\Views\Blog\Index.cshtml"
+            #line 118 "..\..\Views\Blog\Index.cshtml"
 Write(Html.Partial("EditorTemplates/PageStatus", PageStatus.Draft));
 
             

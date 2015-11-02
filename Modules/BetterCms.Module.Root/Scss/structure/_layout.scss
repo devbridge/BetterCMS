@@ -50,7 +50,7 @@ a {
 
 .bcms-modal {
     @include position(fixed, 0);
-    background-color: rgba($main-dark, .8);
+    background-color: $gray-bg;
     font-size: 13px;
     overflow: hidden;
 
@@ -59,10 +59,17 @@ a {
         margin: auto;
         max-width: $page-width;
         position: relative;
+
+        .bcms-scroll-window & {
+            background-color: $white;
+            border: {
+                right: $border-frame;
+                left: $border-frame;
+            }
+        }
     }
 
     &-body {
-        background-color: $gray-bg;
         margin: auto;
         position: relative;
     }

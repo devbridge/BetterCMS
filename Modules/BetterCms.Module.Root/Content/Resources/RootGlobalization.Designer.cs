@@ -277,7 +277,7 @@ namespace BetterCms.Module.Root.Content.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Add New +.
+        ///   Looks up a localized string similar to Add New.
         /// </summary>
         public static string Button_AddNew {
             get {
@@ -1591,7 +1591,7 @@ namespace BetterCms.Module.Root.Content.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Add New +.
+        ///   Looks up a localized string similar to Add New.
         /// </summary>
         public static string SiteSettings_Categories_AddNewCategory {
             get {
@@ -1645,7 +1645,7 @@ namespace BetterCms.Module.Root.Content.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Add New +.
+        ///   Looks up a localized string similar to Add New.
         /// </summary>
         public static string SiteSettings_CategoryTrees_AddNewCategoryTree {
             get {
@@ -1717,7 +1717,7 @@ namespace BetterCms.Module.Root.Content.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Add New +.
+        ///   Looks up a localized string similar to Add New.
         /// </summary>
         public static string SiteSettings_Tags_AddNewTag {
             get {

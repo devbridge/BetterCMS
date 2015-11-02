@@ -8,11 +8,9 @@
 @using BetterCms.Module.Root.Mvc.Grids.TableRenderers
 @using BetterCms.Module.Root.Mvc.Helpers
 @using Microsoft.Web.Mvc
-
 @using MvcContrib.UI.Grid
-
 @model SiteSettingTemplateListViewModel
-           
+
 @{
     var controller = (CmsControllerBase)ViewContext.Controller;
     var roles = string.Format("{0},{1},{2}",
@@ -20,10 +18,10 @@
         RootModuleConstants.UserRoles.EditContent,
         RootModuleConstants.UserRoles.DeleteContent);
     var canViewPages = controller.SecurityService.IsAuthorized(roles);
-    
+
     Action<ColumnBuilder<SiteSettingTemplateItemViewModel>> columns = column =>
     {
-        column.EditButtonColumn(renderId:false);
+        column.EditButtonColumn(renderId: false);
 
         column.For(f => string.Format("<a class=\"bcms-tables-link bcms-grid-item-edit-button bcms-template-name\" data-id=\"{0}\">{1}</a>", f.Id, f.TemplateName))
             .Named(PagesGlobalization.SiteSettings_Templates_NameColumn)
@@ -38,33 +36,39 @@
                 .Sortable(false)
                 .Encode(false);
         }
-        
+
         column.DeleteButtonColumn(false);
     };
 }
-
 @using (Html.BeginForm<TemplatesController>(f => f.Templates(null), FormMethod.Post, new { @id = "bcms-templates-form", @class = "bcms-ajax-form" }))
 {
     @Html.HiddenGridOptions(Model.GridOptions)
-    
+
     <div class="bcms-top-block-holder">
-        <div class="bcms-btn-links-main" id="bcms-register-template-button">@PagesGlobalization.SiteSettings_Widgets_RegisterNew</div>
-        <div class="bcms-search-block">
-            @Html.TextBoxFor(m => m.SearchQuery, new { @class = "bcms-editor-field-box bcms-search-query", @placeholder = RootGlobalization.WaterMark_Search })
-            <div class="bcms-btn-search" id="bcms-template-search-btn">@PagesGlobalization.SiteSettings_Template_Search</div>
+
+        <div class="bcms-clearfix">
+            <div class="bcms-top-block-inner">
+                <div class="bcms-search-block">
+                    @Html.TextBoxFor(m => m.SearchQuery, new { @class = "bcms-search-field-box bcms-search-query", @placeholder = RootGlobalization.WaterMark_Search })
+                    <div class="bcms-btn-search" id="bcms-template-search-btn">@PagesGlobalization.SiteSettings_Template_Search</div>
+                </div>
+
+                <div class="bcms-btn-main" id="bcms-register-template-button">@PagesGlobalization.SiteSettings_Widgets_RegisterNew</div>
+            </div>
         </div>
+
         <div class="bcms-top-block-pager">
             @Html.RenderPaging(Model)
         </div>
-    </div>    
-    
+    </div>
+
     @Html.SiteSettingsMessagesBox()
 
     @(Html
           .Grid(Model.Items)
           .Sort(Model.GridOptions)
           .Columns(columns)
-          .Attributes(@class => "bcms-tables")          
+          .Attributes(@class => "bcms-tables")
           .RowAttributes(delegate(GridRowViewData<SiteSettingTemplateItemViewModel> row)
                   {
                       return new Dictionary<string, object>
@@ -72,7 +76,7 @@
                                     {"data-id", row.Item.Id},
                                     {"data-version", row.Item.Version}
                               };
-              })
+                  })
               .RenderUsing(new EditableHtmlTableGridRenderer<SiteSettingTemplateItemViewModel>()))
 }
 
@@ -83,4 +87,3 @@
         .Attributes(@class => "bcms-tables")
         .RenderUsing(new HtmlTableGridSingleRowRenderer<SiteSettingTemplateItemViewModel>()))
 </script>
-

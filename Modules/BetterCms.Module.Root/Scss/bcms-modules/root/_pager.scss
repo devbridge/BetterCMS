@@ -38,6 +38,7 @@ $pager-buttons: (
 
     &-text {
         color: $light-text;
+        cursor: default;
         float: left;
         font-size: 10px;
         line-height: 28px;

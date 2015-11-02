@@ -11,27 +11,30 @@
     @Html.SiteSettingsMessagesBox(null, new Dictionary<string, string> { { "data-bind", "attr: { id: domId() }" } })
 
     <div class="bcms-top-block-holder">
-        <div class="bcms-breadcrumbs-holder">
-            <div data-bind="foreach: path().pathFolders()"><a class="bcms-breadcrumbs-root" href="#" data-bind="    text: pathName(), click: openMedia.bind($data, $root)"></a></div>
-        </div>
-
         <div class="bcms-clearfix">
-            <div class="bcms-media-controls-holder">
-                @if ((ViewContext.Controller as CmsControllerBase).SecurityService.IsAuthorized(RootModuleConstants.UserRoles.EditContent))
-                {
+            <div class="bcms-top-block-inner">
+                <div class="bcms-media-controls-holder">
+                    @if ((ViewContext.Controller as CmsControllerBase).SecurityService.IsAuthorized(RootModuleConstants.UserRoles.EditContent))
+                    {
                     <!-- ko if: !isSearchResults() -->
-                    <a class="bcms-media-new-folder" data-bind="click: addNewFolder">@MediaGlobalization.MediaManager_NewFolder</a>
-                    <a class="bcms-media-new-file" data-bind="click: uploadMedia, text: uploadButtonTitle()"></a>
+                        <a class="bcms-media-new-folder" data-bind="click: addNewFolder">@MediaGlobalization.MediaManager_NewFolder</a>
+                        <a class="bcms-media-new-file" data-bind="click: uploadMedia, text: uploadButtonTitle()"></a>
                     <!-- /ko -->
-                }
-            </div>
-            <div class="bcms-search-block">
-                <input id="bcms-search-input" name="MediaSearch" data-bind="value: gridOptions().searchQuery, valueUpdate: 'afterkeydown', enterPress: searchMedia" class="bcms-editor-field-box" type="text" placeholder="@RootGlobalization.WaterMark_Search" />
-                <div class="bcms-btn-search" data-bind="click: searchMedia">@RootGlobalization.Button_Search</div>
+                    }
+                </div>
+
+                <div class="bcms-search-block">
+                    <input id="bcms-search-input" name="MediaSearch" data-bind="value: gridOptions().searchQuery, valueUpdate: 'afterkeydown', enterPress: searchMedia" class="bcms-search-field-box" type="text" placeholder="@RootGlobalization.WaterMark_Search" />
+                    <div class="bcms-btn-search" data-bind="click: searchMedia">@RootGlobalization.Button_Search</div>
+                </div>
             </div>
         </div>
 
         <div class="bcms-top-block-pager">
+            <div class="bcms-breadcrumbs-holder">
+                <div data-bind="foreach: path().pathFolders()"><a class="bcms-breadcrumbs-root" href="#" data-bind="    text: pathName(), click: openMedia.bind($data, $root)"></a></div>
+            </div>
+
             <!-- ko with: gridOptions().paging -->
             @Html.Partial(RootModuleConstants.EditableGridPagingTemplate)
             <!-- /ko -->
