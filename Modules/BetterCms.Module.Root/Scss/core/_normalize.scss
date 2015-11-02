@@ -58,6 +58,10 @@ button {
     margin: 0;
     -webkit-appearance: none;
     -webkit-font-smoothing: antialiased;
+
+    &:focus {
+        outline: none;
+    }
 }
 
 select {

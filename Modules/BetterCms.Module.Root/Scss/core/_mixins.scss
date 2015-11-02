@@ -18,6 +18,11 @@
     @include clearfix();
 }
 
+%reset {
+    margin: 0;
+    padding: 0;
+}
+
 @mixin vertical-align($block: inline-block, $align: middle) {
     display: $block;
     vertical-align: $align;

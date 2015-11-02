@@ -12,6 +12,7 @@ $main-dark: #303646;
 $gray-l30: #f5f5f5;
 $gray-light: #a1a1a1;
 $gray-l: #dfdfdf;
+$gray-l10: #eeeeee;
 $blue-main: #0d7ce7;
 $gray-bg: #eae8e9;
 
@@ -23,6 +24,7 @@ $border-search-field: 2px solid $blue-main;
 //module text colors
 $main-text: #636363;
 $light-text: #a6a6a6;
+$dark-text: $main-dark;
 
 ///
 ///
@@ -31,7 +33,7 @@ $light-text: #a6a6a6;
 ///
 
 $gray-l5: #aaaaaa;
-$gray-l10: #eaeaea;
+
 $gray-l20: #e3e3e3;
 $gray-l25: #e5e5e5;
 
@@ -79,6 +81,8 @@ $header-height: 55px;
 $footer-height: 65px;
 $tab-height: 50px;
 //$settings-frame: ($page-width + $settings-sidebar);
+
+$form-element-height: 37px;
 
 //module transitions
 

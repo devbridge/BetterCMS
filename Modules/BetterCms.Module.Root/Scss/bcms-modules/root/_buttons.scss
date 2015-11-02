@@ -24,9 +24,9 @@
         @extend %btn-extender;
         background-color: $blue-main;
         color: $white;
-        font-size: 16px;
-        line-height: 37px;
-        padding: 0 10px;
+        font-size: 15px;
+        line-height: $form-element-height;
+        padding: 0 20px;
 
         &:hover {
             background-color: darken($blue-main, 10%);
@@ -71,17 +71,12 @@
     }
 
     &-search {
-        //@include transition(background-color 200ms);
-        //@include position(absolute, 1px 1px null null);
-        //@include size(28px);
-        //background: $dark url($bcms-search) no-repeat center;
-        //cursor: pointer;
-        //overflow: hidden;
-        //text-indent: -999em;
-        //
-        //&:hover {
-        //    background-color: lighten($dark, 5%);
-        //}
+        @include position(absolute, 0 0 null null);
+        @include size(37px);
+        background: url($bcms-search) no-repeat center;
+        cursor: pointer;
+        overflow: hidden;
+        text-indent: -999em;
     }
 
     &-close {

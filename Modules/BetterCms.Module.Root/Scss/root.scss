@@ -25,11 +25,6 @@
     src: url($bcms-OpenSans-Bold) format('truetype');
 }
 
-%reset {
-    margin: 0;
-    padding: 0;
-}
-
 //module components
 @import 'core/normalize',
 'modules/formelements',
@@ -48,8 +43,9 @@
 'bcms-modules/root/contentstree',
 'bcms-modules/root/notifications',
 'bcms-modules/root/overlays',
-'plugins/markitup',
-'bcms-modules/root/index';
+'bcms-modules/root/pager',
+'bcms-modules/root/index',
+'plugins/markitup';
 
 //module plugins
 @import 'plugins/markitup',
