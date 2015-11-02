@@ -174,8 +174,8 @@ WriteLiteral("\" />\r\n                <div class=\"bcms-btn-search\" data-bind=
             
             #line default
             #line hidden
-WriteLiteral("</div>\r\n            </div>\r\n        </div>\r\n\r\n        <div class=\"bcms-featured-g" +
-"rid bcms-clearfix\">\r\n            <!-- ko with: gridOptions().paging -->\r\n");
+WriteLiteral("</div>\r\n            </div>\r\n        </div>\r\n\r\n        <div class=\"bcms-top-block-" +
+"pager\">\r\n            <!-- ko with: gridOptions().paging -->\r\n");
 
 WriteLiteral("            ");
 

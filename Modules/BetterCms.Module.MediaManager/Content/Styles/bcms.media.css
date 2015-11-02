@@ -1,3 +1,9 @@
+.bcms-clearfix:after, .bcms-file-manager-inner:after {
+  content: '';
+  display: table;
+  clear: both;
+}
+
 .jcrop-holder {
   direction: ltr;
   text-align: left;

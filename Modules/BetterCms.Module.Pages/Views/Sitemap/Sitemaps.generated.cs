@@ -210,7 +210,7 @@ WriteLiteral(">");
             #line hidden
 WriteLiteral("</div>\r\n            </div>\r\n\r\n            <div");
 
-WriteLiteral(" class=\"bcms-featured-grid bcms-clearfix\"");
+WriteLiteral(" class=\"bcms-top-block-pager\"");
 
 WriteLiteral(">\r\n");
 

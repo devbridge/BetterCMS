@@ -44,7 +44,7 @@ WriteLiteral(" type=\"text/html\"");
 WriteLiteral(" id=\"bcms-site-setting-tab-template\"");
 
 WriteLiteral(@">
-    <div class=""bcms-inner-navigation bcms-js-tab-header"">
+    <div class=""bcms-inner-navigation"">
         <!-- ko foreach: tabs -->
         <a class=""bcms-inner-navigation-ui bcms-tab-item"" data-bind=""
             text: title,

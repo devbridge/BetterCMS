@@ -16,7 +16,7 @@ bettercms.define('bcms.modal', ['bcms.jquery', 'bcms', 'bcms.tabs', 'bcms.ko.ext
             close: '.bcms-modal-close, .bcms-modal-cancel, .bcms-error-frame .bcms-error-close, .bcms-success-buttons-holder .bcms-btn-links-main, .bcms-popinfo-frame .bcms-btn-close, .bcms-preview-image-border .bcms-btn-close',
             focusElements: '[tabindex=-1], .bcms-modal-close, .bcms-modal-cancel, .bcms-error-frame .bcms-error-close, .bcms-success-buttons-holder .bcms-btn-links-main, .bcms-popinfo-frame .bcms-btn-close, .bcms-preview-image-border .bcms-btn-close',
             body: '.bcms-modal-body, .bcms-error-frame, .bcms-popinfo-frame',
-            content: '.bcms-modal-content-padded, .bcms-error-frame p, .bcms-popinfo-frame p',
+            content: '.bcms-modal-content, .bcms-error-frame p, .bcms-popinfo-frame p',
             loader: '.bcms-loader',
             scrollWindow: '.bcms-scroll-window',
             previewImage: '.bcms-preview-image-frame img',
@@ -473,7 +473,7 @@ bettercms.define('bcms.modal', ['bcms.jquery', 'bcms', 'bcms.tabs', 'bcms.ko.ext
                 return;
             }
 
-            var viewportHeight = $(window).outerHeight(),
+            var viewportHeight = $(window).height(),
                 elemOuter = this.container.find(selectors.elemOuter),
                 elemHeader = this.container.find(selectors.elemHeader),
                 elemFooter = this.container.find(selectors.elemFooter),

@@ -37,7 +37,7 @@ bettercms.define('bcms.pages.sitemap', ['bcms.jquery', 'bcms', 'bcms.modal', 'bc
                 versionPreviewLoaderContainer: '.bcms-history-preview',
                 sitemapHistoryForm: '#bcms-sitemaphistory-form',
                 sitemapHistorySearchButton: '.bcms-btn-search',
-                modalContent: '.bcms-modal-content-padded',
+                modalContent: '.bcms-modal-content',
                 firstTab: '#bcms-tab-1',
                 secondTab: '#bcms-tab-2',
                 secondTabButton: '.bcms-tab-item[data-name="#bcms-tab-2"]',

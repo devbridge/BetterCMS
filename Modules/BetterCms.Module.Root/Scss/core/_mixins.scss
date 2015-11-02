@@ -10,6 +10,14 @@
     }
 }
 
+%clearfix {
+    @include clearfix($extend: false);
+}
+
+.bcms-clearfix {
+    @include clearfix();
+}
+
 @mixin vertical-align($block: inline-block, $align: middle) {
     display: $block;
     vertical-align: $align;

@@ -23,7 +23,7 @@ bettercms.define('bcms.pages.history', ['bcms.jquery', 'bcms', 'bcms.modal', 'bc
             versionPreviewTemplate: '#bcms-history-preview-template',
             pageContentHistoryForm: '#bcms-pagecontenthistory-form',
             pageContentHistorySearchButton: '.bcms-btn-search',
-            modalContent: '.bcms-modal-content-padded'
+            modalContent: '.bcms-modal-content'
         },
         
         links = {

@@ -10,6 +10,17 @@
 //    }
 //}
 
+.bcms-search {
+    &-field-box {
+        border: {
+            top: 0;
+            right: 0;
+            bottom: $border-search-field;
+            left: 0;
+        }
+    }
+}
+
 //module Input Fields & Field Holders
 .bcms-input-field-holder {
     position: relative;

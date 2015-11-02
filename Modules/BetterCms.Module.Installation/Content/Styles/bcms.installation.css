@@ -1,3 +1,9 @@
+.bcms-clearfix:after {
+  content: '';
+  display: table;
+  clear: both;
+}
+
 html, body {
   height: 100%;
   margin: 0;

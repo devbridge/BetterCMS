@@ -1,3 +1,9 @@
+.bcms-clearfix:after {
+  content: '';
+  display: table;
+  clear: both;
+}
+
 .bcms-blog-templates-container {
   padding-top: 10px;
 }

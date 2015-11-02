@@ -51,7 +51,7 @@ namespace ASP
         {
 WriteLiteral("<div");
 
-WriteLiteral(" class=\"bcms-inner-navigation bcms-js-tab-header\"");
+WriteLiteral(" class=\"bcms-inner-navigation\"");
 
 WriteLiteral(">\r\n    <a");
 

@@ -1,7 +1,6 @@
 %btn-extender {
     @include vertical-align();
     border: 0;
-    border-radius: 2px;
     box-sizing: border-box;
     cursor: pointer;
     font-family: $font-base-family;
@@ -23,11 +22,15 @@
 .bcms-btn {
     &-main {
         @extend %btn-extender;
-        @include add-gradient($top: $blue-l30, $bottom: $blue-l40);
+        background-color: $blue-main;
         color: $white;
         font-size: 16px;
-        line-height: 32px;
+        line-height: 37px;
         padding: 0 10px;
+
+        &:hover {
+            background-color: darken($blue-main, 10%);
+        }
     }
 
     &-small {
@@ -68,17 +71,17 @@
     }
 
     &-search {
-        @include transition(background-color 200ms);
-        @include position(absolute, 1px 1px null null);
-        @include size(28px);
-        background: $dark url($bcms-search) no-repeat center;
-        cursor: pointer;
-        overflow: hidden;
-        text-indent: -999em;
-
-        &:hover {
-            background-color: lighten($dark, 5%);
-        }
+        //@include transition(background-color 200ms);
+        //@include position(absolute, 1px 1px null null);
+        //@include size(28px);
+        //background: $dark url($bcms-search) no-repeat center;
+        //cursor: pointer;
+        //overflow: hidden;
+        //text-indent: -999em;
+        //
+        //&:hover {
+        //    background-color: lighten($dark, 5%);
+        //}
     }
 
     &-close {

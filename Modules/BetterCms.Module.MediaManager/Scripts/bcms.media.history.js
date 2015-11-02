@@ -22,7 +22,7 @@ bettercms.define('bcms.media.history', ['bcms.jquery', 'bcms', 'bcms.modal', 'bc
             versionPreviewLoaderContainer: '.bcms-history-preview',
             mediaHistoryForm: '#bcms-pagecontenthistory-form',
             mediaHistorySearchButton: '.bcms-btn-search',
-            modalContent: '.bcms-modal-content-padded',
+            modalContent: '.bcms-modal-content',
             popinfoFrame: '.bcms-popinfo-frame'
         },
         
