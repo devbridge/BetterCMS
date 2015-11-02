@@ -1609,6 +1609,15 @@ namespace BetterCms.Module.Pages.Content.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to You have selected a new page layout and some content will be missing. Missing content will be found in Page structure managers Lost &amp; Found section. Do you really want to change layout?.
+        /// </summary>
+        public static string EditPageProperties_ChangedLayoutMissingContent_Confirmation_Message {
+            get {
+                return ResourceManager.GetString("EditPageProperties_ChangedLayoutMissingContent_Confirmation_Message", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Edit Master Page Properties.
         /// </summary>
         public static string EditPageProperties_EditMasterPage_Title {

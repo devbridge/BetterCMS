@@ -1386,4 +1386,7 @@
   <data name="HtmlContent_Content_Title" xml:space="preserve">
     <value>Content</value>
   </data>
+  <data name="EditPageProperties_ChangedLayoutMissingContent_Confirmation_Message" xml:space="preserve">
+    <value>You have selected a new page layout and some content will be missing. Missing content will be found in Page structure managers Lost &amp; Found section. Do you really want to change layout?</value>
+  </data>
 </root>
