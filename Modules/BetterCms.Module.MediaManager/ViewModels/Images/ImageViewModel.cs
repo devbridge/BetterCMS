@@ -4,6 +4,7 @@ using System.ComponentModel.DataAnnotations;
 
 using BetterCms.Module.MediaManager.Content.Resources;
 using BetterCms.Module.MediaManager.Models;
+using BetterCms.Module.MediaManager.Models.Enum;
 using BetterCms.Module.Root.Content.Resources;
 using BetterCms.Module.Root.Models;
 
@@ -174,6 +175,22 @@ namespace BetterCms.Module.MediaManager.ViewModels.Images
         /// The image align.
         /// </value>
         public MediaImageAlign ImageAlign { get; set; }
+
+        /// <summary>
+        /// Gets or sets the type of the image.
+        /// </summary>
+        /// <value>
+        /// The type of the image.
+        /// </value>
+        public ImageType ImageType { get; set; }
+
+        /// <summary>
+        /// Gets or sets a value indicating whether [automatic scale].
+        /// </summary>
+        /// <value>
+        ///   <c>true</c> if [automatic scale]; otherwise, <c>false</c>.
+        /// </value>
+        public bool AutoScale { get; set; }
 
         /// <summary>
         /// Gets or sets the first crop point X coordinate.

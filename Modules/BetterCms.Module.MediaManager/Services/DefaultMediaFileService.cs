@@ -622,11 +622,13 @@ namespace BetterCms.Module.MediaManager.Services
             bool ignoreAccessControl)
             where TMedia : MediaFile
         {
-
-            var stream = new MemoryStream();
-
-            sourceStream.Seek(0, SeekOrigin.Begin);
-            sourceStream.CopyTo(stream);
+            MemoryStream stream = null;
+            if (sourceStream != null)
+            {
+                stream = new MemoryStream();
+                sourceStream.Seek(0, SeekOrigin.Begin);
+                sourceStream.CopyTo(stream);
+            }
 
             Action<ISession> failedResultAction = session =>
             {
@@ -654,8 +656,11 @@ namespace BetterCms.Module.MediaManager.Services
 
             Action finalAction = () =>
             {
-                stream.Close();
-                stream.Dispose();
+                if (stream != null)
+                {
+                    stream.Close();
+                    stream.Dispose();
+                }
             };
 
             var task = new Task(() => ExecuteFileUpload(fileUri, stream, ignoreAccessControl));

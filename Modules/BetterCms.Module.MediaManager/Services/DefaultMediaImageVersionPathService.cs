@@ -4,6 +4,7 @@ using System.IO;
 using BetterCms.Core.Exceptions;
 using BetterCms.Module.MediaManager.Helpers;
 using BetterCms.Module.MediaManager.Models;
+using BetterCms.Module.MediaManager.Models.Enum;
 
 namespace BetterCms.Module.MediaManager.Services
 {
@@ -54,7 +55,7 @@ namespace BetterCms.Module.MediaManager.Services
         /// <param name="fileName">The file name.</param>
         /// <param name="archivedImageOriginalUri">The original Uri for archived image.</param>
         /// <param name="archivedImagePublicOriginalUrl">The public original Url for archived image.</param>
-        public void SetPathForNewOriginal(MediaImage newOriginalImage, string folderName, string fileName, Uri archivedImageOriginalUri = null, string archivedImagePublicOriginalUrl = "")
+        public void SetPathForNewOriginal(MediaImage newOriginalImage, string folderName, string fileName, ImageType imageType, Uri archivedImageOriginalUri = null, string archivedImagePublicOriginalUrl = "")
         {
             newOriginalImage.FileUri = mediaFileService.GetFileUri(MediaType.Image, folderName, fileName);
             newOriginalImage.PublicUrl = mediaFileService.GetPublicFileUrl(MediaType.Image, folderName, fileName);
@@ -73,9 +74,16 @@ namespace BetterCms.Module.MediaManager.Services
                 newOriginalImage.OriginalUri = archivedImageOriginalUri;
                 newOriginalImage.PublicOriginallUrl = archivedImagePublicOriginalUrl;
             }
-
-            newOriginalImage.ThumbnailUri = mediaFileService.GetFileUri(MediaType.Image, folderName, ThumbnailImageFilePrefix + Path.GetFileNameWithoutExtension(fileName) + ".png");
-            newOriginalImage.PublicThumbnailUrl = mediaFileService.GetPublicFileUrl(MediaType.Image, folderName, ThumbnailImageFilePrefix + Path.GetFileNameWithoutExtension(fileName) + ".png");
+            if (imageType == ImageType.Raster)
+            {
+                newOriginalImage.ThumbnailUri = mediaFileService.GetFileUri(MediaType.Image, folderName, ThumbnailImageFilePrefix + Path.GetFileNameWithoutExtension(fileName) + ".png");
+                newOriginalImage.PublicThumbnailUrl = mediaFileService.GetPublicFileUrl(MediaType.Image, folderName, ThumbnailImageFilePrefix + Path.GetFileNameWithoutExtension(fileName) + ".png");
+            }
+            else
+            {
+                newOriginalImage.ThumbnailUri = newOriginalImage.OriginalUri;
+                newOriginalImage.PublicThumbnailUrl = newOriginalImage.PublicOriginallUrl;
+            }
         }
     }
 }

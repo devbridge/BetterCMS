@@ -272,7 +272,7 @@ bettercms.define('bcms.media.imageeditor', ['bcms.jquery', 'bcms', 'bcms.modal',
 
                 var self = this;
 
-                self.enableCrop = enableCrop;
+                self.enableCrop = enableCrop && json.ImageType === 1;
 
                 self.widthInput = dialog.container.find(selectors.imageSizeEditBoxWidth);
                 self.heightInput = dialog.container.find(selectors.imageSizeEditBoxHeight);
@@ -287,8 +287,12 @@ bettercms.define('bcms.media.imageeditor', ['bcms.jquery', 'bcms', 'bcms.modal',
                 self.cropHeight = ko.observable(json.CroppedHeight);
                 self.cropWidth = ko.observable(json.CroppedWidth);
                 self.fit = ko.observable(false);
+                self.imageType = ko.observable(json.ImageType);
                 self.calculatedWidth = ko.observable(json.ImageWidth);
                 self.calculatedHeight = ko.observable(json.ImageHeight);
+                self.oldAutoScale = ko.observable(json.AutoScale);
+                self.autoScale = ko.observable(json.AutoScale);
+
                 self.cropCoordX1 = ko.observable(json.CropCoordX1);
                 self.cropCoordX2 = ko.observable(json.CropCoordX2);
                 self.cropCoordY1 = ko.observable(json.CropCoordY1);
@@ -305,8 +309,16 @@ bettercms.define('bcms.media.imageeditor', ['bcms.jquery', 'bcms', 'bcms.modal',
                 self.oldHeight.subscribe(function () {
                     recalculate();
                 });
+                self.oldAutoScale.subscribe(function() {
+                    recalculate();
+                });
+
                 self.widthAndHeight = ko.computed(function () {
-                    return self.oldWidth() + ' x ' + self.oldHeight();
+                    if (self.oldAutoScale()) {
+                        return "Auto";
+                    } else {
+                        return self.oldWidth() + ' x ' + self.oldHeight();
+                    }
                 });
 
                 self.changeHeight = function() {
@@ -511,6 +523,7 @@ bettercms.define('bcms.media.imageeditor', ['bcms.jquery', 'bcms', 'bcms.modal',
 
                     return true;
                 }
+                this.oldAutoScale(this.autoScale());
 
                 return false;
             };
@@ -520,7 +533,7 @@ bettercms.define('bcms.media.imageeditor', ['bcms.jquery', 'bcms', 'bcms.modal',
                 this.height(this.oldHeight());
                 this.heightInput.blur();
                 this.widthInput.blur();
-
+                this.autoScale(this.oldAutoScale());
                 return true;
             };
             

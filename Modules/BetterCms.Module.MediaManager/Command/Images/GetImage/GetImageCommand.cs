@@ -69,6 +69,7 @@ namespace BetterCms.Module.MediaManager.Command.Images.GetImage
                     OriginalImageWidth = image.OriginalWidth,
                     OriginalImageHeight = image.OriginalHeight,
                     ImageAlign = image.ImageAlign.HasValue ? image.ImageAlign.Value : MediaImageAlign.Center,
+                    ImageType = ImageHelper.GetImageType(image.OriginalFileExtension),
                     CropCoordX1 = image.CropCoordX1.HasValue ? image.CropCoordX1.Value : 0,
                     CropCoordY1 = image.CropCoordY1.HasValue ? image.CropCoordY1.Value : 0,
                     CropCoordX2 = image.CropCoordX2.HasValue ? image.CropCoordX2.Value : image.OriginalWidth,
@@ -77,7 +78,8 @@ namespace BetterCms.Module.MediaManager.Command.Images.GetImage
                     FolderId = image.Folder != null ? image.Folder.Id : (Guid?)null,
                     Tags = TagService.GetMediaTagNames(imageId),
                     Categories = CategoryService.GetSelectedCategories<Media, MediaCategory>(imageId).ToList(),
-                    CategoriesFilterKey = image.GetCategorizableItemKey()
+                    CategoriesFilterKey = image.GetCategorizableItemKey(),
+                    AutoScale = image.Width == -1 && image.Width == -1
                 };
         }
     }

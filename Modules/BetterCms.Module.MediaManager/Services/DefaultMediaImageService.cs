@@ -9,6 +9,8 @@ using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Web;
 using System.Xml;
+using System.Xml.Linq;
+using System.Xml.XPath;
 
 using BetterModules.Core.DataAccess;
 using BetterModules.Core.DataAccess.DataContext;
@@ -198,7 +200,7 @@ namespace BetterCms.Module.MediaManager.Services
             var folderName = mediaFileService.CreateRandomFolderName();
             var publicFileName = RemoveInvalidHtmlSymbols(MediaImageHelper.CreatePublicFileName(fileName, Path.GetExtension(fileName)));
             var fileExtension = Path.GetExtension(fileName);
-            var type = ImageHelper.GetImageType(fileExtension);
+            var imageType = ImageHelper.GetImageType(fileExtension);
 
             MediaImage uploadImage = null;
             MemoryStream thumbnailFileStream = null;
@@ -207,7 +209,7 @@ namespace BetterCms.Module.MediaManager.Services
             long thumbnailImageLength;
 
             /* Upload standard raster type images */
-            if (type == ImageType.Raster)
+            if (imageType == ImageType.Raster)
             {
                 thumbnailFileStream = new MemoryStream();
                 fileStream = RotateImage(fileStream);
@@ -221,9 +223,9 @@ namespace BetterCms.Module.MediaManager.Services
             else
             {
                 size = Size.Empty;
-                ReadParametersFormVectorImage(fileStream, size);
-                thumbnailSize = size;
+                ReadParametersFormVectorImage(fileStream, ref size);
                 thumbnailImageLength = fileStream.Length;
+                thumbnailSize = size;
             }
 
             try
@@ -236,14 +238,6 @@ namespace BetterCms.Module.MediaManager.Services
 
                     // Create new original image and upload file stream to the storage
                     uploadImage = CreateImage(rootFolderId, fileName, fileExtension, Path.GetFileName(fileName), size, fileLength);
-                    SetThumbnailParameters(uploadImage, thumbnailSize, thumbnailImageLength);
-                    mediaImageVersionPathService.SetPathForNewOriginal(uploadImage, folderName, publicFileName);
-
-                    unitOfWork.BeginTransaction();
-                    repository.Save(uploadImage);
-                    unitOfWork.Commit();
-
-                    StartTasksForImage(uploadImage, fileStream, thumbnailFileStream, false);
                 }
                 else
                 {
@@ -256,15 +250,16 @@ namespace BetterCms.Module.MediaManager.Services
                         Path.GetFileName(fileName),
                         size,
                         fileLength);
-                    SetThumbnailParameters(uploadImage, thumbnailSize, thumbnailImageLength);
-                    mediaImageVersionPathService.SetPathForNewOriginal(uploadImage, folderName, publicFileName);
 
-                    unitOfWork.BeginTransaction();
-                    repository.Save(uploadImage);
-                    unitOfWork.Commit();
-
-                    StartTasksForImage(uploadImage, fileStream, thumbnailFileStream, false);
                 }
+                SetThumbnailParameters(uploadImage, thumbnailSize, thumbnailImageLength);
+                mediaImageVersionPathService.SetPathForNewOriginal(uploadImage, folderName, publicFileName, imageType);
+
+                unitOfWork.BeginTransaction();
+                repository.Save(uploadImage);
+                unitOfWork.Commit();
+
+                StartTasksForImage(uploadImage, fileStream, thumbnailFileStream, false);
             }
             finally
             {
@@ -277,35 +272,45 @@ namespace BetterCms.Module.MediaManager.Services
             return uploadImage;
         }
 
-        private void ReadParametersFormVectorImage(Stream fileStream, Size size)
+        private void ReadParametersFormVectorImage(Stream fileStream, ref Size size)
         {
-            var xmlReaderSettings = new XmlReaderSettings();
-            xmlReaderSettings.DtdProcessing = DtdProcessing.Parse;
-            using (XmlReader reader = XmlReader.Create(fileStream, xmlReaderSettings))
+            XDocument xdocument = XDocument.Load(fileStream);
+            var root = xdocument.Root;
+            if (root == null || root.Name.LocalName != "svg")
             {
-                reader.ReadToFollowing("svg");
-                var heightAttribute = reader.GetAttribute("height");
-                var widthAttribute = reader.GetAttribute("width");
-                var regex = new Regex(@"^\d+$");
-                /* Assume that attribute may look something like '1024px'. We need to match int value */
-                int value;
-                Match match;
-                if (widthAttribute != null)
+                const string message = "An error has ocurred while trying to read the file";
+                throw new ValidationException(() => message, message);
+            }
+            var attributes = root.Attributes().ToList();
+
+            var widthAttribute = attributes.FirstOrDefault(x => x.Name == "width");
+
+            var heightAttribute = attributes.FirstOrDefault(x => x.Name == "height");
+
+            /* Assume that attribute may look something like '1024px'. We need to match int value */
+            Match match;
+            int value;
+            var regex = new Regex(@"^\d+");
+            if (widthAttribute != null)
+            {
+                match = regex.Match(widthAttribute.Value);
+                if (int.TryParse(match.Value, out value))
                 {
-                    match = regex.Match(widthAttribute);
-                    if (int.TryParse(match.Value, out value))
-                    {
-                        size.Width = value;
-                    };
-                }
-                if (heightAttribute != null)
+                    size.Width = value;
+                };
+            }
+            if (heightAttribute != null)
+            {
+                match = regex.Match(heightAttribute.Value);
+                if (int.TryParse(match.Value, out value))
                 {
-                    match = regex.Match(heightAttribute);
-                    if (int.TryParse(match.Value, out value))
-                    {
-                        size.Height = value;
-                    };
-                }
+                    size.Height = value;
+                };
+            }
+            if (size.Height * size.Width == 0)
+            {
+                size.Height = -1;
+                size.Width = -1;
             }
         }
 
@@ -324,7 +329,7 @@ namespace BetterCms.Module.MediaManager.Services
                 // Create new original image and upload file stream to the storage
                 var originalImage = CreateImage(null, image.OriginalFileName, image.OriginalFileExtension, Path.GetFileName(image.Title), size, image.Size, image);
                 SetThumbnailParameters(originalImage, ThumbnailSize, thumbnailFileStream.Length);
-                mediaImageVersionPathService.SetPathForNewOriginal(originalImage, folderName, publicFileName);
+                mediaImageVersionPathService.SetPathForNewOriginal(originalImage, folderName, publicFileName, ImageHelper.GetImageType(image.OriginalFileExtension));
 
                 unitOfWork.BeginTransaction();
                 repository.Save(originalImage);
@@ -430,7 +435,7 @@ namespace BetterCms.Module.MediaManager.Services
                 if (!overrideUrl)
                 {
                     var publicFileName = RemoveInvalidHtmlSymbols(MediaImageHelper.CreateVersionedFileName(originalImage.OriginalFileName, GetVersion(originalImage)));
-                    mediaImageVersionPathService.SetPathForNewOriginal(originalImage, folderName, publicFileName, archivedImage.OriginalUri, archivedImage.PublicOriginallUrl);
+                    mediaImageVersionPathService.SetPathForNewOriginal(originalImage, folderName, publicFileName, ImageHelper.GetImageType(originalImage.OriginalFileExtension) ,archivedImage.OriginalUri, archivedImage.PublicOriginallUrl);
                 }
                 else
                 {
@@ -492,7 +497,7 @@ namespace BetterCms.Module.MediaManager.Services
                 if (!overrideUrl)
                 {
                     var publicFileName = RemoveInvalidHtmlSymbols(MediaImageHelper.CreateVersionedFileName(image.OriginalFileName, GetVersion(image)));
-                    mediaImageVersionPathService.SetPathForNewOriginal(image, folderName, publicFileName, archivedImage.OriginalUri, archivedImage.PublicOriginallUrl);
+                    mediaImageVersionPathService.SetPathForNewOriginal(image, folderName, publicFileName, ImageHelper.GetImageType(image.OriginalFileExtension), archivedImage.OriginalUri, archivedImage.PublicOriginallUrl);
                 }
                 
                 unitOfWork.BeginTransaction();
@@ -930,6 +935,8 @@ namespace BetterCms.Module.MediaManager.Services
             MemoryStream thumbnailFileStream, 
             bool shouldNotUploadOriginal = false)
         {
+            var allTasks = new List<Task>();
+
             var publicImageUpload = mediaFileService.UploadMediaFileToStorageAsync<MediaImage>(
                 fileStream,
                 mediaImage.FileUri,
@@ -949,28 +956,36 @@ namespace BetterCms.Module.MediaManager.Services
                     }
                 },
                 true);
+            allTasks.Add(publicImageUpload);
 
-            var publicThumbnailUpload = mediaFileService.UploadMediaFileToStorageAsync<MediaImage>(
-                thumbnailFileStream,
-                mediaImage.ThumbnailUri,
-                mediaImage.Id,
-                (img, session) =>
-                {
-                    if (img != null)
+            Task publicThumbnailUpload = null;
+//            if (thumbnailFileStream != null)
+//            {
+                publicThumbnailUpload = mediaFileService.UploadMediaFileToStorageAsync<MediaImage>(
+                    thumbnailFileStream,
+                    mediaImage.ThumbnailUri,
+                    mediaImage.Id,
+                    (img, session) =>
                     {
-                        img.IsThumbnailUploaded = true;
-                    }
-                },
-                img =>
-                {
-                    if (img != null)
+                        if (img != null)
+                        {
+                            img.IsThumbnailUploaded = true;
+                        }
+                    },
+                    img =>
                     {
-                        img.IsThumbnailUploaded = false;
-                    }
-                },
-                true);
-
-            var allTasks = new List<Task> { publicImageUpload, publicThumbnailUpload };
+                        if (img != null)
+                        {
+                            img.IsThumbnailUploaded = false;
+                        }
+                    },
+                    true);
+                allTasks.Add(publicThumbnailUpload);
+//            }
+//            else
+//            {
+//                mediaImage.IsThumbnailUploaded = true;
+//            }
 
             Task publicOriginalUpload = null;
             if (!shouldNotUploadOriginal)
@@ -1026,7 +1041,10 @@ namespace BetterCms.Module.MediaManager.Services
             {
                 publicOriginalUpload.Start();
             }
-            publicThumbnailUpload.Start();
+            if (publicThumbnailUpload != null)
+            {
+                publicThumbnailUpload.Start();
+            }
         }
 
         private void OnAfterUploadCompleted(MediaImage media, bool shouldNotUploadOriginal)
