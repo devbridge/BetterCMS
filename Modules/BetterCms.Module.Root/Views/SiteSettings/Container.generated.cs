@@ -76,13 +76,13 @@ WriteLiteral(" class=\"bcms-settings-separator\"");
 WriteLiteral("></div>\r\n");
 
             
-            #line 11 "..\..\Views\SiteSettings\Container.cshtml"
+            #line 12 "..\..\Views\SiteSettings\Container.cshtml"
         
             
             #line default
             #line hidden
             
-            #line 11 "..\..\Views\SiteSettings\Container.cshtml"
+            #line 12 "..\..\Views\SiteSettings\Container.cshtml"
           
             var lastItemIsHr = true;
             foreach (var menuItem in Model.MenuItems.Projections)
@@ -91,6 +91,18 @@ WriteLiteral("></div>\r\n");
                 {
                     if (!lastItemIsHr)
                     {
+
+            
+            #line default
+            #line hidden
+WriteLiteral("                        <div");
+
+WriteLiteral(" class=\"bcms-settings-separator\"");
+
+WriteLiteral("></div>\r\n");
+
+            
+            #line 21 "..\..\Views\SiteSettings\Container.cshtml"
                         lastItemIsHr = true;
                     }
                 }
@@ -102,11 +114,26 @@ WriteLiteral("></div>\r\n");
                     }
                 }
             }
+            if (!lastItemIsHr)
+            {
+
+            
+            #line default
+            #line hidden
+WriteLiteral("                <div");
+
+WriteLiteral(" class=\"bcms-settings-separator\"");
+
+WriteLiteral("></div>\r\n");
+
+            
+            #line 35 "..\..\Views\SiteSettings\Container.cshtml"
+            }
         
             
             #line default
             #line hidden
-WriteLiteral("\r\n    </div>\r\n</div>");
+WriteLiteral("\r\n    </div>\r\n</div>\r\n");
 
         }
     }
