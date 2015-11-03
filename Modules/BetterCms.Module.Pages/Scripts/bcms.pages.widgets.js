@@ -359,7 +359,7 @@ bettercms.define('bcms.pages.widgets', ['bcms.jquery', 'bcms', 'bcms.modal', 'bc
             dialog.container.find(selectors.htmlWidgetJsCssTabOpener).on('click', function () {
                 if (!codeEditorInitialized) {
                     codeEditor.initialize(dialog.container, dialog, {
-                        cmsEditorType: htmlEditor.cmsEditorTypes.widget
+                        cmsEditorType: htmlEditor.cmsEditorTypes.page
                     });
                     codeEditorInitialized = true;
                 }

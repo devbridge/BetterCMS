@@ -27,6 +27,9 @@
                        var tag;
                       
                        for (tag in tags) {
+                           if ((editor.cmsEditorType === editor.cmsEditorTypes.page && tags[tag].id === 'widgetOption')) {
+                               continue;
+                           }
                            this.add(tags[tag].text, tags[tag].title, tags[tag].title);
                        }
                    },

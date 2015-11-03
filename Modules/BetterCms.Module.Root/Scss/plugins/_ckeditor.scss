@@ -242,6 +242,11 @@ $ck-toolbar-icons: (
     }
 }
 
+.cke_toolbar_break {
+    display: block;
+    clear: left;
+}
+
 //module footer path
 .cke_path_item {
     color: $gray-l65;
