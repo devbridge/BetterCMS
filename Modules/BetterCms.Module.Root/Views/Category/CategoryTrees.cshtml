@@ -6,6 +6,7 @@
 @using BetterCms.Module.Root.ViewModels.SiteSettings
 @using Microsoft.Web.Mvc
 @using MvcContrib.UI.Grid
+
 @model BetterCms.Module.Root.ViewModels.Category.CategoryTreesGridViewModel<SiteSettingCategoryTreeViewModel>
 @{
     Action<ColumnBuilder<SiteSettingCategoryTreeViewModel>> columns = column =>
@@ -18,9 +19,12 @@
         column.DeleteButtonColumn();
     };
 }
+
 @using (Html.BeginForm<CategoryController>(f => f.CategoryTrees(null), FormMethod.Post, new { @id = "bcms-categorytrees-form", @class = "bcms-ajax-form" }))
 {
         @Html.SiteSettingsMessagesBox()
+
+    <div class="bcms-scroll-window-settings">
         @Html.HiddenGridOptions(Model.GridOptions)
         <div class="bcms-top-block-holder">
             <div class="bcms-clearfix">
@@ -39,9 +43,10 @@
             <div class="bcms-top-block-pager">
                 @Html.RenderPaging(Model)
             </div>
-         </div>
+        </div>
 
-    @Html.Grid(Model.Items).Sort(Model.GridOptions).Columns(columns).Attributes(@class => "bcms-tables").RenderUsing(new EditableHtmlTableGridRenderer<SiteSettingCategoryTreeViewModel>())
+        @Html.Grid(Model.Items).Sort(Model.GridOptions).Columns(columns).Attributes(@class => "bcms-tables").RenderUsing(new EditableHtmlTableGridRenderer<SiteSettingCategoryTreeViewModel>())
+    </div>
 }
 
 <script type="text/html" id="bcms-categorytree-list-row-template">

@@ -55,8 +55,10 @@ namespace ASP
         }
         public override void Execute()
         {
+WriteLiteral("\r\n");
+
             
-            #line 4 "..\..\Views\Option\Templates.cshtml"
+            #line 5 "..\..\Views\Option\Templates.cshtml"
 Write(Html.TabbedContentMessagesBox());
 
             
@@ -64,17 +66,13 @@ Write(Html.TabbedContentMessagesBox());
             #line hidden
 WriteLiteral("\r\n\r\n<div");
 
-WriteLiteral(" class=\"bcms-blog-templates-container\"");
+WriteLiteral(" class=\"bcms-top-block-holder\"");
 
 WriteLiteral(">\r\n    <div");
 
-WriteLiteral(" class=\"bcms-top-block-holder\"");
-
-WriteLiteral(">\r\n        <div");
-
 WriteLiteral(" class=\"bcms-clearfix\"");
 
-WriteLiteral(">\r\n            <div");
+WriteLiteral(">\r\n        <div");
 
 WriteLiteral(" class=\"bcms-large-titles\"");
 
@@ -82,38 +80,38 @@ WriteLiteral(">");
 
             
             #line 9 "..\..\Views\Option\Templates.cshtml"
-                                      Write(BlogGlobalization.SiteSettings_Templates_Title);
+                                  Write(BlogGlobalization.SiteSettings_Templates_Title);
 
             
             #line default
             #line hidden
-WriteLiteral("</div>\r\n\r\n            <div");
+WriteLiteral("</div>\r\n\r\n        <div");
 
 WriteLiteral(" class=\"bcms-top-block-inner\"");
 
-WriteLiteral(">\r\n                <div");
+WriteLiteral(">\r\n            <div");
 
 WriteLiteral(" class=\"bcms-search-block\"");
 
-WriteLiteral(">\r\n                    <input");
+WriteLiteral(">\r\n                <input");
 
 WriteLiteral(" type=\"text\"");
 
 WriteLiteral(" class=\"bcms-search-field-box\"");
 
-WriteAttribute("placeholder", Tuple.Create(" placeholder=\"", 562), Tuple.Create("\"", 611)
+WriteAttribute("placeholder", Tuple.Create(" placeholder=\"", 495), Tuple.Create("\"", 544)
             
             #line 13 "..\..\Views\Option\Templates.cshtml"
-   , Tuple.Create(Tuple.Create("", 576), Tuple.Create<System.Object, System.Int32>(RootGlobalization.WaterMark_Search
+, Tuple.Create(Tuple.Create("", 509), Tuple.Create<System.Object, System.Int32>(RootGlobalization.WaterMark_Search
             
             #line default
             #line hidden
-, 576), false)
+, 509), false)
 );
 
 WriteLiteral(" data-bind=\"value: searchQuery, valueUpdate: \'afterkeydown\', enterPress: search\"");
 
-WriteLiteral(">\r\n                    <div");
+WriteLiteral(">\r\n                <div");
 
 WriteLiteral(" class=\"bcms-btn-search bcms-search-query\"");
 
@@ -123,48 +121,44 @@ WriteLiteral(">");
 
             
             #line 14 "..\..\Views\Option\Templates.cshtml"
-                                                                                        Write(RootGlobalization.Button_Search);
+                                                                                    Write(RootGlobalization.Button_Search);
 
             
             #line default
             #line hidden
-WriteLiteral("</div>\r\n                </div>\r\n            </div>\r\n        </div>\r\n    </div>\r\n\r" +
-"\n    <div");
-
-WriteLiteral(" class=\"bcms-blog-templates-container\"");
-
-WriteLiteral(">\r\n        <!-- ko foreach: templateRows -->\r\n        <div");
+WriteLiteral("</div>\r\n            </div>\r\n        </div>\r\n    </div>\r\n</div>\r\n\r\n<!-- ko foreach" +
+": templateRows -->\r\n<div");
 
 WriteLiteral(" class=\"bcms-blog-templates-holder\"");
 
-WriteLiteral(">\r\n            <!-- ko foreach: templates() -->\r\n            <div");
+WriteLiteral(">\r\n    <!-- ko foreach: templates() -->\r\n    <div");
 
 WriteLiteral(" class=\"bcms-blog-templates\"");
 
 WriteLiteral(" data-bind=\"css: {\'bcms-blog-templates-active\': isCompatible && isActive(), \'bcms" +
 "-blog-templates-notcompatible\': !isCompatible }\"");
 
-WriteLiteral(">\r\n                <div");
+WriteLiteral(">\r\n        <div");
 
 WriteLiteral(" class=\"bcms-title-holder\"");
 
-WriteLiteral(">\r\n                    <div");
+WriteLiteral(">\r\n            <div");
 
 WriteLiteral(" class=\"bcms-content-titles\"");
 
 WriteLiteral(" data-bind=\"text: title\"");
 
-WriteLiteral("></div>\r\n                </div>\r\n                <div");
+WriteLiteral("></div>\r\n        </div>\r\n        <div");
 
 WriteLiteral(" class=\"bcms-blog-templates-image-holder\"");
 
-WriteLiteral(">\r\n                    <!-- ko if: previewUrl -->\r\n                    <div");
+WriteLiteral(">\r\n            <!-- ko if: previewUrl -->\r\n            <div");
 
 WriteLiteral(" class=\"bcms-zoom-overlay\"");
 
 WriteLiteral(" data-bind=\"click: previewImage\"");
 
-WriteLiteral("></div>\r\n                    <div");
+WriteLiteral("></div>\r\n            <div");
 
 WriteLiteral(" class=\"bcms-blog-templates-image\"");
 
@@ -172,27 +166,25 @@ WriteLiteral("><img");
 
 WriteLiteral(" data-bind=\"attr:{src: previewUrl, alt: title}\"");
 
-WriteLiteral(" /></div>\r\n                    <!-- /ko -->\r\n                </div>\r\n            " +
-"    <div");
+WriteLiteral(" /></div>\r\n            <!-- /ko -->\r\n        </div>\r\n        <div");
 
 WriteLiteral(" class=\"bcms-blog-templates-button-holder\"");
 
-WriteLiteral(">\r\n                    <!-- ko if: isCompatible && isActive() -->\r\n              " +
-"      <div");
+WriteLiteral(">\r\n            <!-- ko if: isCompatible && isActive() -->\r\n            <div");
 
 WriteLiteral(" class=\"bcms-blog-templates-active-text\"");
 
 WriteLiteral(">");
 
             
-            #line 36 "..\..\Views\Option\Templates.cshtml"
-                                                            Write(BlogGlobalization.SiteSettings_Templates_DefaultTemplate);
+            #line 35 "..\..\Views\Option\Templates.cshtml"
+                                                    Write(BlogGlobalization.SiteSettings_Templates_DefaultTemplate);
 
             
             #line default
             #line hidden
-WriteLiteral("</div>\r\n                    <!-- /ko -->\r\n                    <!-- ko if: isCompa" +
-"tible && !isActive() -->\r\n                    <div");
+WriteLiteral("</div>\r\n            <!-- /ko -->\r\n            <!-- ko if: isCompatible && !isActi" +
+"ve() -->\r\n            <div");
 
 WriteLiteral(" class=\"bcms-btn-grid\"");
 
@@ -201,29 +193,28 @@ WriteLiteral(" data-bind=\"click: select\"");
 WriteLiteral(">");
 
             
-            #line 39 "..\..\Views\Option\Templates.cshtml"
-                                                                    Write(BlogGlobalization.SiteSettings_Templates_SelectButton);
+            #line 38 "..\..\Views\Option\Templates.cshtml"
+                                                            Write(BlogGlobalization.SiteSettings_Templates_SelectButton);
 
             
             #line default
             #line hidden
-WriteLiteral("</div>\r\n                    <!-- /ko -->\r\n                    <!-- ko if: !isComp" +
-"atible -->\r\n                    <div");
+WriteLiteral("</div>\r\n            <!-- /ko -->\r\n            <!-- ko if: !isCompatible -->\r\n    " +
+"        <div");
 
 WriteLiteral(" class=\"bcms-blog-templates-notcompatible-text\"");
 
 WriteLiteral(">");
 
             
-            #line 42 "..\..\Views\Option\Templates.cshtml"
-                                                                   Write(BlogGlobalization.SiteSettings_Templates_IncompatibleTemplate);
+            #line 41 "..\..\Views\Option\Templates.cshtml"
+                                                           Write(BlogGlobalization.SiteSettings_Templates_IncompatibleTemplate);
 
             
             #line default
             #line hidden
-WriteLiteral("</div>\r\n                    <!-- /ko -->\r\n                </div>\r\n            </d" +
-"iv>\r\n            <!-- /ko -->\r\n        </div>\r\n        <!-- /ko -->\r\n    </div>\r" +
-"\n</div>");
+WriteLiteral("</div>\r\n            <!-- /ko -->\r\n        </div>\r\n    </div>\r\n    <!-- /ko -->\r\n<" +
+"/div>\r\n<!-- /ko -->\r\n");
 
         }
     }

@@ -61,16 +61,26 @@ namespace ASP
         }
         public override void Execute()
         {
-WriteLiteral("\r\n");
+WriteLiteral("\r\n<div");
+
+WriteLiteral(" class=\"bcms-scroll-window-settings\"");
+
+WriteLiteral(">\r\n");
 
             
-            #line 6 "..\..\Views\Language\List.cshtml"
-  
-    var gridViewModel = new EditableGridViewModel
-    {
-        ShowMessages = true,
-        TopBlockTitle = RootGlobalization.SiteSettings_Languages_Title,
-        Columns = new List<EditableGridColumn>
+            #line 7 "..\..\Views\Language\List.cshtml"
+    
+            
+            #line default
+            #line hidden
+            
+            #line 7 "..\..\Views\Language\List.cshtml"
+      
+        var gridViewModel = new EditableGridViewModel
+        {
+            ShowMessages = true,
+            TopBlockTitle = RootGlobalization.SiteSettings_Languages_Title,
+            Columns = new List<EditableGridColumn>
             {
                 new EditableGridColumn(RootGlobalization.SiteSettings_Languages_Code_Title, "Code", "code")
                     {
@@ -83,21 +93,23 @@ WriteLiteral("\r\n");
                         CustomBinding = "attr: {tabindex: 100}, hasfocus: hasNameFocus"
                     }
             }
-    };
-
+        };
+    
             
             #line default
             #line hidden
 WriteLiteral("\r\n\r\n");
 
+WriteLiteral("    ");
+
             
-            #line 27 "..\..\Views\Language\List.cshtml"
+            #line 28 "..\..\Views\Language\List.cshtml"
 Write(Html.Partial(RootModuleConstants.EditableGridTemplate, gridViewModel));
 
             
             #line default
             #line hidden
-WriteLiteral("\r\n");
+WriteLiteral("\r\n</div>\r\n");
 
         }
     }

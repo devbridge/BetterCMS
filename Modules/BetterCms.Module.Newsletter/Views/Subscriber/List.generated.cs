@@ -61,37 +61,49 @@ namespace ASP
         }
         public override void Execute()
         {
-WriteLiteral("\r\n");
+WriteLiteral("\r\n<div");
+
+WriteLiteral(" class=\"bcms-scroll-window-settings\"");
+
+WriteLiteral(">\r\n");
 
             
-            #line 6 "..\..\Views\Subscriber\List.cshtml"
-  
-    var gridViewModel = new EditableGridViewModel
-    {
-        ShowMessages = true,
-        TopBlockTitle = NewsletterGlobalization.SiteSettings_NewsletterSubscribers_Title,
-        Columns = new List<EditableGridColumn>
+            #line 7 "..\..\Views\Subscriber\List.cshtml"
+    
+            
+            #line default
+            #line hidden
+            
+            #line 7 "..\..\Views\Subscriber\List.cshtml"
+      
+        var gridViewModel = new EditableGridViewModel
+        {
+            ShowMessages = true,
+            TopBlockTitle = NewsletterGlobalization.SiteSettings_NewsletterSubscribers_Title,
+            Columns = new List<EditableGridColumn>
             {
                 new EditableGridColumn(NewsletterGlobalization.SiteSettings_NewsletterSubscribers_Email_Title, "Email", "email")
                     {
                         AutoFocus = true
                     }
             }
-    };
-
+        };
+    
             
             #line default
             #line hidden
 WriteLiteral("\r\n\r\n");
 
+WriteLiteral("    ");
+
             
-            #line 21 "..\..\Views\Subscriber\List.cshtml"
+            #line 22 "..\..\Views\Subscriber\List.cshtml"
 Write(Html.Partial(RootModuleConstants.EditableGridTemplate, gridViewModel));
 
             
             #line default
             #line hidden
-WriteLiteral("\r\n");
+WriteLiteral("\r\n</div>");
 
         }
     }

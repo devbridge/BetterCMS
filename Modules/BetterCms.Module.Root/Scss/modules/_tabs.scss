@@ -46,6 +46,7 @@
         border-bottom: $border-nav-bottom;
         box-sizing: border-box;
         position: relative;
+        height: $inner-navigation;
     }
 
     &-navigation-ui {

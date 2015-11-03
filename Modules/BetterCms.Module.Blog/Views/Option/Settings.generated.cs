@@ -67,7 +67,7 @@ namespace ASP
         }
         public override void Execute()
         {
-WriteLiteral("\n");
+WriteLiteral("\r\n");
 
             
             #line 7 "..\..\Views\Option\Settings.cshtml"
@@ -76,7 +76,7 @@ Write(Html.TabbedContentMessagesBox());
             
             #line default
             #line hidden
-WriteLiteral("\n\n");
+WriteLiteral("\r\n\r\n");
 
             
             #line 9 "..\..\Views\Option\Settings.cshtml"
@@ -111,7 +111,7 @@ WriteLiteral("\n\n");
             
             #line default
             #line hidden
-WriteLiteral("\n\n");
+WriteLiteral("\r\n\r\n");
 
             
             #line 38 "..\..\Views\Option\Settings.cshtml"
@@ -120,7 +120,7 @@ Write(Html.Partial(RootModuleConstants.EditableGridTemplate, gridViewModel));
             
             #line default
             #line hidden
-WriteLiteral("\n");
+WriteLiteral("\r\n");
 
         }
     }

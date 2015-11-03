@@ -38,8 +38,36 @@ a {
 
 //todo end of
 .bcms-scroll-window {
-    overflow: auto;
-    position: relative;
+    &-settings {
+        height: calc(100vh - #{$settings-frame});
+        overflow: {
+            x: hidden;
+            y: scroll;
+        }
+        padding-right: 30px;
+        position: relative;
+    }
+
+    &-tabbed {
+        height: calc(100vh - #{$settings-frame - $inner-navigation});
+        overflow: {
+            x: hidden;
+            y: scroll;
+        }
+        padding-right: 30px;
+        position: relative;
+    }
+
+    &-options {
+        background-color: $white;
+        height: calc(100vh - #{$settings-frame + $tab-height});
+        overflow: {
+            x: hidden;
+            y: scroll;
+        }
+        padding-right: 30px;
+        position: relative;
+    }
 }
 
 //fixme remove from html
@@ -59,17 +87,10 @@ a {
         margin: auto;
         max-width: $page-width;
         position: relative;
-
-        .bcms-scroll-window & {
-            background-color: $white;
-            border: {
-                right: $border-frame;
-                left: $border-frame;
-            }
-        }
     }
 
     &-body {
+        height: 100vh;
         margin: auto;
         position: relative;
     }
@@ -145,7 +166,7 @@ a {
 
 .bcms-settings {
     &-frame {
-        @include size($page-width 100%);
+        @include size($page-width calc(100vh - #{$settings-frame}));
         background-color: $white;
         border: {
             right: $border-frame;
@@ -165,7 +186,7 @@ a {
 
     &-window {
         @include vertical-align($block: table-cell, $align: top);
-        @include pad(30px);
+        padding-left: 30px;
     }
 
     &-link {

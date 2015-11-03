@@ -134,24 +134,26 @@ WriteLiteral("\r\n");
             #line 28 "..\..\Views\Tags\ListTags.cshtml"
                                        
         
-            
-            #line default
-            #line hidden
-            
-            #line 29 "..\..\Views\Tags\ListTags.cshtml"
-   Write(Html.HiddenGridOptions(Model.GridOptions));
-
-            
-            #line default
-            #line hidden
-            
-            #line 29 "..\..\Views\Tags\ListTags.cshtml"
-                                                  
 
             
             #line default
             #line hidden
 WriteLiteral("        <div");
+
+WriteLiteral(" class=\"bcms-scroll-window-settings\"");
+
+WriteLiteral(">\r\n");
+
+WriteLiteral("            ");
+
+            
+            #line 31 "..\..\Views\Tags\ListTags.cshtml"
+       Write(Html.HiddenGridOptions(Model.GridOptions));
+
+            
+            #line default
+            #line hidden
+WriteLiteral("\r\n        <div");
 
 WriteLiteral(" class=\"bcms-top-block-holder\"");
 
@@ -166,7 +168,7 @@ WriteLiteral(" class=\"bcms-large-titles\"");
 WriteLiteral(">");
 
             
-            #line 32 "..\..\Views\Tags\ListTags.cshtml"
+            #line 34 "..\..\Views\Tags\ListTags.cshtml"
                                           Write(RootGlobalization.SiteSettings_Tags_Title);
 
             
@@ -185,7 +187,7 @@ WriteLiteral(">\r\n");
 WriteLiteral("                        ");
 
             
-            #line 36 "..\..\Views\Tags\ListTags.cshtml"
+            #line 38 "..\..\Views\Tags\ListTags.cshtml"
                    Write(Html.TextBoxFor(m => m.SearchQuery, new { @class = "bcms-search-field-box bcms-search-query", @placeholder = RootGlobalization.WaterMark_Search }));
 
             
@@ -200,7 +202,7 @@ WriteLiteral(" id=\"bcms-tags-search-btn\"");
 WriteLiteral(">");
 
             
-            #line 37 "..\..\Views\Tags\ListTags.cshtml"
+            #line 39 "..\..\Views\Tags\ListTags.cshtml"
                                                                           Write(RootGlobalization.SiteSettings_Tags_Search);
 
             
@@ -215,7 +217,7 @@ WriteLiteral(" id=\"bcms-site-settings-add-tag\"");
 WriteLiteral(">");
 
             
-            #line 40 "..\..\Views\Tags\ListTags.cshtml"
+            #line 42 "..\..\Views\Tags\ListTags.cshtml"
                                                                           Write(RootGlobalization.SiteSettings_Tags_AddNewTag);
 
             
@@ -230,45 +232,38 @@ WriteLiteral(">\r\n");
 WriteLiteral("                ");
 
             
-            #line 45 "..\..\Views\Tags\ListTags.cshtml"
+            #line 47 "..\..\Views\Tags\ListTags.cshtml"
            Write(Html.RenderPaging(Model));
 
             
             #line default
             #line hidden
-WriteLiteral("\r\n            </div>\r\n        </div>\r\n");
+WriteLiteral("\r\n            </div>\r\n        </div>\r\n\r\n\r\n");
+
+WriteLiteral("        ");
 
             
-            #line 48 "..\..\Views\Tags\ListTags.cshtml"
-
-        
-            
-            #line default
-            #line hidden
-            
-            #line 49 "..\..\Views\Tags\ListTags.cshtml"
+            #line 52 "..\..\Views\Tags\ListTags.cshtml"
    Write(Html.Grid(Model.Items).Sort(Model.GridOptions).Columns(columns).Attributes(@class => "bcms-tables").RenderUsing(new EditableHtmlTableGridRenderer<TagItemViewModel>()));
 
             
             #line default
             #line hidden
+WriteLiteral("\r\n");
+
+WriteLiteral("        ");
+
             
-            #line 49 "..\..\Views\Tags\ListTags.cshtml"
-                                                                                                                                                                               
-        
-            
-            #line default
-            #line hidden
-            
-            #line 50 "..\..\Views\Tags\ListTags.cshtml"
+            #line 53 "..\..\Views\Tags\ListTags.cshtml"
    Write(Html.HiddenSubmit());
 
             
             #line default
             #line hidden
+WriteLiteral("\r\n    </div>\r\n");
+
             
-            #line 50 "..\..\Views\Tags\ListTags.cshtml"
-                            
+            #line 55 "..\..\Views\Tags\ListTags.cshtml"
     }
 
             
@@ -285,7 +280,7 @@ WriteLiteral(">\r\n");
 WriteLiteral("        ");
 
             
-            #line 54 "..\..\Views\Tags\ListTags.cshtml"
+            #line 58 "..\..\Views\Tags\ListTags.cshtml"
    Write(Html.Grid(new List<TagItemViewModel> { new TagItemViewModel() }).Columns(columns).Attributes(@class => "bcms-tables").RenderUsing(new HtmlTableGridSingleRowRenderer<TagItemViewModel>()));
 
             

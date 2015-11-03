@@ -50,26 +50,25 @@
 @using (Html.BeginForm<TemplatesController>(f => f.MasterPages(null), FormMethod.Post, new { @id = "bcms-master-pages-form", @class = "bcms-ajax-form" }))
 {
     @Html.SiteSettingsMessagesBox()
-    @Html.HiddenGridOptions(Model.GridOptions)
 
-    <div class="bcms-top-block-holder">
-        <div class="bcms-clearfix">
-            <div class="bcms-top-block-inner">
-                <div class="bcms-search-block">
-                    @Html.TextBoxFor(m => m.SearchQuery, new { @class = "bcms-editor-field-box bcms-search-query", @placeholder = RootGlobalization.WaterMark_Search })
-                    <div class="bcms-btn-search" id="bcms-pages-search-btn">@PagesGlobalization.SiteSettings_Pages_Search</div>
+        @Html.HiddenGridOptions(Model.GridOptions)
+        <div class="bcms-top-block-holder">
+            <div class="bcms-clearfix">
+                <div class="bcms-top-block-inner">
+                    <div class="bcms-search-block">
+                        @Html.TextBoxFor(m => m.SearchQuery, new { @class = "bcms-editor-field-box bcms-search-query", @placeholder = RootGlobalization.WaterMark_Search })
+                        <div class="bcms-btn-search" id="bcms-pages-search-btn">@PagesGlobalization.SiteSettings_Pages_Search</div>
+                    </div>
+
+                    <div class="bcms-btn-main" id="bcms-create-page-button">@PagesGlobalization.SiteSettings_Pages_AddNew</div>
                 </div>
-
-                <div class="bcms-btn-main" id="bcms-create-page-button">@PagesGlobalization.SiteSettings_Pages_AddNew</div>
+            </div>
+            <div class="bcms-top-block-pager">
+                @Html.RenderPaging(Model)
             </div>
         </div>
 
-        <div class="bcms-top-block-pager">
-            @Html.RenderPaging(Model)
-        </div>
-    </div>
-
-    @Html.Grid(Model.Items).Sort(Model.GridOptions).Columns(columns).Attributes(@class => "bcms-tables").RenderUsing(new EditableHtmlTableGridRenderer<SiteSettingPageViewModel>())
+        @Html.Grid(Model.Items).Sort(Model.GridOptions).Columns(columns).Attributes(@class => "bcms-tables").RenderUsing(new EditableHtmlTableGridRenderer<SiteSettingPageViewModel>())
 }
 
 <script type="text/html" id="bcms-pages-list-row-template">

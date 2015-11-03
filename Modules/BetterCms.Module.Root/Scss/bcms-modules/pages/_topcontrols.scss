@@ -1,0 +1,54 @@
+.bcms-top-block {
+    &-holder {
+        @include clearfix();
+        padding: 20px 0 10px;
+    }
+
+    &-inner {
+        float: right;
+    }
+
+    &-pager {
+        @include clearfix();
+        border-top: $border-nav-bottom;
+        clear: both;
+        margin-top: 20px;
+        padding: 10px 0 0;
+        position: relative;
+    }
+}
+
+//module search block
+.bcms-search {
+    &-block {
+        @include vertical-align();
+        margin-right: 15px;
+        position: relative;
+    }
+
+    &-field-box {
+        @extend %reset;
+        @include size(305px $form-element-height);
+        border: {
+            top: 0;
+            right: 0;
+            bottom: $border-search-field;
+            left: 0;
+        }
+        box-sizing: border-box;
+        color: $light-text;
+        font: {
+            size: 14px;
+            style: italic;
+        }
+        padding: 0 42px 0 0;
+
+        @include placeholder {
+            color: $light-text;
+            font: {
+                size: 14px;
+                style: italic;
+            }
+        }
+    }
+}

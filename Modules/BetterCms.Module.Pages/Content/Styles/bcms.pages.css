@@ -461,6 +461,61 @@ a.bcms-expanded-nodes {
   cursor: pointer;
 }
 
+.bcms-top-block-holder {
+  padding: 20px 0 10px;
+}
+
+.bcms-top-block-inner {
+  float: right;
+}
+
+.bcms-top-block-pager {
+  border-top: 1px solid #dfdfdf;
+  clear: both;
+  margin-top: 20px;
+  padding: 10px 0 0;
+  position: relative;
+}
+
+.bcms-search-block {
+  display: inline-block;
+  vertical-align: middle;
+  margin-right: 15px;
+  position: relative;
+}
+
+.bcms-search-field-box {
+  height: 37px;
+  width: 305px;
+  border-top: 0;
+  border-right: 0;
+  border-bottom: 2px solid #0d7ce7;
+  border-left: 0;
+  box-sizing: border-box;
+  color: #a6a6a6;
+  font-size: 14px;
+  font-style: italic;
+  padding: 0 42px 0 0;
+}
+
+.bcms-search-field-box::-webkit-input-placeholder {
+  color: #a6a6a6;
+  font-size: 14px;
+  font-style: italic;
+}
+
+.bcms-search-field-box::-moz-placeholder {
+  color: #a6a6a6;
+  font-size: 14px;
+  font-style: italic;
+}
+
+.bcms-search-field-box:-ms-input-placeholder {
+  color: #a6a6a6;
+  font-size: 14px;
+  font-style: italic;
+}
+
 .bcms-newcontent-top {
   height: 80px;
   padding-top: 20px;
@@ -770,59 +825,4 @@ a.bcms-slider-next:active {
 
 .bcms-template-usage:hover:after {
   background-position: -60px -133px;
-}
-
-.bcms-top-block-holder {
-  padding: 20px 0 10px;
-}
-
-.bcms-top-block-inner {
-  float: right;
-}
-
-.bcms-top-block-pager {
-  border-top: 1px solid #dfdfdf;
-  clear: both;
-  margin-top: 20px;
-  padding: 10px 0 0;
-  position: relative;
-}
-
-.bcms-search-block {
-  display: inline-block;
-  vertical-align: middle;
-  margin-right: 15px;
-  position: relative;
-}
-
-.bcms-search-field-box {
-  height: 37px;
-  width: 305px;
-  border-top: 0;
-  border-right: 0;
-  border-bottom: 2px solid #0d7ce7;
-  border-left: 0;
-  box-sizing: border-box;
-  color: #a6a6a6;
-  font-size: 14px;
-  font-style: italic;
-  padding: 0 42px 0 0;
-}
-
-.bcms-search-field-box::-webkit-input-placeholder {
-  color: #a6a6a6;
-  font-size: 14px;
-  font-style: italic;
-}
-
-.bcms-search-field-box::-moz-placeholder {
-  color: #a6a6a6;
-  font-size: 14px;
-  font-style: italic;
-}
-
-.bcms-search-field-box:-ms-input-placeholder {
-  color: #a6a6a6;
-  font-size: 14px;
-  font-style: italic;
 }

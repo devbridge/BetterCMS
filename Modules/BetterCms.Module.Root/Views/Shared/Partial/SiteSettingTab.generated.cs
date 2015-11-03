@@ -52,11 +52,14 @@ WriteLiteral(@">
             click: tabClick, clickBubble: true""></a>
         <!-- /ko -->
     </div>
-    <!-- ko foreach: tabs -->
-    <div class=""bcms-tab-single"" data-bind=""attr: {id: tabId}, stopBinding: true"">
-        ");
 
-WriteLiteral("\r\n        <div></div>\r\n    </div>\r\n    <!-- /ko -->\r\n</script>\r\n");
+    <div class=""bcms-scroll-window-tabbed"">
+        <!-- ko foreach: tabs -->
+        <div class=""bcms-tab-single"" data-bind=""attr: {id: tabId}, stopBinding: true"">
+            ");
+
+WriteLiteral("\r\n            <div></div>\r\n        </div>\r\n        <!-- /ko -->\r\n    </div>\r\n</sc" +
+"ript>\r\n");
 
         }
     }

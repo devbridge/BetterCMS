@@ -24,6 +24,8 @@
 @using (Html.BeginForm<SitemapController>(f => f.Sitemaps(null), FormMethod.Post, new { @id = "bcms-sitemaps-form", @class = "bcms-ajax-form" }))
 {
         @Html.SiteSettingsMessagesBox()
+
+    <div class="bcms-scroll-window-settings">
         @Html.HiddenGridOptions(Model.GridOptions)
         <div class="bcms-top-block-holder">
             <div class="bcms-clearfix">
@@ -43,8 +45,9 @@
                 @Html.RenderPaging(Model)
             </div>
         </div>
-     
+
         @Html.Grid(Model.Items).Sort(Model.GridOptions).Columns(columns).Attributes(@class => "bcms-tables").RenderUsing(new EditableHtmlTableGridRenderer<SiteSettingSitemapViewModel>())
+    </div>
 }
 
 <script type="text/html" id="bcms-sitemap-list-row-template">

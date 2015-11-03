@@ -79,7 +79,7 @@ namespace ASP
         }
         public override void Execute()
         {
-WriteLiteral("\n");
+WriteLiteral("\r\n");
 
             
             #line 10 "..\..\Views\Templates\EditTemplate.cshtml"
@@ -91,7 +91,7 @@ WriteLiteral("\n");
             
             #line default
             #line hidden
-WriteLiteral("<div");
+WriteLiteral("\r\n<div");
 
 WriteLiteral(" class=\"bcms-tab-header bcms-js-tab-header\"");
 
@@ -104,7 +104,7 @@ WriteLiteral(" data-name=\"#bcms-tab-1\"");
 WriteLiteral(">");
 
             
-            #line 15 "..\..\Views\Templates\EditTemplate.cshtml"
+            #line 16 "..\..\Views\Templates\EditTemplate.cshtml"
                                                                         Write(PagesGlobalization.EditTemplate_BasicPropertiesTab_Title);
 
             
@@ -119,7 +119,7 @@ WriteLiteral(" data-name=\"#bcms-tab-2\"");
 WriteLiteral(">");
 
             
-            #line 16 "..\..\Views\Templates\EditTemplate.cshtml"
+            #line 17 "..\..\Views\Templates\EditTemplate.cshtml"
                                                             Write(PagesGlobalization.EditTemplate_RegionsTab_Title);
 
             
@@ -134,112 +134,112 @@ WriteLiteral(" data-name=\"#bcms-tab-3\"");
 WriteLiteral(">");
 
             
-            #line 17 "..\..\Views\Templates\EditTemplate.cshtml"
+            #line 18 "..\..\Views\Templates\EditTemplate.cshtml"
                                                             Write(PagesGlobalization.EditTemplate_OptionsTab_Title);
 
             
             #line default
             #line hidden
-WriteLiteral("</a>\r\n</div>\n\n<div");
+WriteLiteral("</a>\r\n</div>\r\n\r\n<div");
 
-WriteLiteral(" class=\"bcms-scroll-window\"");
+WriteLiteral(" class=\"bcms-modal-frame-holder\"");
 
-WriteLiteral(">\n");
+WriteLiteral(">\r\n    <div");
 
-WriteLiteral("    ");
+WriteLiteral(" class=\"bcms-scroll-window-options\"");
 
-            
-            #line 21 "..\..\Views\Templates\EditTemplate.cshtml"
-Write(Html.TabbedContentMessagesBox("bcms-edit-template-messages"));
+WriteLiteral(">\r\n");
 
-            
-            #line default
-            #line hidden
-WriteLiteral("\n");
+WriteLiteral("        ");
 
             
-            #line 22 "..\..\Views\Templates\EditTemplate.cshtml"
-    
-            
-            #line default
-            #line hidden
-            
-            #line 22 "..\..\Views\Templates\EditTemplate.cshtml"
-     using (Html.BeginForm<TemplatesController>(c => c.RegisterTemplate((TemplateEditViewModel)null), FormMethod.Post, new { @id = "bcms-template-form", @class = "bcms-ajax-form" }))
-    {
+            #line 23 "..\..\Views\Templates\EditTemplate.cshtml"
+   Write(Html.TabbedContentMessagesBox("bcms-edit-template-messages"));
 
             
             #line default
             #line hidden
-WriteLiteral("        <div");
+WriteLiteral("\r\n");
+
+            
+            #line 24 "..\..\Views\Templates\EditTemplate.cshtml"
+        
+            
+            #line default
+            #line hidden
+            
+            #line 24 "..\..\Views\Templates\EditTemplate.cshtml"
+         using (Html.BeginForm<TemplatesController>(c => c.RegisterTemplate((TemplateEditViewModel)null), FormMethod.Post, new { @id = "bcms-template-form", @class = "bcms-ajax-form" }))
+        {
+
+            
+            #line default
+            #line hidden
+WriteLiteral("            <div");
 
 WriteLiteral(" id=\"bcms-tab-1\"");
 
 WriteLiteral(" class=\"bcms-tab-single\"");
 
-WriteLiteral(">\n            <div");
-
-WriteLiteral(" class=\"bcms-padded-content\"");
-
-WriteLiteral(">\n                <div");
+WriteLiteral(">\r\n                <div");
 
 WriteLiteral(" class=\"bcms-input-list-holder\"");
 
-WriteLiteral(">\n");
+WriteLiteral(">\r\n");
 
 WriteLiteral("                    ");
 
             
-            #line 27 "..\..\Views\Templates\EditTemplate.cshtml"
+            #line 28 "..\..\Views\Templates\EditTemplate.cshtml"
                Write(Html.Tooltip(PagesGlobalization.Template_Title_Tooltip_Description));
 
             
             #line default
             #line hidden
-WriteLiteral("\n                    <div");
+WriteLiteral("\r\n                    <div");
 
 WriteLiteral(" class=\"bcms-content-titles\"");
 
 WriteLiteral(">");
 
             
-            #line 28 "..\..\Views\Templates\EditTemplate.cshtml"
+            #line 29 "..\..\Views\Templates\EditTemplate.cshtml"
                                                 Write(PagesGlobalization.Template_Title_Title);
 
             
             #line default
             #line hidden
-WriteLiteral("</div>\n                    <div");
+WriteLiteral("</div>\r\n                    <div");
 
 WriteLiteral(" class=\"bcms-input-box\"");
 
-WriteLiteral(">\n");
-
-WriteLiteral("                        ");
-
-            
-            #line 30 "..\..\Views\Templates\EditTemplate.cshtml"
-                   Write(Html.TextBoxFor(model => model.Name, new { @class = "bcms-editor-field-box" }));
-
-            
-            #line default
-            #line hidden
-WriteLiteral("\n");
+WriteLiteral(">\r\n");
 
 WriteLiteral("                        ");
 
             
             #line 31 "..\..\Views\Templates\EditTemplate.cshtml"
+                   Write(Html.TextBoxFor(model => model.Name, new { @class = "bcms-editor-field-box" }));
+
+            
+            #line default
+            #line hidden
+WriteLiteral("\r\n");
+
+WriteLiteral("                        ");
+
+            
+            #line 32 "..\..\Views\Templates\EditTemplate.cshtml"
                    Write(Html.BcmsValidationMessageFor(m => m.Name));
 
             
             #line default
             #line hidden
-WriteLiteral("\n                    </div>\n                </div>\n\n                <div");
+WriteLiteral("\r\n                    </div>\r\n                </div>\r\n                <div");
 
 WriteLiteral(" class=\"bcms-input-list-holder\"");
 
-WriteLiteral(">\n");
+WriteLiteral(">\r\n");
 
 WriteLiteral("                    ");
 
@@ -250,7 +250,7 @@ WriteLiteral("                    ");
             
             #line default
             #line hidden
-WriteLiteral("\n                    <div");
+WriteLiteral("\r\n                    <div");
 
 WriteLiteral(" class=\"bcms-content-titles\"");
 
@@ -263,11 +263,11 @@ WriteLiteral(">");
             
             #line default
             #line hidden
-WriteLiteral("</div>\n                    <div");
+WriteLiteral("</div>\r\n                    <div");
 
 WriteLiteral(" class=\"bcms-input-box\"");
 
-WriteLiteral(">\n");
+WriteLiteral(">\r\n");
 
 WriteLiteral("                        ");
 
@@ -278,7 +278,7 @@ WriteLiteral("                        ");
             
             #line default
             #line hidden
-WriteLiteral("\n");
+WriteLiteral("\r\n");
 
 WriteLiteral("                        ");
 
@@ -289,218 +289,218 @@ WriteLiteral("                        ");
             
             #line default
             #line hidden
-WriteLiteral("\n                    </div>\n                </div>\n\n                <div");
+WriteLiteral("\r\n                    </div>\r\n                </div>\r\n                <div");
 
 WriteLiteral(" class=\"bcms-input-list-holder\"");
 
-WriteLiteral(">\n");
+WriteLiteral(">\r\n");
 
 WriteLiteral("                    ");
 
             
-            #line 45 "..\..\Views\Templates\EditTemplate.cshtml"
+            #line 44 "..\..\Views\Templates\EditTemplate.cshtml"
                Write(Html.Tooltip(PagesGlobalization.TemplatePreviewImageUrl_Tooltip_Description));
 
             
             #line default
             #line hidden
-WriteLiteral("\n                    <div");
+WriteLiteral("\r\n                    <div");
 
 WriteLiteral(" class=\"bcms-content-titles\"");
 
 WriteLiteral(">");
 
             
-            #line 46 "..\..\Views\Templates\EditTemplate.cshtml"
+            #line 45 "..\..\Views\Templates\EditTemplate.cshtml"
                                                 Write(PagesGlobalization.TemplatePreviewImageUrl_Title);
 
             
             #line default
             #line hidden
-WriteLiteral("</div>\n                    <div");
+WriteLiteral("</div>\r\n                    <div");
 
 WriteLiteral(" class=\"bcms-input-box\"");
 
-WriteLiteral(">\n");
+WriteLiteral(">\r\n");
 
 WriteLiteral("                        ");
 
             
-            #line 48 "..\..\Views\Templates\EditTemplate.cshtml"
+            #line 47 "..\..\Views\Templates\EditTemplate.cshtml"
                    Write(Html.TextBoxFor(model => model.PreviewImageUrl, new { @class = "bcms-editor-field-box" }));
 
             
             #line default
             #line hidden
-WriteLiteral("\n");
+WriteLiteral("\r\n");
 
 WriteLiteral("                        ");
 
             
-            #line 49 "..\..\Views\Templates\EditTemplate.cshtml"
+            #line 48 "..\..\Views\Templates\EditTemplate.cshtml"
                    Write(Html.BcmsValidationMessageFor(m => m.PreviewImageUrl));
 
             
             #line default
             #line hidden
-WriteLiteral("\n                    </div>\n                </div>\n\n                <div");
+WriteLiteral("\r\n                    </div>\r\n                </div>\r\n                <div");
 
 WriteLiteral(" class=\"bcms-input-list-holder\"");
 
-WriteLiteral(">\n");
+WriteLiteral(">\r\n");
 
 WriteLiteral("                    ");
 
             
-            #line 54 "..\..\Views\Templates\EditTemplate.cshtml"
+            #line 52 "..\..\Views\Templates\EditTemplate.cshtml"
                Write(Html.Tooltip(PagesGlobalization.TemplateImagePreview_Tooltip_Description));
 
             
             #line default
             #line hidden
-WriteLiteral("\n                    <div");
+WriteLiteral("\r\n                    <div");
 
 WriteLiteral(" class=\"bcms-content-titles\"");
 
 WriteLiteral(">");
 
             
-            #line 55 "..\..\Views\Templates\EditTemplate.cshtml"
+            #line 53 "..\..\Views\Templates\EditTemplate.cshtml"
                                                 Write(PagesGlobalization.TemplatePreviewImage_Title);
 
             
             #line default
             #line hidden
-WriteLiteral("</div>\n\n                    <div");
+WriteLiteral("</div>\r\n                    <div");
 
 WriteLiteral(" class=\"bcms-preview-module-image\"");
 
-WriteLiteral(">\n                        <div");
+WriteLiteral(">\r\n                        <div");
 
 WriteLiteral(" style=\"display: none;\"");
 
-WriteLiteral(">\n                            <img");
+WriteLiteral(">\r\n                            <img");
 
 WriteLiteral(" id=\"bcms-template-preview-image\"");
 
-WriteAttribute("src", Tuple.Create(" src=\"", 3185), Tuple.Create("\"", 3213)
+WriteAttribute("src", Tuple.Create(" src=\"", 3253), Tuple.Create("\"", 3281)
             
-            #line 59 "..\..\Views\Templates\EditTemplate.cshtml"
-, Tuple.Create(Tuple.Create("", 3191), Tuple.Create<System.Object, System.Int32>(Model.PreviewImageUrl
+            #line 56 "..\..\Views\Templates\EditTemplate.cshtml"
+, Tuple.Create(Tuple.Create("", 3259), Tuple.Create<System.Object, System.Int32>(Model.PreviewImageUrl
             
             #line default
             #line hidden
-, 3191), false)
+, 3259), false)
 );
 
 WriteLiteral(" alt=\"\"");
 
-WriteLiteral(" />\n                        </div>\n                    </div>\n\n                </" +
-"div>\n            </div>\n        </div>\n");
+WriteLiteral(" />\r\n                        </div>\r\n                    </div>\r\n                " +
+"</div>\r\n            </div>\r\n");
 
             
-            #line 66 "..\..\Views\Templates\EditTemplate.cshtml"
-              
+            #line 61 "..\..\Views\Templates\EditTemplate.cshtml"
+
 
             
             #line default
             #line hidden
-WriteLiteral("        <div");
+WriteLiteral("            <div");
 
 WriteLiteral(" id=\"bcms-tab-2\"");
 
 WriteLiteral(" class=\"bcms-tab-single\"");
 
-WriteLiteral(">\n");
+WriteLiteral(">\r\n");
 
-WriteLiteral("            ");
-
-            
-            #line 68 "..\..\Views\Templates\EditTemplate.cshtml"
-       Write(Html.Partial("Partial/EditTemplateRegions"));
+WriteLiteral("                ");
 
             
-            #line default
-            #line hidden
-WriteLiteral("\n        </div>\n");
-
-            
-            #line 70 "..\..\Views\Templates\EditTemplate.cshtml"
-        
+            #line 63 "..\..\Views\Templates\EditTemplate.cshtml"
+           Write(Html.Partial("Partial/EditTemplateRegions"));
 
             
             #line default
             #line hidden
-WriteLiteral("        <div");
+WriteLiteral("\r\n            </div>\r\n");
+
+            
+            #line 65 "..\..\Views\Templates\EditTemplate.cshtml"
+
+
+            
+            #line default
+            #line hidden
+WriteLiteral("            <div");
 
 WriteLiteral(" id=\"bcms-tab-3\"");
 
 WriteLiteral(" class=\"bcms-tab-single\"");
 
-WriteLiteral(">\n");
+WriteLiteral(">\r\n");
 
-WriteLiteral("            ");
+WriteLiteral("                ");
 
+            
+            #line 67 "..\..\Views\Templates\EditTemplate.cshtml"
+           Write(Html.Partial(PagesConstants.OptionsGridTemplate, new EditableGridViewModel()));
+
+            
+            #line default
+            #line hidden
+WriteLiteral("\r\n            </div>\r\n");
+
+            
+            #line 69 "..\..\Views\Templates\EditTemplate.cshtml"
+
+            
+            
+            #line default
+            #line hidden
+            
+            #line 70 "..\..\Views\Templates\EditTemplate.cshtml"
+       Write(Html.HiddenFor(model => model.Id));
+
+            
+            #line default
+            #line hidden
+            
+            #line 70 "..\..\Views\Templates\EditTemplate.cshtml"
+                                              
+            
+            
+            #line default
+            #line hidden
+            
+            #line 71 "..\..\Views\Templates\EditTemplate.cshtml"
+       Write(Html.HiddenFor(model => model.Version));
+
+            
+            #line default
+            #line hidden
+            
+            #line 71 "..\..\Views\Templates\EditTemplate.cshtml"
+                                                   
+            
+            
+            #line default
+            #line hidden
             
             #line 72 "..\..\Views\Templates\EditTemplate.cshtml"
-       Write(Html.Partial(PagesConstants.OptionsGridTemplate, new EditableGridViewModel()));
-
-            
-            #line default
-            #line hidden
-WriteLiteral("\n        </div>\n");
-
-            
-            #line 74 "..\..\Views\Templates\EditTemplate.cshtml"
-            
-        
-            
-            #line default
-            #line hidden
-            
-            #line 75 "..\..\Views\Templates\EditTemplate.cshtml"
-   Write(Html.HiddenFor(model => model.Id));
+       Write(Html.HiddenSubmit());
 
             
             #line default
             #line hidden
             
-            #line 75 "..\..\Views\Templates\EditTemplate.cshtml"
-                                          
-        
-            
-            #line default
-            #line hidden
-            
-            #line 76 "..\..\Views\Templates\EditTemplate.cshtml"
-   Write(Html.HiddenFor(model => model.Version));
+            #line 72 "..\..\Views\Templates\EditTemplate.cshtml"
+                                
+        }
 
             
             #line default
             #line hidden
-            
-            #line 76 "..\..\Views\Templates\EditTemplate.cshtml"
-                                               
-        
-            
-            #line default
-            #line hidden
-            
-            #line 77 "..\..\Views\Templates\EditTemplate.cshtml"
-   Write(Html.HiddenSubmit());
-
-            
-            #line default
-            #line hidden
-            
-            #line 77 "..\..\Views\Templates\EditTemplate.cshtml"
-                            
-    }
-
-            
-            #line default
-            #line hidden
-WriteLiteral("</div>\n");
+WriteLiteral("    </div>\r\n</div>\r\n");
 
         }
     }

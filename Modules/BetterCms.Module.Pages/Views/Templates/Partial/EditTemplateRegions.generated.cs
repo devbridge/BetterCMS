@@ -73,10 +73,10 @@ namespace ASP
         }
         public override void Execute()
         {
-WriteLiteral("\n\n");
+WriteLiteral("\r\n");
 
             
-            #line 11 "..\..\Views\Templates\Partial\EditTemplateRegions.cshtml"
+            #line 9 "..\..\Views\Templates\Partial\EditTemplateRegions.cshtml"
   
     Action<ColumnBuilder<TemplateRegionItemViewModel>> columns = column =>
     {
@@ -98,15 +98,19 @@ WriteLiteral("\n\n");
             
             #line default
             #line hidden
-WriteLiteral("\n\n<div");
+WriteLiteral("\r\n\r\n<div");
+
+WriteLiteral(" class=\"bcms-scroll-window-settings\"");
+
+WriteLiteral(">\r\n    <div");
 
 WriteLiteral(" class=\"bcms-top-block-holder\"");
 
-WriteLiteral(">\n    <div");
+WriteLiteral(">\r\n        <div");
 
 WriteLiteral(" class=\"bcms-top-block-inner\"");
 
-WriteLiteral(">\r\n        <div");
+WriteLiteral(">\r\n            <div");
 
 WriteLiteral(" class=\"bcms-btn-main\"");
 
@@ -115,16 +119,18 @@ WriteLiteral(" id=\"bcms-add-region-button\"");
 WriteLiteral(">");
 
             
-            #line 32 "..\..\Views\Templates\Partial\EditTemplateRegions.cshtml"
-                                                          Write(PagesGlobalization.TemplateRegions_AddNewRegion);
+            #line 31 "..\..\Views\Templates\Partial\EditTemplateRegions.cshtml"
+                                                              Write(PagesGlobalization.TemplateRegions_AddNewRegion);
 
             
             #line default
             #line hidden
-WriteLiteral("</div>\r\n    </div>\n</div>\n\n");
+WriteLiteral("</div>\r\n        </div>\r\n    </div>\r\n\r\n");
+
+WriteLiteral("    ");
 
             
-            #line 36 "..\..\Views\Templates\Partial\EditTemplateRegions.cshtml"
+            #line 35 "..\..\Views\Templates\Partial\EditTemplateRegions.cshtml"
 Write(Html.Grid(Model.Regions).Columns(columns).Attributes(@class => "bcms-tables", @id => "bcms-regions-grid").RowAttributes(delegate(GridRowViewData<TemplateRegionItemViewModel> row)
                   {
                       return new Dictionary<string, object>
@@ -132,24 +138,24 @@ Write(Html.Grid(Model.Regions).Columns(columns).Attributes(@class => "bcms-table
                                     {"data-id", row.Item.Id},
                                     {"data-version", row.Item.Version}
                               };
-              }).RenderUsing(new EditableHtmlTableGridRenderer<TemplateRegionItemViewModel>()));
+                  }).RenderUsing(new EditableHtmlTableGridRenderer<TemplateRegionItemViewModel>()));
 
             
             #line default
             #line hidden
-WriteLiteral("\n\n                                              <script");
+WriteLiteral("\r\n</div>\r\n\r\n<script");
 
 WriteLiteral(" type=\"text/html\"");
 
 WriteLiteral(" id=\"bcms-editable-row-template\"");
 
-WriteLiteral(">\n");
+WriteLiteral(">\r\n");
 
-WriteLiteral("      ");
+WriteLiteral("    ");
 
             
             #line 46 "..\..\Views\Templates\Partial\EditTemplateRegions.cshtml"
-  Write(Html
+Write(Html
         .Grid(new List<TemplateRegionItemViewModel> { new TemplateRegionItemViewModel() })
         .Columns(columns)
         .Attributes(@class => "bcms-tables")
@@ -158,7 +164,7 @@ WriteLiteral("      ");
             
             #line default
             #line hidden
-WriteLiteral("\n</script>\n\n");
+WriteLiteral("\r\n</script>\r\n");
 
         }
     }

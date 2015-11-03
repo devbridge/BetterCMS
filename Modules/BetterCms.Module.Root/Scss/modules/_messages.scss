@@ -14,8 +14,6 @@ $message-content-type: (
 $validation-fields: ();
 
 %bcms-messages-parent-ui {
-    border-bottom: 0;
-    border-top: 1px solid #c6c6c6;
     font-size: 12px;
     margin: 0;
     padding: 15px 60px 14px;
@@ -25,6 +23,10 @@ $validation-fields: ();
 @each $type in $message-type {
     div {
         &.bcms-messages-type-#{$type} {
+            @include positioning($center-x: true, $position: fixed);
+            top: 0;
+            z-index: 999;
+
             ul {
                 @extend %bcms-messages-parent-ui;
             }

@@ -80,7 +80,8 @@ $page-frame-gutters: 20px;
 $header-height: 55px;
 $footer-height: 65px;
 $tab-height: 50px;
-//$settings-frame: ($page-width + $settings-sidebar);
+$inner-navigation: 58px;
+$settings-frame: ($header-height + $footer-height);
 
 $form-element-height: 37px;
 

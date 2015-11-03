@@ -9,8 +9,8 @@
 @using BetterCms.Module.Root.Mvc.Helpers
 @using Microsoft.Web.Mvc
 @using MvcContrib.UI.Grid
-@model SiteSettingTemplateListViewModel
 
+@model SiteSettingTemplateListViewModel
 @{
     var controller = (CmsControllerBase)ViewContext.Controller;
     var roles = string.Format("{0},{1},{2}",
@@ -40,12 +40,14 @@
         column.DeleteButtonColumn(false);
     };
 }
+
 @using (Html.BeginForm<TemplatesController>(f => f.Templates(null), FormMethod.Post, new { @id = "bcms-templates-form", @class = "bcms-ajax-form" }))
 {
+
+    @Html.SiteSettingsMessagesBox()
+
     @Html.HiddenGridOptions(Model.GridOptions)
-
     <div class="bcms-top-block-holder">
-
         <div class="bcms-clearfix">
             <div class="bcms-top-block-inner">
                 <div class="bcms-search-block">
@@ -62,28 +64,16 @@
         </div>
     </div>
 
-    @Html.SiteSettingsMessagesBox()
-
-    @(Html
-          .Grid(Model.Items)
-          .Sort(Model.GridOptions)
-          .Columns(columns)
-          .Attributes(@class => "bcms-tables")
-          .RowAttributes(delegate(GridRowViewData<SiteSettingTemplateItemViewModel> row)
+    @(Html.Grid(Model.Items).Sort(Model.GridOptions).Columns(columns).Attributes(@class => "bcms-tables").RowAttributes(delegate(GridRowViewData<SiteSettingTemplateItemViewModel> row)
                   {
                       return new Dictionary<string, object>
                               {
                                     {"data-id", row.Item.Id},
                                     {"data-version", row.Item.Version}
                               };
-                  })
-              .RenderUsing(new EditableHtmlTableGridRenderer<SiteSettingTemplateItemViewModel>()))
+                  }).RenderUsing(new EditableHtmlTableGridRenderer<SiteSettingTemplateItemViewModel>()))
 }
 
 <script type="text/html" id="bcms-template-list-row-template">
-    @(Html
-        .Grid(new List<SiteSettingTemplateItemViewModel> { new SiteSettingTemplateItemViewModel() })
-        .Columns(columns)
-        .Attributes(@class => "bcms-tables")
-        .RenderUsing(new HtmlTableGridSingleRowRenderer<SiteSettingTemplateItemViewModel>()))
+    @(Html.Grid(new List<SiteSettingTemplateItemViewModel> { new SiteSettingTemplateItemViewModel() }).Columns(columns).Attributes(@class => "bcms-tables").RenderUsing(new HtmlTableGridSingleRowRenderer<SiteSettingTemplateItemViewModel>()))
 </script>

@@ -128,25 +128,27 @@ WriteLiteral("\n\n");
             
             #line 26 "..\..\Views\Sitemap\Sitemaps.cshtml"
                                        
-        
+
+
             
             #line default
             #line hidden
+WriteLiteral("    <div");
+
+WriteLiteral(" class=\"bcms-scroll-window-settings\"");
+
+WriteLiteral(">\r\n");
+
+WriteLiteral("        ");
+
             
-            #line 27 "..\..\Views\Sitemap\Sitemaps.cshtml"
+            #line 29 "..\..\Views\Sitemap\Sitemaps.cshtml"
    Write(Html.HiddenGridOptions(Model.GridOptions));
 
             
             #line default
             #line hidden
-            
-            #line 27 "..\..\Views\Sitemap\Sitemaps.cshtml"
-                                                  
-
-            
-            #line default
-            #line hidden
-WriteLiteral("        <div");
+WriteLiteral("\r\n        <div");
 
 WriteLiteral(" class=\"bcms-top-block-holder\"");
 
@@ -161,7 +163,7 @@ WriteLiteral(" class=\"bcms-large-titles\"");
 WriteLiteral(">");
 
             
-            #line 30 "..\..\Views\Sitemap\Sitemaps.cshtml"
+            #line 32 "..\..\Views\Sitemap\Sitemaps.cshtml"
                                           Write(NavigationGlobalization.SiteSettings_Sitemaps_Title);
 
             
@@ -180,7 +182,7 @@ WriteLiteral(">\r\n");
 WriteLiteral("                        ");
 
             
-            #line 34 "..\..\Views\Sitemap\Sitemaps.cshtml"
+            #line 36 "..\..\Views\Sitemap\Sitemaps.cshtml"
                    Write(Html.TextBoxFor(m => m.SearchQuery, new { @class = "bcms-search-field-box bcms-search-query", @placeholder = RootGlobalization.WaterMark_Search }));
 
             
@@ -195,7 +197,7 @@ WriteLiteral(" id=\"bcms-sitemaps-search-btn\"");
 WriteLiteral(">");
 
             
-            #line 35 "..\..\Views\Sitemap\Sitemaps.cshtml"
+            #line 37 "..\..\Views\Sitemap\Sitemaps.cshtml"
                                                                               Write(NavigationGlobalization.SiteSettings_Sitemaps_Search);
 
             
@@ -210,7 +212,7 @@ WriteLiteral(" id=\"bcms-create-sitemap-button\"");
 WriteLiteral(">");
 
             
-            #line 38 "..\..\Views\Sitemap\Sitemaps.cshtml"
+            #line 40 "..\..\Views\Sitemap\Sitemaps.cshtml"
                                                                           Write(NavigationGlobalization.SiteSettings_Sitemaps_AddNew);
 
             
@@ -225,31 +227,27 @@ WriteLiteral(">\r\n");
 WriteLiteral("                ");
 
             
-            #line 43 "..\..\Views\Sitemap\Sitemaps.cshtml"
+            #line 45 "..\..\Views\Sitemap\Sitemaps.cshtml"
            Write(Html.RenderPaging(Model));
 
             
             #line default
             #line hidden
-WriteLiteral("\r\n            </div>\r\n        </div>\r\n");
+WriteLiteral("\r\n            </div>\r\n        </div>\r\n\r\n");
+
+WriteLiteral("        ");
 
             
-            #line 46 "..\..\Views\Sitemap\Sitemaps.cshtml"
-     
-        
-            
-            #line default
-            #line hidden
-            
-            #line 47 "..\..\Views\Sitemap\Sitemaps.cshtml"
+            #line 49 "..\..\Views\Sitemap\Sitemaps.cshtml"
    Write(Html.Grid(Model.Items).Sort(Model.GridOptions).Columns(columns).Attributes(@class => "bcms-tables").RenderUsing(new EditableHtmlTableGridRenderer<SiteSettingSitemapViewModel>()));
 
             
             #line default
             #line hidden
+WriteLiteral("\r\n    </div>\r\n");
+
             
-            #line 47 "..\..\Views\Sitemap\Sitemaps.cshtml"
-                                                                                                                                                                                          
+            #line 51 "..\..\Views\Sitemap\Sitemaps.cshtml"
 }
 
             
@@ -266,7 +264,7 @@ WriteLiteral(">\r\n");
 WriteLiteral("    ");
 
             
-            #line 51 "..\..\Views\Sitemap\Sitemaps.cshtml"
+            #line 54 "..\..\Views\Sitemap\Sitemaps.cshtml"
 Write(Html.Grid(new List<SiteSettingSitemapViewModel> { new SiteSettingSitemapViewModel() }).Columns(columns).Attributes(@class => "bcms-tables").RenderUsing(new HtmlTableGridSingleRowRenderer<SiteSettingSitemapViewModel>()));
 
             

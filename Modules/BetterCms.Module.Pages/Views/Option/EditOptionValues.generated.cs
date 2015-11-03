@@ -73,63 +73,77 @@ namespace ASP
         }
         public override void Execute()
         {
-WriteLiteral("\r\n");
+WriteLiteral("\r\n<div");
+
+WriteLiteral(" class=\"bcms-scroll-window-settings\"");
+
+WriteLiteral(">\r\n");
 
             
-            #line 8 "..\..\Views\Option\EditOptionValues.cshtml"
-  
-    var model = new EditableGridViewModel();
-    model.ShowSearch = false;
-    model.TopBlockClass = "bcms-top-block-holder";
-    model.AddHiddenFields = true;
-    model.SaveButtonTitle = RootGlobalization.Button_Ok;
-    model.ShowMessages = false;
-    model.TopBlockAddItemView = "~/Areas/bcms-pages/Views/Option/Partial/TopBlockAddItem.cshtml";
-    model.Columns = new List<EditableGridColumn> 
-    { 
+            #line 9 "..\..\Views\Option\EditOptionValues.cshtml"
+    
+            
+            #line default
+            #line hidden
+            
+            #line 9 "..\..\Views\Option\EditOptionValues.cshtml"
+      
+        var model = new EditableGridViewModel();
+        model.ShowSearch = false;
+        model.TopBlockClass = "bcms-top-block-holder";
+        model.AddHiddenFields = true;
+        model.SaveButtonTitle = RootGlobalization.Button_Ok;
+        model.ShowMessages = false;
+        model.TopBlockAddItemView = "~/Areas/bcms-pages/Views/Option/Partial/TopBlockAddItem.cshtml";
+        model.Columns = new List<EditableGridColumn>
+    {
         new EditableGridColumn(PagesGlobalization.EditOptionsValues_OptionKeyColumn, null, "key")
         {
-            HeaderAttributes = "style=\"width: 200px;\"", 
+            HeaderAttributes = "style=\"width: 200px;\"",
             HiddenFieldName = "OptionValues[{0}].OptionKey"
-        }, 
+        },
         new EditableGridBooleanColumn(PagesGlobalization.EditOptionsValues_UseDefaultValueColumn, null, "useDefaultValueBinding")
         {
-            HiddenFieldName = "OptionValues[{0}].UseDefaultValue", 
+            HiddenFieldName = "OptionValues[{0}].UseDefaultValue",
             CellView = "~/Areas/bcms-pages/Views/Option/Partial/UseDefaultValueCell.cshtml"
-        }, 
+        },
         new OptionValueEditableGridColumn(PagesGlobalization.EditOptionsValues_OptionDefaultValueColumn, "defaultValueBinding", "customOptionDefaultTitle")
         {
-            CanBeEdited = false, 
+            CanBeEdited = false,
             HeaderAttributes = "style=\"width: 160px;\""
-        }, 
+        },
         new EditableGridDropDownColumn(PagesGlobalization.EditOptionsValues_OptionTypeColumn, null, "calcType")
         {
-            OptionsBind = "optionTypes", 
-            ValueTextBind = "typeName", 
-            HeaderAttributes = "style=\"width: 100px;\"", 
+            OptionsBind = "optionTypes",
+            ValueTextBind = "typeName",
+            HeaderAttributes = "style=\"width: 100px;\"",
             CanBeEdited = false
-        }, 
+        },
         new OptionValueEditableGridColumn(PagesGlobalization.EditOptionsValues_OptionValueColumn, "valueBinding", "customOptionTitle")
         {
-            HeaderAttributes = "style=\"width: 200px;\"", 
-            HiddenFieldName = "OptionValues[{0}].OptionValue", 
+            HeaderAttributes = "style=\"width: 200px;\"",
+            HiddenFieldName = "OptionValues[{0}].OptionValue",
             AutoFocus = true,
-        }, 
-        new EditableGridHiddenField("type", "OptionValues[{0}].Type"), 
+        },
+        new EditableGridHiddenField("type", "OptionValues[{0}].Type"),
         new EditableGridHiddenField("customType", "OptionValues[{0}].CustomType") };
-
+    
             
             #line default
             #line hidden
 WriteLiteral("\r\n\r\n");
 
+WriteLiteral("    ");
+
             
-            #line 50 "..\..\Views\Option\EditOptionValues.cshtml"
+            #line 51 "..\..\Views\Option\EditOptionValues.cshtml"
 Write(Html.Partial(RootModuleConstants.EditableGridTemplate, model));
 
             
             #line default
             #line hidden
+WriteLiteral("\r\n</div>\r\n");
+
         }
     }
 }
