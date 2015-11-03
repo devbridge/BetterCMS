@@ -2905,7 +2905,7 @@ namespace BetterCms.Module.Pages.Content.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Hasn&apos;t SEO.
+        ///   Looks up a localized string similar to Some SEO fields are empty.
         /// </summary>
         public static string SeoStatusFilterType_HasNotSEO {
             get {
@@ -2914,7 +2914,7 @@ namespace BetterCms.Module.Pages.Content.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Has SEO.
+        ///   Looks up a localized string similar to All SEO fields filled.
         /// </summary>
         public static string SeoStatusFilterType_HasSEO {
             get {
@@ -3139,7 +3139,7 @@ namespace BetterCms.Module.Pages.Content.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to By SEO status.
+        ///   Looks up a localized string similar to By SEO data.
         /// </summary>
         public static string SiteSettings_Pages_FilterBySEO {
             get {

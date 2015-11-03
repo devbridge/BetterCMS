@@ -51,12 +51,6 @@
            .HeaderAttributes(@style => "width: 100px;")
            .Attributes(@class => "bcms-page-modified");
 
-        column.For(m => Html.EditorFor(e => m.HasSEO, "SEOStatus"))
-           .Named(PagesGlobalization.SiteSettings_Pages_HasSeoColumn)
-           .SortColumnName("HasSEO")
-           .HeaderAttributes(@style => "width: 65px; text-align: center")
-           .Attributes(@class => "bcms-page-hasseo");
-
         column.For(m => Html.EditorFor(e => m.PageStatus, "PageStatus"))
            .Named(PagesGlobalization.SiteSettings_Pages_PageStatusColumn)
            .SortColumnName("PageStatus")

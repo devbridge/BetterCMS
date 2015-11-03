@@ -1306,13 +1306,13 @@
     <value>Unpublished</value>
   </data>
   <data name="SeoStatusFilterType_HasNotSEO" xml:space="preserve">
-    <value>Hasn't SEO</value>
+    <value>Some SEO fields are empty</value>
   </data>
   <data name="SeoStatusFilterType_HasSEO" xml:space="preserve">
-    <value>Has SEO</value>
+    <value>All SEO fields filled</value>
   </data>
   <data name="SiteSettings_Pages_FilterBySEO" xml:space="preserve">
-    <value>By SEO status</value>
+    <value>By SEO data</value>
   </data>
   <data name="SiteSettings_Pages_FilterByStatus" xml:space="preserve">
     <value>By page status</value>
