@@ -1609,7 +1609,7 @@ namespace BetterCms.Module.Pages.Content.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to You have selected a new page layout and some content will be missing. Missing content will be found in Page structure managers Lost &amp; Found section. Do you really want to change layout?.
+        ///   Looks up a localized string similar to You have selected a new page layout, which structure is not the same as previous layout and some page content will be missing. Missing content can be found in Page Structure Manager.&lt;/br&gt;Do you really want to change current layout?.
         /// </summary>
         public static string EditPageProperties_ChangedLayoutMissingContent_Confirmation_Message {
             get {
