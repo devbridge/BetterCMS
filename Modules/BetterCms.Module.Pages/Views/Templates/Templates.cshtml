@@ -23,7 +23,7 @@
     {
         column.EditButtonColumn(renderId: false);
 
-        column.For(f => string.Format("<a class=\"bcms-tables-link bcms-grid-item-edit-button bcms-template-name\" data-id=\"{0}\">{1}</a>", f.Id, f.TemplateName))
+        column.For(f => string.Format("<a class=\"bcms-tables-link bcms-grid-item-edit-button bcms-template-name\" data-id=\"{0}\" data-url=\"{2}\">{1}</a>", f.Id, f.TemplateName, f.Url))
             .Named(PagesGlobalization.SiteSettings_Templates_NameColumn)
             .SortColumnName("TemplateName")
             .Encode(false);
@@ -47,11 +47,16 @@
     <div class="bcms-top-block-holder">
 
         <div class="bcms-clearfix">
+
+            <div class="bcms-large-titles">@PagesGlobalization.SiteSettings_Templates_Title</div>
+
             <div class="bcms-top-block-inner">
                 <div class="bcms-search-block">
                     @Html.TextBoxFor(m => m.SearchQuery, new { @class = "bcms-search-field-box bcms-search-query", @placeholder = RootGlobalization.WaterMark_Search })
                     <div class="bcms-btn-search" id="bcms-template-search-btn">@PagesGlobalization.SiteSettings_Template_Search</div>
                 </div>
+
+                <div class="bcms-btn-main" id="bcms-create-page-button">@PagesGlobalization.SiteSettings_Pages_AddNew</div>
 
                 <div class="bcms-btn-main" id="bcms-register-template-button">@PagesGlobalization.SiteSettings_Widgets_RegisterNew</div>
             </div>
@@ -74,7 +79,8 @@
                       return new Dictionary<string, object>
                               {
                                     {"data-id", row.Item.Id},
-                                    {"data-version", row.Item.Version}
+                                    {"data-version", row.Item.Version},
+                                    {"data-ismasterpage", row.Item.IsMasterPage ? "1" : "0"}
                               };
                   })
               .RenderUsing(new EditableHtmlTableGridRenderer<SiteSettingTemplateItemViewModel>()))

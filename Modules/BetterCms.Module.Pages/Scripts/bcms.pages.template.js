@@ -2,8 +2,8 @@
 /*global bettercms */
 
 bettercms.define('bcms.pages.template', ['bcms.jquery', 'bcms', 'bcms.modal', 'bcms.datepicker', 'bcms.dynamicContent', 'bcms.siteSettings', 'bcms.messages',
-        'bcms.preview', 'bcms.grid', 'bcms.inlineEdit', 'bcms.slides.jquery', 'bcms.options', 'bcms.ko.extenders', 'bcms.pages.masterpage', 'bcms.pages', 'bcms.antiXss'],
-    function ($, bcms, modal, datepicker, dynamicContent, siteSettings, messages, preview, grid, editor, slides, options, ko, masterpage, pages, antiXss) {
+        'bcms.preview', 'bcms.grid', 'bcms.inlineEdit', 'bcms.slides.jquery', 'bcms.options', 'bcms.ko.extenders', 'bcms.pages.masterpage', 'bcms.pages', 'bcms.antiXss', 'bcms.pages.properties'],
+    function ($, bcms, modal, datepicker, dynamicContent, siteSettings, messages, preview, grid, editor, slides, options, ko, masterpage, pages, antiXss, pageProperties) {
         'use strict';
 
         var template = {},
@@ -37,6 +37,7 @@ bettercms.define('bcms.pages.template', ['bcms.jquery', 'bcms', 'bcms.modal', 'b
                 templateSearchField: '.bcms-search-query',
 
                 templateRegisterButton: '#bcms-register-template-button',
+                templateCreateButton: '#bcms-create-page-button',
                 templateRowEditButtons: '.bcms-grid-item-edit-button',
 
                 templatesRowDeleteButtons: '.bcms-grid-item-delete-button',
@@ -234,18 +235,9 @@ bettercms.define('bcms.pages.template', ['bcms.jquery', 'bcms', 'bcms.modal', 'b
         * Opens site settings template list dialog
         */
         template.loadSiteSettingsTemplateList = function () {
-            var tabs = [],
-                onShow = function (container) {
-                    var firstVisibleInputField = container.find('input[type=text],textarea,select').filter(':visible:first');
-                    if (firstVisibleInputField) {
-                        firstVisibleInputField.focus();
-                    }
-                };
-            var templates = new siteSettings.TabViewModel(globalization.templatesTabTitle, links.loadSiteSettingsTemplateListUrl, initializeTemplatesList, onShow);
-            tabs.push(templates);
-            var masterPages = new siteSettings.TabViewModel(masterpage.globalization.masterPagesTabTitle, masterpage.links.loadMasterPagesListUrl, masterpage.initializeMasterPagesList, onShow);
-            tabs.push(masterPages);
-            siteSettings.initContentTabs(tabs);
+            dynamicContent.bindSiteSettings(siteSettings, links.loadSiteSettingsTemplateListUrl, {
+                contentAvailable: initializeTemplatesList
+            });
         };
 
         /**
@@ -306,8 +298,14 @@ bettercms.define('bcms.pages.template', ['bcms.jquery', 'bcms', 'bcms.modal', 'b
         * Initializes site settings template list items.
         */
         function initializeTemplateListEvents(container) {
-            container.find(selectors.templateRowEditButtons).on('click', function () {
-                editTemplate(container, $(this));
+            container.find(selectors.templateRowEditButtons).on('click', function (event) {
+                var url = $(this).data('url');
+                if (url) {
+                    bcms.stopEventPropagation(event);
+                    window.open(url);
+                } else {
+                    editTemplate(container, $(this));
+                }
             });
 
             container.find(selectors.templatesRowDeleteButtons).on('click', function () {
@@ -319,6 +317,10 @@ bettercms.define('bcms.pages.template', ['bcms.jquery', 'bcms', 'bcms.modal', 'b
 
                 filterPagesByTemplate($(this));
             });
+
+            container.find(selectors.templateCreateButton).on('click', function () {
+                addMasterPage(container);
+            });
         };
 
         /**
@@ -326,40 +328,98 @@ bettercms.define('bcms.pages.template', ['bcms.jquery', 'bcms', 'bcms.modal', 'b
         */
         function editTemplate(container, self) {
             var row = self.parents(selectors.templateParentRow),
-                id = row.data('id');
+                id = row.data('id'),
+                isMasterPage = row.data('ismasterpage');
 
-            template.editTemplate(id, function (data) {
-                if (data.Data != null) {
-                    setTemplateFields(row, data);
-                    grid.showHideEmptyRow(container);
-                }
-            });
+            if (isMasterPage == 0) {
+
+                template.editTemplate(id, function(data) {
+                    if (data.Data != null) {
+                        setTemplateFields(row, data);
+                        grid.showHideEmptyRow(container);
+                    }
+                });
+
+            } else {
+                editMasterPage(row, container, function (data) {
+                    if (data.Data != null) {
+                        setMasterPageFields(row, data);
+                        grid.showHideEmptyRow(container);
+                    }
+                });
+            }
         };
 
         /**
         * Deletes template from site settings template list.
         */
         function deleteTemplates(container, self) {
-            var row = self.parents(selectors.templateParentRow);
+            var row = self.parents(selectors.templateParentRow),
+                isMasterPage = row.data('ismasterpage');
 
-            template.deleteTemplate(row, function (data) {
-                messages.refreshBox(row, data);
-                if (data.Success) {
-                    row.remove();
-                    grid.showHideEmptyRow(container);
-                }
-            });
+            if (isMasterPage == 1) {
+                deleteMasterPage(row, container);
+            } else {
+                template.deleteTemplate(row, function(data) {
+                    messages.refreshBox(row, data);
+                    if (data.Success) {
+                        row.remove();
+                        grid.showHideEmptyRow(container);
+                    }
+                });
+            }
         };
 
         /*
         * Opens pages list, filtered by template
         */
         function filterPagesByTemplate(self) {
+            var row = self.parents(selectors.templateParentRow),
+                id = row.data('id'),
+                isMasterPage = row.data('ismasterpage');
+
+            if (isMasterPage == 1) {
+                filterPagesByMasterPage(row);
+            } else {
+                pages.openPageSelectDialog({
+                    params: {
+                        Layout: 'l-' + id
+                    },
+                    canBeSelected: false,
+                    title: pages.globalization.pagesListTitle,
+                    disableAccept: true
+                });
+            }
+        }
+
+
+        function addMasterPage(container) {
+            var onCreated = function(json) {
+                if (json.Data != null) {
+                    var rowtemplate = $(selectors.templateRowTemplate),
+                        newRow = $(rowtemplate.html()).find(selectors.templateRowTemplateFirstRow);
+                    setMasterPageFields(newRow, json);
+                    messages.refreshBox(selectors.templatesListForm, json);
+                    newRow.insertBefore($(selectors.templateTableFirstRow, container));
+                    initializeTemplateListEvents(newRow);
+                    grid.showHideEmptyRow(container);
+                }
+            };
+            pages.openCreatePageDialog(onCreated, true);
+        };
+
+        function editMasterPage(self, container, postSuccess) {
+            var id = self.data('id');
+
+            pageProperties.openEditPageDialog(id, postSuccess, globalization.editMasterPagePropertiesModalTitle);
+        };
+
+        function filterPagesByMasterPage(self) {
             var id = self.data('id');
 
             pages.openPageSelectDialog({
                 params: {
-                    Layout: 'l-' + id
+                    Layout: 'm-' + id
                 },
                 canBeSelected: false,
                 title: pages.globalization.pagesListTitle,
@@ -367,14 +427,35 @@ bettercms.define('bcms.pages.template', ['bcms.jquery', 'bcms', 'bcms.modal', 'b
             });
         }
 
+        function deleteMasterPage(self, container) {
+            var id = self.data('id');
+
+            pages.deletePage(id, function (json) {
+                messages.refreshBox(self, json);
+                if (json.Success) {
+                    self.remove();
+                    grid.showHideEmptyRow(container);
+                }
+            });
+        };
+
         /**
         * Set values, returned from server to row fields
         */
         function setTemplateFields(row, json) {
             row.data('id', json.Data.Id);
             row.data('version', json.Data.Version);
+            row.data('ismasterpage', 0);
             row.find(selectors.templateNameCell).html(antiXss.encodeHtml(json.Data.TemplateName));
         };
+
+        function setMasterPageFields(row, json) {
+            row.data('id', json.Data.PageId);
+            row.data('version', json.Data.Version);
+            row.data('ismasterpage', 1);
+            row.find(selectors.templateNameCell).html(antiXss.encodeHtml(json.Data.Title));
+            row.find(selectors.templateNameCell).data('url',json.Data.PageUrl);
+        }
 
         return template;
     });
