@@ -188,7 +188,7 @@ a:hover {
   right: 0;
   bottom: 0;
   left: 0;
-  background-color: #eae8e9;
+  background-color: rgba(0, 0, 0, 0.8);
   font-size: 13px;
   overflow: hidden;
 }
@@ -240,6 +240,7 @@ a:hover {
 }
 
 .bcms-modal-content {
+  background-color: #eae8e9;
   box-sizing: border-box;
   margin: auto;
   padding: 55px 0 65px;

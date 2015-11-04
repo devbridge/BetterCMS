@@ -64,7 +64,7 @@ a {
 
 .bcms-modal {
     @include position(fixed, 0);
-    background-color: $gray-bg;
+    background-color: rgba($black, .8);
     font-size: 13px;
     overflow: hidden;
 
@@ -107,6 +107,7 @@ a {
     }
 
     &-content {
+        background-color: $gray-bg;
         box-sizing: border-box;
         margin: auto;
         padding: $header-height 0 $footer-height;
