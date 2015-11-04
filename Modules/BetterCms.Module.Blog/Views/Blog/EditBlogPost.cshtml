@@ -36,7 +36,9 @@
 
 <div class="bcms-modal-frame-holder">
     @Html.TabbedContentMessagesBox()
-    @if (Model.CurrentStatus == ContentStatus.Draft)
+
+    <div class="bcms-window-tabbed-options">
+        @if (Model.CurrentStatus == ContentStatus.Draft)
         {
         <div class="bcms-messages-type-1">
             <ul class="bcms-success-messages" style="display: none"></ul>
@@ -90,7 +92,9 @@
                     </div>
                 </div>
             </div>
+
             @Html.Partial("Partial/AddNewBlogEditPermalink")
+
             <div class="bcms-input-list-holder" id="bcms-blog-content-holder">
                 @Html.Tooltip(BlogGlobalization.EditBlogPost_Content_Tooltip_Description)
                 <div class="bcms-content-titles">@BlogGlobalization.EditBlogPost_Content_Title</div>
@@ -153,4 +157,5 @@
                 }
         </div>
         }
+    </div>
 </div>

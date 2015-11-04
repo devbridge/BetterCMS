@@ -12,6 +12,7 @@
 @using MvcContrib.UI.Grid
 
 @model MediaHistoryViewModel
+
 @helper PreviewLink(MediaHistoryItem item)
 {
     <a class="bcms-icn-preview" data-id="@item.Id">@RootGlobalization.Button_Preview</a>
@@ -26,11 +27,11 @@
 {
     if (item.CanCurrentUserRestoreIt)
     {
-    <a class="bcms-icn-restore" data-id="@item.Id" data-version="@item.Version">@RootGlobalization.Button_Restore</a>
+        <a class="bcms-icn-restore" data-id="@item.Id" data-version="@item.Version">@RootGlobalization.Button_Restore</a>
     }
     else
     {
-    @:&nbsp;
+        @:&nbsp;
     }
 }
 
@@ -39,17 +40,18 @@
     switch (status)
     {
         case MediaHistoryStatus.Archived:
-    @:<div class="bcms-archived-state">@statusName</div>
+            @:<div class="bcms-archived-state">@statusName</div>
 
             break;
 
         case MediaHistoryStatus.Active:
-    @:<div class="bcms-published-state">@statusName</div>
-        
+        @:<div class="bcms-published-state">@statusName</div>
+
+
             break;
 
         default:
-    @:statusName
+        @:statusName
             break;
     }
 }
@@ -110,40 +112,36 @@
     };
 }
 
-<div class="bcms-scroll-window">
-
-    <div class="bcms-history-preview-holder">
-        <div class="bcms-history-preview">
-            <div id="bcms-history-preview" style="height: 100%">
-                @Html.TabbedContentMessagesBox()
-                <div class="bcms-history-info" style="display: block;">@MediaGlobalization.MediaHistory_SelectVersionToPreviewMessage</div>
-                <div class="bcms-history-content"></div>
-            </div>
+<div class="bcms-history-preview-holder">
+    <div class="bcms-history-preview">
+        <div id="bcms-history-preview" style="height: 100%">
+            @Html.TabbedContentMessagesBox()
+            <div class="bcms-history-info" style="display: block;">@MediaGlobalization.MediaHistory_SelectVersionToPreviewMessage</div>
+            <div class="bcms-history-content"></div>
         </div>
     </div>
+</div>
 
-    <div class="bcms-history-table-holder">
+<div class="bcms-history-table-holder">
+    @using (Html.BeginForm<HistoryController>(f => f.MediaHistory((GetMediaHistoryRequest)null), FormMethod.Post, new { @id = "bcms-pagecontenthistory-form", @class = "bcms-ajax-form" }))
+        {
+        @Html.HiddenGridOptions(Model.GridOptions)
+        @Html.HiddenFor(model => model.MediaId)
 
-        @using (Html.BeginForm<HistoryController>(f => f.MediaHistory((GetMediaHistoryRequest)null), FormMethod.Post, new { @id = "bcms-pagecontenthistory-form", @class = "bcms-ajax-form" }))
-        {                        
-            @Html.HiddenGridOptions(Model.GridOptions)
-            @Html.HiddenFor(model => model.MediaId)
+        <div class="bcms-history-table-top">
+            <div class="bcms-large-titles">@MediaGlobalization.MediaHistory_OlderVersions</div>
+            <div class="bcms-search-block">
+                @Html.TextBoxFor(m => m.SearchQuery, new { @class = "bcms-editor-field-box", @placeholder = RootGlobalization.WaterMark_Search })
+            </div>
+            <div class="bcms-btn-search" id="bcms-pagecontenthistory-search-btn">@RootGlobalization.Button_Search</div>
+        </div>
 
-            <div class="bcms-history-table-top">
-                <div class="bcms-large-titles">@MediaGlobalization.MediaHistory_OlderVersions</div>
-                <div class="bcms-search-block">
-                    @Html.TextBoxFor(m => m.SearchQuery, new { @class = "bcms-editor-field-box", @placeholder = RootGlobalization.WaterMark_Search })
-                </div>
-                <div class="bcms-btn-search" id="bcms-pagecontenthistory-search-btn">@RootGlobalization.Button_Search</div>
-            </div>  
-                                  
-            @Html.Grid(Model.Items).Sort(Model.GridOptions).Columns(columns).Attributes(@class => "bcms-tables bcms-history-grid").RenderUsing(new ScrollableEditableHtmlTableGridRenderer<MediaHistoryItem>()
+        @Html.Grid(Model.Items).Sort(Model.GridOptions).Columns(columns).Attributes(@class => "bcms-tables bcms-history-grid").RenderUsing(new ScrollableEditableHtmlTableGridRenderer<MediaHistoryItem>()
                                                                                                                                  {
                                                                                                                                      InternalTableCssClass = "bcms-history-cell"
                                                                                                                                  })
-            @Html.HiddenSubmit()
+        @Html.HiddenSubmit()
         }
-    </div>
 </div>
 
 <script type="text/html" id="bcms-history-preview-template">

@@ -49,47 +49,47 @@ namespace ASP
         }
         public override void Execute()
         {
-WriteLiteral("\n    <div");
+WriteLiteral("<div");
 
 WriteLiteral(" class=\"bcms-newcontent-top\"");
 
-WriteLiteral(">\n        <div");
+WriteLiteral(">\r\n    <div");
 
 WriteLiteral(" class=\"bcms-input-field-holder\"");
 
-WriteLiteral(">\n            <div");
+WriteLiteral(">\r\n        <div");
 
 WriteLiteral(" class=\"bcms-content-titles\"");
 
 WriteLiteral(">");
 
             
-            #line 8 "..\..\Views\History\BlogPropertiesHistory.cshtml"
-                                        Write(PagesGlobalization.AddPageContent_RegularContentTab_ContentName_Title);
+            #line 7 "..\..\Views\History\BlogPropertiesHistory.cshtml"
+                                    Write(PagesGlobalization.AddPageContent_RegularContentTab_ContentName_Title);
 
             
             #line default
             #line hidden
-WriteLiteral("</div>\n            <div");
+WriteLiteral("</div>\r\n        <div");
 
 WriteLiteral(" class=\"bcms-custom-input-box\"");
 
-WriteLiteral(">\n");
+WriteLiteral(">\r\n");
 
-WriteLiteral("                ");
+WriteLiteral("            ");
 
             
-            #line 10 "..\..\Views\History\BlogPropertiesHistory.cshtml"
-           Write(Html.TextBoxFor(model => model.Name, new { @readonly = "readonly", @class = "bcms-editor-field-box", style = "width: 535px;" }));
+            #line 9 "..\..\Views\History\BlogPropertiesHistory.cshtml"
+       Write(Html.TextBoxFor(model => model.Name, new { @readonly = "readonly", @class = "bcms-editor-field-box", style = "width: 535px;" }));
 
             
             #line default
             #line hidden
-WriteLiteral("\n            </div>\n        </div>\n        <div");
+WriteLiteral("\r\n        </div>\r\n    </div>\r\n\r\n    <div");
 
 WriteLiteral(" class=\"bcms-input-field-holder\"");
 
-WriteLiteral(">\n            <div");
+WriteLiteral(">\r\n        <div");
 
 WriteLiteral(" class=\"bcms-content-titles\"");
 
@@ -97,87 +97,87 @@ WriteLiteral(">");
 
             
             #line 14 "..\..\Views\History\BlogPropertiesHistory.cshtml"
-                                        Write(PagesGlobalization.AddPageContent_RegularContentTab_LiveFrom_Title);
+                                    Write(PagesGlobalization.AddPageContent_RegularContentTab_LiveFrom_Title);
 
             
             #line default
             #line hidden
-WriteLiteral("</div>\n            <div");
+WriteLiteral("</div>\r\n        <div");
 
 WriteLiteral(" class=\"bcms-date-input-box\"");
 
-WriteLiteral(">\n");
+WriteLiteral(">\r\n");
 
-WriteLiteral("                ");
+WriteLiteral("            ");
 
             
             #line 16 "..\..\Views\History\BlogPropertiesHistory.cshtml"
-           Write(Html.DateTextBoxFor(model => model.ActivationDate, Model.ActivationDate, new Dictionary<string, object> { { "readonly", "readonly" }, { "class", "bcms-editor-field-box bcms-datepicker" }, { "style", "width: 127px;" } }));
+       Write(Html.DateTextBoxFor(model => model.ActivationDate, Model.ActivationDate, new Dictionary<string, object> { { "readonly", "readonly" }, { "class", "bcms-editor-field-box bcms-datepicker" }, { "style", "width: 127px;" } }));
 
             
             #line default
             #line hidden
-WriteLiteral("\n            </div>\n        </div>\n        <div");
+WriteLiteral("\r\n        </div>\r\n    </div>\r\n\r\n    <div");
 
 WriteLiteral(" class=\"bcms-input-field-holder\"");
 
-WriteLiteral(">\n            <div");
+WriteLiteral(">\r\n        <div");
 
 WriteLiteral(" class=\"bcms-content-titles\"");
 
 WriteLiteral(">");
 
             
-            #line 20 "..\..\Views\History\BlogPropertiesHistory.cshtml"
-                                        Write(PagesGlobalization.AddPageContent_RegularContentTab_LiveTo_Title);
+            #line 21 "..\..\Views\History\BlogPropertiesHistory.cshtml"
+                                    Write(PagesGlobalization.AddPageContent_RegularContentTab_LiveTo_Title);
 
             
             #line default
             #line hidden
-WriteLiteral("</div>\n            <div");
+WriteLiteral("</div>\r\n        <div");
 
 WriteLiteral(" class=\"bcms-date-input-box\"");
 
-WriteLiteral(">\n");
+WriteLiteral(">\r\n");
 
-WriteLiteral("                ");
+WriteLiteral("            ");
 
             
-            #line 22 "..\..\Views\History\BlogPropertiesHistory.cshtml"
-           Write(Html.DateTextBoxFor(model => model.ExpirationDate, Model.ExpirationDate, new Dictionary<string, object> { { "readonly", "readonly" }, { "class", "bcms-editor-field-box bcms-datepicker" }, { "style", "width: 127px;" } }));
+            #line 23 "..\..\Views\History\BlogPropertiesHistory.cshtml"
+       Write(Html.DateTextBoxFor(model => model.ExpirationDate, Model.ExpirationDate, new Dictionary<string, object> { { "readonly", "readonly" }, { "class", "bcms-editor-field-box bcms-datepicker" }, { "style", "width: 127px;" } }));
 
             
             #line default
             #line hidden
-WriteLiteral("\n            </div>\n        </div>\n    </div>\n    <div");
+WriteLiteral("\r\n        </div>\r\n    </div>\r\n</div>\r\n\r\n<div");
 
 WriteLiteral(" class=\"bcms-input-list-holder\"");
 
-WriteLiteral(">\n        <div");
+WriteLiteral(">\r\n    <div");
 
 WriteLiteral(" class=\"bcms-content-titles\"");
 
 WriteLiteral(">");
 
             
-            #line 27 "..\..\Views\History\BlogPropertiesHistory.cshtml"
-                                    Write(PagesGlobalization.HtmlContent_Content_Title);
+            #line 29 "..\..\Views\History\BlogPropertiesHistory.cshtml"
+                                Write(PagesGlobalization.HtmlContent_Content_Title);
 
             
             #line default
             #line hidden
-WriteLiteral("</div>\n");
+WriteLiteral("</div>\r\n");
 
-WriteLiteral("        ");
+WriteLiteral("    ");
 
             
-            #line 28 "..\..\Views\History\BlogPropertiesHistory.cshtml"
-   Write(Html.TextAreaFor(model => model.RowText, new { @readonly = "readonly", @class = "bcms-editor-field-area bcms-code-field ", style = "height: 500px;" }));
+            #line 30 "..\..\Views\History\BlogPropertiesHistory.cshtml"
+Write(Html.TextAreaFor(model => model.RowText, new { @readonly = "readonly", @class = "bcms-editor-field-area bcms-code-field ", style = "height: 500px;" }));
 
             
             #line default
             #line hidden
-WriteLiteral("\n    </div>");
+WriteLiteral("\r\n</div>");
 
         }
     }

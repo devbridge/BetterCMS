@@ -11,6 +11,7 @@
 @using Microsoft.Web.Mvc
 @using MvcContrib.UI.Grid
 @model SitemapHistoryViewModel
+
 @helper PreviewLink(SitemapHistoryItem item)
 {
     <a class="bcms-icn-preview" data-id="@item.Id">@RootGlobalization.Button_Preview</a>
@@ -23,9 +24,10 @@
     }
     else
     {
-    @:&nbsp;
+        @:&nbsp;
     }
 }
+
 @{
     Action<ColumnBuilder<SitemapHistoryItem>> columns = column =>
     {
@@ -67,30 +69,30 @@
                .HeaderAttributes(@style => "width: 80px;", @class => "bcms-tables-nohover");
     };
 }
-<div class="bcms-scroll-window">
-    <div class="bcms-history-preview-holder">
-        @Html.TabbedContentMessagesBox()
-        <div class="bcms-history-preview">
-            <div id="bcms-history-preview" class="bcms-sitemap-history">
-                <div class="bcms-history-info" style="display: block;">@PagesGlobalization.ContentHistory_SelectVersionToPreviewMessage</div>
-                <div class="bcms-history-content"></div>
-            </div>
+
+<div class="bcms-history-preview-holder">
+    @Html.TabbedContentMessagesBox()
+    <div class="bcms-history-preview">
+        <div id="bcms-history-preview" class="bcms-sitemap-history">
+            <div class="bcms-history-info" style="display: block;">@PagesGlobalization.ContentHistory_SelectVersionToPreviewMessage</div>
+            <div class="bcms-history-content"></div>
         </div>
     </div>
-    @if (Model != null)
-    {
-        <div class="bcms-history-table-holder">
-            @using (Html.BeginForm<SitemapController>(f => f.ShowSitemapHistory((GetSitemapHistoryRequest)null), FormMethod.Post, new { @id = "bcms-sitemaphistory-form", @class = "bcms-ajax-form" }))
-            {
-                @Html.HiddenGridOptions(Model.GridOptions)
-                @Html.HiddenFor(model => model.SitemapId)
-                <div class="bcms-history-table-top">
-                    <div class="bcms-large-titles">@PagesGlobalization.ContentHistory_OlderVersions</div>
-                </div>
-                
-                @Html.Grid(Model.Items).Sort(Model.GridOptions).Columns(columns).Attributes(@class => "bcms-tables bcms-history-grid").RenderUsing(new ScrollableEditableHtmlTableGridRenderer<SitemapHistoryItem>() { InternalTableCssClass = "bcms-history-cell" })
-                @Html.HiddenSubmit()
-            }
-        </div>
-    }
 </div>
+
+@if (Model != null)
+{
+    <div class="bcms-history-table-holder">
+        @using (Html.BeginForm<SitemapController>(f => f.ShowSitemapHistory((GetSitemapHistoryRequest)null), FormMethod.Post, new { @id = "bcms-sitemaphistory-form", @class = "bcms-ajax-form" }))
+        {
+            @Html.HiddenGridOptions(Model.GridOptions)
+            @Html.HiddenFor(model => model.SitemapId)
+            <div class="bcms-history-table-top">
+                <div class="bcms-large-titles">@PagesGlobalization.ContentHistory_OlderVersions</div>
+            </div>
+
+            @Html.Grid(Model.Items).Sort(Model.GridOptions).Columns(columns).Attributes(@class => "bcms-tables bcms-history-grid").RenderUsing(new ScrollableEditableHtmlTableGridRenderer<SitemapHistoryItem>() { InternalTableCssClass = "bcms-history-cell" })
+            @Html.HiddenSubmit()
+        }
+    </div>
+}

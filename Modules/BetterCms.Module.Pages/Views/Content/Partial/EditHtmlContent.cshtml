@@ -1,7 +1,6 @@
 ﻿@using BetterCms.Module.Pages.Content.Resources
 @using BetterCms.Module.Root.Mvc.Helpers
 @using BetterCms.Module.Root.Mvc.UI
-
 @model BetterCms.Module.Pages.ViewModels.Content.PageContentViewModel
 
 @Html.HiddenFor(model => model.EditInSourceMode, new { @id = "bcms-edit-in-source-mode" })
@@ -16,6 +15,7 @@
             @Html.BcmsValidationMessageFor(model => model.ContentName)
         </div>
     </div>
+
     <div class="bcms-input-field-holder">
         <div class="bcms-content-titles">@PagesGlobalization.AddPageContent_RegularContentTab_LiveFrom_Title</div>
         <div class="bcms-date-input-box">
@@ -23,6 +23,7 @@
             @Html.BcmsValidationMessageFor(model => model.LiveFrom)
         </div>
     </div>
+
     <div class="bcms-input-field-holder">
         <div class="bcms-content-titles">@PagesGlobalization.AddPageContent_RegularContentTab_LiveTo_Title</div>
         <div class="bcms-date-input-box">

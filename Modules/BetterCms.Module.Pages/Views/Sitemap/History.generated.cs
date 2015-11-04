@@ -105,14 +105,14 @@ namespace ASP
     public partial class _Views_Sitemap_History_cshtml : System.Web.Mvc.WebViewPage<SitemapHistoryViewModel>
     {
 
-#line 14 "..\..\Views\Sitemap\History.cshtml"
+#line 15 "..\..\Views\Sitemap\History.cshtml"
 public System.Web.WebPages.HelperResult PreviewLink(SitemapHistoryItem item)
 {
 #line default
 #line hidden
 return new System.Web.WebPages.HelperResult(__razor_helper_writer => {
 
-#line 15 "..\..\Views\Sitemap\History.cshtml"
+#line 16 "..\..\Views\Sitemap\History.cshtml"
  
 
 
@@ -125,7 +125,7 @@ WriteLiteralTo(__razor_helper_writer, " class=\"bcms-icn-preview\"");
 WriteLiteralTo(__razor_helper_writer, " data-id=\"");
 
 
-#line 16 "..\..\Views\Sitemap\History.cshtml"
+#line 17 "..\..\Views\Sitemap\History.cshtml"
            WriteTo(__razor_helper_writer, item.Id);
 
 
@@ -136,35 +136,35 @@ WriteLiteralTo(__razor_helper_writer, "\"");
 WriteLiteralTo(__razor_helper_writer, ">");
 
 
-#line 16 "..\..\Views\Sitemap\History.cshtml"
+#line 17 "..\..\Views\Sitemap\History.cshtml"
                      WriteTo(__razor_helper_writer, RootGlobalization.Button_Preview);
 
 
 #line default
 #line hidden
-WriteLiteralTo(__razor_helper_writer, "</a>\n");
+WriteLiteralTo(__razor_helper_writer, "</a>\r\n");
 
 
-#line 17 "..\..\Views\Sitemap\History.cshtml"
+#line 18 "..\..\Views\Sitemap\History.cshtml"
 
 
 #line default
 #line hidden
 });
 
-#line 17 "..\..\Views\Sitemap\History.cshtml"
+#line 18 "..\..\Views\Sitemap\History.cshtml"
 }
 #line default
 #line hidden
 
-#line 18 "..\..\Views\Sitemap\History.cshtml"
+#line 19 "..\..\Views\Sitemap\History.cshtml"
 public System.Web.WebPages.HelperResult RestoreLink(SitemapHistoryItem item)
 {
 #line default
 #line hidden
 return new System.Web.WebPages.HelperResult(__razor_helper_writer => {
 
-#line 19 "..\..\Views\Sitemap\History.cshtml"
+#line 20 "..\..\Views\Sitemap\History.cshtml"
  
     if (item.CanCurrentUserRestoreIt)
     {
@@ -179,7 +179,7 @@ WriteLiteralTo(__razor_helper_writer, " class=\"bcms-icn-restore\"");
 WriteLiteralTo(__razor_helper_writer, " data-id=\"");
 
 
-#line 22 "..\..\Views\Sitemap\History.cshtml"
+#line 23 "..\..\Views\Sitemap\History.cshtml"
                WriteTo(__razor_helper_writer, item.Id);
 
 
@@ -190,7 +190,7 @@ WriteLiteralTo(__razor_helper_writer, "\"");
 WriteLiteralTo(__razor_helper_writer, " data-version=\"");
 
 
-#line 22 "..\..\Views\Sitemap\History.cshtml"
+#line 23 "..\..\Views\Sitemap\History.cshtml"
                                        WriteTo(__razor_helper_writer, item.Version);
 
 
@@ -201,16 +201,16 @@ WriteLiteralTo(__razor_helper_writer, "\"");
 WriteLiteralTo(__razor_helper_writer, ">");
 
 
-#line 22 "..\..\Views\Sitemap\History.cshtml"
+#line 23 "..\..\Views\Sitemap\History.cshtml"
                                                       WriteTo(__razor_helper_writer, RootGlobalization.Button_Restore);
 
 
 #line default
 #line hidden
-WriteLiteralTo(__razor_helper_writer, "</a>\n");
+WriteLiteralTo(__razor_helper_writer, "</a>\r\n");
 
 
-#line 23 "..\..\Views\Sitemap\History.cshtml"
+#line 24 "..\..\Views\Sitemap\History.cshtml"
     }
     else
     {
@@ -218,12 +218,12 @@ WriteLiteralTo(__razor_helper_writer, "</a>\n");
 
 #line default
 #line hidden
-WriteLiteralTo(__razor_helper_writer, "    ");
+WriteLiteralTo(__razor_helper_writer, "        ");
 
-WriteLiteralTo(__razor_helper_writer, "&nbsp;\n");
+WriteLiteralTo(__razor_helper_writer, "&nbsp;\r\n");
 
 
-#line 27 "..\..\Views\Sitemap\History.cshtml"
+#line 28 "..\..\Views\Sitemap\History.cshtml"
     }
 
 
@@ -231,7 +231,7 @@ WriteLiteralTo(__razor_helper_writer, "&nbsp;\n");
 #line hidden
 });
 
-#line 28 "..\..\Views\Sitemap\History.cshtml"
+#line 29 "..\..\Views\Sitemap\History.cshtml"
 }
 #line default
 #line hidden
@@ -241,8 +241,10 @@ WriteLiteralTo(__razor_helper_writer, "&nbsp;\n");
         }
         public override void Execute()
         {
+WriteLiteral("\r\n");
+
             
-            #line 29 "..\..\Views\Sitemap\History.cshtml"
+            #line 31 "..\..\Views\Sitemap\History.cshtml"
   
     Action<ColumnBuilder<SitemapHistoryItem>> columns = column =>
     {
@@ -287,36 +289,32 @@ WriteLiteralTo(__razor_helper_writer, "&nbsp;\n");
             
             #line default
             #line hidden
-WriteLiteral("\n<div");
-
-WriteLiteral(" class=\"bcms-scroll-window\"");
-
-WriteLiteral(">\n    <div");
+WriteLiteral("\r\n\r\n<div");
 
 WriteLiteral(" class=\"bcms-history-preview-holder\"");
 
-WriteLiteral(">\n");
+WriteLiteral(">\r\n");
 
-WriteLiteral("        ");
+WriteLiteral("    ");
 
             
-            #line 72 "..\..\Views\Sitemap\History.cshtml"
-   Write(Html.TabbedContentMessagesBox());
+            #line 74 "..\..\Views\Sitemap\History.cshtml"
+Write(Html.TabbedContentMessagesBox());
 
             
             #line default
             #line hidden
-WriteLiteral("\n        <div");
+WriteLiteral("\r\n    <div");
 
 WriteLiteral(" class=\"bcms-history-preview\"");
 
-WriteLiteral(">\n            <div");
+WriteLiteral(">\r\n        <div");
 
 WriteLiteral(" id=\"bcms-history-preview\"");
 
 WriteLiteral(" class=\"bcms-sitemap-history\"");
 
-WriteLiteral(">\n                <div");
+WriteLiteral(">\r\n            <div");
 
 WriteLiteral(" class=\"bcms-history-info\"");
 
@@ -325,146 +323,138 @@ WriteLiteral(" style=\"display: block;\"");
 WriteLiteral(">");
 
             
-            #line 75 "..\..\Views\Sitemap\History.cshtml"
-                                                                  Write(PagesGlobalization.ContentHistory_SelectVersionToPreviewMessage);
+            #line 77 "..\..\Views\Sitemap\History.cshtml"
+                                                              Write(PagesGlobalization.ContentHistory_SelectVersionToPreviewMessage);
 
             
             #line default
             #line hidden
-WriteLiteral("</div>\n                <div");
+WriteLiteral("</div>\r\n            <div");
 
 WriteLiteral(" class=\"bcms-history-content\"");
 
-WriteLiteral("></div>\n            </div>\n        </div>\n    </div>\n");
+WriteLiteral("></div>\r\n        </div>\r\n    </div>\r\n</div>\r\n\r\n");
 
             
-            #line 80 "..\..\Views\Sitemap\History.cshtml"
-    
-            
-            #line default
-            #line hidden
-            
-            #line 80 "..\..\Views\Sitemap\History.cshtml"
-     if (Model != null)
-    {
+            #line 83 "..\..\Views\Sitemap\History.cshtml"
+ if (Model != null)
+{
 
             
             #line default
             #line hidden
-WriteLiteral("        <div");
+WriteLiteral("    <div");
 
 WriteLiteral(" class=\"bcms-history-table-holder\"");
 
-WriteLiteral(">\n");
+WriteLiteral(">\r\n");
 
             
-            #line 83 "..\..\Views\Sitemap\History.cshtml"
-            
-            
-            #line default
-            #line hidden
-            
-            #line 83 "..\..\Views\Sitemap\History.cshtml"
-             using (Html.BeginForm<SitemapController>(f => f.ShowSitemapHistory((GetSitemapHistoryRequest)null), FormMethod.Post, new { @id = "bcms-sitemaphistory-form", @class = "bcms-ajax-form" }))
-            {
-                
-            
-            #line default
-            #line hidden
-            
-            #line 85 "..\..\Views\Sitemap\History.cshtml"
-           Write(Html.HiddenGridOptions(Model.GridOptions));
-
-            
-            #line default
-            #line hidden
-            
-            #line 85 "..\..\Views\Sitemap\History.cshtml"
-                                                          
-                
+            #line 86 "..\..\Views\Sitemap\History.cshtml"
+        
             
             #line default
             #line hidden
             
             #line 86 "..\..\Views\Sitemap\History.cshtml"
-           Write(Html.HiddenFor(model => model.SitemapId));
+         using (Html.BeginForm<SitemapController>(f => f.ShowSitemapHistory((GetSitemapHistoryRequest)null), FormMethod.Post, new { @id = "bcms-sitemaphistory-form", @class = "bcms-ajax-form" }))
+        {
+            
+            
+            #line default
+            #line hidden
+            
+            #line 88 "..\..\Views\Sitemap\History.cshtml"
+       Write(Html.HiddenGridOptions(Model.GridOptions));
 
             
             #line default
             #line hidden
             
-            #line 86 "..\..\Views\Sitemap\History.cshtml"
-                                                         
+            #line 88 "..\..\Views\Sitemap\History.cshtml"
+                                                      
+            
+            
+            #line default
+            #line hidden
+            
+            #line 89 "..\..\Views\Sitemap\History.cshtml"
+       Write(Html.HiddenFor(model => model.SitemapId));
 
             
             #line default
             #line hidden
-WriteLiteral("                <div");
+            
+            #line 89 "..\..\Views\Sitemap\History.cshtml"
+                                                     
+
+            
+            #line default
+            #line hidden
+WriteLiteral("            <div");
 
 WriteLiteral(" class=\"bcms-history-table-top\"");
 
-WriteLiteral(">\n                    <div");
+WriteLiteral(">\r\n                <div");
 
 WriteLiteral(" class=\"bcms-large-titles\"");
 
 WriteLiteral(">");
 
             
-            #line 88 "..\..\Views\Sitemap\History.cshtml"
-                                              Write(PagesGlobalization.ContentHistory_OlderVersions);
-
-            
-            #line default
-            #line hidden
-WriteLiteral("</div>\n                </div>\n");
-
-            
-            #line 90 "..\..\Views\Sitemap\History.cshtml"
-                
-                
-            
-            #line default
-            #line hidden
-            
             #line 91 "..\..\Views\Sitemap\History.cshtml"
-           Write(Html.Grid(Model.Items).Sort(Model.GridOptions).Columns(columns).Attributes(@class => "bcms-tables bcms-history-grid").RenderUsing(new ScrollableEditableHtmlTableGridRenderer<SitemapHistoryItem>() { InternalTableCssClass = "bcms-history-cell" }));
+                                          Write(PagesGlobalization.ContentHistory_OlderVersions);
+
+            
+            #line default
+            #line hidden
+WriteLiteral("</div>\r\n            </div>\r\n");
+
+            
+            #line 93 "..\..\Views\Sitemap\History.cshtml"
+
+            
+            
+            #line default
+            #line hidden
+            
+            #line 94 "..\..\Views\Sitemap\History.cshtml"
+       Write(Html.Grid(Model.Items).Sort(Model.GridOptions).Columns(columns).Attributes(@class => "bcms-tables bcms-history-grid").RenderUsing(new ScrollableEditableHtmlTableGridRenderer<SitemapHistoryItem>() { InternalTableCssClass = "bcms-history-cell" }));
 
             
             #line default
             #line hidden
             
-            #line 91 "..\..\Views\Sitemap\History.cshtml"
-                                                                                                                                                                                                                                                                     
-                
+            #line 94 "..\..\Views\Sitemap\History.cshtml"
+                                                                                                                                                                                                                                                                 
+            
             
             #line default
             #line hidden
-            
-            #line 92 "..\..\Views\Sitemap\History.cshtml"
-           Write(Html.HiddenSubmit());
-
-            
-            #line default
-            #line hidden
-            
-            #line 92 "..\..\Views\Sitemap\History.cshtml"
-                                    
-            }
-
-            
-            #line default
-            #line hidden
-WriteLiteral("        </div>\n");
-
             
             #line 95 "..\..\Views\Sitemap\History.cshtml"
-    }
+       Write(Html.HiddenSubmit());
 
             
             #line default
             #line hidden
-WriteLiteral("</div>");
+            
+            #line 95 "..\..\Views\Sitemap\History.cshtml"
+                                
+        }
 
+            
+            #line default
+            #line hidden
+WriteLiteral("    </div>\r\n");
+
+            
+            #line 98 "..\..\Views\Sitemap\History.cshtml"
+}
+
+            
+            #line default
+            #line hidden
         }
     }
 }

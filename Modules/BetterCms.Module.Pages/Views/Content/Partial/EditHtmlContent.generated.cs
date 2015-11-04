@@ -55,10 +55,8 @@ namespace ASP
         }
         public override void Execute()
         {
-WriteLiteral("\r\n");
-
             
-            #line 7 "..\..\Views\Content\Partial\EditHtmlContent.cshtml"
+            #line 6 "..\..\Views\Content\Partial\EditHtmlContent.cshtml"
 Write(Html.HiddenFor(model => model.EditInSourceMode, new { @id = "bcms-edit-in-source-mode" }));
 
             
@@ -67,7 +65,7 @@ Write(Html.HiddenFor(model => model.EditInSourceMode, new { @id = "bcms-edit-in-
 WriteLiteral("\r\n");
 
             
-            #line 8 "..\..\Views\Content\Partial\EditHtmlContent.cshtml"
+            #line 7 "..\..\Views\Content\Partial\EditHtmlContent.cshtml"
 Write(Html.HiddenFor(model => model.ContentTextMode, new { @id = "bcms-content-text-mode" }));
 
             
@@ -86,7 +84,7 @@ WriteLiteral(">\r\n");
 WriteLiteral("        ");
 
             
-            #line 12 "..\..\Views\Content\Partial\EditHtmlContent.cshtml"
+            #line 11 "..\..\Views\Content\Partial\EditHtmlContent.cshtml"
    Write(Html.Tooltip(PagesGlobalization.AddPageContent_RegularContentTab_ContentName_Tooltip_Description));
 
             
@@ -99,7 +97,7 @@ WriteLiteral(" class=\"bcms-content-titles\"");
 WriteLiteral(">");
 
             
-            #line 13 "..\..\Views\Content\Partial\EditHtmlContent.cshtml"
+            #line 12 "..\..\Views\Content\Partial\EditHtmlContent.cshtml"
                                     Write(PagesGlobalization.AddPageContent_RegularContentTab_ContentName_Title);
 
             
@@ -114,7 +112,7 @@ WriteLiteral(">\r\n");
 WriteLiteral("            ");
 
             
-            #line 15 "..\..\Views\Content\Partial\EditHtmlContent.cshtml"
+            #line 14 "..\..\Views\Content\Partial\EditHtmlContent.cshtml"
        Write(Html.TextBoxFor(model => model.ContentName, new { @class = "bcms-editor-field-box", style = "width: 523px;" }));
 
             
@@ -125,13 +123,13 @@ WriteLiteral("\r\n");
 WriteLiteral("            ");
 
             
-            #line 16 "..\..\Views\Content\Partial\EditHtmlContent.cshtml"
+            #line 15 "..\..\Views\Content\Partial\EditHtmlContent.cshtml"
        Write(Html.BcmsValidationMessageFor(model => model.ContentName));
 
             
             #line default
             #line hidden
-WriteLiteral("\r\n        </div>\r\n    </div>\r\n    <div");
+WriteLiteral("\r\n        </div>\r\n    </div>\r\n\r\n    <div");
 
 WriteLiteral(" class=\"bcms-input-field-holder\"");
 
@@ -174,7 +172,7 @@ WriteLiteral("            ");
             
             #line default
             #line hidden
-WriteLiteral("\r\n        </div>\r\n    </div>\r\n    <div");
+WriteLiteral("\r\n        </div>\r\n    </div>\r\n\r\n    <div");
 
 WriteLiteral(" class=\"bcms-input-field-holder\"");
 
@@ -185,7 +183,7 @@ WriteLiteral(" class=\"bcms-content-titles\"");
 WriteLiteral(">");
 
             
-            #line 27 "..\..\Views\Content\Partial\EditHtmlContent.cshtml"
+            #line 28 "..\..\Views\Content\Partial\EditHtmlContent.cshtml"
                                     Write(PagesGlobalization.AddPageContent_RegularContentTab_LiveTo_Title);
 
             
@@ -200,7 +198,7 @@ WriteLiteral(">\r\n");
 WriteLiteral("            ");
 
             
-            #line 29 "..\..\Views\Content\Partial\EditHtmlContent.cshtml"
+            #line 30 "..\..\Views\Content\Partial\EditHtmlContent.cshtml"
        Write(Html.DateTextBoxFor(model => model.LiveTo, Model.LiveTo, new Dictionary<string, object> { { "class", "bcms-editor-field-box bcms-datepicker" }, { "style", "width: 127px;" } }));
 
             
@@ -211,7 +209,7 @@ WriteLiteral("\r\n");
 WriteLiteral("            ");
 
             
-            #line 30 "..\..\Views\Content\Partial\EditHtmlContent.cshtml"
+            #line 31 "..\..\Views\Content\Partial\EditHtmlContent.cshtml"
        Write(Html.BcmsValidationMessageFor(model => model.LiveTo));
 
             
@@ -226,7 +224,7 @@ WriteLiteral(">\r\n");
 WriteLiteral("    ");
 
             
-            #line 36 "..\..\Views\Content\Partial\EditHtmlContent.cshtml"
+            #line 37 "..\..\Views\Content\Partial\EditHtmlContent.cshtml"
 Write(Html.TextAreaFor(model => model.PageContent, new { @class = "bcms-contenthtml", @id = Guid.NewGuid() }));
 
             
