@@ -23,7 +23,22 @@ namespace BetterCms.Module.Pages.Command.Layout.GetSiteSettingsTemplates
         /// <returns>A list of paged\sorted widgets.</returns>
         public SiteSettingTemplateListViewModel Execute(SearchableGridOptions gridOptions)
         {
-            var query =
+            var masterPages =
+                Repository.AsQueryable<Root.Models.Page>()
+                    .Where(f => f.IsDeleted == false && f.IsMasterPage)
+                    .Select(
+                        f =>
+                        new SiteSettingTemplateItemViewModel
+                        {
+                            Id = f.Id,
+                            Version = f.Version,
+                            TemplateName = f.Title,
+                            IsMasterPage = true,
+                            Url = f.PageUrl
+                        })
+                    .ToList();
+
+            var layouts =
                Repository.AsQueryable<Root.Models.Layout>()
                          .Where(f => f.IsDeleted == false)
                          .Select(
@@ -33,7 +48,10 @@ namespace BetterCms.Module.Pages.Command.Layout.GetSiteSettingsTemplates
                                  Id = f.Id,
                                  Version = f.Version,
                                  TemplateName = f.Name,
+                                 IsMasterPage = false
                              });
+
+            var query = masterPages.Union(layouts).AsQueryable();
 
             if (gridOptions != null)
             {
@@ -45,10 +63,10 @@ namespace BetterCms.Module.Pages.Command.Layout.GetSiteSettingsTemplates
                 }
             }
 
-            var count = query.ToRowCountFutureValue();
-            var templates = query.AddSortingAndPaging(gridOptions).ToFuture().ToList();
+            var count = query.Count();
+            var templates = query.AddSortingAndPaging(gridOptions).ToList();
 
-            return new SiteSettingTemplateListViewModel(templates, gridOptions, count.Value);
+            return new SiteSettingTemplateListViewModel(templates, gridOptions, count);
         }
     }
 }

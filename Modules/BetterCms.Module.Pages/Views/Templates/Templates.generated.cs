@@ -119,7 +119,7 @@ WriteLiteral("\r\n");
     {
         column.EditButtonColumn(renderId: false);
 
-        column.For(f => string.Format("<a class=\"bcms-tables-link bcms-grid-item-edit-button bcms-template-name\" data-id=\"{0}\">{1}</a>", f.Id, f.TemplateName))
+        column.For(f => string.Format("<a class=\"bcms-tables-link bcms-grid-item-edit-button bcms-template-name\" data-id=\"{0}\" data-url=\"{2}\">{1}</a>", f.Id, f.TemplateName, f.Url))
             .Named(PagesGlobalization.SiteSettings_Templates_NameColumn)
             .SortColumnName("TemplateName")
             .Encode(false);
@@ -187,7 +187,20 @@ WriteLiteral(">\r\n        <div");
 
 WriteLiteral(" class=\"bcms-clearfix\"");
 
-WriteLiteral(">\r\n            <div");
+WriteLiteral(">\r\n\r\n            <div");
+
+WriteLiteral(" class=\"bcms-large-titles\"");
+
+WriteLiteral(">");
+
+            
+            #line 53 "..\..\Views\Templates\Templates.cshtml"
+                                      Write(PagesGlobalization.SiteSettings_Templates_Title);
+
+            
+            #line default
+            #line hidden
+WriteLiteral("</div>\r\n\r\n            <div");
 
 WriteLiteral(" class=\"bcms-top-block-inner\"");
 
@@ -200,13 +213,13 @@ WriteLiteral(">\r\n");
 WriteLiteral("                    ");
 
             
-            #line 54 "..\..\Views\Templates\Templates.cshtml"
+            #line 57 "..\..\Views\Templates\Templates.cshtml"
                Write(Html.TextBoxFor(m => m.SearchQuery, new { @class = "bcms-search-field-box bcms-search-query", @placeholder = RootGlobalization.WaterMark_Search }));
 
             
             #line default
             #line hidden
-WriteLiteral("\r\n                </div>\r\n                <div");
+WriteLiteral("\r\n                    <div");
 
 WriteLiteral(" class=\"bcms-btn-search\"");
 
@@ -215,8 +228,23 @@ WriteLiteral(" id=\"bcms-template-search-btn\"");
 WriteLiteral(">");
 
             
-            #line 56 "..\..\Views\Templates\Templates.cshtml"
-                                                                      Write(PagesGlobalization.SiteSettings_Template_Search);
+            #line 58 "..\..\Views\Templates\Templates.cshtml"
+                                                                          Write(PagesGlobalization.SiteSettings_Template_Search);
+
+            
+            #line default
+            #line hidden
+WriteLiteral("</div>\r\n                </div>\r\n\r\n                <div");
+
+WriteLiteral(" class=\"bcms-btn-main\"");
+
+WriteLiteral(" id=\"bcms-create-page-button\"");
+
+WriteLiteral(">");
+
+            
+            #line 61 "..\..\Views\Templates\Templates.cshtml"
+                                                                   Write(PagesGlobalization.SiteSettings_Pages_AddNew);
 
             
             #line default
@@ -230,7 +258,7 @@ WriteLiteral(" id=\"bcms-register-template-button\"");
 WriteLiteral(">");
 
             
-            #line 58 "..\..\Views\Templates\Templates.cshtml"
+            #line 63 "..\..\Views\Templates\Templates.cshtml"
                                                                          Write(PagesGlobalization.SiteSettings_Widgets_RegisterNew);
 
             
@@ -245,7 +273,7 @@ WriteLiteral(">\r\n");
 WriteLiteral("            ");
 
             
-            #line 63 "..\..\Views\Templates\Templates.cshtml"
+            #line 68 "..\..\Views\Templates\Templates.cshtml"
        Write(Html.RenderPaging(Model));
 
             
@@ -254,20 +282,21 @@ WriteLiteral("            ");
 WriteLiteral("\r\n        </div>\r\n    </div>\r\n");
 
             
-            #line 66 "..\..\Views\Templates\Templates.cshtml"
+            #line 71 "..\..\Views\Templates\Templates.cshtml"
 
     
             
             #line default
             #line hidden
             
-            #line 67 "..\..\Views\Templates\Templates.cshtml"
+            #line 72 "..\..\Views\Templates\Templates.cshtml"
 Write(Html.Grid(Model.Items).Sort(Model.GridOptions).Columns(columns).Attributes(@class => "bcms-tables").RowAttributes(delegate(GridRowViewData<SiteSettingTemplateItemViewModel> row)
                   {
                       return new Dictionary<string, object>
                               {
                                     {"data-id", row.Item.Id},
-                                    {"data-version", row.Item.Version}
+                                    {"data-version", row.Item.Version},
+                                    {"data-ismasterpage", row.Item.IsMasterPage ? "1" : "0"}
                               };
                   }).RenderUsing(new EditableHtmlTableGridRenderer<SiteSettingTemplateItemViewModel>()));
 
@@ -275,7 +304,7 @@ Write(Html.Grid(Model.Items).Sort(Model.GridOptions).Columns(columns).Attributes
             #line default
             #line hidden
             
-            #line 74 "..\..\Views\Templates\Templates.cshtml"
+            #line 80 "..\..\Views\Templates\Templates.cshtml"
                                                                                                         
 }
 
@@ -293,7 +322,7 @@ WriteLiteral(">\r\n");
 WriteLiteral("    ");
 
             
-            #line 78 "..\..\Views\Templates\Templates.cshtml"
+            #line 84 "..\..\Views\Templates\Templates.cshtml"
 Write(Html.Grid(new List<SiteSettingTemplateItemViewModel> { new SiteSettingTemplateItemViewModel() }).Columns(columns).Attributes(@class => "bcms-tables").RenderUsing(new HtmlTableGridSingleRowRenderer<SiteSettingTemplateItemViewModel>()));
 
             

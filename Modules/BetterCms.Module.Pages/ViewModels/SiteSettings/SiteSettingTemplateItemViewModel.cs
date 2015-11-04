@@ -15,6 +15,10 @@ namespace BetterCms.Module.Pages.ViewModels.SiteSettings
 
         public string TemplateName { get; set; }
 
+        public bool IsMasterPage { get; set; }
+
+        public string Url { get; set; }
+
         public override string ToString()
         {
             return string.Format("Id: {0}, Version: {1}, TemplateName: {2}", Id, Version, TemplateName);

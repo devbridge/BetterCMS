@@ -340,6 +340,11 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Index.cshtml</DependentUpon>
     </Compile>
+    <Compile Include="Views\MediaManager\Partial\MediaManagerFilterTemplate.generated.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>MediaManagerFilterTemplate.cshtml</DependentUpon>
+    </Compile>
     <Compile Include="Views\MediaManager\Partial\MediaManagerTab.generated.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -429,6 +434,10 @@
     </None>
   </ItemGroup>
   <ItemGroup>
+    <None Include="Views\MediaManager\Partial\MediaManagerFilterTemplate.cshtml">
+      <Generator>RazorGenerator</Generator>
+      <LastGenOutput>MediaManagerFilterTemplate.generated.cs</LastGenOutput>
+    </None>
     <None Include="Views\Upload\SingleFileUpload.cshtml">
       <Generator>RazorGenerator</Generator>
       <LastGenOutput>SingleFileUpload.generated.cs</LastGenOutput>
