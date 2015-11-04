@@ -9,115 +9,112 @@
 @using BetterCms.Module.Root.Mvc.Grids.TableRenderers
 @using BetterCms.Module.Root.Mvc.Helpers
 @using MvcContrib.UI.Grid
-
 @model BetterCms.Module.Pages.ViewModels.Filter.PagesGridViewModel<SiteSettingPageViewModel>
-
-@if (Model == null)
-{
-    return;
-}
-
-@Html.HiddenGridOptions(Model.GridOptions)
-
-@{
-    Action<ColumnBuilder<SiteSettingPageViewModel>> columns = column =>
+    @if (Model == null)
     {
-        if ((ViewContext.Controller as CmsControllerBase).SecurityService.IsAuthorized(RootModuleConstants.UserRoles.MultipleRoles(RootModuleConstants.UserRoles.EditContent, RootModuleConstants.UserRoles.PublishContent)))
+        return;
+    }
+    
+    @Html.HiddenGridOptions(Model.GridOptions)
+    @{
+        Action<ColumnBuilder<SiteSettingPageViewModel>> columns = column =>
         {
-            column.EditButtonColumn();
-        }
-        else
-        {
-            column.EmptyColumn();
-        }
-
-        column.For(m => string.Format("<a class=\"bcms-tables-link bcms-page-title\" data-id=\"{0}\" data-url=\"{2}\"{3}>{1}</a>",
-            m.Id, System.Web.Security.AntiXss.AntiXssEncoder.HtmlEncode(m.Title ?? "", true), m.Url,
-            (CmsContext.Config.EnableMultilanguage ? string.Format("data-language-id=\"{0}\"", m.LanguageId) : "")))
-            .Named(PagesGlobalization.SiteSettings_Pages_TitleColumn)
-            .SortColumnName("Title")
-            .Attributes()
-            .Encode(false);
-
-        column.For(m => m.CreatedOn.ToFormattedDateString())
-           .Named(PagesGlobalization.SiteSettings_Pages_CreatedColumn)
-           .SortColumnName("CreatedOn")
-           .HeaderAttributes(@style => "width: 100px;")
-           .Attributes(@class => "bcms-page-created");
-
-        column.For(m => m.ModifiedOn.ToFormattedDateString())
-           .Named(PagesGlobalization.SiteSettings_Pages_ModifiedColumn)
-           .SortColumnName("ModifiedOn")
-           .HeaderAttributes(@style => "width: 100px;")
-           .Attributes(@class => "bcms-page-modified");
-
-        column.For(m => Html.EditorFor(e => m.HasSEO, "SEOStatus"))
-           .Named(PagesGlobalization.SiteSettings_Pages_HasSeoColumn)
-           .SortColumnName("HasSEO")
-           .HeaderAttributes(@style => "width: 65px; text-align: center")
-           .Attributes(@class => "bcms-page-hasseo");
-
-        column.For(m => Html.EditorFor(e => m.PageStatus, "PageStatus"))
-           .Named(PagesGlobalization.SiteSettings_Pages_PageStatusColumn)
-           .SortColumnName("PageStatus")
-           .HeaderAttributes(@style => "width: 85px; text-align: center")
-           .Attributes(@class => "bcms-page-ispublished");
-
-        if ((ViewContext.Controller as CmsControllerBase).SecurityService.IsAuthorized(RootModuleConstants.UserRoles.DeleteContent))
-        {
-            column.DeleteButtonColumn();
-        }
-    };
-}
-
-@Html.SiteSettingsMessagesBox()
-
-<div class="bcms-top-block-holder">
-    <div class="bcms-clearfix">
-        <div class="bcms-large-titles">@PagesGlobalization.SiteSettings_Pages_Title</div>
-
-        <div class="bcms-top-block-inner">
-            @Html.Partial("~/Areas/bcms-pages/Views/Filter/PagesFilterTemplate.cshtml", Model)
-
-            <div class="bcms-search-block">
-                @Html.TextBoxFor(m => m.SearchQuery, new { @class = "bcms-search-field-box bcms-search-query", @placeholder = RootGlobalization.WaterMark_Search })
-                <div class="bcms-btn-search" id="bcms-pages-search-btn">@PagesGlobalization.SiteSettings_Pages_Search</div>
-            </div>
-            @if ((ViewContext.Controller as CmsControllerBase).SecurityService.IsAuthorized(RootModuleConstants.UserRoles.EditContent))
+            if ((ViewContext.Controller as CmsControllerBase).SecurityService.IsAuthorized(RootModuleConstants.UserRoles.MultipleRoles(RootModuleConstants.UserRoles.EditContent, RootModuleConstants.UserRoles.PublishContent)))
             {
-                <div class="bcms-btn-main" id="bcms-create-page-button">@PagesGlobalization.SiteSettings_Pages_AddNew</div>
+                column.EditButtonColumn();
             }
+            else
+            {
+                column.EmptyColumn();
+            }
+
+            column.For(m => string.Format("<a class=\"bcms-tables-link bcms-page-title\" data-id=\"{0}\" data-url=\"{2}\"{3}>{1}</a>",
+                m.Id, System.Web.Security.AntiXss.AntiXssEncoder.HtmlEncode(m.Title ?? "", true), m.Url,
+                (CmsContext.Config.EnableMultilanguage ? string.Format("data-language-id=\"{0}\"", m.LanguageId) : "")))
+                .Named(PagesGlobalization.SiteSettings_Pages_TitleColumn)
+                .SortColumnName("Title")
+                .Attributes()
+                .Encode(false);
+
+            column.For(m => m.CreatedOn.ToFormattedDateString())
+               .Named(PagesGlobalization.SiteSettings_Pages_CreatedColumn)
+               .SortColumnName("CreatedOn")
+               .HeaderAttributes(@style => "width: 100px;")
+               .Attributes(@class => "bcms-page-created");
+
+            column.For(m => m.ModifiedOn.ToFormattedDateString())
+               .Named(PagesGlobalization.SiteSettings_Pages_ModifiedColumn)
+               .SortColumnName("ModifiedOn")
+               .HeaderAttributes(@style => "width: 100px;")
+               .Attributes(@class => "bcms-page-modified");
+
+            column.For(m => Html.EditorFor(e => m.HasSEO, "SEOStatus"))
+               .Named(PagesGlobalization.SiteSettings_Pages_HasSeoColumn)
+               .SortColumnName("HasSEO")
+               .HeaderAttributes(@style => "width: 65px; text-align: center")
+               .Attributes(@class => "bcms-page-hasseo");
+
+            column.For(m => Html.EditorFor(e => m.PageStatus, "PageStatus"))
+               .Named(PagesGlobalization.SiteSettings_Pages_PageStatusColumn)
+               .SortColumnName("PageStatus")
+               .HeaderAttributes(@style => "width: 85px; text-align: center")
+               .Attributes(@class => "bcms-page-ispublished");
+
+            if ((ViewContext.Controller as CmsControllerBase).SecurityService.IsAuthorized(RootModuleConstants.UserRoles.DeleteContent))
+            {
+                column.DeleteButtonColumn();
+            }
+        };
+    }
+
+    @Html.SiteSettingsMessagesBox()
+
+    <div class="bcms-scroll-window-settings">
+        <div class="bcms-top-block-holder">
+            <div class="bcms-clearfix">
+                <div class="bcms-large-titles">@PagesGlobalization.SiteSettings_Pages_Title</div>
+
+                <div class="bcms-top-block-inner">
+                    @Html.Partial("~/Areas/bcms-pages/Views/Filter/PagesFilterTemplate.cshtml", Model)
+
+                    <div class="bcms-search-block">
+                        @Html.TextBoxFor(m => m.SearchQuery, new { @class = "bcms-search-field-box bcms-search-query", @placeholder = RootGlobalization.WaterMark_Search })
+                        <div class="bcms-btn-search" id="bcms-pages-search-btn">@PagesGlobalization.SiteSettings_Pages_Search</div>
+                    </div>
+                    @if ((ViewContext.Controller as CmsControllerBase).SecurityService.IsAuthorized(RootModuleConstants.UserRoles.EditContent))
+                    {
+                        <div class="bcms-btn-main" id="bcms-create-page-button">@PagesGlobalization.SiteSettings_Pages_AddNew</div>
+                    }
+                </div>
+            </div>
+            <div class="bcms-top-block-pager">
+                @Html.RenderPaging(Model)
+            </div>
         </div>
+
+        @Html.Grid(Model.Items).Sort(Model.GridOptions).Columns(columns).Attributes(@class => "bcms-tables").RenderUsing(new EditableHtmlTableGridRenderer<SiteSettingPageViewModel>())
     </div>
 
-    <div class="bcms-top-block-pager">
-        @Html.RenderPaging(Model)
-    </div>
-</div>
+    <script type="text/html" id="bcms-pages-list-row-template">
+        @Html.Grid(new List<SiteSettingPageViewModel> { new SiteSettingPageViewModel() }).Columns(columns).Attributes(@class => "bcms-tables").RenderUsing(new HtmlTableGridSingleRowRenderer<SiteSettingPageViewModel>())
+    </script>
 
-@Html.Grid(Model.Items).Sort(Model.GridOptions).Columns(columns).Attributes(@class => "bcms-tables").RenderUsing(new EditableHtmlTableGridRenderer<SiteSettingPageViewModel>())
+    <script type="text/html" id="bcms-boolean-true-template">
+        @Html.Partial("EditorTemplates/SEOStatus", true)
+    </script>
 
+    <script type="text/html" id="bcms-boolean-false-template">
+        @Html.Partial("EditorTemplates/SEOStatus", false)
+    </script>
 
-<script type="text/html" id="bcms-pages-list-row-template">
-    @Html.Grid(new List<SiteSettingPageViewModel> { new SiteSettingPageViewModel() }).Columns(columns).Attributes(@class => "bcms-tables").RenderUsing(new HtmlTableGridSingleRowRenderer<SiteSettingPageViewModel>())
-</script>
+    <script type="text/html" id="bcms-pagestatus-published-template">
+        @Html.Partial("EditorTemplates/PageStatus", PageStatus.Published)
+    </script>
 
-<script type="text/html" id="bcms-boolean-true-template">
-    @Html.Partial("EditorTemplates/SEOStatus", true)
-</script>
+    <script type="text/html" id="bcms-pagestatus-unpublished-template">
+        @Html.Partial("EditorTemplates/PageStatus", PageStatus.Unpublished)
+    </script>
 
-<script type="text/html" id="bcms-boolean-false-template">
-    @Html.Partial("EditorTemplates/SEOStatus", false)
-</script>
-
-<script type="text/html" id="bcms-pagestatus-published-template">
-    @Html.Partial("EditorTemplates/PageStatus", PageStatus.Published)
-</script>
-
-<script type="text/html" id="bcms-pagestatus-unpublished-template">
-    @Html.Partial("EditorTemplates/PageStatus", PageStatus.Unpublished)
-</script>
-
-<script type="text/html" id="bcms-pagestatus-draft-template">
-    @Html.Partial("EditorTemplates/PageStatus", PageStatus.Draft)
-</script>
+    <script type="text/html" id="bcms-pagestatus-draft-template">
+        @Html.Partial("EditorTemplates/PageStatus", PageStatus.Draft)
+    </script>

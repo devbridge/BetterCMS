@@ -53,8 +53,6 @@ WriteLiteral("<div");
 
 WriteLiteral(" id=\"bcms-site-settings\"");
 
-WriteLiteral(" class=\"bcms-scroll-window\"");
-
 WriteLiteral(">\r\n    <div");
 
 WriteLiteral(" class=\"bcms-settings-frame\"");

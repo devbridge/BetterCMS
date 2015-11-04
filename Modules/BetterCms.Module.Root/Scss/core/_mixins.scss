@@ -53,8 +53,9 @@
     }
 }
 
-@mixin positioning($center: null, $center-y: null, $center-x: null) {
-    position: absolute;
+@mixin positioning($center: null, $center-y: null, $center-x: null, $position: absolute) {
+    position: $position;
+
     @if $center {
         @include transform(translate(-50%, -50%));
         left: 50%;

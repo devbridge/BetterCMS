@@ -7,10 +7,13 @@
             click: tabClick, clickBubble: true"></a>
         <!-- /ko -->
     </div>
-    <!-- ko foreach: tabs -->
-    <div class="bcms-tab-single" data-bind="attr: {id: tabId}, stopBinding: true">
-        @* Creating child Div, because parent binding is stopped *@
-        <div></div>
+
+    <div class="bcms-scroll-window-tabbed">
+        <!-- ko foreach: tabs -->
+        <div class="bcms-tab-single" data-bind="attr: {id: tabId}, stopBinding: true">
+            @* Creating child Div, because parent binding is stopped *@
+            <div></div>
+        </div>
+        <!-- /ko -->
     </div>
-    <!-- /ko -->
 </script>

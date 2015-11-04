@@ -458,11 +458,29 @@ a.bcms-sort-arrow-top:hover {
 }
 
 div.bcms-messages-type-1 ul, div.bcms-messages-type-2 ul {
-  border-bottom: 0;
-  border-top: 1px solid #c6c6c6;
   font-size: 12px;
   margin: 0;
   padding: 15px 60px 14px;
+}
+
+div.bcms-messages-type-1 {
+  position: fixed;
+  -webkit-transform: translateX(-50%);
+  -moz-transform: translateX(-50%);
+  transform: translateX(-50%);
+  left: 50%;
+  top: 0;
+  z-index: 999;
+}
+
+div.bcms-messages-type-2 {
+  position: fixed;
+  -webkit-transform: translateX(-50%);
+  -moz-transform: translateX(-50%);
+  transform: translateX(-50%);
+  left: 50%;
+  top: 0;
+  z-index: 999;
 }
 
 .bcms-success-messages {
@@ -886,13 +904,39 @@ a:hover {
   text-decoration: none;
 }
 
-[class*="bcms-"] {
-  font-family: "Open Sans", sans-serif !important;
+.bcms-scroll-window-settings {
+  overflow-x: hidden;
+  overflow-y: scroll;
+  position: relative;
 }
 
-.bcms-scroll-window {
-  overflow: auto;
+.bcms-scroll-window-tabbed {
+  overflow-x: hidden;
+  overflow-y: scroll;
   position: relative;
+}
+
+.bcms-scroll-window-options {
+  overflow-x: hidden;
+  overflow-y: scroll;
+  position: relative;
+}
+
+.bcms-scroll-window-settings {
+  height: calc(100vh - 120px);
+  padding-right: 30px;
+}
+
+.bcms-scroll-window-tabbed {
+  height: calc(100vh - 62px);
+  padding-right: 30px;
+}
+
+.bcms-scroll-window-options {
+  padding-left: 30px;
+  padding-right: 30px;
+  background-color: #ffffff;
+  height: calc(100vh - 170px);
 }
 
 .bcms-modal {
@@ -913,13 +957,8 @@ a:hover {
   position: relative;
 }
 
-.bcms-scroll-window .bcms-modal-frame-holder {
-  background-color: #ffffff;
-  border-right: 1px solid #dcdadb;
-  border-left: 1px solid #dcdadb;
-}
-
 .bcms-modal-body {
+  height: 100vh;
   margin: auto;
   position: relative;
 }
@@ -1000,7 +1039,7 @@ a:hover {
 }
 
 .bcms-settings-frame {
-  height: 100%;
+  height: calc(100vh - 120px);
   width: 1150px;
   background-color: #ffffff;
   border-right: 1px solid #dcdadb;
@@ -1022,7 +1061,6 @@ a:hover {
   display: table-cell;
   vertical-align: top;
   padding-left: 30px;
-  padding-right: 30px;
 }
 
 .bcms-settings-link {
@@ -1105,6 +1143,7 @@ a:hover {
   border-bottom: 1px solid #dfdfdf;
   box-sizing: border-box;
   position: relative;
+  height: 58px;
 }
 
 .bcms-inner-navigation-ui {
@@ -3259,7 +3298,6 @@ div.bcms-preview-box:hover .bcms-preview-box-image:after {
 
 .bcms-user-access {
   border-bottom: 1px solid #c6c6c6;
-  margin: 0 0 20px -30px;
   padding: 0 0 0 30px;
 }
 

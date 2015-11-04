@@ -4,6 +4,7 @@
 @using BetterCms.Module.Root.Mvc
 @using BetterCms.Module.Root.Mvc.Helpers
 @using Microsoft.Web.Mvc
+
 @model BetterCms.Module.Pages.ViewModels.Content.PageContentViewModel
 
 <div class="bcms-tab-header bcms-js-tab-header">
@@ -15,10 +16,10 @@
 
 @{ ViewBag.CanEdit = (ViewContext.Controller as CmsControllerBase).SecurityService.IsAuthorized(RootModuleConstants.UserRoles.EditContent); }
 
-<div class="bcms-scroll-window">
-    <div class="bcms-modal-frame-holder">
-        @Html.TabbedContentMessagesBox()
+<div class="bcms-modal-frame-holder">
+    @Html.TabbedContentMessagesBox()
 
+    <div class="bcms-scroll-window-options">
         @using (Html.BeginForm<ContentController>(c => c.SavePageHtmlContent(null), FormMethod.Post, new { @id = "bcms-content-form", @class = "bcms-ajax-form" }))
         {
             <div id="bcms-tab-1" class="bcms-tab-single">

@@ -1,26 +1,29 @@
 ﻿@using BetterCms.Module.Pages.Content.Resources
 @using BetterCms.Module.Pages.Controllers
 @using BetterCms.Module.Pages.ViewModels.Page
-
 @using BetterCms.Module.Root
 @using BetterCms.Module.Root.Mvc
 @using BetterCms.Module.Root.Mvc.Helpers
 @using Microsoft.Web.Mvc
 
 @model DeletePageViewModel
-<div class="bcms-scroll-window">
+
+<div class="bcms-modal-frame-holder">
     @Html.TabbedContentMessagesBox()
-    <div class="bcms-padded-content">
-        @using (Html.BeginForm<PageController>(f => f.DeletePage(null), FormMethod.Post, 
-            new {
-                    @class = "bcms-ajax-form",
-                    data_readonly = (Model.ValidationMessage != null) ? "true" : "false"
-                }))
+
+    <div class="bcms-scroll-window-options">
+        @using (Html.BeginForm<PageController>(f => f.DeletePage(null), FormMethod.Post,
+            new
+            {
+                @class = "bcms-ajax-form",
+                data_readonly = (Model.ValidationMessage != null) ? "true" : "false"
+            }))
         {
             <div class="bcms-input-list-holder">
                 <div class="bcms-content-titles">@PagesGlobalization.DeletePage_Dialog_ConfirmationMessage_Header</div>
                 <div>@PagesGlobalization.DeletePage_Dialog_ConfirmationMessage_Text</div>
             </div>
+
             <div class="bcms-input-list-holder">
                 @Html.Tooltip(PagesGlobalization.DeletePage_Dialog_RedurectUrl_Tooltip_Description)
                 <div class="bcms-content-titles">@PagesGlobalization.DeletePage_Dialog_RedirectUrl</div>

@@ -5,25 +5,26 @@
 
 @model BetterCms.Module.Root.ViewModels.Option.ContentOptionValuesViewModel
 
-<div class="bcms-scroll-window">
-
+<div class="bcms-modal-frame-holder">
     @Html.TabbedContentMessagesBox()
 
-    <div class="bcms-input-list-holder">
-        @if (Model != null)
-        {
-            using (Html.BeginForm<ContentController>(c => c.ChildContentOptions(null, null, null, null), FormMethod.Post,
-                new
-                {
-                    @id = "bcms-options-form",
-                    @class = "bcms-ajax-form",
-                    data_readonly = Model.IsReadOnly.ToString().ToLower()
-                }))
+    <div class="bcms-scroll-window-options">
+        <div class="bcms-input-list-holder">
+            @if (Model != null)
             {
-                @Html.Partial(PagesConstants.OptionValuesGridTemplate)
+                using (Html.BeginForm<ContentController>(c => c.ChildContentOptions(null, null, null, null), FormMethod.Post,
+                    new
+                    {
+                        @id = "bcms-options-form",
+                        @class = "bcms-ajax-form",
+                        data_readonly = Model.IsReadOnly.ToString().ToLower()
+                    }))
+                {
+                    @Html.Partial(PagesConstants.OptionValuesGridTemplate)
 
-                @Html.HiddenFor(model => model.OptionValuesContainerId)
+                    @Html.HiddenFor(model => model.OptionValuesContainerId)
+                }
             }
-        }
+        </div>
     </div>
 </div>

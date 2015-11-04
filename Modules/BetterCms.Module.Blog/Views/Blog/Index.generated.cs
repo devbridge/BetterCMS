@@ -374,25 +374,34 @@ WriteLiteral("            ");
             
             #line default
             #line hidden
-WriteLiteral("\n        </div>\n    </div>\n");
+WriteLiteral("\n        </div>\n    </div>\r\n");
 
             
             #line 101 "..\..\Views\Blog\Index.cshtml"
-    
-    
-            
-            #line default
-            #line hidden
-            
-            #line 102 "..\..\Views\Blog\Index.cshtml"
-Write(Html.Grid(Model.Items).Sort(Model.GridOptions).Columns(columns).Attributes(@class => "bcms-tables").RenderUsing(new EditableHtmlTableGridRenderer<SiteSettingBlogPostViewModel>()));
+
 
             
             #line default
             #line hidden
+WriteLiteral("    <div");
+
+WriteLiteral(" class=\"bcms-scroll-window\"");
+
+WriteLiteral(">\r\n");
+
+WriteLiteral("        ");
+
             
-            #line 102 "..\..\Views\Blog\Index.cshtml"
-                                                                                                                                                                                       
+            #line 103 "..\..\Views\Blog\Index.cshtml"
+   Write(Html.Grid(Model.Items).Sort(Model.GridOptions).Columns(columns).Attributes(@class => "bcms-tables").RenderUsing(new EditableHtmlTableGridRenderer<SiteSettingBlogPostViewModel>()));
+
+            
+            #line default
+            #line hidden
+WriteLiteral("\r\n    </div>\r\n");
+
+            
+            #line 105 "..\..\Views\Blog\Index.cshtml"
 }
 
             
@@ -409,7 +418,7 @@ WriteLiteral(">\n");
 WriteLiteral("    ");
 
             
-            #line 106 "..\..\Views\Blog\Index.cshtml"
+            #line 108 "..\..\Views\Blog\Index.cshtml"
 Write(Html.Grid(new List<SiteSettingBlogPostViewModel> { new SiteSettingBlogPostViewModel() }).Columns(columns).Attributes(@class => "bcms-tables").RenderUsing(new HtmlTableGridSingleRowRenderer<SiteSettingBlogPostViewModel>()));
 
             
@@ -426,7 +435,7 @@ WriteLiteral(">\n");
 WriteLiteral("    ");
 
             
-            #line 110 "..\..\Views\Blog\Index.cshtml"
+            #line 112 "..\..\Views\Blog\Index.cshtml"
 Write(Html.Partial("EditorTemplates/PageStatus", PageStatus.Published));
 
             
@@ -443,7 +452,7 @@ WriteLiteral(">\n");
 WriteLiteral("    ");
 
             
-            #line 114 "..\..\Views\Blog\Index.cshtml"
+            #line 116 "..\..\Views\Blog\Index.cshtml"
 Write(Html.Partial("EditorTemplates/PageStatus", PageStatus.Unpublished));
 
             
@@ -460,7 +469,7 @@ WriteLiteral(">\n");
 WriteLiteral("    ");
 
             
-            #line 118 "..\..\Views\Blog\Index.cshtml"
+            #line 120 "..\..\Views\Blog\Index.cshtml"
 Write(Html.Partial("EditorTemplates/PageStatus", PageStatus.Draft));
 
             

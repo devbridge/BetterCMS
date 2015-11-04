@@ -107,9 +107,11 @@
     <a class="bcms-tab-ui bcms-tab-item bcms-active" data-name="#bcms-tab-1">@PagesGlobalization.ContentHistory_ContentTab_Title</a>
     <a class="bcms-tab-ui bcms-tab-item" data-name="#bcms-tab-2">@PagesGlobalization.ContentHistory_PropertiesTab_Title</a>
 </div>
+
 <div class="bcms-scroll-window">
     <div class="bcms-history-preview-holder">
         @Html.TabbedContentMessagesBox()
+
         <div style="height: 100%; overflow: auto;">
             <div id="bcms-tab-1" class="bcms-tab-single" style="height: 100%">
                 <div class="bcms-history-preview" id="bcms-history-preview" style="height: 100%">
@@ -123,8 +125,8 @@
             </div>
         </div>
     </div>
-    <div class="bcms-history-table-holder">
 
+    <div class="bcms-history-table-holder">
         @using (Html.BeginForm<HistoryController>(f => f.ContentHistory((GetContentHistoryRequest)null), FormMethod.Post, new { @id = "bcms-pagecontenthistory-form", @class = "bcms-ajax-form" }))
         {
             @Html.HiddenGridOptions(Model.GridOptions)

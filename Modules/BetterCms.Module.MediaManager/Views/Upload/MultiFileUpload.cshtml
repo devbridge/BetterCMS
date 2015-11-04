@@ -6,12 +6,13 @@
 @using BetterCms.Module.Root.Mvc
 @using BetterCms.Module.Root.Mvc.Helpers
 @using Microsoft.Web.Mvc
+
 @model BetterCms.Module.MediaManager.ViewModels.Upload.MultiFileUploadViewModel
 
-<div class="bcms-scroll-window">
-    <div class="bcms-modal-frame-holder">
-        @Html.TabbedContentMessagesBox("bcms-multi-file-upload-messages")
+<div class="bcms-modal-frame-holder">
+    @Html.TabbedContentMessagesBox("bcms-multi-file-upload-messages")
 
+    <div class="bcms-scroll-window-options">
         @if (Model != null)
         {
             <div class="bcms-file-manager-inner">
@@ -64,6 +65,7 @@
                     <div data-bind="visible: activeUploads().length > 0">
                         <div class="bcms-content-titles">@MediaGlobalization.MultiFileUpload_Uploading<a class="bcms-icn-delete-link" data-bind="click: cancelAllActiveUploads">@MediaGlobalization.MultiFileUpload_CancelUploading</a></div>
                     </div>
+
                     <div data-bind="foreach: uploads">
                         <div data-bind="css: {
                      'bcms-upload-block': true,

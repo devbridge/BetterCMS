@@ -30,12 +30,12 @@
                         ValueTextBind = "typeName",
                         CanBeEdited = false
                     },
-                                        
+
                 new OptionValueEditableGridColumn(PagesGlobalization.Options_OptionDefaultValueColumn, "defaultValueBinding", "customOptionDefaultTitle")
                     {
                         HiddenFieldName = "Options[{0}].OptionDefaultValue"
                     },
-                    
+
                 new EditableGridHiddenField("type", "Options[{0}].Type"),
                 new EditableGridHiddenField("customType", "Options[{0}].CustomType")
             };

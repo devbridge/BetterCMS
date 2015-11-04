@@ -165,53 +165,53 @@ Write(Html.SiteSettingsMessagesBox());
             
             #line 52 "..\..\Views\Templates\MasterPages.cshtml"
                                    
-    
+
+        
             
             #line default
             #line hidden
             
-            #line 53 "..\..\Views\Templates\MasterPages.cshtml"
-Write(Html.HiddenGridOptions(Model.GridOptions));
+            #line 54 "..\..\Views\Templates\MasterPages.cshtml"
+   Write(Html.HiddenGridOptions(Model.GridOptions));
 
             
             #line default
             #line hidden
             
-            #line 53 "..\..\Views\Templates\MasterPages.cshtml"
-                                              
-
+            #line 54 "..\..\Views\Templates\MasterPages.cshtml"
+                                                  
 
             
             #line default
             #line hidden
-WriteLiteral("    <div");
+WriteLiteral("        <div");
 
 WriteLiteral(" class=\"bcms-top-block-holder\"");
 
-WriteLiteral(">\n        <div");
+WriteLiteral(">\r\n            <div");
 
 WriteLiteral(" class=\"bcms-clearfix\"");
 
-WriteLiteral(">\r\n            <div");
+WriteLiteral(">\r\n                <div");
 
 WriteLiteral(" class=\"bcms-top-block-inner\"");
 
-WriteLiteral(">\r\n                <div");
+WriteLiteral(">\r\n                    <div");
 
 WriteLiteral(" class=\"bcms-search-block\"");
 
 WriteLiteral(">\r\n");
 
-WriteLiteral("                    ");
+WriteLiteral("                        ");
 
             
             #line 59 "..\..\Views\Templates\MasterPages.cshtml"
-               Write(Html.TextBoxFor(m => m.SearchQuery, new { @class = "bcms-editor-field-box bcms-search-query", @placeholder = RootGlobalization.WaterMark_Search }));
+                   Write(Html.TextBoxFor(m => m.SearchQuery, new { @class = "bcms-editor-field-box bcms-search-query", @placeholder = RootGlobalization.WaterMark_Search }));
 
             
             #line default
             #line hidden
-WriteLiteral("\r\n                    <div");
+WriteLiteral("\r\n                        <div");
 
 WriteLiteral(" class=\"bcms-btn-search\"");
 
@@ -221,12 +221,12 @@ WriteLiteral(">");
 
             
             #line 60 "..\..\Views\Templates\MasterPages.cshtml"
-                                                                       Write(PagesGlobalization.SiteSettings_Pages_Search);
+                                                                           Write(PagesGlobalization.SiteSettings_Pages_Search);
 
             
             #line default
             #line hidden
-WriteLiteral("</div>\r\n                </div>\r\n\r\n                <div");
+WriteLiteral("</div>\r\n                    </div>\r\n\r\n                    <div");
 
 WriteLiteral(" class=\"bcms-btn-main\"");
 
@@ -236,45 +236,45 @@ WriteLiteral(">");
 
             
             #line 63 "..\..\Views\Templates\MasterPages.cshtml"
-                                                                   Write(PagesGlobalization.SiteSettings_Pages_AddNew);
+                                                                       Write(PagesGlobalization.SiteSettings_Pages_AddNew);
 
             
             #line default
             #line hidden
-WriteLiteral("</div>\r\n            </div>\r\n        </div>\n\n        <div");
+WriteLiteral("</div>\r\n                </div>\r\n            </div>\r\n            <div");
 
 WriteLiteral(" class=\"bcms-top-block-pager\"");
 
-WriteLiteral(">\n");
+WriteLiteral(">\r\n");
 
-WriteLiteral("            ");
+WriteLiteral("                ");
 
             
-            #line 68 "..\..\Views\Templates\MasterPages.cshtml"
-       Write(Html.RenderPaging(Model));
+            #line 67 "..\..\Views\Templates\MasterPages.cshtml"
+           Write(Html.RenderPaging(Model));
 
             
             #line default
             #line hidden
-WriteLiteral("\n        </div>\n    </div>\n");
+WriteLiteral("\r\n            </div>\r\n        </div>\r\n");
 
+            
+            #line 70 "..\..\Views\Templates\MasterPages.cshtml"
+
+        
+            
+            #line default
+            #line hidden
             
             #line 71 "..\..\Views\Templates\MasterPages.cshtml"
-
-    
-            
-            #line default
-            #line hidden
-            
-            #line 72 "..\..\Views\Templates\MasterPages.cshtml"
-Write(Html.Grid(Model.Items).Sort(Model.GridOptions).Columns(columns).Attributes(@class => "bcms-tables").RenderUsing(new EditableHtmlTableGridRenderer<SiteSettingPageViewModel>()));
+   Write(Html.Grid(Model.Items).Sort(Model.GridOptions).Columns(columns).Attributes(@class => "bcms-tables").RenderUsing(new EditableHtmlTableGridRenderer<SiteSettingPageViewModel>()));
 
             
             #line default
             #line hidden
             
-            #line 72 "..\..\Views\Templates\MasterPages.cshtml"
-                                                                                                                                                                                   
+            #line 71 "..\..\Views\Templates\MasterPages.cshtml"
+                                                                                                                                                                                       
 }
 
             
@@ -291,7 +291,7 @@ WriteLiteral(">\n");
 WriteLiteral("    ");
 
             
-            #line 76 "..\..\Views\Templates\MasterPages.cshtml"
+            #line 75 "..\..\Views\Templates\MasterPages.cshtml"
 Write(Html.Grid(new List<SiteSettingPageViewModel> { new SiteSettingPageViewModel() }).Columns(columns).Attributes(@class => "bcms-tables").RenderUsing(new HtmlTableGridSingleRowRenderer<SiteSettingPageViewModel>()));
 
             

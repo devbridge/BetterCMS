@@ -1,3 +1,8 @@
+$dialog-window-options: (
+                ('settings'),
+                ('tabbed'),
+                ('options')
+);
 html,
 body {
     height: 100%;
@@ -32,21 +37,38 @@ a {
 }
 
 //todo remove when iFrame implemented
-[class*="bcms-"] {
-    font-family: $font-base-family;
-}
+//[class*="bcms-"] {
+//    font-family: $font-base-family;
+//}
 
 //todo end of
 .bcms-scroll-window {
-    overflow: auto;
-    position: relative;
-}
+    @each $name in $dialog-window-options {
+        &-#{$name} {
+            overflow: {
+                x: hidden;
+                y: scroll;
+            }
+            position: relative;
+        }
+    }
 
-//fixme remove from html
-//.bcms-padded-content {
-//    max-width: 830px;
-//    padding-left: 50px;
-//}
+    &-settings {
+        height: calc(100vh - #{$settings-frame});
+        padding-right: 30px;
+    }
+
+    &-tabbed {
+        height: calc(100vh - #{$settings-frame - $inner-navigation});
+        padding-right: 30px;
+    }
+
+    &-options {
+        @include pad(30px);
+        background-color: $white;
+        height: calc(100vh - #{$settings-frame + $tab-height});
+    }
+}
 
 .bcms-modal {
     @include position(fixed, 0);
@@ -59,17 +81,10 @@ a {
         margin: auto;
         max-width: $page-width;
         position: relative;
-
-        .bcms-scroll-window & {
-            background-color: $white;
-            border: {
-                right: $border-frame;
-                left: $border-frame;
-            }
-        }
     }
 
     &-body {
+        height: 100vh;
         margin: auto;
         position: relative;
     }
@@ -145,7 +160,7 @@ a {
 
 .bcms-settings {
     &-frame {
-        @include size($page-width 100%);
+        @include size($page-width calc(100vh - #{$settings-frame}));
         background-color: $white;
         border: {
             right: $border-frame;
@@ -165,7 +180,7 @@ a {
 
     &-window {
         @include vertical-align($block: table-cell, $align: top);
-        @include pad(30px);
+        padding-left: 30px;
     }
 
     &-link {

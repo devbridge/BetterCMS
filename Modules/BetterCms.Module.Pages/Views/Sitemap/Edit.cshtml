@@ -5,6 +5,7 @@
 @using BetterCms.Module.Root.Mvc.Helpers
 @using BetterCms.Module.Root.ViewModels.Tags
 @using Microsoft.Web.Mvc
+
 @model SitemapViewModel
 @{
     var tagsTemplateViewModel = new TagsTemplateViewModel
@@ -12,6 +13,7 @@
         TooltipDescription = NavigationGlobalization.Sitemap_EditDialog_AddTags_Tooltip_Description
     };
 }
+
 <div class="bcms-tab-header bcms-js-tab-header">
     <div class="bcms-modal-frame-holder">
         <a class="bcms-tab-ui bcms-tab-item bcms-active" data-name="#bcms-tab-1">Properties</a>
@@ -20,17 +22,18 @@
 </div>
 
 <div class="bcms-modal-frame-holder">
-    <div id="bcms-sitemap-addnode">
-        @Html.TabbedContentMessagesBox()
-        @* Form is required for unobtrusive validation. *@
-        @using (Html.BeginForm<SitemapController>(f => f.EditSitemap(null), FormMethod.Post, new
+    @Html.TabbedContentMessagesBox()
+
+    <div class="bcms-scroll-window-options">
+        <div id="bcms-sitemap-addnode">
+            @* Form is required for unobtrusive validation. *@
+            @using (Html.BeginForm<SitemapController>(f => f.EditSitemap(null), FormMethod.Post, new
         {
             @class = "bcms-sitemap-form bcms-ajax-form",
             data_readonly = Model.IsReadOnly.ToString().ToLower()
         }))
-        {
-            <div id="bcms-tab-1" class="bcms-tab-single">
-                <div class="bcms-padded-content">
+            {
+                <div id="bcms-tab-1" class="bcms-tab-single">
                     <div class="bcms-input-list-holder">
                         @Html.Tooltip(NavigationGlobalization.Sitemap_EditDialog_SitemapTitle_Tooltip_Description)
                         <div class="bcms-content-titles">@NavigationGlobalization.Sitemap_EditDialog_SitemapTitle_Title</div>
@@ -41,17 +44,18 @@
                             @Html.HiddenFor(m => m.Version)
                         </div>
                     </div>
+
                     <div class="bcms-tags-box-holder" data-bind="with: tags">
                         @Html.Partial("~/Areas/bcms-root/Views/Tags/TagsTemplate.cshtml", tagsTemplateViewModel)
                     </div>
+
                     @if (Model.AccessControlEnabled)
-                {
-                @Html.Partial(RootModuleConstants.AccessControlTemplate)
-                }
+                    {
+                    @Html.Partial(RootModuleConstants.AccessControlTemplate)
+                    }
                 </div>
-            </div>
-            <div id="bcms-tab-2" class="bcms-tab-single">
-                <div class="bcms-scroll-window">
+
+                <div id="bcms-tab-2" class="bcms-tab-single">
                     <div class="bcms-columns-container">
                         <div class="bcms-sitemap-filter-holder" data-bind="with: sitemap">
                             <div class="bcms-language-bar" style="display: none;" data-bind="visible: showLanguages, with: language">
@@ -60,6 +64,7 @@
                                     <select class="bcms-global-select" data-bind="options: languages, optionsText: 'value', optionsValue: 'key', value: languageId"></select>
                                 </div>
                             </div>
+
                             <div class="bcms-expand-link-holder" @* data-bind="droppable: 'emptyListZone'" TODO: check later. NOTE: jQuery error is raised on leave over. *@>
                                 <div class="bcms-expand-link" data-bind="click: expandAll">@NavigationGlobalization.Sitemap_Button_ExpandAll</div>
                                 <div class="bcms-expand-link" data-bind="click: collapseAll">@NavigationGlobalization.Sitemap_Button_CollapseAll</div>
@@ -69,7 +74,7 @@
                         <div class="bcms-leftcol bcms-add-node-col">
                             <div class="bcms-sitemap-links-holder" data-bind="template: { name: 'bcms-navigation-pagelinks-template' }"></div>
                         </div>
-                        
+
                         <div class="bcms-rightcol">
                             <div class="bcms-sitemap-holder bcms-sitemap-edit">
                                 <div class="bcms-addnode-placement-holder@(Model.IsReadOnly ? "-readonly" : string.Empty)">
@@ -79,12 +84,12 @@
                         </div>
                     </div>
                 </div>
-            </div>
-        }
+            }
+        </div>
+
+        @Html.Partial("Partial/SitemapTemplate", new SitemapNodeViewModel())
     </div>
 </div>
-
-@Html.Partial("Partial/SitemapTemplate", new SitemapNodeViewModel())
 
 <script type="text/html" id="bcms-navigation-pagelinks-template">
     <div class="bcms-plain-text">@NavigationGlobalization.Sitemap_EditDialog_PageLink_Header</div>

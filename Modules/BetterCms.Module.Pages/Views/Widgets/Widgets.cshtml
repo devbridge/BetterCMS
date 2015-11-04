@@ -9,9 +9,8 @@
 @using BetterCms.Module.Root.Mvc.Helpers
 @using Microsoft.Web.Mvc
 @using MvcContrib.UI.Grid
+
 @model SiteSettingWidgetListViewModel
-
-
 @{
     var controller = (CmsControllerBase)ViewContext.Controller;
     var roles = string.Format("{0},{1},{2}",
@@ -49,38 +48,36 @@
         column.DeleteButtonColumn(renderId: false);
     };
 }
+
 @using (Html.BeginForm<WidgetsController>(f => f.Widgets(null), FormMethod.Post, new { @id = "bcms-widgets-form", @class = "bcms-ajax-form" }))
 {
     @Html.SiteSettingsMessagesBox()
-    @Html.HiddenGridOptions(Model.GridOptions)
 
-    <div class="bcms-top-block-holder">
-        <div class="bcms-clearfix">
-            <div class="bcms-large-titles">@PagesGlobalization.SiteSettings_Widgets_Title</div>
+    <div class="bcms-scroll-window-settings">
+        @Html.HiddenGridOptions(Model.GridOptions)
 
-            <div class="bcms-top-block-inner">
-                <div class="bcms-search-block">
-                    @Html.TextBoxFor(m => m.SearchQuery, new { @class = "bcms-search-field-box bcms-search-query", @placeholder = RootGlobalization.WaterMark_Search })
-                    <div class="bcms-btn-search" id="bcms-widget-search-btn">@PagesGlobalization.SiteSettings_Widgets_Search</div>
+        <div class="bcms-top-block-holder">
+            <div class="bcms-clearfix">
+                <div class="bcms-large-titles">@PagesGlobalization.SiteSettings_Widgets_Title</div>
+
+                <div class="bcms-top-block-inner">
+                    <div class="bcms-search-block">
+                        @Html.TextBoxFor(m => m.SearchQuery, new { @class = "bcms-search-field-box bcms-search-query", @placeholder = RootGlobalization.WaterMark_Search })
+                        <div class="bcms-btn-search" id="bcms-widget-search-btn">@PagesGlobalization.SiteSettings_Widgets_Search</div>
+                    </div>
+
+                    <div class="bcms-btn-main" id="bcms-create-widget-button">@PagesGlobalization.SiteSettings_Widgets_AddNew</div>
+
+                    <div class="bcms-btn-main" id="bcms-register-widget-button">@PagesGlobalization.SiteSettings_Widgets_RegisterNew</div>
                 </div>
+            </div>
 
-                <div class="bcms-btn-main" id="bcms-create-widget-button">@PagesGlobalization.SiteSettings_Widgets_AddNew</div>
-
-                <div class="bcms-btn-main" id="bcms-register-widget-button">@PagesGlobalization.SiteSettings_Widgets_RegisterNew</div>
+            <div class="bcms-top-block-pager">
+                @Html.RenderPaging(Model)
             </div>
         </div>
-
-        <div class="bcms-top-block-pager">
-            @Html.RenderPaging(Model)
-        </div>
-    </div>
-
-    @(Html
-          .Grid(Model.Items)
-          .Sort(Model.GridOptions)
-          .Columns(columns)
-          .Attributes(@class => "bcms-tables")
-          .RowAttributes(delegate(GridRowViewData<SiteSettingWidgetItemViewModel> row)
+        
+        @(Html.Grid(Model.Items).Sort(Model.GridOptions).Columns(columns).Attributes(@class => "bcms-tables").RowAttributes(delegate(GridRowViewData<SiteSettingWidgetItemViewModel> row)
                   {
                       return new Dictionary<string, object>
                               {
@@ -90,14 +87,10 @@
                                     {"data-version", row.Item.Version},
                                     {"data-original-version", row.Item.OriginalVersion}
                               };
-                  })
-          .RenderUsing(new EditableHtmlTableGridRenderer<SiteSettingWidgetItemViewModel>()))
+                  }).RenderUsing(new EditableHtmlTableGridRenderer<SiteSettingWidgetItemViewModel>()))
+    </div>
 }
 
 <script type="text/html" id="bcms-widget-list-row-template">
-    @(Html
-        .Grid(new List<SiteSettingWidgetItemViewModel> { new SiteSettingWidgetItemViewModel() })
-        .Columns(columns)
-        .Attributes(@class => "bcms-tables")
-        .RenderUsing(new HtmlTableGridSingleRowRenderer<SiteSettingWidgetItemViewModel>()))
+    @(Html.Grid(new List<SiteSettingWidgetItemViewModel> { new SiteSettingWidgetItemViewModel() }).Columns(columns).Attributes(@class => "bcms-tables").RenderUsing(new HtmlTableGridSingleRowRenderer<SiteSettingWidgetItemViewModel>()))
 </script>

@@ -5,7 +5,6 @@
 @using BetterCms.Module.Root.Mvc.Helpers
 @using BetterCms.Module.Root.ViewModels.Category
 @using Microsoft.Web.Mvc
-
 @model EditServerControlWidgetViewModel
 
 @{
@@ -14,23 +13,26 @@
         TooltipDescription = PagesGlobalization.EditPageProperties_BasicPropertiesTab_Category_Tooltip_Description
     };
 }
-
 @if (Model == null)
 {
     return;
 }
+
 <div class="bcms-tab-header bcms-js-tab-header">
-    <a class="bcms-tab-ui bcms-tab-item bcms-active" data-name="#bcms-tab-1">@PagesGlobalization.EditWidget_BasicPropertiesTab_Title</a>
-    <a class="bcms-tab-ui bcms-tab-item" data-name="#bcms-tab-2">@PagesGlobalization.EditWidget_OptionsTab_Title</a>
+    <div class="bcms-modal-frame-holder">
+        <a class="bcms-tab-ui bcms-tab-item bcms-active" data-name="#bcms-tab-1">@PagesGlobalization.EditWidget_BasicPropertiesTab_Title</a>
+        <a class="bcms-tab-ui bcms-tab-item" data-name="#bcms-tab-2">@PagesGlobalization.EditWidget_OptionsTab_Title</a>
+    </div>
 </div>
 
-<div class="bcms-scroll-window">
+<div class="bcms-modal-frame-holder">
     @Html.TabbedContentMessagesBox("bcms-edit-widget-messages")
     @Html.Partial("Partial/WarnMessageAboutDraft", Model)
-    @using (Html.BeginForm<WidgetsController>(c => c.EditServerControlWidget((string)null), FormMethod.Post, new { @id = "bcms-widget-form", @class = "bcms-ajax-form" }))
-    {
-        <div id="bcms-tab-1" class="bcms-tab-single">
-            <div class="bcms-padded-content">
+
+    <div class="bcms-scroll-window-options">
+        @using (Html.BeginForm<WidgetsController>(c => c.EditServerControlWidget((string)null), FormMethod.Post, new { @id = "bcms-widget-form", @class = "bcms-ajax-form" }))
+        {
+            <div id="bcms-tab-1" class="bcms-tab-single">
                 <div class="bcms-input-list-holder">
                     @Html.Tooltip(PagesGlobalization.Widget_Title_Tooltip_Description)
                     <div class="bcms-content-titles">@PagesGlobalization.Widget_Title_Title</div>
@@ -40,12 +42,6 @@
                     </div>
                 </div>
 
-@*                <div class="bcms-input-list-holder">*@
-@*                    @Html.Tooltip(PagesGlobalization.Widget_Category_Tooltip_Description)*@
-@*                    <div class="bcms-content-titles">@PagesGlobalization.Widget_Category_Title</div>*@
-@*                    @Html.MultipleDropDown(Model.Categories.ToSelectListItems(Model.SelectedCategories), new { @class = "multiple-dropdown-select" })*@
-@*                </div>*@
-                
                 <div class="bcms-input-list-holder">
                     @Html.Tooltip(PagesGlobalization.Widget_Url_Tooltip_Description)
                     <div class="bcms-content-titles">@PagesGlobalization.Widget_Url_Title</div>
@@ -71,26 +67,23 @@
                 <div class="bcms-input-list-holder">
                     @Html.Tooltip(PagesGlobalization.WidgetPreviewImage_Tooltip_Description)
                     <div class="bcms-content-titles">@PagesGlobalization.WidgetPreviewImage_Title</div>
-
                     <div class="bcms-preview-module-image">
                         <div style="display: none;">
                             <img id="bcms-widget-preview-image" src="@Model.PreviewImageUrl" alt="" />
                         </div>
                     </div>
-
                 </div>
             </div>
-        </div>
-                
-        <div id="bcms-tab-2" class="bcms-tab-single">
-            @Html.Partial(PagesConstants.OptionsGridTemplate)
-        </div>
-        
-        @Html.HiddenFor(model => model.Id, new { @id = "bcmsContentId" })
-        @Html.HiddenFor(model => model.Version, new { @id = "bcmsContentVersion" })
-        @Html.HiddenFor(modal => modal.DesirableStatus, new { @class = "bcms-content-desirable-status" })
-        @Html.HiddenFor(modal => modal.PreviewOnPageContentId, new { @class = "bcms-preview-page-content-id" })
-        @Html.HiddenSubmit()
-    }
-</div>
 
+            <div id="bcms-tab-2" class="bcms-tab-single">
+                @Html.Partial(PagesConstants.OptionsGridTemplate)
+            </div>
+
+            @Html.HiddenFor(model => model.Id, new { @id = "bcmsContentId" })
+            @Html.HiddenFor(model => model.Version, new { @id = "bcmsContentVersion" })
+            @Html.HiddenFor(modal => modal.DesirableStatus, new { @class = "bcms-content-desirable-status" })
+            @Html.HiddenFor(modal => modal.PreviewOnPageContentId, new { @class = "bcms-preview-page-content-id" })
+            @Html.HiddenSubmit()
+        }
+    </div>
+</div>

@@ -4,12 +4,12 @@
 @using BetterCms.Module.Root
 @using BetterCms.Module.Root.Mvc.Helpers
 @using Microsoft.Web.Mvc
-
 @model ClonePageWithLanguageViewModel
 
-<div class="bcms-scroll-window">
+<div class="bcms-modal-frame-holder">
     @Html.TabbedContentMessagesBox()
-    <div class="bcms-padded-content">
+
+    <div class="bcms-scroll-window-options">
         @using (Html.BeginForm<PageController>(f => f.ClonePageWithLanguage((string)null), FormMethod.Post,
             new
             {

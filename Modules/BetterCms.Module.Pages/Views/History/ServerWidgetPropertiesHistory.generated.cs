@@ -47,171 +47,171 @@ WriteLiteral("<div");
 
 WriteLiteral(" class=\"bcms-padded-content\"");
 
-WriteLiteral(">\r\n    <div");
+WriteLiteral(">\n    <div");
 
 WriteLiteral(" class=\"bcms-input-list-holder\"");
 
-WriteLiteral(">\r\n        <div");
+WriteLiteral(">\n        <div");
 
 WriteLiteral(" class=\"bcms-content-titles\"");
 
 WriteLiteral(">");
 
             
-            #line 5 "..\..\Views\History\ServerWidgetPropertiesHistory.cshtml"
+            #line 6 "..\..\Views\History\ServerWidgetPropertiesHistory.cshtml"
                                     Write(PagesGlobalization.Widget_Title_Title);
 
             
             #line default
             #line hidden
-WriteLiteral("</div>\r\n        <div");
+WriteLiteral("</div>\n        <div");
 
 WriteLiteral(" class=\"bcms-input-box\"");
 
-WriteLiteral(">\r\n");
+WriteLiteral(">\n");
 
 WriteLiteral("            ");
 
             
-            #line 7 "..\..\Views\History\ServerWidgetPropertiesHistory.cshtml"
+            #line 8 "..\..\Views\History\ServerWidgetPropertiesHistory.cshtml"
        Write(Html.TextBoxFor(model => model.Name, new { @readonly = "readonly", @class = "bcms-editor-field-box" }));
 
             
             #line default
             #line hidden
-WriteLiteral("\r\n        </div>\r\n    </div>\r\n    <div");
+WriteLiteral("\n        </div>\n    </div>\n    <div");
 
 WriteLiteral(" class=\"bcms-input-list-holder\"");
 
-WriteLiteral(">\r\n        <div");
+WriteLiteral(">\n        <div");
 
 WriteLiteral(" class=\"bcms-content-titles\"");
 
 WriteLiteral(">");
 
             
-            #line 11 "..\..\Views\History\ServerWidgetPropertiesHistory.cshtml"
+            #line 12 "..\..\Views\History\ServerWidgetPropertiesHistory.cshtml"
                                     Write(PagesGlobalization.Widget_Url_Title);
 
             
             #line default
             #line hidden
-WriteLiteral("</div>\r\n        <div");
+WriteLiteral("</div>\n        <div");
 
 WriteLiteral(" class=\"bcms-input-box\"");
 
-WriteLiteral(">\r\n");
+WriteLiteral(">\n");
 
 WriteLiteral("            ");
 
             
-            #line 13 "..\..\Views\History\ServerWidgetPropertiesHistory.cshtml"
+            #line 14 "..\..\Views\History\ServerWidgetPropertiesHistory.cshtml"
        Write(Html.TextBoxFor(model => model.Url, new { @readonly = "readonly", @class = "bcms-editor-field-box" }));
 
             
             #line default
             #line hidden
-WriteLiteral("\r\n        </div>\r\n    </div>\r\n");
+WriteLiteral("\n        </div>\n    </div>\n");
 
-WriteLiteral("\r\n");
+WriteLiteral("\n");
 
-WriteLiteral("\r\n");
+WriteLiteral("\n");
 
-WriteLiteral("\r\n    <div");
+WriteLiteral("\n    <div");
 
 WriteLiteral(" class=\"bcms-input-list-holder\"");
 
-WriteLiteral(">\r\n        <div");
+WriteLiteral(">\n        <div");
 
 WriteLiteral(" class=\"bcms-content-titles\"");
 
 WriteLiteral(">");
 
             
-            #line 20 "..\..\Views\History\ServerWidgetPropertiesHistory.cshtml"
+            #line 21 "..\..\Views\History\ServerWidgetPropertiesHistory.cshtml"
                                     Write(PagesGlobalization.WidgetPreviewImageUrl_Title);
 
             
             #line default
             #line hidden
-WriteLiteral("</div>\r\n        <div");
+WriteLiteral("</div>\n        <div");
 
 WriteLiteral(" class=\"bcms-input-box\"");
 
-WriteLiteral(">\r\n");
+WriteLiteral(">\n");
 
 WriteLiteral("            ");
 
             
-            #line 22 "..\..\Views\History\ServerWidgetPropertiesHistory.cshtml"
+            #line 23 "..\..\Views\History\ServerWidgetPropertiesHistory.cshtml"
        Write(Html.TextBoxFor(model => model.PreviewUrl, new { @readonly = "readonly", @class = "bcms-editor-field-box" }));
 
             
             #line default
             #line hidden
-WriteLiteral("\r\n        </div>\r\n    </div>\r\n    <div");
+WriteLiteral("\n        </div>\n    </div>\n    <div");
 
 WriteLiteral(" class=\"bcms-input-list-holder\"");
 
-WriteLiteral(">\r\n        <div");
+WriteLiteral(">\n        <div");
 
 WriteLiteral(" class=\"bcms-content-titles\"");
 
 WriteLiteral(">");
 
             
-            #line 26 "..\..\Views\History\ServerWidgetPropertiesHistory.cshtml"
+            #line 27 "..\..\Views\History\ServerWidgetPropertiesHistory.cshtml"
                                     Write(PagesGlobalization.WidgetPreviewImage_Title);
 
             
             #line default
             #line hidden
-WriteLiteral("</div>\r\n        <div");
+WriteLiteral("</div>\n        <div");
 
 WriteLiteral(" class=\"bcms-preview-module-image\"");
 
-WriteLiteral(">\r\n");
+WriteLiteral(">\n");
 
             
-            #line 28 "..\..\Views\History\ServerWidgetPropertiesHistory.cshtml"
+            #line 29 "..\..\Views\History\ServerWidgetPropertiesHistory.cshtml"
             
             
             #line default
             #line hidden
             
-            #line 28 "..\..\Views\History\ServerWidgetPropertiesHistory.cshtml"
+            #line 29 "..\..\Views\History\ServerWidgetPropertiesHistory.cshtml"
              if (!string.IsNullOrWhiteSpace(Model.PreviewUrl))
             {
 
             
             #line default
             #line hidden
-WriteLiteral("                <div>\r\n                    <img");
+WriteLiteral("                <div>\n                    <img");
 
 WriteLiteral(" id=\"bcms-widget-preview-image\"");
 
-WriteAttribute("src", Tuple.Create(" src=\"", 1659), Tuple.Create("\"", 1682)
+WriteAttribute("src", Tuple.Create(" src=\"", 1630), Tuple.Create("\"", 1653)
             
-            #line 31 "..\..\Views\History\ServerWidgetPropertiesHistory.cshtml"
-, Tuple.Create(Tuple.Create("", 1665), Tuple.Create<System.Object, System.Int32>(Model.PreviewUrl
+            #line 32 "..\..\Views\History\ServerWidgetPropertiesHistory.cshtml"
+, Tuple.Create(Tuple.Create("", 1636), Tuple.Create<System.Object, System.Int32>(Model.PreviewUrl
             
             #line default
             #line hidden
-, 1665), false)
+, 1636), false)
 );
 
 WriteLiteral(" alt=\"\"");
 
-WriteLiteral("/>\r\n                </div>\r\n");
+WriteLiteral("/>\n                </div>\n");
 
             
-            #line 33 "..\..\Views\History\ServerWidgetPropertiesHistory.cshtml"
+            #line 34 "..\..\Views\History\ServerWidgetPropertiesHistory.cshtml"
             }
 
             
             #line default
             #line hidden
-WriteLiteral("        </div>\r\n    </div>\r\n</div>");
+WriteLiteral("        </div>\n    </div>\n</div>");
 
         }
     }
