@@ -140,7 +140,7 @@ Write(Html.TabbedContentMessagesBox());
             #line hidden
 WriteLiteral("\r\n\r\n    <div");
 
-WriteLiteral(" class=\"bcms-scroll-window-options\"");
+WriteLiteral(" class=\"bcms-window-options\"");
 
 WriteLiteral(">\r\n        <div");
 
@@ -384,14 +384,14 @@ WriteLiteral(" class=\"bcms-editor-field-box bcms-editor-selectable-field-box\""
 
 WriteLiteral(" type=\"text\"");
 
-WriteAttribute("value", Tuple.Create(" value=\"", 3545), Tuple.Create("\"", 3563)
+WriteAttribute("value", Tuple.Create(" value=\"", 3538), Tuple.Create("\"", 3556)
             
             #line 61 "..\..\Views\Images\ImageEditor.cshtml"
-                                     , Tuple.Create(Tuple.Create("", 3553), Tuple.Create<System.Object, System.Int32>(Model.Url
+                                     , Tuple.Create(Tuple.Create("", 3546), Tuple.Create<System.Object, System.Int32>(Model.Url
             
             #line default
             #line hidden
-, 3553), false)
+, 3546), false)
 );
 
 WriteLiteral(" readonly=\"readonly\"");
@@ -879,15 +879,15 @@ WriteLiteral(" class=\"bcms-alignment-controls\"");
 
 WriteLiteral(">\r\n                        <div");
 
-WriteAttribute("class", Tuple.Create(" class=\"", 9443), Tuple.Create("\"", 9540)
-, Tuple.Create(Tuple.Create("", 9451), Tuple.Create("bcms-align-center", 9451), true)
+WriteAttribute("class", Tuple.Create(" class=\"", 9436), Tuple.Create("\"", 9533)
+, Tuple.Create(Tuple.Create("", 9444), Tuple.Create("bcms-align-center", 9444), true)
             
             #line 136 "..\..\Views\Images\ImageEditor.cshtml"
-, Tuple.Create(Tuple.Create("", 9468), Tuple.Create<System.Object, System.Int32>(Model.ImageAlign == MediaImageAlign.Center ? "-active" : string.Empty
+, Tuple.Create(Tuple.Create("", 9461), Tuple.Create<System.Object, System.Int32>(Model.ImageAlign == MediaImageAlign.Center ? "-active" : string.Empty
             
             #line default
             #line hidden
-, 9468), false)
+, 9461), false)
 );
 
 WriteLiteral(">\r\n                            <input");
@@ -896,14 +896,14 @@ WriteLiteral(" type=\"radio\"");
 
 WriteLiteral(" name=\"ImageAlign\"");
 
-WriteAttribute("value", Tuple.Create(" value=\"", 9609), Tuple.Create("\"", 9647)
+WriteAttribute("value", Tuple.Create(" value=\"", 9602), Tuple.Create("\"", 9640)
             
             #line 137 "..\..\Views\Images\ImageEditor.cshtml"
-, Tuple.Create(Tuple.Create("", 9617), Tuple.Create<System.Object, System.Int32>((int)MediaImageAlign.Center
+, Tuple.Create(Tuple.Create("", 9610), Tuple.Create<System.Object, System.Int32>((int)MediaImageAlign.Center
             
             #line default
             #line hidden
-, 9617), false)
+, 9610), false)
 );
 
 WriteLiteral(" ");
@@ -918,15 +918,15 @@ WriteLiteral(" ");
 WriteLiteral(" data-bind=\"checked: imageAlign\" />\r\n                        </div>\r\n            " +
 "            <div");
 
-WriteAttribute("class", Tuple.Create(" class=\"", 9818), Tuple.Create("\"", 9911)
-, Tuple.Create(Tuple.Create("", 9826), Tuple.Create("bcms-align-left", 9826), true)
+WriteAttribute("class", Tuple.Create(" class=\"", 9811), Tuple.Create("\"", 9904)
+, Tuple.Create(Tuple.Create("", 9819), Tuple.Create("bcms-align-left", 9819), true)
             
             #line 139 "..\..\Views\Images\ImageEditor.cshtml"
-, Tuple.Create(Tuple.Create("", 9841), Tuple.Create<System.Object, System.Int32>(Model.ImageAlign == MediaImageAlign.Left ? "-active" : string.Empty
+, Tuple.Create(Tuple.Create("", 9834), Tuple.Create<System.Object, System.Int32>(Model.ImageAlign == MediaImageAlign.Left ? "-active" : string.Empty
             
             #line default
             #line hidden
-, 9841), false)
+, 9834), false)
 );
 
 WriteLiteral(">\r\n                            <input");
@@ -935,14 +935,14 @@ WriteLiteral(" type=\"radio\"");
 
 WriteLiteral(" name=\"ImageAlign\"");
 
-WriteAttribute("value", Tuple.Create(" value=\"", 9980), Tuple.Create("\"", 10016)
+WriteAttribute("value", Tuple.Create(" value=\"", 9973), Tuple.Create("\"", 10009)
             
             #line 140 "..\..\Views\Images\ImageEditor.cshtml"
-, Tuple.Create(Tuple.Create("", 9988), Tuple.Create<System.Object, System.Int32>((int)MediaImageAlign.Left
+, Tuple.Create(Tuple.Create("", 9981), Tuple.Create<System.Object, System.Int32>((int)MediaImageAlign.Left
             
             #line default
             #line hidden
-, 9988), false)
+, 9981), false)
 );
 
 WriteLiteral(" ");
@@ -957,15 +957,15 @@ WriteLiteral(" ");
 WriteLiteral(" data-bind=\"checked: imageAlign\" />\r\n                        </div>\r\n            " +
 "            <div");
 
-WriteAttribute("class", Tuple.Create(" class=\"", 10185), Tuple.Create("\"", 10280)
-, Tuple.Create(Tuple.Create("", 10193), Tuple.Create("bcms-align-right", 10193), true)
+WriteAttribute("class", Tuple.Create(" class=\"", 10178), Tuple.Create("\"", 10273)
+, Tuple.Create(Tuple.Create("", 10186), Tuple.Create("bcms-align-right", 10186), true)
             
             #line 142 "..\..\Views\Images\ImageEditor.cshtml"
-, Tuple.Create(Tuple.Create("", 10209), Tuple.Create<System.Object, System.Int32>(Model.ImageAlign == MediaImageAlign.Right ? "-active" : string.Empty
+, Tuple.Create(Tuple.Create("", 10202), Tuple.Create<System.Object, System.Int32>(Model.ImageAlign == MediaImageAlign.Right ? "-active" : string.Empty
             
             #line default
             #line hidden
-, 10209), false)
+, 10202), false)
 );
 
 WriteLiteral(">\r\n                            <input");
@@ -974,14 +974,14 @@ WriteLiteral(" type=\"radio\"");
 
 WriteLiteral(" name=\"ImageAlign\"");
 
-WriteAttribute("value", Tuple.Create(" value=\"", 10349), Tuple.Create("\"", 10386)
+WriteAttribute("value", Tuple.Create(" value=\"", 10342), Tuple.Create("\"", 10379)
             
             #line 143 "..\..\Views\Images\ImageEditor.cshtml"
-, Tuple.Create(Tuple.Create("", 10357), Tuple.Create<System.Object, System.Int32>((int)MediaImageAlign.Right
+, Tuple.Create(Tuple.Create("", 10350), Tuple.Create<System.Object, System.Int32>((int)MediaImageAlign.Right
             
             #line default
             #line hidden
-, 10357), false)
+, 10350), false)
 );
 
 WriteLiteral(" ");

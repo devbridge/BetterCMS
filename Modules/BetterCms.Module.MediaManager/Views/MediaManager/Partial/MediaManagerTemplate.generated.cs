@@ -94,10 +94,10 @@ Write(Html.SiteSettingsMessagesBox(null, new Dictionary<string, string> { { "dat
             
             #line default
             #line hidden
-WriteLiteral("\r\n\r\n    <div class=\"bcms-scroll-window-settings\">\r\n        <div class=\"bcms-top-b" +
-"lock-holder\">\r\n            <div class=\"bcms-clearfix\">\r\n                <div cla" +
-"ss=\"bcms-top-block-inner\">\r\n                    <div class=\"bcms-media-controls-" +
-"holder\">\r\n");
+WriteLiteral("\r\n\r\n    <div class=\"bcms-window-settings\">\r\n        <div class=\"bcms-top-block-ho" +
+"lder\">\r\n            <div class=\"bcms-clearfix\">\r\n                <div class=\"bcm" +
+"s-top-block-inner\">\r\n                    <div class=\"bcms-media-controls-holder\"" +
+">\r\n");
 
             
             #line 19 "..\..\Views\MediaManager\Partial\MediaManagerTemplate.cshtml"

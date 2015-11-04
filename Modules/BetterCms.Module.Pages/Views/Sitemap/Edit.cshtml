@@ -24,7 +24,7 @@
 <div class="bcms-modal-frame-holder">
     @Html.TabbedContentMessagesBox()
 
-    <div class="bcms-scroll-window-options">
+    <div class="bcms-window-tabbed-options">
         <div id="bcms-sitemap-addnode">
             @* Form is required for unobtrusive validation. *@
             @using (Html.BeginForm<SitemapController>(f => f.EditSitemap(null), FormMethod.Post, new

@@ -18,7 +18,7 @@
 </div>
 
 <div class="bcms-modal-frame-holder">
-    <div class="bcms-scroll-window-options">
+    <div class="bcms-window-tabbed-options">
         @Html.TabbedContentMessagesBox()
         @using (Html.BeginForm<PageController>(f => f.AddNewPage(null, null), FormMethod.Post, new { @class = "bcms-ajax-form" }))
         {

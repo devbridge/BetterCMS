@@ -18,7 +18,7 @@
 <div class="bcms-modal-frame-holder">
     @Html.TabbedContentMessagesBox()
 
-    <div class="bcms-scroll-window-options">
+    <div class="bcms-window-tabbed-options">
         @Html.Partial("Partial/WarnMessageAboutDraft", Model)
 
         @using (Html.BeginForm<ContentController>(c => c.SavePageHtmlContent(null), FormMethod.Post,

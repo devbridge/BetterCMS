@@ -887,6 +887,7 @@ html.bcms-noscroll {
 
 body {
   font-family: "Open Sans", sans-serif !important;
+  font-size: 13px;
   margin: 0;
 }
 
@@ -904,39 +905,37 @@ a:hover {
   text-decoration: none;
 }
 
-.bcms-scroll-window-settings {
-  overflow-x: hidden;
-  overflow-y: scroll;
-  position: relative;
-}
-
-.bcms-scroll-window-tabbed {
-  overflow-x: hidden;
-  overflow-y: scroll;
-  position: relative;
-}
-
-.bcms-scroll-window-options {
-  overflow-x: hidden;
-  overflow-y: scroll;
-  position: relative;
-}
-
-.bcms-scroll-window-settings {
-  height: calc(100vh - 120px);
-  padding-right: 30px;
-}
-
-.bcms-scroll-window-tabbed {
+.bcms-window-tabbed-settings {
   height: calc(100vh - 62px);
-  padding-right: 30px;
+  overflow-x: hidden;
+  overflow-y: scroll;
+  padding: 0 30px 0 0;
+  position: relative;
 }
 
-.bcms-scroll-window-options {
-  padding-left: 30px;
-  padding-right: 30px;
+.bcms-window-settings {
+  height: calc(100vh - 120px);
+  overflow-x: hidden;
+  overflow-y: scroll;
+  padding: 0 30px 0 0;
+  position: relative;
+}
+
+.bcms-window-tabbed-options {
   background-color: #ffffff;
   height: calc(100vh - 170px);
+  overflow-x: hidden;
+  overflow-y: scroll;
+  padding: 0 30px;
+  position: relative;
+}
+
+.bcms-window-options {
+  height: calc(100vh - 120px);
+  overflow-x: hidden;
+  overflow-y: scroll;
+  padding: "30px";
+  position: relative;
 }
 
 .bcms-modal {

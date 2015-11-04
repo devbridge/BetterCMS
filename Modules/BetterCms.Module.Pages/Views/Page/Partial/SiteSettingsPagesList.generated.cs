@@ -202,7 +202,7 @@ Write(Html.SiteSettingsMessagesBox());
             #line hidden
 WriteLiteral("\r\n\r\n    <div");
 
-WriteLiteral(" class=\"bcms-scroll-window-settings\"");
+WriteLiteral(" class=\"bcms-window-settings\"");
 
 WriteLiteral(">\r\n        <div");
 

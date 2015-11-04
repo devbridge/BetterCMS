@@ -10,7 +10,7 @@
 <div class="bcms-modal-frame-holder">
     @Html.TabbedContentMessagesBox()
 
-    <div class="bcms-scroll-window-options">
+    <div class="bcms-window-options">
         <div class="bcms-new-blog-content">
             @using (Html.BeginForm<UserProfileController>(c => c.SaveUserProfile(null), FormMethod.Post, new { @id = "bcms-user-profile-form", @class = "bcms-ajax-form" }))
             {
