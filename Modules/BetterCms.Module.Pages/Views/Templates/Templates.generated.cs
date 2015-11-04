@@ -103,6 +103,8 @@ namespace ASP
         }
         public override void Execute()
         {
+WriteLiteral("\r\n");
+
             
             #line 14 "..\..\Views\Templates\Templates.cshtml"
   
@@ -137,27 +139,42 @@ namespace ASP
             
             #line default
             #line hidden
-WriteLiteral("\r\n");
+WriteLiteral("\r\n\r\n");
 
             
-            #line 43 "..\..\Views\Templates\Templates.cshtml"
+            #line 44 "..\..\Views\Templates\Templates.cshtml"
  using (Html.BeginForm<TemplatesController>(f => f.Templates(null), FormMethod.Post, new { @id = "bcms-templates-form", @class = "bcms-ajax-form" }))
 {
+
     
             
             #line default
             #line hidden
             
-            #line 45 "..\..\Views\Templates\Templates.cshtml"
+            #line 47 "..\..\Views\Templates\Templates.cshtml"
+Write(Html.SiteSettingsMessagesBox());
+
+            
+            #line default
+            #line hidden
+            
+            #line 47 "..\..\Views\Templates\Templates.cshtml"
+                                   
+
+    
+            
+            #line default
+            #line hidden
+            
+            #line 49 "..\..\Views\Templates\Templates.cshtml"
 Write(Html.HiddenGridOptions(Model.GridOptions));
 
             
             #line default
             #line hidden
             
-            #line 45 "..\..\Views\Templates\Templates.cshtml"
+            #line 49 "..\..\Views\Templates\Templates.cshtml"
                                               
-
 
             
             #line default
@@ -166,7 +183,7 @@ WriteLiteral("    <div");
 
 WriteLiteral(" class=\"bcms-top-block-holder\"");
 
-WriteLiteral(">\r\n\r\n        <div");
+WriteLiteral(">\r\n        <div");
 
 WriteLiteral(" class=\"bcms-clearfix\"");
 
@@ -177,7 +194,7 @@ WriteLiteral(" class=\"bcms-large-titles\"");
 WriteLiteral(">");
 
             
-            #line 51 "..\..\Views\Templates\Templates.cshtml"
+            #line 53 "..\..\Views\Templates\Templates.cshtml"
                                       Write(PagesGlobalization.SiteSettings_Templates_Title);
 
             
@@ -196,7 +213,7 @@ WriteLiteral(">\r\n");
 WriteLiteral("                    ");
 
             
-            #line 55 "..\..\Views\Templates\Templates.cshtml"
+            #line 57 "..\..\Views\Templates\Templates.cshtml"
                Write(Html.TextBoxFor(m => m.SearchQuery, new { @class = "bcms-search-field-box bcms-search-query", @placeholder = RootGlobalization.WaterMark_Search }));
 
             
@@ -211,7 +228,7 @@ WriteLiteral(" id=\"bcms-template-search-btn\"");
 WriteLiteral(">");
 
             
-            #line 56 "..\..\Views\Templates\Templates.cshtml"
+            #line 58 "..\..\Views\Templates\Templates.cshtml"
                                                                           Write(PagesGlobalization.SiteSettings_Template_Search);
 
             
@@ -226,7 +243,7 @@ WriteLiteral(" id=\"bcms-create-page-button\"");
 WriteLiteral(">");
 
             
-            #line 59 "..\..\Views\Templates\Templates.cshtml"
+            #line 61 "..\..\Views\Templates\Templates.cshtml"
                                                                    Write(PagesGlobalization.SiteSettings_Pages_AddNew);
 
             
@@ -241,7 +258,7 @@ WriteLiteral(" id=\"bcms-register-template-button\"");
 WriteLiteral(">");
 
             
-            #line 61 "..\..\Views\Templates\Templates.cshtml"
+            #line 63 "..\..\Views\Templates\Templates.cshtml"
                                                                          Write(PagesGlobalization.SiteSettings_Widgets_RegisterNew);
 
             
@@ -256,7 +273,7 @@ WriteLiteral(">\r\n");
 WriteLiteral("            ");
 
             
-            #line 66 "..\..\Views\Templates\Templates.cshtml"
+            #line 68 "..\..\Views\Templates\Templates.cshtml"
        Write(Html.RenderPaging(Model));
 
             
@@ -265,22 +282,7 @@ WriteLiteral("            ");
 WriteLiteral("\r\n        </div>\r\n    </div>\r\n");
 
             
-            #line 69 "..\..\Views\Templates\Templates.cshtml"
-
-    
-            
-            #line default
-            #line hidden
-            
-            #line 70 "..\..\Views\Templates\Templates.cshtml"
-Write(Html.SiteSettingsMessagesBox());
-
-            
-            #line default
-            #line hidden
-            
-            #line 70 "..\..\Views\Templates\Templates.cshtml"
-                                   
+            #line 71 "..\..\Views\Templates\Templates.cshtml"
 
     
             
@@ -288,12 +290,7 @@ Write(Html.SiteSettingsMessagesBox());
             #line hidden
             
             #line 72 "..\..\Views\Templates\Templates.cshtml"
-Write(Html
-          .Grid(Model.Items)
-          .Sort(Model.GridOptions)
-          .Columns(columns)
-          .Attributes(@class => "bcms-tables")
-          .RowAttributes(delegate(GridRowViewData<SiteSettingTemplateItemViewModel> row)
+Write(Html.Grid(Model.Items).Sort(Model.GridOptions).Columns(columns).Attributes(@class => "bcms-tables").RowAttributes(delegate(GridRowViewData<SiteSettingTemplateItemViewModel> row)
                   {
                       return new Dictionary<string, object>
                               {
@@ -301,15 +298,14 @@ Write(Html
                                     {"data-version", row.Item.Version},
                                     {"data-ismasterpage", row.Item.IsMasterPage ? "1" : "0"}
                               };
-                  })
-              .RenderUsing(new EditableHtmlTableGridRenderer<SiteSettingTemplateItemViewModel>()));
+                  }).RenderUsing(new EditableHtmlTableGridRenderer<SiteSettingTemplateItemViewModel>()));
 
             
             #line default
             #line hidden
             
-            #line 86 "..\..\Views\Templates\Templates.cshtml"
-                                                                                                  
+            #line 80 "..\..\Views\Templates\Templates.cshtml"
+                                                                                                        
 }
 
             
@@ -326,12 +322,8 @@ WriteLiteral(">\r\n");
 WriteLiteral("    ");
 
             
-            #line 90 "..\..\Views\Templates\Templates.cshtml"
-Write(Html
-        .Grid(new List<SiteSettingTemplateItemViewModel> { new SiteSettingTemplateItemViewModel() })
-        .Columns(columns)
-        .Attributes(@class => "bcms-tables")
-        .RenderUsing(new HtmlTableGridSingleRowRenderer<SiteSettingTemplateItemViewModel>()));
+            #line 84 "..\..\Views\Templates\Templates.cshtml"
+Write(Html.Grid(new List<SiteSettingTemplateItemViewModel> { new SiteSettingTemplateItemViewModel() }).Columns(columns).Attributes(@class => "bcms-tables").RenderUsing(new HtmlTableGridSingleRowRenderer<SiteSettingTemplateItemViewModel>()));
 
             
             #line default
