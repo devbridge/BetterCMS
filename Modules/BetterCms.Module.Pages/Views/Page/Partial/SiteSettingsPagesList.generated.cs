@@ -227,20 +227,9 @@ WriteLiteral(">");
             #line hidden
 WriteLiteral("</div>\r\n\r\n                <div");
 
-WriteLiteral(" class=\"bcms-top-block-inner\"");
+WriteLiteral(" class=\"bcms-top-block-inner bcms-active-search\"");
 
-WriteLiteral(">\r\n");
-
-WriteLiteral("                    ");
-
-            
-            #line 78 "..\..\Views\Page\Partial\SiteSettingsPagesList.cshtml"
-               Write(Html.Partial("~/Areas/bcms-pages/Views/Filter/PagesFilterTemplate.cshtml", Model));
-
-            
-            #line default
-            #line hidden
-WriteLiteral("\r\n\r\n                    <div");
+WriteLiteral(">\r\n                    <div");
 
 WriteLiteral(" class=\"bcms-search-block\"");
 
@@ -249,13 +238,24 @@ WriteLiteral(">\r\n");
 WriteLiteral("                        ");
 
             
-            #line 81 "..\..\Views\Page\Partial\SiteSettingsPagesList.cshtml"
+            #line 79 "..\..\Views\Page\Partial\SiteSettingsPagesList.cshtml"
+                   Write(Html.Partial("~/Areas/bcms-pages/Views/Filter/PagesFilterTemplate.cshtml", Model));
+
+            
+            #line default
+            #line hidden
+WriteLiteral("\r\n");
+
+WriteLiteral("                        ");
+
+            
+            #line 80 "..\..\Views\Page\Partial\SiteSettingsPagesList.cshtml"
                    Write(Html.TextBoxFor(m => m.SearchQuery, new { @class = "bcms-search-field-box bcms-search-query", @placeholder = RootGlobalization.WaterMark_Search }));
 
             
             #line default
             #line hidden
-WriteLiteral("\r\n                        <div");
+WriteLiteral("                      \r\n                    </div>\r\n                    <div");
 
 WriteLiteral(" class=\"bcms-btn-search\"");
 
@@ -265,12 +265,12 @@ WriteLiteral(">");
 
             
             #line 82 "..\..\Views\Page\Partial\SiteSettingsPagesList.cshtml"
-                                                                           Write(PagesGlobalization.SiteSettings_Pages_Search);
+                                                                       Write(PagesGlobalization.SiteSettings_Pages_Search);
 
             
             #line default
             #line hidden
-WriteLiteral("</div>\r\n                    </div>\r\n");
+WriteLiteral("</div>\r\n\r\n");
 
             
             #line 84 "..\..\Views\Page\Partial\SiteSettingsPagesList.cshtml"

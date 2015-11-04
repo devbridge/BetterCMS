@@ -96,8 +96,9 @@
     <div class="bcms-sidebar-search">
         <input type="text" class="bcms-editor-field-box" placeholder="@NavigationGlobalization.Sitemap_EditDialog_AddPageLink_SearchPlaceHolder"
                data-bind="hasfocus: hasfocus, value: searchQuery, valueUpdate: 'afterkeydown', enterPress: searchForPageLinks" />
-        <div class="bcms-btn-search" data-bind="click: searchForPageLinks">@NavigationGlobalization.Sitemap_EditDialog_AddPageLink_SearchButton</div>
     </div>
+    <div class="bcms-btn-search" data-bind="click: searchForPageLinks">@NavigationGlobalization.Sitemap_EditDialog_AddPageLink_SearchButton</div>
+
     <div class="bcms-addnode-placement-holder@(Model.IsReadOnly ? "-readonly" : string.Empty)" data-bind="template: { name: 'bcms-navigation-pagelink-template', foreach: pageLinks }"></div>
 </script>
 

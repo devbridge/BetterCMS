@@ -148,7 +148,7 @@ WriteAttribute("placeholder", Tuple.Create(" placeholder=\"", 912), Tuple.Create
 , 926), false)
 );
 
-WriteLiteral(" />\r\n            <div");
+WriteLiteral(" />\r\n        </div>\r\n        <div");
 
 WriteLiteral(" class=\"bcms-btn-search\"");
 
@@ -157,13 +157,13 @@ WriteLiteral(" id=\"bcms-advanced-content-search-btn\"");
 WriteLiteral(">");
 
             
-            #line 17 "..\..\Views\Content\Partial\SelectWidget.cshtml"
-                                                                          Write(PagesGlobalization.AddPageContent_WidgetTab_SearchButton);
+            #line 18 "..\..\Views\Content\Partial\SelectWidget.cshtml"
+                                                                      Write(PagesGlobalization.AddPageContent_WidgetTab_SearchButton);
 
             
             #line default
             #line hidden
-WriteLiteral("</div>\r\n        </div>\r\n    </div>\r\n</div>\r\n\r\n<div");
+WriteLiteral("</div>\r\n    </div>\r\n</div>\r\n\r\n<div");
 
 WriteLiteral(" class=\"bcms-content-sliders\"");
 

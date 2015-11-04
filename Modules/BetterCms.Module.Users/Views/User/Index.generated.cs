@@ -200,7 +200,7 @@ WriteLiteral("                        ");
             
             #line default
             #line hidden
-WriteLiteral("\r\n                        <div");
+WriteLiteral("\r\n                    </div>\r\n                    <div");
 
 WriteLiteral(" class=\"bcms-btn-search\"");
 
@@ -209,13 +209,13 @@ WriteLiteral(" id=\"bcms-users-search-btn\"");
 WriteLiteral(">");
 
             
-            #line 47 "..\..\Views\User\Index.cshtml"
-                                                                           Write(UsersGlobalization.User_Dialog_Search);
+            #line 48 "..\..\Views\User\Index.cshtml"
+                                                                       Write(UsersGlobalization.User_Dialog_Search);
 
             
             #line default
             #line hidden
-WriteLiteral("</div>\r\n                    </div>\r\n\r\n                    <div");
+WriteLiteral("</div>\r\n\r\n                    <div");
 
 WriteLiteral(" class=\"bcms-btn-main\"");
 

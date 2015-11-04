@@ -27,8 +27,8 @@
 
                     <div class="bcms-search-block">
                         <input id="bcms-search-input" name="MediaSearch" data-bind="value: gridOptions().searchQuery, valueUpdate: 'afterkeydown', enterPress: searchMedia" class="bcms-search-field-box" type="text" placeholder="@RootGlobalization.WaterMark_Search" />
-                        <div class="bcms-btn-search" data-bind="click: searchMedia">@RootGlobalization.Button_Search</div>
                     </div>
+                    <div class="bcms-btn-search" data-bind="click: searchMedia">@RootGlobalization.Button_Search</div>
                 </div>
             </div>
 
@@ -47,8 +47,8 @@
                     </div>
                 </div>
 
-                <div class="bcms-tags-block" style="display: none;" data-bind="visible: gridOptions().isFilterVisible()">
-                    <div class="bcms-featured-tags">
+                <div class="bcms-filter-selection-block" style="display: none;" data-bind="visible: gridOptions().isFilterVisible()">
+                    <div class="bcms-filter-controls">
                         <div class="bcms-clearfix">
                             <div class="bcms-filter-options" data-bind="with: gridOptions().tags">
                                 <div class="bcms-filter-text">@MediaGlobalization.SiteSettings_FilterByTags</div>
@@ -84,6 +84,7 @@
                                 </div>
                             </div>
                         </div>
+
                         <div class="bcms-single-tag-holder" data-bind="foreach: gridOptions().tags.items()">
                             <div class="bcms-single-tag" data-bind="css: { 'bcms-single-tag-active': isActive() }">
                                 <span data-bind="text: name()"></span><a data-bind="    click: remove">@RootGlobalization.Button_Remove</a>
@@ -91,7 +92,6 @@
                             <input type="hidden" data-bind="attr: { name: getItemInputName($index()) + '.Key', value: id() }" />
                             <input type="hidden" data-bind="attr: { name: getItemInputName($index()) + '.Value', value: name() }" />
                         </div>
-
 
                         <div class="bcms-single-tag-holder" data-bind="foreach: gridOptions().categories.items()">
                             <div class="bcms-single-tag" data-bind="css: { 'bcms-single-tag-active': isActive() }">

@@ -108,44 +108,44 @@ WriteLiteral(">");
             #line hidden
 WriteLiteral("</div>\n        </div>\n    </div>\n\n    <div");
 
-WriteLiteral(" class=\"bcms-tags-block\"");
+WriteLiteral(" class=\"bcms-filter-selection-block\"");
 
 WriteLiteral(" style=\"display: none;\"");
 
 WriteLiteral(" data-bind=\"visible: isVisible(), enterPress: searchWithFilter\"");
 
-WriteLiteral(">\n            <div");
+WriteLiteral(">\n        <div");
 
-WriteLiteral(" class=\"bcms-featured-tags\"");
+WriteLiteral(" class=\"bcms-filter-controls\"");
 
-WriteLiteral(">\n                <div");
+WriteLiteral(">\r\n            <div");
 
 WriteLiteral(" class=\"bcms-clearfix\"");
 
-WriteLiteral(">\n\n                    <div");
+WriteLiteral(">\r\n                <div");
 
 WriteLiteral(" class=\"bcms-filter-options\"");
 
 WriteLiteral(" data-bind=\"with: tags\"");
 
-WriteLiteral(">\n                        <div");
+WriteLiteral(">\r\n                    <div");
 
 WriteLiteral(" class=\"bcms-filter-text\"");
 
 WriteLiteral(">");
 
             
-            #line 20 "..\..\Views\Filter\PagesFilterTemplate.cshtml"
-                                                 Write(PagesGlobalization.SiteSettings_Pages_FilterByTags);
+            #line 19 "..\..\Views\Filter\PagesFilterTemplate.cshtml"
+                                             Write(PagesGlobalization.SiteSettings_Pages_FilterByTags);
 
             
             #line default
             #line hidden
-WriteLiteral("</div>\n                        <div");
+WriteLiteral("</div>\r\n                    <div");
 
 WriteLiteral(" class=\"bcms-filter-field-holder\"");
 
-WriteLiteral(">\n                            <input");
+WriteLiteral(">\r\n                        <input");
 
 WriteLiteral(" type=\"text\"");
 
@@ -158,41 +158,40 @@ WriteLiteral(@" data-bind=""
                             escPress: clearItem,
                             autocompleteList: 'onlyExisting'""");
 
-WriteLiteral(" />\n                            <!-- ko if: newItem.hasError()  -->\n             " +
-"               <span");
+WriteLiteral(" />\r\n                        <!-- ko if: newItem.hasError()  -->\r\n               " +
+"         <span");
 
 WriteLiteral(" class=\"bcms-tag-field-validation-error\"");
 
-WriteLiteral(">\n                                <span");
+WriteLiteral(">\r\n                            <span");
 
 WriteLiteral(" data-bind=\"text: newItem.validationMessage()\"");
 
-WriteLiteral("></span>\n                            </span>\n                            <!-- /ko" +
-" -->\n                        </div>\n                    </div>\n\n                " +
-"    <div");
+WriteLiteral("></span>\r\n                        </span>\r\n                        <!-- /ko -->\r\n" +
+"                    </div>\r\n                </div>\r\n                <div");
 
 WriteLiteral(" class=\"bcms-filter-options\"");
 
 WriteLiteral(" data-bind=\"with: categories\"");
 
-WriteLiteral(">\n                        <div");
+WriteLiteral(">\r\n                    <div");
 
 WriteLiteral(" class=\"bcms-filter-text\"");
 
 WriteLiteral(">");
 
             
-            #line 37 "..\..\Views\Filter\PagesFilterTemplate.cshtml"
-                                                 Write(PagesGlobalization.SiteSettings_Pages_FilterByCategory);
+            #line 35 "..\..\Views\Filter\PagesFilterTemplate.cshtml"
+                                             Write(PagesGlobalization.SiteSettings_Pages_FilterByCategory);
 
             
             #line default
             #line hidden
-WriteLiteral("</div>\n\n                        <div");
+WriteLiteral("</div>\r\n                    <div");
 
 WriteLiteral(" class=\"bcms-filter-field-holder\"");
 
-WriteLiteral(">\n                            <input");
+WriteLiteral(">\r\n                        <input");
 
 WriteLiteral(" type=\"text\"");
 
@@ -205,51 +204,50 @@ WriteLiteral(@" data-bind=""
                             escPress: clearItem,
                             autocompleteList: 'onlyExisting'""");
 
-WriteLiteral(" />\n                            <!-- ko if: newItem.hasError()  -->\n             " +
-"               <span");
+WriteLiteral(" />\r\n                        <!-- ko if: newItem.hasError()  -->\r\n               " +
+"         <span");
 
 WriteLiteral(" class=\"bcms-tag-field-validation-error\"");
 
-WriteLiteral(">\n                                <span");
+WriteLiteral(">\r\n                            <span");
 
 WriteLiteral(" data-bind=\"text: newItem.validationMessage()\"");
 
-WriteLiteral("></span>\n                            </span>\n                            <!-- /ko" +
-" -->\n                        </div>                        \n                    " +
-"</div>\n\n");
+WriteLiteral("></span>\r\n                        </span>\r\n                        <!-- /ko -->\r\n" +
+"                    </div>\r\n                </div>\r\n");
 
             
-            #line 54 "..\..\Views\Filter\PagesFilterTemplate.cshtml"
-                    
+            #line 50 "..\..\Views\Filter\PagesFilterTemplate.cshtml"
+                
             
             #line default
             #line hidden
             
-            #line 54 "..\..\Views\Filter\PagesFilterTemplate.cshtml"
-                     if (Model.Languages != null && Model.Languages.Any())
-                    {
+            #line 50 "..\..\Views\Filter\PagesFilterTemplate.cshtml"
+                 if (Model.Languages != null && Model.Languages.Any())
+                {
 
             
             #line default
             #line hidden
-WriteLiteral("                        <div");
+WriteLiteral("                    <div");
 
 WriteLiteral(" class=\"bcms-filter-options\"");
 
-WriteLiteral(">\n                            <div");
+WriteLiteral(">\r\n                        <div");
 
 WriteLiteral(" class=\"bcms-filter-text\"");
 
 WriteLiteral(">");
 
             
-            #line 57 "..\..\Views\Filter\PagesFilterTemplate.cshtml"
-                                                     Write(PagesGlobalization.SiteSettings_Pages_FilterByLanguage);
+            #line 53 "..\..\Views\Filter\PagesFilterTemplate.cshtml"
+                                                 Write(PagesGlobalization.SiteSettings_Pages_FilterByLanguage);
 
             
             #line default
             #line hidden
-WriteLiteral("</div>\n                            <select");
+WriteLiteral("</div>\r\n                        <select");
 
 WriteLiteral(" class=\"bcms-global-select\"");
 
@@ -258,39 +256,39 @@ WriteLiteral(" name=\"LanguageId\"");
 WriteLiteral(" data-bind=\"options: languages, value: languageId, optionsText: \'Value\', optionsV" +
 "alue: \'Key\'\"");
 
-WriteLiteral(" />\n                        </div>\n");
+WriteLiteral(" />\r\n                    </div>\r\n");
 
             
-            #line 60 "..\..\Views\Filter\PagesFilterTemplate.cshtml"
-                    }
+            #line 56 "..\..\Views\Filter\PagesFilterTemplate.cshtml"
+                }
 
             
             #line default
             #line hidden
-WriteLiteral("\n                    <div");
+WriteLiteral("                <div");
 
 WriteLiteral(" class=\"bcms-filter-options\"");
 
-WriteLiteral(">\n                        <div");
+WriteLiteral(">\r\n                    <div");
 
 WriteLiteral(" class=\"bcms-filter-text\"");
 
 WriteLiteral(">");
 
             
-            #line 63 "..\..\Views\Filter\PagesFilterTemplate.cshtml"
-                                                 Write(PagesGlobalization.SiteSettings_Pages_FilterByStatus);
+            #line 58 "..\..\Views\Filter\PagesFilterTemplate.cshtml"
+                                             Write(PagesGlobalization.SiteSettings_Pages_FilterByStatus);
 
             
             #line default
             #line hidden
-WriteLiteral("</div>\n");
+WriteLiteral("</div>\r\n");
 
-WriteLiteral("                        ");
+WriteLiteral("                    ");
 
             
-            #line 64 "..\..\Views\Filter\PagesFilterTemplate.cshtml"
-                   Write(Html.DropDownListFor(m => m.Status, new List<SelectListItem>(), new
+            #line 59 "..\..\Views\Filter\PagesFilterTemplate.cshtml"
+               Write(Html.DropDownListFor(m => m.Status, new List<SelectListItem>(), new
                                                                       {
                                                                           data_bind = "options: statuses, value: status, optionsText: 'Value', optionsValue: 'Key'",
                                                                           @class = "bcms-global-select"
@@ -299,30 +297,30 @@ WriteLiteral("                        ");
             
             #line default
             #line hidden
-WriteLiteral("\n                    </div>\n\n                    <div");
+WriteLiteral("\r\n                </div>\r\n                <div");
 
 WriteLiteral(" class=\"bcms-filter-options\"");
 
-WriteLiteral(">\n                        <div");
+WriteLiteral(">\r\n                    <div");
 
 WriteLiteral(" class=\"bcms-filter-text\"");
 
 WriteLiteral(">");
 
             
-            #line 72 "..\..\Views\Filter\PagesFilterTemplate.cshtml"
-                                                 Write(PagesGlobalization.SiteSettings_Pages_FilterBySEO);
+            #line 66 "..\..\Views\Filter\PagesFilterTemplate.cshtml"
+                                             Write(PagesGlobalization.SiteSettings_Pages_FilterBySEO);
 
             
             #line default
             #line hidden
-WriteLiteral("</div>\n");
+WriteLiteral("</div>\r\n");
 
-WriteLiteral("                        ");
+WriteLiteral("                    ");
 
             
-            #line 73 "..\..\Views\Filter\PagesFilterTemplate.cshtml"
-                   Write(Html.DropDownListFor(m => m.SeoStatus, new List<SelectListItem>(), new
+            #line 67 "..\..\Views\Filter\PagesFilterTemplate.cshtml"
+               Write(Html.DropDownListFor(m => m.SeoStatus, new List<SelectListItem>(), new
                                                                                             {
                                                                                                 data_bind = "options: seoStatuses, value: seoStatus, optionsText: 'Value', optionsValue: 'Key'",
                                                                                                 @class = "bcms-global-select"
@@ -331,30 +329,30 @@ WriteLiteral("                        ");
             
             #line default
             #line hidden
-WriteLiteral("\n                    </div>\n                    \n                    <div");
+WriteLiteral("\r\n                </div>\r\n\r\n                <div");
 
 WriteLiteral(" class=\"bcms-filter-options\"");
 
-WriteLiteral(">\n                        <div");
+WriteLiteral(">\r\n                    <div");
 
 WriteLiteral(" class=\"bcms-filter-text\"");
 
 WriteLiteral(">");
 
             
-            #line 81 "..\..\Views\Filter\PagesFilterTemplate.cshtml"
-                                                 Write(PagesGlobalization.SiteSettings_Pages_FilterByLayout);
+            #line 75 "..\..\Views\Filter\PagesFilterTemplate.cshtml"
+                                             Write(PagesGlobalization.SiteSettings_Pages_FilterByLayout);
 
             
             #line default
             #line hidden
-WriteLiteral("</div>\n");
+WriteLiteral("</div>\r\n");
 
-WriteLiteral("                        ");
+WriteLiteral("                    ");
 
             
-            #line 82 "..\..\Views\Filter\PagesFilterTemplate.cshtml"
-                   Write(Html.DropDownListFor(m => m.Layout, new List<SelectListItem>(), new
+            #line 76 "..\..\Views\Filter\PagesFilterTemplate.cshtml"
+               Write(Html.DropDownListFor(m => m.Layout, new List<SelectListItem>(), new
                                                                       {
                                                                           data_bind = "options: layouts, value: layout, optionsText: 'Value', optionsValue: 'Key'",
                                                                           @class = "bcms-global-select"
@@ -363,19 +361,61 @@ WriteLiteral("                        ");
             
             #line default
             #line hidden
-WriteLiteral("\n                    </div>\n\n                </div>\n\n                <div");
+WriteLiteral("\r\n                </div>\r\n            </div>\r\n            <div");
 
 WriteLiteral(" class=\"bcms-single-tag-holder\"");
 
 WriteLiteral(" data-bind=\"foreach: tags.items()\"");
 
-WriteLiteral(">\n                    <div");
+WriteLiteral(">\r\n                <div");
 
 WriteLiteral(" class=\"bcms-single-tag\"");
 
 WriteLiteral(" data-bind=\"css: { \'bcms-single-tag-active\': isActive() }\"");
 
-WriteLiteral(">\n                        <span");
+WriteLiteral(">\r\n                    <span");
+
+WriteLiteral(" data-bind=\"text: name()\"");
+
+WriteLiteral("></span><a");
+
+WriteLiteral(" data-bind=\"    click: remove\"");
+
+WriteLiteral(">");
+
+            
+            #line 85 "..\..\Views\Filter\PagesFilterTemplate.cshtml"
+                                                                                      Write(RootGlobalization.Button_Remove);
+
+            
+            #line default
+            #line hidden
+WriteLiteral("</a>\r\n                </div>\r\n                <input");
+
+WriteLiteral(" type=\"hidden\"");
+
+WriteLiteral(" data-bind=\"attr: { name: getItemInputName($index()) + \'.Key\', value: id() }\"");
+
+WriteLiteral(" />\r\n                <input");
+
+WriteLiteral(" type=\"hidden\"");
+
+WriteLiteral(" data-bind=\"attr: { name: getItemInputName($index()) + \'.Value\', value: name() }\"" +
+"");
+
+WriteLiteral(" />\r\n            </div>\r\n\r\n            <div");
+
+WriteLiteral(" class=\"bcms-single-tag-holder\"");
+
+WriteLiteral(" data-bind=\"foreach: categories.items()\"");
+
+WriteLiteral(">\r\n                <div");
+
+WriteLiteral(" class=\"bcms-single-tag\"");
+
+WriteLiteral(" data-bind=\"css: { \'bcms-single-tag-active\': isActive() }\"");
+
+WriteLiteral(">\r\n                    <span");
 
 WriteLiteral(" data-bind=\"text: name()\"");
 
@@ -387,66 +427,24 @@ WriteLiteral(">");
 
             
             #line 93 "..\..\Views\Filter\PagesFilterTemplate.cshtml"
-                                                                                          Write(RootGlobalization.Button_Remove);
+                                                                                      Write(RootGlobalization.Button_Remove);
 
             
             #line default
             #line hidden
-WriteLiteral("</a>\n                    </div>\n                    <input");
-
-WriteLiteral(" type=\"hidden\"");
-
-WriteLiteral(" data-bind=\"attr: { name: getItemInputName($index()) + \'.Key\', value: id() }\"");
-
-WriteLiteral(" />\n                    <input");
-
-WriteLiteral(" type=\"hidden\"");
-
-WriteLiteral(" data-bind=\"attr: { name: getItemInputName($index()) + \'.Value\', value: name() }\"" +
-"");
-
-WriteLiteral(" />\n                </div>\n                \n                <div");
-
-WriteLiteral(" class=\"bcms-single-tag-holder\"");
-
-WriteLiteral(" data-bind=\"foreach: categories.items()\"");
-
-WriteLiteral(">\n                    <div");
-
-WriteLiteral(" class=\"bcms-single-tag\"");
-
-WriteLiteral(" data-bind=\"css: { \'bcms-single-tag-active\': isActive() }\"");
-
-WriteLiteral(">\n                        <span");
-
-WriteLiteral(" data-bind=\"text: name()\"");
-
-WriteLiteral("></span><a");
-
-WriteLiteral(" data-bind=\"    click: remove\"");
-
-WriteLiteral(">");
-
-            
-            #line 101 "..\..\Views\Filter\PagesFilterTemplate.cshtml"
-                                                                                          Write(RootGlobalization.Button_Remove);
-
-            
-            #line default
-            #line hidden
-WriteLiteral("</a>\n                    </div>\n                    <input");
+WriteLiteral("</a>\r\n                </div>\r\n                <input");
 
 WriteLiteral(" type=\"hidden\"");
 
 WriteLiteral(" data-bind=\"attr: { name: \'Categories[\' + $index() + \'].Key\', value: id() }\"");
 
-WriteLiteral(" />\n                    <input");
+WriteLiteral(" />\r\n                <input");
 
 WriteLiteral(" type=\"hidden\"");
 
 WriteLiteral(" data-bind=\"attr: { name: \'Categories[\' + $index() + \'].Value\', value: name() }\"");
 
-WriteLiteral(" />\n                </div>\n\n            </div>\n\n            <div");
+WriteLiteral(" />\r\n            </div>\r\n        </div>\r\n\n\n            <div");
 
 WriteLiteral(" class=\"bcms-clearfix\"");
 
@@ -461,7 +459,7 @@ WriteLiteral(">\n");
 WriteLiteral("                    ");
 
             
-            #line 111 "..\..\Views\Filter\PagesFilterTemplate.cshtml"
+            #line 103 "..\..\Views\Filter\PagesFilterTemplate.cshtml"
                Write(Html.CheckBoxFor(model => model.IncludeArchived, new { data_bind = "checked: includeArchived" }));
 
             
@@ -476,7 +474,7 @@ WriteLiteral(" data-bind=\"click: changeIncludeArchived\"");
 WriteLiteral(">");
 
             
-            #line 112 "..\..\Views\Filter\PagesFilterTemplate.cshtml"
+            #line 104 "..\..\Views\Filter\PagesFilterTemplate.cshtml"
                                                                                    Write(PagesGlobalization.SiteSettings_Pages_FilterIncludeArchived);
 
             
@@ -485,13 +483,13 @@ WriteLiteral(">");
 WriteLiteral("</span>\n                </div>\n");
 
             
-            #line 114 "..\..\Views\Filter\PagesFilterTemplate.cshtml"
+            #line 106 "..\..\Views\Filter\PagesFilterTemplate.cshtml"
                 
             
             #line default
             #line hidden
             
-            #line 114 "..\..\Views\Filter\PagesFilterTemplate.cshtml"
+            #line 106 "..\..\Views\Filter\PagesFilterTemplate.cshtml"
                  if (!Model.HideMasterPagesFiltering)
                 {
 
@@ -507,7 +505,7 @@ WriteLiteral(">\n");
 WriteLiteral("                        ");
 
             
-            #line 117 "..\..\Views\Filter\PagesFilterTemplate.cshtml"
+            #line 109 "..\..\Views\Filter\PagesFilterTemplate.cshtml"
                    Write(Html.CheckBoxFor(model => model.IncludeMasterPages, new { data_bind = "checked: includeMasterPages" }));
 
             
@@ -522,7 +520,7 @@ WriteLiteral(" data-bind=\"click: changeIncludeMasterPages\"");
 WriteLiteral(">");
 
             
-            #line 118 "..\..\Views\Filter\PagesFilterTemplate.cshtml"
+            #line 110 "..\..\Views\Filter\PagesFilterTemplate.cshtml"
                                                                                           Write(PagesGlobalization.SiteSettings_Pages_FilterIncludeMasterPages);
 
             
@@ -531,7 +529,7 @@ WriteLiteral(">");
 WriteLiteral("</span>\n                    </div>\n");
 
             
-            #line 120 "..\..\Views\Filter\PagesFilterTemplate.cshtml"
+            #line 112 "..\..\Views\Filter\PagesFilterTemplate.cshtml"
                 }
 
             
@@ -550,7 +548,7 @@ WriteLiteral(" data-bind=\"click: clearFilter\"");
 WriteLiteral(">");
 
             
-            #line 123 "..\..\Views\Filter\PagesFilterTemplate.cshtml"
+            #line 115 "..\..\Views\Filter\PagesFilterTemplate.cshtml"
                                                                                 Write(PagesGlobalization.SiteSettings_Pages_FilterClear);
 
             
@@ -565,7 +563,7 @@ WriteLiteral(" data-bind=\"click: searchWithFilter\"");
 WriteLiteral(">");
 
             
-            #line 124 "..\..\Views\Filter\PagesFilterTemplate.cshtml"
+            #line 116 "..\..\Views\Filter\PagesFilterTemplate.cshtml"
                                                                                Write(PagesGlobalization.SiteSettings_Pages_FilterSearch);
 
             

@@ -70,7 +70,7 @@
     }
 
     &-search {
-        @include position(absolute, 0 0 null null);
+        @include vertical-align();
         @include size(37px);
         background: url($bcms-search) no-repeat center;
         cursor: pointer;

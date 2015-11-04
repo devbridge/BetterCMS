@@ -1555,7 +1555,6 @@
     <Content Include="Scss\modules\_tabs.scss" />
     <Content Include="Scss\modules\_messages.scss" />
     <Content Include="Scss\bcms-modules\root\_pager.scss" />
-    <Content Include="Scss\bcms-modules\root\_filter.scss" />
     <Content Include="Scss\bcms-modules\pages\_topcontrols.scss" />
     <None Include="Views\Category\CategoryTrees.cshtml">
       <Generator>RazorGenerator</Generator>

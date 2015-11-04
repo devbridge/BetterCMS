@@ -10,13 +10,11 @@
 @using BetterCms.Module.Root.Mvc.Helpers
 @using Microsoft.Web.Mvc
 @using MvcContrib.UI.Grid
-
 @model ContentHistoryViewModel
 @helper PreviewLink(ContentHistoryItem item)
 {
     <a class="bcms-icn-preview" data-id="@item.Id">@RootGlobalization.Button_Preview</a>
 }
-
 @helper RestoreLink(ContentHistoryItem item)
 {
     if (item.CanCurrentUserRestoreIt)
@@ -25,35 +23,35 @@
     }
     else
     {
-    @:&nbsp;
+        @:&nbsp;
     }
 }
-
 @helper DisplayStatus(string statusName, ContentStatus status)
 {
     switch (status)
     {
         case ContentStatus.Archived:
-    @:<div class="bcms-archived-state">@statusName</div>
+            @:<div class="bcms-archived-state">@statusName</div>
 
             break;
 
         case ContentStatus.Draft:
-    @:<div class="bcms-draft-state">@statusName</div>
-        
+        @:<div class="bcms-draft-state">@statusName</div>
+
+
             break;
 
         case ContentStatus.Published:
-    @:<div class="bcms-published-state">@statusName</div>
-        
+        @:<div class="bcms-published-state">@statusName</div>
+
+
             break;
 
         default:
-    @:statusName
+        @:statusName
             break;
     }
 }
-
 @{
     Action<ColumnBuilder<ContentHistoryItem>> columns = column =>
     {
@@ -102,16 +100,16 @@
                .Attributes(@style => "width: 217px;");
     };
 }
-
 <div class="bcms-tab-header bcms-js-tab-header">
-    <a class="bcms-tab-ui bcms-tab-item bcms-active" data-name="#bcms-tab-1">@PagesGlobalization.ContentHistory_ContentTab_Title</a>
-    <a class="bcms-tab-ui bcms-tab-item" data-name="#bcms-tab-2">@PagesGlobalization.ContentHistory_PropertiesTab_Title</a>
+    <div class="bcms-modal-frame-holder">
+        <a class="bcms-tab-ui bcms-tab-item bcms-active" data-name="#bcms-tab-1">@PagesGlobalization.ContentHistory_ContentTab_Title</a>
+        <a class="bcms-tab-ui bcms-tab-item" data-name="#bcms-tab-2">@PagesGlobalization.ContentHistory_PropertiesTab_Title</a>
+    </div>
 </div>
 
 <div class="bcms-scroll-window">
     <div class="bcms-history-preview-holder">
         @Html.TabbedContentMessagesBox()
-
         <div style="height: 100%; overflow: auto;">
             <div id="bcms-tab-1" class="bcms-tab-single" style="height: 100%">
                 <div class="bcms-history-preview" id="bcms-history-preview" style="height: 100%">
@@ -135,10 +133,11 @@
             <div class="bcms-history-table-top">
                 <div class="bcms-large-titles">@PagesGlobalization.ContentHistory_OlderVersions</div>
                 <div class="bcms-search-block">
-                    @Html.TextBoxFor(m => m.SearchQuery, new { @class = "bcms-editor-field-box", @placeholder = RootGlobalization.WaterMark_Search })
-                    <div class="bcms-btn-search" id="bcms-pagecontenthistory-search-btn">@RootGlobalization.Button_Search</div>
+                    @Html.TextBoxFor(m => m.SearchQuery, new { @class = "bcms-editor-field-box", @placeholder = RootGlobalization.WaterMark_Search })    
                 </div>
+                <div class="bcms-btn-search" id="bcms-pagecontenthistory-search-btn">@RootGlobalization.Button_Search</div>
             </div>
+            
             @Html.Grid(Model.Items).Sort(Model.GridOptions).Columns(columns).Attributes(@class => "bcms-tables bcms-history-grid").RenderUsing(new ScrollableEditableHtmlTableGridRenderer<ContentHistoryItem>()
                                                                                                                                  {
                                                                                                                                      InternalTableCssClass = "bcms-history-cell"

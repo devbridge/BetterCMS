@@ -105,14 +105,14 @@ namespace ASP
     public partial class _Views_History_ContentHistory_cshtml : System.Web.Mvc.WebViewPage<ContentHistoryViewModel>
     {
 
-#line 15 "..\..\Views\History\ContentHistory.cshtml"
+#line 14 "..\..\Views\History\ContentHistory.cshtml"
 public System.Web.WebPages.HelperResult PreviewLink(ContentHistoryItem item)
 {
 #line default
 #line hidden
 return new System.Web.WebPages.HelperResult(__razor_helper_writer => {
 
-#line 16 "..\..\Views\History\ContentHistory.cshtml"
+#line 15 "..\..\Views\History\ContentHistory.cshtml"
  
 
 
@@ -125,7 +125,7 @@ WriteLiteralTo(__razor_helper_writer, " class=\"bcms-icn-preview\"");
 WriteLiteralTo(__razor_helper_writer, " data-id=\"");
 
 
-#line 17 "..\..\Views\History\ContentHistory.cshtml"
+#line 16 "..\..\Views\History\ContentHistory.cshtml"
            WriteTo(__razor_helper_writer, item.Id);
 
 
@@ -136,35 +136,35 @@ WriteLiteralTo(__razor_helper_writer, "\"");
 WriteLiteralTo(__razor_helper_writer, ">");
 
 
-#line 17 "..\..\Views\History\ContentHistory.cshtml"
+#line 16 "..\..\Views\History\ContentHistory.cshtml"
                      WriteTo(__razor_helper_writer, RootGlobalization.Button_Preview);
 
 
 #line default
 #line hidden
-WriteLiteralTo(__razor_helper_writer, "</a>\n");
+WriteLiteralTo(__razor_helper_writer, "</a>\r\n");
 
 
-#line 18 "..\..\Views\History\ContentHistory.cshtml"
+#line 17 "..\..\Views\History\ContentHistory.cshtml"
 
 
 #line default
 #line hidden
 });
 
-#line 18 "..\..\Views\History\ContentHistory.cshtml"
+#line 17 "..\..\Views\History\ContentHistory.cshtml"
 }
 #line default
 #line hidden
 
-#line 20 "..\..\Views\History\ContentHistory.cshtml"
+#line 18 "..\..\Views\History\ContentHistory.cshtml"
 public System.Web.WebPages.HelperResult RestoreLink(ContentHistoryItem item)
 {
 #line default
 #line hidden
 return new System.Web.WebPages.HelperResult(__razor_helper_writer => {
 
-#line 21 "..\..\Views\History\ContentHistory.cshtml"
+#line 19 "..\..\Views\History\ContentHistory.cshtml"
  
     if (item.CanCurrentUserRestoreIt)
     {
@@ -179,7 +179,7 @@ WriteLiteralTo(__razor_helper_writer, " class=\"bcms-icn-restore\"");
 WriteLiteralTo(__razor_helper_writer, " data-id=\"");
 
 
-#line 24 "..\..\Views\History\ContentHistory.cshtml"
+#line 22 "..\..\Views\History\ContentHistory.cshtml"
                WriteTo(__razor_helper_writer, item.Id);
 
 
@@ -190,7 +190,7 @@ WriteLiteralTo(__razor_helper_writer, "\"");
 WriteLiteralTo(__razor_helper_writer, " data-version=\"");
 
 
-#line 24 "..\..\Views\History\ContentHistory.cshtml"
+#line 22 "..\..\Views\History\ContentHistory.cshtml"
                                        WriteTo(__razor_helper_writer, item.Version);
 
 
@@ -201,16 +201,16 @@ WriteLiteralTo(__razor_helper_writer, "\"");
 WriteLiteralTo(__razor_helper_writer, ">");
 
 
-#line 24 "..\..\Views\History\ContentHistory.cshtml"
+#line 22 "..\..\Views\History\ContentHistory.cshtml"
                                                       WriteTo(__razor_helper_writer, RootGlobalization.Button_Restore);
 
 
 #line default
 #line hidden
-WriteLiteralTo(__razor_helper_writer, "</a>\n");
+WriteLiteralTo(__razor_helper_writer, "</a>\r\n");
 
 
-#line 25 "..\..\Views\History\ContentHistory.cshtml"
+#line 23 "..\..\Views\History\ContentHistory.cshtml"
     }
     else
     {
@@ -218,12 +218,12 @@ WriteLiteralTo(__razor_helper_writer, "</a>\n");
 
 #line default
 #line hidden
-WriteLiteralTo(__razor_helper_writer, "    ");
+WriteLiteralTo(__razor_helper_writer, "        ");
 
-WriteLiteralTo(__razor_helper_writer, "&nbsp;\n");
+WriteLiteralTo(__razor_helper_writer, "&nbsp;\r\n");
 
 
-#line 29 "..\..\Views\History\ContentHistory.cshtml"
+#line 27 "..\..\Views\History\ContentHistory.cshtml"
     }
 
 
@@ -231,19 +231,19 @@ WriteLiteralTo(__razor_helper_writer, "&nbsp;\n");
 #line hidden
 });
 
-#line 30 "..\..\Views\History\ContentHistory.cshtml"
+#line 28 "..\..\Views\History\ContentHistory.cshtml"
 }
 #line default
 #line hidden
 
-#line 32 "..\..\Views\History\ContentHistory.cshtml"
+#line 29 "..\..\Views\History\ContentHistory.cshtml"
 public System.Web.WebPages.HelperResult DisplayStatus(string statusName, ContentStatus status)
 {
 #line default
 #line hidden
 return new System.Web.WebPages.HelperResult(__razor_helper_writer => {
 
-#line 33 "..\..\Views\History\ContentHistory.cshtml"
+#line 30 "..\..\Views\History\ContentHistory.cshtml"
  
     switch (status)
     {
@@ -252,21 +252,21 @@ return new System.Web.WebPages.HelperResult(__razor_helper_writer => {
 
 #line default
 #line hidden
-WriteLiteralTo(__razor_helper_writer, "    ");
+WriteLiteralTo(__razor_helper_writer, "            ");
 
 WriteLiteralTo(__razor_helper_writer, "<div class=\"bcms-archived-state\">");
 
 
-#line 37 "..\..\Views\History\ContentHistory.cshtml"
-         WriteTo(__razor_helper_writer, statusName);
+#line 34 "..\..\Views\History\ContentHistory.cshtml"
+                 WriteTo(__razor_helper_writer, statusName);
 
 
 #line default
 #line hidden
-WriteLiteralTo(__razor_helper_writer, "</div>\n");
+WriteLiteralTo(__razor_helper_writer, "</div>\r\n");
 
 
-#line 38 "..\..\Views\History\ContentHistory.cshtml"
+#line 35 "..\..\Views\History\ContentHistory.cshtml"
 
             break;
 
@@ -275,22 +275,23 @@ WriteLiteralTo(__razor_helper_writer, "</div>\n");
 
 #line default
 #line hidden
-WriteLiteralTo(__razor_helper_writer, "    ");
+WriteLiteralTo(__razor_helper_writer, "        ");
 
 WriteLiteralTo(__razor_helper_writer, "<div class=\"bcms-draft-state\">");
 
 
-#line 42 "..\..\Views\History\ContentHistory.cshtml"
-      WriteTo(__razor_helper_writer, statusName);
+#line 39 "..\..\Views\History\ContentHistory.cshtml"
+          WriteTo(__razor_helper_writer, statusName);
 
 
 #line default
 #line hidden
-WriteLiteralTo(__razor_helper_writer, "</div>\n");
+WriteLiteralTo(__razor_helper_writer, "</div>\r\n");
 
 
-#line 43 "..\..\Views\History\ContentHistory.cshtml"
-        
+#line 40 "..\..\Views\History\ContentHistory.cshtml"
+
+
             break;
 
         case ContentStatus.Published:
@@ -298,22 +299,23 @@ WriteLiteralTo(__razor_helper_writer, "</div>\n");
 
 #line default
 #line hidden
-WriteLiteralTo(__razor_helper_writer, "    ");
+WriteLiteralTo(__razor_helper_writer, "        ");
 
 WriteLiteralTo(__razor_helper_writer, "<div class=\"bcms-published-state\">");
 
 
-#line 47 "..\..\Views\History\ContentHistory.cshtml"
-          WriteTo(__razor_helper_writer, statusName);
+#line 45 "..\..\Views\History\ContentHistory.cshtml"
+              WriteTo(__razor_helper_writer, statusName);
 
 
 #line default
 #line hidden
-WriteLiteralTo(__razor_helper_writer, "</div>\n");
+WriteLiteralTo(__razor_helper_writer, "</div>\r\n");
 
 
-#line 48 "..\..\Views\History\ContentHistory.cshtml"
-        
+#line 46 "..\..\Views\History\ContentHistory.cshtml"
+
+
             break;
 
         default:
@@ -321,12 +323,12 @@ WriteLiteralTo(__razor_helper_writer, "</div>\n");
 
 #line default
 #line hidden
-WriteLiteralTo(__razor_helper_writer, "    ");
+WriteLiteralTo(__razor_helper_writer, "        ");
 
-WriteLiteralTo(__razor_helper_writer, "statusName\n");
+WriteLiteralTo(__razor_helper_writer, "statusName\r\n");
 
 
-#line 53 "..\..\Views\History\ContentHistory.cshtml"
+#line 52 "..\..\Views\History\ContentHistory.cshtml"
             break;
     }
 
@@ -335,7 +337,7 @@ WriteLiteralTo(__razor_helper_writer, "statusName\n");
 #line hidden
 });
 
-#line 55 "..\..\Views\History\ContentHistory.cshtml"
+#line 54 "..\..\Views\History\ContentHistory.cshtml"
 }
 #line default
 #line hidden
@@ -345,16 +347,8 @@ WriteLiteralTo(__razor_helper_writer, "statusName\n");
         }
         public override void Execute()
         {
-WriteLiteral("\n");
-
-WriteLiteral("\n");
-
-WriteLiteral("\n");
-
-WriteLiteral("\n");
-
             
-            #line 57 "..\..\Views\History\ContentHistory.cshtml"
+            #line 55 "..\..\Views\History\ContentHistory.cshtml"
   
     Action<ColumnBuilder<ContentHistoryItem>> columns = column =>
     {
@@ -406,11 +400,15 @@ WriteLiteral("\n");
             
             #line default
             #line hidden
-WriteLiteral("\n\n<div");
+WriteLiteral("\r\n<div");
 
 WriteLiteral(" class=\"bcms-tab-header bcms-js-tab-header\"");
 
-WriteLiteral(">\r\n    <a");
+WriteLiteral(">\r\n    <div");
+
+WriteLiteral(" class=\"bcms-modal-frame-holder\"");
+
+WriteLiteral(">\r\n        <a");
 
 WriteLiteral(" class=\"bcms-tab-ui bcms-tab-item bcms-active\"");
 
@@ -419,13 +417,13 @@ WriteLiteral(" data-name=\"#bcms-tab-1\"");
 WriteLiteral(">");
 
             
-            #line 107 "..\..\Views\History\ContentHistory.cshtml"
-                                                                        Write(PagesGlobalization.ContentHistory_ContentTab_Title);
+            #line 105 "..\..\Views\History\ContentHistory.cshtml"
+                                                                            Write(PagesGlobalization.ContentHistory_ContentTab_Title);
 
             
             #line default
             #line hidden
-WriteLiteral("</a>\r\n    <a");
+WriteLiteral("</a>\r\n        <a");
 
 WriteLiteral(" class=\"bcms-tab-ui bcms-tab-item\"");
 
@@ -434,36 +432,36 @@ WriteLiteral(" data-name=\"#bcms-tab-2\"");
 WriteLiteral(">");
 
             
-            #line 108 "..\..\Views\History\ContentHistory.cshtml"
-                                                            Write(PagesGlobalization.ContentHistory_PropertiesTab_Title);
+            #line 106 "..\..\Views\History\ContentHistory.cshtml"
+                                                                Write(PagesGlobalization.ContentHistory_PropertiesTab_Title);
 
             
             #line default
             #line hidden
-WriteLiteral("</a>\r\n</div>\n\n<div");
+WriteLiteral("</a>\r\n    </div>\r\n</div>\r\n\r\n<div");
 
 WriteLiteral(" class=\"bcms-scroll-window\"");
 
-WriteLiteral(">\n    <div");
+WriteLiteral(">\r\n    <div");
 
 WriteLiteral(" class=\"bcms-history-preview-holder\"");
 
-WriteLiteral(">\n");
+WriteLiteral(">\r\n");
 
 WriteLiteral("        ");
 
             
-            #line 113 "..\..\Views\History\ContentHistory.cshtml"
+            #line 112 "..\..\Views\History\ContentHistory.cshtml"
    Write(Html.TabbedContentMessagesBox());
 
             
             #line default
             #line hidden
-WriteLiteral("\n\n        <div");
+WriteLiteral("\r\n        <div");
 
 WriteLiteral(" style=\"height: 100%; overflow: auto;\"");
 
-WriteLiteral(">\n            <div");
+WriteLiteral(">\r\n            <div");
 
 WriteLiteral(" id=\"bcms-tab-1\"");
 
@@ -471,7 +469,7 @@ WriteLiteral(" class=\"bcms-tab-single\"");
 
 WriteLiteral(" style=\"height: 100%\"");
 
-WriteLiteral(">\n                <div");
+WriteLiteral(">\r\n                <div");
 
 WriteLiteral(" class=\"bcms-history-preview\"");
 
@@ -479,7 +477,7 @@ WriteLiteral(" id=\"bcms-history-preview\"");
 
 WriteLiteral(" style=\"height: 100%\"");
 
-WriteLiteral(">\n                    <div");
+WriteLiteral(">\r\n                    <div");
 
 WriteLiteral(" class=\"bcms-history-info\"");
 
@@ -488,19 +486,19 @@ WriteLiteral(" style=\"display: block;\"");
 WriteLiteral(">");
 
             
-            #line 118 "..\..\Views\History\ContentHistory.cshtml"
+            #line 116 "..\..\Views\History\ContentHistory.cshtml"
                                                                       Write(PagesGlobalization.ContentHistory_SelectVersionToPreviewMessage);
 
             
             #line default
             #line hidden
-WriteLiteral("</div>\n                </div>\n            </div>\n            <div");
+WriteLiteral("</div>\r\n                </div>\r\n            </div>\r\n            <div");
 
 WriteLiteral(" id=\"bcms-tab-2\"");
 
 WriteLiteral(" class=\"bcms-tab-single\"");
 
-WriteLiteral(">\n                <div");
+WriteLiteral(">\r\n                <div");
 
 WriteLiteral(" class=\"bcms-history-preview\"");
 
@@ -508,7 +506,7 @@ WriteLiteral(" id=\"bcms-history-preview-properties\"");
 
 WriteLiteral(" style=\"height: 100%\"");
 
-WriteLiteral(">\n                    <div");
+WriteLiteral(">\r\n                    <div");
 
 WriteLiteral(" class=\"bcms-history-info\"");
 
@@ -517,27 +515,27 @@ WriteLiteral(" style=\"display: block;\"");
 WriteLiteral(">");
 
             
-            #line 123 "..\..\Views\History\ContentHistory.cshtml"
+            #line 121 "..\..\Views\History\ContentHistory.cshtml"
                                                                       Write(PagesGlobalization.ContentHistory_SelectVersionToPreviewMessage);
 
             
             #line default
             #line hidden
-WriteLiteral("</div>\n                </div>\n            </div>\n        </div>\n    </div>\n\n    <" +
-"div");
+WriteLiteral("</div>\r\n                </div>\r\n            </div>\r\n        </div>\r\n    </div>\r\n\r" +
+"\n    <div");
 
 WriteLiteral(" class=\"bcms-history-table-holder\"");
 
-WriteLiteral(">\n");
+WriteLiteral(">\r\n");
 
             
-            #line 130 "..\..\Views\History\ContentHistory.cshtml"
+            #line 128 "..\..\Views\History\ContentHistory.cshtml"
         
             
             #line default
             #line hidden
             
-            #line 130 "..\..\Views\History\ContentHistory.cshtml"
+            #line 128 "..\..\Views\History\ContentHistory.cshtml"
          using (Html.BeginForm<HistoryController>(f => f.ContentHistory((GetContentHistoryRequest)null), FormMethod.Post, new { @id = "bcms-pagecontenthistory-form", @class = "bcms-ajax-form" }))
         {
             
@@ -545,28 +543,28 @@ WriteLiteral(">\n");
             #line default
             #line hidden
             
-            #line 132 "..\..\Views\History\ContentHistory.cshtml"
+            #line 130 "..\..\Views\History\ContentHistory.cshtml"
        Write(Html.HiddenGridOptions(Model.GridOptions));
 
             
             #line default
             #line hidden
             
-            #line 132 "..\..\Views\History\ContentHistory.cshtml"
+            #line 130 "..\..\Views\History\ContentHistory.cshtml"
                                                       
             
             
             #line default
             #line hidden
             
-            #line 133 "..\..\Views\History\ContentHistory.cshtml"
+            #line 131 "..\..\Views\History\ContentHistory.cshtml"
        Write(Html.HiddenFor(model => model.ContentId));
 
             
             #line default
             #line hidden
             
-            #line 133 "..\..\Views\History\ContentHistory.cshtml"
+            #line 131 "..\..\Views\History\ContentHistory.cshtml"
                                                      
 
 
@@ -577,35 +575,35 @@ WriteLiteral("            <div");
 
 WriteLiteral(" class=\"bcms-history-table-top\"");
 
-WriteLiteral(">\n                <div");
+WriteLiteral(">\r\n                <div");
 
 WriteLiteral(" class=\"bcms-large-titles\"");
 
 WriteLiteral(">");
 
             
-            #line 136 "..\..\Views\History\ContentHistory.cshtml"
+            #line 134 "..\..\Views\History\ContentHistory.cshtml"
                                           Write(PagesGlobalization.ContentHistory_OlderVersions);
 
             
             #line default
             #line hidden
-WriteLiteral("</div>\n                <div");
+WriteLiteral("</div>\r\n                <div");
 
 WriteLiteral(" class=\"bcms-search-block\"");
 
-WriteLiteral(">\n");
+WriteLiteral(">\r\n");
 
 WriteLiteral("                    ");
 
             
-            #line 138 "..\..\Views\History\ContentHistory.cshtml"
+            #line 136 "..\..\Views\History\ContentHistory.cshtml"
                Write(Html.TextBoxFor(m => m.SearchQuery, new { @class = "bcms-editor-field-box", @placeholder = RootGlobalization.WaterMark_Search }));
 
             
             #line default
             #line hidden
-WriteLiteral("\n                    <div");
+WriteLiteral("    \r\n                </div>\r\n                <div");
 
 WriteLiteral(" class=\"bcms-btn-search\"");
 
@@ -614,22 +612,23 @@ WriteLiteral(" id=\"bcms-pagecontenthistory-search-btn\"");
 WriteLiteral(">");
 
             
-            #line 139 "..\..\Views\History\ContentHistory.cshtml"
-                                                                                    Write(RootGlobalization.Button_Search);
+            #line 138 "..\..\Views\History\ContentHistory.cshtml"
+                                                                                Write(RootGlobalization.Button_Search);
 
             
             #line default
             #line hidden
-WriteLiteral("</div>\n                </div>\n            </div>\n");
+WriteLiteral("</div>\r\n            </div>\r\n");
 
             
-            #line 142 "..\..\Views\History\ContentHistory.cshtml"
+            #line 140 "..\..\Views\History\ContentHistory.cshtml"
+            
             
             
             #line default
             #line hidden
             
-            #line 142 "..\..\Views\History\ContentHistory.cshtml"
+            #line 141 "..\..\Views\History\ContentHistory.cshtml"
        Write(Html.Grid(Model.Items).Sort(Model.GridOptions).Columns(columns).Attributes(@class => "bcms-tables bcms-history-grid").RenderUsing(new ScrollableEditableHtmlTableGridRenderer<ContentHistoryItem>()
                                                                                                                                  {
                                                                                                                                      InternalTableCssClass = "bcms-history-cell"
@@ -640,35 +639,35 @@ WriteLiteral("</div>\n                </div>\n            </div>\n");
             #line default
             #line hidden
             
-            #line 146 "..\..\Views\History\ContentHistory.cshtml"
+            #line 145 "..\..\Views\History\ContentHistory.cshtml"
                                                                                                                                    
             
             
             #line default
             #line hidden
             
-            #line 147 "..\..\Views\History\ContentHistory.cshtml"
+            #line 146 "..\..\Views\History\ContentHistory.cshtml"
        Write(Html.HiddenSubmit());
 
             
             #line default
             #line hidden
             
-            #line 147 "..\..\Views\History\ContentHistory.cshtml"
+            #line 146 "..\..\Views\History\ContentHistory.cshtml"
                                 
         }
 
             
             #line default
             #line hidden
-WriteLiteral("    </div>\n</div>\n\n<script");
+WriteLiteral("    </div>\r\n</div>\r\n\r\n<script");
 
 WriteLiteral(" type=\"text/html\"");
 
 WriteLiteral(" id=\"bcms-history-preview-template\"");
 
-WriteLiteral(">\n    <iframe src=\"\" style=\"width: 100%; height: 100%; border: 0px;\"></iframe>\n</" +
-"script>\n");
+WriteLiteral(">\r\n    <iframe src=\"\" style=\"width: 100%; height: 100%; border: 0px;\"></iframe>\r\n" +
+"</script>\r\n");
 
         }
     }

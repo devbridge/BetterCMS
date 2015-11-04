@@ -211,7 +211,7 @@ WriteLiteral("                        ");
             
             #line default
             #line hidden
-WriteLiteral("\r\n                        <div");
+WriteLiteral("\r\n                    </div>\r\n                    <div");
 
 WriteLiteral(" class=\"bcms-btn-search\"");
 
@@ -220,13 +220,13 @@ WriteLiteral(" id=\"bcms-pages-search-btn\"");
 WriteLiteral(">");
 
             
-            #line 60 "..\..\Views\Templates\MasterPages.cshtml"
-                                                                           Write(PagesGlobalization.SiteSettings_Pages_Search);
+            #line 61 "..\..\Views\Templates\MasterPages.cshtml"
+                                                                       Write(PagesGlobalization.SiteSettings_Pages_Search);
 
             
             #line default
             #line hidden
-WriteLiteral("</div>\r\n                    </div>\r\n\r\n                    <div");
+WriteLiteral("</div>\r\n\r\n                    <div");
 
 WriteLiteral(" class=\"bcms-btn-main\"");
 

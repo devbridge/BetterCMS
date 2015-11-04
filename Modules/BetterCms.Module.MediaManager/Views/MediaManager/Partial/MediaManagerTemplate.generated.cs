@@ -161,18 +161,17 @@ WriteLiteral(@"                    </div>
             
             #line default
             #line hidden
-WriteLiteral("\" />\r\n                        <div class=\"bcms-btn-search\" data-bind=\"click: sear" +
-"chMedia\">");
+WriteLiteral("\" />\r\n                    </div>\r\n                    <div class=\"bcms-btn-search" +
+"\" data-bind=\"click: searchMedia\">");
 
             
-            #line 30 "..\..\Views\MediaManager\Partial\MediaManagerTemplate.cshtml"
-                                                                               Write(RootGlobalization.Button_Search);
+            #line 31 "..\..\Views\MediaManager\Partial\MediaManagerTemplate.cshtml"
+                                                                           Write(RootGlobalization.Button_Search);
 
             
             #line default
             #line hidden
 WriteLiteral(@"</div>
-                    </div>
                 </div>
             </div>
 
@@ -221,8 +220,8 @@ WriteLiteral(@"</div>
                     </div>
                 </div>
 
-                <div class=""bcms-tags-block"" style=""display: none;"" data-bind=""visible: gridOptions().isFilterVisible()"">
-                    <div class=""bcms-featured-tags"">
+                <div class=""bcms-filter-selection-block"" style=""display: none;"" data-bind=""visible: gridOptions().isFilterVisible()"">
+                    <div class=""bcms-filter-controls"">
                         <div class=""bcms-clearfix"">
                             <div class=""bcms-filter-options"" data-bind=""with: gridOptions().tags"">
                                 <div class=""bcms-filter-text"">");
@@ -276,12 +275,13 @@ WriteLiteral(@"</div>
                                 </div>
                             </div>
                         </div>
+
                         <div class=""bcms-single-tag-holder"" data-bind=""foreach: gridOptions().tags.items()"">
                             <div class=""bcms-single-tag"" data-bind=""css: { 'bcms-single-tag-active': isActive() }"">
                                 <span data-bind=""text: name()""></span><a data-bind=""    click: remove"">");
 
             
-            #line 89 "..\..\Views\MediaManager\Partial\MediaManagerTemplate.cshtml"
+            #line 90 "..\..\Views\MediaManager\Partial\MediaManagerTemplate.cshtml"
                                                                                                   Write(RootGlobalization.Button_Remove);
 
             
@@ -292,7 +292,6 @@ WriteLiteral(@"</a>
                             <input type=""hidden"" data-bind=""attr: { name: getItemInputName($index()) + '.Key', value: id() }"" />
                             <input type=""hidden"" data-bind=""attr: { name: getItemInputName($index()) + '.Value', value: name() }"" />
                         </div>
-
 
                         <div class=""bcms-single-tag-holder"" data-bind=""foreach: gridOptions().categories.items()"">
                             <div class=""bcms-single-tag"" data-bind=""css: { 'bcms-single-tag-active': isActive() }"">

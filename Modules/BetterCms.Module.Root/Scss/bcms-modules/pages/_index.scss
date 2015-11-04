@@ -21,7 +21,7 @@
 
 //module 2nd tab
 .bcms-content-sliders {
-    max-width: 820px;
+    //fixme remove when html refactored max-width: 820px;
 }
 
 .bcms-slider-box {
@@ -153,7 +153,6 @@ a.bcms-slider-next:active {
 
 .bcms-categories-box-holder {
     border-top: 1px solid #c6c6c6;
-    padding: 10px 0 0 30px;
 }
 
 .bcms-categories-box-holder .bcms-content-titles:hover {

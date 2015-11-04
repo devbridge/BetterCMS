@@ -133,9 +133,10 @@
                 <div class="bcms-large-titles">@MediaGlobalization.MediaHistory_OlderVersions</div>
                 <div class="bcms-search-block">
                     @Html.TextBoxFor(m => m.SearchQuery, new { @class = "bcms-editor-field-box", @placeholder = RootGlobalization.WaterMark_Search })
-                    <div class="bcms-btn-search" id="bcms-pagecontenthistory-search-btn">@RootGlobalization.Button_Search</div>
                 </div>
-            </div>                        
+                <div class="bcms-btn-search" id="bcms-pagecontenthistory-search-btn">@RootGlobalization.Button_Search</div>
+            </div>  
+                                  
             @Html.Grid(Model.Items).Sort(Model.GridOptions).Columns(columns).Attributes(@class => "bcms-tables bcms-history-grid").RenderUsing(new ScrollableEditableHtmlTableGridRenderer<MediaHistoryItem>()
                                                                                                                                  {
                                                                                                                                      InternalTableCssClass = "bcms-history-cell"

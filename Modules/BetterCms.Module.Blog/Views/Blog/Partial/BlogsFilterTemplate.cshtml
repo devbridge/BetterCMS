@@ -5,7 +5,7 @@
 
 @model BlogsGridViewModel<SiteSettingBlogPostViewModel>
 
-<div id="bcms-filter-template">
+<div class="bcms-filter-holder" id="bcms-filter-template">
     <div class="bcms-grid-filtering" data-bind="css: { 'bcms-active-filter': isVisible() }">
         <div class="bcms-filterbox" data-bind="click: toggleFilter">
             @BlogGlobalization.SiteSettings_Blogs_Filter
@@ -13,10 +13,9 @@
         </div>
     </div>
 
-    <div class="bcms-tags-block" style="display: none;" data-bind="visible: isVisible()">
-        <div class="bcms-featured-tags">
+    <div class="bcms-filter-selection-block" style="display: none;" data-bind="visible: isVisible()">
+        <div class="bcms-filter-controls">
             <div class="bcms-clearfix">
-
                 <div class="bcms-filter-options" data-bind="with: tags">
                     <div class="bcms-filter-text">@BlogGlobalization.SiteSettings_Blogs_FilterByTags</div>
                     <div class="bcms-filter-field-holder">
@@ -33,10 +32,9 @@
                         <!-- /ko -->
                     </div>
                 </div>
-                
+
                 <div class="bcms-filter-options" data-bind="with: categories">
                     <div class="bcms-filter-text">@BlogGlobalization.SiteSettings_Blogs_FilterByCategory</div>
-
                     <div class="bcms-filter-field-holder">
                         <input type="text" class="bcms-add-tags-field" data-bind="
                             css: { 'bcms-tag-validation-error': newItem.hasError() },
@@ -51,7 +49,7 @@
                         <!-- /ko -->
                     </div>
                 </div>
-                
+
                 <div class="bcms-filter-options">
                     <div class="bcms-filter-text">@BlogGlobalization.SiteSettings_Blogs_FilterByStatus</div>
                     @Html.DropDownListFor(m => m.Status, new List<SelectListItem>(), new
@@ -60,7 +58,6 @@
                                                                           @class = "bcms-global-select"
                                                                       })
                 </div>
-
                 <div class="bcms-filter-options">
                     <div class="bcms-filter-text">@BlogGlobalization.SiteSettings_Blogs_FilterBySEO</div>
                     @Html.DropDownListFor(m => m.SeoStatus, new List<SelectListItem>(), new
@@ -69,7 +66,6 @@
                                                                                                 @class = "bcms-global-select"
                                                                                             })
                 </div>
-
                 @if (Model.Languages != null && Model.Languages.Any())
                 {
                     <div class="bcms-filter-options">
@@ -77,9 +73,7 @@
                         <select class="bcms-global-select" name="LanguageId" data-bind="options: languages, value: languageId, optionsText: 'Value', optionsValue: 'Key'" />
                     </div>
                 }
-
             </div>
-
             <div class="bcms-single-tag-holder" data-bind="foreach: tags.items()">
                 <div class="bcms-single-tag" data-bind="css: { 'bcms-single-tag-active': isActive() }">
                     <span data-bind="text: name()"></span><a data-bind="    click: remove">@RootGlobalization.Button_Remove</a>
@@ -87,7 +81,7 @@
                 <input type="hidden" data-bind="attr: { name: getItemInputName($index()) + '.Key', value: id() }" />
                 <input type="hidden" data-bind="attr: { name: getItemInputName($index()) + '.Value', value: name() }" />
             </div>
-            
+
             <div class="bcms-single-tag-holder" data-bind="foreach: categories.items()">
                 <div class="bcms-single-tag" data-bind="css: { 'bcms-single-tag-active': isActive() }">
                     <span data-bind="text: name()"></span><a data-bind="    click: remove">@RootGlobalization.Button_Remove</a>
@@ -95,9 +89,7 @@
                 <input type="hidden" data-bind="attr: { name: 'Categories[' + $index() + '].Key', value: id() }" />
                 <input type="hidden" data-bind="attr: { name: 'Categories[' + $index() + '].Value', value: name() }" />
             </div>
-
         </div>
-
         <div class="bcms-clearfix">
             <div class="bcms-check-field-holder">
                 @Html.CheckBoxFor(model => model.IncludeArchived, new { data_bind = "checked: includeArchived" })

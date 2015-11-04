@@ -193,7 +193,7 @@ WriteLiteral("                        ");
             
             #line default
             #line hidden
-WriteLiteral("\r\n                        <div");
+WriteLiteral("\r\n                    </div>\r\n                    <div");
 
 WriteLiteral(" class=\"bcms-btn-search\"");
 
@@ -202,13 +202,13 @@ WriteLiteral(" id=\"bcms-tags-search-btn\"");
 WriteLiteral(">");
 
             
-            #line 39 "..\..\Views\Tags\ListTags.cshtml"
-                                                                          Write(RootGlobalization.SiteSettings_Tags_Search);
+            #line 40 "..\..\Views\Tags\ListTags.cshtml"
+                                                                      Write(RootGlobalization.SiteSettings_Tags_Search);
 
             
             #line default
             #line hidden
-WriteLiteral("</div>\r\n                    </div>\r\n\r\n                    <div");
+WriteLiteral("</div>\r\n\r\n                    <div");
 
 WriteLiteral(" class=\"bcms-btn-main\"");
 

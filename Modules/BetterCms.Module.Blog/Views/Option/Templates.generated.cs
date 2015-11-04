@@ -111,7 +111,7 @@ WriteAttribute("placeholder", Tuple.Create(" placeholder=\"", 495), Tuple.Create
 
 WriteLiteral(" data-bind=\"value: searchQuery, valueUpdate: \'afterkeydown\', enterPress: search\"");
 
-WriteLiteral(">\r\n                <div");
+WriteLiteral(">\r\n            </div>\r\n            <div");
 
 WriteLiteral(" class=\"bcms-btn-search bcms-search-query\"");
 
@@ -120,14 +120,14 @@ WriteLiteral(" data-bind=\"click: search\"");
 WriteLiteral(">");
 
             
-            #line 14 "..\..\Views\Option\Templates.cshtml"
-                                                                                    Write(RootGlobalization.Button_Search);
+            #line 15 "..\..\Views\Option\Templates.cshtml"
+                                                                                Write(RootGlobalization.Button_Search);
 
             
             #line default
             #line hidden
-WriteLiteral("</div>\r\n            </div>\r\n        </div>\r\n    </div>\r\n</div>\r\n\r\n<!-- ko foreach" +
-": templateRows -->\r\n<div");
+WriteLiteral("</div>\r\n        </div>\r\n    </div>\r\n</div>\r\n\r\n<!-- ko foreach: templateRows -->\r\n" +
+"<div");
 
 WriteLiteral(" class=\"bcms-blog-templates-holder\"");
 

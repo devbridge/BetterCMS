@@ -464,20 +464,20 @@ WriteLiteral("</div>\r\n    <div class=\"bcms-sidebar-search\">\r\n        <inpu
             #line default
             #line hidden
 WriteLiteral("\"\r\n               data-bind=\"hasfocus: hasfocus, value: searchQuery, valueUpdate:" +
-" \'afterkeydown\', enterPress: searchForPageLinks\" />\r\n        <div class=\"bcms-bt" +
-"n-search\" data-bind=\"click: searchForPageLinks\">");
+" \'afterkeydown\', enterPress: searchForPageLinks\" />\r\n    </div>\r\n    <div class=" +
+"\"bcms-btn-search\" data-bind=\"click: searchForPageLinks\">");
 
             
-            #line 99 "..\..\Views\Sitemap\Edit.cshtml"
-                                                                      Write(NavigationGlobalization.Sitemap_EditDialog_AddPageLink_SearchButton);
+            #line 100 "..\..\Views\Sitemap\Edit.cshtml"
+                                                                  Write(NavigationGlobalization.Sitemap_EditDialog_AddPageLink_SearchButton);
 
             
             #line default
             #line hidden
-WriteLiteral("</div>\r\n    </div>\r\n    <div class=\"bcms-addnode-placement-holder");
+WriteLiteral("</div>\r\n\r\n    <div class=\"bcms-addnode-placement-holder");
 
             
-            #line 101 "..\..\Views\Sitemap\Edit.cshtml"
+            #line 102 "..\..\Views\Sitemap\Edit.cshtml"
                                          Write(Model.IsReadOnly ? "-readonly" : string.Empty);
 
             
@@ -494,7 +494,7 @@ WriteLiteral(">\r\n    <!-- ko if: isVisible() || isCustom() -->\r\n    <div cla
 "node\" data-bind=\"");
 
             
-            #line 106 "..\..\Views\Sitemap\Edit.cshtml"
+            #line 107 "..\..\Views\Sitemap\Edit.cshtml"
                                             Write(!Model.IsReadOnly ? "draggable: $parentContext.$index, " : string.Empty);
 
             

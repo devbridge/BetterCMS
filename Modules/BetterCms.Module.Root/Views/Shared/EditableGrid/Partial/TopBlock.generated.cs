@@ -140,7 +140,9 @@ WriteAttribute("placeholder", Tuple.Create(" placeholder=\"", 684), Tuple.Create
 , 698), false)
 );
 
-WriteLiteral(" />\r\n                    <div");
+WriteLiteral(" />\r\n                </div>\r\n");
+
+WriteLiteral("                <div");
 
 WriteLiteral(" data-bind=\"click: searchItems\"");
 
@@ -149,13 +151,13 @@ WriteLiteral(" class=\"bcms-btn-search\"");
 WriteLiteral(">");
 
             
-            #line 16 "..\..\Views\Shared\EditableGrid\Partial\TopBlock.cshtml"
-                                                                           Write(RootGlobalization.Button_Search);
+            #line 17 "..\..\Views\Shared\EditableGrid\Partial\TopBlock.cshtml"
+                                                                       Write(RootGlobalization.Button_Search);
 
             
             #line default
             #line hidden
-WriteLiteral("</div>\r\n                </div>\r\n");
+WriteLiteral("</div>\r\n");
 
             
             #line 18 "..\..\Views\Shared\EditableGrid\Partial\TopBlock.cshtml"

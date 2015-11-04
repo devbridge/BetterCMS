@@ -565,13 +565,17 @@ div.bcms-preview-box:hover .bcms-preview-box-image:after {
     outline: none;
 }
 
+.bcms-single-tag-holder {
+    @include clearfix();
+}
+
 .bcms-single-tag {
     background-color: #def8ff;
     border: 1px solid #95d3e7;
     border-radius: 2px;
     color: #000;
     cursor: default;
-    display: inline-block;
+    float: left;
     font-size: 12px;
     height: 22px;
     line-height: 21px;
@@ -582,7 +586,6 @@ div.bcms-preview-box:hover .bcms-preview-box-image:after {
     position: relative;
     text-overflow: ellipsis;
     transition: background-color 0.1s ease-in-out;
-    -webkit-transition: background-color 0.1s ease-in-out;
     white-space: nowrap;
 }
 
@@ -753,6 +756,7 @@ div.bcms-preview-box:hover .bcms-preview-box-image:after {
 //module user access controls
 .bcms-user-access {
     border-bottom: 1px solid #c6c6c6;
+    margin: 0 0 20px -30px;
     padding: 0 0 0 30px;
 }
 

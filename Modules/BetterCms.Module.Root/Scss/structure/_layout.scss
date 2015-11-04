@@ -4,10 +4,10 @@ $tabbed-options: ($settings-frame + $tab-height);
 $options: ($settings-frame);
 
 $dialog-window-options: (
-                ('tabbed-settings', null, $tabbed-settings, 0 30px 0 0),
-                ('settings', null, $settings, 0 30px 0 0),
-                ('tabbed-options', $white, $tabbed-options, 0 30px),
-                ('options', null, $options, '30px')
+                ('tabbed-settings', null, null, $tabbed-settings, 0 30px 0 0),
+                ('settings', null, null, $settings, 0 30px 0 0),
+                ('tabbed-options', $white, null, $tabbed-options, 0 30px),
+                ('options', $white, null, $options, 0 30px)
 );
 
 html,
@@ -53,7 +53,7 @@ a {
 
 //todo end of
 .bcms-window {
-    @each $name, $bg-color, $height, $padding in $dialog-window-options {
+    @each $name, $bg-color, $width, $height, $padding in $dialog-window-options {
         &-#{$name} {
             background-color: $bg-color;
             height: calc(100vh - #{$height});
@@ -63,6 +63,7 @@ a {
             }
             padding: $padding;
             position: relative;
+            width: $width;
         }
     }
 }
@@ -154,7 +155,6 @@ a {
 }
 
 //module dialog frame
-
 .bcms-settings {
     &-frame {
         @include size($page-width calc(100vh - #{$settings-frame}));

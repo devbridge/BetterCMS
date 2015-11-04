@@ -13,8 +13,8 @@
             {
                 <div class="bcms-search-block">
                     <input data-bind="value: options().searchQuery, valueUpdate: 'afterkeydown', enterPress: searchItems, hasfocus: options().hasFocus" type="text" class="bcms-search-field-box" placeholder="@RootGlobalization.WaterMark_Search" />
-                    <div data-bind="click: searchItems" class="bcms-btn-search">@RootGlobalization.Button_Search</div>
                 </div>
+                <div data-bind="click: searchItems" class="bcms-btn-search">@RootGlobalization.Button_Search</div>
             }
 
             @Html.Partial(Model.TopBlockAddItemView, Model)
