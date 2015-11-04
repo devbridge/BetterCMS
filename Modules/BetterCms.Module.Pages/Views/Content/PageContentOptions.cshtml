@@ -6,22 +6,23 @@
 @using Microsoft.Web.Mvc
 
 @model ContentOptionValuesViewModel
-           
-<div class="bcms-scroll-window">
-    
+
+<div class="bcms-modal-frame-holder">
     @Html.TabbedContentMessagesBox()
 
-    <div class="bcms-input-list-holder">
-        @using (Html.BeginForm<ContentController>(c => c.PageContentOptions((ContentOptionValuesViewModel)null), FormMethod.Post, new
+    <div class="bcms-scroll-window-options">
+        <div class="bcms-input-list-holder">
+            @using (Html.BeginForm<ContentController>(c => c.PageContentOptions((ContentOptionValuesViewModel)null), FormMethod.Post, new
             {
                 @id = "bcms-options-form",
                 @class = "bcms-ajax-form",
                 data_readonly = Model.IsReadOnly.ToString().ToLower()
             }))
-        {              
-            @Html.Partial(PagesConstants.OptionValuesGridTemplate)
+            {
+                @Html.Partial(PagesConstants.OptionValuesGridTemplate)
 
-            @Html.HiddenFor(model => model.OptionValuesContainerId)
-        }
+                @Html.HiddenFor(model => model.OptionValuesContainerId)
+            }
+        </div>
     </div>
 </div>

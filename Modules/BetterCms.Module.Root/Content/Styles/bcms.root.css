@@ -904,33 +904,39 @@ a:hover {
   text-decoration: none;
 }
 
-[class*="bcms-"] {
-  font-family: "Open Sans", sans-serif !important;
-}
-
 .bcms-scroll-window-settings {
-  height: calc(100vh - 120px);
   overflow-x: hidden;
   overflow-y: scroll;
-  padding-right: 30px;
   position: relative;
 }
 
 .bcms-scroll-window-tabbed {
-  height: calc(100vh - 62px);
   overflow-x: hidden;
   overflow-y: scroll;
-  padding-right: 30px;
   position: relative;
 }
 
 .bcms-scroll-window-options {
-  background-color: #ffffff;
-  height: calc(100vh - 170px);
   overflow-x: hidden;
   overflow-y: scroll;
-  padding-right: 30px;
   position: relative;
+}
+
+.bcms-scroll-window-settings {
+  height: calc(100vh - 120px);
+  padding-right: 30px;
+}
+
+.bcms-scroll-window-tabbed {
+  height: calc(100vh - 62px);
+  padding-right: 30px;
+}
+
+.bcms-scroll-window-options {
+  padding-left: 30px;
+  padding-right: 30px;
+  background-color: #ffffff;
+  height: calc(100vh - 170px);
 }
 
 .bcms-modal {
@@ -3292,7 +3298,6 @@ div.bcms-preview-box:hover .bcms-preview-box-image:after {
 
 .bcms-user-access {
   border-bottom: 1px solid #c6c6c6;
-  margin: 0 0 20px -30px;
   padding: 0 0 0 30px;
 }
 

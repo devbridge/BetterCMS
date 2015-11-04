@@ -652,7 +652,6 @@ a.bcms-slider-next:active {
 .bcms-tags-box-holder {
   border-bottom: 1px solid #c6c6c6;
   border-top: 1px solid #c6c6c6;
-  margin: 0 0 10px -30px;
   padding: 10px 0 0 30px;
 }
 
@@ -668,7 +667,6 @@ a.bcms-slider-next:active {
 
 .bcms-categories-box-holder {
   border-top: 1px solid #c6c6c6;
-  margin: 0 0 0 -30px;
   padding: 10px 0 0 30px;
 }
 

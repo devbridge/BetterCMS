@@ -5,17 +5,16 @@
 @using BetterCms.Module.Root.Mvc.Grids;
 @using BetterCms.Module.Root.ViewModels.Shared;
 
-<div class="bcms-scroll-window-settings">
-    @{
-        var model = new EditableGridViewModel();
+@{
+    var model = new EditableGridViewModel();
 
-        model.ShowSearch = false;
-        model.TopBlockClass = "bcms-top-block-holder";
-        model.SaveButtonTitle = RootGlobalization.Button_Ok;
-        model.AddHiddenFields = true;
-        model.ShowMessages = false;
-        model.TopBlockAddItemView = "~/Areas/bcms-pages/Views/Option/Partial/TopBlockAddItem.cshtml";
-        model.Columns = new List<EditableGridColumn>
+    model.ShowSearch = false;
+    model.TopBlockClass = "bcms-top-block-holder";
+    model.SaveButtonTitle = RootGlobalization.Button_Ok;
+    model.AddHiddenFields = true;
+    model.ShowMessages = false;
+    model.TopBlockAddItemView = "~/Areas/bcms-pages/Views/Option/Partial/TopBlockAddItem.cshtml";
+    model.Columns = new List<EditableGridColumn>
             {
                 new EditableGridColumn(PagesGlobalization.Options_OptionKeyColumn, null, "key")
                     {
@@ -40,7 +39,6 @@
                 new EditableGridHiddenField("type", "Options[{0}].Type"),
                 new EditableGridHiddenField("customType", "Options[{0}].CustomType")
             };
-    }
+}
 
-    @Html.Partial(RootModuleConstants.EditableGridTemplate, model)
-</div>
+@Html.Partial(RootModuleConstants.EditableGridTemplate, model)

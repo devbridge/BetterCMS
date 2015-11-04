@@ -16,162 +16,155 @@
         TooltipDescription = MediaGlobalization.FileEditor_Dialog_AddTags_Tooltip_Description
     };
 }
-
 @{
     var categoriesTemplateViewModel = new CategoryTemplateViewModel
     {
         TooltipDescription = MediaGlobalization.FileEditor_Dialog_Category_Tooltip_Description
     };
 }
-<div class="bcms-scroll-window">
+
+<div class="bcms-modal-frame-holder">
     @Html.TabbedContentMessagesBox()
-    <div class="bcms-file-manager-inner bcms-clearfix">
-        @using (Html.BeginForm<ImagesController>(f => f.ImageEditor((ImageViewModel)null), FormMethod.Post, new { @class = "bcms-ajax-form", @enctype = "multipart/form-data" }))
-        {
-            @Html.HiddenFor(model => model.Id)
-            @Html.HiddenFor(model => model.Version, new { @id = "image-version-field" })
-            @Html.HiddenFor(model => model.CropCoordX1, new { @data_bind = "value: Math.floor(imageEditorViewModel.cropCoordX1())" })
-            @Html.HiddenFor(model => model.CropCoordX2, new { @data_bind = "value: Math.floor(imageEditorViewModel.cropCoordX2())" })
-            @Html.HiddenFor(model => model.CropCoordY1, new { @data_bind = "value: Math.floor(imageEditorViewModel.cropCoordY1())" })
-            @Html.HiddenFor(model => model.CropCoordY2, new { @data_bind = "value: Math.floor(imageEditorViewModel.cropCoordY2())" })
-            @Html.HiddenFor(model => model.ShouldOverride, new { @id = "image-override-field" })
-            
-            <div class="bcms-input-list-holder">
-                @Html.Tooltip(MediaGlobalization.ImageEditor_Dialog_CropImage_Tooltip_Description)
-                <div class="bcms-content-titles">
-                    @MediaGlobalization.ImageEditor_Dialog_CropImage_Title
 
-                    <a class="bcms-icn-delete-link" data-bind="visible: imageEditorViewModel.hasCrop(), click: imageEditorViewModel.removeCrop">Remove crop</a>
-                    <div class="bcms-crop-checkbox">
-                        <input type="checkbox" data-bind="checked: imageEditorViewModel.fit" />
-                        <div class="bcms-edit-label" data-bind="click: imageEditorViewModel.changeFit">@MediaGlobalization.ImageEditor_Dialog_FitImage_Title</div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="bcms-croped-block">
-                <img src="" data-bind="style: { width: imageEditorViewModel.calculatedWidth() + 'px', height: imageEditorViewModel.calculatedHeight() + 'px' }" />
-            </div>
-
-            <div class="bcms-edit-file-info">
-
-                <div class="bcms-file-info-text">
-                    <div class="bcms-content-titles">@MediaGlobalization.ImageEditor_Dialog_PublicUrl</div>
-                    <div class="bcms-edit-file-info">
-                        <input class="bcms-editor-field-box bcms-editor-selectable-field-box" type="text" value="@Model.Url" readonly="readonly" />
-                    </div>
-                </div>
+    <div class="bcms-scroll-window-options">
+        <div class="bcms-file-manager-inner bcms-clearfix">
+            @using (Html.BeginForm<ImagesController>(f => f.ImageEditor((ImageViewModel)null), FormMethod.Post, new { @class = "bcms-ajax-form", @enctype = "multipart/form-data" }))
+            {
+                @Html.HiddenFor(model => model.Id)
+                @Html.HiddenFor(model => model.Version, new { @id = "image-version-field" })
+                @Html.HiddenFor(model => model.CropCoordX1, new { @data_bind = "value: Math.floor(imageEditorViewModel.cropCoordX1())" })
+                @Html.HiddenFor(model => model.CropCoordX2, new { @data_bind = "value: Math.floor(imageEditorViewModel.cropCoordX2())" })
+                @Html.HiddenFor(model => model.CropCoordY1, new { @data_bind = "value: Math.floor(imageEditorViewModel.cropCoordY1())" })
+                @Html.HiddenFor(model => model.CropCoordY2, new { @data_bind = "value: Math.floor(imageEditorViewModel.cropCoordY2())" })
+                @Html.HiddenFor(model => model.ShouldOverride, new { @id = "image-override-field" })
 
                 <div class="bcms-input-list-holder">
-                    @Html.Tooltip(MediaGlobalization.ImageEditor_Dialog_Caption_Tooltip_Description)
-                    <div class="bcms-content-titles">@MediaGlobalization.ImageEditor_Dialog_Caption</div>
-                    <div class="bcms-input-box">
-                        @Html.TextBoxFor(f => f.Caption, new { @class = "bcms-editor-field-box", @id = "Caption", data_bind = "event: {change: onValueChange}" })
-                        @Html.BcmsValidationMessageFor(f => f.Caption)
+                    @Html.Tooltip(MediaGlobalization.ImageEditor_Dialog_CropImage_Tooltip_Description)
+                    <div class="bcms-content-titles">
+                        @MediaGlobalization.ImageEditor_Dialog_CropImage_Title
+                        <a class="bcms-icn-delete-link" data-bind="visible: imageEditorViewModel.hasCrop(), click: imageEditorViewModel.removeCrop">Remove crop</a>
+                        <div class="bcms-crop-checkbox">
+                            <input type="checkbox" data-bind="checked: imageEditorViewModel.fit" />
+                            <div class="bcms-edit-label" data-bind="click: imageEditorViewModel.changeFit">@MediaGlobalization.ImageEditor_Dialog_FitImage_Title</div>
+                        </div>
                     </div>
                 </div>
 
-                <div class="bcms-file-info-text" data-bind="with: titleEditorViewModel" id="bcms-image-title-editor-box">
-                    <b>@MediaGlobalization.ImageEditor_Dialog_ImageName_Title:</b><div class="bcms-editing-text" data-bind="text: oldTitle()"></div>
-                    <a class="bcms-file-link" data-bind="click: open, visible: !isOpened()">@RootGlobalization.Button_Edit</a>
-                    <div class="bcms-file-edit" data-bind="style: { 'display': isOpened() ? 'block' : 'none' }" style="display: none;">
-                        <div class="bcms-content-titles">@MediaGlobalization.ImageEditor_Dialog_ImageTitle_Title</div>
-                        <div class="bcms-custom-input-box" style="width: 255px;">
-                            @Html.TextBoxFor(f => f.Title, new
+                <div class="bcms-croped-block">
+                    <img src="" data-bind="style: { width: imageEditorViewModel.calculatedWidth() + 'px', height: imageEditorViewModel.calculatedHeight() + 'px' }" />
+                </div>
+
+                <div class="bcms-edit-file-info">
+                    <div class="bcms-file-info-text">
+                        <div class="bcms-content-titles">@MediaGlobalization.ImageEditor_Dialog_PublicUrl</div>
+                        <div class="bcms-edit-file-info">
+                            <input class="bcms-editor-field-box bcms-editor-selectable-field-box" type="text" value="@Model.Url" readonly="readonly" />
+                        </div>
+                    </div>
+                    <div class="bcms-input-list-holder">
+                        @Html.Tooltip(MediaGlobalization.ImageEditor_Dialog_Caption_Tooltip_Description)
+                        <div class="bcms-content-titles">@MediaGlobalization.ImageEditor_Dialog_Caption</div>
+                        <div class="bcms-input-box">
+                            @Html.TextBoxFor(f => f.Caption, new { @class = "bcms-editor-field-box", @id = "Caption", data_bind = "event: {change: onValueChange}" })
+                            @Html.BcmsValidationMessageFor(f => f.Caption)
+                        </div>
+                    </div>
+                    <div class="bcms-file-info-text" data-bind="with: titleEditorViewModel" id="bcms-image-title-editor-box">
+                        <b>@MediaGlobalization.ImageEditor_Dialog_ImageName_Title:</b><div class="bcms-editing-text" data-bind="text: oldTitle()"></div>
+                        <a class="bcms-file-link" data-bind="click: open, visible: !isOpened()">@RootGlobalization.Button_Edit</a>
+                        <div class="bcms-file-edit" data-bind="style: { 'display': isOpened() ? 'block' : 'none' }" style="display: none;">
+                            <div class="bcms-content-titles">@MediaGlobalization.ImageEditor_Dialog_ImageTitle_Title</div>
+                            <div class="bcms-custom-input-box" style="width: 255px;">
+                                @Html.TextBoxFor(f => f.Title, new
                        {
                            @class = "bcms-editor-field-box",
                            @id = "bcms-image-title-editor",
                            @data_bind = "value: title, valueUpdate: 'afterkeydown', enterPress: save, escPress: close, event: {change: $parent.onValueChange}"
                        })
-                            @Html.BcmsValidationMessageFor(f => f.Title)
-                        </div>
+                                @Html.BcmsValidationMessageFor(f => f.Title)
+                            </div>
                             <div class="bcms-btn-small" data-bind="click: save">@RootGlobalization.Button_Ok</div>
                             <div class="bcms-btn-links-small" data-bind="click: close">@RootGlobalization.Button_Cancel</div>
-                    </div>
-                </div>
-
-                <div class="bcms-file-info-text">
-                    <b>@MediaGlobalization.ImageEditor_Dialog_FileSize:</b>
-                    <div class="bcms-editing-text" id="image-file-size">@Model.FileSize</div>
-                </div>
-
-                <div class="bcms-file-info-text">
-                    <b>@MediaGlobalization.ImageEditor_Dialog_CroppedDimensions:</b>
-                    <div class="bcms-editing-text" id="image-file-size" data-bind="text: imageEditorViewModel.croppedWidthAndHeight()">@Model.CroppedWidth x @Model.CroppedHeight</div>
-                </div>
-
-                <div class="bcms-file-info-text" data-bind="with: imageEditorViewModel" id="bcms-image-dimensions-editor-box">
-                    <b>@MediaGlobalization.ImageEditor_Dialog_Dimensions:</b>
-                    <div class="bcms-editing-text" data-bind="text: widthAndHeight()">@Model.ImageWidth x @Model.ImageHeight</div>
-                    <a class="bcms-file-link" data-bind="click: open, visible: !isOpened()">@RootGlobalization.Button_Edit</a>
-                    <div class="bcms-file-edit" data-bind="style: { 'display': isOpened() ? 'block' : 'none' }">
-                        <div class="bcms-content-titles">
-                            @MediaGlobalization.ImageEditor_Dialog_ChangeSize_Title
                         </div>
-                        <span>@MediaGlobalization.ImageEditor_Dialog_ChangeSize_Width:</span>
-                        <div class="bcms-custom-input-box" style="width: 75px;">
-                            @Html.TextBoxFor(f => f.ImageWidth, new
+                    </div>
+                    <div class="bcms-file-info-text">
+                        <b>@MediaGlobalization.ImageEditor_Dialog_FileSize:</b>
+                        <div class="bcms-editing-text" id="image-file-size">@Model.FileSize</div>
+                    </div>
+                    <div class="bcms-file-info-text">
+                        <b>@MediaGlobalization.ImageEditor_Dialog_CroppedDimensions:</b>
+                        <div class="bcms-editing-text" id="image-file-size" data-bind="text: imageEditorViewModel.croppedWidthAndHeight()">@Model.CroppedWidth x @Model.CroppedHeight</div>
+                    </div>
+                    <div class="bcms-file-info-text" data-bind="with: imageEditorViewModel" id="bcms-image-dimensions-editor-box">
+                        <b>@MediaGlobalization.ImageEditor_Dialog_Dimensions:</b>
+                        <div class="bcms-editing-text" data-bind="text: widthAndHeight()">@Model.ImageWidth x @Model.ImageHeight</div>
+                        <a class="bcms-file-link" data-bind="click: open, visible: !isOpened()">@RootGlobalization.Button_Edit</a>
+                        <div class="bcms-file-edit" data-bind="style: { 'display': isOpened() ? 'block' : 'none' }">
+                            <div class="bcms-content-titles">
+                                @MediaGlobalization.ImageEditor_Dialog_ChangeSize_Title
+                            </div>
+                            <span>@MediaGlobalization.ImageEditor_Dialog_ChangeSize_Width:</span>
+                            <div class="bcms-custom-input-box" style="width: 75px;">
+                                @Html.TextBoxFor(f => f.ImageWidth, new
                             {
                                 @class = "bcms-editor-field-box",
                                 @id = "image-width",
                                 @data_bind = "value: width, valueUpdate: 'afterkeydown', enterPress: save, escPress: close, event: { change: changeHeight }"
                             })
-                            @Html.BcmsValidationMessageFor(f => f.ImageWidth)
-                        </div>
-                        <span>@MediaGlobalization.ImageEditor_Dialog_ChangeSize_Height:</span>
-                        <div class="bcms-custom-input-box" style="width: 75px;">
-                            @Html.TextBoxFor(f => f.ImageHeight, new
+                                @Html.BcmsValidationMessageFor(f => f.ImageWidth)
+                            </div>
+                            <span>@MediaGlobalization.ImageEditor_Dialog_ChangeSize_Height:</span>
+                            <div class="bcms-custom-input-box" style="width: 75px;">
+                                @Html.TextBoxFor(f => f.ImageHeight, new
                             {
                                 @class = "bcms-editor-field-box",
                                 @id = "image-height",
                                 @data_bind = "value: height, valueUpdate: 'afterkeydown', enterPress: save, escPress: close, event: { change: changeWidth }"
                             })
-                            @Html.BcmsValidationMessageFor(f => f.ImageHeight)
+                                @Html.BcmsValidationMessageFor(f => f.ImageHeight)
+                            </div>
+                            <div class="bcms-btn-small" data-bind="click: save">@RootGlobalization.Button_Ok</div>
+                            <div class="bcms-btn-links-small" data-bind="click: close">@RootGlobalization.Button_Cancel</div>
+                            <a data-bind="click: restoreOriginalSize">@MediaGlobalization.ImageEditor_Dialog_RestoreOriginalSize_Title</a>
                         </div>
-
-                        <div class="bcms-btn-small" data-bind="click: save">@RootGlobalization.Button_Ok</div>
-                        <div class="bcms-btn-links-small" data-bind="click: close">@RootGlobalization.Button_Cancel</div>
-                        <a data-bind="click: restoreOriginalSize">@MediaGlobalization.ImageEditor_Dialog_RestoreOriginalSize_Title</a>
-                    </div>
-                </div>
-            </div>
-
-            <div class="bcms-file-alignment">
-                <div class="bcms-content-titles">@MediaGlobalization.ImageEditor_Dialog_AligmentTitle</div>
-                <div class="bcms-alignment-controls">
-                    <div class="bcms-align-center@(Model.ImageAlign == MediaImageAlign.Center ? "-active" : string.Empty)">
-                        <input type="radio" name="ImageAlign" value="@((int)MediaImageAlign.Center)" @(Model.ImageAlign == MediaImageAlign.Center ? "checked" : string.Empty) data-bind="checked: imageAlign" />
-                    </div>
-                    <div class="bcms-align-left@(Model.ImageAlign == MediaImageAlign.Left ? "-active" : string.Empty)">
-                        <input type="radio" name="ImageAlign" value="@((int)MediaImageAlign.Left)" @(Model.ImageAlign == MediaImageAlign.Left ? "checked" : string.Empty) data-bind="checked: imageAlign" />
-                    </div>
-                    <div class="bcms-align-right@(Model.ImageAlign == MediaImageAlign.Right ? "-active" : string.Empty)">
-                        <input type="radio" name="ImageAlign" value="@((int)MediaImageAlign.Right)" @(Model.ImageAlign == MediaImageAlign.Right ? "checked" : string.Empty) data-bind="checked: imageAlign" />
                     </div>
                 </div>
 
-                <div class="bcms-input-list-holder">
-                    @Html.Tooltip(MediaGlobalization.ImageEditor_Dialog_Description_Tooltip_Description)
-                    <div class="bcms-content-titles">@MediaGlobalization.ImageEditor_Dialog_Description</div>
-                    <div class="bcms-textarea-box">
-                        @Html.TextAreaFor(f => f.Description, new { @class = "bcms-editor-field-area", @id = "Description", @style = "width: 380px;", data_bind = "event: {change: onValueChange}" })
-                        @Html.BcmsValidationMessageFor(f => f.Description)
+                <div class="bcms-file-alignment">
+                    <div class="bcms-content-titles">@MediaGlobalization.ImageEditor_Dialog_AligmentTitle</div>
+                    <div class="bcms-alignment-controls">
+                        <div class="bcms-align-center@(Model.ImageAlign == MediaImageAlign.Center ? "-active" : string.Empty)">
+                            <input type="radio" name="ImageAlign" value="@((int)MediaImageAlign.Center)" @(Model.ImageAlign == MediaImageAlign.Center ? "checked" : string.Empty) data-bind="checked: imageAlign" />
+                        </div>
+                        <div class="bcms-align-left@(Model.ImageAlign == MediaImageAlign.Left ? "-active" : string.Empty)">
+                            <input type="radio" name="ImageAlign" value="@((int)MediaImageAlign.Left)" @(Model.ImageAlign == MediaImageAlign.Left ? "checked" : string.Empty) data-bind="checked: imageAlign" />
+                        </div>
+                        <div class="bcms-align-right@(Model.ImageAlign == MediaImageAlign.Right ? "-active" : string.Empty)">
+                            <input type="radio" name="ImageAlign" value="@((int)MediaImageAlign.Right)" @(Model.ImageAlign == MediaImageAlign.Right ? "checked" : string.Empty) data-bind="checked: imageAlign" />
+                        </div>
+                    </div>
+                    <div class="bcms-input-list-holder">
+                        @Html.Tooltip(MediaGlobalization.ImageEditor_Dialog_Description_Tooltip_Description)
+                        <div class="bcms-content-titles">@MediaGlobalization.ImageEditor_Dialog_Description</div>
+                        <div class="bcms-textarea-box">
+                            @Html.TextAreaFor(f => f.Description, new { @class = "bcms-editor-field-area", @id = "Description", @style = "width: 380px;", data_bind = "event: {change: onValueChange}" })
+                            @Html.BcmsValidationMessageFor(f => f.Description)
+                        </div>
                     </div>
                 </div>
 
-            </div>
+                <div class="bcms-categories-box-holder" data-bind="with: categories">
+                    @Html.Partial("~/Areas/bcms-root/Views/Category/CategoriesTemplate.cshtml", categoriesTemplateViewModel)
+                </div>
 
-            <div class="bcms-categories-box-holder" data-bind="with: categories">
-                @Html.Partial("~/Areas/bcms-root/Views/Category/CategoriesTemplate.cshtml", categoriesTemplateViewModel)
-            </div>
+                <div class="bcms-media-tags-box-holder bcms-clearfix" data-bind="with: tags">
+                    @Html.Partial("~/Areas/bcms-root/Views/Tags/TagsTemplate.cshtml", tagsTemplateViewModel)
+                </div>
 
-            <div class="bcms-media-tags-box-holder bcms-clearfix" data-bind="with: tags">
-                @Html.Partial("~/Areas/bcms-root/Views/Tags/TagsTemplate.cshtml", tagsTemplateViewModel)
-            </div>
+                <div class="bcms-media-reupload" data-bind="click: reupload">@MediaGlobalization.ImageEditor_Dialog_Reupload_Title</div>
 
-            <div class="bcms-media-reupload" data-bind="click: reupload">@MediaGlobalization.ImageEditor_Dialog_Reupload_Title</div>
-
-            @Html.HiddenSubmit()
-        }
+                @Html.HiddenSubmit()
+            }
+        </div>
     </div>
 </div>

@@ -73,29 +73,19 @@ namespace ASP
         }
         public override void Execute()
         {
-WriteLiteral("\r\n<div");
-
-WriteLiteral(" class=\"bcms-scroll-window-settings\"");
-
-WriteLiteral(">\r\n");
+WriteLiteral("\r\n");
 
             
-            #line 9 "..\..\Views\Option\EditOptionValues.cshtml"
-    
-            
-            #line default
-            #line hidden
-            
-            #line 9 "..\..\Views\Option\EditOptionValues.cshtml"
-      
-        var model = new EditableGridViewModel();
-        model.ShowSearch = false;
-        model.TopBlockClass = "bcms-top-block-holder";
-        model.AddHiddenFields = true;
-        model.SaveButtonTitle = RootGlobalization.Button_Ok;
-        model.ShowMessages = false;
-        model.TopBlockAddItemView = "~/Areas/bcms-pages/Views/Option/Partial/TopBlockAddItem.cshtml";
-        model.Columns = new List<EditableGridColumn>
+            #line 8 "..\..\Views\Option\EditOptionValues.cshtml"
+  
+    var model = new EditableGridViewModel();
+    model.ShowSearch = false;
+    model.TopBlockClass = "bcms-top-block-holder";
+    model.AddHiddenFields = true;
+    model.SaveButtonTitle = RootGlobalization.Button_Ok;
+    model.ShowMessages = false;
+    model.TopBlockAddItemView = "~/Areas/bcms-pages/Views/Option/Partial/TopBlockAddItem.cshtml";
+    model.Columns = new List<EditableGridColumn>
     {
         new EditableGridColumn(PagesGlobalization.EditOptionsValues_OptionKeyColumn, null, "key")
         {
@@ -127,22 +117,20 @@ WriteLiteral(">\r\n");
         },
         new EditableGridHiddenField("type", "OptionValues[{0}].Type"),
         new EditableGridHiddenField("customType", "OptionValues[{0}].CustomType") };
-    
+
             
             #line default
             #line hidden
 WriteLiteral("\r\n\r\n");
 
-WriteLiteral("    ");
-
             
-            #line 51 "..\..\Views\Option\EditOptionValues.cshtml"
+            #line 50 "..\..\Views\Option\EditOptionValues.cshtml"
 Write(Html.Partial(RootModuleConstants.EditableGridTemplate, model));
 
             
             #line default
             #line hidden
-WriteLiteral("\r\n</div>\r\n");
+WriteLiteral("\r\n");
 
         }
     }

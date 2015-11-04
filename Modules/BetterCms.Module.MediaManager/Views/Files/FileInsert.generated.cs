@@ -39,13 +39,13 @@ namespace ASP
         {
 WriteLiteral("<div");
 
-WriteLiteral(" class=\"bcms-scroll-window\"");
+WriteLiteral(" class=\"bcms-modal-frame-holder\"");
 
-WriteLiteral(">\n    <div");
+WriteLiteral(">\r\n    <div");
 
-WriteLiteral(" class=\"bcms-modal-frame-holder bcms-insert-content-modal\"");
+WriteLiteral(" class=\"bcms-scroll-window-options bcms-insert-content-modal\"");
 
-WriteLiteral(">\n");
+WriteLiteral(">\r\n");
 
 WriteLiteral("        ");
 
@@ -56,16 +56,18 @@ WriteLiteral("        ");
             
             #line default
             #line hidden
-WriteLiteral("\n    </div>\n</div>\n\n");
+WriteLiteral("\r\n    </div>\r\n\r\n");
+
+WriteLiteral("    ");
 
             
-            #line 7 "..\..\Views\Files\FileInsert.cshtml"
+            #line 6 "..\..\Views\Files\FileInsert.cshtml"
 Write(Html.Partial("~/Areas/bcms-media/Views/MediaManager/Partial/MediaManagerTemplate.cshtml"));
 
             
             #line default
             #line hidden
-WriteLiteral("\n");
+WriteLiteral("\r\n</div>\r\n");
 
         }
     }

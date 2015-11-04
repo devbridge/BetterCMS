@@ -6,10 +6,12 @@
         ? (UserAccessTemplateViewModel)Model
         : new UserAccessTemplateViewModel();
 }
+
 <div id="bcms-accesscontrol-context">
     <div class="bcms-user-access" data-bind="with: accessControl">
         <div class="bcms-input-list-holder">
             @Html.Tooltip(@viewModel.Tooltip)
+
             <div class="bcms-content-titles">@viewModel.Title</div>
             <div class="bcms-access-table">
                 <div class="bcms-access-title bcms-clearfix">
@@ -18,6 +20,7 @@
                     <div class="bcms-access-title-text">@RootGlobalization.AccessControl_UserAccess_Read</div>
                     <div class="bcms-access-title-text">@RootGlobalization.AccessControl_UserAccess_NoAccess</div>
                 </div>
+
                 <div data-bind="foreach: UserAccessList">
                     <div class="bcms-access-line bcms-clearfix">
                         <div class="bcms-access-value">
@@ -31,6 +34,7 @@
                     <input type="hidden" data-bind="attr: { name: $parent.getPropertyIndexer($index(), 'Identity') }, value: Identity" />
                     <input type="hidden" data-bind="attr: { name: $parent.getPropertyIndexer($index(), 'IsForRole') }, valueBinder: IsForRole" />
                 </div>
+
                 <div class="bcms-access-line bcms-clearfix" data-bind="with: userAccessControl">
                     <div class="bcms-access-value-add">
                         <div class="btn-acces-plus" data-bind="click: clickPlus">&nbsp;</div>
@@ -53,6 +57,7 @@
                         </div>
                     </div>
                 </div>
+
                 <div class="bcms-access-line bcms-clearfix" data-bind="with: roleAccessControl">
                     <div class="bcms-access-value-add">
                         <div class="btn-acces-plus" data-bind="click: clickPlus">&nbsp;</div>

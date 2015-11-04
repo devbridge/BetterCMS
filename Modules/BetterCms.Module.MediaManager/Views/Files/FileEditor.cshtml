@@ -20,9 +20,11 @@
         TooltipDescription = MediaGlobalization.FileEditor_Dialog_Category_Tooltip_Description
     };
 }
-<div class="bcms-scroll-window">
+
+<div class="bcms-modal-frame-holder">
     @Html.TabbedContentMessagesBox()
-    <div class="bcms-padded-content bcms-clearfix" id="bcms-file-manager-inner" style="margin-top: 30px;">
+
+    <div class="bcms-scroll-window-options" id="bcms-file-manager-inner">
         @using (Html.BeginForm<FilesController>(f => f.FileEditor((FileViewModel)null), FormMethod.Post,
             new
                 {

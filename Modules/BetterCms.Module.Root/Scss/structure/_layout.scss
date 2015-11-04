@@ -1,3 +1,8 @@
+$dialog-window-options: (
+                ('settings'),
+                ('tabbed'),
+                ('options')
+);
 html,
 body {
     height: 100%;
@@ -32,49 +37,38 @@ a {
 }
 
 //todo remove when iFrame implemented
-[class*="bcms-"] {
-    font-family: $font-base-family;
-}
+//[class*="bcms-"] {
+//    font-family: $font-base-family;
+//}
 
 //todo end of
 .bcms-scroll-window {
+    @each $name in $dialog-window-options {
+        &-#{$name} {
+            overflow: {
+                x: hidden;
+                y: scroll;
+            }
+            position: relative;
+        }
+    }
+
     &-settings {
         height: calc(100vh - #{$settings-frame});
-        overflow: {
-            x: hidden;
-            y: scroll;
-        }
         padding-right: 30px;
-        position: relative;
     }
 
     &-tabbed {
         height: calc(100vh - #{$settings-frame - $inner-navigation});
-        overflow: {
-            x: hidden;
-            y: scroll;
-        }
         padding-right: 30px;
-        position: relative;
     }
 
     &-options {
+        @include pad(30px);
         background-color: $white;
         height: calc(100vh - #{$settings-frame + $tab-height});
-        overflow: {
-            x: hidden;
-            y: scroll;
-        }
-        padding-right: 30px;
-        position: relative;
     }
 }
-
-//fixme remove from html
-//.bcms-padded-content {
-//    max-width: 830px;
-//    padding-left: 50px;
-//}
 
 .bcms-modal {
     @include position(fixed, 0);
