@@ -3454,7 +3454,7 @@ namespace BetterCms.Module.Pages.Content.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Register +.
+        ///   Looks up a localized string similar to Register.
         /// </summary>
         public static string SiteSettings_Widgets_RegisterNew {
             get {

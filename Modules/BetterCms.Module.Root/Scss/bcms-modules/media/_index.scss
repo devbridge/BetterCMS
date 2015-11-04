@@ -1,20 +1,4 @@
 //module site settings media manager
-.bcms-media-controls-holder {
-    float: left;
-}
-
-.bcms-media-controls-holder a {
-    color: #0383df;
-    cursor: pointer;
-    display: inline-block;
-    font-size: 10px;
-    vertical-align: middle;
-}
-
-.bcms-media-controls-holder a:hover {
-    text-decoration: underline;
-}
-
 .bcms-select-list {
     background: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAA8AAAAZCAYAAAGZXkRaAAAAe0lEQVQ4y2M4cODAQyD+z/D/PwQjGJE7390D4v8MIHncav6D1cBEMJTgFoAZC8XHyDGDsADMhVB8AEMFNnc9RHMbfncSdAQ2R91DcxjpjsTlQAocRytjaSSJJwj/D4SxxMTaPXxBjAcfoMzmkehsYHw9xBeXePCxkehsAFIWbewiC0rOAAAAAElFTkSuQmCC') no-repeat center 1px;
     height: 12px;
@@ -30,12 +14,6 @@
 
 .bcms-media-new-folder {
     background: url('images/sprite-media-1.png') no-repeat -3px -56px;
-    padding-left: 29px;
-}
-
-.bcms-media-new-file {
-    background: url('images/sprite-media-1.png') no-repeat 0 -96px;
-    margin-left: 10px;
     padding-left: 29px;
 }
 
@@ -680,4 +658,18 @@ input.bcms-grid-input:focus {
 
 .bcms-media-history-image-holder img {
     max-width: 100%;
+}
+
+.bcms-media-input-box {
+    left: 135px;
+    margin: -15px 0 0;
+    position: absolute;
+    top: 50%;
+    width: 380px;
+}
+
+.bcms-list .bcms-media-input-box input.bcms-input-validation-error {
+    background: #fcecec;
+    border: 1px solid #e64343;
+    box-shadow: 0 0 2px 0 rgba(230, 67, 67, 0.4);
 }

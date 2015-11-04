@@ -361,7 +361,7 @@ WriteLiteral("                    ");
             
             #line default
             #line hidden
-WriteLiteral("\r\n                </div>\r\n            </div>\r\n            <div");
+WriteLiteral("\r\n                </div>\r\n            </div>\r\n\r\n            <div");
 
 WriteLiteral(" class=\"bcms-single-tag-holder\"");
 
@@ -384,7 +384,7 @@ WriteLiteral(" data-bind=\"    click: remove\"");
 WriteLiteral(">");
 
             
-            #line 85 "..\..\Views\Filter\PagesFilterTemplate.cshtml"
+            #line 86 "..\..\Views\Filter\PagesFilterTemplate.cshtml"
                                                                                       Write(RootGlobalization.Button_Remove);
 
             
@@ -426,7 +426,7 @@ WriteLiteral(" data-bind=\"    click: remove\"");
 WriteLiteral(">");
 
             
-            #line 93 "..\..\Views\Filter\PagesFilterTemplate.cshtml"
+            #line 94 "..\..\Views\Filter\PagesFilterTemplate.cshtml"
                                                                                       Write(RootGlobalization.Button_Remove);
 
             
@@ -444,7 +444,7 @@ WriteLiteral(" type=\"hidden\"");
 
 WriteLiteral(" data-bind=\"attr: { name: \'Categories[\' + $index() + \'].Value\', value: name() }\"");
 
-WriteLiteral(" />\r\n            </div>\r\n        </div>\r\n\n\n            <div");
+WriteLiteral(" />\r\n            </div>\r\n        </div>\n\n            <div");
 
 WriteLiteral(" class=\"bcms-clearfix\"");
 

@@ -310,7 +310,7 @@ WriteLiteral("</div>\r\n");
             
             #line default
             #line hidden
-WriteLiteral("                </div>\r\n            </div>\r\n            <div");
+WriteLiteral("                </div>\r\n            </div>\r\n\r\n            <div");
 
 WriteLiteral(" class=\"bcms-top-block-pager\"");
 
@@ -319,7 +319,7 @@ WriteLiteral(">\r\n");
 WriteLiteral("                ");
 
             
-            #line 91 "..\..\Views\Page\Partial\SiteSettingsPagesList.cshtml"
+            #line 92 "..\..\Views\Page\Partial\SiteSettingsPagesList.cshtml"
            Write(Html.RenderPaging(Model));
 
             
@@ -330,7 +330,7 @@ WriteLiteral("\r\n            </div>\r\n        </div>\r\n\r\n");
 WriteLiteral("        ");
 
             
-            #line 95 "..\..\Views\Page\Partial\SiteSettingsPagesList.cshtml"
+            #line 96 "..\..\Views\Page\Partial\SiteSettingsPagesList.cshtml"
    Write(Html.Grid(Model.Items).Sort(Model.GridOptions).Columns(columns).Attributes(@class => "bcms-tables").RenderUsing(new EditableHtmlTableGridRenderer<SiteSettingPageViewModel>()));
 
             
@@ -347,7 +347,7 @@ WriteLiteral(">\r\n");
 WriteLiteral("        ");
 
             
-            #line 99 "..\..\Views\Page\Partial\SiteSettingsPagesList.cshtml"
+            #line 100 "..\..\Views\Page\Partial\SiteSettingsPagesList.cshtml"
    Write(Html.Grid(new List<SiteSettingPageViewModel> { new SiteSettingPageViewModel() }).Columns(columns).Attributes(@class => "bcms-tables").RenderUsing(new HtmlTableGridSingleRowRenderer<SiteSettingPageViewModel>()));
 
             
@@ -364,7 +364,7 @@ WriteLiteral(">\r\n");
 WriteLiteral("        ");
 
             
-            #line 103 "..\..\Views\Page\Partial\SiteSettingsPagesList.cshtml"
+            #line 104 "..\..\Views\Page\Partial\SiteSettingsPagesList.cshtml"
    Write(Html.Partial("EditorTemplates/SEOStatus", true));
 
             
@@ -381,7 +381,7 @@ WriteLiteral(">\r\n");
 WriteLiteral("        ");
 
             
-            #line 107 "..\..\Views\Page\Partial\SiteSettingsPagesList.cshtml"
+            #line 108 "..\..\Views\Page\Partial\SiteSettingsPagesList.cshtml"
    Write(Html.Partial("EditorTemplates/SEOStatus", false));
 
             
@@ -398,7 +398,7 @@ WriteLiteral(">\r\n");
 WriteLiteral("        ");
 
             
-            #line 111 "..\..\Views\Page\Partial\SiteSettingsPagesList.cshtml"
+            #line 112 "..\..\Views\Page\Partial\SiteSettingsPagesList.cshtml"
    Write(Html.Partial("EditorTemplates/PageStatus", PageStatus.Published));
 
             
@@ -415,7 +415,7 @@ WriteLiteral(">\r\n");
 WriteLiteral("        ");
 
             
-            #line 115 "..\..\Views\Page\Partial\SiteSettingsPagesList.cshtml"
+            #line 116 "..\..\Views\Page\Partial\SiteSettingsPagesList.cshtml"
    Write(Html.Partial("EditorTemplates/PageStatus", PageStatus.Unpublished));
 
             
@@ -432,7 +432,7 @@ WriteLiteral(">\r\n");
 WriteLiteral("        ");
 
             
-            #line 119 "..\..\Views\Page\Partial\SiteSettingsPagesList.cshtml"
+            #line 120 "..\..\Views\Page\Partial\SiteSettingsPagesList.cshtml"
    Write(Html.Partial("EditorTemplates/PageStatus", PageStatus.Draft));
 
             

@@ -80,6 +80,7 @@
                                                                       })
                 </div>
             </div>
+
             <div class="bcms-single-tag-holder" data-bind="foreach: tags.items()">
                 <div class="bcms-single-tag" data-bind="css: { 'bcms-single-tag-active': isActive() }">
                     <span data-bind="text: name()"></span><a data-bind="    click: remove">@RootGlobalization.Button_Remove</a>
@@ -96,7 +97,6 @@
                 <input type="hidden" data-bind="attr: { name: 'Categories[' + $index() + '].Value', value: name() }" />
             </div>
         </div>
-
 
             <div class="bcms-clearfix">
                 <div class="bcms-check-field-holder" style="float: none;">

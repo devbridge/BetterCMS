@@ -100,17 +100,13 @@ WriteLiteral("\r\n");
             #line hidden
 WriteLiteral("\r\n\r\n<div");
 
-WriteLiteral(" class=\"bcms-window-settings\"");
+WriteLiteral(" class=\"bcms-top-block-holder\"");
 
 WriteLiteral(">\r\n    <div");
 
-WriteLiteral(" class=\"bcms-top-block-holder\"");
-
-WriteLiteral(">\r\n        <div");
-
 WriteLiteral(" class=\"bcms-top-block-inner\"");
 
-WriteLiteral(">\r\n            <div");
+WriteLiteral(">\r\n        <div");
 
 WriteLiteral(" class=\"bcms-btn-main\"");
 
@@ -119,18 +115,16 @@ WriteLiteral(" id=\"bcms-add-region-button\"");
 WriteLiteral(">");
 
             
-            #line 31 "..\..\Views\Templates\Partial\EditTemplateRegions.cshtml"
-                                                              Write(PagesGlobalization.TemplateRegions_AddNewRegion);
+            #line 30 "..\..\Views\Templates\Partial\EditTemplateRegions.cshtml"
+                                                          Write(PagesGlobalization.TemplateRegions_AddNewRegion);
 
             
             #line default
             #line hidden
-WriteLiteral("</div>\r\n        </div>\r\n    </div>\r\n\r\n");
-
-WriteLiteral("    ");
+WriteLiteral("</div>\r\n    </div>\r\n</div>\r\n\r\n");
 
             
-            #line 35 "..\..\Views\Templates\Partial\EditTemplateRegions.cshtml"
+            #line 34 "..\..\Views\Templates\Partial\EditTemplateRegions.cshtml"
 Write(Html.Grid(Model.Regions).Columns(columns).Attributes(@class => "bcms-tables", @id => "bcms-regions-grid").RowAttributes(delegate(GridRowViewData<TemplateRegionItemViewModel> row)
                   {
                       return new Dictionary<string, object>
@@ -143,7 +137,7 @@ Write(Html.Grid(Model.Regions).Columns(columns).Attributes(@class => "bcms-table
             
             #line default
             #line hidden
-WriteLiteral("\r\n</div>\r\n\r\n<script");
+WriteLiteral("\r\n\r\n\r\n<script");
 
 WriteLiteral(" type=\"text/html\"");
 
@@ -154,7 +148,7 @@ WriteLiteral(">\r\n");
 WriteLiteral("    ");
 
             
-            #line 46 "..\..\Views\Templates\Partial\EditTemplateRegions.cshtml"
+            #line 45 "..\..\Views\Templates\Partial\EditTemplateRegions.cshtml"
 Write(Html
         .Grid(new List<TemplateRegionItemViewModel> { new TemplateRegionItemViewModel() })
         .Columns(columns)

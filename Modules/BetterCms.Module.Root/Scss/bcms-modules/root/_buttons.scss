@@ -34,20 +34,20 @@
 
     &-small {
         @extend %btn-extender;
-        @include add-gradient($top: $blue-l30, $bottom: $blue-l40);
+        background-color: $blue-main;
         color: $white;
         font-size: 12px;
         line-height: 30px;
         padding: 0 10px;
 
         &.bcms-btn-gray {
-            @include add-gradient($top: $gray-l45, $bottom: $gray-l46);
+            background-color: $gray-l45;
         }
     }
 
     &-grid {
         @extend %btn-extender;
-        @include add-gradient($top: $gray-l50, $bottom: $gray-l60);
+        background-color: $gray-l45;
         color: $white;
         font-size: 14px;
         font-weight: 600;
@@ -90,16 +90,16 @@
 }
 
 //todo need to update
-.bcms-btn-plus {
-    background: url('images/sprite-base-2.png') no-repeat -44px -179px;
-    cursor: pointer;
-    display: inline-block;
-    line-height: 16px;
-    margin-left: 5px;
-    vertical-align: middle;
-    width: 16px;
-}
-
-div.bcms-btn-plus-expand {
-    background-position: -64px -179px;
-}
+//.bcms-btn-plus {
+//    background: url('images/sprite-base-2.png') no-repeat -44px -179px;
+//    cursor: pointer;
+//    display: inline-block;
+//    line-height: 16px;
+//    margin-left: 5px;
+//    vertical-align: middle;
+//    width: 16px;
+//}
+//
+//div.bcms-btn-plus-expand {
+//    background-position: -64px -179px;
+//}

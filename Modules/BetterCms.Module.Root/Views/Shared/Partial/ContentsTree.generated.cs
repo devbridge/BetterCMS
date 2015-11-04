@@ -43,7 +43,7 @@ namespace ASP
         }
         public override void Execute()
         {
-WriteLiteral("<script");
+WriteLiteral("\r\n<script");
 
 WriteLiteral(" type=\"text/html\"");
 
@@ -51,12 +51,12 @@ WriteLiteral(" id=\"bcms-contents-tree-template\"");
 
 WriteLiteral(@">
     <div class=""bcms-modal-frame-holder"" id=""bcms-contents-tree"">
-        <div class=""bcms-window-tabbed-options"">
+        <div class=""bcms-window-options"">
             <div class=""bcms-tree-container"" data-bind=""visible: visibleItems().length > 0, with: visibleItems()"">
                 <h2 data-bind=""visible: $parent.invisibleItems().length > 0"">");
 
             
-            #line 6 "..\..\Views\Shared\Partial\ContentsTree.cshtml"
+            #line 7 "..\..\Views\Shared\Partial\ContentsTree.cshtml"
                                                                         Write(RootGlobalization.ContentsTree_VisibleItems_Title);
 
             
@@ -70,7 +70,7 @@ WriteLiteral(@"</h2>
                 <h2>");
 
             
-            #line 11 "..\..\Views\Shared\Partial\ContentsTree.cshtml"
+            #line 12 "..\..\Views\Shared\Partial\ContentsTree.cshtml"
                Write(RootGlobalization.ContentsTree_InvisibleItems_Title);
 
             

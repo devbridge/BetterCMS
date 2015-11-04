@@ -107,12 +107,14 @@ img {
     visibility: hidden;
 }
 
-button::-moz-focus-inner, input::-moz-focus-inner {
+button::-moz-focus-inner,
+input::-moz-focus-inner {
     border: 0;
     padding: 0;
 }
 
-input[type="submit"].btn-secondary, input[type="submit"].btn-primary {
+input[type="submit"].btn-secondary,
+input[type="submit"].btn-primary {
     height: 50px;
 }
 

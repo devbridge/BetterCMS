@@ -1,7 +1,8 @@
 ﻿@using BetterCms.Module.Root.Content.Resources
+
 <script type="text/html" id="bcms-contents-tree-template">
     <div class="bcms-modal-frame-holder" id="bcms-contents-tree">
-        <div class="bcms-window-tabbed-options">
+        <div class="bcms-window-options">
             <div class="bcms-tree-container" data-bind="visible: visibleItems().length > 0, with: visibleItems()">
                 <h2 data-bind="visible: $parent.invisibleItems().length > 0">@RootGlobalization.ContentsTree_VisibleItems_Title</h2>
                 <div data-bind='template: { name: "bcms-contents-tree-list-template" }'></div>

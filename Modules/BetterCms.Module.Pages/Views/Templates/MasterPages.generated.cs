@@ -241,7 +241,7 @@ WriteLiteral(">");
             
             #line default
             #line hidden
-WriteLiteral("</div>\r\n                </div>\r\n            </div>\r\n            <div");
+WriteLiteral("</div>\r\n                </div>\r\n            </div>\r\n\r\n            <div");
 
 WriteLiteral(" class=\"bcms-top-block-pager\"");
 
@@ -250,7 +250,7 @@ WriteLiteral(">\r\n");
 WriteLiteral("                ");
 
             
-            #line 67 "..\..\Views\Templates\MasterPages.cshtml"
+            #line 68 "..\..\Views\Templates\MasterPages.cshtml"
            Write(Html.RenderPaging(Model));
 
             
@@ -259,45 +259,54 @@ WriteLiteral("                ");
 WriteLiteral("\r\n            </div>\r\n        </div>\r\n");
 
             
-            #line 70 "..\..\Views\Templates\MasterPages.cshtml"
+            #line 71 "..\..\Views\Templates\MasterPages.cshtml"
 
-        
+
             
             #line default
             #line hidden
+WriteLiteral("    <div");
+
+WriteLiteral(" class=\"bcms-window-settings\"");
+
+WriteLiteral(">\r\n");
+
+WriteLiteral("        ");
+
             
-            #line 71 "..\..\Views\Templates\MasterPages.cshtml"
+            #line 73 "..\..\Views\Templates\MasterPages.cshtml"
    Write(Html.Grid(Model.Items).Sort(Model.GridOptions).Columns(columns).Attributes(@class => "bcms-tables").RenderUsing(new EditableHtmlTableGridRenderer<SiteSettingPageViewModel>()));
 
             
             #line default
             #line hidden
+WriteLiteral("\r\n    </div>\r\n");
+
             
-            #line 71 "..\..\Views\Templates\MasterPages.cshtml"
-                                                                                                                                                                                       
+            #line 75 "..\..\Views\Templates\MasterPages.cshtml"
 }
 
             
             #line default
             #line hidden
-WriteLiteral("\n<script");
+WriteLiteral("\r\n<script");
 
 WriteLiteral(" type=\"text/html\"");
 
 WriteLiteral(" id=\"bcms-pages-list-row-template\"");
 
-WriteLiteral(">\n");
+WriteLiteral(">\r\n");
 
 WriteLiteral("    ");
 
             
-            #line 75 "..\..\Views\Templates\MasterPages.cshtml"
+            #line 78 "..\..\Views\Templates\MasterPages.cshtml"
 Write(Html.Grid(new List<SiteSettingPageViewModel> { new SiteSettingPageViewModel() }).Columns(columns).Attributes(@class => "bcms-tables").RenderUsing(new HtmlTableGridSingleRowRenderer<SiteSettingPageViewModel>()));
 
             
             #line default
             #line hidden
-WriteLiteral("\n</script>");
+WriteLiteral("\r\n</script>\r\n");
 
         }
     }

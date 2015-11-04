@@ -1547,15 +1547,18 @@
     <Content Include="Scss\plugins\_jquerycalendar.scss" />
     <Content Include="Scss\bcms-modules\root\_contentstree.scss" />
     <Content Include="Scss\bcms-modules\blog\_settings.scss" />
-    <Content Include="Scss\modules\_formelements.scss" />
-    <Content Include="Scss\modules\_tables.scss" />
+    <Content Include="Scss\bcms-modules\root\_formelements.scss" />
+    <Content Include="Scss\bcms-modules\root\_tables.scss" />
     <Content Include="Scss\core\_normalize.scss" />
-    <Content Include="Scss\modules\_autocomplete.scss" />
+    <Content Include="Scss\bcms-modules\root\_autocomplete.scss" />
     <Content Include="Scss\structure\_global.scss" />
-    <Content Include="Scss\modules\_tabs.scss" />
-    <Content Include="Scss\modules\_messages.scss" />
+    <Content Include="Scss\bcms-modules\root\_tabs.scss" />
+    <Content Include="Scss\bcms-modules\root\_messages.scss" />
     <Content Include="Scss\bcms-modules\root\_pager.scss" />
     <Content Include="Scss\bcms-modules\pages\_topcontrols.scss" />
+    <Content Include="Scss\bcms-modules\root\_templategrids.scss" />
+    <Content Include="Scss\bcms-modules\root\_browsersupport.scss" />
+    <Content Include="Scss\bcms-modules\root\_structurepath.scss" />
     <None Include="Views\Category\CategoryTrees.cshtml">
       <Generator>RazorGenerator</Generator>
       <LastGenOutput>CategoryTrees.generated.cs</LastGenOutput>

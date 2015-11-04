@@ -9,20 +9,18 @@
 
 @Html.TabbedContentMessagesBox()
 
-<div class="bcms-no-ui">
-    <div id="bcms-tab-1" class="bcms-tab-single">
-        @Html.Partial("Partial/MediaManagerTab")
-    </div>
+<div id="bcms-tab-1" class="bcms-tab-single">
+    @Html.Partial("Partial/MediaManagerTab")
+</div>
 
-    <div id="bcms-tab-2" class="bcms-tab-single">
-        @* Added inner div, because sometimes there is a need for showing custom messages *@
-        <div>
-            @if (Model.CustomFilesMessages != null)
-            {
-                @Html.TabbedContentCustomMessagesBox(Model.CustomFilesMessages)
-            }
-            @Html.Partial("Partial/MediaManagerTab")
-        </div>
+<div id="bcms-tab-2" class="bcms-tab-single">
+    @* Added inner div, because sometimes there is a need for showing custom messages *@
+    <div>
+        @if (Model.CustomFilesMessages != null)
+        {
+            @Html.TabbedContentCustomMessagesBox(Model.CustomFilesMessages)
+        }
+        @Html.Partial("Partial/MediaManagerTab")
     </div>
 </div>
 

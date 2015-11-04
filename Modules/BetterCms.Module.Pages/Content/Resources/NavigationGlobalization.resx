@@ -196,7 +196,7 @@
     <value>Title</value>
   </data>
   <data name="SiteSettings_Sitemaps_AddNew" xml:space="preserve">
-    <value>Add New+</value>
+    <value>Add New</value>
   </data>
   <data name="SiteSettings_Sitemaps_Search" xml:space="preserve">
     <value>Search</value>

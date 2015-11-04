@@ -703,7 +703,7 @@
     <value>Edit page widget options</value>
   </data>
   <data name="SiteSettings_Widgets_RegisterNew" xml:space="preserve">
-    <value>Register +</value>
+    <value>Register</value>
   </data>
   <data name="DeletePageContent_ConfirmationMessage" xml:space="preserve">
     <value>Are you sure you want to delete "{0}" content?</value>

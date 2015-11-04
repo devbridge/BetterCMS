@@ -15,21 +15,18 @@
         <div class="bcms-top-block-holder">
             <div class="bcms-clearfix">
                 <div class="bcms-top-block-inner">
-                    <div class="bcms-media-controls-holder">
-                        @if ((ViewContext.Controller as CmsControllerBase).SecurityService.IsAuthorized(RootModuleConstants.UserRoles.EditContent))
-                        {
-                    <!-- ko if: !isSearchResults() -->
-                            <a class="bcms-media-new-file" data-bind="click: uploadMedia, text: uploadButtonTitle()"></a>
-                    <!-- /ko -->
-                        }
-                    </div>
-
-                    @Html.Partial("Partial/MediaManagerFilterTemplate", Model)
-
                     <div class="bcms-search-block">
+                        @Html.Partial("Partial/MediaManagerFilterTemplate", Model)
                         <input id="bcms-search-input" name="MediaSearch" data-bind="value: gridOptions().searchQuery, valueUpdate: 'afterkeydown', enterPress: searchMedia" class="bcms-search-field-box" type="text" placeholder="@RootGlobalization.WaterMark_Search"/>
-                        <div class="bcms-btn-search" data-bind="click: searchMedia">@RootGlobalization.Button_Search</div>
                     </div>
+                    <div class="bcms-btn-search" data-bind="click: searchMedia">@RootGlobalization.Button_Search</div>
+
+                    @if ((ViewContext.Controller as CmsControllerBase).SecurityService.IsAuthorized(RootModuleConstants.UserRoles.EditContent))
+                    {
+                    <!-- ko if: !isSearchResults() -->
+                        <a class="bcms-btn-main" data-bind="click: uploadMedia, text: uploadButtonTitle()"></a>
+                    <!-- /ko -->
+                    }
                 </div>
             </div>
 

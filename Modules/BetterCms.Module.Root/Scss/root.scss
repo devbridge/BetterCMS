@@ -26,24 +26,27 @@
 }
 
 //module components
-@import 'core/normalize',
-'modules/formelements',
-'modules/tables',
-'modules/messages',
-'modules/autocomplete';
+@import 'core/normalize';
 
 //module structure
 @import 'structure/layout',
-'structure/global',
-'modules/tabs';
+'structure/global';
 
 //module styles
-@import 'bcms-modules/root/buttons',
+@import 'bcms-modules/root/autocomplete',
+'bcms-modules/root/buttons',
+'bcms-modules/root/browsersupport',
 'bcms-modules/root/controlpanel',
 'bcms-modules/root/contentstree',
+'bcms-modules/root/formelements',
+'bcms-modules/root/messages',
 'bcms-modules/root/notifications',
 'bcms-modules/root/overlays',
 'bcms-modules/root/pager',
+'bcms-modules/root/structurepath',
+'bcms-modules/root/tables',
+'bcms-modules/root/tabs',
+'bcms-modules/root/templategrids',
 'bcms-modules/root/index',
 'plugins/markitup';
 

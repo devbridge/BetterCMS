@@ -1,7 +1,7 @@
 $tabbed-settings: ($settings-frame - $inner-navigation);
-$settings: ($settings-frame);
+$settings: $settings-frame;
 $tabbed-options: ($settings-frame + $tab-height);
-$options: ($settings-frame);
+$options: $settings-frame;
 
 $dialog-window-options: (
                 ('tabbed-settings', null, null, $tabbed-settings, 0 30px 0 0),
@@ -46,12 +46,6 @@ a {
     }
 }
 
-//todo remove when iFrame implemented
-//[class*="bcms-"] {
-//    font-family: $font-base-family;
-//}
-
-//todo end of
 .bcms-window {
     @each $name, $bg-color, $width, $height, $padding in $dialog-window-options {
         &-#{$name} {
@@ -150,10 +144,6 @@ a {
     }
 }
 
-.bcms-no-ui {
-    //this class used for any element which doesn't require any styling.
-}
-
 //module dialog frame
 .bcms-settings {
     &-frame {
@@ -181,10 +171,13 @@ a {
     }
 
     &-link {
+        box-sizing: border-box;
         color: $gray-light;
         display: block;
-        font-size: 12px;
-        font-weight: 400;
+        font: {
+            size: 12px;
+            weight: 400;
+        }
         line-height: 38px;
         padding-left: 40px;
         text-decoration: none;

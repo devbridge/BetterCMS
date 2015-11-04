@@ -98,77 +98,73 @@ Write(Html.TabbedContentMessagesBox());
             #line hidden
 WriteLiteral("\r\n\r\n<div");
 
-WriteLiteral(" class=\"bcms-no-ui\"");
-
-WriteLiteral(">\r\n    <div");
-
 WriteLiteral(" id=\"bcms-tab-1\"");
 
 WriteLiteral(" class=\"bcms-tab-single\"");
 
 WriteLiteral(">\r\n");
 
-WriteLiteral("        ");
+WriteLiteral("    ");
 
             
-            #line 14 "..\..\Views\MediaManager\Index.cshtml"
-   Write(Html.Partial("Partial/MediaManagerTab"));
+            #line 13 "..\..\Views\MediaManager\Index.cshtml"
+Write(Html.Partial("Partial/MediaManagerTab"));
 
             
             #line default
             #line hidden
-WriteLiteral("\r\n    </div>\r\n\r\n    <div");
+WriteLiteral("\r\n</div>\r\n\r\n<div");
 
 WriteLiteral(" id=\"bcms-tab-2\"");
 
 WriteLiteral(" class=\"bcms-tab-single\"");
 
-WriteLiteral(">\r\n        ");
+WriteLiteral(">\r\n    ");
 
-WriteLiteral("\r\n        <div>\r\n");
+WriteLiteral("\r\n    <div>\r\n");
 
             
-            #line 20 "..\..\Views\MediaManager\Index.cshtml"
+            #line 19 "..\..\Views\MediaManager\Index.cshtml"
+        
+            
+            #line default
+            #line hidden
+            
+            #line 19 "..\..\Views\MediaManager\Index.cshtml"
+         if (Model.CustomFilesMessages != null)
+        {
             
             
             #line default
             #line hidden
             
-            #line 20 "..\..\Views\MediaManager\Index.cshtml"
-             if (Model.CustomFilesMessages != null)
-            {
-                
-            
-            #line default
-            #line hidden
-            
-            #line 22 "..\..\Views\MediaManager\Index.cshtml"
-           Write(Html.TabbedContentCustomMessagesBox(Model.CustomFilesMessages));
+            #line 21 "..\..\Views\MediaManager\Index.cshtml"
+       Write(Html.TabbedContentCustomMessagesBox(Model.CustomFilesMessages));
 
             
             #line default
             #line hidden
             
-            #line 22 "..\..\Views\MediaManager\Index.cshtml"
-                                                                               
-            }
+            #line 21 "..\..\Views\MediaManager\Index.cshtml"
+                                                                           
+        }
 
             
             #line default
             #line hidden
-WriteLiteral("            ");
+WriteLiteral("        ");
 
             
-            #line 24 "..\..\Views\MediaManager\Index.cshtml"
-       Write(Html.Partial("Partial/MediaManagerTab"));
+            #line 23 "..\..\Views\MediaManager\Index.cshtml"
+   Write(Html.Partial("Partial/MediaManagerTab"));
 
             
             #line default
             #line hidden
-WriteLiteral("\r\n        </div>\r\n    </div>\r\n</div>\r\n\r\n");
+WriteLiteral("\r\n    </div>\r\n</div>\r\n\r\n");
 
             
-            #line 29 "..\..\Views\MediaManager\Index.cshtml"
+            #line 27 "..\..\Views\MediaManager\Index.cshtml"
 Write(Html.Partial("Partial/MediaManagerTemplate"));
 
             

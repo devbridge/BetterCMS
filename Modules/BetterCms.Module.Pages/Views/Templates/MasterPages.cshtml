@@ -63,12 +63,15 @@
                     <div class="bcms-btn-main" id="bcms-create-page-button">@PagesGlobalization.SiteSettings_Pages_AddNew</div>
                 </div>
             </div>
+
             <div class="bcms-top-block-pager">
                 @Html.RenderPaging(Model)
             </div>
         </div>
 
+    <div class="bcms-window-settings">
         @Html.Grid(Model.Items).Sort(Model.GridOptions).Columns(columns).Attributes(@class => "bcms-tables").RenderUsing(new EditableHtmlTableGridRenderer<SiteSettingPageViewModel>())
+    </div>
 }
 
 <script type="text/html" id="bcms-pages-list-row-template">
