@@ -29,7 +29,7 @@
     @Html.TabbedContentMessagesBox("bcms-edit-widget-messages")
     @Html.Partial("Partial/WarnMessageAboutDraft", Model)
 
-    <div class="bcms-scroll-window-options">
+    <div class="bcms-window-tabbed-options">
         @using (Html.BeginForm<WidgetsController>(c => c.EditServerControlWidget((string)null), FormMethod.Post, new { @id = "bcms-widget-form", @class = "bcms-ajax-form" }))
         {
             <div id="bcms-tab-1" class="bcms-tab-single">

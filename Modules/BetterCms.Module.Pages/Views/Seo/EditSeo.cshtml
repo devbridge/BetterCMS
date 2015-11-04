@@ -14,7 +14,7 @@
     @Html.TabbedContentMessagesBox()
     @Html.Partial("Partial/WarnMessageAboutSitemap", Model)
 
-    <div class="bcms-scroll-window-options">
+    <div class="bcms-window-options">
         @using (Html.BeginForm<SeoController>(f => f.EditSeo((EditSeoViewModel)null), FormMethod.Post,
                 new
                     {

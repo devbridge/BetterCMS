@@ -9,7 +9,7 @@
 <div class="bcms-modal-frame-holder">
     @Html.TabbedContentMessagesBox()
 
-    <div class="bcms-scroll-window-options">
+    <div class="bcms-window-options">
         <div class="bcms-file-manager-inner bcms-clearfix">
             @using (Html.BeginForm<ImagesController>(f => f.ImageEditor((ImageViewModel)null), FormMethod.Post, new { @class = "bcms-ajax-form", @enctype = "multipart/form-data" }))
         {

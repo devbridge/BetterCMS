@@ -10,7 +10,7 @@
 <div class="bcms-modal-frame-holder">
     @Html.TabbedContentMessagesBox()
 
-    <div class="bcms-scroll-window-options">
+    <div class="bcms-window-options">
         @using (Html.BeginForm<PageController>(f => f.ClonePage((ClonePageViewModel)null), FormMethod.Post, new { @class = "bcms-ajax-form" }))
         {
             <div class="bcms-input-list-holder">

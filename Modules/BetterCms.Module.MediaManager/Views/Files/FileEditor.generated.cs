@@ -131,7 +131,7 @@ Write(Html.TabbedContentMessagesBox());
             #line hidden
 WriteLiteral("\r\n\r\n    <div");
 
-WriteLiteral(" class=\"bcms-scroll-window-options\"");
+WriteLiteral(" class=\"bcms-window-options\"");
 
 WriteLiteral(" id=\"bcms-file-manager-inner\"");
 
@@ -315,14 +315,14 @@ WriteLiteral(" class=\"bcms-editor-field-box bcms-editor-selectable-field-box\""
 
 WriteLiteral(" type=\"text\"");
 
-WriteAttribute("value", Tuple.Create(" value=\"", 2612), Tuple.Create("\"", 2630)
+WriteAttribute("value", Tuple.Create(" value=\"", 2605), Tuple.Create("\"", 2623)
             
             #line 54 "..\..\Views\Files\FileEditor.cshtml"
-                             , Tuple.Create(Tuple.Create("", 2620), Tuple.Create<System.Object, System.Int32>(Model.Url
+                             , Tuple.Create(Tuple.Create("", 2613), Tuple.Create<System.Object, System.Int32>(Model.Url
             
             #line default
             #line hidden
-, 2620), false)
+, 2613), false)
 );
 
 WriteLiteral(" readonly=\"readonly\"");

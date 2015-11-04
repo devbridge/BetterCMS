@@ -71,7 +71,7 @@ WriteLiteral(" style=\"display: none;\"");
 
 WriteLiteral("></ul>\r\n    </div>\r\n\r\n    <div");
 
-WriteLiteral(" class=\"bcms-scroll-window-options\"");
+WriteLiteral(" class=\"bcms-window-options\"");
 
 WriteLiteral(">\r\n");
 

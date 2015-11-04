@@ -51,7 +51,7 @@ WriteLiteral(" id=\"bcms-contents-tree-template\"");
 
 WriteLiteral(@">
     <div class=""bcms-modal-frame-holder"" id=""bcms-contents-tree"">
-        <div class=""bcms-scroll-window-options"">
+        <div class=""bcms-window-tabbed-options"">
             <div class=""bcms-tree-container"" data-bind=""visible: visibleItems().length > 0, with: visibleItems()"">
                 <h2 data-bind=""visible: $parent.invisibleItems().length > 0"">");
 

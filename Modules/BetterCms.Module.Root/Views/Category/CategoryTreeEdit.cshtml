@@ -16,7 +16,7 @@
 <div class="bcms-modal-frame-holder">
     @Html.TabbedContentMessagesBox()
 
-    <div class="bcms-scroll-window-options" id="bcms-categorytree-addnode">
+    <div class="bcms-window-tabbed-options" id="bcms-categorytree-addnode">
         @* Form is required for unobtrusive validation. *@
         @using (Html.BeginForm<CategoryController>(f => f.EditCategoryTree(null), FormMethod.Post, new
         {

@@ -96,7 +96,7 @@ Write(Html.TabbedContentMessagesBox("bcms-multi-file-upload-messages"));
             #line hidden
 WriteLiteral("\r\n\r\n    <div");
 
-WriteLiteral(" class=\"bcms-scroll-window-options\"");
+WriteLiteral(" class=\"bcms-window-options\"");
 
 WriteLiteral(">\r\n        <div");
 

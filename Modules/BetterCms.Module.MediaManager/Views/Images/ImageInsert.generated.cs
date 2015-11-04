@@ -43,7 +43,7 @@ WriteLiteral(" class=\"bcms-modal-frame-holder\"");
 
 WriteLiteral(">\r\n    <div");
 
-WriteLiteral(" class=\"bcms-scroll-window-options bcms-insert-content-modal\"");
+WriteLiteral(" class=\"bcms-window-options bcms-insert-content-modal\"");
 
 WriteLiteral(">\r\n");
 

@@ -1,8 +1,15 @@
+$tabbed-settings: ($settings-frame - $inner-navigation);
+$settings: ($settings-frame);
+$tabbed-options: ($settings-frame + $tab-height);
+$options: ($settings-frame);
+
 $dialog-window-options: (
-                ('settings'),
-                ('tabbed'),
-                ('options')
+                ('tabbed-settings', null, $tabbed-settings, 0 30px 0 0),
+                ('settings', null, $settings, 0 30px 0 0),
+                ('tabbed-options', $white, $tabbed-options, 0 30px),
+                ('options', null, $options, '30px')
 );
+
 html,
 body {
     height: 100%;
@@ -16,7 +23,10 @@ html {
 }
 
 body {
-    font-family: $font-base-family;
+    font: {
+        family: $font-base-family;
+        size: $font-base-size;
+    }
     margin: 0;
 }
 
@@ -42,31 +52,18 @@ a {
 //}
 
 //todo end of
-.bcms-scroll-window {
-    @each $name in $dialog-window-options {
+.bcms-window {
+    @each $name, $bg-color, $height, $padding in $dialog-window-options {
         &-#{$name} {
+            background-color: $bg-color;
+            height: calc(100vh - #{$height});
             overflow: {
                 x: hidden;
                 y: scroll;
             }
+            padding: $padding;
             position: relative;
         }
-    }
-
-    &-settings {
-        height: calc(100vh - #{$settings-frame});
-        padding-right: 30px;
-    }
-
-    &-tabbed {
-        height: calc(100vh - #{$settings-frame - $inner-navigation});
-        padding-right: 30px;
-    }
-
-    &-options {
-        @include pad(30px);
-        background-color: $white;
-        height: calc(100vh - #{$settings-frame + $tab-height});
     }
 }
 
