@@ -14,7 +14,8 @@ bettercms.define('bcms.newsletter', ['bcms.jquery', 'bcms', 'bcms.siteSettings',
             },
             globalization = {
                 deleteSubscriberDialogTitle: null
-            };
+            },
+            rowId = 0;
 
         /**
         * Assign objects to module.
@@ -71,6 +72,13 @@ bettercms.define('bcms.newsletter', ['bcms.jquery', 'bcms', 'bcms.siteSettings',
                 params.Email = this.email();
 
                 return params;
+            };
+
+            SubscriberViewModel.prototype.getRowId = function () {
+                if (!this.rowId) {
+                    this.rowId = 'bcms-subscriber-row-' + rowId++;
+                }
+                return this.rowId;
             };
 
             return SubscriberViewModel;

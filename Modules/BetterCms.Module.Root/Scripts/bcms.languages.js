@@ -16,7 +16,8 @@ function ($, bcms, dynamicContent, siteSettings, ko, kogrid, autocomplete, antiX
         },
         globalization = {
             deleteLanguageConfirmMessage: null
-        };
+        },
+        rowId = 0;
 
     /**
     * Assign objects to module.
@@ -170,6 +171,13 @@ function ($, bcms, dynamicContent, siteSettings, ko, kogrid, autocomplete, antiX
             }
 
             _super.prototype.onCancelEdit.call(this, data, event);
+        };
+
+        LanguageViewModel.prototype.getRowId = function () {
+            if (!this.rowId) {
+                this.rowId = 'bcms-lang-row-' + rowId++;
+            }
+            return this.rowId;
         };
 
         return LanguageViewModel;

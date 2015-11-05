@@ -513,7 +513,7 @@ WriteLiteral("            ");
 
             
             #line 81 "..\..\Views\Page\AddNewPage.cshtml"
-       Write(Html.Partial(PagesConstants.OptionValuesGridTemplate, new EditableGridViewModel()));
+       Write(Html.Partial(PagesConstants.OptionValuesGridTemplate));
 
             
             #line default

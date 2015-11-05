@@ -85,6 +85,7 @@ WriteLiteral("\r\n");
     model.SaveButtonTitle = RootGlobalization.Button_Ok;
     model.ShowMessages = false;
     model.TopBlockAddItemView = "~/Areas/bcms-pages/Views/Option/Partial/TopBlockAddItem.cshtml";
+    model.CanAddNewItems = false;
     model.Columns = new List<EditableGridColumn> 
     { 
         new EditableGridColumn(PagesGlobalization.EditOptionsValues_OptionKeyColumn, null, "key")
@@ -95,7 +96,8 @@ WriteLiteral("\r\n");
         new EditableGridBooleanColumn(PagesGlobalization.EditOptionsValues_UseDefaultValueColumn, null, "useDefaultValueBinding")
         {
             HiddenFieldName = "OptionValues[{0}].UseDefaultValue", 
-            CellView = "~/Areas/bcms-pages/Views/Option/Partial/UseDefaultValueCell.cshtml"
+            CellView = "~/Areas/bcms-pages/Views/Option/Partial/UseDefaultValueCell.cshtml",
+            FocusIdentifier = "hasFocus"
         }, 
         new OptionValueEditableGridColumn(PagesGlobalization.EditOptionsValues_OptionDefaultValueColumn, "defaultValueBinding", "customOptionDefaultTitle")
         {
@@ -112,8 +114,9 @@ WriteLiteral("\r\n");
         new OptionValueEditableGridColumn(PagesGlobalization.EditOptionsValues_OptionValueColumn, "valueBinding", "customOptionTitle")
         {
             HeaderAttributes = "style=\"width: 200px;\"", 
-            HiddenFieldName = "OptionValues[{0}].OptionValue", 
-            AutoFocus = true,
+            HiddenFieldName = "OptionValues[{0}].OptionValue",
+            FocusIdentifier = "valueHasFocus"
+            
         }, 
         new EditableGridHiddenField("type", "OptionValues[{0}].Type"), 
         new EditableGridHiddenField("customType", "OptionValues[{0}].CustomType") };
@@ -124,7 +127,7 @@ WriteLiteral("\r\n");
 WriteLiteral("\r\n\r\n");
 
             
-            #line 50 "..\..\Views\Option\EditOptionValues.cshtml"
+            #line 53 "..\..\Views\Option\EditOptionValues.cshtml"
 Write(Html.Partial(RootModuleConstants.EditableGridTemplate, model));
 
             
