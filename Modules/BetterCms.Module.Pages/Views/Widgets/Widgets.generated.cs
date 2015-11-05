@@ -193,86 +193,81 @@ WriteLiteral(" class=\"bcms-top-block-holder\"");
 
 WriteLiteral(">\r\n            <div");
 
-WriteLiteral(" class=\"bcms-clearfix\"");
+WriteLiteral(" class=\"bcms-top-controls-btn-holder\"");
 
 WriteLiteral(">\r\n                <div");
 
-WriteLiteral(" class=\"bcms-large-titles\"");
+WriteLiteral(" class=\"bcms-btn-main\"");
+
+WriteLiteral(" id=\"bcms-create-page-button\"");
 
 WriteLiteral(">");
 
             
             #line 61 "..\..\Views\Widgets\Widgets.cshtml"
-                                          Write(PagesGlobalization.SiteSettings_Widgets_Title);
+                                                                   Write(PagesGlobalization.SiteSettings_Pages_AddNew);
 
             
             #line default
             #line hidden
-WriteLiteral("</div>\r\n\r\n                <div");
+WriteLiteral("</div>\r\n                <div");
 
-WriteLiteral(" class=\"bcms-top-block-inner\"");
+WriteLiteral(" class=\"bcms-btn-opener\"");
+
+WriteLiteral("> </div>\r\n\r\n                <div");
+
+WriteLiteral(" class=\"bcms-btn-opener-holder\"");
 
 WriteLiteral(">\r\n                    <div");
 
-WriteLiteral(" class=\"bcms-search-block\"");
+WriteLiteral(" class=\"bcms-btn-opener-link\"");
 
-WriteLiteral(">\r\n");
+WriteLiteral(" id=\"bcms-register-template-button\"");
 
-WriteLiteral("                        ");
+WriteLiteral(">");
 
             
             #line 65 "..\..\Views\Widgets\Widgets.cshtml"
-                   Write(Html.TextBoxFor(m => m.SearchQuery, new { @class = "bcms-search-field-box bcms-search-query", @placeholder = RootGlobalization.WaterMark_Search }));
-
-            
-            #line default
-            #line hidden
-WriteLiteral("\r\n                    </div>\r\n                    <div");
-
-WriteLiteral(" class=\"bcms-btn-search\"");
-
-WriteLiteral(" id=\"bcms-widget-search-btn\"");
-
-WriteLiteral(">");
-
-            
-            #line 67 "..\..\Views\Widgets\Widgets.cshtml"
-                                                                        Write(PagesGlobalization.SiteSettings_Widgets_Search);
-
-            
-            #line default
-            #line hidden
-WriteLiteral("</div>\r\n\r\n                    <div");
-
-WriteLiteral(" class=\"bcms-btn-main\"");
-
-WriteLiteral(" id=\"bcms-create-widget-button\"");
-
-WriteLiteral(">");
-
-            
-            #line 69 "..\..\Views\Widgets\Widgets.cshtml"
-                                                                         Write(PagesGlobalization.SiteSettings_Widgets_AddNew);
-
-            
-            #line default
-            #line hidden
-WriteLiteral("</div>\r\n                    <div");
-
-WriteLiteral(" class=\"bcms-btn-main\"");
-
-WriteLiteral(" id=\"bcms-register-widget-button\"");
-
-WriteLiteral(">");
-
-            
-            #line 70 "..\..\Views\Widgets\Widgets.cshtml"
-                                                                           Write(PagesGlobalization.SiteSettings_Widgets_RegisterNew);
+                                                                                    Write(PagesGlobalization.SiteSettings_Widgets_RegisterNew);
 
             
             #line default
             #line hidden
 WriteLiteral("</div>\r\n                </div>\r\n            </div>\r\n\r\n            <div");
+
+WriteLiteral(" class=\"bcms-top-block-inner\"");
+
+WriteLiteral(">\r\n                <div");
+
+WriteLiteral(" class=\"bcms-btn-search\"");
+
+WriteLiteral(" id=\"bcms-template-search-btn\"");
+
+WriteLiteral(">");
+
+            
+            #line 70 "..\..\Views\Widgets\Widgets.cshtml"
+                                                                      Write(PagesGlobalization.SiteSettings_Template_Search);
+
+            
+            #line default
+            #line hidden
+WriteLiteral("</div>\r\n                <div");
+
+WriteLiteral(" class=\"bcms-search-block\"");
+
+WriteLiteral(">\r\n");
+
+WriteLiteral("                    ");
+
+            
+            #line 72 "..\..\Views\Widgets\Widgets.cshtml"
+               Write(Html.TextBoxFor(m => m.SearchQuery, new { @class = "bcms-search-field-box bcms-search-query", @placeholder = RootGlobalization.WaterMark_Search }));
+
+            
+            #line default
+            #line hidden
+WriteLiteral("\r\n                </div>\r\n            </div>\r\n\r\n            <div");
 
 WriteLiteral(" class=\"bcms-top-block-pager\"");
 
@@ -281,18 +276,18 @@ WriteLiteral(">\r\n");
 WriteLiteral("                ");
 
             
-            #line 75 "..\..\Views\Widgets\Widgets.cshtml"
+            #line 77 "..\..\Views\Widgets\Widgets.cshtml"
            Write(Html.RenderPaging(Model));
 
             
             #line default
             #line hidden
-WriteLiteral("\r\n            </div>\r\n        </div>\r\n        \r\n");
+WriteLiteral("\r\n            </div>\r\n        </div>\r\n\r\n");
 
 WriteLiteral("        ");
 
             
-            #line 79 "..\..\Views\Widgets\Widgets.cshtml"
+            #line 81 "..\..\Views\Widgets\Widgets.cshtml"
     Write(Html.Grid(Model.Items).Sort(Model.GridOptions).Columns(columns).Attributes(@class => "bcms-tables").RowAttributes(delegate(GridRowViewData<SiteSettingWidgetItemViewModel> row)
                   {
                       return new Dictionary<string, object>
@@ -311,7 +306,7 @@ WriteLiteral("        ");
 WriteLiteral("\r\n    </div>\r\n");
 
             
-            #line 91 "..\..\Views\Widgets\Widgets.cshtml"
+            #line 93 "..\..\Views\Widgets\Widgets.cshtml"
 }
 
             
@@ -328,7 +323,7 @@ WriteLiteral(">\r\n");
 WriteLiteral("    ");
 
             
-            #line 94 "..\..\Views\Widgets\Widgets.cshtml"
+            #line 96 "..\..\Views\Widgets\Widgets.cshtml"
 Write(Html.Grid(new List<SiteSettingWidgetItemViewModel> { new SiteSettingWidgetItemViewModel() }).Columns(columns).Attributes(@class => "bcms-tables").RenderUsing(new HtmlTableGridSingleRowRenderer<SiteSettingWidgetItemViewModel>()));
 
             

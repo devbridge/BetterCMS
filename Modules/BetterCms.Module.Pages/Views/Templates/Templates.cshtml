@@ -46,22 +46,22 @@
 
     @Html.SiteSettingsMessagesBox()
 
-<div class="bcms-window-settings">
+    <div class="bcms-window-settings">
         @Html.HiddenGridOptions(Model.GridOptions)
         <div class="bcms-top-block-holder">
-            <div class="bcms-clearfix">
+            <div class="bcms-top-controls-btn-holder">
+                <div class="bcms-btn-main" id="bcms-create-page-button">@PagesGlobalization.SiteSettings_Pages_AddNew</div>
+                <div class="bcms-btn-opener"> </div>
+                
+                <div class="bcms-btn-opener-holder">
+                    <div class="bcms-btn-opener-link" id="bcms-register-template-button">@PagesGlobalization.SiteSettings_Widgets_RegisterNew</div>
+                </div>
+            </div>
 
-                <div class="bcms-large-titles">@PagesGlobalization.SiteSettings_Templates_Title</div>
-
-                <div class="bcms-top-block-inner">
-                    <div class="bcms-search-block">
-                        @Html.TextBoxFor(m => m.SearchQuery, new { @class = "bcms-search-field-box bcms-search-query", @placeholder = RootGlobalization.WaterMark_Search })
-                    </div>
-                    <div class="bcms-btn-search" id="bcms-template-search-btn">@PagesGlobalization.SiteSettings_Template_Search</div>
-
-                    <div class="bcms-btn-main" id="bcms-create-page-button">@PagesGlobalization.SiteSettings_Pages_AddNew</div>
-
-                    <div class="bcms-btn-main" id="bcms-register-template-button">@PagesGlobalization.SiteSettings_Widgets_RegisterNew</div>
+            <div class="bcms-top-block-inner">
+                <div class="bcms-btn-search" id="bcms-template-search-btn">@PagesGlobalization.SiteSettings_Template_Search</div>
+                <div class="bcms-search-block">
+                    @Html.TextBoxFor(m => m.SearchQuery, new { @class = "bcms-search-field-box bcms-search-query", @placeholder = RootGlobalization.WaterMark_Search })
                 </div>
             </div>
 
@@ -79,9 +79,9 @@
                                     {"data-ismasterpage", row.Item.IsMasterPage ? "1" : "0"}
                               };
                   }).RenderUsing(new EditableHtmlTableGridRenderer<SiteSettingTemplateItemViewModel>()))
-</div>
+    </div>
 }
- 
+
 <script type="text/html" id="bcms-template-list-row-template">
     @(Html.Grid(new List<SiteSettingTemplateItemViewModel> { new SiteSettingTemplateItemViewModel() }).Columns(columns).Attributes(@class => "bcms-tables").RenderUsing(new HtmlTableGridSingleRowRenderer<SiteSettingTemplateItemViewModel>()))
 </script>

@@ -2,11 +2,11 @@
 .bcms-top-block {
     &-holder {
         @include clearfix();
-        padding: 20px 0 10px;
+        padding: 20px 0;
     }
 
     &-inner {
-        float: right;
+        @include vertical-align();
 
         &.bcms-active-search {
             .bcms-search-block {
@@ -22,11 +22,55 @@
 
     &-pager {
         @include clearfix();
-        border-top: $border-nav-bottom;
-        clear: both;
-        margin-top: 20px;
-        padding: 10px 0 0;
+        float: right;
         position: relative;
+    }
+
+    &-filters {
+        padding: 5px 0;
+        border-top: $border-nav-bottom;
+    }
+}
+
+//module buttons opener
+.bcms-top-controls-btn-holder {
+    @include vertical-align();
+    position: relative;
+}
+
+.bcms-btn-opener {
+    @include transition(background-color 200ms);
+    @include vertical-align();
+    @include size($form-element-height);
+    background-color: $blue-main;
+    cursor: pointer;
+
+    &:hover {
+        background-color: darken($blue-main, 10%);
+
+        + .bcms-btn-opener-holder {
+            display: block;
+        }
+    }
+
+    &-holder {
+        @include position(absolute, calc(100% + 1px) 0 null);
+        border: $border-blue;
+        box-sizing: border-box;
+        display: none;
+        z-index: 5;
+    }
+
+    &-link {
+        @include pad(25px);
+        background-color: $white;
+        border-top: $border-blue;
+        color: $blue-main;
+        line-height: $form-element-height;
+
+        &:first-child {
+            border-top: 0;
+        }
     }
 }
 
@@ -91,11 +135,10 @@
     @include pad(5px 20px);
     color: $gray-light;
     cursor: pointer;
-    font: {
-        style: italic;
-    }
+    font-size: 11px;
     line-height: 28px;
     position: relative;
+    text-transform: uppercase;
 
 }
 

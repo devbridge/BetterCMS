@@ -15,7 +15,7 @@ $pager-buttons: (
 }
 
 .bcms-pager {
-    float: right;
+    height: $form-element-height;
     text-align: right;
 
     &-no {

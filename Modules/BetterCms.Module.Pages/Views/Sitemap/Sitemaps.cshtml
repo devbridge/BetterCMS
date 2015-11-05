@@ -28,18 +28,14 @@
     <div class="bcms-window-settings">
         @Html.HiddenGridOptions(Model.GridOptions)
         <div class="bcms-top-block-holder">
-            <div class="bcms-clearfix">
-                <div class="bcms-large-titles">@NavigationGlobalization.SiteSettings_Sitemaps_Title</div>
+            <div class="bcms-btn-main" id="bcms-create-sitemap-button">@NavigationGlobalization.SiteSettings_Sitemaps_AddNew</div>
 
                 <div class="bcms-top-block-inner">
+                    <div class="bcms-btn-search" id="bcms-sitemaps-search-btn">@NavigationGlobalization.SiteSettings_Sitemaps_Search</div>
                     <div class="bcms-search-block">
                         @Html.TextBoxFor(m => m.SearchQuery, new { @class = "bcms-search-field-box bcms-search-query", @placeholder = RootGlobalization.WaterMark_Search })
                     </div>
-                    <div class="bcms-btn-search" id="bcms-sitemaps-search-btn">@NavigationGlobalization.SiteSettings_Sitemaps_Search</div>
-
-                    <div class="bcms-btn-main" id="bcms-create-sitemap-button">@NavigationGlobalization.SiteSettings_Sitemaps_AddNew</div>
                 </div>
-            </div>
 
             <div class="bcms-top-block-pager">
                 @Html.RenderPaging(Model)

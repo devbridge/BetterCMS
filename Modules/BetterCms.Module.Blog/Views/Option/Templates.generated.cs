@@ -70,48 +70,9 @@ WriteLiteral(" class=\"bcms-top-block-holder\"");
 
 WriteLiteral(">\r\n    <div");
 
-WriteLiteral(" class=\"bcms-clearfix\"");
-
-WriteLiteral(">\r\n        <div");
-
-WriteLiteral(" class=\"bcms-large-titles\"");
-
-WriteLiteral(">");
-
-            
-            #line 9 "..\..\Views\Option\Templates.cshtml"
-                                  Write(BlogGlobalization.SiteSettings_Templates_Title);
-
-            
-            #line default
-            #line hidden
-WriteLiteral("</div>\r\n\r\n        <div");
-
 WriteLiteral(" class=\"bcms-top-block-inner\"");
 
-WriteLiteral(">\r\n            <div");
-
-WriteLiteral(" class=\"bcms-search-block\"");
-
-WriteLiteral(">\r\n                <input");
-
-WriteLiteral(" type=\"text\"");
-
-WriteLiteral(" class=\"bcms-search-field-box\"");
-
-WriteAttribute("placeholder", Tuple.Create(" placeholder=\"", 495), Tuple.Create("\"", 544)
-            
-            #line 13 "..\..\Views\Option\Templates.cshtml"
-, Tuple.Create(Tuple.Create("", 509), Tuple.Create<System.Object, System.Int32>(RootGlobalization.WaterMark_Search
-            
-            #line default
-            #line hidden
-, 509), false)
-);
-
-WriteLiteral(" data-bind=\"value: searchQuery, valueUpdate: \'afterkeydown\', enterPress: search\"");
-
-WriteLiteral(">\r\n            </div>\r\n            <div");
+WriteLiteral(">\r\n        <div");
 
 WriteLiteral(" class=\"bcms-btn-search bcms-search-query\"");
 
@@ -120,14 +81,35 @@ WriteLiteral(" data-bind=\"click: search\"");
 WriteLiteral(">");
 
             
-            #line 15 "..\..\Views\Option\Templates.cshtml"
-                                                                                Write(RootGlobalization.Button_Search);
+            #line 9 "..\..\Views\Option\Templates.cshtml"
+                                                                            Write(RootGlobalization.Button_Search);
 
             
             #line default
             #line hidden
-WriteLiteral("</div>\r\n        </div>\r\n    </div>\r\n</div>\r\n\r\n<!-- ko foreach: templateRows -->\r\n" +
-"<div");
+WriteLiteral("</div>\r\n        <div");
+
+WriteLiteral(" class=\"bcms-search-block\"");
+
+WriteLiteral(">\r\n            <input");
+
+WriteLiteral(" type=\"text\"");
+
+WriteLiteral(" class=\"bcms-search-field-box\"");
+
+WriteAttribute("placeholder", Tuple.Create(" placeholder=\"", 475), Tuple.Create("\"", 524)
+            
+            #line 11 "..\..\Views\Option\Templates.cshtml"
+, Tuple.Create(Tuple.Create("", 489), Tuple.Create<System.Object, System.Int32>(RootGlobalization.WaterMark_Search
+            
+            #line default
+            #line hidden
+, 489), false)
+);
+
+WriteLiteral(" data-bind=\"value: searchQuery, valueUpdate: \'afterkeydown\', enterPress: search\"");
+
+WriteLiteral(">\r\n        </div>\r\n    </div>\r\n</div>\r\n\r\n<!-- ko foreach: templateRows -->\r\n<div");
 
 WriteLiteral(" class=\"bcms-blog-templates-holder\"");
 
@@ -177,7 +159,7 @@ WriteLiteral(" class=\"bcms-blog-templates-active-text\"");
 WriteLiteral(">");
 
             
-            #line 35 "..\..\Views\Option\Templates.cshtml"
+            #line 31 "..\..\Views\Option\Templates.cshtml"
                                                     Write(BlogGlobalization.SiteSettings_Templates_DefaultTemplate);
 
             
@@ -193,7 +175,7 @@ WriteLiteral(" data-bind=\"click: select\"");
 WriteLiteral(">");
 
             
-            #line 38 "..\..\Views\Option\Templates.cshtml"
+            #line 34 "..\..\Views\Option\Templates.cshtml"
                                                             Write(BlogGlobalization.SiteSettings_Templates_SelectButton);
 
             
@@ -207,7 +189,7 @@ WriteLiteral(" class=\"bcms-blog-templates-notcompatible-text\"");
 WriteLiteral(">");
 
             
-            #line 41 "..\..\Views\Option\Templates.cshtml"
+            #line 37 "..\..\Views\Option\Templates.cshtml"
                                                            Write(BlogGlobalization.SiteSettings_Templates_IncompatibleTemplate);
 
             

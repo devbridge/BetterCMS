@@ -5,17 +5,23 @@
 @model BetterCms.Module.Pages.ViewModels.Widgets.SelectWidgetViewModel
 
 <div class="bcms-top-block-holder">
-    <div class="bcms-top-block-inner">
-        @if ((ViewContext.Controller as CmsControllerBase).SecurityService.IsAuthorized(RootModuleConstants.UserRoles.Administration))
-        {
-            <div class="bcms-btn-links-main" id="bcms-create-advanced-content-button">@PagesGlobalization.AddPageContent_WidgetTab_AddNewButton</div>
-            <div class="bcms-btn-links-main" id="bcms-registeradvanced-content-button">@PagesGlobalization.AddPageContent_WidgetTab_RegisterButton</div>
-        }
+    @if ((ViewContext.Controller as CmsControllerBase).SecurityService.IsAuthorized(RootModuleConstants.UserRoles.Administration))
+    {
+        <div class="bcms-top-controls-btn-holder">
+            <div class="bcms-btn-main" id="bcms-create-advanced-content-button">@PagesGlobalization.AddPageContent_WidgetTab_AddNewButton</div>
 
+            <div class="bcms-btn-opener"> </div>
+            <div class="bcms-btn-opener-holder">
+                <div class="bcms-btn-opener-link" id="bcms-registeradvanced-content-button">@PagesGlobalization.AddPageContent_WidgetTab_RegisterButton</div>
+            </div>
+        </div>
+    }
+
+    <div class="bcms-top-block-inner">
+        <div class="bcms-btn-search" id="bcms-advanced-content-search-btn">@PagesGlobalization.AddPageContent_WidgetTab_SearchButton</div>
         <div class="bcms-search-block">
             <input type="text" id="bcms-advanced-content-search" class="bcms-search-field-box" placeholder="@RootGlobalization.WaterMark_Search" />
         </div>
-        <div class="bcms-btn-search" id="bcms-advanced-content-search-btn">@PagesGlobalization.AddPageContent_WidgetTab_SearchButton</div>
     </div>
 </div>
 

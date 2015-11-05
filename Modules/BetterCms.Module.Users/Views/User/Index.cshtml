@@ -37,17 +37,16 @@
     @using (Html.BeginForm<UserController>(f => f.Index(null), FormMethod.Post, new { @id = "bcms-users-form", @class = "bcms-ajax-form" }))
     {
         @Html.SiteSettingsMessagesBox("bcms-users-messages")
-        
+
         @Html.HiddenGridOptions(Model.GridOptions)
         <div class="bcms-top-block-holder">
-            <div class="bcms-clearfix">
-                <div class="bcms-top-block-inner">
-                    <div class="bcms-search-block">
-                        @Html.TextBoxFor(m => m.SearchQuery, new { @class = "bcms-search-field-box", @placeholder = RootGlobalization.WaterMark_Search })
-                    </div>
-                    <div class="bcms-btn-search" id="bcms-users-search-btn">@UsersGlobalization.User_Dialog_Search</div>
+            <div class="bcms-btn-main" id="bcms-create-user-button">@UsersGlobalization.User_Dialog_AddNew</div>
 
-                    <div class="bcms-btn-main" id="bcms-create-user-button">@UsersGlobalization.User_Dialog_AddNew</div>
+            <div class="bcms-top-block-inner">
+
+                <div class="bcms-btn-search" id="bcms-users-search-btn">@UsersGlobalization.User_Dialog_Search</div>
+                <div class="bcms-search-block">
+                    @Html.TextBoxFor(m => m.SearchQuery, new { @class = "bcms-search-field-box", @placeholder = RootGlobalization.WaterMark_Search })
                 </div>
             </div>
 

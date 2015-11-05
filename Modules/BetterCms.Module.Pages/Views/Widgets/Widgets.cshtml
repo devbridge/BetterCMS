@@ -57,17 +57,19 @@
         @Html.HiddenGridOptions(Model.GridOptions)
 
         <div class="bcms-top-block-holder">
-            <div class="bcms-clearfix">
-                <div class="bcms-large-titles">@PagesGlobalization.SiteSettings_Widgets_Title</div>
+            <div class="bcms-top-controls-btn-holder">
+                <div class="bcms-btn-main" id="bcms-create-page-button">@PagesGlobalization.SiteSettings_Pages_AddNew</div>
+                <div class="bcms-btn-opener"> </div>
 
-                <div class="bcms-top-block-inner">
-                    <div class="bcms-search-block">
-                        @Html.TextBoxFor(m => m.SearchQuery, new { @class = "bcms-search-field-box bcms-search-query", @placeholder = RootGlobalization.WaterMark_Search })
-                    </div>
-                    <div class="bcms-btn-search" id="bcms-widget-search-btn">@PagesGlobalization.SiteSettings_Widgets_Search</div>
+                <div class="bcms-btn-opener-holder">
+                    <div class="bcms-btn-opener-link" id="bcms-register-template-button">@PagesGlobalization.SiteSettings_Widgets_RegisterNew</div>
+                </div>
+            </div>
 
-                    <div class="bcms-btn-main" id="bcms-create-widget-button">@PagesGlobalization.SiteSettings_Widgets_AddNew</div>
-                    <div class="bcms-btn-main" id="bcms-register-widget-button">@PagesGlobalization.SiteSettings_Widgets_RegisterNew</div>
+            <div class="bcms-top-block-inner">
+                <div class="bcms-btn-search" id="bcms-template-search-btn">@PagesGlobalization.SiteSettings_Template_Search</div>
+                <div class="bcms-search-block">
+                    @Html.TextBoxFor(m => m.SearchQuery, new { @class = "bcms-search-field-box bcms-search-query", @placeholder = RootGlobalization.WaterMark_Search })
                 </div>
             </div>
 
@@ -75,7 +77,7 @@
                 @Html.RenderPaging(Model)
             </div>
         </div>
-        
+
         @(Html.Grid(Model.Items).Sort(Model.GridOptions).Columns(columns).Attributes(@class => "bcms-tables").RowAttributes(delegate(GridRowViewData<SiteSettingWidgetItemViewModel> row)
                   {
                       return new Dictionary<string, object>

@@ -64,7 +64,7 @@ a {
 
 .bcms-modal {
     @include position(fixed, 0);
-    background-color: rgba($black, .8);
+    background-color: $gray-bg;
     font-size: 13px;
     overflow: hidden;
 
@@ -76,6 +76,7 @@ a {
     }
 
     &-body {
+        //todo check later background-color: rgba($black, .8);
         height: 100vh;
         margin: auto;
         position: relative;

@@ -73,33 +73,39 @@
     @Html.HiddenGridOptions(Model.GridOptions)
 
     <div class="bcms-top-block-holder">
-        <div class="bcms-clearfix">
-            @if (canPublish && canEdit)
+        <div class="bcms-top-controls-btn-holder">
+            @if (canEdit)
             {
-                <div class="bcms-btn-links-main" id="bcms-import-blogs">@BlogGlobalization.SiteSettings_Blogs_Import</div>
-                <div class="bcms-btn-links-main" id="bcms-export-blogs">@BlogGlobalization.SiteSettings_Blogs_Export</div>
+                <div class="bcms-btn-main" id="bcms-create-blog-button">@BlogGlobalization.SiteSettings_Blogs_AddNew</div>
             }
 
+            @if (canPublish && canEdit)
+            {
+                <div class="bcms-btn-opener"> </div>
+                <div class="bcms-btn-opener-holder">
+                    <div class="bcms-btn-opener-link" id="bcms-import-blogs">@BlogGlobalization.SiteSettings_Blogs_Import</div>
+                    <div class="bcms-btn-opener-link" id="bcms-export-blogs">@BlogGlobalization.SiteSettings_Blogs_Export</div>
+                </div>
+            }
+        </div>
+
             <div class="bcms-top-block-inner">
-                <div class="bcms-search-block">
-                    @Html.Partial("~/Areas/bcms-blog/Views/Blog/Partial/BlogsFilterTemplate.cshtml", Model)
+                <div class="bcms-btn-search" id="bcms-blogs-search-btn">@BlogGlobalization.SiteSettings_Blogs_Search</div>
+                <div class="bcms-search-block">                 
                     @Html.TextBoxFor(m => m.SearchQuery, new { @class = "bcms-search-field-box bcms-search-query", @placeholder = RootGlobalization.WaterMark_Search })
                 </div>
-                <div class="bcms-btn-search" id="bcms-blogs-search-btn">@BlogGlobalization.SiteSettings_Blogs_Search</div>
-
-                @if (canEdit)
-                {
-                    <div class="bcms-btn-main" id="bcms-create-blog-button">@BlogGlobalization.SiteSettings_Blogs_AddNew</div>
-                }
             </div>
-        </div>
 
-        <div class="bcms-top-block-pager">
-            @Html.RenderPaging(Model)
-        </div>
+            <div class="bcms-top-block-pager">
+                @Html.RenderPaging(Model)
+            </div>
     </div>
 
-        @Html.Grid(Model.Items).Sort(Model.GridOptions).Columns(columns).Attributes(@class => "bcms-tables").RenderUsing(new EditableHtmlTableGridRenderer<SiteSettingBlogPostViewModel>())
+    <div class="bcms-top-block-filters">
+        @Html.Partial("~/Areas/bcms-blog/Views/Blog/Partial/BlogsFilterTemplate.cshtml", Model)
+    </div>
+    
+    @Html.Grid(Model.Items).Sort(Model.GridOptions).Columns(columns).Attributes(@class => "bcms-tables").RenderUsing(new EditableHtmlTableGridRenderer<SiteSettingBlogPostViewModel>())
 }
 
 <script type="text/html" id="bcms-blogs-list-row-template">

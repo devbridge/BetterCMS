@@ -154,17 +154,15 @@ WriteLiteral(" class=\"bcms-top-block-holder\"");
 
 WriteLiteral(">\r\n            <div");
 
-WriteLiteral(" class=\"bcms-clearfix\"");
+WriteLiteral(" class=\"bcms-btn-main\"");
 
-WriteLiteral(">\r\n                <div");
-
-WriteLiteral(" class=\"bcms-large-titles\"");
+WriteLiteral(" id=\"bcms-create-sitemap-button\"");
 
 WriteLiteral(">");
 
             
-            #line 32 "..\..\Views\Sitemap\Sitemaps.cshtml"
-                                          Write(NavigationGlobalization.SiteSettings_Sitemaps_Title);
+            #line 31 "..\..\Views\Sitemap\Sitemaps.cshtml"
+                                                                  Write(NavigationGlobalization.SiteSettings_Sitemaps_AddNew);
 
             
             #line default
@@ -174,6 +172,21 @@ WriteLiteral("</div>\r\n\r\n                <div");
 WriteLiteral(" class=\"bcms-top-block-inner\"");
 
 WriteLiteral(">\r\n                    <div");
+
+WriteLiteral(" class=\"bcms-btn-search\"");
+
+WriteLiteral(" id=\"bcms-sitemaps-search-btn\"");
+
+WriteLiteral(">");
+
+            
+            #line 34 "..\..\Views\Sitemap\Sitemaps.cshtml"
+                                                                          Write(NavigationGlobalization.SiteSettings_Sitemaps_Search);
+
+            
+            #line default
+            #line hidden
+WriteLiteral("</div>\r\n                    <div");
 
 WriteLiteral(" class=\"bcms-search-block\"");
 
@@ -188,37 +201,7 @@ WriteLiteral("                        ");
             
             #line default
             #line hidden
-WriteLiteral("\r\n                    </div>\r\n                    <div");
-
-WriteLiteral(" class=\"bcms-btn-search\"");
-
-WriteLiteral(" id=\"bcms-sitemaps-search-btn\"");
-
-WriteLiteral(">");
-
-            
-            #line 38 "..\..\Views\Sitemap\Sitemaps.cshtml"
-                                                                          Write(NavigationGlobalization.SiteSettings_Sitemaps_Search);
-
-            
-            #line default
-            #line hidden
-WriteLiteral("</div>\r\n\r\n                    <div");
-
-WriteLiteral(" class=\"bcms-btn-main\"");
-
-WriteLiteral(" id=\"bcms-create-sitemap-button\"");
-
-WriteLiteral(">");
-
-            
-            #line 40 "..\..\Views\Sitemap\Sitemaps.cshtml"
-                                                                          Write(NavigationGlobalization.SiteSettings_Sitemaps_AddNew);
-
-            
-            #line default
-            #line hidden
-WriteLiteral("</div>\r\n                </div>\r\n            </div>\r\n\r\n            <div");
+WriteLiteral("\r\n                    </div>\r\n                </div>\r\n\r\n            <div");
 
 WriteLiteral(" class=\"bcms-top-block-pager\"");
 
@@ -227,7 +210,7 @@ WriteLiteral(">\r\n");
 WriteLiteral("                ");
 
             
-            #line 45 "..\..\Views\Sitemap\Sitemaps.cshtml"
+            #line 41 "..\..\Views\Sitemap\Sitemaps.cshtml"
            Write(Html.RenderPaging(Model));
 
             
@@ -238,7 +221,7 @@ WriteLiteral("\r\n            </div>\r\n        </div>\r\n\r\n");
 WriteLiteral("        ");
 
             
-            #line 49 "..\..\Views\Sitemap\Sitemaps.cshtml"
+            #line 45 "..\..\Views\Sitemap\Sitemaps.cshtml"
    Write(Html.Grid(Model.Items).Sort(Model.GridOptions).Columns(columns).Attributes(@class => "bcms-tables").RenderUsing(new EditableHtmlTableGridRenderer<SiteSettingSitemapViewModel>()));
 
             
@@ -247,7 +230,7 @@ WriteLiteral("        ");
 WriteLiteral("\r\n    </div>\r\n");
 
             
-            #line 51 "..\..\Views\Sitemap\Sitemaps.cshtml"
+            #line 47 "..\..\Views\Sitemap\Sitemaps.cshtml"
 }
 
             
@@ -264,7 +247,7 @@ WriteLiteral(">\r\n");
 WriteLiteral("    ");
 
             
-            #line 54 "..\..\Views\Sitemap\Sitemaps.cshtml"
+            #line 50 "..\..\Views\Sitemap\Sitemaps.cshtml"
 Write(Html.Grid(new List<SiteSettingSitemapViewModel> { new SiteSettingSitemapViewModel() }).Columns(columns).Attributes(@class => "bcms-tables").RenderUsing(new HtmlTableGridSingleRowRenderer<SiteSettingSitemapViewModel>()));
 
             

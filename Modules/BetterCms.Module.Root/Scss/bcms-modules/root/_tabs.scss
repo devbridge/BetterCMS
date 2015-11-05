@@ -43,14 +43,14 @@
 .bcms-inner {
     &-navigation {
         @include clearfix();
-        border-bottom: $border-nav-bottom;
-        box-sizing: border-box;
-        position: relative;
-        height: $inner-navigation;
+        @include position(absolute, 0 null null);
+        height: $header-height;
+        z-index: 10;
     }
 
     &-navigation-ui {
-        @include transition(color 200ms);
+        @include transition(color 200ms, background-color 200ms);
+        background-color: transparent;;
         color: $light-text;
         cursor: pointer;
         float: left;
@@ -58,26 +58,17 @@
             weight: 700;
             size: 16px;
         }
-        margin-right: 40px;
-        padding: 25px 0 10px;
+        margin: 15px 20px 0 0;
+        padding: 10px 15px 8px;
         position: relative;
 
         &:hover {
             color: darken($light-text, 10%);
         }
 
-        @include virtual(after) {
-            @include transition(border-color 200ms);
-            @include position(absolute, null 0 0);
-            border-bottom: $border-thick-transparent;
-        }
-
         &.bcms-active {
+            background-color: $white;
             color: $blue-main;
-
-            &:after {
-                border-color: $blue-main;
-            }
         }
     }
 }

@@ -462,11 +462,12 @@ a.bcms-expanded-nodes {
 }
 
 .bcms-top-block-holder {
-  padding: 20px 0 10px;
+  padding: 20px 0;
 }
 
 .bcms-top-block-inner {
-  float: right;
+  display: inline-block;
+  vertical-align: middle;
 }
 
 .bcms-top-block-inner.bcms-active-search .bcms-search-block {
@@ -479,11 +480,63 @@ a.bcms-expanded-nodes {
 }
 
 .bcms-top-block-pager {
-  border-top: 1px solid #dfdfdf;
-  clear: both;
-  margin-top: 20px;
-  padding: 10px 0 0;
+  float: right;
   position: relative;
+}
+
+.bcms-top-block-filters {
+  padding: 5px 0;
+  border-top: 1px solid #dfdfdf;
+}
+
+.bcms-top-controls-btn-holder {
+  display: inline-block;
+  vertical-align: middle;
+  position: relative;
+}
+
+.bcms-btn-opener {
+  -webkit-transition: background-color 200ms;
+  -moz-transition: background-color 200ms;
+  transition: background-color 200ms;
+  display: inline-block;
+  vertical-align: middle;
+  height: 37px;
+  width: 37px;
+  background-color: #0d7ce7;
+  cursor: pointer;
+}
+
+.bcms-btn-opener:hover {
+  background-color: #0a62b7;
+}
+
+.bcms-btn-opener:hover + .bcms-btn-opener-holder {
+  display: block;
+}
+
+.bcms-btn-opener-holder {
+  position: absolute;
+  top: calc(100% + 1px);
+  right: 0;
+  left: 0;
+  border: 1px solid #0d7ce7;
+  box-sizing: border-box;
+  display: none;
+  z-index: 5;
+}
+
+.bcms-btn-opener-link {
+  padding-left: 25px;
+  padding-right: 25px;
+  background-color: #ffffff;
+  border-top: 1px solid #0d7ce7;
+  color: #0d7ce7;
+  line-height: 37px;
+}
+
+.bcms-btn-opener-link:first-child {
+  border-top: 0;
 }
 
 .bcms-search-block {
@@ -552,9 +605,10 @@ a.bcms-expanded-nodes {
   padding-right: 20px;
   color: #a1a1a1;
   cursor: pointer;
-  font-style: italic;
+  font-size: 11px;
   line-height: 28px;
   position: relative;
+  text-transform: uppercase;
 }
 
 .bcms-filter-selection-block {

@@ -71,26 +71,25 @@
 
     <div class="bcms-window-settings">
         <div class="bcms-top-block-holder">
-            <div class="bcms-clearfix">
-                <div class="bcms-large-titles">@PagesGlobalization.SiteSettings_Pages_Title</div>
+            @if ((ViewContext.Controller as CmsControllerBase).SecurityService.IsAuthorized(RootModuleConstants.UserRoles.EditContent))
+            {
+                <div class="bcms-btn-main" id="bcms-create-page-button">@PagesGlobalization.SiteSettings_Pages_AddNew</div>
+            }
 
-                <div class="bcms-top-block-inner bcms-active-search">
-                    <div class="bcms-search-block">
-                        @Html.Partial("~/Areas/bcms-pages/Views/Filter/PagesFilterTemplate.cshtml", Model)
-                        @Html.TextBoxFor(m => m.SearchQuery, new { @class = "bcms-search-field-box bcms-search-query", @placeholder = RootGlobalization.WaterMark_Search })                      
-                    </div>
-                    <div class="bcms-btn-search" id="bcms-pages-search-btn">@PagesGlobalization.SiteSettings_Pages_Search</div>
-
-                    @if ((ViewContext.Controller as CmsControllerBase).SecurityService.IsAuthorized(RootModuleConstants.UserRoles.EditContent))
-                    {
-                        <div class="bcms-btn-main" id="bcms-create-page-button">@PagesGlobalization.SiteSettings_Pages_AddNew</div>
-                    }
+            <div class="bcms-top-block-inner bcms-active-search">
+                <div class="bcms-btn-search" id="bcms-pages-search-btn">@PagesGlobalization.SiteSettings_Pages_Search</div>
+                <div class="bcms-search-block">
+                    @Html.TextBoxFor(m => m.SearchQuery, new { @class = "bcms-search-field-box bcms-search-query", @placeholder = RootGlobalization.WaterMark_Search })                      
                 </div>
             </div>
 
             <div class="bcms-top-block-pager">
                 @Html.RenderPaging(Model)
             </div>
+        </div>
+
+        <div class="bcms-top-block-filters">
+            @Html.Partial("~/Areas/bcms-pages/Views/Filter/PagesFilterTemplate.cshtml", Model)
         </div>
 
         @Html.Grid(Model.Items).Sort(Model.GridOptions).Columns(columns).Attributes(@class => "bcms-tables").RenderUsing(new EditableHtmlTableGridRenderer<SiteSettingPageViewModel>())
