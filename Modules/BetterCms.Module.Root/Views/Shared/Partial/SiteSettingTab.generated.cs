@@ -53,7 +53,7 @@ WriteLiteral(@">
         <!-- /ko -->
     </div>
 
-    <div class=""bcms-window-tabbed-settings"">
+    <div class=""bcms-window-settings"">
         <!-- ko foreach: tabs -->
         <div class=""bcms-tab-single"" data-bind=""attr: {id: tabId}, stopBinding: true"">
             ");

@@ -42,6 +42,11 @@
 </div>
 
 <div class="bcms-modal-frame-holder">
+    <div class="bcms-info-message-box">
+        <a class="bcms-btn-close">@RootGlobalization.Button_Close</a>
+        @Html.Raw(PagesGlobalization.EditPageProperties_LayoutPropertiesTab_InfoMessage)
+    </div>
+
     <div class="bcms-window-tabbed-options">
         @Html.TabbedContentMessagesBox()
         @if (Model.IsMasterPage)
@@ -180,11 +185,6 @@
                 <div class="bcms-input-list-holder">
                     @Html.Tooltip(PagesGlobalization.EditPageProperties_LayoutPropertiesTab_Layout_Tooltip_Description)
                     <div class="bcms-content-titles">@PagesGlobalization.EditPageProperties_LayoutPropertiesTab_ChooseLayout_Title</div>
-                </div>
-
-                <div class="bcms-info-message-box">
-                    <a class="bcms-btn-close">@RootGlobalization.Button_Close</a>
-                    @Html.Raw(PagesGlobalization.EditPageProperties_LayoutPropertiesTab_InfoMessage)
                 </div>
 
                 @Html.Partial("Partial/TemplatesList", Model.Templates)

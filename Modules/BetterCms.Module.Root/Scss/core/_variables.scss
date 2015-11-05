@@ -15,11 +15,14 @@ $gray-l: #dfdfdf;
 $gray-l10: #eeeeee;
 $blue-main: #0d7ce7;
 $gray-bg: #eae8e9;
+$error-red: #d9241d;
 
 //module new borders
 $border-nav-bottom: 1px solid $gray-l;
 $border-frame: 1px solid #dcdadb;
 $border-search-field: 2px solid $blue-main;
+$border-error: 4px solid $blue-main;
+$border-info: 4px solid $blue-main;
 
 //module text colors
 $main-text: #636363;

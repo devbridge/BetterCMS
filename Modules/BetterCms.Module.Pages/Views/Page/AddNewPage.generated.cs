@@ -141,6 +141,36 @@ WriteLiteral(" class=\"bcms-modal-frame-holder\"");
 
 WriteLiteral(">\r\n    <div");
 
+WriteLiteral(" class=\"bcms-info-message-box\"");
+
+WriteLiteral(">\r\n        <a");
+
+WriteLiteral(" class=\"bcms-btn-close\"");
+
+WriteLiteral(" id=\"bcms-addnewpage-closeinfomessage\"");
+
+WriteLiteral(">");
+
+            
+            #line 22 "..\..\Views\Page\AddNewPage.cshtml"
+                                                                   Write(RootGlobalization.Button_Close);
+
+            
+            #line default
+            #line hidden
+WriteLiteral("</a>\r\n");
+
+WriteLiteral("        ");
+
+            
+            #line 23 "..\..\Views\Page\AddNewPage.cshtml"
+   Write(Html.Raw(PagesGlobalization.AddNewPage_Template_InfoMessage_Text));
+
+            
+            #line default
+            #line hidden
+WriteLiteral("\r\n    </div>\r\n\r\n    <div");
+
 WriteLiteral(" class=\"bcms-window-tabbed-options\"");
 
 WriteLiteral(">\r\n");
@@ -148,7 +178,7 @@ WriteLiteral(">\r\n");
 WriteLiteral("        ");
 
             
-            #line 22 "..\..\Views\Page\AddNewPage.cshtml"
+            #line 27 "..\..\Views\Page\AddNewPage.cshtml"
    Write(Html.TabbedContentMessagesBox());
 
             
@@ -157,13 +187,13 @@ WriteLiteral("        ");
 WriteLiteral("\r\n");
 
             
-            #line 23 "..\..\Views\Page\AddNewPage.cshtml"
+            #line 28 "..\..\Views\Page\AddNewPage.cshtml"
         
             
             #line default
             #line hidden
             
-            #line 23 "..\..\Views\Page\AddNewPage.cshtml"
+            #line 28 "..\..\Views\Page\AddNewPage.cshtml"
          using (Html.BeginForm<PageController>(f => f.AddNewPage(null, null), FormMethod.Post, new { @class = "bcms-ajax-form" }))
         {
 
@@ -185,7 +215,7 @@ WriteLiteral(">\r\n");
 WriteLiteral("                    ");
 
             
-            #line 27 "..\..\Views\Page\AddNewPage.cshtml"
+            #line 32 "..\..\Views\Page\AddNewPage.cshtml"
                Write(Html.Tooltip(PagesGlobalization.AddNewPage_PageTitle_Tooltip_Description));
 
             
@@ -198,7 +228,7 @@ WriteLiteral(" class=\"bcms-content-titles\"");
 WriteLiteral(">");
 
             
-            #line 28 "..\..\Views\Page\AddNewPage.cshtml"
+            #line 33 "..\..\Views\Page\AddNewPage.cshtml"
                                                 Write(PagesGlobalization.AddNewPage_PageTitle);
 
             
@@ -213,7 +243,7 @@ WriteLiteral(">\r\n");
 WriteLiteral("                        ");
 
             
-            #line 30 "..\..\Views\Page\AddNewPage.cshtml"
+            #line 35 "..\..\Views\Page\AddNewPage.cshtml"
                    Write(Html.TextBoxFor(f => f.PageTitle, new { @class = "bcms-editor-field-box", @id = "PageTitle" }));
 
             
@@ -224,7 +254,7 @@ WriteLiteral("\r\n");
 WriteLiteral("                        ");
 
             
-            #line 31 "..\..\Views\Page\AddNewPage.cshtml"
+            #line 36 "..\..\Views\Page\AddNewPage.cshtml"
                    Write(Html.BcmsValidationMessageFor(f => f.PageTitle));
 
             
@@ -235,7 +265,7 @@ WriteLiteral("\r\n                    </div>\r\n                </div>\r\n\r\n")
 WriteLiteral("                ");
 
             
-            #line 35 "..\..\Views\Page\AddNewPage.cshtml"
+            #line 40 "..\..\Views\Page\AddNewPage.cshtml"
            Write(Html.Partial("Partial/AddNewPageEditPermalink"));
 
             
@@ -250,7 +280,7 @@ WriteLiteral(">\r\n");
 WriteLiteral("                    ");
 
             
-            #line 38 "..\..\Views\Page\AddNewPage.cshtml"
+            #line 43 "..\..\Views\Page\AddNewPage.cshtml"
                Write(Html.Tooltip(PagesGlobalization.AddNewPage_Template_Tooltip_Description));
 
             
@@ -263,43 +293,13 @@ WriteLiteral(" class=\"bcms-content-titles\"");
 WriteLiteral(">");
 
             
-            #line 39 "..\..\Views\Page\AddNewPage.cshtml"
+            #line 44 "..\..\Views\Page\AddNewPage.cshtml"
                                                 Write(PagesGlobalization.AddNewPage_Template);
 
             
             #line default
             #line hidden
-WriteLiteral("</div>\r\n                </div>\r\n\r\n                <div");
-
-WriteLiteral(" class=\"bcms-info-message-box\"");
-
-WriteLiteral(">\r\n                    <a");
-
-WriteLiteral(" class=\"bcms-btn-close\"");
-
-WriteLiteral(" id=\"bcms-addnewpage-closeinfomessage\"");
-
-WriteLiteral(">");
-
-            
-            #line 43 "..\..\Views\Page\AddNewPage.cshtml"
-                                                                               Write(RootGlobalization.Button_Close);
-
-            
-            #line default
-            #line hidden
-WriteLiteral("</a>\r\n");
-
-WriteLiteral("                    ");
-
-            
-            #line 44 "..\..\Views\Page\AddNewPage.cshtml"
-               Write(Html.Raw(PagesGlobalization.AddNewPage_Template_InfoMessage_Text));
-
-            
-            #line default
-            #line hidden
-WriteLiteral("\r\n                </div>\r\n\r\n");
+WriteLiteral("</div>\r\n                </div>\r\n\r\n");
 
 WriteLiteral("                ");
 

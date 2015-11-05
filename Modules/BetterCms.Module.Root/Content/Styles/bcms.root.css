@@ -148,14 +148,6 @@ a:hover {
   text-decoration: none;
 }
 
-.bcms-window-tabbed-settings {
-  height: calc(100vh - 62px);
-  overflow-x: hidden;
-  overflow-y: scroll;
-  padding: 0 30px 0 0;
-  position: relative;
-}
-
 .bcms-window-settings {
   height: calc(100vh - 120px);
   overflow-x: hidden;
@@ -270,6 +262,17 @@ a:hover {
 .bcms-modal-edit-seo .bcms-modal-content {
   margin: auto;
   width: 1150px;
+}
+
+.bcms-modal-alert {
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  background-color: rgba(48, 54, 70, 0.9);
+  overflow: hidden;
+  z-index: 999;
 }
 
 .bcms-modal form {
@@ -1789,44 +1792,29 @@ span.bcms-tag-field-validation-error > span:before {
   right: 6px;
 }
 
-.bcms-info-message-box {
-  position: relative;
-  max-width: 760px;
-  padding: 8px 35px 8px 20px;
-  margin: 0 0 15px 0;
-  border: 1px solid #cecece;
-  background-color: #eff9fd;
-  line-height: 16px;
-  font-size: 12px;
-}
-
-.bcms-info-message-box .bcms-tooltip-mark {
-  left: -20px;
-  top: 50%;
-  margin-top: -6px;
-}
-
 .bcms-error-frame {
-  width: 320px;
-  position: relative;
-  padding: 20px;
-  background-color: #A73331;
-  background-image: -webkit-linear-gradient(top, #A73331 0, #8F2724 100%);
-  background-image: linear-gradient(to bottom, #A73331 0, #8F2724 100%);
-  color: #f3bfbf;
-  top: 50%;
+  position: absolute;
+  -webkit-transform: translate(-50%, -50%);
+  -moz-transform: translate(-50%, -50%);
+  transform: translate(-50%, -50%);
   left: 50%;
-  margin-left: -180px;
-  margin-top: -50px;
+  top: 50%;
+  background-color: #ffffff;
+  border-top: 4px solid #0d7ce7;
+  box-shadow: 0 25px 80px 5px rgba(0, 0, 0, 0.4);
+  box-sizing: border-box;
+  color: #303646;
+  padding: 30px 80px 30px 40px;
+  width: 600px;
 }
 
 .bcms-error-frame > h4 {
+  color: #d9241d;
   margin: 0;
-  color: #fff;
 }
 
 .bcms-error-frame > p {
-  font-size: 11px;
+  font-size: 14px;
   line-height: 19px;
 }
 
@@ -1837,34 +1825,57 @@ span.bcms-tag-field-validation-error > span:before {
   transform: translate(-50%, -50%);
   left: 50%;
   top: 50%;
-  width: 320px;
-  padding: 20px;
-  background-color: #eff9fd;
-  border: 1px solid #818181;
-  color: #000;
+  background-color: #ffffff;
+  border-top: 4px solid #0d7ce7;
+  box-shadow: 0 25px 80px 5px rgba(0, 0, 0, 0.4);
+  box-sizing: border-box;
+  color: #303646;
+  padding: 30px 80px 30px 40px;
+  width: 600px;
 }
 
 .bcms-popinfo-frame > h4 {
+  color: #0d7ce7;
   margin: 0;
 }
 
 .bcms-popinfo-frame > p {
+  font-size: 14px;
   line-height: 19px;
-  word-wrap: break-word;
-  font-size: 11px;
 }
 
 a.bcms-error-close {
-  position: absolute;
-  top: 10px;
-  right: 10px;
-  height: 14px;
-  width: 15px;
   background: url("images/sprite-base-1.png") no-repeat -9px -726px;
   cursor: pointer;
+  height: 14px;
   overflow: hidden;
-  text-indent: 9999px;
+  position: absolute;
+  right: 10px;
   text-decoration: none;
+  text-indent: 9999px;
+  top: 10px;
+  width: 15px;
+}
+
+.bcms-info-message-box {
+  position: fixed;
+  -webkit-transform: translateX(-50%);
+  -moz-transform: translateX(-50%);
+  transform: translateX(-50%);
+  left: 50%;
+  background-color: #eff9fd;
+  border: 1px solid #cecece;
+  font-size: 12px;
+  line-height: 16px;
+  padding: 8px 35px 8px 20px;
+  top: 0;
+  z-index: 99;
+}
+
+.bcms-info-message-box .bcms-tooltip-mark {
+  left: -20px;
+  margin-top: -6px;
+  top: 50%;
 }
 
 .bcms-on .bcms-region-overlay {
@@ -3257,8 +3268,6 @@ div.bcms-tip-close {
 
 .bcms-user-access {
   border-bottom: 1px solid #c6c6c6;
-  margin: 0 0 20px -30px;
-  padding: 0 0 0 30px;
 }
 
 .bcms-access-title {

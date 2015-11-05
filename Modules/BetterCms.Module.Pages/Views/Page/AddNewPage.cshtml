@@ -18,6 +18,11 @@
 </div>
 
 <div class="bcms-modal-frame-holder">
+    <div class="bcms-info-message-box">
+        <a class="bcms-btn-close" id="bcms-addnewpage-closeinfomessage">@RootGlobalization.Button_Close</a>
+        @Html.Raw(PagesGlobalization.AddNewPage_Template_InfoMessage_Text)
+    </div>
+
     <div class="bcms-window-tabbed-options">
         @Html.TabbedContentMessagesBox()
         @using (Html.BeginForm<PageController>(f => f.AddNewPage(null, null), FormMethod.Post, new { @class = "bcms-ajax-form" }))
@@ -37,11 +42,6 @@
                 <div class="bcms-addpage-title">
                     @Html.Tooltip(PagesGlobalization.AddNewPage_Template_Tooltip_Description)
                     <div class="bcms-content-titles">@PagesGlobalization.AddNewPage_Template</div>
-                </div>
-
-                <div class="bcms-info-message-box">
-                    <a class="bcms-btn-close" id="bcms-addnewpage-closeinfomessage">@RootGlobalization.Button_Close</a>
-                    @Html.Raw(PagesGlobalization.AddNewPage_Template_InfoMessage_Text)
                 </div>
 
                 @Html.Partial("Partial/TemplatesList", Model.Templates)

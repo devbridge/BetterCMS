@@ -1,14 +1,15 @@
 ﻿@using BetterCms.Module.Root.Content.Resources
+
 <script type="text/html" id="bcms-modal-confirm-template">
-    <div class="bcms-modal">  
+    <div class="bcms-modal-alert">
         <div class="bcms-popinfo-frame" tabindex="-1">
             <a class="bcms-btn-close">@RootGlobalization.Button_Close</a>
             <h4>@RootGlobalization.Confirm_DefaultTitle</h4>
             <p></p>
             <div class="bcms-success-buttons-holder" data-bind="foreach: buttons">
-               <!-- ko if: disabled() === false -->
-                    <div data-bind="text: title, css: css, click: click, visible: !disabled()"></div>
-               <!-- /ko -->
+                <!-- ko if: disabled() === false -->
+                <div data-bind="text: title, css: css, click: click, visible: !disabled()"></div>
+                <!-- /ko -->
             </div>
         </div>
     </div>
