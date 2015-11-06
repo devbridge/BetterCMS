@@ -292,10 +292,6 @@ bettercms.define('bcms.pages.content', ['bcms.jquery', 'bcms', 'bcms.modal', 'bc
                 }
             });
 
-            //settings.dialog.container.find('#bcms-draft-closeinfomessage').on('click', function() {
-            //    settings.dialog.container.find().hide('.bcms-warning-messages');
-            //});
-
             var maxHeightOpts = {};
             if (settings.contentTextMode == content.contentTextModes.simpleText) {
                 maxHeightOpts.substractHeight = 20;
