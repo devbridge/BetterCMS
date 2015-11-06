@@ -54,6 +54,10 @@
         box-sizing: border-box;
         display: none;
         z-index: 5;
+
+        &.bcms-opened {
+            display: block;
+        }
     }
 
     &-link {
