@@ -26,7 +26,11 @@
     }
 
     &-filters {
-        border-top: $border-nav-bottom;
+        @include clearfix();
+        border: {
+            top: $border-nav-bottom;
+            bottom: $border-nav-bottom;
+        }
         padding: 5px 0;
     }
 }
@@ -112,7 +116,7 @@
 
 //module search filter
 .bcms-filter-holder {
-    @include vertical-align();
+    float: right;
     position: relative;
     z-index: 1;
 }
@@ -132,6 +136,7 @@
 
 .bcms-filterbox {
     @include pad(5px 20px);
+    background: url($bcms-grid-filter) no-repeat 90% center;
     color: $gray-light;
     cursor: pointer;
     font-size: 11px;
@@ -143,7 +148,7 @@
 
 .bcms-filter {
     &-selection-block {
-        @include position(absolute, #{calc(100% - 1px)} null null 0);
+        @include position(absolute, #{calc(100% - 1px)} 0 null null);
         background-color: $white;
         border: $border-nav-bottom;
         box-sizing: border-box;

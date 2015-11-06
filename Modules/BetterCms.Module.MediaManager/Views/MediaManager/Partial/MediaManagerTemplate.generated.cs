@@ -177,11 +177,11 @@ WriteLiteral("            ");
             #line default
             #line hidden
 WriteLiteral(@"
-        </div>
 
-        <div class=""bcms-breadcrumbs-holder"">
-            <div data-bind=""foreach: path().pathFolders()"">
-                <a class=""bcms-breadcrumbs-root"" href=""#"" data-bind=""text: pathName(), click: openMedia.bind($data, $root)""></a>
+            <div class=""bcms-breadcrumbs-holder"">
+                <div data-bind=""foreach: path().pathFolders()"">
+                    <a class=""bcms-breadcrumbs-root"" href=""#"" data-bind=""text: pathName(), click: openMedia.bind($data, $root)""></a>
+                </div>
             </div>
         </div>
 
