@@ -45,7 +45,7 @@ bettercms.define('bcms.pages.redirects', ['bcms.jquery', 'bcms', 'bcms.dynamicCo
     /**
     * Initializes site settings redirects list and list items
     */
-    redirect.initializeSiteSettingsRedirectsList = function() {
+    redirect.initializeSiteSettingsRedirectsList = function(data, isSearchResult) {
         var dialog = siteSettings.getModalDialog(),
             container = dialog.container;
         
@@ -62,13 +62,17 @@ bettercms.define('bcms.pages.redirects', ['bcms.jquery', 'bcms', 'bcms.dynamicCo
         });
 
         form.find(selectors.searchLink).on('click', function () {
-            redirect.searchSiteSettingsRedirects(form, container);
+            $(this).parent().addClass('bcms-active-search');
         });
 
         form.find(selectors.createLink).on('click', function () {
             editor.addNewRow(container);
         });
         
+        if (isSearchResult === true) {
+            form.find(selectors.searchLink).parent().addClass('bcms-active-search');
+        }
+
         editor.initialize(container, {
             saveUrl: links.saveRedirectUrl,
             deleteUrl: links.deleteRedirectUrl,
@@ -89,7 +93,7 @@ bettercms.define('bcms.pages.redirects', ['bcms.jquery', 'bcms', 'bcms.dynamicCo
     redirect.searchSiteSettingsRedirects = function(form, container) {
         grid.submitGridForm(form, function (data) {
             siteSettings.setContent(data);
-            redirect.initializeSiteSettingsRedirectsList(data);
+            redirect.initializeSiteSettingsRedirectsList(data, true);
             var searchInput = container.find(selectors.searchField);  
             grid.focusSearchInput(searchInput);
         });

@@ -1,4 +1,5 @@
 ﻿@using BetterCms.Module.Pages.Content.Resources
+@using BetterCms.Module.Root.Content.Resources
 
 @model BetterCms.Module.Pages.ViewModels.Seo.EditSeoViewModel
 
@@ -11,6 +12,7 @@
         </ul>
         <ul class="bcms-warning-messages">
             <li>
+                <a class="bcms-btn-close" id="bcms-seo-closeinfomessage">@RootGlobalization.Button_Close</a>
                 @PagesGlobalization.EditSeo_Messages_NotInSitemapWarnMessage
             </li>
         </ul>

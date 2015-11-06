@@ -72,17 +72,19 @@ WriteLiteral(">\r\n    <div");
 
 WriteLiteral(" class=\"bcms-top-block-inner\"");
 
+WriteLiteral(" data-bind=\"css: { \'bcms-active-search\': searchEnabled() }\"");
+
 WriteLiteral(">\r\n        <div");
 
 WriteLiteral(" class=\"bcms-btn-search bcms-search-query\"");
 
-WriteLiteral(" data-bind=\"click: search\"");
+WriteLiteral(" data-bind=\"click: enableSearch\"");
 
 WriteLiteral(">");
 
             
             #line 9 "..\..\Views\Option\Templates.cshtml"
-                                                                            Write(RootGlobalization.Button_Search);
+                                                                                  Write(RootGlobalization.Button_Search);
 
             
             #line default
@@ -97,14 +99,14 @@ WriteLiteral(" type=\"text\"");
 
 WriteLiteral(" class=\"bcms-search-field-box\"");
 
-WriteAttribute("placeholder", Tuple.Create(" placeholder=\"", 475), Tuple.Create("\"", 524)
+WriteAttribute("placeholder", Tuple.Create(" placeholder=\"", 540), Tuple.Create("\"", 589)
             
             #line 11 "..\..\Views\Option\Templates.cshtml"
-, Tuple.Create(Tuple.Create("", 489), Tuple.Create<System.Object, System.Int32>(RootGlobalization.WaterMark_Search
+, Tuple.Create(Tuple.Create("", 554), Tuple.Create<System.Object, System.Int32>(RootGlobalization.WaterMark_Search
             
             #line default
             #line hidden
-, 489), false)
+, 554), false)
 );
 
 WriteLiteral(" data-bind=\"value: searchQuery, valueUpdate: \'afterkeydown\', enterPress: search\"");

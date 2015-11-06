@@ -50,14 +50,14 @@ bettercms.define('bcms.user', ['bcms.jquery', 'bcms', 'bcms.modal', 'bcms.siteSe
         function searchSiteSettingsUsers(form) {
             grid.submitGridForm(form, function (htmlContent) {
                 usersContainer.html(htmlContent);
-                initializeSiteSettingsUsersList();
+                initializeSiteSettingsUsersList(true);
             });
         }
 
         /**
         * Initailizes site settings users list
         */
-        function initializeSiteSettingsUsersList() {
+        function initializeSiteSettingsUsersList(isSearchResult) {
             var form = usersContainer.find(selectors.usersForm);
 
             grid.bindGridForm(form, function (htmlContent) {
@@ -78,13 +78,16 @@ bettercms.define('bcms.user', ['bcms.jquery', 'bcms', 'bcms.modal', 'bcms.siteSe
             });
 
             form.find(selectors.usersSearchButton).on('click', function () {
-                searchSiteSettingsUsers(form);
+                $(this).parent().addClass('bcms-active-search');
             });
 
             usersContainer.find(selectors.siteSettingsUserCreateButton).on('click', function () {
                 createUser();
-                
             });
+
+            if (isSearchResult === true) {
+                form.find(selectors.usersSearchButton).parent().addClass('bcms-active-search');
+            }
 
             initializeSiteSettingsUsersListItem(usersContainer);
             

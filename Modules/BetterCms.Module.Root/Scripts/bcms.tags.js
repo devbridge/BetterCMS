@@ -66,7 +66,7 @@ bettercms.define('bcms.tags', ['bcms.jquery', 'bcms', 'bcms.dynamicContent', 'bc
     tags.searchSiteSettingsTags = function (form, container) {
         grid.submitGridForm(form, function (data) {
             siteSettings.setContent(data);
-            tags.initSiteSettingsTagsEvents(data);   
+            tags.initSiteSettingsTagsEvents(data, true);   
             var searchInput = container.find(selectors.tagsSearchField);
             grid.focusSearchInput(searchInput);
         });
@@ -75,7 +75,7 @@ bettercms.define('bcms.tags', ['bcms.jquery', 'bcms', 'bcms.dynamicContent', 'bc
     /**
     * Initializes site settings tags list and list items events
     */
-    tags.initSiteSettingsTagsEvents = function () {
+    tags.initSiteSettingsTagsEvents = function (data, isSearchResult) {
         var dialog = siteSettings.getModalDialog(),
             container = dialog.container;
         
@@ -92,13 +92,17 @@ bettercms.define('bcms.tags', ['bcms.jquery', 'bcms', 'bcms.dynamicContent', 'bc
         });
 
         container.find(selectors.tagsSearchButton).on('click', function () {
-            tags.searchSiteSettingsTags(form, container);
+            $(this).parent().addClass('bcms-active-search');
         });
 
         container.find(selectors.addTagButton).on('click', function () {
             editor.addNewRow(container);
         });
         
+        if (isSearchResult === true) {
+            form.find(selectors.tagsSearchButton).parent().addClass('bcms-active-search');
+        }
+
         editor.initialize(container, {
             saveUrl: links.saveTagUrl,
             deleteUrl: links.deleteTagUrl,

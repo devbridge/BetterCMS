@@ -9,6 +9,9 @@ bettercms.define('bcms.pages.properties', ['bcms.jquery', 'bcms', 'bcms.modal', 
         var page = {},
             selectors = {
                 editPagePropertiesCloseInfoMessageBox: '.bcms-info-message-box',
+                editPagePropertiesCloseInfoMessage: '#bcms-editpage-closeinfomessage',
+                editPagePropertiesInfoMessageBox: '.bcms-info-messages',
+
 
                 editPermalink: '#bcms-pageproperties-editpermalink',
                 editPermalinkBox: '.bcms-edit-urlpath-box',
@@ -124,6 +127,10 @@ bettercms.define('bcms.pages.properties', ['bcms.jquery', 'bcms', 'bcms.modal', 
                     page.hideEditPagePropertiesInfoMessage(dialog);
                 });
             }
+
+            dialog.container.find(selectors.editPagePropertiesCloseInfoMessage).on('click', function() {
+                dialog.container.find(selectors.editPagePropertiesInfoMessageBox).hide();
+            });
 
             dialog.container.find(selectors.pagePropertiesTemplateSelect).on('click', function () {
                 page.highlightPagePropertiesActiveTemplate(dialog, this, function (id, isMasterPage) {

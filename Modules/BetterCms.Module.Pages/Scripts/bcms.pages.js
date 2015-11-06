@@ -542,7 +542,7 @@ bettercms.define('bcms.pages', ['bcms.jquery', 'bcms', 'bcms.modal', 'bcms.siteS
         /**
         * Initializes site settings pages list and list items
         */
-        page.initializeSiteSettingsPagesList = function (content, jsonData, opts) {
+        page.initializeSiteSettingsPagesList = function (content, jsonData, opts, isSearchResult) {
             opts = $.extend({
                 dialog: siteSettings.getModalDialog(),
                 dialogContainer: siteSettings,
@@ -567,12 +567,17 @@ bettercms.define('bcms.pages', ['bcms.jquery', 'bcms', 'bcms.modal', 'bcms.siteS
             bcms.preventInputFromSubmittingForm(form.find(selectors.siteSettingsPagesSearchField), {
                 preventedEnter: function () {
                     page.searchSiteSettingsPages(form, container, opts);
-                },
+                }
             });
 
             form.find(selectors.siteSettingsPagesSearchButton).on('click', function () {
-                page.searchSiteSettingsPages(form, container, opts);
+                //page.searchSiteSettingsPages(form, container, opts);
+                $(this).parent().addClass('bcms-active-search');
             });
+
+            if (isSearchResult) {
+                form.find(selectors.siteSettingsPagesSearchButton).parent().addClass('bcms-active-search');
+            }
 
             page.initializeSiteSettingsPagesListItems(container, opts);
 
@@ -631,7 +636,7 @@ bettercms.define('bcms.pages', ['bcms.jquery', 'bcms', 'bcms.modal', 'bcms.siteS
                 container.find(selectors.siteSettingsPagesSearchField).blur();
                 
                 opts.dialogContainer.setContent(htmlContent);
-                page.initializeSiteSettingsPagesList(htmlContent, data, opts);
+                page.initializeSiteSettingsPagesList(htmlContent, data, opts, true);
             });
         };
 

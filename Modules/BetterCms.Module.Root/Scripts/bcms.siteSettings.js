@@ -52,6 +52,9 @@ bettercms.define('bcms.siteSettings', ['bcms.jquery', 'bcms', 'bcms.modal', 'bcm
                 dynamicContent.setContentFromUrl(dialog, siteSettings.links.loadSiteSettingsUrl, {
                     done: function () {
                         siteSettings.selectFirstMenuItem();
+                        $('bcms-btn-search').on('click', function() {
+                            $(this).parent().addClass("bcms-active-search");
+                        });
                     }
                 });
             },

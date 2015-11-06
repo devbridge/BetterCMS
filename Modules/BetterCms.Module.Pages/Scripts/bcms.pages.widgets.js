@@ -90,7 +90,9 @@ bettercms.define('bcms.pages.widgets', ['bcms.jquery', 'bcms', 'bcms.modal', 'bc
                 editInSourceModeHiddenField: '#bcms-edit-in-source-mode',
 
                 widgetUsagesGrid: '#bcms-widget-usages-grid',
-                userConfirmationHiddenField: '#bcms-user-confirmed-region-deletion'
+                userConfirmationHiddenField: '#bcms-user-confirmed-region-deletion',
+                editContentCloseInfoMessage: '#bcms-draft-closeinfomessage',
+                editContentInfoMessageBox: '.bcms-warning-messages'
             },
             classes = {
                 regionAdvancedContent: 'bcms-content-advanced',
@@ -356,6 +358,10 @@ bettercms.define('bcms.pages.widgets', ['bcms.jquery', 'bcms', 'bcms.modal', 'bc
             }, editInSourceMode);
             htmlEditor.enableInsertDynamicRegion(editorId, false, data.LastDynamicRegionNumber);
 
+            dialog.container.find(selectors.editContentCloseInfoMessage).on('click', function () {
+                dialog.container.find(selectors.editContentInfoMessageBox).hide();
+            });
+
             dialog.container.find(selectors.htmlWidgetJsCssTabOpener).on('click', function () {
                 if (!codeEditorInitialized) {
                     codeEditor.initialize(dialog.container, dialog, {
@@ -408,6 +414,10 @@ bettercms.define('bcms.pages.widgets', ['bcms.jquery', 'bcms', 'bcms.modal', 'bc
                     image.hide();
                     image.parent().removeAttr("src");
                 }
+            });
+
+            dialog.container.find(selectors.editContentCloseInfoMessage).on('click', function () {
+                dialog.container.find(selectors.editContentInfoMessageBox).hide();
             });
 
             dialog.container.find(selectors.destroyDraftVersionLink).on('click', function () {
@@ -551,7 +561,7 @@ bettercms.define('bcms.pages.widgets', ['bcms.jquery', 'bcms', 'bcms.modal', 'bc
         /**
         * Initializes site settings widgets list and list items
         */
-        function initializeSiteSettingsWidgetsList() {
+        function initializeSiteSettingsWidgetsList(isSearchResult) {
             var dialog = siteSettings.getModalDialog(),
                 container = dialog.container,
                 onWidgetCreated = function (json) {
@@ -579,8 +589,12 @@ bettercms.define('bcms.pages.widgets', ['bcms.jquery', 'bcms', 'bcms.modal', 'bc
             });
 
             form.find(selectors.widgetsSearchButton).on('click', function () {
-                searchSiteSettingsWidgets(form);
+                $(this).parent().addClass('bcms-active-search');
             });
+
+            if (isSearchResult === true) {
+                form.find(selectors.widgetsSearchButton).parent().addClass('bcms-active-search');
+            }
 
             container.find(selectors.widgetCreateButton).on('click', function () {
                 widgets.openCreateHtmlContentWidgetDialog(onWidgetCreated, null);
@@ -602,7 +616,7 @@ bettercms.define('bcms.pages.widgets', ['bcms.jquery', 'bcms', 'bcms.modal', 'bc
         function searchSiteSettingsWidgets(form) {
             grid.submitGridForm(form, function (data) {
                 siteSettings.setContent(data);
-                initializeSiteSettingsWidgetsList();
+                initializeSiteSettingsWidgetsList(true);
             });
         };
 

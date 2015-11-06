@@ -186,13 +186,13 @@ WriteLiteral(">\r\n                    <div");
 
 WriteLiteral(" class=\"bcms-btn-search\"");
 
-WriteLiteral(" id=\"bcms-redirects-searchbtn\"");
+WriteLiteral(" id=\"bcms-redirects-search-btn\"");
 
 WriteLiteral(">");
 
             
             #line 45 "..\..\Views\Redirect\Redirects.cshtml"
-                                                                          Write(PagesGlobalization.SiteSettings_Redirects_Search);
+                                                                           Write(PagesGlobalization.SiteSettings_Redirects_Search);
 
             
             #line default

@@ -42,7 +42,9 @@ bettercms.define('bcms.pages.content', ['bcms.jquery', 'bcms', 'bcms.modal', 'bc
                 editInSourceModeHiddenField: '#bcms-edit-in-source-mode',
                 contentTextModeHiddenField: '#bcms-content-text-mode',
                 firstForm: 'form:first',
-                datePickers: 'input.bcms-datepicker'
+                datePickers: 'input.bcms-datepicker',
+                editContentCloseInfoMessage: '#bcms-draft-closeinfomessage',
+                editContentInfoMessageBox: '.bcms-warning-messages'
             },
             classes = {
                 sliderPrev: 'bcms-slider-prev',
@@ -366,6 +368,10 @@ bettercms.define('bcms.pages.content', ['bcms.jquery', 'bcms', 'bcms.modal', 'bc
                     htmlEditor.enableInsertDynamicRegion(settings.editorId, true, settings.data.LastDynamicRegionNumber);
                 }
             }
+
+            settings.dialog.container.find(selectors.editContentCloseInfoMessage).on('click', function () {
+                settings.dialog.container.find(selectors.editContentInfoMessageBox).hide();
+            });
 
             settings.dialog.container.find(selectors.destroyDraftVersionLink).on('click', function () {
                 var contentId = settings.dialog.container.find(selectors.contentId).val(),

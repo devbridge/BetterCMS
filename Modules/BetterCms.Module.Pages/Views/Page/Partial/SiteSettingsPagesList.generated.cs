@@ -250,7 +250,7 @@ WriteLiteral("</div>\r\n");
             #line hidden
 WriteLiteral("\r\n            <div");
 
-WriteLiteral(" class=\"bcms-top-block-inner bcms-active-search\"");
+WriteLiteral(" class=\"bcms-top-block-inner\"");
 
 WriteLiteral(">\r\n                <div");
 

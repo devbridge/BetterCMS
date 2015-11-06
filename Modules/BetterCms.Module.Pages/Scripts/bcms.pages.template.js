@@ -243,7 +243,7 @@ bettercms.define('bcms.pages.template', ['bcms.jquery', 'bcms', 'bcms.modal', 'b
         /**
         * Initializes site settings template list and list items
         */
-        function initializeTemplatesList() {
+        function initializeTemplatesList(isSearchResult) {
             var dialog = siteSettings.getModalDialog(),
                 container = dialog.container.find(selectors.siteSettingsTemplatesListForm),
                 onTemplateCreated = function (json) {
@@ -271,12 +271,16 @@ bettercms.define('bcms.pages.template', ['bcms.jquery', 'bcms', 'bcms.modal', 'b
             });
 
             form.find(selectors.templateSearchButton).on('click', function () {
-                searchTemplates(form, container);
+                $(this).parent().addClass('bcms-active-search');
             });
 
             container.find(selectors.templateRegisterButton).on('click', function () {
                 template.openRegisterTemplateDialog(onTemplateCreated);
             });
+
+            if (isSearchResult === true) {
+                form.find(selectors.templateSearchButton).parent().addClass('bcms-active-search');
+            }
 
             initializeTemplateListEvents(container);
 
@@ -290,7 +294,7 @@ bettercms.define('bcms.pages.template', ['bcms.jquery', 'bcms', 'bcms.modal', 'b
         function searchTemplates(form, container) {
             grid.submitGridForm(form, function (htmlContent) {
                 container.html(htmlContent);
-                initializeTemplatesList();
+                initializeTemplatesList(true);
             });
         };
 
