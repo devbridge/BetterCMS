@@ -130,12 +130,13 @@ WriteLiteral("                    <!-- /ko -->\r\n");
             
             #line default
             #line hidden
-WriteLiteral("\r\n            <div class=\"bcms-top-block-inner\">\r\n                <div class=\"bcm" +
-"s-btn-search\" data-bind=\"click: searchMedia\">");
+WriteLiteral("\r\n            <div class=\"bcms-top-block-inner\" data-bind=\"css : { \'bcms-active-s" +
+"earch\': searchEnabled() }\">\r\n                <div class=\"bcms-btn-search\" data-b" +
+"ind=\"click: enableSearch\">");
 
             
             #line 24 "..\..\Views\MediaManager\Partial\MediaManagerTemplate.cshtml"
-                                                                       Write(RootGlobalization.Button_Search);
+                                                                        Write(RootGlobalization.Button_Search);
 
             
             #line default

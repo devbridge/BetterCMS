@@ -122,7 +122,7 @@ bettercms.define('bcms.pages.sitemap', ['bcms.jquery', 'bcms', 'bcms.modal', 'bc
         /**
         * Initializes site settings master pages list.
         */
-        sitemap.initializeSitemapsList = function () {
+        sitemap.initializeSitemapsList = function (isSearchResult) {
             var dialog = siteSettings.getModalDialog(),
                 container = dialog.container,
                 form = container.find(selectors.siteSettingsSitemapsForm);
@@ -141,13 +141,16 @@ bettercms.define('bcms.pages.sitemap', ['bcms.jquery', 'bcms', 'bcms.modal', 'bc
             bcms.preventInputFromSubmittingForm(form.find(selectors.searchField), {
                 preventedEnter: function () {
                     searchSitemaps(form);
-                },
+                }
             });
 
             form.find(selectors.searchButton).on('click', function (event) {
-                bcms.stopEventPropagation(event);
-                searchSitemaps(form);
+                $(this).parent().addClass('bcms-active-search');
             });
+
+            if (isSearchResult === true) {
+                form.find(selectors.searchButton).parent().addClass('bcms-active-search');
+            }
 
             initializeListItems(container);
 
@@ -161,7 +164,7 @@ bettercms.define('bcms.pages.sitemap', ['bcms.jquery', 'bcms', 'bcms.modal', 'bc
         function searchSitemaps(form) {
             grid.submitGridForm(form, function (htmlContent) {
                 siteSettings.setContent(htmlContent);
-                sitemap.initializeSitemapsList();
+                sitemap.initializeSitemapsList(true);
             });
         };
 

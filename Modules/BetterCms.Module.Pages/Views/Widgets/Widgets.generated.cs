@@ -241,13 +241,13 @@ WriteLiteral(">\r\n                <div");
 
 WriteLiteral(" class=\"bcms-btn-search\"");
 
-WriteLiteral(" id=\"bcms-template-search-btn\"");
+WriteLiteral(" id=\"bcms-widget-search-btn\"");
 
 WriteLiteral(">");
 
             
             #line 70 "..\..\Views\Widgets\Widgets.cshtml"
-                                                                      Write(PagesGlobalization.SiteSettings_Template_Search);
+                                                                    Write(PagesGlobalization.SiteSettings_Template_Search);
 
             
             #line default

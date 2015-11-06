@@ -341,6 +341,7 @@ function ($, bcms, modal, siteSettings, forms, dynamicContent, messages, mediaUp
         self.canInsertMedia = ko.observable(false);
         self.canInsertMediaWithOptions = ko.observable(false);
         self.canSearchInHistory = ko.observable(false);
+        self.searchEnabled = ko.observable(false);
         
         self.showPropertiesPreview = ko.observable(false);
         self.previewItem = new MediaItemPreviewViewModel();
@@ -410,6 +411,10 @@ function ($, bcms, modal, siteSettings, forms, dynamicContent, messages, mediaUp
             self.gridOptions().paging.pageNumber(1);
             self.gridOptions().closeFilter();
             self.loadMedia();
+        };
+
+        self.enableSearch = function() {
+            self.searchEnabled(true);
         };
 
         self.searchWithFilter = function (searchInHistory) {

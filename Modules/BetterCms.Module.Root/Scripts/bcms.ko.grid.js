@@ -76,6 +76,7 @@ bettercms.define('bcms.ko.grid', ['bcms.jquery', 'bcms', 'bcms.ko.extenders', 'b
             self.options = ko.observable();
             self.container = container;
             self.rowAdded = false;
+            self.searchEnabled = ko.observable(false);
             
             self.messagesDomId = function () {
                 var id = staticDomId++;
@@ -107,6 +108,10 @@ bettercms.define('bcms.ko.grid', ['bcms.jquery', 'bcms', 'bcms.ko.extenders', 'b
                 self.items.push(itemViewModel);
             };
             
+            self.activateSearchBlock = function() {
+                self.searchEnabled(true);
+            }
+
             self.searchItems = function () {
                 self.options().paging.pageNumber(1);
 

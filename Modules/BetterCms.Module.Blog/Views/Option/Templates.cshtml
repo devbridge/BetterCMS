@@ -5,8 +5,8 @@
 @Html.TabbedContentMessagesBox()
 
 <div class="bcms-top-block-holder">
-    <div class="bcms-top-block-inner">
-        <div class="bcms-btn-search bcms-search-query" data-bind="click: search">@RootGlobalization.Button_Search</div>
+    <div class="bcms-top-block-inner" data-bind="css: { 'bcms-active-search': searchEnabled() }">
+        <div class="bcms-btn-search bcms-search-query" data-bind="click: enableSearch">@RootGlobalization.Button_Search</div>
         <div class="bcms-search-block">
             <input type="text" class="bcms-search-field-box" placeholder="@RootGlobalization.WaterMark_Search" data-bind="value: searchQuery, valueUpdate: 'afterkeydown', enterPress: search">
         </div>

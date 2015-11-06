@@ -994,7 +994,7 @@
         function searchCategoryTrees(form) {
             grid.submitGridForm(form, function (htmlContent) {
                 siteSettings.setContent(htmlContent);
-                initializeListOfCategoryTrees();
+                initializeListOfCategoryTrees(true);
             });
         };
 
@@ -1064,7 +1064,7 @@
             });
         };
 
-        function initializeListOfCategoryTrees() {
+        function initializeListOfCategoryTrees(isSearchResult) {
             var dialog = siteSettings.getModalDialog(),
                 container = dialog.container,
                 form = container.find(selectors.siteSettingsCategoryTreesForm);
@@ -1087,9 +1087,12 @@
             });
 
             form.find(selectors.searchButton).on("click", function (event) {
-                bcms.stopEventPropagation(event);
-                searchCategoryTrees(form);
+                $(this).parent().addClass('bcms-active-search');
             });
+
+            if (isSearchResult === true) {
+                form.find(selectors.searchButton).parent().addClass('bcms-active-search');
+            }
 
             initializeListItems(container);
 

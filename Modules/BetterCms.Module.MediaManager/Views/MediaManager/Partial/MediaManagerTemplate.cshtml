@@ -20,8 +20,8 @@
                     <!-- /ko -->
             }
 
-            <div class="bcms-top-block-inner">
-                <div class="bcms-btn-search" data-bind="click: searchMedia">@RootGlobalization.Button_Search</div>
+            <div class="bcms-top-block-inner" data-bind="css : { 'bcms-active-search': searchEnabled() }">
+                <div class="bcms-btn-search" data-bind="click: enableSearch">@RootGlobalization.Button_Search</div>
                 <div class="bcms-search-block">
                     <input id="bcms-search-input" name="MediaSearch" data-bind="value: gridOptions().searchQuery, valueUpdate: 'afterkeydown', enterPress: searchMedia" class="bcms-search-field-box" type="text" placeholder="@RootGlobalization.WaterMark_Search" />
                 </div>

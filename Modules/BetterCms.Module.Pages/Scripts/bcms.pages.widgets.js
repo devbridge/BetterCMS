@@ -551,7 +551,7 @@ bettercms.define('bcms.pages.widgets', ['bcms.jquery', 'bcms', 'bcms.modal', 'bc
         /**
         * Initializes site settings widgets list and list items
         */
-        function initializeSiteSettingsWidgetsList() {
+        function initializeSiteSettingsWidgetsList(isSearchResult) {
             var dialog = siteSettings.getModalDialog(),
                 container = dialog.container,
                 onWidgetCreated = function (json) {
@@ -579,8 +579,12 @@ bettercms.define('bcms.pages.widgets', ['bcms.jquery', 'bcms', 'bcms.modal', 'bc
             });
 
             form.find(selectors.widgetsSearchButton).on('click', function () {
-                searchSiteSettingsWidgets(form);
+                $(this).parent().addClass('bcms-active-search');
             });
+
+            if (isSearchResult === true) {
+                form.find(selectors.widgetsSearchButton).parent().addClass('bcms-active-search');
+            }
 
             container.find(selectors.widgetCreateButton).on('click', function () {
                 widgets.openCreateHtmlContentWidgetDialog(onWidgetCreated, null);
@@ -602,7 +606,7 @@ bettercms.define('bcms.pages.widgets', ['bcms.jquery', 'bcms', 'bcms.modal', 'bc
         function searchSiteSettingsWidgets(form) {
             grid.submitGridForm(form, function (data) {
                 siteSettings.setContent(data);
-                initializeSiteSettingsWidgetsList();
+                initializeSiteSettingsWidgetsList(true);
             });
         };
 
