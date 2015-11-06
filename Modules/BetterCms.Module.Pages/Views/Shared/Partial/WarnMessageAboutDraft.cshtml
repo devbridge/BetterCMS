@@ -1,5 +1,6 @@
 ﻿@using BetterCms.Core.DataContracts.Enums
 @using BetterCms.Module.Pages.Content.Resources
+@using BetterCms.Module.Root.Content.Resources
 
 @model BetterCms.Module.Pages.ViewModels.Content.IDraftDestroy
 
@@ -12,6 +13,7 @@
         </ul>
         <ul class="bcms-warning-messages">
             <li>
+                <a class="bcms-btn-close" id="bcms-draft-closeinfomessage">@RootGlobalization.Button_Close</a>
                 @PagesGlobalization.EditPageContent_Messages_DraftStatusWarnMessage
                 @if (Model.CanDestroyDraft)
                 {

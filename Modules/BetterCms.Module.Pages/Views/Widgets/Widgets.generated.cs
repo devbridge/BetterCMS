@@ -199,13 +199,13 @@ WriteLiteral(">\r\n                <div");
 
 WriteLiteral(" class=\"bcms-btn-main\"");
 
-WriteLiteral(" id=\"bcms-create-page-button\"");
+WriteLiteral(" id=\"bcms-create-widget-button\"");
 
 WriteLiteral(">");
 
             
             #line 61 "..\..\Views\Widgets\Widgets.cshtml"
-                                                                   Write(PagesGlobalization.SiteSettings_Pages_AddNew);
+                                                                     Write(PagesGlobalization.SiteSettings_Pages_AddNew);
 
             
             #line default
@@ -222,13 +222,13 @@ WriteLiteral(">\r\n                    <div");
 
 WriteLiteral(" class=\"bcms-btn-opener-link\"");
 
-WriteLiteral(" id=\"bcms-register-template-button\"");
+WriteLiteral(" id=\"bcms-register-widget-button\"");
 
 WriteLiteral(">");
 
             
             #line 65 "..\..\Views\Widgets\Widgets.cshtml"
-                                                                                    Write(PagesGlobalization.SiteSettings_Widgets_RegisterNew);
+                                                                                  Write(PagesGlobalization.SiteSettings_Widgets_RegisterNew);
 
             
             #line default

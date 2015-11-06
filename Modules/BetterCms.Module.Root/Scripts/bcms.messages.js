@@ -107,7 +107,11 @@ bettercms.define('bcms.messages', ['bcms.jquery'], function ($) {
 
             if (message) {
                 messagesOfTypeContainer.fadeIn();
-                var element = $('<li>' + message + '</li>');
+                var closeButton = '<a class="bcms-btn-close">Close</a>';
+                var element = $('<li>' + closeButton + message + '</li>');
+                element.find('.bcms-btn-close').on('click', function() {
+                    messagesOfTypeContainer.hide();
+                });
                 messagesOfTypeContainer.append(element);
 
                 if (options.enableAutoHide) {

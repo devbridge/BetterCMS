@@ -90,7 +90,9 @@ bettercms.define('bcms.pages.widgets', ['bcms.jquery', 'bcms', 'bcms.modal', 'bc
                 editInSourceModeHiddenField: '#bcms-edit-in-source-mode',
 
                 widgetUsagesGrid: '#bcms-widget-usages-grid',
-                userConfirmationHiddenField: '#bcms-user-confirmed-region-deletion'
+                userConfirmationHiddenField: '#bcms-user-confirmed-region-deletion',
+                editContentCloseInfoMessage: '#bcms-draft-closeinfomessage',
+                editContentInfoMessageBox: '.bcms-warning-messages'
             },
             classes = {
                 regionAdvancedContent: 'bcms-content-advanced',
@@ -356,6 +358,10 @@ bettercms.define('bcms.pages.widgets', ['bcms.jquery', 'bcms', 'bcms.modal', 'bc
             }, editInSourceMode);
             htmlEditor.enableInsertDynamicRegion(editorId, false, data.LastDynamicRegionNumber);
 
+            dialog.container.find(selectors.editContentCloseInfoMessage).on('click', function () {
+                dialog.container.find(selectors.editContentInfoMessageBox).hide();
+            });
+
             dialog.container.find(selectors.htmlWidgetJsCssTabOpener).on('click', function () {
                 if (!codeEditorInitialized) {
                     codeEditor.initialize(dialog.container, dialog, {
@@ -408,6 +414,10 @@ bettercms.define('bcms.pages.widgets', ['bcms.jquery', 'bcms', 'bcms.modal', 'bc
                     image.hide();
                     image.parent().removeAttr("src");
                 }
+            });
+
+            dialog.container.find(selectors.editContentCloseInfoMessage).on('click', function () {
+                dialog.container.find(selectors.editContentInfoMessageBox).hide();
             });
 
             dialog.container.find(selectors.destroyDraftVersionLink).on('click', function () {
