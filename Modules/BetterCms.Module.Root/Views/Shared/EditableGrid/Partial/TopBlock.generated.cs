@@ -90,7 +90,7 @@ WriteLiteral(">\r\n");
             #line hidden
 WriteLiteral("            <div");
 
-WriteLiteral(" data-bind=\"click: activateSearchBlock\"");
+WriteLiteral(" data-bind=\"click: toggleSearch\"");
 
 WriteLiteral(" class=\"bcms-btn-search\"");
 
@@ -98,7 +98,7 @@ WriteLiteral(">");
 
             
             #line 10 "..\..\Views\Shared\EditableGrid\Partial\TopBlock.cshtml"
-                                                                           Write(RootGlobalization.Button_Search);
+                                                                    Write(RootGlobalization.Button_Search);
 
             
             #line default
@@ -118,14 +118,14 @@ WriteLiteral(" type=\"text\"");
 
 WriteLiteral(" class=\"bcms-search-field-box\"");
 
-WriteAttribute("placeholder", Tuple.Create(" placeholder=\"", 707), Tuple.Create("\"", 756)
+WriteAttribute("placeholder", Tuple.Create(" placeholder=\"", 700), Tuple.Create("\"", 749)
             
             #line 12 "..\..\Views\Shared\EditableGrid\Partial\TopBlock.cshtml"
-                                                                                                                            , Tuple.Create(Tuple.Create("", 721), Tuple.Create<System.Object, System.Int32>(RootGlobalization.WaterMark_Search
+                                                                                                                            , Tuple.Create(Tuple.Create("", 714), Tuple.Create<System.Object, System.Int32>(RootGlobalization.WaterMark_Search
             
             #line default
             #line hidden
-, 721), false)
+, 714), false)
 );
 
 WriteLiteral(" />\r\n            </div>\r\n");

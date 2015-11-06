@@ -593,7 +593,13 @@ bettercms.define('bcms.pages.widgets', ['bcms.jquery', 'bcms', 'bcms.modal', 'bc
             });
 
             form.find(selectors.widgetsSearchButton).on('click', function () {
-                $(this).parent().addClass('bcms-active-search');
+                var parent = $(this).parent();
+                if (!parent.hasClass('bcms-active-search')) {
+                    parent.addClass('bcms-active-search');
+                } else {
+                    parent.removeClass('bcms-active-search');
+                    form.find(selectors.widgetsSearchField).val('');
+                }
             });
 
             if (isSearchResult === true) {

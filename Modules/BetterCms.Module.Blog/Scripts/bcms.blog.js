@@ -430,7 +430,13 @@ bettercms.define('bcms.blog', ['bcms.jquery', 'bcms', 'bcms.modal', 'bcms.siteSe
             });
 
             form.find(selectors.siteSettingsBlogsSearchButton).on('click', function () {
-                $(this).parent().addClass('bcms-active-search');
+                var parent = $(this).parent();
+                if (!parent.hasClass('bcms-active-search')) {
+                    parent.addClass('bcms-active-search');
+                } else {
+                    parent.removeClass('bcms-active-search');
+                    form.find(selectors.siteSettingsBlogsSearchInput).val('');
+                }
             });
 
             form.find(selectors.siteSettingsButtonOpener).on('click', function (event) {
@@ -890,8 +896,13 @@ bettercms.define('bcms.blog', ['bcms.jquery', 'bcms', 'bcms.modal', 'bcms.siteSe
                 self.fillTemplateRows();
             };
 
-            self.enableSearch = function () {
-                self.searchEnabled(true);
+            self.toggleSearch = function () {
+                if (!self.searchEnabled()) {
+                    self.searchEnabled(true);
+                } else {
+                    self.searchEnabled(false);
+                    self.searchQuery('');
+                }
             };
 
             self.fillTemplateRows();

@@ -108,8 +108,13 @@ bettercms.define('bcms.ko.grid', ['bcms.jquery', 'bcms', 'bcms.ko.extenders', 'b
                 self.items.push(itemViewModel);
             };
             
-            self.activateSearchBlock = function() {
-                self.searchEnabled(true);
+            self.toggleSearch = function() {
+                if (!self.searchEnabled()) {
+                    self.searchEnabled(true);
+                } else {
+                    self.searchEnabled(false);
+                    self.options().searchQuery('');
+                }
             }
 
             self.searchItems = function () {

@@ -62,7 +62,13 @@ bettercms.define('bcms.pages.redirects', ['bcms.jquery', 'bcms', 'bcms.dynamicCo
         });
 
         form.find(selectors.searchLink).on('click', function () {
-            $(this).parent().addClass('bcms-active-search');
+            var parent = $(this).parent();
+            if (!parent.hasClass('bcms-active-search')) {
+                parent.addClass('bcms-active-search');
+            } else {
+                parent.removeClass('bcms-active-search');
+                form.find(selectors.searchField).val('');
+            }
         });
 
         form.find(selectors.createLink).on('click', function () {
