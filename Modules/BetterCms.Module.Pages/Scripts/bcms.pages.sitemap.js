@@ -1861,8 +1861,6 @@ bettercms.define('bcms.pages.sitemap', ['bcms.jquery', 'bcms', 'bcms.modal', 'bc
         * Initializes sitemap history dialog events.
         */
         function initSitemapHistoryDialogEvents(dialog, afterSitemapRestored) {
-            dialog.maximizeHeight();
-
             var container = dialog.container.find(selectors.modalContent);
 
             container.find(selectors.gridRestoreLinks).on('click', function (event) {

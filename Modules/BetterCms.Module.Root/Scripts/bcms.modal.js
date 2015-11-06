@@ -18,7 +18,7 @@ bettercms.define('bcms.modal', ['bcms.jquery', 'bcms', 'bcms.tabs', 'bcms.ko.ext
             body: '.bcms-modal-body, .bcms-error-frame, .bcms-popinfo-frame',
             content: '.bcms-modal-content, .bcms-error-frame p, .bcms-popinfo-frame p',
             loader: '.bcms-loader',
-            scrollWindow: '.bcms-scroll-window',
+            scrollWindow: '.bcms-window-tabbed-options',
             previewImage: '.bcms-preview-image-frame img',
             previewImageContainer: '.bcms-preview-image-border',
             previewFailure: '.bcms-grid-image-holder',
@@ -28,12 +28,6 @@ bettercms.define('bcms.modal', ['bcms.jquery', 'bcms', 'bcms.tabs', 'bcms.ko.ext
             errorFrame: '.bcms-error-frame',
             loaderContainer: '.bcms-modal-content',
 
-            // selectors for calculation of modal window size
-            elemHeader: '.bcms-modal-header',
-            elemFooter: '.bcms-modal-footer',
-            elemTabsHeader: '.bcms-js-tab-header',
-            elemContent: '.bcms-scroll-window',
-            elemTopControls: '.bcms-top-block-holder',
             readonly: '[data-readonly=true]'
         },
 
@@ -282,7 +276,7 @@ bettercms.define('bcms.modal', ['bcms.jquery', 'bcms', 'bcms.tabs', 'bcms.ko.ext
                 container.fadeIn('fast');
             }
 
-            this.maximizeHeight();
+            //this.maximizeHeight();
 
             if ($.isFunction(this.options.onShow)) {
                 this.options.onShow();
@@ -329,7 +323,6 @@ bettercms.define('bcms.modal', ['bcms.jquery', 'bcms', 'bcms.tabs', 'bcms.ko.ext
         close: function () {
             if (this.onAction(this.options.onClose) === true) {
                 this.destroy();
-                this.changeFirstModalWindowSize();
             }
         },
 
@@ -368,8 +361,6 @@ bettercms.define('bcms.modal', ['bcms.jquery', 'bcms', 'bcms.tabs', 'bcms.ko.ext
                 if ($.validator && $.validator.unobtrusive) {
                     $.validator.unobtrusive.parse(this.container);
                 }
-
-                this.maximizeHeight();
 
                 tabs.initTabPanel(this.container);
 
@@ -463,55 +454,7 @@ bettercms.define('bcms.modal', ['bcms.jquery', 'bcms', 'bcms.tabs', 'bcms.ko.ext
             if (modal.getCount() < 1) {
                 removeGlobalEvents();
             }
-        },
-
-        /**
-         * Maximizes dialog height to document height.
-         */
-        maximizeHeight: function () {
-            if (this.disableMaxHeight) {
-                return;
-            }
-
-            var viewportHeight = $(window).height(),
-                elemHeader = this.container.find(selectors.elemHeader),
-                elemFooter = this.container.find(selectors.elemFooter),
-                elemTabsHeader = this.container.find(selectors.elemTabsHeader),
-                elemTopControls = this.container.find(selectors.elemTopControls),
-                elemContent = this.container.find(selectors.elemContent);
-
-            if (elemTopControls.length) {
-                elemContent.css({ 'height': (viewportHeight - (elemHeader.outerHeight() + elemFooter.outerHeight() + elemTopControls.outerHeight())) + 'px' });
-            } else if (elemTabsHeader.length) {
-                elemContent.css({ 'height': (viewportHeight - (elemHeader.outerHeight() + elemFooter.outerHeight() + elemTabsHeader.outerHeight() + elemTopControls.outerHeight())) + 'px' });
-            } else {
-                elemContent.css({ 'height': (viewportHeight - (elemHeader.outerHeight() + elemFooter.outerHeight())) + 'px' });
-            }
-        },
-
-        changeFirstModalWindowSize: function () {
-            var dialog = modal.last();
-            if (dialog && isResized) {
-                dialog.maximizeHeight();
-            }
         }
-    };
-
-    /**
-     * Binds to a window resize event.
-     */
-    function addGlobalResizeModalEvent() {
-        $(window).on('resize.bcms.modal', function () {
-            clearTimeout(resizeTimer);
-
-            resizeTimer = setTimeout(function () {
-                var topModal = modal.last();
-                if (topModal) {
-                    topModal.maximizeHeight();
-                    isResized = true;
-                }
-            }, 200);
-        });
     };
 
     /**
@@ -541,7 +484,7 @@ bettercms.define('bcms.modal', ['bcms.jquery', 'bcms', 'bcms.tabs', 'bcms.ko.ext
                         }
                     }
                 }
-                    // If Enter pressed and accept action is not disabled in the modal dialog.
+                // If Enter pressed and accept action is not disabled in the modal dialog.
                 else if (e.keyCode === 13 && !topModal.options.disableAccept) {
                     if (canHandleKeyPress()) {
                         e.preventDefault();
@@ -573,7 +516,6 @@ bettercms.define('bcms.modal', ['bcms.jquery', 'bcms', 'bcms.tabs', 'bcms.ko.ext
 
         if (!isGlobalKeyPressEventAttached) {
             addGlobalKeyPressEvent();
-            addGlobalResizeModalEvent();
             isGlobalKeyPressEventAttached = true;
         }
 
@@ -694,7 +636,7 @@ bettercms.define('bcms.modal', ['bcms.jquery', 'bcms', 'bcms.tabs', 'bcms.ko.ext
             declineTitle: globalization.no,
             onDecline: function () {
                 return true;
-            },
+            }
         }, options);
         if (!$.isArray(options.buttons)) {
             options.buttons = [];
@@ -812,9 +754,9 @@ bettercms.define('bcms.modal', ['bcms.jquery', 'bcms', 'bcms.tabs', 'bcms.ko.ext
         }
     };
 
-    /**
-     * Maximizes dialog's provided child/children height up to maximum visible value.
-     */
+    ///**
+    // * Maximizes dialog's provided child/children height up to maximum visible value.
+    // */
     modal.maximizeChildHeight = function (obj, dialog, options) {
         options = $.extend({
             substractHeight: 60
