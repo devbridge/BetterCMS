@@ -132,7 +132,7 @@ WriteLiteral("                    <!-- /ko -->\r\n");
             #line hidden
 WriteLiteral("\r\n            <div class=\"bcms-top-block-inner\" data-bind=\"css : { \'bcms-active-s" +
 "earch\': searchEnabled() }\">\r\n                <div class=\"bcms-btn-search\" data-b" +
-"ind=\"click: enableSearch\">");
+"ind=\"click: toggleSearch\">");
 
             
             #line 24 "..\..\Views\MediaManager\Partial\MediaManagerTemplate.cshtml"

@@ -571,8 +571,13 @@ bettercms.define('bcms.pages', ['bcms.jquery', 'bcms', 'bcms.modal', 'bcms.siteS
             });
 
             form.find(selectors.siteSettingsPagesSearchButton).on('click', function () {
-                //page.searchSiteSettingsPages(form, container, opts);
-                $(this).parent().addClass('bcms-active-search');
+                var parent = $(this).parent();
+                if (!parent.hasClass('bcms-active-search')) {
+                    parent.addClass('bcms-active-search');
+                } else {
+                    parent.removeClass('bcms-active-search');
+                    form.find(selectors.siteSettingsPagesSearchField).val('');
+                }
             });
 
             if (isSearchResult) {

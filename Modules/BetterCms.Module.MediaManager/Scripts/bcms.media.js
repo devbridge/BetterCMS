@@ -413,8 +413,13 @@ function ($, bcms, modal, siteSettings, forms, dynamicContent, messages, mediaUp
             self.loadMedia();
         };
 
-        self.enableSearch = function() {
-            self.searchEnabled(true);
+        self.toggleSearch = function() {
+            if (!self.searchEnabled()) {
+                self.searchEnabled(true);
+            } else {
+                self.searchEnabled(false);
+                self.options().searchQuery('');
+            }
         };
 
         self.searchWithFilter = function (searchInHistory) {

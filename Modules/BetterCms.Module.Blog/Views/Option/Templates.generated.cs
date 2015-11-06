@@ -78,7 +78,7 @@ WriteLiteral(">\r\n        <div");
 
 WriteLiteral(" class=\"bcms-btn-search bcms-search-query\"");
 
-WriteLiteral(" data-bind=\"click: enableSearch\"");
+WriteLiteral(" data-bind=\"click: toggleSearch\"");
 
 WriteLiteral(">");
 

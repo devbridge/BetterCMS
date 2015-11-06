@@ -7,7 +7,7 @@
     <div class="bcms-top-block-inner" data-bind="css: { 'bcms-active-search': searchEnabled() }">
         @if (Model.ShowSearch)
         {
-            <div data-bind="click: activateSearchBlock" class="bcms-btn-search">@RootGlobalization.Button_Search</div>
+            <div data-bind="click: toggleSearch" class="bcms-btn-search">@RootGlobalization.Button_Search</div>
             <div class="bcms-search-block">
                 <input data-bind="value: options().searchQuery, valueUpdate: 'afterkeydown', enterPress: searchItems, hasfocus: options().hasFocus" type="text" class="bcms-search-field-box" placeholder="@RootGlobalization.WaterMark_Search" />
             </div>

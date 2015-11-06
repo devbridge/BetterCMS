@@ -92,7 +92,13 @@ bettercms.define('bcms.tags', ['bcms.jquery', 'bcms', 'bcms.dynamicContent', 'bc
         });
 
         container.find(selectors.tagsSearchButton).on('click', function () {
-            $(this).parent().addClass('bcms-active-search');
+            var parent = $(this).parent();
+            if (!parent.hasClass('bcms-active-search')) {
+                parent.addClass('bcms-active-search');
+            } else {
+                parent.removeClass('bcms-active-search');
+                form.find(selectors.tagsSearchField).val('');
+            }
         });
 
         container.find(selectors.addTagButton).on('click', function () {
