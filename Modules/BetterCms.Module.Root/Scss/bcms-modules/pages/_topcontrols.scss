@@ -46,10 +46,6 @@
 
     &:hover {
         background-color: darken($blue-main, 10%);
-
-        + .bcms-btn-opener-holder {
-            display: block;
-        }
     }
 
     &-holder {

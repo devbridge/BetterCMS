@@ -516,10 +516,6 @@ a.bcms-expanded-nodes {
   background-color: #0a62b7;
 }
 
-.bcms-btn-opener:hover + .bcms-btn-opener-holder {
-  display: block;
-}
-
 .bcms-btn-opener-holder {
   position: absolute;
   top: calc(100% + 1px);
