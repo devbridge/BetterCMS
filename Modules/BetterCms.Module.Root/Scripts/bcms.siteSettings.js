@@ -74,7 +74,7 @@ bettercms.define('bcms.siteSettings', ['bcms.jquery', 'bcms', 'bcms.modal', 'bcm
                 $.validator.unobtrusive.parse(siteSettingsModalWindow.container);
             }
 
-            siteSettingsModalWindow.maximizeHeight();
+            //siteSettingsModalWindow.maximizeHeight();
 
             if (!doNotInitTabs) {
                 tabs.initTabPanel(siteSettingsModalWindow.container);

@@ -173,8 +173,6 @@ bettercms.define('bcms.media.history', ['bcms.jquery', 'bcms', 'bcms.modal', 'bc
     * Initializes EditSeo dialog events.
     */
     history.initMediaHistoryDialogEvents = function (dialog, isImage) {
-        dialog.maximizeHeight();
-
         var container = dialog.container.find(selectors.modalContent);
 
         container.find(selectors.gridRestoreLinks).on('click', function (event) {

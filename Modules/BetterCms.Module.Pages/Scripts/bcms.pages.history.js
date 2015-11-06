@@ -157,8 +157,6 @@ bettercms.define('bcms.pages.history', ['bcms.jquery', 'bcms', 'bcms.modal', 'bc
     * Initializes EditSeo dialog events.
     */
     history.initPageContentHistoryDialogEvents = function (dialog, opts) {
-        dialog.maximizeHeight();
-
         var container = dialog.container.find(selectors.modalContent);
 
         container.find(selectors.gridRestoreLinks).on('click', function (event) {
