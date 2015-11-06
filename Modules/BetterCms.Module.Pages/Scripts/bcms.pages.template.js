@@ -58,7 +58,11 @@ bettercms.define('bcms.pages.template', ['bcms.jquery', 'bcms', 'bcms.modal', 'b
                 regionsTable: '#bcms-regions-grid',
                 regionsTab: '#bcms-tab-2',
                 
-                optionsTab: '#bcms-tab-3'
+                optionsTab: '#bcms-tab-3',
+                
+                siteSettingsButtonOpener: ".bcms-btn-opener",
+                siteSettingsButtonHolder: ".bcms-btn-opener-holder",
+                siteSettingsOutsideAddButtons: ":not(div[class^='bcms-btn-opener'])"
             };
 
         /**
@@ -272,6 +276,23 @@ bettercms.define('bcms.pages.template', ['bcms.jquery', 'bcms', 'bcms.modal', 'b
 
             form.find(selectors.templateSearchButton).on('click', function () {
                 $(this).parent().addClass('bcms-active-search');
+            });
+
+            form.find(selectors.siteSettingsButtonOpener).on('click', function (event) {
+                bcms.stopEventPropagation(event);
+                var holder = form.find(selectors.siteSettingsButtonHolder);
+                if (!holder.hasClass('bcms-opened')) {
+                    holder.addClass('bcms-opened');
+                } else {
+                    holder.removeClass('bcms-opened');
+                }
+            });
+
+            container.find(selectors.siteSettingsOutsideAddButtons).on('click', function (event) {
+                var holder = form.find(selectors.siteSettingsButtonHolder);
+                if (holder.hasClass('bcms-opened')) {
+                    holder.removeClass('bcms-opened');
+                }
             });
 
             container.find(selectors.templateRegisterButton).on('click', function () {

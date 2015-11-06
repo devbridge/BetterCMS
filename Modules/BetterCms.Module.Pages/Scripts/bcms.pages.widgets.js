@@ -92,7 +92,11 @@ bettercms.define('bcms.pages.widgets', ['bcms.jquery', 'bcms', 'bcms.modal', 'bc
                 widgetUsagesGrid: '#bcms-widget-usages-grid',
                 userConfirmationHiddenField: '#bcms-user-confirmed-region-deletion',
                 editContentCloseInfoMessage: '#bcms-draft-closeinfomessage',
-                editContentInfoMessageBox: '.bcms-warning-messages'
+                editContentInfoMessageBox: '.bcms-warning-messages',
+
+                siteSettingsButtonOpener: ".bcms-btn-opener",
+                siteSettingsButtonHolder: ".bcms-btn-opener-holder",
+                siteSettingsOutsideAddButtons: ":not(div[class^='bcms-btn-opener'])"
             },
             classes = {
                 regionAdvancedContent: 'bcms-content-advanced',
@@ -595,6 +599,23 @@ bettercms.define('bcms.pages.widgets', ['bcms.jquery', 'bcms', 'bcms.modal', 'bc
             if (isSearchResult === true) {
                 form.find(selectors.widgetsSearchButton).parent().addClass('bcms-active-search');
             }
+
+            form.find(selectors.siteSettingsButtonOpener).on('click', function (event) {
+                bcms.stopEventPropagation(event);
+                var holder = form.find(selectors.siteSettingsButtonHolder);
+                if (!holder.hasClass('bcms-opened')) {
+                    holder.addClass('bcms-opened');
+                } else {
+                    holder.removeClass('bcms-opened');
+                }
+            });
+
+            container.find(selectors.siteSettingsOutsideAddButtons).on('click', function (event) {
+                var holder = form.find(selectors.siteSettingsButtonHolder);
+                if (holder.hasClass('bcms-opened')) {
+                    holder.removeClass('bcms-opened');
+                }
+            });
 
             container.find(selectors.widgetCreateButton).on('click', function () {
                 widgets.openCreateHtmlContentWidgetDialog(onWidgetCreated, null);
