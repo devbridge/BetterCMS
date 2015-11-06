@@ -49,9 +49,9 @@ namespace ASP
         }
         public override void Execute()
         {
-WriteLiteral("<div");
+WriteLiteral("\r\n<div");
 
-WriteLiteral(" class=\"bcms-messages-type-1\"");
+WriteLiteral(" class=\"bcms-messages-ui bcms-js-messages\"");
 
 WriteLiteral(">\r\n    <ul");
 
@@ -59,13 +59,13 @@ WriteLiteral(" class=\"bcms-success-messages\"");
 
 WriteLiteral(" style=\"display: none\"");
 
-WriteLiteral(">\r\n    </ul>\r\n    <ul");
+WriteLiteral("></ul>\r\n    <ul");
 
 WriteLiteral(" class=\"bcms-info-messages\"");
 
 WriteLiteral(">\r\n        <li>\r\n            <a");
 
-WriteLiteral(" class=\"bcms-btn-close\"");
+WriteLiteral(" class=\"bcms-messages-close bcms-js-btn-close\"");
 
 WriteLiteral(" id=\"bcms-editpage-closeinfomessage\"");
 
@@ -73,7 +73,7 @@ WriteLiteral(">");
 
             
             #line 8 "..\..\Views\Shared\Partial\InfoMessageAboutMasterPage.cshtml"
-                                                                     Write(RootGlobalization.Button_Close);
+                                                                                            Write(RootGlobalization.Button_Close);
 
             
             #line default
@@ -95,13 +95,13 @@ WriteLiteral(" class=\"bcms-warning-messages\"");
 
 WriteLiteral(" style=\"display: none\"");
 
-WriteLiteral(">\r\n    </ul>\r\n    <ul");
+WriteLiteral("></ul>\r\n    <ul");
 
 WriteLiteral(" class=\"bcms-error-messages\"");
 
 WriteLiteral(" style=\"display: none\"");
 
-WriteLiteral(">\r\n    </ul>\r\n</div>\r\n");
+WriteLiteral("></ul>\r\n</div>\r\n");
 
         }
     }

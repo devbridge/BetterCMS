@@ -13,7 +13,7 @@ bettercms.define('bcms.messages', ['bcms.jquery'], function ($) {
     // Selectors used in the module to locate DOM elements:
         selectors = {
             messagesBox: '#bcms-messages-box',
-            messages: '.bcms-messages-type-1:not(.bcms-custom-messages):first, .bcms-messages-type-2:not(.bcms-custom-messages):first',
+            messages: '.bcms-js-messages:not(.bcms-custom-messages):first',
             success: '.bcms-success-messages:first',
             info: '.bcms-info-messages:first',
             warn: '.bcms-warning-messages:first',
@@ -107,9 +107,9 @@ bettercms.define('bcms.messages', ['bcms.jquery'], function ($) {
 
             if (message) {
                 messagesOfTypeContainer.fadeIn();
-                var closeButton = '<a class="bcms-btn-close">Close</a>';
+                var closeButton = '<a class="bcms-messages-close bcms-js-btn-close">Close</a>';
                 var element = $('<li>' + closeButton + message + '</li>');
-                element.find('.bcms-btn-close').on('click', function() {
+                element.find('.bcms-js-btn-close').on('click', function () {
                     messagesOfTypeContainer.hide();
                 });
                 messagesOfTypeContainer.append(element);

@@ -1,6 +1,7 @@
 //module top block
 .bcms-top-block {
     &-holder {
+        @include user-select();
         padding: 20px 0;
         position: relative;
     }

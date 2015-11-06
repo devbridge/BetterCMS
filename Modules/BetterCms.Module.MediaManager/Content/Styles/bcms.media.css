@@ -649,12 +649,18 @@ div.bcms-upload-success .bcms-upload-description {
 }
 
 .bcms-breadcrumbs-holder {
+  max-width: 600px;
   font-size: 14px;
   font-weight: 700;
   line-height: 15px;
-  margin-bottom: 15px;
-  padding-bottom: 5px;
+  padding: 5px 0;
   float: left;
+}
+
+.bcms-breadcrumbs-holder > div {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
 .bcms-breadcrumbs-root {

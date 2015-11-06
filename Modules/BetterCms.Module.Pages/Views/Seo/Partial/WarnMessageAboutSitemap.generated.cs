@@ -49,7 +49,7 @@ namespace ASP
         }
         public override void Execute()
         {
-WriteLiteral("\r\n");
+WriteLiteral("\n");
 
             
             #line 6 "..\..\Views\Seo\Partial\WarnMessageAboutSitemap.cshtml"
@@ -61,7 +61,7 @@ WriteLiteral("\r\n");
             #line hidden
 WriteLiteral("    <div");
 
-WriteLiteral(" class=\"bcms-messages-type-1\"");
+WriteLiteral(" class=\"bcms-messages-ui bcms-js-messages\"");
 
 WriteLiteral(">\r\n        <ul");
 
@@ -69,27 +69,27 @@ WriteLiteral(" class=\"bcms-success-messages\"");
 
 WriteLiteral(" style=\"display: none\"");
 
-WriteLiteral(">\r\n        </ul>\r\n        <ul");
+WriteLiteral("></ul>\r\n        <ul");
 
 WriteLiteral(" class=\"bcms-info-messages\"");
 
 WriteLiteral(" style=\"display: none\"");
 
-WriteLiteral(">\r\n        </ul>\r\n        <ul");
+WriteLiteral("></ul>\r\n        <ul");
 
 WriteLiteral(" class=\"bcms-warning-messages\"");
 
 WriteLiteral(">\r\n            <li>\r\n                <a");
 
-WriteLiteral(" class=\"bcms-btn-close\"");
+WriteLiteral(" class=\"bcms-messages-close bcms-js-btn-close\"");
 
 WriteLiteral(" id=\"bcms-seo-closeinfomessage\"");
 
 WriteLiteral(">");
 
             
-            #line 15 "..\..\Views\Seo\Partial\WarnMessageAboutSitemap.cshtml"
-                                                                    Write(RootGlobalization.Button_Close);
+            #line 13 "..\..\Views\Seo\Partial\WarnMessageAboutSitemap.cshtml"
+                                                                                           Write(RootGlobalization.Button_Close);
 
             
             #line default
@@ -99,7 +99,7 @@ WriteLiteral("</a>\r\n");
 WriteLiteral("                ");
 
             
-            #line 16 "..\..\Views\Seo\Partial\WarnMessageAboutSitemap.cshtml"
+            #line 14 "..\..\Views\Seo\Partial\WarnMessageAboutSitemap.cshtml"
            Write(PagesGlobalization.EditSeo_Messages_NotInSitemapWarnMessage);
 
             
@@ -111,10 +111,10 @@ WriteLiteral(" class=\"bcms-error-messages\"");
 
 WriteLiteral(" style=\"display: none\"");
 
-WriteLiteral(">\r\n        </ul>\r\n    </div>\r\n");
+WriteLiteral("></ul>\r\n    </div>\r\n");
 
             
-            #line 22 "..\..\Views\Seo\Partial\WarnMessageAboutSitemap.cshtml"
+            #line 19 "..\..\Views\Seo\Partial\WarnMessageAboutSitemap.cshtml"
 }
 
             

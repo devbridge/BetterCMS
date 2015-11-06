@@ -8,7 +8,7 @@ bettercms.define('bcms.pages.properties', ['bcms.jquery', 'bcms', 'bcms.modal', 
 
         var page = {},
             selectors = {
-                editPagePropertiesCloseInfoMessageBox: '.bcms-info-message-box',
+                editPagePropertiesCloseInfoMessageBox: '.bcms-js-info-message',
                 editPagePropertiesCloseInfoMessage: '#bcms-editpage-closeinfomessage',
                 editPagePropertiesInfoMessageBox: '.bcms-info-messages',
 

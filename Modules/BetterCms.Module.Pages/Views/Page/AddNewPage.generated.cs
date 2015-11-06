@@ -145,7 +145,7 @@ WriteLiteral(" class=\"bcms-info-message-box\"");
 
 WriteLiteral(">\r\n        <a");
 
-WriteLiteral(" class=\"bcms-btn-close\"");
+WriteLiteral(" class=\"bcms-messages-close bcms-js-btn-close\"");
 
 WriteLiteral(" id=\"bcms-addnewpage-closeinfomessage\"");
 
@@ -153,7 +153,7 @@ WriteLiteral(">");
 
             
             #line 22 "..\..\Views\Page\AddNewPage.cshtml"
-                                                                   Write(RootGlobalization.Button_Close);
+                                                                                          Write(RootGlobalization.Button_Close);
 
             
             #line default

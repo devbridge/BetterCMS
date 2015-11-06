@@ -208,29 +208,29 @@ WriteLiteral(">\r\n");
             
             #line default
             #line hidden
-WriteLiteral("        <div");
+WriteLiteral("            <div");
 
-WriteLiteral(" class=\"bcms-messages-type-1\"");
+WriteLiteral(" class=\"bcms-messages-ui bcms-js-messages\"");
 
-WriteLiteral(">\r\n            <ul");
+WriteLiteral(">\r\n                <ul");
 
 WriteLiteral(" class=\"bcms-success-messages\"");
 
 WriteLiteral(" style=\"display: none\"");
 
-WriteLiteral("></ul>\r\n            <ul");
+WriteLiteral("></ul>\r\n                <ul");
 
 WriteLiteral(" class=\"bcms-info-messages\"");
 
 WriteLiteral(" style=\"display: none\"");
 
-WriteLiteral("></ul>\r\n            <ul");
+WriteLiteral("></ul>\r\n                <ul");
 
 WriteLiteral(" class=\"bcms-warning-messages\"");
 
-WriteLiteral(">\r\n                <li>\r\n                    <a");
+WriteLiteral(">\r\n                    <li>\r\n                        <a");
 
-WriteLiteral(" class=\"bcms-btn-close\"");
+WriteLiteral(" class=\"bcms-messages-close bcms-js-btn-close\"");
 
 WriteLiteral(" id=\"bcms-addnewblog-closeinfomessage\"");
 
@@ -238,18 +238,18 @@ WriteLiteral(">");
 
             
             #line 48 "..\..\Views\Blog\EditBlogPost.cshtml"
-                                                                               Write(RootGlobalization.Button_Close);
+                                                                                                          Write(RootGlobalization.Button_Close);
 
             
             #line default
             #line hidden
 WriteLiteral("</a>\r\n");
 
-WriteLiteral("                    ");
+WriteLiteral("                        ");
 
             
             #line 49 "..\..\Views\Blog\EditBlogPost.cshtml"
-               Write(PagesGlobalization.EditPageContent_Messages_DraftStatusWarnMessage);
+                   Write(PagesGlobalization.EditPageContent_Messages_DraftStatusWarnMessage);
 
             
             #line default
@@ -258,40 +258,40 @@ WriteLiteral("\r\n");
 
             
             #line 50 "..\..\Views\Blog\EditBlogPost.cshtml"
-                    
-            
-            #line default
-            #line hidden
-            
-            #line 50 "..\..\Views\Blog\EditBlogPost.cshtml"
-                     if (Model.HasPublishedContent && canEdit)
-                    {
                         
             
             #line default
             #line hidden
             
+            #line 50 "..\..\Views\Blog\EditBlogPost.cshtml"
+                         if (Model.HasPublishedContent && canEdit)
+                        {
+                            
+            
+            #line default
+            #line hidden
+            
             #line 52 "..\..\Views\Blog\EditBlogPost.cshtml"
-                   Write(Html.Raw(PagesGlobalization.EditPageContent_Messages_DraftStatusWarnMessage_Destroy));
+                       Write(Html.Raw(PagesGlobalization.EditPageContent_Messages_DraftStatusWarnMessage_Destroy));
 
             
             #line default
             #line hidden
             
             #line 52 "..\..\Views\Blog\EditBlogPost.cshtml"
-                                                                                                             
-                    }
+                                                                                                                 
+                        }
 
             
             #line default
             #line hidden
-WriteLiteral("                </li>\r\n            </ul>\r\n            <ul");
+WriteLiteral("                    </li>\r\n                </ul>\r\n                <ul");
 
 WriteLiteral(" class=\"bcms-error-messages\"");
 
 WriteLiteral(" style=\"display: none\"");
 
-WriteLiteral("></ul>\r\n        </div>\r\n");
+WriteLiteral("></ul>\r\n            </div>\r\n");
 
             
             #line 58 "..\..\Views\Blog\EditBlogPost.cshtml"

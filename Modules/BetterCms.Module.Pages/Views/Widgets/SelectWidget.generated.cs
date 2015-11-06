@@ -43,7 +43,7 @@ WriteLiteral(" class=\"bcms-modal-frame-holder\"");
 
 WriteLiteral(">\r\n    <div");
 
-WriteLiteral(" class=\"bcms-messages-type-1 \"");
+WriteLiteral(" class=\"bcms-messages-ui bcms-js-messages\"");
 
 WriteLiteral(">\r\n        <ul");
 

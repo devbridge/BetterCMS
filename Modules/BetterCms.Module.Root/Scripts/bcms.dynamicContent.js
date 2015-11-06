@@ -46,8 +46,8 @@ bettercms.define('bcms.dynamicContent', ['bcms.jquery', 'bcms', 'bcms.modal', 'b
         options = $.extend({
             done: null,
             fail: function (failedDialog, message, request) {
-                var html = '<div class="bcms-scroll-window">' +
-                                '<div class="bcms-messages-type-2">' +
+                var html = '<div class="bcms-window-options">' +
+                                '<div class="bcms-messages-ui bcms-js-messages">' +
                                     '<ul class="bcms-error-messages">' +
                                         '<li>' +
                                             message +

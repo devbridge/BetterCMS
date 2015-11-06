@@ -118,6 +118,16 @@
     @content
 }
 
+@mixin close-button($icon: null, $position: null) {
+    @include position(absolute, $position);
+    @include size(20px);
+    background: url($icon) no-repeat center;
+    cursor: pointer;
+    overflow: hidden;
+    text-decoration: none;
+    text-indent: -999em;
+}
+
 //module functions
 //class constructor
 //@mixin construct-button($get-map: null) {

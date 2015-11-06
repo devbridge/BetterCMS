@@ -462,6 +462,9 @@ a.bcms-expanded-nodes {
 }
 
 .bcms-top-block-holder {
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  user-select: none;
   padding: 20px 0;
   position: relative;
 }

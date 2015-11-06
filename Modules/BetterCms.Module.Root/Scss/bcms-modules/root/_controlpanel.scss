@@ -14,7 +14,7 @@ $control-panel-switch-status: (
 
 $control-panel-status: (
                 ('pubstatus', $bcms-cp-pub-ok, $bcms-cp-pub-warn),
-                ('seostatus', $bcms-cp-seo-ok, $bcms-cp-seo-warn)
+                //fixme ('seostatus', $bcms-cp-seo-ok, $bcms-cp-seo-warn)
 );
 //module
 .bcms-user-profile {
