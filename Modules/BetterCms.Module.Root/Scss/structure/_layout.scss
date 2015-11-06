@@ -96,7 +96,7 @@ a {
     }
 
     &-close {
-        @include size(15px);
+        @include size(20px);
         @include positioning($center-y: true);
         background: url($bcms-close) no-repeat center;
         cursor: pointer;

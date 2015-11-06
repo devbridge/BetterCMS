@@ -50,11 +50,11 @@ WriteLiteral(" type=\"text/html\"");
 WriteLiteral(" id=\"bcms-modal-alert-template\"");
 
 WriteLiteral(">\n    <div class=\"bcms-modal-alert\">\r\n        <div class=\"bcms-error-frame\" tabin" +
-"dex=\"-1\">\r\n            <a class=\"bcms-error-close\">");
+"dex=\"-1\">\r\n            <a class=\"bcms-modal-close bcms-js-btn-close\">");
 
             
             #line 6 "..\..\Views\Shared\Partial\Alert.cshtml"
-                                   Write(RootGlobalization.Button_Close);
+                                                     Write(RootGlobalization.Button_Close);
 
             
             #line default

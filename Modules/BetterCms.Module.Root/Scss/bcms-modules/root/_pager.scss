@@ -1,6 +1,6 @@
 $pager-buttons: (
-                ('prev', left, 9px, null, null),
-                ('next', right, 1px, null, null)
+                ('prev', left, 9px, $bcms-pager-arrow-left, null),
+                ('next', right, 6px, $bcms-pager-arrow-right, null)
 );
 
 %pager-buttons-extender {
@@ -15,7 +15,6 @@ $pager-buttons: (
 }
 
 .bcms-pager {
-    height: $form-element-height;
     text-align: right;
 
     &-no {
@@ -50,13 +49,25 @@ $pager-buttons: (
 @each $name, $float, $margin, $icon, $icon-hover in $pager-buttons {
     .bcms-pager-#{$name} {
         @extend %pager-buttons-extender;
-        background: url($icon) no-repeat;
+        background: url($icon) no-repeat center;
         float: $float;
         margin-left: $margin;
-        text-indent: -999em;
+        text-indent: 999em;
 
         &:hover {
-            background-image: url($icon-hover);
+            //fixme add hover state if needed background-image: url($icon-hover);
         }
+    }
+}
+
+.bcms-pager-next {
+    overflow: visible;
+    position: relative;
+
+    @include virtual(before) {
+        @include positioning($center-y: true);
+        border-left: $border-nav-bottom;
+        height: 30px;
+        left: -3px;
     }
 }

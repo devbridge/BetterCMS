@@ -1422,6 +1422,7 @@
     <EmbeddedResource Include="Scripts\ckeditor\skins\bettercms\editor.css" />
     <EmbeddedResource Include="Scripts\ckeditor\skins\bettercms\dialog.css" />
     <Content Include="Scss\base_64\icons\add-content.svg" />
+    <Content Include="Scss\base_64\icons\btn-down-arrow.svg" />
     <Content Include="Scss\base_64\icons\close.svg" />
     <Content Include="Scss\base_64\icons\cp-add-new.svg" />
     <Content Include="Scss\base_64\icons\cp-clone.svg" />
@@ -1478,6 +1479,7 @@
     <Content Include="Scss\base_64\icons\editor-underline.svg" />
     <Content Include="Scss\base_64\icons\editor-undo.svg" />
     <Content Include="Scss\base_64\icons\editor-unlink.svg" />
+    <Content Include="Scss\base_64\icons\grid-filter.svg" />
     <Content Include="Scss\base_64\icons\manage.svg" />
     <Content Include="Scss\base_64\icons\manager-add-content.svg" />
     <Content Include="Scss\base_64\icons\manager-content.svg" />

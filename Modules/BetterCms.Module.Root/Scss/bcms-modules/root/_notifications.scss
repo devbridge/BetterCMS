@@ -26,19 +26,6 @@ $alert-frames: (
     }
 }
 
-a.bcms-error-close {
-    background: url('images/sprite-base-1.png') no-repeat -9px -726px;
-    cursor: pointer;
-    height: 14px;
-    overflow: hidden;
-    position: absolute;
-    right: 10px;
-    text-decoration: none;
-    text-indent: 9999px;
-    top: 10px;
-    width: 15px;
-}
-
 //module information messages
 .bcms-info-message-box {
     @include positioning($center-x: true, $position: fixed);
@@ -55,4 +42,18 @@ a.bcms-error-close {
         margin-top: -6px;
         top: 50%;
     }
+}
+
+//fixme remove when fixed functionality
+a.bcms-error-close {
+    background: url('images/sprite-base-1.png') no-repeat -9px -726px;
+    cursor: pointer;
+    height: 14px;
+    overflow: hidden;
+    position: absolute;
+    right: 10px;
+    text-decoration: none;
+    text-indent: 9999px;
+    top: 10px;
+    width: 15px;
 }

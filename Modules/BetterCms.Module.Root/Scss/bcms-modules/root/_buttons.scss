@@ -79,8 +79,8 @@
     }
 
     &-close {
-        @include position(absolute, 10px 10px null null);
-        @include size(15px);
+        @include position(absolute, 15px 15px null null);
+        @include size(20px);
         background: url($bcms-close) no-repeat center;
         cursor: pointer;
         overflow: hidden;

@@ -1,8 +1,8 @@
 //module top block
 .bcms-top-block {
     &-holder {
-        @include clearfix();
         padding: 20px 0;
+        position: relative;
     }
 
     &-inner {
@@ -21,9 +21,8 @@
     }
 
     &-pager {
-        @include clearfix();
-        float: right;
-        position: relative;
+        @include positioning($center-y: true);
+        right: 0;
     }
 
     &-filters {
@@ -42,7 +41,7 @@
     @include transition(background-color 200ms);
     @include vertical-align();
     @include size($form-element-height);
-    background-color: $blue-main;
+    background: $blue-main url($bcms-btn-down-arrow) no-repeat center;
     cursor: pointer;
 
     &:hover {
