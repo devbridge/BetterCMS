@@ -39,7 +39,9 @@ bettercms.define('bcms.blog', ['bcms.jquery', 'bcms', 'bcms.modal', 'bcms.siteSe
             importBlogPostsForm: '#bcms-import-blog-posts',
             fileUploadingTarget: '#bcms-import-form-target',
             fileUploadingResult: '#jsonResult',
-            categorySelection: "input[name*='Categories']"
+            categorySelection: "input[name*='Categories']",
+            siteSettingsBlogCloseInfoMessage: "#bcms-addnewblog-closeinfomessage",
+            siteSettingsBlogInfoMessageBox: ".bcms-warning-messages",
         },
         links = {
             loadSiteSettingsBlogsUrl: null,
@@ -300,7 +302,11 @@ bettercms.define('bcms.blog', ['bcms.jquery', 'bcms', 'bcms.modal', 'bcms.siteSe
                 self.parent('div').css('z-index', bcms.getHighestZindex() + 1);
             });
         }
-        
+
+        dialog.container.find(selectors.siteSettingsBlogCloseInfoMessage).on('click', function() {
+            dialog.container.find(selectors.siteSettingsBlogInfoMessageBox).hide();
+        });
+
         dialog.container.find(selectors.datePickers).initializeDatepicker(globalization.datePickerTooltipTitle);
 
         return blogViewModel;
