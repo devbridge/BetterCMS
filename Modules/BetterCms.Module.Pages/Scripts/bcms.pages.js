@@ -18,7 +18,7 @@ bettercms.define('bcms.pages', ['bcms.jquery', 'bcms', 'bcms.modal', 'bcms.siteS
 
                 addNewPageTitleInput: '#PageTitle',
                 addNewPageCloseInfoMessage: '#bcms-addnewpage-closeinfomessage',
-                addNewPageCloseInfoMessageBox: '.bcms-info-message-box',
+                addNewPageCloseInfoMessageBox: '.bcms-js-info-message',
                 addNewPageTemplateSelect: '.bcms-inner-grid-box',
                 addNewPageTemplateId: '#TemplateId',
                 addNewPageMasterPageId: '#MasterPageId',

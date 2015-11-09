@@ -67,7 +67,7 @@ WriteLiteral("\r\n");
             #line hidden
 WriteLiteral("    <div");
 
-WriteLiteral(" class=\"bcms-messages-type-1\"");
+WriteLiteral(" class=\"bcms-messages-ui bcms-js-messages\"");
 
 WriteLiteral(">\r\n        <ul");
 
@@ -75,27 +75,27 @@ WriteLiteral(" class=\"bcms-success-messages\"");
 
 WriteLiteral(" style=\"display: none\"");
 
-WriteLiteral(">\r\n        </ul>\r\n        <ul");
+WriteLiteral("></ul>\r\n        <ul");
 
 WriteLiteral(" class=\"bcms-info-messages\"");
 
 WriteLiteral(" style=\"display: none\"");
 
-WriteLiteral(">\r\n        </ul>\r\n        <ul");
+WriteLiteral("></ul>\r\n        <ul");
 
 WriteLiteral(" class=\"bcms-warning-messages\"");
 
 WriteLiteral(">\r\n            <li>\r\n                <a");
 
-WriteLiteral(" class=\"bcms-btn-close\"");
+WriteLiteral(" class=\"bcms-messages-close bcms-js-btn-close\"");
 
 WriteLiteral(" id=\"bcms-draft-closeinfomessage\"");
 
 WriteLiteral(">");
 
             
-            #line 16 "..\..\Views\Shared\Partial\WarnMessageAboutDraft.cshtml"
-                                                                      Write(RootGlobalization.Button_Close);
+            #line 14 "..\..\Views\Shared\Partial\WarnMessageAboutDraft.cshtml"
+                                                                                             Write(RootGlobalization.Button_Close);
 
             
             #line default
@@ -105,7 +105,7 @@ WriteLiteral("</a>\r\n");
 WriteLiteral("                ");
 
             
-            #line 17 "..\..\Views\Shared\Partial\WarnMessageAboutDraft.cshtml"
+            #line 15 "..\..\Views\Shared\Partial\WarnMessageAboutDraft.cshtml"
            Write(PagesGlobalization.EditPageContent_Messages_DraftStatusWarnMessage);
 
             
@@ -114,13 +114,13 @@ WriteLiteral("                ");
 WriteLiteral("\r\n");
 
             
-            #line 18 "..\..\Views\Shared\Partial\WarnMessageAboutDraft.cshtml"
+            #line 16 "..\..\Views\Shared\Partial\WarnMessageAboutDraft.cshtml"
                 
             
             #line default
             #line hidden
             
-            #line 18 "..\..\Views\Shared\Partial\WarnMessageAboutDraft.cshtml"
+            #line 16 "..\..\Views\Shared\Partial\WarnMessageAboutDraft.cshtml"
                  if (Model.CanDestroyDraft)
                 {
                     
@@ -128,14 +128,14 @@ WriteLiteral("\r\n");
             #line default
             #line hidden
             
-            #line 20 "..\..\Views\Shared\Partial\WarnMessageAboutDraft.cshtml"
+            #line 18 "..\..\Views\Shared\Partial\WarnMessageAboutDraft.cshtml"
                Write(Html.Raw(PagesGlobalization.EditPageContent_Messages_DraftStatusWarnMessage_Destroy));
 
             
             #line default
             #line hidden
             
-            #line 20 "..\..\Views\Shared\Partial\WarnMessageAboutDraft.cshtml"
+            #line 18 "..\..\Views\Shared\Partial\WarnMessageAboutDraft.cshtml"
                                                                                                          
                 }
 
@@ -148,10 +148,10 @@ WriteLiteral(" class=\"bcms-error-messages\"");
 
 WriteLiteral(" style=\"display: none\"");
 
-WriteLiteral(">\r\n        </ul>\r\n    </div>\r\n");
+WriteLiteral("></ul>\r\n    </div>\r\n");
 
             
-            #line 27 "..\..\Views\Shared\Partial\WarnMessageAboutDraft.cshtml"
+            #line 24 "..\..\Views\Shared\Partial\WarnMessageAboutDraft.cshtml"
 }
 
             

@@ -1,49 +1,62 @@
-$message-type: (
-                ('1'),
-                ('2')
-);
+$message-success: #33aa61;
+$message-warning: #e5a12a;
+$message-error: #dc4250;
+$message-info: #368fd3;
 
 //fixme change color while design arrives.
 $message-content-type: (
-                ('success', $green),
-                ('warning', $gray-l46),
-                ('error', $red-l70),
-                ('info', $blue-main)
+                ('success', $message-success),
+                ('warning', $message-warning),
+                ('error', $message-error),
+                ('info', $message-info)
 );
 
 $validation-fields: ();
 
-%bcms-messages-parent-ui {
-    font-size: 12px;
-    margin: 0;
-    padding: 15px 60px 14px;
-}
-
 //module server side messages
-@each $type in $message-type {
-    div {
-        &.bcms-messages-type-#{$type} {
-            @include positioning($center-x: true, $position: fixed);
-            top: 0;
-            z-index: 999;
+.bcms-messages {
+    &-ui {
+        @include position(fixed, 0 0 null);
+        z-index: 999;
 
-            ul {
-                @extend %bcms-messages-parent-ui;
+        @each $name, $color in $message-content-type {
+            .bcms-#{$name}-messages {
+                background-color: $color;
             }
         }
-    }
-}
 
-@each $name, $color in $message-content-type {
-    .bcms-#{$name}-messages {
-        background-color: $color;
+        ul {
+            box-sizing: border-box;
+            font-size: 13px;
+            margin: 0;
+            min-height: 55px;
+            padding: 15px 60px;
+        }
 
         li {
-            color: #20cd00;
-            line-height: 25px;
-            list-style-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAwAAAANCAYAAAHqLr/UAAAAsklEQVQoz2NQOMvAAMIgggfGABMGDDA5IP4PY1yCq4HipcicELBaKEZRhsqBYhWYyauBuBoqeBiIXyHraIGaF4jPKBAWwib4GWQ8umA+shP/QwWZoWwhmMQ9IL4BxN+AeAW65f+RdKJIqMOMIORcXI5aSkghyKEHoIpBISXKALVyBVQSPYw/QxWvRnbSfKjgTyA2Q3MCCIdg84MlEP+BKviG5AQhdGcic9iA+CTMc7j8BQD3Drtv1DbDeQAAAABJRU5ErkJggg==');
-            list-style-position: inside;
+            color: $white;
+            line-height: 18px;
+            list-style: none;
+            margin: auto;
+            max-width: 700px;
+            padding: 0 19px;
+            position: relative;
         }
+
+        .bcms-btn-close {
+            right: 0;
+            top: 0;
+        }
+    }
+
+    &-close {
+        @include close-button($icon: $bcms-close-white, $position: 3px 0 null null);
+    }
+
+    &-draft-destroy {
+        color: $white;
+        font-weight: 700;
+        text-decoration: underline;
     }
 }
 
