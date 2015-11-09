@@ -9,6 +9,22 @@
   padding: 0;
 }
 
+.bcms-tree-zones-holder {
+  display: table;
+  width: 100%;
+}
+
+.bcms-tree-drag-area {
+  display: table-cell;
+  vertical-align: top;
+  width: 180px;
+}
+
+.bcms-tree-drop-area-ui {
+  display: table-cell;
+  vertical-align: top;
+}
+
 .bcms-sitemap-links-holder {
   padding: 10px 20px;
 }
@@ -219,16 +235,6 @@ div.bcms-add-node-col .bcms-placement-dropzone {
   border-radius: 2px;
   font-size: 16px;
   font-weight: bold;
-}
-
-.bcms-placement-holder {
-  display: block;
-  padding: 0 20px;
-  margin-top: -8px;
-}
-
-.bcms-leftcol-helper {
-  border-top: 1px solid #c6c6c6;
 }
 
 .bcms-placement-node {
@@ -536,11 +542,12 @@ a.bcms-expanded-nodes {
 }
 
 .bcms-btn-opener-link {
-  padding-left: 25px;
-  padding-right: 25px;
+  padding-left: 20px;
+  padding-right: 20px;
   background-color: #ffffff;
   border-top: 1px solid #0d7ce7;
   color: #0d7ce7;
+  cursor: pointer;
   line-height: 37px;
 }
 

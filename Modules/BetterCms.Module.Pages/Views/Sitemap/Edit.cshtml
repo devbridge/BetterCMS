@@ -56,7 +56,6 @@
                 </div>
 
                 <div id="bcms-tab-2" class="bcms-tab-single">
-                    <div class="bcms-columns-container">
                         <div class="bcms-sitemap-filter-holder" data-bind="with: sitemap">
                             <div class="bcms-language-bar" style="display: none;" data-bind="visible: showLanguages, with: language">
                                 <div class="bcms-filter-text bcms-table-middle-box">Edit sitemap in language:</div>
@@ -71,11 +70,12 @@
                             </div>
                         </div>
 
-                        <div class="bcms-leftcol bcms-add-node-col">
+                    <div class="bcms-tree-zones-holder">
+                        <div class="bcms-tree-drag-area bcms-add-node-col">
                             <div class="bcms-sitemap-links-holder" data-bind="template: { name: 'bcms-navigation-pagelinks-template' }"></div>
                         </div>
 
-                        <div class="bcms-rightcol">
+                        <div class="bcms-tree-drop-area">
                             <div class="bcms-sitemap-holder bcms-sitemap-edit">
                                 <div class="bcms-addnode-placement-holder@(Model.IsReadOnly ? "-readonly" : string.Empty)">
                                     @Html.Partial("Partial/Sitemap", new SitemapNodeViewModel())

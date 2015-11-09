@@ -376,6 +376,9 @@ a:hover {
 .bcms-btn-main, .bcms-btn-small, .bcms-btn-grid, .bcms-btn-links-main, .bcms-btn-links-small {
   display: inline-block;
   vertical-align: middle;
+  -webkit-transition: background-color 200ms;
+  -moz-transition: background-color 200ms;
+  transition: background-color 200ms;
   border: 0;
   box-sizing: border-box;
   cursor: pointer;

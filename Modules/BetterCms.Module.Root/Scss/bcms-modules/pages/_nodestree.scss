@@ -1,3 +1,24 @@
+.bcms-tree {
+    &-zones-holder {
+        display: table;
+        width: 100%;
+    }
+
+    &-drag-area {
+        @include vertical-align($block: table-cell, $align: top);
+        width: $settings-sidebar;
+    }
+
+    &-drop-area-ui {
+        @include vertical-align($block: table-cell, $align: top);
+    }
+}
+
+//
+//
+//
+//
+//
 //module sitemap "add new node"
 .bcms-sitemap-links-holder {
     padding: 10px 20px;
@@ -85,7 +106,6 @@
     padding-top: 20px;
 }
 
-//module new placement
 //module left-sidebar
 .bcms-dropable-page-box {
     background-color: #fff;

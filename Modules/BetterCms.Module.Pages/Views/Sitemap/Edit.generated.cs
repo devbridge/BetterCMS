@@ -303,10 +303,6 @@ WriteLiteral(" id=\"bcms-tab-2\"");
 
 WriteLiteral(" class=\"bcms-tab-single\"");
 
-WriteLiteral(">\r\n                    <div");
-
-WriteLiteral(" class=\"bcms-columns-container\"");
-
 WriteLiteral(">\r\n                        <div");
 
 WriteLiteral(" class=\"bcms-sitemap-filter-holder\"");
@@ -352,7 +348,7 @@ WriteLiteral(" data-bind=\"click: expandAll\"");
 WriteLiteral(">");
 
             
-            #line 69 "..\..\Views\Sitemap\Edit.cshtml"
+            #line 68 "..\..\Views\Sitemap\Edit.cshtml"
                                                                                       Write(NavigationGlobalization.Sitemap_Button_ExpandAll);
 
             
@@ -367,16 +363,20 @@ WriteLiteral(" data-bind=\"click: collapseAll\"");
 WriteLiteral(">");
 
             
-            #line 70 "..\..\Views\Sitemap\Edit.cshtml"
+            #line 69 "..\..\Views\Sitemap\Edit.cshtml"
                                                                                         Write(NavigationGlobalization.Sitemap_Button_CollapseAll);
 
             
             #line default
             #line hidden
 WriteLiteral("</div>\r\n                            </div>\r\n                        </div>\r\n\r\n   " +
-"                     <div");
+"                 <div");
 
-WriteLiteral(" class=\"bcms-leftcol bcms-add-node-col\"");
+WriteLiteral(" class=\"bcms-tree-zones-holder\"");
+
+WriteLiteral(">\r\n                        <div");
+
+WriteLiteral(" class=\"bcms-tree-drag-area bcms-add-node-col\"");
 
 WriteLiteral(">\r\n                            <div");
 
@@ -386,7 +386,7 @@ WriteLiteral(" data-bind=\"template: { name: \'bcms-navigation-pagelinks-templat
 
 WriteLiteral("></div>\r\n                        </div>\r\n\r\n                        <div");
 
-WriteLiteral(" class=\"bcms-rightcol\"");
+WriteLiteral(" class=\"bcms-tree-drop-area\"");
 
 WriteLiteral(">\r\n                            <div");
 

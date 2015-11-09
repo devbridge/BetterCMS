@@ -383,27 +383,23 @@ WriteLiteral(" class=\"bcms-tab-single\"");
 
 WriteLiteral(">\r\n                <div");
 
-WriteLiteral(" class=\"bcms-columns-container\"");
+WriteLiteral(" class=\"bcms-sitemap-filter-holder\"");
 
 WriteLiteral(">\r\n                    <div");
 
-WriteLiteral(" class=\"bcms-sitemap-filter-holder\"");
-
-WriteLiteral(">\r\n                        <div");
-
 WriteLiteral(" class=\"bcms-language-bar\"");
 
-WriteLiteral(">\r\n                            <div");
+WriteLiteral(">\r\n                        <div");
 
 WriteLiteral(" class=\"bcms-filter-text bcms-table-middle-box bcms-btn-links-main\"");
 
 WriteLiteral(" data-bind=\"click: addNewNode\"");
 
-WriteLiteral(">Add New</div>\r\n                        </div>\r\n\r\n                        <div");
+WriteLiteral(">Add New</div>\r\n                    </div>\r\n\r\n                    <div");
 
 WriteLiteral(" class=\"bcms-expand-link-holder\"");
 
-WriteLiteral(">\r\n                            <div");
+WriteLiteral(">\r\n                        <div");
 
 WriteLiteral(" class=\"bcms-expand-link\"");
 
@@ -412,13 +408,13 @@ WriteLiteral(" data-bind=\"click: expandAll\"");
 WriteLiteral(">");
 
             
-            #line 77 "..\..\Views\Category\CategoryTreeEdit.cshtml"
-                                                                                  Write(RootGlobalization.CategoryTree_Button_ExpandAll);
+            #line 76 "..\..\Views\Category\CategoryTreeEdit.cshtml"
+                                                                              Write(RootGlobalization.CategoryTree_Button_ExpandAll);
 
             
             #line default
             #line hidden
-WriteLiteral("</div>\r\n                            <div");
+WriteLiteral("</div>\r\n                        <div");
 
 WriteLiteral(" class=\"bcms-expand-link\"");
 
@@ -427,50 +423,50 @@ WriteLiteral(" data-bind=\"click: collapseAll\"");
 WriteLiteral(">");
 
             
-            #line 78 "..\..\Views\Category\CategoryTreeEdit.cshtml"
-                                                                                    Write(RootGlobalization.CategoryTree_Button_CollapseAll);
+            #line 77 "..\..\Views\Category\CategoryTreeEdit.cshtml"
+                                                                                Write(RootGlobalization.CategoryTree_Button_CollapseAll);
 
             
             #line default
             #line hidden
-WriteLiteral("</div>\r\n                        </div>\r\n                    </div>\r\n\r\n           " +
-"         <div");
+WriteLiteral("</div>\r\n                    </div>\r\n                </div>\r\n\r\n                <di" +
+"v");
 
-WriteLiteral(" class=\"bcms-rightcol\"");
+WriteLiteral(" class=\"bcms-tree-drop-area\"");
 
-WriteLiteral(">\r\n                        <div");
+WriteLiteral(">\r\n                    <div");
 
 WriteLiteral(" class=\"bcms-sitemap-holder bcms-sitemap-edit\"");
 
-WriteLiteral(">\r\n                            <div");
+WriteLiteral(">\r\n                        <div");
 
-WriteAttribute("class", Tuple.Create(" class=\"", 4582), Tuple.Create("\"", 4667)
-, Tuple.Create(Tuple.Create("", 4590), Tuple.Create("bcms-addnode-placement-holder", 4590), true)
+WriteAttribute("class", Tuple.Create(" class=\"", 4473), Tuple.Create("\"", 4558)
+, Tuple.Create(Tuple.Create("", 4481), Tuple.Create("bcms-addnode-placement-holder", 4481), true)
             
-            #line 84 "..\..\Views\Category\CategoryTreeEdit.cshtml"
-, Tuple.Create(Tuple.Create("", 4619), Tuple.Create<System.Object, System.Int32>(Model.IsReadOnly ? "-readonly" : string.Empty
+            #line 83 "..\..\Views\Category\CategoryTreeEdit.cshtml"
+, Tuple.Create(Tuple.Create("", 4510), Tuple.Create<System.Object, System.Int32>(Model.IsReadOnly ? "-readonly" : string.Empty
             
             #line default
             #line hidden
-, 4619), false)
+, 4510), false)
 );
 
 WriteLiteral(">\r\n");
 
-WriteLiteral("                                ");
+WriteLiteral("                            ");
 
             
-            #line 85 "..\..\Views\Category\CategoryTreeEdit.cshtml"
-                           Write(Html.Partial("Partial/CategoryTree", new CategoryTreeNodeViewModel()));
+            #line 84 "..\..\Views\Category\CategoryTreeEdit.cshtml"
+                       Write(Html.Partial("Partial/CategoryTree", new CategoryTreeNodeViewModel()));
 
             
             #line default
             #line hidden
-WriteLiteral("\r\n                            </div>\r\n                        </div>\r\n           " +
-"         </div>\r\n                </div>\r\n            </div>\r\n");
+WriteLiteral("\r\n                        </div>\r\n                    </div>\r\n                </d" +
+"iv>\r\n            </div>\r\n");
 
             
-            #line 91 "..\..\Views\Category\CategoryTreeEdit.cshtml"
+            #line 89 "..\..\Views\Category\CategoryTreeEdit.cshtml"
         }
 
             
@@ -481,7 +477,7 @@ WriteLiteral("    </div>\r\n\r\n");
 WriteLiteral("    ");
 
             
-            #line 94 "..\..\Views\Category\CategoryTreeEdit.cshtml"
+            #line 92 "..\..\Views\Category\CategoryTreeEdit.cshtml"
 Write(Html.Partial("Partial/CategoryTreeTemplate", new CategoryTreeNodeViewModel()));
 
             

@@ -67,23 +67,21 @@
             </div>
 
             <div id="bcms-tab-2" class="bcms-tab-single">
-                <div class="bcms-columns-container">
-                    <div class="bcms-sitemap-filter-holder">
-                        <div class="bcms-language-bar">
-                            <div class="bcms-filter-text bcms-table-middle-box bcms-btn-links-main" data-bind="click: addNewNode">Add New</div>
-                        </div>
-
-                        <div class="bcms-expand-link-holder">
-                            <div class="bcms-expand-link" data-bind="click: expandAll">@RootGlobalization.CategoryTree_Button_ExpandAll</div>
-                            <div class="bcms-expand-link" data-bind="click: collapseAll">@RootGlobalization.CategoryTree_Button_CollapseAll</div>
-                        </div>
+                <div class="bcms-sitemap-filter-holder">
+                    <div class="bcms-language-bar">
+                        <div class="bcms-filter-text bcms-table-middle-box bcms-btn-links-main" data-bind="click: addNewNode">Add New</div>
                     </div>
 
-                    <div class="bcms-rightcol">
-                        <div class="bcms-sitemap-holder bcms-sitemap-edit">
-                            <div class="bcms-addnode-placement-holder@(Model.IsReadOnly ? "-readonly" : string.Empty)">
-                                @Html.Partial("Partial/CategoryTree", new CategoryTreeNodeViewModel())
-                            </div>
+                    <div class="bcms-expand-link-holder">
+                        <div class="bcms-expand-link" data-bind="click: expandAll">@RootGlobalization.CategoryTree_Button_ExpandAll</div>
+                        <div class="bcms-expand-link" data-bind="click: collapseAll">@RootGlobalization.CategoryTree_Button_CollapseAll</div>
+                    </div>
+                </div>
+
+                <div class="bcms-tree-drop-area">
+                    <div class="bcms-sitemap-holder bcms-sitemap-edit">
+                        <div class="bcms-addnode-placement-holder@(Model.IsReadOnly ? "-readonly" : string.Empty)">
+                            @Html.Partial("Partial/CategoryTree", new CategoryTreeNodeViewModel())
                         </div>
                     </div>
                 </div>
