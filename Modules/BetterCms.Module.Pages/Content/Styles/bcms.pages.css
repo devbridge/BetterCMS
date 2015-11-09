@@ -1,4 +1,4 @@
-.bcms-clearfix:after, .bcms-top-block-filters:after {
+.bcms-clearfix:after, .bcms-tree-filter-holder:after, .bcms-top-block-filters:after {
   content: '';
   display: table;
   clear: both;
@@ -23,6 +23,10 @@
 .bcms-tree-drop-area-ui {
   display: table-cell;
   vertical-align: top;
+}
+
+.bcms-expand-link-holder {
+  float: right;
 }
 
 .bcms-sitemap-links-holder {
@@ -55,48 +59,9 @@
   padding: 0 0 4px;
 }
 
-.bcms-sitemap-holder {
-  margin-top: -8px;
-  padding: 0 20px;
-}
-
-.bcms-sitemap-filter-holder {
-  display: table-caption;
-  height: 62px;
-  margin-left: 10px;
-  position: relative;
-}
-
-.bcms-language-bar {
-  display: table;
-  margin-top: 15px;
-}
-
-.bcms-language-selector-box {
-  float: right;
-  margin-top: 0;
-}
-
-.bcms-table-middle-box {
-  display: table-cell;
-  padding: 0 10px;
-  vertical-align: middle;
-}
-
-.bcms-sitemap-filter-holder .bcms-expand-link-holder {
-  position: absolute;
-  right: 20px;
-  top: 25px;
-  width: auto;
-}
-
 .bcms-sitemap-history {
   height: 100%;
   overflow: auto;
-}
-
-.bcms-sitemap-history .bcms-sitemap-filter-holder {
-  display: block;
 }
 
 .bcms-add-node-col {
@@ -307,11 +272,6 @@ div.bcms-placement-one-active {
 
 a.bcms-expanded-nodes {
   background-position: -23px -179px;
-}
-
-.bcms-expand-link-holder {
-  display: inline-block;
-  width: 100%;
 }
 
 .bcms-expand-link {

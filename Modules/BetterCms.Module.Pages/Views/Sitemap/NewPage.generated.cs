@@ -131,13 +131,13 @@ WriteLiteral(" class=\"bcms-columns-container\"");
 
 WriteLiteral(">\r\n                <div");
 
-WriteLiteral(" class=\"bcms-sitemap-filter-holder\"");
+WriteLiteral(" class=\"bcms-tree-filter-holder\"");
 
 WriteLiteral(" data-bind=\"with: sitemap\"");
 
 WriteLiteral(">\r\n                    <div");
 
-WriteLiteral(" class=\"bcms-language-bar\"");
+WriteLiteral(" class=\"\"");
 
 WriteLiteral(" style=\"display: none;\"");
 
@@ -145,7 +145,7 @@ WriteLiteral(" data-bind=\"visible: showLanguages, with: language\"");
 
 WriteLiteral(">\r\n                        <div");
 
-WriteLiteral(" class=\"bcms-filter-text bcms-table-middle-box\"");
+WriteLiteral(" class=\"bcms-filter-text\"");
 
 WriteLiteral(">Edit sitemap in language:</div>\r\n                        <div");
 

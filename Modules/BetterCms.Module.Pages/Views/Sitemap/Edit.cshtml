@@ -51,24 +51,24 @@
 
                     @if (Model.AccessControlEnabled)
                     {
-                    @Html.Partial(RootModuleConstants.AccessControlTemplate)
+                        @Html.Partial(RootModuleConstants.AccessControlTemplate)
                     }
                 </div>
 
                 <div id="bcms-tab-2" class="bcms-tab-single">
-                        <div class="bcms-sitemap-filter-holder" data-bind="with: sitemap">
-                            <div class="bcms-language-bar" style="display: none;" data-bind="visible: showLanguages, with: language">
-                                <div class="bcms-filter-text bcms-table-middle-box">Edit sitemap in language:</div>
-                                <div class="bcms-table-middle-box">
-                                    <select class="bcms-global-select" data-bind="options: languages, optionsText: 'value', optionsValue: 'key', value: languageId"></select>
-                                </div>
-                            </div>
-
-                            <div class="bcms-expand-link-holder" @* data-bind="droppable: 'emptyListZone'" TODO: check later. NOTE: jQuery error is raised on leave over. *@>
-                                <div class="bcms-expand-link" data-bind="click: expandAll">@NavigationGlobalization.Sitemap_Button_ExpandAll</div>
-                                <div class="bcms-expand-link" data-bind="click: collapseAll">@NavigationGlobalization.Sitemap_Button_CollapseAll</div>
+                    <div class="bcms-tree-filter-holder" data-bind="with: sitemap">
+                        <div class="" style="display: none;" data-bind="visible: showLanguages, with: language">
+                            <div class="bcms-filter-text">Edit sitemap in language:</div>
+                            <div class="bcms-table-middle-box">
+                                <select class="bcms-global-select" data-bind="options: languages, optionsText: 'value', optionsValue: 'key', value: languageId"></select>
                             </div>
                         </div>
+
+                        <div class="bcms-expand-link-holder" @* data-bind="droppable: 'emptyListZone'" TODO: check later. NOTE: jQuery error is raised on leave over. *@>
+                            <div class="bcms-expand-link" data-bind="click: expandAll">@NavigationGlobalization.Sitemap_Button_ExpandAll</div>
+                            <div class="bcms-expand-link" data-bind="click: collapseAll">@NavigationGlobalization.Sitemap_Button_CollapseAll</div>
+                        </div>
+                    </div>
 
                     <div class="bcms-tree-zones-holder">
                         <div class="bcms-tree-drag-area bcms-add-node-col">
@@ -76,10 +76,8 @@
                         </div>
 
                         <div class="bcms-tree-drop-area">
-                            <div class="bcms-sitemap-holder bcms-sitemap-edit">
-                                <div class="bcms-addnode-placement-holder@(Model.IsReadOnly ? "-readonly" : string.Empty)">
-                                    @Html.Partial("Partial/Sitemap", new SitemapNodeViewModel())
-                                </div>
+                            <div class="bcms-addnode-placement-holder@(Model.IsReadOnly ? "-readonly" : string.Empty)">
+                                @Html.Partial("Partial/Sitemap", new SitemapNodeViewModel())
                             </div>
                         </div>
                     </div>
