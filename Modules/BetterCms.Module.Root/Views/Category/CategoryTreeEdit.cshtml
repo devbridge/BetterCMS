@@ -42,30 +42,32 @@
 
                 @if (Model.ShowMacros)
                 {
-                <div class="bcms-input-list-holder">
-                    @Html.Tooltip(RootGlobalization.CategoryTree_EditDialog_Macro_Tooltip_Message)
-                    <div class="bcms-content-titles">@RootGlobalization.CategoryTree_EditDialog_Macro_Title</div>
+                    <div class="bcms-input-list-holder">
+                        @Html.Tooltip(RootGlobalization.CategoryTree_EditDialog_Macro_Tooltip_Message)
+                        <div class="bcms-content-titles">@RootGlobalization.CategoryTree_EditDialog_Macro_Title</div>
 
-                    <div class="bcms-input-box">
-                        @Html.TextBoxFor(model => model.Macro, new
+                        <div class="bcms-input-box">
+                            @Html.TextBoxFor(model => model.Macro, new
                        {
                            @class = "bcms-editor-field-box",
                            placeholder = RootGlobalization.CategoryTree_Macro_Placeholder_Message,
                            data_bind = "value: macro, valueUpdate: 'afterkeydown', hasfocus: true"
                        })
-                        @Html.BcmsValidationMessageFor(m => m.Macro)
+                            @Html.BcmsValidationMessageFor(m => m.Macro)
+                        </div>
                     </div>
-                </div>
                 }
             </div>
 
-            <div class="bcms-tree-filter-holder">
-                <div class="bcms-btn-main" data-bind="click: addNewNode">Add New</div>
+            <div class="bcms-tree-info-block">
+                <div class="bcms-content-titles">@RootGlobalization.CategoryTree_EditDialog_Title_Title</div>
 
-                <div class="bcms-expand-link-holder">
-                    <div class="bcms-expand-link" data-bind="click: expandAll">@RootGlobalization.CategoryTree_Button_ExpandAll</div>
-                    <div class="bcms-expand-link" data-bind="click: collapseAll">@RootGlobalization.CategoryTree_Button_CollapseAll</div>
-                </div>
+                <div class="bcms-tree-expander" data-bind="click: expandAll">@RootGlobalization.CategoryTree_Button_ExpandAll</div>
+                <div class="bcms-tree-expander" data-bind="click: collapseAll">@RootGlobalization.CategoryTree_Button_CollapseAll</div>
+            </div>
+
+            <div class="bcms-tree-controls-holder">
+                <div class="bcms-tree-add-node" data-bind="click: addNewNode">Add New</div>
             </div>
 
             <div class="bcms-tree-drop-area">

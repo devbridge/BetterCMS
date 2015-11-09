@@ -1369,9 +1369,18 @@ div.bcms-btn-logout:active {
   height: 37px;
 }
 
+.bcms-form-holder {
+  margin-bottom: 20px;
+}
+
+.bcms-form-block-holder {
+  margin: 0 -30px;
+}
+
 .bcms-form-block-holder > div {
   box-sizing: border-box;
   float: left;
+  padding: 0 30px;
 }
 
 .bcms-form-block-holder > div:first-child:nth-last-child(12),

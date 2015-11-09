@@ -1,4 +1,4 @@
-.bcms-clearfix:after, .bcms-tree-filter-holder:after, .bcms-top-block-filters:after {
+.bcms-clearfix:after, .bcms-tree-info-block:after, .bcms-tree-controls-holder:after, .bcms-top-block-filters:after {
   content: '';
   display: table;
   clear: both;
@@ -7,6 +7,17 @@
 .bcms-search-field-box {
   margin: 0;
   padding: 0;
+}
+
+.bcms-tree-expander, .bcms-tree-add-node {
+  color: #0d7ce7;
+  cursor: pointer;
+  font-weight: 600;
+  line-height: 20px;
+}
+
+.bcms-tree-expander:hover, .bcms-tree-add-node:hover {
+  color: #0a62b7;
 }
 
 .bcms-tree-zones-holder {
@@ -25,8 +36,33 @@
   vertical-align: top;
 }
 
-.bcms-expand-link-holder {
+.bcms-tree-info-block {
+  border-bottom: 1px solid #dfdfdf;
+  margin-bottom: 15px;
+}
+
+.bcms-tree-info-block .bcms-content-titles {
+  float: left;
+}
+
+.bcms-tree-controls-holder {
+  margin: 15px 0 10px;
+}
+
+.bcms-tree-expander {
+  background: url("data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIyMCIgaGVpZ2h0PSIyMCIgdmlld0JveD0iLTI5NC42IDM4NyAyMCAyMCIgZW5hYmxlLWJhY2tncm91bmQ9Im5ldyAtMjk0LjYgMzg3IDIwIDIwIj48cGF0aCBkPSJtLTI5NC4xIDM4Ny41aDE5djE5aC0xOXYtMTl6IiBmaWxsPSJub25lIiBzdHJva2U9IiMwZDdiZTMiIHN0cm9rZS1saW5lY2FwPSJzcXVhcmUiLz48ZyBmaWxsPSIjMGQ3YmUzIj48cGF0aCBkPSJtLTI4NS42IDM5Mi4yaDEuOXY5LjVoLTEuOXYtOS41Ii8+PHBhdGggZD0ibS0yODkuNCAzOTh2LTJoOS41djEuOWgtOS41eiIvPjwvZz48L3N2Zz4=") no-repeat right center;
   float: right;
+  padding-right: 28px;
+}
+
+.bcms-tree-expander-close {
+  background-image: url("data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIyMCIgaGVpZ2h0PSIyMCIgdmlld0JveD0iLTI5NC42IDM4NyAyMCAyMCIgZW5hYmxlLWJhY2tncm91bmQ9Im5ldyAtMjk0LjYgMzg3IDIwIDIwIj48cGF0aCBkPSJtLTI5NC4xIDM4Ny41aDE5djE5aC0xOXYtMTl6IiBmaWxsPSJub25lIiBzdHJva2U9IiMwZDdiZTMiIHN0cm9rZS1saW5lY2FwPSJzcXVhcmUiLz48cGF0aCBkPSJtLTI4OS40IDM5OHYtMmg5LjV2MS45aC05LjV6IiBmaWxsPSIjMGQ3YmUzIi8+PC9zdmc+");
+}
+
+.bcms-tree-add-node {
+  background: url("data:image/svg+xml;base64,PHN2ZyBoZWlnaHQ9IjEwIiB3aWR0aD0iMjAiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgdmlld0JveD0iMCAwIDIwIDEwIj48cGF0aCBmaWxsPSIjMGQ3YmUzIiBmaWxsLXJ1bGU9ImV2ZW5vZGQiIGQ9Im0xMCAwdjRoLTR2LTRoLTJ2NGgtNHYyaDR2NGgydi00aDR2NGgxMHYtMTBoLTEwbTIgMmg2djZoLTZ2LTYiLz48L3N2Zz4=") no-repeat left center;
+  float: left;
+  padding-left: 28px;
 }
 
 .bcms-sitemap-links-holder {
@@ -272,19 +308,6 @@ div.bcms-placement-one-active {
 
 a.bcms-expanded-nodes {
   background-position: -23px -179px;
-}
-
-.bcms-expand-link {
-  float: right;
-  line-height: 16px;
-  padding-left: 11px;
-  color: #0383df;
-  text-decoration: none;
-  cursor: pointer;
-}
-
-.bcms-expand-link:hover {
-  text-decoration: underline;
 }
 
 .bcms-placement-dropzone {

@@ -19,15 +19,18 @@
 .bcms-form {
     &-holder {
         @include clearfix();
+        margin-bottom: 20px;
     }
 
     &-block-holder {
         @include clearfix();
+        margin: 0 -30px;
 
         > div {
             @include flexible-grid($elem-class: 'div');
             box-sizing: border-box;
             float: left;
+            padding: 0 30px;
         }
     }
 }
@@ -41,15 +44,6 @@
     left: -15px;
     top: 4px;
 }
-
-//.bcms-input-list-holder {
-//    padding: 0 0 20px 0;
-//    position: relative;
-//}
-
-//.bcms-input-list-holder:first-child {
-//    padding-top: 20px;
-//}
 
 .bcms-input-list-holder:first-child .bcms-tooltip-mark {
     top: 24px;
