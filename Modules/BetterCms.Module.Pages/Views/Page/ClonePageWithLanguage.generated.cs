@@ -178,7 +178,7 @@ WriteLiteral(">");
             #line hidden
 WriteLiteral("</div>\r\n                <div");
 
-WriteLiteral(" class=\"bcms-input-box\"");
+WriteLiteral(" class=\"bcms-field-wrapper\"");
 
 WriteLiteral(">\r\n                    <div");
 
@@ -245,7 +245,7 @@ WriteLiteral(">");
             #line hidden
 WriteLiteral("</div>\r\n                <div");
 
-WriteLiteral(" class=\"bcms-input-box\"");
+WriteLiteral(" class=\"bcms-field-wrapper\"");
 
 WriteLiteral(">\r\n");
 
@@ -253,7 +253,7 @@ WriteLiteral("                    ");
 
             
             #line 40 "..\..\Views\Page\ClonePageWithLanguage.cshtml"
-               Write(Html.TextBoxFor(m => m.PageTitle, new { @class = "bcms-editor-field-box" }));
+               Write(Html.TextBoxFor(m => m.PageTitle, new { @class = "bcms-field-text" }));
 
             
             #line default

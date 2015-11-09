@@ -31,8 +31,8 @@
                 <div class="bcms-input-list-holder">
                     @Html.Tooltip(PagesGlobalization.AddNewPage_PageTitle_Tooltip_Description)
                     <div class="bcms-content-titles">@PagesGlobalization.AddNewPage_PageTitle</div>
-                    <div class="bcms-input-box">
-                        @Html.TextBoxFor(f => f.PageTitle, new { @class = "bcms-editor-field-box", @id = "PageTitle" })
+                    <div class="bcms-field-wrapper">
+                        @Html.TextBoxFor(f => f.PageTitle, new { @class = "bcms-field-text", @id = "PageTitle" })
                         @Html.BcmsValidationMessageFor(f => f.PageTitle)
                     </div>
                 </div>

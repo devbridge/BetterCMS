@@ -65,8 +65,8 @@
                 <div class="bcms-input-list-holder">
                     @Html.Tooltip(PagesGlobalization.EditPageProperties_BasicPropertiesTab_PageName_Tooltip_Description)
                     <div class="bcms-content-titles">@PagesGlobalization.EditPageProperties_BasicPropertiesTab_PageName_Title</div>
-                    <div class="bcms-input-box">
-                        @Html.TextBoxFor(model => model.PageName, new { @class = "bcms-editor-field-box" })
+                    <div class="bcms-field-wrapper">
+                        @Html.TextBoxFor(model => model.PageName, new { @class = "bcms-field-text" })
                         @Html.BcmsValidationMessageFor(f => f.PageName)
                     </div>
                 </div>
@@ -204,13 +204,13 @@
                 <div class="bcms-input-list-holder">
                     @Html.Tooltip(PagesGlobalization.EditPageProperties_AdvancedPropertiesTab_PageCss_Tooltip_Description)
                     <div class="bcms-content-titles">@PagesGlobalization.EditPageProperties_AdvancedPropertiesTab_PageCss_Title</div>
-                    @Html.TextAreaFor(model => model.PageCSS, new { @class = "bcms-editor-field-area bcms-code-field bcms-code-field-css", @id = Guid.NewGuid() })
+                    @Html.TextAreaFor(model => model.PageCSS, new { @class = "bcms-field-textarea bcms-code-field bcms-code-field-css", @id = Guid.NewGuid() })
                 </div>
 
                 <div class="bcms-input-list-holder">
                     @Html.Tooltip(PagesGlobalization.EditPageProperties_AdvancedPropertiesTab_PageJavascript_Tooltip_Description)
                     <div class="bcms-content-titles">@PagesGlobalization.EditPageProperties_AdvancedPropertiesTab_PageJavascript_Title</div>
-                    @Html.TextAreaFor(model => model.PageJavascript, new { @class = "bcms-editor-field-area bcms-code-field bcms-code-field-javascript", id = Guid.NewGuid() })
+                    @Html.TextAreaFor(model => model.PageJavascript, new { @class = "bcms-field-textarea bcms-code-field bcms-code-field-javascript", id = Guid.NewGuid() })
                 </div>
             </div>
 

@@ -16,12 +16,13 @@ $gray-l10: #eeeeee;
 $blue-main: #0d7ce7;
 $gray-bg: #eae8e9;
 $error-red: #d9241d;
+$bg-light: #f3f3f3;
 
 //module new borders
 $border-nav-bottom: 1px solid $gray-l;
 $border-frame: 1px solid #dcdadb;
 $border-search-field: 2px solid $blue-main;
-$border-error: 4px solid $blue-main;
+$border-error: 4px solid $error-red;
 $border-info: 4px solid $blue-main;
 
 //module text colors
@@ -76,7 +77,7 @@ $border-content-box: 1px solid $gray-l45;
 $border-thin-transparent: 1px solid transparent;
 $border-thick-transparent: 2px solid transparent;
 $border-blue: 1px solid $blue-main;
-$border-form-element:1px solid #d0d0d0;
+$border-form-element: 1px solid #d0d0d0;
 
 //module images paths
 

@@ -179,7 +179,7 @@ WriteLiteral("        ");
 
             
             #line 24 "..\..\Views\Blog\Partial\AddNewBlogEditPermalink.cshtml"
-   Write(Html.TextBoxFor(model => model.BlogUrl, new { @id = "bcms-page-permalink-edit", @class = "bcms-editor-field-box bcms-js-url-path" }));
+   Write(Html.TextBoxFor(model => model.BlogUrl, new { @id = "bcms-page-permalink-edit", @class = "bcms-field-text bcms-js-url-path" }));
 
             
             #line default

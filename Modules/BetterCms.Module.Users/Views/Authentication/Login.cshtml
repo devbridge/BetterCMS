@@ -26,7 +26,7 @@
     <div>
         <span class="bcms-title">@UsersGlobalization.Login_UserName</span>
         <p>
-            @Html.TextBoxFor(m => m.UserName, new { id = "userName", @class = "bcms-editor-field-box"})
+            @Html.TextBoxFor(m => m.UserName, new { id = "userName", @class = "bcms-field-text"})
             @Html.ValidationMessageFor(m => m.UserName)
         </p>
     </div>
@@ -34,7 +34,7 @@
     <div>
         <span class="bcms-title">@UsersGlobalization.Login_Password</span>
         <p>
-            @Html.PasswordFor(m => m.Password, new { @class = "bcms-editor-field-box" })
+            @Html.PasswordFor(m => m.Password, new { @class = "bcms-field-text" })
             @Html.ValidationMessageFor(m => m.Password)
         </p>
     </div>

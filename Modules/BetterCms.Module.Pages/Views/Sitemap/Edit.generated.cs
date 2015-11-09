@@ -193,7 +193,7 @@ WriteLiteral(">");
             #line hidden
 WriteLiteral("</div>\r\n                        <div");
 
-WriteLiteral(" class=\"bcms-input-box\"");
+WriteLiteral(" class=\"bcms-field-wrapper\"");
 
 WriteLiteral(">\r\n");
 
@@ -201,7 +201,7 @@ WriteLiteral("                            ");
 
             
             #line 41 "..\..\Views\Sitemap\Edit.cshtml"
-                       Write(Html.TextBoxFor(model => model.Title, new { @class = "bcms-editor-field-box", data_bind = "value: title, valueUpdate: 'afterkeydown', hasfocus: true" }));
+                       Write(Html.TextBoxFor(model => model.Title, new { @class = "bcms-field-text", data_bind = "value: title, valueUpdate: 'afterkeydown', hasfocus: true" }));
 
             
             #line default
@@ -381,15 +381,15 @@ WriteLiteral(" class=\"bcms-tree-drop-area\"");
 
 WriteLiteral(">\r\n                            <div");
 
-WriteAttribute("class", Tuple.Create(" class=\"", 3926), Tuple.Create("\"", 4011)
-, Tuple.Create(Tuple.Create("", 3934), Tuple.Create("bcms-addnode-placement-holder", 3934), true)
+WriteAttribute("class", Tuple.Create(" class=\"", 3924), Tuple.Create("\"", 4009)
+, Tuple.Create(Tuple.Create("", 3932), Tuple.Create("bcms-addnode-placement-holder", 3932), true)
             
             #line 77 "..\..\Views\Sitemap\Edit.cshtml"
-, Tuple.Create(Tuple.Create("", 3963), Tuple.Create<System.Object, System.Int32>(Model.IsReadOnly ? "-readonly" : string.Empty
+, Tuple.Create(Tuple.Create("", 3961), Tuple.Create<System.Object, System.Int32>(Model.IsReadOnly ? "-readonly" : string.Empty
             
             #line default
             #line hidden
-, 3963), false)
+, 3961), false)
 );
 
 WriteLiteral(">\r\n");
@@ -440,11 +440,11 @@ WriteLiteral(">\r\n    <div class=\"bcms-plain-text\">");
             #line default
             #line hidden
 WriteLiteral("</div>\r\n    <div class=\"bcms-sidebar-search\">\r\n        <input type=\"text\" class=\"" +
-"bcms-editor-field-box\" placeholder=\"");
+"bcms-field-text\" placeholder=\"");
 
             
             #line 93 "..\..\Views\Sitemap\Edit.cshtml"
-                                                                 Write(NavigationGlobalization.Sitemap_EditDialog_AddPageLink_SearchPlaceHolder);
+                                                           Write(NavigationGlobalization.Sitemap_EditDialog_AddPageLink_SearchPlaceHolder);
 
             
             #line default

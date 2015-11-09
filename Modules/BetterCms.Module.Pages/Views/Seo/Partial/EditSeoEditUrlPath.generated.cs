@@ -138,7 +138,7 @@ WriteLiteral("        ");
 
             
             #line 13 "..\..\Views\Seo\Partial\EditSeoEditUrlPath.cshtml"
-   Write(Html.TextBoxFor(f => f.ChangedUrlPath, new { @class = "bcms-editor-field-box bcms-js-url-path" }));
+   Write(Html.TextBoxFor(f => f.ChangedUrlPath, new { @class = "bcms-field-text bcms-js-url-path" }));
 
             
             #line default

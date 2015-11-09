@@ -130,7 +130,7 @@ WriteLiteral("                            ");
                        Write(Html.TextBoxFor(m => m.Title, new
                             {
                                 data_bind = "value: title, valueUpdate: 'afterkeydown', enterPress: saveSitemapNodeWithValidation, escPress: cancelEditSitemapNode, hasfocus: isActive()",
-                                @class = "bcms-editor-field-box",
+                                @class = "bcms-field-text",
                                 Title = (string)null,
                             }));
 
@@ -192,7 +192,7 @@ WriteLiteral("                            ");
                        Write(Html.TextBoxFor(m => m.Macro, new
                             {
                                 data_bind = "value: macro, valueUpdate: 'afterkeydown', enterPress: saveSitemapNodeWithValidation, escPress: cancelEditSitemapNode",
-                                @class = "bcms-editor-field-box",
+                                @class = "bcms-field-text",
                                 Title = (string)null,
                                 placeholder = NavigationGlobalization.Sitemap_NodeEdit_Macro_Placeholder_Message
                             }));
@@ -231,7 +231,7 @@ WriteLiteral("                        ");
             
             #line default
             #line hidden
-WriteLiteral("\n                        <div class=\"bcms-input-box\">\n");
+WriteLiteral("\n                        <div class=\"bcms-field-wrapper\">\n");
 
 WriteLiteral("                            ");
 
@@ -240,7 +240,7 @@ WriteLiteral("                            ");
                        Write(Html.TextBoxFor(m => m.Url, new
                             {
                                 data_bind = "value: url, valueUpdate: 'afterkeydown', enterPress: saveSitemapNodeWithValidation, escPress: cancelEditSitemapNode, attr: { 'readonly': getUrlReadonlyState() }",
-                                @class = "bcms-editor-field-box",
+                                @class = "bcms-field-text",
                                 Url = (string)null,
                             }));
 

@@ -66,7 +66,7 @@ WriteLiteral(">");
             #line hidden
 WriteLiteral("</div>\n        <div");
 
-WriteLiteral(" class=\"bcms-input-box\"");
+WriteLiteral(" class=\"bcms-field-wrapper\"");
 
 WriteLiteral(">\n");
 
@@ -74,7 +74,7 @@ WriteLiteral("            ");
 
             
             #line 8 "..\..\Views\History\WidgetPropertiesHistory.cshtml"
-       Write(Html.TextBoxFor(model => model.Name, new { @readonly = "readonly", @class = "bcms-editor-field-box" }));
+       Write(Html.TextBoxFor(model => model.Name, new { @readonly = "readonly", @class = "bcms-field-text" }));
 
             
             #line default
@@ -106,7 +106,7 @@ WriteLiteral("            ");
 
             
             #line 15 "..\..\Views\History\WidgetPropertiesHistory.cshtml"
-       Write(Html.TextAreaFor(model => model.Html, new { @readonly = "readonly", @class = "bcms-advanced-contenthtml bcms-editor-field-area bcms-code-field" }));
+       Write(Html.TextAreaFor(model => model.Html, new { @readonly = "readonly", @class = "bcms-advanced-contenthtml bcms-field-textarea bcms-code-field" }));
 
             
             #line default
@@ -166,7 +166,7 @@ WriteLiteral("        ");
 
             
             #line 28 "..\..\Views\History\WidgetPropertiesHistory.cshtml"
-   Write(Html.TextAreaFor(model => model.CustomCss, new { @readonly = "readonly", @class = "bcms-editor-field-area bcms-code-field bcms-code-field-css" }));
+   Write(Html.TextAreaFor(model => model.CustomCss, new { @readonly = "readonly", @class = "bcms-field-textarea bcms-code-field bcms-code-field-css" }));
 
             
             #line default
@@ -226,7 +226,7 @@ WriteLiteral("        ");
 
             
             #line 40 "..\..\Views\History\WidgetPropertiesHistory.cshtml"
-   Write(Html.TextAreaFor(model => model.CustomJs, new { @readonly = "readonly", @class = "bcms-editor-field-area bcms-code-field bcms-code-field-javascript" }));
+   Write(Html.TextAreaFor(model => model.CustomJs, new { @readonly = "readonly", @class = "bcms-field-textarea bcms-code-field bcms-code-field-javascript" }));
 
             
             #line default

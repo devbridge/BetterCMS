@@ -150,7 +150,7 @@ WriteLiteral(">");
             #line hidden
 WriteLiteral("</div>\r\n\r\n                        <div");
 
-WriteLiteral(" class=\"bcms-input-box\"");
+WriteLiteral(" class=\"bcms-field-wrapper\"");
 
 WriteLiteral(">\r\n");
 
@@ -158,7 +158,7 @@ WriteLiteral("                            ");
 
             
             #line 23 "..\..\Views\Category\CategoryTreeEdit.cshtml"
-                       Write(Html.TextBoxFor(model => model.Title, new { @class = "bcms-editor-field-box", data_bind = "value: title, valueUpdate: 'afterkeydown', hasfocus: true" }));
+                       Write(Html.TextBoxFor(model => model.Title, new { @class = "bcms-field-text", data_bind = "value: title, valueUpdate: 'afterkeydown', hasfocus: true" }));
 
             
             #line default
@@ -289,7 +289,7 @@ WriteLiteral(">");
             #line hidden
 WriteLiteral("</div>\r\n\r\n                        <div");
 
-WriteLiteral(" class=\"bcms-input-box\"");
+WriteLiteral(" class=\"bcms-field-wrapper\"");
 
 WriteLiteral(">\r\n");
 
@@ -299,7 +299,7 @@ WriteLiteral("                            ");
             #line 50 "..\..\Views\Category\CategoryTreeEdit.cshtml"
                        Write(Html.TextBoxFor(model => model.Macro, new
                        {
-                           @class = "bcms-editor-field-box",
+                           @class = "bcms-field-text",
                            placeholder = RootGlobalization.CategoryTree_Macro_Placeholder_Message,
                            data_bind = "value: macro, valueUpdate: 'afterkeydown', hasfocus: true"
                        }));
@@ -417,15 +417,15 @@ WriteLiteral(" class=\"bcms-tree-drop-area\"");
 
 WriteLiteral(">\r\n                <div");
 
-WriteAttribute("class", Tuple.Create(" class=\"", 3998), Tuple.Create("\"", 4083)
-, Tuple.Create(Tuple.Create("", 4006), Tuple.Create("bcms-addnode-placement-holder", 4006), true)
+WriteAttribute("class", Tuple.Create(" class=\"", 3994), Tuple.Create("\"", 4079)
+, Tuple.Create(Tuple.Create("", 4002), Tuple.Create("bcms-addnode-placement-holder", 4002), true)
             
             #line 74 "..\..\Views\Category\CategoryTreeEdit.cshtml"
-, Tuple.Create(Tuple.Create("", 4035), Tuple.Create<System.Object, System.Int32>(Model.IsReadOnly ? "-readonly" : string.Empty
+, Tuple.Create(Tuple.Create("", 4031), Tuple.Create<System.Object, System.Int32>(Model.IsReadOnly ? "-readonly" : string.Empty
             
             #line default
             #line hidden
-, 4035), false)
+, 4031), false)
 );
 
 WriteLiteral(">\r\n");

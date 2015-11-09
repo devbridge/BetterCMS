@@ -161,7 +161,7 @@ WriteLiteral(">");
             #line hidden
 WriteLiteral("</div>\r\n        <div");
 
-WriteLiteral(" class=\"bcms-input-box\"");
+WriteLiteral(" class=\"bcms-field-wrapper\"");
 
 WriteLiteral(">\r\n");
 
@@ -169,7 +169,7 @@ WriteLiteral("            ");
 
             
             #line 29 "..\..\Views\Page\DeletePageConfirmation.cshtml"
-       Write(Html.TextBoxFor(m => m.RedirectUrl, new { @class = "bcms-editor-field-box", @id = "PageTitle" }));
+       Write(Html.TextBoxFor(m => m.RedirectUrl, new { @class = "bcms-field-text", @id = "PageTitle" }));
 
             
             #line default
@@ -224,7 +224,7 @@ WriteLiteral(">");
             #line hidden
 WriteLiteral("</div>\r\n        <div");
 
-WriteLiteral(" class=\"bcms-input-box\"");
+WriteLiteral(" class=\"bcms-field-wrapper\"");
 
 WriteLiteral(">\r\n");
 
@@ -232,7 +232,7 @@ WriteLiteral("            ");
 
             
             #line 38 "..\..\Views\Page\DeletePageConfirmation.cshtml"
-       Write(Html.TextBoxFor(m => m.SecurityWord, new { @class = "bcms-editor-field-box", @id = "SecurityWord" }));
+       Write(Html.TextBoxFor(m => m.SecurityWord, new { @class = "bcms-field-text", @id = "SecurityWord" }));
 
             
             #line default

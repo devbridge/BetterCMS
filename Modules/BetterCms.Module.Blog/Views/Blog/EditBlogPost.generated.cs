@@ -455,7 +455,7 @@ WriteLiteral(">");
             #line hidden
 WriteLiteral("</div>\r\n                    <div");
 
-WriteLiteral(" class=\"bcms-input-box\"");
+WriteLiteral(" class=\"bcms-field-wrapper\"");
 
 WriteLiteral(">\r\n");
 
@@ -463,7 +463,7 @@ WriteLiteral("                        ");
 
             
             #line 76 "..\..\Views\Blog\EditBlogPost.cshtml"
-                   Write(Html.TextBoxFor(m => m.Title, new { @class = "bcms-editor-field-box", @id = "bcms-editor-blog-title", @style = "width: 523px;" }));
+                   Write(Html.TextBoxFor(m => m.Title, new { @class = "bcms-field-text", @id = "bcms-editor-blog-title", @style = "width: 523px;" }));
 
             
             #line default
@@ -517,7 +517,7 @@ WriteLiteral("                        ");
 
             
             #line 84 "..\..\Views\Blog\EditBlogPost.cshtml"
-                   Write(Html.DateTextBoxFor(model => model.LiveFromDate, Model.LiveFromDate, new Dictionary<string, object> { { "class", "bcms-editor-field-box bcms-datepicker" }, { "style", "width: 127px;" } }));
+                   Write(Html.DateTextBoxFor(model => model.LiveFromDate, Model.LiveFromDate, new Dictionary<string, object> { { "class", "bcms-field-text bcms-datepicker" }, { "style", "width: 127px;" } }));
 
             
             #line default
@@ -560,7 +560,7 @@ WriteLiteral("                        ");
 
             
             #line 91 "..\..\Views\Blog\EditBlogPost.cshtml"
-                   Write(Html.DateTextBoxFor(model => model.LiveToDate, Model.LiveToDate, new Dictionary<string, object> { { "class", "bcms-editor-field-box bcms-datepicker" }, { "style", "width: 127px;" } }));
+                   Write(Html.DateTextBoxFor(model => model.LiveToDate, Model.LiveToDate, new Dictionary<string, object> { { "class", "bcms-field-text bcms-datepicker" }, { "style", "width: 127px;" } }));
 
             
             #line default
@@ -685,7 +685,7 @@ WriteLiteral("                        ");
 
             
             #line 112 "..\..\Views\Blog\EditBlogPost.cshtml"
-                   Write(Html.TextAreaFor(m => m.IntroText, new { @style = "height: 217px;", @class = "bcms-editor-field-area" }));
+                   Write(Html.TextAreaFor(m => m.IntroText, new { @style = "height: 217px;", @class = "bcms-field-textarea" }));
 
             
             #line default

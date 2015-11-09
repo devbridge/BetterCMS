@@ -175,14 +175,14 @@ WriteLiteral(">\r\n                <img");
 
 WriteLiteral(" class=\"bcms-crop-image\"");
 
-WriteAttribute("src", Tuple.Create(" src=\"", 1078), Tuple.Create("\"", 1094)
+WriteAttribute("src", Tuple.Create(" src=\"", 1065), Tuple.Create("\"", 1081)
             
             #line 24 "..\..\Views\Images\ImageEditorInsert.cshtml"
-, Tuple.Create(Tuple.Create("", 1084), Tuple.Create<System.Object, System.Int32>(Model.Url
+, Tuple.Create(Tuple.Create("", 1071), Tuple.Create<System.Object, System.Int32>(Model.Url
             
             #line default
             #line hidden
-, 1084), false)
+, 1071), false)
 );
 
 WriteLiteral(" data-id=\"");
@@ -243,18 +243,18 @@ WriteLiteral(" class=\"bcms-edit-file-info\"");
 
 WriteLiteral(">\r\n                        <input");
 
-WriteLiteral(" class=\"bcms-editor-field-box bcms-editor-selectable-field-box\"");
+WriteLiteral(" class=\"bcms-field-text bcms-editor-selectable-field-box\"");
 
 WriteLiteral(" type=\"text\"");
 
-WriteAttribute("value", Tuple.Create(" value=\"", 1539), Tuple.Create("\"", 1557)
+WriteAttribute("value", Tuple.Create(" value=\"", 1520), Tuple.Create("\"", 1538)
             
             #line 31 "..\..\Views\Images\ImageEditorInsert.cshtml"
-                                 , Tuple.Create(Tuple.Create("", 1547), Tuple.Create<System.Object, System.Int32>(Model.Url
+                           , Tuple.Create(Tuple.Create("", 1528), Tuple.Create<System.Object, System.Int32>(Model.Url
             
             #line default
             #line hidden
-, 1547), false)
+, 1528), false)
 );
 
 WriteLiteral(" readonly=\"readonly\"");
@@ -293,7 +293,7 @@ WriteLiteral("                    ");
 
             
             #line 37 "..\..\Views\Images\ImageEditorInsert.cshtml"
-               Write(Html.TextBoxFor(f => f.Caption, new { @class = "bcms-editor-field-box", @id = "Caption" }));
+               Write(Html.TextBoxFor(f => f.Caption, new { @class = "bcms-field-text", @id = "Caption" }));
 
             
             #line default
@@ -462,15 +462,15 @@ WriteLiteral(" class=\"bcms-alignment-controls\"");
 
 WriteLiteral(">\r\n                    <div");
 
-WriteAttribute("class", Tuple.Create(" class=\"", 3189), Tuple.Create("\"", 3286)
-, Tuple.Create(Tuple.Create("", 3197), Tuple.Create("bcms-align-center", 3197), true)
+WriteAttribute("class", Tuple.Create(" class=\"", 3164), Tuple.Create("\"", 3261)
+, Tuple.Create(Tuple.Create("", 3172), Tuple.Create("bcms-align-center", 3172), true)
             
             #line 57 "..\..\Views\Images\ImageEditorInsert.cshtml"
-, Tuple.Create(Tuple.Create("", 3214), Tuple.Create<System.Object, System.Int32>(Model.ImageAlign == MediaImageAlign.Center ? "-active" : string.Empty
+, Tuple.Create(Tuple.Create("", 3189), Tuple.Create<System.Object, System.Int32>(Model.ImageAlign == MediaImageAlign.Center ? "-active" : string.Empty
             
             #line default
             #line hidden
-, 3214), false)
+, 3189), false)
 );
 
 WriteLiteral(">\r\n                        <input");
@@ -481,14 +481,14 @@ WriteLiteral(" id=\"aligncenter\"");
 
 WriteLiteral(" name=\"ImageAlign\"");
 
-WriteAttribute("value", Tuple.Create(" value=\"", 3368), Tuple.Create("\"", 3406)
+WriteAttribute("value", Tuple.Create(" value=\"", 3343), Tuple.Create("\"", 3381)
             
             #line 58 "..\..\Views\Images\ImageEditorInsert.cshtml"
-       , Tuple.Create(Tuple.Create("", 3376), Tuple.Create<System.Object, System.Int32>((int)MediaImageAlign.Center
+       , Tuple.Create(Tuple.Create("", 3351), Tuple.Create<System.Object, System.Int32>((int)MediaImageAlign.Center
             
             #line default
             #line hidden
-, 3376), false)
+, 3351), false)
 );
 
 WriteLiteral(" ");
@@ -502,15 +502,15 @@ WriteLiteral(" ");
             #line hidden
 WriteLiteral(">\r\n                    </div>\r\n                    <div");
 
-WriteAttribute("class", Tuple.Create(" class=\"", 3535), Tuple.Create("\"", 3628)
-, Tuple.Create(Tuple.Create("", 3543), Tuple.Create("bcms-align-left", 3543), true)
+WriteAttribute("class", Tuple.Create(" class=\"", 3510), Tuple.Create("\"", 3603)
+, Tuple.Create(Tuple.Create("", 3518), Tuple.Create("bcms-align-left", 3518), true)
             
             #line 60 "..\..\Views\Images\ImageEditorInsert.cshtml"
-, Tuple.Create(Tuple.Create("", 3558), Tuple.Create<System.Object, System.Int32>(Model.ImageAlign == MediaImageAlign.Left ? "-active" : string.Empty
+, Tuple.Create(Tuple.Create("", 3533), Tuple.Create<System.Object, System.Int32>(Model.ImageAlign == MediaImageAlign.Left ? "-active" : string.Empty
             
             #line default
             #line hidden
-, 3558), false)
+, 3533), false)
 );
 
 WriteLiteral(">\r\n                        <input");
@@ -521,14 +521,14 @@ WriteLiteral(" id=\"alignleft\"");
 
 WriteLiteral(" name=\"ImageAlign\"");
 
-WriteAttribute("value", Tuple.Create(" value=\"", 3708), Tuple.Create("\"", 3744)
+WriteAttribute("value", Tuple.Create(" value=\"", 3683), Tuple.Create("\"", 3719)
             
             #line 61 "..\..\Views\Images\ImageEditorInsert.cshtml"
-     , Tuple.Create(Tuple.Create("", 3716), Tuple.Create<System.Object, System.Int32>((int)MediaImageAlign.Left
+     , Tuple.Create(Tuple.Create("", 3691), Tuple.Create<System.Object, System.Int32>((int)MediaImageAlign.Left
             
             #line default
             #line hidden
-, 3716), false)
+, 3691), false)
 );
 
 WriteLiteral(" ");
@@ -542,15 +542,15 @@ WriteLiteral(" ");
             #line hidden
 WriteLiteral(">\r\n                    </div>\r\n                    <div");
 
-WriteAttribute("class", Tuple.Create(" class=\"", 3871), Tuple.Create("\"", 3966)
-, Tuple.Create(Tuple.Create("", 3879), Tuple.Create("bcms-align-right", 3879), true)
+WriteAttribute("class", Tuple.Create(" class=\"", 3846), Tuple.Create("\"", 3941)
+, Tuple.Create(Tuple.Create("", 3854), Tuple.Create("bcms-align-right", 3854), true)
             
             #line 63 "..\..\Views\Images\ImageEditorInsert.cshtml"
-, Tuple.Create(Tuple.Create("", 3895), Tuple.Create<System.Object, System.Int32>(Model.ImageAlign == MediaImageAlign.Right ? "-active" : string.Empty
+, Tuple.Create(Tuple.Create("", 3870), Tuple.Create<System.Object, System.Int32>(Model.ImageAlign == MediaImageAlign.Right ? "-active" : string.Empty
             
             #line default
             #line hidden
-, 3895), false)
+, 3870), false)
 );
 
 WriteLiteral(">\r\n                        <input");
@@ -561,14 +561,14 @@ WriteLiteral(" id=\"alignright\"");
 
 WriteLiteral(" name=\"ImageAlign\"");
 
-WriteAttribute("value", Tuple.Create(" value=\"", 4047), Tuple.Create("\"", 4084)
+WriteAttribute("value", Tuple.Create(" value=\"", 4022), Tuple.Create("\"", 4059)
             
             #line 64 "..\..\Views\Images\ImageEditorInsert.cshtml"
-      , Tuple.Create(Tuple.Create("", 4055), Tuple.Create<System.Object, System.Int32>((int)MediaImageAlign.Right
+      , Tuple.Create(Tuple.Create("", 4030), Tuple.Create<System.Object, System.Int32>((int)MediaImageAlign.Right
             
             #line default
             #line hidden
-, 4055), false)
+, 4030), false)
 );
 
 WriteLiteral(" ");
@@ -620,7 +620,7 @@ WriteLiteral("                        ");
             #line 71 "..\..\Views\Images\ImageEditorInsert.cshtml"
                    Write(Html.TextAreaFor(f => f.Description, new
                                                                   {
-                                                                      @class = "bcms-editor-field-area",
+                                                                      @class = "bcms-field-textarea",
                                                                       @id = "Description",
                                                                       @style = "width: 380px;",
                                                                       @readonly = "readonly"

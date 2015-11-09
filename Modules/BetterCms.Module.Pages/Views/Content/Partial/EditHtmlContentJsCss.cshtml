@@ -5,7 +5,7 @@
 
 <div class="bcms-input-list-holder" id="bcms-custom-css-container">
     <div class="bcms-content-titles">@PagesGlobalization.HtmlContent_CustomCss_Title</div>
-    @Html.TextAreaFor(model => model.CustomCss, new { @class = "bcms-editor-field-area bcms-code-field bcms-code-field-css", @style = "width:820px;", @id = Guid.NewGuid() })
+    @Html.TextAreaFor(model => model.CustomCss, new { @class = "bcms-field-textarea bcms-code-field bcms-code-field-css", @style = "width:820px;", @id = Guid.NewGuid() })
     @Html.BcmsValidationMessageFor(model => model.CustomCss)
 </div>
 
@@ -18,7 +18,7 @@
 
 <div class="bcms-input-list-holder" id="bcms-custom-js-container">
     <div class="bcms-content-titles">@PagesGlobalization.HtmlContent_CustomJs_Title</div>
-    @Html.TextAreaFor(model => model.CustomJs, new { @class = "bcms-editor-field-area bcms-code-field bcms-code-field-javascript", @style = "width:820px;", @id = Guid.NewGuid() })
+    @Html.TextAreaFor(model => model.CustomJs, new { @class = "bcms-field-textarea bcms-code-field bcms-code-field-javascript", @style = "width:820px;", @id = Guid.NewGuid() })
     @Html.BcmsValidationMessageFor(model => model.CustomJs)
 </div>
 

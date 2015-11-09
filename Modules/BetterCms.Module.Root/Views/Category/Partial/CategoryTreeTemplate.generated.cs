@@ -122,7 +122,7 @@ WriteLiteral("                            ");
                        Write(Html.TextBoxFor(m => m.Title, new
                             {
                                 data_bind = "value: title, valueUpdate: 'afterkeydown', enterPress: saveCategoryTreeNodeWithValidation, escPress: cancelEditCategoryTreeNode, hasfocus: isActive()",
-                                @class = "bcms-editor-field-box",
+                                @class = "bcms-field-text",
                                 Title = (string)null,
                             }));
 
@@ -183,7 +183,7 @@ WriteLiteral("                            ");
                        Write(Html.TextBoxFor(m => m.Macro, new
                             {
                                 data_bind = "value: macro, valueUpdate: 'afterkeydown', enterPress: saveCategoryTreeNodeWithValidation, escPress: cancelEditCategoryTreeNode",
-                                @class = "bcms-editor-field-box",
+                                @class = "bcms-field-text",
                                 Title = (string)null,
                                 placeholder = RootGlobalization.CategoryTree_NodeEdit_Macro_Placeholder_Message
                             }));

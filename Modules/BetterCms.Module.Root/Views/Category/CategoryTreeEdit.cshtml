@@ -19,8 +19,8 @@
                         @Html.Tooltip(RootGlobalization.CategoryTree_EditDialog_Title_Tooltip_Description)
                         <div class="bcms-content-titles">@RootGlobalization.CategoryTree_EditDialog_Title_Title</div>
 
-                        <div class="bcms-input-box">
-                            @Html.TextBoxFor(model => model.Title, new { @class = "bcms-editor-field-box", data_bind = "value: title, valueUpdate: 'afterkeydown', hasfocus: true" })
+                        <div class="bcms-field-wrapper">
+                            @Html.TextBoxFor(model => model.Title, new { @class = "bcms-field-text", data_bind = "value: title, valueUpdate: 'afterkeydown', hasfocus: true" })
                             @Html.BcmsValidationMessageFor(f => f.Title)
                             @Html.HiddenFor(m => m.Id)
                             @Html.HiddenFor(m => m.Version)
@@ -46,10 +46,10 @@
                         @Html.Tooltip(RootGlobalization.CategoryTree_EditDialog_Macro_Tooltip_Message)
                         <div class="bcms-content-titles">@RootGlobalization.CategoryTree_EditDialog_Macro_Title</div>
 
-                        <div class="bcms-input-box">
+                        <div class="bcms-field-wrapper">
                             @Html.TextBoxFor(model => model.Macro, new
                        {
-                           @class = "bcms-editor-field-box",
+                           @class = "bcms-field-text",
                            placeholder = RootGlobalization.CategoryTree_Macro_Placeholder_Message,
                            data_bind = "value: macro, valueUpdate: 'afterkeydown', hasfocus: true"
                        })

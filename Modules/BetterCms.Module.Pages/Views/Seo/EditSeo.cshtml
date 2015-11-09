@@ -25,8 +25,8 @@
             <div class="bcms-input-list-holder">
                 @Html.Tooltip(PagesGlobalization.EditSeo_PageTitle_Tooltip_Description)
                 <div class="bcms-content-titles">@PagesGlobalization.EditSeo_PageTitle</div>
-                <div class="bcms-input-box">
-                    @Html.TextBoxFor(f => f.PageTitle, new { @class = "bcms-editor-field-box" })
+                <div class="bcms-field-wrapper">
+                    @Html.TextBoxFor(f => f.PageTitle, new { @class = "bcms-field-text" })
                     @Html.BcmsValidationMessageFor(f => f.PageTitle)
                 </div>
             </div>
@@ -36,8 +36,8 @@
             <div class="bcms-input-list-holder">
                 @Html.Tooltip(PagesGlobalization.EditSeo_MetaTitle_Tooltip_Description)
                 <div class="bcms-content-titles">@PagesGlobalization.EditSeo_MetaTitle</div>
-                <div class="bcms-input-box">
-                    @Html.TextBoxFor(f => f.MetaTitle, new { @class = "bcms-editor-field-box" })
+                <div class="bcms-field-wrapper">
+                    @Html.TextBoxFor(f => f.MetaTitle, new { @class = "bcms-field-text" })
                     @Html.BcmsValidationMessageFor(f => f.MetaTitle)
                 </div>
             </div>
@@ -45,8 +45,8 @@
             <div class="bcms-input-list-holder">
                 @Html.Tooltip(PagesGlobalization.EditSeo_MetaKeywords_Tooltip_Description)
                 <div class="bcms-content-titles">@PagesGlobalization.EditSeo_MetaKeywords</div>
-                <div class="bcms-input-box">
-                    @Html.TextAreaFor(f => f.MetaKeywords, new { @class = "bcms-editor-field-area" })
+                <div class="bcms-field-wrapper">
+                    @Html.TextAreaFor(f => f.MetaKeywords, new { @class = "bcms-field-textarea" })
                     @Html.BcmsValidationMessageFor(f => f.MetaKeywords)
                 </div>
             </div>
@@ -54,8 +54,8 @@
             <div class="bcms-input-list-holder">
                 @Html.Tooltip(PagesGlobalization.EditSeo_MetaDescription_Tooltip_Description)
                 <div class="bcms-content-titles">@PagesGlobalization.EditSeo_MetaDescription</div>
-                <div class="bcms-input-box">
-                    @Html.TextAreaFor(f => f.MetaDescription, new { @class = "bcms-editor-field-area" })
+                <div class="bcms-field-wrapper">
+                    @Html.TextAreaFor(f => f.MetaDescription, new { @class = "bcms-field-textarea" })
                     @Html.BcmsValidationMessageFor(f => f.MetaDescription)
                 </div>
             </div>

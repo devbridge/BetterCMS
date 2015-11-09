@@ -36,8 +36,8 @@
                 <div class="bcms-input-list-holder">
                     @Html.Tooltip(PagesGlobalization.HtmlContentWidget_ContentName_Tooltip_Description)
                     <div class="bcms-content-titles">@PagesGlobalization.HtmlContentWidget_ContentName_Title</div>
-                    <div class="bcms-input-box">
-                        @Html.TextBoxFor(model => model.Name, new { @class = "bcms-editor-field-box" })
+                    <div class="bcms-field-wrapper">
+                        @Html.TextBoxFor(model => model.Name, new { @class = "bcms-field-text" })
                         @Html.BcmsValidationMessageFor(m => m.Name)
                     </div>
                 </div>
@@ -68,7 +68,7 @@
             <div id="bcms-tab-3" class="bcms-tab-single">
                 <div class="bcms-input-list-holder">
                     <div class="bcms-content-titles">@PagesGlobalization.HtmlContentWidget_CustomCSS_Title</div>
-                    @Html.TextAreaFor(model => model.CustomCSS, new { @class = "bcms-editor-field-area bcms-code-field bcms-code-field-css", @id = Guid.NewGuid() })
+                    @Html.TextAreaFor(model => model.CustomCSS, new { @class = "bcms-field-textarea bcms-code-field bcms-code-field-css", @id = Guid.NewGuid() })
                 </div>
                 <div class="bcms-input-list-holder">
                     <div class="bcms-edit-check-field">
@@ -78,7 +78,7 @@
                 </div>
                 <div class="bcms-input-list-holder">
                     <div class="bcms-content-titles">@PagesGlobalization.HtmlContentWidget_CustomJS_Title</div>
-                    @Html.TextAreaFor(model => model.CustomJS, new { @class = "bcms-editor-field-area bcms-code-field bcms-code-field-javascript", id = Guid.NewGuid() })
+                    @Html.TextAreaFor(model => model.CustomJS, new { @class = "bcms-field-textarea bcms-code-field bcms-code-field-javascript", id = Guid.NewGuid() })
                 </div>
                 <div class="bcms-input-list-holder">
                     <div class="bcms-edit-check-field">

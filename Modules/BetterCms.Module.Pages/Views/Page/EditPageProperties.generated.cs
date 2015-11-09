@@ -357,7 +357,7 @@ WriteLiteral(">");
             #line hidden
 WriteLiteral("</div>\r\n                    <div");
 
-WriteLiteral(" class=\"bcms-input-box\"");
+WriteLiteral(" class=\"bcms-field-wrapper\"");
 
 WriteLiteral(">\r\n");
 
@@ -365,7 +365,7 @@ WriteLiteral("                        ");
 
             
             #line 69 "..\..\Views\Page\EditPageProperties.cshtml"
-                   Write(Html.TextBoxFor(model => model.PageName, new { @class = "bcms-editor-field-box" }));
+                   Write(Html.TextBoxFor(model => model.PageName, new { @class = "bcms-field-text" }));
 
             
             #line default
@@ -1186,7 +1186,7 @@ WriteLiteral("                    ");
 
             
             #line 207 "..\..\Views\Page\EditPageProperties.cshtml"
-               Write(Html.TextAreaFor(model => model.PageCSS, new { @class = "bcms-editor-field-area bcms-code-field bcms-code-field-css", @id = Guid.NewGuid() }));
+               Write(Html.TextAreaFor(model => model.PageCSS, new { @class = "bcms-field-textarea bcms-code-field bcms-code-field-css", @id = Guid.NewGuid() }));
 
             
             #line default
@@ -1225,7 +1225,7 @@ WriteLiteral("                    ");
 
             
             #line 213 "..\..\Views\Page\EditPageProperties.cshtml"
-               Write(Html.TextAreaFor(model => model.PageJavascript, new { @class = "bcms-editor-field-area bcms-code-field bcms-code-field-javascript", id = Guid.NewGuid() }));
+               Write(Html.TextAreaFor(model => model.PageJavascript, new { @class = "bcms-field-textarea bcms-code-field bcms-code-field-javascript", id = Guid.NewGuid() }));
 
             
             #line default

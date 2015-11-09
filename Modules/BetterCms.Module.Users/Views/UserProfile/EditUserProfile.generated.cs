@@ -195,7 +195,7 @@ WriteLiteral(">");
             #line hidden
 WriteLiteral("</div>\r\n                        <div");
 
-WriteLiteral(" class=\"bcms-input-box\"");
+WriteLiteral(" class=\"bcms-field-wrapper\"");
 
 WriteLiteral(">\r\n");
 
@@ -203,7 +203,7 @@ WriteLiteral("                            ");
 
             
             #line 26 "..\..\Views\UserProfile\EditUserProfile.cshtml"
-                       Write(Html.TextBoxFor(m => m.FirstName, new { @class = "bcms-editor-field-box", data_bind = "value: firstName, valueUpdate: 'afterkeydown'" }));
+                       Write(Html.TextBoxFor(m => m.FirstName, new { @class = "bcms-field-text", data_bind = "value: firstName, valueUpdate: 'afterkeydown'" }));
 
             
             #line default
@@ -254,7 +254,7 @@ WriteLiteral(">");
             #line hidden
 WriteLiteral("</div>\r\n                        <div");
 
-WriteLiteral(" class=\"bcms-input-box\"");
+WriteLiteral(" class=\"bcms-field-wrapper\"");
 
 WriteLiteral(">\r\n");
 
@@ -262,7 +262,7 @@ WriteLiteral("                            ");
 
             
             #line 34 "..\..\Views\UserProfile\EditUserProfile.cshtml"
-                       Write(Html.TextBoxFor(m => m.LastName, new { @class = "bcms-editor-field-box", data_bind = "value: lastName, valueUpdate: 'afterkeydown'" }));
+                       Write(Html.TextBoxFor(m => m.LastName, new { @class = "bcms-field-text", data_bind = "value: lastName, valueUpdate: 'afterkeydown'" }));
 
             
             #line default
@@ -313,7 +313,7 @@ WriteLiteral(">");
             #line hidden
 WriteLiteral("</div>\r\n                        <div");
 
-WriteLiteral(" class=\"bcms-input-box\"");
+WriteLiteral(" class=\"bcms-field-wrapper\"");
 
 WriteLiteral(">\r\n");
 
@@ -321,7 +321,7 @@ WriteLiteral("                            ");
 
             
             #line 42 "..\..\Views\UserProfile\EditUserProfile.cshtml"
-                       Write(Html.TextBoxFor(m => m.UserName, new { @class = "bcms-editor-field-box", data_bind = "value: userName, valueUpdate: 'afterkeydown', event: {keyup: userNameOnKeyUp}" }));
+                       Write(Html.TextBoxFor(m => m.UserName, new { @class = "bcms-field-text", data_bind = "value: userName, valueUpdate: 'afterkeydown', event: {keyup: userNameOnKeyUp}" }));
 
             
             #line default
@@ -372,7 +372,7 @@ WriteLiteral(">");
             #line hidden
 WriteLiteral("</div>\r\n                        <div");
 
-WriteLiteral(" class=\"bcms-input-box\"");
+WriteLiteral(" class=\"bcms-field-wrapper\"");
 
 WriteLiteral(">\r\n");
 
@@ -380,7 +380,7 @@ WriteLiteral("                            ");
 
             
             #line 50 "..\..\Views\UserProfile\EditUserProfile.cshtml"
-                       Write(Html.TextBoxFor(m => m.Email, new { @class = "bcms-editor-field-box" }));
+                       Write(Html.TextBoxFor(m => m.Email, new { @class = "bcms-field-text" }));
 
             
             #line default
@@ -431,7 +431,7 @@ WriteLiteral(">");
             #line hidden
 WriteLiteral("</div>\r\n                        <div");
 
-WriteLiteral(" class=\"bcms-input-box\"");
+WriteLiteral(" class=\"bcms-field-wrapper\"");
 
 WriteLiteral(">\r\n");
 
@@ -439,7 +439,7 @@ WriteLiteral("                            ");
 
             
             #line 58 "..\..\Views\UserProfile\EditUserProfile.cshtml"
-                       Write(Html.TextBoxFor(m => m.Password, new { @class = "bcms-editor-field-box", @type = "password" }));
+                       Write(Html.TextBoxFor(m => m.Password, new { @class = "bcms-field-text", @type = "password" }));
 
             
             #line default
@@ -490,7 +490,7 @@ WriteLiteral(">");
             #line hidden
 WriteLiteral("</div>\r\n                        <div");
 
-WriteLiteral(" class=\"bcms-input-box\"");
+WriteLiteral(" class=\"bcms-field-wrapper\"");
 
 WriteLiteral(">\r\n");
 
@@ -498,7 +498,7 @@ WriteLiteral("                            ");
 
             
             #line 66 "..\..\Views\UserProfile\EditUserProfile.cshtml"
-                       Write(Html.TextBoxFor(m => m.RetypedPassword, new { @class = "bcms-editor-field-box", @type = "password" }));
+                       Write(Html.TextBoxFor(m => m.RetypedPassword, new { @class = "bcms-field-text", @type = "password" }));
 
             
             #line default

@@ -1,3 +1,35 @@
+//module Titles
+.bcms-large-titles {
+    @include vertical-align();
+    color: $dark-text;
+    font: {
+        size: 18px;
+        weight: 700;
+        family: $font-base-family;
+    }
+    line-height: $form-element-height;
+}
+
+.bcms-content-titles {
+    color: $dark-text;
+    font-family: $font-base-family;
+    font-size: 14px;
+    font-weight: 700;
+    line-height: 20px;
+    padding-bottom: 4px;
+    position: relative;
+
+    > a {
+        color: $blue-main;
+        cursor: pointer;
+        font: {
+            size: 12px;
+            weight: 400;
+        }
+        margin-left: 40px;
+    }
+}
+
 .bcms-loader {
     background: url('images/loading.gif') no-repeat center center;
     height: 70px;
@@ -339,36 +371,6 @@ div.bcms-tip-close {
     top: 100%;
 }
 
-//module Titles
-.bcms-large-titles {
-    @include vertical-align();
-    color: $dark-text;
-    font: {
-        size: 18px;
-        weight: 700;
-        family: $font-base-family;
-    }
-    line-height: $form-element-height;
-}
-
-.bcms-content-titles {
-    color: #000;
-    font-family: "Open Sans", sans-serif;
-    font-size: 14px;
-    font-weight: 700;
-    line-height: 20px;
-    padding-bottom: 10px;
-    position: relative;
-}
-
-.bcms-content-titles a {
-    color: #0383df;
-    cursor: pointer;
-    font-size: 12px;
-    font-weight: 400;
-    margin-left: 40px;
-}
-
 //module preview boxes & widgets grid
 .bcms-preview-block {
     float: left;
@@ -598,17 +600,17 @@ div.bcms-tip-close {
 //}
 
 //module table grid validation messages
-.bcms-input-box input.bcms-input-validation-error {
-    background: #fcecec;
-    border: 1px solid #e64343;
-    box-shadow: 0 0 2px 0 rgba(230, 67, 67, 0.4);
-}
-
-.bcms-input-box input.bcms-input-validation-error:focus {
-    background: #fcecec;
-    border: 1px solid #e64343;
-    box-shadow: 0 0 2px 0 rgba(230, 67, 67, 0.4);
-}
+//.bcms-input-box input.bcms-input-validation-error {
+//    background: #fcecec;
+//    border: 1px solid #e64343;
+//    box-shadow: 0 0 2px 0 rgba(230, 67, 67, 0.4);
+//}
+//
+//.bcms-input-box input.bcms-input-validation-error:focus {
+//    background: #fcecec;
+//    border: 1px solid #e64343;
+//    box-shadow: 0 0 2px 0 rgba(230, 67, 67, 0.4);
+//}
 
 //module user access controls
 .bcms-user-access {
