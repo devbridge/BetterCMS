@@ -463,7 +463,7 @@ bettercms.define('bcms.pages', ['bcms.jquery', 'bcms', 'bcms.modal', 'bcms.siteS
         */
         page.deletePage = function (id, postSuccess, title) {
             title = title || globalization.deletePageDialogTitle;
-            modal.open({
+            modal.confirmDelete({
                 title: title,
                 acceptTitle: globalization.deleteButtonTitle,
                 onLoad: function (dialog) {

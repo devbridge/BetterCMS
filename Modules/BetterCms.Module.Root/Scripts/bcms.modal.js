@@ -33,6 +33,7 @@ bettercms.define('bcms.modal', ['bcms.jquery', 'bcms', 'bcms.tabs', 'bcms.ko.ext
 
         classes = {
             saveButton: 'bcms-btn-small bcms-modal-accept',
+            deleteButton: 'bcms-btn-secondary bcms-modal-accept',
             cancelButton: 'bcms-btn-links-small bcms-js-btn-cancel',
             grayButton: 'bcms-btn-small bcms-btn-gray',
             inactive: 'bcms-inactive'
@@ -630,6 +631,22 @@ bettercms.define('bcms.modal', ['bcms.jquery', 'bcms', 'bcms.tabs', 'bcms.ko.ext
         var dialog = modal.open(options);
         // Hack for IE.
         dialog.container.find(selectors.popinfoFrame).get(0).focus();
+        return dialog;
+    };
+
+    modal.confirmDelete = function (options) {
+        options = $.extend({
+            acceptTitle: globalization.ok,
+            cancelTitle: globalization.cancel,
+            acceptCss: classes.deleteButton
+        }, options);
+
+        options.templateId = 'bcms-modal-delete-template';
+        options.disableAnimation = true;
+
+        var dialog = modal.open(options);
+        // Hack for IE.
+        dialog.container.find(selectors.errorFrame).get(0).focus();
         return dialog;
     };
 

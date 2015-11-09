@@ -81,320 +81,292 @@ namespace ASP
         {
 WriteLiteral("\r\n");
 
-WriteLiteral("<div");
-
-WriteLiteral(" class=\"bcms-modal-frame-holder\"");
-
-WriteLiteral(">\r\n");
-
-WriteLiteral("    ");
+WriteLiteral("\r\n\r\n");
 
             
-            #line 12 "..\..\Views\Page\DeletePageConfirmation.cshtml"
-Write(Html.MessagesBox());
-
-            
-            #line default
-            #line hidden
-WriteLiteral("\r\n\r\n    <div");
-
-WriteLiteral(" class=\"bcms-window-options\"");
-
-WriteLiteral(">\r\n");
-
-            
-            #line 15 "..\..\Views\Page\DeletePageConfirmation.cshtml"
-        
-            
-            #line default
-            #line hidden
-            
-            #line 15 "..\..\Views\Page\DeletePageConfirmation.cshtml"
-         using (Html.BeginForm<PageController>(f => f.DeletePage(null), FormMethod.Post,
+            #line 13 "..\..\Views\Page\DeletePageConfirmation.cshtml"
+ using (Html.BeginForm<PageController>(f => f.DeletePage(null), FormMethod.Post,
             new
             {
                 @class = "bcms-ajax-form",
                 data_readonly = (Model.ValidationMessage != null) ? "true" : "false"
             }))
-        {
+{
 
             
             #line default
             #line hidden
-WriteLiteral("            <div");
+WriteLiteral("    <div");
 
 WriteLiteral(" class=\"bcms-input-list-holder\"");
 
-WriteLiteral(">\r\n                <div");
+WriteLiteral(">\r\n        <div");
 
 WriteLiteral(" class=\"bcms-content-titles\"");
 
 WriteLiteral(">");
 
             
-            #line 23 "..\..\Views\Page\DeletePageConfirmation.cshtml"
-                                            Write(PagesGlobalization.DeletePage_Dialog_ConfirmationMessage_Header);
+            #line 21 "..\..\Views\Page\DeletePageConfirmation.cshtml"
+                                    Write(PagesGlobalization.DeletePage_Dialog_ConfirmationMessage_Header);
 
             
             #line default
             #line hidden
-WriteLiteral("</div>\r\n                <div>");
+WriteLiteral("</div>\r\n        <div>");
+
+            
+            #line 22 "..\..\Views\Page\DeletePageConfirmation.cshtml"
+        Write(PagesGlobalization.DeletePage_Dialog_ConfirmationMessage_Text);
+
+            
+            #line default
+            #line hidden
+WriteLiteral("</div>\r\n    </div>\r\n");
 
             
             #line 24 "..\..\Views\Page\DeletePageConfirmation.cshtml"
-                Write(PagesGlobalization.DeletePage_Dialog_ConfirmationMessage_Text);
+
 
             
             #line default
             #line hidden
-WriteLiteral("</div>\r\n            </div>\r\n");
+WriteLiteral("    <div");
+
+WriteLiteral(" class=\"bcms-input-list-holder\"");
+
+WriteLiteral(">\r\n");
+
+WriteLiteral("        ");
 
             
             #line 26 "..\..\Views\Page\DeletePageConfirmation.cshtml"
-
-
-            
-            #line default
-            #line hidden
-WriteLiteral("            <div");
-
-WriteLiteral(" class=\"bcms-input-list-holder\"");
-
-WriteLiteral(">\r\n");
-
-WriteLiteral("                ");
-
-            
-            #line 28 "..\..\Views\Page\DeletePageConfirmation.cshtml"
-           Write(Html.Tooltip(PagesGlobalization.DeletePage_Dialog_RedurectUrl_Tooltip_Description));
+   Write(Html.Tooltip(PagesGlobalization.DeletePage_Dialog_RedurectUrl_Tooltip_Description));
 
             
             #line default
             #line hidden
-WriteLiteral("\r\n                <div");
+WriteLiteral("\r\n        <div");
 
 WriteLiteral(" class=\"bcms-content-titles\"");
 
 WriteLiteral(">");
+
+            
+            #line 27 "..\..\Views\Page\DeletePageConfirmation.cshtml"
+                                    Write(PagesGlobalization.DeletePage_Dialog_RedirectUrl);
+
+            
+            #line default
+            #line hidden
+WriteLiteral("</div>\r\n        <div");
+
+WriteLiteral(" class=\"bcms-input-box\"");
+
+WriteLiteral(">\r\n");
+
+WriteLiteral("            ");
 
             
             #line 29 "..\..\Views\Page\DeletePageConfirmation.cshtml"
-                                            Write(PagesGlobalization.DeletePage_Dialog_RedirectUrl);
-
-            
-            #line default
-            #line hidden
-WriteLiteral("</div>\r\n                <div");
-
-WriteLiteral(" class=\"bcms-input-box\"");
-
-WriteLiteral(">\r\n");
-
-WriteLiteral("                    ");
-
-            
-            #line 31 "..\..\Views\Page\DeletePageConfirmation.cshtml"
-               Write(Html.TextBoxFor(m => m.RedirectUrl, new { @class = "bcms-editor-field-box", @id = "PageTitle" }));
+       Write(Html.TextBoxFor(m => m.RedirectUrl, new { @class = "bcms-editor-field-box", @id = "PageTitle" }));
 
             
             #line default
             #line hidden
 WriteLiteral("\r\n");
 
-WriteLiteral("                    ");
+WriteLiteral("            ");
 
             
-            #line 32 "..\..\Views\Page\DeletePageConfirmation.cshtml"
-               Write(Html.BcmsValidationMessageFor(f => f.RedirectUrl));
+            #line 30 "..\..\Views\Page\DeletePageConfirmation.cshtml"
+       Write(Html.BcmsValidationMessageFor(f => f.RedirectUrl));
 
             
             #line default
             #line hidden
-WriteLiteral("\r\n                </div>\r\n            </div>\r\n");
+WriteLiteral("\r\n        </div>\r\n    </div>\r\n");
+
+            
+            #line 33 "..\..\Views\Page\DeletePageConfirmation.cshtml"
+
+
+            
+            #line default
+            #line hidden
+WriteLiteral("    <div");
+
+WriteLiteral(" class=\"bcms-input-list-holder\"");
+
+WriteLiteral(">\r\n");
+
+WriteLiteral("        ");
 
             
             #line 35 "..\..\Views\Page\DeletePageConfirmation.cshtml"
-
-
-            
-            #line default
-            #line hidden
-WriteLiteral("            <div");
-
-WriteLiteral(" class=\"bcms-input-list-holder\"");
-
-WriteLiteral(">\r\n");
-
-WriteLiteral("                ");
-
-            
-            #line 37 "..\..\Views\Page\DeletePageConfirmation.cshtml"
-           Write(Html.Tooltip(PagesGlobalization.DeletePage_Dialog_SecurityWord_Tooltip_Description));
+   Write(Html.Tooltip(PagesGlobalization.DeletePage_Dialog_SecurityWord_Tooltip_Description));
 
             
             #line default
             #line hidden
-WriteLiteral("\r\n                <div");
+WriteLiteral("\r\n        <div");
 
 WriteLiteral(" class=\"bcms-content-titles\"");
 
 WriteLiteral(">");
 
             
-            #line 38 "..\..\Views\Page\DeletePageConfirmation.cshtml"
-                                            Write(PagesGlobalization.DeletePage_Dialog_SecurityWord);
+            #line 36 "..\..\Views\Page\DeletePageConfirmation.cshtml"
+                                    Write(PagesGlobalization.DeletePage_Dialog_SecurityWord);
 
             
             #line default
             #line hidden
-WriteLiteral("</div>\r\n                <div");
+WriteLiteral("</div>\r\n        <div");
 
 WriteLiteral(" class=\"bcms-input-box\"");
 
 WriteLiteral(">\r\n");
 
-WriteLiteral("                    ");
+WriteLiteral("            ");
 
             
-            #line 40 "..\..\Views\Page\DeletePageConfirmation.cshtml"
-               Write(Html.TextBoxFor(m => m.SecurityWord, new { @class = "bcms-editor-field-box", @id = "SecurityWord" }));
+            #line 38 "..\..\Views\Page\DeletePageConfirmation.cshtml"
+       Write(Html.TextBoxFor(m => m.SecurityWord, new { @class = "bcms-editor-field-box", @id = "SecurityWord" }));
 
             
             #line default
             #line hidden
 WriteLiteral("\r\n");
 
-WriteLiteral("                    ");
+WriteLiteral("            ");
 
             
-            #line 41 "..\..\Views\Page\DeletePageConfirmation.cshtml"
-               Write(Html.BcmsValidationMessageFor(f => f.SecurityWord));
-
-            
-            #line default
-            #line hidden
-WriteLiteral("\r\n                </div>\r\n            </div>\r\n");
-
-            
-            #line 44 "..\..\Views\Page\DeletePageConfirmation.cshtml"
-
-            if (Model.IsInSitemap && (ViewContext.Controller as CmsControllerBase).SecurityService.IsAuthorized(RootModuleConstants.UserRoles.EditContent))
-            {
+            #line 39 "..\..\Views\Page\DeletePageConfirmation.cshtml"
+       Write(Html.BcmsValidationMessageFor(f => f.SecurityWord));
 
             
             #line default
             #line hidden
-WriteLiteral("                <div");
+WriteLiteral("\r\n        </div>\r\n    </div>\r\n");
+
+            
+            #line 42 "..\..\Views\Page\DeletePageConfirmation.cshtml"
+
+    if (Model.IsInSitemap && (ViewContext.Controller as CmsControllerBase).SecurityService.IsAuthorized(RootModuleConstants.UserRoles.EditContent))
+    {
+
+            
+            #line default
+            #line hidden
+WriteLiteral("        <div");
 
 WriteLiteral(" class=\"bcms-input-list-holder\"");
 
 WriteLiteral(">\r\n");
 
-WriteLiteral("                    ");
+WriteLiteral("            ");
 
             
-            #line 48 "..\..\Views\Page\DeletePageConfirmation.cshtml"
-               Write(Html.Tooltip(PagesGlobalization.DeletePage_Dialog_UpdateSitemap_Description));
+            #line 46 "..\..\Views\Page\DeletePageConfirmation.cshtml"
+       Write(Html.Tooltip(PagesGlobalization.DeletePage_Dialog_UpdateSitemap_Description));
 
             
             #line default
             #line hidden
-WriteLiteral("\r\n                    <div");
+WriteLiteral("\r\n            <div");
 
 WriteLiteral(" class=\"bcms-content-titles\"");
 
 WriteLiteral(">");
 
             
-            #line 49 "..\..\Views\Page\DeletePageConfirmation.cshtml"
-                                                Write(PagesGlobalization.DeletePage_Dialog_UpdateSitemap);
+            #line 47 "..\..\Views\Page\DeletePageConfirmation.cshtml"
+                                        Write(PagesGlobalization.DeletePage_Dialog_UpdateSitemap);
 
             
             #line default
             #line hidden
-WriteLiteral("</div>\r\n                    <div");
+WriteLiteral("</div>\r\n            <div");
 
 WriteLiteral(" class=\"bcms-edit-check-field\"");
 
 WriteLiteral(">\r\n");
 
-WriteLiteral("                        ");
+WriteLiteral("                ");
 
             
-            #line 51 "..\..\Views\Page\DeletePageConfirmation.cshtml"
-                   Write(Html.CheckBoxFor(m => m.UpdateSitemap, new { @id = "UpdateSitemap" }));
+            #line 49 "..\..\Views\Page\DeletePageConfirmation.cshtml"
+           Write(Html.CheckBoxFor(m => m.UpdateSitemap, new { @id = "UpdateSitemap" }));
 
             
             #line default
             #line hidden
-WriteLiteral("\r\n                        <div");
+WriteLiteral("\r\n                <div");
 
 WriteLiteral(" class=\"bcms-edit-label\"");
 
 WriteLiteral(">");
 
             
-            #line 52 "..\..\Views\Page\DeletePageConfirmation.cshtml"
-                                                Write(PagesGlobalization.DeletePage_Dialog_UpdateSitemap_RemovePageFromSitemap);
+            #line 50 "..\..\Views\Page\DeletePageConfirmation.cshtml"
+                                        Write(PagesGlobalization.DeletePage_Dialog_UpdateSitemap_RemovePageFromSitemap);
 
             
             #line default
             #line hidden
-WriteLiteral("</div>\r\n                    </div>\r\n                </div>\r\n");
+WriteLiteral("</div>\r\n            </div>\r\n        </div>\r\n");
 
+            
+            #line 53 "..\..\Views\Page\DeletePageConfirmation.cshtml"
+    }
+
+    
+            
+            #line default
+            #line hidden
             
             #line 55 "..\..\Views\Page\DeletePageConfirmation.cshtml"
-            }
+Write(Html.HiddenFor(m => m.PageId));
 
             
+            #line default
+            #line hidden
+            
+            #line 55 "..\..\Views\Page\DeletePageConfirmation.cshtml"
+                                  
+    
+            
+            #line default
+            #line hidden
+            
+            #line 56 "..\..\Views\Page\DeletePageConfirmation.cshtml"
+Write(Html.HiddenFor(m => m.Version));
+
+            
+            #line default
+            #line hidden
+            
+            #line 56 "..\..\Views\Page\DeletePageConfirmation.cshtml"
+                                   
+    
             
             #line default
             #line hidden
             
             #line 57 "..\..\Views\Page\DeletePageConfirmation.cshtml"
-       Write(Html.HiddenFor(m => m.PageId));
+Write(Html.HiddenSubmit());
 
             
             #line default
             #line hidden
             
             #line 57 "..\..\Views\Page\DeletePageConfirmation.cshtml"
-                                          
-            
-            
-            #line default
-            #line hidden
-            
-            #line 58 "..\..\Views\Page\DeletePageConfirmation.cshtml"
-       Write(Html.HiddenFor(m => m.Version));
-
+                        
+}
             
             #line default
             #line hidden
-            
-            #line 58 "..\..\Views\Page\DeletePageConfirmation.cshtml"
-                                           
-            
-            
-            #line default
-            #line hidden
-            
-            #line 59 "..\..\Views\Page\DeletePageConfirmation.cshtml"
-       Write(Html.HiddenSubmit());
-
-            
-            #line default
-            #line hidden
-            
-            #line 59 "..\..\Views\Page\DeletePageConfirmation.cshtml"
-                                
-        }
-
-            
-            #line default
-            #line hidden
-WriteLiteral("    </div>\r\n</div>\r\n");
-
         }
     }
 }
