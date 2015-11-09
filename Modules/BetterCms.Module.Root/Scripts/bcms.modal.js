@@ -262,6 +262,10 @@ bettercms.define('bcms.modal', ['bcms.jquery', 'bcms', 'bcms.tabs', 'bcms.ko.ext
                 instance.closeClick();
             });
 
+            container.find(selectors.cancel).on('click', function () {
+                instance.closeClick();
+            });
+
             container.find(selectors.accept).on('click', function () {
                 instance.acceptClick();
             });
