@@ -538,7 +538,7 @@ namespace BetterCms.Module.Root.Commands.GetPageToRender
         /// <param name="optionValues">The option values.</param>
         /// <param name="childrenPages">The children pages.</param>
         /// <returns>Merged option values</returns>
-        private IList<IOptionValue> GetMergedOptionValues(IEnumerable<IOptionEntity> options, IEnumerable<IOptionEntity> optionValues, IList<Page> childrenPages)
+        private IList<IOptionValue> GetMergedOptionValues(IEnumerable<IOptionEntity> options, IEnumerable<IOptionValueEntity> optionValues, IList<Page> childrenPages)
         {
             var mergedOptions = new List<IOptionValue>();
 

@@ -298,7 +298,9 @@ bettercms.define('bcms.options', ['bcms.jquery', 'bcms', 'bcms.ko.extenders', 'b
                 self.rowId = null;
                 self.customType = ko.observable();
                 self.customOptionTitle = ko.observable();
+                self.customOptionTitleBinding = ko.observable();
                 self.customOptionDefaultTitle = ko.observable();
+                self.customOptionDefaultTitleBinding = ko.observable();
                 self.calcType = ko.observable();
                 self.translationsEnabled = false;
                 self.oldValues = {};
@@ -306,7 +308,7 @@ bettercms.define('bcms.options', ['bcms.jquery', 'bcms', 'bcms.ko.extenders', 'b
                 // NOTE: useDefaultValueBinding should be registered before defaultValue and type
                 // because in other case, when cancelling edit mode, it sets wrong values.
                 self.registerFields(self.useDefaultValueBinding, self.key, self.defaultValueBinding, self.valueBinding,
-                    self.type, self.customType, self.calcType, self.customOptionTitle, self.customOptionDefaultTitle);
+                    self.type, self.customType, self.calcType, self.customOptionTitleBinding, self.customOptionDefaultTitleBinding, self.customOptionTitle, self.customOptionDefaultTitle);
 
                 self.getOptionTypeName = function () {
                     var i,
@@ -356,8 +358,8 @@ bettercms.define('bcms.options', ['bcms.jquery', 'bcms', 'bcms.ko.extenders', 'b
                             self.editableValue('');
                         }
                     } else {
-                        self.customOptionTitle('');
-                        self.customOptionDefaultTitle('');
+                        self.customOptionTitleBinding('');
+                        self.customOptionDefaultTitleBinding('');
 
                         // Leaving boolean mode
                         if (oldType == optionTypes.boolType) {
@@ -447,7 +449,9 @@ bettercms.define('bcms.options', ['bcms.jquery', 'bcms', 'bcms.ko.extenders', 'b
                 self.type(item.Type);
                 if (item.Type == optionTypes.customType) {
                     self.customType(item.CustomType);
+                    self.customOptionDefaultTitleBinding(item.CustomOptionDefaultValueTitle);
                     self.customOptionDefaultTitle(item.CustomOptionDefaultValueTitle);
+                    self.customOptionTitleBinding(item.CustomOptionValueTitle);
                     self.customOptionTitle(item.CustomOptionValueTitle);
                 }
                 self.calcType(self.getCalcType(self));
@@ -459,11 +463,11 @@ bettercms.define('bcms.options', ['bcms.jquery', 'bcms', 'bcms.ko.extenders', 'b
                     self.translations = item.Translations;
                 }
                 self.translationsEnabled = parent.showLanguages();
-                if (self.translationsEnabled) {
-                    if (item.UseDefaultValue && item.OptionValue == null) {
-                        self.valueBinding(item.OptionDefaultValue);
-                    }
-                }
+//                if (self.translationsEnabled) {
+//                    if (item.UseDefaultValue && item.OptionValue == null) {
+//                        self.valueBinding(item.OptionDefaultValue);
+//                    }
+//                }
                 if (item.ValueTranslations != null) {
                     self.valueTranslations = item.ValueTranslations;
                     self.valueTranslations.forEach(function (item) {
@@ -478,30 +482,33 @@ bettercms.define('bcms.options', ['bcms.jquery', 'bcms', 'bcms.ko.extenders', 'b
                     if (self.isActive()) {
                         if ((self.translationsEnabled && languageId == "") || !self.translationsEnabled) {
                             if (newValue) {
-                                self.value(self.defaultValue());
+//                                self.value(self.defaultValue());
                                 self.valueBinding(self.defaultValue());
-                                self.customOptionTitle(self.customOptionDefaultTitle());
+                                self.customOptionTitleBinding(self.customOptionDefaultTitle());
+//                                self.customOptionTitle(self.customOptionDefaultTitle());
                             } else {
                                 var val = self.type() == optionTypes.boolType ? false : '';
-                                self.value(val);
+//                                self.value(val);
                                 self.valueBinding(val);
-                                self.customOptionTitle(val);
+//                                self.customOptionTitle(val);
+                                self.customOptionTitleBinding(val);
                             }
                         } else {
                             var translation = self.getTranslation(languageId);
                             if (newValue) {
                                 if (translation != null) {
                                     var optionValue = self.ClearFixValue(translation.OptionValue);
+                                    var customOptionValue = self.ClearFixValue(translation.CustomOptionTitle);
                                     self.valueBinding(optionValue);
-                                    self.customOptionTitle(optionValue);
+                                    self.customOptionTitleBinding(customOptionValue);
                                 } else {
                                     self.valueBinding(self.defaultValue());
-                                    self.customOptionTitle(self.defaultValue());
+                                    self.customOptionTitleBinding(self.customOptionDefaultTitle());
                                 }
                             } else {
                                 var val = self.type() == optionTypes.boolType ? false : '';
                                 self.valueBinding(val);
-                                self.customOptionTitle(val);
+                                self.customOptionTitleBinding(val);
                             }
                         }
                     }
@@ -513,18 +520,15 @@ bettercms.define('bcms.options', ['bcms.jquery', 'bcms', 'bcms.ko.extenders', 'b
                     if (newValue != null) {
                         newValue = newValue.toString();
                     }
-                    var customOptionDefaultTitle = self.customOptionDefaultTitle();
+                    var customOptionDefaultTitle = self.customOptionDefaultTitleBinding();
                     if (customOptionDefaultTitle != null) {
                         customOptionDefaultTitle = customOptionDefaultTitle.toString();
                     }
 
-                    if (!self.translationsEnabled) {
-                        self.defaultValue(newValue);
-                        return;
-                    }
                     var languageId = parent.languageId();
                     if (languageId == "") {
                         self.defaultValue(newValue);
+                        self.customOptionDefaultTitle(customOptionDefaultTitle);
                     }
                     else {
                         var translation = this.getTranslation(languageId);
@@ -622,17 +626,17 @@ bettercms.define('bcms.options', ['bcms.jquery', 'bcms', 'bcms.ko.extenders', 'b
                 }
                 if (languageId == "") {
                     this.defaultValueBinding(defaultValue);
-                    this.customOptionDefaultTitle(customOptionDefaultTitle);
+                    this.customOptionDefaultTitleBinding(customOptionDefaultTitle);
                 } else {
                     var translation = this.getTranslation(languageId);
                     if (translation == null) {
                         this.defaultValueBinding(defaultValue);
-                        this.customOptionDefaultTitle(customOptionDefaultTitle);
+                        this.customOptionDefaultTitleBinding(customOptionDefaultTitle);
                     } else {
                         var translationValue = this.ClearFixValue(translation.OptionValue);
                         var translationCustomTitle = this.ClearFixValue(translation.CustomOptionTitle);
                         this.defaultValueBinding(translationValue);
-                        this.customOptionDefaultTitle(translationCustomTitle);
+                        this.customOptionDefaultTitleBinding(translationCustomTitle);
                     }
                 }
             };
@@ -658,7 +662,7 @@ bettercms.define('bcms.options', ['bcms.jquery', 'bcms', 'bcms.ko.extenders', 'b
                 this.oldValues['calcType'] = this.calcType();
                 this.oldValues['customType'] = this.customType();
                 this.oldValues['defaultValueBinding'] = this.defaultValueBinding();
-                this.oldValues['customOptionDefaultTitle'] = this.customOptionDefaultTitle();
+                this.oldValues['customOptionDefaultTitleBinding'] = this.customOptionDefaultTitleBinding();
             };
 
             OptionViewModel.prototype.restoreOldValues = function () {
@@ -668,7 +672,7 @@ bettercms.define('bcms.options', ['bcms.jquery', 'bcms', 'bcms.ko.extenders', 'b
                 this.valueBinding(this.oldValues.valueBinding);
                 this.customType(this.oldValues.customType);
                 this.customOptionTitle(this.oldValues.customOptionTitle);
-                this.customOptionDefaultTitle(this.oldValues.customOptionDefaultTitle);
+                this.customOptionDefaultTitleBinding(this.oldValues.customOptionDefaultTitleBinding);
             };
 
             OptionViewModel.prototype.onBodyClick = function (e) {
@@ -736,20 +740,16 @@ bettercms.define('bcms.options', ['bcms.jquery', 'bcms', 'bcms.ko.extenders', 'b
                     if (newValue != null) {
                         newValue = newValue.toString();
                     }
-                    var customOptionTitle = self.customOptionTitle();
+                    var customOptionTitle = self.customOptionTitleBinding();
                     if (customOptionTitle != null) {
                         customOptionTitle = customOptionTitle.toString();
                     }
 
-                    if (!self.translationsEnabled) {
-                        self.value(newValue);
-                        self.useDefaultValue(useDefaultValue);
-                        return;
-                    }
                     var languageId = parent.languageId();
                     if (languageId == "") {
                         self.value(newValue);
                         self.useDefaultValue(useDefaultValue);
+                        self.customOptionTitle(customOptionTitle);
                     }
                     else {
 
@@ -835,13 +835,13 @@ bettercms.define('bcms.options', ['bcms.jquery', 'bcms', 'bcms.ko.extenders', 'b
                 if (languageId == "") {
                     if (this.useDefaultValue() && value == null) {
                         this.valueBinding(defaultValue);
-                        this.customOptionTitle(customOptionDefaultTitle);
+                        this.customOptionTitleBinding(customOptionDefaultTitle);
                     } else {
                         this.valueBinding(value);
-                        this.customOptionTitle(customOptionTitle);
+                        this.customOptionTitleBinding(customOptionTitle);
                     }
                     this.useDefaultValueBinding(this.useDefaultValue());
-                    this.customOptionDefaultTitle(customOptionDefaultTitle);
+                    this.customOptionDefaultTitleBinding(customOptionDefaultTitle);
                     this.defaultValueBinding(defaultValue);
                 } else {
                     var translation = this.getTranslation(languageId);
@@ -849,23 +849,23 @@ bettercms.define('bcms.options', ['bcms.jquery', 'bcms', 'bcms.ko.extenders', 'b
                     var customOptionTitleValue;
                     if (translation == null) {
                         this.defaultValueBinding(defaultValue);
-                        this.customOptionDefaultTitle(customOptionDefaultTitle);
+                        this.customOptionDefaultTitleBinding(customOptionDefaultTitle);
                         this.valueBinding(defaultValue);
-                        this.customOptionTitle(customOptionDefaultTitle);
+                        this.customOptionTitleBinding(customOptionDefaultTitle);
                     } else {
                         optionValue = this.ClearFixValue(translation.OptionValue);
                         customOptionTitleValue = this.ClearFixValue(translation.CustomOptionTitle);
                         this.defaultValueBinding(optionValue);
-                        this.customOptionDefaultTitle(customOptionTitleValue);
+                        this.customOptionDefaultTitleBinding(customOptionTitleValue);
                         this.valueBinding(optionValue);
-                        this.customOptionTitle(customOptionTitleValue);
+                        this.customOptionTitleBinding(customOptionTitleValue);
                     }
                     var valueTranslation = this.getValueTranslation(languageId);
                     if (valueTranslation != null) {
                         optionValue = this.ClearFixValue(valueTranslation.OptionValue);
-                        customOptionTitleValue = this.ClearFixValue(translation.CustomOptionTitle);
+                        customOptionTitleValue = this.ClearFixValue(valueTranslation.CustomOptionTitle);
                         this.valueBinding(optionValue);
-                        this.customOptionTitle(customOptionTitleValue);
+                        this.customOptionTitleBinding(customOptionTitleValue);
                         this.useDefaultValueBinding(false);
                     } else {
                         this.useDefaultValueBinding(true);

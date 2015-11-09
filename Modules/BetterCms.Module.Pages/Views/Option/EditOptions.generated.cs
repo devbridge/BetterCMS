@@ -104,7 +104,7 @@ WriteLiteral("\r\n");
                         CanBeEdited = false
                     },
                                         
-                new OptionValueEditableGridColumn(PagesGlobalization.Options_OptionDefaultValueColumn, "defaultValueBinding", "customOptionDefaultTitle")
+                new OptionValueEditableGridColumn(PagesGlobalization.Options_OptionDefaultValueColumn, "defaultValueBinding", "customOptionDefaultTitleBinding")
                     {
                         HiddenFieldName = "Options[{0}].OptionDefaultValue",
                         FocusIdentifier = "valueHasFocus"

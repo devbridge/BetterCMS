@@ -25,7 +25,7 @@ namespace BetterCms.Test.Module.Root.ServiceTests
         public void Should_Return_MergedEmptyOptionsSuccessfully()
         {
             var service = CreateOptionService();
-            var optionValues = new List<IOptionEntity>();
+            var optionValues = new List<IOptionValueEntity>();
             var options = new List<IOptionEntity>();
 
             var result = service.GetMergedOptionValues(options, optionValues);
@@ -44,7 +44,7 @@ namespace BetterCms.Test.Module.Root.ServiceTests
             
             optionValue3.Value = null;
             var service = CreateOptionService();
-            var optionValues = new List<IOptionEntity> { optionValue1, optionValue2, optionValue3 };
+            var optionValues = new List<IOptionValueEntity> { optionValue1, optionValue2, optionValue3 };
             var options = new List<IOptionEntity>();
 
             var result = service.GetMergedOptionValues(options, optionValues);
@@ -65,7 +65,7 @@ namespace BetterCms.Test.Module.Root.ServiceTests
             option3.DefaultValue = null;
 
             var service = CreateOptionService();
-            var optionValues = new List<IOptionEntity>();
+            var optionValues = new List<IOptionValueEntity>();
             var options = new List<IOptionEntity> { option1, option2, option3 };
 
             var result = service.GetMergedOptionValues(options, optionValues);
@@ -97,7 +97,7 @@ namespace BetterCms.Test.Module.Root.ServiceTests
             option3.DefaultValue = null;
             optionValue4.Value = null;
             var service = CreateOptionService();
-            var optionValues = new List<IOptionEntity> { optionValue1, optionValue2, optionValue3, optionValue4, optionValue5 };
+            var optionValues = new List<IOptionValueEntity> { optionValue1, optionValue2, optionValue3, optionValue4, optionValue5 };
             var options = new List<IOptionEntity> { option1, option2, option3, option4, option5 };
 
             var result = service.GetMergedOptionValues(options, optionValues);
@@ -107,105 +107,10 @@ namespace BetterCms.Test.Module.Root.ServiceTests
         }
 
         [Test]
-        public void Should_Return_ValuesConvertedToInteger()
-        {
-            var service = CreateOptionService();
-            var optionValues = new List<IOptionEntity>();
-            var options = new List<IOptionEntity>();
-            
-            var option = TestDataProvider.CreateNewLayoutOption();
-            option.DefaultValue = "580";
-            option.Type = OptionType.Integer;
-            options.Add(option);
-
-            var result = service.GetMergedOptionValues(options, optionValues);
-            Assert.NotNull(result);
-            Assert.AreEqual(result.Count, 1);
-            Assert.AreEqual(result[0].Value is int, true);
-            Assert.AreEqual(result[0].Value, 580);
-        }
-        
-        [Test]
-        public void Should_Return_ValuesConvertedToLongInteger()
-        {
-            var service = CreateOptionService();
-            var optionValues = new List<IOptionEntity>();
-            var options = new List<IOptionEntity>();
-            
-            var option = TestDataProvider.CreateNewLayoutOption();
-            option.DefaultValue = "4294967296";
-            option.Type = OptionType.Integer;
-            options.Add(option);
-
-            var result = service.GetMergedOptionValues(options, optionValues);
-            Assert.NotNull(result);
-            Assert.AreEqual(result.Count, 1);
-            Assert.AreEqual(result[0].Value is long, true);
-            Assert.AreEqual(result[0].Value, 4294967296);
-        }
-        
-        [Test]
-        public void Should_Return_ValuesConvertedToDateTime()
-        {
-            var service = CreateOptionService();
-            var optionValues = new List<IOptionEntity>();
-            var options = new List<IOptionEntity>();
-
-            var option = TestDataProvider.CreateNewLayoutOption();
-            option.DefaultValue = "2010-10-10";
-            option.Type = OptionType.DateTime;
-            options.Add(option);
-
-            var result = service.GetMergedOptionValues(options, optionValues);
-            Assert.NotNull(result);
-            Assert.AreEqual(result.Count, 1);
-            Assert.AreEqual(result[0].Value is DateTime, true);
-            Assert.AreEqual(result[0].Value, new DateTime(2010, 10, 10));
-        }
-        
-        [Test]
-        public void Should_Return_ValuesConvertedToBoolean()
-        {
-            var service = CreateOptionService();
-            var optionValues = new List<IOptionEntity>();
-            var options = new List<IOptionEntity>();
-
-            var option = TestDataProvider.CreateNewLayoutOption();
-            option.DefaultValue = "true";
-            option.Type = OptionType.Boolean;
-            options.Add(option);
-
-            var result = service.GetMergedOptionValues(options, optionValues);
-            Assert.NotNull(result);
-            Assert.AreEqual(result.Count, 1);
-            Assert.AreEqual(result[0].Value is bool, true);
-            Assert.AreEqual(result[0].Value, true);
-        }
-        
-        [Test]
-        public void Should_Return_ValuesConvertedToFloat()
-        {
-            var service = CreateOptionService();
-            var optionValues = new List<IOptionEntity>();
-            var options = new List<IOptionEntity>();
-
-            var option = TestDataProvider.CreateNewLayoutOption();
-            option.DefaultValue = "10.5";
-            option.Type = OptionType.Float;
-            options.Add(option);
-
-            var result = service.GetMergedOptionValues(options, optionValues);
-            Assert.NotNull(result);
-            Assert.AreEqual(result.Count, 1);
-            Assert.AreEqual(result[0].Value is decimal, true);
-            Assert.AreEqual(result[0].Value, 10.5M);
-        }
-        
-        [Test]
         public void Should_Return_Null_Values_Not_ConvertedToInteger()
         {
             var service = CreateOptionService();
-            var optionValues = new List<IOptionEntity>();
+            var optionValues = new List<IOptionValueEntity>();
             var options = new List<IOptionEntity>();
 
             var option = TestDataProvider.CreateNewLayoutOption();
@@ -222,7 +127,7 @@ namespace BetterCms.Test.Module.Root.ServiceTests
         public void Should_Return_Null_Values_Not_ConvertedToDateTime()
         {
             var service = CreateOptionService();
-            var optionValues = new List<IOptionEntity>();
+            var optionValues = new List<IOptionValueEntity>();
             var options = new List<IOptionEntity>();
 
             var option = TestDataProvider.CreateNewLayoutOption();
@@ -239,7 +144,7 @@ namespace BetterCms.Test.Module.Root.ServiceTests
         public void Should_Return_Null_Values_Not_ConvertedToBoolean()
         {
             var service = CreateOptionService();
-            var optionValues = new List<IOptionEntity>();
+            var optionValues = new List<IOptionValueEntity>();
             var options = new List<IOptionEntity>();
 
             var option = TestDataProvider.CreateNewLayoutOption();
@@ -257,7 +162,7 @@ namespace BetterCms.Test.Module.Root.ServiceTests
         public void Should_Return_Null_Values_Not_ConvertedToFloat()
         {
             var service = CreateOptionService();
-            var optionValues = new List<IOptionEntity>();
+            var optionValues = new List<IOptionValueEntity>();
             var options = new List<IOptionEntity>();
 
             var option = TestDataProvider.CreateNewLayoutOption();
@@ -275,7 +180,7 @@ namespace BetterCms.Test.Module.Root.ServiceTests
         public void Should_Return_MergedEmptyOptions_ForEdit_Successfully()
         {
             var service = CreateOptionService();
-            var optionValues = new List<IOptionEntity>();
+            var optionValues = new List<IOptionValueEntity>();
             var options = new List<IOptionEntity>();
 
             var result = service.GetMergedOptionValuesForEdit(options, optionValues);
@@ -294,7 +199,7 @@ namespace BetterCms.Test.Module.Root.ServiceTests
             optionValue3.Value = null;
 
             var service = CreateOptionService();
-            var optionValues = new List<IOptionEntity> { optionValue1, optionValue2, optionValue3 };
+            var optionValues = new List<IOptionValueEntity> { optionValue1, optionValue2, optionValue3 };
             var options = new List<IOptionEntity>();
 
             var result = service.GetMergedOptionValuesForEdit(options, optionValues);
@@ -313,7 +218,7 @@ namespace BetterCms.Test.Module.Root.ServiceTests
             option3.DefaultValue = null;
 
             var service = CreateOptionService();
-            var optionValues = new List<IOptionEntity>();
+            var optionValues = new List<IOptionValueEntity>();
             var options = new List<IOptionEntity> { option1, option2, option3 };
 
             var result = service.GetMergedOptionValuesForEdit(options, optionValues);
@@ -345,7 +250,7 @@ namespace BetterCms.Test.Module.Root.ServiceTests
             optionValue4.Value = null;
 
             var service = CreateOptionService();
-            var optionValues = new List<IOptionEntity> { optionValue1, optionValue2, optionValue3, optionValue4, optionValue5 };
+            var optionValues = new List<IOptionValueEntity> { optionValue1, optionValue2, optionValue3, optionValue4, optionValue5 };
             var options = new List<IOptionEntity> { option1, option2, option3, option4, option5 };
 
             var result = service.GetMergedOptionValuesForEdit(options, optionValues);

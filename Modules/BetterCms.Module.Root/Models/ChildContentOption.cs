@@ -11,7 +11,7 @@ using BetterModules.Core.Models;
 namespace BetterCms.Module.Root.Models
 {
     [Serializable]
-    public class ChildContentOption : EquatableEntity<ChildContentOption>, IOptionEntity, IMultilingualOption
+    public class ChildContentOption : EquatableEntity<ChildContentOption>, IOptionValueEntity, IMultilingualOption
     {
         public ChildContentOption()
         {
@@ -23,6 +23,8 @@ namespace BetterCms.Module.Root.Models
         public virtual string Value { get; set; }
 
         public virtual string Key { get; set; }
+
+        public virtual bool UseDefaultValue { get; set; }
 
         public virtual OptionType Type { get; set; }
 

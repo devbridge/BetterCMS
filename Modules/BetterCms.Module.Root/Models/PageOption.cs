@@ -9,7 +9,7 @@ using BetterModules.Core.Models;
 namespace BetterCms.Module.Root.Models
 {
     [Serializable]
-    public class PageOption : EquatableEntity<PageOption>, IOptionEntity, IAccessSecuredObjectDependency
+    public class PageOption : EquatableEntity<PageOption>, IOptionValueEntity, IAccessSecuredObjectDependency
     {
         public virtual Page Page { get; set; }
 
@@ -20,6 +20,8 @@ namespace BetterCms.Module.Root.Models
         public virtual OptionType Type { get; set; }
 
         public virtual CustomOption CustomOption { get; set; }
+
+        public virtual bool UseDefaultValue { get; set; }
 
         IAccessSecuredObject IAccessSecuredObjectDependency.SecuredObject
         {

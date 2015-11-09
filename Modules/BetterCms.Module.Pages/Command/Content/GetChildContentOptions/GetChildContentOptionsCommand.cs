@@ -134,6 +134,7 @@ namespace BetterCms.Module.Pages.Command.Content.GetChildContentOptions
 
         private IQueryable<ChildContent> AddFetches(IQueryable<ChildContent> query)
         {
+            // TODO: fix this !!! This has critical performance impact
             return query
                 .Fetch(f => f.Child).ThenFetchMany(f => f.ContentOptions).ThenFetch(f => f.CustomOption)
                 .FetchMany(f => f.Options).ThenFetch(f => f.CustomOption)

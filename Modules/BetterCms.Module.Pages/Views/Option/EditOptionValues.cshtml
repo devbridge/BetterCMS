@@ -4,17 +4,15 @@
 @using BetterCms.Module.Root.Content.Resources
 @using BetterCms.Module.Root.Mvc.Grids;
 @using BetterCms.Module.Root.ViewModels.Shared
-
+@model EditableGridViewModel
 @{
-    var model = new EditableGridViewModel();
-    model.ShowSearch = false;
-    model.TopBlockClass = "bcms-top-block-holder";
-    model.AddHiddenFields = true;
-    model.SaveButtonTitle = RootGlobalization.Button_Ok;
-    model.ShowMessages = false;
-    model.TopBlockAddItemView = "~/Areas/bcms-pages/Views/Option/Partial/TopBlockAddItem.cshtml";
-    model.CanAddNewItems = false;
-    model.Columns = new List<EditableGridColumn> 
+    Model.ShowSearch = false;
+    Model.TopBlockClass = "bcms-top-block-holder";
+    Model.AddHiddenFields = true;
+    Model.SaveButtonTitle = RootGlobalization.Button_Ok;
+    Model.ShowMessages = false;
+    Model.TopBlockAddItemView = "~/Areas/bcms-pages/Views/Option/Partial/TopBlockAddItem.cshtml";
+    Model.Columns = new List<EditableGridColumn> 
     { 
         new EditableGridColumn(PagesGlobalization.EditOptionsValues_OptionKeyColumn, null, "key")
         {
@@ -27,7 +25,7 @@
             CellView = "~/Areas/bcms-pages/Views/Option/Partial/UseDefaultValueCell.cshtml",
             FocusIdentifier = "hasFocus"
         }, 
-        new OptionValueEditableGridColumn(PagesGlobalization.EditOptionsValues_OptionDefaultValueColumn, "defaultValueBinding", "customOptionDefaultTitle")
+        new OptionValueEditableGridColumn(PagesGlobalization.EditOptionsValues_OptionDefaultValueColumn, "defaultValueBinding", "customOptionDefaultTitleBinding")
         {
             CanBeEdited = false, 
             HeaderAttributes = "style=\"width: 160px;\""
@@ -39,7 +37,7 @@
             HeaderAttributes = "style=\"width: 100px;\"", 
             CanBeEdited = false
         }, 
-        new OptionValueEditableGridColumn(PagesGlobalization.EditOptionsValues_OptionValueColumn, "valueBinding", "customOptionTitle")
+        new OptionValueEditableGridColumn(PagesGlobalization.EditOptionsValues_OptionValueColumn, "valueBinding", "customOptionTitleBinding")
         {
             HeaderAttributes = "style=\"width: 200px;\"", 
             HiddenFieldName = "OptionValues[{0}].OptionValue",
@@ -50,4 +48,4 @@
         new EditableGridHiddenField("customType", "OptionValues[{0}].CustomType") };
 }
 
-@Html.Partial(RootModuleConstants.EditableGridTemplate, model)
+@Html.Partial(RootModuleConstants.EditableGridTemplate, Model)
