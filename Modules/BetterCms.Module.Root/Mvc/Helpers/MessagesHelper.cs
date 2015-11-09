@@ -6,7 +6,6 @@ using System.Web;
 using System.Web.Mvc;
 
 using BetterCms.Core.Exceptions;
-using BetterCms.Core.Mvc;
 
 using BetterModules.Core.Web.Mvc;
 
@@ -17,11 +16,10 @@ namespace BetterCms.Module.Root.Mvc.Helpers
     /// </summary>
     public static class MessagesHelper
     {
-        private const string cssClassMessagesType1 = "bcms-messages-ui bcms-js-messages";
-        private const string cssClassMessagesType2 = "bcms-messages-ui bcms-js-messages";
+        private const string cssClassMessages = "bcms-messages-ui bcms-js-messages";
         private const string cssClassCustomMessages = "bcms-custom-messages";
 
-        public static IHtmlString TabbedContentCustomMessagesBox(this HtmlHelper html, IMessagesIndicator messages, string id = null,
+        public static IHtmlString CustomMessagesBox(this HtmlHelper html, IMessagesIndicator messages, string id = null,
             IDictionary<string, string> attributes = null)
         {
             if (string.IsNullOrWhiteSpace(id))
@@ -29,19 +27,13 @@ namespace BetterCms.Module.Root.Mvc.Helpers
                 id = string.Format("bcms-custom-messages-{0}", Guid.NewGuid());
             }
 
-            return MessagesBox(html, id, attributes, cssClassMessagesType1 + " " + cssClassCustomMessages, messages);
+            return MessagesBox(html, id, attributes, cssClassMessages + " " + cssClassCustomMessages, messages);
         }
 
-        public static IHtmlString TabbedContentMessagesBox(this HtmlHelper html, string id = null, 
+        public static IHtmlString MessagesBox(this HtmlHelper html, string id = null, 
             IDictionary<string, string> attributes = null)
         {
-            return MessagesBox(html, id, attributes, cssClassMessagesType1);
-        }
-
-        public static IHtmlString SiteSettingsMessagesBox(this HtmlHelper html, string id = null,
-            IDictionary<string, string> attributes = null)
-        {
-            return MessagesBox(html, id, attributes, cssClassMessagesType2);
+            return MessagesBox(html, id, attributes, cssClassMessages);
         }
 
         /// <summary>

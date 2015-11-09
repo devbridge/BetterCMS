@@ -9,7 +9,7 @@
 @model DeletePageViewModel
 
 <div class="bcms-modal-frame-holder">
-    @Html.TabbedContentMessagesBox()
+    @Html.MessagesBox()
 
     <div class="bcms-window-options">
         @using (Html.BeginForm<PageController>(f => f.DeletePage(null), FormMethod.Post,

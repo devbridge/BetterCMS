@@ -121,7 +121,7 @@ WriteLiteral("    ");
 
             
             #line 17 "..\..\Views\Category\CategoryTreeEdit.cshtml"
-Write(Html.TabbedContentMessagesBox());
+Write(Html.MessagesBox());
 
             
             #line default

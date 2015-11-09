@@ -59,7 +59,7 @@ WriteLiteral("\r\n");
 
             
             #line 5 "..\..\Views\Option\Templates.cshtml"
-Write(Html.TabbedContentMessagesBox());
+Write(Html.MessagesBox());
 
             
             #line default

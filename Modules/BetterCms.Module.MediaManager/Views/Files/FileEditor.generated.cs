@@ -124,7 +124,7 @@ WriteLiteral("    ");
 
             
             #line 25 "..\..\Views\Files\FileEditor.cshtml"
-Write(Html.TabbedContentMessagesBox());
+Write(Html.MessagesBox());
 
             
             #line default

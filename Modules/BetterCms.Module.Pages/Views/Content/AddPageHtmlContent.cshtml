@@ -17,7 +17,7 @@
 @{ ViewBag.CanEdit = (ViewContext.Controller as CmsControllerBase).SecurityService.IsAuthorized(RootModuleConstants.UserRoles.EditContent); }
 
 <div class="bcms-modal-frame-holder">
-    @Html.TabbedContentMessagesBox()
+    @Html.MessagesBox()
 
     <div class="bcms-window-tabbed-options">
         @using (Html.BeginForm<ContentController>(c => c.SavePageHtmlContent(null), FormMethod.Post, new { @id = "bcms-content-form", @class = "bcms-ajax-form" }))

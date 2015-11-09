@@ -44,7 +44,7 @@
 @using (Html.BeginForm<TemplatesController>(f => f.Templates(null), FormMethod.Post, new { @id = "bcms-templates-form", @class = "bcms-ajax-form" }))
 {
 
-    @Html.SiteSettingsMessagesBox()
+    @Html.MessagesBox()
 
     <div class="bcms-window-settings">
         @Html.HiddenGridOptions(Model.GridOptions)

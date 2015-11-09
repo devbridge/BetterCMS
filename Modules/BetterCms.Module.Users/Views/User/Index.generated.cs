@@ -146,14 +146,14 @@ WriteLiteral("\r\n\r\n");
             #line hidden
             
             #line 39 "..\..\Views\User\Index.cshtml"
-   Write(Html.SiteSettingsMessagesBox("bcms-users-messages"));
+   Write(Html.MessagesBox("bcms-users-messages"));
 
             
             #line default
             #line hidden
             
             #line 39 "..\..\Views\User\Index.cshtml"
-                                                            
+                                                
 
         
             

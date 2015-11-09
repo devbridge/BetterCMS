@@ -24,7 +24,7 @@
     </div>
 
     <div class="bcms-window-tabbed-options">
-        @Html.TabbedContentMessagesBox()
+        @Html.MessagesBox()
         @using (Html.BeginForm<PageController>(f => f.AddNewPage(null, null), FormMethod.Post, new { @class = "bcms-ajax-form" }))
         {
             <div id="bcms-tab-1" class="bcms-tab-single">

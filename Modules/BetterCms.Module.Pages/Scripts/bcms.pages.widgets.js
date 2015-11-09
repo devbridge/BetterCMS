@@ -95,8 +95,7 @@ bettercms.define('bcms.pages.widgets', ['bcms.jquery', 'bcms', 'bcms.modal', 'bc
                 editContentInfoMessageBox: '.bcms-warning-messages',
 
                 siteSettingsButtonOpener: ".bcms-btn-opener",
-                siteSettingsButtonHolder: ".bcms-btn-opener-holder",
-                siteSettingsOutsideAddButtons: ":not(div[class^='bcms-btn-opener'])"
+                siteSettingsButtonHolder: ".bcms-btn-opener-holder"
             },
             classes = {
                 regionAdvancedContent: 'bcms-content-advanced',
@@ -616,7 +615,7 @@ bettercms.define('bcms.pages.widgets', ['bcms.jquery', 'bcms', 'bcms.modal', 'bc
                 }
             });
 
-            container.find(selectors.siteSettingsOutsideAddButtons).on('click', function (event) {
+            $(document).on('click', function (event) {
                 var holder = form.find(selectors.siteSettingsButtonHolder);
                 if (holder.hasClass('bcms-opened')) {
                     holder.removeClass('bcms-opened');

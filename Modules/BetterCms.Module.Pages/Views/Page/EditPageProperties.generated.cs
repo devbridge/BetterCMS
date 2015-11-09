@@ -295,7 +295,7 @@ WriteLiteral("        ");
 
             
             #line 55 "..\..\Views\Page\EditPageProperties.cshtml"
-   Write(Html.TabbedContentMessagesBox());
+   Write(Html.MessagesBox());
 
             
             #line default
@@ -1259,7 +1259,7 @@ WriteLiteral(">\r\n");
             #line hidden
             
             #line 220 "..\..\Views\Page\EditPageProperties.cshtml"
-                   Write(Html.TabbedContentCustomMessagesBox(Model.TranslationMessages));
+                   Write(Html.CustomMessagesBox(Model.TranslationMessages));
 
             
             #line default

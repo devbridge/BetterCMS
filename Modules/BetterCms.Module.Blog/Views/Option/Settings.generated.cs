@@ -71,7 +71,7 @@ WriteLiteral("\r\n");
 
             
             #line 7 "..\..\Views\Option\Settings.cshtml"
-Write(Html.TabbedContentMessagesBox());
+Write(Html.MessagesBox());
 
             
             #line default

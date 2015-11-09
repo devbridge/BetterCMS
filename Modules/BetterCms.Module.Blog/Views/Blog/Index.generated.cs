@@ -181,14 +181,14 @@ WriteLiteral("\n\n");
             #line hidden
             
             #line 71 "..\..\Views\Blog\Index.cshtml"
-Write(Html.SiteSettingsMessagesBox());
+Write(Html.MessagesBox());
 
             
             #line default
             #line hidden
             
             #line 71 "..\..\Views\Blog\Index.cshtml"
-                                   
+                       
 
     
             

@@ -157,14 +157,14 @@ WriteLiteral("\n\n");
             #line hidden
             
             #line 52 "..\..\Views\Templates\MasterPages.cshtml"
-Write(Html.SiteSettingsMessagesBox());
+Write(Html.MessagesBox());
 
             
             #line default
             #line hidden
             
             #line 52 "..\..\Views\Templates\MasterPages.cshtml"
-                                   
+                       
 
         
             

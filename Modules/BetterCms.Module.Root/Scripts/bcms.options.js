@@ -146,13 +146,22 @@ bettercms.define('bcms.options', ['bcms.jquery', 'bcms', 'bcms.ko.extenders', 'b
 
                 _super.call(self, container, null, items, null);
 
+                self.addOption = function (optionType) {
+                    self.selectedTypeId(optionType.id);
+                }
+
                 //  Override methods
-                self.addNewItem = function () {
+                self.addNewItem = function (data, event) {
                     self.suspendAddItemSubscribe = true;
                     self.selectedTypeId(null);
                     self.suspendAddItemSubscribe = false;
-                    self.isAddNewSelected(true);
+                    self.isAddNewSelected(!self.isAddNewSelected());
+                    event.stopPropagation();
                 };
+
+                $(document).on('click', function() {
+                    self.isAddNewSelected(false);
+                });
             };
 
             OptionsListViewModel.prototype.createItem = function (item) {

@@ -125,14 +125,14 @@ WriteLiteral("\r\n");
             #line hidden
             
             #line 28 "..\..\Views\Tags\ListTags.cshtml"
-   Write(Html.SiteSettingsMessagesBox());
+   Write(Html.MessagesBox());
 
             
             #line default
             #line hidden
             
             #line 28 "..\..\Views\Tags\ListTags.cshtml"
-                                       
+                           
         
 
             

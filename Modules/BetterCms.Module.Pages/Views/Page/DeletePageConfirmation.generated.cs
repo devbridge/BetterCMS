@@ -91,7 +91,7 @@ WriteLiteral("    ");
 
             
             #line 12 "..\..\Views\Page\DeletePageConfirmation.cshtml"
-Write(Html.TabbedContentMessagesBox());
+Write(Html.MessagesBox());
 
             
             #line default

@@ -2,10 +2,13 @@
 
 @if (Model.CanAddNewItems)
 {
-    <div class="bcms-btn-main" data-bind="click: addNewItem">@Model.AddNewTitle</div>
+    <div class="bcms-top-controls-btn-holder">
+        <div class="bcms-btn-main" data-bind="click: addNewItem">@Model.AddNewTitle</div>
+        <div class="bcms-btn-opener" data-bind="click: addNewItem"> </div>
 
-    <div class="bcms-widget-option-box" data-bind="visible: isAddNewSelected">
-        <select class="bcms-global-select" id="bcms-multi-opts" data-bind="options: optionTypes, optionsText: 'name', optionsCaption: 'Choose type...', optionsValue: 'id', value: selectedTypeId"></select>
+        <div class="bcms-btn-opener-holder" data-bind="css: {'bcms-opened' : isAddNewSelected}, foreach: optionTypes">
+            <div class="bcms-btn-opener-link" data-bind="text: name, click: $parent.addOption, clickBubble: false"></div>
+        </div>
     </div>
 
     <div class="bcms-language-bar bcms-language-selector-box" data-bind="visible: showLanguages, with: language">

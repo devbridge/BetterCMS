@@ -61,8 +61,7 @@ bettercms.define('bcms.pages.template', ['bcms.jquery', 'bcms', 'bcms.modal', 'b
                 optionsTab: '#bcms-tab-3',
                 
                 siteSettingsButtonOpener: ".bcms-btn-opener",
-                siteSettingsButtonHolder: ".bcms-btn-opener-holder",
-                siteSettingsOutsideAddButtons: ":not(div[class^='bcms-btn-opener'])"
+                siteSettingsButtonHolder: ".bcms-btn-opener-holder"
             };
 
         /**
@@ -294,7 +293,7 @@ bettercms.define('bcms.pages.template', ['bcms.jquery', 'bcms', 'bcms.modal', 'b
                 }
             });
 
-            container.find(selectors.siteSettingsOutsideAddButtons).on('click', function (event) {
+            $(document).on('click', function (event) {
                 var holder = form.find(selectors.siteSettingsButtonHolder);
                 if (holder.hasClass('bcms-opened')) {
                     holder.removeClass('bcms-opened');

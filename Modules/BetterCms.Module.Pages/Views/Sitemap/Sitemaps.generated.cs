@@ -120,14 +120,14 @@ WriteLiteral("\n\n");
             #line hidden
             
             #line 26 "..\..\Views\Sitemap\Sitemaps.cshtml"
-   Write(Html.SiteSettingsMessagesBox());
+   Write(Html.MessagesBox());
 
             
             #line default
             #line hidden
             
             #line 26 "..\..\Views\Sitemap\Sitemaps.cshtml"
-                                       
+                           
 
 
             

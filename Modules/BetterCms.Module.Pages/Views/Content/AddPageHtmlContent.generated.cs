@@ -131,7 +131,7 @@ WriteLiteral("    ");
 
             
             #line 20 "..\..\Views\Content\AddPageHtmlContent.cshtml"
-Write(Html.TabbedContentMessagesBox());
+Write(Html.MessagesBox());
 
             
             #line default

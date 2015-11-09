@@ -8,7 +8,7 @@
 @model ClonePageViewModel
 
 <div class="bcms-modal-frame-holder">
-    @Html.TabbedContentMessagesBox()
+    @Html.MessagesBox()
 
     <div class="bcms-window-options">
         @using (Html.BeginForm<PageController>(f => f.ClonePage((ClonePageViewModel)null), FormMethod.Post, new { @class = "bcms-ajax-form" }))

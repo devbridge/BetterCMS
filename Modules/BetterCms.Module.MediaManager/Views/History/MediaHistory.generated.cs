@@ -476,7 +476,7 @@ WriteLiteral("            ");
 
             
             #line 118 "..\..\Views\History\MediaHistory.cshtml"
-       Write(Html.TabbedContentMessagesBox());
+       Write(Html.MessagesBox());
 
             
             #line default

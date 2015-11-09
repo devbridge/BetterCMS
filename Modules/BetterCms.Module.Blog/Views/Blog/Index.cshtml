@@ -68,7 +68,7 @@
 
 @using (Html.BeginForm<BlogController>(f => f.Index(null), FormMethod.Post, new { @id = "bcms-blogs-form", @class = "bcms-ajax-form" }))
 {
-    @Html.SiteSettingsMessagesBox()
+    @Html.MessagesBox()
 
     @Html.HiddenGridOptions(Model.GridOptions)
 

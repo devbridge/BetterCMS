@@ -33,7 +33,7 @@ namespace BetterCms.Test.Module.Root.HelperTests
             var context = new ViewContext();
             context.Controller = controller.Object;
 
-            IHtmlString box = new HtmlHelper(context, new ViewPage()).SiteSettingsMessagesBox("bcms-test-id");
+            IHtmlString box = new HtmlHelper(context, new ViewPage()).MessagesBox("bcms-test-id");
             string html = box.ToHtmlString().Trim();
             
             Assert.IsTrue(html.Contains("id=\"bcms-test-id\""));
@@ -48,7 +48,7 @@ namespace BetterCms.Test.Module.Root.HelperTests
             CmsException ex = Assert.Throws<CmsException>(
                 () =>
                     {
-                        new HtmlHelper(new ViewContext(), new ViewPage()).SiteSettingsMessagesBox("bcms-test-id");
+                        new HtmlHelper(new ViewContext(), new ViewPage()).MessagesBox("bcms-test-id");
                     });
 
             Assert.IsInstanceOf<NotSupportedException>(ex.InnerException);

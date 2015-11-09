@@ -110,7 +110,7 @@ WriteLiteral("    ");
 
             
             #line 18 "..\..\Views\Sitemap\NewPage.cshtml"
-Write(Html.SiteSettingsMessagesBox());
+Write(Html.MessagesBox());
 
             
             #line default

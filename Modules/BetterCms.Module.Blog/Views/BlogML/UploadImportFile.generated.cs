@@ -71,7 +71,7 @@ WriteLiteral("    ");
 
             
             #line 8 "..\..\Views\BlogML\UploadImportFile.cshtml"
-Write(Html.TabbedContentMessagesBox());
+Write(Html.MessagesBox());
 
             
             #line default
