@@ -3,12 +3,16 @@ $message-warning: #e5a12a;
 $message-error: #dc4250;
 $message-info: #368fd3;
 
+$message-icon-size: 22px;
+$message-icon-spacing: 12px;
+$message-block-left-padding: ($settings-sidebar + $message-icon-size + $message-icon-spacing);
+
 //fixme change color while design arrives.
 $message-content-type: (
-                ('success', $message-success),
-                ('warning', $message-warning),
-                ('error', $message-error),
-                ('info', $message-info)
+                ('success', $message-success, $bcms-messages-success),
+                ('warning', $message-warning, $bcms-messages-warning),
+                ('error', $message-error, $bcms-messages-error),
+                ('info', $message-info, $bcms-messages-info)
 );
 
 $validation-fields: ();
@@ -19,9 +23,19 @@ $validation-fields: ();
         @include position(fixed, 0 0 null);
         z-index: 999;
 
-        @each $name, $color in $message-content-type {
+        @each $name, $color, $message-icon in $message-content-type {
             .bcms-#{$name}-messages {
                 background-color: $color;
+
+                li {
+                    &:first-child {
+                        @include virtual(before) {
+                            @include position(absolute, 0 null null $settings-sidebar);
+                            @include size($message-icon-size);
+                            background: url($message-icon) no-repeat center;
+                        }
+                    }
+                }
             }
         }
 
@@ -30,27 +44,23 @@ $validation-fields: ();
             font-size: 13px;
             margin: 0;
             min-height: 55px;
-            padding: 15px 60px;
+            padding: 15px 0;
         }
 
         li {
+            box-sizing: border-box;
             color: $white;
             line-height: 18px;
             list-style: none;
             margin: auto;
-            max-width: 700px;
-            padding: 0 19px;
+            padding: 4px (30px + $message-icon-spacing) 4px $message-block-left-padding;
             position: relative;
-        }
-
-        .bcms-btn-close {
-            right: 0;
-            top: 0;
+            width: $page-width;
         }
     }
 
     &-close {
-        @include close-button($icon: $bcms-close-white, $position: 3px 0 null null);
+        @include close-button($icon: $bcms-close-white, $position: 3px 30px null null);
     }
 
     &-draft-destroy {

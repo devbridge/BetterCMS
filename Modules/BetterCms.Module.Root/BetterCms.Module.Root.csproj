@@ -1423,6 +1423,7 @@
     <EmbeddedResource Include="Scripts\ckeditor\skins\bettercms\dialog.css" />
     <Content Include="Scss\base_64\icons\add-content.svg" />
     <Content Include="Scss\base_64\icons\btn-down-arrow.svg" />
+    <Content Include="Scss\base_64\icons\close-white.svg" />
     <Content Include="Scss\base_64\icons\close.svg" />
     <Content Include="Scss\base_64\icons\cp-add-new.svg" />
     <Content Include="Scss\base_64\icons\cp-clone.svg" />
@@ -1489,12 +1490,18 @@
     <Content Include="Scss\base_64\icons\manager-history.svg" />
     <Content Include="Scss\base_64\icons\manager-options.svg" />
     <Content Include="Scss\base_64\icons\manager-region.svg" />
+    <Content Include="Scss\base_64\icons\messages-error.svg" />
+    <Content Include="Scss\base_64\icons\messages-info.svg" />
+    <Content Include="Scss\base_64\icons\messages-success.svg" />
+    <Content Include="Scss\base_64\icons\messages-warning.svg" />
     <Content Include="Scss\base_64\icons\overlay-delete.svg" />
     <Content Include="Scss\base_64\icons\overlay-edit-child.svg" />
     <Content Include="Scss\base_64\icons\overlay-edit.svg" />
     <Content Include="Scss\base_64\icons\overlay-history.svg" />
     <Content Include="Scss\base_64\icons\overlay-options.svg" />
     <Content Include="Scss\base_64\icons\overlay-widget.svg" />
+    <Content Include="Scss\base_64\icons\pager-arrow-left.svg" />
+    <Content Include="Scss\base_64\icons\pager-arrow-right.svg" />
     <Content Include="Scss\base_64\icons\search.svg" />
     <Content Include="Scss\base_64\icons\texture.svg" />
     <Content Include="Scss\base_64\icons\toolbar-h1.svg" />
