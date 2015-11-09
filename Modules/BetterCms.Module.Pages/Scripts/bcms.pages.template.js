@@ -293,7 +293,7 @@ bettercms.define('bcms.pages.template', ['bcms.jquery', 'bcms', 'bcms.modal', 'b
                 }
             });
 
-            $(document).on('click', function (event) {
+            bcms.on(bcms.events.bodyClick, function (event) {
                 var holder = form.find(selectors.siteSettingsButtonHolder);
                 if (holder.hasClass('bcms-opened')) {
                     holder.removeClass('bcms-opened');
