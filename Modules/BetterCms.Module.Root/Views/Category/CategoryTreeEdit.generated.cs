@@ -370,7 +370,7 @@ WriteLiteral(">");
             #line hidden
 WriteLiteral("</div>\r\n                <div");
 
-WriteLiteral(" class=\"bcms-tree-expander\"");
+WriteLiteral(" class=\"bcms-tree-expander bcms-tree-expander-close\"");
 
 WriteLiteral(" data-bind=\"click: collapseAll\"");
 
@@ -378,7 +378,7 @@ WriteLiteral(">");
 
             
             #line 66 "..\..\Views\Category\CategoryTreeEdit.cshtml"
-                                                                          Write(RootGlobalization.CategoryTree_Button_CollapseAll);
+                                                                                                   Write(RootGlobalization.CategoryTree_Button_CollapseAll);
 
             
             #line default
@@ -417,15 +417,15 @@ WriteLiteral(" class=\"bcms-tree-drop-area\"");
 
 WriteLiteral(">\r\n                <div");
 
-WriteAttribute("class", Tuple.Create(" class=\"", 3973), Tuple.Create("\"", 4058)
-, Tuple.Create(Tuple.Create("", 3981), Tuple.Create("bcms-addnode-placement-holder", 3981), true)
+WriteAttribute("class", Tuple.Create(" class=\"", 3998), Tuple.Create("\"", 4083)
+, Tuple.Create(Tuple.Create("", 4006), Tuple.Create("bcms-addnode-placement-holder", 4006), true)
             
             #line 74 "..\..\Views\Category\CategoryTreeEdit.cshtml"
-, Tuple.Create(Tuple.Create("", 4010), Tuple.Create<System.Object, System.Int32>(Model.IsReadOnly ? "-readonly" : string.Empty
+, Tuple.Create(Tuple.Create("", 4035), Tuple.Create<System.Object, System.Int32>(Model.IsReadOnly ? "-readonly" : string.Empty
             
             #line default
             #line hidden
-, 4010), false)
+, 4035), false)
 );
 
 WriteLiteral(">\r\n");
