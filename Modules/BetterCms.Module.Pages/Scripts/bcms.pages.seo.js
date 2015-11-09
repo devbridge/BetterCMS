@@ -15,7 +15,7 @@ bettercms.define('bcms.pages.seo', ['bcms.jquery', 'bcms', 'bcms.modal', 'bcms.m
             editUrlPathBox: '.bcms-edit-urlpath-box',
             editUrlSave: '#bcms-editseo-editurlpath-save',
             editUrlCancel: '#bcms-editseo-editurlpath-cancel, .bcms-edit-urlpath-box .bcms-tip-close',
-            editUrlTextBox: '.bcms-edit-urlpath-box .bcms-editor-field-box',
+            editUrlTextBox: '.bcms-js-url-path',
             editSeoForm: 'form:first',
             editSeoCloseInfoMessage: '#bcms-seo-closeinfomessage',
             editSeoInfoMessageBox: '.bcms-warning-messages'

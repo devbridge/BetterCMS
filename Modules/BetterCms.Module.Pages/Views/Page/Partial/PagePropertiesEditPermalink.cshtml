@@ -13,7 +13,7 @@
     @Html.Hidden("PagePermalinkHidden", Model.PageUrl, new { @id = "bcms-page-permalink" })
 
     <div class="bcms-custom-input-box">
-        @Html.TextBoxFor(model => model.PageUrl, new { @id = "bcms-page-permalink-edit", @class = "bcms-editor-field-box", @style = "width: 503px;" })
+        @Html.TextBoxFor(model => model.PageUrl, new { @id = "bcms-page-permalink-edit", @class = "bcms-editor-field-box bcms-js-url-path", @style = "width: 503px;" })
         @Html.BcmsValidationMessageFor(f => f.PageUrl)
     </div>
 

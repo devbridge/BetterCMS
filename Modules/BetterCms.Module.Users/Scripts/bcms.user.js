@@ -11,7 +11,7 @@ bettercms.define('bcms.user', ['bcms.jquery', 'bcms', 'bcms.modal', 'bcms.siteSe
                 usersForm: '#bcms-users-form',
                 userForm: 'form:first',
                 usersSearchButton: '#bcms-users-search-btn',
-                usersSearchField: '.bcms-search-block input.bcms-editor-field-box',
+                usersSearchField: '.bcms-js-search-box',
                 userCells: 'td',
                 userEditButton: '.bcms-icn-edit',
                 userRowDeleteButton: '.bcms-grid-item-delete-button',
