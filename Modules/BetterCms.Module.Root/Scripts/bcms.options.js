@@ -124,7 +124,11 @@ bettercms.define('bcms.options', ['bcms.jquery', 'bcms', 'bcms.ko.extenders', 'b
                         i;
 
                     for (i = 0; i < allItems.length; i++) {
-                        result.push(allItems[i].toJson());
+                        var item = allItems[i];
+                        if (item.isSelected == true && item.isActive()) {
+                            item.onSave();
+                        }
+                        result.push(item.toJson());
                     }
 
                     return result;
@@ -463,11 +467,7 @@ bettercms.define('bcms.options', ['bcms.jquery', 'bcms', 'bcms.ko.extenders', 'b
                     self.translations = item.Translations;
                 }
                 self.translationsEnabled = parent.showLanguages();
-//                if (self.translationsEnabled) {
-//                    if (item.UseDefaultValue && item.OptionValue == null) {
-//                        self.valueBinding(item.OptionDefaultValue);
-//                    }
-//                }
+
                 if (item.ValueTranslations != null) {
                     self.valueTranslations = item.ValueTranslations;
                     self.valueTranslations.forEach(function (item) {
@@ -482,15 +482,11 @@ bettercms.define('bcms.options', ['bcms.jquery', 'bcms', 'bcms.ko.extenders', 'b
                     if (self.isActive()) {
                         if ((self.translationsEnabled && languageId == "") || !self.translationsEnabled) {
                             if (newValue) {
-//                                self.value(self.defaultValue());
                                 self.valueBinding(self.defaultValue());
                                 self.customOptionTitleBinding(self.customOptionDefaultTitle());
-//                                self.customOptionTitle(self.customOptionDefaultTitle());
                             } else {
                                 var val = self.type() == optionTypes.boolType ? false : '';
-//                                self.value(val);
                                 self.valueBinding(val);
-//                                self.customOptionTitle(val);
                                 self.customOptionTitleBinding(val);
                             }
                         } else {
