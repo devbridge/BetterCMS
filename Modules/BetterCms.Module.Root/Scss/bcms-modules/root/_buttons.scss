@@ -1,5 +1,6 @@
 %btn-extender {
     @include vertical-align();
+    @include transition(background-color 200ms);
     border: 0;
     box-sizing: border-box;
     cursor: pointer;

@@ -1,4 +1,4 @@
-.bcms-clearfix:after, .bcms-top-block-filters:after {
+.bcms-clearfix:after, .bcms-tree-info-block:after, .bcms-tree-controls-holder:after, .bcms-top-block-filters:after {
   content: '';
   display: table;
   clear: both;
@@ -7,6 +7,62 @@
 .bcms-search-field-box {
   margin: 0;
   padding: 0;
+}
+
+.bcms-tree-expander, .bcms-tree-add-node {
+  color: #0d7ce7;
+  cursor: pointer;
+  font-weight: 600;
+  line-height: 20px;
+}
+
+.bcms-tree-expander:hover, .bcms-tree-add-node:hover {
+  color: #0a62b7;
+}
+
+.bcms-tree-zones-holder {
+  display: table;
+  width: 100%;
+}
+
+.bcms-tree-drag-area {
+  display: table-cell;
+  vertical-align: top;
+  width: 180px;
+}
+
+.bcms-tree-drop-area-ui {
+  display: table-cell;
+  vertical-align: top;
+}
+
+.bcms-tree-info-block {
+  border-bottom: 1px solid #dfdfdf;
+  margin-bottom: 15px;
+}
+
+.bcms-tree-info-block .bcms-content-titles {
+  float: left;
+}
+
+.bcms-tree-controls-holder {
+  margin: 15px 0 10px;
+}
+
+.bcms-tree-expander {
+  background: url("data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIyMCIgaGVpZ2h0PSIyMCIgdmlld0JveD0iLTI5NC42IDM4NyAyMCAyMCIgZW5hYmxlLWJhY2tncm91bmQ9Im5ldyAtMjk0LjYgMzg3IDIwIDIwIj48cGF0aCBkPSJtLTI5NC4xIDM4Ny41aDE5djE5aC0xOXYtMTl6IiBmaWxsPSJub25lIiBzdHJva2U9IiMwZDdiZTMiIHN0cm9rZS1saW5lY2FwPSJzcXVhcmUiLz48ZyBmaWxsPSIjMGQ3YmUzIj48cGF0aCBkPSJtLTI4NS42IDM5Mi4yaDEuOXY5LjVoLTEuOXYtOS41Ii8+PHBhdGggZD0ibS0yODkuNCAzOTh2LTJoOS41djEuOWgtOS41eiIvPjwvZz48L3N2Zz4=") no-repeat right center;
+  float: right;
+  padding-right: 28px;
+}
+
+.bcms-tree-expander-close {
+  background-image: url("data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIyMCIgaGVpZ2h0PSIyMCIgdmlld0JveD0iLTI5NC42IDM4NyAyMCAyMCIgZW5hYmxlLWJhY2tncm91bmQ9Im5ldyAtMjk0LjYgMzg3IDIwIDIwIj48cGF0aCBkPSJtLTI5NC4xIDM4Ny41aDE5djE5aC0xOXYtMTl6IiBmaWxsPSJub25lIiBzdHJva2U9IiMwZDdiZTMiIHN0cm9rZS1saW5lY2FwPSJzcXVhcmUiLz48cGF0aCBkPSJtLTI4OS40IDM5OHYtMmg5LjV2MS45aC05LjV6IiBmaWxsPSIjMGQ3YmUzIi8+PC9zdmc+");
+}
+
+.bcms-tree-add-node {
+  background: url("data:image/svg+xml;base64,PHN2ZyBoZWlnaHQ9IjEwIiB3aWR0aD0iMjAiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgdmlld0JveD0iMCAwIDIwIDEwIj48cGF0aCBmaWxsPSIjMGQ3YmUzIiBmaWxsLXJ1bGU9ImV2ZW5vZGQiIGQ9Im0xMCAwdjRoLTR2LTRoLTJ2NGgtNHYyaDR2NGgydi00aDR2NGgxMHYtMTBoLTEwbTIgMmg2djZoLTZ2LTYiLz48L3N2Zz4=") no-repeat left center;
+  float: left;
+  padding-left: 28px;
 }
 
 .bcms-sitemap-links-holder {
@@ -39,48 +95,9 @@
   padding: 0 0 4px;
 }
 
-.bcms-sitemap-holder {
-  margin-top: -8px;
-  padding: 0 20px;
-}
-
-.bcms-sitemap-filter-holder {
-  display: table-caption;
-  height: 62px;
-  margin-left: 10px;
-  position: relative;
-}
-
-.bcms-language-bar {
-  display: table;
-  margin-top: 15px;
-}
-
-.bcms-language-selector-box {
-  float: right;
-  margin-top: 0;
-}
-
-.bcms-table-middle-box {
-  display: table-cell;
-  padding: 0 10px;
-  vertical-align: middle;
-}
-
-.bcms-sitemap-filter-holder .bcms-expand-link-holder {
-  position: absolute;
-  right: 20px;
-  top: 25px;
-  width: auto;
-}
-
 .bcms-sitemap-history {
   height: 100%;
   overflow: auto;
-}
-
-.bcms-sitemap-history .bcms-sitemap-filter-holder {
-  display: block;
 }
 
 .bcms-add-node-col {
@@ -221,16 +238,6 @@ div.bcms-add-node-col .bcms-placement-dropzone {
   font-weight: bold;
 }
 
-.bcms-placement-holder {
-  display: block;
-  padding: 0 20px;
-  margin-top: -8px;
-}
-
-.bcms-leftcol-helper {
-  border-top: 1px solid #c6c6c6;
-}
-
 .bcms-placement-node {
   position: relative;
   height: 30px;
@@ -301,24 +308,6 @@ div.bcms-placement-one-active {
 
 a.bcms-expanded-nodes {
   background-position: -23px -179px;
-}
-
-.bcms-expand-link-holder {
-  display: inline-block;
-  width: 100%;
-}
-
-.bcms-expand-link {
-  float: right;
-  line-height: 16px;
-  padding-left: 11px;
-  color: #0383df;
-  text-decoration: none;
-  cursor: pointer;
-}
-
-.bcms-expand-link:hover {
-  text-decoration: underline;
 }
 
 .bcms-placement-dropzone {
@@ -536,11 +525,12 @@ a.bcms-expanded-nodes {
 }
 
 .bcms-btn-opener-link {
-  padding-left: 25px;
-  padding-right: 25px;
+  padding-left: 20px;
+  padding-right: 20px;
   background-color: #ffffff;
   border-top: 1px solid #0d7ce7;
   color: #0d7ce7;
+  cursor: pointer;
   line-height: 37px;
 }
 

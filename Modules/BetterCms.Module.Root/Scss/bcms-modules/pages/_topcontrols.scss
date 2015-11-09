@@ -66,10 +66,11 @@
     }
 
     &-link {
-        @include pad(25px);
+        @include pad(20px);
         background-color: $white;
         border-top: $border-blue;
         color: $blue-main;
+        cursor: pointer;
         line-height: $form-element-height;
 
         &:first-child {

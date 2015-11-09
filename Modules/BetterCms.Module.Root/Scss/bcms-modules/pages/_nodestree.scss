@@ -1,3 +1,69 @@
+%tree-links-ui {
+    color: $blue-main;
+    cursor: pointer;
+    font-weight: 600;
+    line-height: 20px;
+
+    &:hover {
+        color: darken($blue-main, 10%);
+    }
+}
+
+.bcms-tree {
+    &-zones-holder {
+        display: table;
+        width: 100%;
+    }
+
+    &-drag-area {
+        @include vertical-align($block: table-cell, $align: top);
+        width: $settings-sidebar;
+    }
+
+    &-drop-area-ui {
+        @include vertical-align($block: table-cell, $align: top);
+    }
+
+    &-info-block {
+        @include clearfix();
+        border-bottom: $border-nav-bottom;
+        margin-bottom: 15px;
+
+        .bcms-content-titles {
+            float: left;
+        }
+    }
+
+    &-controls-holder {
+        @include clearfix();
+        margin: 15px 0 10px;
+    }
+
+    &-expander {
+        @extend %tree-links-ui;
+        background: url($bcms-tree-plus) no-repeat right center;
+        float: right;
+        padding-right: 28px;
+
+        &-close {
+            background-image: url($bcms-tree-minus);
+        }
+    }
+
+    &-add-node {
+        @extend %tree-links-ui;
+        background: url($bcms-tree-new-node) no-repeat left center;
+        float: left;
+        padding-left: 28px;
+
+    }
+}
+
+//
+//
+//
+//
+//
 //module sitemap "add new node"
 .bcms-sitemap-links-holder {
     padding: 10px 20px;
@@ -29,48 +95,9 @@
     padding: 0 0 4px;
 }
 
-.bcms-sitemap-holder {
-    margin-top: -8px;
-    padding: 0 20px;
-}
-
-.bcms-sitemap-filter-holder {
-    display: table-caption;
-    height: 62px;
-    margin-left: 10px;
-    position: relative;
-}
-
-.bcms-language-bar {
-    display: table;
-    margin-top: 15px;
-}
-
-.bcms-language-selector-box {
-    float: right;
-    margin-top: 0;
-}
-
-.bcms-table-middle-box {
-    display: table-cell;
-    padding: 0 10px;
-    vertical-align: middle;
-}
-
-.bcms-sitemap-filter-holder .bcms-expand-link-holder {
-    position: absolute;
-    right: 20px;
-    top: 25px;
-    width: auto;
-}
-
 .bcms-sitemap-history {
     height: 100%;
     overflow: auto;
-}
-
-.bcms-sitemap-history .bcms-sitemap-filter-holder {
-    display: block;
 }
 
 .bcms-add-node-col {
@@ -85,7 +112,6 @@
     padding-top: 20px;
 }
 
-//module new placement
 //module left-sidebar
 .bcms-dropable-page-box {
     background-color: #fff;
