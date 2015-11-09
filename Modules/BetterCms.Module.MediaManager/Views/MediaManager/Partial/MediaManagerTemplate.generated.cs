@@ -431,7 +431,7 @@ WriteLiteral("</a>\r\n                        <!-- /ko -->\r\n                  
 WriteLiteral(@"</a>
                         <!-- /ko -->
                         <!-- ko if: !isFailed() && !isFolder() && publicUrl() -->
-                        <input class=""bcms-editor-field-box"" type=""text"" readonly=""readonly"" data-bind=""value: publicUrl(), click: selectThis.bind($data, $root, $element)"" />
+                        <input class=""bcms-field-text"" type=""text"" readonly=""readonly"" data-bind=""value: publicUrl(), click: selectThis.bind($data, $root, $element)"" />
                         <!-- /ko -->
                         <!-- ko if: !isReadOnly() && !isFailed() && (isFolder() || isImage() && !publicUrl() || (");
 

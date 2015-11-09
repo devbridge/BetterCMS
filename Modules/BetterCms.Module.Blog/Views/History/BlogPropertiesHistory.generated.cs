@@ -80,7 +80,7 @@ WriteLiteral("            ");
 
             
             #line 9 "..\..\Views\History\BlogPropertiesHistory.cshtml"
-       Write(Html.TextBoxFor(model => model.Name, new { @readonly = "readonly", @class = "bcms-editor-field-box", style = "width: 535px;" }));
+       Write(Html.TextBoxFor(model => model.Name, new { @readonly = "readonly", @class = "bcms-field-text", style = "width: 535px;" }));
 
             
             #line default
@@ -112,7 +112,7 @@ WriteLiteral("            ");
 
             
             #line 16 "..\..\Views\History\BlogPropertiesHistory.cshtml"
-       Write(Html.DateTextBoxFor(model => model.ActivationDate, Model.ActivationDate, new Dictionary<string, object> { { "readonly", "readonly" }, { "class", "bcms-editor-field-box bcms-datepicker" }, { "style", "width: 127px;" } }));
+       Write(Html.DateTextBoxFor(model => model.ActivationDate, Model.ActivationDate, new Dictionary<string, object> { { "readonly", "readonly" }, { "class", "bcms-field-text bcms-datepicker" }, { "style", "width: 127px;" } }));
 
             
             #line default
@@ -144,7 +144,7 @@ WriteLiteral("            ");
 
             
             #line 23 "..\..\Views\History\BlogPropertiesHistory.cshtml"
-       Write(Html.DateTextBoxFor(model => model.ExpirationDate, Model.ExpirationDate, new Dictionary<string, object> { { "readonly", "readonly" }, { "class", "bcms-editor-field-box bcms-datepicker" }, { "style", "width: 127px;" } }));
+       Write(Html.DateTextBoxFor(model => model.ExpirationDate, Model.ExpirationDate, new Dictionary<string, object> { { "readonly", "readonly" }, { "class", "bcms-field-text bcms-datepicker" }, { "style", "width: 127px;" } }));
 
             
             #line default
@@ -172,7 +172,7 @@ WriteLiteral("    ");
 
             
             #line 30 "..\..\Views\History\BlogPropertiesHistory.cshtml"
-Write(Html.TextAreaFor(model => model.RowText, new { @readonly = "readonly", @class = "bcms-editor-field-area bcms-code-field ", style = "height: 500px;" }));
+Write(Html.TextAreaFor(model => model.RowText, new { @readonly = "readonly", @class = "bcms-field-textarea bcms-code-field ", style = "height: 500px;" }));
 
             
             #line default

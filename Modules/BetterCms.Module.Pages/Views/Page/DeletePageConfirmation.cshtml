@@ -25,8 +25,8 @@
     <div class="bcms-input-list-holder">
         @Html.Tooltip(PagesGlobalization.DeletePage_Dialog_RedurectUrl_Tooltip_Description)
         <div class="bcms-content-titles">@PagesGlobalization.DeletePage_Dialog_RedirectUrl</div>
-        <div class="bcms-input-box">
-            @Html.TextBoxFor(m => m.RedirectUrl, new { @class = "bcms-editor-field-box", @id = "PageTitle" })
+        <div class="bcms-field-wrapper">
+            @Html.TextBoxFor(m => m.RedirectUrl, new { @class = "bcms-field-text", @id = "PageTitle" })
             @Html.BcmsValidationMessageFor(f => f.RedirectUrl)
         </div>
     </div>
@@ -34,8 +34,8 @@
     <div class="bcms-input-list-holder">
         @Html.Tooltip(PagesGlobalization.DeletePage_Dialog_SecurityWord_Tooltip_Description)
         <div class="bcms-content-titles">@PagesGlobalization.DeletePage_Dialog_SecurityWord</div>
-        <div class="bcms-input-box">
-            @Html.TextBoxFor(m => m.SecurityWord, new { @class = "bcms-editor-field-box", @id = "SecurityWord" })
+        <div class="bcms-field-wrapper">
+            @Html.TextBoxFor(m => m.SecurityWord, new { @class = "bcms-field-text", @id = "SecurityWord" })
             @Html.BcmsValidationMessageFor(f => f.SecurityWord)
         </div>
     </div>

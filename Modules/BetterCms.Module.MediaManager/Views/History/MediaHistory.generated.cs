@@ -576,7 +576,7 @@ WriteLiteral("                ");
 
             
             #line 134 "..\..\Views\History\MediaHistory.cshtml"
-           Write(Html.TextBoxFor(m => m.SearchQuery, new { @class = "bcms-editor-field-box", @placeholder = RootGlobalization.WaterMark_Search }));
+           Write(Html.TextBoxFor(m => m.SearchQuery, new { @class = "bcms-field-text", @placeholder = RootGlobalization.WaterMark_Search }));
 
             
             #line default

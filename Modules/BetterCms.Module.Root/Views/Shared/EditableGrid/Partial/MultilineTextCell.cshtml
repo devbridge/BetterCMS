@@ -2,7 +2,7 @@
 @model EditableGridColumn
 
 <td @Html.Raw(Model.Attributes)>
-    <div class="bcms-input-box">
+    <div class="bcms-field-wrapper">
         @if (Model.CanBeEdited)
         {
             <!-- ko if: !isActive() || (@(Model.ValueBind).editingIsDisabled && @(Model.ValueBind).editingIsDisabled()) -->
@@ -12,7 +12,7 @@
         {
             <!-- /ko -->
             <!-- ko if: isActive() && (!@(Model.ValueBind).editingIsDisabled || !@(Model.ValueBind).editingIsDisabled()) -->
-            <textarea class="bcms-editor-field-area" data-bind="
+            <textarea class="bcms-field-textarea" data-bind="
                 css: { 'bcms-input-validation-error': !isNew() && @(Model.ValueBind).hasError && @(Model.ValueBind).hasError() },
                 value: @Model.ValueBind, 
                 valueUpdate: 'afterkeydown', 

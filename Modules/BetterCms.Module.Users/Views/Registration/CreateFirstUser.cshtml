@@ -17,7 +17,7 @@
     <div>
         <span class="bcms-title">@UsersGlobalization.EditUser_FirstName_Title</span>
         <p>
-            @Html.TextBoxFor(m => m.FirstName, new { @class = "bcms-editor-field-box", @id = "firstName" })
+            @Html.TextBoxFor(m => m.FirstName, new { @class = "bcms-field-text", @id = "firstName" })
             @Html.ValidationMessageFor(m => m.FirstName)
         </p>
     </div>
@@ -25,7 +25,7 @@
     <div>
         <span class="bcms-title">@UsersGlobalization.EditUser_LastName</span>
         <p>
-            @Html.TextBoxFor(m => m.LastName, new { @class = "bcms-editor-field-box" })
+            @Html.TextBoxFor(m => m.LastName, new { @class = "bcms-field-text" })
             @Html.ValidationMessageFor(m => m.LastName)
         </p>
     </div>
@@ -33,7 +33,7 @@
     <div>
         <span class="bcms-title">@UsersGlobalization.EditUser_UserName_Title</span>
         <p>
-            @Html.TextBoxFor(m => m.UserName, new { @class = "bcms-editor-field-box" })
+            @Html.TextBoxFor(m => m.UserName, new { @class = "bcms-field-text" })
             @Html.ValidationMessageFor(m => m.UserName)
         </p>
     </div>
@@ -41,7 +41,7 @@
     <div>
         <span class="bcms-title">@UsersGlobalization.EditUser_Email_Title</span>
         <p>
-            @Html.TextBoxFor(m => m.Email, new { @class = "bcms-editor-field-box" })
+            @Html.TextBoxFor(m => m.Email, new { @class = "bcms-field-text" })
             @Html.ValidationMessageFor(m => m.Email)
         </p>
     </div>
@@ -49,7 +49,7 @@
     <div>
         <span class="bcms-title">@UsersGlobalization.EditUser_Password_Title</span>
         <p>
-            @Html.PasswordFor(m => m.Password, new { @class = "bcms-editor-field-box" })
+            @Html.PasswordFor(m => m.Password, new { @class = "bcms-field-text" })
             @Html.ValidationMessageFor(m => m.Password)
         </p>
     </div>
@@ -57,7 +57,7 @@
     <div>
         <span class="bcms-title">@UsersGlobalization.EditUser_RetypePassword_Title</span>
         <p>
-            @Html.PasswordFor(m => m.RetypedPassword, new { @class = "bcms-editor-field-box" })
+            @Html.PasswordFor(m => m.RetypedPassword, new { @class = "bcms-field-text" })
             @Html.ValidationMessageFor(m => m.RetypedPassword)
         </p>
     </div>

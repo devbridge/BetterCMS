@@ -1,4 +1,21 @@
-//todo upgrade forms styling to db pattern
+%input-fields-ui {
+    @include transition(border-color 200ms, box-shadow 200ms);
+    background-color: $white;
+    border: $border-form-element;
+    box-sizing: border-box;
+    color: $light-text;
+    font-size: 14px;
+    padding: 9px 11px 10px;
+    width: 100%;
+
+    &:focus {
+        background: $white;
+        border-color: $blue-main;
+        box-shadow: 0 0 3px 0 rgba($blue-main, .35);
+        outline: none;
+    }
+}
+
 .bcms-field {
     &-wrapper {
         padding-bottom: 20px;
@@ -6,13 +23,19 @@
     }
 
     &-text {
-        background-color: $white;
-        border: $border-form-element;
-        box-sizing: border-box;
+        @extend %input-fields-ui;
         height: $form-element-height;
+
     }
 
     &-textarea {
+        @extend %input-fields-ui;
+        height: 150px;
+        resize: vertical;
+
+        &.bcms-code-field {
+            font-family: monospace !important;
+        }
     }
 }
 
@@ -59,84 +82,6 @@
 .bcms-checkbox-holder > input[type="checkbox"] {
     margin-top: 0;
     vertical-align: middle;
-}
-
-//module  Overwrite default placeholder text
-:-moz-placeholder {
-    color: #787878;
-    font-family: "Open Sans", sans-serif;
-    font-size: 16px;
-}
-
-::-webkit-input-placeholder {
-    color: #787878;
-    font-family: "Open Sans", sans-serif;
-    font-size: 12px;
-}
-
-:-ms-input-placeholder {
-    color: #787878;
-    font-family: "Open Sans", sans-serif;
-    font-size: 12px;
-}
-
-.bcms-editor-field-box {
-    background-color: #f5f5f5;
-    border: 1px solid #c6c6c6;
-    border-radius: 0;
-    border-radius: 0;
-    box-sizing: border-box;
-    -moz-box-sizing: border-box;
-    color: #000;
-    font-family: "Open Sans", sans-serif;
-    font-size: 12px;
-    height: 30px;
-    line-height: 18px;
-    margin: 0;
-    padding: 6px;
-    vertical-align: middle;
-    width: 100%;
-    -webkit-appearance: none;
-}
-
-.bcms-editor-field-box:focus {
-    background: #fff;
-    border-color: #1894e4;
-    box-shadow: 0 0 3px 0 rgba(24, 145, 230, 0.35);
-    outline: none;
-}
-
-.bcms-editor-field-area, .bcms-editor-field-area-container {
-    background-color: #f5f5f5;
-    border: 1px solid #c6c6c6;
-    border-radius: 0;
-    border-radius: 0;
-    box-sizing: border-box;
-    -moz-box-sizing: border-box;
-    color: #000;
-    font-family: "Open Sans", sans-serif;
-    font-size: 12px;
-    line-height: 18px;
-    margin: 0;
-    padding: 6px;
-    width: 100%;
-    -webkit-appearance: none;
-}
-
-.bcms-editor-field-area:focus, .bcms-editor-field-area-container:focus {
-    background: #fff;
-    border-color: #1894e4;
-    box-shadow: 0 0 3px 0 rgba(24, 145, 230, 0.35);
-    outline: none;
-}
-
-.bcms-editor-field-area {
-    height: 104px;
-    resize: vertical;
-}
-
-.bcms-code-field {
-    font-family: monospace !important;
 }
 
 //module Global Select

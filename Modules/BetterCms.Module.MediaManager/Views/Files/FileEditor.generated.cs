@@ -244,7 +244,7 @@ WriteLiteral(">");
             #line hidden
 WriteLiteral("</div>\r\n                <div");
 
-WriteLiteral(" class=\"bcms-input-box\"");
+WriteLiteral(" class=\"bcms-field-wrapper\"");
 
 WriteLiteral(">\r\n");
 
@@ -252,7 +252,7 @@ WriteLiteral("                    ");
 
             
             #line 45 "..\..\Views\Files\FileEditor.cshtml"
-               Write(Html.TextBoxFor(f => f.Title, new { @class = "bcms-editor-field-box", @id = "Title", data_bind = "event: {change: onValueChange}" }));
+               Write(Html.TextBoxFor(f => f.Title, new { @class = "bcms-field-text", @id = "Title", data_bind = "event: {change: onValueChange}" }));
 
             
             #line default
@@ -307,22 +307,22 @@ WriteLiteral(">");
             #line hidden
 WriteLiteral("</div>\r\n                <div");
 
-WriteLiteral(" class=\"bcms-input-box\"");
+WriteLiteral(" class=\"bcms-field-wrapper\"");
 
 WriteLiteral(">\r\n                    <input");
 
-WriteLiteral(" class=\"bcms-editor-field-box bcms-editor-selectable-field-box\"");
+WriteLiteral(" class=\"bcms-field-text bcms-editor-selectable-field-box\"");
 
 WriteLiteral(" type=\"text\"");
 
-WriteAttribute("value", Tuple.Create(" value=\"", 2605), Tuple.Create("\"", 2623)
+WriteAttribute("value", Tuple.Create(" value=\"", 2588), Tuple.Create("\"", 2606)
             
             #line 54 "..\..\Views\Files\FileEditor.cshtml"
-                             , Tuple.Create(Tuple.Create("", 2613), Tuple.Create<System.Object, System.Int32>(Model.Url
+                       , Tuple.Create(Tuple.Create("", 2596), Tuple.Create<System.Object, System.Int32>(Model.Url
             
             #line default
             #line hidden
-, 2613), false)
+, 2596), false)
 );
 
 WriteLiteral(" readonly=\"readonly\"");
@@ -411,7 +411,7 @@ WriteLiteral("                    ");
 
             
             #line 67 "..\..\Views\Files\FileEditor.cshtml"
-               Write(Html.TextAreaFor(f => f.Description, new { @class = "bcms-editor-field-area", @id = "Description", data_bind = "event: {change: onValueChange}" }));
+               Write(Html.TextAreaFor(f => f.Description, new { @class = "bcms-field-textarea", @id = "Description", data_bind = "event: {change: onValueChange}" }));
 
             
             #line default

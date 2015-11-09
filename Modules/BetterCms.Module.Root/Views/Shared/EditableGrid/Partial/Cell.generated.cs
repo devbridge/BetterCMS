@@ -54,7 +54,7 @@ Write(Html.Raw(Model.Attributes));
             #line hidden
 WriteLiteral(">\r\n    <div");
 
-WriteLiteral(" class=\"bcms-input-box\"");
+WriteLiteral(" class=\"bcms-field-wrapper\"");
 
 WriteLiteral(">\r\n");
 
@@ -156,7 +156,7 @@ WriteLiteral("            <input");
 
 WriteLiteral(" type=\"text\"");
 
-WriteLiteral(" class=\"bcms-editor-field-box bcms-js-grid-input\"");
+WriteLiteral(" class=\"bcms-field-text bcms-js-grid-input\"");
 
 WriteLiteral(" data-bind=\"\r\n                   css { \'bcms-input-validation-error\'\r\n           " +
 "        !isnew() && ");

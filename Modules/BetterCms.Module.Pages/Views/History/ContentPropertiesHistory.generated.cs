@@ -80,7 +80,7 @@ WriteLiteral("            ");
 
             
             #line 9 "..\..\Views\History\ContentPropertiesHistory.cshtml"
-       Write(Html.TextBoxFor(model => model.Name, new { @readonly = "readonly", @class = "bcms-editor-field-box", style = "width: 523px;" }));
+       Write(Html.TextBoxFor(model => model.Name, new { @readonly = "readonly", @class = "bcms-field-text", style = "width: 523px;" }));
 
             
             #line default
@@ -112,7 +112,7 @@ WriteLiteral("            ");
 
             
             #line 15 "..\..\Views\History\ContentPropertiesHistory.cshtml"
-       Write(Html.DateTextBoxFor(model => model.ActivationDate, Model.ActivationDate, new Dictionary<string, object> { { "readonly", "readonly" }, { "class", "bcms-editor-field-box bcms-datepicker" }, { "style", "width: 127px;" } }));
+       Write(Html.DateTextBoxFor(model => model.ActivationDate, Model.ActivationDate, new Dictionary<string, object> { { "readonly", "readonly" }, { "class", "bcms-field-text bcms-datepicker" }, { "style", "width: 127px;" } }));
 
             
             #line default
@@ -144,7 +144,7 @@ WriteLiteral("            ");
 
             
             #line 21 "..\..\Views\History\ContentPropertiesHistory.cshtml"
-       Write(Html.DateTextBoxFor(model => model.ExpirationDate, Model.ExpirationDate, new Dictionary<string, object> { { "readonly", "readonly" }, { "class", "bcms-editor-field-box bcms-datepicker" }, { "style", "width: 127px;" } }));
+       Write(Html.DateTextBoxFor(model => model.ExpirationDate, Model.ExpirationDate, new Dictionary<string, object> { { "readonly", "readonly" }, { "class", "bcms-field-text bcms-datepicker" }, { "style", "width: 127px;" } }));
 
             
             #line default
@@ -172,7 +172,7 @@ WriteLiteral("    ");
 
             
             #line 28 "..\..\Views\History\ContentPropertiesHistory.cshtml"
-Write(Html.TextAreaFor(model => model.RowText, new { @readonly = "readonly", @class = "bcms-editor-field-area bcms-code-field ", @style = "width:820px;", @id = Guid.NewGuid() }));
+Write(Html.TextAreaFor(model => model.RowText, new { @readonly = "readonly", @class = "bcms-field-textarea bcms-code-field ", @style = "width:820px;", @id = Guid.NewGuid() }));
 
             
             #line default
@@ -200,7 +200,7 @@ WriteLiteral("    ");
 
             
             #line 33 "..\..\Views\History\ContentPropertiesHistory.cshtml"
-Write(Html.TextAreaFor(model => model.CustomCss, new { @readonly = "readonly", @class = "bcms-editor-field-area bcms-code-field bcms-code-field-css", @style = "width:820px;", @id = Guid.NewGuid() }));
+Write(Html.TextAreaFor(model => model.CustomCss, new { @readonly = "readonly", @class = "bcms-field-textarea bcms-code-field bcms-code-field-css", @style = "width:820px;", @id = Guid.NewGuid() }));
 
             
             #line default
@@ -260,7 +260,7 @@ WriteLiteral("    ");
 
             
             #line 45 "..\..\Views\History\ContentPropertiesHistory.cshtml"
-Write(Html.TextAreaFor(model => model.CustomJs, new { @readonly = "readonly", @class = "bcms-editor-field-area bcms-code-field bcms-code-field-javascript", @style = "width:820px;", @id = Guid.NewGuid() }));
+Write(Html.TextAreaFor(model => model.CustomJs, new { @readonly = "readonly", @class = "bcms-field-textarea bcms-code-field bcms-code-field-javascript", @style = "width:820px;", @id = Guid.NewGuid() }));
 
             
             #line default

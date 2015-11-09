@@ -58,14 +58,14 @@
                     <div class="bcms-file-info-text">
                         <div class="bcms-content-titles">@MediaGlobalization.ImageEditor_Dialog_PublicUrl</div>
                         <div class="bcms-edit-file-info">
-                            <input class="bcms-editor-field-box bcms-editor-selectable-field-box" type="text" value="@Model.Url" readonly="readonly" />
+                            <input class="bcms-field-text bcms-editor-selectable-field-box" type="text" value="@Model.Url" readonly="readonly" />
                         </div>
                     </div>
                     <div class="bcms-input-list-holder">
                         @Html.Tooltip(MediaGlobalization.ImageEditor_Dialog_Caption_Tooltip_Description)
                         <div class="bcms-content-titles">@MediaGlobalization.ImageEditor_Dialog_Caption</div>
-                        <div class="bcms-input-box">
-                            @Html.TextBoxFor(f => f.Caption, new { @class = "bcms-editor-field-box", @id = "Caption", data_bind = "event: {change: onValueChange}" })
+                        <div class="bcms-field-wrapper">
+                            @Html.TextBoxFor(f => f.Caption, new { @class = "bcms-field-text", @id = "Caption", data_bind = "event: {change: onValueChange}" })
                             @Html.BcmsValidationMessageFor(f => f.Caption)
                         </div>
                     </div>
@@ -77,7 +77,7 @@
                             <div class="bcms-custom-input-box" style="width: 255px;">
                                 @Html.TextBoxFor(f => f.Title, new
                        {
-                           @class = "bcms-editor-field-box",
+                           @class = "bcms-field-text",
                            @id = "bcms-image-title-editor",
                            @data_bind = "value: title, valueUpdate: 'afterkeydown', enterPress: save, escPress: close, event: {change: $parent.onValueChange}"
                        })
@@ -107,7 +107,7 @@
                             <div class="bcms-custom-input-box" style="width: 75px;">
                                 @Html.TextBoxFor(f => f.ImageWidth, new
                             {
-                                @class = "bcms-editor-field-box",
+                                @class = "bcms-field-text",
                                 @id = "image-width",
                                 @data_bind = "value: width, valueUpdate: 'afterkeydown', enterPress: save, escPress: close, event: { change: changeHeight }"
                             })
@@ -117,7 +117,7 @@
                             <div class="bcms-custom-input-box" style="width: 75px;">
                                 @Html.TextBoxFor(f => f.ImageHeight, new
                             {
-                                @class = "bcms-editor-field-box",
+                                @class = "bcms-field-text",
                                 @id = "image-height",
                                 @data_bind = "value: height, valueUpdate: 'afterkeydown', enterPress: save, escPress: close, event: { change: changeWidth }"
                             })
@@ -147,7 +147,7 @@
                         @Html.Tooltip(MediaGlobalization.ImageEditor_Dialog_Description_Tooltip_Description)
                         <div class="bcms-content-titles">@MediaGlobalization.ImageEditor_Dialog_Description</div>
                         <div class="bcms-textarea-box">
-                            @Html.TextAreaFor(f => f.Description, new { @class = "bcms-editor-field-area", @id = "Description", @style = "width: 380px;", data_bind = "event: {change: onValueChange}" })
+                            @Html.TextAreaFor(f => f.Description, new { @class = "bcms-field-textarea", @id = "Description", @style = "width: 380px;", data_bind = "event: {change: onValueChange}" })
                             @Html.BcmsValidationMessageFor(f => f.Description)
                         </div>
                     </div>

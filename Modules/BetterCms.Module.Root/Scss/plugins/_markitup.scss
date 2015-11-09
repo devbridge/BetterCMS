@@ -24,19 +24,21 @@ $toolbar-icons: (
 
 //module global styles
 textarea {
-    border: $border-thin-gray;
-    box-sizing: border-box;
-    display: block;
-    font-family: $font-code-family;
-    font-size: 12px;
-    line-height: 18px;
-    overflow: auto;
-    padding: 10px;
-    resize: vertical;
-    width: 100%;
+    &.markItUpEditor {
+        border: $border-thin-gray;
+        box-sizing: border-box;
+        display: block;
+        font-family: $font-code-family;
+        font-size: 12px;
+        line-height: 18px;
+        overflow: auto;
+        padding: 10px;
+        resize: vertical;
+        width: 100%;
 
-    &:focus {
-        outline: none;
+        &:focus {
+            outline: none;
+        }
     }
 }
 

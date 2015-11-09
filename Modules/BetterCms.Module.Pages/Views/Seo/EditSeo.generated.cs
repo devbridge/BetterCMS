@@ -160,7 +160,7 @@ WriteLiteral(">");
             #line hidden
 WriteLiteral("</div>\r\n                <div");
 
-WriteLiteral(" class=\"bcms-input-box\"");
+WriteLiteral(" class=\"bcms-field-wrapper\"");
 
 WriteLiteral(">\r\n");
 
@@ -168,7 +168,7 @@ WriteLiteral("                    ");
 
             
             #line 29 "..\..\Views\Seo\EditSeo.cshtml"
-               Write(Html.TextBoxFor(f => f.PageTitle, new { @class = "bcms-editor-field-box" }));
+               Write(Html.TextBoxFor(f => f.PageTitle, new { @class = "bcms-field-text" }));
 
             
             #line default
@@ -238,7 +238,7 @@ WriteLiteral(">");
             #line hidden
 WriteLiteral("</div>\r\n                <div");
 
-WriteLiteral(" class=\"bcms-input-box\"");
+WriteLiteral(" class=\"bcms-field-wrapper\"");
 
 WriteLiteral(">\r\n");
 
@@ -246,7 +246,7 @@ WriteLiteral("                    ");
 
             
             #line 40 "..\..\Views\Seo\EditSeo.cshtml"
-               Write(Html.TextBoxFor(f => f.MetaTitle, new { @class = "bcms-editor-field-box" }));
+               Write(Html.TextBoxFor(f => f.MetaTitle, new { @class = "bcms-field-text" }));
 
             
             #line default
@@ -301,7 +301,7 @@ WriteLiteral(">");
             #line hidden
 WriteLiteral("</div>\r\n                <div");
 
-WriteLiteral(" class=\"bcms-input-box\"");
+WriteLiteral(" class=\"bcms-field-wrapper\"");
 
 WriteLiteral(">\r\n");
 
@@ -309,7 +309,7 @@ WriteLiteral("                    ");
 
             
             #line 49 "..\..\Views\Seo\EditSeo.cshtml"
-               Write(Html.TextAreaFor(f => f.MetaKeywords, new { @class = "bcms-editor-field-area" }));
+               Write(Html.TextAreaFor(f => f.MetaKeywords, new { @class = "bcms-field-textarea" }));
 
             
             #line default
@@ -364,7 +364,7 @@ WriteLiteral(">");
             #line hidden
 WriteLiteral("</div>\r\n                <div");
 
-WriteLiteral(" class=\"bcms-input-box\"");
+WriteLiteral(" class=\"bcms-field-wrapper\"");
 
 WriteLiteral(">\r\n");
 
@@ -372,7 +372,7 @@ WriteLiteral("                    ");
 
             
             #line 58 "..\..\Views\Seo\EditSeo.cshtml"
-               Write(Html.TextAreaFor(f => f.MetaDescription, new { @class = "bcms-editor-field-area" }));
+               Write(Html.TextAreaFor(f => f.MetaDescription, new { @class = "bcms-field-textarea" }));
 
             
             #line default

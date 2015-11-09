@@ -215,7 +215,7 @@ WriteLiteral(">");
             #line hidden
 WriteLiteral("</div>\r\n                    <div");
 
-WriteLiteral(" class=\"bcms-input-box\"");
+WriteLiteral(" class=\"bcms-field-wrapper\"");
 
 WriteLiteral(">\r\n");
 
@@ -223,7 +223,7 @@ WriteLiteral("                        ");
 
             
             #line 33 "..\..\Views\Templates\EditTemplate.cshtml"
-                   Write(Html.TextBoxFor(model => model.Name, new { @class = "bcms-editor-field-box" }));
+                   Write(Html.TextBoxFor(model => model.Name, new { @class = "bcms-field-text" }));
 
             
             #line default
@@ -269,7 +269,7 @@ WriteLiteral(">");
             #line hidden
 WriteLiteral("</div>\r\n                    <div");
 
-WriteLiteral(" class=\"bcms-input-box\"");
+WriteLiteral(" class=\"bcms-field-wrapper\"");
 
 WriteLiteral(">\r\n");
 
@@ -277,7 +277,7 @@ WriteLiteral("                        ");
 
             
             #line 41 "..\..\Views\Templates\EditTemplate.cshtml"
-                   Write(Html.TextBoxFor(model => model.Url, new { @class = "bcms-editor-field-box" }));
+                   Write(Html.TextBoxFor(model => model.Url, new { @class = "bcms-field-text" }));
 
             
             #line default
@@ -323,7 +323,7 @@ WriteLiteral(">");
             #line hidden
 WriteLiteral("</div>\r\n                    <div");
 
-WriteLiteral(" class=\"bcms-input-box\"");
+WriteLiteral(" class=\"bcms-field-wrapper\"");
 
 WriteLiteral(">\r\n");
 
@@ -331,7 +331,7 @@ WriteLiteral("                        ");
 
             
             #line 49 "..\..\Views\Templates\EditTemplate.cshtml"
-                   Write(Html.TextBoxFor(model => model.PreviewImageUrl, new { @class = "bcms-editor-field-box" }));
+                   Write(Html.TextBoxFor(model => model.PreviewImageUrl, new { @class = "bcms-field-text" }));
 
             
             #line default
@@ -387,14 +387,14 @@ WriteLiteral(">\r\n                            <img");
 
 WriteLiteral(" id=\"bcms-template-preview-image\"");
 
-WriteAttribute("src", Tuple.Create(" src=\"", 3320), Tuple.Create("\"", 3348)
+WriteAttribute("src", Tuple.Create(" src=\"", 3301), Tuple.Create("\"", 3329)
             
             #line 58 "..\..\Views\Templates\EditTemplate.cshtml"
-, Tuple.Create(Tuple.Create("", 3326), Tuple.Create<System.Object, System.Int32>(Model.PreviewImageUrl
+, Tuple.Create(Tuple.Create("", 3307), Tuple.Create<System.Object, System.Int32>(Model.PreviewImageUrl
             
             #line default
             #line hidden
-, 3326), false)
+, 3307), false)
 );
 
 WriteLiteral(" alt=\"\"");

@@ -140,7 +140,7 @@ WriteLiteral("        ");
 
             
             #line 16 "..\..\Views\Page\Partial\ClonePageEditUrl.cshtml"
-   Write(Html.TextBoxFor(model => model.PageUrl, new { @id = "bcms-page-permalink-edit", @class = "bcms-editor-field-box bcms-js-url-path", @style = "width: 503px;" }));
+   Write(Html.TextBoxFor(model => model.PageUrl, new { @id = "bcms-page-permalink-edit", @class = "bcms-field-text bcms-js-url-path", @style = "width: 503px;" }));
 
             
             #line default

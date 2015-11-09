@@ -28,13 +28,13 @@
                 <div class="bcms-file-info-text">
                     <div class="bcms-content-titles">@MediaGlobalization.ImageEditor_Dialog_PublicUrl</div>
                     <div class="bcms-edit-file-info">
-                        <input class="bcms-editor-field-box bcms-editor-selectable-field-box" type="text" value="@Model.Url" readonly="readonly" />
+                        <input class="bcms-field-text bcms-editor-selectable-field-box" type="text" value="@Model.Url" readonly="readonly" />
                     </div>
                 </div>
                 <div class="bcms-input-list-holder">
                     @Html.Tooltip(MediaGlobalization.ImageEditor_Dialog_Caption_Tooltip_Description)
                     <div class="bcms-content-titles">@MediaGlobalization.ImageEditor_Dialog_Caption:</div>
-                    @Html.TextBoxFor(f => f.Caption, new { @class = "bcms-editor-field-box", @id = "Caption" })
+                    @Html.TextBoxFor(f => f.Caption, new { @class = "bcms-field-text", @id = "Caption" })
                 </div>
                 <div class="bcms-file-info-text"><b>@MediaGlobalization.ImageEditor_Dialog_FileName:</b> <span id="image-file-name">@Model.Title</span></div>
                 <div class="bcms-file-info-text"><b>@MediaGlobalization.ImageEditor_Dialog_FileSize:</b> <span id="image-file-size">@Model.FileSize</span></div>
@@ -70,7 +70,7 @@
                     <div class="bcms-textarea-box">
                         @Html.TextAreaFor(f => f.Description, new
                                                                   {
-                                                                      @class = "bcms-editor-field-area",
+                                                                      @class = "bcms-field-textarea",
                                                                       @id = "Description",
                                                                       @style = "width: 380px;",
                                                                       @readonly = "readonly"

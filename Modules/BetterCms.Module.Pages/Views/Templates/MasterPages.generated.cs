@@ -232,7 +232,7 @@ WriteLiteral("                        ");
 
             
             #line 61 "..\..\Views\Templates\MasterPages.cshtml"
-                   Write(Html.TextBoxFor(m => m.SearchQuery, new { @class = "bcms-editor-field-box bcms-search-query", @placeholder = RootGlobalization.WaterMark_Search }));
+                   Write(Html.TextBoxFor(m => m.SearchQuery, new { @class = "bcms-field-text bcms-search-query", @placeholder = RootGlobalization.WaterMark_Search }));
 
             
             #line default

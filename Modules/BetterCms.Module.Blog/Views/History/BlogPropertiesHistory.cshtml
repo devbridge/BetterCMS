@@ -6,26 +6,26 @@
     <div class="bcms-input-field-holder">
         <div class="bcms-content-titles">@PagesGlobalization.AddPageContent_RegularContentTab_ContentName_Title</div>
         <div class="bcms-custom-input-box">
-            @Html.TextBoxFor(model => model.Name, new { @readonly = "readonly", @class = "bcms-editor-field-box", style = "width: 535px;" })
+            @Html.TextBoxFor(model => model.Name, new { @readonly = "readonly", @class = "bcms-field-text", style = "width: 535px;" })
         </div>
     </div>
 
     <div class="bcms-input-field-holder">
         <div class="bcms-content-titles">@PagesGlobalization.AddPageContent_RegularContentTab_LiveFrom_Title</div>
         <div class="bcms-date-input-box">
-            @Html.DateTextBoxFor(model => model.ActivationDate, Model.ActivationDate, new Dictionary<string, object> { { "readonly", "readonly" }, { "class", "bcms-editor-field-box bcms-datepicker" }, { "style", "width: 127px;" } })
+            @Html.DateTextBoxFor(model => model.ActivationDate, Model.ActivationDate, new Dictionary<string, object> { { "readonly", "readonly" }, { "class", "bcms-field-text bcms-datepicker" }, { "style", "width: 127px;" } })
         </div>
     </div>
 
     <div class="bcms-input-field-holder">
         <div class="bcms-content-titles">@PagesGlobalization.AddPageContent_RegularContentTab_LiveTo_Title</div>
         <div class="bcms-date-input-box">
-            @Html.DateTextBoxFor(model => model.ExpirationDate, Model.ExpirationDate, new Dictionary<string, object> { { "readonly", "readonly" }, { "class", "bcms-editor-field-box bcms-datepicker" }, { "style", "width: 127px;" } })
+            @Html.DateTextBoxFor(model => model.ExpirationDate, Model.ExpirationDate, new Dictionary<string, object> { { "readonly", "readonly" }, { "class", "bcms-field-text bcms-datepicker" }, { "style", "width: 127px;" } })
         </div>
     </div>
 </div>
 
 <div class="bcms-input-list-holder">
     <div class="bcms-content-titles">@PagesGlobalization.HtmlContent_Content_Title</div>
-    @Html.TextAreaFor(model => model.RowText, new { @readonly = "readonly", @class = "bcms-editor-field-area bcms-code-field ", style = "height: 500px;" })
+    @Html.TextAreaFor(model => model.RowText, new { @readonly = "readonly", @class = "bcms-field-textarea bcms-code-field ", style = "height: 500px;" })
 </div>

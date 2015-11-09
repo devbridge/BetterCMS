@@ -72,8 +72,8 @@
                 <div class="bcms-input-field-holder">
                     @Html.Tooltip(BlogGlobalization.EditBlogPost_Title_Tooltip_Description)
                     <div class="bcms-content-titles">@BlogGlobalization.EditBlogPost_Title_Title</div>
-                    <div class="bcms-input-box">
-                        @Html.TextBoxFor(m => m.Title, new { @class = "bcms-editor-field-box", @id = "bcms-editor-blog-title", @style = "width: 523px;" })
+                    <div class="bcms-field-wrapper">
+                        @Html.TextBoxFor(m => m.Title, new { @class = "bcms-field-text", @id = "bcms-editor-blog-title", @style = "width: 523px;" })
                         @Html.BcmsValidationMessageFor(m => m.Title)
                     </div>
                 </div>
@@ -81,14 +81,14 @@
                     @Html.Tooltip(BlogGlobalization.EditBlogPost_LiveDates_Tooltip_Description)
                     <div class="bcms-content-titles">@BlogGlobalization.EditBlogPost_LiveFrom_Title</div>
                     <div class="bcms-date-input-box">
-                        @Html.DateTextBoxFor(model => model.LiveFromDate, Model.LiveFromDate, new Dictionary<string, object> { { "class", "bcms-editor-field-box bcms-datepicker" }, { "style", "width: 127px;" } })
+                        @Html.DateTextBoxFor(model => model.LiveFromDate, Model.LiveFromDate, new Dictionary<string, object> { { "class", "bcms-field-text bcms-datepicker" }, { "style", "width: 127px;" } })
                         @Html.BcmsValidationMessageFor(m => m.LiveFromDate)
                     </div>
                 </div>
                 <div class="bcms-input-field-holder">
                     <div class="bcms-content-titles">@BlogGlobalization.EditBlogPost_LiveTo_Title</div>
                     <div class="bcms-date-input-box">
-                        @Html.DateTextBoxFor(model => model.LiveToDate, Model.LiveToDate, new Dictionary<string, object> { { "class", "bcms-editor-field-box bcms-datepicker" }, { "style", "width: 127px;" } })
+                        @Html.DateTextBoxFor(model => model.LiveToDate, Model.LiveToDate, new Dictionary<string, object> { { "class", "bcms-field-text bcms-datepicker" }, { "style", "width: 127px;" } })
                         @Html.BcmsValidationMessageFor(m => m.LiveToDate)
                     </div>
                 </div>
@@ -109,7 +109,7 @@
                     @Html.Tooltip(BlogGlobalization.EditBlogPost_IntroText_Tooltip_Description)
                     <div class="bcms-content-titles">@BlogGlobalization.EditBlogPost_IntroText_Title</div>
                     <div class="bcms-textarea-box">
-                        @Html.TextAreaFor(m => m.IntroText, new { @style = "height: 217px;", @class = "bcms-editor-field-area" })
+                        @Html.TextAreaFor(m => m.IntroText, new { @style = "height: 217px;", @class = "bcms-field-textarea" })
                         @Html.BcmsValidationMessageFor(m => m.IntroText)
                     </div>
                 </div>

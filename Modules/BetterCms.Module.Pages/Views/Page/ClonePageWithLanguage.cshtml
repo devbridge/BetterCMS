@@ -25,7 +25,7 @@
             <div class="bcms-input-list-holder">
                 @Html.Tooltip(PagesGlobalization.ClonePageWithLanguage_Dialog_Language_Tootlip)
                 <div class="bcms-content-titles">@PagesGlobalization.ClonePageWithLanguage_Dialog_Language_Title</div>
-                <div class="bcms-input-box">
+                <div class="bcms-field-wrapper">
                     <div class="bcms-select-holder">
                         @Html.DropDownListFor(model => model.LanguageId, Model.Languages.ToSelectList(Model.LanguageId), string.Empty, new { @class = "bcms-global-select" })
                         @Html.BcmsValidationMessageFor(f => f.LanguageId)
@@ -36,8 +36,8 @@
             <div class="bcms-input-list-holder">
                 @Html.Tooltip(PagesGlobalization.ClonePage_Dialog_PageTitle_Tooltip_Description)
                 <div class="bcms-content-titles">@PagesGlobalization.ClonePage_Dialog_PageTitle</div>
-                <div class="bcms-input-box">
-                    @Html.TextBoxFor(m => m.PageTitle, new { @class = "bcms-editor-field-box" })
+                <div class="bcms-field-wrapper">
+                    @Html.TextBoxFor(m => m.PageTitle, new { @class = "bcms-field-text" })
                     @Html.BcmsValidationMessageFor(f => f.PageTitle)
                 </div>
             </div>

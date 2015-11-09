@@ -113,7 +113,7 @@ WriteLiteral("            ");
 
             
             #line 14 "..\..\Views\Content\Partial\EditHtmlContent.cshtml"
-       Write(Html.TextBoxFor(model => model.ContentName, new { @class = "bcms-editor-field-box", style = "width: 523px;" }));
+       Write(Html.TextBoxFor(model => model.ContentName, new { @class = "bcms-field-text", style = "width: 523px;" }));
 
             
             #line default
@@ -156,7 +156,7 @@ WriteLiteral("            ");
 
             
             #line 22 "..\..\Views\Content\Partial\EditHtmlContent.cshtml"
-       Write(Html.DateTextBoxFor(model => model.LiveFrom, Model.LiveFrom, new Dictionary<string, object> { { "class", "bcms-editor-field-box bcms-datepicker" }, { "style", "width: 127px;" } }));
+       Write(Html.DateTextBoxFor(model => model.LiveFrom, Model.LiveFrom, new Dictionary<string, object> { { "class", "bcms-field-text bcms-datepicker" }, { "style", "width: 127px;" } }));
 
             
             #line default
@@ -199,7 +199,7 @@ WriteLiteral("            ");
 
             
             #line 30 "..\..\Views\Content\Partial\EditHtmlContent.cshtml"
-       Write(Html.DateTextBoxFor(model => model.LiveTo, Model.LiveTo, new Dictionary<string, object> { { "class", "bcms-editor-field-box bcms-datepicker" }, { "style", "width: 127px;" } }));
+       Write(Html.DateTextBoxFor(model => model.LiveTo, Model.LiveTo, new Dictionary<string, object> { { "class", "bcms-field-text bcms-datepicker" }, { "style", "width: 127px;" } }));
 
             
             #line default

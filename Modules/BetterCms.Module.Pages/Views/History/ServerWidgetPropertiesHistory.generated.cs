@@ -66,7 +66,7 @@ WriteLiteral(">");
             #line hidden
 WriteLiteral("</div>\n        <div");
 
-WriteLiteral(" class=\"bcms-input-box\"");
+WriteLiteral(" class=\"bcms-field-wrapper\"");
 
 WriteLiteral(">\n");
 
@@ -74,7 +74,7 @@ WriteLiteral("            ");
 
             
             #line 8 "..\..\Views\History\ServerWidgetPropertiesHistory.cshtml"
-       Write(Html.TextBoxFor(model => model.Name, new { @readonly = "readonly", @class = "bcms-editor-field-box" }));
+       Write(Html.TextBoxFor(model => model.Name, new { @readonly = "readonly", @class = "bcms-field-text" }));
 
             
             #line default
@@ -98,7 +98,7 @@ WriteLiteral(">");
             #line hidden
 WriteLiteral("</div>\n        <div");
 
-WriteLiteral(" class=\"bcms-input-box\"");
+WriteLiteral(" class=\"bcms-field-wrapper\"");
 
 WriteLiteral(">\n");
 
@@ -106,7 +106,7 @@ WriteLiteral("            ");
 
             
             #line 14 "..\..\Views\History\ServerWidgetPropertiesHistory.cshtml"
-       Write(Html.TextBoxFor(model => model.Url, new { @readonly = "readonly", @class = "bcms-editor-field-box" }));
+       Write(Html.TextBoxFor(model => model.Url, new { @readonly = "readonly", @class = "bcms-field-text" }));
 
             
             #line default
@@ -136,7 +136,7 @@ WriteLiteral(">");
             #line hidden
 WriteLiteral("</div>\n        <div");
 
-WriteLiteral(" class=\"bcms-input-box\"");
+WriteLiteral(" class=\"bcms-field-wrapper\"");
 
 WriteLiteral(">\n");
 
@@ -144,7 +144,7 @@ WriteLiteral("            ");
 
             
             #line 23 "..\..\Views\History\ServerWidgetPropertiesHistory.cshtml"
-       Write(Html.TextBoxFor(model => model.PreviewUrl, new { @readonly = "readonly", @class = "bcms-editor-field-box" }));
+       Write(Html.TextBoxFor(model => model.PreviewUrl, new { @readonly = "readonly", @class = "bcms-field-text" }));
 
             
             #line default
@@ -190,14 +190,14 @@ WriteLiteral("                <div>\n                    <img");
 
 WriteLiteral(" id=\"bcms-widget-preview-image\"");
 
-WriteAttribute("src", Tuple.Create(" src=\"", 1630), Tuple.Create("\"", 1653)
+WriteAttribute("src", Tuple.Create(" src=\"", 1624), Tuple.Create("\"", 1647)
             
             #line 32 "..\..\Views\History\ServerWidgetPropertiesHistory.cshtml"
-, Tuple.Create(Tuple.Create("", 1636), Tuple.Create<System.Object, System.Int32>(Model.PreviewUrl
+, Tuple.Create(Tuple.Create("", 1630), Tuple.Create<System.Object, System.Int32>(Model.PreviewUrl
             
             #line default
             #line hidden
-, 1636), false)
+, 1630), false)
 );
 
 WriteLiteral(" alt=\"\"");
