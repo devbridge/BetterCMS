@@ -3,7 +3,7 @@
     background-color: $white;
     border: $border-form-element;
     box-sizing: border-box;
-    color: $light-text;
+    color: $main-text;
     font-size: 14px;
     padding: 9px 11px 10px;
     width: 100%;
@@ -14,12 +14,20 @@
         box-shadow: 0 0 3px 0 rgba($blue-main, .35);
         outline: none;
     }
+
+    @include placeholder {
+        color: $light-text;
+    }
 }
 
 .bcms-field {
     &-wrapper {
-        padding-bottom: 20px;
+        margin-bottom: 20px;
         position: relative;
+
+        td & {
+            margin-bottom: 0;
+        }
     }
 
     &-text {
@@ -58,20 +66,13 @@
     }
 }
 
+.bcms-input-list-holder {
+    &:first-of-type {
+        margin-top: 25px;
+    }
+}
+
 //module Input Fields & Field Holders
-.bcms-input-field-holder {
-    position: relative;
-}
-
-.bcms-input-field-holder .bcms-tooltip-mark {
-    left: -15px;
-    top: 4px;
-}
-
-.bcms-input-list-holder:first-child .bcms-tooltip-mark {
-    top: 24px;
-}
-
 .bcms-checkbox-holder {
     color: #595959;
     display: inline-block;

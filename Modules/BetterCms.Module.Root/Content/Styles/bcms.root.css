@@ -1364,7 +1364,7 @@ div.bcms-btn-logout:active {
   background-color: #ffffff;
   border: 1px solid #d0d0d0;
   box-sizing: border-box;
-  color: #a6a6a6;
+  color: #636363;
   font-size: 14px;
   padding: 9px 11px 10px;
   width: 100%;
@@ -1377,9 +1377,25 @@ div.bcms-btn-logout:active {
   outline: none;
 }
 
+.bcms-field-text::-webkit-input-placeholder, .bcms-field-textarea::-webkit-input-placeholder {
+  color: #a6a6a6;
+}
+
+.bcms-field-text::-moz-placeholder, .bcms-field-textarea::-moz-placeholder {
+  color: #a6a6a6;
+}
+
+.bcms-field-text:-ms-input-placeholder, .bcms-field-textarea:-ms-input-placeholder {
+  color: #a6a6a6;
+}
+
 .bcms-field-wrapper {
-  padding-bottom: 20px;
+  margin-bottom: 20px;
   position: relative;
+}
+
+td .bcms-field-wrapper {
+  margin-bottom: 0;
 }
 
 .bcms-field-text {
@@ -1469,17 +1485,8 @@ div.bcms-btn-logout:active {
   width: 100%;
 }
 
-.bcms-input-field-holder {
-  position: relative;
-}
-
-.bcms-input-field-holder .bcms-tooltip-mark {
-  left: -15px;
-  top: 4px;
-}
-
-.bcms-input-list-holder:first-child .bcms-tooltip-mark {
-  top: 24px;
+.bcms-input-list-holder:first-of-type {
+  margin-top: 25px;
 }
 
 .bcms-checkbox-holder {
@@ -1669,10 +1676,9 @@ div.bcms-btn-logout:active {
   text-decoration: underline;
 }
 
-.bcms-input-box {
-  position: relative;
-}
-
+/*.bcms-input-box {
+    position: relative;
+}*/
 .bcms-custom-input-box {
   display: inline-block;
   position: relative;

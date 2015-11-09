@@ -132,7 +132,7 @@ namespace BetterCms.Module.Root.Mvc.Grids.Extensions
                                         {
                                             {"id", null},
                                             {"Name", namePattern},
-                                            {"class", "bcms-editor-field-box"}
+                                            {"class", "bcms-field-text"}
                                         };
             if (!string.IsNullOrWhiteSpace(namePattern))
             {
@@ -175,7 +175,7 @@ namespace BetterCms.Module.Root.Mvc.Grids.Extensions
                                             {"id", null},
                                             {"name", namePattern},
                                             {"style", "display:none; width:100%;"},
-                                            {"class", string.Format("bcms-editor-field-box {0}", textBoxClassName)}
+                                            {"class", string.Format("bcms-field-text {0}", textBoxClassName)}
                                         };
             if (!string.IsNullOrWhiteSpace(namePattern))
             {
@@ -197,7 +197,7 @@ namespace BetterCms.Module.Root.Mvc.Grids.Extensions
             // Div
             var div = new TagBuilder("div");
             div.InnerHtml = string.Concat(link.ToString(TagRenderMode.Normal), textBox.ToString(), validationBox.ToString(), hiddenField.ToString());
-            div.AddCssClass("bcms-input-box");
+            div.AddCssClass("bcms-field-wrapper");
 
             return new MvcHtmlString(div.ToString());
         }
