@@ -161,16 +161,16 @@ WriteLiteral(" type=\"text\"");
 
 WriteLiteral(" id=\"bcms-advanced-content-search\"");
 
-WriteLiteral(" class=\"bcms-search-field-box\"");
+WriteLiteral(" class=\"bcms-search-field-box bcms-js-search-box\"");
 
-WriteAttribute("placeholder", Tuple.Create(" placeholder=\"", 1229), Tuple.Create("\"", 1278)
+WriteAttribute("placeholder", Tuple.Create(" placeholder=\"", 1248), Tuple.Create("\"", 1297)
             
             #line 23 "..\..\Views\Content\Partial\SelectWidget.cshtml"
-                            , Tuple.Create(Tuple.Create("", 1243), Tuple.Create<System.Object, System.Int32>(RootGlobalization.WaterMark_Search
+                                               , Tuple.Create(Tuple.Create("", 1262), Tuple.Create<System.Object, System.Int32>(RootGlobalization.WaterMark_Search
             
             #line default
             #line hidden
-, 1243), false)
+, 1262), false)
 );
 
 WriteLiteral(" />\r\n        </div>\r\n    </div>\r\n</div>\r\n\r\n<div");

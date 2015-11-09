@@ -56,18 +56,16 @@
                 </div>
 
                 <div id="bcms-tab-2" class="bcms-tab-single">
-                    <div class="bcms-tree-filter-holder" data-bind="with: sitemap">
-                        <div class="" style="display: none;" data-bind="visible: showLanguages, with: language">
+                    <div class="bcms-tree-info-block" data-bind="with: sitemap">
+                        <div style="display: none;" data-bind="visible: showLanguages, with: language">
                             <div class="bcms-filter-text">Edit sitemap in language:</div>
                             <div class="bcms-table-middle-box">
                                 <select class="bcms-global-select" data-bind="options: languages, optionsText: 'value', optionsValue: 'key', value: languageId"></select>
                             </div>
                         </div>
 
-                        <div class="bcms-expand-link-holder" @* data-bind="droppable: 'emptyListZone'" TODO: check later. NOTE: jQuery error is raised on leave over. *@>
-                            <div class="bcms-expand-link" data-bind="click: expandAll">@NavigationGlobalization.Sitemap_Button_ExpandAll</div>
-                            <div class="bcms-expand-link" data-bind="click: collapseAll">@NavigationGlobalization.Sitemap_Button_CollapseAll</div>
-                        </div>
+                        <div class="bcms-tree-expander" data-bind="click: expandAll">@NavigationGlobalization.Sitemap_Button_ExpandAll</div>
+                        <div class="bcms-tree-expander" data-bind="click: collapseAll">@NavigationGlobalization.Sitemap_Button_CollapseAll</div>
                     </div>
 
                     <div class="bcms-tree-zones-holder">

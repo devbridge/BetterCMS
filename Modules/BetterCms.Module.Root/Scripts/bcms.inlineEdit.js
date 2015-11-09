@@ -24,7 +24,7 @@ bettercms.define('bcms.inlineEdit', ['bcms.jquery', 'bcms', 'bcms.messages', 'bc
             firstForm: 'form:first',
             firstEditableInput: 'input[type="text"]:first',
             editableInput: 'input[type="text"]',
-            fieldInputs: 'td > .bcms-input-box > input.bcms-editor-field-box',
+            fieldInputs: '.bcms-js-grid-input',
             allInputs: 'td input',
             fieldValues: '.bcms-grid-item-info',
             deleteRowLink: 'a.bcms-icn-delete',

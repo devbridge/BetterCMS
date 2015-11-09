@@ -116,16 +116,16 @@ WriteLiteral(" data-bind=\"value: options().searchQuery, valueUpdate: \'afterkey
 
 WriteLiteral(" type=\"text\"");
 
-WriteLiteral(" class=\"bcms-search-field-box\"");
+WriteLiteral(" class=\"bcms-search-field-box bcms-js-search-box\"");
 
-WriteAttribute("placeholder", Tuple.Create(" placeholder=\"", 700), Tuple.Create("\"", 749)
+WriteAttribute("placeholder", Tuple.Create(" placeholder=\"", 719), Tuple.Create("\"", 768)
             
             #line 12 "..\..\Views\Shared\EditableGrid\Partial\TopBlock.cshtml"
-                                                                                                                            , Tuple.Create(Tuple.Create("", 714), Tuple.Create<System.Object, System.Int32>(RootGlobalization.WaterMark_Search
+                                                                                                                                               , Tuple.Create(Tuple.Create("", 733), Tuple.Create<System.Object, System.Int32>(RootGlobalization.WaterMark_Search
             
             #line default
             #line hidden
-, 714), false)
+, 733), false)
 );
 
 WriteLiteral(" />\r\n            </div>\r\n");

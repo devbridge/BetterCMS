@@ -97,16 +97,16 @@ WriteLiteral(">\r\n            <input");
 
 WriteLiteral(" type=\"text\"");
 
-WriteLiteral(" class=\"bcms-search-field-box\"");
+WriteLiteral(" class=\"bcms-search-field-box bcms-js-search-box\"");
 
-WriteAttribute("placeholder", Tuple.Create(" placeholder=\"", 540), Tuple.Create("\"", 589)
+WriteAttribute("placeholder", Tuple.Create(" placeholder=\"", 546), Tuple.Create("\"", 595)
             
             #line 11 "..\..\Views\Option\Templates.cshtml"
-, Tuple.Create(Tuple.Create("", 554), Tuple.Create<System.Object, System.Int32>(RootGlobalization.WaterMark_Search
+              , Tuple.Create(Tuple.Create("", 560), Tuple.Create<System.Object, System.Int32>(RootGlobalization.WaterMark_Search
             
             #line default
             #line hidden
-, 554), false)
+, 560), false)
 );
 
 WriteLiteral(" data-bind=\"value: searchQuery, valueUpdate: \'afterkeydown\', enterPress: search\"");

@@ -305,13 +305,11 @@ WriteLiteral(" class=\"bcms-tab-single\"");
 
 WriteLiteral(">\r\n                    <div");
 
-WriteLiteral(" class=\"bcms-tree-filter-holder\"");
+WriteLiteral(" class=\"bcms-tree-info-block\"");
 
 WriteLiteral(" data-bind=\"with: sitemap\"");
 
 WriteLiteral(">\r\n                        <div");
-
-WriteLiteral(" class=\"\"");
 
 WriteLiteral(" style=\"display: none;\"");
 
@@ -335,42 +333,35 @@ WriteLiteral(" data-bind=\"options: languages, optionsText: \'value\', optionsVa
 WriteLiteral("></select>\r\n                            </div>\r\n                        </div>\r\n\r" +
 "\n                        <div");
 
-WriteLiteral(" class=\"bcms-expand-link-holder\"");
-
-WriteLiteral(" ");
-
-WriteLiteral(">\r\n                            <div");
-
-WriteLiteral(" class=\"bcms-expand-link\"");
+WriteLiteral(" class=\"bcms-tree-expander\"");
 
 WriteLiteral(" data-bind=\"click: expandAll\"");
 
 WriteLiteral(">");
 
             
-            #line 68 "..\..\Views\Sitemap\Edit.cshtml"
-                                                                                  Write(NavigationGlobalization.Sitemap_Button_ExpandAll);
+            #line 67 "..\..\Views\Sitemap\Edit.cshtml"
+                                                                                Write(NavigationGlobalization.Sitemap_Button_ExpandAll);
 
             
             #line default
             #line hidden
-WriteLiteral("</div>\r\n                            <div");
+WriteLiteral("</div>\r\n                        <div");
 
-WriteLiteral(" class=\"bcms-expand-link\"");
+WriteLiteral(" class=\"bcms-tree-expander\"");
 
 WriteLiteral(" data-bind=\"click: collapseAll\"");
 
 WriteLiteral(">");
 
             
-            #line 69 "..\..\Views\Sitemap\Edit.cshtml"
-                                                                                    Write(NavigationGlobalization.Sitemap_Button_CollapseAll);
+            #line 68 "..\..\Views\Sitemap\Edit.cshtml"
+                                                                                  Write(NavigationGlobalization.Sitemap_Button_CollapseAll);
 
             
             #line default
             #line hidden
-WriteLiteral("</div>\r\n                        </div>\r\n                    </div>\r\n\r\n           " +
-"         <div");
+WriteLiteral("</div>\r\n                    </div>\r\n\r\n                    <div");
 
 WriteLiteral(" class=\"bcms-tree-zones-holder\"");
 
@@ -390,15 +381,15 @@ WriteLiteral(" class=\"bcms-tree-drop-area\"");
 
 WriteLiteral(">\r\n                            <div");
 
-WriteAttribute("class", Tuple.Create(" class=\"", 4145), Tuple.Create("\"", 4230)
-, Tuple.Create(Tuple.Create("", 4153), Tuple.Create("bcms-addnode-placement-holder", 4153), true)
+WriteAttribute("class", Tuple.Create(" class=\"", 3926), Tuple.Create("\"", 4011)
+, Tuple.Create(Tuple.Create("", 3934), Tuple.Create("bcms-addnode-placement-holder", 3934), true)
             
-            #line 79 "..\..\Views\Sitemap\Edit.cshtml"
-, Tuple.Create(Tuple.Create("", 4182), Tuple.Create<System.Object, System.Int32>(Model.IsReadOnly ? "-readonly" : string.Empty
+            #line 77 "..\..\Views\Sitemap\Edit.cshtml"
+, Tuple.Create(Tuple.Create("", 3963), Tuple.Create<System.Object, System.Int32>(Model.IsReadOnly ? "-readonly" : string.Empty
             
             #line default
             #line hidden
-, 4182), false)
+, 3963), false)
 );
 
 WriteLiteral(">\r\n");
@@ -406,7 +397,7 @@ WriteLiteral(">\r\n");
 WriteLiteral("                                ");
 
             
-            #line 80 "..\..\Views\Sitemap\Edit.cshtml"
+            #line 78 "..\..\Views\Sitemap\Edit.cshtml"
                            Write(Html.Partial("Partial/Sitemap", new SitemapNodeViewModel()));
 
             
@@ -416,7 +407,7 @@ WriteLiteral("\r\n                            </div>\r\n                        
 "         </div>\r\n                </div>\r\n");
 
             
-            #line 85 "..\..\Views\Sitemap\Edit.cshtml"
+            #line 83 "..\..\Views\Sitemap\Edit.cshtml"
             }
 
             
@@ -427,7 +418,7 @@ WriteLiteral("        </div>\r\n\r\n");
 WriteLiteral("        ");
 
             
-            #line 88 "..\..\Views\Sitemap\Edit.cshtml"
+            #line 86 "..\..\Views\Sitemap\Edit.cshtml"
    Write(Html.Partial("Partial/SitemapTemplate", new SitemapNodeViewModel()));
 
             
@@ -442,7 +433,7 @@ WriteLiteral(" id=\"bcms-navigation-pagelinks-template\"");
 WriteLiteral(">\r\n    <div class=\"bcms-plain-text\">");
 
             
-            #line 93 "..\..\Views\Sitemap\Edit.cshtml"
+            #line 91 "..\..\Views\Sitemap\Edit.cshtml"
                             Write(NavigationGlobalization.Sitemap_EditDialog_PageLink_Header);
 
             
@@ -452,7 +443,7 @@ WriteLiteral("</div>\r\n    <div class=\"bcms-sidebar-search\">\r\n        <inpu
 "bcms-editor-field-box\" placeholder=\"");
 
             
-            #line 95 "..\..\Views\Sitemap\Edit.cshtml"
+            #line 93 "..\..\Views\Sitemap\Edit.cshtml"
                                                                  Write(NavigationGlobalization.Sitemap_EditDialog_AddPageLink_SearchPlaceHolder);
 
             
@@ -463,7 +454,7 @@ WriteLiteral("\"\r\n               data-bind=\"hasfocus: hasfocus, value: search
 "\"bcms-btn-search\" data-bind=\"click: searchForPageLinks\">");
 
             
-            #line 98 "..\..\Views\Sitemap\Edit.cshtml"
+            #line 96 "..\..\Views\Sitemap\Edit.cshtml"
                                                                   Write(NavigationGlobalization.Sitemap_EditDialog_AddPageLink_SearchButton);
 
             
@@ -472,7 +463,7 @@ WriteLiteral("\"\r\n               data-bind=\"hasfocus: hasfocus, value: search
 WriteLiteral("</div>\r\n\r\n    <div class=\"bcms-addnode-placement-holder");
 
             
-            #line 100 "..\..\Views\Sitemap\Edit.cshtml"
+            #line 98 "..\..\Views\Sitemap\Edit.cshtml"
                                          Write(Model.IsReadOnly ? "-readonly" : string.Empty);
 
             
@@ -489,7 +480,7 @@ WriteLiteral(">\r\n    <!-- ko if: isVisible() || isCustom() -->\r\n    <div cla
 "node\" data-bind=\"");
 
             
-            #line 105 "..\..\Views\Sitemap\Edit.cshtml"
+            #line 103 "..\..\Views\Sitemap\Edit.cshtml"
                                             Write(!Model.IsReadOnly ? "draggable: $parentContext.$index, " : string.Empty);
 
             

@@ -351,7 +351,7 @@ WriteLiteral("                    ");
 
             
             #line 95 "..\..\Views\Blog\Index.cshtml"
-               Write(Html.TextBoxFor(m => m.SearchQuery, new { @class = "bcms-search-field-box bcms-search-query", @placeholder = RootGlobalization.WaterMark_Search }));
+               Write(Html.TextBoxFor(m => m.SearchQuery, new { @class = "bcms-search-field-box bcms-js-search-box bcms-search-query", @placeholder = RootGlobalization.WaterMark_Search }));
 
             
             #line default
