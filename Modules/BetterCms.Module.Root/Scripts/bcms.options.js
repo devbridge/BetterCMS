@@ -159,7 +159,7 @@ bettercms.define('bcms.options', ['bcms.jquery', 'bcms', 'bcms.ko.extenders', 'b
                     event.stopPropagation();
                 };
 
-                $(document).on('click', function() {
+                bcms.on(bcms.events.bodyClick, function () {
                     self.isAddNewSelected(false);
                 });
             };
