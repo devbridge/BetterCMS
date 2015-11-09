@@ -577,6 +577,7 @@
             self.activeZone = ko.observable(DropZoneTypes.None);
             self.showHasNoDataMessage = ko.observable(false);
             self.savingInProgress = false;                  // To prevent multiple saving.
+            self.allNodesExpanded = ko.observable(false);
 
             self.version = jsonCategoryTree.Version;
             self.title = ko.observable(jsonCategoryTree.Title);
@@ -650,18 +651,35 @@
             };
 
             // Expanding or collapsing nodes.
-            self.expandAll = function () {
-                self.expandOrCollapse(self.childNodes(), true);
+            self.checkIfAllNodesExpanded = function (nodes) {
+                for (var i = 0; i < nodes.length; i++) {
+                    var node = nodes[i];
+                    if(node.hasChildNodes()){
+                        if (!node.isExpanded() || !self.checkIfAllNodesExpanded(node.childNodes())) {
+                            return false;
+                        };
+                    }
+                }
+                return true;
+            }
+
+            self.callExpandOrCollapse = function() {
+                var expand = !self.allNodesExpanded();
+                self.expandOrCollapse(self.childNodes(), expand);
+                self.allNodesExpanded(expand);
             };
-            self.collapseAll = function () {
-                self.expandOrCollapse(self.childNodes(), false);
-            };
+
             self.expandOrCollapse = function (nodes, expand) {
                 for (var i = 0; i < nodes.length; i++) {
                     var node = nodes[i];
                     node.isExpanded(expand);
                     self.expandOrCollapse(node.childNodes(), expand);
                 }
+            };
+
+            self.toggleNodeExpand = function(node) {
+                node.toggleExpand();
+                self.allNodesExpanded(self.checkIfAllNodesExpanded(self.childNodes()));
             };
 
             self.hasChildNodes = function () {

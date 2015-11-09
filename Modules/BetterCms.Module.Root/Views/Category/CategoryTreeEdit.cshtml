@@ -62,8 +62,7 @@
             <div class="bcms-tree-info-block">
                 <div class="bcms-content-titles">@RootGlobalization.CategoryTree_EditDialog_Title_Title</div>
 
-                <div class="bcms-tree-expander" data-bind="click: expandAll">@RootGlobalization.CategoryTree_Button_ExpandAll</div>
-                <div class="bcms-tree-expander bcms-tree-expander-close" data-bind="click: collapseAll">@RootGlobalization.CategoryTree_Button_CollapseAll</div>
+                <div class="bcms-tree-expander bcms-tree-expander-close" data-bind="click: callExpandOrCollapse, css: { 'bcms-tree-expander-close' : allNodesExpanded()}, text: allNodesExpanded() ? '@RootGlobalization.CategoryTree_Button_CollapseAll' : '@RootGlobalization.CategoryTree_Button_ExpandAll'"></div>
             </div>
 
             <div class="bcms-tree-controls-holder">

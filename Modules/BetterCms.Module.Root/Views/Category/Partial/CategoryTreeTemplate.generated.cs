@@ -55,9 +55,9 @@ WriteLiteral(" type=\"text/html\"");
 
 WriteLiteral(" id=\"bcms-navigation-categorynode-template\"");
 
-WriteLiteral(">\n    <!-- ko if: !hasChildNodes() -->\n    <div class=\"bcms-nodes-dropzone bcms-n" +
-"odes-dropzone-active\" data-bind=\"droppableCategoryNode: \'emptyListZone\'\">\n      " +
-"  <div class=\"bcms-node-infotext\" data-bind=\"text: getNoDataMessage()\">");
+WriteLiteral(">\r\n    <!-- ko if: !hasChildNodes() -->\r\n    <div class=\"bcms-nodes-dropzone bcms" +
+"-nodes-dropzone-active\" data-bind=\"droppableCategoryNode: \'emptyListZone\'\">\r\n   " +
+"     <div class=\"bcms-node-infotext\" data-bind=\"text: getNoDataMessage()\">");
 
             
             #line 8 "..\..\Views\Category\Partial\CategoryTreeTemplate.cshtml"
@@ -93,7 +93,7 @@ WriteLiteral(@"</div>
                         css: { 'bcms-placement-node-drag': isBeingDragged(), 'bcms-placement-node-edit': isActive(), 'bcms-placement-one-active': !isBeingDragged() && superDraggable() },
                         style: { height: getNodeHeight() }"">
                 <!-- ko if: hasChildNodes() -->
-                <a class=""bcms-expand-collapse-node"" data-bind=""click: toggleExpand, css: { 'bcms-expanded-nodes': isExpanded() }"">&nbsp;</a>
+                <a class=""bcms-expand-collapse-node"" data-bind=""click: $root.toggleNodeExpand, css: { 'bcms-expanded-nodes': isExpanded() }"">&nbsp;</a>
                 <!-- /ko -->
                 <div class=""bcms-node-info"" data-bind=""droppableCategoryNode: 'middleZone'"">
                     <div class=""bcms-placement-title"" data-bind=""text: title""></div>
@@ -112,8 +112,8 @@ WriteLiteral("                        ");
             
             #line default
             #line hidden
-WriteLiteral("\n                        <div class=\"bcms-custom-input-box\" style=\"width: 50%;\">\n" +
-"");
+WriteLiteral("\r\n                        <div class=\"bcms-custom-input-box\" style=\"width: 50%;\">" +
+"\r\n");
 
 WriteLiteral("                            ");
 
@@ -129,7 +129,7 @@ WriteLiteral("                            ");
             
             #line default
             #line hidden
-WriteLiteral("\n");
+WriteLiteral("\r\n");
 
 WriteLiteral("                            ");
 
@@ -140,9 +140,9 @@ WriteLiteral("                            ");
             
             #line default
             #line hidden
-WriteLiteral("\n                        </div>\n                        <div class=\"bcms-btn-smal" +
-"l\" data-bind=\"click: saveCategoryTreeNodeWithValidation, text: getCategoryTree()" +
-".settings.nodeSaveButtonTitle\">");
+WriteLiteral("\r\n                        </div>\r\n                        <div class=\"bcms-btn-sm" +
+"all\" data-bind=\"click: saveCategoryTreeNodeWithValidation, text: getCategoryTree" +
+"().settings.nodeSaveButtonTitle\">");
 
             
             #line 44 "..\..\Views\Category\Partial\CategoryTreeTemplate.cshtml"
@@ -151,8 +151,8 @@ WriteLiteral("\n                        </div>\n                        <div cla
             
             #line default
             #line hidden
-WriteLiteral("</div>\n                        <div class=\"bcms-btn-links-small\" data-bind=\"click" +
-": cancelEditCategoryTreeNode\">");
+WriteLiteral("</div>\r\n                        <div class=\"bcms-btn-links-small\" data-bind=\"clic" +
+"k: cancelEditCategoryTreeNode\">");
 
             
             #line 45 "..\..\Views\Category\Partial\CategoryTreeTemplate.cshtml"
@@ -161,8 +161,8 @@ WriteLiteral("</div>\n                        <div class=\"bcms-btn-links-small\
             
             #line default
             #line hidden
-WriteLiteral("</div>\n                    </div>\n                    <!-- ko if: getCategoryTree" +
-"().showMacros -->\n                    <div class=\"bcms-edit-node-holder\">\n");
+WriteLiteral("</div>\r\n                    </div>\r\n                    <!-- ko if: getCategoryTr" +
+"ee().showMacros -->\r\n                    <div class=\"bcms-edit-node-holder\">\r\n");
 
 WriteLiteral("                        ");
 
@@ -173,8 +173,8 @@ WriteLiteral("                        ");
             
             #line default
             #line hidden
-WriteLiteral("\n                        <div class=\"bcms-custom-input-box\" style=\"width: 100%;\">" +
-"\n");
+WriteLiteral("\r\n                        <div class=\"bcms-custom-input-box\" style=\"width: 100%;\"" +
+">\r\n");
 
 WriteLiteral("                            ");
 
@@ -191,7 +191,7 @@ WriteLiteral("                            ");
             
             #line default
             #line hidden
-WriteLiteral("\n");
+WriteLiteral("\r\n");
 
 WriteLiteral("                            ");
 
@@ -219,9 +219,9 @@ WriteLiteral(@"
             
             #line default
             #line hidden
-WriteLiteral("</a>\n                    <!-- /ko -->\n                    <!-- ko if: getCategory" +
-"Tree().settings.canDeleteNode -->\n                    <a class=\"bcms-icn-delete\"" +
-" data-bind=\"click: deleteCategoryTreeNode\">");
+WriteLiteral("</a>\r\n                    <!-- /ko -->\r\n                    <!-- ko if: getCatego" +
+"ryTree().settings.canDeleteNode -->\r\n                    <a class=\"bcms-icn-dele" +
+"te\" data-bind=\"click: deleteCategoryTreeNode\">");
 
             
             #line 69 "..\..\Views\Category\Partial\CategoryTreeTemplate.cshtml"
@@ -267,8 +267,8 @@ WriteLiteral(@"</div>
             
             #line default
             #line hidden
-WriteLiteral("</div>\n            </div>\n            <!-- /ko -->\n        </div>\n    </div>\n    " +
-"<!-- /ko -->\n    <!-- /ko -->\n</script>");
+WriteLiteral("</div>\r\n            </div>\r\n            <!-- /ko -->\r\n        </div>\r\n    </div>\r" +
+"\n    <!-- /ko -->\r\n    <!-- /ko -->\r\n</script>");
 
         }
     }
