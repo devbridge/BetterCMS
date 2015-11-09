@@ -91,7 +91,7 @@ WriteLiteral("</a>\r\n</div>\r\n\r\n");
 
             
             #line 10 "..\..\Views\MediaManager\Index.cshtml"
-Write(Html.TabbedContentMessagesBox());
+Write(Html.MessagesBox());
 
             
             #line default
@@ -139,7 +139,7 @@ WriteLiteral("\r\n    <div>\r\n");
             #line hidden
             
             #line 21 "..\..\Views\MediaManager\Index.cshtml"
-       Write(Html.TabbedContentCustomMessagesBox(Model.CustomFilesMessages));
+       Write(Html.CustomMessagesBox(Model.CustomFilesMessages));
 
             
             #line default

@@ -36,7 +36,7 @@
 
     @using (Html.BeginForm<UserController>(f => f.Index(null), FormMethod.Post, new { @id = "bcms-users-form", @class = "bcms-ajax-form" }))
     {
-        @Html.SiteSettingsMessagesBox("bcms-users-messages")
+        @Html.MessagesBox("bcms-users-messages")
 
         @Html.HiddenGridOptions(Model.GridOptions)
         <div class="bcms-top-block-holder">

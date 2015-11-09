@@ -152,14 +152,14 @@ WriteLiteral("\r\n\r\n");
             #line hidden
             
             #line 47 "..\..\Views\Templates\Templates.cshtml"
-Write(Html.SiteSettingsMessagesBox());
+Write(Html.MessagesBox());
 
             
             #line default
             #line hidden
             
             #line 47 "..\..\Views\Templates\Templates.cshtml"
-                                   
+                       
 
 
             

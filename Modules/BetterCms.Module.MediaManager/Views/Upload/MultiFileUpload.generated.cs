@@ -97,7 +97,7 @@ WriteLiteral("    ");
 
             
             #line 13 "..\..\Views\Upload\MultiFileUpload.cshtml"
-Write(Html.TabbedContentMessagesBox("bcms-multi-file-upload-messages"));
+Write(Html.MessagesBox("bcms-multi-file-upload-messages"));
 
             
             #line default

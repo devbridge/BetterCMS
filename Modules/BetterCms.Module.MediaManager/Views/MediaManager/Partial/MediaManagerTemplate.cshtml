@@ -9,7 +9,7 @@
     var canEdit = (ViewContext.Controller as CmsControllerBase).SecurityService.IsAuthorized(RootModuleConstants.UserRoles.EditContent);
 }
 <script type="text/html" id="bcms-media-list-template">
-    @Html.SiteSettingsMessagesBox(null, new Dictionary<string, string> { { "data-bind", "attr: { id: domId() }" } })
+    @Html.MessagesBox(null, new Dictionary<string, string> { { "data-bind", "attr: { id: domId() }" } })
 
     <div class="bcms-window-settings">
         <div class="bcms-top-block-holder">

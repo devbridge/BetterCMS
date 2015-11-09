@@ -51,7 +51,7 @@
 
 @using (Html.BeginForm<WidgetsController>(f => f.Widgets(null), FormMethod.Post, new { @id = "bcms-widgets-form", @class = "bcms-ajax-form" }))
 {
-    @Html.SiteSettingsMessagesBox()
+    @Html.MessagesBox()
 
     <div class="bcms-window-settings">
         @Html.HiddenGridOptions(Model.GridOptions)

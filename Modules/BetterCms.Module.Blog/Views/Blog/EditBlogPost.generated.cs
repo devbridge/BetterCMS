@@ -183,7 +183,7 @@ WriteLiteral("    ");
 
             
             #line 38 "..\..\Views\Blog\EditBlogPost.cshtml"
-Write(Html.TabbedContentMessagesBox());
+Write(Html.MessagesBox());
 
             
             #line default

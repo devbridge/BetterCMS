@@ -217,7 +217,7 @@ WriteLiteral("    ");
 
             
             #line 32 "..\..\Views\History\MediaVersion.cshtml"
-Write(Html.TabbedContentMessagesBox());
+Write(Html.MessagesBox());
 
             
             #line default

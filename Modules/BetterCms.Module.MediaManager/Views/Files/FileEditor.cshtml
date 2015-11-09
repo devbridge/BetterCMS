@@ -22,7 +22,7 @@
 }
 
 <div class="bcms-modal-frame-holder">
-    @Html.TabbedContentMessagesBox()
+    @Html.MessagesBox()
 
     <div class="bcms-window-options" id="bcms-file-manager-inner">
         @using (Html.BeginForm<FilesController>(f => f.FileEditor((FileViewModel)null), FormMethod.Post,

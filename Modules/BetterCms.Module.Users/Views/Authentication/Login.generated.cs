@@ -94,7 +94,7 @@ WriteLiteral("       ");
 
             
             #line 24 "..\..\Views\Authentication\Login.cshtml"
-  Write(Html.TabbedContentMessagesBox());
+  Write(Html.MessagesBox());
 
             
             #line default

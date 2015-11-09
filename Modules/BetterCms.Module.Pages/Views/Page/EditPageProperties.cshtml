@@ -52,7 +52,7 @@
     </div>
 
     <div class="bcms-window-tabbed-options">
-        @Html.TabbedContentMessagesBox()
+        @Html.MessagesBox()
         @if (Model.IsMasterPage)
         {
             @Html.Partial("Partial/InfoMessageAboutMasterPage")
@@ -217,7 +217,7 @@
                 <div id="bcms-tab-5" class="bcms-tab-single">
                     @if (Model.TranslationMessages != null)
                     {
-                        @Html.TabbedContentCustomMessagesBox(Model.TranslationMessages)
+                        @Html.CustomMessagesBox(Model.TranslationMessages)
                     }
                     <div class="bcms-page-translations-content">
                         <div class="bcms-input-list-holder" data-bind="with: translations.language">

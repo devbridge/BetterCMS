@@ -7,7 +7,7 @@
     <a class="bcms-inner-navigation-ui bcms-tab-item" data-name="#bcms-tab-2" id="bcms-tab-files">@MediaGlobalization.FilesTab_Title</a>
 </div>
 
-@Html.TabbedContentMessagesBox()
+@Html.MessagesBox()
 
 <div id="bcms-tab-1" class="bcms-tab-single">
     @Html.Partial("Partial/MediaManagerTab")
@@ -18,7 +18,7 @@
     <div>
         @if (Model.CustomFilesMessages != null)
         {
-            @Html.TabbedContentCustomMessagesBox(Model.CustomFilesMessages)
+            @Html.CustomMessagesBox(Model.CustomFilesMessages)
         }
         @Html.Partial("Partial/MediaManagerTab")
     </div>

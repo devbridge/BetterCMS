@@ -49,7 +49,7 @@
 
 @using (Html.BeginForm<TemplatesController>(f => f.MasterPages(null), FormMethod.Post, new { @id = "bcms-master-pages-form", @class = "bcms-ajax-form" }))
 {
-    @Html.SiteSettingsMessagesBox()
+    @Html.MessagesBox()
 
         @Html.HiddenGridOptions(Model.GridOptions)
         <div class="bcms-top-block-holder">

@@ -85,7 +85,7 @@ WriteLiteral("    ");
 
             
             #line 11 "..\..\Views\UserProfile\EditUserProfile.cshtml"
-Write(Html.TabbedContentMessagesBox());
+Write(Html.MessagesBox());
 
             
             #line default

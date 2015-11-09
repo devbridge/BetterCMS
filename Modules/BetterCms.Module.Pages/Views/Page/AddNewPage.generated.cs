@@ -179,7 +179,7 @@ WriteLiteral("        ");
 
             
             #line 27 "..\..\Views\Page\AddNewPage.cshtml"
-   Write(Html.TabbedContentMessagesBox());
+   Write(Html.MessagesBox());
 
             
             #line default

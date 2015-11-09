@@ -89,7 +89,7 @@ WriteLiteral("    ");
 
             
             #line 14 "..\..\Views\Seo\EditSeo.cshtml"
-Write(Html.TabbedContentMessagesBox());
+Write(Html.MessagesBox());
 
             
             #line default

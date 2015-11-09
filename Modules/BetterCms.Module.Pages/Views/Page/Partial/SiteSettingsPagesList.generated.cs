@@ -195,7 +195,7 @@ WriteLiteral("    ");
 
             
             #line 70 "..\..\Views\Page\Partial\SiteSettingsPagesList.cshtml"
-Write(Html.SiteSettingsMessagesBox());
+Write(Html.MessagesBox());
 
             
             #line default

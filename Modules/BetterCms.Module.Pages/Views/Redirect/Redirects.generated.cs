@@ -131,14 +131,14 @@ WriteLiteral("\n\n");
             #line hidden
             
             #line 37 "..\..\Views\Redirect\Redirects.cshtml"
-Write(Html.SiteSettingsMessagesBox());
+Write(Html.MessagesBox());
 
             
             #line default
             #line hidden
             
             #line 37 "..\..\Views\Redirect\Redirects.cshtml"
-                               
+                   
 
 
             

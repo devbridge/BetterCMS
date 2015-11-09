@@ -150,7 +150,7 @@ WriteLiteral("    ");
 
             
             #line 29 "..\..\Views\Widgets\EditServerControlWidget.cshtml"
-Write(Html.TabbedContentMessagesBox("bcms-edit-widget-messages"));
+Write(Html.MessagesBox("bcms-edit-widget-messages"));
 
             
             #line default

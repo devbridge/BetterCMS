@@ -122,7 +122,7 @@ WriteLiteral("    ");
 
             
             #line 25 "..\..\Views\Sitemap\Edit.cshtml"
-Write(Html.TabbedContentMessagesBox());
+Write(Html.MessagesBox());
 
             
             #line default

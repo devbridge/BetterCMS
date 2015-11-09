@@ -7,7 +7,7 @@
 
 @if (Model.ShowMessages)
 {
-    @Html.SiteSettingsMessagesBox(null, new Dictionary<string, string> { { "data-bind", "attr: { id: messagesDomId() }" } })
+    @Html.MessagesBox(null, new Dictionary<string, string> { { "data-bind", "attr: { id: messagesDomId() }" } })
 }
 
 @{

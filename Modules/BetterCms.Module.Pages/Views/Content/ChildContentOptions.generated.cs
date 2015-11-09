@@ -73,7 +73,7 @@ WriteLiteral("    ");
 
             
             #line 9 "..\..\Views\Content\ChildContentOptions.cshtml"
-Write(Html.TabbedContentMessagesBox());
+Write(Html.MessagesBox());
 
             
             #line default

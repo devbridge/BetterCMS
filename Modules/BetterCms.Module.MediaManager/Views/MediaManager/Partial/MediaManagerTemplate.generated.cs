@@ -89,7 +89,7 @@ WriteLiteral("    ");
 
             
             #line 12 "..\..\Views\MediaManager\Partial\MediaManagerTemplate.cshtml"
-Write(Html.SiteSettingsMessagesBox(null, new Dictionary<string, string> { { "data-bind", "attr: { id: domId() }" } }));
+Write(Html.MessagesBox(null, new Dictionary<string, string> { { "data-bind", "attr: { id: domId() }" } }));
 
             
             #line default

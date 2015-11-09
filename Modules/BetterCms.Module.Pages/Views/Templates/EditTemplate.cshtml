@@ -22,7 +22,7 @@
 
 <div class="bcms-modal-frame-holder">
     <div class="bcms-window-tabbed-options">
-        @Html.TabbedContentMessagesBox("bcms-edit-template-messages")
+        @Html.MessagesBox("bcms-edit-template-messages")
         @using (Html.BeginForm<TemplatesController>(c => c.RegisterTemplate((TemplateEditViewModel)null), FormMethod.Post, new { @id = "bcms-template-form", @class = "bcms-ajax-form" }))
         {
             <div id="bcms-tab-1" class="bcms-tab-single">

@@ -167,7 +167,7 @@ WriteLiteral("        ");
 
             
             #line 31 "..\..\Views\Widgets\EditHtmlContentWidget.cshtml"
-   Write(Html.TabbedContentMessagesBox("bcms-edit-widget-messages"));
+   Write(Html.MessagesBox("bcms-edit-widget-messages"));
 
             
             #line default

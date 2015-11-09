@@ -453,7 +453,7 @@ WriteLiteral("    ");
 
             
             #line 116 "..\..\Views\History\ContentHistory.cshtml"
-Write(Html.TabbedContentMessagesBox());
+Write(Html.MessagesBox());
 
             
             #line default

@@ -83,7 +83,7 @@ WriteLiteral("    ");
 
             
             #line 10 "..\..\Views\Page\ClonePageWithLanguage.cshtml"
-Write(Html.TabbedContentMessagesBox());
+Write(Html.MessagesBox());
 
             
             #line default

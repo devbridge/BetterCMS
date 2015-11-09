@@ -83,7 +83,7 @@ WriteLiteral("    ");
 
             
             #line 10 "..\..\Views\Images\ImageEditorInsert.cshtml"
-Write(Html.TabbedContentMessagesBox());
+Write(Html.MessagesBox());
 
             
             #line default

@@ -299,7 +299,7 @@ WriteLiteral("    ");
 
             
             #line 74 "..\..\Views\Sitemap\History.cshtml"
-Write(Html.TabbedContentMessagesBox());
+Write(Html.MessagesBox());
 
             
             #line default

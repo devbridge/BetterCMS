@@ -5,7 +5,7 @@
 @model BetterCms.Module.Blog.ViewModels.Blog.UploadImportFileViewModel
 
 <div class="bcms-modal-frame-holder">
-    @Html.TabbedContentMessagesBox()
+    @Html.MessagesBox()
 
     <div class="bcms-window-options">
         @using (Html.BeginForm<BlogMLController>(c => c.UploadImportFile(), FormMethod.Post, new { @enctype = "multipart/form-data", @id = "bcms-import-blog-posts", @target = "bcms-import-form-target", }))

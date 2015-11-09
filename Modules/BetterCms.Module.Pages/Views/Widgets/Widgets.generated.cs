@@ -159,14 +159,14 @@ WriteLiteral("\r\n\r\n");
             #line hidden
             
             #line 54 "..\..\Views\Widgets\Widgets.cshtml"
-Write(Html.SiteSettingsMessagesBox());
+Write(Html.MessagesBox());
 
             
             #line default
             #line hidden
             
             #line 54 "..\..\Views\Widgets\Widgets.cshtml"
-                                   
+                       
 
 
             

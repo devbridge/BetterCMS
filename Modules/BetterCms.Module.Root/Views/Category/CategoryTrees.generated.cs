@@ -115,14 +115,14 @@ WriteLiteral("\n\n");
             #line hidden
             
             #line 25 "..\..\Views\Category\CategoryTrees.cshtml"
-   Write(Html.SiteSettingsMessagesBox());
+   Write(Html.MessagesBox());
 
             
             #line default
             #line hidden
             
             #line 25 "..\..\Views\Category\CategoryTrees.cshtml"
-                                       
+                           
 
 
             
