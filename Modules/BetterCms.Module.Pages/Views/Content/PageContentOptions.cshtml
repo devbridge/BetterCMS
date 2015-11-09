@@ -19,7 +19,7 @@
                 data_readonly = Model.IsReadOnly.ToString().ToLower()
             }))
         {              
-            @Html.Partial(PagesConstants.OptionValuesGridTemplate)
+            @Html.Partial(PagesConstants.OptionValuesGridTemplate, new EditableGridViewModel{CanAddNewItems = false})
 
             @Html.HiddenFor(model => model.OptionValuesContainerId)
         }

@@ -13,8 +13,9 @@
         <select class="bcms-global-select" style="width: 125px;" data-bind="options: @(Model.OptionsBind),
             optionsText: '@(Model.OptionsText)',
             optionsValue: '@(Model.OptionsValue)',
-            value: @Model.ValueBind, 
-            event: {blur: onBlurField, focus: onStopEvent, click: onStopEvent}"></select>
+            value: @Model.ValueBind
+@*            event: {blur: onBlurField, focus: onStopEvent, click: onStopEvent}*@
+                "></select>
         <!-- /ko -->
     }
 </td>

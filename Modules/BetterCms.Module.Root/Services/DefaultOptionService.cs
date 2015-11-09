@@ -70,7 +70,7 @@ namespace BetterCms.Module.Root.Services
         /// <returns>
         /// List of option values view models, merged from options and option values
         /// </returns>
-        public List<OptionValueEditViewModel> GetMergedOptionValuesForEdit(IEnumerable<IOptionEntity> options, IEnumerable<IOptionEntity> optionValues)
+        public List<OptionValueEditViewModel> GetMergedOptionValuesForEdit(IEnumerable<IOptionEntity> options, IEnumerable<IOptionValueEntity> optionValues)
         {
             var optionModels = new List<OptionValueEditViewModel>();
 
@@ -97,7 +97,8 @@ namespace BetterCms.Module.Root.Services
                                                   OptionKey = optionValue.Key.Trim(),
                                                   OptionValue = ClearFixValueForEdit(optionValue.Type, optionValue.Value),
                                                   OptionDefaultValue = option != null ? ClearFixValueForEdit(option.Type, option.Value) : null,
-                                                  UseDefaultValue = option != null && optionValue.Value == null // false
+//                                                  UseDefaultValue = option != null && optionValue.Value == null // false
+                                                UseDefaultValue = optionValue.UseDefaultValue
                                               };
                     if (cmsConfiguration.EnableMultilanguage && optionValue is IMultilingualOption)
                     {
@@ -207,7 +208,7 @@ namespace BetterCms.Module.Root.Services
         /// <returns>
         /// List of option values view models, merged from options and option values
         /// </returns>
-        public List<IOptionValue> GetMergedOptionValues(IEnumerable<IOptionEntity> options, IEnumerable<IOptionEntity> optionValues, Guid? languageId = null)
+        public List<IOptionValue> GetMergedOptionValues(IEnumerable<IOptionEntity> options, IEnumerable<IOptionValueEntity> optionValues, Guid? languageId = null)
         {
             var optionModels = new List<OptionValueViewModel>();
 
@@ -229,11 +230,12 @@ namespace BetterCms.Module.Root.Services
                     {
                         optionViewModel = CreateOptionValueViewModel(option, languageId);
                         optionModels.Add(optionViewModel);
-                    } else if (optionViewModel.OptionValue == null && languageId != null)
-                    {
-                        var optViewModel = CreateOptionValueViewModel(option, languageId);
-                        optionViewModel.OptionValue = optViewModel.OptionValue;
-                    }
+                    } 
+//                    else if (optionViewModel.OptionValue == null && languageId != null)
+//                    {
+//                        var optViewModel = CreateOptionValueViewModel(option, languageId);
+//                        optionViewModel.OptionValue = optViewModel.OptionValue;
+//                    }
                 }
             }
 
@@ -347,7 +349,7 @@ namespace BetterCms.Module.Root.Services
             IEnumerable<OptionValueEditViewModel> optionViewModels,
             IEnumerable<TEntity> optionValues,
             Func<TEntity> entityCreator,
-            Func<IOptionTranslationEntity> translationEntityCreator = null) where TEntity : Entity, IOptionEntity
+            Func<IOptionTranslationEntity> translationEntityCreator = null) where TEntity : Entity, IOptionValueEntity
         {
             var savedOptionValues = new List<TEntity>();
 
@@ -399,6 +401,7 @@ namespace BetterCms.Module.Root.Services
                         optionValue = entityCreator();
                         optionValue.Key = optionViewModel.OptionKey;
                     }
+                    optionValue.UseDefaultValue = false;
                     optionValue.Value = ClearFixValueForSave(optionViewModel.OptionKey, optionViewModel.Type, optionViewModel.OptionValue);
                     optionValue.Type = optionViewModel.Type;
 
@@ -435,6 +438,7 @@ namespace BetterCms.Module.Root.Services
                         {
                             multilangOptionValue.Translations = multilingualTranslations;
                             optionValue.Value = null;
+                            optionValue.UseDefaultValue = true;
                             savedOptionValues.Add(optionValue);
                             repository.Save(optionValue);
                         }
@@ -464,6 +468,7 @@ namespace BetterCms.Module.Root.Services
                         {
                             multilangOptionValue.Translations = multilingualTranslations;
                             optionValue.Value = null;
+                            optionValue.UseDefaultValue = true;
                             savedOptionValues.Add(optionValue);
                             repository.Save(optionValue);
                         }
@@ -893,18 +898,52 @@ namespace BetterCms.Module.Root.Services
         /// <param name="valueModels">The value models.</param>
         public void SetCustomOptionValueTitles(IEnumerable<OptionViewModel> optionModels, IEnumerable<OptionValueEditViewModel> valueModels = null)
         {
-            var values = optionModels
-                    .Where(m => m.Type == OptionType.Custom && m.CustomOption != null)
-                    .Select(m => new { m.CustomOption.Identifier, Value = m.OptionDefaultValue });
+//            var values = optionModels
+//                    .Where(m => m.Type == OptionType.Custom && m.CustomOption != null)
+//                    .Select(m => new { m.CustomOption.Identifier, Value = m.OptionDefaultValue });
+//            var customOptionModels = optionModels.Where(m => m.Type == OptionType.Custom);
 
+            var values = new List<System.Tuple<string, string>>();
+            foreach (var optionModel in optionModels)
+            {
+                if (optionModel.Type != OptionType.Custom || optionModel.CustomOption == null)
+                {
+                    continue;
+                }
+                values.Add(new System.Tuple<string, string>(optionModel.CustomOption.Identifier, optionModel.OptionDefaultValue));
+                if (optionModel.Translations == null)
+                {
+                    continue;
+                }
+                foreach (var translation in optionModel.Translations)
+                {
+                    values.Add(new System.Tuple<string, string>(optionModel.CustomOption.Identifier, translation.OptionValue));
+                }
+            }
             if (valueModels != null)
             {
-                values = values.Concat(valueModels
-                    .Where(m => m.Type == OptionType.Custom && m.CustomOption != null)
-                    .Select(m => new { m.CustomOption.Identifier, Value = m.OptionValue }));
+//                values = values.Concat(valueModels
+//                    .Where(m => m.Type == OptionType.Custom && m.CustomOption != null)
+//                    .Select(m => new { m.CustomOption.Identifier, Value = m.OptionValue }));
+                foreach (var valueModel in valueModels)
+                {
+                    if (valueModel.Type != OptionType.Custom || valueModel.CustomOption == null)
+                    {
+                        continue;
+                    }
+                    values.Add(new System.Tuple<string, string>(valueModel.CustomOption.Identifier, valueModel.OptionValue));
+                    if (valueModel.ValueTranslations == null)
+                    {
+                        continue;
+                    }
+                    foreach (var translation in valueModel.ValueTranslations)
+                    {
+                        values.Add(new System.Tuple<string, string>(valueModel.CustomOption.Identifier, translation.OptionValue));
+                    }
+                }
             }
 
-            var groupped = values.Distinct().GroupBy(g => g.Identifier);
+            var groupped = values.Distinct().GroupBy(g => g.Item1);
 
             foreach (var group in groupped)
             {
@@ -912,24 +951,58 @@ namespace BetterCms.Module.Root.Services
 
                 if (provider != null)
                 {
-                    var ids = group.Select(g => g.Value).Distinct().ToArray();
+                    var ids = group.Select(g => g.Item2).Distinct().ToArray();
                     var titles = provider.GetTitlesForValues(ids, repository);
 
                     if (titles != null)
                     {
                         foreach (var pair in titles)
                         {
-                            optionModels
-                                .Where(g => g.Type == OptionType.Custom && (g.OptionDefaultValue == pair.Key || (pair.Key == string.Empty && string.IsNullOrEmpty(g.OptionDefaultValue))))
-                                .ToList()
-                                .ForEach(g => g.CustomOptionDefaultValueTitle = pair.Value);
+                            foreach (var optionModel in optionModels)
+                            {
+                                if (optionModel.Type != OptionType.Custom)
+                                {
+                                    continue;
+                                }
+                                if(optionModel.OptionDefaultValue == pair.Key || (pair.Key == string.Empty && string.IsNullOrEmpty(optionModel.OptionDefaultValue)))
+                                {
+                                    optionModel.CustomOptionDefaultValueTitle = pair.Value;
+                                }
+                                if (optionModel.Translations != null)
+                                {
+                                    foreach (var translation in optionModel.Translations)
+                                    {
+                                        if (translation.OptionValue == pair.Key || (pair.Key == string.Empty && string.IsNullOrEmpty(translation.OptionValue)))
+                                        {
+                                            translation.CustomOptionTitle = pair.Value;
+                                        }
+                                    }
+                                }
+                            }
 
                             if (valueModels != null)
                             {
-                                valueModels
-                                   .Where(g => g.Type == OptionType.Custom && (g.OptionValue == pair.Key || (pair.Key == string.Empty && string.IsNullOrEmpty(g.OptionValue))))
-                                   .ToList()
-                                   .ForEach(g => g.CustomOptionValueTitle = pair.Value);
+                                foreach (var valueModel in valueModels)
+                                {
+                                    if (valueModel.Type != OptionType.Custom)
+                                    {
+                                        continue;
+                                    }
+                                    if (valueModel.OptionValue == pair.Key || (pair.Key == string.Empty && string.IsNullOrEmpty(valueModel.OptionValue)))
+                                    {
+                                        valueModel.CustomOptionValueTitle = pair.Value;
+                                    }
+                                    if (valueModel.ValueTranslations != null)
+                                    {
+                                        foreach (var translation in valueModel.ValueTranslations)
+                                        {
+                                            if (translation.OptionValue == pair.Key || (pair.Key == string.Empty && string.IsNullOrEmpty(translation.OptionValue)))
+                                            {
+                                                translation.CustomOptionTitle = pair.Value;
+                                            }
+                                        }
+                                    }
+                                }
                             }
                         }
                     }

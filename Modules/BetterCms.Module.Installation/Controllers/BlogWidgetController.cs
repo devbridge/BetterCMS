@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web.Mvc;
 
-using BetterCms.Core.Extensions;
 using BetterCms.Module.Api;
 using BetterCms.Module.Api.Infrastructure;
 using BetterCms.Module.Api.Infrastructure.Enums;
@@ -12,6 +11,7 @@ using BetterCms.Module.Api.Operations.Root.Categories;
 using BetterCms.Module.Api.Operations.Root.Categories.Category;
 using BetterCms.Module.Installation.Models.Blog;
 using BetterCms.Module.Root.Mvc;
+using BetterCms.Module.Root.Mvc.Helpers;
 using BetterCms.Module.Root.ViewModels.Cms;
 
 using Microsoft.Web.Mvc;
@@ -25,8 +25,8 @@ namespace BetterCms.Module.Installation.Controllers
         {
             IList<BlogItem> posts;
 
-            var isPagingEnabled = model.Options.Where(x => x.Key == "ShowPager").Select(x => x.CastValueOrDefault<bool>()).FirstOrDefault();
-            var pageSize = model.Options.Where(x => x.Key == "PageSize").Select(x => x.CastValueOrDefault<int>()).FirstOrDefault();
+            var isPagingEnabled = model.GetOptionValue<bool>("ShowPager");
+            var pageSize = model.GetOptionValue<int>("PageSize");
             var page = Request.QueryString["blogpage"].ToIntOrDefault();
             int postsCount;
 
@@ -63,10 +63,10 @@ namespace BetterCms.Module.Installation.Controllers
             var items = new BlogItemsModel
             {
                 Items = posts,
-                ShowAuthor = model.Options.Where(x => x.Key == "ShowAuthor").Select(x => x.CastValueOrDefault<bool>()).FirstOrDefault(),
-                ShowDate = model.Options.Where(x => x.Key == "ShowDate").Select(x => x.CastValueOrDefault<bool>()).FirstOrDefault(),
-                ShowCategories = model.Options.Where(x => x.Key == "ShowCategories").Select(x => x.CastValueOrDefault<bool>()).FirstOrDefault(),
-                ShowTags = model.Options.Where(x => x.Key == "ShowTags").Select(x => x.CastValueOrDefault<bool>()).FirstOrDefault(),
+                ShowAuthor = model.GetOptionValue<bool>("ShowAuthor"),
+                ShowDate = model.GetOptionValue<bool>("ShowDate"),
+                ShowCategories = model.GetOptionValue<bool>("ShowCategories"),
+                ShowTags = model.GetOptionValue<bool>("ShowTags"),
                 ShowPager = isPagingEnabled,
                 NumberOfPages = (int)Math.Ceiling((double)postsCount / pageSize),
                 CurrentPage = page > 0 ? page : 1
@@ -80,8 +80,8 @@ namespace BetterCms.Module.Installation.Controllers
             var categories = new List<CategoryItem>();
             using (var api = ApiFactory.Create())
             {
-                var useSpecificCategoryTree = model.Options.Where(x => x.Key == "UseSpecificCategoryTree").Select(x => x.CastValueOrDefault<bool>()).FirstOrDefault();
-                var categoryTreeName = model.Options.Where(x => x.Key == "CategoryTreeName").Select(x => x.CastValueOrDefault<string>()).FirstOrDefault();
+                var useSpecificCategoryTree = model.GetOptionValue<bool>("UseSpecificCategoryTree");
+                var categoryTreeName = model.GetOptionValue<string>("CategoryTreeName");
 
                 var treeRequest = new GetCategoryTreesModel();
                 var treePages = api.Root.Categories.Get(new GetCategoryTreesRequest { Data = treeRequest });

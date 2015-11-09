@@ -1220,7 +1220,7 @@ WriteLiteral("            ");
 
             
             #line 210 "..\..\Views\Page\EditPageProperties.cshtml"
-       Write(Html.Partial(PagesConstants.OptionValuesGridTemplate, new EditableGridViewModel()));
+       Write(Html.Partial(PagesConstants.OptionValuesGridTemplate, new EditableGridViewModel{ CanAddNewItems = true }));
 
             
             #line default

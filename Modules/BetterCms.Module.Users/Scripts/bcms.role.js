@@ -17,7 +17,8 @@ bettercms.define('bcms.role', ['bcms.jquery', 'bcms', 'bcms.autocomplete', 'bcms
             globalization = {
                 rolesListTabTitle: null,
                 deleteRoleConfirmMessage: null
-            };
+            },
+            rowId = 0;
 
         // Assign objects to module.
         role.links = links;
@@ -74,6 +75,7 @@ bettercms.define('bcms.role', ['bcms.jquery', 'bcms', 'bcms.autocomplete', 'bcms
                 self.registerFields(self.name, self.description);
                 self.name(item.Name);
                 self.description(item.Description);
+                self.valueHasFocus = ko.observable(false);
                 
                 if (item.IsSystematic === true) {
                     self.editingIsDisabled(true);
@@ -91,6 +93,13 @@ bettercms.define('bcms.role', ['bcms.jquery', 'bcms', 'bcms.autocomplete', 'bcms
                 params.Description = this.description();
 
                 return params;
+            };
+
+            RoleViewModel.prototype.getRowId = function () {
+                if (!this.rowId) {
+                    this.rowId = 'bcms-role-row-' + rowId++;
+                }
+                return this.rowId;
             };
 
             return RoleViewModel;

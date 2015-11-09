@@ -4,30 +4,30 @@
 <td @Html.Raw(Model.Attributes)>
     @if (Model.CanBeEdited)
     {
-        <!-- ko if: isActive() -->
         <input type="checkbox" class="bcms-checkbox-holder bcms-pointer" data-bind="
             checked: @(Model.ValueBind),
-            click: onItemSelect,
-            event: {blur: onBlurField, focus: onItemSelect},
             enterPress: onSave, 
             afterRender: initInput($element, @Model.ValueBind),
-            escPress: onCancelEdit
-            @(Model.AutoFocus ? ", hasfocus: isActive() && hasFocus" : "") " />
-        <!-- /ko -->
-        <!-- ko ifnot: isActive() -->
+            escPress: onCancelEdit,
+            visible: isActive()
+            @(!string.IsNullOrEmpty(Model.FocusIdentifier) ? string.Format(", hasfocus: {0}", Model.FocusIdentifier) : string.Empty)
+               " />
+
     }
     @if (Model.ShowValueAsText)
     {
-        <a class="bcms-tables-link" data-bind="text: @(Model.ValueBind)() === true || @(Model.ValueBind)() === 'true'
-            ? '@RootGlobalization.Button_Yes' 
-            : (@(Model.ValueBind)() === false || @(Model.ValueBind)() === 'false' ? '@RootGlobalization.Button_No' : '&nbsp;')"></a>
+        <a class="bcms-tables-link" data-bind="
+           text: @(Model.ValueBind)() === true || @(Model.ValueBind)() === 'true' ? '@RootGlobalization.Button_Yes' : (@(Model.ValueBind)() === false || @(Model.ValueBind)() === 'false' ? '@RootGlobalization.Button_No' : '&nbsp;' )
+           @(!string.IsNullOrEmpty(Model.FocusIdentifier) ? string.Format(", click: onItemSelect.bind($data, {0})", Model.FocusIdentifier) : string.Empty)
+           @(Model.CanBeEdited ? ", visible: !isActive()"  : string.Empty)
+           "></a>
     }
     else
     {
-        <input type="checkbox" class="bcms-checkbox-holder" data-bind="checked: @(Model.ValueBind)(), click: onOpen" />
-    }
-    @if (Model.CanBeEdited)
-    {
-        <!-- /ko -->
+        <input type="checkbox" class="bcms-checkbox-holder" data-bind="
+               checked: @(Model.ValueBind)()
+               @(!string.IsNullOrEmpty(Model.FocusIdentifier) ? string.Format(", click: onItemSelect.bind($data, {0})", Model.FocusIdentifier) : string.Empty)
+               @(Model.CanBeEdited ? ", visible: !isActive()"  : string.Empty)
+               " />
     }
 </td>

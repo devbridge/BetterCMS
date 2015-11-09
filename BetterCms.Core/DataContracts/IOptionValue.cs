@@ -5,14 +5,8 @@ namespace BetterCms.Core.DataContracts
     /// <summary>
     /// Defines interface to access the option key/type/casted value.
     /// </summary>
-    public interface IOptionValue
+    public interface IOptionValue : IOption
     {
-        string Key { get; }
-
-        OptionType Type { get; }
-
-        object Value { get; }
-
-        ICustomOption CustomOption { get; set; }
+        bool UseDefaultValue { get; set; }
     }
 }

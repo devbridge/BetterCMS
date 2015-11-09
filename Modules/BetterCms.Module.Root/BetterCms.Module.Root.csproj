@@ -223,6 +223,7 @@
     <Compile Include="Models\Migrations\Migration201510141900.cs" />
     <Compile Include="Models\Migrations\Migration201510061845.cs" />
     <Compile Include="Models\Migrations\Migration201509241740.cs" />
+    <Compile Include="Models\Migrations\Migration201511051430.cs" />
     <Compile Include="Models\WidgetCategories.cs" />
     <Compile Include="Models\IChildRegionContainer.cs" />
     <Compile Include="Models\Language.cs" />

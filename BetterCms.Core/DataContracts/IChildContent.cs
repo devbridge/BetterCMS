@@ -11,6 +11,6 @@ namespace BetterCms.Core.DataContracts
 
         Guid AssignmentIdentifier { get; }
 
-        IEnumerable<IOptionEntity> Options { get; }
+        IEnumerable<IOptionValueEntity> Options { get; }
     }
 }

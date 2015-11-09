@@ -1,4 +1,5 @@
-﻿/*jslint unparam: true, white: true, browser: true, devel: true */
+﻿/// <reference path="../../../../../Modules/BetterCms.Module.Root/Views/Shared/EditableGrid/Partial/BooleanCell.cshtml" />
+/*jslint unparam: true, white: true, browser: true, devel: true */
 /*global bettercms */
 
 bettercms.define('bcms.options', ['bcms.jquery', 'bcms', 'bcms.ko.extenders', 'bcms.ko.grid', 'bcms.datepicker', 'bcms.antiXss'],
@@ -123,7 +124,11 @@ bettercms.define('bcms.options', ['bcms.jquery', 'bcms', 'bcms.ko.extenders', 'b
                         i;
 
                     for (i = 0; i < allItems.length; i++) {
-                        result.push(allItems[i].toJson());
+                        var item = allItems[i];
+                        if (item.isSelected == true && item.isActive()) {
+                            item.onSave();
+                        }
+                        result.push(item.toJson());
                     }
 
                     return result;
@@ -217,12 +222,6 @@ bettercms.define('bcms.options', ['bcms.jquery', 'bcms', 'bcms.ko.extenders', 'b
                 return newItem;
             };
 
-            //            OptionValuesListViewModel.prototype.onAfterNewItemAdded = function (item) {
-            //                if (item.canEditOption() !== false && item.key.domElement) {
-            //                    $(item.key.domElement).focus();
-            //                }
-            //            };
-
             OptionsListViewModel.prototype.onLanguageChanged = function (languageId) {
                 if (languageId != this.languageId()) {
                     this.languageId(languageId);
@@ -264,11 +263,6 @@ bettercms.define('bcms.options', ['bcms.jquery', 'bcms', 'bcms.ko.extenders', 'b
                     onDatePickerBoxFocused(self);
                     return false;
                 });
-
-                $(selectors.datePickerBox).mousedown(function (event) {
-                    bcms.stopEventPropagation(event);
-                    return false;
-                });
             }
         }
 
@@ -298,7 +292,7 @@ bettercms.define('bcms.options', ['bcms.jquery', 'bcms', 'bcms.ko.extenders', 'b
 
                 // Additional values
                 self.value = ko.observable();
-
+                self.valueHasFocus = ko.observable(false);
                 self.valueTranslations = [];
                 self.defaultValue = ko.observable();
                 self.useDefaultValue = ko.observable(false);
@@ -308,7 +302,9 @@ bettercms.define('bcms.options', ['bcms.jquery', 'bcms', 'bcms.ko.extenders', 'b
                 self.rowId = null;
                 self.customType = ko.observable();
                 self.customOptionTitle = ko.observable();
+                self.customOptionTitleBinding = ko.observable();
                 self.customOptionDefaultTitle = ko.observable();
+                self.customOptionDefaultTitleBinding = ko.observable();
                 self.calcType = ko.observable();
                 self.translationsEnabled = false;
                 self.oldValues = {};
@@ -316,7 +312,7 @@ bettercms.define('bcms.options', ['bcms.jquery', 'bcms', 'bcms.ko.extenders', 'b
                 // NOTE: useDefaultValueBinding should be registered before defaultValue and type
                 // because in other case, when cancelling edit mode, it sets wrong values.
                 self.registerFields(self.useDefaultValueBinding, self.key, self.defaultValueBinding, self.valueBinding,
-                    self.type, self.customType, self.calcType, self.customOptionTitle, self.customOptionDefaultTitle);
+                    self.type, self.customType, self.calcType, self.customOptionTitleBinding, self.customOptionDefaultTitleBinding, self.customOptionTitle, self.customOptionDefaultTitle);
 
                 self.getOptionTypeName = function () {
                     var i,
@@ -366,8 +362,8 @@ bettercms.define('bcms.options', ['bcms.jquery', 'bcms', 'bcms.ko.extenders', 'b
                             self.editableValue('');
                         }
                     } else {
-                        self.customOptionTitle('');
-                        self.customOptionDefaultTitle('');
+                        self.customOptionTitleBinding('');
+                        self.customOptionDefaultTitleBinding('');
 
                         // Leaving boolean mode
                         if (oldType == optionTypes.boolType) {
@@ -419,12 +415,12 @@ bettercms.define('bcms.options', ['bcms.jquery', 'bcms', 'bcms.ko.extenders', 'b
                             self.isSelected = true;
                         },
                         onClose: function (selectedDate, datePicker) {
-                            setTimeout(function () {
-                                var focusedElement = datePicker.input.parents('#' + self.rowId).find(selectors.focusedElements);
-                                if (focusedElement.length === 0) {
-                                    self.onBlurField();
-                                }
-                            }, 10);
+//                            setTimeout(function () {
+//                                var focusedElement = datePicker.input.parents('#' + self.rowId).find(selectors.focusedElements);
+//                                if (focusedElement.length === 0) {
+//                                    self.onBlurField();
+//                                }
+//                            }, 10);
                         }
                     },
                         row = $('#' + self.rowId),
@@ -436,19 +432,18 @@ bettercms.define('bcms.options', ['bcms.jquery', 'bcms', 'bcms.ko.extenders', 'b
 
                         datePickerTrigger = row.find(selectors.datePickerTrigger);
 
-                        datePickerTrigger.on('mousedown', function(event) {
-                            bcms.stopEventPropagation(event);
-                        });
-
                         datePickerTrigger.on('click', function (event) {
-                            self.onItemSelect(self, event);
+//                            self.onItemSelect(self.valueHasFocus, self, event);
+                            self.valueHasFocus(true);
                         });
                         datePickerTrigger.on('focus', function (event) {
-                            self.onItemSelect(self, event);
+//                            self.onItemSelect(self.valueHasFocus, self, event);
+                            self.valueHasFocus(true);
                         });
                     }
                 };
 
+                self.preventFromSave = false;
                 // Set values
                 self.key(item.OptionKey);
                 self.defaultValue(item.OptionDefaultValue);
@@ -458,7 +453,9 @@ bettercms.define('bcms.options', ['bcms.jquery', 'bcms', 'bcms.ko.extenders', 'b
                 self.type(item.Type);
                 if (item.Type == optionTypes.customType) {
                     self.customType(item.CustomType);
+                    self.customOptionDefaultTitleBinding(item.CustomOptionDefaultValueTitle);
                     self.customOptionDefaultTitle(item.CustomOptionDefaultValueTitle);
+                    self.customOptionTitleBinding(item.CustomOptionValueTitle);
                     self.customOptionTitle(item.CustomOptionValueTitle);
                 }
                 self.calcType(self.getCalcType(self));
@@ -470,11 +467,7 @@ bettercms.define('bcms.options', ['bcms.jquery', 'bcms', 'bcms.ko.extenders', 'b
                     self.translations = item.Translations;
                 }
                 self.translationsEnabled = parent.showLanguages();
-                if (self.translationsEnabled) {
-                    if (item.UseDefaultValue && item.OptionValue == null) {
-                        self.valueBinding(item.OptionDefaultValue);
-                    }
-                }
+
                 if (item.ValueTranslations != null) {
                     self.valueTranslations = item.ValueTranslations;
                     self.valueTranslations.forEach(function (item) {
@@ -489,27 +482,29 @@ bettercms.define('bcms.options', ['bcms.jquery', 'bcms', 'bcms.ko.extenders', 'b
                     if (self.isActive()) {
                         if ((self.translationsEnabled && languageId == "") || !self.translationsEnabled) {
                             if (newValue) {
-                                self.value(self.defaultValue());
                                 self.valueBinding(self.defaultValue());
-                                self.customOptionTitle(self.customOptionDefaultTitle());
+                                self.customOptionTitleBinding(self.customOptionDefaultTitle());
                             } else {
-                                self.value('');
-                                self.valueBinding('');
-                                self.customOptionTitle('');
+                                var val = self.type() == optionTypes.boolType ? false : '';
+                                self.valueBinding(val);
+                                self.customOptionTitleBinding(val);
                             }
                         } else {
                             var translation = self.getTranslation(languageId);
                             if (newValue) {
                                 if (translation != null) {
-                                    self.valueBinding(translation.OptionValue);
-                                    self.customOptionTitle(translation.OptionValue);
+                                    var optionValue = self.ClearFixValue(translation.OptionValue);
+                                    var customOptionValue = self.ClearFixValue(translation.CustomOptionTitle);
+                                    self.valueBinding(optionValue);
+                                    self.customOptionTitleBinding(customOptionValue);
                                 } else {
                                     self.valueBinding(self.defaultValue());
-                                    self.customOptionTitle(self.defaultValue());
+                                    self.customOptionTitleBinding(self.customOptionDefaultTitle());
                                 }
                             } else {
-                                self.valueBinding('');
-                                self.customOptionTitle('');
+                                var val = self.type() == optionTypes.boolType ? false : '';
+                                self.valueBinding(val);
+                                self.customOptionTitleBinding(val);
                             }
                         }
                     }
@@ -517,28 +512,29 @@ bettercms.define('bcms.options', ['bcms.jquery', 'bcms', 'bcms.ko.extenders', 'b
 
                 self.saveItem = function () {
                     _super.prototype.saveItem.call(self);
-                    var newValue = "";
-                    if (self.type() != optionTypes.customType) {
-                        newValue = self.defaultValueBinding();
-                    } else {
-                        newValue = self.customOptionDefaultTitle();
+                    var newValue = self.defaultValueBinding();
+                    if (newValue != null) {
+                        newValue = newValue.toString();
                     }
-                    if (!self.translationsEnabled) {
-                        self.defaultValue(newValue);
-                        return;
+                    var customOptionDefaultTitle = self.customOptionDefaultTitleBinding();
+                    if (customOptionDefaultTitle != null) {
+                        customOptionDefaultTitle = customOptionDefaultTitle.toString();
                     }
+
                     var languageId = parent.languageId();
                     if (languageId == "") {
                         self.defaultValue(newValue);
+                        self.customOptionDefaultTitle(customOptionDefaultTitle);
                     }
                     else {
                         var translation = this.getTranslation(languageId);
                         if (translation == null) {
-                            translation = { OptionValue: newValue, LanguageId: languageId };
+                            translation = { OptionValue: newValue, LanguageId: languageId, CustomOptionTitle: customOptionDefaultTitle };
                             this.translations.push(translation);
                         }
                         else {
                             translation.OptionValue = newValue;
+                            translation.CustomOptionTitle = customOptionDefaultTitle;
                         }
                     }
                 }
@@ -552,7 +548,7 @@ bettercms.define('bcms.options', ['bcms.jquery', 'bcms', 'bcms.ko.extenders', 'b
                 });
 
                 self.onCustomOptionExecute = function (data, titleObservable, valueObservable) {
-                    self.onItemSelect(data, null);
+                    self.onItemSelect(self.valueHasFocus, data, null);
 
                     var customType = self.customType();
                     if (!customType) {
@@ -561,6 +557,7 @@ bettercms.define('bcms.options', ['bcms.jquery', 'bcms', 'bcms.ko.extenders', 'b
 
                     for (ci = 0, cl = registeredCustomOptions.length; ci < cl; ci++) {
                         if (registeredCustomOptions[ci].identifier == customType) {
+                            self.preventFromSave = true;
                             registeredCustomOptions[ci].onExecute(valueObservable, titleObservable, self);
 
                             return;
@@ -619,23 +616,31 @@ bettercms.define('bcms.options', ['bcms.jquery', 'bcms', 'bcms.ko.extenders', 'b
 
                 var defaultValue = this.ClearFixValue(this.defaultValue());
 
+                var customOptionDefaultTitle = null;
+                if (this.type() == optionTypes.customType) {
+                    customOptionDefaultTitle = this.ClearFixValue(this.customOptionDefaultTitle());
+                }
                 if (languageId == "") {
                     this.defaultValueBinding(defaultValue);
-                    this.customOptionDefaultTitle(defaultValue);
+                    this.customOptionDefaultTitleBinding(customOptionDefaultTitle);
                 } else {
                     var translation = this.getTranslation(languageId);
                     if (translation == null) {
                         this.defaultValueBinding(defaultValue);
-                        this.customOptionDefaultTitle(defaultValue);
+                        this.customOptionDefaultTitleBinding(customOptionDefaultTitle);
                     } else {
                         var translationValue = this.ClearFixValue(translation.OptionValue);
+                        var translationCustomTitle = this.ClearFixValue(translation.CustomOptionTitle);
                         this.defaultValueBinding(translationValue);
-                        this.customOptionDefaultTitle(translationValue);
+                        this.customOptionDefaultTitleBinding(translationCustomTitle);
                     }
                 }
             };
 
             OptionViewModel.prototype.ClearFixValue = function (value) {
+                if (!value) {
+                    return value;
+                }
                 if (this.type() == optionTypes.boolType) {
                     var lowerCaseValue = value.toLowerCase();
                     if (lowerCaseValue == "true") {
@@ -653,7 +658,7 @@ bettercms.define('bcms.options', ['bcms.jquery', 'bcms', 'bcms.ko.extenders', 'b
                 this.oldValues['calcType'] = this.calcType();
                 this.oldValues['customType'] = this.customType();
                 this.oldValues['defaultValueBinding'] = this.defaultValueBinding();
-                this.oldValues['customOptionDefaultTitle'] = this.customOptionDefaultTitle();
+                this.oldValues['customOptionDefaultTitleBinding'] = this.customOptionDefaultTitleBinding();
             };
 
             OptionViewModel.prototype.restoreOldValues = function () {
@@ -663,7 +668,13 @@ bettercms.define('bcms.options', ['bcms.jquery', 'bcms', 'bcms.ko.extenders', 'b
                 this.valueBinding(this.oldValues.valueBinding);
                 this.customType(this.oldValues.customType);
                 this.customOptionTitle(this.oldValues.customOptionTitle);
-                this.customOptionDefaultTitle(this.oldValues.customOptionDefaultTitle);
+                this.customOptionDefaultTitleBinding(this.oldValues.customOptionDefaultTitleBinding);
+            };
+
+            OptionViewModel.prototype.onBodyClick = function (e) {
+                if (!this.preventFromSave) {
+                    _super.prototype.onBodyClick.call(this, e);
+                }
             };
 
             return OptionViewModel;
@@ -721,33 +732,32 @@ bettercms.define('bcms.options', ['bcms.jquery', 'bcms', 'bcms.ko.extenders', 'b
                     _super.prototype.saveItem.call(self);
                     var useDefaultValue = self.useDefaultValueBinding();
 
-                    var newValue = "";
-                    if (self.type() != optionTypes.customType) {
-                        newValue = self.valueBinding();
-                    } else {
-                        newValue = self.customOptionTitle();
+                    var newValue = self.valueBinding();
+                    if (newValue != null) {
+                        newValue = newValue.toString();
+                    }
+                    var customOptionTitle = self.customOptionTitleBinding();
+                    if (customOptionTitle != null) {
+                        customOptionTitle = customOptionTitle.toString();
                     }
 
-                    if (!self.translationsEnabled) {
-                        self.defaultValue(newValue);
-                        self.useDefaultValue(useDefaultValue);
-                        return;
-                    }
                     var languageId = parent.languageId();
                     if (languageId == "") {
                         self.value(newValue);
                         self.useDefaultValue(useDefaultValue);
+                        self.customOptionTitle(customOptionTitle);
                     }
                     else {
 
                         var valueTranslation = this.getValueTranslation(languageId);
                         if (!useDefaultValue) {
                             if (valueTranslation == null) {
-                                valueTranslation = { OptionValue: newValue, LanguageId: languageId, UseDefaultValue: useDefaultValue };
+                                valueTranslation = { OptionValue: newValue, LanguageId: languageId, UseDefaultValue: useDefaultValue, CustomOptionTitle: customOptionTitle };
                                 this.valueTranslations.push(valueTranslation);
                             } else {
                                 valueTranslation.OptionValue = newValue;
                                 valueTranslation.UseDefaultValue = useDefaultValue;
+                                valueTranslation.CustomOptionTitle = customOptionTitle;
                             }
                         } else {
                             // remove the translation
@@ -811,43 +821,51 @@ bettercms.define('bcms.options', ['bcms.jquery', 'bcms', 'bcms.ko.extenders', 'b
             OptionValueViewModel.prototype.activateTranslation = function (languageId) {
                 var defaultValue = this.ClearFixValue(this.defaultValue());
                 var value = this.ClearFixValue(this.value());
+                var customOptionTitle = null;
+                var customOptionDefaultTitle = null;
+                if (this.type() == optionTypes.customType) {
+                    customOptionTitle = this.ClearFixValue(this.customOptionTitle());
+                    customOptionDefaultTitle = this.ClearFixValue(this.customOptionDefaultTitle());
+                }
+
                 if (languageId == "") {
                     if (this.useDefaultValue() && value == null) {
                         this.valueBinding(defaultValue);
-                        this.customOptionTitle(defaultValue);
+                        this.customOptionTitleBinding(customOptionDefaultTitle);
                     } else {
                         this.valueBinding(value);
-                        this.customOptionTitle(value);
+                        this.customOptionTitleBinding(customOptionTitle);
                     }
                     this.useDefaultValueBinding(this.useDefaultValue());
-                    this.customOptionDefaultTitle(defaultValue);
+                    this.customOptionDefaultTitleBinding(customOptionDefaultTitle);
                     this.defaultValueBinding(defaultValue);
                 } else {
                     var translation = this.getTranslation(languageId);
                     var optionValue;
+                    var customOptionTitleValue;
                     if (translation == null) {
                         this.defaultValueBinding(defaultValue);
-                        this.customOptionDefaultTitle(defaultValue);
+                        this.customOptionDefaultTitleBinding(customOptionDefaultTitle);
                         this.valueBinding(defaultValue);
-                        this.customOptionTitle(defaultValue);
+                        this.customOptionTitleBinding(customOptionDefaultTitle);
                     } else {
                         optionValue = this.ClearFixValue(translation.OptionValue);
+                        customOptionTitleValue = this.ClearFixValue(translation.CustomOptionTitle);
                         this.defaultValueBinding(optionValue);
-                        this.customOptionDefaultTitle(optionValue);
+                        this.customOptionDefaultTitleBinding(customOptionTitleValue);
                         this.valueBinding(optionValue);
-                        this.customOptionTitle(optionValue);
+                        this.customOptionTitleBinding(customOptionTitleValue);
                     }
                     var valueTranslation = this.getValueTranslation(languageId);
                     if (valueTranslation != null) {
                         optionValue = this.ClearFixValue(valueTranslation.OptionValue);
+                        customOptionTitleValue = this.ClearFixValue(valueTranslation.CustomOptionTitle);
                         this.valueBinding(optionValue);
-                        this.customOptionTitle(optionValue);
+                        this.customOptionTitleBinding(customOptionTitleValue);
                         this.useDefaultValueBinding(false);
-
                     } else {
                         this.useDefaultValueBinding(true);
                     }
-
                 }
             };
 
