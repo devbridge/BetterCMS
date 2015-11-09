@@ -259,7 +259,7 @@ WriteLiteral(" class=\"bcms-messages-ui bcms-js-messages\"");
 
 WriteLiteral(">\r\n        <ul");
 
-WriteLiteral(" class=\"bcms-info-messages\"");
+WriteLiteral(" class=\"bcms-js-info-message bcms-info-messages\"");
 
 WriteLiteral(">\r\n            <li>\r\n                <a");
 
@@ -1266,7 +1266,7 @@ WriteLiteral(">\r\n");
             #line hidden
             
             #line 220 "..\..\Views\Page\EditPageProperties.cshtml"
-                                                                                       
+                                                                          
                     }
 
             
