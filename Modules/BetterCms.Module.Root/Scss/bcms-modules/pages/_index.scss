@@ -107,6 +107,10 @@ $access-control-buttons: (
     &-value-add {
         color: $blue-main;
         cursor: pointer;
+        
+        > span {
+            vertical-align: middle;
+        }
 
         .bcms-field-wrapper {
             @include vertical-align();

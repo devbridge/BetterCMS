@@ -823,6 +823,10 @@ a.bcms-expanded-nodes {
   cursor: pointer;
 }
 
+.bcms-access-value-add > span {
+  vertical-align: middle;
+}
+
 .bcms-access-value-add .bcms-field-wrapper {
   display: inline-block;
   vertical-align: middle;
