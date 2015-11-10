@@ -6,8 +6,10 @@ bettercms.define('bcms.newsletter', ['bcms.jquery', 'bcms', 'bcms.siteSettings',
 
         var newsletter = {},
             selectors = {
-                downloadSubscribersInCsv: '#download-subscribers-in-csv'
-            },
+                downloadSubscribersInCsv: '#download-subscribers-in-csv',
+                siteSettingsButtonOpener: ".bcms-btn-opener",
+                siteSettingsButtonHolder: ".bcms-btn-opener-holder"
+    },
             links = {
                 loadSiteSettingsSubscribersUrl: null,
                 loadSubscribersUrl: null,
@@ -93,7 +95,8 @@ bettercms.define('bcms.newsletter', ['bcms.jquery', 'bcms', 'bcms.siteSettings',
         */
         function initializeSiteSettingsNewsletterSubscribers(json) {
             var container = siteSettings.getMainContainer(),
-                data = (json.Success == true) ? json.Data : {};
+                data = (json.Success == true) ? json.Data : {},
+                holder = container.find(selectors.siteSettingsButtonHolder);
 
             var viewModel = new SubscribersListViewModel(container, data.Items, data.GridOptions);
             viewModel.deleteUrl = links.deleteSubscriberUrl;
@@ -110,6 +113,22 @@ bettercms.define('bcms.newsletter', ['bcms.jquery', 'bcms', 'bcms.siteSettings',
             $(container.find(selectors.downloadSubscribersInCsv)).on('click', function() {
                 window.location.href = links.downoadCsvUrl;
             });
+
+            container.find(selectors.siteSettingsButtonOpener).on('click', function (event) {
+                bcms.stopEventPropagation(event);
+                if (!holder.hasClass('bcms-opened')) {
+                    holder.addClass('bcms-opened');
+                } else {
+                    holder.removeClass('bcms-opened');
+                }
+            });
+
+            bcms.on(bcms.events.bodyClick, function (event) {
+                if (holder.hasClass('bcms-opened')) {
+                    holder.removeClass('bcms-opened');
+                }
+            });
+
         }
 
         /**
