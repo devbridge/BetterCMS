@@ -67,10 +67,13 @@
 }
 
 .bcms-input-list-holder {
+    position: relative;
+
     &:first-of-type {
         margin-top: 25px;
     }
 }
+
 
 //module Input Fields & Field Holders
 .bcms-checkbox-holder {

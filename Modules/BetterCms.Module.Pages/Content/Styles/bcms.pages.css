@@ -667,6 +667,28 @@ a.bcms-expanded-nodes {
   margin: 4px 0 0 -3px;
 }
 
+.bcms-thumb-container {
+  display: table;
+  margin: 40px 0 45px;
+}
+
+.bcms-thumb-box {
+  display: table-cell;
+  vertical-align: top;
+}
+
+.bcms-thumb-image {
+  border: 1px solid #c6c6c6;
+  display: inline-block;
+  height: 124px;
+  position: relative;
+  width: 124px;
+}
+
+.bcms-thumb-image img {
+  max-width: 100%;
+}
+
 .bcms-newcontent-top {
   height: 80px;
   padding-top: 20px;
@@ -766,34 +788,6 @@ a.bcms-slider-next:active {
   font-size: 18px;
   font-weight: 700;
   padding: 10px 20px;
-}
-
-.bcms-uploaded-image {
-  background: url("images/bcms-no-image-2.png") no-repeat center center #f5f5f5;
-  border: 1px solid #c6c6c6;
-  display: inline-block;
-  height: 124px;
-  position: relative;
-  width: 124px;
-}
-
-.bcms-uploaded-image img {
-  background: #f5f5f5;
-  max-width: 100%;
-}
-
-.bcms-page-images-holder {
-  width: 840px;
-}
-
-.bcms-page-images-holder .bcms-input-list-holder {
-  display: inline-block;
-  margin-right: 50px;
-}
-
-.bcms-page-images-holder .bcms-btn-small {
-  display: block;
-  text-align: center;
 }
 
 .bcms-tags-box-holder {

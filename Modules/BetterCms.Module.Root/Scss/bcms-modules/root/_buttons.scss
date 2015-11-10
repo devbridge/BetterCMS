@@ -1,12 +1,16 @@
-%btn-extender {
+%btn-frame {
     @include vertical-align();
-    @include transition(background-color 200ms);
-    border: 0;
+    @include transition(background-color 200ms, color 200ms);
     box-sizing: border-box;
     cursor: pointer;
     font-family: $font-base-family;
     overflow: hidden;
     text-align: center;
+}
+
+%btn-extender {
+    @extend %btn-frame;
+    border: 0;
     text-transform: uppercase;
 }
 
@@ -44,6 +48,16 @@
         &.bcms-btn-gray {
             background-color: $gray-l45;
         }
+    }
+
+    &-tertiary {
+        @extend %btn-frame;
+        background-color: $white;
+        border: $border-nav-bottom;
+        color: $blue-main;
+        font-size: 12px;
+        line-height: 28px;
+        padding: 0 20px;
     }
 
     &-grid {
