@@ -190,17 +190,19 @@ WriteLiteral("            <div");
 
 WriteLiteral(" class=\"bcms-top-block-inner\"");
 
+WriteLiteral(" data-bind=\"css: { \'bcms-active-search\' : searchEnabled }\"");
+
 WriteLiteral(">\r\n                <div");
 
 WriteLiteral(" class=\"bcms-btn-search\"");
 
-WriteLiteral(" data-bind=\"click: searchItems\"");
+WriteLiteral(" data-bind=\"click: toggleSearch\"");
 
 WriteLiteral(">");
 
             
             #line 25 "..\..\Views\Subscriber\List.cshtml"
-                                                                       Write(RootGlobalization.Button_Search);
+                                                                        Write(RootGlobalization.Button_Search);
 
             
             #line default
@@ -211,21 +213,21 @@ WriteLiteral(" class=\"bcms-search-block\"");
 
 WriteLiteral(">\r\n                    <input");
 
-WriteLiteral(" class=\"bcms-editor-field-box\"");
+WriteLiteral(" class=\"bcms-search-field-box\"");
 
 WriteLiteral(" data-bind=\"value: options().searchQuery, valueUpdate: \'afterkeydown\', enterPress" +
 ": searchItems, hasfocus: options().hasFocus\"");
 
 WriteLiteral(" type=\"text\"");
 
-WriteAttribute("placeholder", Tuple.Create(" placeholder=\"", 1703), Tuple.Create("\"", 1752)
+WriteAttribute("placeholder", Tuple.Create(" placeholder=\"", 1762), Tuple.Create("\"", 1811)
             
             #line 27 "..\..\Views\Subscriber\List.cshtml"
-                                                                                                                               , Tuple.Create(Tuple.Create("", 1717), Tuple.Create<System.Object, System.Int32>(RootGlobalization.WaterMark_Search
+                                                                                                                               , Tuple.Create(Tuple.Create("", 1776), Tuple.Create<System.Object, System.Int32>(RootGlobalization.WaterMark_Search
             
             #line default
             #line hidden
-, 1717), false)
+, 1776), false)
 );
 
 WriteLiteral(" />\r\n                </div>\r\n            </div>\r\n");
@@ -402,14 +404,14 @@ WriteLiteral("                <td");
 
 WriteLiteral(" class=\"bcms-tables-nohover\"");
 
-WriteAttribute("colspan", Tuple.Create(" colspan=\"", 3359), Tuple.Create("\"", 3389)
+WriteAttribute("colspan", Tuple.Create(" colspan=\"", 3418), Tuple.Create("\"", 3448)
             
             #line 72 "..\..\Views\Subscriber\List.cshtml"
-, Tuple.Create(Tuple.Create("", 3369), Tuple.Create<System.Object, System.Int32>(visibleColumnsCount
+, Tuple.Create(Tuple.Create("", 3428), Tuple.Create<System.Object, System.Int32>(visibleColumnsCount
             
             #line default
             #line hidden
-, 3369), false)
+, 3428), false)
 );
 
 WriteLiteral(">");
@@ -456,14 +458,14 @@ WriteLiteral("                <td");
 
 WriteLiteral(" class=\"bcms-tables-nohover\"");
 
-WriteAttribute("colspan", Tuple.Create(" colspan=\"", 3711), Tuple.Create("\"", 3741)
+WriteAttribute("colspan", Tuple.Create(" colspan=\"", 3770), Tuple.Create("\"", 3800)
             
             #line 79 "..\..\Views\Subscriber\List.cshtml"
-, Tuple.Create(Tuple.Create("", 3721), Tuple.Create<System.Object, System.Int32>(visibleColumnsCount
+, Tuple.Create(Tuple.Create("", 3780), Tuple.Create<System.Object, System.Int32>(visibleColumnsCount
             
             #line default
             #line hidden
-, 3721), false)
+, 3780), false)
 );
 
 WriteLiteral(">");
@@ -687,14 +689,14 @@ WriteLiteral("&nbsp;\r\n");
 WriteLiteral("\r\n            </td>\r\n            <!-- /ko -->\r\n        </tr>\r\n        <!-- /ko --" +
 ">\r\n        <!-- ko if: items().length == 0 -->\r\n        <tr>\r\n            <td");
 
-WriteAttribute("colspan", Tuple.Create(" colspan=\"", 5498), Tuple.Create("\"", 5534)
+WriteAttribute("colspan", Tuple.Create(" colspan=\"", 5557), Tuple.Create("\"", 5593)
             
             #line 125 "..\..\Views\Subscriber\List.cshtml"
-, Tuple.Create(Tuple.Create("", 5508), Tuple.Create<System.Object, System.Int32>(visibleColumnsCount + 2
+, Tuple.Create(Tuple.Create("", 5567), Tuple.Create<System.Object, System.Int32>(visibleColumnsCount + 2
             
             #line default
             #line hidden
-, 5508), false)
+, 5567), false)
 );
 
 WriteLiteral("><span");
