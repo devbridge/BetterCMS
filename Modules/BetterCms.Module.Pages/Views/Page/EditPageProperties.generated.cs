@@ -531,8 +531,8 @@ WriteLiteral(" data-bind=\"attr: { src: featuredImage().thumbnailUrl(), alt: fea
 "ltip() }\"");
 
 WriteLiteral(" />\r\n                                    </a>\r\n                                  " +
-"  <!-- /ko -->\r\n                                    <!-- ko if: featuredImage()." +
-"url() -->\r\n                                    <svg");
+"  <!-- /ko -->\r\n                                    <!-- ko ifnot: featuredImage" +
+"().url() -->\r\n                                    <svg");
 
 WriteLiteral(" class=\"bcms-grid-no-preview\"");
 
@@ -644,8 +644,8 @@ WriteLiteral(" data-bind=\"attr: { src: secondaryImage().thumbnailUrl(), alt: se
 "ooltip() }\"");
 
 WriteLiteral(" />\r\n                                    </a>\r\n                                  " +
-"  <!-- /ko -->\r\n                                    <!-- ko if: secondaryImage()" +
-".url() -->\r\n                                    <svg");
+"  <!-- /ko -->\r\n                                    <!-- ko ifnot: secondaryImag" +
+"e().url() -->\r\n                                    <svg");
 
 WriteLiteral(" class=\"bcms-grid-no-preview\"");
 

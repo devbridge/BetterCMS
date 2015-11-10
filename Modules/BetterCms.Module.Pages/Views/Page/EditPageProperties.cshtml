@@ -103,7 +103,7 @@
                                         <img data-bind="attr: { src: featuredImage().thumbnailUrl(), alt: featuredImage().tooltip() }" />
                                     </a>
                                     <!-- /ko -->
-                                    <!-- ko if: featuredImage().url() -->
+                                    <!-- ko ifnot: featuredImage().url() -->
                                     <svg class="bcms-grid-no-preview" xmlns="http://www.w3.org/2000/svg" width="50" height="50" viewBox="-205 372 50 50" enable-background="new -205 372 50 50">
                                         <g fill="#cdcdcd">
                                             <path d="m-205 422h50v-50h-50v50m2-48h46v46h-46v-46" />
@@ -128,7 +128,7 @@
                                         <img data-bind="attr: { src: secondaryImage().thumbnailUrl(), alt: secondaryImage().tooltip() }" />
                                     </a>
                                     <!-- /ko -->
-                                    <!-- ko if: secondaryImage().url() -->
+                                    <!-- ko ifnot: secondaryImage().url() -->
                                     <svg class="bcms-grid-no-preview" xmlns="http://www.w3.org/2000/svg" width="50" height="50" viewBox="-205 372 50 50" enable-background="new -205 372 50 50">
                                         <g fill="#cdcdcd">
                                             <path d="m-205 422h50v-50h-50v50m2-48h46v46h-46v-46" />
