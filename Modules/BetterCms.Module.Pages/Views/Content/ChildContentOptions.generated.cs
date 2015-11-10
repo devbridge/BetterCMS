@@ -47,6 +47,12 @@ namespace ASP
     #line hidden
     
     #line 4 "..\..\Views\Content\ChildContentOptions.cshtml"
+    using BetterCms.Module.Root.ViewModels.Shared;
+    
+    #line default
+    #line hidden
+    
+    #line 5 "..\..\Views\Content\ChildContentOptions.cshtml"
     using Microsoft.Web.Mvc;
     
     #line default
@@ -72,7 +78,7 @@ WriteLiteral(">\r\n");
 WriteLiteral("    ");
 
             
-            #line 9 "..\..\Views\Content\ChildContentOptions.cshtml"
+            #line 10 "..\..\Views\Content\ChildContentOptions.cshtml"
 Write(Html.MessagesBox());
 
             
@@ -89,13 +95,13 @@ WriteLiteral(" class=\"bcms-input-list-holder\"");
 WriteLiteral(">\r\n");
 
             
-            #line 13 "..\..\Views\Content\ChildContentOptions.cshtml"
+            #line 14 "..\..\Views\Content\ChildContentOptions.cshtml"
             
             
             #line default
             #line hidden
             
-            #line 13 "..\..\Views\Content\ChildContentOptions.cshtml"
+            #line 14 "..\..\Views\Content\ChildContentOptions.cshtml"
              if (Model != null)
             {
                 using (Html.BeginForm<ContentController>(c => c.ChildContentOptions(null, null, null, null), FormMethod.Post,
@@ -105,35 +111,35 @@ WriteLiteral(">\r\n");
                         @class = "bcms-ajax-form",
                         data_readonly = Model.IsReadOnly.ToString().ToLower()
                     }))
-                {
-                    
+            {
+                
             
             #line default
             #line hidden
             
-            #line 23 "..\..\Views\Content\ChildContentOptions.cshtml"
-               Write(Html.Partial(PagesConstants.OptionValuesGridTemplate));
+            #line 24 "..\..\Views\Content\ChildContentOptions.cshtml"
+           Write(Html.Partial(PagesConstants.OptionValuesGridTemplate, new EditableGridViewModel {CanAddNewItems = false}));
 
             
             #line default
             #line hidden
             
-            #line 23 "..\..\Views\Content\ChildContentOptions.cshtml"
-                                                                          
+            #line 24 "..\..\Views\Content\ChildContentOptions.cshtml"
+                                                                                                                          
 
                     
             
             #line default
             #line hidden
             
-            #line 25 "..\..\Views\Content\ChildContentOptions.cshtml"
+            #line 26 "..\..\Views\Content\ChildContentOptions.cshtml"
                Write(Html.HiddenFor(model => model.OptionValuesContainerId));
 
             
             #line default
             #line hidden
             
-            #line 25 "..\..\Views\Content\ChildContentOptions.cshtml"
+            #line 26 "..\..\Views\Content\ChildContentOptions.cshtml"
                                                                            
                 }
             }
@@ -141,7 +147,7 @@ WriteLiteral(">\r\n");
             
             #line default
             #line hidden
-WriteLiteral("        </div>\r\n    </div>\r\n</div>\r\n");
+WriteLiteral("        </div>\r\n    </div>\r\n</div>");
 
         }
     }

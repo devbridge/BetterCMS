@@ -4,14 +4,13 @@
 @using BetterCms.Module.Pages.ViewModels.Page
 @using BetterCms.Module.Root
 @using BetterCms.Module.Root.Content.Resources
-@using BetterCms.Module.Root.Mvc.Extensions
 @using BetterCms.Module.Root.Mvc.Helpers
 @using BetterCms.Module.Root.ViewModels.Category
 @using BetterCms.Module.Root.ViewModels.Shared
 @using BetterCms.Module.Root.ViewModels.Tags
 @using Microsoft.Web.Mvc
-@using MvcContrib.EnumerableExtensions
 @model EditPagePropertiesViewModel
+
 @if (Model == null)
 {
     return;
@@ -114,6 +113,7 @@
                     </div>
                 </div>
 
+
                 <div class="bcms-categories-box-holder" data-bind="with: categories">
                     @Html.Partial("~/Areas/bcms-root/Views/Category/CategoriesTemplate.cshtml", categoriesTemplateViewModel)
                 </div>
@@ -203,7 +203,7 @@
             </div>
 
             <div id="bcms-tab-3" class="bcms-tab-single" data-bind="with: options">
-                @Html.Partial(PagesConstants.OptionValuesGridTemplate, new EditableGridViewModel())
+                @Html.Partial(PagesConstants.OptionValuesGridTemplate, new EditableGridViewModel{ CanAddNewItems = true })
             </div>
 
             <div id="bcms-tab-4" class="bcms-tab-single">

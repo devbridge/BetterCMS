@@ -1609,6 +1609,15 @@ namespace BetterCms.Module.Pages.Content.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to You have selected a new page layout, which structure is not the same as previous layout and some page content will be missing. Missing content can be found in Page Structure Manager.&lt;/br&gt;Do you really want to change current layout?.
+        /// </summary>
+        public static string EditPageProperties_ChangedLayoutMissingContent_Confirmation_Message {
+            get {
+                return ResourceManager.GetString("EditPageProperties_ChangedLayoutMissingContent_Confirmation_Message", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Edit Master Page Properties.
         /// </summary>
         public static string EditPageProperties_EditMasterPage_Title {
@@ -2896,7 +2905,7 @@ namespace BetterCms.Module.Pages.Content.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Hasn&apos;t SEO.
+        ///   Looks up a localized string similar to Some SEO fields are empty.
         /// </summary>
         public static string SeoStatusFilterType_HasNotSEO {
             get {
@@ -2905,7 +2914,7 @@ namespace BetterCms.Module.Pages.Content.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Has SEO.
+        ///   Looks up a localized string similar to All SEO fields filled.
         /// </summary>
         public static string SeoStatusFilterType_HasSEO {
             get {
@@ -3130,7 +3139,7 @@ namespace BetterCms.Module.Pages.Content.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to By SEO status.
+        ///   Looks up a localized string similar to By SEO data.
         /// </summary>
         public static string SiteSettings_Pages_FilterBySEO {
             get {
@@ -3292,7 +3301,7 @@ namespace BetterCms.Module.Pages.Content.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Page URL.
+        ///   Looks up a localized string similar to Source URL.
         /// </summary>
         public static string SiteSettings_Redirects_PageUrlColumn {
             get {
@@ -3301,7 +3310,7 @@ namespace BetterCms.Module.Pages.Content.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Redirected URL.
+        ///   Looks up a localized string similar to Destination URL.
         /// </summary>
         public static string SiteSettings_Redirects_RedirectUrlColumn {
             get {

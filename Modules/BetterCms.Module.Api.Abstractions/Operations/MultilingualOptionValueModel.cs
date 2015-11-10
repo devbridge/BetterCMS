@@ -9,6 +9,6 @@ namespace BetterCms.Module.Api.Operations
     public class MultilingualOptionValueModel : OptionValueModel
     {
         [DataMember]
-        public IList<OptionTranslationModel> Translations;
+        public IList<OptionTranslationModel> Translations { get; set;}
     }
 }

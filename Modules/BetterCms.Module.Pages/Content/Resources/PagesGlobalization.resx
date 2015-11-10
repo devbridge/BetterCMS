@@ -604,10 +604,10 @@
     <value>Add New</value>
   </data>
   <data name="SiteSettings_Redirects_PageUrlColumn" xml:space="preserve">
-    <value>Page URL</value>
+    <value>Source URL</value>
   </data>
   <data name="SiteSettings_Redirects_RedirectUrlColumn" xml:space="preserve">
-    <value>Redirected URL</value>
+    <value>Destination URL</value>
   </data>
   <data name="SiteSettings_Redirects_Search" xml:space="preserve">
     <value>Search</value>
@@ -1306,13 +1306,13 @@
     <value>Unpublished</value>
   </data>
   <data name="SeoStatusFilterType_HasNotSEO" xml:space="preserve">
-    <value>Hasn't SEO</value>
+    <value>Some SEO fields are empty</value>
   </data>
   <data name="SeoStatusFilterType_HasSEO" xml:space="preserve">
-    <value>Has SEO</value>
+    <value>All SEO fields filled</value>
   </data>
   <data name="SiteSettings_Pages_FilterBySEO" xml:space="preserve">
-    <value>By SEO status</value>
+    <value>By SEO data</value>
   </data>
   <data name="SiteSettings_Pages_FilterByStatus" xml:space="preserve">
     <value>By page status</value>
@@ -1385,5 +1385,8 @@
   </data>
   <data name="HtmlContent_Content_Title" xml:space="preserve">
     <value>Content</value>
+  </data>
+  <data name="EditPageProperties_ChangedLayoutMissingContent_Confirmation_Message" xml:space="preserve">
+    <value>You have selected a new page layout, which structure is not the same as previous layout and some page content will be missing. Missing content can be found in Page Structure Manager.&lt;/br&gt;Do you really want to change current layout?</value>
   </data>
 </root>

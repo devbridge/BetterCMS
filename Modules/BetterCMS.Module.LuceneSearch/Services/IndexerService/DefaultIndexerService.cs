@@ -271,9 +271,27 @@ namespace BetterCMS.Module.LuceneSearch.Services.IndexerService
             doc.Add(new Field(LuceneIndexDocumentKeys.Id, pageData.Id.ToString(), Field.Store.YES, Field.Index.ANALYZED));
             doc.Add(new Field(LuceneIndexDocumentKeys.IsPublished, pageData.IsPublished.ToString(), Field.Store.YES, Field.Index.ANALYZED));
 
-            doc = LuceneEvents.Instance.OnDocumentSaving(doc, pageData).Document;
+            var args = LuceneEvents.Instance.OnDocumentSaving(doc, pageData);
 
-            writer.UpdateDocument(path, doc, analyzer);
+            if (!args.ExcludeDefaultDocumentFromIndex)
+            {
+                writer.UpdateDocument(path, args.Document, analyzer);
+            }
+
+            if (args.AdditionalDocuments != null && args.AdditionalDocuments.Count > 0)
+            {
+                foreach (var document in args.AdditionalDocuments)
+                {
+                    var luceneDocument = new Document();
+                    luceneDocument.Add(new Field(LuceneIndexDocumentKeys.Path, document.Path, Field.Store.YES, Field.Index.NOT_ANALYZED));
+                    luceneDocument.Add(new Field(LuceneIndexDocumentKeys.Title, document.Title, Field.Store.YES, Field.Index.ANALYZED));
+                    luceneDocument.Add(new Field(LuceneIndexDocumentKeys.Content, document.Content, Field.Store.YES, Field.Index.ANALYZED));
+                    luceneDocument.Add(new Field(LuceneIndexDocumentKeys.Id, document.Id.ToString(), Field.Store.YES, Field.Index.ANALYZED));
+                    luceneDocument.Add(new Field(LuceneIndexDocumentKeys.IsPublished, document.IsPublished.ToString(), Field.Store.YES, Field.Index.ANALYZED));
+
+                    writer.UpdateDocument(new Term(LuceneIndexDocumentKeys.Path, document.Path), luceneDocument, analyzer);
+                }
+            }
         }
 
         public void DeleteDocuments(Guid[] ids)

@@ -75,28 +75,29 @@ WriteLiteral("\r\n");
             {
                 new EditableGridColumn(UsersGlobalization.SiteSettings_Roles_RoleColumn, "Name", "name")
                     {
-                        AutoFocus = true,
+                        FocusIdentifier = "hasFocus",
                         HeaderAttributes = "style=\"width: 130px;\"",
                     },
 
                 new EditableGridColumn(UsersGlobalization.SiteSettings_Roles_DescriptionColumn, "Description", "description")
+                    {
+                        FocusIdentifier = "valueHasFocus"
+                    }
             }
     };
 
             
             #line default
             #line hidden
-WriteLiteral("\r\n\r\n");
+WriteLiteral("\r\n");
 
             
-            #line 25 "..\..\Views\Role\Partial\ListTemplate.cshtml"
+            #line 27 "..\..\Views\Role\Partial\ListTemplate.cshtml"
 Write(Html.Partial(RootModuleConstants.EditableGridTemplate, gridViewModel));
 
             
             #line default
             #line hidden
-WriteLiteral("\r\n");
-
         }
     }
 }

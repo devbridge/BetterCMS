@@ -270,11 +270,11 @@ function ($, bcms, modal, siteSettings, forms, dynamicContent, messages, mediaUp
             self.previewUrl(item.thumbnailUrl());
 
             self.dimensions(item.width + ' x ' + item.height);
-                
+
             var dimensions = imageEditor.calculateImageDimensionsToFit(item.width, item.height, maxWidth, maxHeight);
             self.containerWidth(parseInt(dimensions.width) + 'px');
             self.containerHeight(parseInt(dimensions.height) + 'px');
-                
+
             dimensions = imageEditor.calculateImageDimensionsToFit(thumbnailWidth, thumbnailHeight, dimensions.width, dimensions.height, true);
             self.width(parseInt(dimensions.width) + 'px');
             self.height(parseInt(dimensions.height) + 'px');
@@ -287,7 +287,7 @@ function ($, bcms, modal, siteSettings, forms, dynamicContent, messages, mediaUp
             self.previewUrl(self.imageUrl());
             self.width('');
             self.height('');
-                
+
             setCoords();
         };
 
@@ -516,7 +516,7 @@ function ($, bcms, modal, siteSettings, forms, dynamicContent, messages, mediaUp
 
             for (i = 0, l = self.medias().length; i < l; i++) {
                 item = self.medias()[i];
-                
+
                 item.isSelected(item == keepSelected);
             }
         };
@@ -525,7 +525,7 @@ function ($, bcms, modal, siteSettings, forms, dynamicContent, messages, mediaUp
             var showProperties = self.showPropertiesPreview(),
                 clientX = event.clientX,
                 clientY = event.clientY;
-            
+
             if (menu.isVisible || !data.isImage()) {
                 if (showProperties) {
                     self.showPropertiesPreview(false);
@@ -538,7 +538,7 @@ function ($, bcms, modal, siteSettings, forms, dynamicContent, messages, mediaUp
                     clearTimeout(previewTimer);
                 }
 
-                previewTimer = setTimeout(function() {
+                previewTimer = setTimeout(function () {
                     showPreview(data, clientX, clientY);
                 }, 300);
             } else {
@@ -561,17 +561,17 @@ function ($, bcms, modal, siteSettings, forms, dynamicContent, messages, mediaUp
             self.previewItem.setCoords(clientX, clientY);
             self.showPropertiesPreview(true);
         };
-        
+
         self.hidePreview = function () {
             if (previewTimer != null) {
                 clearTimeout(previewTimer);
             }
-            
+
             self.showPropertiesPreview(false);
             self.previewItem.clearItem();
         };
 
-        bcms.on(media.events.mediaListViewModeChanged, function(currentMode) {
+        bcms.on(media.events.mediaListViewModeChanged, function (currentMode) {
             self.isGrid(currentMode);
         });
     }
@@ -674,7 +674,7 @@ function ($, bcms, modal, siteSettings, forms, dynamicContent, messages, mediaUp
                 return self.publicUrl();
             };
 
-            self.getImageThumbnailUrl = function() {
+            self.getImageThumbnailUrl = function () {
                 if (!self.thumbnailUrl()) {
                     return null;
                 }
@@ -1298,7 +1298,7 @@ function ($, bcms, modal, siteSettings, forms, dynamicContent, messages, mediaUp
     * Show folder selection window
     */
     media.openFolderSelectDialog = function (opts) {
-        
+
         var options = $.extend({
             onAccept: function () { },
             folderViewModelOptions: null,
@@ -1327,7 +1327,7 @@ function ($, bcms, modal, siteSettings, forms, dynamicContent, messages, mediaUp
                 });
             },
             onAcceptClick: function () {
-                
+
                 if ($.isFunction(options.onAccept)) {
                     options.onAccept(imagesViewModel.path().currentFolder());
                 }
@@ -1341,7 +1341,7 @@ function ($, bcms, modal, siteSettings, forms, dynamicContent, messages, mediaUp
     * Shows image selection window.
     */
     media.openImageInsertDialog = function (opts) {
-        
+
         var options = $.extend({
             onAccept: function () { },
             canInsertWithOptions: false,
@@ -1415,7 +1415,7 @@ function ($, bcms, modal, siteSettings, forms, dynamicContent, messages, mediaUp
             },
             canInsertWithOptions: true
         };
-        
+
         media.openImageInsertDialog(options);
     }
 
@@ -1477,7 +1477,7 @@ function ($, bcms, modal, siteSettings, forms, dynamicContent, messages, mediaUp
             var align = "left",
                 cssClass = classes.customImageLeftAlign,
                 img;
-            
+
             if (imageAlign == 2) {
                 align = "";
                 cssClass = "";
@@ -1520,7 +1520,7 @@ function ($, bcms, modal, siteSettings, forms, dynamicContent, messages, mediaUp
                         filesViewModel.canInsertMedia(true);
                         filesViewModel.spinContainer = dialog.container.find(selectors.insertContentContainer);
                         initializeTab(content, filesViewModel);
-}
+                    }
                 });
             },
             onAcceptClick: function () {
@@ -1888,7 +1888,7 @@ function ($, bcms, modal, siteSettings, forms, dynamicContent, messages, mediaUp
         videosViewModel = null;
 
         var dialogContainer = siteSettings.getModalDialog().container,
-            selectSearch = function() {
+            selectSearch = function () {
                 var firstVisibleInputField = dialogContainer.find('input[type=text],textarea,select').filter(':visible:first');
                 if (firstVisibleInputField) {
                     firstVisibleInputField.focus();
@@ -1902,7 +1902,7 @@ function ($, bcms, modal, siteSettings, forms, dynamicContent, messages, mediaUp
                 filesViewModel = new MediaItemsViewModel(tabContainer, links.loadFilesUrl, dialogContainer);
                 filesViewModel.spinContainer = tabContainer.parents(selectors.spinContainer);
 
-                loadTabData(filesViewModel, null, function(json) {
+                loadTabData(filesViewModel, null, function (json) {
                     initializeTab(json, filesViewModel);
                     selectSearch();
                 });
@@ -1910,12 +1910,12 @@ function ($, bcms, modal, siteSettings, forms, dynamicContent, messages, mediaUp
                 selectSearch();
             }
         });
-        
+
         // Attach to images tab selector
         dialogContainer.find(selectors.tabImagesSelector).on('click', function () {
             selectSearch();
         });
-        
+
         var imagesTabContainer = dialogContainer.find(selectors.tabImagesContainer);
         imagesViewModel = new MediaItemsViewModel(imagesTabContainer, links.loadImagesUrl, dialogContainer);
         imagesViewModel.spinContainer = imagesTabContainer.parents(selectors.spinContainer);
@@ -1979,7 +1979,7 @@ function ($, bcms, modal, siteSettings, forms, dynamicContent, messages, mediaUp
 
         media.ImageSelectorViewModel.prototype.select = function (data, event) {
             var self = this,
-                onMediaSelect = function(insertedImage) {
+                onMediaSelect = function (insertedImage) {
                     self.thumbnailUrl(insertedImage.thumbnailUrl());
                     self.url(insertedImage.publicUrl());
                     self.tooltip(insertedImage.tooltip);
@@ -1990,11 +1990,11 @@ function ($, bcms, modal, siteSettings, forms, dynamicContent, messages, mediaUp
                     self.onAfterSelect();
                 },
                 mediasViewModelExtender = {
-                    onMediaSelect: function(image) {
+                    onMediaSelect: function (image) {
                         onMediaSelect(image);
                     }
                 },
-                onMediaSelectClose = function() {
+                onMediaSelectClose = function () {
                     self.onSelectClose();
                 }, options = {
                     onAccept: onMediaSelect,
@@ -2064,7 +2064,7 @@ function ($, bcms, modal, siteSettings, forms, dynamicContent, messages, mediaUp
                 parentFolderId = self.parentFolderId(),
                 options = {
                     onAccept: onMediaSelect,
-                    folderViewModelOptions: mediasViewModelExtender, 
+                    folderViewModelOptions: mediasViewModelExtender,
                     onClose: onMediaSelectClose,
                     parentFolderId: !parentFolderId || bcms.isEmptyGuid(parentFolderId) ? '' : parentFolderId
                 };
@@ -2074,7 +2074,7 @@ function ($, bcms, modal, siteSettings, forms, dynamicContent, messages, mediaUp
         };
 
         media.ImageFolderSelectorViewModel.prototype.onAfterSelect = function () { };
-        
+
         media.ImageFolderSelectorViewModel.prototype.onSelectClose = function () { };
 
         return media.ImageFolderSelectorViewModel;
@@ -2084,7 +2084,7 @@ function ($, bcms, modal, siteSettings, forms, dynamicContent, messages, mediaUp
     * Called when user press browse button in the options grid with type = "Media Manager Folder".
     */
     function onExecuteMediaManagerFolderOption(valueObservable, titleObservable, optionModel) {
-        var onMediaSelect = function(selectedFolder) {
+        var onMediaSelect = function (selectedFolder) {
             var id = selectedFolder.id(),
                 name = selectedFolder.name();
 
@@ -2099,14 +2099,17 @@ function ($, bcms, modal, siteSettings, forms, dynamicContent, messages, mediaUp
             if (optionModel.key && !optionModel.key()) {
                 optionModel.key(name);
             }
-
-            optionModel.hasFocus(true);
+            setTimeout(function () {
+                optionModel.preventFromSave = false;
+            }, 100);
         },
-            onMediaClose = function() {
-                optionModel.hasFocus(true);
+            onMediaClose = function () {
+                setTimeout(function () {
+                    optionModel.preventFromSave = false;
+                }, 100);
             },
             mediasViewModelExtender = {
-                onMediaSelect: function(selectedFolder) {
+                onMediaSelect: function (selectedFolder) {
                     onMediaSelect(selectedFolder);
                 }
             },
@@ -2124,21 +2127,24 @@ function ($, bcms, modal, siteSettings, forms, dynamicContent, messages, mediaUp
     * Called when user press browse button in the options grid with type = "Media Manager Image Url".
     */
     function onExecuteMediaManagerImageOption(valueObservable, titleObservable, optionModel) {
-        var onMediaSelect = function(selectedImage) {
+        var onMediaSelect = function (selectedImage) {
             var url = selectedImage.getImageUrl();
 
 
-                valueObservable(url);
-                titleObservable(url);
+            valueObservable(url);
+            titleObservable(url);
 
-                if (optionModel.key && !optionModel.key()) {
-                    optionModel.key(name);
-                }
-
-                optionModel.hasFocus(true);
-            },
-            onMediaClose = function() {
-                optionModel.hasFocus(true);
+            if (optionModel.key && !optionModel.key()) {
+                optionModel.key(name);
+            }
+            setTimeout(function () {
+                optionModel.preventFromSave = false;
+            }, 100);
+        },
+            onMediaClose = function () {
+                setTimeout(function () {
+                    optionModel.preventFromSave = false;
+                }, 100);
             },
 
             options = {
@@ -2173,7 +2179,7 @@ function ($, bcms, modal, siteSettings, forms, dynamicContent, messages, mediaUp
         bcms.on(menu.events.menuOn, onShowContextMenu);
 
         fileEditor.SetMedia(media);
-        
+
         optionsModule.registerCustomOption('media-images-folder', onExecuteMediaManagerFolderOption);
         optionsModule.registerCustomOption('media-images-url', onExecuteMediaManagerImageOption);
     };

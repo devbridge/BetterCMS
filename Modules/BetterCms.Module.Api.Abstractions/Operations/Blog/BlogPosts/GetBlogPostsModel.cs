@@ -18,6 +18,7 @@ namespace BetterCms.Module.Api.Operations.Blog.BlogPosts
         {
             FilterByTagsConnector = FilterConnector.And;
             FilterByTags = new List<string>();
+            FilterByCategoriesNames = new List<string>();
         }
 
         /// <summary>

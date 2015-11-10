@@ -5,7 +5,6 @@ using System.Linq;
 using BetterModules.Core.DataAccess.DataContext;
 using BetterCms.Core.DataContracts.Enums;
 using BetterCms.Core.Security;
-using BetterCms.Module.MediaManager.Models;
 using BetterCms.Module.Pages.Models;
 using BetterCms.Module.Pages.ViewModels.Filter;
 using BetterCms.Module.Pages.ViewModels.SiteSettings;
@@ -14,7 +13,6 @@ using BetterCms.Module.Root.Models;
 using BetterCms.Module.Root.Mvc;
 using BetterCms.Module.Root.Mvc.Grids.Extensions;
 using BetterCms.Module.Root.Services;
-using BetterCms.Module.Root.ViewModels.Language;
 
 using NHibernate;
 using NHibernate.Criterion;
@@ -205,14 +203,14 @@ namespace BetterCms.Module.Pages.Services
                 }
                 else if (request.Status.Value == PageStatusFilterType.ContainingUnpublishedContents)
                 {
-                    const ContentStatus draft = ContentStatus.Draft;
+                    PageContent pageContentAlias = null;
                     Root.Models.Content contentAlias = null;
-                    var subQuery = QueryOver.Of<PageContent>()
-                        .JoinAlias(p => p.Content, () => contentAlias)
-                        .Where(pageContent => pageContent.Page.Id == alias.Id && !pageContent.IsDeleted)
-                        .And(() => contentAlias.Status == draft)
-                        .AndNot(() => contentAlias.IsDeleted)
-                        .Select(pageContent => 1);
+                    Root.Models.Content contentHistoryAlias = null;
+                    var subQuery = QueryOver.Of(() => pageContentAlias)
+                        .Inner.JoinAlias(() => pageContentAlias.Content, () => contentAlias, () => !contentAlias.IsDeleted)
+                        .Inner.JoinAlias(() => contentAlias.History, () => contentHistoryAlias, () => !contentHistoryAlias.IsDeleted && contentHistoryAlias.Status == ContentStatus.Draft)
+                        .Where(() => pageContentAlias.Page.Id == alias.Id && !pageContentAlias.IsDeleted)
+                        .Select(p => 1);
 
                     query = query.WithSubquery.WhereExists(subQuery);
                 }

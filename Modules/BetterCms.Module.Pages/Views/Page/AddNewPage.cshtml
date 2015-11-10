@@ -75,7 +75,7 @@
             </div>
 
             <div id="bcms-tab-2" class="bcms-tab-single" data-bind="with: options">
-                @Html.Partial(PagesConstants.OptionValuesGridTemplate, new EditableGridViewModel())
+                @Html.Partial(PagesConstants.OptionValuesGridTemplate, new EditableGridViewModel{CanAddNewItems = true})
             </div>
         }
     </div>

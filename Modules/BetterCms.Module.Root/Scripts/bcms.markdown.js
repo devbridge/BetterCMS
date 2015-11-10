@@ -76,19 +76,12 @@
         }
 
         /**
-         * Called when cursor position changes: checks if widget option button should be enabled
+         * Sets the selected widget in the given position 
          */
-        function onCursorPositionChanged() {
-            var textarea = $('#' + currentEditorId),
-                value = textarea.val(),
-                position = getTextareaCursorPosition(textarea.get(0)),
-                i;
+        function setSelectedWidget(position, hasContentChanged) {
+            var i;
 
-            if (value !== currentValue) {
-                recalculateWidgetPositions(value);
-            }
-
-            if (position !== currentCursorPosition || value !== currentValue) {
+            if (position !== currentCursorPosition || hasContentChanged) {
                 currentWidgetSelected = -1;
                 for (i = 0; i < widgetPositions.length; i++) {
                     if (position >= widgetPositions[i].start && position <= widgetPositions[i].end) {
@@ -97,6 +90,21 @@
                     }
                 }
             }
+        }
+
+        /**
+         * Called when cursor position changes: checks if widget option button should be enabled
+         */
+        function onCursorPositionChanged() {
+            var textarea = $('#' + currentEditorId),
+                value = textarea.val(),
+                position = getTextareaCursorPosition(textarea.get(0));
+
+            if (value !== currentValue) {
+                recalculateWidgetPositions(value);
+            }
+
+            setSelectedWidget(position, value !== currentValue);
 
             if (currentWidgetSelected > -1) {
                 $(selectors.widgetOptionsButton).show();
@@ -106,7 +114,6 @@
 
             currentValue = value;
             currentCursorPosition = position;
-            // console.log("onCursorPositionChanged: %s, currentCursorPosition: %s", currentWidgetSelected, currentCursorPosition);
         }
 
         /**
@@ -207,6 +214,8 @@
          * Inserts a widget to the textarea
          */
         function editWidgetOptions(obj) {
+            setSelectedWidget(obj.caretPosition);
+
             if (currentWidgetSelected <= -1) {
                 return;
             }
@@ -240,7 +249,8 @@
 
                     return true;
                 },
-                optionListViewModel: optionListViewModel
+                optionListViewModel: optionListViewModel,
+                enableTranslations: htmlEditor.cmsEditorType == "widget"
             });
         }
 
@@ -303,7 +313,7 @@
                     { name: 'Picture', key: 'P', className: 'markItUpButtonPicture', afterInsert: insertImage },
                     { name: 'Link', key: 'L', className: 'markItUpButtonLink', afterInsert: insertFile },
                     { name: 'Widget', className: 'markItUpButtonWidget', afterInsert: insertWidget },
-                    { name: 'Widget Option', className: 'markItUpButtonOption', afterInsert: function(obj) {
+                    { name: 'Insert Option', className: 'markItUpButtonOption', afterInsert: function(obj) {
                         insertOption(obj, options.smartTags);
                     } },
                     { name: 'Quotes', openWith: '> ', className: 'markItUpButtonQuotes' },
@@ -312,7 +322,6 @@
                     {
                         name: 'Widget Options',
                         className: 'markItUpButtonWidget markItUpButtonWidgetOption',
-                        // afterInsert: editWidgetOptions,
                         beforeInsert: editWidgetOptions
                     }
                 ];

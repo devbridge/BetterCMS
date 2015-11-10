@@ -20,7 +20,8 @@
                     {
                         HeaderAttributes = "style=\"width: 200px;\"",
                         AutoFocus = true,
-                        HiddenFieldName = "Options[{0}].OptionKey"
+                        HiddenFieldName = "Options[{0}].OptionKey",
+                        FocusIdentifier = "hasFocus"
                     },
 
                 new EditableGridDropDownColumn(PagesGlobalization.Options_OptionTypeColumn, null, "calcType")
@@ -31,9 +32,10 @@
                         CanBeEdited = false
                     },
 
-                new OptionValueEditableGridColumn(PagesGlobalization.Options_OptionDefaultValueColumn, "defaultValueBinding", "customOptionDefaultTitle")
+                new OptionValueEditableGridColumn(PagesGlobalization.Options_OptionDefaultValueColumn, "defaultValueBinding", "customOptionDefaultTitleBinding")
                     {
-                        HiddenFieldName = "Options[{0}].OptionDefaultValue"
+                        HiddenFieldName = "Options[{0}].OptionDefaultValue",
+                        FocusIdentifier = "valueHasFocus"
                     },
 
                 new EditableGridHiddenField("type", "Options[{0}].Type"),

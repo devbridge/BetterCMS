@@ -48,6 +48,11 @@ bettercms.define('bcms.processor', [@Model.JavaScriptModules.RenderCommaSeparate
                 moduleName = target.data('bcms-module'),
                 actionName = target.data('bcms-action');
 
+            if (target.hasClass('bcms-settings-link')) {
+                target.parent().find('.bcms-settings-link-active').removeClass('bcms-settings-link-active');
+                target.addClass('bcms-settings-link-active');
+            }           
+            
             processor.executeModuleAction(moduleName, actionName, target);
         });
         

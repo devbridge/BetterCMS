@@ -113,9 +113,33 @@ WriteLiteral("></select>\r\n    </div>\r\n");
             
             #line 17 "..\..\Views\Option\Partial\TopBlockAddItem.cshtml"
 }
+
             
             #line default
             #line hidden
+WriteLiteral("<div");
+
+WriteLiteral(" class=\"bcms-language-bar bcms-language-selector-box\"");
+
+WriteLiteral(" data-bind=\"visible: showLanguages, with: language\"");
+
+WriteLiteral(">\r\n    <div");
+
+WriteLiteral(" class=\"bcms-filter-text bcms-table-middle-box\"");
+
+WriteLiteral(">Edit in language:</div>\r\n    <div");
+
+WriteLiteral(" class=\"bcms-table-middle-box\"");
+
+WriteLiteral(">\r\n        <select");
+
+WriteLiteral(" class=\"bcms-global-select\"");
+
+WriteLiteral(" data-bind=\"options: languages, optionsText: \'value\', optionsValue: \'key\', value:" +
+" languageId\"");
+
+WriteLiteral("></select>\r\n    </div>\r\n</div>");
+
         }
     }
 }

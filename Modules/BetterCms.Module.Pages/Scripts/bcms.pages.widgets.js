@@ -368,7 +368,7 @@ bettercms.define('bcms.pages.widgets', ['bcms.jquery', 'bcms', 'bcms.modal', 'bc
             dialog.container.find(selectors.htmlWidgetJsCssTabOpener).on('click', function () {
                 if (!codeEditorInitialized) {
                     codeEditor.initialize(dialog.container, dialog, {
-                        cmsEditorType: htmlEditor.cmsEditorTypes.widget
+                        cmsEditorType: htmlEditor.cmsEditorTypes.page
                     });
                     codeEditorInitialized = true;
                 }
@@ -511,7 +511,8 @@ bettercms.define('bcms.pages.widgets', ['bcms.jquery', 'bcms', 'bcms.modal', 'bc
                 disableAccept: false,
                 cancelTitle: '',
                 onCloseClick: null,
-                optionListViewModel: null
+                optionListViewModel: null,
+                enableTranslations: null
             }, opts);
 
             modal.open({
@@ -525,7 +526,7 @@ bettercms.define('bcms.pages.widgets', ['bcms.jquery', 'bcms', 'bcms.modal', 'bc
                             var optionsContainer = contentDialog.container.find(selectors.pageContentOptionsForm);
 
                             optionListViewModel = opts.optionListViewModel
-                                || options.createOptionValuesViewModel(optionsContainer, content.Data.OptionValues, content.Data.CustomOptions, content.Data.ShowLanguages, content.Data.Languages);
+                                || options.createOptionValuesViewModel(optionsContainer, content.Data.OptionValues, content.Data.CustomOptions, opts.enableTranslations && content.Data.ShowLanguages, content.Data.Languages);
 
                             ko.applyBindings(optionListViewModel, optionsContainer.get(0));
                         },
@@ -925,14 +926,15 @@ bettercms.define('bcms.pages.widgets', ['bcms.jquery', 'bcms', 'bcms.modal', 'bc
                 widgetId = data.widgetId,
                 contentId = data.contentId,
                 onCloseClick = data.onCloseClick,
-                optionListViewModel = data.optionListViewModel;
+                optionListViewModel = data.optionListViewModel,
+                enableTranslations = data.enableTranslations;
 
             if (!assignmentId && !widgetId) {
                 bcms.logger.error("Cannot open child widget options modal window. assignmentId or widgetId should be set.");
                 return;
             }
 
-            widgets.configureWidget('', function () {
+            widgets.configureWidget('', function() {
                 // Do nothing - just close modal and that's it
             }, {
                 title: globalization.editChildWidgetOptionsTitle,
@@ -940,8 +942,9 @@ bettercms.define('bcms.pages.widgets', ['bcms.jquery', 'bcms', 'bcms.modal', 'bc
                 disableAccept: true,
                 cancelTitle: globalization.editChildWidgetOptionsCloseButtonTitle,
                 onCloseClick: onCloseClick,
-                optionListViewModel: optionListViewModel
-            });
+                optionListViewModel: optionListViewModel,
+                enableTranslations: enableTranslations
+        });
         }
 
         /**

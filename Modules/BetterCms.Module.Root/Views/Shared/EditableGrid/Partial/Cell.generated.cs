@@ -46,7 +46,7 @@ namespace ASP
 WriteLiteral("<td ");
 
             
-            #line 4 "..\..\Views\Shared\EditableGrid\Partial\Cell.cshtml"
+            #line 3 "..\..\Views\Shared\EditableGrid\Partial\Cell.cshtml"
 Write(Html.Raw(Model.Attributes));
 
             
@@ -56,179 +56,70 @@ WriteLiteral(">\r\n    <div");
 
 WriteLiteral(" class=\"bcms-field-wrapper\"");
 
-WriteLiteral(">\r\n");
-
-            
-            #line 6 "..\..\Views\Shared\EditableGrid\Partial\Cell.cshtml"
-        
-            
-            #line default
-            #line hidden
-            
-            #line 6 "..\..\Views\Shared\EditableGrid\Partial\Cell.cshtml"
-         if (Model.CanBeEdited)
-        {
-
-            
-            #line default
-            #line hidden
-WriteLiteral("            <!-- ko if: !isActive() || (");
-
-            
-            #line 8 "..\..\Views\Shared\EditableGrid\Partial\Cell.cshtml"
-                                    Write(Model.ValueBind);
-
-            
-            #line default
-            #line hidden
-WriteLiteral(".editingIsDisabled && ");
-
-            
-            #line 8 "..\..\Views\Shared\EditableGrid\Partial\Cell.cshtml"
-                                                                            Write(Model.ValueBind);
-
-            
-            #line default
-            #line hidden
-WriteLiteral(".editingIsDisabled()) -->\r\n");
-
-            
-            #line 9 "..\..\Views\Shared\EditableGrid\Partial\Cell.cshtml"
-        }
-
-            
-            #line default
-            #line hidden
-WriteLiteral("        <a");
+WriteLiteral(">\r\n        <a");
 
 WriteLiteral(" class=\"bcms-tables-link\"");
 
-WriteLiteral(" data-bind=\"text: ");
+WriteLiteral(" data-bind=\"\r\n           text: ");
 
             
-            #line 10 "..\..\Views\Shared\EditableGrid\Partial\Cell.cshtml"
-                                                 Write(Model.ValueBind);
-
-            
-            #line default
-            #line hidden
-WriteLiteral("()\"");
-
-WriteLiteral("></a>\r\n");
-
-            
-            #line 11 "..\..\Views\Shared\EditableGrid\Partial\Cell.cshtml"
-        
-            
-            #line default
-            #line hidden
-            
-            #line 11 "..\..\Views\Shared\EditableGrid\Partial\Cell.cshtml"
-         if (Model.CanBeEdited)
-        {
+            #line 6 "..\..\Views\Shared\EditableGrid\Partial\Cell.cshtml"
+             Write(Model.ValueBind);
 
             
             #line default
             #line hidden
-WriteLiteral("            <!-- /ko -->\r\n");
+WriteLiteral(" ()\r\n");
 
-WriteLiteral("            <!-- ko if: isActive() && (!");
-
-            
-            #line 14 "..\..\Views\Shared\EditableGrid\Partial\Cell.cshtml"
-                                    Write(Model.ValueBind);
+WriteLiteral("           ");
 
             
-            #line default
-            #line hidden
-WriteLiteral(".editingIsDisabled || !");
-
-            
-            #line 14 "..\..\Views\Shared\EditableGrid\Partial\Cell.cshtml"
-                                                                             Write(Model.ValueBind);
-
-            
-            #line default
-            #line hidden
-WriteLiteral(".editingIsDisabled()) -->\r\n");
-
-WriteLiteral("            <input");
-
-WriteLiteral(" type=\"text\"");
-
-WriteLiteral(" class=\"bcms-field-text bcms-js-grid-input\"");
-
-WriteLiteral(" data-bind=\"\r\n                   css { \'bcms-input-validation-error\'\r\n           " +
-"        !isnew() && ");
-
-            
-            #line 17 "..\..\Views\Shared\EditableGrid\Partial\Cell.cshtml"
-                           Write(Model.ValueBind);
-
-            
-            #line default
-            #line hidden
-WriteLiteral(" .haserror && ");
-
-            
-            #line 17 "..\..\Views\Shared\EditableGrid\Partial\Cell.cshtml"
-                                                           Write(Model.ValueBind);
-
-            
-            #line default
-            #line hidden
-WriteLiteral(" .haserror() },\r\n                   value ");
-
-            
-            #line 18 "..\..\Views\Shared\EditableGrid\Partial\Cell.cshtml"
-                    Write(Model.ValueBind);
-
-            
-            #line default
-            #line hidden
-WriteLiteral(" ,\r\n                   valueupdate \'afterkeydown\' ,\r\n                   enterpres" +
-"s onsave,\r\n                   escpress oncanceledit,\r\n                   afterre" +
-"nder initinput($element, ");
-
-            
-            #line 22 "..\..\Views\Shared\EditableGrid\Partial\Cell.cshtml"
-                                              Write(Model.ValueBind);
-
-            
-            #line default
-            #line hidden
-WriteLiteral(" ),\r\n                   event {blur onblurfield, focus onstopevent, click onstope" +
-"vent}\r\n");
-
-WriteLiteral("                   ");
-
-            
-            #line 24 "..\..\Views\Shared\EditableGrid\Partial\Cell.cshtml"
-               Write(!string.IsNullOrWhiteSpace(Model.CustomBinding) ? string.Format(", {0}", Model.CustomBinding) : string.Empty);
+            #line 7 "..\..\Views\Shared\EditableGrid\Partial\Cell.cshtml"
+       Write(!string.IsNullOrEmpty(Model.FocusIdentifier) ? string.Format(", click: onItemSelect.bind($data, {0})", Model.FocusIdentifier) : string.Empty);
 
             
             #line default
             #line hidden
 WriteLiteral("\r\n");
 
-WriteLiteral("                   ");
+WriteLiteral("           ");
 
             
-            #line 25 "..\..\Views\Shared\EditableGrid\Partial\Cell.cshtml"
-               Write(Model.AutoFocus ? ", hasfocus: isActive() && hasFocus" : string.Empty);
+            #line 8 "..\..\Views\Shared\EditableGrid\Partial\Cell.cshtml"
+       Write(Model.CanBeEdited ? string.Format(", visible: !isActive() || ({0}.editingIsDisabled && {0}.editingIsDisabled())", Model.ValueBind) : string.Empty);
 
             
             #line default
             #line hidden
 WriteLiteral(" \"");
 
-WriteLiteral(" />\r\n");
-
-WriteLiteral("            <!-- ko if: !isNew() &&  ");
+WriteLiteral("></a>\r\n");
 
             
-            #line 26 "..\..\Views\Shared\EditableGrid\Partial\Cell.cshtml"
-                                 Write(Model.ValueBind);
+            #line 9 "..\..\Views\Shared\EditableGrid\Partial\Cell.cshtml"
+        
+            
+            #line default
+            #line hidden
+            
+            #line 9 "..\..\Views\Shared\EditableGrid\Partial\Cell.cshtml"
+         if (Model.CanBeEdited)
+        {
+
+            
+            #line default
+            #line hidden
+WriteLiteral("            <input");
+
+WriteLiteral(" type=\"text\"");
+
+WriteLiteral(" class=\"bcms-field-text bcms-js-grid-input\"");
+
+WriteLiteral(" data-bind=\"\r\n                css: { \'bcms-input-validation-error\': !isNew() && ");
+
+            
+            #line 12 "..\..\Views\Shared\EditableGrid\Partial\Cell.cshtml"
+                                                              Write(Model.ValueBind);
 
             
             #line default
@@ -236,8 +127,83 @@ WriteLiteral("            <!-- ko if: !isNew() &&  ");
 WriteLiteral(".hasError && ");
 
             
-            #line 26 "..\..\Views\Shared\EditableGrid\Partial\Cell.cshtml"
-                                                                Write(Model.ValueBind);
+            #line 12 "..\..\Views\Shared\EditableGrid\Partial\Cell.cshtml"
+                                                                                             Write(Model.ValueBind);
+
+            
+            #line default
+            #line hidden
+WriteLiteral(".hasError() },\r\n                value: ");
+
+            
+            #line 13 "..\..\Views\Shared\EditableGrid\Partial\Cell.cshtml"
+                  Write(Model.ValueBind);
+
+            
+            #line default
+            #line hidden
+WriteLiteral(", \r\n                valueUpdate: \'afterkeydown\', \r\n                enterPress: on" +
+"Save, \r\n                escPress: onCancelEdit, \r\n                afterRender: i" +
+"nitInput($element, ");
+
+            
+            #line 17 "..\..\Views\Shared\EditableGrid\Partial\Cell.cshtml"
+                                            Write(Model.ValueBind);
+
+            
+            #line default
+            #line hidden
+WriteLiteral(")\r\n");
+
+WriteLiteral("                ");
+
+            
+            #line 18 "..\..\Views\Shared\EditableGrid\Partial\Cell.cshtml"
+            Write(!string.IsNullOrWhiteSpace(Model.CustomBinding) ? string.Format(", {0}", Model.CustomBinding) : string.Empty);
+
+            
+            #line default
+            #line hidden
+WriteLiteral("\r\n");
+
+WriteLiteral("                ");
+
+            
+            #line 19 "..\..\Views\Shared\EditableGrid\Partial\Cell.cshtml"
+            Write(!string.IsNullOrEmpty(Model.FocusIdentifier) ? string.Format(", hasfocus: {0}", Model.FocusIdentifier) : string.Empty);
+
+            
+            #line default
+            #line hidden
+WriteLiteral("\r\n");
+
+WriteLiteral("                ");
+
+            
+            #line 20 "..\..\Views\Shared\EditableGrid\Partial\Cell.cshtml"
+            Write(string.Format(", visible: isActive() && (!{0}.editingIsDisabled || !{0}.editingIsDisabled())", Model.ValueBind));
+
+            
+            #line default
+            #line hidden
+WriteLiteral("\r\n                   \"");
+
+WriteLiteral("/>\r\n");
+
+WriteLiteral("            <!-- ko if: !isNew() && ");
+
+            
+            #line 22 "..\..\Views\Shared\EditableGrid\Partial\Cell.cshtml"
+                                Write(Model.ValueBind);
+
+            
+            #line default
+            #line hidden
+WriteLiteral(".hasError && ");
+
+            
+            #line 22 "..\..\Views\Shared\EditableGrid\Partial\Cell.cshtml"
+                                                               Write(Model.ValueBind);
 
             
             #line default
@@ -253,7 +219,7 @@ WriteLiteral(">\r\n                <span");
 WriteLiteral(" data-bind=\"html: ");
 
             
-            #line 28 "..\..\Views\Shared\EditableGrid\Partial\Cell.cshtml"
+            #line 24 "..\..\Views\Shared\EditableGrid\Partial\Cell.cshtml"
                                    Write(Model.ValueBind);
 
             
@@ -265,10 +231,8 @@ WriteLiteral("></span>\r\n            </span>\r\n");
 
 WriteLiteral("            <!-- /ko -->\r\n");
 
-WriteLiteral("            <!-- /ko -->\r\n");
-
             
-            #line 32 "..\..\Views\Shared\EditableGrid\Partial\Cell.cshtml"
+            #line 27 "..\..\Views\Shared\EditableGrid\Partial\Cell.cshtml"
         }
 
             

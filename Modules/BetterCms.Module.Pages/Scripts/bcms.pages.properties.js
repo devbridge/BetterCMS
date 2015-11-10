@@ -39,7 +39,8 @@ bettercms.define('bcms.pages.properties', ['bcms.jquery', 'bcms', 'bcms.modal', 
             links = {
                 loadEditPropertiesDialogUrl: null,
                 loadLayoutOptionsUrl: null,
-                loadLayoutUserAccessUrl: null
+                loadLayoutUserAccessUrl: null,
+                checkForMissingContentUrl: null
             },
             globalization = {
                 editPagePropertiesModalTitle: null,
@@ -47,7 +48,8 @@ bettercms.define('bcms.pages.properties', ['bcms.jquery', 'bcms', 'bcms.modal', 
                 pageStatusChangeConfirmationMessagePublish: null,
                 pageStatusChangeConfirmationMessageUnPublish: null,
                 pageConversionToMasterConfirmationMessage: null,
-                selectedMasterIsChildPage: null
+                selectedMasterIsChildPage: null,
+                missingContentConfirmationMessage: null
             },
             keys = {
                 editPagePropertiesInfoMessageClosed: 'bcms.EditPagePropertiesInfoBoxClosed'
@@ -57,7 +59,9 @@ bettercms.define('bcms.pages.properties', ['bcms.jquery', 'bcms', 'bcms.modal', 
                 inactive: 'bcms-inactive'
             },
             currentPageIsPublished,
-            currentPageIsMaster;
+            currentPageIsMaster,
+            currentPageTemplateId,
+            currentPageMasterId;
 
         /**
         * Assign objects to module.
@@ -99,6 +103,8 @@ bettercms.define('bcms.pages.properties', ['bcms.jquery', 'bcms', 'bcms.modal', 
 
             currentPageIsPublished = dialog.container.find(selectors.pagePropertiesPageIsPublishedCheckbox).is(':checked');
             currentPageIsMaster = dialog.container.find(selectors.pagePropertiesPageIsMasterCheckbox).is(':checked');
+            currentPageTemplateId = dialog.container.find(selectors.pagePropertiesTemplateId).val();
+            currentPageMasterId = dialog.container.find(selectors.pagePropertiesMasterPageId).val();
 
             dialog.container.find(selectors.editPermalink).on('click', function () {
                 page.showPagePropertiesEditPermalinkBox(dialog);
@@ -428,7 +434,37 @@ bettercms.define('bcms.pages.properties', ['bcms.jquery', 'bcms', 'bcms.modal', 
 
                             var newPageIsPublished = dialog.container.find(selectors.pagePropertiesPageIsPublishedCheckbox).is(':checked'),
                                 message = newPageIsPublished ? globalization.pageStatusChangeConfirmationMessagePublish : globalization.pageStatusChangeConfirmationMessageUnPublish,
-                                isMasterPage = dialog.container.find(selectors.pagePropertiesPageIsMasterCheckbox).is(':checked');
+                                isMasterPage = dialog.container.find(selectors.pagePropertiesPageIsMasterCheckbox).is(':checked'),
+                                newPageTemplateId = dialog.container.find(selectors.pagePropertiesTemplateId).val(),
+                                newPageMasterId = dialog.container.find(selectors.pagePropertiesMasterPageId).val();
+
+                            if (newPageMasterId != currentPageMasterId || newPageTemplateId != currentPageTemplateId) {
+
+                                var isContentWillBeMissing = false;
+
+                                $.ajax({
+                                        type: 'GET',
+                                        url: $.format(links.checkForMissingContentUrl, id, newPageTemplateId, newPageMasterId),
+                                        async: false
+                                    })
+                                    .done(function (result) {
+                                        if (result.Data) {
+                                            isContentWillBeMissing = result.Data.IsMissingContents;
+                                        }
+                                });
+
+                                if (isContentWillBeMissing) {
+                                    modal.confirm({
+                                        content: globalization.missingContentConfirmationMessage,
+                                        onAccept: function () {
+                                            currentPageMasterId = newPageMasterId;
+                                            currentPageTemplateId = newPageTemplateId;
+                                            dialog.container.find(selectors.pagePropertiesForm).submit();
+                                        }
+                                    });
+                                    return false;
+                                }
+                            }
 
                             if (currentPageIsMaster != isMasterPage) {
                                 modal.confirm({

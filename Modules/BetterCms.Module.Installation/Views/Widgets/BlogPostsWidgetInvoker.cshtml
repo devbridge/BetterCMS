@@ -1,0 +1,6 @@
+﻿@using Microsoft.Web.Mvc
+@using BetterCms.Module.Installation.Controllers
+@model BetterCms.Module.Root.ViewModels.Cms.RenderWidgetViewModel
+@{
+    Html.RenderAction<BlogWidgetController>(c => c.BlogPosts(Model));
+}

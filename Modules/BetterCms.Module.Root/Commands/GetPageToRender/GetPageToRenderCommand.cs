@@ -17,7 +17,7 @@ using BetterCms.Module.Root.Services;
 using BetterCms.Module.Root.ViewModels.Cms;
 using BetterCms.Module.Root.Models.Extensions;
 using BetterCms.Module.Root.ViewModels.Security;
-using BetterCms.Module.Root.ViewModels.Language;
+//using BetterCms.Module.Root.Views.Language;
 
 using BetterModules.Core.Web.Mvc.Commands;
 using BetterModules.Core.Web.Mvc.Extensions;
@@ -537,7 +537,7 @@ namespace BetterCms.Module.Root.Commands.GetPageToRender
         /// <param name="optionValues">The option values.</param>
         /// <param name="childrenPages">The children pages.</param>
         /// <returns>Merged option values</returns>
-        private IList<IOptionValue> GetMergedOptionValues(IEnumerable<IOptionEntity> options, IEnumerable<IOptionEntity> optionValues, IList<Page> childrenPages)
+        private IList<IOptionValue> GetMergedOptionValues(IEnumerable<IOptionEntity> options, IEnumerable<IOptionValueEntity> optionValues, IList<Page> childrenPages)
         {
             var mergedOptions = new List<IOptionValue>();
 
