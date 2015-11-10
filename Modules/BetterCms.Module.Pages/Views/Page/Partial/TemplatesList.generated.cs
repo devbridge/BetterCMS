@@ -50,85 +50,23 @@ return new System.Web.WebPages.HelperResult(__razor_helper_writer => {
  
     if (model != null && model.Count > 0)
     {
-        
-
-#line default
-#line hidden
-
-#line 7 "..\..\Views\Page\Partial\TemplatesList.cshtml"
-WriteTo(__razor_helper_writer, Html.Raw("<div class=\"bcms-grid-holder\">"));
-
-
-#line default
-#line hidden
-
-#line 7 "..\..\Views\Page\Partial\TemplatesList.cshtml"
-                                                     
-
         for (var i = 0; i < model.Count; i++)
         {
-            if (i % 3 == 0 && i != 0)
-            {
-                
-
-#line default
-#line hidden
-
-#line 13 "..\..\Views\Page\Partial\TemplatesList.cshtml"
-WriteTo(__razor_helper_writer, Html.Raw("</div>"));
-
-
-#line default
-#line hidden
-
-#line 13 "..\..\Views\Page\Partial\TemplatesList.cshtml"
-                                   
-                
-
-#line default
-#line hidden
-
-#line 14 "..\..\Views\Page\Partial\TemplatesList.cshtml"
-WriteTo(__razor_helper_writer, Html.Raw("<div class=\"bcms-grid-holder\">"));
-
-
-#line default
-#line hidden
-
-#line 14 "..\..\Views\Page\Partial\TemplatesList.cshtml"
-                                                             
-            }
-
             
 
 #line default
 #line hidden
 
-#line 17 "..\..\Views\Page\Partial\TemplatesList.cshtml"
+#line 9 "..\..\Views\Page\Partial\TemplatesList.cshtml"
 WriteTo(__razor_helper_writer, Html.Partial("Partial/Template", model[i]));
 
 
 #line default
 #line hidden
 
-#line 17 "..\..\Views\Page\Partial\TemplatesList.cshtml"
+#line 9 "..\..\Views\Page\Partial\TemplatesList.cshtml"
                                                        
         }
-
-        
-
-#line default
-#line hidden
-
-#line 20 "..\..\Views\Page\Partial\TemplatesList.cshtml"
-WriteTo(__razor_helper_writer, Html.Raw("</div>"));
-
-
-#line default
-#line hidden
-
-#line 20 "..\..\Views\Page\Partial\TemplatesList.cshtml"
-                           
     }
     else
     {
@@ -139,16 +77,16 @@ WriteTo(__razor_helper_writer, Html.Raw("</div>"));
 WriteLiteralTo(__razor_helper_writer, "        <p>");
 
 
-#line 24 "..\..\Views\Page\Partial\TemplatesList.cshtml"
+#line 14 "..\..\Views\Page\Partial\TemplatesList.cshtml"
 WriteTo(__razor_helper_writer, Html.Raw(RootGlobalization.Message_NoItemToSelect));
 
 
 #line default
 #line hidden
-WriteLiteralTo(__razor_helper_writer, "</p>\n");
+WriteLiteralTo(__razor_helper_writer, "</p>\r\n");
 
 
-#line 25 "..\..\Views\Page\Partial\TemplatesList.cshtml"
+#line 15 "..\..\Views\Page\Partial\TemplatesList.cshtml"
     }
 
 
@@ -156,7 +94,7 @@ WriteLiteralTo(__razor_helper_writer, "</p>\n");
 #line hidden
 });
 
-#line 26 "..\..\Views\Page\Partial\TemplatesList.cshtml"
+#line 16 "..\..\Views\Page\Partial\TemplatesList.cshtml"
 }
 #line default
 #line hidden
@@ -167,7 +105,7 @@ WriteLiteralTo(__razor_helper_writer, "</p>\n");
         public override void Execute()
         {
             
-            #line 27 "..\..\Views\Page\Partial\TemplatesList.cshtml"
+            #line 17 "..\..\Views\Page\Partial\TemplatesList.cshtml"
   
     var active = Model.FirstOrDefault(m => m.IsActive);
     var selectFirstTab = active == null || !active.IsMasterPage;
@@ -175,33 +113,33 @@ WriteLiteralTo(__razor_helper_writer, "</p>\n");
             
             #line default
             #line hidden
-WriteLiteral("\n\n<div");
+WriteLiteral("\r\n\r\n<div");
 
 WriteLiteral(" class=\"bcms-templates-holder\"");
 
-WriteLiteral(">\n");
+WriteLiteral(">\r\n");
 
 WriteLiteral("  ");
 
             
-            #line 33 "..\..\Views\Page\Partial\TemplatesList.cshtml"
+            #line 23 "..\..\Views\Page\Partial\TemplatesList.cshtml"
 Write(Templates(Model.Where(m => !m.IsMasterPage).ToList()));
 
             
             #line default
             #line hidden
-WriteLiteral("\n");
+WriteLiteral("\r\n");
 
 WriteLiteral("  ");
 
             
-            #line 34 "..\..\Views\Page\Partial\TemplatesList.cshtml"
+            #line 24 "..\..\Views\Page\Partial\TemplatesList.cshtml"
 Write(Templates(Model.Where(m => m.IsMasterPage).ToList()));
 
             
             #line default
             #line hidden
-WriteLiteral("\n</div>");
+WriteLiteral("\r\n</div>");
 
         }
     }
