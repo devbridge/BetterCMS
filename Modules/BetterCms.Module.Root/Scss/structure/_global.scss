@@ -95,11 +95,11 @@ $access-control-buttons: (
 
     &-image {
         @include size(125px);
-        background: $bcms-no-image no-repeat center;
+        background-color: $gray-l30;
         background-size: cover;
         border: $border-nav-bottom;
         box-sizing: border-box;
-        margin-bottom: 10px;
+        margin-bottom: 5px;
         position: relative;
 
         img {

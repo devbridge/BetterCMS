@@ -111,94 +111,119 @@ WriteAttribute("placeholder", Tuple.Create(" placeholder=\"", 546), Tuple.Create
 
 WriteLiteral(" data-bind=\"value: searchQuery, valueUpdate: \'afterkeydown\', enterPress: search\"");
 
-WriteLiteral(">\r\n        </div>\r\n    </div>\r\n</div>\r\n\r\n<!-- ko foreach: templateRows -->\r\n<div");
+WriteLiteral(">\r\n        </div>\r\n    </div>\r\n</div>\r\n\r\n<div");
 
-WriteLiteral(" class=\"bcms-blog-templates-holder\"");
+WriteLiteral(" class=\"bcms-templates-holder\"");
 
 WriteLiteral(">\r\n    <!-- ko foreach: templates() -->\r\n    <div");
 
-WriteLiteral(" class=\"bcms-blog-templates\"");
+WriteLiteral(" class=\"bcms-grid-box bcms-grid-box-blog\"");
 
-WriteLiteral(" data-bind=\"css: {\'bcms-blog-templates-active\': isCompatible && isActive(), \'bcms" +
-"-blog-templates-notcompatible\': !isCompatible }\"");
+WriteLiteral(" data-bind=\"css: {\'bcms-grid-box-active\': isCompatible && isActive(), \'bcms-grid-" +
+"box-notcompatible\': !isCompatible }\"");
 
 WriteLiteral(">\r\n        <div");
-
-WriteLiteral(" class=\"bcms-title-holder\"");
-
-WriteLiteral(">\r\n            <div");
 
 WriteLiteral(" class=\"bcms-content-titles\"");
 
 WriteLiteral(" data-bind=\"text: title\"");
 
-WriteLiteral("></div>\r\n        </div>\r\n        <div");
+WriteLiteral("></div>\r\n\r\n        <div");
 
-WriteLiteral(" class=\"bcms-blog-templates-image-holder\"");
+WriteLiteral(" class=\"bcms-grid-image-holder\"");
 
 WriteLiteral(">\r\n            <!-- ko if: previewUrl -->\r\n            <div");
+
+WriteLiteral(" class=\"bcms-grid-image\"");
+
+WriteLiteral(">\r\n                <img");
+
+WriteLiteral(" data-bind=\"attr:{src: previewUrl, alt: title}\"");
+
+WriteLiteral(" />\r\n            </div>\r\n\r\n            <div");
 
 WriteLiteral(" class=\"bcms-zoom-overlay\"");
 
 WriteLiteral(" data-bind=\"click: previewImage\"");
 
-WriteLiteral("></div>\r\n            <div");
+WriteLiteral("></div>\r\n            <!-- /ko -->\r\n            <!-- ko ifnot: previewUrl -->\r\n   " +
+"         <svg");
 
-WriteLiteral(" class=\"bcms-blog-templates-image\"");
+WriteLiteral(" class=\"bcms-grid-no-preview\"");
 
-WriteLiteral("><img");
+WriteLiteral(" xmlns=\"http://www.w3.org/2000/svg\"");
 
-WriteLiteral(" data-bind=\"attr:{src: previewUrl, alt: title}\"");
+WriteLiteral(" width=\"50\"");
 
-WriteLiteral(" /></div>\r\n            <!-- /ko -->\r\n        </div>\r\n        <div");
+WriteLiteral(" height=\"50\"");
 
-WriteLiteral(" class=\"bcms-blog-templates-button-holder\"");
+WriteLiteral(" viewBox=\"-205 372 50 50\"");
 
-WriteLiteral(">\r\n            <!-- ko if: isCompatible && isActive() -->\r\n            <div");
+WriteLiteral(" enable-background=\"new -205 372 50 50\"");
 
-WriteLiteral(" class=\"bcms-blog-templates-active-text\"");
+WriteLiteral(">\r\n                <g");
+
+WriteLiteral(" fill=\"#cdcdcd\"");
+
+WriteLiteral(">\r\n                    <path");
+
+WriteLiteral(" d=\"m-205 422h50v-50h-50v50m2-48h46v46h-46v-46\"");
+
+WriteLiteral(" />\r\n                    <path");
+
+WriteLiteral(" d=\"m-164.3 406.2l1.4-1.4-11.5-11.5-7.7 7.6-3.6-3.6-11.5 11.5 1.4 1.4 10.1-10.1 1" +
+"1.1 11.1 1.4-1.4-7.5-7.5 6.3-6.2 10.1 10.1\"");
+
+WriteLiteral(" />\r\n                    <path");
+
+WriteLiteral(" d=\"m-187.9 382.4c-2.8 0-5 2.2-5 5 0 2.8 2.2 5 5 5 2.8 0 5-2.2 5-5 0-2.8-2.2-5-5-" +
+"5m0 2c1.7 0 3 1.4 3 3 0 1.7-1.3 3-3 3-1.6 0-3-1.3-3-3 0-1.7 1.3-3 3-3\"");
+
+WriteLiteral(" />\r\n                </g>\r\n            </svg>\r\n            <!-- /ko -->\r\n        " +
+"</div>\r\n\r\n        <!-- ko if: isCompatible && isActive() -->\r\n        <div");
+
+WriteLiteral(" class=\"bcms-btn-tertiary\"");
 
 WriteLiteral(">");
 
             
-            #line 31 "..\..\Views\Option\Templates.cshtml"
-                                                    Write(BlogGlobalization.SiteSettings_Templates_DefaultTemplate);
+            #line 41 "..\..\Views\Option\Templates.cshtml"
+                                  Write(BlogGlobalization.SiteSettings_Templates_DefaultTemplate);
 
             
             #line default
             #line hidden
-WriteLiteral("</div>\r\n            <!-- /ko -->\r\n            <!-- ko if: isCompatible && !isActi" +
-"ve() -->\r\n            <div");
+WriteLiteral("</div>\r\n        <!-- /ko -->\r\n        <!-- ko if: isCompatible && !isActive() -->" +
+"\r\n        <div");
 
-WriteLiteral(" class=\"bcms-btn-grid\"");
+WriteLiteral(" class=\"bcms-btn-tertiary\"");
 
 WriteLiteral(" data-bind=\"click: select\"");
 
 WriteLiteral(">");
 
             
-            #line 34 "..\..\Views\Option\Templates.cshtml"
+            #line 44 "..\..\Views\Option\Templates.cshtml"
                                                             Write(BlogGlobalization.SiteSettings_Templates_SelectButton);
 
             
             #line default
             #line hidden
-WriteLiteral("</div>\r\n            <!-- /ko -->\r\n            <!-- ko if: !isCompatible -->\r\n    " +
-"        <div");
+WriteLiteral("</div>\r\n        <!-- /ko -->\r\n        <!-- ko if: !isCompatible -->\r\n        <div" +
+"");
 
-WriteLiteral(" class=\"bcms-blog-templates-notcompatible-text\"");
+WriteLiteral(" class=\"bcms-btn-tertiary\"");
 
 WriteLiteral(">");
 
             
-            #line 37 "..\..\Views\Option\Templates.cshtml"
-                                                           Write(BlogGlobalization.SiteSettings_Templates_IncompatibleTemplate);
+            #line 47 "..\..\Views\Option\Templates.cshtml"
+                                  Write(BlogGlobalization.SiteSettings_Templates_IncompatibleTemplate);
 
             
             #line default
             #line hidden
-WriteLiteral("</div>\r\n            <!-- /ko -->\r\n        </div>\r\n    </div>\r\n    <!-- /ko -->\r\n<" +
-"/div>\r\n<!-- /ko -->\r\n");
+WriteLiteral("</div>\r\n        <!-- /ko -->\r\n\r\n    </div>\r\n    <!-- /ko -->\r\n</div>\r\n");
 
         }
     }

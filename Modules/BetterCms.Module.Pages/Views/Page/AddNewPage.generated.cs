@@ -222,20 +222,20 @@ WriteLiteral(">\r\n                    <div>\r\n");
             #line 33 "..\..\Views\Page\AddNewPage.cshtml"
                          if (Model.Languages != null && Model.Languages.Any())
                         {
-                            
+                        
             
             #line default
             #line hidden
             
             #line 35 "..\..\Views\Page\AddNewPage.cshtml"
-                       Write(Html.HiddenFor(model => model.LanguageId, new { data_bind = "value: language.languageId()" }));
+                   Write(Html.HiddenFor(model => model.LanguageId, new { data_bind = "value: language.languageId()" }));
 
             
             #line default
             #line hidden
             
             #line 35 "..\..\Views\Page\AddNewPage.cshtml"
-                                                                                                                          
+                                                                                                                      
                         }
 
             
@@ -266,7 +266,7 @@ WriteLiteral("\r\n");
             
             #line default
             #line hidden
-WriteLiteral("                            <div");
+WriteLiteral("                        <div");
 
 WriteLiteral(" class=\"bcms-input-list-holder\"");
 
@@ -274,16 +274,16 @@ WriteLiteral(" data-bind=\"with: language\"");
 
 WriteLiteral(">\r\n");
 
-WriteLiteral("                                ");
+WriteLiteral("                            ");
 
             
             #line 41 "..\..\Views\Page\AddNewPage.cshtml"
-                           Write(Html.Tooltip(PagesGlobalization.AddNewPage_Language_Tooltip_Description));
+                       Write(Html.Tooltip(PagesGlobalization.AddNewPage_Language_Tooltip_Description));
 
             
             #line default
             #line hidden
-WriteLiteral("\r\n                                <div");
+WriteLiteral("\r\n                            <div");
 
 WriteLiteral(" class=\"bcms-content-titles\"");
 
@@ -291,19 +291,19 @@ WriteLiteral(">");
 
             
             #line 42 "..\..\Views\Page\AddNewPage.cshtml"
-                                                            Write(PagesGlobalization.AddNewPage_Language);
+                                                        Write(PagesGlobalization.AddNewPage_Language);
 
             
             #line default
             #line hidden
-WriteLiteral("</div>\r\n                                <select");
+WriteLiteral("</div>\r\n                            <select");
 
 WriteLiteral(" class=\"bcms-global-select\"");
 
 WriteLiteral(" data-bind=\"options: languages, optionsText: \'value\', optionsValue: \'key\', value:" +
 " languageId\"");
 
-WriteLiteral("></select>\r\n                            </div>\r\n");
+WriteLiteral("></select>\r\n                        </div>\r\n");
 
             
             #line 45 "..\..\Views\Page\AddNewPage.cshtml"
@@ -394,20 +394,20 @@ WriteLiteral("\r\n                    </div>\r\n\r\n                    <div>\r\
                                                     Title = PagesGlobalization.AddNewPage_UserAccess,
                                                     Tooltip = PagesGlobalization.AddNewPage_UserAccess_Tooltip_Description
                                                 };
-                            
+                        
             
             #line default
             #line hidden
             
             #line 67 "..\..\Views\Page\AddNewPage.cshtml"
-                       Write(Html.Partial(RootModuleConstants.AccessControlTemplate, viewModel));
+                   Write(Html.Partial(RootModuleConstants.AccessControlTemplate, viewModel));
 
             
             #line default
             #line hidden
             
             #line 67 "..\..\Views\Page\AddNewPage.cshtml"
-                                                                                               
+                                                                                           
                         }
 
             

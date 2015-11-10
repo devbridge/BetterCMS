@@ -1,3 +1,9 @@
+$inactive-red: #e64343;
+
+$template-grid-box-states: (
+                ('active', $blue-main),
+                ('notcompatible', $inactive-red)
+);
 
 .bcms-templates-holder {
     @include clearfix();
@@ -6,23 +12,7 @@
 
 .bcms-grid {
     &-box {
-        @include gallery(2);
         margin-bottom: gutter();
-
-        &-active {
-            background-color: $gray-l30;
-            border: $border-search-field;
-            cursor: default;
-
-            .bcms-content-titles {
-                color: #0383df;
-            }
-        }
-
-        &-notcompatible {
-            background-color: #fcecec;
-            border: 1px solid #e64343;
-        }
 
         .bcms-content-titles {
             @include ellipsis;
@@ -36,22 +26,53 @@
         }
     }
 
+    &-box-pages {
+        @include gallery(2);
+    }
+
+    @each $name, $color in $template-grid-box-states {
+        &-box-#{$name} {
+            cursor: default;
+
+            .bcms-content-titles {
+                color: $color;
+            }
+
+            .bcms-grid-image-holder {
+                border-color: $color;
+            }
+            .bcms-btn-tertiary {
+                background-color: $color;
+                border-color: $color;
+                color: $white;
+                cursor: default;
+            }
+        }
+    }
+
     &-image-holder {
-        background: $bcms-no-image no-repeat center;
-        background-size: cover;
+        @include transition(border-color 200ms);
+        background-color: $gray-l30;
         border: $border-nav-bottom;
         box-sizing: border-box;
         height: 150px;
-        margin: 0 auto;
         overflow: hidden;
+        position: relative;
 
         img {
-            background: #f5f5f5;
-            display: block;
-            max-height: 175px;
-            max-width: 208px;
+            @include position(absolute, 0);
+            z-index: 1;
+        }
+
+        .bcms-no-image-found {
+            @include position(absolute, 0);
+            z-index: 0;
         }
     }
+
+    &-no-preview {
+        @include positioning($center: true);
+    }
 }
 
 //
@@ -61,41 +82,8 @@
 //
 //
 //
-//
-//
-//.bcms-grid-image-holder:hover > div.bcms-grid-image:after,
-//div.bcms-preview-box:hover .bcms-preview-box-image:after {
-//    background-color: #148add;
-//    content: "";
-//    height: 100%;
-//    left: 0;
-//    opacity: 0.4;
-//    position: absolute;
-//    top: 0;
-//    width: 100%;
+//.bcms-grid-active-message-text {
+//    color: #0383df;
+//    font-size: 19px;
+//    font-weight: 700;
 //}
-
-.bcms-grid-active-message-text {
-    color: #0383df;
-    font-size: 19px;
-    font-weight: 700;
-}
-
-.bcms-grid-button-holder {
-    line-height: 33px;
-    padding-top: 20px;
-    text-align: center;
-}
-
-//module
-.bcms-inner-grid-box {
-    float: left;
-
-    &:first-child {
-        margin-left: 0;
-    }
-
-    .bcms-content-titles {
-        padding: 0 4px;
-    }
-}

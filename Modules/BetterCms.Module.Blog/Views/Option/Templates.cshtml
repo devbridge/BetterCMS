@@ -13,31 +13,40 @@
     </div>
 </div>
 
-<!-- ko foreach: templateRows -->
-<div class="bcms-blog-templates-holder">
+<div class="bcms-templates-holder">
     <!-- ko foreach: templates() -->
-    <div class="bcms-blog-templates" data-bind="css: {'bcms-blog-templates-active': isCompatible && isActive(), 'bcms-blog-templates-notcompatible': !isCompatible }">
-        <div class="bcms-title-holder">
-            <div class="bcms-content-titles" data-bind="text: title"></div>
-        </div>
-        <div class="bcms-blog-templates-image-holder">
+    <div class="bcms-grid-box bcms-grid-box-blog" data-bind="css: {'bcms-grid-box-active': isCompatible && isActive(), 'bcms-grid-box-notcompatible': !isCompatible }">
+        <div class="bcms-content-titles" data-bind="text: title"></div>
+
+        <div class="bcms-grid-image-holder">
             <!-- ko if: previewUrl -->
+            <div class="bcms-grid-image">
+                <img data-bind="attr:{src: previewUrl, alt: title}" />
+            </div>
+
             <div class="bcms-zoom-overlay" data-bind="click: previewImage"></div>
-            <div class="bcms-blog-templates-image"><img data-bind="attr:{src: previewUrl, alt: title}" /></div>
+            <!-- /ko -->
+            <!-- ko ifnot: previewUrl -->
+            <svg class="bcms-grid-no-preview" xmlns="http://www.w3.org/2000/svg" width="50" height="50" viewBox="-205 372 50 50" enable-background="new -205 372 50 50">
+                <g fill="#cdcdcd">
+                    <path d="m-205 422h50v-50h-50v50m2-48h46v46h-46v-46" />
+                    <path d="m-164.3 406.2l1.4-1.4-11.5-11.5-7.7 7.6-3.6-3.6-11.5 11.5 1.4 1.4 10.1-10.1 11.1 11.1 1.4-1.4-7.5-7.5 6.3-6.2 10.1 10.1" />
+                    <path d="m-187.9 382.4c-2.8 0-5 2.2-5 5 0 2.8 2.2 5 5 5 2.8 0 5-2.2 5-5 0-2.8-2.2-5-5-5m0 2c1.7 0 3 1.4 3 3 0 1.7-1.3 3-3 3-1.6 0-3-1.3-3-3 0-1.7 1.3-3 3-3" />
+                </g>
+            </svg>
             <!-- /ko -->
         </div>
-        <div class="bcms-blog-templates-button-holder">
-            <!-- ko if: isCompatible && isActive() -->
-            <div class="bcms-blog-templates-active-text">@BlogGlobalization.SiteSettings_Templates_DefaultTemplate</div>
-            <!-- /ko -->
-            <!-- ko if: isCompatible && !isActive() -->
-            <div class="bcms-btn-grid" data-bind="click: select">@BlogGlobalization.SiteSettings_Templates_SelectButton</div>
-            <!-- /ko -->
-            <!-- ko if: !isCompatible -->
-            <div class="bcms-blog-templates-notcompatible-text">@BlogGlobalization.SiteSettings_Templates_IncompatibleTemplate</div>
-            <!-- /ko -->
-        </div>
+
+        <!-- ko if: isCompatible && isActive() -->
+        <div class="bcms-btn-tertiary">@BlogGlobalization.SiteSettings_Templates_DefaultTemplate</div>
+        <!-- /ko -->
+        <!-- ko if: isCompatible && !isActive() -->
+        <div class="bcms-btn-tertiary" data-bind="click: select">@BlogGlobalization.SiteSettings_Templates_SelectButton</div>
+        <!-- /ko -->
+        <!-- ko if: !isCompatible -->
+        <div class="bcms-btn-tertiary">@BlogGlobalization.SiteSettings_Templates_IncompatibleTemplate</div>
+        <!-- /ko -->
+
     </div>
     <!-- /ko -->
 </div>
-<!-- /ko -->

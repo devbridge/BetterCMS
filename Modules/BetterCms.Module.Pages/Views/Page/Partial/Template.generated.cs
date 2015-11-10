@@ -39,22 +39,24 @@ namespace ASP
         {
 WriteLiteral("<div");
 
-WriteAttribute("class", Tuple.Create(" class=\"", 71), Tuple.Create("\"", 226)
+WriteAttribute("class", Tuple.Create(" class=\"", 71), Tuple.Create("\"", 263)
 , Tuple.Create(Tuple.Create("", 79), Tuple.Create("bcms-grid-box", 79), true)
+, Tuple.Create(Tuple.Create(" ", 92), Tuple.Create("bcms-grid-box-pages", 93), true)
+, Tuple.Create(Tuple.Create(" ", 112), Tuple.Create("bcms-js-grid-box", 113), true)
             
             #line 3 "..\..\Views\Page\Partial\Template.cshtml"
-, Tuple.Create(Tuple.Create(" ", 92), Tuple.Create<System.Object, System.Int32>(Model.IsActive ? "bcms-grid-box-active" : string.Empty
+, Tuple.Create(Tuple.Create(" ", 129), Tuple.Create<System.Object, System.Int32>(Model.IsActive ? "bcms-grid-box-active" : string.Empty
             
             #line default
             #line hidden
-, 93), false)
+, 130), false)
             
             #line 3 "..\..\Views\Page\Partial\Template.cshtml"
-     , Tuple.Create(Tuple.Create(" ", 150), Tuple.Create<System.Object, System.Int32>(Model.IsCircularToCurrent ? "bcms-grid-box-notcompatible" : string.Empty
+                                          , Tuple.Create(Tuple.Create(" ", 187), Tuple.Create<System.Object, System.Int32>(Model.IsCircularToCurrent ? "bcms-grid-box-notcompatible" : string.Empty
             
             #line default
             #line hidden
-, 151), false)
+, 188), false)
 );
 
 WriteLiteral("\r\n     data-id=\"");
@@ -129,24 +131,24 @@ WriteLiteral(" class=\"bcms-grid-image\"");
 
 WriteLiteral(">\r\n                <img");
 
-WriteAttribute("src", Tuple.Create(" src=\"", 677), Tuple.Create("\"", 786)
+WriteAttribute("src", Tuple.Create(" src=\"", 714), Tuple.Create("\"", 823)
             
             #line 14 "..\..\Views\Page\Partial\Template.cshtml"
-, Tuple.Create(Tuple.Create("", 683), Tuple.Create<System.Object, System.Int32>(!string.IsNullOrWhiteSpace(Model.PreviewThumbnailUrl) ? Model.PreviewThumbnailUrl : Model.PreviewUrl
+, Tuple.Create(Tuple.Create("", 720), Tuple.Create<System.Object, System.Int32>(!string.IsNullOrWhiteSpace(Model.PreviewThumbnailUrl) ? Model.PreviewThumbnailUrl : Model.PreviewUrl
             
             #line default
             #line hidden
-, 683), false)
+, 720), false)
 );
 
-WriteAttribute("alt", Tuple.Create(" alt=\"", 787), Tuple.Create("\"", 805)
+WriteAttribute("alt", Tuple.Create(" alt=\"", 824), Tuple.Create("\"", 842)
             
             #line 14 "..\..\Views\Page\Partial\Template.cshtml"
-                                                         , Tuple.Create(Tuple.Create("", 793), Tuple.Create<System.Object, System.Int32>(Model.Title
+                                                         , Tuple.Create(Tuple.Create("", 830), Tuple.Create<System.Object, System.Int32>(Model.Title
             
             #line default
             #line hidden
-, 793), false)
+, 830), false)
 );
 
 WriteLiteral(" />\r\n            </div>\r\n");
@@ -188,6 +190,49 @@ WriteLiteral("></div>\r\n");
 
             
             #line 18 "..\..\Views\Page\Partial\Template.cshtml"
+        }
+        else
+        {
+
+            
+            #line default
+            #line hidden
+WriteLiteral("            <svg");
+
+WriteLiteral(" class=\"bcms-grid-no-preview\"");
+
+WriteLiteral(" xmlns=\"http://www.w3.org/2000/svg\"");
+
+WriteLiteral(" width=\"50\"");
+
+WriteLiteral(" height=\"50\"");
+
+WriteLiteral(" viewBox=\"-205 372 50 50\"");
+
+WriteLiteral(" enable-background=\"new -205 372 50 50\"");
+
+WriteLiteral(">\r\n                <g");
+
+WriteLiteral(" fill=\"#cdcdcd\"");
+
+WriteLiteral(">\r\n                    <path");
+
+WriteLiteral(" d=\"m-205 422h50v-50h-50v50m2-48h46v46h-46v-46\"");
+
+WriteLiteral(" />\r\n                    <path");
+
+WriteLiteral(" d=\"m-164.3 406.2l1.4-1.4-11.5-11.5-7.7 7.6-3.6-3.6-11.5 11.5 1.4 1.4 10.1-10.1 1" +
+"1.1 11.1 1.4-1.4-7.5-7.5 6.3-6.2 10.1 10.1\"");
+
+WriteLiteral(" />\r\n                    <path");
+
+WriteLiteral(" d=\"m-187.9 382.4c-2.8 0-5 2.2-5 5 0 2.8 2.2 5 5 5 2.8 0 5-2.2 5-5 0-2.8-2.2-5-5-" +
+"5m0 2c1.7 0 3 1.4 3 3 0 1.7-1.3 3-3 3-1.6 0-3-1.3-3-3 0-1.7 1.3-3 3-3\"");
+
+WriteLiteral(" />\r\n                </g>\r\n            </svg>\r\n");
+
+            
+            #line 28 "..\..\Views\Page\Partial\Template.cshtml"
         }
 
             
