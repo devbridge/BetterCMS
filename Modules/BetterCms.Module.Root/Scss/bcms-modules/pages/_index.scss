@@ -56,9 +56,6 @@ $access-control-buttons: (
     cursor: pointer;
 }
 
-.bcms-access-table {
-}
-
 .bcms-access {
     &-title {
         border-bottom: $border-nav-bottom;
@@ -107,7 +104,7 @@ $access-control-buttons: (
     &-value-add {
         color: $blue-main;
         cursor: pointer;
-        
+
         > span {
             vertical-align: middle;
         }
@@ -133,7 +130,15 @@ $access-control-buttons: (
         }
     }
 }
-
+//
+//
+//
+//
+//
+//
+//
+//
+//
 //module Add New tabbed content
 //module 1st tab
 .bcms-newcontent-top {
