@@ -1,13 +1,24 @@
+.bcms-templates-holder {
+    @include clearfix();
+    margin: 30px 0;
+}
+
+//
+//
+//
+//
+//
+//
+//
+//
+//
 .bcms-grid-holder {
-    display: inline-block;
     padding-bottom: 10px;
-    width: 820px;
 }
 
 .bcms-grid-box {
     border: 1px solid #c6c6c6;
     box-sizing: border-box;
-    -moz-box-sizing: border-box;
     float: left;
     height: 300px;
     margin-left: 11px;
@@ -85,6 +96,8 @@ div.bcms-preview-box:hover .bcms-preview-box-image:after {
 
 //module
 .bcms-inner-grid-box {
+    float: left;
+
     &:first-child {
         margin-left: 0;
     }

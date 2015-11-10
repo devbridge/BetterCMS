@@ -803,9 +803,6 @@
     <EmbeddedResource Include="Content\Styles\Images\icn-zoom.png" />
     <EmbeddedResource Include="Content\Styles\Images\loading.gif" />
     <EmbeddedResource Include="Content\Styles\Images\logo.png" />
-    <EmbeddedResource Include="Content\Styles\Images\bcms-no-image-1.png" />
-    <EmbeddedResource Include="Content\Styles\Images\bcms-no-image-2.png" />
-    <EmbeddedResource Include="Content\Styles\Images\bcms-no-image-3.png" />
     <EmbeddedResource Include="Content\Styles\Images\sprite-pages-1.png" />
     <EmbeddedResource Include="Content\Styles\Images\sprite-pages-2.png" />
   </ItemGroup>
@@ -837,6 +834,7 @@
     <EmbeddedResource Include="Models\Migrations\Migration201502101138.sqlserver.sql" />
     <EmbeddedResource Include="Content\Styles\bcms.pages.css" />
     <EmbeddedResource Include="Content\Styles\bcms.pages.min.css" />
+    <EmbeddedResource Include="Content\Styles\Images\bcms-no-image.svg" />
     <Content Include="packages.config">
       <SubType>Designer</SubType>
     </Content>

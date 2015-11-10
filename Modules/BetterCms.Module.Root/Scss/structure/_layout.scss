@@ -10,7 +10,7 @@ $options: $settings-frame;
 $dialog-window-options: (
                 ('settings', null, null, $settings, 0 30px 0 0),
                 ('tabbed-options', $white, null, $tabbed-options, 0 30px),
-                ('options', $bg-light, null, $options, 0 30px)
+                ('options', $white, null, $options, 0 30px)
 );
 
 html,

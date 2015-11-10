@@ -756,15 +756,9 @@
     <EmbeddedResource Include="Scripts\bcms.modal.js" />
     <EmbeddedResource Include="Scripts\bcms.siteSettings.js" />
     <EmbeddedResource Include="Scripts\bcms.forms.js" />
-    <EmbeddedResource Include="Content\Styles\images\bcms-no-image-1.png" />
-    <EmbeddedResource Include="Content\Styles\images\bcms-no-image-2.png" />
-    <EmbeddedResource Include="Content\Styles\images\bcms-no-image-3.png" />
-    <EmbeddedResource Include="Content\Styles\images\bcms-sidebar-select.png" />
     <EmbeddedResource Include="Content\Styles\images\icn-calendar.png" />
-    <EmbeddedResource Include="Content\Styles\images\icn-sidebg.png" />
     <EmbeddedResource Include="Content\Styles\images\icn-zoom.png" />
     <EmbeddedResource Include="Content\Styles\images\loading.gif" />
-    <EmbeddedResource Include="Content\Styles\images\modal-back.png" />
     <EmbeddedResource Include="Content\Styles\images\sprite-base-1.png" />
     <EmbeddedResource Include="Content\Styles\images\sprite-base-2.png" />
     <EmbeddedResource Include="Scripts\bcms.spinner.jquery.js" />
@@ -797,7 +791,6 @@
     <EmbeddedResource Include="Scripts\bcms.grid.js" />
     <EmbeddedResource Include="Scripts\bcms.jquery.autocomplete.js" />
     <EmbeddedResource Include="Scripts\bcms.ko.extenders.js" />
-    <EmbeddedResource Include="Content\Styles\images\bcms-arrows-sprite.png" />
     <EmbeddedResource Include="Models\Migrations\Migration201307191431.sqlserver.sql" />
     <EmbeddedResource Include="Scripts\bcms.ko.grid.js" />
     <EmbeddedResource Include="Scripts\bcms.options.js" />
@@ -1416,6 +1409,7 @@
     <EmbeddedResource Include="Scripts\ckeditor\plugins\cms-togglelinewrap\plugin.js" />
     <EmbeddedResource Include="Content\Styles\bcms.root.css" />
     <EmbeddedResource Include="Content\Styles\bcms.root.min.css" />
+    <EmbeddedResource Include="Content\Styles\images\bcms-no-image.svg" />
     <Content Include="Gulpfile.js" />
     <Content Include="gulp\compile-sass\compile-sass.js" />
     <Content Include="gulp\create-data-uri-vars\create-data-uri-vars.js" />
