@@ -1,18 +1,22 @@
 ﻿@model BetterCms.Module.Pages.ViewModels.Page.TemplateViewModel
-<div class="bcms-inner-grid-box @(Model.IsActive ? "bcms-inner-grid-box-active" : string.Empty) @(Model.IsCircularToCurrent ? "bcms-inner-grid-box-notcompatible" : string.Empty)"
+
+<div class="bcms-grid-box @(Model.IsActive ? "bcms-grid-box-active" : string.Empty) @(Model.IsCircularToCurrent ? "bcms-grid-box-notcompatible" : string.Empty)"
      data-id="@Model.TemplateId"
      data-master="@(Model.IsMasterPage ? "1" : "0")"
      data-iscircular="@(Model.IsCircularToCurrent ? "1" : "0")">
-    <div class="bcms-title-holder">
-        <div class="bcms-content-titles">@Model.Title</div>
-    </div>
+
+    <div class="bcms-content-titles">@Model.Title</div>
+
     <div class="bcms-grid-image-holder">
         @if (!string.IsNullOrWhiteSpace(Model.PreviewThumbnailUrl) || !string.IsNullOrWhiteSpace(Model.PreviewUrl))
         {
             <div class="bcms-grid-image">
                 <img src="@(!string.IsNullOrWhiteSpace(Model.PreviewThumbnailUrl) ? Model.PreviewThumbnailUrl : Model.PreviewUrl)" alt="@Model.Title" />
             </div>
+
             <div class="bcms-zoom-overlay bcms-preview-template" data-url="@(!string.IsNullOrWhiteSpace(Model.PreviewUrl) ? Model.PreviewUrl : Model.PreviewThumbnailUrl)" data-alt="@Model.Title"></div>
         }
     </div>
+
+    <div class="bcms-btn-tertiary bcms-js-grid-box">Select</div>
 </div>

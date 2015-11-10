@@ -1,5 +1,3 @@
-$no-image: url('images/bcms-no-image.svg');
-//
 $access-control-buttons: (
                 ('plus', $bcms-tree-plus),
                 ('minus', $bcms-tree-minus)
@@ -97,7 +95,8 @@ $access-control-buttons: (
 
     &-image {
         @include size(125px);
-        background: $no-image no-repeat center;
+        background: $bcms-no-image no-repeat center;
+        background-size: cover;
         border: $border-nav-bottom;
         box-sizing: border-box;
         margin-bottom: 10px;

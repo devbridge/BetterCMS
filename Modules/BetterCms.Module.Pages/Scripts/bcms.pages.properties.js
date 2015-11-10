@@ -22,10 +22,10 @@ bettercms.define('bcms.pages.properties', ['bcms.jquery', 'bcms', 'bcms.modal', 
                 permalinkEditField: '#bcms-page-permalink-edit',
                 permalinkInfoField: '#bcms-page-permalink-info',
 
-                pagePropertiesTemplateSelect: '.bcms-inner-grid-box',
+                pagePropertiesTemplateSelect: '.bcms-js-grid-box',
                 pagePropertiesTemplateId: '#TemplateId',
                 pagePropertiesMasterPageId: '#MasterPageId',
-                pagePropertiesActiveTemplateBox: '.bcms-inner-grid-box-active',
+                pagePropertiesActiveTemplateBox: '.bcms-grid-box-active',
                 pagePropertiesTemplatePreviewLink: '.bcms-preview-template',
 
                 pagePropertiesForm: 'form:first',
@@ -55,7 +55,7 @@ bettercms.define('bcms.pages.properties', ['bcms.jquery', 'bcms', 'bcms.modal', 
                 editPagePropertiesInfoMessageClosed: 'bcms.EditPagePropertiesInfoBoxClosed'
             },
             classes = {
-                pagePropertiesActiveTemplateBox: 'bcms-inner-grid-box-active',
+                pagePropertiesActiveTemplateBox: 'bcms-grid-box-active',
                 inactive: 'bcms-inactive'
             },
             currentPageIsPublished,

@@ -102,11 +102,11 @@ $prefix-for-spec: true;
 //module susy config
 $susy: (
         columns: 12,
-        container: 1160px,
-        gutters: (40/60)
+        container: 1150px,
+        gutters: (20/60)
 );
 
 //module image paths
-
+$bcms-no-image: url('images/bcms-no-image.svg');
 
 //module global maps/keys

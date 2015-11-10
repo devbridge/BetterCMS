@@ -412,6 +412,7 @@ a:hover {
   height: 125px;
   width: 125px;
   background: url("images/bcms-no-image.svg") no-repeat center;
+  background-size: cover;
   border: 1px solid #dfdfdf;
   box-sizing: border-box;
   margin-bottom: 10px;
@@ -1080,9 +1081,9 @@ a:hover {
 }
 
 .bcms-buttons-block > .bcms-sidemenu-btn {
-  width: 48.27586%;
+  width: 48.93617%;
   float: left;
-  margin-left: 3.44828%;
+  margin-left: 2.12766%;
 }
 
 .bcms-buttons-block > .bcms-sidemenu-btn:first-child {
@@ -1244,15 +1245,15 @@ div.bcms-btn-settings {
 }
 
 div.bcms-btn-delete {
-  width: 48.27586%;
+  width: 48.93617%;
   float: right;
   margin-right: 0;
 }
 
 div.bcms-btn-delete + .bcms-btn-settings {
-  width: 48.27586%;
+  width: 48.93617%;
   float: left;
-  margin-right: 3.44828%;
+  margin-right: 2.12766%;
 }
 
 div.bcms-btn-ok {
@@ -2833,54 +2834,85 @@ a.bcms-sort-arrow-top:hover {
   margin: 30px 0;
 }
 
-.bcms-grid-holder {
-  padding-bottom: 10px;
-}
-
 .bcms-grid-box {
-  border: 1px solid #c6c6c6;
-  box-sizing: border-box;
+  width: 14.89362%;
   float: left;
-  height: 300px;
-  margin-left: 11px;
-  padding: 20px 26px;
-  position: relative;
-  width: 265px;
+  margin-bottom: 2.12766%;
 }
 
-.bcms-grid-box:first-child {
+.bcms-grid-box:nth-child(6n + 1) {
+  margin-left: 0;
+  margin-right: -100%;
+  clear: both;
   margin-left: 0;
 }
 
+.bcms-grid-box:nth-child(6n + 2) {
+  margin-left: 17.02128%;
+  margin-right: -100%;
+  clear: none;
+}
+
+.bcms-grid-box:nth-child(6n + 3) {
+  margin-left: 34.04255%;
+  margin-right: -100%;
+  clear: none;
+}
+
+.bcms-grid-box:nth-child(6n + 4) {
+  margin-left: 51.06383%;
+  margin-right: -100%;
+  clear: none;
+}
+
+.bcms-grid-box:nth-child(6n + 5) {
+  margin-left: 68.08511%;
+  margin-right: -100%;
+  clear: none;
+}
+
+.bcms-grid-box:nth-child(6n + 6) {
+  margin-left: 85.10638%;
+  margin-right: -100%;
+  clear: none;
+}
+
 .bcms-grid-box-active {
-  background-color: #eff9fd;
-  border-color: #0383df;
+  background-color: #f5f5f5;
+  border: 2px solid #0d7ce7;
+  cursor: default;
+}
+
+.bcms-grid-box-active .bcms-content-titles {
+  color: #0383df;
+}
+
+.bcms-grid-box-notcompatible {
+  background-color: #fcecec;
+  border: 1px solid #e64343;
+}
+
+.bcms-grid-box .bcms-content-titles {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  font-size: 12px;
+  padding-bottom: 0;
+}
+
+.bcms-grid-box .bcms-btn-tertiary {
+  margin-top: 5px;
+  width: 100%;
 }
 
 .bcms-grid-image-holder {
-  background: url("images/bcms-no-image-1.png") no-repeat center center #f5f5f5;
-  border: 1px solid #c6c6c6;
-  height: 175px;
+  background: url("images/bcms-no-image.svg") no-repeat center;
+  background-size: cover;
+  border: 1px solid #dfdfdf;
+  box-sizing: border-box;
+  height: 150px;
   margin: 0 auto;
   overflow: hidden;
-  position: relative;
-  width: 208px;
-}
-
-.bcms-grid-image-holder:hover > .bcms-zoom-overlay {
-  cursor: pointer;
-  filter: Alpha(opacity=100);
-  opacity: 1;
-}
-
-.bcms-grid-image-holder > div.bcms-grid-image:after {
-  opacity: 0;
-}
-
-.bcms-grid-image-holder > div.bcms-grid-image {
-  background-color: #ffffff;
-  height: 100%;
-  width: 100%;
 }
 
 .bcms-grid-image-holder img {
@@ -2888,18 +2920,6 @@ a.bcms-sort-arrow-top:hover {
   display: block;
   max-height: 175px;
   max-width: 208px;
-}
-
-.bcms-grid-image-holder:hover > div.bcms-grid-image:after,
-div.bcms-preview-box:hover .bcms-preview-box-image:after {
-  background-color: #148add;
-  content: "";
-  height: 100%;
-  left: 0;
-  opacity: 0.4;
-  position: absolute;
-  top: 0;
-  width: 100%;
 }
 
 .bcms-grid-active-message-text {
@@ -2920,22 +2940,6 @@ div.bcms-preview-box:hover .bcms-preview-box-image:after {
 
 .bcms-inner-grid-box:first-child {
   margin-left: 0;
-}
-
-.bcms-inner-grid-box-active {
-  background-color: #eff9fd;
-  border: 2px solid #0383df;
-  cursor: default;
-}
-
-.bcms-inner-grid-box-active .bcms-content-titles {
-  color: #0383df;
-  padding-right: 20px;
-}
-
-.bcms-inner-grid-box-notcompatible {
-  background-color: #fcecec;
-  border: 1px solid #e64343;
 }
 
 .bcms-inner-grid-box .bcms-content-titles {
@@ -3196,14 +3200,6 @@ a.bcms-remove-image {
   overflow: hidden;
   position: relative;
   width: 210px;
-}
-
-.bcms-title-holder {
-  height: 20px;
-  margin-bottom: 5px;
-  overflow: hidden;
-  position: relative;
-  width: 100%;
 }
 
 .bcms-controls-holder {

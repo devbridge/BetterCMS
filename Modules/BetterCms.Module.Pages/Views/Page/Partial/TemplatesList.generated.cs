@@ -39,14 +39,14 @@ namespace ASP
     public partial class _Views_Page_Partial_TemplatesList_cshtml : System.Web.Mvc.WebViewPage<IList<BetterCms.Module.Pages.ViewModels.Page.TemplateViewModel>>
     {
 
-#line 3 "..\..\Views\Page\Partial\TemplatesList.cshtml"
+#line 4 "..\..\Views\Page\Partial\TemplatesList.cshtml"
 public System.Web.WebPages.HelperResult Templates(IList<BetterCms.Module.Pages.ViewModels.Page.TemplateViewModel> model)
 {
 #line default
 #line hidden
 return new System.Web.WebPages.HelperResult(__razor_helper_writer => {
 
-#line 4 "..\..\Views\Page\Partial\TemplatesList.cshtml"
+#line 5 "..\..\Views\Page\Partial\TemplatesList.cshtml"
  
     if (model != null && model.Count > 0)
     {
@@ -57,14 +57,14 @@ return new System.Web.WebPages.HelperResult(__razor_helper_writer => {
 #line default
 #line hidden
 
-#line 9 "..\..\Views\Page\Partial\TemplatesList.cshtml"
+#line 10 "..\..\Views\Page\Partial\TemplatesList.cshtml"
 WriteTo(__razor_helper_writer, Html.Partial("Partial/Template", model[i]));
 
 
 #line default
 #line hidden
 
-#line 9 "..\..\Views\Page\Partial\TemplatesList.cshtml"
+#line 10 "..\..\Views\Page\Partial\TemplatesList.cshtml"
                                                        
         }
     }
@@ -77,16 +77,16 @@ WriteTo(__razor_helper_writer, Html.Partial("Partial/Template", model[i]));
 WriteLiteralTo(__razor_helper_writer, "        <p>");
 
 
-#line 14 "..\..\Views\Page\Partial\TemplatesList.cshtml"
+#line 15 "..\..\Views\Page\Partial\TemplatesList.cshtml"
 WriteTo(__razor_helper_writer, Html.Raw(RootGlobalization.Message_NoItemToSelect));
 
 
 #line default
 #line hidden
-WriteLiteralTo(__razor_helper_writer, "</p>\r\n");
+WriteLiteralTo(__razor_helper_writer, "</p>\n");
 
 
-#line 15 "..\..\Views\Page\Partial\TemplatesList.cshtml"
+#line 16 "..\..\Views\Page\Partial\TemplatesList.cshtml"
     }
 
 
@@ -94,7 +94,7 @@ WriteLiteralTo(__razor_helper_writer, "</p>\r\n");
 #line hidden
 });
 
-#line 16 "..\..\Views\Page\Partial\TemplatesList.cshtml"
+#line 17 "..\..\Views\Page\Partial\TemplatesList.cshtml"
 }
 #line default
 #line hidden
@@ -105,7 +105,7 @@ WriteLiteralTo(__razor_helper_writer, "</p>\r\n");
         public override void Execute()
         {
             
-            #line 17 "..\..\Views\Page\Partial\TemplatesList.cshtml"
+            #line 18 "..\..\Views\Page\Partial\TemplatesList.cshtml"
   
     var active = Model.FirstOrDefault(m => m.IsActive);
     var selectFirstTab = active == null || !active.IsMasterPage;
@@ -113,33 +113,33 @@ WriteLiteralTo(__razor_helper_writer, "</p>\r\n");
             
             #line default
             #line hidden
-WriteLiteral("\r\n\r\n<div");
+WriteLiteral("\n\n<div");
 
 WriteLiteral(" class=\"bcms-templates-holder\"");
 
-WriteLiteral(">\r\n");
-
-WriteLiteral("  ");
-
-            
-            #line 23 "..\..\Views\Page\Partial\TemplatesList.cshtml"
-Write(Templates(Model.Where(m => !m.IsMasterPage).ToList()));
-
-            
-            #line default
-            #line hidden
-WriteLiteral("\r\n");
+WriteLiteral(">\n");
 
 WriteLiteral("  ");
 
             
             #line 24 "..\..\Views\Page\Partial\TemplatesList.cshtml"
+Write(Templates(Model.Where(m => !m.IsMasterPage).ToList()));
+
+            
+            #line default
+            #line hidden
+WriteLiteral("\n");
+
+WriteLiteral("  ");
+
+            
+            #line 25 "..\..\Views\Page\Partial\TemplatesList.cshtml"
 Write(Templates(Model.Where(m => m.IsMasterPage).ToList()));
 
             
             #line default
             #line hidden
-WriteLiteral("\r\n</div>");
+WriteLiteral("\n</div>\n");
 
         }
     }
