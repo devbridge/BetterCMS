@@ -6,67 +6,52 @@
 
 <div class="bcms-window-settings">
     @{
-        var gridViewModel = new EditableGridViewModel
-        {
-            ShowMessages = true,
-            TopBlockTitle = NewsletterGlobalization.SiteSettings_NewsletterSubscribers_Title,
-            Columns = new List<EditableGridColumn>
-            {
-                new EditableGridColumn(NewsletterGlobalization.SiteSettings_NewsletterSubscribers_Email_Title, "Email", "email")
-                    {
-                        AutoFocus = true,
-                        FocusIdentifier = "hasFocus"
-                    }
-            }
-        };
+        var gridViewModel = new EditableGridViewModel { ShowMessages = true, TopBlockTitle = NewsletterGlobalization.SiteSettings_NewsletterSubscribers_Title, Columns = new List<EditableGridColumn> { new EditableGridColumn(NewsletterGlobalization.SiteSettings_NewsletterSubscribers_Email_Title, "Email", "email") { AutoFocus = true, FocusIdentifier = "hasFocus" } } };
     }
-
-<div class="@gridViewModel.TopBlockClass">
-        @if (!string.IsNullOrWhiteSpace(gridViewModel.TopBlockTitle))
-        {
-            <div class="bcms-large-titles">@gridViewModel.TopBlockTitle</div>
-        }
-
-        @if (gridViewModel.CanAddNewItems)
-        {
-            <div class="bcms-btn-links-main" data-bind="click: addNewItem">@gridViewModel.AddNewTitle</div>
-        }
-        else
-        {
-            <div class="bcms-btn-links-main">&nbsp;</div>
-        }
-        <div class="bcms-btn-links-main" id="download-subscribers-in-csv">@NewsletterGlobalization.Download_NewsletterSubscribers_Title</div>
-
+    <div class="@gridViewModel.TopBlockClass">
+        <div class="bcms-top-controls-btn-holder">
+            @if (gridViewModel.CanAddNewItems)
+            {
+                <div class="bcms-btn-main" data-bind="click: addNewItem">@gridViewModel.AddNewTitle</div>
+                <div class="bcms-btn-opener"> </div>
+                <div class="bcms-btn-opener-holder">
+                    <div class="bcms-btn-opener-link" id="download-subscribers-in-csv">@NewsletterGlobalization.Download_NewsletterSubscribers_Title</div>
+                </div>
+            }
+        </div>
         @if (gridViewModel.ShowSearch)
         {
-            <div class="bcms-search-block">
-                <input data-bind="value: options().searchQuery, valueUpdate: 'afterkeydown', enterPress: searchItems, hasfocus: options().hasFocus" type="text" class="bcms-editor-field-box" placeholder="@RootGlobalization.WaterMark_Search" />
-                <div data-bind="click: searchItems" class="bcms-btn-search">@RootGlobalization.Button_Search</div>
+            <div class="bcms-top-block-inner">
+                <div class="bcms-btn-search" data-bind="click: searchItems">@RootGlobalization.Button_Search</div>
+                <div class="bcms-search-block">
+                    <input class="bcms-editor-field-box" data-bind="value: options().searchQuery, valueUpdate: 'afterkeydown', enterPress: searchItems, hasfocus: options().hasFocus" type="text" placeholder="@RootGlobalization.WaterMark_Search" />
+                </div>
             </div>
         }
-
         @if (gridViewModel.AddPaging)
         {
-        <!-- ko with: options().paging -->
-            <div class="bcms-featured-grid bcms-clearfix">
-                @Html.Partial(gridViewModel.PagingView, gridViewModel)
+            <div class="bcms-top-block-pager">
+                <!-- ko with: options().paging -->
+                <div class="bcms-featured-grid bcms-clearfix">
+                    @Html.Partial(gridViewModel.PagingView, gridViewModel)
+                </div>
+                <!-- /ko -->
             </div>
-        <!-- /ko -->
         }
     </div>
 
-@if (gridViewModel.ShowMessages)
-{
-    @Html.MessagesBox(null, new Dictionary<string, string> { { "data-bind", "attr: { id: messagesDomId() }" } })
-}
+    @if (gridViewModel.ShowMessages)
+    {
+        @Html.MessagesBox(null, new Dictionary<string, string> { { "data-bind", "attr: { id: messagesDomId() }" } })
+    }
 
-@{
-    var visibleColumns = gridViewModel.Columns.Where(c => c.IsRendered).ToList();
-    var visibleColumnsCount = visibleColumns.Count;
-}
+    @{
+        var visibleColumns = gridViewModel.Columns.Where(c => c.IsRendered).ToList();
+        var visibleColumnsCount = visibleColumns.Count;
+    }
 
-<table class="bcms-tables">
-    <thead>
+    <table class="bcms-tables">
+        <thead>
         <tr>
             <th class="bcms-tables-nohover">&nbsp;</th>
             @foreach (var column in visibleColumns)
@@ -75,8 +60,8 @@
             }
             <th class="bcms-tables-nohover" style="width: 145px;">&nbsp;</th>
         </tr>
-    </thead>
-    <tbody>
+        </thead>
+        <tbody>
         <!-- ko foreach: items -->
         <tr data-bind="click: onOpen, css: {'bcms-table-row-active' : isActive() || isSelectedForInsert()}, attr: {id: getRowId()}">
             <!-- ko if: saving() || deleting() -->
@@ -140,20 +125,20 @@
             <td colspan="@(visibleColumnsCount + 2)"><span class="bcms-table-no-data">@RootGlobalization.Grid_NoDataAvailable_Message</span></td>
         </tr>
         <!-- /ko -->
-    </tbody>
-</table>
+        </tbody>
+    </table>
 
-@if (gridViewModel.AddHiddenFields)
-{
-    <!-- ko foreach: items -->
-    foreach (var column in gridViewModel.Columns)
+    @if (gridViewModel.AddHiddenFields)
     {
-        if (!string.IsNullOrWhiteSpace(column.HiddenFieldName))
+        <!-- ko foreach: items -->
+        foreach (var column in gridViewModel.Columns)
         {
-            <input type="hidden" name="" value="" data-bind="valueBinder: @(column.ValueBind)
+            if (!string.IsNullOrWhiteSpace(column.HiddenFieldName))
+            {
+                <input type="hidden" name="" value="" data-bind="valueBinder: @(column.ValueBind)
                    , attr {name hiddenfieldname('@(column.HiddenFieldName)', $index()) }">
+            }
         }
+        <!-- /ko -->
     }
-    <!-- /ko -->
-}
 </div>
