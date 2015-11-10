@@ -150,7 +150,7 @@ WriteLiteral(">\r\n                        <input");
 
 WriteLiteral(" type=\"text\"");
 
-WriteLiteral(" class=\"bcms-add-tags-field\"");
+WriteLiteral(" class=\"bcms-field-text\"");
 
 WriteLiteral(" data-bind=\"\r\n    css: { \'bcms-tag-validation-error\': newItem.hasError() },\r\n    " +
 "value: newItem,\r\n    valueUpdate: \'afterkeydown\',\r\n    escPress: clearItem,\r\n   " +
@@ -193,7 +193,7 @@ WriteLiteral(">\r\n                        <input");
 
 WriteLiteral(" type=\"text\"");
 
-WriteLiteral(" class=\"bcms-add-tags-field\"");
+WriteLiteral(" class=\"bcms-field-text\"");
 
 WriteLiteral(@" data-bind=""
                             css: { 'bcms-tag-validation-error': newItem.hasError() },

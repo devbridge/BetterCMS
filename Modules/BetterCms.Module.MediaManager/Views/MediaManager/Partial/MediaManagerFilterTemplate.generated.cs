@@ -135,7 +135,7 @@ WriteLiteral(">\r\n                        <input");
 
 WriteLiteral(" type=\"text\"");
 
-WriteLiteral(" class=\"bcms-add-tags-field\"");
+WriteLiteral(" class=\"bcms-field-text\"");
 
 WriteLiteral(@" data-bind=""
                                     css: { 'bcms-tag-validation-error': newItem.hasError() },
@@ -181,7 +181,7 @@ WriteLiteral(">\r\n                        <input");
 
 WriteLiteral(" type=\"text\"");
 
-WriteLiteral(" class=\"bcms-add-tags-field\"");
+WriteLiteral(" class=\"bcms-field-text\"");
 
 WriteLiteral(@" data-bind=""
                                     css: { 'bcms-tag-validation-error': newItem.hasError() },

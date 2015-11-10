@@ -1,3 +1,8 @@
+$access-control-buttons: (
+                ('plus', $bcms-tree-plus),
+                ('minus', $bcms-tree-minus)
+);
+
 .bcms-thumb {
     &-container {
         display: table;
@@ -30,27 +35,99 @@
     padding: 10px;
     position: relative;
     z-index: 1;
-}
 
-.bcms-permissions-column {
-    float: left;
-    padding: 0 30px 20px 0;
-    width: 170px;
+    .bcms-field-wrapper {
+        @include vertical-align();
+        width: 80%;
+    }
 }
 
 .bcms-edit-check-field {
     padding: 10px 0 0;
-}
 
-.bcms-edit-check-field input[type="checkbox"] {
-    margin: 0 5px 0 0;
-    vertical-align: middle;
+    input[type="checkbox"] {
+        margin: 0 5px 0 0;
+        vertical-align: middle;
+    }
 }
 
 .bcms-edit-label {
+    @include vertical-align();
     cursor: pointer;
-    display: inline-block;
-    vertical-align: middle;
+}
+
+.bcms-access-table {
+}
+
+.bcms-access {
+    &-title {
+        border-bottom: $border-nav-bottom;
+        display: table;
+        width: 100%;
+    }
+
+    &-title-text {
+        @include vertical-align($block: table-cell);
+        color: $dark-text;
+        font-size: 12px;
+        font-weight: 700;
+        padding: 5px;
+        text-align: center;
+        width: 80px;
+
+        &:first-child {
+            text-align: left;
+            width: auto;
+        }
+    }
+
+    &-line {
+        border-bottom: $border-nav-bottom;
+        display: table;
+        width: 100%;
+    }
+
+    &-value {
+        @include vertical-align($block: table-cell);
+        padding: 5px;
+        width: 80px;
+
+        &:first-child {
+            text-align: left;
+            width: auto;
+        }
+
+        input[type="radio"] {
+            cursor: pointer;
+            display: block;
+            margin: auto;
+        }
+    }
+
+    &-value-add {
+        color: $blue-main;
+        cursor: pointer;
+
+        .bcms-field-wrapper {
+            @include vertical-align();
+        }
+
+        .bcms-field-text {
+            font-size: 12px;
+            height: 20px;
+        }
+    }
+
+    @each $name, $icon in $access-control-buttons {
+        &-#{$name} {
+            @include size(20px);
+            @include vertical-align();
+            background: url($icon) no-repeat center;
+            cursor: pointer;
+            margin-right: 10px;
+            padding: 5px 0;
+        }
+    }
 }
 
 //module Add New tabbed content

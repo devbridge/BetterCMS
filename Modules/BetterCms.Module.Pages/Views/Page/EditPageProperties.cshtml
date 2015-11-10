@@ -126,49 +126,52 @@
                     </div>
 
                     <div>
-                        @if (Model.AccessControlEnabled)
-                        {
-                        @Html.Partial(RootModuleConstants.AccessControlTemplate)
-                        }
                         @if (!Model.IsMasterPage)
                         {
-                        <div class="bcms-input-list-holder">
-                            @Html.Tooltip(PagesGlobalization.EditPageProperties_Properties_Tooltip_Description)
-                            <div class="bcms-content-titles">@PagesGlobalization.EditPageProperties_Properties_Title</div>
-                            <div class="bcms-checkbox-holder">
-                                @{
-                    object options = null;
-                    if (!Model.CanPublishPage)
-                    {
-                        options = new { disabled = "disabled" };
-                    }
-                                }
-                                @Html.CheckBoxFor(model => model.IsPagePublished, options)
-                                <div class="bcms-edit-label">@PagesGlobalization.EditPageProperties_AdvancedPropertiesTab_Privacy_VisibleToEveryone</div>
+                            <div class="bcms-input-list-holder">
+                                @Html.Tooltip(PagesGlobalization.EditPageProperties_ForceProtocol_Tooltip_Description)
+                                <div class="bcms-content-titles">@PagesGlobalization.EditPageProperties_ForceProtocol_Title</div>
+                                @Html.DropDownListFor(model => model.ForceAccessProtocol, Model.PageAccessProtocols.ToSelectList(Model.ForceAccessProtocol), null, new { @class = "bcms-global-select" })
                             </div>
 
-                            <div class="bcms-checkbox-holder">
-                                @Html.CheckBoxFor(model => model.UseNoFollow)
-                                <div class="bcms-edit-label">@PagesGlobalization.EditPageProperties_AdvancedPropertiesTab_UseNoFollow</div>
-                            </div>
+                            <div class="bcms-input-list-holder">
+                                @Html.Tooltip(PagesGlobalization.EditPageProperties_Properties_Tooltip_Description)
+                                <div class="bcms-content-titles">@PagesGlobalization.EditPageProperties_Properties_Title</div>
+                                <div class="bcms-checkbox-holder">
+                                    @{
+                            object options = null;
+                            if (!Model.CanPublishPage)
+                            {
+                                options = new { disabled = "disabled" };
+                            }
+                                    }
 
-                            <div class="bcms-checkbox-holder">
-                                @Html.CheckBoxFor(model => model.UseNoIndex)
-                                <div class="bcms-edit-label">@PagesGlobalization.EditPageProperties_AdvancedPropertiesTab_UseNoIndex</div>
-                            </div>
+                                    @Html.CheckBoxFor(model => model.IsPagePublished, options)
+                                    <div class="bcms-edit-label">@PagesGlobalization.EditPageProperties_AdvancedPropertiesTab_Privacy_VisibleToEveryone</div>
+                                </div>
 
-                            <div class="bcms-checkbox-holder">
-                                @Html.CheckBoxFor(model => model.IsArchived)
-                                <div class="bcms-edit-label">@PagesGlobalization.EditPageProperties_AdvancedPropertiesTab_IsArchived</div>
-                            </div>
-                        </div>
+                                <div class="bcms-checkbox-holder">
+                                    @Html.CheckBoxFor(model => model.UseNoFollow)
+                                    <div class="bcms-edit-label">@PagesGlobalization.EditPageProperties_AdvancedPropertiesTab_UseNoFollow</div>
+                                </div>
 
-                        <div class="bcms-input-list-holder">
-                            @Html.Tooltip(PagesGlobalization.EditPageProperties_ForceProtocol_Tooltip_Description)
-                            <div class="bcms-content-titles">@PagesGlobalization.EditPageProperties_ForceProtocol_Title</div>
-                            @Html.DropDownListFor(model => model.ForceAccessProtocol, Model.PageAccessProtocols.ToSelectList(Model.ForceAccessProtocol), null, new { @class = "bcms-global-select" })
-                        </div>
+                                <div class="bcms-checkbox-holder">
+                                    @Html.CheckBoxFor(model => model.UseNoIndex)
+                                    <div class="bcms-edit-label">@PagesGlobalization.EditPageProperties_AdvancedPropertiesTab_UseNoIndex</div>
+                                </div>
+
+                                <div class="bcms-checkbox-holder">
+                                    @Html.CheckBoxFor(model => model.IsArchived)
+                                    <div class="bcms-edit-label">@PagesGlobalization.EditPageProperties_AdvancedPropertiesTab_IsArchived</div>
+                                </div>
+                            </div>
                         }
+
+                        @if (Model.AccessControlEnabled)
+                        {
+                            @Html.Partial(RootModuleConstants.AccessControlTemplate)
+                        }
+
                         @Html.HiddenFor(model => model.CanPublishPage)
                         @Html.HiddenFor(model => model.TemplateId, new { @id = "TemplateId" })
                         @Html.HiddenFor(model => model.MasterPageId, new { @id = "MasterPageId" })
@@ -179,7 +182,7 @@
                         @Html.HiddenFor(model => model.FeaturedImage.ImageId, new { data_bind = "value: featuredImage().id()" })
                         @if (Model.ShowTranslationsTab)
                         {
-                        @Html.HiddenFor(model => model.LanguageId, new { data_bind = "value: translations.language.languageId()" })
+                            @Html.HiddenFor(model => model.LanguageId, new { data_bind = "value: translations.language.languageId()" })
                         }
                     </div>
                 </div>
@@ -197,7 +200,7 @@
 
                 @if (Model.IsMasterPage)
                 {
-                @Html.Partial("Partial/InfoMessageAboutMasterPage")
+                    @Html.Partial("Partial/InfoMessageAboutMasterPage")
                 }
 
                 <div class="bcms-input-list-holder">
