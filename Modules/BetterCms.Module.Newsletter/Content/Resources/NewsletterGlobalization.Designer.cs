@@ -88,6 +88,15 @@ namespace BetterCms.Module.Newsletter.Content.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Export.
+        /// </summary>
+        public static string Download_NewsletterSubscribers_Title {
+            get {
+                return ResourceManager.GetString("Download_NewsletterSubscribers_Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Subscriber email is invalid..
         /// </summary>
         public static string EditSubscriber_IvalidEmail_Message {
@@ -115,7 +124,7 @@ namespace BetterCms.Module.Newsletter.Content.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Newsletter subscribers.
+        ///   Looks up a localized string similar to Subscribers.
         /// </summary>
         public static string SiteSettings_NewsletterSubscribers_Title {
             get {

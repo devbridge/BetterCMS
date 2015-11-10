@@ -86,11 +86,12 @@ WriteLiteral(">\r\n");
                     {
                         CustomBinding = "autocomplete: 'onlyExisting', attr: {tabindex: 50}",
                         HeaderAttributes = "style=\"width: 200px;\"",
-                        AutoFocus = true
+                        FocusIdentifier = "hasFocus"
                     },
                 new EditableGridColumn(RootGlobalization.SiteSettings_Languages_Name_Title, "Name", "name")
                     {
-                        CustomBinding = "attr: {tabindex: 100}, hasfocus: hasNameFocus"
+                        CustomBinding = "attr: {tabindex: 100}",
+                        FocusIdentifier = "hasNameFocus"
                     }
             }
         };
@@ -103,13 +104,13 @@ WriteLiteral("\r\n\r\n");
 WriteLiteral("    ");
 
             
-            #line 28 "..\..\Views\Language\List.cshtml"
+            #line 29 "..\..\Views\Language\List.cshtml"
 Write(Html.Partial(RootModuleConstants.EditableGridTemplate, gridViewModel));
 
             
             #line default
             #line hidden
-WriteLiteral("\r\n</div>\r\n");
+WriteLiteral("\r\n</div>");
 
         }
     }

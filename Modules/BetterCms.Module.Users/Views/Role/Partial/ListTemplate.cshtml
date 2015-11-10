@@ -13,13 +13,15 @@
             {
                 new EditableGridColumn(UsersGlobalization.SiteSettings_Roles_RoleColumn, "Name", "name")
                     {
-                        AutoFocus = true,
+                        FocusIdentifier = "hasFocus",
                         HeaderAttributes = "style=\"width: 130px;\"",
                     },
 
                 new EditableGridColumn(UsersGlobalization.SiteSettings_Roles_DescriptionColumn, "Description", "description")
+                    {
+                        FocusIdentifier = "valueHasFocus"
+                    }
             }
     };
 }
-
 @Html.Partial(RootModuleConstants.EditableGridTemplate, gridViewModel)

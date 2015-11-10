@@ -515,7 +515,7 @@ WriteLiteral("                ");
 
             
             #line 78 "..\..\Views\Page\AddNewPage.cshtml"
-           Write(Html.Partial(PagesConstants.OptionValuesGridTemplate, new EditableGridViewModel()));
+           Write(Html.Partial(PagesConstants.OptionValuesGridTemplate, new EditableGridViewModel{CanAddNewItems = true}));
 
             
             #line default
@@ -529,7 +529,7 @@ WriteLiteral("\r\n            </div>\r\n");
             
             #line default
             #line hidden
-WriteLiteral("    </div>\r\n</div>\r\n");
+WriteLiteral("    </div>\r\n</div>");
 
         }
     }

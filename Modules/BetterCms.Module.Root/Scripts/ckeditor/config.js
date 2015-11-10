@@ -13,6 +13,7 @@ CKEDITOR.editorConfig = function (config) {
         ['CmsImageManager', 'CmsFileManager', 'Image'],
         ['CmsDynamicRegion', 'CmsWidget', 'CmsOption', 'CmsModelValues'],
         ['Source', 'Maximize', 'CmsToggleLineWrap'],
+        '/',
         ['Table', 'Strike', 'NumberedList', 'JustifyLeft', 'JustifyCenter', 'JustifyRight', 'JustifyBlock', 'Styles', 'Format', 'Font', 'FontSize'],
         ['Copy', 'Cut', 'Paste', 'PasteFromWord']
     ];

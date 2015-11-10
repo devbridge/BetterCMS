@@ -3,7 +3,6 @@ using System.Collections.Generic;
 
 using BetterCms.Core.DataContracts;
 using BetterCms.Core.DataContracts.Enums;
-using BetterCms.Module.Root.Models;
 using BetterCms.Module.Root.ViewModels.Option;
 
 using BetterModules.Core.DataContracts;
@@ -21,7 +20,7 @@ namespace BetterCms.Module.Root.Services
         /// <returns>
         /// List of option values view models, merged from options and option values
         /// </returns>
-        List<OptionValueEditViewModel> GetMergedOptionValuesForEdit(IEnumerable<IOptionEntity> options, IEnumerable<IOptionEntity> optionValues);
+        List<OptionValueEditViewModel> GetMergedOptionValuesForEdit(IEnumerable<IOptionEntity> options, IEnumerable<IOptionValueEntity> optionValues);
 
         /// <summary>
         /// Merges options and values and returns one list with option value view models for use (values are returned as objects).
@@ -32,7 +31,7 @@ namespace BetterCms.Module.Root.Services
         /// <returns>
         /// List of option values view models, merged from options and option values
         /// </returns>
-        List<IOptionValue> GetMergedOptionValues(IEnumerable<IOptionEntity> options, IEnumerable<IOptionEntity> optionValues, Guid? languageId = null);
+        List<IOptionValue> GetMergedOptionValues(IEnumerable<IOptionEntity> options, IEnumerable<IOptionValueEntity> optionValues, Guid? languageId = null);
 
         /// <summary>
         /// Merges options and values and returns one list with option value view models for use (values are returned as objects).
@@ -76,7 +75,7 @@ namespace BetterCms.Module.Root.Services
         /// <param name="translationEntityCreator"></param>
         IList<TEntity> SaveOptionValues<TEntity>(IEnumerable<OptionValueEditViewModel> optionViewModels, IEnumerable<TEntity> savedOptionValues,
             Func<TEntity> entityCreator, Func<IOptionTranslationEntity> translationEntityCreator = null)
-            where TEntity : Entity, IOptionEntity;
+            where TEntity : Entity, IOptionValueEntity;
 
         /// <summary>
         /// Validates the option value.

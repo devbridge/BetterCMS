@@ -314,12 +314,13 @@ namespace BetterCms.Module.Pages.Command.Page.SavePageProperties
                 tagService.SavePageTags(page, request.Tags, out newTags);
             }
 
+            UnitOfWork.Commit();
+
             if (publishDraftContent)
             {
                 contentService.PublishDraftContent(page.Id);
+                UnitOfWork.Commit();
             }
-
-            UnitOfWork.Commit();
 
             // Notify about page properties change.
             page.Options = pageOptions;

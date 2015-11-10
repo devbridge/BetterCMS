@@ -151,7 +151,8 @@ namespace BetterCms.Test.Module.Root.HelperTests
             var model = CreateTestViewModel();
             html = GetReplacedHtml(html, model);
 
-            Assert.AreEqual(html, ((DateTime)model.Options.First(o => o.Key == OptionNames.Date).Value).ToString(System.Threading.Thread.CurrentThread.CurrentCulture.DateTimeFormat.ShortDatePattern));
+            var expected = new DateTime(2009, 04, 27).ToString(System.Threading.Thread.CurrentThread.CurrentCulture.DateTimeFormat.ShortDatePattern);
+            Assert.AreEqual(expected, html);
         }
         
         [Test]
@@ -161,7 +162,8 @@ namespace BetterCms.Test.Module.Root.HelperTests
             var model = CreateTestViewModel();
             html = GetReplacedHtml(html, model);
 
-            Assert.AreEqual(html, ((DateTime)model.Options.First(o => o.Key == OptionNames.Date).Value).ToString("yyyy MM"));
+            var expected = new DateTime(2009, 04, 27).ToString("yyyy MM");
+            Assert.AreEqual(expected, html);
         }
         
         [Test]
@@ -171,7 +173,8 @@ namespace BetterCms.Test.Module.Root.HelperTests
             var model = CreateTestViewModel();
             html = GetReplacedHtml(html, model);
 
-            Assert.AreEqual(html, ((decimal)model.Options.First(o => o.Key == OptionNames.Float).Value).ToString(".0000"));
+            var expected = 10.123456M.ToString(".0000");
+            Assert.AreEqual(expected, html);
         }
 
         [Test]

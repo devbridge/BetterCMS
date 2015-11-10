@@ -1253,7 +1253,6 @@ div.bcms-btn-logout:active {
   box-shadow: 0 0 5px 0 rgba(0, 0, 0, 0.2);
   margin-top: 15px;
   padding: 15px 15px 15px 30px;
-  position: relative;
 }
 
 .bcms-contents-tree-content.bcms-contents-hover {

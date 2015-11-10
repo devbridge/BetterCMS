@@ -5,16 +5,20 @@ bettercms.define('bcms.newsletter', ['bcms.jquery', 'bcms', 'bcms.siteSettings',
         'use strict';
 
         var newsletter = {},
-            selectors = {},
+            selectors = {
+                downloadSubscribersInCsv: '#download-subscribers-in-csv'
+            },
             links = {
                 loadSiteSettingsSubscribersUrl: null,
                 loadSubscribersUrl: null,
                 saveSubscriberUrl: null,
-                deleteSubscriberUrl: null
+                deleteSubscriberUrl: null,
+                downoadCsvUrl: null
             },
             globalization = {
                 deleteSubscriberDialogTitle: null
-            };
+            },
+            rowId = 0;
 
         /**
         * Assign objects to module.
@@ -73,6 +77,13 @@ bettercms.define('bcms.newsletter', ['bcms.jquery', 'bcms', 'bcms.siteSettings',
                 return params;
             };
 
+            SubscriberViewModel.prototype.getRowId = function () {
+                if (!this.rowId) {
+                    this.rowId = 'bcms-subscriber-row-' + rowId++;
+                }
+                return this.rowId;
+            };
+
             return SubscriberViewModel;
 
         })(kogrid.ItemViewModel);
@@ -95,6 +106,10 @@ bettercms.define('bcms.newsletter', ['bcms.jquery', 'bcms', 'bcms.siteSettings',
             if (firstVisibleInputField) {
                 firstVisibleInputField.focus();
             }
+
+            $(container.find(selectors.downloadSubscribersInCsv)).on('click', function() {
+                window.location.href = links.downoadCsvUrl;
+            });
         }
 
         /**

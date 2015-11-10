@@ -114,21 +114,21 @@ WriteLiteral(">\r\n");
                 @class = "bcms-ajax-form",
                 data_readonly = Model.IsReadOnly.ToString().ToLower()
             }))
-            {
-                
+        {
+            
             
             #line default
             #line hidden
             
             #line 22 "..\..\Views\Content\PageContentOptions.cshtml"
-           Write(Html.Partial(PagesConstants.OptionValuesGridTemplate));
+       Write(Html.Partial(PagesConstants.OptionValuesGridTemplate, new EditableGridViewModel{CanAddNewItems = false}));
 
             
             #line default
             #line hidden
             
             #line 22 "..\..\Views\Content\PageContentOptions.cshtml"
-                                                                      
+                                                                                                                     
 
                 
             
@@ -149,7 +149,7 @@ WriteLiteral(">\r\n");
             
             #line default
             #line hidden
-WriteLiteral("        </div>\r\n    </div>\r\n</div>\r\n");
+WriteLiteral("        </div>\r\n    </div>\r\n</div>");
 
         }
     }

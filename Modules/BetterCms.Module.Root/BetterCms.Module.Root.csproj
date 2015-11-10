@@ -217,11 +217,13 @@
     <Compile Include="Models\Maps\ChildContentOptionTranslationMap.cs" />
     <Compile Include="Models\Maps\ContentOptionTranslationMap.cs" />
     <Compile Include="Models\Maps\WidgetCategoryMap.cs" />
+    <Compile Include="Models\Migrations\Migration201510231700.cs" />
     <Compile Include="Models\Migrations\Migration201509281017.cs" />
     <Compile Include="Models\Migrations\Migration201502061445.cs" />
     <Compile Include="Models\Migrations\Migration201510141900.cs" />
     <Compile Include="Models\Migrations\Migration201510061845.cs" />
     <Compile Include="Models\Migrations\Migration201509241740.cs" />
+    <Compile Include="Models\Migrations\Migration201511051430.cs" />
     <Compile Include="Models\WidgetCategories.cs" />
     <Compile Include="Models\IChildRegionContainer.cs" />
     <Compile Include="Models\Language.cs" />
@@ -1426,6 +1428,7 @@
     <EmbeddedResource Include="Scripts\ckeditor\skins\bettercms\skin.js" />
     <EmbeddedResource Include="Scripts\ckeditor\skins\bettercms\editor.css" />
     <EmbeddedResource Include="Scripts\ckeditor\skins\bettercms\dialog.css" />
+    <EmbeddedResource Include="Models\Migrations\Migration201510231700.sqlserver.sql" />
     <Content Include="Scss\base_64\icons\add-content.svg" />
     <Content Include="Scss\base_64\icons\btn-down-arrow.svg" />
     <Content Include="Scss\base_64\icons\close-white.svg" />
