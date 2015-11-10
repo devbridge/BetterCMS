@@ -105,7 +105,7 @@ WriteLiteral(">");
             #line hidden
 WriteLiteral("</div>\r\n        <div");
 
-WriteLiteral(" class=\"bcms-custom-input-box\"");
+WriteLiteral(" class=\"bcms-field-wrapper\"");
 
 WriteLiteral(">\r\n");
 
@@ -113,7 +113,7 @@ WriteLiteral("            ");
 
             
             #line 14 "..\..\Views\Content\Partial\EditHtmlContent.cshtml"
-       Write(Html.TextBoxFor(model => model.ContentName, new { @class = "bcms-field-text", style = "width: 523px;" }));
+       Write(Html.TextBoxFor(model => model.ContentName, new { @class = "bcms-field-text"}));
 
             
             #line default

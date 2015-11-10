@@ -1401,7 +1401,6 @@ div.bcms-btn-logout:active {
 }
 
 .bcms-field-wrapper {
-  margin-bottom: 20px;
   position: relative;
 }
 
@@ -1497,16 +1496,12 @@ td .bcms-field-wrapper {
 }
 
 .bcms-input-list-holder {
+  margin-top: 20px;
   position: relative;
-}
-
-.bcms-input-list-holder:first-of-type {
-  margin-top: 25px;
 }
 
 .bcms-checkbox-holder {
   color: #595959;
-  display: inline-block;
   font-size: 12px;
   padding: 5px 10px 5px 0;
 }
@@ -2804,6 +2799,7 @@ div.bcms-preview-box:hover .bcms-preview-box-image:after {
 
 .bcms-content-titles {
   color: #303646;
+  cursor: default;
   font-family: "Open Sans", sans-serif !important;
   font-size: 14px;
   font-weight: 700;
@@ -3153,30 +3149,6 @@ a.bcms-remove-image {
   display: block;
 }
 
-.bcms-tags-field-holder {
-  position: absolute;
-  right: -125px;
-  top: 0;
-}
-
-.bcms-add-tags-field {
-  background-color: #f5f5f5;
-  border: 0;
-  border: 1px solid #d1d1d1;
-  color: #000;
-  font-family: "Open Sans", sans-serif;
-  font-size: 12px;
-  height: 16px;
-  line-height: 16px;
-  margin: 0;
-  padding: 3px;
-  vertical-align: middle;
-}
-
-.bcms-add-tags-field:focus {
-  outline: none;
-}
-
 .bcms-single-tag {
   background-color: #def8ff;
   border: 1px solid #95d3e7;
@@ -3341,18 +3313,12 @@ a.bcms-remove-image {
 .bcms-tooltip-mark {
   height: 18px;
   width: 18px;
-  display: inline-block;
-  vertical-align: middle;
+  position: absolute;
+  top: 0;
+  left: -25px;
   background: url("data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxOCIgaGVpZ2h0PSIxOCIgdmlld0JveD0iLTI5OS42IDM4Ny4zIDE4IDE4IiBlbmFibGUtYmFja2dyb3VuZD0ibmV3IC0yOTkuNiAzODcuMyAxOCAxOCI+PHBhdGggZD0ibS0yOTAuNiA0MDQuOGM0LjcgMCA4LjUtMy44IDguNS04LjVzLTMuOC04LjUtOC41LTguNS04LjUgMy44LTguNSA4LjUgMy45IDguNSA4LjUgOC41eiIgZmlsbD0iI2ZmZiIgc3Ryb2tlPSIjYWNhY2FjIiBzdHJva2UtbGluZWNhcD0ic3F1YXJlIi8+PHRleHQgdHJhbnNmb3JtPSJtYXRyaXgoLjk4NTQgMCAwIDEtMjkzLjEzIDQwMS4wMSkiIGZpbGw9IiNhY2FjYWMiIGZvbnQtZmFtaWx5PSImYXBvcztPcGVuU2FucyZhcG9zOyIgZm9udC1zaXplPSIxMi4xNzgiPj88L3RleHQ+PC9zdmc+") no-repeat center;
   cursor: pointer;
-  margin-bottom: 4px;
-  position: relative;
   z-index: 10;
-}
-
-.bcms-tooltip-mark ~ .bcms-content-titles {
-  display: inline-block;
-  margin-left: 4px;
 }
 
 .bcms-tooltip-holder {

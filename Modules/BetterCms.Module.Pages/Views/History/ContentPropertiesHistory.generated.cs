@@ -72,7 +72,7 @@ WriteLiteral(">");
             #line hidden
 WriteLiteral("</div>\r\n        <div");
 
-WriteLiteral(" class=\"bcms-custom-input-box\"");
+WriteLiteral(" class=\"bcms-field-wrapper\"");
 
 WriteLiteral(">\r\n");
 
@@ -80,7 +80,7 @@ WriteLiteral("            ");
 
             
             #line 9 "..\..\Views\History\ContentPropertiesHistory.cshtml"
-       Write(Html.TextBoxFor(model => model.Name, new { @readonly = "readonly", @class = "bcms-field-text", style = "width: 523px;" }));
+       Write(Html.TextBoxFor(model => model.Name, new { @readonly = "readonly", @class = "bcms-field-text"}));
 
             
             #line default

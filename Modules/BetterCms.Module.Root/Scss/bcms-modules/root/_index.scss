@@ -12,6 +12,7 @@
 
 .bcms-content-titles {
     color: $dark-text;
+    cursor: default;
     font-family: $font-base-family;
     font-size: 14px;
     font-weight: 700;
@@ -369,30 +370,6 @@ a.bcms-remove-image {
 }
 
 //module Tags & Default Tags Holders
-.bcms-tags-field-holder {
-    position: absolute;
-    right: -125px;
-    top: 0;
-}
-
-.bcms-add-tags-field {
-    background-color: #f5f5f5;
-    border: 0;
-    border: 1px solid #d1d1d1;
-    color: #000;
-    font-family: "Open Sans", sans-serif;
-    font-size: 12px;
-    height: 16px;
-    line-height: 16px;
-    margin: 0;
-    padding: 3px;
-    vertical-align: middle;
-}
-
-.bcms-add-tags-field:focus {
-    outline: none;
-}
-
 .bcms-single-tag-holder {
     @include clearfix();
 }

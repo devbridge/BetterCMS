@@ -2,17 +2,10 @@
 .bcms-tooltip {
     &-mark {
         @include size(18px);
-        @include vertical-align();
+        @include position(absolute, 0 null null -25px);
         background: url($bcms-tooltip-mark) no-repeat center;
         cursor: pointer;
-        margin-bottom: 4px;
-        position: relative;
         z-index: 10;
-
-        ~ .bcms-content-titles {
-            display: inline-block;
-            margin-left: 4px;
-        }
     }
 
     &-holder {

@@ -134,20 +134,20 @@ Write(Html.Hidden("PagePermalinkHidden", Model.PageUrl, new { @id = "bcms-page-p
             #line hidden
 WriteLiteral("\n\n    <div");
 
-WriteLiteral(" class=\"bcms-custom-input-box\"");
+WriteLiteral(" class=\"bcms-field-wrapper\"");
 
-WriteLiteral(">\n");
+WriteLiteral(">\r\n");
 
 WriteLiteral("        ");
 
             
             #line 16 "..\..\Views\Page\Partial\PagePropertiesEditPermalink.cshtml"
-   Write(Html.TextBoxFor(model => model.PageUrl, new { @id = "bcms-page-permalink-edit", @class = "bcms-field-text bcms-js-url-path", @style = "width: 503px;" }));
+   Write(Html.TextBoxFor(model => model.PageUrl, new { @id = "bcms-page-permalink-edit", @class = "bcms-field-text bcms-js-url-path"}));
 
             
             #line default
             #line hidden
-WriteLiteral("\n");
+WriteLiteral("\r\n");
 
 WriteLiteral("        ");
 
@@ -158,7 +158,7 @@ WriteLiteral("        ");
             
             #line default
             #line hidden
-WriteLiteral("\n    </div>\n\n    <div");
+WriteLiteral("\r\n    </div>\n\n    <div");
 
 WriteLiteral(" class=\"bcms-btn-small\"");
 

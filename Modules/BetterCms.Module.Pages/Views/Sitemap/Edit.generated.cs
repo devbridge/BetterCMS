@@ -242,7 +242,7 @@ WriteLiteral("                            ");
 WriteLiteral("\r\n                        </div>\r\n                    </div>\r\n\r\n                 " +
 "   <div");
 
-WriteLiteral(" class=\"bcms-tags-box-holder\"");
+WriteLiteral(" class=\"bcms-input-list-holder\"");
 
 WriteLiteral(" data-bind=\"with: tags\"");
 
@@ -381,15 +381,15 @@ WriteLiteral(" class=\"bcms-tree-drop-area\"");
 
 WriteLiteral(">\r\n                            <div");
 
-WriteAttribute("class", Tuple.Create(" class=\"", 3924), Tuple.Create("\"", 4009)
-, Tuple.Create(Tuple.Create("", 3932), Tuple.Create("bcms-addnode-placement-holder", 3932), true)
+WriteAttribute("class", Tuple.Create(" class=\"", 3926), Tuple.Create("\"", 4011)
+, Tuple.Create(Tuple.Create("", 3934), Tuple.Create("bcms-addnode-placement-holder", 3934), true)
             
             #line 77 "..\..\Views\Sitemap\Edit.cshtml"
-, Tuple.Create(Tuple.Create("", 3961), Tuple.Create<System.Object, System.Int32>(Model.IsReadOnly ? "-readonly" : string.Empty
+, Tuple.Create(Tuple.Create("", 3963), Tuple.Create<System.Object, System.Int32>(Model.IsReadOnly ? "-readonly" : string.Empty
             
             #line default
             #line hidden
-, 3961), false)
+, 3963), false)
 );
 
 WriteLiteral(">\r\n");

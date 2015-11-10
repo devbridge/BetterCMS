@@ -61,66 +61,58 @@ namespace ASP
         }
         public override void Execute()
         {
-WriteLiteral("\n");
-
             
-            #line 8 "..\..\Views\Category\CategoriesTemplate.cshtml"
+            #line 7 "..\..\Views\Category\CategoriesTemplate.cshtml"
    var canEdit = (ViewContext.Controller as CmsControllerBase).SecurityService.IsAuthorized(RootModuleConstants.UserRoles.EditContent); 
             
             #line default
             #line hidden
-WriteLiteral("\n<div");
-
-WriteLiteral(" class=\"bcms-input-list-holder\"");
-
-WriteLiteral(">\n");
-
-WriteLiteral("    ");
+WriteLiteral("\r\n");
 
             
-            #line 10 "..\..\Views\Category\CategoriesTemplate.cshtml"
+            #line 8 "..\..\Views\Category\CategoriesTemplate.cshtml"
 Write(Html.Tooltip(Model.TooltipDescription));
 
             
             #line default
             #line hidden
-WriteLiteral("\n\n    <div");
+WriteLiteral("\r\n\r\n<div");
 
 WriteLiteral(" class=\"bcms-content-titles\"");
 
-WriteLiteral(">\n");
+WriteLiteral(">\r\n");
 
-WriteLiteral("        ");
+WriteLiteral("    ");
 
             
-            #line 13 "..\..\Views\Category\CategoriesTemplate.cshtml"
-   Write(RootGlobalization.CategoriesTemplate_AddCategories_Title);
+            #line 11 "..\..\Views\Category\CategoriesTemplate.cshtml"
+Write(RootGlobalization.CategoriesTemplate_AddCategories_Title);
 
             
             #line default
             #line hidden
-WriteLiteral("\n        <div");
+WriteLiteral("\r\n    <div");
 
 WriteLiteral(" class=\"bcms-btn-plus\"");
 
 WriteLiteral(" data-bind=\"css: { \'bcms-btn-plus-expand\': isExpanded() }");
 
             
-            #line 14 "..\..\Views\Category\CategoriesTemplate.cshtml"
-                                                                                       Write(canEdit ? ", click: expandCollapse" : string.Empty);
+            #line 12 "..\..\Views\Category\CategoriesTemplate.cshtml"
+                                                                                   Write(canEdit ? ", click: expandCollapse" : string.Empty);
 
             
             #line default
             #line hidden
 WriteLiteral("\"");
 
-WriteLiteral(">&nbsp;</div>\n\n        <div");
+WriteLiteral(">&nbsp;</div>\r\n   \r\n     <div");
 
 WriteLiteral(" class=\"bcms-tags-field-holder\"");
 
 WriteLiteral(" data-bind=\"visible: isExpanded()\"");
 
-WriteLiteral(">\n            <input");
+WriteLiteral(">\r\n        <input");
 
 WriteLiteral(" type=\"text\"");
 
@@ -137,22 +129,21 @@ WriteLiteral(@" data-bind=""
                     enterPress: function(){},
                     escPress: clearItem""");
 
-WriteLiteral(" />\n            <!-- ko if: newItem.hasError()  -->\n            <span");
+WriteLiteral(" />\r\n        <!-- ko if: newItem.hasError()  -->\r\n        <span");
 
 WriteLiteral(" class=\"bcms-tag-field-validation-error\"");
 
-WriteLiteral(">\n                <span");
+WriteLiteral(">\r\n            <span");
 
 WriteLiteral(" data-bind=\"text: newItem.validationMessage()\"");
 
-WriteLiteral("></span>\n            </span>\n            <!-- /ko -->\n        </div>\n    </div>\n\n" +
-"    <div");
+WriteLiteral("></span>\r\n        </span>\r\n        <!-- /ko -->\r\n    </div>\r\n</div>\r\n\r\n<div");
 
 WriteLiteral(" class=\"bcms-single-tag-holder\"");
 
 WriteLiteral(" data-bind=\"foreach: items()\"");
 
-WriteLiteral(">\n        <div");
+WriteLiteral(">\r\n    <div");
 
 WriteLiteral(" class=\"bcms-single-tag\"");
 
@@ -160,15 +151,15 @@ WriteLiteral(" data-bind=\"css: { \'bcms-single-tag-active\': isActive() }\"");
 
 WriteLiteral("><span");
 
-WriteLiteral(" data-bind=\"    text: name()\"");
+WriteLiteral(" data-bind=\"text: name()\"");
 
 WriteLiteral("></span><a");
 
 WriteLiteral(" data-bind=\"");
 
             
-            #line 34 "..\..\Views\Category\CategoriesTemplate.cshtml"
-                                                                                                                                                   Write(canEdit ? "click: remove" : string.Empty);
+            #line 32 "..\..\Views\Category\CategoriesTemplate.cshtml"
+                                                                                                                                           Write(canEdit ? "click: remove" : string.Empty);
 
             
             #line default
@@ -178,19 +169,19 @@ WriteLiteral("\"");
 WriteLiteral(">");
 
             
-            #line 34 "..\..\Views\Category\CategoriesTemplate.cshtml"
-                                                                                                                                                                                               Write(RootGlobalization.Button_Remove);
+            #line 32 "..\..\Views\Category\CategoriesTemplate.cshtml"
+                                                                                                                                                                                       Write(RootGlobalization.Button_Remove);
 
             
             #line default
             #line hidden
-WriteLiteral("</a></div>\n        <input");
+WriteLiteral("</a></div>\r\n    <input");
 
 WriteLiteral(" type=\"hidden\"");
 
 WriteLiteral(" data-bind=\"attr: { name: getItemInputName($index()), value: id() }\"");
 
-WriteLiteral(" />\n    </div>\n</div>\n");
+WriteLiteral(" />\r\n</div>\r\n");
 
         }
     }

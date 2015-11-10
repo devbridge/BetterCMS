@@ -1,24 +1,56 @@
 .bcms-thumb {
     &-container {
         display: table;
-        margin: 40px 0 45px;
+        margin: 0 0 45px;
     }
 
     &-box {
         @include vertical-align($block: table-cell, $align: top);
+        padding-right: 50px;
+
+        .bcms-btn-tertiary {
+            width: 100%;
+        }
     }
 
     &-image {
-        border: 1px solid #c6c6c6;
-        display: inline-block;
-        height: 124px;
+        @include size(125px);
+        border: $border-nav-bottom;
+        margin-bottom: 10px;
         position: relative;
-        width: 124px;
 
         img {
             max-width: 100%;
         }
     }
+}
+
+.bcms-edit-urlpath-box {
+    background-color: $sky-blue;
+    padding: 10px;
+    position: relative;
+    z-index: 1;
+}
+
+.bcms-permissions-column {
+    float: left;
+    padding: 0 30px 20px 0;
+    width: 170px;
+}
+
+.bcms-edit-check-field {
+    padding: 10px 0 0;
+}
+
+.bcms-edit-check-field input[type="checkbox"] {
+    margin: 0 5px 0 0;
+    vertical-align: middle;
+}
+
+.bcms-edit-label {
+    cursor: pointer;
+    display: inline-block;
+    vertical-align: middle;
 }
 
 //module Add New tabbed content
@@ -129,51 +161,6 @@ a.bcms-slider-next:active {
     padding: 10px 20px;
 }
 
-//module Edit Properties
-
-//.bcms-page-images-holder {
-//    width: 840px;
-//}
-//
-//.bcms-page-images-holder .bcms-input-list-holder {
-//    display: inline-block;
-//    margin-right: 50px;
-//}
-//
-//.bcms-page-images-holder .bcms-btn-small {
-//    display: block;
-//    text-align: center;
-//}
-
-.bcms-tags-box-holder {
-    border-bottom: 1px solid #c6c6c6;
-    border-top: 1px solid #c6c6c6;
-}
-
-.bcms-tags-box-holder .bcms-content-titles:hover {
-    color: #24597e;
-    cursor: pointer;
-}
-
-.bcms-tags-box-holder .bcms-content-titles {
-    display: inline-block;
-    vertical-align: top;
-}
-
-.bcms-categories-box-holder {
-    border-top: 1px solid #c6c6c6;
-}
-
-.bcms-categories-box-holder .bcms-content-titles:hover {
-    color: #24597e;
-    cursor: pointer;
-}
-
-.bcms-categories-box-holder .bcms-content-titles {
-    display: inline-block;
-    vertical-align: top;
-}
-
 //module Add new
 .bcms-addpage-title {
     position: relative;
@@ -209,14 +196,6 @@ a.bcms-slider-next:active {
     font-weight: 600;
     margin-left: 20px;
 }
-
-//module create menus
-//.bcms-menu-settings {
-//    padding: 0 20px 0 35px;
-//}
-
-//module Site settings
-//module sidebar
 
 //module content
 .bcms-title-show-helper {

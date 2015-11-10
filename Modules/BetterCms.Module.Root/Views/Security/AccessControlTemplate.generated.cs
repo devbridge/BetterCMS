@@ -65,53 +65,64 @@ namespace ASP
             
             #line default
             #line hidden
-WriteLiteral("\n\n<div");
+WriteLiteral("\r\n\r\n<div");
+
+WriteLiteral(" class=\"bcms-input-list-holder\"");
 
 WriteLiteral(" id=\"bcms-accesscontrol-context\"");
 
-WriteLiteral(">\n    <div");
+WriteLiteral(">\r\n    <div");
 
 WriteLiteral(" class=\"bcms-user-access\"");
 
 WriteLiteral(" data-bind=\"with: accessControl\"");
 
-WriteLiteral(">\n        <div");
+WriteLiteral(">\r\n");
 
-WriteLiteral(" class=\"bcms-input-list-holder\"");
-
-WriteLiteral(">\n");
-
-WriteLiteral("            ");
+WriteLiteral("        ");
 
             
-            #line 13 "..\..\Views\Security\AccessControlTemplate.cshtml"
-       Write(Html.Tooltip(@viewModel.Tooltip));
+            #line 12 "..\..\Views\Security\AccessControlTemplate.cshtml"
+   Write(Html.Tooltip(@viewModel.Tooltip));
 
             
             #line default
             #line hidden
-WriteLiteral("\n\n            <div");
+WriteLiteral("\r\n        <div");
 
 WriteLiteral(" class=\"bcms-content-titles\"");
 
 WriteLiteral(">");
 
             
-            #line 15 "..\..\Views\Security\AccessControlTemplate.cshtml"
-                                        Write(viewModel.Title);
+            #line 13 "..\..\Views\Security\AccessControlTemplate.cshtml"
+                                    Write(viewModel.Title);
 
             
             #line default
             #line hidden
-WriteLiteral("</div>\n            <div");
+WriteLiteral("</div>\r\n\r\n        <div");
 
 WriteLiteral(" class=\"bcms-access-table\"");
 
-WriteLiteral(">\n                <div");
+WriteLiteral(">\r\n            <div");
 
 WriteLiteral(" class=\"bcms-access-title bcms-clearfix\"");
 
-WriteLiteral(">\n                    <div");
+WriteLiteral(">\r\n                <div");
+
+WriteLiteral(" class=\"bcms-access-title-text\"");
+
+WriteLiteral(">");
+
+            
+            #line 17 "..\..\Views\Security\AccessControlTemplate.cshtml"
+                                               Write(RootGlobalization.AccessControl_UserAccess_User);
+
+            
+            #line default
+            #line hidden
+WriteLiteral("</div>\r\n                <div");
 
 WriteLiteral(" class=\"bcms-access-title-text\"");
 
@@ -119,12 +130,12 @@ WriteLiteral(">");
 
             
             #line 18 "..\..\Views\Security\AccessControlTemplate.cshtml"
-                                                   Write(RootGlobalization.AccessControl_UserAccess_User);
+                                               Write(RootGlobalization.AccessControl_UserAccess_ReadAndEdit);
 
             
             #line default
             #line hidden
-WriteLiteral("</div>\n                    <div");
+WriteLiteral("</div>\r\n                <div");
 
 WriteLiteral(" class=\"bcms-access-title-text\"");
 
@@ -132,12 +143,12 @@ WriteLiteral(">");
 
             
             #line 19 "..\..\Views\Security\AccessControlTemplate.cshtml"
-                                                   Write(RootGlobalization.AccessControl_UserAccess_ReadAndEdit);
+                                               Write(RootGlobalization.AccessControl_UserAccess_Read);
 
             
             #line default
             #line hidden
-WriteLiteral("</div>\n                    <div");
+WriteLiteral("</div>\r\n                <div");
 
 WriteLiteral(" class=\"bcms-access-title-text\"");
 
@@ -145,43 +156,30 @@ WriteLiteral(">");
 
             
             #line 20 "..\..\Views\Security\AccessControlTemplate.cshtml"
-                                                   Write(RootGlobalization.AccessControl_UserAccess_Read);
+                                               Write(RootGlobalization.AccessControl_UserAccess_NoAccess);
 
             
             #line default
             #line hidden
-WriteLiteral("</div>\n                    <div");
-
-WriteLiteral(" class=\"bcms-access-title-text\"");
-
-WriteLiteral(">");
-
-            
-            #line 21 "..\..\Views\Security\AccessControlTemplate.cshtml"
-                                                   Write(RootGlobalization.AccessControl_UserAccess_NoAccess);
-
-            
-            #line default
-            #line hidden
-WriteLiteral("</div>\n                </div>\n\n                <div");
+WriteLiteral("</div>\r\n            </div>\r\n            <div");
 
 WriteLiteral(" data-bind=\"foreach: UserAccessList\"");
 
-WriteLiteral(">\n                    <div");
+WriteLiteral(">\r\n                <div");
 
 WriteLiteral(" class=\"bcms-access-line bcms-clearfix\"");
 
-WriteLiteral(">\n                        <div");
+WriteLiteral(">\r\n                    <div");
 
 WriteLiteral(" class=\"bcms-access-value\"");
 
-WriteLiteral(">\n                            <div");
+WriteLiteral(">\r\n                        <div");
 
 WriteLiteral(" class=\"btn-acces-minus\"");
 
 WriteLiteral(" data-bind=\"click: $parent.removeUser\"");
 
-WriteLiteral(">&nbsp;</div>\n                            <span");
+WriteLiteral(">&nbsp;</div>\r\n                        <span");
 
 WriteLiteral(" data-bind=\"visible: IsForRole()\"");
 
@@ -193,7 +191,7 @@ WriteLiteral(">User:</span>&nbsp;<span");
 
 WriteLiteral(" data-bind=\"text: Identity\"");
 
-WriteLiteral("></span>\n                        </div>\n                        <div");
+WriteLiteral("></span>\r\n                    </div>\r\n                    <div");
 
 WriteLiteral(" class=\"bcms-access-value\"");
 
@@ -206,7 +204,7 @@ WriteLiteral(" value=\"3\"");
 WriteLiteral(" data-bind=\"checked: AccessLevel, attr: { name: $parent.getPropertyIndexer($index" +
 "(), \'AccessLevel\') }\"");
 
-WriteLiteral(" /></div>\n                        <div");
+WriteLiteral(" /></div>\r\n                    <div");
 
 WriteLiteral(" class=\"bcms-access-value\"");
 
@@ -219,7 +217,7 @@ WriteLiteral(" value=\"2\"");
 WriteLiteral(" data-bind=\"checked: AccessLevel, attr: { name: $parent.getPropertyIndexer($index" +
 "(), \'AccessLevel\') }\"");
 
-WriteLiteral(" /></div>\n                        <div");
+WriteLiteral(" /></div>\r\n                    <div");
 
 WriteLiteral(" class=\"bcms-access-value\"");
 
@@ -232,54 +230,54 @@ WriteLiteral(" value=\"1\"");
 WriteLiteral(" data-bind=\"checked: AccessLevel, attr: { name: $parent.getPropertyIndexer($index" +
 "(), \'AccessLevel\') }\"");
 
-WriteLiteral(" /></div>\n                    </div>\n                    <input");
+WriteLiteral(" /></div>\r\n                </div>\r\n                <input");
 
 WriteLiteral(" type=\"hidden\"");
 
 WriteLiteral(" data-bind=\"attr: { name: $parent.getPropertyIndexer($index(), \'Identity\') }, val" +
 "ue: Identity\"");
 
-WriteLiteral(" />\n                    <input");
+WriteLiteral(" />\r\n                <input");
 
 WriteLiteral(" type=\"hidden\"");
 
 WriteLiteral(" data-bind=\"attr: { name: $parent.getPropertyIndexer($index(), \'IsForRole\') }, va" +
 "lueBinder: IsForRole\"");
 
-WriteLiteral(" />\n                </div>\n\n                <div");
+WriteLiteral(" />\r\n            </div>\r\n            <div");
 
 WriteLiteral(" class=\"bcms-access-line bcms-clearfix\"");
 
 WriteLiteral(" data-bind=\"with: userAccessControl\"");
 
-WriteLiteral(">\n                    <div");
+WriteLiteral(">\r\n                <div");
 
 WriteLiteral(" class=\"bcms-access-value-add\"");
 
-WriteLiteral(">\n                        <div");
+WriteLiteral(">\r\n                    <div");
 
 WriteLiteral(" class=\"btn-acces-plus\"");
 
 WriteLiteral(" data-bind=\"click: clickPlus\"");
 
-WriteLiteral(">&nbsp;</div>\n                        <span");
+WriteLiteral(">&nbsp;</div>\r\n                    <span");
 
 WriteLiteral(" data-bind=\"visible: isInAddMode() !== \'user\', click: clickPlus\"");
 
 WriteLiteral(">");
 
             
-            #line 41 "..\..\Views\Security\AccessControlTemplate.cshtml"
-                                                                                         Write(RootGlobalization.AccessControl_UserAccess_AddNewUser);
+            #line 38 "..\..\Views\Security\AccessControlTemplate.cshtml"
+                                                                                     Write(RootGlobalization.AccessControl_UserAccess_AddNewUser);
 
             
             #line default
             #line hidden
-WriteLiteral("</span>\n                        <div");
+WriteLiteral("</span>\r\n                    <div");
 
-WriteLiteral(" class=\"bcms-custom-input-box\"");
+WriteLiteral(" class=\"bcms-field-wrapper\"");
 
-WriteLiteral(">\n                            <input");
+WriteLiteral(">\r\n                        <input");
 
 WriteLiteral(" type=\"text\"");
 
@@ -295,51 +293,51 @@ WriteLiteral(@" data-bind=""
                                 autocompleteList: '',
                                 escPress: clearItem""");
 
-WriteLiteral(" />\n                            <!-- ko if: newItem.hasError() -->\n              " +
-"              <span");
+WriteLiteral(" />\r\n                        <!-- ko if: newItem.hasError() -->\r\n                " +
+"        <span");
 
 WriteLiteral(" class=\"bcms-tag-field-validation-error\"");
 
-WriteLiteral(">\n                                <span");
+WriteLiteral(">\r\n                            <span");
 
 WriteLiteral(" data-bind=\"text: newItem.validationMessage()\"");
 
-WriteLiteral("></span>\n                            </span>\n                            <!-- /ko" +
-" -->\n                        </div>\n                    </div>\n                <" +
-"/div>\n\n                <div");
+WriteLiteral("></span>\r\n                        </span>\r\n                        <!-- /ko -->\r\n" +
+"                    </div>\r\n                </div>\r\n            </div>\r\n        " +
+"    <div");
 
 WriteLiteral(" class=\"bcms-access-line bcms-clearfix\"");
 
 WriteLiteral(" data-bind=\"with: roleAccessControl\"");
 
-WriteLiteral(">\n                    <div");
+WriteLiteral(">\r\n                <div");
 
 WriteLiteral(" class=\"bcms-access-value-add\"");
 
-WriteLiteral(">\n                        <div");
+WriteLiteral(">\r\n                    <div");
 
 WriteLiteral(" class=\"btn-acces-plus\"");
 
 WriteLiteral(" data-bind=\"click: clickPlus\"");
 
-WriteLiteral(">&nbsp;</div>\n                        <span");
+WriteLiteral(">&nbsp;</div>\r\n                    <span");
 
 WriteLiteral(" data-bind=\"visible: isInAddMode() !== \'role\', click: clickPlus\"");
 
 WriteLiteral(">");
 
             
-            #line 64 "..\..\Views\Security\AccessControlTemplate.cshtml"
-                                                                                         Write(RootGlobalization.AccessControl_UserAccess_AddNewRole);
+            #line 60 "..\..\Views\Security\AccessControlTemplate.cshtml"
+                                                                                     Write(RootGlobalization.AccessControl_UserAccess_AddNewRole);
 
             
             #line default
             #line hidden
-WriteLiteral("</span>\n                        <div");
+WriteLiteral("</span>\r\n                    <div");
 
-WriteLiteral(" class=\"bcms-custom-input-box\"");
+WriteLiteral(" class=\"bcms-field-wrapper\"");
 
-WriteLiteral(">\n                            <input");
+WriteLiteral(">\r\n                        <input");
 
 WriteLiteral(" type=\"text\"");
 
@@ -355,18 +353,18 @@ WriteLiteral(@" data-bind=""
                                 autocompleteList: '',
                                 escPress: clearItem""");
 
-WriteLiteral(" />\n                            <!-- ko if: newItem.hasError() -->\n              " +
-"              <span");
+WriteLiteral(" />\r\n                        <!-- ko if: newItem.hasError() -->\r\n                " +
+"        <span");
 
 WriteLiteral(" class=\"bcms-tag-field-validation-error\"");
 
-WriteLiteral(">\n                                <span");
+WriteLiteral(">\r\n                            <span");
 
 WriteLiteral(" data-bind=\"text: newItem.validationMessage()\"");
 
-WriteLiteral("></span>\n                            </span>\n                            <!-- /ko" +
-" -->\n                        </div>\n                    </div>\n                <" +
-"/div>\n            </div>\n        </div>\n    </div>\n</div>\n");
+WriteLiteral("></span>\r\n                        </span>\r\n                        <!-- /ko -->\r\n" +
+"                    </div>\r\n                </div>\r\n            </div>\r\n        " +
+"</div>\r\n    </div>\r\n</div>\r\n");
 
         }
     }

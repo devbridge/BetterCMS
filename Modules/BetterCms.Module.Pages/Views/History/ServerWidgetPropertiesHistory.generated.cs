@@ -79,7 +79,7 @@ WriteLiteral("            ");
             
             #line default
             #line hidden
-WriteLiteral("\n        </div>\n    </div>\n    <div");
+WriteLiteral("\n        </div>\n    </div>\n\n    <div");
 
 WriteLiteral(" class=\"bcms-input-list-holder\"");
 
@@ -90,7 +90,7 @@ WriteLiteral(" class=\"bcms-content-titles\"");
 WriteLiteral(">");
 
             
-            #line 12 "..\..\Views\History\ServerWidgetPropertiesHistory.cshtml"
+            #line 13 "..\..\Views\History\ServerWidgetPropertiesHistory.cshtml"
                                     Write(PagesGlobalization.Widget_Url_Title);
 
             
@@ -105,19 +105,13 @@ WriteLiteral(">\n");
 WriteLiteral("            ");
 
             
-            #line 14 "..\..\Views\History\ServerWidgetPropertiesHistory.cshtml"
+            #line 15 "..\..\Views\History\ServerWidgetPropertiesHistory.cshtml"
        Write(Html.TextBoxFor(model => model.Url, new { @readonly = "readonly", @class = "bcms-field-text" }));
 
             
             #line default
             #line hidden
-WriteLiteral("\n        </div>\n    </div>\n");
-
-WriteLiteral("\n");
-
-WriteLiteral("\n");
-
-WriteLiteral("\n    <div");
+WriteLiteral("\n        </div>\n    </div>\n\n    <div");
 
 WriteLiteral(" class=\"bcms-input-list-holder\"");
 
@@ -128,7 +122,7 @@ WriteLiteral(" class=\"bcms-content-titles\"");
 WriteLiteral(">");
 
             
-            #line 21 "..\..\Views\History\ServerWidgetPropertiesHistory.cshtml"
+            #line 20 "..\..\Views\History\ServerWidgetPropertiesHistory.cshtml"
                                     Write(PagesGlobalization.WidgetPreviewImageUrl_Title);
 
             
@@ -143,13 +137,13 @@ WriteLiteral(">\n");
 WriteLiteral("            ");
 
             
-            #line 23 "..\..\Views\History\ServerWidgetPropertiesHistory.cshtml"
+            #line 22 "..\..\Views\History\ServerWidgetPropertiesHistory.cshtml"
        Write(Html.TextBoxFor(model => model.PreviewUrl, new { @readonly = "readonly", @class = "bcms-field-text" }));
 
             
             #line default
             #line hidden
-WriteLiteral("\n        </div>\n    </div>\n    <div");
+WriteLiteral("\n        </div>\n    </div>\n\n    <div");
 
 WriteLiteral(" class=\"bcms-input-list-holder\"");
 
@@ -190,14 +184,14 @@ WriteLiteral("                <div>\n                    <img");
 
 WriteLiteral(" id=\"bcms-widget-preview-image\"");
 
-WriteAttribute("src", Tuple.Create(" src=\"", 1624), Tuple.Create("\"", 1647)
+WriteAttribute("src", Tuple.Create(" src=\"", 1423), Tuple.Create("\"", 1446)
             
             #line 32 "..\..\Views\History\ServerWidgetPropertiesHistory.cshtml"
-, Tuple.Create(Tuple.Create("", 1630), Tuple.Create<System.Object, System.Int32>(Model.PreviewUrl
+, Tuple.Create(Tuple.Create("", 1429), Tuple.Create<System.Object, System.Int32>(Model.PreviewUrl
             
             #line default
             #line hidden
-, 1630), false)
+, 1429), false)
 );
 
 WriteLiteral(" alt=\"\"");

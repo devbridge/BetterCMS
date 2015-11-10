@@ -22,7 +22,6 @@
 
 .bcms-field {
     &-wrapper {
-        margin-bottom: 20px;
         position: relative;
 
         td & {
@@ -67,18 +66,14 @@
 }
 
 .bcms-input-list-holder {
+    margin-top: 20px;
     position: relative;
-
-    &:first-of-type {
-        margin-top: 25px;
-    }
 }
-
 
 //module Input Fields & Field Holders
 .bcms-checkbox-holder {
     color: #595959;
-    display: inline-block;
+    //display: inline-block;
     font-size: 12px;
     padding: 5px 10px 5px 0;
 }
