@@ -5,7 +5,7 @@
     line-height: 20px;
 
     &:hover {
-        color: darken($blue-main, 10%);
+        color: darken($text-blue, 10%);
     }
 }
 
@@ -26,7 +26,7 @@
 
     &-info-block {
         @include clearfix();
-        border-bottom: $border-nav-bottom;
+        border-bottom: $border-thin-smoke;
         margin: 20px 0 15px;
 
         .bcms-content-titles {

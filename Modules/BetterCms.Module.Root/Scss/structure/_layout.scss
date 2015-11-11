@@ -161,8 +161,8 @@ a {
         @include size($page-width calc(100vh - #{$settings-frame}));
         background-color: $white;
         border: {
-            right: $border-frame;
-            left: $border-frame;
+            right: $border-thin-frame;
+            left: $border-thin-frame;
         }
         display: table;
         margin: auto;
@@ -171,7 +171,7 @@ a {
 
     &-menu {
         @include vertical-align($block: table-cell, $align: top);
-        background-color: $gray-l30;
+        background-color: $gray-smoke30;
         padding-top: 40px;
         width: $settings-sidebar;
     }

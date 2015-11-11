@@ -289,8 +289,8 @@ a:hover {
   height: calc(100vh - 120px);
   width: 1150px;
   background-color: #ffffff;
-  border-right: 1px solid #dcdadb;
-  border-left: 1px solid #dcdadb;
+  border-right: 1px solid #dfdfdf;
+  border-left: 1px solid #dfdfdf;
   display: table;
   margin: auto;
   table-layout: fixed;
@@ -312,7 +312,7 @@ a:hover {
 
 .bcms-settings-link {
   box-sizing: border-box;
-  color: #a1a1a1;
+  color: #a6a6a6;
   display: block;
   font-size: 12px;
   font-weight: 400;
@@ -1121,7 +1121,7 @@ a:hover {
 }
 
 .bcms-on .bcms-sidemenu-switch {
-  background-color: #007633;
+  background-color: #33aa61;
 }
 
 .bcms-sidemenu-on {
@@ -1714,7 +1714,7 @@ div.bcms-btn-logout:active {
 
 .bcms-field-text:focus, .bcms-field-textarea:focus {
   background: #ffffff;
-  border-color: 1px solid #0d7ce7;
+  border-color: #0d7ce7;
   box-shadow: 0 0 3px 0 rgba(13, 124, 231, 0.35);
   outline: none;
 }
@@ -2532,7 +2532,7 @@ a.bcms-error-close {
 
 .bcms-pager-no {
   background-color: #eeeeee;
-  border: 1px solid #dcdadb;
+  border: 1px solid #dfdfdf;
   box-sizing: border-box;
   color: #a6a6a6;
   float: left;
@@ -3179,7 +3179,7 @@ a.bcms-sort-arrow-top:hover {
 }
 
 .bcms-draft {
-  background: #eff9fd;
+  background: #0d7ce7;
 }
 
 .bcms-hidden-submit {

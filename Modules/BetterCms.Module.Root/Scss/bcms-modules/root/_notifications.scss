@@ -1,6 +1,6 @@
 $alert-frames: (
-                ('error', $text-red, $border-error),
-                ('popinfo', $blue-main, $border-info)
+                ('error', $text-red, $border-solid-red),
+                ('popinfo', $blue-main, $border-solid-blue)
 );
 
 @each $name, $color, $border in $alert-frames {

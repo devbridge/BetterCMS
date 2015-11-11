@@ -3,7 +3,7 @@ $control-panel-buttons: (
                 ('clone', $bcms-cp-clone, $blue-l30, $blue-l40),
                 ('blog-add', $bcms-cp-add-new, $blue-l30, $blue-l40),
                 ('translate', $bcms-cp-translate, $blue-l30, $blue-l40),
-                ('settings', $bcms-cp-settings, $gray-l45, $gray-l46),
+                ('settings', $bcms-cp-settings, $gray-smoke45, $gray-smoke46),
                 ('delete', $bcms-cp-delete, $red-l60, $red-l70)
 );
 
@@ -35,7 +35,7 @@ $control-panel-status: (
     @include user-select();
     background-color: $black;
     border-radius: 0 0 2px 0;
-    color: $gray-l60;
+    color: $gray-smoke60;
     font-family: $font-base-family;
     font-size: 12px;
     padding: 5px 5px 0 0;
@@ -87,7 +87,7 @@ $control-panel-status: (
 
     &-btn {
         @include size(100% 32px);
-        @include add-gradient($top: $gray-l50, $bottom: $gray-l60);
+        @include add-gradient($top: $gray-smoke50, $bottom: $gray-smoke60);
         border-radius: 2px;
         box-shadow: 0 0 1px 1px rgba($black, .2);
         box-sizing: border-box;
@@ -101,7 +101,7 @@ $control-panel-status: (
         padding: 0 10px;
 
         &:active {
-            background: $gray-l60;
+            background: $gray-smoke60;
             box-shadow: 0 0 2px 1px rgba($black, .2);
         }
     }
@@ -211,7 +211,7 @@ $control-panel-status: (
     }
 
     &-position-handle {
-        background: $gray-l60 url($bcms-cp-stick-handle) no-repeat center;
+        background: $gray-smoke60 url($bcms-cp-stick-handle) no-repeat center;
         border-radius: 2px;
         cursor: pointer;
         float: right;

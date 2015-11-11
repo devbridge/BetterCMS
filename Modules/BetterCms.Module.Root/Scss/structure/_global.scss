@@ -38,7 +38,7 @@ $loading-spinner: (
         position: relative;
 
         > a {
-            color: $blue-main;
+            color: $text-blue;
             cursor: pointer;
             font: {
                 size: 12px;
@@ -104,9 +104,9 @@ $loading-spinner: (
 
     &-image {
         @include size(125px);
-        background-color: $gray-l30;
+        background-color: $gray-smoke30;
         background-size: cover;
-        border: $border-nav-bottom;
+        border: $border-thin-smoke;
         box-sizing: border-box;
         margin-bottom: 5px;
         position: relative;
@@ -121,8 +121,8 @@ $loading-spinner: (
 .bcms-access {
     &-title {
         border: {
-            top: $border-nav-bottom;
-            bottom: $border-nav-bottom;
+            top: $border-thin-smoke;
+            bottom: $border-thin-smoke;
         }
         display: table;
         margin-top: 10px;
@@ -130,7 +130,7 @@ $loading-spinner: (
     }
 
     &-line {
-        border-bottom: $border-nav-bottom;
+        border-bottom: $border-thin-smoke;
         display: table;
         width: 100%;
     }
@@ -174,7 +174,7 @@ $loading-spinner: (
     }
 
     &-value-add {
-        color: $blue-main;
+        color: $text-blue;
         cursor: pointer;
 
         > span {

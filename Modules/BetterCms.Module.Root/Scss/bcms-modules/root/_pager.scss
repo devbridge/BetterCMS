@@ -19,8 +19,8 @@ $pager-buttons: (
 
     &-no {
         @extend %pager-buttons-extender;
-        background-color: $gray-l10;
-        border: $border-frame;
+        background-color: $gray-smoke10;
+        border: $border-thin-frame;
         box-sizing: border-box;
         color: $text-light;
         float: left;
@@ -66,7 +66,7 @@ $pager-buttons: (
 
     @include virtual(before) {
         @include positioning($center-y: true);
-        border-left: $border-nav-bottom;
+        border-left: $border-thin-smoke;
         height: 30px;
         left: -3px;
     }
