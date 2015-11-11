@@ -13,8 +13,8 @@
         @* Form is required for unobtrusive validation. *@
         @using (Html.BeginForm<CategoryController>(f => f.EditCategoryTree(null), FormMethod.Post, new { @class = "bcms-categorytree-form bcms-ajax-form", data_readonly = Model.IsReadOnly.ToString().ToLower() }))
         {
-            <div class="bcms-form-holder">
-                <div class="bcms-form-block-holder">
+            <div class="bcms-form-block-holder">
+                <div>
                     <div class="bcms-input-list-holder">
                         @Html.Tooltip(RootGlobalization.CategoryTree_EditDialog_Title_Tooltip_Description)
                         <div class="bcms-content-titles">@RootGlobalization.CategoryTree_EditDialog_Title_Title</div>
@@ -27,6 +27,26 @@
                         </div>
                     </div>
 
+                    @if (Model.ShowMacros)
+                    {
+                        <div class="bcms-input-list-holder">
+                            @Html.Tooltip(RootGlobalization.CategoryTree_EditDialog_Macro_Tooltip_Message)
+                            <div class="bcms-content-titles">@RootGlobalization.CategoryTree_EditDialog_Macro_Title</div>
+
+                            <div class="bcms-field-wrapper">
+                                @Html.TextBoxFor(model => model.Macro, new
+                       {
+                           @class = "bcms-field-text",
+                           placeholder = RootGlobalization.CategoryTree_Macro_Placeholder_Message,
+                           data_bind = "value: macro, valueUpdate: 'afterkeydown', hasfocus: true"
+                       })
+                                @Html.BcmsValidationMessageFor(m => m.Macro)
+                            </div>
+                        </div>
+                    }
+                </div>
+
+                <div>
                     <div class="bcms-input-list-holder">
                         @Html.Tooltip(RootGlobalization.CategoryTree_EditDialog_UsedFor_Tooltip_Description)
                         <div class="bcms-content-titles">@RootGlobalization.CategoryTree_EditDialog_UsedFor_Title</div>
@@ -39,24 +59,6 @@
                         <!-- /ko -->
                     </div>
                 </div>
-
-                @if (Model.ShowMacros)
-                {
-                    <div class="bcms-input-list-holder">
-                        @Html.Tooltip(RootGlobalization.CategoryTree_EditDialog_Macro_Tooltip_Message)
-                        <div class="bcms-content-titles">@RootGlobalization.CategoryTree_EditDialog_Macro_Title</div>
-
-                        <div class="bcms-field-wrapper">
-                            @Html.TextBoxFor(model => model.Macro, new
-                       {
-                           @class = "bcms-field-text",
-                           placeholder = RootGlobalization.CategoryTree_Macro_Placeholder_Message,
-                           data_bind = "value: macro, valueUpdate: 'afterkeydown', hasfocus: true"
-                       })
-                            @Html.BcmsValidationMessageFor(m => m.Macro)
-                        </div>
-                    </div>
-                }
             </div>
 
             <div class="bcms-tree-info-block">

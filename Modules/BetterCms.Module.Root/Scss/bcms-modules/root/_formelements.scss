@@ -47,11 +47,6 @@
 }
 
 .bcms-form {
-    &-holder {
-        @include clearfix();
-        margin-bottom: 20px;
-    }
-
     &-block-holder {
         @include clearfix();
         margin: 0 -30px;

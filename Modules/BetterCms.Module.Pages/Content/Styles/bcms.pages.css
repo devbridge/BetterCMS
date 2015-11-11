@@ -38,7 +38,7 @@
 
 .bcms-tree-info-block {
   border-bottom: 1px solid #dfdfdf;
-  margin-bottom: 15px;
+  margin: 20px 0 15px;
 }
 
 .bcms-tree-info-block .bcms-content-titles {
@@ -594,13 +594,22 @@ a.bcms-expanded-nodes {
 }
 
 .bcms-filter-options {
+  width: 48.93617%;
   float: left;
   padding-bottom: 5px;
-  padding-right: 5px;
 }
 
-.bcms-filter-options:first-child {
-  margin-right: 15px;
+.bcms-filter-options:nth-child(2n + 1) {
+  margin-left: 0;
+  margin-right: -100%;
+  clear: both;
+  margin-left: 0;
+}
+
+.bcms-filter-options:nth-child(2n + 2) {
+  margin-left: 51.06383%;
+  margin-right: -100%;
+  clear: none;
 }
 
 .bcms-filter-options .bcms-global-select {

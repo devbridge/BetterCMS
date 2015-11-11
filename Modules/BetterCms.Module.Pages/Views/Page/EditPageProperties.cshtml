@@ -71,6 +71,7 @@
                                     @Html.Tooltip(PagesGlobalization.EditPageProperties_BasicPropertiesTab_PageImage_Tooltip_Description)
                                     <div class="bcms-content-titles">@PagesGlobalization.EditPageProperties_BasicPropertiesTab_PageImage_Title</div>
                                 </div>
+
                                 <div class="bcms-thumb-image">
                                     <!-- ko if: image().url() -->
                                     <a class="bcms-remove-image" data-bind="click: image().remove.bind(image())">@RootGlobalization.Button_Remove</a>
@@ -79,7 +80,7 @@
                                     </a>
                                     <!-- /ko -->
                                     <!-- ko ifnot: image().url() -->
-                                    <svg class="bcms-grid-no-preview" xmlns="http://www.w3.org/2000/svg" width="50" height="50" viewBox="-205 372 50 50" enable-background="new -205 372 50 50">
+                                    <svg class="bcms-grid-no-preview" width="50" height="50" viewBox="-205 372 50 50" enable-background="new -205 372 50 50">
                                         <g fill="#cdcdcd">
                                             <path d="m-205 422h50v-50h-50v50m2-48h46v46h-46v-46" />
                                             <path d="m-164.3 406.2l1.4-1.4-11.5-11.5-7.7 7.6-3.6-3.6-11.5 11.5 1.4 1.4 10.1-10.1 11.1 11.1 1.4-1.4-7.5-7.5 6.3-6.2 10.1 10.1" />
@@ -88,6 +89,7 @@
                                     </svg>
                                     <!-- /ko -->
                                 </div>
+
                                 <div class="bcms-btn-tertiary" data-bind="click: image().select.bind(image())">@PagesGlobalization.EditPageProperties_BasicPropertiesTab_SelectImage_ButtonTitle</div>
                             </div>
 
@@ -96,6 +98,7 @@
                                     @Html.Tooltip(PagesGlobalization.EditPageProperties_BasicPropertiesTab_PageFeaturedImage_Tooltip_Description)
                                     <div class="bcms-content-titles">@PagesGlobalization.EditPageProperties_BasicPropertiesTab_PageFeaturedImage_Title</div>
                                 </div>
+
                                 <div class="bcms-thumb-image">
                                     <!-- ko if: featuredImage().url() -->
                                     <a class="bcms-remove-image" data-bind="click: featuredImage().remove.bind(featuredImage())">@RootGlobalization.Button_Remove</a>
@@ -113,6 +116,7 @@
                                     </svg>
                                     <!-- /ko -->
                                 </div>
+
                                 <div class="bcms-btn-tertiary" data-bind="click: featuredImage().select.bind(featuredImage())">@PagesGlobalization.EditPageProperties_BasicPropertiesTab_SelectImage_ButtonTitle</div>
                             </div>
 
@@ -121,6 +125,7 @@
                                     @Html.Tooltip(PagesGlobalization.EditPageProperties_BasicPropertiesTab_PageSecondaryImage_Tooltip_Description)
                                     <div class="bcms-content-titles">@PagesGlobalization.EditPageProperties_BasicPropertiesTab_PageSecondaryImage_Title</div>
                                 </div>
+
                                 <div class="bcms-thumb-image">
                                     <!-- ko if: secondaryImage().url() -->
                                     <a class="bcms-remove-image" data-bind="click: secondaryImage().remove.bind(secondaryImage())">@RootGlobalization.Button_Remove</a>
@@ -138,6 +143,7 @@
                                     </svg>
                                     <!-- /ko -->
                                 </div>
+
                                 <div class="bcms-btn-tertiary" data-bind="click: secondaryImage().select.bind(secondaryImage())">@PagesGlobalization.EditPageProperties_BasicPropertiesTab_SelectImage_ButtonTitle</div>
                             </div>
                         </div>

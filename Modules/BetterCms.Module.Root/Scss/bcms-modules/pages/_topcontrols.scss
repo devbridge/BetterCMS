@@ -166,13 +166,8 @@
     }
 
     &-options {
-        float: left;
+        @include gallery(6);
         padding-bottom: 5px;
-        padding-right: 5px;
-
-        &:first-child {
-            margin-right: 15px;
-        }
 
         .bcms-global-select {
             height: 28px;

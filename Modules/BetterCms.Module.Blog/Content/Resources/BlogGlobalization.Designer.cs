@@ -277,15 +277,6 @@ namespace BetterCms.Module.Blog.Content.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Image will be displayed as a thumbnail with your post..
-        /// </summary>
-        public static string EditBlogPost_FeaturedImage_Description {
-            get {
-                return ResourceManager.GetString("EditBlogPost_FeaturedImage_Description", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Main Image.
         /// </summary>
         public static string EditBlogPost_FeaturedImage_Title {

@@ -1,4 +1,4 @@
-.bcms-clearfix:after, .bcms-buttons-block:after, .bcms-dragging:after, .bcms-form-holder:after, .bcms-form-block-holder:after, .bcms-inner-navigation:after, .bcms-templates-holder:after, .markItUpHeader:after, .markItUpFooter:after {
+.bcms-clearfix:after, .bcms-buttons-block:after, .bcms-dragging:after, .bcms-form-block-holder:after, .bcms-inner-navigation:after, .bcms-templates-holder:after, .markItUpHeader:after, .markItUpFooter:after {
   content: '';
   display: table;
   clear: both;
@@ -1610,10 +1610,6 @@ td .bcms-field-wrapper {
   font-family: monospace !important;
 }
 
-.bcms-form-holder {
-  margin-bottom: 20px;
-}
-
 .bcms-form-block-holder {
   margin: 0 -30px;
 }
@@ -1851,10 +1847,6 @@ td .bcms-field-wrapper {
   position: relative;
 }
 
-.bcms-textarea-box {
-  position: relative;
-}
-
 .bcms-input-validation-error {
   background-color: #fcecec;
   border: 1px solid #e64343;
@@ -1869,11 +1861,6 @@ td .bcms-field-wrapper {
 
 .bcms-input-validation-error:focus ~ .bcms-field-validation-error span {
   visibility: visible;
-}
-
-.bcms-textarea-box .bcms-input-validation-error {
-  background: 0;
-  top: 15px;
 }
 
 .bcms-date-input-box .bcms-input-validation-error {
