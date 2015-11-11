@@ -222,7 +222,8 @@ bettercms.define('bcms.siteSettings', ['bcms.jquery', 'bcms', 'bcms.modal', 'bcm
             content = $($(selectors.tabsTemplate).html());
 
         siteSettings.setContent(content, null, true);
-        
+
+        ko.cleanNode(siteSettingsModalWindow.container.find(selectors.placeHolder).get(0));
         ko.applyBindings(tabsViewModel, siteSettingsModalWindow.container.find(selectors.placeHolder).get(0));
 
         if (tabViewModels.length > 0) {

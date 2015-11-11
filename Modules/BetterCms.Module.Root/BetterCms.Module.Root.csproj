@@ -774,7 +774,6 @@
       <SubType>Designer</SubType>
     </Content>
     <EmbeddedResource Include="Content\Styles\images\icn-zoom-notcompatible.png" />
-    <EmbeddedResource Include="Scripts\bcms.knockout-2.2.1.js" />
     <EmbeddedResource Include="Scripts\bcms.require-2.1.5.js" />
     <EmbeddedResource Include="Content\Styles\images\cookies.png" />
     <EmbeddedResource Include="Content\Styles\images\error-back.png" />
@@ -1422,6 +1421,7 @@
     <EmbeddedResource Include="Scripts\ckeditor\skins\bettercms\editor.css" />
     <EmbeddedResource Include="Scripts\ckeditor\skins\bettercms\dialog.css" />
     <EmbeddedResource Include="Models\Migrations\Migration201510231700.sqlserver.sql" />
+    <EmbeddedResource Include="Scripts\bcms.knockout-3.3.0.js" />
     <Content Include="Scss\base_64\icons\add-content.svg" />
     <Content Include="Scss\base_64\icons\btn-down-arrow.svg" />
     <Content Include="Scss\base_64\icons\close-white.svg" />

@@ -1107,8 +1107,11 @@
             form.find(selectors.searchButton).on("click", function (event) {
                 var parent = $(this).parent();
                 if (!parent.hasClass('bcms-active-search')) {
+                    form.find(selectors.searchField).prop('disabled', false);
                     parent.addClass('bcms-active-search');
+                    form.find(selectors.searchField).focus();
                 } else {
+                    form.find(selectors.searchField).prop('disabled', true);
                     parent.removeClass('bcms-active-search');
                     form.find(selectors.searchField).val('');
                 }
@@ -1116,6 +1119,8 @@
 
             if (isSearchResult === true) {
                 form.find(selectors.searchButton).parent().addClass('bcms-active-search');
+            } else {
+                form.find(selectors.searchField).prop('disabled', true);
             }
 
             initializeListItems(container);

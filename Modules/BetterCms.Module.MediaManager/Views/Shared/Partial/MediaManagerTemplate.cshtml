@@ -23,7 +23,7 @@
             <div class="bcms-top-block-inner" data-bind="css : { 'bcms-active-search': searchEnabled() }">
                 <div class="bcms-btn-search" data-bind="click: toggleSearch">@RootGlobalization.Button_Search</div>
                 <div class="bcms-search-block">
-                    <input id="bcms-search-input" name="MediaSearch" data-bind="value: gridOptions().searchQuery, valueUpdate: 'afterkeydown', enterPress: searchMedia" class="bcms-search-field-box bcms-js-search-box" type="text" placeholder="@RootGlobalization.WaterMark_Search" />
+                    <input id="bcms-search-input" name="MediaSearch" data-bind="value: gridOptions().searchQuery, valueUpdate: 'afterkeydown', enterPress: searchMedia, hasFocus: hasFocus, enable: searchEnabled" class="bcms-search-field-box bcms-js-search-box" type="text" placeholder="@RootGlobalization.WaterMark_Search" />
                 </div>
             </div>
 

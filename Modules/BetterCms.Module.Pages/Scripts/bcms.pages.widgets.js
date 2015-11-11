@@ -595,8 +595,11 @@ bettercms.define('bcms.pages.widgets', ['bcms.jquery', 'bcms', 'bcms.modal', 'bc
             form.find(selectors.widgetsSearchButton).on('click', function () {
                 var parent = $(this).parent();
                 if (!parent.hasClass('bcms-active-search')) {
+                    form.find(selectors.widgetsSearchField).prop('disabled', false);
                     parent.addClass('bcms-active-search');
+                    form.find(selectors.widgetsSearchField).focus();
                 } else {
+                    form.find(selectors.widgetsSearchField).prop('disabled', true);
                     parent.removeClass('bcms-active-search');
                     form.find(selectors.widgetsSearchField).val('');
                 }
@@ -604,6 +607,8 @@ bettercms.define('bcms.pages.widgets', ['bcms.jquery', 'bcms', 'bcms.modal', 'bc
 
             if (isSearchResult === true) {
                 form.find(selectors.widgetsSearchButton).parent().addClass('bcms-active-search');
+            } else {
+                form.find(selectors.widgetsSearchField).prop('disabled', true);
             }
 
             form.find(selectors.siteSettingsButtonOpener).on('click', function (event) {

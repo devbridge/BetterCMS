@@ -342,6 +342,7 @@ function ($, bcms, modal, siteSettings, forms, dynamicContent, messages, mediaUp
         self.canInsertMediaWithOptions = ko.observable(false);
         self.canSearchInHistory = ko.observable(false);
         self.searchEnabled = ko.observable(false);
+        self.hasFocus = ko.observable(false);
         
         self.showPropertiesPreview = ko.observable(false);
         self.previewItem = new MediaItemPreviewViewModel();
@@ -416,9 +417,10 @@ function ($, bcms, modal, siteSettings, forms, dynamicContent, messages, mediaUp
         self.toggleSearch = function() {
             if (!self.searchEnabled()) {
                 self.searchEnabled(true);
+                self.hasFocus(true);
             } else {
                 self.searchEnabled(false);
-                self.options().searchQuery('');
+                self.gridOptions().searchQuery('');
             }
         };
 

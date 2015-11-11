@@ -112,20 +112,20 @@ WriteLiteral(" class=\"bcms-search-block\"");
 WriteLiteral(">\r\n                <input");
 
 WriteLiteral(" data-bind=\"value: options().searchQuery, valueUpdate: \'afterkeydown\', enterPress" +
-": searchItems, hasfocus: options().hasFocus\"");
+": searchItems, hasfocus: options().hasFocus, enable: searchEnabled\"");
 
 WriteLiteral(" type=\"text\"");
 
 WriteLiteral(" class=\"bcms-search-field-box bcms-js-search-box\"");
 
-WriteAttribute("placeholder", Tuple.Create(" placeholder=\"", 717), Tuple.Create("\"", 766)
+WriteAttribute("placeholder", Tuple.Create(" placeholder=\"", 740), Tuple.Create("\"", 789)
             
             #line 11 "..\..\Views\Shared\EditableGrid\Partial\TopBlock.cshtml"
-                                                                                                                                               , Tuple.Create(Tuple.Create("", 731), Tuple.Create<System.Object, System.Int32>(RootGlobalization.WaterMark_Search
+                                                                                                                                                                      , Tuple.Create(Tuple.Create("", 754), Tuple.Create<System.Object, System.Int32>(RootGlobalization.WaterMark_Search
             
             #line default
             #line hidden
-, 731), false)
+, 754), false)
 );
 
 WriteLiteral(" />\r\n            </div>\r\n");

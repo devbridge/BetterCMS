@@ -78,8 +78,8 @@
        />
 
     <JavaScriptCompressorTask
-             SourceFiles="$(ProjectDir)Scripts\bcms.knockout-2.2.1.js"
-             OutputFile="$(ProjectDir)Scripts\bcms.knockout-2.2.1.min.js"
+             SourceFiles="$(ProjectDir)Scripts\bcms.knockout-3.3.0.js"
+             OutputFile="$(ProjectDir)Scripts\bcms.knockout-3.3.0.min.js"
              CompressionType="Standard"
              ObfuscateJavaScript="True"
              PreserveAllSemicolons="True"

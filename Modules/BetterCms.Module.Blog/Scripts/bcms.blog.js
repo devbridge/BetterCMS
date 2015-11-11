@@ -431,8 +431,11 @@ bettercms.define('bcms.blog', ['bcms.jquery', 'bcms', 'bcms.modal', 'bcms.siteSe
             form.find(selectors.siteSettingsBlogsSearchButton).on('click', function () {
                 var parent = $(this).parent();
                 if (!parent.hasClass('bcms-active-search')) {
+                    form.find(selectors.siteSettingsBlogsSearchInput).prop('disabled', false);
                     parent.addClass('bcms-active-search');
+                    form.find(selectors.siteSettingsBlogsSearchInput).focus();
                 } else {
+                    form.find(selectors.siteSettingsBlogsSearchInput).prop('disabled', true);
                     parent.removeClass('bcms-active-search');
                     form.find(selectors.siteSettingsBlogsSearchInput).val('');
                 }
@@ -480,6 +483,8 @@ bettercms.define('bcms.blog', ['bcms.jquery', 'bcms', 'bcms.modal', 'bcms.siteSe
 
             if (isSearchResult) {
                 form.find(selectors.siteSettingsBlogsSearchButton).parent().addClass('bcms-active-search');
+            } else {
+                form.find(selectors.siteSettingsBlogsSearchInput).prop('disabled', true);
             }
 
             initializeSiteSettingsBlogsListItems(container);
@@ -860,6 +865,7 @@ bettercms.define('bcms.blog', ['bcms.jquery', 'bcms', 'bcms.modal', 'bcms.siteSe
             self.templateRows = ko.observableArray();
             self.searchQuery = ko.observable();
             self.searchEnabled = ko.observable(false);
+            self.hasFocus = ko.observable(false);
 
             if (templates != null) {
                 for (var i = 0; i < templates.length; i++) {
@@ -898,6 +904,7 @@ bettercms.define('bcms.blog', ['bcms.jquery', 'bcms', 'bcms.modal', 'bcms.siteSe
             self.toggleSearch = function () {
                 if (!self.searchEnabled()) {
                     self.searchEnabled(true);
+                    self.hasFocus(true);
                 } else {
                     self.searchEnabled(false);
                     self.searchQuery('');
