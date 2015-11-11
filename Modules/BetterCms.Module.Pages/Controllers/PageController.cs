@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 
@@ -170,7 +171,7 @@ namespace BetterCms.Module.Pages.Controllers
             var json = new {
                                PageId = success ? model.Id : (System.Guid?)null,
                                Tags = success ? model.Tags : null,
-                               Categories = success ? model.Categories : null,
+                               Categories = success ? model.Categories.Select(x => new {id = x.Key.ToLowerInvariant(), text = x.Value}).ToList() : null,
                                Image = success ? model.Image : new ImageSelectorViewModel(),
                                SecondaryImage = success ? model.SecondaryImage : new ImageSelectorViewModel(),
                                FeaturedImage = success ? model.FeaturedImage : new ImageSelectorViewModel(),
@@ -182,7 +183,8 @@ namespace BetterCms.Module.Pages.Controllers
                                LanguageId = success ? model.LanguageId : null,
                                Translations = success ? model.Translations : null,
                                ShowTranslationsTab = success && model.ShowTranslationsTab,
-                               CategoriesFilterKey = success ? model.CategoriesFilterKey : PageProperties.CategorizableItemKeyForPages
+                               CategoriesFilterKey = success ? model.CategoriesFilterKey : PageProperties.CategorizableItemKeyForPages,
+                               CategoriesLookupList = success ? model.CategoriesLookupList : null,
                            };
 
             return ComboWireJson(success, view, json, JsonRequestBehavior.AllowGet);

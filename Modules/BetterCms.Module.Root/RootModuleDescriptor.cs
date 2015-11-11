@@ -239,7 +239,8 @@ namespace BetterCms.Module.Root
         {
             return new[]
                        {
-                           new CssIncludeDescriptor(this, "bcms.root.css")
+                           new CssIncludeDescriptor(this, "bcms.root.css"),
+                           new CssIncludeDescriptor(this, "select2.css") 
                        };
         }
 
@@ -291,7 +292,8 @@ namespace BetterCms.Module.Root
                     languagesJsModuleIncludeDescriptor,
                     new OptionsJsModuleIncludeDescriptor(this),
                     new JsIncludeDescriptor(this, "bcms.markdown"),
-                    new JsIncludeDescriptor(this, "bcms.jquery.markitup")
+                    new JsIncludeDescriptor(this, "bcms.jquery.markitup"),
+                    new JsIncludeDescriptor(this, "bcms.jquery.select2", "bcms.jquery.select2.js","bcms.jquery.select2.js") 
                 };
         }
 

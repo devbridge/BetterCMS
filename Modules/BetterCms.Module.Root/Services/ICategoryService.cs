@@ -3,6 +3,7 @@ using System.Collections.Generic;
 
 using BetterCms.Core.DataContracts;
 using BetterCms.Module.Root.Models;
+using BetterCms.Module.Root.ViewModels.Category;
 
 using BetterModules.Core.Models;
 
@@ -31,5 +32,7 @@ namespace BetterCms.Module.Root.Services
         IEnumerable<Guid> GetChildCategoriesIds(Guid category);
 
         IEnumerable<Guid> GetCategoriesIds(IEnumerable<string> categoriesNames);
+
+        IList<CategoryLookupModel> GetCategoriesLookupList(string categoriesFilterKey);
     }
 }
