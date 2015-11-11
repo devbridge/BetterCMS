@@ -61,10 +61,8 @@ namespace ASP
         }
         public override void Execute()
         {
-WriteLiteral("\n");
-
             
-            #line 6 "..\..\Views\Widgets\Partial\WidgetUsagesTemplate.cshtml"
+            #line 5 "..\..\Views\Widgets\Partial\WidgetUsagesTemplate.cshtml"
   
     var gridViewModel = new EditableGridViewModel
     {
@@ -73,7 +71,7 @@ WriteLiteral("\n");
         Columns = new List<EditableGridColumn>
             {
                 new EditableGridColumn(PagesGlobalization.WidgetUsages_Title_Title, "Title", "title"),
-                    
+
                 new EditableGridColumn(PagesGlobalization.WidgetUsages_Type_Title, "", "typeTitle")
                     {
                         HeaderAttributes = "style=\"width: 105px;\""
@@ -84,7 +82,11 @@ WriteLiteral("\n");
             
             #line default
             #line hidden
-WriteLiteral("\n\n<div");
+WriteLiteral("\r\n\r\n<div");
+
+WriteLiteral(" class=\"bcms-modal-frame-holder\"");
+
+WriteLiteral(">\r\n    <div");
 
 WriteLiteral(" class=\"bcms-window-options\"");
 
@@ -92,16 +94,16 @@ WriteLiteral(" id=\"bcms-widget-usages-grid\"");
 
 WriteLiteral(">\r\n");
 
-WriteLiteral("    ");
+WriteLiteral("        ");
 
             
             #line 24 "..\..\Views\Widgets\Partial\WidgetUsagesTemplate.cshtml"
-Write(Html.Partial(RootModuleConstants.EditableGridTemplate, gridViewModel));
+   Write(Html.Partial(RootModuleConstants.EditableGridTemplate, gridViewModel));
 
             
             #line default
             #line hidden
-WriteLiteral("\r\n</div>\n");
+WriteLiteral("\r\n    </div>\r\n</div>");
 
         }
     }

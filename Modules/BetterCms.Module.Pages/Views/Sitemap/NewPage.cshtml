@@ -19,16 +19,17 @@
 
     <div class="bcms-window-tabbed-options">
         <div class="bcms-tab-single" style="display: block; height: 100%;">
-            <div class="bcms-tree-info-block" data-bind="with: sitemap">
+            <div class="bcms-top-block-holder" data-bind="with: sitemap">
                 <div style="display: none;" data-bind="visible: showLanguages, with: language">
                     <div class="bcms-filter-text">Edit sitemap in language:</div>
                     <div class="bcms-table-middle-box">
                         <select class="bcms-global-select" data-bind="options: languages, optionsText: 'value', optionsValue: 'key', value: languageId"></select>
                     </div>
                 </div>
+            </div>
 
-                <div class="bcms-tree-expander" data-bind="click: expandAll">@NavigationGlobalization.Sitemap_Button_ExpandAll</div>
-                <div class="bcms-tree-expander" data-bind="click: collapseAll">@NavigationGlobalization.Sitemap_Button_CollapseAll</div>
+            <div class="bcms-tree-info-block" data-bind="with: sitemap">
+                <div class="bcms-tree-expander bcms-tree-expander-close" data-bind="click: callExpandOrCollapse, css: { 'bcms-tree-expander-close' : allNodesExpanded()}, text: allNodesExpanded() ? '@PagesGlobalization.CategoryTree_Button_CollapseAll' : '@PagesGlobalization.CategoryTree_Button_ExpandAll'"></div>
             </div>
 
             <div class="bcms-tree-zones-holder">
@@ -62,9 +63,9 @@
                     <div class="bcms-sitemap-newpage">
                         @* Form is required for unobtrusive validation. *@
                         @using (Html.BeginForm<SitemapController>(f => f.SaveSitemap(null), FormMethod.Post, new { @class = "bcms-sitemap-form bcms-ajax-form" }))
-                            {
+                        {
                             @Html.Partial("Partial/Sitemap", new SitemapNodeViewModel())
-                            }
+                        }
                     </div>
                 </div>
             </div>

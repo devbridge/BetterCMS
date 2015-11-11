@@ -7,31 +7,29 @@
     @Html.Tooltip(PagesGlobalization.EditPageProperties_AdvancedPropertiesTab_PageUrl_Tooltip_Description)
     <div class="bcms-content-titles">@PagesGlobalization.EditPageProperties_AdvancedPropertiesTab_PageUrl_Title<a onclick="return false" id="bcms-pageproperties-editpermalink">@RootGlobalization.Button_Edit</a></div>
     <div class="bcms-editseo-urlpath" id="bcms-page-permalink-info">@(string.IsNullOrWhiteSpace(Model.PageUrl) ? Html.Raw("&nbsp;") : new MvcHtmlString(Html.Encode(Model.PageUrl)))</div>
-</div>
 
-<div class="bcms-edit-urlpath-box" style="display: none;">
-    @Html.Hidden("PagePermalinkHidden", Model.PageUrl, new { @id = "bcms-page-permalink" })
-
-    <div class="bcms-field-wrapper">
-        @Html.TextBoxFor(model => model.PageUrl, new { @id = "bcms-page-permalink-edit", @class = "bcms-field-text bcms-js-url-path"})
-        @Html.BcmsValidationMessageFor(f => f.PageUrl)
-    </div>
-
-    <div class="bcms-btn-small" id="bcms-save-permalink">@RootGlobalization.Button_Ok</div>
-    <div class="bcms-btn-links-small">@RootGlobalization.Button_Cancel</div>
-    <div class="bcms-edit-check-field">
-        @Html.CheckBoxFor(model => model.RedirectFromOldUrl)
-        <div class="bcms-edit-label">@PagesGlobalization.EditPageProperties_AdvancedPropertiesTab_CreatePermanentRedirectToOldUrl_Title</div>
-    </div>
-    <div class="bcms-edit-check-field">
-        @Html.CheckBoxFor(model => model.UseCanonicalUrl)
-        <div class="bcms-edit-label">@PagesGlobalization.EditPageProperties_AdvancedPropertiesTab_UseCanonicalUrl</div>
-    </div>
-    @if (Model.IsInSitemap)
-    {
-        <div class="bcms-edit-check-field">
-            @Html.CheckBoxFor(model => model.UpdateSitemap)
-            <div class="bcms-edit-label">@PagesGlobalization.EditPageProperties_AdvancedPropertiesTab_UpdateSitemap_Title</div>
+    <div class="bcms-edit-urlpath-box" style="display: none;">
+        @Html.Hidden("PagePermalinkHidden", Model.PageUrl, new { @id = "bcms-page-permalink" })
+        <div class="bcms-field-wrapper">
+            @Html.TextBoxFor(model => model.PageUrl, new { @id = "bcms-page-permalink-edit", @class = "bcms-field-text bcms-js-url-path" })
+            @Html.BcmsValidationMessageFor(f => f.PageUrl)
         </div>
-    }
+        <div class="bcms-btn-small" id="bcms-save-permalink">@RootGlobalization.Button_Ok</div>
+        <div class="bcms-btn-links-small">@RootGlobalization.Button_Cancel</div>
+        <div class="bcms-edit-check-field">
+            @Html.CheckBoxFor(model => model.RedirectFromOldUrl)
+            <div class="bcms-edit-label">@PagesGlobalization.EditPageProperties_AdvancedPropertiesTab_CreatePermanentRedirectToOldUrl_Title</div>
+        </div>
+        <div class="bcms-edit-check-field">
+            @Html.CheckBoxFor(model => model.UseCanonicalUrl)
+            <div class="bcms-edit-label">@PagesGlobalization.EditPageProperties_AdvancedPropertiesTab_UseCanonicalUrl</div>
+        </div>
+        @if (Model.IsInSitemap)
+        {
+            <div class="bcms-edit-check-field">
+                @Html.CheckBoxFor(model => model.UpdateSitemap)
+                <div class="bcms-edit-label">@PagesGlobalization.EditPageProperties_AdvancedPropertiesTab_UpdateSitemap_Title</div>
+            </div>
+        }
+    </div>
 </div>

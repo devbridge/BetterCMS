@@ -238,9 +238,8 @@
                 <div class="bcms-input-list-holder">
                     @Html.Tooltip(PagesGlobalization.EditPageProperties_LayoutPropertiesTab_Layout_Tooltip_Description)
                     <div class="bcms-content-titles">@PagesGlobalization.EditPageProperties_LayoutPropertiesTab_ChooseLayout_Title</div>
+                    @Html.Partial("Partial/TemplatesList", Model.Templates)
                 </div>
-
-                @Html.Partial("Partial/TemplatesList", Model.Templates)
             </div>
 
             <div id="bcms-tab-3" class="bcms-tab-single" data-bind="with: options">
@@ -275,7 +274,7 @@
                             <select class="bcms-global-select" data-bind="options: languages, optionsText: 'value', optionsValue: 'key', value: languageId"></select>
                         </div>
 
-                        <div class="bcms-title-show-helper">
+                        <div class="bcms-input-list-holder">
                             @Html.Tooltip(PagesGlobalization.EditPageTranslations_OtherLanguages_Tooltip)
                             <div class="bcms-content-titles">@PagesGlobalization.EditPageTranslations_OtherLanguages_Title</div>
                         </div>
