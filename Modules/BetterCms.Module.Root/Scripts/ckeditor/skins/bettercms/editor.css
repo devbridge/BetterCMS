@@ -190,6 +190,11 @@
   border-top-color: #474747;
 }
 
+.cke_toolbar_break {
+  display: block;
+  clear: left;
+}
+
 .cke_path_item {
   color: #474747;
   cursor: default;

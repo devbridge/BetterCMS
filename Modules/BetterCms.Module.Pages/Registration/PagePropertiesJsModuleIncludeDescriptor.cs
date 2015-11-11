@@ -23,6 +23,7 @@ namespace BetterCms.Module.Pages.Registration
                     new JavaScriptModuleLinkTo<PageController>(this, "loadEditPropertiesDialogUrl", c => c.EditPageProperties("{0}")),
                     new JavaScriptModuleLinkTo<PageController>(this, "loadLayoutOptionsUrl", c => c.LoadLayoutOptions("{0}", "{1}")),
                     new JavaScriptModuleLinkTo<PageController>(this, "loadLayoutUserAccessUrl", c => c.LoadLayoutUserAccess("{0}", "{1}")),
+                    new JavaScriptModuleLinkTo<PageController>(this, "checkForMissingContentUrl", c => c.CheckForMissingContent("{0}", "{1}", "{2}"))
                 };
 
             Globalization = new IActionProjection[]
@@ -32,7 +33,8 @@ namespace BetterCms.Module.Pages.Registration
                     new JavaScriptModuleGlobalization(this, "pageStatusChangeConfirmationMessagePublish", () => PagesGlobalization.EditPageProperties_PageStatusChange_ConfirmationMessage_Publish),
                     new JavaScriptModuleGlobalization(this, "pageStatusChangeConfirmationMessageUnPublish", () => PagesGlobalization.EditPageProperties_PageStatusChange_ConfirmationMessage_UnPublish),
                     new JavaScriptModuleGlobalization(this, "pageConversionToMasterConfirmationMessage", () => PagesGlobalization.EditPageProperties_PageConversionToMaster_ConfirmationMessage),
-                    new JavaScriptModuleGlobalization(this, "selectedMasterIsChildPage", () => PagesGlobalization.SavePagePropertiesCommand_SelectedMasterIsChildPage_Message)
+                    new JavaScriptModuleGlobalization(this, "selectedMasterIsChildPage", () => PagesGlobalization.SavePagePropertiesCommand_SelectedMasterIsChildPage_Message),
+                    new JavaScriptModuleGlobalization(this, "missingContentConfirmationMessage", () => PagesGlobalization.EditPageProperties_ChangedLayoutMissingContent_Confirmation_Message)
                 };
         }
     }

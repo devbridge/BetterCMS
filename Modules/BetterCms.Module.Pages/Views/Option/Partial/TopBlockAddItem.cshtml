@@ -9,9 +9,8 @@
             <div class="bcms-btn-opener-link" data-bind="text: name, click: $parent.addOption, clickBubble: false"></div>
         </div>
     </div>
-
-    <div class="bcms-language-selector-box" data-bind="visible: showLanguages, with: language">
-        <div class="bcms-filter-text">Edit in language:</div>
-        <select class="bcms-global-select" data-bind="options: languages, optionsText: 'value', optionsValue: 'key', value: languageId"></select>
-    </div>
 }
+<div class="bcms-language-selector-box" data-bind="visible: showLanguages, with: language">
+    <div class="bcms-filter-text">Edit in language:</div>
+    <select class="bcms-global-select" data-bind="options: languages, optionsText: 'value', optionsValue: 'key', value: languageId"></select>
+</div>

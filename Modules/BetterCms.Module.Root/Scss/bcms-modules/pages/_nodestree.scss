@@ -27,7 +27,7 @@
     &-info-block {
         @include clearfix();
         border-bottom: $border-nav-bottom;
-        margin-bottom: 15px;
+        margin: 20px 0 15px;
 
         .bcms-content-titles {
             float: left;

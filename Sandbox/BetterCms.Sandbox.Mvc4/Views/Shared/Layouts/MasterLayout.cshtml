@@ -1,0 +1,18 @@
+﻿@model BetterCms.Module.Root.ViewModels.Cms.RenderPageViewModel
+@{
+    Layout = "~/Areas/bcms-Root/Views/Shared/BaseLayout.cshtml";
+}
+@section CmsHeadScripts {
+    <meta charset="utf-8" />
+    @RenderSection("CmsHeadScripts", false)
+}
+@section Styles {
+    <meta name="twitter:card" content="summary" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1" />
+    <meta name="google" content="notranslate">
+    <link type="text/css" rel="stylesheet" href="//fast.fonts.net/cssapi/ff50334d-7692-47b2-913a-6c24a82061e2.css" />
+}
+
+@RenderBody()
+@RenderSection("Body", false)

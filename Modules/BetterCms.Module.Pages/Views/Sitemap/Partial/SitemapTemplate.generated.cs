@@ -120,8 +120,7 @@ WriteLiteral("                        ");
             
             #line default
             #line hidden
-WriteLiteral("\n                        <div class=\"bcms-custom-input-box\" style=\"width: 50%;\">\n" +
-"");
+WriteLiteral("\n                        <div class=\"bcms-field-wrapper\">\r\n");
 
 WriteLiteral("                            ");
 
@@ -137,7 +136,7 @@ WriteLiteral("                            ");
             
             #line default
             #line hidden
-WriteLiteral("\n");
+WriteLiteral("\r\n");
 
 WriteLiteral("                            ");
 
@@ -148,9 +147,9 @@ WriteLiteral("                            ");
             
             #line default
             #line hidden
-WriteLiteral("\n                        </div>\n                        <!-- ko if: isUrlReadonly" +
-" -->\n                        <div class=\"bcms-btn-small\" data-bind=\"click: saveS" +
-"itemapNodeWithValidation, text: getSitemap().settings.nodeSaveButtonTitle\">");
+WriteLiteral("\r\n                        </div>\n                        <!-- ko if: isUrlReadonl" +
+"y -->\n                        <div class=\"bcms-btn-small\" data-bind=\"click: save" +
+"SitemapNodeWithValidation, text: getSitemap().settings.nodeSaveButtonTitle\">");
 
             
             #line 48 "..\..\Views\Sitemap\Partial\SitemapTemplate.cshtml"

@@ -74,7 +74,7 @@
                         <a class="bcms-file-link" data-bind="click: open, visible: !isOpened()">@RootGlobalization.Button_Edit</a>
                         <div class="bcms-file-edit" data-bind="style: { 'display': isOpened() ? 'block' : 'none' }" style="display: none;">
                             <div class="bcms-content-titles">@MediaGlobalization.ImageEditor_Dialog_ImageTitle_Title</div>
-                            <div class="bcms-custom-input-box" style="width: 255px;">
+                            <div class="bcms-field-wrapper">
                                 @Html.TextBoxFor(f => f.Title, new
                        {
                            @class = "bcms-field-text",
@@ -132,6 +132,7 @@
 
                 <div class="bcms-file-alignment">
                     <div class="bcms-content-titles">@MediaGlobalization.ImageEditor_Dialog_AligmentTitle</div>
+                    
                     <div class="bcms-alignment-controls">
                         <div class="bcms-align-center@(Model.ImageAlign == MediaImageAlign.Center ? "-active" : string.Empty)">
                             <input type="radio" name="ImageAlign" value="@((int)MediaImageAlign.Center)" @(Model.ImageAlign == MediaImageAlign.Center ? "checked" : string.Empty) data-bind="checked: imageAlign" />
@@ -143,6 +144,7 @@
                             <input type="radio" name="ImageAlign" value="@((int)MediaImageAlign.Right)" @(Model.ImageAlign == MediaImageAlign.Right ? "checked" : string.Empty) data-bind="checked: imageAlign" />
                         </div>
                     </div>
+
                     <div class="bcms-input-list-holder">
                         @Html.Tooltip(MediaGlobalization.ImageEditor_Dialog_Description_Tooltip_Description)
                         <div class="bcms-content-titles">@MediaGlobalization.ImageEditor_Dialog_Description</div>
@@ -157,7 +159,7 @@
                     @Html.Partial("~/Areas/bcms-root/Views/Category/CategoriesTemplate.cshtml", categoriesTemplateViewModel)
                 </div>
 
-                <div class="bcms-media-tags-box-holder bcms-clearfix" data-bind="with: tags">
+                <div class="bcms-categories-box-holder" data-bind="with: tags">
                     @Html.Partial("~/Areas/bcms-root/Views/Tags/TagsTemplate.cshtml", tagsTemplateViewModel)
                 </div>
 

@@ -64,6 +64,19 @@ namespace BetterCMS.Module.LuceneSearch.Services.ScrapeService
                                         IsPublished = page.Status == PageStatus.Published
                                     })
                           .ToList();
+
+            var eventArgs = BetterCms.Events.LuceneEvents.Instance.OnFetchingNewUrls();
+
+            if (eventArgs != null && eventArgs.IndexSources != null && eventArgs.IndexSources.Count > 0)
+            {
+                var indexSourceComparer = new BetterCMS.Module.LuceneSearch.Models.IndexSource.IndexSourceComparerByIdAndPath();
+                var registeredSources = Repository.AsQueryable<IndexSource>().ToList();
+                var additionalSources = eventArgs.IndexSources.Where(additionalSource => !registeredSources.Any(registeredSource => indexSourceComparer.Equals(additionalSource, registeredSource)))
+                                                              .Where(additionalSource => !sourcesTosave.Any(sourceToSave => indexSourceComparer.Equals(additionalSource, sourceToSave)))
+                                                              .Distinct(indexSourceComparer);
+
+                sourcesTosave.AddRange(additionalSources);
+            }
             
             // Change publish status where status has changed
             Repository.AsQueryable<IndexSource>()

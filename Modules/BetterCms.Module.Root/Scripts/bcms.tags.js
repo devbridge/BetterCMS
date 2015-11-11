@@ -94,8 +94,11 @@ bettercms.define('bcms.tags', ['bcms.jquery', 'bcms', 'bcms.dynamicContent', 'bc
         container.find(selectors.tagsSearchButton).on('click', function () {
             var parent = $(this).parent();
             if (!parent.hasClass('bcms-active-search')) {
+                form.find(selectors.tagsSearchField).prop('disabled', false);
                 parent.addClass('bcms-active-search');
+                form.find(selectors.tagsSearchField).focus();
             } else {
+                form.find(selectors.tagsSearchField).prop('disabled', true);
                 parent.removeClass('bcms-active-search');
                 form.find(selectors.tagsSearchField).val('');
             }
@@ -107,6 +110,8 @@ bettercms.define('bcms.tags', ['bcms.jquery', 'bcms', 'bcms.dynamicContent', 'bc
         
         if (isSearchResult === true) {
             form.find(selectors.tagsSearchButton).parent().addClass('bcms-active-search');
+        } else {
+            form.find(selectors.tagsSearchField).prop('disabled', true);
         }
 
         editor.initialize(container, {

@@ -1,6 +1,5 @@
 ﻿@using BetterCms.Module.Root.Content.Resources
 @model BetterCms.Module.Root.ViewModels.Shared.EditableGridViewModel
-
 <div class="@Model.TopBlockClass">
     @Html.Partial(Model.TopBlockAddItemView, Model)
 
@@ -9,7 +8,7 @@
         {
             <div data-bind="click: toggleSearch" class="bcms-btn-search">@RootGlobalization.Button_Search</div>
             <div class="bcms-search-block">
-                <input data-bind="value: options().searchQuery, valueUpdate: 'afterkeydown', enterPress: searchItems, hasfocus: options().hasFocus" type="text" class="bcms-search-field-box bcms-js-search-box" placeholder="@RootGlobalization.WaterMark_Search" />
+                <input data-bind="value: options().searchQuery, valueUpdate: 'afterkeydown', enterPress: searchItems, hasfocus: options().hasFocus, enable: searchEnabled" type="text" class="bcms-search-field-box bcms-js-search-box" placeholder="@RootGlobalization.WaterMark_Search" />
             </div>
         }
     </div>

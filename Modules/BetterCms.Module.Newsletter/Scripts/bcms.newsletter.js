@@ -5,16 +5,22 @@ bettercms.define('bcms.newsletter', ['bcms.jquery', 'bcms', 'bcms.siteSettings',
         'use strict';
 
         var newsletter = {},
-            selectors = {},
+            selectors = {
+                downloadSubscribersInCsv: '#download-subscribers-in-csv',
+                siteSettingsButtonOpener: ".bcms-btn-opener",
+                siteSettingsButtonHolder: ".bcms-btn-opener-holder"
+    },
             links = {
                 loadSiteSettingsSubscribersUrl: null,
                 loadSubscribersUrl: null,
                 saveSubscriberUrl: null,
-                deleteSubscriberUrl: null
+                deleteSubscriberUrl: null,
+                downoadCsvUrl: null
             },
             globalization = {
                 deleteSubscriberDialogTitle: null
-            };
+            },
+            rowId = 0;
 
         /**
         * Assign objects to module.
@@ -73,6 +79,13 @@ bettercms.define('bcms.newsletter', ['bcms.jquery', 'bcms', 'bcms.siteSettings',
                 return params;
             };
 
+            SubscriberViewModel.prototype.getRowId = function () {
+                if (!this.rowId) {
+                    this.rowId = 'bcms-subscriber-row-' + rowId++;
+                }
+                return this.rowId;
+            };
+
             return SubscriberViewModel;
 
         })(kogrid.ItemViewModel);
@@ -82,12 +95,14 @@ bettercms.define('bcms.newsletter', ['bcms.jquery', 'bcms', 'bcms.siteSettings',
         */
         function initializeSiteSettingsNewsletterSubscribers(json) {
             var container = siteSettings.getMainContainer(),
-                data = (json.Success == true) ? json.Data : {};
+                data = (json.Success == true) ? json.Data : {},
+                holder = container.find(selectors.siteSettingsButtonHolder);
 
             var viewModel = new SubscribersListViewModel(container, data.Items, data.GridOptions);
             viewModel.deleteUrl = links.deleteSubscriberUrl;
             viewModel.saveUrl = links.saveSubscriberUrl;
-            
+
+            ko.cleanNode(container.get(0));
             ko.applyBindings(viewModel, container.get(0));
             
             // Select search.
@@ -95,6 +110,26 @@ bettercms.define('bcms.newsletter', ['bcms.jquery', 'bcms', 'bcms.siteSettings',
             if (firstVisibleInputField) {
                 firstVisibleInputField.focus();
             }
+
+            $(container.find(selectors.downloadSubscribersInCsv)).on('click', function() {
+                window.location.href = links.downoadCsvUrl;
+            });
+
+            container.find(selectors.siteSettingsButtonOpener).on('click', function (event) {
+                bcms.stopEventPropagation(event);
+                if (!holder.hasClass('bcms-opened')) {
+                    holder.addClass('bcms-opened');
+                } else {
+                    holder.removeClass('bcms-opened');
+                }
+            });
+
+            bcms.on(bcms.events.bodyClick, function (event) {
+                if (holder.hasClass('bcms-opened')) {
+                    holder.removeClass('bcms-opened');
+                }
+            });
+
         }
 
         /**

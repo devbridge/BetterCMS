@@ -34,38 +34,47 @@
         }))
             {
                 <div id="bcms-tab-1" class="bcms-tab-single">
-                    <div class="bcms-input-list-holder">
-                        @Html.Tooltip(NavigationGlobalization.Sitemap_EditDialog_SitemapTitle_Tooltip_Description)
-                        <div class="bcms-content-titles">@NavigationGlobalization.Sitemap_EditDialog_SitemapTitle_Title</div>
-                        <div class="bcms-field-wrapper">
-                            @Html.TextBoxFor(model => model.Title, new { @class = "bcms-field-text", data_bind = "value: title, valueUpdate: 'afterkeydown', hasfocus: true" })
-                            @Html.BcmsValidationMessageFor(f => f.Title)
-                            @Html.HiddenFor(m => m.Id)
-                            @Html.HiddenFor(m => m.Version)
+                    <div class="bcms-form-block-holder">
+                        <div>
+                            <div class="bcms-input-list-holder">
+                                @Html.Tooltip(NavigationGlobalization.Sitemap_EditDialog_SitemapTitle_Tooltip_Description)
+                                <div class="bcms-content-titles">@NavigationGlobalization.Sitemap_EditDialog_SitemapTitle_Title</div>
+                                <div class="bcms-field-wrapper">
+                                    @Html.TextBoxFor(model => model.Title, new { @class = "bcms-field-text", data_bind = "value: title, valueUpdate: 'afterkeydown', hasfocus: true" })
+                                    @Html.BcmsValidationMessageFor(f => f.Title)
+                                    @Html.HiddenFor(m => m.Id)
+                                    @Html.HiddenFor(m => m.Version)
+                                </div>
+                            </div>
+
+                            <div class="bcms-input-list-holder" data-bind="with: tags">
+                                @Html.Partial("~/Areas/bcms-root/Views/Tags/TagsTemplate.cshtml", tagsTemplateViewModel)
+                            </div>
+                        </div>
+
+                        <div>
+                            @if (Model.AccessControlEnabled)
+                            {
+
+                                @Html.Partial(RootModuleConstants.AccessControlTemplate)
+
+                            }
                         </div>
                     </div>
-
-                    <div class="bcms-tags-box-holder" data-bind="with: tags">
-                        @Html.Partial("~/Areas/bcms-root/Views/Tags/TagsTemplate.cshtml", tagsTemplateViewModel)
-                    </div>
-
-                    @if (Model.AccessControlEnabled)
-                    {
-                        @Html.Partial(RootModuleConstants.AccessControlTemplate)
-                    }
                 </div>
 
                 <div id="bcms-tab-2" class="bcms-tab-single">
-                    <div class="bcms-tree-info-block" data-bind="with: sitemap">
+                    <div class="bcms-top-block-holder" data-bind="with: sitemap">
                         <div style="display: none;" data-bind="visible: showLanguages, with: language">
                             <div class="bcms-filter-text">Edit sitemap in language:</div>
                             <div class="bcms-table-middle-box">
                                 <select class="bcms-global-select" data-bind="options: languages, optionsText: 'value', optionsValue: 'key', value: languageId"></select>
                             </div>
                         </div>
+                    </div>
 
-                        <div class="bcms-tree-expander" data-bind="click: expandAll">@NavigationGlobalization.Sitemap_Button_ExpandAll</div>
-                        <div class="bcms-tree-expander" data-bind="click: collapseAll">@NavigationGlobalization.Sitemap_Button_CollapseAll</div>
+                    <div class="bcms-tree-info-block" data-bind="with: sitemap">
+                        <div class="bcms-tree-expander bcms-tree-expander-close" data-bind="click: callExpandOrCollapse, css: { 'bcms-tree-expander-close' : allNodesExpanded()}, text: allNodesExpanded() ? '@PagesGlobalization.CategoryTree_Button_CollapseAll' : '@PagesGlobalization.CategoryTree_Button_ExpandAll'"></div>
                     </div>
 
                     <div class="bcms-tree-zones-holder">

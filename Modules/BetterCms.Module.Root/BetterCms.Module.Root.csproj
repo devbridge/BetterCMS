@@ -217,11 +217,13 @@
     <Compile Include="Models\Maps\ChildContentOptionTranslationMap.cs" />
     <Compile Include="Models\Maps\ContentOptionTranslationMap.cs" />
     <Compile Include="Models\Maps\WidgetCategoryMap.cs" />
+    <Compile Include="Models\Migrations\Migration201510231700.cs" />
     <Compile Include="Models\Migrations\Migration201509281017.cs" />
     <Compile Include="Models\Migrations\Migration201502061445.cs" />
     <Compile Include="Models\Migrations\Migration201510141900.cs" />
     <Compile Include="Models\Migrations\Migration201510061845.cs" />
     <Compile Include="Models\Migrations\Migration201509241740.cs" />
+    <Compile Include="Models\Migrations\Migration201511051430.cs" />
     <Compile Include="Models\WidgetCategories.cs" />
     <Compile Include="Models\IChildRegionContainer.cs" />
     <Compile Include="Models\Language.cs" />
@@ -755,15 +757,9 @@
     <EmbeddedResource Include="Scripts\bcms.modal.js" />
     <EmbeddedResource Include="Scripts\bcms.siteSettings.js" />
     <EmbeddedResource Include="Scripts\bcms.forms.js" />
-    <EmbeddedResource Include="Content\Styles\images\bcms-no-image-1.png" />
-    <EmbeddedResource Include="Content\Styles\images\bcms-no-image-2.png" />
-    <EmbeddedResource Include="Content\Styles\images\bcms-no-image-3.png" />
-    <EmbeddedResource Include="Content\Styles\images\bcms-sidebar-select.png" />
     <EmbeddedResource Include="Content\Styles\images\icn-calendar.png" />
-    <EmbeddedResource Include="Content\Styles\images\icn-sidebg.png" />
     <EmbeddedResource Include="Content\Styles\images\icn-zoom.png" />
     <EmbeddedResource Include="Content\Styles\images\loading.gif" />
-    <EmbeddedResource Include="Content\Styles\images\modal-back.png" />
     <EmbeddedResource Include="Content\Styles\images\sprite-base-1.png" />
     <EmbeddedResource Include="Content\Styles\images\sprite-base-2.png" />
     <EmbeddedResource Include="Scripts\bcms.spinner.jquery.js" />
@@ -779,7 +775,6 @@
       <SubType>Designer</SubType>
     </Content>
     <EmbeddedResource Include="Content\Styles\images\icn-zoom-notcompatible.png" />
-    <EmbeddedResource Include="Scripts\bcms.knockout-2.2.1.js" />
     <EmbeddedResource Include="Scripts\bcms.require-2.1.5.js" />
     <EmbeddedResource Include="Content\Styles\images\cookies.png" />
     <EmbeddedResource Include="Content\Styles\images\error-back.png" />
@@ -796,7 +791,6 @@
     <EmbeddedResource Include="Scripts\bcms.grid.js" />
     <EmbeddedResource Include="Scripts\bcms.jquery.autocomplete.js" />
     <EmbeddedResource Include="Scripts\bcms.ko.extenders.js" />
-    <EmbeddedResource Include="Content\Styles\images\bcms-arrows-sprite.png" />
     <EmbeddedResource Include="Models\Migrations\Migration201307191431.sqlserver.sql" />
     <EmbeddedResource Include="Scripts\bcms.ko.grid.js" />
     <EmbeddedResource Include="Scripts\bcms.options.js" />
@@ -1429,6 +1423,8 @@
     <EmbeddedResource Include="Scripts\ckeditor\skins\bettercms\skin.js" />
     <EmbeddedResource Include="Scripts\ckeditor\skins\bettercms\editor.css" />
     <EmbeddedResource Include="Scripts\ckeditor\skins\bettercms\dialog.css" />
+    <EmbeddedResource Include="Models\Migrations\Migration201510231700.sqlserver.sql" />
+    <EmbeddedResource Include="Scripts\bcms.knockout-3.3.0.js" />
     <EmbeddedResource Include="Scripts\bcms.jquery.select2.js" />
     <Content Include="Scss\base_64\icons\add-content.svg" />
     <Content Include="Scss\base_64\icons\btn-down-arrow.svg" />
@@ -1512,6 +1508,7 @@
     <Content Include="Scss\base_64\icons\pager-arrow-left.svg" />
     <Content Include="Scss\base_64\icons\pager-arrow-right.svg" />
     <Content Include="Scss\base_64\icons\search.svg" />
+    <Content Include="Scss\base_64\icons\tag-close.svg" />
     <Content Include="Scss\base_64\icons\texture.svg" />
     <Content Include="Scss\base_64\icons\toolbar-h1.svg" />
     <Content Include="Scss\base_64\icons\toolbar-h2.svg" />
@@ -1519,6 +1516,10 @@
     <Content Include="Scss\base_64\icons\toolbar-h4.svg" />
     <Content Include="Scss\base_64\icons\toolbar-h5.svg" />
     <Content Include="Scss\base_64\icons\toolbar-h6.svg" />
+    <Content Include="Scss\base_64\icons\tooltip-mark.svg" />
+    <Content Include="Scss\base_64\icons\tree-minus.svg" />
+    <Content Include="Scss\base_64\icons\tree-new-node.svg" />
+    <Content Include="Scss\base_64\icons\tree-plus.svg" />
     <Content Include="Scss\base_64\icons\validation.svg" />
     <Content Include="Views\Web.config" />
     <Content Include="Views\Category\CategoryTreeEdit.cshtml">
@@ -1533,7 +1534,6 @@
     <Content Include="Scss\pages.scss" />
     <Content Include="Scss\bcms-modules\pages\_index.scss" />
     <Content Include="Scss\users.scss" />
-    <Content Include="Scss\bcms-modules\pages\_navigation.scss" />
     <Content Include="Scss\media.scss" />
     <Content Include="Scss\structure\_layout.scss" />
     <Content Include="Scss\bcms-modules\blog\_index.scss" />
@@ -1577,6 +1577,9 @@
     <Content Include="Scss\bcms-modules\root\_templategrids.scss" />
     <Content Include="Scss\bcms-modules\root\_browsersupport.scss" />
     <Content Include="Scss\bcms-modules\root\_structurepath.scss" />
+    <Content Include="Scss\bcms-modules\root\_tooltips.scss" />
+    <Content Include="Scss\bcms-modules\pages\_nodestree.scss" />
+    <Content Include="Scss\bcms-modules\pages\_taglabels.scss" />
     <None Include="Views\Category\CategoryTrees.cshtml">
       <Generator>RazorGenerator</Generator>
       <LastGenOutput>CategoryTrees.generated.cs</LastGenOutput>

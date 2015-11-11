@@ -1,0 +1,63 @@
+$tag-label-border: 1px solid darken($sky-blue, 10%);
+$tag-label-border-error: 1px solid lighten($error-red, 10%);
+$tag-label-bg: lighten($sky-blue, 5%);
+
+//module Tags & Default Tags Holders
+.bcms-single {
+    &-tag-holder {
+        @include clearfix();
+    }
+
+    &-tag {
+        @include ellipsis;
+        @include transition(background-color 0.1s ease-in-out);
+        background-color: $tag-label-bg;
+        border: $tag-label-border;
+        border-radius: 2px;
+        color: $dark-text;
+        cursor: default;
+        float: left;
+        font-size: 12px;
+        height: 22px;
+        line-height: 21px;
+        margin: 4px 4px 3px 0;
+        max-width: 280px;
+        padding: 0 18px 0 6px;
+        position: relative;
+
+        &:hover {
+            background-color: darken($tag-label-bg, 5%);
+        }
+
+        > a {
+            @include size(8px);
+            @include positioning($center-y: true);
+            background: url($bcms-tag-close) no-repeat center;
+            cursor: pointer;
+            overflow: hidden;
+            right: 4px;
+            text-indent: 999em;
+        }
+    }
+
+    &-tag-active {
+        @include animation(duplicateTag 1.5s 3);
+    }
+}
+
+@include keyframes(duplicateTag) {
+    0% {
+        background-color: $tag-label-bg;
+        border: $tag-label-border;
+    }
+
+    50% {
+        background-color: lighten($error-red, 20%);
+        border: $tag-label-border-error;
+    }
+
+    100% {
+        background-color: $tag-label-bg;
+        border: $tag-label-border;
+    }
+}

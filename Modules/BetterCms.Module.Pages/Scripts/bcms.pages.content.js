@@ -27,9 +27,9 @@ bettercms.define('bcms.pages.content', ['bcms.jquery', 'bcms', 'bcms.modal', 'bc
                 widgetsContainer: '#bcms-advanced-contents-container',
                 widgetCreateButton: '#bcms-create-advanced-content-button',
                 widgetRegisterButton: '#bcms-registeradvanced-content-button',
-                widgetInsertButtons: '.bcms-content-insert-button',
-                widgetDeleteButtons: '.bcms-content-delete-button',
-                widgetEditButtons: '.bcms-content-edit-button',
+                widgetInsertButtons: '.bcms-js-insert',
+                widgetDeleteButtons: '.bcms-js-content-delete',
+                widgetEditButtons: '.bcms-js-content-edit',
                 widgetContainerBlock: '.bcms-preview-block',
                 widgetCategory: '.bcms-category',
                 widgetName: '.bcms-title-holder > .bcms-content-titles',
@@ -433,7 +433,7 @@ bettercms.define('bcms.pages.content', ['bcms.jquery', 'bcms', 'bcms.modal', 'bc
         */
         function initializeWidgets(container, dialog, onInsert) {
 
-            pagesContent.initializeSliders(container);
+            //pagesContent.initializeSliders(container);
 
             container.find(selectors.widgetInsertButtons).on('click', onInsert);
 
@@ -566,43 +566,43 @@ bettercms.define('bcms.pages.content', ['bcms.jquery', 'bcms', 'bcms.modal', 'bc
         /**
         * Initializes a content sliders.
         */
-        pagesContent.initializeSliders = function (container) {
-            var updateSlide = function (slideBox, currentSlideNumber) {
-                var currentSlide = slideBox.find(".bcms-slides-single-slide").get([currentSlideNumber - 1]);
-                $(currentSlide).find('.bcms-preview-box').each(function () {
-                    var previewBox = $(this),
-                        data = previewBox.data();
-                    if (!data.isLoaded) {
-                        if (data.asImage === "True") {
-                            previewBox.find('div:first').append($.format("<img src=\"{0}\" alt=\"{1}\" />",
-                                data.previewUrl, data.title));
-                        } else {
-                            previewBox.find('div:first').append($.format("<iframe class=\"{0}\" width=\"{1}\" height=\"{2}\" scrolling=\"no\" border=\"0\" frameborder=\"0\" src=\"{3}\" style=\"background-color:white;\"/>",
-                                data.frameCssClass, data.width, data.height, data.previewUrl));
-                        }
-                        previewBox.data("isLoaded", true);
-                    }
-                });
-            };
-            container.find(selectors.sliderBoxes).each(function () {
-                var slideBox = $(this);
-                slideBox.slides({
-                    container: selectors.sliderContainer,
-                    generateNextPrev: true,
-                    generatePagination: false,
-                    prev: classes.sliderPrev,
-                    next: classes.sliderNext,
-                    slidesLoaded: function () {
-                        updateSlide(slideBox, 1);
-                    },
-                    animationStart: function (currentSlideNumber) {
-                    },
-                    animationComplete: function (currentSlideNumber) {
-                        updateSlide(slideBox, currentSlideNumber);
-                    }
-                });
-            });
-        };
+        //pagesContent.initializeSliders = function (container) {
+        //    var updateSlide = function (slideBox, currentSlideNumber) {
+        //        var currentSlide = slideBox.find(".bcms-slides-single-slide").get([currentSlideNumber - 1]);
+        //        $(currentSlide).find('.bcms-preview-box').each(function () {
+        //            var previewBox = $(this),
+        //                data = previewBox.data();
+        //            if (!data.isLoaded) {
+        //                if (data.asImage === "True") {
+        //                    previewBox.find('div:first').append($.format("<img src=\"{0}\" alt=\"{1}\" />",
+        //                        data.previewUrl, data.title));
+        //                } else {
+        //                    previewBox.find('div:first').append($.format("<iframe class=\"{0}\" width=\"{1}\" height=\"{2}\" scrolling=\"no\" border=\"0\" frameborder=\"0\" src=\"{3}\" style=\"background-color:white;\"/>",
+        //                        data.frameCssClass, data.width, data.height, data.previewUrl));
+        //                }
+        //                previewBox.data("isLoaded", true);
+        //            }
+        //        });
+        //    };
+        //    container.find(selectors.sliderBoxes).each(function () {
+        //        var slideBox = $(this);
+        //        slideBox.slides({
+        //            container: selectors.sliderContainer,
+        //            generateNextPrev: true,
+        //            generatePagination: false,
+        //            prev: classes.sliderPrev,
+        //            next: classes.sliderNext,
+        //            slidesLoaded: function () {
+        //                updateSlide(slideBox, 1);
+        //            },
+        //            animationStart: function (currentSlideNumber) {
+        //            },
+        //            animationComplete: function (currentSlideNumber) {
+        //                updateSlide(slideBox, currentSlideNumber);
+        //            }
+        //        });
+        //    });
+        //};
 
         /**
         * Called when content view model is created

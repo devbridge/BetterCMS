@@ -426,7 +426,7 @@ WriteLiteral("        ");
             
             #line default
             #line hidden
-WriteLiteral("\r\n    </script>\r\n");
+WriteLiteral("\r\n    </script>");
 
         }
     }

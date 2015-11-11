@@ -92,7 +92,8 @@ WriteLiteral("\r\n");
                     {
                         HeaderAttributes = "style=\"width: 200px;\"",
                         AutoFocus = true,
-                        HiddenFieldName = "Options[{0}].OptionKey"
+                        HiddenFieldName = "Options[{0}].OptionKey",
+                        FocusIdentifier = "hasFocus"
                     },
 
                 new EditableGridDropDownColumn(PagesGlobalization.Options_OptionTypeColumn, null, "calcType")
@@ -103,9 +104,10 @@ WriteLiteral("\r\n");
                         CanBeEdited = false
                     },
 
-                new OptionValueEditableGridColumn(PagesGlobalization.Options_OptionDefaultValueColumn, "defaultValueBinding", "customOptionDefaultTitle")
+                new OptionValueEditableGridColumn(PagesGlobalization.Options_OptionDefaultValueColumn, "defaultValueBinding", "customOptionDefaultTitleBinding")
                     {
-                        HiddenFieldName = "Options[{0}].OptionDefaultValue"
+                        HiddenFieldName = "Options[{0}].OptionDefaultValue",
+                        FocusIdentifier = "valueHasFocus"
                     },
 
                 new EditableGridHiddenField("type", "Options[{0}].Type"),
@@ -118,14 +120,12 @@ WriteLiteral("\r\n");
 WriteLiteral("\r\n\r\n");
 
             
-            #line 44 "..\..\Views\Option\EditOptions.cshtml"
+            #line 46 "..\..\Views\Option\EditOptions.cshtml"
 Write(Html.Partial(RootModuleConstants.EditableGridTemplate, model));
 
             
             #line default
             #line hidden
-WriteLiteral("\r\n");
-
         }
     }
 }

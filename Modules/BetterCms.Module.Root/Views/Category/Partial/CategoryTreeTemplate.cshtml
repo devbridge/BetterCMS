@@ -32,7 +32,7 @@
                 <div class="bcms-edit-node">
                     <div class="bcms-edit-node-holder">
                         @Html.Tooltip(RootGlobalization.CategoryTree_NodeEdit_Title_Tooltip_Message)
-                        <div class="bcms-custom-input-box" style="width: 50%;">
+                        <div class="bcms-field-wrapper">
                             @Html.TextBoxFor(m => m.Title, new
                             {
                                 data_bind = "value: title, valueUpdate: 'afterkeydown', enterPress: saveCategoryTreeNodeWithValidation, escPress: cancelEditCategoryTreeNode, hasfocus: isActive()",

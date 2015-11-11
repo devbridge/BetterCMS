@@ -51,7 +51,7 @@ namespace ASP
         {
 WriteLiteral("<div");
 
-WriteLiteral(" class=\"bcms-tree-info-block\"");
+WriteLiteral(" class=\"bcms-top-block-holder\"");
 
 WriteLiteral(" data-bind=\"with: sitemap\"");
 
@@ -72,40 +72,41 @@ WriteLiteral(" class=\"bcms-global-select\"");
 WriteLiteral(" data-bind=\"options: languages, optionsText: \'value\', optionsValue: \'key\', value:" +
 " languageId\"");
 
-WriteLiteral("></select>\r\n    </div>\r\n\r\n    <div");
+WriteLiteral("></select>\r\n    </div>\r\n</div>\r\n\r\n<div");
 
-WriteLiteral(" class=\"bcms-tree-expander\"");
+WriteLiteral(" class=\"bcms-tree-info-block\"");
 
-WriteLiteral(" data-bind=\"click: expandAll\"");
+WriteLiteral(" data-bind=\"with: sitemap\"");
 
-WriteLiteral(">");
+WriteLiteral(">\r\n    <div");
 
-            
-            #line 11 "..\..\Views\Sitemap\Preview.cshtml"
-                                                            Write(NavigationGlobalization.Sitemap_Button_ExpandAll);
+WriteLiteral(" class=\"bcms-tree-expander bcms-tree-expander-close\"");
 
-            
-            #line default
-            #line hidden
-WriteLiteral("</div>\r\n    <div");
-
-WriteLiteral(" class=\"bcms-tree-expander\"");
-
-WriteLiteral(" data-bind=\"click: collapseAll\"");
-
-WriteLiteral(">");
+WriteLiteral(" data-bind=\"click: callExpandOrCollapse, css: { \'bcms-tree-expander-close\' : allN" +
+"odesExpanded()}, text: allNodesExpanded() ? \'");
 
             
-            #line 12 "..\..\Views\Sitemap\Preview.cshtml"
-                                                              Write(NavigationGlobalization.Sitemap_Button_CollapseAll);
+            #line 13 "..\..\Views\Sitemap\Preview.cshtml"
+                                                                                                                                                                                     Write(PagesGlobalization.CategoryTree_Button_CollapseAll);
 
             
             #line default
             #line hidden
-WriteLiteral("</div>\r\n</div>\r\n\r\n");
+WriteLiteral("\' : \'");
 
             
-            #line 15 "..\..\Views\Sitemap\Preview.cshtml"
+            #line 13 "..\..\Views\Sitemap\Preview.cshtml"
+                                                                                                                                                                                                                                             Write(PagesGlobalization.CategoryTree_Button_ExpandAll);
+
+            
+            #line default
+            #line hidden
+WriteLiteral("\'\"");
+
+WriteLiteral("></div>\r\n</div>\r\n\r\n");
+
+            
+            #line 16 "..\..\Views\Sitemap\Preview.cshtml"
 Write(Html.Partial("Partial/Sitemap", new SitemapNodeViewModel()));
 
             
@@ -114,7 +115,7 @@ Write(Html.Partial("Partial/Sitemap", new SitemapNodeViewModel()));
 WriteLiteral("\r\n\r\n");
 
             
-            #line 17 "..\..\Views\Sitemap\Preview.cshtml"
+            #line 18 "..\..\Views\Sitemap\Preview.cshtml"
 Write(Html.Partial("Partial/SitemapTemplate", new SitemapNodeViewModel()));
 
             

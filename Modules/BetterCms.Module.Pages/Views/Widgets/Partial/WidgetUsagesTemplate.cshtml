@@ -2,7 +2,6 @@
 @using BetterCms.Module.Root;
 @using BetterCms.Module.Root.Mvc.Grids;
 @using BetterCms.Module.Root.ViewModels.Shared;
-
 @{
     var gridViewModel = new EditableGridViewModel
     {
@@ -11,7 +10,7 @@
         Columns = new List<EditableGridColumn>
             {
                 new EditableGridColumn(PagesGlobalization.WidgetUsages_Title_Title, "Title", "title"),
-                    
+
                 new EditableGridColumn(PagesGlobalization.WidgetUsages_Type_Title, "", "typeTitle")
                     {
                         HeaderAttributes = "style=\"width: 105px;\""
@@ -20,6 +19,8 @@
     };
 }
 
-<div class="bcms-scroll-window" id="bcms-widget-usages-grid">
-    @Html.Partial(RootModuleConstants.EditableGridTemplate, gridViewModel)
+<div class="bcms-modal-frame-holder">
+    <div class="bcms-window-options" id="bcms-widget-usages-grid">
+        @Html.Partial(RootModuleConstants.EditableGridTemplate, gridViewModel)
+    </div>
 </div>

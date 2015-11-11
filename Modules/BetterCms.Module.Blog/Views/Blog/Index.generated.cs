@@ -487,7 +487,7 @@ Write(Html.Partial("EditorTemplates/PageStatus", PageStatus.Draft));
             
             #line default
             #line hidden
-WriteLiteral("\n</script>\n");
+WriteLiteral("\n</script>");
 
         }
     }

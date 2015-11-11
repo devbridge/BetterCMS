@@ -61,7 +61,7 @@ WriteLiteral("<div");
 
 WriteLiteral(" class=\"bcms-input-list-holder\"");
 
-WriteLiteral(">\n");
+WriteLiteral(">\r\n");
 
 WriteLiteral("    ");
 
@@ -72,7 +72,7 @@ Write(Html.Tooltip(PagesGlobalization.AddNewPage_Permalink_Tooltip_Description))
             
             #line default
             #line hidden
-WriteLiteral("\n    <div");
+WriteLiteral("\r\n    <div");
 
 WriteLiteral(" class=\"bcms-content-titles\"");
 
@@ -98,7 +98,7 @@ WriteLiteral(">");
             
             #line default
             #line hidden
-WriteLiteral("</a></div>\n    <div");
+WriteLiteral("</a></div>\r\n    <div");
 
 WriteLiteral(" class=\"bcms-editseo-urlpath\"");
 
@@ -113,50 +113,50 @@ WriteLiteral(">");
             
             #line default
             #line hidden
-WriteLiteral("</div>\n</div>\n\n<div");
+WriteLiteral("</div>\r\n\r\n    <div");
 
 WriteLiteral(" class=\"bcms-edit-urlpath-box\"");
 
 WriteLiteral(" style=\"display: none;\"");
 
-WriteLiteral(">\n\n");
+WriteLiteral(">\r\n");
 
-WriteLiteral("    ");
+WriteLiteral("        ");
+
+            
+            #line 12 "..\..\Views\Page\Partial\AddNewPageEditPermalink.cshtml"
+   Write(Html.Hidden("PagePermalinkHidden", Model.PageUrl, new { @id = "bcms-page-permalink" }));
+
+            
+            #line default
+            #line hidden
+WriteLiteral("\r\n        <div");
+
+WriteLiteral(" class=\"bcms-field-wrapper\"");
+
+WriteLiteral(">\r\n");
+
+WriteLiteral("            ");
 
             
             #line 14 "..\..\Views\Page\Partial\AddNewPageEditPermalink.cshtml"
-Write(Html.Hidden("PagePermalinkHidden", Model.PageUrl, new { @id = "bcms-page-permalink" }));
+       Write(Html.TextBoxFor(model => model.PageUrl, new { @id = "bcms-page-permalink-edit", @class = "bcms-field-text bcms-js-url-path" }));
 
             
             #line default
             #line hidden
-WriteLiteral("\n\n    <div");
+WriteLiteral("\r\n");
 
-WriteLiteral(" class=\"bcms-custom-input-box\"");
-
-WriteLiteral(">\n");
-
-WriteLiteral("        ");
+WriteLiteral("            ");
 
             
-            #line 17 "..\..\Views\Page\Partial\AddNewPageEditPermalink.cshtml"
-   Write(Html.TextBoxFor(model => model.PageUrl, new { @id = "bcms-page-permalink-edit", @class = "bcms-field-text bcms-js-url-path", @style = "width: 503px;" }));
+            #line 15 "..\..\Views\Page\Partial\AddNewPageEditPermalink.cshtml"
+       Write(Html.BcmsValidationMessageFor(f => f.PageUrl));
 
             
             #line default
             #line hidden
-WriteLiteral("\n");
-
-WriteLiteral("        ");
-
-            
-            #line 18 "..\..\Views\Page\Partial\AddNewPageEditPermalink.cshtml"
-   Write(Html.BcmsValidationMessageFor(f => f.PageUrl));
-
-            
-            #line default
-            #line hidden
-WriteLiteral("\n    </div>\n\n    <div");
+WriteLiteral("\r\n        </div>\r\n        <div");
 
 WriteLiteral(" class=\"bcms-btn-small\"");
 
@@ -165,26 +165,26 @@ WriteLiteral(" id=\"bcms-save-permalink\"");
 WriteLiteral(">");
 
             
-            #line 21 "..\..\Views\Page\Partial\AddNewPageEditPermalink.cshtml"
-                                                    Write(RootGlobalization.Button_Ok);
+            #line 17 "..\..\Views\Page\Partial\AddNewPageEditPermalink.cshtml"
+                                                        Write(RootGlobalization.Button_Ok);
 
             
             #line default
             #line hidden
-WriteLiteral("</div>\n    <div");
+WriteLiteral("</div>\r\n        <div");
 
 WriteLiteral(" class=\"bcms-btn-links-small\"");
 
 WriteLiteral(">");
 
             
-            #line 22 "..\..\Views\Page\Partial\AddNewPageEditPermalink.cshtml"
-                                 Write(RootGlobalization.Button_Cancel);
+            #line 18 "..\..\Views\Page\Partial\AddNewPageEditPermalink.cshtml"
+                                     Write(RootGlobalization.Button_Cancel);
 
             
             #line default
             #line hidden
-WriteLiteral("</div>\n</div>\n");
+WriteLiteral("</div>\r\n    </div>\r\n</div>\r\n");
 
         }
     }

@@ -33,12 +33,22 @@
         @using (Html.BeginForm<WidgetsController>(c => c.EditHtmlContentWidget((string)null), FormMethod.Post, new { @id = "bcms-advanced-content-form", @class = "bcms-ajax-form" }))
         {
             <div id="bcms-tab-1" class="bcms-tab-single">
-                <div class="bcms-input-list-holder">
-                    @Html.Tooltip(PagesGlobalization.HtmlContentWidget_ContentName_Tooltip_Description)
-                    <div class="bcms-content-titles">@PagesGlobalization.HtmlContentWidget_ContentName_Title</div>
-                    <div class="bcms-field-wrapper">
-                        @Html.TextBoxFor(model => model.Name, new { @class = "bcms-field-text" })
-                        @Html.BcmsValidationMessageFor(m => m.Name)
+                <div class="bcms-form-block-holder">
+                    <div>
+                        <div class="bcms-input-list-holder">
+                            @Html.Tooltip(PagesGlobalization.HtmlContentWidget_ContentName_Tooltip_Description)
+                            <div class="bcms-content-titles">@PagesGlobalization.HtmlContentWidget_ContentName_Title</div>
+                            <div class="bcms-field-wrapper">
+                                @Html.TextBoxFor(model => model.Name, new { @class = "bcms-field-text" })
+                                @Html.BcmsValidationMessageFor(m => m.Name)
+                            </div>
+                        </div>
+                    </div>
+
+                    <div>
+                        <div class="bcms-input-list-holder" data-bind="with: categories">
+                            @Html.Partial("~/Areas/bcms-root/Views/Category/CategoriesTemplate.cshtml", categoriesTemplateViewModel)
+                        </div>
                     </div>
                 </div>
 
@@ -54,10 +64,6 @@
                         @Html.CheckBoxFor(model => model.EnableCustomHtml, new { @id = "bcms-enable-custom-html" })
                         <div class="bcms-edit-label">@Html.Raw(PagesGlobalization.HtmlContentWidget_RenderCustomHTML_Title)</div>
                     </div>
-                </div>
-
-                <div class="bcms-tags-box-holder" data-bind="with: categories">
-                    @Html.Partial("~/Areas/bcms-root/Views/Category/CategoriesTemplate.cshtml", categoriesTemplateViewModel)
                 </div>
             </div>
 

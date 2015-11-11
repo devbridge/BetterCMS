@@ -1,32 +1,20 @@
-//module Titles
-.bcms-large-titles {
-    @include vertical-align();
-    color: $dark-text;
-    font: {
-        size: 18px;
-        weight: 700;
-        family: $font-base-family;
-    }
-    line-height: $form-element-height;
-}
+$action-icons: (
+                ('edit', $bcms-action-edit),
+                ('preview'),
+                ('restore'),
+                ('history'),
+                ('settings'),
+                ('delete', $bcms-action-delete)
+);
 
-.bcms-content-titles {
-    color: $dark-text;
-    font-family: $font-base-family;
-    font-size: 14px;
-    font-weight: 700;
-    line-height: 20px;
-    padding-bottom: 4px;
-    position: relative;
-
-    > a {
-        color: $blue-main;
+@each $name, $icon in $action-icons {
+    .bcms-action-#{$name} {
+        @include vertical-align();
+        @include size(18px);
+        background: url($icon) no-repeat center;
         cursor: pointer;
-        font: {
-            size: 12px;
-            weight: 400;
-        }
-        margin-left: 40px;
+        position: relative;
+        text-indent: 999em;
     }
 }
 
@@ -40,13 +28,13 @@
     width: 70px;
 }
 
-.bcms-loader-2 {
-    background: url('images/loading.gif') no-repeat scroll center center transparent;
-    height: 70px;
-    margin: -35px 0 0 -35px;
-    position: fixed;
-    width: 70px;
-}
+//.bcms-loader-2 {
+//    background: url('images/loading.gif') no-repeat scroll center center transparent;
+//    height: 70px;
+//    margin: -35px 0 0 -35px;
+//    position: fixed;
+//    width: 70px;
+//}
 
 //module Hidden form submit. Can't set display:none because we need to submit form.
 .bcms-hidden-submit {
@@ -282,95 +270,6 @@ a.bcms-remove-image {
     height: 6px;
 }
 
-//module Tooltips
-.bcms-tooltip-mark {
-    background: url('images/sprite-base-1.png') no-repeat -3px -777px;
-    cursor: pointer;
-    height: 12px;
-    left: -15px;
-    position: absolute;
-    top: 4px;
-    width: 12px;
-    z-index: 100;
-}
-
-.bcms-tooltip-mark:hover {
-    background-position: -20px -777px;
-}
-
-.bcms-tooltip-mark-active {
-    background-position: -20px -777px;
-}
-
-.bcms-tooltip-box {
-    background: #eff9fd;
-    border: 1px solid #c6c6c6;
-    box-shadow: 1px 1px 5px 0 rgba(0, 0, 0, 0.4);
-    padding: 5px;
-    position: relative;
-    width: 300px;
-}
-
-.bcms-tooltip-box p {
-    font-size: 11px;
-    line-height: 19px;
-    margin: 0;
-    padding: 0;
-}
-
-div.bcms-tip-close {
-    background: url('images/sprite-base-1.png') no-repeat -9px -755px;
-    cursor: pointer;
-    height: 14px;
-    overflow: hidden;
-    position: absolute;
-    right: 10px;
-    text-decoration: none;
-    text-indent: 9999px;
-    top: 10px;
-    width: 15px;
-}
-
-.bcms-tooltip-tl:before,
-.bcms-tooltip-bl:before,
-.bcms-tooltip-tr:before,
-.bcms-tooltip-br:before {
-    background: url('images/sprite-base-2.png') no-repeat;
-    content: " ";
-    height: 7px;
-    pointer-events: none;
-    position: absolute;
-    width: 12px;
-}
-
-//module top left
-.bcms-tooltip-tl:before {
-    background-position: -24px -129px;
-    bottom: 100%;
-    left: 19px;
-}
-
-//module bottom left
-.bcms-tooltip-bl:before {
-    background-position: -24px -137px;
-    left: 19px;
-    top: 100%;
-}
-
-//module top right
-.bcms-tooltip-tr:before {
-    background-position: -24px -129px;
-    bottom: 100%;
-    left: 320px;
-}
-
-//module bottom right
-.bcms-tooltip-br:before {
-    background-position: -24px -137px;
-    left: 320px;
-    top: 100%;
-}
-
 //module preview boxes & widgets grid
 .bcms-preview-block {
     float: left;
@@ -380,42 +279,42 @@ div.bcms-tip-close {
     width: 210px;
 }
 
-.bcms-title-holder {
-    height: 20px;
-    margin-bottom: 5px;
-    overflow: hidden;
-    position: relative;
-    width: 100%;
-}
+//.bcms-title-holder {
+//    height: 20px;
+//    margin-bottom: 5px;
+//    overflow: hidden;
+//    position: relative;
+//    width: 100%;
+//}
 
-.bcms-controls-holder {
-    position: relative;
-}
+//.bcms-controls-holder {
+//    position: relative;
+//}
+//
+//.bcms-controls-holder .bcms-btn-small {
+//    margin-right: 17px;
+//}
 
-.bcms-controls-holder .bcms-btn-small {
-    margin-right: 17px;
-}
+//.bcms-preview-box {
+//    background: url('images/bcms-no-image-1.png') no-repeat center center #f5f5f5;
+//    border: 1px solid #c6c6c6;
+//    height: 175px;
+//    margin-bottom: 5px;
+//    position: relative;
+//    width: 208px;
+//}
+//
+//.bcms-preview-box > div.bcms-preview-box-image {
+//    background-color: #ffffff;
+//    height: 100%;
+//    width: 100%;
+//}
 
-.bcms-preview-box {
-    background: url('images/bcms-no-image-1.png') no-repeat center center #f5f5f5;
-    border: 1px solid #c6c6c6;
-    height: 175px;
-    margin-bottom: 5px;
-    position: relative;
-    width: 208px;
-}
-
-.bcms-preview-box > div.bcms-preview-box-image {
-    background-color: #ffffff;
-    height: 100%;
-    width: 100%;
-}
-
-.bcms-preview-box img {
-    display: block;
-    max-height: 175px;
-    max-width: 208px;
-}
+//.bcms-preview-box img {
+//    display: block;
+//    max-height: 175px;
+//    max-width: 208px;
+//}
 
 .bcms-preview-box:hover > .bcms-zoom-overlay {
     cursor: pointer;
@@ -436,261 +335,28 @@ div.bcms-tip-close {
     z-index: 1;
 }
 
-.bcms-preview-image-border {
-    background-color: #f5f5f5;
-    border: 1px solid #c6c6c6;
-    box-shadow: 0 0 1px 1px #292929;
-    left: 50%;
-    margin-left: -116px;
-    min-height: 170px;
-    padding: 30px;
-    position: absolute;
-    top: 50px;
-    width: 215px;
-}
-
-.bcms-preview-image-frame {
-    overflow: hidden;
-}
-
-.bcms-preview-image-frame img {
-    display: block;
-}
-
-//module Tags & Default Tags Holders
-.bcms-tags-field-holder {
-    position: absolute;
-    right: -125px;
-    top: 0;
-}
-
-.bcms-add-tags-field {
-    background-color: #f5f5f5;
-    border: 0;
-    border: 1px solid #d1d1d1;
-    color: #000;
-    font-family: "Open Sans", sans-serif;
-    font-size: 12px;
-    height: 16px;
-    line-height: 16px;
-    margin: 0;
-    padding: 3px;
-    vertical-align: middle;
-}
-
-.bcms-add-tags-field:focus {
-    outline: none;
-}
-
-.bcms-single-tag-holder {
-    @include clearfix();
-}
-
-.bcms-single-tag {
-    background-color: #def8ff;
-    border: 1px solid #95d3e7;
-    border-radius: 2px;
-    color: #000;
-    cursor: default;
-    float: left;
-    font-size: 12px;
-    height: 22px;
-    line-height: 21px;
-    margin: 4px 4px 3px 0;
-    max-width: 280px;
-    overflow: hidden;
-    padding: 0 18px 0 6px;
-    position: relative;
-    text-overflow: ellipsis;
-    transition: background-color 0.1s ease-in-out;
-    white-space: nowrap;
-}
-
-.bcms-single-tag:hover {
-    background-color: #CDF4FF;
-}
-
-.bcms-single-tag > a {
-    background: url('images/sprite-base-1.png') no-repeat -21px -1059px;
-    cursor: pointer;
-    height: 8px;
-    margin: -4px 0 0 6px;
-    overflow: hidden;
-    position: absolute;
-    right: 4px;
-    text-indent: 9999px;
-    top: 50%;
-    width: 8px;
-}
-
-.bcms-single-tag-active {
-    animation: duplicateTag 1.5s 3;
-    -webkit-animation: duplicateTag 1.5s 3;
-}
-
-@-webkit-keyframes duplicateTag {
-    0% {
-        background-color: #def8ff;
-        border: 1px solid #95d3e7;
-    }
-
-    50% {
-        background-color: #fcecec;
-        border: 1px solid #e64343;
-    }
-
-    100% {
-        background-color: #def8ff;
-        border: 1px solid #95d3e7;
-    }
-}
-
-@keyframes duplicateTag {
-    0% {
-        background-color: #def8ff;
-        border: 1px solid #95d3e7;
-    }
-
-    50% {
-        background-color: #fcecec;
-        border: 1px solid #e64343;
-    }
-
-    100% {
-        background-color: #def8ff;
-        border: 1px solid #95d3e7;
-    }
-}
-
-//module media manager validation
-//.bcms-grid .bcms-file-box .bcms-media-input-box {
-//    bottom: 5px;
-//    left: 4px;
+//.bcms-preview-image-border {
+//    background-color: #f5f5f5;
+//    border: 1px solid #c6c6c6;
+//    box-shadow: 0 0 1px 1px #292929;
+//    left: 50%;
+//    margin-left: -116px;
+//    min-height: 170px;
+//    padding: 30px;
 //    position: absolute;
-//    top: auto;
-//    width: 95px;
+//    top: 50px;
+//    width: 215px;
 //}
 //
-//.bcms-grid .bcms-folder-box .bcms-media-input-box {
-//    bottom: 5px;
-//    left: 4px;
-//    position: absolute;
-//    top: auto;
-//    width: 95px;
+//.bcms-preview-image-frame {
+//    overflow: hidden;
 //}
 //
-//.bcms-grid .bcms-image-box .bcms-media-input-box {
-//    bottom: 5px;
-//    left: 4px;
-//    position: absolute;
-//    top: auto;
-//    width: 95px;
-//}
-//
-//.bcms-grid .bcms-media-input-box input.bcms-input-validation-error {
-//    background-color: #fcecec;
-//    border: 1px solid #e64343;
-//    box-shadow: 0 0 2px 0 rgba(230, 67, 67, 0.4);
-//}
-//
-//.bcms-grid .bcms-media-input-box input.bcms-input-validation-error:focus {
-//    background: #fcecec;
-//    border: 1px solid #e64343;
-//    box-shadow: 0 0 2px 0 rgba(230, 67, 67, 0.4);
-//}
-
-//module table grid validation messages
-//.bcms-input-box input.bcms-input-validation-error {
-//    background: #fcecec;
-//    border: 1px solid #e64343;
-//    box-shadow: 0 0 2px 0 rgba(230, 67, 67, 0.4);
-//}
-//
-//.bcms-input-box input.bcms-input-validation-error:focus {
-//    background: #fcecec;
-//    border: 1px solid #e64343;
-//    box-shadow: 0 0 2px 0 rgba(230, 67, 67, 0.4);
+//.bcms-preview-image-frame img {
+//    display: block;
 //}
 
 //module user access controls
-.bcms-user-access {
-    border-bottom: 1px solid #c6c6c6;
-}
-
-.bcms-access-table {
-}
-
-.bcms-access-title {
-    border-bottom: 1px solid #c6c6c6;
-}
-
-.bcms-access-title-text {
-    box-sizing: border-box;
-    -moz-box-sizing: border-box;
-    float: left;
-    font-weight: 700;
-    padding: 5px;
-    text-align: center;
-    width: 15%;
-}
-
-.bcms-access-title-text:first-child {
-    text-align: left;
-    width: 55%;
-}
-
-.bcms-access-line {
-    border-bottom: 1px solid #eeeeee;
-    line-height: 1.5em;
-    padding: 5px 0;
-}
-
-.bcms-access-line:last-child {
-    border-bottom: 0;
-}
-
-.bcms-access-value {
-    box-sizing: border-box;
-    -moz-box-sizing: border-box;
-    float: left;
-    width: 15%;
-}
-
-.bcms-access-value:first-child {
-    text-align: left;
-    width: 55%;
-}
-
-.bcms-access-value input[type="radio"] {
-    cursor: pointer;
-    display: block;
-    margin-left: auto;
-    margin-right: auto;
-}
-
-.bcms-access-value-add {
-    color: #0383DF;
-    cursor: pointer;
-    font-weight: 700;
-}
-
-.btn-acces-plus, .btn-acces-minus {
-    cursor: pointer;
-    display: inline-block;
-    line-height: 16px;
-    margin-right: 10px;
-    vertical-align: middle;
-    width: 16px;
-}
-
-.btn-acces-plus {
-    background: url('images/sprite-base-2.png') no-repeat -44px -179px;
-}
-
-.btn-acces-minus {
-    background: url('images/sprite-base-2.png') no-repeat -64px -179px;
-}
-
 .bcms-pointer {
     cursor: pointer;
 }

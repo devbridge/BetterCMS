@@ -1,5 +1,7 @@
 ﻿using System;
+using System.Collections.Generic;
 
+using BetterCMS.Module.LuceneSearch.Services.IndexerService;
 using BetterCMS.Module.LuceneSearch.Services.WebCrawlerService;
 
 using Lucene.Net.Documents;
@@ -14,10 +16,16 @@ namespace BetterCms.Events
 
         public PageData PageData { get; set; }
 
+        public bool ExcludeDefaultDocumentFromIndex { get; set; }
+
+        public IList<DocumentData> AdditionalDocuments { get; set; }
+
         public DocumentSavingEventArgs(Document document, PageData pageData)
         {
             Document = document;
             PageData = pageData;
+            ExcludeDefaultDocumentFromIndex = false;
+            AdditionalDocuments = new List<DocumentData>();
         }
     }
 }

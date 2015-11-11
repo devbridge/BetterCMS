@@ -1,12 +1,16 @@
-%btn-extender {
+%btn-frame {
     @include vertical-align();
-    @include transition(background-color 200ms);
-    border: 0;
+    @include transition(background-color 200ms, color 200ms);
     box-sizing: border-box;
     cursor: pointer;
     font-family: $font-base-family;
     overflow: hidden;
     text-align: center;
+}
+
+%btn-extender {
+    @extend %btn-frame;
+    border: 0;
     text-transform: uppercase;
 }
 
@@ -46,6 +50,17 @@
         }
     }
 
+    &-tertiary {
+        @extend %btn-frame;
+        background-color: $white;
+        border: $border-nav-bottom;
+        color: $blue-main;
+        font-size: 12px;
+        height: 28px;
+        line-height: 26px;
+        padding: 0 20px;
+    }
+
     &-grid {
         @extend %btn-extender;
         background-color: $gray-l45;
@@ -68,6 +83,7 @@
         @extend %btn-links-extender;
         font-size: 12px;
         line-height: 30px;
+        margin: 0;
     }
 
     &-search {
@@ -83,18 +99,3 @@
         @include close-button($icon: $bcms-close, $position: 15px 15px null null);
     }
 }
-
-//todo need to update
-//.bcms-btn-plus {
-//    background: url('images/sprite-base-2.png') no-repeat -44px -179px;
-//    cursor: pointer;
-//    display: inline-block;
-//    line-height: 16px;
-//    margin-left: 5px;
-//    vertical-align: middle;
-//    width: 16px;
-//}
-//
-//div.bcms-btn-plus-expand {
-//    background-position: -64px -179px;
-//}

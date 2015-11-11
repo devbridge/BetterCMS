@@ -340,17 +340,17 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Index.cshtml</DependentUpon>
     </Compile>
-    <Compile Include="Views\MediaManager\Partial\MediaManagerFilterTemplate.generated.cs">
+    <Compile Include="Views\Shared\Partial\MediaManagerFilterTemplate.generated.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>MediaManagerFilterTemplate.cshtml</DependentUpon>
     </Compile>
-    <Compile Include="Views\MediaManager\Partial\MediaManagerTab.generated.cs">
+    <Compile Include="Views\Shared\Partial\MediaManagerTab.generated.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>MediaManagerTab.cshtml</DependentUpon>
     </Compile>
-    <Compile Include="Views\MediaManager\Partial\MediaManagerTemplate.generated.cs">
+    <Compile Include="Views\Shared\Partial\MediaManagerTemplate.generated.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>MediaManagerTemplate.cshtml</DependentUpon>
@@ -434,7 +434,7 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <None Include="Views\MediaManager\Partial\MediaManagerFilterTemplate.cshtml">
+    <None Include="Views\Shared\Partial\MediaManagerFilterTemplate.cshtml">
       <Generator>RazorGenerator</Generator>
       <LastGenOutput>MediaManagerFilterTemplate.generated.cs</LastGenOutput>
     </None>
@@ -480,13 +480,13 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <None Include="Views\MediaManager\Partial\MediaManagerTab.cshtml">
+    <None Include="Views\Shared\Partial\MediaManagerTab.cshtml">
       <Generator>RazorGenerator</Generator>
       <LastGenOutput>MediaManagerTab.generated.cs</LastGenOutput>
     </None>
   </ItemGroup>
   <ItemGroup>
-    <None Include="Views\MediaManager\Partial\MediaManagerTemplate.cshtml">
+    <None Include="Views\Shared\Partial\MediaManagerTemplate.cshtml">
       <Generator>RazorGenerator</Generator>
       <LastGenOutput>MediaManagerTemplate.generated.cs</LastGenOutput>
     </None>
