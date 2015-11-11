@@ -73,6 +73,15 @@ $template-grid-box-states: (
     &-no-preview {
         @include positioning($center: true);
     }
+
+    &-controls-holder {
+        display: table;
+        width: 100%;
+
+        .bcms-btn-tertiary {
+            width: 50%;
+        }
+    }
 }
 
 //
