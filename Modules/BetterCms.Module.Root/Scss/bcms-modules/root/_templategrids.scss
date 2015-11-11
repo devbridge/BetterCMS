@@ -16,7 +16,10 @@ $template-grid-box-states: (
 
         .bcms-content-titles {
             @include ellipsis;
-            font-size: 12px;
+            font: {
+                size: 12px;
+                weight: 400;
+            }
             padding-bottom: 0;
         }
 
@@ -75,11 +78,20 @@ $template-grid-box-states: (
     }
 
     &-controls-holder {
-        display: table;
-        width: 100%;
+        @include clearfix();
 
         .bcms-btn-tertiary {
             width: 50%;
+        }
+    }
+
+    &-controls-helper {
+        float: right;
+        line-height: 23px;
+        margin-top: 5px;
+
+        .bcms-action-delete {
+            margin-left: 10px;
         }
     }
 }

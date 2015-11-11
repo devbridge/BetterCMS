@@ -213,20 +213,28 @@ $access-control-buttons: (
 }
 
 //module spinner
-.bcms-loader-2,
-.bcms-loader-2:before,
-.bcms-loader-2:after {
+.bcms-loader {
+    height: 70px;
+    margin: -35px 0 0 -35px;
+    position: fixed;
+    width: 70px;
+    z-index: 999;
+}
+
+.bcms-loader,
+.bcms-loader:before,
+.bcms-loader:after {
     border-radius: 50%;
 }
 
-.bcms-loader-2:before,
-.bcms-loader-2:after {
+.bcms-loader:before,
+.bcms-loader:after {
     content: '';
     position: absolute;
     z-index: 999;
 }
 
-.bcms-loader-2:before {
+.bcms-loader:before {
     animation: load2 2s infinite ease 1.5s;
     -webkit-animation: load2 2s infinite ease 1.5s;
     background: #0dc5c1;
@@ -239,7 +247,7 @@ $access-control-buttons: (
     width: 5.2em;
 }
 
-.bcms-loader-2 {
+.bcms-loader {
     box-shadow: inset 0 0 0 1em #ffffff;
     font-size: 11px;
     height: 10em;
@@ -252,7 +260,7 @@ $access-control-buttons: (
     width: 10em;
 }
 
-.bcms-loader-2:after {
+.bcms-loader:after {
     animation: load2 2s infinite ease;
     -webkit-animation: load2 2s infinite ease;
     background: #0dc5c1;
