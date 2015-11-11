@@ -55,13 +55,13 @@ namespace ASP
         }
         public override void Execute()
         {
-WriteLiteral("\n<div");
+WriteLiteral("\r\n<div");
 
 WriteLiteral(" class=\"bcms-input-list-holder\"");
 
 WriteLiteral(" data-bind=\"with: roles\"");
 
-WriteLiteral(">\n");
+WriteLiteral(">\r\n");
 
 WriteLiteral("    ");
 
@@ -72,11 +72,11 @@ Write(Html.Tooltip(UsersGlobalization.EditUser_Role_Tooltip_Description));
             
             #line default
             #line hidden
-WriteLiteral("\n    <div");
+WriteLiteral("\r\n    <div");
 
 WriteLiteral(" class=\"bcms-content-titles\"");
 
-WriteLiteral(">\n");
+WriteLiteral(">\r\n");
 
 WriteLiteral("        ");
 
@@ -87,22 +87,15 @@ WriteLiteral("        ");
             
             #line default
             #line hidden
-WriteLiteral("\n        <div");
+WriteLiteral("\r\n    </div>\r\n\r\n    <div");
 
-WriteLiteral(" class=\"bcms-btn-plus\"");
-
-WriteLiteral(" data-bind=\"css: { \'bcms-btn-plus-expand\': isExpanded() }, click: expandCollapse\"" +
-"");
-
-WriteLiteral(">&nbsp;</div>\n        <div");
-
-WriteLiteral(" class=\"bcms-tags-field-holder\"");
+WriteLiteral(" class=\"bcms-field-wrapper\"");
 
 WriteLiteral(" data-bind=\"visible: isExpanded()\"");
 
 WriteLiteral(" style=\"right: -170px;\"");
 
-WriteLiteral(">\n            <input");
+WriteLiteral(">\r\n        <input");
 
 WriteLiteral(" type=\"text\"");
 
@@ -116,22 +109,21 @@ WriteLiteral(@" data-bind=""
                 autocompleteList: 'onlyExisting',
                 escPress: clearItem""");
 
-WriteLiteral(" />\n            <!-- ko if: newItem.hasError()  -->\n            <span");
+WriteLiteral(" />\r\n        <!-- ko if: newItem.hasError()  -->\r\n        <span");
 
 WriteLiteral(" class=\"bcms-tag-field-validation-error\"");
 
-WriteLiteral(">\n                <span");
+WriteLiteral(">\r\n            <span");
 
 WriteLiteral(" data-bind=\"text: newItem.validationMessage()\"");
 
-WriteLiteral("></span>\n            </span>\n            <!-- /ko -->\n        </div>\n    </div>\n " +
-"   <div");
+WriteLiteral("></span>\r\n        </span>\r\n        <!-- /ko -->\r\n    </div>\r\n\r\n    <div");
 
 WriteLiteral(" class=\"bcms-single-tag-holder\"");
 
 WriteLiteral(" data-bind=\"foreach: items()\"");
 
-WriteLiteral(">\n        <div");
+WriteLiteral(">\r\n        <div");
 
 WriteLiteral(" class=\"bcms-single-tag\"");
 
@@ -148,19 +140,19 @@ WriteLiteral(" data-bind=\"click: remove\"");
 WriteLiteral(">");
 
             
-            #line 26 "..\..\Views\User\Partial\EditUserRoles.cshtml"
+            #line 27 "..\..\Views\User\Partial\EditUserRoles.cshtml"
                                                                                                                                                              Write(RootGlobalization.Button_Remove);
 
             
             #line default
             #line hidden
-WriteLiteral("</a></div>\n        <input");
+WriteLiteral("</a></div>\r\n        <input");
 
 WriteLiteral(" type=\"hidden\"");
 
 WriteLiteral(" data-bind=\"attr: { name: getItemInputName($index()), value: name() }\"");
 
-WriteLiteral(" />\n    </div>\n</div>");
+WriteLiteral(" />\r\n    </div>\r\n</div>\r\n");
 
         }
     }

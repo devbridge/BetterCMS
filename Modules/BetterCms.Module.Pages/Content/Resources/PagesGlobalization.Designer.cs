@@ -412,6 +412,24 @@ namespace BetterCms.Module.Pages.Content.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Collapse All.
+        /// </summary>
+        public static string CategoryTree_Button_CollapseAll {
+            get {
+                return ResourceManager.GetString("CategoryTree_Button_CollapseAll", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Expand All.
+        /// </summary>
+        public static string CategoryTree_Button_ExpandAll {
+            get {
+                return ResourceManager.GetString("CategoryTree_Button_ExpandAll", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Edit child widget options.
         /// </summary>
         public static string ChildWidgetOptions_Dialog_Title {

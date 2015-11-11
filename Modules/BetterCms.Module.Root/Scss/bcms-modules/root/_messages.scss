@@ -85,9 +85,9 @@ $validation-fields: ();
     position: relative;
 }
 
-.bcms-textarea-box {
-    position: relative;
-}
+//.bcms-textarea-box {
+//    position: relative;
+//}
 
 .bcms-input-validation-error {
     background-color: #fcecec;
@@ -104,11 +104,6 @@ $validation-fields: ();
                 visibility: visible;
             }
         }
-    }
-
-    .bcms-textarea-box & {
-        background: 0;
-        top: 15px;
     }
 
     .bcms-date-input-box & {

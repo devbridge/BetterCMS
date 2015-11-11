@@ -2,14 +2,15 @@
 @using BetterCms.Module.Pages.ViewModels.Sitemap
 @model SitemapViewModel
 
-<div class="bcms-tree-info-block" data-bind="with: sitemap">
+<div class="bcms-top-block-holder" data-bind="with: sitemap">
     <div style="display: none;" data-bind="visible: showLanguages, with: language">
         <div class="bcms-filter-text">Edit sitemap in language:</div>
         <select class="bcms-global-select" data-bind="options: languages, optionsText: 'value', optionsValue: 'key', value: languageId"></select>
     </div>
+</div>
 
-    <div class="bcms-tree-expander" data-bind="click: expandAll">@NavigationGlobalization.Sitemap_Button_ExpandAll</div>
-    <div class="bcms-tree-expander" data-bind="click: collapseAll">@NavigationGlobalization.Sitemap_Button_CollapseAll</div>
+<div class="bcms-tree-info-block" data-bind="with: sitemap">
+    <div class="bcms-tree-expander bcms-tree-expander-close" data-bind="click: callExpandOrCollapse, css: { 'bcms-tree-expander-close' : allNodesExpanded()}, text: allNodesExpanded() ? '@PagesGlobalization.CategoryTree_Button_CollapseAll' : '@PagesGlobalization.CategoryTree_Button_ExpandAll'"></div>
 </div>
 
 @Html.Partial("Partial/Sitemap", new SitemapNodeViewModel())

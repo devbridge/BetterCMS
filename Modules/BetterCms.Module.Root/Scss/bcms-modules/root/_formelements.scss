@@ -47,11 +47,6 @@
 }
 
 .bcms-form {
-    &-holder {
-        @include clearfix();
-        margin-bottom: 20px;
-    }
-
     &-block-holder {
         @include clearfix();
         margin: 0 -30px;
@@ -60,13 +55,13 @@
             @include flexible-grid($elem-class: 'div');
             box-sizing: border-box;
             float: left;
-            padding: 0 30px 0 60px;
+            padding: 0 30px;
         }
     }
 }
 
 .bcms-input-list-holder {
-    margin-top: 30px;
+    margin: 30px 0 0 30px;
     position: relative;
 }
 

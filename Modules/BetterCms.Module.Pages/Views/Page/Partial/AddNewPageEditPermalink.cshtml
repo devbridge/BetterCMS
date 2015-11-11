@@ -7,16 +7,14 @@
     @Html.Tooltip(PagesGlobalization.AddNewPage_Permalink_Tooltip_Description)
     <div class="bcms-content-titles">@PagesGlobalization.AddNewPage_Permalink<a id="bcms-page-editpermalink">@RootGlobalization.Button_Edit</a></div>
     <div class="bcms-editseo-urlpath" id="bcms-page-permalink-info">@(string.IsNullOrWhiteSpace(Model.PageUrl) ? Html.Raw("&nbsp;") : new MvcHtmlString(Html.Encode(Model.PageUrl)))</div>
-</div>
 
-<div class="bcms-edit-urlpath-box" style="display: none;">
-    @Html.Hidden("PagePermalinkHidden", Model.PageUrl, new { @id = "bcms-page-permalink" })
-
-    <div class="bcms-field-wrapper">
-        @Html.TextBoxFor(model => model.PageUrl, new { @id = "bcms-page-permalink-edit", @class = "bcms-field-text bcms-js-url-path"})
-        @Html.BcmsValidationMessageFor(f => f.PageUrl)
+    <div class="bcms-edit-urlpath-box" style="display: none;">
+        @Html.Hidden("PagePermalinkHidden", Model.PageUrl, new { @id = "bcms-page-permalink" })
+        <div class="bcms-field-wrapper">
+            @Html.TextBoxFor(model => model.PageUrl, new { @id = "bcms-page-permalink-edit", @class = "bcms-field-text bcms-js-url-path" })
+            @Html.BcmsValidationMessageFor(f => f.PageUrl)
+        </div>
+        <div class="bcms-btn-small" id="bcms-save-permalink">@RootGlobalization.Button_Ok</div>
+        <div class="bcms-btn-links-small">@RootGlobalization.Button_Cancel</div>
     </div>
-
-    <div class="bcms-btn-small" id="bcms-save-permalink">@RootGlobalization.Button_Ok</div>
-    <div class="bcms-btn-links-small">@RootGlobalization.Button_Cancel</div>
 </div>
