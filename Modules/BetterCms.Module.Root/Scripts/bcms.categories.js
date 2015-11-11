@@ -50,6 +50,9 @@
                 MiddleZone: "middleZone",
                 BottomZone: "bottomZone"
             },
+            events = {
+                categoryNodeAdded: 'categoryNodeAdded'
+            },
             nodeId = 0;
 
         /**
@@ -229,6 +232,7 @@
                                 }
 
                                 updateValidation();
+                                bcms.trigger(events.categoryNodeAdded, dragObject);
                             }
                         };
                     if (dropZoneObject.getCategoryTree && !dropZoneObject.getCategoryTree().settings.canDropNode) {
@@ -692,6 +696,10 @@
                 }
                 return false;
             };
+
+            bcms.on(events.categoryNodeAdded, function () {
+                self.allNodesExpanded(self.checkIfAllNodesExpanded(self.childNodes()));
+            });
 
             // Updating display order and parent node info.
             self.updateNodesOrderAndParent = function () {

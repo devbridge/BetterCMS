@@ -82,7 +82,7 @@ bettercms.define('bcms.pages.properties', ['bcms.jquery', 'bcms', 'bcms.modal', 
             self.featuredImage = ko.observable(new media.ImageSelectorViewModel(featuredImage));
             self.accessControl = accessControlViewModel;
             self.translations = translationsViewModel;
-            self.categories = categoriesModel;
+            self.categories = ko.observableArray(categoriesModel);
         }
 
         /**
@@ -92,13 +92,28 @@ bettercms.define('bcms.pages.properties', ['bcms.jquery', 'bcms', 'bcms.modal', 
             var optionsContainer = dialog.container.find(selectors.optionsTab),
                 optionListViewModel = options.createOptionValuesViewModel(optionsContainer, content.Data.OptionValues, content.Data.CustomOptions),
                 tagsViewModel = new tags.TagsListViewModel(content.Data.Tags),
-                categoriesModel = new categories.CategoriesListViewModel(content.Data.Categories, content.Data.CategoriesFilterKey),
+                //categoriesModel = new categories.CategoriesListViewModel(content.Data.Categories, content.Data.CategoriesFilterKey),
                 accessControlViewModel = security.createUserAccessViewModel(content.Data.UserAccessList),
                 translationsViewModel = content.Data.Languages ? new pageLanguages.PageTranslationsListViewModel(content.Data.Translations, content.Data.Languages, content.Data.LanguageId, content.Data.PageId) : null,
-                pageViewModel = new PageViewModel(content.Data.Image, content.Data.SecondaryImage, content.Data.FeaturedImage, tagsViewModel, optionListViewModel, accessControlViewModel, translationsViewModel, categoriesModel),
+                pageViewModel = new PageViewModel(content.Data.Image, content.Data.SecondaryImage, content.Data.FeaturedImage, tagsViewModel, optionListViewModel, accessControlViewModel, translationsViewModel, content.Data.Categories),
                 form = dialog.container.find(selectors.pagePropertiesForm),
                 codeEditorInitialized = false;
 
+            var categoriesSelectBox = $("#customSelect").select2({
+                multiple: true,
+                width: 300,
+                data: content.Data.CategoriesLookupList
+            }).on('select2-selecting', function (e) {
+                pageViewModel.categories.push({ id: e.val });
+                })
+            .on('select2-removed', function(e) {
+                pageViewModel.categories.remove(function(item) {
+                    return item.id == e.val;
+                });
+            });
+
+            categoriesSelectBox.select2('data', content.Data.Categories);
+             
             ko.applyBindings(pageViewModel, form.get(0));
 
             currentPageIsPublished = dialog.container.find(selectors.pagePropertiesPageIsPublishedCheckbox).is(':checked');

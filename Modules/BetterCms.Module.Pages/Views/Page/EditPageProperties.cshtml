@@ -148,9 +148,19 @@
                             </div>
                         </div>
 
-                        <div class="bcms-input-list-holder" data-bind="with: categories">
-                            @Html.Partial("~/Areas/bcms-root/Views/Category/CategoriesTemplate.cshtml", categoriesTemplateViewModel)
+@*                        <div class="bcms-input-list-holder" data-bind="with: categories">*@
+@*                            @Html.Partial("~/Areas/bcms-root/Views/Category/CategoriesTemplate.cshtml", categoriesTemplateViewModel)*@
+@*                        </div>*@
+                        <div class="bcms-input-list-holder">
+                            <div class="bcms-content-titles">
+                                @RootGlobalization.CategoriesTemplate_AddCategories_Title
+                                <input type="hidden" id="customSelect" />
+                            </div>
                         </div>
+                        <div class="bcms-single-tag-holder" data-bind="foreach: categories">
+                            <input type="hidden" data-bind="attr: { name: 'Categories['+ $index() +'].key', value: $data.id }" />
+                        </div>
+
 
                         <div class="bcms-input-list-holder" data-bind="with: tags">
                             @Html.Partial("~/Areas/bcms-root/Views/Tags/TagsTemplate.cshtml", tagsTemplateViewModel)

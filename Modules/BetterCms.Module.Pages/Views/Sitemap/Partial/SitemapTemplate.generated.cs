@@ -100,7 +100,7 @@ WriteLiteral(@"</div>
                         css: { 'bcms-placement-node-drag': isBeingDragged(), 'bcms-placement-node-edit': isActive(), 'bcms-placement-one-active': !isBeingDragged() && superDraggable() },
                         style: { height: getNodeHeight() }"">
                 <!-- ko if: hasChildNodes() -->
-                <a class=""bcms-expand-collapse-node"" data-bind=""click: toggleExpand, css: { 'bcms-expanded-nodes': isExpanded() }"">&nbsp;</a>
+                <a class=""bcms-expand-collapse-node"" data-bind=""click: $parents[$parents.length - 2].toggleNodeExpand, css: { 'bcms-expanded-nodes': isExpanded() }"">&nbsp;</a>
                 <!-- /ko -->
                 <div class=""bcms-node-info"" data-bind=""droppable: 'middleZone'"">
                     <div class=""bcms-placement-title"" data-bind=""text: title""></div>

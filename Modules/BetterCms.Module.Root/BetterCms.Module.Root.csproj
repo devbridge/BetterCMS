@@ -445,6 +445,7 @@
     <Compile Include="ViewModels\Authentication\InfoViewModel.cs" />
     <Compile Include="ViewModels\Autocomplete\SuggestionViewModel.cs" />
     <Compile Include="ViewModels\CategoryTreesFilter.cs" />
+    <Compile Include="ViewModels\Category\CategoryLookupModel.cs" />
     <Compile Include="ViewModels\Category\CategorySuggestionViewModel.cs" />
     <Compile Include="ViewModels\Category\CategoryTreeNodeViewModel.cs" />
     <Compile Include="ViewModels\Category\CategoryTreesGridViewModel.cs" />
@@ -1408,6 +1409,8 @@
     <EmbeddedResource Include="Scripts\ckeditor\plugins\cms-togglelinewrap\plugin.js" />
     <EmbeddedResource Include="Content\Styles\bcms.root.css" />
     <EmbeddedResource Include="Content\Styles\bcms.root.min.css" />
+    <EmbeddedResource Include="Content\Styles\select2.css" />
+    <EmbeddedResource Include="Content\Styles\select2.png" />
     <Content Include="Gulpfile.js" />
     <Content Include="gulp\compile-sass\compile-sass.js" />
     <Content Include="gulp\create-data-uri-vars\create-data-uri-vars.js" />
@@ -1422,6 +1425,7 @@
     <EmbeddedResource Include="Scripts\ckeditor\skins\bettercms\dialog.css" />
     <EmbeddedResource Include="Models\Migrations\Migration201510231700.sqlserver.sql" />
     <EmbeddedResource Include="Scripts\bcms.knockout-3.3.0.js" />
+    <EmbeddedResource Include="Scripts\bcms.jquery.select2.js" />
     <Content Include="Scss\base_64\icons\add-content.svg" />
     <Content Include="Scss\base_64\icons\btn-down-arrow.svg" />
     <Content Include="Scss\base_64\icons\close-white.svg" />
