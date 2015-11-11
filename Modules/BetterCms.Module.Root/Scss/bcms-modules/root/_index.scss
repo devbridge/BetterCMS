@@ -1,3 +1,23 @@
+$action-icons: (
+                ('edit', $bcms-action-edit),
+                ('preview'),
+                ('restore'),
+                ('history'),
+                ('settings'),
+                ('delete', $bcms-action-delete)
+);
+
+@each $name, $icon in $action-icons {
+    .bcms-action-#{$name} {
+        @include vertical-align();
+        @include size(18px);
+        background: url($icon) no-repeat center;
+        cursor: pointer;
+        position: relative;
+        text-indent: 999em;
+    }
+}
+
 .bcms-loader {
     background: url('images/loading.gif') no-repeat center center;
     height: 70px;

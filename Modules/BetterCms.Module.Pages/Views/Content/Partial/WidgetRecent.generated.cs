@@ -293,13 +293,13 @@ WriteLiteral("</div>\r\n");
             #line hidden
 WriteLiteral("                            <a");
 
-WriteLiteral(" class=\"bcms-icn-edit bcms-content-edit-button bcms-edit-draft\"");
+WriteLiteral(" class=\"bcms-icn-edit bcms-js-content-edit bcms-edit-draft\"");
 
 WriteLiteral(">");
 
             
             #line 45 "..\..\Views\Content\Partial\WidgetRecent.cshtml"
-                                                                                         Write(PagesGlobalization.AddPageContent_WidgetTab_EditButton);
+                                                                                     Write(PagesGlobalization.AddPageContent_WidgetTab_EditButton);
 
             
             #line default
@@ -317,13 +317,13 @@ WriteLiteral("</a>\r\n");
             #line hidden
 WriteLiteral("                            <a");
 
-WriteLiteral(" class=\"bcms-icn-edit bcms-content-edit-button\"");
+WriteLiteral(" class=\"bcms-icn-edit bcms-js-content-edit\"");
 
 WriteLiteral(">");
 
             
             #line 49 "..\..\Views\Content\Partial\WidgetRecent.cshtml"
-                                                                         Write(PagesGlobalization.AddPageContent_WidgetTab_EditButton);
+                                                                     Write(PagesGlobalization.AddPageContent_WidgetTab_EditButton);
 
             
             #line default
@@ -339,13 +339,13 @@ WriteLiteral("</a>\r\n");
             #line hidden
 WriteLiteral("                        <a");
 
-WriteLiteral(" class=\"bcms-icn-delete bcms-content-delete-button\"");
+WriteLiteral(" class=\"bcms-icn-delete bcms-js-content-delete\"");
 
 WriteLiteral(">");
 
             
             #line 51 "..\..\Views\Content\Partial\WidgetRecent.cshtml"
-                                                                         Write(PagesGlobalization.AddPageContent_WidgetTab_DeleteButton);
+                                                                     Write(PagesGlobalization.AddPageContent_WidgetTab_DeleteButton);
 
             
             #line default
