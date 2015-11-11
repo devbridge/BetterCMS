@@ -105,6 +105,7 @@ bettercms.define('bcms.ko.grid', ['bcms.jquery', 'bcms', 'bcms.ko.extenders', 'b
 
             self.toggleSearch = function() {
                 if (!self.searchEnabled()) {
+                    self.options().hasFocus(true);
                     self.searchEnabled(true);
                 } else {
                     self.searchEnabled(false);

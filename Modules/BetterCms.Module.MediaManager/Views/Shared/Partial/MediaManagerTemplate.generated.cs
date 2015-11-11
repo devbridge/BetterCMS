@@ -143,11 +143,11 @@ WriteLiteral("\r\n            <div class=\"bcms-top-block-inner\" data-bind=\"cs
             #line hidden
 WriteLiteral(@"</div>
                 <div class=""bcms-search-block"">
-                    <input id=""bcms-search-input"" name=""MediaSearch"" data-bind=""value: gridOptions().searchQuery, valueUpdate: 'afterkeydown', enterPress: searchMedia"" class=""bcms-search-field-box bcms-js-search-box"" type=""text"" placeholder=""");
+                    <input id=""bcms-search-input"" name=""MediaSearch"" data-bind=""value: gridOptions().searchQuery, valueUpdate: 'afterkeydown', enterPress: searchMedia, hasFocus: hasFocus, enable: searchEnabled"" class=""bcms-search-field-box bcms-js-search-box"" type=""text"" placeholder=""");
 
             
             #line 26 "..\..\Views\Shared\Partial\MediaManagerTemplate.cshtml"
-                                                                                                                                                                                                                                             Write(RootGlobalization.WaterMark_Search);
+                                                                                                                                                                                                                                                                                        Write(RootGlobalization.WaterMark_Search);
 
             
             #line default

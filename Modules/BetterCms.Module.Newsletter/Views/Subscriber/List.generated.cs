@@ -216,18 +216,18 @@ WriteLiteral(">\r\n                    <input");
 WriteLiteral(" class=\"bcms-search-field-box\"");
 
 WriteLiteral(" data-bind=\"value: options().searchQuery, valueUpdate: \'afterkeydown\', enterPress" +
-": searchItems, hasfocus: options().hasFocus\"");
+": searchItems, hasfocus: options().hasFocus, enable: searchEnabled\"");
 
 WriteLiteral(" type=\"text\"");
 
-WriteAttribute("placeholder", Tuple.Create(" placeholder=\"", 1762), Tuple.Create("\"", 1811)
+WriteAttribute("placeholder", Tuple.Create(" placeholder=\"", 1785), Tuple.Create("\"", 1834)
             
             #line 27 "..\..\Views\Subscriber\List.cshtml"
-                                                                                                                               , Tuple.Create(Tuple.Create("", 1776), Tuple.Create<System.Object, System.Int32>(RootGlobalization.WaterMark_Search
+                                                                                                                                                      , Tuple.Create(Tuple.Create("", 1799), Tuple.Create<System.Object, System.Int32>(RootGlobalization.WaterMark_Search
             
             #line default
             #line hidden
-, 1776), false)
+, 1799), false)
 );
 
 WriteLiteral(" />\r\n                </div>\r\n            </div>\r\n");
@@ -404,14 +404,14 @@ WriteLiteral("                <td");
 
 WriteLiteral(" class=\"bcms-tables-nohover\"");
 
-WriteAttribute("colspan", Tuple.Create(" colspan=\"", 3418), Tuple.Create("\"", 3448)
+WriteAttribute("colspan", Tuple.Create(" colspan=\"", 3441), Tuple.Create("\"", 3471)
             
             #line 72 "..\..\Views\Subscriber\List.cshtml"
-, Tuple.Create(Tuple.Create("", 3428), Tuple.Create<System.Object, System.Int32>(visibleColumnsCount
+, Tuple.Create(Tuple.Create("", 3451), Tuple.Create<System.Object, System.Int32>(visibleColumnsCount
             
             #line default
             #line hidden
-, 3428), false)
+, 3451), false)
 );
 
 WriteLiteral(">");
@@ -458,14 +458,14 @@ WriteLiteral("                <td");
 
 WriteLiteral(" class=\"bcms-tables-nohover\"");
 
-WriteAttribute("colspan", Tuple.Create(" colspan=\"", 3770), Tuple.Create("\"", 3800)
+WriteAttribute("colspan", Tuple.Create(" colspan=\"", 3793), Tuple.Create("\"", 3823)
             
             #line 79 "..\..\Views\Subscriber\List.cshtml"
-, Tuple.Create(Tuple.Create("", 3780), Tuple.Create<System.Object, System.Int32>(visibleColumnsCount
+, Tuple.Create(Tuple.Create("", 3803), Tuple.Create<System.Object, System.Int32>(visibleColumnsCount
             
             #line default
             #line hidden
-, 3780), false)
+, 3803), false)
 );
 
 WriteLiteral(">");
@@ -689,14 +689,14 @@ WriteLiteral("&nbsp;\r\n");
 WriteLiteral("\r\n            </td>\r\n            <!-- /ko -->\r\n        </tr>\r\n        <!-- /ko --" +
 ">\r\n        <!-- ko if: items().length == 0 -->\r\n        <tr>\r\n            <td");
 
-WriteAttribute("colspan", Tuple.Create(" colspan=\"", 5557), Tuple.Create("\"", 5593)
+WriteAttribute("colspan", Tuple.Create(" colspan=\"", 5580), Tuple.Create("\"", 5616)
             
             #line 125 "..\..\Views\Subscriber\List.cshtml"
-, Tuple.Create(Tuple.Create("", 5567), Tuple.Create<System.Object, System.Int32>(visibleColumnsCount + 2
+, Tuple.Create(Tuple.Create("", 5590), Tuple.Create<System.Object, System.Int32>(visibleColumnsCount + 2
             
             #line default
             #line hidden
-, 5567), false)
+, 5590), false)
 );
 
 WriteLiteral("><span");

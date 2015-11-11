@@ -101,7 +101,8 @@ bettercms.define('bcms.newsletter', ['bcms.jquery', 'bcms', 'bcms.siteSettings',
             var viewModel = new SubscribersListViewModel(container, data.Items, data.GridOptions);
             viewModel.deleteUrl = links.deleteSubscriberUrl;
             viewModel.saveUrl = links.saveSubscriberUrl;
-            
+
+            ko.cleanNode(container.get(0));
             ko.applyBindings(viewModel, container.get(0));
             
             // Select search.

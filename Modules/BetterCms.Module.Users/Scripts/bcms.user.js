@@ -80,8 +80,11 @@ bettercms.define('bcms.user', ['bcms.jquery', 'bcms', 'bcms.modal', 'bcms.siteSe
             form.find(selectors.usersSearchButton).on('click', function () {
                 var parent = $(this).parent();
                 if (!parent.hasClass('bcms-active-search')) {
+                    form.find(selectors.usersSearchField).prop('disabled', false);
                     parent.addClass('bcms-active-search');
+                    form.find(selectors.usersSearchField).focus();
                 } else {
+                    form.find(selectors.usersSearchField).prop('disabled', true);
                     parent.removeClass('bcms-active-search');
                     form.find(selectors.usersSearchField).val('');
                 }
@@ -93,6 +96,8 @@ bettercms.define('bcms.user', ['bcms.jquery', 'bcms', 'bcms.modal', 'bcms.siteSe
 
             if (isSearchResult === true) {
                 form.find(selectors.usersSearchButton).parent().addClass('bcms-active-search');
+            } else {
+                form.find(selectors.usersSearchField).prop('disabled', true);
             }
 
             initializeSiteSettingsUsersListItem(usersContainer);

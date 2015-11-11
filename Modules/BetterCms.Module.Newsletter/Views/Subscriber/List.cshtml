@@ -24,7 +24,7 @@
             <div class="bcms-top-block-inner" data-bind="css: { 'bcms-active-search' : searchEnabled }">
                 <div class="bcms-btn-search" data-bind="click: toggleSearch">@RootGlobalization.Button_Search</div>
                 <div class="bcms-search-block">
-                    <input class="bcms-search-field-box" data-bind="value: options().searchQuery, valueUpdate: 'afterkeydown', enterPress: searchItems, hasfocus: options().hasFocus" type="text" placeholder="@RootGlobalization.WaterMark_Search" />
+                    <input class="bcms-search-field-box" data-bind="value: options().searchQuery, valueUpdate: 'afterkeydown', enterPress: searchItems, hasfocus: options().hasFocus, enable: searchEnabled" type="text" placeholder="@RootGlobalization.WaterMark_Search" />
                 </div>
             </div>
         }

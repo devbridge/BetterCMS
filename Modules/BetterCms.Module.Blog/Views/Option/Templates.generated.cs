@@ -109,7 +109,8 @@ WriteAttribute("placeholder", Tuple.Create(" placeholder=\"", 546), Tuple.Create
 , 560), false)
 );
 
-WriteLiteral(" data-bind=\"value: searchQuery, valueUpdate: \'afterkeydown\', enterPress: search\"");
+WriteLiteral(" data-bind=\"value: searchQuery, valueUpdate: \'afterkeydown\', enterPress: search, " +
+"hasFocus: hasFocus, enable: searchEnabled\"");
 
 WriteLiteral(">\r\n        </div>\r\n    </div>\r\n</div>\r\n\r\n<div");
 

@@ -195,6 +195,7 @@ function ($, bcms, dynamicContent, siteSettings, ko, kogrid, autocomplete, antiX
         viewModel.deleteUrl = links.deleteLanguageUrl;
         viewModel.saveUrl = links.saveLanguageUrl;
 
+        ko.cleanNode(container.get(0));
         ko.applyBindings(viewModel, container.get(0));
     }
 
