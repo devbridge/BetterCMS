@@ -272,8 +272,11 @@ function ($, bcms, modal, siteSettings, forms, dynamicContent, messages, mediaUp
 
             self.imageUrl(src + (src.indexOf('?') != -1 ? '&' : '?') + (new Date()).getTime());
             self.previewUrl(item.thumbnailUrl());
-
-            self.dimensions(item.width + ' x ' + item.height);
+            if (item.width == -1 || item.height == -1) {
+                self.dimensions("Auto");
+            } else {
+                self.dimensions(item.width + ' x ' + item.height);
+            }
 
             var dimensions = imageEditor.calculateImageDimensionsToFit(item.width, item.height, maxWidth, maxHeight);
             self.containerWidth(parseInt(dimensions.width) + 'px');

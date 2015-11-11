@@ -622,9 +622,7 @@ namespace BetterCms.Module.MediaManager.Services
             bool ignoreAccessControl)
             where TMedia : MediaFile
         {
-
             var stream = new MemoryStream();
-
             sourceStream.Seek(0, SeekOrigin.Begin);
             sourceStream.CopyTo(stream);
 
