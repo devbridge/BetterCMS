@@ -862,43 +862,28 @@ bettercms.define('bcms.blog', ['bcms.jquery', 'bcms', 'bcms.modal', 'bcms.siteSe
             var self = this;
 
             self.templates = ko.observableArray();
-            self.templateRows = ko.observableArray();
             self.searchQuery = ko.observable();
             self.searchEnabled = ko.observable(false);
             self.hasFocus = ko.observable(false);
 
-            if (templates != null) {
-                for (var i = 0; i < templates.length; i++) {
-                    var template = new TemplateViewModel(templates[i], self, container);
-                    self.templates.push(template);
-                }
-            }
+            self.displayTemplates = function () {
+                if(templates != null) {
+                    self.templates.removeAll();
 
-            self.fillTemplateRows = function () {
-                self.templateRows.removeAll();
+                    var query = (self.searchQuery() || '').toLowerCase();
 
-                var row = new TemplateRowViewModel(),
-                    query = (self.searchQuery() || '').toLowerCase(),
-                    items = 0;
-
-                for (var j = 0; j < self.templates().length; j++) {
-                    var currentTemplate = self.templates()[j];
-                    if (query && currentTemplate.title.toLowerCase().indexOf(query) < 0) {
-                        continue;
+                    for (var j = 0; j < templates.length; j++) {
+                        var currentTemplate = new TemplateViewModel(templates[j], self, container);
+                        if (query && currentTemplate.title.toLowerCase().indexOf(query) < 0) {
+                            continue;
+                        }
+                        self.templates.push(currentTemplate);
                     }
-
-                    if (items == 0 || items % 3 == 0) {
-                        row = new TemplateRowViewModel();
-                        self.templateRows.push(row);
-                    }
-
-                    items++;
-                    row.templates.push(currentTemplate);
                 }
             };
 
             self.search = function () {
-                self.fillTemplateRows();
+                self.displayTemplates();
             };
 
             self.toggleSearch = function () {
@@ -911,7 +896,7 @@ bettercms.define('bcms.blog', ['bcms.jquery', 'bcms', 'bcms.modal', 'bcms.siteSe
                 }
             };
 
-            self.fillTemplateRows();
+            self.displayTemplates();
         }
 
         /**
