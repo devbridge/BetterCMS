@@ -117,7 +117,7 @@ WriteLiteral("<div class=\"bcms-templates-holder\">\r\n");
             #line 14 "..\..\Views\Content\Partial\WidgetRecent.cshtml"
         for (int i = 0; i < Model.Count; i++)
         {
-        var widget = Model[i];
+            var widget = Model[i];
 
 
             
@@ -125,7 +125,7 @@ WriteLiteral("<div class=\"bcms-templates-holder\">\r\n");
             #line hidden
 WriteLiteral("            <div");
 
-WriteLiteral(" class=\"bcms-grid-box bcms-grid-box-pages\"");
+WriteLiteral(" class=\"bcms-grid-box bcms-grid-box-pages bcms-js-preview-block\"");
 
 WriteLiteral("\r\n                 data-id=\"");
 

@@ -30,7 +30,7 @@ bettercms.define('bcms.pages.content', ['bcms.jquery', 'bcms', 'bcms.modal', 'bc
                 widgetInsertButtons: '.bcms-js-insert',
                 widgetDeleteButtons: '.bcms-content-delete-button',
                 widgetEditButtons: '.bcms-content-edit-button',
-                widgetContainerBlock: '.bcms-preview-block',
+                widgetContainerBlock: '.bcms-js-preview-block',
                 widgetCategory: '.bcms-category',
                 widgetName: '.bcms-title-holder > .bcms-content-titles',
                 widgetIFramePreview: ".bcms-preview-box[data-as-image='False'] .bcms-zoom-overlay",
