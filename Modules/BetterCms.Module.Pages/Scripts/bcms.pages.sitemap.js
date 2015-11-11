@@ -789,6 +789,7 @@ bettercms.define('bcms.pages.sitemap', ['bcms.jquery', 'bcms', 'bcms.modal', 'bc
             self.someNodeIsOver = ko.observable(false);     // Someone is dragging some node over the sitemap, but not over the particular node.
             self.activeZone = ko.observable(DropZoneTypes.None);
             self.showHasNoDataMessage = ko.observable(false);
+            self.allNodesExpanded = ko.observable(false);
             self.savingInProgress = false;                  // To prevent multiple saving.
 
             self.version = jsonSitemap.Version;
@@ -835,18 +836,35 @@ bettercms.define('bcms.pages.sitemap', ['bcms.jquery', 'bcms', 'bcms.modal', 'bc
             };
 
             // Expanding or collapsing nodes.
-            self.expandAll = function () {
-                self.expandOrCollapse(self.childNodes(), true);
+            self.checkIfAllNodesExpanded = function (nodes) {
+                for (var i = 0; i < nodes.length; i++) {
+                    var node = nodes[i];
+                    if (node.hasChildNodes()) {
+                        if (!node.isExpanded() || !self.checkIfAllNodesExpanded(node.childNodes())) {
+                            return false;
+                        };
+                    }
+                }
+                return true;
+            }
+
+            self.callExpandOrCollapse = function () {
+                var expand = !self.allNodesExpanded();
+                self.expandOrCollapse(self.childNodes(), expand);
+                self.allNodesExpanded(expand);
             };
-            self.collapseAll = function () {
-                self.expandOrCollapse(self.childNodes(), false);
-            };
+
             self.expandOrCollapse = function (nodes, expand) {
                 for (var i = 0; i < nodes.length; i++) {
                     var node = nodes[i];
                     node.isExpanded(expand);
                     self.expandOrCollapse(node.childNodes(), expand);
                 }
+            };
+
+            self.toggleNodeExpand = function (node) {
+                node.toggleExpand();
+                self.allNodesExpanded(self.checkIfAllNodesExpanded(self.childNodes()));
             };
 
             self.hasChildNodes = function () {
@@ -859,6 +877,10 @@ bettercms.define('bcms.pages.sitemap', ['bcms.jquery', 'bcms', 'bcms.modal', 'bc
                 }
                 return false;
             };
+
+            bcms.on(events.sitemapNodeAdded, function () {
+                self.allNodesExpanded(self.checkIfAllNodesExpanded(self.childNodes()));
+            });
             
             // Updating display order and parent node info.
             self.updateNodesOrderAndParent = function () {
