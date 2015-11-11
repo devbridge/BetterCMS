@@ -185,14 +185,6 @@ namespace BetterCms.Module.MediaManager.ViewModels.Images
         public ImageType ImageType { get; set; }
 
         /// <summary>
-        /// Gets or sets a value indicating whether [automatic scale].
-        /// </summary>
-        /// <value>
-        ///   <c>true</c> if [automatic scale]; otherwise, <c>false</c>.
-        /// </value>
-        public bool AutoScale { get; set; }
-
-        /// <summary>
         /// Gets or sets the first crop point X coordinate.
         /// </summary>
         /// <value>

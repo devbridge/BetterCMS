@@ -26,6 +26,8 @@ using BetterCms.Module.Root.Mvc;
 
 using Common.Logging;
 
+using FluentNHibernate.Mapping;
+
 using NHibernate;
 using NHibernate.Linq;
 
@@ -203,21 +205,19 @@ namespace BetterCms.Module.MediaManager.Services
             var imageType = ImageHelper.GetImageType(fileExtension);
 
             MediaImage uploadImage = null;
-            MemoryStream thumbnailFileStream = null;
+            MemoryStream thumbnailFileStream = new MemoryStream();
             Size size;
-            Size thumbnailSize;
+            Size thumbnailSize = ThumbnailSize;
             long thumbnailImageLength;
 
             /* Upload standard raster type images */
             if (imageType == ImageType.Raster)
             {
-                thumbnailFileStream = new MemoryStream();
                 fileStream = RotateImage(fileStream);
                 size = GetSize(fileStream);
 
                 CreatePngThumbnail(fileStream, thumbnailFileStream, ThumbnailSize);
                 thumbnailImageLength = thumbnailFileStream.Length;
-                thumbnailSize = ThumbnailSize;
             }
             /* Upload vector graphics images */
             else
@@ -225,7 +225,7 @@ namespace BetterCms.Module.MediaManager.Services
                 size = Size.Empty;
                 ReadParametersFormVectorImage(fileStream, ref size);
                 thumbnailImageLength = fileStream.Length;
-                thumbnailSize = size;
+                CreateSvgThumbnail(fileStream, thumbnailFileStream, ThumbnailSize);
             }
 
             try
@@ -386,10 +386,17 @@ namespace BetterCms.Module.MediaManager.Services
             }
 
             var downloadResponse = storageService.DownloadObject(mediaImage.FileUri);
-
+            var imageType = ImageHelper.GetImageType(mediaImage.OriginalFileExtension);
             using (var memoryStream = new MemoryStream())
             {
-                CreatePngThumbnail(downloadResponse.ResponseStream, memoryStream, size);
+                if (imageType == ImageType.Raster)
+                {
+                    CreatePngThumbnail(downloadResponse.ResponseStream, memoryStream, size);
+                }
+                else
+                {
+                    CreateSvgThumbnail(downloadResponse.ResponseStream, memoryStream, size);
+                }
 
                 mediaImage.ThumbnailWidth = size.Width;
                 mediaImage.ThumbnailHeight = size.Height;
@@ -790,6 +797,42 @@ namespace BetterCms.Module.MediaManager.Services
                 destination.Save(destinationStream, ImageFormat.Png);
             }
         }
+
+        private void CreateSvgThumbnail(Stream sourceStream, Stream destinationStream, Size size)
+        {
+            sourceStream.Seek(0, SeekOrigin.Begin);
+            var xDocument = XDocument.Load(sourceStream);
+            var root = xDocument.Root;
+            if (root == null || root.Name.LocalName != "svg")
+            {
+                const string message = "An error has occured while trying to read the file";
+                throw new ValidationException(() => message, message);
+            }
+            var attributes = root.Attributes().ToList();
+
+            var widthAttribute = attributes.FirstOrDefault(x => x.Name == "width");
+            if (widthAttribute == null)
+            {
+                widthAttribute = new XAttribute("width", size.Width.ToString());
+                attributes.Add(widthAttribute);
+            }
+            else
+            {
+                widthAttribute.Value = size.Width.ToString();
+            }
+            var heightAttribute = attributes.FirstOrDefault(x => x.Name == "height");
+            if (heightAttribute == null)
+            {
+                heightAttribute = new XAttribute("height", size.Height.ToString());
+                attributes.Add(heightAttribute);
+            }
+            else
+            {
+                heightAttribute.Value = size.Height.ToString();
+            }
+            root.ReplaceAttributes(attributes);
+            xDocument.Save(destinationStream);
+        }
         
         private int GetVersion(MediaImage image)
         {
@@ -958,34 +1001,26 @@ namespace BetterCms.Module.MediaManager.Services
                 true);
             allTasks.Add(publicImageUpload);
 
-            Task publicThumbnailUpload = null;
-//            if (thumbnailFileStream != null)
-//            {
-                publicThumbnailUpload = mediaFileService.UploadMediaFileToStorageAsync<MediaImage>(
-                    thumbnailFileStream,
-                    mediaImage.ThumbnailUri,
-                    mediaImage.Id,
-                    (img, session) =>
+            var publicThumbnailUpload = mediaFileService.UploadMediaFileToStorageAsync<MediaImage>(
+                thumbnailFileStream,
+                mediaImage.ThumbnailUri,
+                mediaImage.Id,
+                (img, session) =>
+                {
+                    if (img != null)
                     {
-                        if (img != null)
-                        {
-                            img.IsThumbnailUploaded = true;
-                        }
-                    },
-                    img =>
+                        img.IsThumbnailUploaded = true;
+                    }
+                },
+                img =>
+                {
+                    if (img != null)
                     {
-                        if (img != null)
-                        {
-                            img.IsThumbnailUploaded = false;
-                        }
-                    },
-                    true);
-                allTasks.Add(publicThumbnailUpload);
-//            }
-//            else
-//            {
-//                mediaImage.IsThumbnailUploaded = true;
-//            }
+                        img.IsThumbnailUploaded = false;
+                    }
+                },
+                true);
+            allTasks.Add(publicThumbnailUpload);
 
             Task publicOriginalUpload = null;
             if (!shouldNotUploadOriginal)

@@ -290,8 +290,6 @@ bettercms.define('bcms.media.imageeditor', ['bcms.jquery', 'bcms', 'bcms.modal',
                 self.imageType = ko.observable(json.ImageType);
                 self.calculatedWidth = ko.observable(json.ImageWidth);
                 self.calculatedHeight = ko.observable(json.ImageHeight);
-                self.oldAutoScale = ko.observable(json.AutoScale);
-                self.autoScale = ko.observable(json.AutoScale);
 
                 self.cropCoordX1 = ko.observable(json.CropCoordX1);
                 self.cropCoordX2 = ko.observable(json.CropCoordX2);
@@ -309,16 +307,12 @@ bettercms.define('bcms.media.imageeditor', ['bcms.jquery', 'bcms', 'bcms.modal',
                 self.oldHeight.subscribe(function () {
                     recalculate();
                 });
-                self.oldAutoScale.subscribe(function() {
-                    recalculate();
-                });
 
                 self.widthAndHeight = ko.computed(function () {
-                    if (self.oldAutoScale()) {
+                    if (self.oldWidth() == -1 || self.oldHeight() == -1) {
                         return "Auto";
-                    } else {
-                        return self.oldWidth() + ' x ' + self.oldHeight();
                     }
+                    return self.oldWidth() + ' x ' + self.oldHeight();
                 });
 
                 self.changeHeight = function() {
@@ -523,7 +517,6 @@ bettercms.define('bcms.media.imageeditor', ['bcms.jquery', 'bcms', 'bcms.modal',
 
                     return true;
                 }
-                this.oldAutoScale(this.autoScale());
 
                 return false;
             };
@@ -533,7 +526,7 @@ bettercms.define('bcms.media.imageeditor', ['bcms.jquery', 'bcms', 'bcms.modal',
                 this.height(this.oldHeight());
                 this.heightInput.blur();
                 this.widthInput.blur();
-                this.autoScale(this.oldAutoScale());
+
                 return true;
             };
             
