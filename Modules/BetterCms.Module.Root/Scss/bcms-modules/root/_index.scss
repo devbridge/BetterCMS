@@ -23,24 +23,6 @@ $action-icons: (
     background: $blue-5;
 }
 
-//.bcms-loader {
-//    background: url('images/loading.gif') no-repeat center center;
-//    height: 70px;
-//    left: 50%;
-//    margin: -35px 0 0 -35px;
-//    position: absolute;
-//    top: 50%;
-//    width: 70px;
-//}
-
-.bcms-loader-2 {
-    background: url('images/loading.gif') no-repeat scroll center center transparent;
-    height: 70px;
-    margin: -35px 0 0 -35px;
-    position: fixed;
-    width: 70px;
-}
-
 //module Hidden form submit. Can't set display:none because we need to submit form.
 .bcms-hidden-submit {
     background: none;
