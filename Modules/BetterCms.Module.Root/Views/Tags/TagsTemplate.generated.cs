@@ -91,28 +91,13 @@ Write(RootGlobalization.TagsTemplate_AddTags_Title);
             
             #line default
             #line hidden
-WriteLiteral("\r\n    <div");
+WriteLiteral("\r\n</div>\r\n\r\n<div");
 
-WriteLiteral(" class=\"bcms-btn-plus\"");
-
-WriteLiteral(" data-bind=\"css: { \'bcms-btn-plus-expand\': isExpanded() }");
-
-            
-            #line 12 "..\..\Views\Tags\TagsTemplate.cshtml"
-                                                                                   Write(canEdit ? ", click: expandCollapse" : string.Empty);
-
-            
-            #line default
-            #line hidden
-WriteLiteral("\"");
-
-WriteLiteral(">&nbsp;</div>\r\n    <div");
-
-WriteLiteral(" class=\"bcms-tags-field-holder\"");
+WriteLiteral(" class=\"bcms-field-wrapper\"");
 
 WriteLiteral(" data-bind=\"visible: isExpanded()\"");
 
-WriteLiteral(">\r\n        <input");
+WriteLiteral(">\r\n    <input");
 
 WriteLiteral(" type=\"text\"");
 
@@ -127,15 +112,15 @@ WriteLiteral(@" data-bind=""
                     enterPress: addItem,
                     escPress: clearItem""");
 
-WriteLiteral(" />\r\n        <!-- ko if: newItem.hasError()  -->\r\n        <span");
+WriteLiteral(" />\r\n    <!-- ko if: newItem.hasError()  -->\r\n    <span");
 
 WriteLiteral(" class=\"bcms-tag-field-validation-error\"");
 
-WriteLiteral(">\r\n            <span");
+WriteLiteral(">\r\n        <span");
 
 WriteLiteral(" data-bind=\"text: newItem.validationMessage()\"");
 
-WriteLiteral("></span>\r\n        </span>\r\n        <!-- /ko -->\r\n    </div>\r\n</div>\r\n\r\n<div");
+WriteLiteral("></span>\r\n    </span>\r\n    <!-- /ko -->\r\n</div>\r\n\r\n<div");
 
 WriteLiteral(" class=\"bcms-single-tag-holder\"");
 
