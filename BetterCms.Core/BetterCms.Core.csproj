@@ -179,6 +179,7 @@
     <Compile Include="DataContracts\IOptionContainer.cs" />
     <Compile Include="DataContracts\IOptionTranslation.cs" />
     <Compile Include="DataContracts\IOptionValue.cs" />
+    <Compile Include="DataContracts\IOptionValueEntity.cs" />
     <Compile Include="DataContracts\IRenderPage.cs" />
     <Compile Include="Environment\FileSystem\CmsWorkingDirectory.cs" />
     <Compile Include="Environment\Host\DefaultCmsAutoHost.cs" />

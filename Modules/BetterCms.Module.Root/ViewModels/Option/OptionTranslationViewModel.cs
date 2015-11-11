@@ -25,6 +25,14 @@ namespace BetterCms.Module.Root.ViewModels.Option
         /// </value>
         public string LanguageId { get; set; }
 
+        /// <summary>
+        /// Gets or sets the custom option title.
+        /// </summary>
+        /// <value>
+        /// The custom option title.
+        /// </value>
+        public string CustomOptionTitle { get; set; }
+
         string IOptionTranslation.Value 
         { 
             get
