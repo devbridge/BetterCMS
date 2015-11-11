@@ -48,7 +48,7 @@
                         }
 
                         <div class="bcms-controls-holder">
-                            <div class="bcms-btn-small bcms-content-insert-button" >@PagesGlobalization.AddPageContent_WidgetTab_InsertButton</div>
+                            <div class="bcms-btn-small bcms-js-insert">@PagesGlobalization.AddPageContent_WidgetTab_InsertButton</div>
                             @if ((ViewContext.Controller as CmsControllerBase).SecurityService.IsAuthorized(RootModuleConstants.UserRoles.Administration))
                             {
                                 if (!widget.Status.Equals(ContentStatus.Published.ToString()))

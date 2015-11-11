@@ -5,10 +5,10 @@
 @model BetterCms.Module.Pages.ViewModels.Filter.PagesGridViewModel<SiteSettingPageViewModel>
 
 <div class="bcms-modal-frame-holder">
-<div class="bcms-window-options">
-    @using (Html.BeginForm<PageController>(controller => controller.SelectPage(null), FormMethod.Post, new { @id = "bcms-pages-form", @class = "bcms-ajax-form" }))
-    {
-        @Html.Partial("Pages")
-    }
-</div>
+    <div class="bcms-window-options">
+        @using (Html.BeginForm<PageController>(controller => controller.SelectPage(null), FormMethod.Post, new { @id = "bcms-pages-form", @class = "bcms-ajax-form" }))
+        {
+            @Html.Partial("Pages")
+        }
+    </div>
 </div>

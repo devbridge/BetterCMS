@@ -61,7 +61,7 @@ WriteLiteral("<div");
 
 WriteLiteral(" class=\"bcms-modal-frame-holder\"");
 
-WriteLiteral(">\n<div");
+WriteLiteral(">\n    <div");
 
 WriteLiteral(" class=\"bcms-window-options\"");
 
@@ -69,34 +69,34 @@ WriteLiteral(">\n");
 
             
             #line 9 "..\..\Views\Page\SelectPage.cshtml"
-    
-            
-            #line default
-            #line hidden
-            
-            #line 9 "..\..\Views\Page\SelectPage.cshtml"
-     using (Html.BeginForm<PageController>(controller => controller.SelectPage(null), FormMethod.Post, new { @id = "bcms-pages-form", @class = "bcms-ajax-form" }))
-    {
         
             
             #line default
             #line hidden
             
+            #line 9 "..\..\Views\Page\SelectPage.cshtml"
+         using (Html.BeginForm<PageController>(controller => controller.SelectPage(null), FormMethod.Post, new { @id = "bcms-pages-form", @class = "bcms-ajax-form" }))
+        {
+            
+            
+            #line default
+            #line hidden
+            
             #line 11 "..\..\Views\Page\SelectPage.cshtml"
-   Write(Html.Partial("Pages"));
+       Write(Html.Partial("Pages"));
 
             
             #line default
             #line hidden
             
             #line 11 "..\..\Views\Page\SelectPage.cshtml"
-                              
-    }
+                                  
+        }
 
             
             #line default
             #line hidden
-WriteLiteral("</div>\n</div>");
+WriteLiteral("    </div>\n</div>\n");
 
         }
     }

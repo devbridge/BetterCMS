@@ -21,14 +21,13 @@ namespace BetterCms.Module.Root.Mvc.Helpers
             StringBuilder sb = new StringBuilder();
 
             sb.AppendFormat(
-                "<div class=\"bcms-preview-box\" data-as-image=\"{0}\", data-preview-url=\"{1}\", data-title=\"{2}\", data-frame-css-class=\"{3}\", data-width=\"{4}\", data-height=\"{5}\"><div class=\"bcms-preview-box-image\">",
+                "<div class=\"bcms-grid-image-holder\" data-as-image=\"{0}\", data-preview-url=\"{1}\", data-title=\"{2}\", data-frame-css-class=\"{3}\", data-width=\"{4}\", data-height=\"{5}\">",
                 asImage,
                 html.Encode(previewUrl),
                 html.Encode(title),
                 frameCssClass,
                 width,
                 height);
-            sb.AppendLine("</div>");
             sb.AppendFormat("<div class=\"bcms-zoom-overlay\" data-preview-title=\"{0}\" data-preview-url=\"{1}\"> </div>", html.Encode(title), html.Encode(openUrl));
             sb.AppendLine();
             sb.AppendLine("</div>");
