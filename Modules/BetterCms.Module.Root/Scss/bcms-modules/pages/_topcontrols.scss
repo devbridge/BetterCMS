@@ -100,14 +100,14 @@
             left: 0;
         }
         box-sizing: border-box;
-        color: $dark-text;
+        color: $text-dark;
         font: {
             size: 14px;
             style: italic;
         }
 
         @include placeholder {
-            color: $light-text;
+            color: $text-light;
             font: {
                 size: 14px;
                 style: italic;

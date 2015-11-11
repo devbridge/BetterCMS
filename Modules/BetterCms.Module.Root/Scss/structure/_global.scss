@@ -11,7 +11,7 @@ $loading-spinner: (
 //module Titles
 .bcms-large-titles {
     @include vertical-align();
-    color: $dark-text;
+    color: $text-dark;
     font: {
         size: 18px;
         weight: 700;
@@ -28,7 +28,7 @@ $loading-spinner: (
     }
 
     &-titles {
-        color: $dark-text;
+        color: $text-dark;
         cursor: default;
         font-family: $font-base-family;
         font-size: 14px;
@@ -137,7 +137,7 @@ $loading-spinner: (
 
     &-title-text {
         @include vertical-align($block: table-cell);
-        color: $dark-text;
+        color: $text-dark;
         font-size: 12px;
         font-weight: 700;
         padding: 5px;

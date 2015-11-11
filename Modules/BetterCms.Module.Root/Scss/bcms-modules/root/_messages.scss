@@ -7,7 +7,6 @@ $message-icon-size: 22px;
 $message-icon-spacing: 12px;
 $message-block-left-padding: ($settings-sidebar + $message-icon-size + $message-icon-spacing);
 
-//fixme change color while design arrives.
 $message-content-type: (
                 ('success', $message-success, $bcms-messages-success),
                 ('warning', $message-warning, $bcms-messages-warning),
@@ -71,10 +70,6 @@ $validation-fields: ();
 }
 
 //module validation messages
-/*.bcms-input-box {
-    position: relative;
-}*/
-
 .bcms-custom-input-box {
     display: inline-block;
     position: relative;
@@ -84,10 +79,6 @@ $validation-fields: ();
     display: inline-block;
     position: relative;
 }
-
-//.bcms-textarea-box {
-//    position: relative;
-//}
 
 .bcms-input-validation-error {
     background-color: #fcecec;

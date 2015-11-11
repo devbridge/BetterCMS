@@ -1,5 +1,5 @@
 $alert-frames: (
-                ('error', $error-red, $border-error),
+                ('error', $text-red, $border-error),
                 ('popinfo', $blue-main, $border-info)
 );
 
@@ -10,7 +10,7 @@ $alert-frames: (
         border-top: $border;
         box-shadow: 0 25px 80px 5px rgba($black, .4);
         box-sizing: border-box;
-        color: $main-dark;
+        color: $dark-main;
         padding: 30px 80px 30px 40px;
         width: 600px;
 

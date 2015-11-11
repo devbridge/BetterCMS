@@ -14,7 +14,6 @@
       <JavaScriptFiles Include="$(ProjectDir)Scripts\bcms.jquery.autocomplete.js" />
       <JavaScriptFiles Include="$(ProjectDir)Scripts\bcms.jquery.markitup.js" />
       <JavaScriptFiles Include="$(ProjectDir)Scripts\bcms.autocomplete.js" />
-      <JavaScriptFiles Include="$(ProjectDir)Scripts\bcms.slides.jquery.js" />
       <JavaScriptFiles Include="$(ProjectDir)Scripts\bcms.spinner.jquery.js" />      
       <JavaScriptFiles Include="$(ProjectDir)Scripts\bcms.antiXss.js" />
       <JavaScriptFiles Include="$(ProjectDir)Scripts\bcms.authentication.js" />

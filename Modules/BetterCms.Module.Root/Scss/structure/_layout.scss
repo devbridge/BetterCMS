@@ -86,7 +86,7 @@ a {
 
     &-header {
         @include position(absolute, 0 0 null);
-        background-color: $main-dark;
+        background-color: $dark-main;
         box-sizing: border-box;
         height: $header-height;
         line-height: $header-height;
@@ -118,7 +118,7 @@ a {
 
     &-footer {
         @include position(absolute, null 0 0);
-        background-color: $main-dark;
+        background-color: $dark-main;
         box-sizing: border-box;
         height: $footer-height;
         padding: 18px $page-frame-gutters;
@@ -139,7 +139,7 @@ a {
 
     &-alert {
         @include position(fixed, 0);
-        background-color: rgba($main-dark, .9);
+        background-color: rgba($dark-main, .9);
         overflow: hidden;
         z-index: 999;
     }

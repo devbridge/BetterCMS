@@ -50,7 +50,7 @@ $overlay-control-buttons: (
     &-button {
         @include transition(all 200ms);
         @include vertical-align($align: top);
-        background-color: $blue-main;
+        background-color: $bg-blue;
         box-sizing: border-box;
         color: $white;
         cursor: pointer;
@@ -60,7 +60,7 @@ $overlay-control-buttons: (
         padding: 0 10px;
 
         &:hover {
-            background-color: darken($blue-main, 10%);
+            background-color: darken($bg-blue, 10%);
             cursor: pointer;
         }
     }
@@ -69,7 +69,7 @@ $overlay-control-buttons: (
         position: relative;
 
         &.bcms-active {
-            background-color: darken($blue-main, 10%);
+            background-color: darken($bg-blue, 10%);
         }
     }
 
@@ -85,7 +85,7 @@ $overlay-control-buttons: (
 
     &-pick-editor {
         @include transition(all 200ms);
-        background-color: darken($blue-main, 10%);
+        background-color: darken($bg-blue, 10%);
         line-height: 18px;
         padding: 5px 20px;
 
@@ -106,7 +106,7 @@ $overlay-control-buttons: (
     @each $name, $icon in $overlay-mange-controls {
         &-#{$name} {
             @include size(30px 26px);
-            background: $blue-main url($icon) no-repeat center;
+            background: $bg-blue url($icon) no-repeat center;
         }
     }
 }
@@ -177,7 +177,7 @@ $overlay-control-buttons: (
     }
 
     &-content {
-        color: $dark;
+        color: $text-dark;
         font-weight: 700;
         text-transform: capitalize;
     }
@@ -194,7 +194,7 @@ $overlay-control-buttons: (
     &-button {
         @include transition(all 200ms);
         @include size(42px);
-        background-color: $blue-main;
+        background-color: $bg-blue;
         border-left: $border-content-actions;
         cursor: pointer;
         display: block;

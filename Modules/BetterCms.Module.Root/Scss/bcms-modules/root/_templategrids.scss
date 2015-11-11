@@ -1,4 +1,4 @@
-$inactive-red: #e64343;
+$inactive-red: $red;
 
 $template-grid-box-states: (
                 ('active', $blue-main),
@@ -95,16 +95,3 @@ $template-grid-box-states: (
         }
     }
 }
-
-//
-//
-//
-//
-//
-//
-//
-//.bcms-grid-active-message-text {
-//    color: #0383df;
-//    font-size: 19px;
-//    font-weight: 700;
-//}

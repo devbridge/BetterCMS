@@ -22,7 +22,7 @@ $pager-buttons: (
         background-color: $gray-l10;
         border: $border-frame;
         box-sizing: border-box;
-        color: $light-text;
+        color: $text-light;
         float: left;
         font-size: 10px;
         line-height: 28px;
@@ -36,7 +36,7 @@ $pager-buttons: (
     }
 
     &-text {
-        color: $light-text;
+        color: $text-light;
         cursor: default;
         float: left;
         font-size: 10px;

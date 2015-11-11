@@ -1714,7 +1714,7 @@ div.bcms-btn-logout:active {
 
 .bcms-field-text:focus, .bcms-field-textarea:focus {
   background: #ffffff;
-  border-color: #0d7ce7;
+  border-color: 1px solid #0d7ce7;
   box-shadow: 0 0 3px 0 rgba(13, 124, 231, 0.35);
   outline: none;
 }
@@ -1976,9 +1976,6 @@ td .bcms-field-wrapper {
   text-decoration: underline;
 }
 
-/*.bcms-input-box {
-    position: relative;
-}*/
 .bcms-custom-input-box {
   display: inline-block;
   position: relative;
@@ -2147,7 +2144,7 @@ span.bcms-tag-field-validation-error > span:before {
   left: 50%;
   top: 50%;
   background-color: #ffffff;
-  border-top: 4px solid #d9241d;
+  border-top: 4px solid #dc4250;
   box-shadow: 0 25px 80px 5px rgba(0, 0, 0, 0.4);
   box-sizing: border-box;
   color: #303646;
@@ -2156,7 +2153,7 @@ span.bcms-tag-field-validation-error > span:before {
 }
 
 .bcms-error-frame > h4 {
-  color: #d9241d;
+  color: #dc4250;
   margin: 0;
 }
 
@@ -2407,7 +2404,7 @@ a.bcms-error-close {
 }
 
 .bcms-sort-content {
-  color: #303030;
+  color: #303646;
   font-weight: 700;
   text-transform: capitalize;
 }
@@ -3048,16 +3045,16 @@ a.bcms-sort-arrow-top:hover {
 }
 
 .bcms-grid-box-notcompatible .bcms-content-titles {
-  color: #e64343;
+  color: #dc4250;
 }
 
 .bcms-grid-box-notcompatible .bcms-grid-image-holder {
-  border-color: #e64343;
+  border-color: #dc4250;
 }
 
 .bcms-grid-box-notcompatible .bcms-btn-tertiary {
-  background-color: #e64343;
-  border-color: #e64343;
+  background-color: #dc4250;
+  border-color: #dc4250;
   color: #ffffff;
   cursor: default;
 }
