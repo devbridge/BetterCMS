@@ -49,10 +49,10 @@ namespace ASP
         }
         public override void Execute()
         {
-WriteLiteral("\r\n");
+WriteLiteral("\n");
 
-WriteLiteral("\r\n<!-- ko if: !useDefaultValueBinding() && type() != 5 && type() != 4 && type() !" +
-"= 21 && type() != 99 -->\r\n");
+WriteLiteral("\n<!-- ko if: !useDefaultValueBinding() && type() != 5 && type() != 4 && type() !=" +
+" 21 && type() != 99 -->\n");
 
 WriteLiteral("    ");
 
@@ -63,9 +63,9 @@ Write(Html.Partial(RootModuleConstants.EditableGridCellTemplate));
             
             #line default
             #line hidden
-WriteLiteral("\r\n<!-- /ko -->\r\n\r\n");
+WriteLiteral("\n<!-- /ko -->\n\n");
 
-WriteLiteral("\r\n<!-- ko if: !useDefaultValueBinding() && type() == 21 -->\r\n");
+WriteLiteral("\n<!-- ko if: !useDefaultValueBinding() && type() == 21 -->\n");
 
 WriteLiteral("    ");
 
@@ -76,9 +76,9 @@ Write(Html.Partial(RootModuleConstants.EditableGridMultilineTextCellTemplate));
             
             #line default
             #line hidden
-WriteLiteral("\r\n<!-- /ko -->\r\n\r\n");
+WriteLiteral("\n<!-- /ko -->\n\n");
 
-WriteLiteral("\r\n<!-- ko if: !useDefaultValueBinding() && type() == 5  -->\r\n");
+WriteLiteral("\n<!-- ko if: !useDefaultValueBinding() && type() == 5  -->\n");
 
 WriteLiteral("    ");
 
@@ -96,9 +96,9 @@ Write(Html.Partial(RootModuleConstants.EditableGridBooleanCellTemplate, new Edit
             
             #line default
             #line hidden
-WriteLiteral("\r\n<!-- /ko -->\r\n\r\n");
+WriteLiteral("\n<!-- /ko -->\n\n");
 
-WriteLiteral("\r\n<!-- ko if: !useDefaultValueBinding() && type() == 4  -->\r\n<td ");
+WriteLiteral("\n<!-- ko if: !useDefaultValueBinding() && type() == 4  -->\n<td ");
 
             
             #line 30 "..\..\Views\Option\Partial\OptionCell.cshtml"
@@ -107,7 +107,7 @@ Write(Html.Raw(Model.Attributes));
             
             #line default
             #line hidden
-WriteLiteral(">\r\n");
+WriteLiteral(">\n");
 
             
             #line 31 "..\..\Views\Option\Partial\OptionCell.cshtml"
@@ -127,18 +127,18 @@ WriteLiteral("        <div");
 
 WriteLiteral(" class=\"bcms-input-field-holder\"");
 
-WriteLiteral(">\r\n            <div");
+WriteLiteral(">\n            <div");
 
-WriteLiteral(" class=\"bcms-date-input-box bcms-options-date\"");
+WriteLiteral(" class=\"bcms-field-wrapper bcms-options-date\"");
 
 WriteLiteral(" data-bind=\"visible: isActive()\"");
 
-WriteLiteral(">\r\n                <input");
+WriteLiteral(">\n                <input");
 
 WriteLiteral(" class=\"bcms-field-text bcms-datepicker\"");
 
-WriteLiteral(" data-bind=\"\r\n                    css: { \'bcms-input-validation-error\': !isNew() " +
-"&& ");
+WriteLiteral(" data-bind=\"\n                    css: { \'bcms-input-validation-error\': !isNew() &" +
+"& ");
 
             
             #line 36 "..\..\Views\Option\Partial\OptionCell.cshtml"
@@ -156,7 +156,7 @@ WriteLiteral(".hasError && ");
             
             #line default
             #line hidden
-WriteLiteral(".hasError() },\r\n                    value: ");
+WriteLiteral(".hasError() },\n                    value: ");
 
             
             #line 37 "..\..\Views\Option\Partial\OptionCell.cshtml"
@@ -165,9 +165,9 @@ WriteLiteral(".hasError() },\r\n                    value: ");
             
             #line default
             #line hidden
-WriteLiteral(",\r\n                    valueUpdate: \'afterkeydown\', \r\n                    enterPr" +
-"ess: onSave, \r\n                    escPress: onCancelEdit,\r\n                    " +
-"afterRender: initDatePickers(),\r\n                    visible: isActive()\r\n");
+WriteLiteral(",\n                    valueUpdate: \'afterkeydown\', \n                    enterPres" +
+"s: onSave, \n                    escPress: onCancelEdit,\n                    afte" +
+"rRender: initDatePickers(),\n                    visible: isActive()\n");
 
 WriteLiteral("                    ");
 
@@ -178,9 +178,9 @@ WriteLiteral("                    ");
             
             #line default
             #line hidden
-WriteLiteral("\r\n                       \"");
+WriteLiteral("\n                       \"");
 
-WriteLiteral(" />\r\n            \r\n                <!-- ko if: !isNew() &&  ");
+WriteLiteral(" />\n            \n                <!-- ko if: !isNew() &&  ");
 
             
             #line 46 "..\..\Views\Option\Partial\OptionCell.cshtml"
@@ -198,11 +198,11 @@ WriteLiteral(".hasError && ");
             
             #line default
             #line hidden
-WriteLiteral(".hasError() -->\r\n                <span");
+WriteLiteral(".hasError() -->\n                <span");
 
 WriteLiteral(" class=\"bcms-field-validation-error\"");
 
-WriteLiteral(">\r\n                    <span");
+WriteLiteral(">\n                    <span");
 
 WriteLiteral(" data-bind=\"html: ");
 
@@ -215,8 +215,8 @@ WriteLiteral(" data-bind=\"html: ");
             #line hidden
 WriteLiteral(".validationMessage()\"");
 
-WriteLiteral("></span>\r\n                </span>\r\n                <!-- /ko -->\r\n            </di" +
-"v>\r\n        </div>\r\n");
+WriteLiteral("></span>\n                </span>\n                <!-- /ko -->\n            </div>\n" +
+"        </div>\n");
 
             
             #line 53 "..\..\Views\Option\Partial\OptionCell.cshtml"
@@ -229,7 +229,7 @@ WriteLiteral("    <a");
 
 WriteLiteral(" class=\"bcms-tables-link\"");
 
-WriteLiteral(" data-bind=\"\r\n       text: ");
+WriteLiteral(" data-bind=\"\n       text: ");
 
             
             #line 55 "..\..\Views\Option\Partial\OptionCell.cshtml"
@@ -247,7 +247,7 @@ WriteLiteral("() ");
             
             #line default
             #line hidden
-WriteLiteral("\r\n");
+WriteLiteral("\n");
 
 WriteLiteral("       ");
 
@@ -258,11 +258,11 @@ WriteLiteral("       ");
             
             #line default
             #line hidden
-WriteLiteral("\r\n       \"");
+WriteLiteral("\n       \"");
 
-WriteLiteral("></a>    \r\n\r\n</td>\r\n<!-- /ko -->\r\n\r\n");
+WriteLiteral("></a>    \n\n</td>\n<!-- /ko -->\n\n");
 
-WriteLiteral("\r\n<!-- ko if: !useDefaultValueBinding() && type() == 99  -->\r\n<td ");
+WriteLiteral("\n<!-- ko if: !useDefaultValueBinding() && type() == 99  -->\n<td ");
 
             
             #line 64 "..\..\Views\Option\Partial\OptionCell.cshtml"
@@ -271,7 +271,7 @@ Write(Html.Raw(Model.Attributes));
             
             #line default
             #line hidden
-WriteLiteral(">\r\n");
+WriteLiteral(">\n");
 
             
             #line 65 "..\..\Views\Option\Partial\OptionCell.cshtml"
@@ -315,8 +315,8 @@ WriteLiteral("() || ");
             
             #line default
             #line hidden
-WriteLiteral("(), \r\n            enterPress: onSave, \r\n            escPress: onCancelEdit,\r\n    " +
-"        visible: isActive()\r\n");
+WriteLiteral("(), \n            enterPress: onSave, \n            escPress: onCancelEdit,\n       " +
+"     visible: isActive()\n");
 
 WriteLiteral("            ");
 
@@ -327,16 +327,16 @@ WriteLiteral("            ");
             
             #line default
             #line hidden
-WriteLiteral("\r\n               \"");
+WriteLiteral("\n               \"");
 
-WriteLiteral(" />\r\n");
+WriteLiteral(" />\n");
 
 WriteLiteral("        <div");
 
 WriteLiteral(" class=\"bcms-btn-small\"");
 
-WriteLiteral(" data-bind=\"\r\n                    click: onCustomOptionExecute.bind($data, $data," +
-" ");
+WriteLiteral(" data-bind=\"\n                    click: onCustomOptionExecute.bind($data, $data, " +
+"");
 
             
             #line 74 "..\..\Views\Option\Partial\OptionCell.cshtml"
@@ -354,10 +354,10 @@ WriteLiteral(", ");
             
             #line default
             #line hidden
-WriteLiteral("),\r\n                    enterPress: onSave, \r\n                    escPress: onCan" +
-"celEdit,\r\n                    visible: isActive()\"");
+WriteLiteral("),\n                    enterPress: onSave, \n                    escPress: onCance" +
+"lEdit,\n                    visible: isActive()\"");
 
-WriteLiteral(">...</div>\r\n");
+WriteLiteral(">...</div>\n");
 
             
             #line 78 "..\..\Views\Option\Partial\OptionCell.cshtml"
@@ -370,7 +370,7 @@ WriteLiteral("    <a");
 
 WriteLiteral(" class=\"bcms-tables-link\"");
 
-WriteLiteral(" data-bind=\"\r\n       text: ");
+WriteLiteral(" data-bind=\"\n       text: ");
 
             
             #line 80 "..\..\Views\Option\Partial\OptionCell.cshtml"
@@ -388,7 +388,7 @@ WriteLiteral("() || ");
             
             #line default
             #line hidden
-WriteLiteral("() \r\n");
+WriteLiteral("() \n");
 
 WriteLiteral("       ");
 
@@ -399,7 +399,7 @@ WriteLiteral("       ");
             
             #line default
             #line hidden
-WriteLiteral("\r\n");
+WriteLiteral("\n");
 
 WriteLiteral("       ");
 
@@ -410,11 +410,11 @@ WriteLiteral("       ");
             
             #line default
             #line hidden
-WriteLiteral("\r\n       \"");
+WriteLiteral("\n       \"");
 
-WriteLiteral("></a>    \r\n</td>\r\n<!-- /ko -->\r\n\r\n");
+WriteLiteral("></a>    \n</td>\n<!-- /ko -->\n\n");
 
-WriteLiteral("\r\n<!-- ko if: useDefaultValueBinding() && type() == 5  -->\r\n");
+WriteLiteral("\n<!-- ko if: useDefaultValueBinding() && type() == 5  -->\n");
 
 WriteLiteral("    ");
 
@@ -429,7 +429,7 @@ Write(Html.Partial(RootModuleConstants.EditableGridBooleanCellTemplate, new Edit
             
             #line default
             #line hidden
-WriteLiteral("\r\n<!-- /ko -->\r\n\r\n<!-- ko if: useDefaultValueBinding() && type() != 5  -->\r\n<td ");
+WriteLiteral("\n<!-- /ko -->\n\n<!-- ko if: useDefaultValueBinding() && type() != 5  -->\n<td ");
 
             
             #line 97 "..\..\Views\Option\Partial\OptionCell.cshtml"
@@ -438,7 +438,7 @@ Write(Html.Raw(Model.Attributes));
             
             #line default
             #line hidden
-WriteLiteral(">\r\n    <a");
+WriteLiteral(">\n    <a");
 
 WriteLiteral(" class=\"bcms-tables-link\"");
 
@@ -471,7 +471,7 @@ WriteLiteral("() ");
             #line hidden
 WriteLiteral("\"");
 
-WriteLiteral("></a>\r\n</td>\r\n<!-- /ko -->\r\n");
+WriteLiteral("></a>\n</td>\n<!-- /ko -->\n");
 
         }
     }

@@ -13,22 +13,22 @@
     &-holder {
         position: absolute;
     }
-}
 
-.bcms-tooltip-box {
-    background: #eff9fd;
-    border: 1px solid #c6c6c6;
-    box-shadow: 1px 1px 5px 0 rgba(0, 0, 0, 0.4);
-    padding: 5px;
-    position: relative;
-    width: 300px;
-}
+    &-box {
+        background-color: $white;
+        box-shadow: 0 2px 24px 0 rgba($black, .4);
+        padding: 6px 8px;
+        position: relative;
+        width: 300px;
 
-.bcms-tooltip-box p {
-    font-size: 11px;
-    line-height: 19px;
-    margin: 0;
-    padding: 0;
+        p {
+            color: $text-dark;
+            font-size: 11px;
+            line-height: 19px;
+            margin: 0;
+            padding: 0;
+        }
+    }
 }
 
 div.bcms-tip-close {

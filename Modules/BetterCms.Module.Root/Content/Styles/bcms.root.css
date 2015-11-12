@@ -1985,16 +1985,6 @@ td .bcms-field-wrapper {
   text-decoration: underline;
 }
 
-.bcms-custom-input-box {
-  display: inline-block;
-  position: relative;
-}
-
-.bcms-date-input-box {
-  display: inline-block;
-  position: relative;
-}
-
 .bcms-input-validation-error {
   background-color: #fcecec;
   border: 1px solid #e64343;
@@ -3429,15 +3419,15 @@ a.bcms-remove-image {
 }
 
 .bcms-tooltip-box {
-  background: #eff9fd;
-  border: 1px solid #c6c6c6;
-  box-shadow: 1px 1px 5px 0 rgba(0, 0, 0, 0.4);
-  padding: 5px;
+  background-color: #ffffff;
+  box-shadow: 0 2px 24px 0 rgba(0, 0, 0, 0.4);
+  padding: 6px 8px;
   position: relative;
   width: 300px;
 }
 
 .bcms-tooltip-box p {
+  color: #303646;
   font-size: 11px;
   line-height: 19px;
   margin: 0;

@@ -18,7 +18,7 @@
 
     <div class="bcms-input-field-holder">
         <div class="bcms-content-titles">@PagesGlobalization.AddPageContent_RegularContentTab_LiveFrom_Title</div>
-        <div class="bcms-date-input-box">
+        <div class="bcms-field-wrapper">
             @Html.DateTextBoxFor(model => model.LiveFrom, Model.LiveFrom, new Dictionary<string, object> { { "class", "bcms-field-text bcms-datepicker" }, { "style", "width: 127px;" } })
             @Html.BcmsValidationMessageFor(model => model.LiveFrom)
         </div>
@@ -26,7 +26,7 @@
 
     <div class="bcms-input-field-holder">
         <div class="bcms-content-titles">@PagesGlobalization.AddPageContent_RegularContentTab_LiveTo_Title</div>
-        <div class="bcms-date-input-box">
+        <div class="bcms-field-wrapper">
             @Html.DateTextBoxFor(model => model.LiveTo, Model.LiveTo, new Dictionary<string, object> { { "class", "bcms-field-text bcms-datepicker" }, { "style", "width: 127px;" } })
             @Html.BcmsValidationMessageFor(model => model.LiveTo)
         </div>

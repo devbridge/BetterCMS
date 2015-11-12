@@ -52,7 +52,7 @@
                     <!-- ko if: getSitemap().showMacros -->
                     <div class="bcms-edit-node-holder">
                         @Html.Tooltip(NavigationGlobalization.Sitemap_NodeEdit_Macro_Tooltip_Message)
-                        <div class="bcms-custom-input-box" style="width: 100%;">
+                        <div class="bcms-field-wrapper">
                             @Html.TextBoxFor(m => m.Macro, new
                             {
                                 data_bind = "value: macro, valueUpdate: 'afterkeydown', enterPress: saveSitemapNodeWithValidation, escPress: cancelEditSitemapNode",

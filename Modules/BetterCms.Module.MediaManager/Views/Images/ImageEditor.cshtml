@@ -107,7 +107,7 @@
                             <div class="bcms-content-titles">@MediaGlobalization.ImageEditor_Dialog_ChangeSize_Title</div>
 
                             <span>@MediaGlobalization.ImageEditor_Dialog_ChangeSize_Width:</span>
-                            <div class="bcms-custom-input-box" style="width: 75px;">
+                            <div class="bcms-field-wrapper">
                                 @Html.TextBoxFor(f => f.ImageWidth, new
                             {
                                 @class = "bcms-field-text",
@@ -117,7 +117,7 @@
                                 @Html.BcmsValidationMessageFor(f => f.ImageWidth)
                             </div>
                             <span>@MediaGlobalization.ImageEditor_Dialog_ChangeSize_Height:</span>
-                            <div class="bcms-custom-input-box" style="width: 75px;">
+                            <div class="bcms-field-wrapper">
                                 @Html.TextBoxFor(f => f.ImageHeight, new
                             {
                                 @class = "bcms-field-text",

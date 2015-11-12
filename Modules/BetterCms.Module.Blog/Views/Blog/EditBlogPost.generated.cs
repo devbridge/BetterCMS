@@ -510,7 +510,7 @@ WriteLiteral("                        ");
             #line hidden
 WriteLiteral("\r\n                        <div");
 
-WriteLiteral(" class=\"bcms-date-input-box\"");
+WriteLiteral(" class=\"bcms-field-wrapper\"");
 
 WriteLiteral(">\r\n");
 
@@ -554,7 +554,7 @@ WriteLiteral(">");
             #line hidden
 WriteLiteral("</div>\r\n                        <div");
 
-WriteLiteral(" class=\"bcms-date-input-box\"");
+WriteLiteral(" class=\"bcms-field-wrapper\"");
 
 WriteLiteral(">\r\n");
 

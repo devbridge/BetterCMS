@@ -70,16 +70,6 @@ $validation-fields: ();
 }
 
 //module validation messages
-.bcms-custom-input-box {
-    display: inline-block;
-    position: relative;
-}
-
-.bcms-date-input-box {
-    display: inline-block;
-    position: relative;
-}
-
 .bcms-input-validation-error {
     background-color: #fcecec;
     border: 1px solid #e64343;

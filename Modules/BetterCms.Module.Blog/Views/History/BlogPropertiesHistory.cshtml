@@ -19,7 +19,7 @@
 
     <div class="bcms-input-field-holder">
         <div class="bcms-content-titles">@PagesGlobalization.AddPageContent_RegularContentTab_LiveTo_Title</div>
-        <div class="bcms-date-input-box">
+        <div class="bcms-field-wrapper">
             @Html.DateTextBoxFor(model => model.ExpirationDate, Model.ExpirationDate, new Dictionary<string, object> { { "readonly", "readonly" }, { "class", "bcms-field-text bcms-datepicker" }, { "style", "width: 127px;" } })
         </div>
     </div>

@@ -31,7 +31,7 @@
     @if (Model.CanBeEdited)
     {
         <div class="bcms-input-field-holder">
-            <div class="bcms-date-input-box bcms-options-date" data-bind="visible: isActive()">
+            <div class="bcms-field-wrapper bcms-options-date" data-bind="visible: isActive()">
                 <input class="bcms-field-text bcms-datepicker" data-bind="
                     css: { 'bcms-input-validation-error': !isNew() && @(Model.ValueBind).hasError && @(Model.ValueBind).hasError() },
                     value: @(Model.ValueBind),
