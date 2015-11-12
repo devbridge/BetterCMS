@@ -125,7 +125,7 @@ WriteLiteral(">\n");
             #line hidden
 WriteLiteral("        <div");
 
-WriteLiteral(" class=\"bcms-input-field-holder\"");
+WriteLiteral(" class=\"bcms-input-list-holder\"");
 
 WriteLiteral(">\n            <div");
 

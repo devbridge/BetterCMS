@@ -112,36 +112,37 @@
     };
 }
 
-<div class="bcms-history-preview-holder">
-    <div class="bcms-history-preview">
-        <div id="bcms-history-preview" style="height: 100%">
-            @Html.MessagesBox()
-            <div class="bcms-history-info" style="display: block;">@MediaGlobalization.MediaHistory_SelectVersionToPreviewMessage</div>
-            <div class="bcms-history-content"></div>
-        </div>
+@Html.MessagesBox()
+<div class="bcms-modal-frame-holder">
+    <div class="bcms-history-preview-holder" id="bcms-history-preview">
+        <div class="bcms-history-info" style="display: block;">@MediaGlobalization.MediaHistory_SelectVersionToPreviewMessage</div>
+        @*<div class="bcms-history-content"></div>*@
     </div>
-</div>
 
-<div class="bcms-history-table-holder">
-    @using (Html.BeginForm<HistoryController>(f => f.MediaHistory((GetMediaHistoryRequest)null), FormMethod.Post, new { @id = "bcms-pagecontenthistory-form", @class = "bcms-ajax-form" }))
+    <div class="bcms-history-table-holder">
+        @using (Html.BeginForm<HistoryController>(f => f.MediaHistory((GetMediaHistoryRequest)null), FormMethod.Post, new { @id = "bcms-pagecontenthistory-form", @class = "bcms-ajax-form" }))
         {
-        @Html.HiddenGridOptions(Model.GridOptions)
-        @Html.HiddenFor(model => model.MediaId)
+            @Html.HiddenGridOptions(Model.GridOptions)
+            @Html.HiddenFor(model => model.MediaId)
 
-        <div class="bcms-history-table-top">
-            <div class="bcms-large-titles">@MediaGlobalization.MediaHistory_OlderVersions</div>
-            <div class="bcms-search-block">
-                @Html.TextBoxFor(m => m.SearchQuery, new { @class = "bcms-field-text", @placeholder = RootGlobalization.WaterMark_Search })
+            <div class="bcms-history-table-top">
+                <div class="bcms-large-titles">@MediaGlobalization.MediaHistory_OlderVersions</div>
+
+                <div class="bcms-btn-search" id="bcms-pagecontenthistory-search-btn">@RootGlobalization.Button_Search</div>
+                <div class="bcms-search-block">
+                    @Html.TextBoxFor(m => m.SearchQuery, new { @class = "bcms-field-text", @placeholder = RootGlobalization.WaterMark_Search })
+                </div>            
             </div>
-            <div class="bcms-btn-search" id="bcms-pagecontenthistory-search-btn">@RootGlobalization.Button_Search</div>
-        </div>
 
-        @Html.Grid(Model.Items).Sort(Model.GridOptions).Columns(columns).Attributes(@class => "bcms-tables bcms-history-grid").RenderUsing(new ScrollableEditableHtmlTableGridRenderer<MediaHistoryItem>()
+            <div class="bcms-history-items-list">
+                @Html.Grid(Model.Items).Sort(Model.GridOptions).Columns(columns).Attributes(@class => "bcms-tables bcms-history-grid").RenderUsing(new ScrollableEditableHtmlTableGridRenderer<MediaHistoryItem>()
                                                                                                                                  {
                                                                                                                                      InternalTableCssClass = "bcms-history-cell"
                                                                                                                                  })
-        @Html.HiddenSubmit()
+                @Html.HiddenSubmit()
+            </div>
         }
+    </div>
 </div>
 
 <script type="text/html" id="bcms-history-preview-template">

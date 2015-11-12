@@ -340,15 +340,19 @@ a:hover {
   vertical-align: middle;
   color: #303646;
   font-size: 18px;
-  font-weight: 700;
   font-family: "Open Sans", sans-serif !important;
-  line-height: 37px;
 }
 
 .bcms-content-info-container {
   box-sizing: border-box;
   max-width: 50%;
   padding: 30px 0 0 10px;
+}
+
+.bcms-content-info-block .bcms-input-list-holder {
+  display: inline-block;
+  vertical-align: top;
+  margin-top: 0;
 }
 
 .bcms-content-titles {
@@ -567,9 +571,9 @@ a:hover {
   -webkit-transform: translateZ(0);
   -moz-transform: translateZ(0);
   transform: translateZ(0);
-  -webkit-animation: loader 1000ms infinite ease-in-out;
-  -moz-animation: loader 1000ms infinite ease-in-out;
-  animation: loader 1000ms infinite ease-in-out;
+  -webkit-animation: loader 800ms infinite ease-in-out;
+  -moz-animation: loader 800ms infinite ease-in-out;
+  animation: loader 800ms infinite ease-in-out;
   -webkit-animation-delay: -160ms;
   -moz-animation-delay: -160ms;
   animation-delay: -160ms;
@@ -581,9 +585,9 @@ a:hover {
 .bcms-loader:before,
 .bcms-loader:after {
   content: "";
-  -webkit-animation: loader 1000ms infinite ease-in-out;
-  -moz-animation: loader 1000ms infinite ease-in-out;
-  animation: loader 1000ms infinite ease-in-out;
+  -webkit-animation: loader 800ms infinite ease-in-out;
+  -moz-animation: loader 800ms infinite ease-in-out;
+  animation: loader 800ms infinite ease-in-out;
   height: 2.30769rem;
   width: 0.61538rem;
   position: absolute;
@@ -615,9 +619,9 @@ a:hover {
   -webkit-transform: translateZ(0);
   -moz-transform: translateZ(0);
   transform: translateZ(0);
-  -webkit-animation: loader 1000ms infinite ease-in-out;
-  -moz-animation: loader 1000ms infinite ease-in-out;
-  animation: loader 1000ms infinite ease-in-out;
+  -webkit-animation: loader 800ms infinite ease-in-out;
+  -moz-animation: loader 800ms infinite ease-in-out;
+  animation: loader 800ms infinite ease-in-out;
   -webkit-animation-delay: -160ms;
   -moz-animation-delay: -160ms;
   animation-delay: -160ms;
@@ -629,9 +633,9 @@ a:hover {
 .bcms-loader-2:before,
 .bcms-loader-2:after {
   content: "";
-  -webkit-animation: loader 1000ms infinite ease-in-out;
-  -moz-animation: loader 1000ms infinite ease-in-out;
-  animation: loader 1000ms infinite ease-in-out;
+  -webkit-animation: loader 800ms infinite ease-in-out;
+  -moz-animation: loader 800ms infinite ease-in-out;
+  animation: loader 800ms infinite ease-in-out;
   height: 2.30769rem;
   width: 0.61538rem;
   position: absolute;

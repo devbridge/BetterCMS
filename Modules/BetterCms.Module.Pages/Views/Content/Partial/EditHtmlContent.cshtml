@@ -6,17 +6,17 @@
 @Html.HiddenFor(model => model.EditInSourceMode, new { @id = "bcms-edit-in-source-mode" })
 @Html.HiddenFor(model => model.ContentTextMode, new { @id = "bcms-content-text-mode" })
 
-<div class="bcms-newcontent-top">
-    <div class="bcms-input-field-holder">
+<div class="bcms-content-info-block">
+    <div class="bcms-input-list-holder">
         <div class="bcms-content-titles">@PagesGlobalization.AddPageContent_RegularContentTab_ContentName_Title</div>
         @Html.Tooltip(PagesGlobalization.AddPageContent_RegularContentTab_ContentName_Tooltip_Description)
         <div class="bcms-field-wrapper">
-            @Html.TextBoxFor(model => model.ContentName, new { @class = "bcms-field-text"})
+            @Html.TextBoxFor(model => model.ContentName, new { @class = "bcms-field-text" })
             @Html.BcmsValidationMessageFor(model => model.ContentName)
         </div>
     </div>
 
-    <div class="bcms-input-field-holder">
+    <div class="bcms-input-list-holder">
         <div class="bcms-content-titles">@PagesGlobalization.AddPageContent_RegularContentTab_LiveFrom_Title</div>
         <div class="bcms-field-wrapper">
             @Html.DateTextBoxFor(model => model.LiveFrom, Model.LiveFrom, new Dictionary<string, object> { { "class", "bcms-field-text bcms-datepicker" }, { "style", "width: 127px;" } })
@@ -24,7 +24,7 @@
         </div>
     </div>
 
-    <div class="bcms-input-field-holder">
+    <div class="bcms-input-list-holder">
         <div class="bcms-content-titles">@PagesGlobalization.AddPageContent_RegularContentTab_LiveTo_Title</div>
         <div class="bcms-field-wrapper">
             @Html.DateTextBoxFor(model => model.LiveTo, Model.LiveTo, new Dictionary<string, object> { { "class", "bcms-field-text bcms-datepicker" }, { "style", "width: 127px;" } })
@@ -33,6 +33,6 @@
     </div>
 </div>
 
-<div class="bcms-text-editor-holder">
+<div class="bcms-field-wrapper">
     @Html.TextAreaFor(model => model.PageContent, new { @class = "bcms-contenthtml", @id = Guid.NewGuid() })
 </div>
