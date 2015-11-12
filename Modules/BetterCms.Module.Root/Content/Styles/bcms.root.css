@@ -1963,9 +1963,10 @@ td .bcms-field-wrapper {
   line-height: 18px;
   list-style: none;
   margin: auto;
-  max-width: 1150px;
   padding: 4px 35px;
   position: relative;
+  text-align: left;
+  width: 1150px;
 }
 
 .bcms-messages-close {
@@ -2187,19 +2188,6 @@ span.bcms-tag-field-validation-error > span:before {
 .bcms-popinfo-frame > p {
   font-size: 14px;
   line-height: 19px;
-}
-
-a.bcms-error-close {
-  background: url("images/sprite-base-1.png") no-repeat -9px -726px;
-  cursor: pointer;
-  height: 14px;
-  overflow: hidden;
-  position: absolute;
-  right: 10px;
-  text-decoration: none;
-  text-indent: 9999px;
-  top: 10px;
-  width: 15px;
 }
 
 .bcms-on .bcms-region-overlay {
@@ -3414,19 +3402,6 @@ a.bcms-remove-image {
   line-height: 19px;
   margin: 0;
   padding: 0;
-}
-
-div.bcms-tip-close {
-  background-color: #dc4250;
-  cursor: pointer;
-  height: 14px;
-  overflow: hidden;
-  position: absolute;
-  right: 10px;
-  text-decoration: none;
-  text-indent: 9999px;
-  top: 10px;
-  width: 15px;
 }
 
 .markItUpButtonH1 a, .markItUpButtonH2 a, .markItUpButtonH3 a, .markItUpButtonH4 a, .markItUpButtonH5 a, .markItUpButtonH6 a, .markItUpButtonBold a, .markItUpButtonItalic a, .markItUpButtonListBullet a, .markItUpButtonListNumeric a, .markItUpButtonPicture a, .markItUpButtonLink a, .markItUpButtonQuotes a, .markItUpButtonCode a, .markItUpButtonWidget a, .markItUpButtonWidgetOption a, .markItUpButtonOption a {

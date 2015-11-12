@@ -178,7 +178,7 @@ namespace BetterCms.Module.Pages.Content.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to &lt;b&gt;The layout of this page is based on a template.&lt;/b&gt; Select a template from options below. If you need an additional template contact your system administrator to create a custom template..
+        ///   Looks up a localized string similar to The layout of this page is based on a template. Select a template from options below, or contact your system administrator to create a custom template..
         /// </summary>
         public static string AddNewPage_Template_InfoMessage_Text {
             get {
@@ -1672,7 +1672,7 @@ namespace BetterCms.Module.Pages.Content.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to &lt;b&gt;The layout of this page is based on a template.&lt;/b&gt; Select a template from options below. If you need an additional template contact your system administrator to create a custom template..
+        ///   Looks up a localized string similar to The layout of this page is based on a template. Select a template from options below, or contact your system administrator to create a custom template..
         /// </summary>
         public static string EditPageProperties_LayoutPropertiesTab_InfoMessage {
             get {

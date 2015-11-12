@@ -34,20 +34,20 @@
     }
 }
 
-div.bcms-tip-close {
-    background-color: $red;
-    cursor: pointer;
-    height: 14px;
-    overflow: hidden;
-    position: absolute;
-    right: 10px;
-    text-decoration: none;
-    text-indent: 9999px;
-    top: 10px;
-    width: 15px;
-}
-
+//todo check if design requires position arrows to tooltip mark
 //.bcms-tooltip-tl:before,
 //.bcms-tooltip-bl:before,
 //.bcms-tooltip-tr:before,
 //.bcms-tooltip-br:before
+//div.bcms-tip-close {
+//    background-color: $bg-red;
+//    cursor: pointer;
+//    height: 14px;
+//    overflow: hidden;
+//    position: absolute;
+//    right: 10px;
+//    text-decoration: none;
+//    text-indent: 999em;
+//    top: 10px;
+//    width: 15px;
+//}
