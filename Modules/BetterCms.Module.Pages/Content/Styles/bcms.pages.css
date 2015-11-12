@@ -355,6 +355,7 @@ a.bcms-expanded-nodes {
 }
 
 .bcms-history-items-list {
+  background-color: #ffffff;
   height: calc(40vh - 109px);
   overflow-y: auto;
 }

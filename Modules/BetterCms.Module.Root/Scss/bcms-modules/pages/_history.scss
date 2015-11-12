@@ -40,6 +40,7 @@ $history-preview-box: ($header-height + $tab-height);
     }
 
     &-items-list {
+        background-color: $white;
         height: calc(40vh - #{$footer-height + 44px});
         overflow-y: auto;
     }
