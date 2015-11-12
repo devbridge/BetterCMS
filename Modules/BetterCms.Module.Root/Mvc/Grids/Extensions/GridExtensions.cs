@@ -175,7 +175,7 @@ namespace BetterCms.Module.Root.Mvc.Grids.Extensions
                                             {"id", null},
                                             {"name", namePattern},
                                             {"style", "display:none; width:100%;"},
-                                            {"class", string.Format("bcms-field-text {0}", textBoxClassName)}
+                                            {"class", string.Format("bcms-field-text bcms-js-grid-input {0}", textBoxClassName)}
                                         };
             if (!string.IsNullOrWhiteSpace(namePattern))
             {
