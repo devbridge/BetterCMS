@@ -1,8 +1,10 @@
 ﻿@using BetterCms.Module.Root.Mvc.Helpers
 @model BetterCms.Module.MediaManager.ViewModels.MediaManager.MediaViewModel
 
-<script type="text/html" id="bcms-media-list-template">
+<script type="text/html" id="bcms-media-list-window-template">
     @Html.MessagesBox(null, new Dictionary<string, string> { { "data-bind", "attr: { id: domId() }" } })
 
-    @Html.Partial("Partial/MediaManagerInnerContentTemplate")
+    <div class="bcms-window-settings">
+        @Html.Partial("Partial/MediaManagerInnerContentTemplate")
+    </div>
 </script>

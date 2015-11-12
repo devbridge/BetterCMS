@@ -51,7 +51,7 @@ WriteLiteral("        ");
 
             
             #line 3 "..\..\Views\Files\FileInsert.cshtml"
-   Write(Html.Partial("~/Areas/bcms-media/Views/Shared/Partial/MediaManagerTab.cshtml"));
+   Write(Html.Partial("~/Areas/bcms-media/Views/Shared/Partial/MediaManagerInsertion.cshtml"));
 
             
             #line default

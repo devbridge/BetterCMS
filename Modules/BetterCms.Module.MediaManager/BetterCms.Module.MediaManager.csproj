@@ -346,10 +346,25 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>MediaManagerFilterTemplate.cshtml</DependentUpon>
     </Compile>
+    <Compile Include="Views\Shared\Partial\MediaManagerInsertion.generated.cs">
+      <DependentUpon>MediaManagerInsertion.cshtml</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+    </Compile>
     <Compile Include="Views\Shared\Partial\MediaManagerTab.generated.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>MediaManagerTab.cshtml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Shared\Partial\MediaManagerInnerContentTemplate.generated.cs">
+      <DependentUpon>MediaManagerInnerContentTemplate.cshtml</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+    </Compile>
+    <Compile Include="Views\Shared\Partial\MediaManagerWindowTemplate.generated.cs">
+      <DependentUpon>MediaManagerWindowTemplate.cshtml</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
     </Compile>
     <Compile Include="Views\Shared\Partial\MediaManagerTemplate.generated.cs">
       <AutoGen>True</AutoGen>
@@ -438,6 +453,18 @@
     <None Include="Views\Shared\Partial\MediaManagerFilterTemplate.cshtml">
       <Generator>RazorGenerator</Generator>
       <LastGenOutput>MediaManagerFilterTemplate.generated.cs</LastGenOutput>
+    </None>
+    <None Include="Views\Shared\Partial\MediaManagerInnerContentTemplate.cshtml">
+      <Generator>RazorGenerator</Generator>
+      <LastGenOutput>MediaManagerInnerContentTemplate.generated.cs</LastGenOutput>
+    </None>
+    <None Include="Views\Shared\Partial\MediaManagerInsertion.cshtml">
+      <Generator>RazorGenerator</Generator>
+      <LastGenOutput>MediaManagerInsertion.generated.cs</LastGenOutput>
+    </None>
+    <None Include="Views\Shared\Partial\MediaManagerWindowTemplate.cshtml">
+      <Generator>RazorGenerator</Generator>
+      <LastGenOutput>MediaManagerWindowTemplate.generated.cs</LastGenOutput>
     </None>
     <None Include="Views\Upload\SingleFileUpload.cshtml">
       <Generator>RazorGenerator</Generator>
