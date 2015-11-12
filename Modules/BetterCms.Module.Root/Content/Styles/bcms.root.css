@@ -1887,6 +1887,58 @@ td .bcms-field-wrapper {
   display: none;
 }
 
+.bcms-error-frame {
+  position: absolute;
+  -webkit-transform: translate(-50%, -50%);
+  -moz-transform: translate(-50%, -50%);
+  transform: translate(-50%, -50%);
+  left: 50%;
+  top: 50%;
+  background-color: #ffffff;
+  border-top: 4px solid #dc4250;
+  box-shadow: 0 25px 80px 5px rgba(0, 0, 0, 0.4);
+  box-sizing: border-box;
+  color: #303646;
+  padding: 30px 80px 30px 40px;
+  width: 600px;
+}
+
+.bcms-error-frame > h4 {
+  color: #dc4250;
+  margin: 0;
+}
+
+.bcms-error-frame > p {
+  font-size: 14px;
+  line-height: 19px;
+}
+
+.bcms-popinfo-frame {
+  position: absolute;
+  -webkit-transform: translate(-50%, -50%);
+  -moz-transform: translate(-50%, -50%);
+  transform: translate(-50%, -50%);
+  left: 50%;
+  top: 50%;
+  background-color: #ffffff;
+  border-top: 4px solid #0d7ce7;
+  box-shadow: 0 25px 80px 5px rgba(0, 0, 0, 0.4);
+  box-sizing: border-box;
+  color: #303646;
+  padding: 30px 80px 30px 40px;
+  width: 600px;
+}
+
+.bcms-popinfo-frame > h4 {
+  color: #0d7ce7;
+  margin: 0;
+}
+
+.bcms-popinfo-frame > p {
+  font-size: 14px;
+  line-height: 19px;
+}
+
 .bcms-messages-ui {
   position: fixed;
   top: 0;
@@ -2140,58 +2192,6 @@ span.bcms-tag-field-validation-error > span:before {
   border-width: 11px;
   margin-left: -11px;
   right: 6px;
-}
-
-.bcms-error-frame {
-  position: absolute;
-  -webkit-transform: translate(-50%, -50%);
-  -moz-transform: translate(-50%, -50%);
-  transform: translate(-50%, -50%);
-  left: 50%;
-  top: 50%;
-  background-color: #ffffff;
-  border-top: 4px solid #dc4250;
-  box-shadow: 0 25px 80px 5px rgba(0, 0, 0, 0.4);
-  box-sizing: border-box;
-  color: #303646;
-  padding: 30px 80px 30px 40px;
-  width: 600px;
-}
-
-.bcms-error-frame > h4 {
-  color: #dc4250;
-  margin: 0;
-}
-
-.bcms-error-frame > p {
-  font-size: 14px;
-  line-height: 19px;
-}
-
-.bcms-popinfo-frame {
-  position: absolute;
-  -webkit-transform: translate(-50%, -50%);
-  -moz-transform: translate(-50%, -50%);
-  transform: translate(-50%, -50%);
-  left: 50%;
-  top: 50%;
-  background-color: #ffffff;
-  border-top: 4px solid #0d7ce7;
-  box-shadow: 0 25px 80px 5px rgba(0, 0, 0, 0.4);
-  box-sizing: border-box;
-  color: #303646;
-  padding: 30px 80px 30px 40px;
-  width: 600px;
-}
-
-.bcms-popinfo-frame > h4 {
-  color: #0d7ce7;
-  margin: 0;
-}
-
-.bcms-popinfo-frame > p {
-  font-size: 14px;
-  line-height: 19px;
 }
 
 .bcms-on .bcms-region-overlay {

@@ -311,9 +311,6 @@
       <LastGenOutput>BlogGlobalization.Designer.cs</LastGenOutput>
     </EmbeddedResource>
     <EmbeddedResource Include="Content\Styles\Images\sprite-blog.png" />
-    <EmbeddedResource Include="Content\Styles\Images\bcms-no-image-1.png" />
-    <EmbeddedResource Include="Content\Styles\Images\bcms-no-image-2.png" />
-    <EmbeddedResource Include="Content\Styles\Images\bcms-no-image-3.png" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Content\Styles\Images\icn-zoom-notcompatible.png" />

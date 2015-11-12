@@ -360,10 +360,6 @@ a.bcms-expanded-nodes {
   overflow-y: auto;
 }
 
-.bcms-history-content {
-  padding: 20px;
-}
-
 .bcms-published-state {
   color: #0d7ce7;
 }
@@ -374,11 +370,6 @@ a.bcms-expanded-nodes {
 
 .bcms-archived-state {
   color: #dc4250;
-}
-
-.bcms-editseo-window {
-  width: 670px;
-  min-height: 100%;
 }
 
 .bcms-top-block-holder {
