@@ -20,48 +20,48 @@
 
                 <div class="bcms-blog-left">
                     <div class="bcms-input-list-holder">
-                        <div class="bcms-tooltip-mark" data-message="@UsersGlobalization.EditUser_FirstName_Tooltip_Description"></div>
                         <div class="bcms-content-titles">@UsersGlobalization.EditUser_FirstName_Title</div>
+                        <div class="bcms-tooltip-mark" data-message="@UsersGlobalization.EditUser_FirstName_Tooltip_Description"></div>
                         <div class="bcms-field-wrapper">
                             @Html.TextBoxFor(m => m.FirstName, new { @class = "bcms-field-text", data_bind = "value: firstName, valueUpdate: 'afterkeydown'" })
                             @Html.BcmsValidationMessageFor(m => m.FirstName)
                         </div>
                     </div>
                     <div class="bcms-input-list-holder">
-                        <div class="bcms-tooltip-mark" data-message="@UsersGlobalization.EditUser_LastName_Tooltip_Description"></div>
                         <div class="bcms-content-titles">@UsersGlobalization.EditUser_LastName</div>
+                        <div class="bcms-tooltip-mark" data-message="@UsersGlobalization.EditUser_LastName_Tooltip_Description"></div>
                         <div class="bcms-field-wrapper">
                             @Html.TextBoxFor(m => m.LastName, new { @class = "bcms-field-text", data_bind = "value: lastName, valueUpdate: 'afterkeydown'" })
                             @Html.BcmsValidationMessageFor(m => m.LastName)
                         </div>
                     </div>
                     <div class="bcms-input-list-holder">
-                        <div class="bcms-tooltip-mark" data-message="@UsersGlobalization.EditUser_UserName_Tooltip_Description"></div>
                         <div class="bcms-content-titles">@UsersGlobalization.EditUser_UserName_Title</div>
+                        <div class="bcms-tooltip-mark" data-message="@UsersGlobalization.EditUser_UserName_Tooltip_Description"></div>
                         <div class="bcms-field-wrapper">
                             @Html.TextBoxFor(m => m.UserName, new { @class = "bcms-field-text", data_bind = "value: userName, valueUpdate: 'afterkeydown', event: {keyup: userNameOnKeyUp}" })
                             @Html.BcmsValidationMessageFor(m => m.UserName)
                         </div>
                     </div>
                     <div class="bcms-input-list-holder">
-                        <div class="bcms-tooltip-mark" data-message="@UsersGlobalization.EditUser_Email_Tooltip_Description"></div>
                         <div class="bcms-content-titles">@UsersGlobalization.EditUser_Email_Title</div>
+                        <div class="bcms-tooltip-mark" data-message="@UsersGlobalization.EditUser_Email_Tooltip_Description"></div>
                         <div class="bcms-field-wrapper">
                             @Html.TextBoxFor(m => m.Email, new { @class = "bcms-field-text" })
                             @Html.BcmsValidationMessageFor(m => m.Email)
                         </div>
                     </div>
                     <div class="bcms-input-list-holder">
-                        <div class="bcms-tooltip-mark" data-message="@UsersGlobalization.EditUser_Password_Tooltip_Description"></div>
                         <div class="bcms-content-titles">@UsersGlobalization.EditUser_Password_Title</div>
+                        <div class="bcms-tooltip-mark" data-message="@UsersGlobalization.EditUser_Password_Tooltip_Description"></div>
                         <div class="bcms-field-wrapper">
                             @Html.TextBoxFor(m => m.Password, new { @class = "bcms-field-text", @type = "password" })
                             @Html.BcmsValidationMessageFor(m => m.Password)
                         </div>
                     </div>
                     <div class="bcms-input-list-holder">
-                        <div class="bcms-tooltip-mark" data-message="@UsersGlobalization.EditUser_RetypePassword_Tooltip_Description"></div>
                         <div class="bcms-content-titles">@UsersGlobalization.EditUser_RetypePassword_Title</div>
+                        <div class="bcms-tooltip-mark" data-message="@UsersGlobalization.EditUser_RetypePassword_Tooltip_Description"></div>
                         <div class="bcms-field-wrapper">
                             @Html.TextBoxFor(m => m.RetypedPassword, new { @class = "bcms-field-text", @type = "password" })
                             @Html.BcmsValidationMessageFor(m => m.RetypedPassword)
@@ -71,8 +71,8 @@
 
                 <div class="bcms-blog-right">
                     <div class="bcms-create-author-holder">
-                        <div class="bcms-tooltip-mark" data-message="@UsersGlobalization.EditUser_UserImage_Tooltip_Description"></div>
                         <div class="bcms-content-titles">@UsersGlobalization.EditUser_Image_Title</div>
+                        <div class="bcms-tooltip-mark" data-message="@UsersGlobalization.EditUser_UserImage_Tooltip_Description"></div>
                         <div class="bcms-uploaded-image">
                             <!-- ko if: image().url() -->
                             <a class="bcms-remove-image" data-bind="click: image().remove.bind(image())">@RootGlobalization.Button_Remove</a>

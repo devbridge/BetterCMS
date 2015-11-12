@@ -55,37 +55,35 @@ namespace ASP
         }
         public override void Execute()
         {
-WriteLiteral("\n");
-
 WriteLiteral("<div");
 
 WriteLiteral(" class=\"bcms-input-list-holder\"");
 
-WriteLiteral(">\r\n");
-
-WriteLiteral("    ");
-
-            
-            #line 8 "..\..\Views\Page\Partial\ClonePageEditUrl.cshtml"
-Write(Html.Tooltip(PagesGlobalization.ClonePage_NewUrl_Tooltip_Description));
-
-            
-            #line default
-            #line hidden
-WriteLiteral("\r\n    <div");
+WriteLiteral(">\r\n    <div");
 
 WriteLiteral(" class=\"bcms-content-titles\"");
 
-WriteLiteral(">");
+WriteLiteral(">\r\n");
+
+WriteLiteral("        ");
 
             
-            #line 9 "..\..\Views\Page\Partial\ClonePageEditUrl.cshtml"
-                                Write(PagesGlobalization.ClonePage_NewUrl);
+            #line 8 "..\..\Views\Page\Partial\ClonePageEditUrl.cshtml"
+   Write(PagesGlobalization.ClonePage_NewUrl);
 
             
             #line default
             #line hidden
-WriteLiteral("<a");
+WriteLiteral(" ");
+
+            
+            #line 8 "..\..\Views\Page\Partial\ClonePageEditUrl.cshtml"
+                                        Write(Html.Tooltip(PagesGlobalization.ClonePage_NewUrl_Tooltip_Description));
+
+            
+            #line default
+            #line hidden
+WriteLiteral("\r\n        <a");
 
 WriteLiteral(" id=\"bcms-page-editpermalink\"");
 
@@ -93,12 +91,12 @@ WriteLiteral(">");
 
             
             #line 9 "..\..\Views\Page\Partial\ClonePageEditUrl.cshtml"
-                                                                                                    Write(RootGlobalization.Button_Edit);
+                                   Write(RootGlobalization.Button_Edit);
 
             
             #line default
             #line hidden
-WriteLiteral("</a></div>\r\n    <div");
+WriteLiteral("</a>\r\n    </div>\r\n    <div");
 
 WriteLiteral(" class=\"bcms-editseo-urlpath\"");
 
@@ -107,7 +105,7 @@ WriteLiteral(" id=\"bcms-page-permalink-info\"");
 WriteLiteral(">");
 
             
-            #line 10 "..\..\Views\Page\Partial\ClonePageEditUrl.cshtml"
+            #line 11 "..\..\Views\Page\Partial\ClonePageEditUrl.cshtml"
                                                                 Write(string.IsNullOrWhiteSpace(Model.PageUrl) ? Html.Raw("&nbsp;") : new MvcHtmlString(Html.Encode(Model.PageUrl)));
 
             
@@ -124,7 +122,7 @@ WriteLiteral(">\r\n");
 WriteLiteral("        ");
 
             
-            #line 13 "..\..\Views\Page\Partial\ClonePageEditUrl.cshtml"
+            #line 14 "..\..\Views\Page\Partial\ClonePageEditUrl.cshtml"
    Write(Html.Hidden("PageNewUrlHidden", Model.PageUrl, new { @id = "bcms-page-permalink" }));
 
             
@@ -139,7 +137,7 @@ WriteLiteral(">\r\n");
 WriteLiteral("            ");
 
             
-            #line 15 "..\..\Views\Page\Partial\ClonePageEditUrl.cshtml"
+            #line 16 "..\..\Views\Page\Partial\ClonePageEditUrl.cshtml"
        Write(Html.TextBoxFor(model => model.PageUrl, new { @id = "bcms-page-permalink-edit", @class = "bcms-field-text bcms-js-url-path" }));
 
             
@@ -150,7 +148,7 @@ WriteLiteral("\r\n");
 WriteLiteral("            ");
 
             
-            #line 16 "..\..\Views\Page\Partial\ClonePageEditUrl.cshtml"
+            #line 17 "..\..\Views\Page\Partial\ClonePageEditUrl.cshtml"
        Write(Html.BcmsValidationMessageFor(f => f.PageUrl));
 
             
@@ -165,7 +163,7 @@ WriteLiteral(" id=\"bcms-save-permalink\"");
 WriteLiteral(">");
 
             
-            #line 18 "..\..\Views\Page\Partial\ClonePageEditUrl.cshtml"
+            #line 19 "..\..\Views\Page\Partial\ClonePageEditUrl.cshtml"
                                                         Write(RootGlobalization.Button_Ok);
 
             
@@ -178,7 +176,7 @@ WriteLiteral(" class=\"bcms-btn-links-small\"");
 WriteLiteral(">");
 
             
-            #line 19 "..\..\Views\Page\Partial\ClonePageEditUrl.cshtml"
+            #line 20 "..\..\Views\Page\Partial\ClonePageEditUrl.cshtml"
                                      Write(RootGlobalization.Button_Cancel);
 
             

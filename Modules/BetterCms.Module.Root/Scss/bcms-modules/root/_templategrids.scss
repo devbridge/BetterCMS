@@ -59,8 +59,9 @@ $template-grid-box-states: (
         background-color: $gray-smoke30;
         border: $border-thin-smoke;
         box-sizing: border-box;
-        height: 150px;
+        height: 140px;
         overflow: hidden;
+        padding: 5px;
         position: relative;
 
         img {

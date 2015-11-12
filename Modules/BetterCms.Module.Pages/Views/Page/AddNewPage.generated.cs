@@ -272,31 +272,31 @@ WriteLiteral(" class=\"bcms-input-list-holder\"");
 
 WriteLiteral(" data-bind=\"with: language\"");
 
-WriteLiteral(">\r\n");
-
-WriteLiteral("                            ");
-
-            
-            #line 41 "..\..\Views\Page\AddNewPage.cshtml"
-                       Write(Html.Tooltip(PagesGlobalization.AddNewPage_Language_Tooltip_Description));
-
-            
-            #line default
-            #line hidden
-WriteLiteral("\r\n                            <div");
+WriteLiteral(">\r\n                            <div");
 
 WriteLiteral(" class=\"bcms-content-titles\"");
 
 WriteLiteral(">");
 
             
-            #line 42 "..\..\Views\Page\AddNewPage.cshtml"
+            #line 41 "..\..\Views\Page\AddNewPage.cshtml"
                                                         Write(PagesGlobalization.AddNewPage_Language);
 
             
             #line default
             #line hidden
-WriteLiteral("</div>\r\n                            <select");
+WriteLiteral("</div>\r\n");
+
+WriteLiteral("                            ");
+
+            
+            #line 42 "..\..\Views\Page\AddNewPage.cshtml"
+                       Write(Html.Tooltip(PagesGlobalization.AddNewPage_Language_Tooltip_Description));
+
+            
+            #line default
+            #line hidden
+WriteLiteral("\r\n                            <select");
 
 WriteLiteral(" class=\"bcms-global-select\"");
 
@@ -316,31 +316,31 @@ WriteLiteral("\r\n                        <div");
 
 WriteLiteral(" class=\"bcms-input-list-holder\"");
 
-WriteLiteral(">\r\n");
-
-WriteLiteral("                            ");
-
-            
-            #line 48 "..\..\Views\Page\AddNewPage.cshtml"
-                       Write(Html.Tooltip(PagesGlobalization.AddNewPage_PageTitle_Tooltip_Description));
-
-            
-            #line default
-            #line hidden
-WriteLiteral("\r\n                            <div");
+WriteLiteral(">\r\n                            <div");
 
 WriteLiteral(" class=\"bcms-content-titles\"");
 
 WriteLiteral(">");
 
             
-            #line 49 "..\..\Views\Page\AddNewPage.cshtml"
+            #line 48 "..\..\Views\Page\AddNewPage.cshtml"
                                                         Write(PagesGlobalization.AddNewPage_PageTitle);
 
             
             #line default
             #line hidden
-WriteLiteral("</div>\r\n                            <div");
+WriteLiteral("</div>\r\n");
+
+WriteLiteral("                            ");
+
+            
+            #line 49 "..\..\Views\Page\AddNewPage.cshtml"
+                       Write(Html.Tooltip(PagesGlobalization.AddNewPage_PageTitle_Tooltip_Description));
+
+            
+            #line default
+            #line hidden
+WriteLiteral("\r\n                            <div");
 
 WriteLiteral(" class=\"bcms-field-wrapper\"");
 
@@ -417,31 +417,31 @@ WriteLiteral("                    </div>\r\n                </div>\r\n\r\n      
 
 WriteLiteral(" class=\"bcms-input-list-holder\"");
 
-WriteLiteral(">\r\n");
-
-WriteLiteral("                    ");
-
-            
-            #line 73 "..\..\Views\Page\AddNewPage.cshtml"
-               Write(Html.Tooltip(PagesGlobalization.AddNewPage_Template_Tooltip_Description));
-
-            
-            #line default
-            #line hidden
-WriteLiteral("\r\n                    <div");
+WriteLiteral(">\r\n                    <div");
 
 WriteLiteral(" class=\"bcms-content-titles\"");
 
 WriteLiteral(">");
 
             
-            #line 74 "..\..\Views\Page\AddNewPage.cshtml"
+            #line 73 "..\..\Views\Page\AddNewPage.cshtml"
                                                 Write(PagesGlobalization.AddNewPage_Template);
 
             
             #line default
             #line hidden
 WriteLiteral("</div>\r\n");
+
+WriteLiteral("                    ");
+
+            
+            #line 74 "..\..\Views\Page\AddNewPage.cshtml"
+               Write(Html.Tooltip(PagesGlobalization.AddNewPage_Template_Tooltip_Description));
+
+            
+            #line default
+            #line hidden
+WriteLiteral("\r\n");
 
 WriteLiteral("                    ");
 

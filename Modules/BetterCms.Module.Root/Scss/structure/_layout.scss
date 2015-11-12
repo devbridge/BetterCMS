@@ -1,12 +1,12 @@
 $header-height: 55px;
 $footer-height: 65px;
 $settings-frame: ($header-height + $footer-height);
-//
+
 $tabbed-settings: ($settings-frame - $inner-navigation);
 $settings: $settings-frame;
 $tabbed-options: ($settings-frame + $tab-height);
 $options: $settings-frame;
-//
+
 $dialog-window-options: (
                 ('settings', null, null, $settings, 0 30px 0 0),
                 ('tabbed-options', $white, null, $tabbed-options, 0 30px),
@@ -67,7 +67,7 @@ a {
 
 .bcms-modal {
     @include position(fixed, 0);
-    background-color: $gray-bg;
+    background-color: $bg-gray-lighter;
     font-size: 13px;
     overflow: hidden;
 
@@ -110,7 +110,7 @@ a {
     }
 
     &-content {
-        background-color: $gray-bg;
+        background-color: $bg-gray-lighter;
         box-sizing: border-box;
         margin: auto;
         padding: $header-height 0 $footer-height;

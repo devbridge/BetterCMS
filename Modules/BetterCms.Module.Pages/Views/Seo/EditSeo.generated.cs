@@ -134,31 +134,31 @@ WriteLiteral("            <div");
 
 WriteLiteral(" class=\"bcms-input-list-holder\"");
 
-WriteLiteral(">\r\n");
-
-WriteLiteral("                ");
-
-            
-            #line 26 "..\..\Views\Seo\EditSeo.cshtml"
-           Write(Html.Tooltip(PagesGlobalization.EditSeo_PageTitle_Tooltip_Description));
-
-            
-            #line default
-            #line hidden
-WriteLiteral("\r\n                <div");
+WriteLiteral(">\r\n                <div");
 
 WriteLiteral(" class=\"bcms-content-titles\"");
 
 WriteLiteral(">");
 
             
-            #line 27 "..\..\Views\Seo\EditSeo.cshtml"
+            #line 26 "..\..\Views\Seo\EditSeo.cshtml"
                                             Write(PagesGlobalization.EditSeo_PageTitle);
 
             
             #line default
             #line hidden
-WriteLiteral("</div>\r\n                <div");
+WriteLiteral("</div>\r\n");
+
+WriteLiteral("                ");
+
+            
+            #line 27 "..\..\Views\Seo\EditSeo.cshtml"
+           Write(Html.Tooltip(PagesGlobalization.EditSeo_PageTitle_Tooltip_Description));
+
+            
+            #line default
+            #line hidden
+WriteLiteral("\r\n                <div");
 
 WriteLiteral(" class=\"bcms-field-wrapper\"");
 
@@ -212,31 +212,31 @@ WriteLiteral("            <div");
 
 WriteLiteral(" class=\"bcms-input-list-holder\"");
 
-WriteLiteral(">\r\n");
-
-WriteLiteral("                ");
-
-            
-            #line 37 "..\..\Views\Seo\EditSeo.cshtml"
-           Write(Html.Tooltip(PagesGlobalization.EditSeo_MetaTitle_Tooltip_Description));
-
-            
-            #line default
-            #line hidden
-WriteLiteral("\r\n                <div");
+WriteLiteral(">\r\n                <div");
 
 WriteLiteral(" class=\"bcms-content-titles\"");
 
 WriteLiteral(">");
 
             
-            #line 38 "..\..\Views\Seo\EditSeo.cshtml"
+            #line 37 "..\..\Views\Seo\EditSeo.cshtml"
                                             Write(PagesGlobalization.EditSeo_MetaTitle);
 
             
             #line default
             #line hidden
-WriteLiteral("</div>\r\n                <div");
+WriteLiteral("</div>\r\n");
+
+WriteLiteral("                ");
+
+            
+            #line 38 "..\..\Views\Seo\EditSeo.cshtml"
+           Write(Html.Tooltip(PagesGlobalization.EditSeo_MetaTitle_Tooltip_Description));
+
+            
+            #line default
+            #line hidden
+WriteLiteral("\r\n                <div");
 
 WriteLiteral(" class=\"bcms-field-wrapper\"");
 
@@ -275,31 +275,31 @@ WriteLiteral("            <div");
 
 WriteLiteral(" class=\"bcms-input-list-holder\"");
 
-WriteLiteral(">\r\n");
-
-WriteLiteral("                ");
-
-            
-            #line 46 "..\..\Views\Seo\EditSeo.cshtml"
-           Write(Html.Tooltip(PagesGlobalization.EditSeo_MetaKeywords_Tooltip_Description));
-
-            
-            #line default
-            #line hidden
-WriteLiteral("\r\n                <div");
+WriteLiteral(">\r\n                <div");
 
 WriteLiteral(" class=\"bcms-content-titles\"");
 
 WriteLiteral(">");
 
             
-            #line 47 "..\..\Views\Seo\EditSeo.cshtml"
+            #line 46 "..\..\Views\Seo\EditSeo.cshtml"
                                             Write(PagesGlobalization.EditSeo_MetaKeywords);
 
             
             #line default
             #line hidden
-WriteLiteral("</div>\r\n                <div");
+WriteLiteral("</div>\r\n");
+
+WriteLiteral("                ");
+
+            
+            #line 47 "..\..\Views\Seo\EditSeo.cshtml"
+           Write(Html.Tooltip(PagesGlobalization.EditSeo_MetaKeywords_Tooltip_Description));
+
+            
+            #line default
+            #line hidden
+WriteLiteral("\r\n                <div");
 
 WriteLiteral(" class=\"bcms-field-wrapper\"");
 
@@ -338,31 +338,31 @@ WriteLiteral("            <div");
 
 WriteLiteral(" class=\"bcms-input-list-holder\"");
 
-WriteLiteral(">\r\n");
-
-WriteLiteral("                ");
-
-            
-            #line 55 "..\..\Views\Seo\EditSeo.cshtml"
-           Write(Html.Tooltip(PagesGlobalization.EditSeo_MetaDescription_Tooltip_Description));
-
-            
-            #line default
-            #line hidden
-WriteLiteral("\r\n                <div");
+WriteLiteral(">\r\n                <div");
 
 WriteLiteral(" class=\"bcms-content-titles\"");
 
 WriteLiteral(">");
 
             
-            #line 56 "..\..\Views\Seo\EditSeo.cshtml"
+            #line 55 "..\..\Views\Seo\EditSeo.cshtml"
                                             Write(PagesGlobalization.EditSeo_MetaDescription);
 
             
             #line default
             #line hidden
-WriteLiteral("</div>\r\n                <div");
+WriteLiteral("</div>\r\n");
+
+WriteLiteral("                ");
+
+            
+            #line 56 "..\..\Views\Seo\EditSeo.cshtml"
+           Write(Html.Tooltip(PagesGlobalization.EditSeo_MetaDescription_Tooltip_Description));
+
+            
+            #line default
+            #line hidden
+WriteLiteral("\r\n                <div");
 
 WriteLiteral(" class=\"bcms-field-wrapper\"");
 

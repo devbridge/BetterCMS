@@ -330,6 +330,11 @@ a:hover {
   text-decoration: none;
 }
 
+.bcms-input-list-holder {
+  margin: 30px 0 0;
+  position: relative;
+}
+
 .bcms-large-titles {
   display: inline-block;
   vertical-align: middle;
@@ -347,13 +352,15 @@ a:hover {
 }
 
 .bcms-content-titles {
+  display: inline-block;
+  vertical-align: middle;
   color: #303646;
   cursor: default;
   font-family: "Open Sans", sans-serif !important;
   font-size: 14px;
   font-weight: 700;
   line-height: 20px;
-  padding-bottom: 4px;
+  margin-bottom: 4px;
   position: relative;
 }
 
@@ -395,7 +402,7 @@ a:hover {
 
 .bcms-thumb-container {
   display: table;
-  margin: 0 0 45px 30px;
+  margin-bottom: 45px;
 }
 
 .bcms-thumb-box {
@@ -406,6 +413,11 @@ a:hover {
 
 .bcms-thumb-box .bcms-input-list-holder {
   margin-left: 0;
+}
+
+.bcms-thumb-box .bcms-content-titles {
+  font-size: 13px;
+  font-weight: 400;
 }
 
 .bcms-thumb-box .bcms-btn-tertiary {
@@ -539,6 +551,10 @@ a:hover {
   z-index: 99;
 }
 
+.bcms-spinner-container {
+  background-color: #ffffff;
+}
+
 .bcms-loader {
   position: fixed;
   -webkit-transform: translate(-50%, -50%);
@@ -546,13 +562,18 @@ a:hover {
   transform: translate(-50%, -50%);
   left: 50%;
   top: 50%;
-  height: 10em;
-  width: 10em;
+  height: 2.30769rem;
+  width: 0.61538rem;
   -webkit-transform: translateZ(0);
   -moz-transform: translateZ(0);
   transform: translateZ(0);
-  border-radius: 50%;
-  box-shadow: inset 0 0 0 1em #0d7ce7;
+  -webkit-animation: loader 1000ms infinite ease-in-out;
+  -moz-animation: loader 1000ms infinite ease-in-out;
+  animation: loader 1000ms infinite ease-in-out;
+  -webkit-animation-delay: -160ms;
+  -moz-animation-delay: -160ms;
+  animation-delay: -160ms;
+  background-color: #0d7ce7;
   z-index: 9999;
   font-size: 11px;
 }
@@ -560,36 +581,26 @@ a:hover {
 .bcms-loader:before,
 .bcms-loader:after {
   content: "";
-  height: 10.2em;
-  width: 5.2em;
-  border-radius: 50%;
+  -webkit-animation: loader 1000ms infinite ease-in-out;
+  -moz-animation: loader 1000ms infinite ease-in-out;
+  animation: loader 1000ms infinite ease-in-out;
+  height: 2.30769rem;
+  width: 0.61538rem;
   position: absolute;
-  top: -0.1em;
+  background-color: #0d7ce7;
+  top: 0;
   z-index: 999;
 }
 
 .bcms-loader:after {
-  -webkit-animation: loader 2s infinite ease;
-  -moz-animation: loader 2s infinite ease;
-  animation: loader 2s infinite ease;
-  -webkit-transform-origin: 0 5.1em;
-  -moz-transform-origin: 0 5.1em;
-  transform-origin: 0 5.1em;
-  background-color: #eae8e9;
-  border-radius: 0 10.2em 10.2em 0;
-  left: 5.1em;
+  left: 0.92308rem;
 }
 
 .bcms-loader:before {
-  -webkit-animation: loader 2s infinite ease 1.5s;
-  -moz-animation: loader 2s infinite ease 1.5s;
-  animation: loader 2s infinite ease 1.5s;
-  -webkit-transform-origin: 5.2em 5.1em;
-  -moz-transform-origin: 5.2em 5.1em;
-  transform-origin: 5.2em 5.1em;
-  background-color: #eae8e9;
-  border-radius: 10.2em 0 0 10.2em;
-  left: -0.1em;
+  -webkit-animation-delay: -320ms;
+  -moz-animation-delay: -320ms;
+  animation-delay: -320ms;
+  left: -0.92308rem;
 }
 
 .bcms-loader-2 {
@@ -599,13 +610,18 @@ a:hover {
   transform: translate(-50%, -50%);
   left: 50%;
   top: 50%;
-  height: 10em;
-  width: 10em;
+  height: 2.30769rem;
+  width: 0.61538rem;
   -webkit-transform: translateZ(0);
   -moz-transform: translateZ(0);
   transform: translateZ(0);
-  border-radius: 50%;
-  box-shadow: inset 0 0 0 1em #0d7ce7;
+  -webkit-animation: loader 1000ms infinite ease-in-out;
+  -moz-animation: loader 1000ms infinite ease-in-out;
+  animation: loader 1000ms infinite ease-in-out;
+  -webkit-animation-delay: -160ms;
+  -moz-animation-delay: -160ms;
+  animation-delay: -160ms;
+  background-color: #0d7ce7;
   z-index: 9999;
   font-size: 11px;
 }
@@ -613,66 +629,64 @@ a:hover {
 .bcms-loader-2:before,
 .bcms-loader-2:after {
   content: "";
-  height: 10.2em;
-  width: 5.2em;
-  border-radius: 50%;
+  -webkit-animation: loader 1000ms infinite ease-in-out;
+  -moz-animation: loader 1000ms infinite ease-in-out;
+  animation: loader 1000ms infinite ease-in-out;
+  height: 2.30769rem;
+  width: 0.61538rem;
   position: absolute;
-  top: -0.1em;
+  background-color: #0d7ce7;
+  top: 0;
   z-index: 999;
 }
 
 .bcms-loader-2:after {
-  -webkit-animation: loader 2s infinite ease;
-  -moz-animation: loader 2s infinite ease;
-  animation: loader 2s infinite ease;
-  -webkit-transform-origin: 0 5.1em;
-  -moz-transform-origin: 0 5.1em;
-  transform-origin: 0 5.1em;
-  background-color: #eae8e9;
-  border-radius: 0 10.2em 10.2em 0;
-  left: 5.1em;
+  left: 0.92308rem;
 }
 
 .bcms-loader-2:before {
-  -webkit-animation: loader 2s infinite ease 1.5s;
-  -moz-animation: loader 2s infinite ease 1.5s;
-  animation: loader 2s infinite ease 1.5s;
-  -webkit-transform-origin: 5.2em 5.1em;
-  -moz-transform-origin: 5.2em 5.1em;
-  transform-origin: 5.2em 5.1em;
-  background-color: #eae8e9;
-  border-radius: 10.2em 0 0 10.2em;
-  left: -0.1em;
+  -webkit-animation-delay: -320ms;
+  -moz-animation-delay: -320ms;
+  animation-delay: -320ms;
+  left: -0.92308rem;
 }
 
 @-webkit-keyframes loader {
-  0% {
-    -webkit-transform: rotate(0deg);
-  }
+  0%,
+  80%,
   100% {
-    -webkit-transform: rotate(360deg);
+    box-shadow: 0 0 #0d7ce7;
+    height: 1.92308rem;
+  }
+  40% {
+    box-shadow: 0 -2em #0d7ce7;
+    height: 2.30769rem;
   }
 }
 
 @-moz-keyframes loader {
-  0% {
-    -moz-transform: rotate(0deg);
-  }
+  0%,
+  80%,
   100% {
-    -moz-transform: rotate(360deg);
+    box-shadow: 0 0 #0d7ce7;
+    height: 1.92308rem;
+  }
+  40% {
+    box-shadow: 0 -2em #0d7ce7;
+    height: 2.30769rem;
   }
 }
 
 @keyframes loader {
-  0% {
-    -webkit-transform: rotate(0deg);
-    -moz-transform: rotate(0deg);
-    transform: rotate(0deg);
-  }
+  0%,
+  80%,
   100% {
-    -webkit-transform: rotate(360deg);
-    -moz-transform: rotate(360deg);
-    transform: rotate(360deg);
+    box-shadow: 0 0 #0d7ce7;
+    height: 1.92308rem;
+  }
+  40% {
+    box-shadow: 0 -2em #0d7ce7;
+    height: 2.30769rem;
   }
 }
 
@@ -1820,11 +1834,6 @@ td .bcms-field-wrapper {
 .bcms-form-block-holder > div:first-child:nth-last-child(1),
 .bcms-form-block-holder > div:first-child:nth-last-child(1) ~ div {
   width: 100%;
-}
-
-.bcms-input-list-holder {
-  margin: 30px 0 0 30px;
-  position: relative;
 }
 
 .bcms-checkbox-holder {
@@ -3067,8 +3076,9 @@ a.bcms-sort-arrow-top:hover {
   background-color: #f5f5f5;
   border: 1px solid #dfdfdf;
   box-sizing: border-box;
-  height: 150px;
+  height: 140px;
   overflow: hidden;
+  padding: 5px;
   position: relative;
 }
 
@@ -3403,14 +3413,15 @@ a.bcms-remove-image {
 }
 
 .bcms-tooltip-mark {
-  height: 18px;
-  width: 18px;
-  position: absolute;
-  top: 0;
-  left: -25px;
-  background: url("data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxOCIgaGVpZ2h0PSIxOCIgdmlld0JveD0iLTI5OS42IDM4Ny4zIDE4IDE4IiBlbmFibGUtYmFja2dyb3VuZD0ibmV3IC0yOTkuNiAzODcuMyAxOCAxOCI+PHBhdGggZD0ibS0yOTAuNiA0MDQuOGM0LjcgMCA4LjUtMy44IDguNS04LjVzLTMuOC04LjUtOC41LTguNS04LjUgMy44LTguNSA4LjUgMy45IDguNSA4LjUgOC41eiIgZmlsbD0iI2ZmZiIgc3Ryb2tlPSIjYWNhY2FjIiBzdHJva2UtbGluZWNhcD0ic3F1YXJlIi8+PHRleHQgdHJhbnNmb3JtPSJtYXRyaXgoLjk4NTQgMCAwIDEtMjkzLjEzIDQwMS4wMSkiIGZpbGw9IiNhY2FjYWMiIGZvbnQtZmFtaWx5PSImYXBvcztPcGVuU2FucyZhcG9zOyIgZm9udC1zaXplPSIxMi4xNzgiPj88L3RleHQ+PC9zdmc+") no-repeat center;
+  height: 15px;
+  width: 15px;
+  display: inline-block;
+  vertical-align: middle;
+  background: url("data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxMyIgaGVpZ2h0PSIxMyIgdmlld0JveD0iLTI5OS41IDM5MS4yIDEzIDEzIiBlbmFibGUtYmFja2dyb3VuZD0ibmV3IC0yOTkuNSAzOTEuMiAxMyAxMyI+PHBhdGggZD0ibS0yOTMgNDAzLjdjMy4zIDAgNi0yLjcgNi02cy0yLjctNi02LTYtNiAyLjctNiA2IDIuNyA2IDYgNnoiIGZpbGw9IiNmZmYiIHN0cm9rZT0iI2FjYWNhYyIgc3Ryb2tlLWxpbmVjYXA9InNxdWFyZSIvPjx0ZXh0IHRyYW5zZm9ybT0idHJhbnNsYXRlKC0yOTQuOTEgNDAwLjg0KSIgZmlsbD0iI2E1YTVhNSIgZm9udC1mYW1pbHk9IiZhcG9zO09wZW5TYW5zLUJvbGQmYXBvczsiIGZvbnQtc2l6ZT0iOCI+PzwvdGV4dD48L3N2Zz4=") no-repeat center;
   cursor: pointer;
-  z-index: 10;
+  margin-bottom: 4px;
+  position: relative;
+  z-index: 1;
 }
 
 .bcms-tooltip-holder {

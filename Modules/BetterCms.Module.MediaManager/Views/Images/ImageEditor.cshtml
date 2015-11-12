@@ -40,7 +40,6 @@
 
                 <div class="bcms-input-list-holder">
                 <div data-bind="visible: imageEditorViewModel.imageType() == 1">
-                    @Html.Tooltip(MediaGlobalization.ImageEditor_Dialog_CropImage_Tooltip_Description)
                     <div class="bcms-content-titles">
                         @MediaGlobalization.ImageEditor_Dialog_CropImage_Title
 
@@ -50,6 +49,7 @@
                             <div class="bcms-edit-label" data-bind="click: imageEditorViewModel.changeFit">@MediaGlobalization.ImageEditor_Dialog_FitImage_Title</div>
                         </div>
                     </div>
+                    @Html.Tooltip(MediaGlobalization.ImageEditor_Dialog_CropImage_Tooltip_Description)
                 </div>
             </div>
 
@@ -65,8 +65,8 @@
                         </div>
                     </div>
                     <div class="bcms-input-list-holder">
-                        @Html.Tooltip(MediaGlobalization.ImageEditor_Dialog_Caption_Tooltip_Description)
                         <div class="bcms-content-titles">@MediaGlobalization.ImageEditor_Dialog_Caption</div>
+                        @Html.Tooltip(MediaGlobalization.ImageEditor_Dialog_Caption_Tooltip_Description)
                         <div class="bcms-field-wrapper">
                             @Html.TextBoxFor(f => f.Caption, new { @class = "bcms-field-text", @id = "Caption", data_bind = "event: {change: onValueChange}" })
                             @Html.BcmsValidationMessageFor(f => f.Caption)
@@ -104,9 +104,8 @@
                         <div class="bcms-editing-text" data-bind="text: widthAndHeight()">@Model.ImageWidth x @Model.ImageHeight</div>
                     <a class="bcms-file-link" data-bind="click: open, visible: !isOpened() && $parent.imageEditorViewModel.imageType() == 1">@RootGlobalization.Button_Edit</a>
                         <div class="bcms-file-edit" data-bind="style: { 'display': isOpened() ? 'block' : 'none' }">
-                            <div class="bcms-content-titles">
-                                @MediaGlobalization.ImageEditor_Dialog_ChangeSize_Title
-                            </div>
+                            <div class="bcms-content-titles">@MediaGlobalization.ImageEditor_Dialog_ChangeSize_Title</div>
+
                             <span>@MediaGlobalization.ImageEditor_Dialog_ChangeSize_Width:</span>
                             <div class="bcms-custom-input-box" style="width: 75px;">
                                 @Html.TextBoxFor(f => f.ImageWidth, new
@@ -150,8 +149,8 @@
                     </div>
 
                     <div class="bcms-input-list-holder">
-                        @Html.Tooltip(MediaGlobalization.ImageEditor_Dialog_Description_Tooltip_Description)
                         <div class="bcms-content-titles">@MediaGlobalization.ImageEditor_Dialog_Description</div>
+                        @Html.Tooltip(MediaGlobalization.ImageEditor_Dialog_Description_Tooltip_Description)
                         <div class="bcms-textarea-box">
                             @Html.TextAreaFor(f => f.Description, new { @class = "bcms-field-textarea", @id = "Description", @style = "width: 380px;", data_bind = "event: {change: onValueChange}" })
                             @Html.BcmsValidationMessageFor(f => f.Description)

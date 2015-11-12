@@ -79,31 +79,31 @@ WriteLiteral(">\r\n    <div");
 
 WriteLiteral(" class=\"bcms-input-field-holder\"");
 
-WriteLiteral(">\r\n");
-
-WriteLiteral("        ");
-
-            
-            #line 11 "..\..\Views\Content\Partial\EditHtmlContent.cshtml"
-   Write(Html.Tooltip(PagesGlobalization.AddPageContent_RegularContentTab_ContentName_Tooltip_Description));
-
-            
-            #line default
-            #line hidden
-WriteLiteral("\r\n        <div");
+WriteLiteral(">\r\n        <div");
 
 WriteLiteral(" class=\"bcms-content-titles\"");
 
 WriteLiteral(">");
 
             
-            #line 12 "..\..\Views\Content\Partial\EditHtmlContent.cshtml"
+            #line 11 "..\..\Views\Content\Partial\EditHtmlContent.cshtml"
                                     Write(PagesGlobalization.AddPageContent_RegularContentTab_ContentName_Title);
 
             
             #line default
             #line hidden
-WriteLiteral("</div>\r\n        <div");
+WriteLiteral("</div>\r\n");
+
+WriteLiteral("        ");
+
+            
+            #line 12 "..\..\Views\Content\Partial\EditHtmlContent.cshtml"
+   Write(Html.Tooltip(PagesGlobalization.AddPageContent_RegularContentTab_ContentName_Tooltip_Description));
+
+            
+            #line default
+            #line hidden
+WriteLiteral("\r\n        <div");
 
 WriteLiteral(" class=\"bcms-field-wrapper\"");
 

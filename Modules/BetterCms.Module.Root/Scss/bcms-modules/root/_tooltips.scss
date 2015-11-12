@@ -1,11 +1,13 @@
 //module Tooltips
 .bcms-tooltip {
     &-mark {
-        @include size(18px);
-        @include position(absolute, 0 null null -25px);
+        @include size(15px);
+        @include vertical-align();
         background: url($bcms-tooltip-mark) no-repeat center;
         cursor: pointer;
-        z-index: 10;
+        margin-bottom: 4px;
+        position: relative;
+        z-index: 1;
     }
 
     &-holder {

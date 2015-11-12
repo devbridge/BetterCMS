@@ -37,8 +37,8 @@
                     <div class="bcms-form-block-holder">
                         <div>
                             <div class="bcms-input-list-holder">
-                                @Html.Tooltip(NavigationGlobalization.Sitemap_EditDialog_SitemapTitle_Tooltip_Description)
                                 <div class="bcms-content-titles">@NavigationGlobalization.Sitemap_EditDialog_SitemapTitle_Title</div>
+                                @Html.Tooltip(NavigationGlobalization.Sitemap_EditDialog_SitemapTitle_Tooltip_Description)
                                 <div class="bcms-field-wrapper">
                                     @Html.TextBoxFor(model => model.Title, new { @class = "bcms-field-text", data_bind = "value: title, valueUpdate: 'afterkeydown', hasfocus: true" })
                                     @Html.BcmsValidationMessageFor(f => f.Title)

@@ -218,31 +218,31 @@ WriteLiteral("            <div");
 
 WriteLiteral(" class=\"bcms-input-list-holder\"");
 
-WriteLiteral(">\r\n");
-
-WriteLiteral("                ");
-
-            
-            #line 42 "..\..\Views\Files\FileEditor.cshtml"
-           Write(Html.Tooltip(MediaGlobalization.FileEditor_Dialog_Title_Tooltip_Description));
-
-            
-            #line default
-            #line hidden
-WriteLiteral("\r\n                <div");
+WriteLiteral(">\r\n                <div");
 
 WriteLiteral(" class=\"bcms-content-titles\"");
 
 WriteLiteral(">");
 
             
-            #line 43 "..\..\Views\Files\FileEditor.cshtml"
+            #line 42 "..\..\Views\Files\FileEditor.cshtml"
                                             Write(MediaGlobalization.FileEditor_Dialog_Title_Title);
 
             
             #line default
             #line hidden
-WriteLiteral("</div>\r\n                <div");
+WriteLiteral("</div>\r\n");
+
+WriteLiteral("                ");
+
+            
+            #line 43 "..\..\Views\Files\FileEditor.cshtml"
+           Write(Html.Tooltip(MediaGlobalization.FileEditor_Dialog_Title_Tooltip_Description));
+
+            
+            #line default
+            #line hidden
+WriteLiteral("\r\n                <div");
 
 WriteLiteral(" class=\"bcms-field-wrapper\"");
 
@@ -281,31 +281,31 @@ WriteLiteral("            <div");
 
 WriteLiteral(" class=\"bcms-input-list-holder\"");
 
-WriteLiteral(">\r\n");
-
-WriteLiteral("                ");
-
-            
-            #line 51 "..\..\Views\Files\FileEditor.cshtml"
-           Write(Html.Tooltip(MediaGlobalization.FileEditor_Dialog_PublicUrl_Tooltip_Description));
-
-            
-            #line default
-            #line hidden
-WriteLiteral("\r\n                <div");
+WriteLiteral(">\r\n                <div");
 
 WriteLiteral(" class=\"bcms-content-titles\"");
 
 WriteLiteral(">");
 
             
-            #line 52 "..\..\Views\Files\FileEditor.cshtml"
+            #line 51 "..\..\Views\Files\FileEditor.cshtml"
                                             Write(MediaGlobalization.FileProperties_Dialog_PublicUrl);
 
             
             #line default
             #line hidden
-WriteLiteral("</div>\r\n                <div");
+WriteLiteral("</div>\r\n");
+
+WriteLiteral("                ");
+
+            
+            #line 52 "..\..\Views\Files\FileEditor.cshtml"
+           Write(Html.Tooltip(MediaGlobalization.FileEditor_Dialog_PublicUrl_Tooltip_Description));
+
+            
+            #line default
+            #line hidden
+WriteLiteral("\r\n                <div");
 
 WriteLiteral(" class=\"bcms-field-wrapper\"");
 
@@ -377,31 +377,31 @@ WriteLiteral("            <div");
 
 WriteLiteral(" class=\"bcms-input-list-holder\"");
 
-WriteLiteral(">\r\n");
-
-WriteLiteral("                ");
-
-            
-            #line 64 "..\..\Views\Files\FileEditor.cshtml"
-           Write(Html.Tooltip(MediaGlobalization.FileEditor_Dialog_Description_Tooltip_Description));
-
-            
-            #line default
-            #line hidden
-WriteLiteral("\r\n                <div");
+WriteLiteral(">\r\n                <div");
 
 WriteLiteral(" class=\"bcms-content-titles\"");
 
 WriteLiteral(">");
 
             
-            #line 65 "..\..\Views\Files\FileEditor.cshtml"
+            #line 64 "..\..\Views\Files\FileEditor.cshtml"
                                             Write(MediaGlobalization.FileEditor_Dialog_Description);
 
             
             #line default
             #line hidden
-WriteLiteral("</div>\r\n                <div");
+WriteLiteral("</div>\r\n");
+
+WriteLiteral("                ");
+
+            
+            #line 65 "..\..\Views\Files\FileEditor.cshtml"
+           Write(Html.Tooltip(MediaGlobalization.FileEditor_Dialog_Description_Tooltip_Description));
+
+            
+            #line default
+            #line hidden
+WriteLiteral("\r\n                <div");
 
 WriteLiteral(" class=\"bcms-textarea-box\"");
 
@@ -514,31 +514,31 @@ WriteLiteral(">\r\n                <div");
 
 WriteLiteral(" class=\"bcms-input-list-holder\"");
 
-WriteLiteral(">\r\n");
-
-WriteLiteral("                    ");
-
-            
-            #line 87 "..\..\Views\Files\FileEditor.cshtml"
-               Write(Html.Tooltip(MediaGlobalization.FileEditor_Dialog_Image_Tooltip_Description));
-
-            
-            #line default
-            #line hidden
-WriteLiteral("\r\n                    <div");
+WriteLiteral(">\r\n                    <div");
 
 WriteLiteral(" class=\"bcms-content-titles\"");
 
 WriteLiteral(">");
 
             
-            #line 88 "..\..\Views\Files\FileEditor.cshtml"
+            #line 87 "..\..\Views\Files\FileEditor.cshtml"
                                                 Write(MediaGlobalization.FileEditor_Dialog_Image_Title);
 
             
             #line default
             #line hidden
-WriteLiteral("</div>\r\n                    <div");
+WriteLiteral("</div>\r\n");
+
+WriteLiteral("                    ");
+
+            
+            #line 88 "..\..\Views\Files\FileEditor.cshtml"
+               Write(Html.Tooltip(MediaGlobalization.FileEditor_Dialog_Image_Tooltip_Description));
+
+            
+            #line default
+            #line hidden
+WriteLiteral("\r\n                    <div");
 
 WriteLiteral(" class=\"bcms-uploaded-image\"");
 

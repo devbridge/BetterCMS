@@ -155,31 +155,31 @@ WriteLiteral(">\r\n                <div>\r\n                    <div");
 
 WriteLiteral(" class=\"bcms-input-list-holder\"");
 
-WriteLiteral(">\r\n");
-
-WriteLiteral("                        ");
-
-            
-            #line 23 "..\..\Views\Page\ClonePageWithLanguage.cshtml"
-                   Write(Html.Tooltip(PagesGlobalization.ClonePageWithLanguage_Dialog_Language_Tootlip));
-
-            
-            #line default
-            #line hidden
-WriteLiteral("\r\n                        <div");
+WriteLiteral(">\r\n                        <div");
 
 WriteLiteral(" class=\"bcms-content-titles\"");
 
 WriteLiteral(">");
 
             
-            #line 24 "..\..\Views\Page\ClonePageWithLanguage.cshtml"
+            #line 23 "..\..\Views\Page\ClonePageWithLanguage.cshtml"
                                                     Write(PagesGlobalization.ClonePageWithLanguage_Dialog_Language_Title);
 
             
             #line default
             #line hidden
-WriteLiteral("</div>\r\n                        <div");
+WriteLiteral("</div>\r\n");
+
+WriteLiteral("                        ");
+
+            
+            #line 24 "..\..\Views\Page\ClonePageWithLanguage.cshtml"
+                   Write(Html.Tooltip(PagesGlobalization.ClonePageWithLanguage_Dialog_Language_Tootlip));
+
+            
+            #line default
+            #line hidden
+WriteLiteral("\r\n                        <div");
 
 WriteLiteral(" class=\"bcms-field-wrapper\"");
 
@@ -214,31 +214,31 @@ WriteLiteral("\r\n                            </div>\r\n                        
 
 WriteLiteral(" class=\"bcms-input-list-holder\"");
 
-WriteLiteral(">\r\n");
-
-WriteLiteral("                        ");
-
-            
-            #line 34 "..\..\Views\Page\ClonePageWithLanguage.cshtml"
-                   Write(Html.Tooltip(PagesGlobalization.ClonePage_Dialog_PageTitle_Tooltip_Description));
-
-            
-            #line default
-            #line hidden
-WriteLiteral("\r\n                        <div");
+WriteLiteral(">\r\n                        <div");
 
 WriteLiteral(" class=\"bcms-content-titles\"");
 
 WriteLiteral(">");
 
             
-            #line 35 "..\..\Views\Page\ClonePageWithLanguage.cshtml"
+            #line 34 "..\..\Views\Page\ClonePageWithLanguage.cshtml"
                                                     Write(PagesGlobalization.ClonePage_Dialog_PageTitle);
 
             
             #line default
             #line hidden
-WriteLiteral("</div>\r\n                        <div");
+WriteLiteral("</div>\r\n");
+
+WriteLiteral("                        ");
+
+            
+            #line 35 "..\..\Views\Page\ClonePageWithLanguage.cshtml"
+                   Write(Html.Tooltip(PagesGlobalization.ClonePage_Dialog_PageTitle_Tooltip_Description));
+
+            
+            #line default
+            #line hidden
+WriteLiteral("\r\n                        <div");
 
 WriteLiteral(" class=\"bcms-field-wrapper\"");
 

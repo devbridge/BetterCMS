@@ -38,15 +38,15 @@
                         @if (Model.ShowLanguages)
                         {
                         <div class="bcms-input-list-holder" data-bind="with: language">
-                            @Html.Tooltip(PagesGlobalization.AddNewPage_Language_Tooltip_Description)
                             <div class="bcms-content-titles">@PagesGlobalization.AddNewPage_Language</div>
+                            @Html.Tooltip(PagesGlobalization.AddNewPage_Language_Tooltip_Description)
                             <select class="bcms-global-select" data-bind="options: languages, optionsText: 'value', optionsValue: 'key', value: languageId"></select>
                         </div>
                         }
 
                         <div class="bcms-input-list-holder">
-                            @Html.Tooltip(PagesGlobalization.AddNewPage_PageTitle_Tooltip_Description)
                             <div class="bcms-content-titles">@PagesGlobalization.AddNewPage_PageTitle</div>
+                            @Html.Tooltip(PagesGlobalization.AddNewPage_PageTitle_Tooltip_Description)
                             <div class="bcms-field-wrapper">
                                 @Html.TextBoxFor(f => f.PageTitle, new { @class = "bcms-field-text", @id = "PageTitle" })
                                 @Html.BcmsValidationMessageFor(f => f.PageTitle)
@@ -70,8 +70,8 @@
                 </div>
 
                 <div class="bcms-input-list-holder">
-                    @Html.Tooltip(PagesGlobalization.AddNewPage_Template_Tooltip_Description)
                     <div class="bcms-content-titles">@PagesGlobalization.AddNewPage_Template</div>
+                    @Html.Tooltip(PagesGlobalization.AddNewPage_Template_Tooltip_Description)
                     @Html.Partial("Partial/TemplatesList", Model.Templates)
                 </div>
              

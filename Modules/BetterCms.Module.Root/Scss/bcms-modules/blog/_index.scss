@@ -1,5 +1,9 @@
 .bcms-grid-box-blog {
     @include gallery(2.4);
+
+    .bcms-grid-image-holder {
+        height: 150px;
+    }
 }
 
 //
@@ -20,14 +24,14 @@
 }
 
 .bcms-blog-right {
-    float: left;
-    width: 330px;
-    margin: 20px 0 0 20px;
-    padding: 20px 5px;
+    border-color: #cce0e9 #e4e4e4 #e4e4e4 #e4e4e4;
     border-style: solid;
     border-width: 5px 1px 1px 1px;
-    border-color: #cce0e9 #e4e4e4 #e4e4e4 #e4e4e4;
     box-shadow: 0 0 5px 0 rgba(0, 0, 0, 0.3);
+    float: left;
+    margin: 20px 0 0 20px;
+    padding: 20px 5px;
+    width: 330px;
 }
 
 .bcms-blog-dates-holder {
@@ -44,20 +48,20 @@
 }
 
 .bcms-blog-right > .bcms-create-author-holder {
-    position: relative;
     margin: 0 0 0 20px;
+    position: relative;
 }
 
 .bcms-blog-right .bcms-upload-info {
     display: inline-block;
-    width: 140px;
     padding-left: 20px;
     vertical-align: top;
+    width: 140px;
 }
 
 .bcms-blog-right .bcms-upload-info-text {
-    height: 86px;
     font-size: 12px;
+    height: 86px;
     overflow: hidden;
 }
 
@@ -66,13 +70,13 @@
 }
 
 .bcms-create-author-holder .bcms-tooltip-mark {
-    top: 4px;
     left: -15px;
+    top: 4px;
 }
 
 .bcms-blog-categories-holder {
-    position: relative;
     margin: 5px 0 -17px 20px;
+    position: relative;
 }
 
 .bcms-blog-categories-holder .bcms-content-titles {
@@ -80,8 +84,8 @@
 }
 
 .bcms-blog-tags-holder {
-    position: relative;
     margin: 0 0 0 20px;
+    position: relative;
 }
 
 .bcms-blog-tags-holder .bcms-content-titles {
@@ -90,30 +94,30 @@
 
 //module author tab
 .bcms-author-picture {
-    position: relative;
-    width: 110px;
+    background: url('images/bcms-no-image-3.png') no-repeat center center;
+    background-size: cover;
+    border: 1px solid #c6c6c6;
     height: 110px;
     margin: 0 auto;
-    background: url('images/bcms-no-image-3.png') no-repeat center center;
+    position: relative;
     vertical-align: middle;
-    border: 1px solid #c6c6c6;
-    background-size: cover;
+    width: 110px;
 }
 
 .bcms-author-picture img {
-    width: 100%;
     background: #f5f5f5;
+    width: 100%;
 }
 
 .bcms-blog-browse-images {
-    margin: 10px auto 0;
-    cursor: pointer;
     color: #0383df;
+    cursor: pointer;
     font-family: "Open Sans", sans-serif;
     font-size: 12px;
     font-weight: 600;
-    text-transform: uppercase;
+    margin: 10px auto 0;
     text-align: center;
+    text-transform: uppercase;
 }
 
 .bcms-blog-browse-images:hover {
@@ -135,30 +139,30 @@
 }
 
 .bcms-icn-import-success {
-    width: 12px;
+    background: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAwAAAANCAYAAAHqLr/UAAAAsklEQVQoz2NQOMvAAMIgggfGABMGDDA5IP4PY1yCq4HipcicELBaKEZRhsqBYhWYyauBuBoqeBiIXyHraIGaF4jPKBAWwib4GWQ8umA+shP/QwWZoWwhmMQ9IL4BxN+AeAW65f+RdKJIqMOMIORcXI5aSkghyKEHoIpBISXKALVyBVQSPYw/QxWvRnbSfKjgTyA2Q3MCCIdg84MlEP+BKviG5AQhdGcic9iA+CTMc7j8BQD3Drtv1DbDeQAAAABJRU5ErkJggg==');
     height: 13px;
     margin: 0 auto;
     overflow: hidden;
     text-indent: 9999px;
-    background: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAwAAAANCAYAAAHqLr/UAAAAsklEQVQoz2NQOMvAAMIgggfGABMGDDA5IP4PY1yCq4HipcicELBaKEZRhsqBYhWYyauBuBoqeBiIXyHraIGaF4jPKBAWwib4GWQ8umA+shP/QwWZoWwhmMQ9IL4BxN+AeAW65f+RdKJIqMOMIORcXI5aSkghyKEHoIpBISXKALVyBVQSPYw/QxWvRnbSfKjgTyA2Q3MCCIdg84MlEP+BKviG5AQhdGcic9iA+CTMc7j8BQD3Drtv1DbDeQAAAABJRU5ErkJggg==');
+    width: 12px;
 }
 
 .bcms-icn-import-warn {
-    width: 12px;
+    background: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAwAAAALCAYAAAE8d1zJAAAA+klEQVQoz13RP0tCURjH8asEBRGIDWltCs4J6dKrMME2oa1egbk2NjSka0OQe1ONOeomVITQJi0RQkHY4p/vT35HLg2fw33+3Oece2708ZKJsFySGOmhqmVLyzGG6onceB6CItYwVzBz9Sq0zVHGNp5wpOQZcm4YYB2T8IaCBzyjHt8x412rjpcFBX9I4RDTUNDGB7h2dwk1PUyc2Mct9nCqRAsnLhY8IRk2r/tEj9iInyqBCvr4xLuN8era6rRZvKGHbrjEmE3nNSAbbvkLO24oe8CNL0q5Xfc0In/yL5r/Juc9uY0L/Kg3FPVzOr48Xf2l3eMbd0irdwG2fCIWmRn0SgAAAABJRU5ErkJggg==');
     height: 12px;
     margin: 0 auto;
     overflow: hidden;
     text-indent: 9999px;
-    background: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAwAAAALCAYAAAE8d1zJAAAA+klEQVQoz13RP0tCURjH8asEBRGIDWltCs4J6dKrMME2oa1egbk2NjSka0OQe1ONOeomVITQJi0RQkHY4p/vT35HLg2fw33+3Oece2708ZKJsFySGOmhqmVLyzGG6onceB6CItYwVzBz9Sq0zVHGNp5wpOQZcm4YYB2T8IaCBzyjHt8x412rjpcFBX9I4RDTUNDGB7h2dwk1PUyc2Mct9nCqRAsnLhY8IRk2r/tEj9iInyqBCvr4xLuN8era6rRZvKGHbrjEmE3nNSAbbvkLO24oe8CNL0q5Xfc0In/yL5r/Juc9uY0L/Kg3FPVzOr48Xf2l3eMbd0irdwG2fCIWmRn0SgAAAABJRU5ErkJggg==');
+    width: 12px;
 }
 
 .bcms-icn-import-error {
-    width: 10px;
+    background: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAoAAAAJCAYAAAF8oY2FAAAAZElEQVQY02N45uw8DYi/MsAZ////Z0AQQKH/YA6QYYcsuhxD5D8QO0LpTOyCIAtAElBJO5ClIEYmskoUW2ACMDdgqsRlZgtU5Rcg9kZS4A0VA8m1MCBJZEAlkHEG3G6iFRJrNQAfBNhPNe12LwAAAABJRU5ErkJggg==');
     height: 9px;
     margin: 0 auto;
     overflow: hidden;
     text-indent: 9999px;
-    background: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAoAAAAJCAYAAAF8oY2FAAAAZElEQVQY02N45uw8DYi/MsAZ////Z0AQQKH/YA6QYYcsuhxD5D8QO0LpTOyCIAtAElBJO5ClIEYmskoUW2ACMDdgqsRlZgtU5Rcg9kZS4A0VA8m1MCBJZEAlkHEG3G6iFRJrNQAfBNhPNe12LwAAAABJRU5ErkJggg==');
+    width: 10px;
 }
 
 .bcms-download-sample-file {

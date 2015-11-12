@@ -30,12 +30,19 @@ $prefix-for-microsoft: false;
 $prefix-for-opera: false;
 $prefix-for-spec: true;
 
-//module susy config
+//module config
 $susy: (
         columns: 12,
         container: 1150px,
         gutters: (20/60)
 );
+
+@function rem($target, $context: $font-base-size) {
+    @if $target == 0 {
+        @return (0);
+    }
+    @return (($target + 0px ) / $context + 0rem);
+}
 
 //
 //
@@ -50,7 +57,7 @@ $susy: (
 //fixme delete trash bellow after refactoring
 $gray-smoke30: #f5f5f5;
 $gray-smoke10: #eeeeee;
-$gray-bg: #eae8e9;
+
 
 //module text colors
 $gray-smoke5: #aaaaaa;

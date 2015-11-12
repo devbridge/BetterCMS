@@ -75,31 +75,31 @@ WriteLiteral(">\r\n    <div");
 
 WriteLiteral(" data-bind=\"with: accessControl\"");
 
-WriteLiteral(">\r\n");
-
-WriteLiteral("        ");
-
-            
-            #line 12 "..\..\Views\Security\AccessControlTemplate.cshtml"
-   Write(Html.Tooltip(@viewModel.Tooltip));
-
-            
-            #line default
-            #line hidden
-WriteLiteral("\r\n        <div");
+WriteLiteral(">\r\n        <div");
 
 WriteLiteral(" class=\"bcms-content-titles\"");
 
 WriteLiteral(">");
 
             
-            #line 13 "..\..\Views\Security\AccessControlTemplate.cshtml"
+            #line 12 "..\..\Views\Security\AccessControlTemplate.cshtml"
                                     Write(viewModel.Title);
 
             
             #line default
             #line hidden
-WriteLiteral("</div>\r\n        <div");
+WriteLiteral("</div>\r\n");
+
+WriteLiteral("        ");
+
+            
+            #line 13 "..\..\Views\Security\AccessControlTemplate.cshtml"
+   Write(Html.Tooltip(@viewModel.Tooltip));
+
+            
+            #line default
+            #line hidden
+WriteLiteral("\r\n\r\n        <div");
 
 WriteLiteral(" class=\"bcms-access-title bcms-clearfix\"");
 
@@ -110,7 +110,7 @@ WriteLiteral(" class=\"bcms-access-title-text\"");
 WriteLiteral(">");
 
             
-            #line 15 "..\..\Views\Security\AccessControlTemplate.cshtml"
+            #line 16 "..\..\Views\Security\AccessControlTemplate.cshtml"
                                            Write(RootGlobalization.AccessControl_UserAccess_User);
 
             
@@ -123,7 +123,7 @@ WriteLiteral(" class=\"bcms-access-title-text\"");
 WriteLiteral(">");
 
             
-            #line 16 "..\..\Views\Security\AccessControlTemplate.cshtml"
+            #line 17 "..\..\Views\Security\AccessControlTemplate.cshtml"
                                            Write(RootGlobalization.AccessControl_UserAccess_ReadAndEdit);
 
             
@@ -136,7 +136,7 @@ WriteLiteral(" class=\"bcms-access-title-text\"");
 WriteLiteral(">");
 
             
-            #line 17 "..\..\Views\Security\AccessControlTemplate.cshtml"
+            #line 18 "..\..\Views\Security\AccessControlTemplate.cshtml"
                                            Write(RootGlobalization.AccessControl_UserAccess_Read);
 
             
@@ -149,7 +149,7 @@ WriteLiteral(" class=\"bcms-access-title-text\"");
 WriteLiteral(">");
 
             
-            #line 18 "..\..\Views\Security\AccessControlTemplate.cshtml"
+            #line 19 "..\..\Views\Security\AccessControlTemplate.cshtml"
                                            Write(RootGlobalization.AccessControl_UserAccess_NoAccess);
 
             
@@ -261,7 +261,7 @@ WriteLiteral(" data-bind=\"visible: isInAddMode() !== \'user\', click: clickPlus
 WriteLiteral(">");
 
             
-            #line 38 "..\..\Views\Security\AccessControlTemplate.cshtml"
+            #line 39 "..\..\Views\Security\AccessControlTemplate.cshtml"
                                                                                  Write(RootGlobalization.AccessControl_UserAccess_AddNewUser);
 
             
@@ -320,7 +320,7 @@ WriteLiteral(" data-bind=\"visible: isInAddMode() !== \'role\', click: clickPlus
 WriteLiteral(">");
 
             
-            #line 61 "..\..\Views\Security\AccessControlTemplate.cshtml"
+            #line 62 "..\..\Views\Security\AccessControlTemplate.cshtml"
                                                                                  Write(RootGlobalization.AccessControl_UserAccess_AddNewRole);
 
             

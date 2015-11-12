@@ -189,31 +189,31 @@ WriteLiteral(">\r\n                <div");
 
 WriteLiteral(" class=\"bcms-input-list-holder\"");
 
-WriteLiteral(">\r\n");
-
-WriteLiteral("                    ");
-
-            
-            #line 30 "..\..\Views\Templates\EditTemplate.cshtml"
-               Write(Html.Tooltip(PagesGlobalization.Template_Title_Tooltip_Description));
-
-            
-            #line default
-            #line hidden
-WriteLiteral("\r\n                    <div");
+WriteLiteral(">\r\n                    <div");
 
 WriteLiteral(" class=\"bcms-content-titles\"");
 
 WriteLiteral(">");
 
             
-            #line 31 "..\..\Views\Templates\EditTemplate.cshtml"
+            #line 30 "..\..\Views\Templates\EditTemplate.cshtml"
                                                 Write(PagesGlobalization.Template_Title_Title);
 
             
             #line default
             #line hidden
-WriteLiteral("</div>\r\n                    <div");
+WriteLiteral("</div>\r\n");
+
+WriteLiteral("                    ");
+
+            
+            #line 31 "..\..\Views\Templates\EditTemplate.cshtml"
+               Write(Html.Tooltip(PagesGlobalization.Template_Title_Tooltip_Description));
+
+            
+            #line default
+            #line hidden
+WriteLiteral("\r\n                    <div");
 
 WriteLiteral(" class=\"bcms-field-wrapper\"");
 
@@ -243,31 +243,31 @@ WriteLiteral("\r\n                    </div>\r\n                </div>\r\n      
 
 WriteLiteral(" class=\"bcms-input-list-holder\"");
 
-WriteLiteral(">\r\n");
-
-WriteLiteral("                    ");
-
-            
-            #line 38 "..\..\Views\Templates\EditTemplate.cshtml"
-               Write(Html.Tooltip(PagesGlobalization.Template_Url_Tooltip_Description));
-
-            
-            #line default
-            #line hidden
-WriteLiteral("\r\n                    <div");
+WriteLiteral(">\r\n                    <div");
 
 WriteLiteral(" class=\"bcms-content-titles\"");
 
 WriteLiteral(">");
 
             
-            #line 39 "..\..\Views\Templates\EditTemplate.cshtml"
+            #line 38 "..\..\Views\Templates\EditTemplate.cshtml"
                                                 Write(PagesGlobalization.Template_Url_Title);
 
             
             #line default
             #line hidden
-WriteLiteral("</div>\r\n                    <div");
+WriteLiteral("</div>\r\n");
+
+WriteLiteral("                    ");
+
+            
+            #line 39 "..\..\Views\Templates\EditTemplate.cshtml"
+               Write(Html.Tooltip(PagesGlobalization.Template_Url_Tooltip_Description));
+
+            
+            #line default
+            #line hidden
+WriteLiteral("\r\n                    <div");
 
 WriteLiteral(" class=\"bcms-field-wrapper\"");
 
@@ -297,31 +297,31 @@ WriteLiteral("\r\n                    </div>\r\n                </div>\r\n      
 
 WriteLiteral(" class=\"bcms-input-list-holder\"");
 
-WriteLiteral(">\r\n");
-
-WriteLiteral("                    ");
-
-            
-            #line 46 "..\..\Views\Templates\EditTemplate.cshtml"
-               Write(Html.Tooltip(PagesGlobalization.TemplatePreviewImageUrl_Tooltip_Description));
-
-            
-            #line default
-            #line hidden
-WriteLiteral("\r\n                    <div");
+WriteLiteral(">\r\n                    <div");
 
 WriteLiteral(" class=\"bcms-content-titles\"");
 
 WriteLiteral(">");
 
             
-            #line 47 "..\..\Views\Templates\EditTemplate.cshtml"
+            #line 46 "..\..\Views\Templates\EditTemplate.cshtml"
                                                 Write(PagesGlobalization.TemplatePreviewImageUrl_Title);
 
             
             #line default
             #line hidden
-WriteLiteral("</div>\r\n                    <div");
+WriteLiteral("</div>\r\n");
+
+WriteLiteral("                    ");
+
+            
+            #line 47 "..\..\Views\Templates\EditTemplate.cshtml"
+               Write(Html.Tooltip(PagesGlobalization.TemplatePreviewImageUrl_Tooltip_Description));
+
+            
+            #line default
+            #line hidden
+WriteLiteral("\r\n                    <div");
 
 WriteLiteral(" class=\"bcms-field-wrapper\"");
 
@@ -351,31 +351,31 @@ WriteLiteral("\r\n                    </div>\r\n                </div>\r\n      
 
 WriteLiteral(" class=\"bcms-input-list-holder\"");
 
-WriteLiteral(">\r\n");
-
-WriteLiteral("                    ");
-
-            
-            #line 54 "..\..\Views\Templates\EditTemplate.cshtml"
-               Write(Html.Tooltip(PagesGlobalization.TemplateImagePreview_Tooltip_Description));
-
-            
-            #line default
-            #line hidden
-WriteLiteral("\r\n                    <div");
+WriteLiteral(">\r\n                    <div");
 
 WriteLiteral(" class=\"bcms-content-titles\"");
 
 WriteLiteral(">");
 
             
-            #line 55 "..\..\Views\Templates\EditTemplate.cshtml"
+            #line 54 "..\..\Views\Templates\EditTemplate.cshtml"
                                                 Write(PagesGlobalization.TemplatePreviewImage_Title);
 
             
             #line default
             #line hidden
-WriteLiteral("</div>\r\n                    <div");
+WriteLiteral("</div>\r\n");
+
+WriteLiteral("                    ");
+
+            
+            #line 55 "..\..\Views\Templates\EditTemplate.cshtml"
+               Write(Html.Tooltip(PagesGlobalization.TemplateImagePreview_Tooltip_Description));
+
+            
+            #line default
+            #line hidden
+WriteLiteral("\r\n                    <div");
 
 WriteLiteral(" class=\"bcms-preview-module-image\"");
 

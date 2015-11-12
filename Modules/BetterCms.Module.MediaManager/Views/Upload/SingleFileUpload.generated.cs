@@ -176,20 +176,6 @@ WriteLiteral("\r\n");
             #line 28 "..\..\Views\Upload\SingleFileUpload.cshtml"
                      if (Model.RootFolderId.HasDefaultValue() && Model.ReuploadMediaId.HasDefaultValue())
                     {
-                        
-            
-            #line default
-            #line hidden
-            
-            #line 30 "..\..\Views\Upload\SingleFileUpload.cshtml"
-                   Write(Html.Tooltip(MediaGlobalization.MultiFileUpload_SelectFolder_Help_Message));
-
-            
-            #line default
-            #line hidden
-            
-            #line 30 "..\..\Views\Upload\SingleFileUpload.cshtml"
-                                                                                                   
 
             
             #line default
@@ -201,7 +187,7 @@ WriteLiteral(" class=\"bcms-content-titles\"");
 WriteLiteral(">");
 
             
-            #line 31 "..\..\Views\Upload\SingleFileUpload.cshtml"
+            #line 30 "..\..\Views\Upload\SingleFileUpload.cshtml"
                                                     Write(MediaGlobalization.MultiFileUpload_SelectFolder);
 
             
@@ -210,7 +196,21 @@ WriteLiteral(">");
 WriteLiteral("</div>\r\n");
 
             
-            #line 32 "..\..\Views\Upload\SingleFileUpload.cshtml"
+            #line 31 "..\..\Views\Upload\SingleFileUpload.cshtml"
+                        
+            
+            #line default
+            #line hidden
+            
+            #line 31 "..\..\Views\Upload\SingleFileUpload.cshtml"
+                   Write(Html.Tooltip(MediaGlobalization.MultiFileUpload_SelectFolder_Help_Message));
+
+            
+            #line default
+            #line hidden
+            
+            #line 31 "..\..\Views\Upload\SingleFileUpload.cshtml"
+                                                                                                   
                         
             
             #line default

@@ -263,31 +263,31 @@ WriteLiteral(" />\r\n                    </div>\r\n                </div>\r\n   
 
 WriteLiteral(" class=\"bcms-input-list-holder\"");
 
-WriteLiteral(">\r\n");
-
-WriteLiteral("                    ");
-
-            
-            #line 35 "..\..\Views\Images\ImageEditorInsert.cshtml"
-               Write(Html.Tooltip(MediaGlobalization.ImageEditor_Dialog_Caption_Tooltip_Description));
-
-            
-            #line default
-            #line hidden
-WriteLiteral("\r\n                    <div");
+WriteLiteral(">\r\n                    <div");
 
 WriteLiteral(" class=\"bcms-content-titles\"");
 
 WriteLiteral(">");
 
             
-            #line 36 "..\..\Views\Images\ImageEditorInsert.cshtml"
+            #line 35 "..\..\Views\Images\ImageEditorInsert.cshtml"
                                                 Write(MediaGlobalization.ImageEditor_Dialog_Caption);
 
             
             #line default
             #line hidden
 WriteLiteral(":</div>\r\n");
+
+WriteLiteral("                    ");
+
+            
+            #line 36 "..\..\Views\Images\ImageEditorInsert.cshtml"
+               Write(Html.Tooltip(MediaGlobalization.ImageEditor_Dialog_Caption_Tooltip_Description));
+
+            
+            #line default
+            #line hidden
+WriteLiteral("\r\n");
 
 WriteLiteral("                    ");
 
@@ -584,31 +584,31 @@ WriteLiteral(">\r\n                    </div>\r\n                </div>\r\n     
 
 WriteLiteral(" class=\"bcms-input-list-holder\"");
 
-WriteLiteral(">\r\n");
-
-WriteLiteral("                    ");
-
-            
-            #line 68 "..\..\Views\Images\ImageEditorInsert.cshtml"
-               Write(Html.Tooltip(MediaGlobalization.ImageEditor_Dialog_Description_Tooltip_Description));
-
-            
-            #line default
-            #line hidden
-WriteLiteral("\r\n                    <div");
+WriteLiteral(">\r\n                    <div");
 
 WriteLiteral(" class=\"bcms-content-titles\"");
 
 WriteLiteral(">");
 
             
-            #line 69 "..\..\Views\Images\ImageEditorInsert.cshtml"
+            #line 68 "..\..\Views\Images\ImageEditorInsert.cshtml"
                                                 Write(MediaGlobalization.ImageEditor_Dialog_Description);
 
             
             #line default
             #line hidden
-WriteLiteral("</div>\r\n                    <div");
+WriteLiteral("</div>\r\n");
+
+WriteLiteral("                    ");
+
+            
+            #line 69 "..\..\Views\Images\ImageEditorInsert.cshtml"
+               Write(Html.Tooltip(MediaGlobalization.ImageEditor_Dialog_Description_Tooltip_Description));
+
+            
+            #line default
+            #line hidden
+WriteLiteral("\r\n                    <div");
 
 WriteLiteral(" class=\"bcms-textarea-box\"");
 

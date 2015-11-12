@@ -71,18 +71,7 @@ WriteLiteral("<div");
 
 WriteLiteral(" class=\"bcms-input-list-holder\"");
 
-WriteLiteral(">\r\n");
-
-WriteLiteral("    ");
-
-            
-            #line 9 "..\..\Views\Blog\Partial\AddNewBlogEditPermalink.cshtml"
-Write(Html.Tooltip(BlogGlobalization.EditBlogPost_Permalink_Tooltip_Description));
-
-            
-            #line default
-            #line hidden
-WriteLiteral("\r\n    <div");
+WriteLiteral(">\r\n    <div");
 
 WriteLiteral(" class=\"bcms-content-titles\"");
 
@@ -91,7 +80,7 @@ WriteLiteral(">\r\n");
 WriteLiteral("        ");
 
             
-            #line 11 "..\..\Views\Blog\Partial\AddNewBlogEditPermalink.cshtml"
+            #line 10 "..\..\Views\Blog\Partial\AddNewBlogEditPermalink.cshtml"
    Write(BlogGlobalization.EditBlogPost_Permalink);
 
             
@@ -100,13 +89,13 @@ WriteLiteral("        ");
 WriteLiteral("\r\n");
 
             
-            #line 12 "..\..\Views\Blog\Partial\AddNewBlogEditPermalink.cshtml"
+            #line 11 "..\..\Views\Blog\Partial\AddNewBlogEditPermalink.cshtml"
         
             
             #line default
             #line hidden
             
-            #line 12 "..\..\Views\Blog\Partial\AddNewBlogEditPermalink.cshtml"
+            #line 11 "..\..\Views\Blog\Partial\AddNewBlogEditPermalink.cshtml"
          if ((ViewContext.Controller as CmsControllerBase).SecurityService.IsAuthorized(RootModuleConstants.UserRoles.EditContent))
         {
 
@@ -120,7 +109,7 @@ WriteLiteral(" id=\"bcms-page-editpermalink\"");
 WriteLiteral(">");
 
             
-            #line 14 "..\..\Views\Blog\Partial\AddNewBlogEditPermalink.cshtml"
+            #line 13 "..\..\Views\Blog\Partial\AddNewBlogEditPermalink.cshtml"
                                        Write(RootGlobalization.Button_Edit);
 
             
@@ -129,13 +118,24 @@ WriteLiteral(">");
 WriteLiteral("</a>\r\n");
 
             
-            #line 15 "..\..\Views\Blog\Partial\AddNewBlogEditPermalink.cshtml"
+            #line 14 "..\..\Views\Blog\Partial\AddNewBlogEditPermalink.cshtml"
         }
 
             
             #line default
             #line hidden
-WriteLiteral("    </div>\r\n    <div");
+WriteLiteral("    </div>    \r\n");
+
+WriteLiteral("    ");
+
+            
+            #line 16 "..\..\Views\Blog\Partial\AddNewBlogEditPermalink.cshtml"
+Write(Html.Tooltip(BlogGlobalization.EditBlogPost_Permalink_Tooltip_Description));
+
+            
+            #line default
+            #line hidden
+WriteLiteral("\r\n    <div");
 
 WriteLiteral(" class=\"bcms-editseo-urlpath\"");
 

@@ -429,31 +429,31 @@ WriteLiteral(">\r\n                    <div");
 
 WriteLiteral(" class=\"bcms-input-field-holder\"");
 
-WriteLiteral(">\r\n");
-
-WriteLiteral("                        ");
-
-            
-            #line 73 "..\..\Views\Blog\EditBlogPost.cshtml"
-                   Write(Html.Tooltip(BlogGlobalization.EditBlogPost_Title_Tooltip_Description));
-
-            
-            #line default
-            #line hidden
-WriteLiteral("\r\n                        <div");
+WriteLiteral(">\r\n                        <div");
 
 WriteLiteral(" class=\"bcms-content-titles\"");
 
 WriteLiteral(">");
 
             
-            #line 74 "..\..\Views\Blog\EditBlogPost.cshtml"
+            #line 73 "..\..\Views\Blog\EditBlogPost.cshtml"
                                                     Write(BlogGlobalization.EditBlogPost_Title_Title);
 
             
             #line default
             #line hidden
-WriteLiteral("</div>\r\n                        <div");
+WriteLiteral("</div>\r\n");
+
+WriteLiteral("                        ");
+
+            
+            #line 74 "..\..\Views\Blog\EditBlogPost.cshtml"
+                   Write(Html.Tooltip(BlogGlobalization.EditBlogPost_Title_Tooltip_Description));
+
+            
+            #line default
+            #line hidden
+WriteLiteral("\r\n                        <div");
 
 WriteLiteral(" class=\"bcms-field-wrapper\"");
 
@@ -484,31 +484,31 @@ WriteLiteral("\r\n                        </div>\r\n                    </div>\r
 
 WriteLiteral(" class=\"bcms-input-field-holder\"");
 
-WriteLiteral(">\r\n");
-
-WriteLiteral("                        ");
-
-            
-            #line 81 "..\..\Views\Blog\EditBlogPost.cshtml"
-                   Write(Html.Tooltip(BlogGlobalization.EditBlogPost_LiveDates_Tooltip_Description));
-
-            
-            #line default
-            #line hidden
-WriteLiteral("\r\n                        <div");
+WriteLiteral(">\r\n                        <div");
 
 WriteLiteral(" class=\"bcms-content-titles\"");
 
 WriteLiteral(">");
 
             
-            #line 82 "..\..\Views\Blog\EditBlogPost.cshtml"
+            #line 81 "..\..\Views\Blog\EditBlogPost.cshtml"
                                                     Write(BlogGlobalization.EditBlogPost_LiveFrom_Title);
 
             
             #line default
             #line hidden
-WriteLiteral("</div>\r\n                        <div");
+WriteLiteral("</div>\r\n");
+
+WriteLiteral("                        ");
+
+            
+            #line 82 "..\..\Views\Blog\EditBlogPost.cshtml"
+                   Write(Html.Tooltip(BlogGlobalization.EditBlogPost_LiveDates_Tooltip_Description));
+
+            
+            #line default
+            #line hidden
+WriteLiteral("\r\n                        <div");
 
 WriteLiteral(" class=\"bcms-date-input-box\"");
 
@@ -596,31 +596,31 @@ WriteLiteral(" class=\"bcms-input-list-holder\"");
 
 WriteLiteral(" id=\"bcms-blog-content-holder\"");
 
-WriteLiteral(">\r\n");
-
-WriteLiteral("                    ");
-
-            
-            #line 100 "..\..\Views\Blog\EditBlogPost.cshtml"
-               Write(Html.Tooltip(BlogGlobalization.EditBlogPost_Content_Tooltip_Description));
-
-            
-            #line default
-            #line hidden
-WriteLiteral("\r\n                    <div");
+WriteLiteral(">\r\n                    <div");
 
 WriteLiteral(" class=\"bcms-content-titles\"");
 
 WriteLiteral(">");
 
             
-            #line 101 "..\..\Views\Blog\EditBlogPost.cshtml"
+            #line 100 "..\..\Views\Blog\EditBlogPost.cshtml"
                                                 Write(BlogGlobalization.EditBlogPost_Content_Title);
 
             
             #line default
             #line hidden
 WriteLiteral("</div>\r\n");
+
+WriteLiteral("                    ");
+
+            
+            #line 101 "..\..\Views\Blog\EditBlogPost.cshtml"
+               Write(Html.Tooltip(BlogGlobalization.EditBlogPost_Content_Tooltip_Description));
+
+            
+            #line default
+            #line hidden
+WriteLiteral("\r\n");
 
 WriteLiteral("                    ");
 
@@ -670,31 +670,31 @@ WriteLiteral("                        <div");
 
 WriteLiteral(" class=\"bcms-input-list-holder\"");
 
-WriteLiteral(">\r\n");
-
-WriteLiteral("                            ");
-
-            
-            #line 112 "..\..\Views\Blog\EditBlogPost.cshtml"
-                       Write(Html.Tooltip(BlogGlobalization.EditBlogPost_Language_Tooltip));
-
-            
-            #line default
-            #line hidden
-WriteLiteral("\r\n                            <div");
+WriteLiteral(">\r\n                            <div");
 
 WriteLiteral(" class=\"bcms-content-titles\"");
 
 WriteLiteral(">");
 
             
-            #line 113 "..\..\Views\Blog\EditBlogPost.cshtml"
+            #line 112 "..\..\Views\Blog\EditBlogPost.cshtml"
                                                         Write(BlogGlobalization.EditBlogPost_Language_Title);
 
             
             #line default
             #line hidden
 WriteLiteral("</div>\r\n");
+
+WriteLiteral("                            ");
+
+            
+            #line 113 "..\..\Views\Blog\EditBlogPost.cshtml"
+                       Write(Html.Tooltip(BlogGlobalization.EditBlogPost_Language_Tooltip));
+
+            
+            #line default
+            #line hidden
+WriteLiteral("\r\n");
 
 WriteLiteral("                            ");
 
@@ -718,31 +718,31 @@ WriteLiteral("\r\n                        <div");
 
 WriteLiteral(" class=\"bcms-input-list-holder\"");
 
-WriteLiteral(">\r\n");
-
-WriteLiteral("                            ");
-
-            
-            #line 119 "..\..\Views\Blog\EditBlogPost.cshtml"
-                       Write(Html.Tooltip(BlogGlobalization.EditBlogPost_IntroText_Tooltip_Description));
-
-            
-            #line default
-            #line hidden
-WriteLiteral("\r\n                            <div");
+WriteLiteral(">\r\n                            <div");
 
 WriteLiteral(" class=\"bcms-content-titles\"");
 
 WriteLiteral(">");
 
             
-            #line 120 "..\..\Views\Blog\EditBlogPost.cshtml"
+            #line 119 "..\..\Views\Blog\EditBlogPost.cshtml"
                                                         Write(BlogGlobalization.EditBlogPost_IntroText_Title);
 
             
             #line default
             #line hidden
-WriteLiteral("</div>\r\n                            <div");
+WriteLiteral("</div>\r\n");
+
+WriteLiteral("                            ");
+
+            
+            #line 120 "..\..\Views\Blog\EditBlogPost.cshtml"
+                       Write(Html.Tooltip(BlogGlobalization.EditBlogPost_IntroText_Tooltip_Description));
+
+            
+            #line default
+            #line hidden
+WriteLiteral("\r\n                            <div");
 
 WriteLiteral(" class=\"bcms-field-wrapper\"");
 
@@ -773,31 +773,31 @@ WriteLiteral("\r\n                            </div>\r\n                        
 
 WriteLiteral(" class=\"bcms-input-list-holder\"");
 
-WriteLiteral(">\r\n");
-
-WriteLiteral("                            ");
-
-            
-            #line 128 "..\..\Views\Blog\EditBlogPost.cshtml"
-                       Write(Html.Tooltip(BlogGlobalization.EditBlogPost_Author_Tooltip_Description));
-
-            
-            #line default
-            #line hidden
-WriteLiteral("\r\n                            <div");
+WriteLiteral(">\r\n                            <div");
 
 WriteLiteral(" class=\"bcms-content-titles\"");
 
 WriteLiteral(">");
 
             
-            #line 129 "..\..\Views\Blog\EditBlogPost.cshtml"
+            #line 128 "..\..\Views\Blog\EditBlogPost.cshtml"
                                                         Write(BlogGlobalization.EditBlogPost_Author_Title);
 
             
             #line default
             #line hidden
 WriteLiteral("</div>\r\n");
+
+WriteLiteral("                            ");
+
+            
+            #line 129 "..\..\Views\Blog\EditBlogPost.cshtml"
+                       Write(Html.Tooltip(BlogGlobalization.EditBlogPost_Author_Tooltip_Description));
+
+            
+            #line default
+            #line hidden
+WriteLiteral("\r\n");
 
 WriteLiteral("                            ");
 
@@ -821,32 +821,31 @@ WriteLiteral(">\r\n                                <div");
 
 WriteLiteral(" class=\"bcms-input-list-holder\"");
 
-WriteLiteral(">\r\n");
-
-WriteLiteral("                                    ");
-
-            
-            #line 138 "..\..\Views\Blog\EditBlogPost.cshtml"
-                               Write(Html.Tooltip(BlogGlobalization.EditBlogPost_FeaturedImage_Tooltip_Description));
-
-            
-            #line default
-            #line hidden
-WriteLiteral("\r\n                                    <div");
+WriteLiteral(">\r\n                                    <div");
 
 WriteLiteral(" class=\"bcms-content-titles\"");
 
 WriteLiteral(">");
 
             
-            #line 139 "..\..\Views\Blog\EditBlogPost.cshtml"
+            #line 138 "..\..\Views\Blog\EditBlogPost.cshtml"
                                                                 Write(BlogGlobalization.EditBlogPost_FeaturedImage_Title);
 
             
             #line default
             #line hidden
-WriteLiteral("</div>\r\n                                </div>\r\n\r\n                               " +
-" <div");
+WriteLiteral("</div>\r\n");
+
+WriteLiteral("                                    ");
+
+            
+            #line 139 "..\..\Views\Blog\EditBlogPost.cshtml"
+                               Write(Html.Tooltip(BlogGlobalization.EditBlogPost_FeaturedImage_Tooltip_Description));
+
+            
+            #line default
+            #line hidden
+WriteLiteral("\r\n                                </div>\r\n\r\n                                <div");
 
 WriteLiteral(" class=\"bcms-thumb-image\"");
 

@@ -167,12 +167,25 @@ WriteLiteral(" class=\"bcms-input-list-holder\"");
 
 WriteLiteral(">\r\n                        <div");
 
+WriteLiteral(" class=\"bcms-content-titles\"");
+
+WriteLiteral(">");
+
+            
+            #line 23 "..\..\Views\UserProfile\EditUserProfile.cshtml"
+                                                    Write(UsersGlobalization.EditUser_FirstName_Title);
+
+            
+            #line default
+            #line hidden
+WriteLiteral("</div>\r\n                        <div");
+
 WriteLiteral(" class=\"bcms-tooltip-mark\"");
 
 WriteLiteral(" data-message=\"");
 
             
-            #line 23 "..\..\Views\UserProfile\EditUserProfile.cshtml"
+            #line 24 "..\..\Views\UserProfile\EditUserProfile.cshtml"
                                                                 Write(UsersGlobalization.EditUser_FirstName_Tooltip_Description);
 
             
@@ -181,19 +194,6 @@ WriteLiteral(" data-message=\"");
 WriteLiteral("\"");
 
 WriteLiteral("></div>\r\n                        <div");
-
-WriteLiteral(" class=\"bcms-content-titles\"");
-
-WriteLiteral(">");
-
-            
-            #line 24 "..\..\Views\UserProfile\EditUserProfile.cshtml"
-                                                    Write(UsersGlobalization.EditUser_FirstName_Title);
-
-            
-            #line default
-            #line hidden
-WriteLiteral("</div>\r\n                        <div");
 
 WriteLiteral(" class=\"bcms-field-wrapper\"");
 
@@ -226,12 +226,25 @@ WriteLiteral(" class=\"bcms-input-list-holder\"");
 
 WriteLiteral(">\r\n                        <div");
 
+WriteLiteral(" class=\"bcms-content-titles\"");
+
+WriteLiteral(">");
+
+            
+            #line 31 "..\..\Views\UserProfile\EditUserProfile.cshtml"
+                                                    Write(UsersGlobalization.EditUser_LastName);
+
+            
+            #line default
+            #line hidden
+WriteLiteral("</div>\r\n                        <div");
+
 WriteLiteral(" class=\"bcms-tooltip-mark\"");
 
 WriteLiteral(" data-message=\"");
 
             
-            #line 31 "..\..\Views\UserProfile\EditUserProfile.cshtml"
+            #line 32 "..\..\Views\UserProfile\EditUserProfile.cshtml"
                                                                 Write(UsersGlobalization.EditUser_LastName_Tooltip_Description);
 
             
@@ -240,19 +253,6 @@ WriteLiteral(" data-message=\"");
 WriteLiteral("\"");
 
 WriteLiteral("></div>\r\n                        <div");
-
-WriteLiteral(" class=\"bcms-content-titles\"");
-
-WriteLiteral(">");
-
-            
-            #line 32 "..\..\Views\UserProfile\EditUserProfile.cshtml"
-                                                    Write(UsersGlobalization.EditUser_LastName);
-
-            
-            #line default
-            #line hidden
-WriteLiteral("</div>\r\n                        <div");
 
 WriteLiteral(" class=\"bcms-field-wrapper\"");
 
@@ -285,12 +285,25 @@ WriteLiteral(" class=\"bcms-input-list-holder\"");
 
 WriteLiteral(">\r\n                        <div");
 
+WriteLiteral(" class=\"bcms-content-titles\"");
+
+WriteLiteral(">");
+
+            
+            #line 39 "..\..\Views\UserProfile\EditUserProfile.cshtml"
+                                                    Write(UsersGlobalization.EditUser_UserName_Title);
+
+            
+            #line default
+            #line hidden
+WriteLiteral("</div>\r\n                        <div");
+
 WriteLiteral(" class=\"bcms-tooltip-mark\"");
 
 WriteLiteral(" data-message=\"");
 
             
-            #line 39 "..\..\Views\UserProfile\EditUserProfile.cshtml"
+            #line 40 "..\..\Views\UserProfile\EditUserProfile.cshtml"
                                                                 Write(UsersGlobalization.EditUser_UserName_Tooltip_Description);
 
             
@@ -299,19 +312,6 @@ WriteLiteral(" data-message=\"");
 WriteLiteral("\"");
 
 WriteLiteral("></div>\r\n                        <div");
-
-WriteLiteral(" class=\"bcms-content-titles\"");
-
-WriteLiteral(">");
-
-            
-            #line 40 "..\..\Views\UserProfile\EditUserProfile.cshtml"
-                                                    Write(UsersGlobalization.EditUser_UserName_Title);
-
-            
-            #line default
-            #line hidden
-WriteLiteral("</div>\r\n                        <div");
 
 WriteLiteral(" class=\"bcms-field-wrapper\"");
 
@@ -344,12 +344,25 @@ WriteLiteral(" class=\"bcms-input-list-holder\"");
 
 WriteLiteral(">\r\n                        <div");
 
+WriteLiteral(" class=\"bcms-content-titles\"");
+
+WriteLiteral(">");
+
+            
+            #line 47 "..\..\Views\UserProfile\EditUserProfile.cshtml"
+                                                    Write(UsersGlobalization.EditUser_Email_Title);
+
+            
+            #line default
+            #line hidden
+WriteLiteral("</div>\r\n                        <div");
+
 WriteLiteral(" class=\"bcms-tooltip-mark\"");
 
 WriteLiteral(" data-message=\"");
 
             
-            #line 47 "..\..\Views\UserProfile\EditUserProfile.cshtml"
+            #line 48 "..\..\Views\UserProfile\EditUserProfile.cshtml"
                                                                 Write(UsersGlobalization.EditUser_Email_Tooltip_Description);
 
             
@@ -358,19 +371,6 @@ WriteLiteral(" data-message=\"");
 WriteLiteral("\"");
 
 WriteLiteral("></div>\r\n                        <div");
-
-WriteLiteral(" class=\"bcms-content-titles\"");
-
-WriteLiteral(">");
-
-            
-            #line 48 "..\..\Views\UserProfile\EditUserProfile.cshtml"
-                                                    Write(UsersGlobalization.EditUser_Email_Title);
-
-            
-            #line default
-            #line hidden
-WriteLiteral("</div>\r\n                        <div");
 
 WriteLiteral(" class=\"bcms-field-wrapper\"");
 
@@ -403,12 +403,25 @@ WriteLiteral(" class=\"bcms-input-list-holder\"");
 
 WriteLiteral(">\r\n                        <div");
 
+WriteLiteral(" class=\"bcms-content-titles\"");
+
+WriteLiteral(">");
+
+            
+            #line 55 "..\..\Views\UserProfile\EditUserProfile.cshtml"
+                                                    Write(UsersGlobalization.EditUser_Password_Title);
+
+            
+            #line default
+            #line hidden
+WriteLiteral("</div>\r\n                        <div");
+
 WriteLiteral(" class=\"bcms-tooltip-mark\"");
 
 WriteLiteral(" data-message=\"");
 
             
-            #line 55 "..\..\Views\UserProfile\EditUserProfile.cshtml"
+            #line 56 "..\..\Views\UserProfile\EditUserProfile.cshtml"
                                                                 Write(UsersGlobalization.EditUser_Password_Tooltip_Description);
 
             
@@ -417,19 +430,6 @@ WriteLiteral(" data-message=\"");
 WriteLiteral("\"");
 
 WriteLiteral("></div>\r\n                        <div");
-
-WriteLiteral(" class=\"bcms-content-titles\"");
-
-WriteLiteral(">");
-
-            
-            #line 56 "..\..\Views\UserProfile\EditUserProfile.cshtml"
-                                                    Write(UsersGlobalization.EditUser_Password_Title);
-
-            
-            #line default
-            #line hidden
-WriteLiteral("</div>\r\n                        <div");
 
 WriteLiteral(" class=\"bcms-field-wrapper\"");
 
@@ -462,12 +462,25 @@ WriteLiteral(" class=\"bcms-input-list-holder\"");
 
 WriteLiteral(">\r\n                        <div");
 
+WriteLiteral(" class=\"bcms-content-titles\"");
+
+WriteLiteral(">");
+
+            
+            #line 63 "..\..\Views\UserProfile\EditUserProfile.cshtml"
+                                                    Write(UsersGlobalization.EditUser_RetypePassword_Title);
+
+            
+            #line default
+            #line hidden
+WriteLiteral("</div>\r\n                        <div");
+
 WriteLiteral(" class=\"bcms-tooltip-mark\"");
 
 WriteLiteral(" data-message=\"");
 
             
-            #line 63 "..\..\Views\UserProfile\EditUserProfile.cshtml"
+            #line 64 "..\..\Views\UserProfile\EditUserProfile.cshtml"
                                                                 Write(UsersGlobalization.EditUser_RetypePassword_Tooltip_Description);
 
             
@@ -476,19 +489,6 @@ WriteLiteral(" data-message=\"");
 WriteLiteral("\"");
 
 WriteLiteral("></div>\r\n                        <div");
-
-WriteLiteral(" class=\"bcms-content-titles\"");
-
-WriteLiteral(">");
-
-            
-            #line 64 "..\..\Views\UserProfile\EditUserProfile.cshtml"
-                                                    Write(UsersGlobalization.EditUser_RetypePassword_Title);
-
-            
-            #line default
-            #line hidden
-WriteLiteral("</div>\r\n                        <div");
 
 WriteLiteral(" class=\"bcms-field-wrapper\"");
 
@@ -534,12 +534,25 @@ WriteLiteral(" class=\"bcms-create-author-holder\"");
 
 WriteLiteral(">\r\n                        <div");
 
+WriteLiteral(" class=\"bcms-content-titles\"");
+
+WriteLiteral(">");
+
+            
+            #line 74 "..\..\Views\UserProfile\EditUserProfile.cshtml"
+                                                    Write(UsersGlobalization.EditUser_Image_Title);
+
+            
+            #line default
+            #line hidden
+WriteLiteral("</div>\r\n                        <div");
+
 WriteLiteral(" class=\"bcms-tooltip-mark\"");
 
 WriteLiteral(" data-message=\"");
 
             
-            #line 74 "..\..\Views\UserProfile\EditUserProfile.cshtml"
+            #line 75 "..\..\Views\UserProfile\EditUserProfile.cshtml"
                                                                 Write(UsersGlobalization.EditUser_UserImage_Tooltip_Description);
 
             
@@ -548,19 +561,6 @@ WriteLiteral(" data-message=\"");
 WriteLiteral("\"");
 
 WriteLiteral("></div>\r\n                        <div");
-
-WriteLiteral(" class=\"bcms-content-titles\"");
-
-WriteLiteral(">");
-
-            
-            #line 75 "..\..\Views\UserProfile\EditUserProfile.cshtml"
-                                                    Write(UsersGlobalization.EditUser_Image_Title);
-
-            
-            #line default
-            #line hidden
-WriteLiteral("</div>\r\n                        <div");
 
 WriteLiteral(" class=\"bcms-uploaded-image\"");
 
