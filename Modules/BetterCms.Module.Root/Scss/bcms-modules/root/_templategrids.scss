@@ -13,6 +13,7 @@ $template-grid-box-states: (
 .bcms-grid {
     &-box {
         margin-bottom: gutter();
+        padding: 5px;
 
         .bcms-content-titles {
             @include ellipsis;

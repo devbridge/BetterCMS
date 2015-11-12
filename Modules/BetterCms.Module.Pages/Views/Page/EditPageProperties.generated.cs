@@ -534,8 +534,6 @@ WriteLiteral(" />\r\n                                    </a>\r\n               
 
 WriteLiteral(" class=\"bcms-grid-no-preview\"");
 
-WriteLiteral(" xmlns=\"http://www.w3.org/2000/svg\"");
-
 WriteLiteral(" width=\"50\"");
 
 WriteLiteral(" height=\"50\"");
@@ -646,8 +644,6 @@ WriteLiteral(" />\r\n                                    </a>\r\n               
 "e().url() -->\r\n                                    <svg");
 
 WriteLiteral(" class=\"bcms-grid-no-preview\"");
-
-WriteLiteral(" xmlns=\"http://www.w3.org/2000/svg\"");
 
 WriteLiteral(" width=\"50\"");
 
