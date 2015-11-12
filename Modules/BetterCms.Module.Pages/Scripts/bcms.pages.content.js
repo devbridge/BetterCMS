@@ -30,11 +30,13 @@ bettercms.define('bcms.pages.content', ['bcms.jquery', 'bcms', 'bcms.modal', 'bc
                 widgetInsertButtons: '.bcms-js-insert',
                 widgetDeleteButtons: '.bcms-js-content-delete',
                 widgetEditButtons: '.bcms-js-content-edit',
-                widgetContainerBlock: '.bcms-preview-block',
+                widgetContainerBlock: '.bcms-js-preview-block',
                 widgetCategory: '.bcms-category',
-                widgetName: '.bcms-title-holder > .bcms-content-titles',
+                widgetName: '.bcms-content-titles',
                 widgetIFramePreview: ".bcms-preview-box[data-as-image='False'] .bcms-zoom-overlay",
                 widgetImagePreview: ".bcms-preview-box[data-as-image='True'] .bcms-zoom-overlay",
+                widgetButtonOpener: ".bcms-btn-opener",
+                widgetButtonHolder: ".bcms-btn-opener-holder",
                 anyTab: '.bcms-tab-item',
 
                 widgetsContent: '.bcms-widgets',
@@ -49,7 +51,9 @@ bettercms.define('bcms.pages.content', ['bcms.jquery', 'bcms', 'bcms.modal', 'bc
             classes = {
                 sliderPrev: 'bcms-slider-prev',
                 sliderNext: 'bcms-slider-next',
-                inactive: 'bcms-inactive'
+                inactive: 'bcms-inactive',
+                activeSearch: 'bcms-active-search',
+                opened: 'bcms-opened'
             },
             links = {
                 loadWidgetsUrl: null,
@@ -235,10 +239,6 @@ bettercms.define('bcms.pages.content', ['bcms.jquery', 'bcms', 'bcms.modal', 'bc
         };
 
         function initializeWidgetsTab(dialog, onInsert) {
-            dialog.container.find(selectors.widgetsSearchButton).on('click', function () {
-                pagesContent.updateWidgetCategoryList(dialog, onInsert);
-            });
-
             dialog.container.find(selectors.widgetCreateButton).on('click', function () {
                 widgets.openCreateHtmlContentWidgetDialog(function (json) {
                     // Reload search results after category was created.
@@ -254,9 +254,22 @@ bettercms.define('bcms.pages.content', ['bcms.jquery', 'bcms', 'bcms.modal', 'bc
                 }, null);
             });
 
+            dialog.container.find(selectors.widgetsSearchButton).on('click', function () {
+                var parent = $(this).parent();
+                if (!parent.hasClass(classes.activeSearch)) {
+                    dialog.container.find(selectors.widgetsSearchInput).prop('disabled', false);
+                    parent.addClass(classes.activeSearch);
+                    dialog.container.find(selectors.widgetsSearchInput).focus();
+                } else {
+                    dialog.container.find(selectors.widgetsSearchInput).prop('disabled', true);
+                    parent.removeClass(classes.activeSearch);
+                    dialog.container.find(selectors.widgetsSearchInput).val('');
+                }
+            });
+
             bcms.preventInputFromSubmittingForm(dialog.container.find(selectors.widgetsSearchInput), {
                 preventedEnter: function () {
-                    pagesContent.updateWidgetCategoryList(dialog, onInsert);
+                    pagesContent.updateWidgetCategoryList(dialog, onInsert, true);
                 }
             });
         }
@@ -416,14 +429,14 @@ bettercms.define('bcms.pages.content', ['bcms.jquery', 'bcms', 'bcms.modal', 'bc
         /**
         * Reloads widget category list.
         */
-        pagesContent.updateWidgetCategoryList = function (dialog, onInsert) {
+        pagesContent.updateWidgetCategoryList = function (dialog, onInsert, isSearchResult) {
             $.ajax({
                 url: $.format(links.loadWidgetsUrl, dialog.container.find(selectors.widgetsSearchInput).val()),
                 cache: false
             }).done(function (data) {
                 dialog.container.find(selectors.widgetsContainer).html(data);
 
-                initializeWidgets(dialog.container, dialog, onInsert);
+                initializeWidgets(dialog.container, dialog, onInsert, isSearchResult);
                 dialog.container.find(selectors.widgetsSearchInput).focus();
             });
         };
@@ -431,15 +444,15 @@ bettercms.define('bcms.pages.content', ['bcms.jquery', 'bcms', 'bcms.modal', 'bc
         /**
         * Initializes widget categories list with sliders.
         */
-        function initializeWidgets(container, dialog, onInsert) {
+        function initializeWidgets(container, dialog, onInsert, isSearchResult) {
 
             container.find(selectors.widgetInsertButtons).on('click', onInsert);
 
             container.find(selectors.widgetDeleteButtons).on('click', function () {
                 var self = $(this),
                     widgetContainer = self.parents(selectors.widgetContainerBlock),
-                    widgetId = widgetContainer.data('originalId'),
-                    widgetVersion = widgetContainer.data('originalVersion'),
+                    widgetId = widgetContainer.data('original-id'),
+                    widgetVersion = widgetContainer.data('original-version'),
                     widgetName = widgetContainer.find(selectors.widgetName).text(),
                     onComplete = function (data) {
                         messages.refreshBox(modal.last().container || widgetContainer, data);
@@ -468,6 +481,29 @@ bettercms.define('bcms.pages.content', ['bcms.jquery', 'bcms', 'bcms.modal', 'bc
                     pagesContent.updateWidgetCategoryList(dialog, onInsert);
                 },
                 null);
+            });
+
+            if (isSearchResult) {
+                container.find(selectors.widgetsSearchButton).parent().addClass(classes.activeSearch);
+            } else {
+                container.find(selectors.widgetsSearchInput).prop('disabled', true);
+            }
+
+            container.find(selectors.widgetButtonOpener).on('click', function (event) {
+                bcms.stopEventPropagation(event);
+                var holder = container.find(selectors.widgetButtonHolder);
+                if (!holder.hasClass(classes.opened)) {
+                    holder.addClass(classes.opened);
+                } else {
+                    holder.removeClass(classes.opened);
+                }
+            });
+
+            bcms.on(bcms.events.bodyClick, function () {
+                var holder = container.find(selectors.widgetButtonHolder);
+                if (holder.hasClass(classes.opened)) {
+                    holder.removeClass(classes.opened);
+                }
             });
 
             preview.initialize(container.find(selectors.widgetsContainer), selectors.widgetIFramePreview);
@@ -854,7 +890,7 @@ bettercms.define('bcms.pages.content', ['bcms.jquery', 'bcms', 'bcms.modal', 'bc
             var dialog,
                 onInsert = function () {
                     var widgetContainer = $(this).parents(selectors.widgetContainerBlock),
-                        contentId = widgetContainer.data('originalId').toUpperCase(),
+                        contentId = widgetContainer.data('original-id').toUpperCase(),
                         title = widgetContainer.find(selectors.widgetName).text(),
                         html = '<widget data-id="' + contentId + '" data-assign-id="' + bcms.createGuid() + '">' + title + '</widget>';
 

@@ -1,14 +1,17 @@
 ﻿@using BetterCms.Module.Pages.Controllers
 @using BetterCms.Module.Pages.ViewModels.SiteSettings
+@using BetterCms.Module.Root.Mvc.Helpers
 @using Microsoft.Web.Mvc
 
 @model BetterCms.Module.Pages.ViewModels.Filter.PagesGridViewModel<SiteSettingPageViewModel>
 
 <div class="bcms-modal-frame-holder">
+    @Html.MessagesBox()
+
     <div class="bcms-window-options">
         @using (Html.BeginForm<PageController>(controller => controller.SelectPage(null), FormMethod.Post, new { @id = "bcms-pages-form", @class = "bcms-ajax-form" }))
         {
-            @Html.Partial("Pages")
+            @Html.Partial("Partial/SiteSettingsPagesList")
         }
     </div>
 </div>

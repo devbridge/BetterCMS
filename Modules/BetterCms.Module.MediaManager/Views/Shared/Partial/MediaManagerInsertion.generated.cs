@@ -29,10 +29,10 @@ namespace ASP
     using System.Web.WebPages;
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("RazorGenerator", "2.0.0.0")]
-    [System.Web.WebPages.PageVirtualPathAttribute("~/Views/Shared/Partial/MediaManagerTab.cshtml")]
-    public partial class _Views_Shared_Partial_MediaManagerTab_cshtml : System.Web.Mvc.WebViewPage<dynamic>
+    [System.Web.WebPages.PageVirtualPathAttribute("~/Views/Shared/Partial/MediaManagerInsertion.cshtml")]
+    public partial class _Views_Shared_Partial_MediaManagerInsertion_cshtml : System.Web.Mvc.WebViewPage<dynamic>
     {
-        public _Views_Shared_Partial_MediaManagerTab_cshtml()
+        public _Views_Shared_Partial_MediaManagerInsertion_cshtml()
         {
         }
         public override void Execute()
@@ -40,7 +40,7 @@ namespace ASP
 WriteLiteral("\r\n");
 
             
-            #line 2 "..\..\Views\Shared\Partial\MediaManagerTab.cshtml"
+            #line 2 "..\..\Views\Shared\Partial\MediaManagerInsertion.cshtml"
  using (Html.BeginForm(null, null, null, FormMethod.Post, new {@class = "bcms-ajax-form"}))
 {
 
@@ -49,14 +49,14 @@ WriteLiteral("\r\n");
             #line hidden
 WriteLiteral("    <div");
 
-WriteLiteral(" data-bind=\"template: { name: \'bcms-media-list-window-template\' }\"");
+WriteLiteral(" data-bind=\"template: { name: \'bcms-media-list-template\' }\"");
 
 WriteLiteral(" class=\"bcms-data-bind-container\"");
 
 WriteLiteral("></div>\r\n");
 
             
-            #line 5 "..\..\Views\Shared\Partial\MediaManagerTab.cshtml"
+            #line 5 "..\..\Views\Shared\Partial\MediaManagerInsertion.cshtml"
 }
             
             #line default

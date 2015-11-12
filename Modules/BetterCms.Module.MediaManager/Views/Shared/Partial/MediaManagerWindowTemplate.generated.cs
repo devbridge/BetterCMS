@@ -28,39 +28,51 @@ namespace ASP
     using System.Web.UI;
     using System.Web.WebPages;
     
+    #line 1 "..\..\Views\Shared\Partial\MediaManagerWindowTemplate.cshtml"
+    using BetterCms.Module.Root.Mvc.Helpers;
+    
+    #line default
+    #line hidden
+    
     [System.CodeDom.Compiler.GeneratedCodeAttribute("RazorGenerator", "2.0.0.0")]
-    [System.Web.WebPages.PageVirtualPathAttribute("~/Views/Shared/Partial/MediaManagerTab.cshtml")]
-    public partial class _Views_Shared_Partial_MediaManagerTab_cshtml : System.Web.Mvc.WebViewPage<dynamic>
+    [System.Web.WebPages.PageVirtualPathAttribute("~/Views/Shared/Partial/MediaManagerWindowTemplate.cshtml")]
+    public partial class _Views_Shared_Partial_MediaManagerWindowTemplate_cshtml : System.Web.Mvc.WebViewPage<BetterCms.Module.MediaManager.ViewModels.MediaManager.MediaViewModel>
     {
-        public _Views_Shared_Partial_MediaManagerTab_cshtml()
+        public _Views_Shared_Partial_MediaManagerWindowTemplate_cshtml()
         {
         }
         public override void Execute()
         {
-WriteLiteral("\r\n");
+WriteLiteral("<script");
+
+WriteLiteral(" type=\"text/html\"");
+
+WriteLiteral(" id=\"bcms-media-list-window-template\"");
+
+WriteLiteral(">\r\n");
+
+WriteLiteral("    ");
 
             
-            #line 2 "..\..\Views\Shared\Partial\MediaManagerTab.cshtml"
- using (Html.BeginForm(null, null, null, FormMethod.Post, new {@class = "bcms-ajax-form"}))
-{
+            #line 5 "..\..\Views\Shared\Partial\MediaManagerWindowTemplate.cshtml"
+Write(Html.MessagesBox(null, new Dictionary<string, string> { { "data-bind", "attr: { id: domId() }" } }));
+
+            
+            #line default
+            #line hidden
+WriteLiteral("\r\n\r\n    <div class=\"bcms-window-settings\">\r\n");
+
+WriteLiteral("        ");
+
+            
+            #line 8 "..\..\Views\Shared\Partial\MediaManagerWindowTemplate.cshtml"
+   Write(Html.Partial("Partial/MediaManagerInnerContentTemplate"));
 
             
             #line default
             #line hidden
-WriteLiteral("    <div");
+WriteLiteral("\r\n    </div>\r\n</script>");
 
-WriteLiteral(" data-bind=\"template: { name: \'bcms-media-list-window-template\' }\"");
-
-WriteLiteral(" class=\"bcms-data-bind-container\"");
-
-WriteLiteral("></div>\r\n");
-
-            
-            #line 5 "..\..\Views\Shared\Partial\MediaManagerTab.cshtml"
-}
-            
-            #line default
-            #line hidden
         }
     }
 }

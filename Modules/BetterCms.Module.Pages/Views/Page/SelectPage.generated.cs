@@ -41,6 +41,12 @@ namespace ASP
     #line hidden
     
     #line 3 "..\..\Views\Page\SelectPage.cshtml"
+    using BetterCms.Module.Root.Mvc.Helpers;
+    
+    #line default
+    #line hidden
+    
+    #line 4 "..\..\Views\Page\SelectPage.cshtml"
     using Microsoft.Web.Mvc;
     
     #line default
@@ -55,26 +61,37 @@ namespace ASP
         }
         public override void Execute()
         {
-WriteLiteral("\n");
+WriteLiteral("\r\n");
 
 WriteLiteral("<div");
 
 WriteLiteral(" class=\"bcms-modal-frame-holder\"");
 
-WriteLiteral(">\n    <div");
+WriteLiteral(">\r\n");
 
-WriteLiteral(" class=\"bcms-window-options\"");
-
-WriteLiteral(">\n");
+WriteLiteral("    ");
 
             
             #line 9 "..\..\Views\Page\SelectPage.cshtml"
+Write(Html.MessagesBox());
+
+            
+            #line default
+            #line hidden
+WriteLiteral("\r\n\r\n    <div");
+
+WriteLiteral(" class=\"bcms-window-options\"");
+
+WriteLiteral(">\r\n");
+
+            
+            #line 12 "..\..\Views\Page\SelectPage.cshtml"
         
             
             #line default
             #line hidden
             
-            #line 9 "..\..\Views\Page\SelectPage.cshtml"
+            #line 12 "..\..\Views\Page\SelectPage.cshtml"
          using (Html.BeginForm<PageController>(controller => controller.SelectPage(null), FormMethod.Post, new { @id = "bcms-pages-form", @class = "bcms-ajax-form" }))
         {
             
@@ -82,21 +99,21 @@ WriteLiteral(">\n");
             #line default
             #line hidden
             
-            #line 11 "..\..\Views\Page\SelectPage.cshtml"
-       Write(Html.Partial("Pages"));
+            #line 14 "..\..\Views\Page\SelectPage.cshtml"
+       Write(Html.Partial("Partial/SiteSettingsPagesList"));
 
             
             #line default
             #line hidden
             
-            #line 11 "..\..\Views\Page\SelectPage.cshtml"
-                                  
+            #line 14 "..\..\Views\Page\SelectPage.cshtml"
+                                                          
         }
 
             
             #line default
             #line hidden
-WriteLiteral("    </div>\n</div>\n");
+WriteLiteral("    </div>\r\n</div>\r\n");
 
         }
     }
