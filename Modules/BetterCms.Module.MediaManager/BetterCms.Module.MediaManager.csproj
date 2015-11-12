@@ -389,12 +389,8 @@
       <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="Content\Styles\Images\icn-zoom.png" />
-    <EmbeddedResource Include="Content\Styles\Images\loading.gif" />
     <EmbeddedResource Include="Content\Styles\Images\sprite-media-1.png" />
     <EmbeddedResource Include="Content\Styles\Images\sprite-media-2.png" />
-    <EmbeddedResource Include="Content\Styles\Images\bcms-no-image-1.png" />
-    <EmbeddedResource Include="Content\Styles\Images\bcms-no-image-2.png" />
-    <EmbeddedResource Include="Content\Styles\Images\bcms-no-image-3.png" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\BetterCMS.Configuration\BetterCms.Configuration.csproj">

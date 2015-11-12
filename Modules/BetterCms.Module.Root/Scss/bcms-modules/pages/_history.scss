@@ -1,5 +1,11 @@
 $history-preview-box: ($header-height + $tab-height);
 
+$history-states: (
+                ('published', $text-blue),
+                ('draft', $text-green),
+                ('archived', $text-red)
+);
+
 %history-preview-frame {
     background-color: $white;
     height: calc(60vh - #{$history-preview-box});
@@ -46,18 +52,9 @@ $history-preview-box: ($header-height + $tab-height);
     }
 }
 
-.bcms-history-content {
-    padding: 20px;
-}
+@each $name, $state-color in $history-states {
+    .bcms-#{$name}-state {
+        color: $state-color;
+    }
 
-.bcms-published-state {
-    color: $text-blue;
-}
-
-.bcms-draft-state {
-    color: $text-green;
-}
-
-.bcms-archived-state {
-    color: $text-red;
 }
