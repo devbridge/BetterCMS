@@ -73,11 +73,11 @@ Write(Html.HiddenFor(model => model.ContentTextMode, new { @id = "bcms-content-t
             #line hidden
 WriteLiteral("\r\n\r\n<div");
 
-WriteLiteral(" class=\"bcms-newcontent-top\"");
+WriteLiteral(" class=\"bcms-content-info-block\"");
 
 WriteLiteral(">\r\n    <div");
 
-WriteLiteral(" class=\"bcms-input-field-holder\"");
+WriteLiteral(" class=\"bcms-input-list-holder\"");
 
 WriteLiteral(">\r\n        <div");
 
@@ -113,7 +113,7 @@ WriteLiteral("            ");
 
             
             #line 14 "..\..\Views\Content\Partial\EditHtmlContent.cshtml"
-       Write(Html.TextBoxFor(model => model.ContentName, new { @class = "bcms-field-text"}));
+       Write(Html.TextBoxFor(model => model.ContentName, new { @class = "bcms-field-text" }));
 
             
             #line default
@@ -131,7 +131,7 @@ WriteLiteral("            ");
             #line hidden
 WriteLiteral("\r\n        </div>\r\n    </div>\r\n\r\n    <div");
 
-WriteLiteral(" class=\"bcms-input-field-holder\"");
+WriteLiteral(" class=\"bcms-input-list-holder\"");
 
 WriteLiteral(">\r\n        <div");
 
@@ -174,7 +174,7 @@ WriteLiteral("            ");
             #line hidden
 WriteLiteral("\r\n        </div>\r\n    </div>\r\n\r\n    <div");
 
-WriteLiteral(" class=\"bcms-input-field-holder\"");
+WriteLiteral(" class=\"bcms-input-list-holder\"");
 
 WriteLiteral(">\r\n        <div");
 
@@ -217,7 +217,7 @@ WriteLiteral("            ");
             #line hidden
 WriteLiteral("\r\n        </div>\r\n    </div>\r\n</div>\r\n\r\n<div");
 
-WriteLiteral(" class=\"bcms-text-editor-holder\"");
+WriteLiteral(" class=\"bcms-field-wrapper\"");
 
 WriteLiteral(">\r\n");
 
@@ -230,7 +230,7 @@ Write(Html.TextAreaFor(model => model.PageContent, new { @class = "bcms-contenth
             
             #line default
             #line hidden
-WriteLiteral("\r\n</div>");
+WriteLiteral("\r\n</div>\r\n");
 
         }
     }

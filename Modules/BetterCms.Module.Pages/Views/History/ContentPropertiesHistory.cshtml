@@ -2,20 +2,22 @@
 @using BetterCms.Module.Root.Mvc.UI
 @model BetterCms.Module.Pages.ViewModels.History.HtmlContentHistoryViewModel
 
-<div class="bcms-newcontent-top">
-    <div class="bcms-input-field-holder">
+<div class="bcms-content-info-block">
+    <div class="bcms-input-list-holder">
         <div class="bcms-content-titles">@PagesGlobalization.AddPageContent_RegularContentTab_ContentName_Title</div>
         <div class="bcms-field-wrapper">
-            @Html.TextBoxFor(model => model.Name, new { @readonly = "readonly", @class = "bcms-field-text"})
+            @Html.TextBoxFor(model => model.Name, new { @readonly = "readonly", @class = "bcms-field-text" })
         </div>
     </div>
-    <div class="bcms-input-field-holder">
+
+    <div class="bcms-input-list-holder">
         <div class="bcms-content-titles">@PagesGlobalization.AddPageContent_RegularContentTab_LiveFrom_Title</div>
         <div class="bcms-field-wrapper">
             @Html.DateTextBoxFor(model => model.ActivationDate, Model.ActivationDate, new Dictionary<string, object> { { "readonly", "readonly" }, { "class", "bcms-field-text bcms-datepicker" }, { "style", "width: 127px;" } })
         </div>
     </div>
-    <div class="bcms-input-field-holder">
+
+    <div class="bcms-input-list-holder">
         <div class="bcms-content-titles">@PagesGlobalization.AddPageContent_RegularContentTab_LiveTo_Title</div>
         <div class="bcms-field-wrapper">
             @Html.DateTextBoxFor(model => model.ExpirationDate, Model.ExpirationDate, new Dictionary<string, object> { { "readonly", "readonly" }, { "class", "bcms-field-text bcms-datepicker" }, { "style", "width: 127px;" } })
@@ -25,12 +27,16 @@
 
 <div class="bcms-input-list-holder">
     <div class="bcms-content-titles">@PagesGlobalization.HtmlContent_Content_Title</div>
-    @Html.TextAreaFor(model => model.RowText, new { @readonly = "readonly", @class = "bcms-field-textarea bcms-code-field ", @style = "width:820px;", @id = Guid.NewGuid() })
+    <div class="bcms-field-wrapper">
+        @Html.TextAreaFor(model => model.RowText, new { @readonly = "readonly", @class = "bcms-field-textarea bcms-code-field ", @style = "width:820px;", @id = Guid.NewGuid() })
+    </div>
 </div>
 
 <div class="bcms-input-list-holder">
     <div class="bcms-content-titles">@PagesGlobalization.HtmlContent_CustomCss_Title</div>
-    @Html.TextAreaFor(model => model.CustomCss, new { @readonly = "readonly", @class = "bcms-field-textarea bcms-code-field bcms-code-field-css", @style = "width:820px;", @id = Guid.NewGuid() })
+    <div class="bcms-field-wrapper">
+        @Html.TextAreaFor(model => model.CustomCss, new { @readonly = "readonly", @class = "bcms-field-textarea bcms-code-field bcms-code-field-css", @style = "width:820px;", @id = Guid.NewGuid() })
+    </div>
 </div>
 
 <div class="bcms-input-list-holder">
@@ -42,7 +48,9 @@
 
 <div class="bcms-input-list-holder">
     <div class="bcms-content-titles">@PagesGlobalization.HtmlContent_CustomJs_Title</div>
-    @Html.TextAreaFor(model => model.CustomJs, new { @readonly = "readonly", @class = "bcms-field-textarea bcms-code-field bcms-code-field-javascript", @style = "width:820px;", @id = Guid.NewGuid() })
+    <div class="bcms-field-wrapper">
+        @Html.TextAreaFor(model => model.CustomJs, new { @readonly = "readonly", @class = "bcms-field-textarea bcms-code-field bcms-code-field-javascript", @style = "width:820px;", @id = Guid.NewGuid() })
+    </div>
 </div>
 
 <div class="bcms-input-list-holder">

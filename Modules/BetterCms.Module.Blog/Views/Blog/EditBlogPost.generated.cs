@@ -423,11 +423,11 @@ WriteLiteral(" class=\"bcms-tab-single\"");
 
 WriteLiteral(">\r\n                <div");
 
-WriteLiteral(" class=\"bcms-newcontent-top\"");
+WriteLiteral(" class=\"bcms-content-info-block\"");
 
 WriteLiteral(">\r\n                    <div");
 
-WriteLiteral(" class=\"bcms-input-field-holder\"");
+WriteLiteral(" class=\"bcms-input-list-holder\"");
 
 WriteLiteral(">\r\n                        <div");
 
@@ -482,7 +482,7 @@ WriteLiteral("                            ");
 WriteLiteral("\r\n                        </div>\r\n                    </div>\r\n                   " +
 " <div");
 
-WriteLiteral(" class=\"bcms-input-field-holder\"");
+WriteLiteral(" class=\"bcms-input-list-holder\"");
 
 WriteLiteral(">\r\n                        <div");
 
@@ -537,7 +537,7 @@ WriteLiteral("                            ");
 WriteLiteral("\r\n                        </div>\r\n                    </div>\r\n                   " +
 " <div");
 
-WriteLiteral(" class=\"bcms-input-field-holder\"");
+WriteLiteral(" class=\"bcms-input-list-holder\"");
 
 WriteLiteral(">\r\n                        <div");
 

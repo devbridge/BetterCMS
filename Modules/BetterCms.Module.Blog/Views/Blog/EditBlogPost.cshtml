@@ -68,8 +68,8 @@
             @Html.HiddenFor(modal => modal.ContentTextMode, new { @id = "bcms-user-confirmed-region-deletion" })
 
             <div id="bcms-tab-1" class="bcms-tab-single">
-                <div class="bcms-newcontent-top">
-                    <div class="bcms-input-field-holder">
+                <div class="bcms-content-info-block">
+                    <div class="bcms-input-list-holder">
                         <div class="bcms-content-titles">@BlogGlobalization.EditBlogPost_Title_Title</div>
                         @Html.Tooltip(BlogGlobalization.EditBlogPost_Title_Tooltip_Description)
                         <div class="bcms-field-wrapper">
@@ -77,7 +77,7 @@
                             @Html.BcmsValidationMessageFor(m => m.Title)
                         </div>
                     </div>
-                    <div class="bcms-input-field-holder">
+                    <div class="bcms-input-list-holder">
                         <div class="bcms-content-titles">@BlogGlobalization.EditBlogPost_LiveFrom_Title</div>
                         @Html.Tooltip(BlogGlobalization.EditBlogPost_LiveDates_Tooltip_Description)
                         <div class="bcms-field-wrapper">
@@ -85,7 +85,7 @@
                             @Html.BcmsValidationMessageFor(m => m.LiveFromDate)
                         </div>
                     </div>
-                    <div class="bcms-input-field-holder">
+                    <div class="bcms-input-list-holder">
                         <div class="bcms-content-titles">@BlogGlobalization.EditBlogPost_LiveTo_Title</div>
                         <div class="bcms-field-wrapper">
                             @Html.DateTextBoxFor(model => model.LiveToDate, Model.LiveToDate, new Dictionary<string, object> { { "class", "bcms-field-text bcms-datepicker" }, { "style", "width: 127px;" } })
