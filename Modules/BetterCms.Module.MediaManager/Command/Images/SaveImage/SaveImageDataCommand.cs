@@ -3,11 +3,14 @@ using System.Collections.Generic;
 using System.Drawing;
 using System.IO;
 using System.Linq;
+using System.Xml.Linq;
 
+using BetterCms.Core.Exceptions.Mvc;
 using BetterCms.Core.Services.Storage;
 
 using BetterCms.Module.MediaManager.Helpers;
 using BetterCms.Module.MediaManager.Models;
+using BetterCms.Module.MediaManager.Models.Enum;
 using BetterCms.Module.MediaManager.Services;
 using BetterCms.Module.MediaManager.ViewModels.Images;
 
@@ -99,70 +102,69 @@ namespace BetterCms.Module.MediaManager.Command.Images.SaveImage
         /// <param name="request">The request.</param>
         private MemoryStream ResizeAndCropImage(MediaImage mediaImage, ImageViewModel request)
         {
-            int? x1 = request.CropCoordX1;
-            int? x2 = request.CropCoordX2;
-            int? y1 = request.CropCoordY1;
-            int? y2 = request.CropCoordY2;
-
-            var cropped = true;
-            if ((x1 <= 0 && y1 <= 0 && ((x2 >= mediaImage.OriginalWidth && y2 >= mediaImage.OriginalHeight) || (x2 <= 0 && y2 <= 0))))
-            {
-                x1 = y1 = 0;
-                x2 = mediaImage.OriginalWidth;
-                y2 = mediaImage.OriginalHeight;
-                cropped = false;
-            }
-
+            MemoryStream memoryStream = null;
             var newWidth = request.ImageWidth;
             var newHeight = request.ImageHeight;
-            var resized = (newWidth != mediaImage.OriginalWidth || newHeight != mediaImage.OriginalHeight);
 
-            MemoryStream memoryStream = null;
-
-            var hasChanges = (mediaImage.Width != newWidth
-                || mediaImage.Height != newHeight
-                || x1 != mediaImage.CropCoordX1
-                || x2 != mediaImage.CropCoordX2
-                || y1 != mediaImage.CropCoordY1
-                || y2 != mediaImage.CropCoordY2); 
-
-            if (hasChanges)
+            if (request.ImageType == ImageType.Raster)
             {
-                DownloadResponse downloadResponse = StorageService.DownloadObject(mediaImage.OriginalUri);
-                var dimensionsCalculator = new ImageDimensionsCalculator(newWidth, newHeight, mediaImage.OriginalWidth, mediaImage.OriginalHeight, x1, x2, y1, y2);
-                using (var image = Image.FromStream(downloadResponse.ResponseStream))
+                int? x1 = request.CropCoordX1;
+                int? x2 = request.CropCoordX2;
+                int? y1 = request.CropCoordY1;
+                int? y2 = request.CropCoordY2;
+
+                var cropped = true;
+                if ((x1 <= 0 && y1 <= 0 && ((x2 >= mediaImage.OriginalWidth && y2 >= mediaImage.OriginalHeight) || (x2 <= 0 && y2 <= 0))))
                 {
-                    var destination = image;
-                    var codec = ImageHelper.GetImageCodec(destination);
-
-                    if (resized)
-                    {
-                        destination = ImageHelper.Resize(destination, new Size { Width = newWidth, Height = newHeight });
-                    }
-
-                    if (cropped)
-                    {
-                        var width = dimensionsCalculator.ResizedCroppedWidth;
-                        var heigth = dimensionsCalculator.ResizedCroppedHeight;
-                        var cropX12 = dimensionsCalculator.ResizedCropCoordX1.Value;
-                        var cropY12 = dimensionsCalculator.ResizedCropCoordY1.Value;
-
-                        Rectangle rec = new Rectangle(cropX12, cropY12, width, heigth);
-                        destination = ImageHelper.Crop(destination, rec);
-                    }
-
-                    memoryStream = new MemoryStream();
-                    destination.Save(memoryStream, codec, null);
-                    mediaImage.Size = memoryStream.Length;
+                    x1 = y1 = 0;
+                    x2 = mediaImage.OriginalWidth;
+                    y2 = mediaImage.OriginalHeight;
+                    cropped = false;
                 }
 
-                mediaImage.CropCoordX1 = x1;
-                mediaImage.CropCoordY1 = y1;
-                mediaImage.CropCoordX2 = x2;
-                mediaImage.CropCoordY2 = y2;
+                var resized = (newWidth != mediaImage.OriginalWidth || newHeight != mediaImage.OriginalHeight);
 
-                mediaImage.Width = newWidth;
-                mediaImage.Height = newHeight;
+                var hasChanges = (mediaImage.Width != newWidth || mediaImage.Height != newHeight || x1 != mediaImage.CropCoordX1 || x2 != mediaImage.CropCoordX2
+                                  || y1 != mediaImage.CropCoordY1 || y2 != mediaImage.CropCoordY2);
+
+                if (hasChanges)
+                {
+                    DownloadResponse downloadResponse = StorageService.DownloadObject(mediaImage.OriginalUri);
+                    var dimensionsCalculator = new ImageDimensionsCalculator(newWidth, newHeight, mediaImage.OriginalWidth, mediaImage.OriginalHeight, x1, x2, y1, y2);
+                    using (var image = Image.FromStream(downloadResponse.ResponseStream))
+                    {
+                        var destination = image;
+                        var codec = ImageHelper.GetImageCodec(destination);
+
+                        if (resized)
+                        {
+                            destination = ImageHelper.Resize(destination, new Size { Width = newWidth, Height = newHeight });
+                        }
+
+                        if (cropped)
+                        {
+                            var width = dimensionsCalculator.ResizedCroppedWidth;
+                            var heigth = dimensionsCalculator.ResizedCroppedHeight;
+                            var cropX12 = dimensionsCalculator.ResizedCropCoordX1.Value;
+                            var cropY12 = dimensionsCalculator.ResizedCropCoordY1.Value;
+
+                            Rectangle rec = new Rectangle(cropX12, cropY12, width, heigth);
+                            destination = ImageHelper.Crop(destination, rec);
+                        }
+
+                        memoryStream = new MemoryStream();
+                        destination.Save(memoryStream, codec, null);
+                        mediaImage.Size = memoryStream.Length;
+                    }
+
+                    mediaImage.CropCoordX1 = x1;
+                    mediaImage.CropCoordY1 = y1;
+                    mediaImage.CropCoordX2 = x2;
+                    mediaImage.CropCoordY2 = y2;
+
+                    mediaImage.Width = newWidth;
+                    mediaImage.Height = newHeight;
+                }
             }
 
             return memoryStream;

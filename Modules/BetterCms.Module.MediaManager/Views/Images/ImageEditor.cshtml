@@ -1,5 +1,4 @@
-﻿@using BetterCms.Module.MediaManager.Models
-@using BetterCms.Module.Root.Mvc.Extensions
+@using BetterCms.Module.MediaManager.Models
 @using BetterCms.Module.Root.ViewModels.Category
 @using BetterCms.Module.Root.ViewModels.Tags
 @using Microsoft.Web.Mvc
@@ -37,11 +36,14 @@
                 @Html.HiddenFor(model => model.CropCoordY1, new { @data_bind = "value: Math.floor(imageEditorViewModel.cropCoordY1())" })
                 @Html.HiddenFor(model => model.CropCoordY2, new { @data_bind = "value: Math.floor(imageEditorViewModel.cropCoordY2())" })
                 @Html.HiddenFor(model => model.ShouldOverride, new { @id = "image-override-field" })
+            @Html.HiddenFor(model => model.ImageType, new { @data_bind = "value: imageEditorViewModel.imageType()" })
 
                 <div class="bcms-input-list-holder">
+                <div data-bind="visible: imageEditorViewModel.imageType() == 1">
                     @Html.Tooltip(MediaGlobalization.ImageEditor_Dialog_CropImage_Tooltip_Description)
                     <div class="bcms-content-titles">
                         @MediaGlobalization.ImageEditor_Dialog_CropImage_Title
+
                         <a class="bcms-icn-delete-link" data-bind="visible: imageEditorViewModel.hasCrop(), click: imageEditorViewModel.removeCrop">Remove crop</a>
                         <div class="bcms-crop-checkbox">
                             <input type="checkbox" data-bind="checked: imageEditorViewModel.fit" />
@@ -49,6 +51,7 @@
                         </div>
                     </div>
                 </div>
+            </div>
 
                 <div class="bcms-croped-block">
                     <img src="" data-bind="style: { width: imageEditorViewModel.calculatedWidth() + 'px', height: imageEditorViewModel.calculatedHeight() + 'px' }" />
@@ -91,14 +94,15 @@
                         <b>@MediaGlobalization.ImageEditor_Dialog_FileSize:</b>
                         <div class="bcms-editing-text" id="image-file-size">@Model.FileSize</div>
                     </div>
-                    <div class="bcms-file-info-text">
+
+                    <div class="bcms-file-info-text" data-bind="visible: imageEditorViewModel.enableCrop">
                         <b>@MediaGlobalization.ImageEditor_Dialog_CroppedDimensions:</b>
                         <div class="bcms-editing-text" id="image-file-size" data-bind="text: imageEditorViewModel.croppedWidthAndHeight()">@Model.CroppedWidth x @Model.CroppedHeight</div>
                     </div>
                     <div class="bcms-file-info-text" data-bind="with: imageEditorViewModel" id="bcms-image-dimensions-editor-box">
                         <b>@MediaGlobalization.ImageEditor_Dialog_Dimensions:</b>
                         <div class="bcms-editing-text" data-bind="text: widthAndHeight()">@Model.ImageWidth x @Model.ImageHeight</div>
-                        <a class="bcms-file-link" data-bind="click: open, visible: !isOpened()">@RootGlobalization.Button_Edit</a>
+                    <a class="bcms-file-link" data-bind="click: open, visible: !isOpened() && $parent.imageEditorViewModel.imageType() == 1">@RootGlobalization.Button_Edit</a>
                         <div class="bcms-file-edit" data-bind="style: { 'display': isOpened() ? 'block' : 'none' }">
                             <div class="bcms-content-titles">
                                 @MediaGlobalization.ImageEditor_Dialog_ChangeSize_Title

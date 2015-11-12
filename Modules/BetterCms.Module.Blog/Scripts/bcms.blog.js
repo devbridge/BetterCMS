@@ -1065,28 +1065,36 @@ bettercms.define('bcms.blog', ['bcms.jquery', 'bcms', 'bcms.modal', 'bcms.siteSe
 
                             form = dialog.container.find(selectors.importBlogPostsForm);
 
-                            importModel = {
-                                createRedirects: ko.observable(true),
-                                fileName: ko.observable(''),
-                                fixedFileName: ko.observable(''),
-                                messageBox: messages.box({ container: form }),
-                                form: form,
-                                results: ko.observableArray(),
-                                uploaded: ko.observable(false),
-                                finished: ko.observable(false),
-                                dialog: dialog,
-                                fileId: '',
-                                checkedAll: ko.observable(true)
-                            };
-                            importModel.fileName.subscribe(function (fileName) {
-                                if (fileName) {
-                                    fileName = fileName.toUpperCase().replace('C:\\FAKEPATH\\', '');
-                                }
-                                importModel.fixedFileName(fileName);
-                            });
-                            importModel.checkedAll.subscribe(function (checked) {
-                                for (i = 0; i < importModel.results().length; i++) {
-                                    item = importModel.results()[i];
+                        importModel = {
+                            createRedirects: ko.observable(true),
+                            reuseExistingCategories: ko.observable(false),
+                            recreateCategoryTree: ko.observable(true),
+                            fileName: ko.observable(''),
+                            fixedFileName: ko.observable(''),
+                            messageBox: messages.box({ container: form }),
+                            form: form,
+                            results: ko.observableArray(),
+                            uploaded: ko.observable(false),
+                            finished: ko.observable(false),
+                            dialog: dialog,
+                            fileId: '',
+                            checkedAll: ko.observable(true)
+                        };
+                        importModel.fileName.subscribe(function (fileName) {
+                            if (fileName) {
+                                fileName = fileName.toUpperCase().replace('C:\\FAKEPATH\\', '');
+                            }
+                            importModel.fixedFileName(fileName);
+                        });
+                        importModel.reuseExistingCategories.subscribe(function (reuseExistingCategories) {
+                            importModel.recreateCategoryTree(!reuseExistingCategories);
+                        });
+                        importModel.recreateCategoryTree.subscribe(function (recreateCategoryTree) {
+                            importModel.reuseExistingCategories(!recreateCategoryTree);
+                        });
+                        importModel.checkedAll.subscribe(function(checked) {
+                            for (i = 0; i < importModel.results().length; i ++) {
+                                item = importModel.results()[i];
 
                                     item.checked(checked);
                                 }
@@ -1148,11 +1156,13 @@ bettercms.define('bcms.blog', ['bcms.jquery', 'bcms', 'bcms.modal', 'bcms.siteSe
                             }
                         }
                     } else {
-                        params = {
-                            BlogPosts: [],
-                            CreateRedirects: importModel.createRedirects(),
-                            FileId: importModel.fileId
-                        };
+                    params = {
+                        BlogPosts: [],
+                        CreateRedirects: importModel.createRedirects(),
+                        ReuseExistingCategories: importModel.reuseExistingCategories(),
+                        RecreateCategoryTree: importModel.recreateCategoryTree(),
+                        FileId: importModel.fileId
+                    };
 
                         // Start import
                         for (i = 0; i < importModel.results().length; i++) {

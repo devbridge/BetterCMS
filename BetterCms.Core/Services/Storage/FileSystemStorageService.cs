@@ -19,6 +19,10 @@ namespace BetterCms.Core.Services.Storage
 
         public void UploadObject(UploadRequest request)
         {
+            if (request.InputStream == null)
+            {
+                return;
+            }
             CheckUri(request.Uri);
 
             string pathRoot = Path.GetDirectoryName(request.Uri.LocalPath);

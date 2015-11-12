@@ -48,7 +48,7 @@ namespace BetterCms.Module.Blog.Commands.ImportBlogPosts
             {
                 downloadResponse.ResponseStream.Position = 0;
                 var blogs = importService.DeserializeXMLStream(downloadResponse.ResponseStream);
-                results = importService.ImportBlogs(blogs, request.BlogPosts, Context.Principal, request.CreateRedirects);
+                results = importService.ImportBlogs(blogs, request.BlogPosts, Context.Principal, request.CreateRedirects, request.RecreateCategoryTree, request.ReuseExistingCategories);
             }
             else
             {
