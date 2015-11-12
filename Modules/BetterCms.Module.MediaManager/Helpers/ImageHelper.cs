@@ -1,6 +1,10 @@
 ﻿using System.Drawing;
 using System.Drawing.Drawing2D;
 using System.Drawing.Imaging;
+using System.IO;
+
+using BetterCms.Core.Exceptions.Mvc;
+using BetterCms.Module.MediaManager.Models.Enum;
 
 namespace BetterCms.Module.MediaManager.Helpers
 {
@@ -50,6 +54,29 @@ namespace BetterCms.Module.MediaManager.Helpers
             }
 
             return null;
-        }    
+        }
+
+        public static ImageType GetImageType(string extension)
+        {
+            if (extension != null)
+            {
+                extension = extension.Trim('.');
+            }
+
+            switch (extension)
+            {
+                case "gif":
+                case "jpg":
+                case "jpeg":
+                case "png":
+                case "bmp":
+                    return ImageType.Raster;
+                case "svg":
+                    return ImageType.Vector;
+                default: 
+                    const string message = "Image type not supported.";
+                    throw new ValidationException(() => message, message);
+            }
+        }
     }
 }

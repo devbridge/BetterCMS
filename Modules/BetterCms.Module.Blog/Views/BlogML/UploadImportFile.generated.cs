@@ -232,11 +232,57 @@ WriteLiteral(">");
             
             #line default
             #line hidden
+WriteLiteral("</div>\r\n                    </div>\r\n                    <div");
+
+WriteLiteral(" class=\"bcms-edit-check-field\"");
+
+WriteLiteral(">\r\n                        <input");
+
+WriteLiteral(" type=\"checkbox\"");
+
+WriteLiteral(" data-bind=\"checked: recreateCategoryTree\"");
+
+WriteLiteral(" />\r\n                        <div");
+
+WriteLiteral(" class=\"bcms-edit-label\"");
+
+WriteLiteral(">");
+
+            
+            #line 45 "..\..\Views\BlogML\UploadImportFile.cshtml"
+                                                Write(Html.Raw(BlogGlobalization.ImportBlogPosts_RecreateCategoryTree_Title));
+
+            
+            #line default
+            #line hidden
+WriteLiteral("</div>\r\n                    </div>\r\n                    <div");
+
+WriteLiteral(" class=\"bcms-edit-check-field\"");
+
+WriteLiteral(">\r\n                        <input");
+
+WriteLiteral(" type=\"checkbox\"");
+
+WriteLiteral(" data-bind=\"checked: reuseExistingCategories\"");
+
+WriteLiteral(" />\r\n                        <div");
+
+WriteLiteral(" class=\"bcms-edit-label\"");
+
+WriteLiteral(">");
+
+            
+            #line 49 "..\..\Views\BlogML\UploadImportFile.cshtml"
+                                                Write(Html.Raw(BlogGlobalization.ImportBlogPosts_ReuseExistingCategories_Title));
+
+            
+            #line default
+            #line hidden
 WriteLiteral("</div>\r\n                    </div>\r\n                </div>\r\n                <!-- " +
 "/ko -->\r\n            </div>\r\n");
 
             
-            #line 43 "..\..\Views\BlogML\UploadImportFile.cshtml"
+            #line 56 "..\..\Views\BlogML\UploadImportFile.cshtml"
 
 
             
@@ -268,8 +314,8 @@ WriteLiteral(" class=\"bcms-tables-nohover\"");
 WriteLiteral(">");
 
             
-            #line 49 "..\..\Views\BlogML\UploadImportFile.cshtml"
-                                                   Write(BlogGlobalization.ImportBlogPosts_Results_Title_Title);
+            #line 62 "..\..\Views\BlogML\UploadImportFile.cshtml"
+                                               Write(BlogGlobalization.ImportBlogPosts_Results_Title_Title);
 
             
             #line default
@@ -281,8 +327,8 @@ WriteLiteral(" class=\"bcms-tables-nohover\"");
 WriteLiteral(">");
 
             
-            #line 50 "..\..\Views\BlogML\UploadImportFile.cshtml"
-                                                   Write(BlogGlobalization.ImportBlogPosts_Results_Url_Title);
+            #line 63 "..\..\Views\BlogML\UploadImportFile.cshtml"
+                                               Write(BlogGlobalization.ImportBlogPosts_Results_Url_Title);
 
             
             #line default
@@ -337,8 +383,8 @@ WriteLiteral("></a>\r\n                            <!-- /ko -->\r\n             
 WriteLiteral("                            ");
 
             
-            #line 69 "..\..\Views\BlogML\UploadImportFile.cshtml"
-                       Write(BlogGlobalization.ImportBlogPosts_Skipped_Title);
+            #line 82 "..\..\Views\BlogML\UploadImportFile.cshtml"
+                   Write(BlogGlobalization.ImportBlogPosts_Skipped_Title);
 
             
             #line default
@@ -375,8 +421,8 @@ WriteLiteral(" class=\"bcms-table-no-data\"");
 WriteLiteral(">");
 
             
-            #line 86 "..\..\Views\BlogML\UploadImportFile.cshtml"
-                                                        Write(BlogGlobalization.ImportBlogPosts_ImportFileHasNoBlogs_Message);
+            #line 99 "..\..\Views\BlogML\UploadImportFile.cshtml"
+                                                    Write(BlogGlobalization.ImportBlogPosts_ImportFileHasNoBlogs_Message);
 
             
             #line default
@@ -387,8 +433,8 @@ WriteLiteral("</span>\r\n                        </td>\r\n                    </
 WriteLiteral("        <!-- /ko -->\r\n");
 
             
-            #line 93 "..\..\Views\BlogML\UploadImportFile.cshtml"
-        }
+            #line 106 "..\..\Views\BlogML\UploadImportFile.cshtml"
+    }
 
             
             #line default
