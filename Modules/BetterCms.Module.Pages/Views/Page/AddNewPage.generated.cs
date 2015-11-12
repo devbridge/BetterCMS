@@ -145,7 +145,7 @@ WriteLiteral(" class=\"bcms-messages-ui\"");
 
 WriteLiteral(">\r\n        <ul");
 
-WriteLiteral(" class=\"bcms-info-messages\"");
+WriteLiteral(" class=\"bcms-info-messages bcms-js-info-message\"");
 
 WriteLiteral(">\r\n            <li>\r\n                <a");
 
