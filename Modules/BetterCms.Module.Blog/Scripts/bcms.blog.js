@@ -1030,6 +1030,8 @@ bettercms.define('bcms.blog', ['bcms.jquery', 'bcms', 'bcms.modal', 'bcms.siteSe
 
                         importModel = {
                             createRedirects: ko.observable(true),
+                            reuseExistingCategories: ko.observable(false),
+                            recreateCategoryTree: ko.observable(true),
                             fileName: ko.observable(''),
                             fixedFileName: ko.observable(''),
                             messageBox: messages.box({ container: form }),
@@ -1046,6 +1048,12 @@ bettercms.define('bcms.blog', ['bcms.jquery', 'bcms', 'bcms.modal', 'bcms.siteSe
                                 fileName = fileName.toUpperCase().replace('C:\\FAKEPATH\\', '');
                             }
                             importModel.fixedFileName(fileName);
+                        });
+                        importModel.reuseExistingCategories.subscribe(function (reuseExistingCategories) {
+                            importModel.recreateCategoryTree(!reuseExistingCategories);
+                        });
+                        importModel.recreateCategoryTree.subscribe(function (recreateCategoryTree) {
+                            importModel.reuseExistingCategories(!recreateCategoryTree);
                         });
                         importModel.checkedAll.subscribe(function(checked) {
                             for (i = 0; i < importModel.results().length; i ++) {
@@ -1114,6 +1122,8 @@ bettercms.define('bcms.blog', ['bcms.jquery', 'bcms', 'bcms.modal', 'bcms.siteSe
                     params = {
                         BlogPosts: [],
                         CreateRedirects: importModel.createRedirects(),
+                        ReuseExistingCategories: importModel.reuseExistingCategories(),
+                        RecreateCategoryTree: importModel.recreateCategoryTree(),
                         FileId: importModel.fileId
                     };
 

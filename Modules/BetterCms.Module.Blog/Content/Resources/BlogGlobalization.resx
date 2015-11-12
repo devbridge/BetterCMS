@@ -366,6 +366,12 @@
   <data name="ImportBlogPosts_CreateRedirects_Title" xml:space="preserve">
     <value>Create redirects</value>
   </data>
+  <data name="ImportBlogPosts_ReuseExistingCategories_Title" xml:space="preserve">
+    <value>Reuse existing categories (no categories will be created)</value>
+  </data>
+  <data name="ImportBlogPosts_RecreateCategoryTree_Title" xml:space="preserve">
+    <value>Recreate category tree (if not found will create categories if possible)</value>
+  </data>
   <data name="ImportBlogPosts_Results_Title_Title" xml:space="preserve">
     <value>Title</value>
   </data>
@@ -410,9 +416,6 @@
   </data>
   <data name="ImportBlogPosts_AuthorByRefNotFound_Message" xml:space="preserve">
     <value>Author with ID "{0}" wasn't found in the list of importing authors</value>
-  </data>
-  <data name="ImportBlogPosts_CategoryByRefNotFound_Message" xml:space="preserve">
-    <value>Category with ID "{0}" wasn't found in the list of importing categories</value>
   </data>
   <data name="SiteSettings_BlogSettingsTab_SettingName_Title" xml:space="preserve">
     <value>Setting</value>
