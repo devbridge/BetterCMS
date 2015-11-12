@@ -52,9 +52,10 @@ $validation-fields: ();
             line-height: 18px;
             list-style: none;
             margin: auto;
-            max-width: $page-width;
             padding: 4px 35px;
             position: relative;
+            text-align: left;
+            width: $page-width;
         }
     }
 

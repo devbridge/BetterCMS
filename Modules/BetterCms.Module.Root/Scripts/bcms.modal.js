@@ -14,7 +14,7 @@ bettercms.define('bcms.modal', ['bcms.jquery', 'bcms', 'bcms.tabs', 'bcms.ko.ext
             accept: '.bcms-modal-accept, .bcms-popinfo-frame .bcms-success-buttons-holder .bcms-btn-main',
             cancel: '.bcms-js-btn-cancel',
             close: '.bcms-js-btn-close',
-            focusElements: '[tabindex=-1], .bcms-modal-close, .bcms-error-frame .bcms-error-close, .bcms-success-buttons-holder .bcms-btn-links-main, .bcms-preview-image-border .bcms-btn-close',
+            focusElements: '[tabindex=-1], .bcms-modal-close, .bcms-success-buttons-holder .bcms-btn-links-main, .bcms-preview-image-border .bcms-btn-close',
             body: '.bcms-modal-body, .bcms-error-frame, .bcms-popinfo-frame',
             content: '.bcms-modal-content, .bcms-error-frame p, .bcms-popinfo-frame p',
             loader: '.bcms-loader',
