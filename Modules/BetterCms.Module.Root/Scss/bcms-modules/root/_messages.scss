@@ -4,8 +4,6 @@ $message-error: #dc4250;
 $message-info: #368fd3;
 
 $message-icon-size: 22px;
-$message-icon-spacing: 12px;
-$message-block-left-padding: ($settings-sidebar + $message-icon-size + $message-icon-spacing);
 
 $message-content-type: (
                 ('success', $message-success, $bcms-messages-success),
@@ -29,7 +27,7 @@ $validation-fields: ();
                 li {
                     &:first-child {
                         @include virtual(before) {
-                            @include position(absolute, 0 null null $settings-sidebar);
+                            @include position(absolute, 2px null null 4px);
                             @include size($message-icon-size);
                             background: url($message-icon) no-repeat center;
                         }
@@ -44,22 +42,24 @@ $validation-fields: ();
             margin: 0;
             min-height: 55px;
             padding: 15px 0;
+            text-align: center;
         }
 
         li {
             box-sizing: border-box;
             color: $white;
+            display: inline-block;
             line-height: 18px;
             list-style: none;
             margin: auto;
-            padding: 4px (30px + $message-icon-spacing) 4px $message-block-left-padding;
+            max-width: $page-width;
+            padding: 4px 35px;
             position: relative;
-            width: $page-width;
         }
     }
 
     &-close {
-        @include close-button($icon: $bcms-close-white, $position: 3px 30px null null);
+        @include close-button($icon: $bcms-close-white, $position: 4px 4px null null);
     }
 
     &-draft-destroy {

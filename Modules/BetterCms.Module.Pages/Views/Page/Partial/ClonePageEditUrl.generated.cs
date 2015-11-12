@@ -74,11 +74,13 @@ WriteLiteral("        ");
             
             #line default
             #line hidden
-WriteLiteral(" ");
+WriteLiteral(" \r\n");
+
+WriteLiteral("        ");
 
             
-            #line 8 "..\..\Views\Page\Partial\ClonePageEditUrl.cshtml"
-                                        Write(Html.Tooltip(PagesGlobalization.ClonePage_NewUrl_Tooltip_Description));
+            #line 9 "..\..\Views\Page\Partial\ClonePageEditUrl.cshtml"
+   Write(Html.Tooltip(PagesGlobalization.ClonePage_NewUrl_Tooltip_Description));
 
             
             #line default
@@ -90,7 +92,7 @@ WriteLiteral(" id=\"bcms-page-editpermalink\"");
 WriteLiteral(">");
 
             
-            #line 9 "..\..\Views\Page\Partial\ClonePageEditUrl.cshtml"
+            #line 10 "..\..\Views\Page\Partial\ClonePageEditUrl.cshtml"
                                    Write(RootGlobalization.Button_Edit);
 
             
@@ -105,7 +107,7 @@ WriteLiteral(" id=\"bcms-page-permalink-info\"");
 WriteLiteral(">");
 
             
-            #line 11 "..\..\Views\Page\Partial\ClonePageEditUrl.cshtml"
+            #line 12 "..\..\Views\Page\Partial\ClonePageEditUrl.cshtml"
                                                                 Write(string.IsNullOrWhiteSpace(Model.PageUrl) ? Html.Raw("&nbsp;") : new MvcHtmlString(Html.Encode(Model.PageUrl)));
 
             
@@ -122,7 +124,7 @@ WriteLiteral(">\r\n");
 WriteLiteral("        ");
 
             
-            #line 14 "..\..\Views\Page\Partial\ClonePageEditUrl.cshtml"
+            #line 15 "..\..\Views\Page\Partial\ClonePageEditUrl.cshtml"
    Write(Html.Hidden("PageNewUrlHidden", Model.PageUrl, new { @id = "bcms-page-permalink" }));
 
             
@@ -137,7 +139,7 @@ WriteLiteral(">\r\n");
 WriteLiteral("            ");
 
             
-            #line 16 "..\..\Views\Page\Partial\ClonePageEditUrl.cshtml"
+            #line 17 "..\..\Views\Page\Partial\ClonePageEditUrl.cshtml"
        Write(Html.TextBoxFor(model => model.PageUrl, new { @id = "bcms-page-permalink-edit", @class = "bcms-field-text bcms-js-url-path" }));
 
             
@@ -148,7 +150,7 @@ WriteLiteral("\r\n");
 WriteLiteral("            ");
 
             
-            #line 17 "..\..\Views\Page\Partial\ClonePageEditUrl.cshtml"
+            #line 18 "..\..\Views\Page\Partial\ClonePageEditUrl.cshtml"
        Write(Html.BcmsValidationMessageFor(f => f.PageUrl));
 
             
@@ -163,7 +165,7 @@ WriteLiteral(" id=\"bcms-save-permalink\"");
 WriteLiteral(">");
 
             
-            #line 19 "..\..\Views\Page\Partial\ClonePageEditUrl.cshtml"
+            #line 20 "..\..\Views\Page\Partial\ClonePageEditUrl.cshtml"
                                                         Write(RootGlobalization.Button_Ok);
 
             
@@ -176,7 +178,7 @@ WriteLiteral(" class=\"bcms-btn-links-small\"");
 WriteLiteral(">");
 
             
-            #line 20 "..\..\Views\Page\Partial\ClonePageEditUrl.cshtml"
+            #line 21 "..\..\Views\Page\Partial\ClonePageEditUrl.cshtml"
                                      Write(RootGlobalization.Button_Cancel);
 
             

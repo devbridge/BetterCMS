@@ -27,22 +27,22 @@ $alert-frames: (
 }
 
 //module information messages
-.bcms-info-message-box {
-    @include positioning($center-x: true, $position: fixed);
-    background-color: #eff9fd;
-    border: 1px solid #cecece;
-    font-size: 12px;
-    line-height: 16px;
-    padding: 8px 35px 8px 20px;
-    top: 0;
-    z-index: 99;
-
-    .bcms-tooltip-mark {
-        left: -20px;
-        margin-top: -6px;
-        top: 50%;
-    }
-}
+//.bcms-info-message-box {
+//    @include positioning($center-x: true, $position: fixed);
+//    background-color: #eff9fd;
+//    border: 1px solid #cecece;
+//    font-size: 12px;
+//    line-height: 16px;
+//    padding: 8px 35px 8px 20px;
+//    top: 0;
+//    z-index: 99;
+//
+//    .bcms-tooltip-mark {
+//        left: -20px;
+//        margin-top: -6px;
+//        top: 50%;
+//    }
+//}
 
 //fixme remove when fixed functionality
 a.bcms-error-close {

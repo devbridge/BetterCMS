@@ -5,7 +5,8 @@
 
 <div class="bcms-input-list-holder">
     <div class="bcms-content-titles">
-        @PagesGlobalization.AddNewPage_Permalink  @Html.Tooltip(PagesGlobalization.AddNewPage_Permalink_Tooltip_Description)
+        @PagesGlobalization.AddNewPage_Permalink  
+        @Html.Tooltip(PagesGlobalization.AddNewPage_Permalink_Tooltip_Description)
         <a id="bcms-page-editpermalink">@RootGlobalization.Button_Edit</a>
     </div>
     <div class="bcms-editseo-urlpath" id="bcms-page-permalink-info">@(string.IsNullOrWhiteSpace(Model.PageUrl) ? Html.Raw("&nbsp;") : new MvcHtmlString(Html.Encode(Model.PageUrl)))</div>

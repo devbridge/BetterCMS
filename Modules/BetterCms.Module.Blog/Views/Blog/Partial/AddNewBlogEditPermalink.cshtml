@@ -8,12 +8,13 @@
 <div class="bcms-input-list-holder">
     <div class="bcms-content-titles">
         @BlogGlobalization.EditBlogPost_Permalink
+        @Html.Tooltip(BlogGlobalization.EditBlogPost_Permalink_Tooltip_Description)
         @if ((ViewContext.Controller as CmsControllerBase).SecurityService.IsAuthorized(RootModuleConstants.UserRoles.EditContent))
         {
             <a id="bcms-page-editpermalink">@RootGlobalization.Button_Edit</a>
         }
     </div>    
-    @Html.Tooltip(BlogGlobalization.EditBlogPost_Permalink_Tooltip_Description)
+
     <div class="bcms-editseo-urlpath" id="bcms-page-permalink-info">@(string.IsNullOrWhiteSpace(Model.BlogUrl) ? Html.Raw("/") : new MvcHtmlString(Html.Encode(Model.BlogUrl)))</div>
 
     <div class="bcms-edit-urlpath-box" style="display: none;">

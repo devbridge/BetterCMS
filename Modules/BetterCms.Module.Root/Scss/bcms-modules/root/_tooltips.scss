@@ -23,7 +23,10 @@
 
         p {
             color: $text-dark;
-            font-size: 11px;
+            font: {
+                size: 11px;
+                weight: 400;
+            }
             line-height: 19px;
             margin: 0;
             padding: 0;
@@ -32,7 +35,7 @@
 }
 
 div.bcms-tip-close {
-    background: url('images/sprite-base-1.png') no-repeat -9px -755px;
+    background-color: $red;
     cursor: pointer;
     height: 14px;
     overflow: hidden;
@@ -47,39 +50,4 @@ div.bcms-tip-close {
 //.bcms-tooltip-tl:before,
 //.bcms-tooltip-bl:before,
 //.bcms-tooltip-tr:before,
-//.bcms-tooltip-br:before {
-//    background: url('images/sprite-base-2.png') no-repeat;
-//    content: " ";
-//    height: 7px;
-//    pointer-events: none;
-//    position: absolute;
-//    width: 12px;
-//}
-//
-////module top left
-//.bcms-tooltip-tl:before {
-//    background-position: -24px -129px;
-//    bottom: 100%;
-//    left: 19px;
-//}
-//
-////module bottom left
-//.bcms-tooltip-bl:before {
-//    background-position: -24px -137px;
-//    left: 19px;
-//    top: 100%;
-//}
-//
-////module top right
-//.bcms-tooltip-tr:before {
-//    background-position: -24px -129px;
-//    bottom: 100%;
-//    left: 320px;
-//}
-//
-////module bottom right
-//.bcms-tooltip-br:before {
-//    background-position: -24px -137px;
-//    left: 320px;
-//    top: 100%;
-//}
+//.bcms-tooltip-br:before
