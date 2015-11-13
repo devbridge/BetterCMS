@@ -13,10 +13,12 @@ $gray-smoke: #dfdfdf;
 $gray-light: #a6a6a6;
 $light: #d0d0d0;
 $gray-lighter: #eae8e9;
+$sky-blue: #deeaf1;
 
 //module text colors
 $text-gray: $gray;
 $text-light: $gray-light;
+$text-smoke: $gray-smoke;
 $text-dark: $dark-main;
 $text-blue: $blue-main;
 $text-red: $red;
@@ -29,6 +31,9 @@ $bg-dark: $dark-main;
 $bg-gray-lighter: $gray-lighter;
 $bg-modal-options: #f3f3f3;
 $bg-node-step: #d2cfcf;
+
+//module shadows
+$sh-dark:  #c8c8c8;
 
 //module border colors
 $border-red: $red;

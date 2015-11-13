@@ -65,7 +65,7 @@
   padding-left: 28px;
 }
 
-.bcms-placement-node {
+.bcms-node-box-container {
   -webkit-transition: border-style 200ms;
   -moz-transition: border-style 200ms;
   transition: border-style 200ms;
@@ -73,42 +73,48 @@
   border: 1px solid #dfdfdf;
   box-sizing: border-box;
   min-height: 44px;
-  padding: 10px 18px;
+  padding: 0 60px 0 20px;
   position: relative;
 }
 
-.bcms-placement-node:hover {
+.bcms-node-box-container:hover {
   border-style: dashed;
   cursor: move;
 }
 
-.bcms-placement-node-edit .bcms-node-delete-box {
-  opacity: 0;
+.bcms-node-box-info {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  max-width: 80%;
 }
 
-.bcms-placement-title {
+.bcms-node-box-title {
   display: inline-block;
   vertical-align: middle;
   color: #0d7ce7;
-  line-height: 20px;
+  line-height: 42px;
 }
 
-.bcms-node-delete-box {
-  -webkit-transition: opacity 200ms;
-  -moz-transition: opacity 200ms;
-  transition: opacity 200ms;
-  position: absolute;
-  top: 0;
-  right: 0;
-  bottom: 0;
-  border-left: 1px solid #dfdfdf;
-  opacity: 1;
-  width: 50px;
+.bcms-node-box-drag {
+  background-color: #deeaf1;
+  box-shadow: 5px 3px 0 2px rgba(200, 200, 200, 0.6);
 }
 
-.bcms-node-delete-box .bcms-action-delete {
-  height: 100%;
-  width: 100%;
+.bcms-node-box-edit {
+  background-color: #deeaf1;
+}
+
+.bcms-node-box-edit .bcms-node-box-info {
+  display: none;
+}
+
+.bcms-node-box-edit .bcms-node-editable-box {
+  display: block;
+}
+
+.bcms-node-box-edit .bcms-node-delete-box {
+  opacity: 0;
 }
 
 .bcms-node-expander {
@@ -129,15 +135,66 @@
   background-image: url("data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIyMCIgaGVpZ2h0PSIyMCIgdmlld0JveD0iLTI5NC42IDM4NyAyMCAyMCIgZW5hYmxlLWJhY2tncm91bmQ9Im5ldyAtMjk0LjYgMzg3IDIwIDIwIj48cGF0aCBkPSJtLTI5NC4xIDM4Ny41aDE5djE5aC0xOXYtMTl6IiBmaWxsPSJub25lIiBzdHJva2U9IiMwZDdiZTMiIHN0cm9rZS1saW5lY2FwPSJzcXVhcmUiLz48cGF0aCBkPSJtLTI4OS40IDM5OHYtMmg5LjV2MS45aC05LjV6IiBmaWxsPSIjMGQ3YmUzIi8+PC9zdmc+");
 }
 
+.bcms-node-edit-holder {
+  margin: 5px 0;
+}
+
+.bcms-node-edit-holder .bcms-field-wrapper {
+  display: inline-block;
+  vertical-align: middle;
+  width: 80%;
+}
+
+.bcms-node-delete-box {
+  -webkit-transition: opacity 200ms;
+  -moz-transition: opacity 200ms;
+  transition: opacity 200ms;
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  border-left: 1px solid #dfdfdf;
+  opacity: 1;
+  width: 50px;
+}
+
+.bcms-node-delete-box .bcms-action-delete {
+  height: 100%;
+  width: 100%;
+}
+
+.bcms-node-drop-zone {
+  padding: 4px 0;
+}
+
+.bcms-node-drop-zone-active {
+  padding: 8px 0;
+}
+
+.bcms-node-drop-zone-text {
+  border: 2px dashed #dfdfdf;
+  box-sizing: border-box;
+  color: #dfdfdf;
+  display: none;
+  font-size: 14px;
+  height: 44px;
+  line-height: 42px;
+  padding: 0 15px;
+}
+
+.bcms-node-drop-zone-active .bcms-node-drop-zone-text {
+  display: block;
+}
+
 .bcms-zone-holder {
   padding-left: 15px;
 }
 
-.bcms-zone-holder > .bcms-nodes-container {
+.bcms-zone-holder > .bcms-node-container {
   position: relative;
 }
 
-.bcms-zone-holder > .bcms-nodes-container:before {
+.bcms-zone-holder > .bcms-node-container:before {
   content: "";
   position: absolute;
   top: 0;
@@ -147,7 +204,7 @@
   background: url("data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIyIiBoZWlnaHQ9IjE3IiB2aWV3Qm94PSItMjk3IDMzOCAyIDE3IiBlbmFibGUtYmFja2dyb3VuZD0ibmV3IC0yOTcgMzM4IDIgMTciPjxwYXRoIGQ9Im0tMjk3IDMzOGgydjEwaC0ydi0xMCIgZmlsbD0iI2QyY2ZjZiIvPjwvc3ZnPg==") repeat-y left top;
 }
 
-.bcms-zone-holder > .bcms-nodes-container:after {
+.bcms-zone-holder > .bcms-node-container:after {
   content: "";
   position: absolute;
   top: 21px;
@@ -157,22 +214,16 @@
   background-color: #d2cfcf;
 }
 
-.bcms-zone-holder > .bcms-nodes-container:first-of-type:before {
+.bcms-zone-holder > .bcms-node-container:first-of-type:before {
   top: 8px;
 }
 
-.bcms-zone-holder > .bcms-nodes-container:first-of-type:after {
+.bcms-zone-holder > .bcms-node-container:first-of-type:after {
   top: 29px;
 }
 
-.bcms-zone-holder > .bcms-nodes-container:last-of-type:before {
+.bcms-zone-holder > .bcms-node-container:last-of-type:before {
   height: 23px;
-}
-
-.bcms-edit-node-holder .bcms-field-wrapper {
-  display: inline-block;
-  vertical-align: middle;
-  width: 80%;
 }
 
 .bcms-sitemap-links-holder {
@@ -239,18 +290,6 @@
   padding-bottom: 20px;
 }
 
-.bcms-edit-node {
-  display: none;
-}
-
-.bcms-placement-node-edit .bcms-node-info {
-  display: none;
-}
-
-.bcms-placement-node-edit .bcms-edit-node {
-  display: block;
-}
-
 div.bcms-menu-left-col {
   width: 50%;
 }
@@ -266,80 +305,6 @@ div.bcms-add-node-col .bcms-placement-node {
 
 div.bcms-add-node-col .bcms-placement-dropzone {
   margin-bottom: 5px;
-}
-
-.bcms-nodes-dropzone + .bcms-zone-holder {
-  margin-top: 0;
-}
-
-.bcms-nodes-dropzone {
-  padding: 4px 0;
-}
-
-.bcms-nodes-dropzone-active {
-  padding: 8px 0;
-}
-
-.bcms-nodes-dropzone-active .bcms-node-infotext {
-  display: block;
-}
-
-.bcms-node-infotext {
-  display: none;
-  height: 30px;
-  line-height: 30px;
-  padding: 8px 15px;
-  color: #bdbdbd;
-  border: 1px dashed #bdbdbd;
-  border-radius: 2px;
-  font-size: 16px;
-  font-weight: bold;
-}
-
-.bcms-placement-node:hover .bcms-node-controls {
-  display: block;
-}
-
-.bcms-placement-node .bcms-placement-path {
-  max-width: 350px;
-  line-height: 16px;
-  font-size: 11px;
-  color: #0383df;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  cursor: pointer;
-  text-decoration: none;
-}
-
-.bcms-placement-node-drag {
-  border: 1px dashed #bdbdbd;
-  background: #effcfe;
-  opacity: 0.5;
-  filter: alpha(opacity=50);
-}
-
-div.bcms-placement-one-active {
-  background: #effcfe;
-  cursor: move;
-}
-
-.bcms-placement-node-drag a.bcms-icn-edit {
-  display: none;
-}
-
-.bcms-placement-node-drag a.bcms-icn-delete {
-  display: none;
-}
-
-.bcms-placement-dropzone {
-  height: 46px;
-  margin-top: 15px;
-  margin-bottom: 15px;
-  line-height: 46px;
-  border: 2px dashed #bdbdbd;
-  border-radius: 2px;
-  background: #fff;
 }
 
 .bcms-history-preview-holder, .bcms-history-preview-data {

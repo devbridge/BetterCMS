@@ -1545,7 +1545,6 @@
     <Content Include="Scss\bcms-modules\media\_types.scss" />
     <Content Include="Scss\bcms-modules\media\_uploader.scss" />
     <Content Include="Scss\bcms-modules\pages\_history.scss" />
-    <Content Include="Scss\bcms-modules\pages\_nodedropzone.scss" />
     <Content Include="Scss\root.scss" />
     <Content Include="Scss\bcms-modules\root\_buttons.scss" />
     <Content Include="Scss\bcms-modules\root\_controlpanel.scss" />

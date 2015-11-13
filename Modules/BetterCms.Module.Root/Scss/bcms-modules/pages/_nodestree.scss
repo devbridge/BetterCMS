@@ -61,14 +61,14 @@ $zone-padding: 15px;
     }
 }
 
-.bcms-placement {
-    &-node {
+.bcms-node-box {
+    &-container {
         @include transition(border-style 200ms);
         background-color: $white;
         border: $border-thin-smoke;
         box-sizing: border-box;
         min-height: 44px;
-        padding: 10px 18px;
+        padding: 0 60px 0 20px;
         position: relative;
 
         &:hover {
@@ -77,20 +77,65 @@ $zone-padding: 15px;
         }
     }
 
-    &-node-edit {
-        .bcms-node-delete-box {
-            opacity: 0;
-        }
+    &-info {
+        @include ellipsis();
+        max-width: 80%;
     }
 
     &-title {
         @include vertical-align();
         color: $text-blue;
-        line-height: 20px;
+        line-height: 42px;
+    }
+
+    &-drag {
+        background-color: $sky-blue;
+        box-shadow: 5px 3px 0 2px rgba($sh-dark, .6);
+    }
+
+    &-edit {
+        background-color: $sky-blue;
+
+        .bcms-node-box-info {
+            display: none;
+        }
+
+        .bcms-node-editable-box {
+            display: block;
+        }
+
+        .bcms-node-delete-box {
+            opacity: 0;
+        }
+    }
+
+    &-active {
     }
 }
 
 .bcms-node {
+    &-expander {
+        @include positioning($center-y: true);
+        @include size(20px);
+        background: $bg-modal-options url($bcms-tree-plus) no-repeat right center;
+        cursor: pointer;
+        left: -10px;
+        z-index: 1;
+    }
+
+    &-expanded {
+        background-image: url($bcms-tree-minus);
+    }
+
+    &-edit-holder {
+        margin: 5px 0;
+
+        .bcms-field-wrapper {
+            @include vertical-align();
+            width: 80%;
+        }
+    }
+
     &-delete-box {
         @include transition(opacity 200ms);
         @include position(absolute, 0 0 0 null);
@@ -104,24 +149,36 @@ $zone-padding: 15px;
         }
     }
 
-    &-expander {
-        @include positioning($center-y: true);
-        @include size(20px);
-        background: $bg-modal-options url($bcms-tree-plus) no-repeat right center;
-        cursor: pointer;
-        left: -10px;
-        z-index: 1;
+    &-drop-zone {
+        padding: 4px 0;
     }
 
-    &-expanded {
-        background-image: url($bcms-tree-minus);
+    &-drop-zone-active {
+        padding: 8px 0;
+    }
+
+    &-drop-zone-text {
+        border: $border-thick-dashed-smoke;
+        box-sizing: border-box;
+        color: $text-smoke;
+        display: none;
+        font-size: 14px;
+        height: 44px;
+        line-height: 42px;
+        padding: 0 15px;
+    }
+
+    &-drop-zone-active {
+        .bcms-node-drop-zone-text {
+            display: block;
+        }
     }
 }
 
 .bcms-zone-holder {
     padding-left: 15px;
 
-    > .bcms-nodes-container {
+    > .bcms-node-container {
         position: relative;
 
         @include virtual(before) {
@@ -150,15 +207,6 @@ $zone-padding: 15px;
             &:before {
                 height: 23px;
             }
-        }
-    }
-}
-
-.bcms-edit {
-    &-node-holder {
-        .bcms-field-wrapper {
-            @include vertical-align();
-            width: 80%;
         }
     }
 }
@@ -236,18 +284,18 @@ $zone-padding: 15px;
     padding-bottom: 20px;
 }
 
-//module editable node
-.bcms-edit-node {
-    display: none;
-}
-
-.bcms-placement-node-edit .bcms-node-info {
-    display: none;
-}
-
-.bcms-placement-node-edit .bcms-edit-node {
-    display: block;
-}
+////module editable node
+//.bcms-edit-node {
+//    display: none;
+//}
+//
+//.bcms-placement-node-edit .bcms-node-info {
+//    display: none;
+//}
+//
+//.bcms-placement-node-edit .bcms-edit-node {
+//    display: block;
+//}
 
 //module menu
 div.bcms-menu-left-col {
