@@ -28,15 +28,16 @@
                 </div>
             </div>
 
-            <div class="bcms-tree-info-block" data-bind="with: sitemap">
+            <div class="bcms-tree-info-block">
                 <!-- ko if: !linkIsDropped() -->
                 <div class="bcms-content-titles">@NavigationGlobalization.Sitemap_AddNewPageDialog_PageNodeHeader</div>
                 <!-- /ko -->
                 <!-- ko if: linkIsDropped() -->
                 <div class="bcms-content-titles">@NavigationGlobalization.Sitemap_AddNewPageDialog_PageNodeFooter</div>
                 <!-- /ko -->
-
+                <!-- ko with: sitemap -->
                 <div class="bcms-tree-expander bcms-tree-expander-close" data-bind="click: callExpandOrCollapse, css: { 'bcms-tree-expander-close' : allNodesExpanded()}, text: allNodesExpanded() ? '@PagesGlobalization.CategoryTree_Button_CollapseAll' : '@PagesGlobalization.CategoryTree_Button_ExpandAll'"></div>
+                <!-- /ko -->
             </div>
 
             <div class="bcms-tree-zones-holder">
