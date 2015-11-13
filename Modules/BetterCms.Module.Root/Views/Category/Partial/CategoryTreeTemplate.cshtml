@@ -20,8 +20,7 @@
         <div data-bind="draggableCategoryNode: $parentContext.$index, style: { zIndex: !isBeingDragged() ? '0' : '9999' }">
             <div class="bcms-placement-node" data-bind="
                         attr: { id: containerId },
-                        css: { 'bcms-placement-node-drag': isBeingDragged(), 'bcms-placement-node-edit': isActive(), 'bcms-placement-one-active': !isBeingDragged() && superDraggable() },
-                        style: { height: getNodeHeight() }">
+                        css: { 'bcms-placement-node-drag': isBeingDragged(), 'bcms-placement-node-edit': isActive(), 'bcms-placement-one-active': !isBeingDragged() && superDraggable() }">
 
                 <!-- ko if: hasChildNodes() -->
                 <div class="bcms-node-expander" data-bind="click: $root.toggleNodeExpand, css: { 'bcms-node-expanded': isExpanded() }">&nbsp;</div>
