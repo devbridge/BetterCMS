@@ -166,7 +166,7 @@ a:hover {
 }
 
 .bcms-window-options {
-  background-color: #ffffff;
+  background-color: #f3f3f3;
   height: calc(100vh - 120px);
   overflow-x: hidden;
   overflow-y: scroll;

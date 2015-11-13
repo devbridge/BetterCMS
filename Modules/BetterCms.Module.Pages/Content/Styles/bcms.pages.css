@@ -65,6 +65,83 @@
   padding-left: 28px;
 }
 
+.bcms-placement-node {
+  -webkit-transition: border-style 200ms;
+  -moz-transition: border-style 200ms;
+  transition: border-style 200ms;
+  background-color: #ffffff;
+  border: 1px solid #dfdfdf;
+  box-sizing: border-box;
+  min-height: 42px;
+  padding: 10px 18px;
+  position: relative;
+}
+
+.bcms-placement-node:hover {
+  border-style: dashed;
+  cursor: move;
+}
+
+.bcms-placement-node-edit .bcms-node-delete-box {
+  opacity: 0;
+}
+
+.bcms-placement-title {
+  display: inline-block;
+  vertical-align: middle;
+  color: #0d7ce7;
+  line-height: 20px;
+}
+
+.bcms-node-delete-box {
+  -webkit-transition: opacity 200ms;
+  -moz-transition: opacity 200ms;
+  transition: opacity 200ms;
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  border-left: 1px solid #dfdfdf;
+  opacity: 1;
+  width: 50px;
+}
+
+.bcms-node-delete-box .bcms-action-delete {
+  height: 100%;
+  width: 100%;
+}
+
+.bcms-node-expander {
+  position: absolute;
+  -webkit-transform: translateY(-50%);
+  -moz-transform: translateY(-50%);
+  transform: translateY(-50%);
+  top: 50%;
+  height: 20px;
+  width: 20px;
+  background: #f3f3f3 url("data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIyMCIgaGVpZ2h0PSIyMCIgdmlld0JveD0iLTI5NC42IDM4NyAyMCAyMCIgZW5hYmxlLWJhY2tncm91bmQ9Im5ldyAtMjk0LjYgMzg3IDIwIDIwIj48cGF0aCBkPSJtLTI5NC4xIDM4Ny41aDE5djE5aC0xOXYtMTl6IiBmaWxsPSJub25lIiBzdHJva2U9IiMwZDdiZTMiIHN0cm9rZS1saW5lY2FwPSJzcXVhcmUiLz48ZyBmaWxsPSIjMGQ3YmUzIj48cGF0aCBkPSJtLTI4NS42IDM5Mi4yaDEuOXY5LjVoLTEuOXYtOS41Ii8+PHBhdGggZD0ibS0yODkuNCAzOTh2LTJoOS41djEuOWgtOS41eiIvPjwvZz48L3N2Zz4=") no-repeat right center;
+  cursor: pointer;
+  left: -10px;
+}
+
+.bcms-node-expanded {
+  background-image: url("data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIyMCIgaGVpZ2h0PSIyMCIgdmlld0JveD0iLTI5NC42IDM4NyAyMCAyMCIgZW5hYmxlLWJhY2tncm91bmQ9Im5ldyAtMjk0LjYgMzg3IDIwIDIwIj48cGF0aCBkPSJtLTI5NC4xIDM4Ny41aDE5djE5aC0xOXYtMTl6IiBmaWxsPSJub25lIiBzdHJva2U9IiMwZDdiZTMiIHN0cm9rZS1saW5lY2FwPSJzcXVhcmUiLz48cGF0aCBkPSJtLTI4OS40IDM5OHYtMmg5LjV2MS45aC05LjV6IiBmaWxsPSIjMGQ3YmUzIi8+PC9zdmc+");
+}
+
+.bcms-zone-holder .bcms-nodes-container {
+  position: relative;
+}
+
+.bcms-zone-holder .bcms-nodes-container:before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: -17px;
+  height: 23px;
+  width: 17px;
+  background: url("data:image/svg+xml;base64,PHN2ZyBoZWlnaHQ9IjIzIiB3aWR0aD0iMTciIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgdmlld0JveD0iMCAwIDE3IDIzIj48ZyBmaWxsPSIjZDJjZmNmIiBmaWxsLXJ1bGU9ImV2ZW5vZGQiPjxwYXRoIGQ9Im0wIDBoMnYxMGgtMnYtMTAiLz48cGF0aCBkPSJtMCAxN2gydjZoLTJ2LTYiLz48cGF0aCBkPSJtMiAyMWgxNXYyaC0xNXYtMiIvPjwvZz48L3N2Zz4=") no-repeat center;
+}
+
 .bcms-sitemap-links-holder {
   padding: 10px 20px;
 }
@@ -82,11 +159,6 @@
   display: block;
   min-height: 52px;
   padding: 0 0 4px;
-}
-
-.bcms-addnode-placement-holder .bcms-placement-node:hover {
-  border: 1px dashed #bdbdbd;
-  cursor: move;
 }
 
 .bcms-addnode-placement-holder-readonly {
@@ -134,30 +206,7 @@
   padding-bottom: 20px;
 }
 
-.bcms-tree-holder > div {
-  position: relative;
-}
-
 .bcms-edit-node {
-  display: none;
-}
-
-.bcms-edit-node-holder {
-  padding-bottom: 5px;
-  position: relative;
-}
-
-.bcms-edit-node-holder .bcms-tooltip-mark {
-  left: -20px;
-  top: 1px;
-}
-
-.bcms-placement-node-edit {
-  height: 67px;
-  padding-left: 30px;
-}
-
-.bcms-placement-node-edit:hover div.bcms-node-controls {
   display: none;
 }
 
@@ -167,15 +216,6 @@
 
 .bcms-placement-node-edit .bcms-edit-node {
   display: block;
-}
-
-.bcms-node-controls {
-  box-sizing: border-box;
-  display: none;
-  padding: 12px 5px 10px;
-  position: absolute;
-  right: 0;
-  top: 0;
 }
 
 div.bcms-menu-left-col {
@@ -200,8 +240,6 @@ div.bcms-add-node-col .bcms-placement-dropzone {
 }
 
 .bcms-zone-holder {
-  position: relative;
-  border-left: 3px solid #c6c6c6;
   padding: 0 0 0 20px;
 }
 
@@ -233,29 +271,8 @@ div.bcms-add-node-col .bcms-placement-dropzone {
   font-weight: bold;
 }
 
-.bcms-placement-node {
-  position: relative;
-  height: 30px;
-  padding: 8px 15px;
-  border: 1px solid #c6c6c6;
-  border-radius: 2px;
-  background-color: #f5f5f5;
-}
-
 .bcms-placement-node:hover .bcms-node-controls {
   display: block;
-}
-
-.bcms-placement-node .bcms-placement-title {
-  max-width: 450px;
-  line-height: 16px;
-  font-size: 14px;
-  font-weight: 700;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  padding: 0;
-  cursor: pointer;
 }
 
 .bcms-placement-node .bcms-placement-path {
@@ -288,21 +305,6 @@ div.bcms-placement-one-active {
 
 .bcms-placement-node-drag a.bcms-icn-delete {
   display: none;
-}
-
-.bcms-expand-collapse-node {
-  position: absolute;
-  left: -8px;
-  top: -8px;
-  width: 16px;
-  height: 16px;
-  background: url("images/sprite-base-2.png") no-repeat -2px -179px;
-  cursor: pointer;
-  text-indent: -9999px;
-}
-
-a.bcms-expanded-nodes {
-  background-position: -23px -179px;
 }
 
 .bcms-placement-dropzone {

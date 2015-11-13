@@ -59,6 +59,77 @@
     }
 }
 
+.bcms-placement {
+    &-node {
+        @include transition(border-style 200ms);
+        background-color: $white;
+        border: $border-thin-smoke;
+        box-sizing: border-box;
+        min-height: 42px;
+        padding: 10px 18px;
+        position: relative;
+
+        &:hover {
+            border-style: dashed;
+            cursor: move;
+        }
+    }
+
+    &-node-edit {
+        .bcms-node-delete-box {
+            opacity: 0;
+        }
+    }
+
+    &-title {
+        @include vertical-align();
+        color: $text-blue;
+        line-height: 20px;
+    }
+}
+
+.bcms-node {
+    &-delete-box {
+        @include transition(opacity 200ms);
+        @include position(absolute, 0 0 0 null);
+        border-left: $border-thin-smoke;
+        opacity: 1;
+        width: 50px;
+
+        .bcms-action-delete {
+            height: 100%;
+            width: 100%;
+        }
+    }
+
+    &-expander {
+        @include positioning($center-y: true);
+        @include size(20px);
+        background: $bg-modal-options url($bcms-tree-plus) no-repeat right center;
+        cursor: pointer;
+        left: -10px;
+    }
+
+    &-expanded {
+        background-image: url($bcms-tree-minus);
+    }
+}
+
+.bcms-zone-holder {
+    .bcms-nodes-container {
+        position: relative;
+
+        @include virtual(before) {
+            @include position(absolute, 0 null null -17px);
+            @include size(17px 23px);
+            background: url($bcms-node-step-last) no-repeat center;
+        }
+    }
+}
+
+.bcms-nodes-container {
+}
+
 //todo upgrade after design received
 //
 //
@@ -85,10 +156,10 @@
     padding: 0 0 4px;
 }
 
-.bcms-addnode-placement-holder .bcms-placement-node:hover {
-    border: 1px dashed #bdbdbd;
-    cursor: move;
-}
+//.bcms-addnode-placement-holder .bcms-placement-node:hover {
+//    border: 1px dashed #bdbdbd;
+//    cursor: move;
+//}
 
 .bcms-addnode-placement-holder-readonly {
     display: block;
@@ -137,33 +208,33 @@
 }
 
 //module nodes tree
-.bcms-tree-holder > div {
-    position: relative;
-}
+//.bcms-tree-holder > div {
+//    position: relative;
+//}
 
 //module editable node
 .bcms-edit-node {
     display: none;
 }
 
-.bcms-edit-node-holder {
-    padding-bottom: 5px;
-    position: relative;
-}
+//.bcms-edit-node-holder {
+//    padding-bottom: 5px;
+//    position: relative;
+//}
 
-.bcms-edit-node-holder .bcms-tooltip-mark {
-    left: -20px;
-    top: 1px;
-}
+//.bcms-edit-node-holder .bcms-tooltip-mark {
+//    left: -20px;
+//    top: 1px;
+//}
 
-.bcms-placement-node-edit {
-    height: 67px;
-    padding-left: 30px;
-}
+//.bcms-placement-node-edit {
+//    height: 67px;
+//    padding-left: 30px;
+//}
 
-.bcms-placement-node-edit:hover div.bcms-node-controls {
-    display: none;
-}
+//.bcms-placement-node-edit:hover div.bcms-node-controls {
+//    display: none;
+//}
 
 .bcms-placement-node-edit .bcms-node-info {
     display: none;
@@ -173,14 +244,14 @@
     display: block;
 }
 
-.bcms-node-controls {
-    box-sizing: border-box;
-    display: none;
-    padding: 12px 5px 10px;
-    position: absolute;
-    right: 0;
-    top: 0;
-}
+//.bcms-node-controls {
+//    box-sizing: border-box;
+//    display: none;
+//    padding: 12px 5px 10px;
+//    position: absolute;
+//    right: 0;
+//    top: 0;
+//}
 
 //module menu
 div.bcms-menu-left-col {
