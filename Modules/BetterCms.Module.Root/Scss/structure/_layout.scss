@@ -7,7 +7,7 @@ $options: $settings-frame;
 
 $dialog-window-options: (
                 ('settings', null, null, $settings, 0 30px 0 0),
-                ('tabbed-options', $white, null, $tabbed-options, 0 30px),
+                ('tabbed-options', $bg-modal-options, null, $tabbed-options, 0 30px),
                 ('options', $bg-modal-options, null, $options, 0 30px)
 );
 
@@ -70,10 +70,22 @@ a {
     overflow: hidden;
 
     &-frame-holder {
+        border: {
+            right: $border-thin-frame;
+            left: $border-thin-frame;
+        }
+        box-sizing: border-box;
         height: 100%;
         margin: auto;
         max-width: $page-width;
         position: relative;
+
+        .bcms-modal-header &,
+        .bcms-modal-footer &,
+        .bcms-tab-header & {
+            border: 0;
+            padding: 0 1px;
+        }
     }
 
     &-body {
@@ -187,7 +199,7 @@ a {
             size: 12px;
             weight: 400;
         }
-        line-height: 38px;
+        line-height: 42px;
         padding-left: 40px;
         text-decoration: none;
         text-transform: uppercase;

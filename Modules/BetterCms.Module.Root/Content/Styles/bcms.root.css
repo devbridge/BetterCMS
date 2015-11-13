@@ -157,7 +157,7 @@ a:hover {
 }
 
 .bcms-window-tabbed-options {
-  background-color: #ffffff;
+  background-color: #f3f3f3;
   height: calc(100vh - 170px);
   overflow-x: hidden;
   overflow-y: scroll;
@@ -186,10 +186,20 @@ a:hover {
 }
 
 .bcms-modal-frame-holder {
+  border-right: 1px solid #dfdfdf;
+  border-left: 1px solid #dfdfdf;
+  box-sizing: border-box;
   height: 100%;
   margin: auto;
   max-width: 1150px;
   position: relative;
+}
+
+.bcms-modal-header .bcms-modal-frame-holder,
+.bcms-modal-footer .bcms-modal-frame-holder,
+.bcms-tab-header .bcms-modal-frame-holder {
+  border: 0;
+  padding: 0 1px;
 }
 
 .bcms-modal-body {
@@ -316,7 +326,7 @@ a:hover {
   display: block;
   font-size: 12px;
   font-weight: 400;
-  line-height: 38px;
+  line-height: 42px;
   padding-left: 40px;
   text-decoration: none;
   text-transform: uppercase;
@@ -3393,7 +3403,7 @@ a.bcms-remove-image {
 
 .bcms-tooltip-box {
   background-color: #ffffff;
-  box-shadow: 0 2px 24px 0 rgba(0, 0, 0, 0.4);
+  box-shadow: 0 2px 24px 0 rgba(0, 0, 0, 0.2);
   padding: 6px 8px;
   position: relative;
   width: 300px;

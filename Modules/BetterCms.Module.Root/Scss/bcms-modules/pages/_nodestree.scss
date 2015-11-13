@@ -272,6 +272,25 @@ $zone-padding: 15px;
     }
 }
 
+.bcms-dropable-page-box {
+    @include user-select();
+    background-color: $white;
+    border: $border-thin-smoke;
+    box-sizing: border-box;
+    cursor: move;
+    margin-bottom: 8px;
+    padding: 15px;
+    position: relative;
+
+    &:hover {
+        border: $border-thin-dashed-smoke;
+    }
+
+    &:active {
+        opacity: .8;
+    }
+}
+
 //todo upgrade after design received
 //
 //
@@ -281,8 +300,12 @@ $zone-padding: 15px;
 //
 //module sitemap "add new node"
 .bcms-sidebar-search {
-    margin: 15px 0;
+    margin: 0 0 15px;
     position: relative;
+
+    .bcms-btn-search {
+        @include position(absolute, 0 0 null null);
+    }
 }
 
 .bcms-sidebar-search .bcms-editor-field-box {
@@ -290,24 +313,6 @@ $zone-padding: 15px;
 }
 
 //module left-sidebar
-.bcms-dropable-page-box {
-    background-color: #fff;
-    border: 1px solid #bdbdbd;
-    border-radius: 4px;
-    cursor: move;
-    margin-bottom: 8px;
-    margin-top: 8px;
-    padding: 15px;
-    position: relative;
-}
-
-.bcms-dropable-page-box:hover {
-    border: 1px dashed #a4a4a4;
-}
-
-.bcms-dropable-page-box:active {
-    opacity: 0.8;
-}
 
 .bcms-dropable-page-box .bcms-content-titles {
     padding-bottom: 5px;
