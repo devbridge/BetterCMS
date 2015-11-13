@@ -2,6 +2,7 @@
     @include gallery(2.4);
 
     .bcms-grid-image-holder {
+        background-color: $bg-modal-options;
         height: 150px;
     }
 }
@@ -37,15 +38,6 @@
 .bcms-blog-dates-holder {
     display: inline-block;
 }
-
-//.bcms-blog-dates-holder .bcms-input-field-holder {
-//    float: left;
-//    margin-left: 20px;
-//}
-//
-//.bcms-blog-right > .bcms-input-field-holder {
-//    margin: 20px 0 0 20px;
-//}
 
 .bcms-blog-right > .bcms-create-author-holder {
     margin: 0 0 0 20px;

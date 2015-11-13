@@ -18,15 +18,17 @@
     @Html.MessagesBox()
 
     <div class="bcms-window-tabbed-options">
-        <div class="bcms-tab-single" style="display: block; height: 100%;">
-            <div class="bcms-top-block-holder" data-bind="with: sitemap">
-                <div style="display: none;" data-bind="visible: showLanguages, with: language">
+        <div class="bcms-tab-single">
+            <!-- ko with: sitemap -->
+            <div style="display: none;" data-bind="visible: showLanguages, with: language">
+                <div class="bcms-top-block-holder">
                     <div class="bcms-filter-text">Edit sitemap in language:</div>
                     <div class="bcms-table-middle-box">
                         <select class="bcms-global-select" data-bind="options: languages, optionsText: 'value', optionsValue: 'key', value: languageId"></select>
                     </div>
                 </div>
             </div>
+            <!-- /ko -->
 
             <div class="bcms-tree-info-block">
                 <!-- ko if: !linkIsDropped() -->
@@ -45,16 +47,16 @@
                     <!-- ko if: !linkIsDropped() -->
                     <!-- ko with: pageLink -->
                     <div data-bind="draggable: $parentContext">
-                        <div class="bcms-dropable-page-box" style="position: relative; z-index: 0;" data-bind="css: { 'bcms-node-box-drag': isBeingDragged() }">
+                        <div class="bcms-drop-page-box" style="position: relative; z-index: 0;" data-bind="css: { 'bcms-node-box-drag': isBeingDragged() }">
                             <div class="bcms-drop-button">@NavigationGlobalization.Sitemap_AddNewPageDialog_DragButton</div>
                             <div class="bcms-content-titles">@NavigationGlobalization.Sitemap_AddNewPageDialog_PageName</div>
-                            <div class="bcms-dropable-text" data-bind="text: title()"></div>
+                            <div class="bcms-drop-text" data-bind="text: title()"></div>
                             <div class="bcms-content-titles">@NavigationGlobalization.Sitemap_AddNewPageDialog_PageUrl</div>
-                            <div class="bcms-dropable-text" data-bind="text: url()"></div>
+                            <div class="bcms-drop-text" data-bind="text: url()"></div>
                         </div>
                     </div>
                     <div class="bcms-node-drop-zone" data-bind="visible: isBeingDragged()"></div>
-                    <div>@NavigationGlobalization.Sitemap_AddNewPageDialog_UndoMessage</div>
+                    <div class="bcms-content-titles">@NavigationGlobalization.Sitemap_AddNewPageDialog_UndoMessage</div>
                     <!-- /ko -->
                     <!-- /ko -->
 

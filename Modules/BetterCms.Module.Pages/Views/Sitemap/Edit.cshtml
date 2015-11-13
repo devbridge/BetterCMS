@@ -56,7 +56,7 @@
                             @if (Model.AccessControlEnabled)
                             {
 
-                                @Html.Partial(RootModuleConstants.AccessControlTemplate)
+                            @Html.Partial(RootModuleConstants.AccessControlTemplate)
 
                             }
                         </div>
@@ -64,19 +64,21 @@
                 </div>
 
                 <div id="bcms-tab-2" class="bcms-tab-single">
-                    <div class="bcms-top-block-holder" data-bind="with: sitemap">
-                        <div style="display: none;" data-bind="visible: showLanguages, with: language">
+                    <!-- ko with: sitemap -->
+                    <div style="display: none;" data-bind="visible: showLanguages, with: language">
+                        <div class="bcms-top-block-holder">
                             <div class="bcms-filter-text">Edit sitemap in language:</div>
                             <div class="bcms-table-middle-box">
                                 <select class="bcms-global-select" data-bind="options: languages, optionsText: 'value', optionsValue: 'key', value: languageId"></select>
                             </div>
                         </div>
                     </div>
-
-                    <div class="bcms-tree-info-block" data-bind="with: sitemap">
+                
+                    <div class="bcms-tree-info-block">
                         <div class="bcms-content-titles">@NavigationGlobalization.Sitemap_EditDialog_PageLink_Header</div>
                         <div class="bcms-tree-expander bcms-tree-expander-close" data-bind="click: callExpandOrCollapse, css: { 'bcms-tree-expander-close' : allNodesExpanded()}, text: allNodesExpanded() ? '@PagesGlobalization.CategoryTree_Button_CollapseAll' : '@PagesGlobalization.CategoryTree_Button_ExpandAll'"></div>
                     </div>
+                    <!-- /ko -->
 
                     <div class="bcms-tree-zones-holder">
                         <div class="bcms-tree-drag-area-ui" data-bind="template: { name: 'bcms-navigation-pagelinks-template' }"></div>
@@ -97,10 +99,12 @@
 
 <script type="text/html" id="bcms-navigation-pagelinks-template">
     <div class="bcms-sidebar-search">
-        <input type="text" class="bcms-field-text" placeholder="@NavigationGlobalization.Sitemap_EditDialog_AddPageLink_SearchPlaceHolder"
-               data-bind="hasfocus: hasfocus, value: searchQuery, valueUpdate: 'afterkeydown', enterPress: searchForPageLinks" />
+        <div class="bcms-field-wrapper">
+            <input type="text" class="bcms-field-text" placeholder="@NavigationGlobalization.Sitemap_EditDialog_AddPageLink_SearchPlaceHolder"
+                   data-bind="hasfocus: hasfocus, value: searchQuery, valueUpdate: 'afterkeydown', enterPress: searchForPageLinks" />
+        </div>
+        <div class="bcms-btn-search" data-bind="click: searchForPageLinks">@NavigationGlobalization.Sitemap_EditDialog_AddPageLink_SearchButton</div>
     </div>
-    <div class="bcms-btn-search" data-bind="click: searchForPageLinks">@NavigationGlobalization.Sitemap_EditDialog_AddPageLink_SearchButton</div>
 
     <div class="bcms-drag-zone@(Model.IsReadOnly ? "-read-only" : string.Empty)" data-bind="template: { name: 'bcms-navigation-pagelink-template', foreach: pageLinks }"></div>
 </script>

@@ -56,7 +56,7 @@ $template-grid-box-states: (
 
     &-image-holder {
         @include transition(border-color 200ms);
-        background-color: $gray-smoke30;
+        background-color: $white;
         border: $border-thin-smoke;
         box-sizing: border-box;
         height: 140px;

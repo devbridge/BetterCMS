@@ -441,7 +441,7 @@ a:hover {
 .bcms-thumb-image {
   height: 125px;
   width: 125px;
-  background-color: #f5f5f5;
+  background-color: #ffffff;
   background-size: cover;
   border: 1px solid #dfdfdf;
   box-sizing: border-box;
@@ -3046,7 +3046,7 @@ a.bcms-sort-arrow-top:hover {
   -webkit-transition: border-color 200ms;
   -moz-transition: border-color 200ms;
   transition: border-color 200ms;
-  background-color: #f5f5f5;
+  background-color: #ffffff;
   border: 1px solid #dfdfdf;
   box-sizing: border-box;
   height: 140px;

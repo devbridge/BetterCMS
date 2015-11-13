@@ -1,5 +1,3 @@
-$zone-padding: 15px;
-
 %tree-links-ui {
     color: $text-blue;
     cursor: pointer;
@@ -11,6 +9,7 @@ $zone-padding: 15px;
     }
 }
 
+//module contents tree structure
 .bcms-tree {
     &-zones-holder {
         display: table;
@@ -129,7 +128,13 @@ $zone-padding: 15px;
         }
     }
 
-    &-active {
+    &-inactive {
+        cursor: default;
+        opacity: .8;
+
+        &:hover {
+            border-style: solid;
+        }
     }
 }
 
@@ -272,7 +277,21 @@ $zone-padding: 15px;
     }
 }
 
-.bcms-dropable-page-box {
+//module contents tree sidebar
+.bcms-sidebar-search {
+    margin: 0 0 15px;
+    position: relative;
+
+    .bcms-field-wrapper {
+        margin-right: 37px;
+    }
+
+    .bcms-btn-search {
+        @include position(absolute, 0 0 null null);
+    }
+}
+
+.bcms-drop-page-box {
     @include user-select();
     background-color: $white;
     border: $border-thin-smoke;
@@ -289,35 +308,12 @@ $zone-padding: 15px;
     &:active {
         opacity: .8;
     }
-}
 
-//todo upgrade after design received
-//
-//
-//
-//
-//
-//
-//module sitemap "add new node"
-.bcms-sidebar-search {
-    margin: 0 0 15px;
-    position: relative;
-
-    .bcms-btn-search {
-        @include position(absolute, 0 0 null null);
+    .bcms-content-titles {
+        margin-bottom: 5px;
     }
-}
 
-.bcms-sidebar-search .bcms-editor-field-box {
-    background-color: #fff;
-}
-
-//module left-sidebar
-
-.bcms-dropable-page-box .bcms-content-titles {
-    padding-bottom: 5px;
-}
-
-.bcms-dropable-page-box .bcms-dropable-text {
-    padding-bottom: 20px;
+    .bcms-drop-text {
+        margin-bottom: 20px;
+    }
 }

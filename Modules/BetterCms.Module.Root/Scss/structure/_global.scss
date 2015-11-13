@@ -127,7 +127,7 @@ $loading-spinner: (
 
     &-image {
         @include size(125px);
-        background-color: $gray-smoke30;
+        background-color: $white;
         background-size: cover;
         border: $border-thin-smoke;
         box-sizing: border-box;
