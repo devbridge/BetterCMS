@@ -18,9 +18,13 @@
 </div>
 
 <div class="bcms-modal-frame-holder">
-    <div class="bcms-info-message-box">
-        <a class="bcms-messages-close bcms-js-btn-close" id="bcms-addnewpage-closeinfomessage">@RootGlobalization.Button_Close</a>
-        @Html.Raw(PagesGlobalization.AddNewPage_Template_InfoMessage_Text)
+    <div class="bcms-messages-ui">
+        <ul class="bcms-info-messages bcms-js-info-message">
+            <li>
+                <a class="bcms-messages-close bcms-js-btn-close" id="bcms-addnewpage-closeinfomessage">@RootGlobalization.Button_Close</a>
+                @Html.Raw(PagesGlobalization.AddNewPage_Template_InfoMessage_Text)
+            </li>
+        </ul>
     </div>
 
     <div class="bcms-window-tabbed-options">
@@ -32,21 +36,21 @@
                     <div>
                         @if (Model.Languages != null && Model.Languages.Any())
                         {
-                        @Html.HiddenFor(model => model.LanguageId, new { data_bind = "value: language.languageId()" })
+                            @Html.HiddenFor(model => model.LanguageId, new { data_bind = "value: language.languageId()" })
                         }
                         @Html.HiddenSubmit()
                         @if (Model.ShowLanguages)
                         {
-                        <div class="bcms-input-list-holder" data-bind="with: language">
-                            @Html.Tooltip(PagesGlobalization.AddNewPage_Language_Tooltip_Description)
-                            <div class="bcms-content-titles">@PagesGlobalization.AddNewPage_Language</div>
-                            <select class="bcms-global-select" data-bind="options: languages, optionsText: 'value', optionsValue: 'key', value: languageId"></select>
-                        </div>
+                            <div class="bcms-input-list-holder" data-bind="with: language">
+                                <div class="bcms-content-titles">@PagesGlobalization.AddNewPage_Language</div>
+                                @Html.Tooltip(PagesGlobalization.AddNewPage_Language_Tooltip_Description)
+                                <select class="bcms-global-select" data-bind="options: languages, optionsText: 'value', optionsValue: 'key', value: languageId"></select>
+                            </div>
                         }
 
                         <div class="bcms-input-list-holder">
-                            @Html.Tooltip(PagesGlobalization.AddNewPage_PageTitle_Tooltip_Description)
                             <div class="bcms-content-titles">@PagesGlobalization.AddNewPage_PageTitle</div>
+                            @Html.Tooltip(PagesGlobalization.AddNewPage_PageTitle_Tooltip_Description)
                             <div class="bcms-field-wrapper">
                                 @Html.TextBoxFor(f => f.PageTitle, new { @class = "bcms-field-text", @id = "PageTitle" })
                                 @Html.BcmsValidationMessageFor(f => f.PageTitle)
@@ -64,17 +68,17 @@
                                                     Title = PagesGlobalization.AddNewPage_UserAccess,
                                                     Tooltip = PagesGlobalization.AddNewPage_UserAccess_Tooltip_Description
                                                 };
-                        @Html.Partial(RootModuleConstants.AccessControlTemplate, viewModel)
+                            @Html.Partial(RootModuleConstants.AccessControlTemplate, viewModel)
                         }
                     </div>
                 </div>
 
                 <div class="bcms-input-list-holder">
-                    @Html.Tooltip(PagesGlobalization.AddNewPage_Template_Tooltip_Description)
                     <div class="bcms-content-titles">@PagesGlobalization.AddNewPage_Template</div>
+                    @Html.Tooltip(PagesGlobalization.AddNewPage_Template_Tooltip_Description)
                     @Html.Partial("Partial/TemplatesList", Model.Templates)
                 </div>
-             
+
                 @Html.HiddenFor(f => f.TemplateId, new { @id = "TemplateId" })
                 @Html.HiddenFor(f => f.MasterPageId, new { @id = "MasterPageId" })
                 @Html.HiddenFor(f => f.ParentPageUrl)

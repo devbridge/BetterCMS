@@ -181,8 +181,7 @@ WriteLiteral("                        ");
             
             #line default
             #line hidden
-WriteLiteral("\n                        <div class=\"bcms-custom-input-box\" style=\"width: 100%;\">" +
-"\n");
+WriteLiteral("\n                        <div class=\"bcms-field-wrapper\">\n");
 
 WriteLiteral("                            ");
 

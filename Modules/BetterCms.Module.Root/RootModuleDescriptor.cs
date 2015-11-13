@@ -278,7 +278,6 @@ namespace BetterCms.Module.Root
                     new RedirectJsModuleIncludeDescriptor(this),
                     new SidemenuJsModuleIncludeDescriptor(this),                     
                     siteSettingsJsModuleIncludeDescriptor,
-                    new JsIncludeDescriptor(this, "bcms.slides.jquery"),
                     new JsIncludeDescriptor(this, "bcms.spinner.jquery"),
                     new JsIncludeDescriptor(this, "bcms.store"),
                     new TabsJsModuleIncludeDescriptor(this), 

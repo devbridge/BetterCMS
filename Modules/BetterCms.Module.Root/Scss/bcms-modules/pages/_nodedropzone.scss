@@ -3,8 +3,8 @@
 }
 
 .bcms-zone-holder {
-    position: relative;
-    border-left: 3px solid #c6c6c6;
+//    position: relative;
+//    border-left: 3px solid #c6c6c6;
     padding: 0 0 0 20px;
 }
 
@@ -36,30 +36,30 @@
     font-weight: bold;
 }
 
-.bcms-placement-node {
-    position: relative;
-    height: 30px;
-    padding: 8px 15px;
-    border: 1px solid #c6c6c6;
-    border-radius: 2px;
-    background-color: #f5f5f5;
-}
+//.bcms-placement-node {
+//    position: relative;
+//    height: 30px;
+//    padding: 8px 15px;
+//    border: 1px solid #c6c6c6;
+//    border-radius: 2px;
+//    background-color: #f5f5f5;
+//}
 
 .bcms-placement-node:hover .bcms-node-controls {
     display: block;
 }
 
-.bcms-placement-node .bcms-placement-title {
-    max-width: 450px;
-    line-height: 16px;
-    font-size: 14px;
-    font-weight: 700;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    padding: 0;
-    cursor: pointer;
-}
+//.bcms-placement-node .bcms-placement-title {
+//    max-width: 450px;
+//    line-height: 16px;
+//    font-size: 14px;
+//    font-weight: 700;
+//    white-space: nowrap;
+//    overflow: hidden;
+//    text-overflow: ellipsis;
+//    padding: 0;
+//    cursor: pointer;
+//}
 
 .bcms-placement-node .bcms-placement-path {
     max-width: 350px;
@@ -93,20 +93,20 @@ div.bcms-placement-one-active {
     display: none;
 }
 
-.bcms-expand-collapse-node {
-    position: absolute;
-    left: -8px;
-    top: -8px;
-    width: 16px;
-    height: 16px;
-    background: url('images/sprite-base-2.png') no-repeat -2px -179px;
-    cursor: pointer;
-    text-indent: -9999px;
-}
-
-a.bcms-expanded-nodes {
-    background-position: -23px -179px;
-}
+//.bcms-expand-collapse-node {
+//    position: absolute;
+//    left: -8px;
+//    top: -8px;
+//    width: 16px;
+//    height: 16px;
+//    background: url('images/sprite-base-2.png') no-repeat -2px -179px;
+//    cursor: pointer;
+//    text-indent: -9999px;
+//}
+//
+//a.bcms-expanded-nodes {
+//    background-position: -23px -179px;
+//}
 
 .bcms-placement-dropzone {
     height: 46px;

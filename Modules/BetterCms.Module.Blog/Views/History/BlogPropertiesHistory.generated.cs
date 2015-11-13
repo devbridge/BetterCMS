@@ -51,11 +51,11 @@ namespace ASP
         {
 WriteLiteral("<div");
 
-WriteLiteral(" class=\"bcms-newcontent-top\"");
+WriteLiteral(" class=\"bcms-content-info-block\"");
 
 WriteLiteral(">\r\n    <div");
 
-WriteLiteral(" class=\"bcms-input-field-holder\"");
+WriteLiteral(" class=\"bcms-input-list-holder\"");
 
 WriteLiteral(">\r\n        <div");
 
@@ -87,7 +87,7 @@ WriteLiteral("            ");
             #line hidden
 WriteLiteral("\r\n        </div>\r\n    </div>\r\n\r\n    <div");
 
-WriteLiteral(" class=\"bcms-input-field-holder\"");
+WriteLiteral(" class=\"bcms-input-list-holder\"");
 
 WriteLiteral(">\r\n        <div");
 
@@ -119,7 +119,7 @@ WriteLiteral("            ");
             #line hidden
 WriteLiteral("\r\n        </div>\r\n    </div>\r\n\r\n    <div");
 
-WriteLiteral(" class=\"bcms-input-field-holder\"");
+WriteLiteral(" class=\"bcms-input-list-holder\"");
 
 WriteLiteral(">\r\n        <div");
 
@@ -136,7 +136,7 @@ WriteLiteral(">");
             #line hidden
 WriteLiteral("</div>\r\n        <div");
 
-WriteLiteral(" class=\"bcms-date-input-box\"");
+WriteLiteral(" class=\"bcms-field-wrapper\"");
 
 WriteLiteral(">\r\n");
 
@@ -166,18 +166,22 @@ WriteLiteral(">");
             
             #line default
             #line hidden
-WriteLiteral("</div>\r\n");
+WriteLiteral("</div>\r\n    <div");
 
-WriteLiteral("    ");
+WriteLiteral(" class=\"bcms-field-wrapper\"");
+
+WriteLiteral(">\r\n");
+
+WriteLiteral("        ");
 
             
-            #line 30 "..\..\Views\History\BlogPropertiesHistory.cshtml"
-Write(Html.TextAreaFor(model => model.RowText, new { @readonly = "readonly", @class = "bcms-field-textarea bcms-code-field ", style = "height: 500px;" }));
+            #line 31 "..\..\Views\History\BlogPropertiesHistory.cshtml"
+   Write(Html.TextAreaFor(model => model.RowText, new { @readonly = "readonly", @class = "bcms-field-textarea bcms-code-field ", style = "height: 500px;" }));
 
             
             #line default
             #line hidden
-WriteLiteral("\r\n</div>");
+WriteLiteral("\r\n    </div>\r\n</div>\r\n");
 
         }
     }

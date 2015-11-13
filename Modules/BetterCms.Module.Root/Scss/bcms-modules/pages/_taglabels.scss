@@ -1,5 +1,5 @@
 $tag-label-border: 1px solid darken($sky-blue, 10%);
-$tag-label-border-error: 1px solid lighten($error-red, 10%);
+$tag-label-border-error: 1px solid lighten($border-red, 10%);
 $tag-label-bg: lighten($sky-blue, 5%);
 
 //module Tags & Default Tags Holders
@@ -14,7 +14,7 @@ $tag-label-bg: lighten($sky-blue, 5%);
         background-color: $tag-label-bg;
         border: $tag-label-border;
         border-radius: 2px;
-        color: $dark-text;
+        color: $text-dark;
         cursor: default;
         float: left;
         font-size: 12px;
@@ -52,7 +52,7 @@ $tag-label-bg: lighten($sky-blue, 5%);
     }
 
     50% {
-        background-color: lighten($error-red, 20%);
+        background-color: lighten($bg-red, 20%);
         border: $tag-label-border-error;
     }
 

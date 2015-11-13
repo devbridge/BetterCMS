@@ -15,46 +15,46 @@
 }
 
 %btn-links-extender {
-    color: $blue-main;
+    color: $text-blue;
     margin: 0 20px 0 0;
 
     &:hover {
-        color: darken($blue-main, 10%);
+        color: darken($text-blue, 10%);
     }
 }
 
 .bcms-btn {
     &-main {
         @extend %btn-extender;
-        background-color: $blue-main;
+        background-color: $bg-blue;
         color: $white;
         font-size: 15px;
         line-height: $form-element-height;
         padding: 0 20px;
 
         &:hover {
-            background-color: darken($blue-main, 10%);
+            background-color: darken($bg-blue, 10%);
         }
     }
 
     &-small {
         @extend %btn-extender;
-        background-color: $blue-main;
+        background-color: $bg-blue;
         color: $white;
         font-size: 12px;
         line-height: 30px;
         padding: 0 10px;
 
         &.bcms-btn-gray {
-            background-color: $gray-l45;
+            background-color: $gray-smoke45;
         }
     }
 
     &-tertiary {
         @extend %btn-frame;
         background-color: $white;
-        border: $border-nav-bottom;
-        color: $blue-main;
+        border: $border-thin-smoke;
+        color: $text-blue;
         font-size: 12px;
         height: 28px;
         line-height: 26px;
@@ -63,7 +63,7 @@
 
     &-grid {
         @extend %btn-extender;
-        background-color: $gray-l45;
+        background-color: $gray-smoke45;
         color: $white;
         font-size: 14px;
         font-weight: 600;

@@ -39,8 +39,8 @@
             @Html.HiddenFor(model => model.Image.ImageId, new { data_bind = "value: image().id()" })
 
             <div class="bcms-input-list-holder">
-                @Html.Tooltip(MediaGlobalization.FileEditor_Dialog_Title_Tooltip_Description)
                 <div class="bcms-content-titles">@MediaGlobalization.FileEditor_Dialog_Title_Title</div>
+                @Html.Tooltip(MediaGlobalization.FileEditor_Dialog_Title_Tooltip_Description)
                 <div class="bcms-field-wrapper">
                     @Html.TextBoxFor(f => f.Title, new { @class = "bcms-field-text", @id = "Title", data_bind = "event: {change: onValueChange}" })
                     @Html.BcmsValidationMessageFor(f => f.Title)
@@ -48,8 +48,8 @@
             </div>
 
             <div class="bcms-input-list-holder">
-                @Html.Tooltip(MediaGlobalization.FileEditor_Dialog_PublicUrl_Tooltip_Description)
                 <div class="bcms-content-titles">@MediaGlobalization.FileProperties_Dialog_PublicUrl</div>
+                @Html.Tooltip(MediaGlobalization.FileEditor_Dialog_PublicUrl_Tooltip_Description)
                 <div class="bcms-field-wrapper">
                     <input class="bcms-field-text bcms-editor-selectable-field-box" type="text" value="@Model.Url" readonly="readonly" />
                 </div>
@@ -61,8 +61,8 @@
             </div>
 
             <div class="bcms-input-list-holder">
-                @Html.Tooltip(MediaGlobalization.FileEditor_Dialog_Description_Tooltip_Description)
                 <div class="bcms-content-titles">@MediaGlobalization.FileEditor_Dialog_Description</div>
+                @Html.Tooltip(MediaGlobalization.FileEditor_Dialog_Description_Tooltip_Description)
                 <div class="bcms-textarea-box">
                     @Html.TextAreaFor(f => f.Description, new { @class = "bcms-field-textarea", @id = "Description", data_bind = "event: {change: onValueChange}" })
                     @Html.BcmsValidationMessageFor(f => f.Description)
@@ -84,8 +84,8 @@
 
             <div class="bcms-page-images-holder">
                 <div class="bcms-input-list-holder">
-                    @Html.Tooltip(MediaGlobalization.FileEditor_Dialog_Image_Tooltip_Description)
                     <div class="bcms-content-titles">@MediaGlobalization.FileEditor_Dialog_Image_Title</div>
+                    @Html.Tooltip(MediaGlobalization.FileEditor_Dialog_Image_Tooltip_Description)
                     <div class="bcms-uploaded-image">
                         <!-- ko if: image().url() -->
                         <a class="bcms-remove-image" data-bind="click: image().remove.bind(image())">@RootGlobalization.Button_Remove</a>

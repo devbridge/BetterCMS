@@ -105,6 +105,8 @@
                .Attributes(@style => "width: 217px;");
     };
 }
+
+@Html.MessagesBox()
 <div class="bcms-tab-header bcms-js-tab-header">
     <div class="bcms-modal-frame-holder">
         <a class="bcms-tab-ui bcms-tab-item bcms-active" data-name="#bcms-tab-1">@PagesGlobalization.ContentHistory_ContentTab_Title</a>
@@ -112,43 +114,45 @@
     </div>
 </div>
 
-<div class="bcms-history-preview-holder">
-    @Html.MessagesBox()
-    <div style="height: 100%; overflow: auto;">
-        <div id="bcms-tab-1" class="bcms-tab-single" style="height: 100%">
-            <div class="bcms-history-preview" id="bcms-history-preview" style="height: 100%">
-                <div class="bcms-history-info" style="display: block;">@PagesGlobalization.ContentHistory_SelectVersionToPreviewMessage</div>
-            </div>
-        </div>
-        <div id="bcms-tab-2" class="bcms-tab-single">
-            <div class="bcms-history-preview" id="bcms-history-preview-properties" style="height: 100%">
-                <div class="bcms-history-info" style="display: block;">@PagesGlobalization.ContentHistory_SelectVersionToPreviewMessage</div>
-            </div>
+<div class="bcms-modal-frame-holder"> 
+    <div id="bcms-tab-1" class="bcms-tab-single">
+        <div class="bcms-history-preview-holder" id="bcms-history-preview">
+            <div class="bcms-history-info" style="display: block;">@PagesGlobalization.ContentHistory_SelectVersionToPreviewMessage</div>
         </div>
     </div>
-</div>
 
-<div class="bcms-history-table-holder">
-    @using (Html.BeginForm<HistoryController>(f => f.ContentHistory((GetContentHistoryRequest)null), FormMethod.Post, new { @id = "bcms-pagecontenthistory-form", @class = "bcms-ajax-form" }))
-        {
-        @Html.HiddenGridOptions(Model.GridOptions)
-        @Html.HiddenFor(model => model.ContentId)
-
-        <div class="bcms-history-table-top">
-            <div class="bcms-large-titles">@PagesGlobalization.ContentHistory_OlderVersions</div>
-            <div class="bcms-search-block">
-                @Html.TextBoxFor(m => m.SearchQuery, new { @class = "bcms-field-text", @placeholder = RootGlobalization.WaterMark_Search })
-            </div>
-            <div class="bcms-btn-search" id="bcms-pagecontenthistory-search-btn">@RootGlobalization.Button_Search</div>
+    <div id="bcms-tab-2" class="bcms-tab-single">
+        <div class="bcms-history-preview-data" id="bcms-history-preview-properties">
+            <div class="bcms-history-info" style="display: block;">@PagesGlobalization.ContentHistory_SelectVersionToPreviewMessage</div>
         </div>
+    </div>
 
-        @Html.Grid(Model.Items).Sort(Model.GridOptions).Columns(columns).Attributes(@class => "bcms-tables bcms-history-grid").RenderUsing(new ScrollableEditableHtmlTableGridRenderer<ContentHistoryItem>()
+    <div class="bcms-history-table-holder">
+        @using (Html.BeginForm<HistoryController>(f => f.ContentHistory((GetContentHistoryRequest)null), FormMethod.Post, new { @id = "bcms-pagecontenthistory-form", @class = "bcms-ajax-form" }))
+        {
+            @Html.HiddenGridOptions(Model.GridOptions)
+            @Html.HiddenFor(model => model.ContentId)
+
+            <div class="bcms-history-table-top">
+                <div class="bcms-large-titles">@PagesGlobalization.ContentHistory_OlderVersions</div>
+                <div class="bcms-top-block-inner">
+                    <div class="bcms-btn-search" id="bcms-pagecontenthistory-search-btn">@RootGlobalization.Button_Search</div>
+                    <div class="bcms-search-block">
+                        @Html.TextBoxFor(m => m.SearchQuery, new { @class = "bcms-search-field-box bcms-js-search-box bcms-search-query", @placeholder = RootGlobalization.WaterMark_Search })
+                    </div> 
+                </div>
+            </div>
+
+            <div class="bcms-history-items-list">
+            @Html.Grid(Model.Items).Sort(Model.GridOptions).Columns(columns).Attributes(@class => "bcms-tables bcms-history-grid").RenderUsing(new ScrollableEditableHtmlTableGridRenderer<ContentHistoryItem>()
                                                                                                                                  {
                                                                                                                                      InternalTableCssClass = "bcms-history-cell"
 
                                                                                                                                  })
-        @Html.HiddenSubmit()
+            @Html.HiddenSubmit()
+            </div>
         }
+    </div>
 </div>
 
 <script type="text/html" id="bcms-history-preview-template">

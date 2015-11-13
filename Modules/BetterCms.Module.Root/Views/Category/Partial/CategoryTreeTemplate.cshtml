@@ -10,7 +10,7 @@
     <!-- /ko -->
     <!-- ko foreach: childNodes -->
     <!-- ko if: isVisible() && !isDeleted() -->
-    <div class="bcms-tree-holder">
+    <div class="bcms-nodes-container">
         <!-- ko if: isFirstNode() -->
         <div class="bcms-nodes-dropzone"
              data-bind="css: { 'bcms-nodes-dropzone-active': activeZone() == 'topZone'  }, droppableCategoryNode: 'topZone'">
@@ -22,12 +22,17 @@
                         attr: { id: containerId },
                         css: { 'bcms-placement-node-drag': isBeingDragged(), 'bcms-placement-node-edit': isActive(), 'bcms-placement-one-active': !isBeingDragged() && superDraggable() },
                         style: { height: getNodeHeight() }">
+
                 <!-- ko if: hasChildNodes() -->
-                <a class="bcms-expand-collapse-node" data-bind="click: $root.toggleNodeExpand, css: { 'bcms-expanded-nodes': isExpanded() }">&nbsp;</a>
+                <div class="bcms-node-expander" data-bind="click: $root.toggleNodeExpand, css: { 'bcms-node-expanded': isExpanded() }">&nbsp;</div>
                 <!-- /ko -->
                 <div class="bcms-node-info" data-bind="droppableCategoryNode: 'middleZone'">
                     <div class="bcms-placement-title" data-bind="text: title"></div>
+                    <!-- ko if: getCategoryTree().settings.canEditNode -->
+                    <div class="bcms-action-edit" data-bind="click: startEditCategoryTreeNode">@RootGlobalization.Button_Edit</div>
+                    <!-- /ko -->
                 </div>
+
                 <!-- ko if: getCategoryTree().settings.canEditNode && isActive() -->
                 <div class="bcms-edit-node">
                     <div class="bcms-edit-node-holder">
@@ -44,10 +49,11 @@
                         <div class="bcms-btn-small" data-bind="click: saveCategoryTreeNodeWithValidation, text: getCategoryTree().settings.nodeSaveButtonTitle">@RootGlobalization.Button_Ok</div>
                         <div class="bcms-btn-links-small" data-bind="click: cancelEditCategoryTreeNode">@RootGlobalization.Button_Cancel</div>
                     </div>
+
                     <!-- ko if: getCategoryTree().showMacros -->
                     <div class="bcms-edit-node-holder">
                         @Html.Tooltip(RootGlobalization.CategoryTree_NodeEdit_Macro_Tooltip_Message)
-                        <div class="bcms-custom-input-box" style="width: 100%;">
+                        <div class="bcms-field-wrapper">
                             @Html.TextBoxFor(m => m.Macro, new
                             {
                                 data_bind = "value: macro, valueUpdate: 'afterkeydown', enterPress: saveCategoryTreeNodeWithValidation, escPress: cancelEditCategoryTreeNode",
@@ -61,14 +67,12 @@
                     <!-- /ko -->
                 </div>
                 <!-- /ko -->
-                <div class="bcms-node-controls">
-                    <!-- ko if: getCategoryTree().settings.canEditNode -->
-                    <a class="bcms-icn-edit" data-bind="click: startEditCategoryTreeNode">@RootGlobalization.Button_Edit</a>
-                    <!-- /ko -->
-                    <!-- ko if: getCategoryTree().settings.canDeleteNode -->
-                    <a class="bcms-icn-delete" data-bind="click: deleteCategoryTreeNode">@RootGlobalization.Button_Delete</a>
-                    <!-- /ko -->
+
+                <!-- ko if: getCategoryTree().settings.canDeleteNode -->
+                <div class="bcms-node-delete-box">
+                    <div class="bcms-action-delete" data-bind="click: deleteCategoryTreeNode">@RootGlobalization.Button_Delete</div>
                 </div>
+                <!-- /ko -->
             </div>
             <!-- ko if: activeZone() == 'middleZone' -->
             <div class="bcms-zone-holder">

@@ -3,9 +3,9 @@
 
 bettercms.define('bcms.pages.widgets', ['bcms.jquery', 'bcms', 'bcms.modal', 'bcms.datepicker', 'bcms.htmlEditor',
         'bcms.dynamicContent', 'bcms.siteSettings', 'bcms.messages', 'bcms.preview', 'bcms.grid',
-        'bcms.slides.jquery', 'bcms.redirect', 'bcms.pages.history', 'bcms.security', 'bcms.options', 'bcms.ko.extenders', 'bcms.codeEditor',
+        'bcms.redirect', 'bcms.pages.history', 'bcms.security', 'bcms.options', 'bcms.ko.extenders', 'bcms.codeEditor',
         'bcms.pages', 'bcms.categories', 'bcms.forms', 'bcms.ko.grid', 'bcms.antiXss'],
-    function ($, bcms, modal, datepicker, htmlEditor, dynamicContent, siteSettings, messages, preview, grid, slides, redirect, contentHistory, security, options, ko, codeEditor, pages, categories, forms, kogrid, antiXss) {
+    function ($, bcms, modal, datepicker, htmlEditor, dynamicContent, siteSettings, messages, preview, grid, redirect, contentHistory, security, options, ko, codeEditor, pages, categories, forms, kogrid, antiXss) {
         'use strict';
 
         var widgets = {},

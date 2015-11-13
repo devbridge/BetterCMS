@@ -3,20 +3,20 @@
     background-color: $white;
     border: $border-form-element;
     box-sizing: border-box;
-    color: $main-text;
+    color: $text-gray;
     font-size: 14px;
     padding: 9px 11px 10px;
     width: 100%;
 
     &:focus {
         background: $white;
-        border-color: $blue-main;
+        border-color: $border-blue;
         box-shadow: 0 0 3px 0 rgba($blue-main, .35);
         outline: none;
     }
 
     @include placeholder {
-        color: $light-text;
+        color: $text-light;
     }
 }
 
@@ -58,11 +58,6 @@
             padding: 0 30px;
         }
     }
-}
-
-.bcms-input-list-holder {
-    margin: 30px 0 0 30px;
-    position: relative;
 }
 
 //

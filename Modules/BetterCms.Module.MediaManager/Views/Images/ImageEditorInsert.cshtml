@@ -32,8 +32,8 @@
                     </div>
                 </div>
                 <div class="bcms-input-list-holder">
-                    @Html.Tooltip(MediaGlobalization.ImageEditor_Dialog_Caption_Tooltip_Description)
                     <div class="bcms-content-titles">@MediaGlobalization.ImageEditor_Dialog_Caption:</div>
+                    @Html.Tooltip(MediaGlobalization.ImageEditor_Dialog_Caption_Tooltip_Description)
                     @Html.TextBoxFor(f => f.Caption, new { @class = "bcms-field-text", @id = "Caption" })
                 </div>
                 <div class="bcms-file-info-text"><b>@MediaGlobalization.ImageEditor_Dialog_FileName:</b> <span id="image-file-name">@Model.Title</span></div>
@@ -65,8 +65,8 @@
                     </div>
                 </div>
                 <div class="bcms-input-list-holder">
-                    @Html.Tooltip(MediaGlobalization.ImageEditor_Dialog_Description_Tooltip_Description)
                     <div class="bcms-content-titles">@MediaGlobalization.ImageEditor_Dialog_Description</div>
+                    @Html.Tooltip(MediaGlobalization.ImageEditor_Dialog_Description_Tooltip_Description)
                     <div class="bcms-textarea-box">
                         @Html.TextAreaFor(f => f.Description, new
                                                                   {

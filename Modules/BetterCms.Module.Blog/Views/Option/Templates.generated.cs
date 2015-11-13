@@ -152,33 +152,43 @@ WriteLiteral("></div>\r\n            <!-- /ko -->\r\n            <!-- ko ifnot: 
 
 WriteLiteral(" class=\"bcms-grid-no-preview\"");
 
-WriteLiteral(" xmlns=\"http://www.w3.org/2000/svg\"");
+WriteLiteral(" viewBox=\"-237.5 336 138 121.5\"");
 
-WriteLiteral(" width=\"50\"");
+WriteLiteral(" enable-background=\"new -237.5 336 138 121.5\"");
 
-WriteLiteral(" height=\"50\"");
+WriteLiteral(">\r\n                <path");
 
-WriteLiteral(" viewBox=\"-205 372 50 50\"");
+WriteLiteral(" d=\"m-237 336h137v4h-137v-4\"");
 
-WriteLiteral(" enable-background=\"new -205 372 50 50\"");
+WriteLiteral(" fill=\"#e6e6e6\"");
 
-WriteLiteral(">\r\n                <g");
+WriteLiteral(" />\r\n                <g");
 
-WriteLiteral(" fill=\"#cdcdcd\"");
+WriteLiteral(" fill=\"#fff\"");
+
+WriteLiteral(" stroke=\"#d7d4d4\"");
+
+WriteLiteral(" stroke-linecap=\"square\"");
 
 WriteLiteral(">\r\n                    <path");
 
-WriteLiteral(" d=\"m-205 422h50v-50h-50v50m2-48h46v46h-46v-46\"");
+WriteLiteral(" d=\"m-237 404h43v27h-43v-27z\"");
 
 WriteLiteral(" />\r\n                    <path");
 
-WriteLiteral(" d=\"m-164.3 406.2l1.4-1.4-11.5-11.5-7.7 7.6-3.6-3.6-11.5 11.5 1.4 1.4 10.1-10.1 1" +
-"1.1 11.1 1.4-1.4-7.5-7.5 6.3-6.2 10.1 10.1\"");
+WriteLiteral(" d=\"m-190 404h43v27h-43v-27z\"");
 
 WriteLiteral(" />\r\n                    <path");
 
-WriteLiteral(" d=\"m-187.9 382.4c-2.8 0-5 2.2-5 5 0 2.8 2.2 5 5 5 2.8 0 5-2.2 5-5 0-2.8-2.2-5-5-" +
-"5m0 2c1.7 0 3 1.4 3 3 0 1.7-1.3 3-3 3-1.6 0-3-1.3-3-3 0-1.7 1.3-3 3-3\"");
+WriteLiteral(" d=\"m-237 437h137v20h-137v-20z\"");
+
+WriteLiteral(" />\r\n                    <path");
+
+WriteLiteral(" d=\"m-143 404h43v27h-43v-27z\"");
+
+WriteLiteral(" />\r\n                    <path");
+
+WriteLiteral(" d=\"m-237 345h137v53h-137v-53z\"");
 
 WriteLiteral(" />\r\n                </g>\r\n            </svg>\r\n            <!-- /ko -->\r\n        " +
 "</div>\r\n\r\n        <!-- ko if: isCompatible && isActive() -->\r\n        <div");
@@ -188,7 +198,7 @@ WriteLiteral(" class=\"bcms-btn-tertiary\"");
 WriteLiteral(">");
 
             
-            #line 41 "..\..\Views\Option\Templates.cshtml"
+            #line 44 "..\..\Views\Option\Templates.cshtml"
                                   Write(BlogGlobalization.SiteSettings_Templates_DefaultTemplate);
 
             
@@ -204,7 +214,7 @@ WriteLiteral(" data-bind=\"click: select\"");
 WriteLiteral(">");
 
             
-            #line 44 "..\..\Views\Option\Templates.cshtml"
+            #line 47 "..\..\Views\Option\Templates.cshtml"
                                                             Write(BlogGlobalization.SiteSettings_Templates_SelectButton);
 
             
@@ -218,7 +228,7 @@ WriteLiteral(" class=\"bcms-btn-tertiary\"");
 WriteLiteral(">");
 
             
-            #line 47 "..\..\Views\Option\Templates.cshtml"
+            #line 50 "..\..\Views\Option\Templates.cshtml"
                                   Write(BlogGlobalization.SiteSettings_Templates_IncompatibleTemplate);
 
             

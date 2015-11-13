@@ -1,0 +1,5 @@
+﻿@* Form is required for unobtrusive validation *@
+@using (Html.BeginForm(null, null, null, FormMethod.Post, new {@class = "bcms-ajax-form"}))
+{
+    <div data-bind="template: { name: 'bcms-media-list-template' }" class="bcms-data-bind-container"></div>
+}

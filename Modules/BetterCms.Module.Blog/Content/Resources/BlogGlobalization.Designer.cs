@@ -457,15 +457,6 @@ namespace BetterCms.Module.Blog.Content.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Category with ID &quot;{0}&quot; wasn&apos;t found in the list of importing categories.
-        /// </summary>
-        public static string ImportBlogPosts_CategoryByRefNotFound_Message {
-            get {
-                return ResourceManager.GetString("ImportBlogPosts_CategoryByRefNotFound_Message", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Create redirects.
         /// </summary>
         public static string ImportBlogPosts_CreateRedirects_Title {
@@ -628,6 +619,15 @@ namespace BetterCms.Module.Blog.Content.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Recreate category tree (if not found will create categories if possible).
+        /// </summary>
+        public static string ImportBlogPosts_RecreateCategoryTree_Title {
+            get {
+                return ResourceManager.GetString("ImportBlogPosts_RecreateCategoryTree_Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Redirect for URL &quot;{0}&quot; wasn&apos;t created, because it already exists..
         /// </summary>
         public static string ImportBlogPosts_RedirectWasAlreadyCreatedFor_Message {
@@ -655,6 +655,15 @@ namespace BetterCms.Module.Blog.Content.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Reuse existing categories (no categories will be created).
+        /// </summary>
+        public static string ImportBlogPosts_ReuseExistingCategories_Title {
+            get {
+                return ResourceManager.GetString("ImportBlogPosts_ReuseExistingCategories_Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Skipped import.
         /// </summary>
         public static string ImportBlogPosts_Skipped_Title {
@@ -673,7 +682,7 @@ namespace BetterCms.Module.Blog.Content.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Cannot save blog post. Master page, which is selected as default blog post layout is inaccessible..
+        ///   Looks up a localized string similar to Cannot save blog post. Template, which is selected as default blog post layout is inaccessible..
         /// </summary>
         public static string SaveBlogPost_FailedToSave_InaccessibleMasterPage {
             get {

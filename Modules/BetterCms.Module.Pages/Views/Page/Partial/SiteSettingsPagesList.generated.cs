@@ -189,35 +189,20 @@ WriteLiteral("\r\n");
             
             #line default
             #line hidden
-WriteLiteral("\r\n\r\n");
-
-WriteLiteral("    ");
-
-            
-            #line 70 "..\..\Views\Page\Partial\SiteSettingsPagesList.cshtml"
-Write(Html.MessagesBox());
-
-            
-            #line default
-            #line hidden
-WriteLiteral("\r\n\r\n    <div");
-
-WriteLiteral(" class=\"bcms-window-settings\"");
-
-WriteLiteral(">\r\n        <div");
+WriteLiteral("\r\n\r\n        <div");
 
 WriteLiteral(" class=\"bcms-top-block-holder\"");
 
 WriteLiteral(">\r\n");
 
             
-            #line 74 "..\..\Views\Page\Partial\SiteSettingsPagesList.cshtml"
+            #line 71 "..\..\Views\Page\Partial\SiteSettingsPagesList.cshtml"
             
             
             #line default
             #line hidden
             
-            #line 74 "..\..\Views\Page\Partial\SiteSettingsPagesList.cshtml"
+            #line 71 "..\..\Views\Page\Partial\SiteSettingsPagesList.cshtml"
              if ((ViewContext.Controller as CmsControllerBase).SecurityService.IsAuthorized(RootModuleConstants.UserRoles.EditContent))
             {
 
@@ -233,7 +218,7 @@ WriteLiteral(" id=\"bcms-create-page-button\"");
 WriteLiteral(">");
 
             
-            #line 76 "..\..\Views\Page\Partial\SiteSettingsPagesList.cshtml"
+            #line 73 "..\..\Views\Page\Partial\SiteSettingsPagesList.cshtml"
                                                                    Write(PagesGlobalization.SiteSettings_Pages_AddNew);
 
             
@@ -242,7 +227,7 @@ WriteLiteral(">");
 WriteLiteral("</div>\r\n");
 
             
-            #line 77 "..\..\Views\Page\Partial\SiteSettingsPagesList.cshtml"
+            #line 74 "..\..\Views\Page\Partial\SiteSettingsPagesList.cshtml"
             }
 
             
@@ -261,7 +246,7 @@ WriteLiteral(" id=\"bcms-pages-search-btn\"");
 WriteLiteral(">");
 
             
-            #line 80 "..\..\Views\Page\Partial\SiteSettingsPagesList.cshtml"
+            #line 77 "..\..\Views\Page\Partial\SiteSettingsPagesList.cshtml"
                                                                    Write(PagesGlobalization.SiteSettings_Pages_Search);
 
             
@@ -276,7 +261,7 @@ WriteLiteral(">\r\n");
 WriteLiteral("                    ");
 
             
-            #line 82 "..\..\Views\Page\Partial\SiteSettingsPagesList.cshtml"
+            #line 79 "..\..\Views\Page\Partial\SiteSettingsPagesList.cshtml"
                Write(Html.TextBoxFor(m => m.SearchQuery, new { @class = "bcms-search-field-box bcms-js-search-box bcms-search-query", @placeholder = RootGlobalization.WaterMark_Search }));
 
             
@@ -292,7 +277,7 @@ WriteLiteral(">\r\n");
 WriteLiteral("                ");
 
             
-            #line 87 "..\..\Views\Page\Partial\SiteSettingsPagesList.cshtml"
+            #line 84 "..\..\Views\Page\Partial\SiteSettingsPagesList.cshtml"
            Write(Html.RenderPaging(Model));
 
             
@@ -307,7 +292,7 @@ WriteLiteral(">\r\n");
 WriteLiteral("            ");
 
             
-            #line 92 "..\..\Views\Page\Partial\SiteSettingsPagesList.cshtml"
+            #line 89 "..\..\Views\Page\Partial\SiteSettingsPagesList.cshtml"
        Write(Html.Partial("~/Areas/bcms-pages/Views/Filter/PagesFilterTemplate.cshtml", Model));
 
             
@@ -318,13 +303,13 @@ WriteLiteral("\r\n        </div>\r\n\r\n");
 WriteLiteral("        ");
 
             
-            #line 95 "..\..\Views\Page\Partial\SiteSettingsPagesList.cshtml"
+            #line 92 "..\..\Views\Page\Partial\SiteSettingsPagesList.cshtml"
    Write(Html.Grid(Model.Items).Sort(Model.GridOptions).Columns(columns).Attributes(@class => "bcms-tables").RenderUsing(new EditableHtmlTableGridRenderer<SiteSettingPageViewModel>()));
 
             
             #line default
             #line hidden
-WriteLiteral("\r\n    </div>\r\n\r\n    <script");
+WriteLiteral("\r\n\r\n    <script");
 
 WriteLiteral(" type=\"text/html\"");
 
@@ -335,7 +320,7 @@ WriteLiteral(">\r\n");
 WriteLiteral("        ");
 
             
-            #line 99 "..\..\Views\Page\Partial\SiteSettingsPagesList.cshtml"
+            #line 95 "..\..\Views\Page\Partial\SiteSettingsPagesList.cshtml"
    Write(Html.Grid(new List<SiteSettingPageViewModel> { new SiteSettingPageViewModel() }).Columns(columns).Attributes(@class => "bcms-tables").RenderUsing(new HtmlTableGridSingleRowRenderer<SiteSettingPageViewModel>()));
 
             
@@ -352,7 +337,7 @@ WriteLiteral(">\r\n");
 WriteLiteral("        ");
 
             
-            #line 103 "..\..\Views\Page\Partial\SiteSettingsPagesList.cshtml"
+            #line 99 "..\..\Views\Page\Partial\SiteSettingsPagesList.cshtml"
    Write(Html.Partial("EditorTemplates/SEOStatus", true));
 
             
@@ -369,7 +354,7 @@ WriteLiteral(">\r\n");
 WriteLiteral("        ");
 
             
-            #line 107 "..\..\Views\Page\Partial\SiteSettingsPagesList.cshtml"
+            #line 103 "..\..\Views\Page\Partial\SiteSettingsPagesList.cshtml"
    Write(Html.Partial("EditorTemplates/SEOStatus", false));
 
             
@@ -386,7 +371,7 @@ WriteLiteral(">\r\n");
 WriteLiteral("        ");
 
             
-            #line 111 "..\..\Views\Page\Partial\SiteSettingsPagesList.cshtml"
+            #line 107 "..\..\Views\Page\Partial\SiteSettingsPagesList.cshtml"
    Write(Html.Partial("EditorTemplates/PageStatus", PageStatus.Published));
 
             
@@ -403,7 +388,7 @@ WriteLiteral(">\r\n");
 WriteLiteral("        ");
 
             
-            #line 115 "..\..\Views\Page\Partial\SiteSettingsPagesList.cshtml"
+            #line 111 "..\..\Views\Page\Partial\SiteSettingsPagesList.cshtml"
    Write(Html.Partial("EditorTemplates/PageStatus", PageStatus.Unpublished));
 
             
@@ -420,7 +405,7 @@ WriteLiteral(">\r\n");
 WriteLiteral("        ");
 
             
-            #line 119 "..\..\Views\Page\Partial\SiteSettingsPagesList.cshtml"
+            #line 115 "..\..\Views\Page\Partial\SiteSettingsPagesList.cshtml"
    Write(Html.Partial("EditorTemplates/PageStatus", PageStatus.Draft));
 
             

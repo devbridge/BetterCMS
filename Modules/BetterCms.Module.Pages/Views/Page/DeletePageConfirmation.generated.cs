@@ -135,31 +135,31 @@ WriteLiteral("    <div");
 
 WriteLiteral(" class=\"bcms-input-list-holder\"");
 
-WriteLiteral(">\r\n");
-
-WriteLiteral("        ");
-
-            
-            #line 26 "..\..\Views\Page\DeletePageConfirmation.cshtml"
-   Write(Html.Tooltip(PagesGlobalization.DeletePage_Dialog_RedurectUrl_Tooltip_Description));
-
-            
-            #line default
-            #line hidden
-WriteLiteral("\r\n        <div");
+WriteLiteral(">\r\n        <div");
 
 WriteLiteral(" class=\"bcms-content-titles\"");
 
 WriteLiteral(">");
 
             
-            #line 27 "..\..\Views\Page\DeletePageConfirmation.cshtml"
+            #line 26 "..\..\Views\Page\DeletePageConfirmation.cshtml"
                                     Write(PagesGlobalization.DeletePage_Dialog_RedirectUrl);
 
             
             #line default
             #line hidden
-WriteLiteral("</div>\r\n        <div");
+WriteLiteral("</div>\r\n");
+
+WriteLiteral("        ");
+
+            
+            #line 27 "..\..\Views\Page\DeletePageConfirmation.cshtml"
+   Write(Html.Tooltip(PagesGlobalization.DeletePage_Dialog_RedurectUrl_Tooltip_Description));
+
+            
+            #line default
+            #line hidden
+WriteLiteral("\r\n        <div");
 
 WriteLiteral(" class=\"bcms-field-wrapper\"");
 
@@ -198,31 +198,31 @@ WriteLiteral("    <div");
 
 WriteLiteral(" class=\"bcms-input-list-holder\"");
 
-WriteLiteral(">\r\n");
-
-WriteLiteral("        ");
-
-            
-            #line 35 "..\..\Views\Page\DeletePageConfirmation.cshtml"
-   Write(Html.Tooltip(PagesGlobalization.DeletePage_Dialog_SecurityWord_Tooltip_Description));
-
-            
-            #line default
-            #line hidden
-WriteLiteral("\r\n        <div");
+WriteLiteral(">\r\n        <div");
 
 WriteLiteral(" class=\"bcms-content-titles\"");
 
 WriteLiteral(">");
 
             
-            #line 36 "..\..\Views\Page\DeletePageConfirmation.cshtml"
+            #line 35 "..\..\Views\Page\DeletePageConfirmation.cshtml"
                                     Write(PagesGlobalization.DeletePage_Dialog_SecurityWord);
 
             
             #line default
             #line hidden
-WriteLiteral("</div>\r\n        <div");
+WriteLiteral("</div>\r\n");
+
+WriteLiteral("        ");
+
+            
+            #line 36 "..\..\Views\Page\DeletePageConfirmation.cshtml"
+   Write(Html.Tooltip(PagesGlobalization.DeletePage_Dialog_SecurityWord_Tooltip_Description));
+
+            
+            #line default
+            #line hidden
+WriteLiteral("\r\n        <div");
 
 WriteLiteral(" class=\"bcms-field-wrapper\"");
 
@@ -263,31 +263,31 @@ WriteLiteral("        <div");
 
 WriteLiteral(" class=\"bcms-input-list-holder\"");
 
-WriteLiteral(">\r\n");
-
-WriteLiteral("            ");
-
-            
-            #line 46 "..\..\Views\Page\DeletePageConfirmation.cshtml"
-       Write(Html.Tooltip(PagesGlobalization.DeletePage_Dialog_UpdateSitemap_Description));
-
-            
-            #line default
-            #line hidden
-WriteLiteral("\r\n            <div");
+WriteLiteral(">\r\n            <div");
 
 WriteLiteral(" class=\"bcms-content-titles\"");
 
 WriteLiteral(">");
 
             
-            #line 47 "..\..\Views\Page\DeletePageConfirmation.cshtml"
+            #line 46 "..\..\Views\Page\DeletePageConfirmation.cshtml"
                                         Write(PagesGlobalization.DeletePage_Dialog_UpdateSitemap);
 
             
             #line default
             #line hidden
-WriteLiteral("</div>\r\n            <div");
+WriteLiteral("</div>\r\n");
+
+WriteLiteral("            ");
+
+            
+            #line 47 "..\..\Views\Page\DeletePageConfirmation.cshtml"
+       Write(Html.Tooltip(PagesGlobalization.DeletePage_Dialog_UpdateSitemap_Description));
+
+            
+            #line default
+            #line hidden
+WriteLiteral("\r\n            <div");
 
 WriteLiteral(" class=\"bcms-edit-check-field\"");
 

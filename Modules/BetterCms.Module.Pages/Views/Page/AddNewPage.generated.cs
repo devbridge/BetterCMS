@@ -141,9 +141,13 @@ WriteLiteral(" class=\"bcms-modal-frame-holder\"");
 
 WriteLiteral(">\r\n    <div");
 
-WriteLiteral(" class=\"bcms-info-message-box\"");
+WriteLiteral(" class=\"bcms-messages-ui\"");
 
-WriteLiteral(">\r\n        <a");
+WriteLiteral(">\r\n        <ul");
+
+WriteLiteral(" class=\"bcms-info-messages bcms-js-info-message\"");
+
+WriteLiteral(">\r\n            <li>\r\n                <a");
 
 WriteLiteral(" class=\"bcms-messages-close bcms-js-btn-close\"");
 
@@ -152,24 +156,24 @@ WriteLiteral(" id=\"bcms-addnewpage-closeinfomessage\"");
 WriteLiteral(">");
 
             
-            #line 22 "..\..\Views\Page\AddNewPage.cshtml"
-                                                                                          Write(RootGlobalization.Button_Close);
+            #line 24 "..\..\Views\Page\AddNewPage.cshtml"
+                                                                                                  Write(RootGlobalization.Button_Close);
 
             
             #line default
             #line hidden
 WriteLiteral("</a>\r\n");
 
-WriteLiteral("        ");
+WriteLiteral("                ");
 
             
-            #line 23 "..\..\Views\Page\AddNewPage.cshtml"
-   Write(Html.Raw(PagesGlobalization.AddNewPage_Template_InfoMessage_Text));
+            #line 25 "..\..\Views\Page\AddNewPage.cshtml"
+           Write(Html.Raw(PagesGlobalization.AddNewPage_Template_InfoMessage_Text));
 
             
             #line default
             #line hidden
-WriteLiteral("\r\n    </div>\r\n\r\n    <div");
+WriteLiteral("\r\n            </li>\r\n        </ul>\r\n    </div>\r\n\r\n    <div");
 
 WriteLiteral(" class=\"bcms-window-tabbed-options\"");
 
@@ -178,7 +182,7 @@ WriteLiteral(">\r\n");
 WriteLiteral("        ");
 
             
-            #line 27 "..\..\Views\Page\AddNewPage.cshtml"
+            #line 31 "..\..\Views\Page\AddNewPage.cshtml"
    Write(Html.MessagesBox());
 
             
@@ -187,13 +191,13 @@ WriteLiteral("        ");
 WriteLiteral("\r\n");
 
             
-            #line 28 "..\..\Views\Page\AddNewPage.cshtml"
+            #line 32 "..\..\Views\Page\AddNewPage.cshtml"
         
             
             #line default
             #line hidden
             
-            #line 28 "..\..\Views\Page\AddNewPage.cshtml"
+            #line 32 "..\..\Views\Page\AddNewPage.cshtml"
          using (Html.BeginForm<PageController>(f => f.AddNewPage(null, null), FormMethod.Post, new { @class = "bcms-ajax-form" }))
         {
 
@@ -213,29 +217,29 @@ WriteLiteral(" class=\"bcms-form-block-holder\"");
 WriteLiteral(">\r\n                    <div>\r\n");
 
             
-            #line 33 "..\..\Views\Page\AddNewPage.cshtml"
+            #line 37 "..\..\Views\Page\AddNewPage.cshtml"
                         
             
             #line default
             #line hidden
             
-            #line 33 "..\..\Views\Page\AddNewPage.cshtml"
+            #line 37 "..\..\Views\Page\AddNewPage.cshtml"
                          if (Model.Languages != null && Model.Languages.Any())
                         {
-                        
+                            
             
             #line default
             #line hidden
             
-            #line 35 "..\..\Views\Page\AddNewPage.cshtml"
-                   Write(Html.HiddenFor(model => model.LanguageId, new { data_bind = "value: language.languageId()" }));
+            #line 39 "..\..\Views\Page\AddNewPage.cshtml"
+                       Write(Html.HiddenFor(model => model.LanguageId, new { data_bind = "value: language.languageId()" }));
 
             
             #line default
             #line hidden
             
-            #line 35 "..\..\Views\Page\AddNewPage.cshtml"
-                                                                                                                      
+            #line 39 "..\..\Views\Page\AddNewPage.cshtml"
+                                                                                                                          
                         }
 
             
@@ -244,7 +248,7 @@ WriteLiteral(">\r\n                    <div>\r\n");
 WriteLiteral("                        ");
 
             
-            #line 37 "..\..\Views\Page\AddNewPage.cshtml"
+            #line 41 "..\..\Views\Page\AddNewPage.cshtml"
                    Write(Html.HiddenSubmit());
 
             
@@ -253,60 +257,60 @@ WriteLiteral("                        ");
 WriteLiteral("\r\n");
 
             
-            #line 38 "..\..\Views\Page\AddNewPage.cshtml"
+            #line 42 "..\..\Views\Page\AddNewPage.cshtml"
                         
             
             #line default
             #line hidden
             
-            #line 38 "..\..\Views\Page\AddNewPage.cshtml"
+            #line 42 "..\..\Views\Page\AddNewPage.cshtml"
                          if (Model.ShowLanguages)
                         {
 
             
             #line default
             #line hidden
-WriteLiteral("                        <div");
+WriteLiteral("                            <div");
 
 WriteLiteral(" class=\"bcms-input-list-holder\"");
 
 WriteLiteral(" data-bind=\"with: language\"");
 
-WriteLiteral(">\r\n");
-
-WriteLiteral("                            ");
-
-            
-            #line 41 "..\..\Views\Page\AddNewPage.cshtml"
-                       Write(Html.Tooltip(PagesGlobalization.AddNewPage_Language_Tooltip_Description));
-
-            
-            #line default
-            #line hidden
-WriteLiteral("\r\n                            <div");
+WriteLiteral(">\r\n                                <div");
 
 WriteLiteral(" class=\"bcms-content-titles\"");
 
 WriteLiteral(">");
 
             
-            #line 42 "..\..\Views\Page\AddNewPage.cshtml"
-                                                        Write(PagesGlobalization.AddNewPage_Language);
+            #line 45 "..\..\Views\Page\AddNewPage.cshtml"
+                                                            Write(PagesGlobalization.AddNewPage_Language);
 
             
             #line default
             #line hidden
-WriteLiteral("</div>\r\n                            <select");
+WriteLiteral("</div>\r\n");
+
+WriteLiteral("                                ");
+
+            
+            #line 46 "..\..\Views\Page\AddNewPage.cshtml"
+                           Write(Html.Tooltip(PagesGlobalization.AddNewPage_Language_Tooltip_Description));
+
+            
+            #line default
+            #line hidden
+WriteLiteral("\r\n                                <select");
 
 WriteLiteral(" class=\"bcms-global-select\"");
 
 WriteLiteral(" data-bind=\"options: languages, optionsText: \'value\', optionsValue: \'key\', value:" +
 " languageId\"");
 
-WriteLiteral("></select>\r\n                        </div>\r\n");
+WriteLiteral("></select>\r\n                            </div>\r\n");
 
             
-            #line 45 "..\..\Views\Page\AddNewPage.cshtml"
+            #line 49 "..\..\Views\Page\AddNewPage.cshtml"
                         }
 
             
@@ -316,31 +320,31 @@ WriteLiteral("\r\n                        <div");
 
 WriteLiteral(" class=\"bcms-input-list-holder\"");
 
-WriteLiteral(">\r\n");
-
-WriteLiteral("                            ");
-
-            
-            #line 48 "..\..\Views\Page\AddNewPage.cshtml"
-                       Write(Html.Tooltip(PagesGlobalization.AddNewPage_PageTitle_Tooltip_Description));
-
-            
-            #line default
-            #line hidden
-WriteLiteral("\r\n                            <div");
+WriteLiteral(">\r\n                            <div");
 
 WriteLiteral(" class=\"bcms-content-titles\"");
 
 WriteLiteral(">");
 
             
-            #line 49 "..\..\Views\Page\AddNewPage.cshtml"
+            #line 52 "..\..\Views\Page\AddNewPage.cshtml"
                                                         Write(PagesGlobalization.AddNewPage_PageTitle);
 
             
             #line default
             #line hidden
-WriteLiteral("</div>\r\n                            <div");
+WriteLiteral("</div>\r\n");
+
+WriteLiteral("                            ");
+
+            
+            #line 53 "..\..\Views\Page\AddNewPage.cshtml"
+                       Write(Html.Tooltip(PagesGlobalization.AddNewPage_PageTitle_Tooltip_Description));
+
+            
+            #line default
+            #line hidden
+WriteLiteral("\r\n                            <div");
 
 WriteLiteral(" class=\"bcms-field-wrapper\"");
 
@@ -349,7 +353,7 @@ WriteLiteral(">\r\n");
 WriteLiteral("                                ");
 
             
-            #line 51 "..\..\Views\Page\AddNewPage.cshtml"
+            #line 55 "..\..\Views\Page\AddNewPage.cshtml"
                            Write(Html.TextBoxFor(f => f.PageTitle, new { @class = "bcms-field-text", @id = "PageTitle" }));
 
             
@@ -360,7 +364,7 @@ WriteLiteral("\r\n");
 WriteLiteral("                                ");
 
             
-            #line 52 "..\..\Views\Page\AddNewPage.cshtml"
+            #line 56 "..\..\Views\Page\AddNewPage.cshtml"
                            Write(Html.BcmsValidationMessageFor(f => f.PageTitle));
 
             
@@ -371,7 +375,7 @@ WriteLiteral("\r\n                            </div>\r\n                        
 WriteLiteral("                        ");
 
             
-            #line 56 "..\..\Views\Page\AddNewPage.cshtml"
+            #line 60 "..\..\Views\Page\AddNewPage.cshtml"
                    Write(Html.Partial("Partial/AddNewPageEditPermalink"));
 
             
@@ -380,13 +384,13 @@ WriteLiteral("                        ");
 WriteLiteral("\r\n                    </div>\r\n\r\n                    <div>\r\n");
 
             
-            #line 60 "..\..\Views\Page\AddNewPage.cshtml"
+            #line 64 "..\..\Views\Page\AddNewPage.cshtml"
                         
             
             #line default
             #line hidden
             
-            #line 60 "..\..\Views\Page\AddNewPage.cshtml"
+            #line 64 "..\..\Views\Page\AddNewPage.cshtml"
                          if (Model.AccessControlEnabled)
                         {
                             var viewModel = new UserAccessTemplateViewModel
@@ -394,20 +398,20 @@ WriteLiteral("\r\n                    </div>\r\n\r\n                    <div>\r\
                                                     Title = PagesGlobalization.AddNewPage_UserAccess,
                                                     Tooltip = PagesGlobalization.AddNewPage_UserAccess_Tooltip_Description
                                                 };
-                        
+                            
             
             #line default
             #line hidden
             
-            #line 67 "..\..\Views\Page\AddNewPage.cshtml"
-                   Write(Html.Partial(RootModuleConstants.AccessControlTemplate, viewModel));
+            #line 71 "..\..\Views\Page\AddNewPage.cshtml"
+                       Write(Html.Partial(RootModuleConstants.AccessControlTemplate, viewModel));
 
             
             #line default
             #line hidden
             
-            #line 67 "..\..\Views\Page\AddNewPage.cshtml"
-                                                                                           
+            #line 71 "..\..\Views\Page\AddNewPage.cshtml"
+                                                                                               
                         }
 
             
@@ -417,25 +421,14 @@ WriteLiteral("                    </div>\r\n                </div>\r\n\r\n      
 
 WriteLiteral(" class=\"bcms-input-list-holder\"");
 
-WriteLiteral(">\r\n");
-
-WriteLiteral("                    ");
-
-            
-            #line 73 "..\..\Views\Page\AddNewPage.cshtml"
-               Write(Html.Tooltip(PagesGlobalization.AddNewPage_Template_Tooltip_Description));
-
-            
-            #line default
-            #line hidden
-WriteLiteral("\r\n                    <div");
+WriteLiteral(">\r\n                    <div");
 
 WriteLiteral(" class=\"bcms-content-titles\"");
 
 WriteLiteral(">");
 
             
-            #line 74 "..\..\Views\Page\AddNewPage.cshtml"
+            #line 77 "..\..\Views\Page\AddNewPage.cshtml"
                                                 Write(PagesGlobalization.AddNewPage_Template);
 
             
@@ -446,18 +439,29 @@ WriteLiteral("</div>\r\n");
 WriteLiteral("                    ");
 
             
-            #line 75 "..\..\Views\Page\AddNewPage.cshtml"
+            #line 78 "..\..\Views\Page\AddNewPage.cshtml"
+               Write(Html.Tooltip(PagesGlobalization.AddNewPage_Template_Tooltip_Description));
+
+            
+            #line default
+            #line hidden
+WriteLiteral("\r\n");
+
+WriteLiteral("                    ");
+
+            
+            #line 79 "..\..\Views\Page\AddNewPage.cshtml"
                Write(Html.Partial("Partial/TemplatesList", Model.Templates));
 
             
             #line default
             #line hidden
-WriteLiteral("\r\n                </div>\r\n             \r\n");
+WriteLiteral("\r\n                </div>\r\n\r\n");
 
 WriteLiteral("                ");
 
             
-            #line 78 "..\..\Views\Page\AddNewPage.cshtml"
+            #line 82 "..\..\Views\Page\AddNewPage.cshtml"
            Write(Html.HiddenFor(f => f.TemplateId, new { @id = "TemplateId" }));
 
             
@@ -468,7 +472,7 @@ WriteLiteral("\r\n");
 WriteLiteral("                ");
 
             
-            #line 79 "..\..\Views\Page\AddNewPage.cshtml"
+            #line 83 "..\..\Views\Page\AddNewPage.cshtml"
            Write(Html.HiddenFor(f => f.MasterPageId, new { @id = "MasterPageId" }));
 
             
@@ -479,7 +483,7 @@ WriteLiteral("\r\n");
 WriteLiteral("                ");
 
             
-            #line 80 "..\..\Views\Page\AddNewPage.cshtml"
+            #line 84 "..\..\Views\Page\AddNewPage.cshtml"
            Write(Html.HiddenFor(f => f.ParentPageUrl));
 
             
@@ -490,7 +494,7 @@ WriteLiteral("\r\n");
 WriteLiteral("                ");
 
             
-            #line 81 "..\..\Views\Page\AddNewPage.cshtml"
+            #line 85 "..\..\Views\Page\AddNewPage.cshtml"
            Write(Html.HiddenFor(f => f.CreateMasterPage));
 
             
@@ -499,7 +503,7 @@ WriteLiteral("                ");
 WriteLiteral("\r\n            </div>\r\n");
 
             
-            #line 83 "..\..\Views\Page\AddNewPage.cshtml"
+            #line 87 "..\..\Views\Page\AddNewPage.cshtml"
 
 
             
@@ -518,7 +522,7 @@ WriteLiteral(">\r\n");
 WriteLiteral("                ");
 
             
-            #line 85 "..\..\Views\Page\AddNewPage.cshtml"
+            #line 89 "..\..\Views\Page\AddNewPage.cshtml"
            Write(Html.Partial(PagesConstants.OptionValuesGridTemplate, new EditableGridViewModel { CanAddNewItems = true }));
 
             
@@ -527,7 +531,7 @@ WriteLiteral("                ");
 WriteLiteral("\r\n            </div>\r\n");
 
             
-            #line 87 "..\..\Views\Page\AddNewPage.cshtml"
+            #line 91 "..\..\Views\Page\AddNewPage.cshtml"
         }
 
             

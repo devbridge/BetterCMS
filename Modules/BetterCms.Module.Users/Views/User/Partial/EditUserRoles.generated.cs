@@ -61,39 +61,35 @@ WriteLiteral(" class=\"bcms-input-list-holder\"");
 
 WriteLiteral(" data-bind=\"with: roles\"");
 
-WriteLiteral(">\r\n");
+WriteLiteral(">\r\n    <div");
+
+WriteLiteral(" class=\"bcms-content-titles\"");
+
+WriteLiteral(">");
+
+            
+            #line 6 "..\..\Views\User\Partial\EditUserRoles.cshtml"
+                                Write(UsersGlobalization.EditUser_Add_Role_Title);
+
+            
+            #line default
+            #line hidden
+WriteLiteral("</div>    \r\n");
 
 WriteLiteral("    ");
 
             
-            #line 6 "..\..\Views\User\Partial\EditUserRoles.cshtml"
+            #line 7 "..\..\Views\User\Partial\EditUserRoles.cshtml"
 Write(Html.Tooltip(UsersGlobalization.EditUser_Role_Tooltip_Description));
 
             
             #line default
             #line hidden
-WriteLiteral("\r\n    <div");
-
-WriteLiteral(" class=\"bcms-content-titles\"");
-
-WriteLiteral(">\r\n");
-
-WriteLiteral("        ");
-
-            
-            #line 8 "..\..\Views\User\Partial\EditUserRoles.cshtml"
-   Write(UsersGlobalization.EditUser_Add_Role_Title);
-
-            
-            #line default
-            #line hidden
-WriteLiteral("\r\n    </div>\r\n\r\n    <div");
+WriteLiteral("\r\n\r\n    <div");
 
 WriteLiteral(" class=\"bcms-field-wrapper\"");
 
 WriteLiteral(" data-bind=\"visible: isExpanded()\"");
-
-WriteLiteral(" style=\"right: -170px;\"");
 
 WriteLiteral(">\r\n        <input");
 
@@ -140,7 +136,7 @@ WriteLiteral(" data-bind=\"click: remove\"");
 WriteLiteral(">");
 
             
-            #line 27 "..\..\Views\User\Partial\EditUserRoles.cshtml"
+            #line 25 "..\..\Views\User\Partial\EditUserRoles.cshtml"
                                                                                                                                                              Write(RootGlobalization.Button_Remove);
 
             

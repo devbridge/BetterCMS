@@ -1,49 +1,51 @@
 ﻿@using BetterCms.Module.Pages.Content.Resources
 @model BetterCms.Module.Pages.ViewModels.History.HtmlContentWidgetHistoryViewModel
 
-<div class="bcms-padded-content">
-    <div class="bcms-input-list-holder">
-        <div class="bcms-content-titles">@PagesGlobalization.HtmlContentWidget_ContentName_Title</div>
-        <div class="bcms-field-wrapper">
-            @Html.TextBoxFor(model => model.Name, new { @readonly = "readonly", @class = "bcms-field-text" })
-        </div>
+<div class="bcms-input-list-holder">
+    <div class="bcms-content-titles">@PagesGlobalization.HtmlContentWidget_ContentName_Title</div>
+    <div class="bcms-field-wrapper">
+        @Html.TextBoxFor(model => model.Name, new { @readonly = "readonly", @class = "bcms-field-text" })
     </div>
+</div>
 
-    <div class="bcms-input-list-holder">
-        <div class="bcms-content-titles">@PagesGlobalization.HtmlContentWidget_CustomHTML_Title</div>
-        <div class="bcms-poptext-editor-holder">
-            @Html.TextAreaFor(model => model.Html, new { @readonly = "readonly", @class = "bcms-advanced-contenthtml bcms-field-textarea bcms-code-field" })
-        </div>
+<div class="bcms-input-list-holder">
+    <div class="bcms-content-titles">@PagesGlobalization.HtmlContentWidget_CustomHTML_Title</div>
+    <div class="bcms-field-wrapper">
+        @Html.TextAreaFor(model => model.Html, new { @readonly = "readonly", @class = "bcms-advanced-contenthtml bcms-field-textarea bcms-code-field" })
     </div>
+</div>
 
-    <div class="bcms-input-list-holder">
-        <div class="bcms-edit-check-field">
-            @Html.CheckBoxFor(model => model.UseCustomHtml, new { @disabled = "disabled" })
-            <div class="bcms-edit-label">@Html.Raw(PagesGlobalization.HtmlContentWidget_RenderCustomHTML_Title)</div>
-        </div>
+<div class="bcms-input-list-holder">
+    <div class="bcms-edit-check-field">
+        @Html.CheckBoxFor(model => model.UseCustomHtml, new { @disabled = "disabled" })
+        <div class="bcms-edit-label">@Html.Raw(PagesGlobalization.HtmlContentWidget_RenderCustomHTML_Title)</div>
     </div>
+</div>
 
-    <div class="bcms-input-list-holder">
-        <div class="bcms-content-titles">@PagesGlobalization.HtmlContentWidget_CustomCSS_Title</div>
+<div class="bcms-input-list-holder">
+    <div class="bcms-content-titles">@PagesGlobalization.HtmlContentWidget_CustomCSS_Title</div>
+    <div class="bcms-field-wrapper">
         @Html.TextAreaFor(model => model.CustomCss, new { @readonly = "readonly", @class = "bcms-field-textarea bcms-code-field bcms-code-field-css" })
     </div>
+</div>
 
-    <div class="bcms-input-list-holder">
-        <div class="bcms-edit-check-field">
-            @Html.CheckBoxFor(model => model.UseCustomCss, new { @disabled = "disabled" })
-            <div class="bcms-edit-label">@Html.Raw(PagesGlobalization.HtmlContentWidget_RenderCustomCSS_Title)</div>
-        </div>
+<div class="bcms-input-list-holder">
+    <div class="bcms-edit-check-field">
+        @Html.CheckBoxFor(model => model.UseCustomCss, new { @disabled = "disabled" })
+        <div class="bcms-edit-label">@Html.Raw(PagesGlobalization.HtmlContentWidget_RenderCustomCSS_Title)</div>
     </div>
+</div>
 
-    <div class="bcms-input-list-holder">
-        <div class="bcms-content-titles">@PagesGlobalization.HtmlContentWidget_CustomJS_Title</div>
+<div class="bcms-input-list-holder">
+    <div class="bcms-content-titles">@PagesGlobalization.HtmlContentWidget_CustomJS_Title</div>
+    <div class="bcms-field-wrapper">
         @Html.TextAreaFor(model => model.CustomJs, new { @readonly = "readonly", @class = "bcms-field-textarea bcms-code-field bcms-code-field-javascript" })
     </div>
+</div>
 
-    <div class="bcms-input-list-holder">
-        <div class="bcms-edit-check-field">
-            @Html.CheckBoxFor(model => model.UseCustomJs, new { @disabled = "disabled" })
-            <div class="bcms-edit-label">@Html.Raw(PagesGlobalization.HtmlContentWidget_RenderCustomJS_Title)</div>
-        </div>
+<div class="bcms-input-list-holder">
+    <div class="bcms-edit-check-field">
+        @Html.CheckBoxFor(model => model.UseCustomJs, new { @disabled = "disabled" })
+        <div class="bcms-edit-label">@Html.Raw(PagesGlobalization.HtmlContentWidget_RenderCustomJS_Title)</div>
     </div>
 </div>

@@ -67,31 +67,29 @@ namespace ASP
             
             #line default
             #line hidden
-WriteLiteral("\r\n");
+WriteLiteral("\r\n\r\n<div");
+
+WriteLiteral(" class=\"bcms-content-titles\"");
+
+WriteLiteral(">");
 
             
-            #line 8 "..\..\Views\Category\CategoriesTemplate.cshtml"
+            #line 9 "..\..\Views\Category\CategoriesTemplate.cshtml"
+                            Write(RootGlobalization.CategoriesTemplate_AddCategories_Title);
+
+            
+            #line default
+            #line hidden
+WriteLiteral("</div>\r\n");
+
+            
+            #line 10 "..\..\Views\Category\CategoriesTemplate.cshtml"
 Write(Html.Tooltip(Model.TooltipDescription));
 
             
             #line default
             #line hidden
 WriteLiteral("\r\n\r\n<div");
-
-WriteLiteral(" class=\"bcms-content-titles\"");
-
-WriteLiteral(">\r\n");
-
-WriteLiteral("    ");
-
-            
-            #line 11 "..\..\Views\Category\CategoriesTemplate.cshtml"
-Write(RootGlobalization.CategoriesTemplate_AddCategories_Title);
-
-            
-            #line default
-            #line hidden
-WriteLiteral("\r\n</div>\r\n\r\n<div");
 
 WriteLiteral(" class=\"bcms-field-wapper\"");
 
@@ -141,7 +139,7 @@ WriteLiteral("></span><a");
 WriteLiteral(" data-bind=\"");
 
             
-            #line 31 "..\..\Views\Category\CategoriesTemplate.cshtml"
+            #line 29 "..\..\Views\Category\CategoriesTemplate.cshtml"
                                                                                                                                            Write(canEdit ? "click: remove" : string.Empty);
 
             
@@ -152,7 +150,7 @@ WriteLiteral("\"");
 WriteLiteral(">");
 
             
-            #line 31 "..\..\Views\Category\CategoriesTemplate.cshtml"
+            #line 29 "..\..\Views\Category\CategoriesTemplate.cshtml"
                                                                                                                                                                                        Write(RootGlobalization.Button_Remove);
 
             

@@ -171,31 +171,31 @@ WriteLiteral(">\r\n                        <div>\r\n                            
 
 WriteLiteral(" class=\"bcms-input-list-holder\"");
 
-WriteLiteral(">\r\n");
-
-WriteLiteral("                                ");
-
-            
-            #line 40 "..\..\Views\Sitemap\Edit.cshtml"
-                           Write(Html.Tooltip(NavigationGlobalization.Sitemap_EditDialog_SitemapTitle_Tooltip_Description));
-
-            
-            #line default
-            #line hidden
-WriteLiteral("\r\n                                <div");
+WriteLiteral(">\r\n                                <div");
 
 WriteLiteral(" class=\"bcms-content-titles\"");
 
 WriteLiteral(">");
 
             
-            #line 41 "..\..\Views\Sitemap\Edit.cshtml"
+            #line 40 "..\..\Views\Sitemap\Edit.cshtml"
                                                             Write(NavigationGlobalization.Sitemap_EditDialog_SitemapTitle_Title);
 
             
             #line default
             #line hidden
-WriteLiteral("</div>\r\n                                <div");
+WriteLiteral("</div>\r\n");
+
+WriteLiteral("                                ");
+
+            
+            #line 41 "..\..\Views\Sitemap\Edit.cshtml"
+                           Write(Html.Tooltip(NavigationGlobalization.Sitemap_EditDialog_SitemapTitle_Tooltip_Description));
+
+            
+            #line default
+            #line hidden
+WriteLiteral("\r\n                                <div");
 
 WriteLiteral(" class=\"bcms-field-wrapper\"");
 

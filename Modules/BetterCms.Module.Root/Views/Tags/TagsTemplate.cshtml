@@ -5,11 +5,9 @@
 @model BetterCms.Module.Root.ViewModels.Tags.TagsTemplateViewModel
 
 @{ var canEdit = (ViewContext.Controller as CmsControllerBase).SecurityService.IsAuthorized(RootModuleConstants.UserRoles.EditContent); }
-@Html.Tooltip(Model.TooltipDescription)
 
-<div class="bcms-content-titles">
-    @RootGlobalization.TagsTemplate_AddTags_Title
-</div>
+<div class="bcms-content-titles">@RootGlobalization.TagsTemplate_AddTags_Title</div>
+@Html.Tooltip(Model.TooltipDescription)
 
 <div class="bcms-field-wrapper" data-bind="visible: isExpanded()">
     <input type="text" class="bcms-field-text" data-bind="

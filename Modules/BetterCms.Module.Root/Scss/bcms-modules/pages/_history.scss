@@ -1,94 +1,60 @@
-.bcms-history-preview-holder {
-    box-sizing: border-box;
-    -moz-box-sizing: border-box;
-    height: 100%;
-    padding-bottom: 251px;
+$history-preview-box: ($header-height + $tab-height);
+
+$history-states: (
+                ('published', $text-blue),
+                ('draft', $text-green),
+                ('archived', $text-red)
+);
+
+%history-preview-frame {
+    background-color: $white;
+    height: calc(60vh - #{$history-preview-box});
     position: relative;
 }
 
-.bcms-history-preview {
-    height: 100%;
-    width: 100%;
+.bcms-history {
+    &-preview-holder {
+        @extend %history-preview-frame;
+        overflow: hidden;
+    }
+
+    &-preview-data {
+        @extend %history-preview-frame;
+        box-sizing: border-box;
+        overflow: auto;
+        padding: 20px 30px;
+    }
+
+    &-info {
+        @include positioning($center: true);
+        color: $text-dark;
+        font-size: 19px;
+        text-align: center;
+    }
+
+    &-table-holder {
+        height: calc(40vh - #{$footer-height});
+    }
+
+    &-table-top {
+        background-color: $white;
+        border: {
+            top: $border-thin-smoke;
+            bottom: $border-thin-smoke;
+        }
+        padding: 3px 30px;
+    }
+
+    &-items-list {
+        background-color: $white;
+        height: calc(40vh - #{$footer-height + 44px});
+        overflow-y: auto;
+    }
 }
 
-.bcms-history-info {
-    color: #24597e;
-    font-size: 19px;
-    font-weight: 700;
-    left: 0;
-    line-height: 1.5em;
-    margin-top: -139px;
-    position: absolute;
-    text-align: center;
-    top: 50%;
-    width: 100%;
-}
+@each $name, $state-color in $history-states {
+    .bcms-#{$name}-state {
+        color: $state-color;
+    }
 
-.bcms-history-content {
-    padding: 20px;
-}
-
-.bcms-history-table-holder {
-    bottom: 0;
-    left: 0;
-    position: absolute;
-    right: 0;
-}
-
-.bcms-history-table-top {
-    background-color: #e3e3e3;
-    border-top: 4px solid #7a7a7a;
-    padding: 10px 15px;
-}
-
-//.bcms-history-table-top .bcms-large-titles {
-//    display: inline-block;
-//    padding: 5px;
-//}
-
-.bcms-history-grid thead tr {
-    display: block;
-}
-
-.bcms-history-cell:hover {
-    background-color: #fff;
-}
-
-.bcms-scroll-tbody {
-    height: 160px;
-    overflow-y: scroll;
-}
-
-.bcms-scroll-tbody tr:hover a.bcms-icn-preview {
-    background-position: -60px -133px;
-}
-
-.bcms-scroll-tbody tr:hover a.bcms-icn-preview:active {
-    background-position: -60px -159px;
-}
-
-.bcms-scroll-tbody tr:hover a.bcms-icn-restore {
-    background-position: right -1121px;
-    color: #303030;
-}
-
-.bcms-scroll-tbody tr:hover a.bcms-icn-restore:active {
-    background-position: right -1151px;
-    color: #df2200;
-}
-
-.bcms-scroll-tbody tbody td {
-    vertical-align: middle;
-}
-
-.bcms-published-state {
-    color: #24597e;
-}
-
-.bcms-draft-state {
-    color: #20cd00;
-}
-
-.bcms-archived-state {
-    color: #e64343;
 }

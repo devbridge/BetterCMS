@@ -9,8 +9,9 @@
 
 <div class="bcms-input-list-holder" id="bcms-accesscontrol-context">
     <div data-bind="with: accessControl">
-        @Html.Tooltip(@viewModel.Tooltip)
         <div class="bcms-content-titles">@viewModel.Title</div>
+        @Html.Tooltip(@viewModel.Tooltip)
+
         <div class="bcms-access-title bcms-clearfix">
             <div class="bcms-access-title-text">@RootGlobalization.AccessControl_UserAccess_User</div>
             <div class="bcms-access-title-text">@RootGlobalization.AccessControl_UserAccess_ReadAndEdit</div>

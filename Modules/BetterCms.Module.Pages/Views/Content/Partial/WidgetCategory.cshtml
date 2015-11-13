@@ -5,20 +5,19 @@
 @using BetterCms.Module.Root.Mvc
 @using BetterCms.Module.Root.Mvc.Helpers
 @using Microsoft.Web.Mvc
-
 @model BetterCms.Module.Pages.ViewModels.Widgets.WidgetCategoryViewModel
-        
-<div class="bcms-category-titles">@Model.CategoryName</div>
 
+<div class="bcms-category-titles">@Model.CategoryName</div>
 @if (Model.Widgets != null)
 {
     @:<div class="bcms-templates-holder">
+
 
     for (int i = 0; i < Model.Widgets.Count; i++)
     {
         var widget = Model.Widgets[i];
 
-        <div class="bcms-grid-box bcms-grid-box-pages"
+        <div class="bcms-grid-box bcms-grid-box-pages bcms-js-preview-block"
              data-id="@widget.Id"
              data-original-id="@widget.OriginalId"
              data-version="@widget.Version"
@@ -43,15 +42,17 @@
                 <div class="bcms-btn-tertiary bcms-js-insert">@PagesGlobalization.AddPageContent_WidgetTab_InsertButton</div>
                 @if ((ViewContext.Controller as CmsControllerBase).SecurityService.IsAuthorized(RootModuleConstants.UserRoles.Administration))
                 {
-                    if (!widget.Status.Equals(ContentStatus.Published.ToString()))
-                    {
-                        <a class="bcms-icn-edit bcms-js-content-edit bcms-edit-draft">@PagesGlobalization.AddPageContent_WidgetTab_EditButton</a>
-                    }
-                    else
-                    {
-                        <a class="bcms-icn-edit bcms-js-content-edit">@PagesGlobalization.AddPageContent_WidgetTab_EditButton</a>
-                    }
-                    <a class="bcms-icn-delete bcms-js-content-delete">@PagesGlobalization.AddPageContent_WidgetTab_DeleteButton</a>
+                    <div class="bcms-grid-controls-helper">
+                        @if (!widget.Status.Equals(ContentStatus.Published.ToString()))
+                        {
+                            <div class="bcms-action-edit bcms-js-content-edit bcms-draft">@PagesGlobalization.AddPageContent_WidgetTab_EditButton</div>
+                        }
+                        else
+                        {
+                            <div class="bcms-action-edit bcms-js-content-edit">@PagesGlobalization.AddPageContent_WidgetTab_EditButton</div>
+                        }
+                        <div class="bcms-action-delete bcms-js-content-delete">@PagesGlobalization.AddPageContent_WidgetTab_DeleteButton</div>
+                    </div>
                 }
             </div>
         </div>
@@ -59,4 +60,3 @@
 
     @:</div>
 }
-

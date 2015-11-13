@@ -1,7 +1,10 @@
 .bcms-category-titles {
-    border-bottom: $border-nav-bottom;
-    color: $dark-text;
-    font-size: 16px;
+    border-bottom: $border-thin-smoke;
+    color: $text-dark;
+    font: {
+        size: 16px;
+        weight: 700;
+    }
     padding: 10px 0;
 }
 
@@ -14,27 +17,6 @@
 //
 //
 //
-//module Add New tabbed content
-//module 1st tab
-.bcms-newcontent-top {
-    height: 80px;
-    padding-top: 20px;
-}
-
-.bcms-newcontent-top .bcms-input-field-holder {
-    float: left;
-    margin-left: 20px;
-}
-
-.bcms-newcontent-top .bcms-input-field-holder:first-child {
-    margin-left: 0;
-}
-
-.bcms-text-editor-holder {
-    padding-bottom: 25px;
-    position: relative;
-}
-
 //module new placement
 //module left-sidebar
 .bcms-sidebar-info-block {

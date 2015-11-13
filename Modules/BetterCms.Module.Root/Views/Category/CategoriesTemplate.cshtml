@@ -5,11 +5,9 @@
 @model BetterCms.Module.Root.ViewModels.Category.CategoryTemplateViewModel
 
 @{ var canEdit = (ViewContext.Controller as CmsControllerBase).SecurityService.IsAuthorized(RootModuleConstants.UserRoles.EditContent); }
-@Html.Tooltip(Model.TooltipDescription)
 
-<div class="bcms-content-titles">
-    @RootGlobalization.CategoriesTemplate_AddCategories_Title
-</div>
+<div class="bcms-content-titles">@RootGlobalization.CategoriesTemplate_AddCategories_Title</div>
+@Html.Tooltip(Model.TooltipDescription)
 
 <div class="bcms-field-wapper" data-bind="visible: isExpanded()">
     <input type="text" class="bcms-field-text" data-bind="

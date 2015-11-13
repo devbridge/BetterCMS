@@ -34,8 +34,8 @@
         {
             <div id="bcms-tab-1" class="bcms-tab-single">
                 <div class="bcms-input-list-holder">
-                    @Html.Tooltip(PagesGlobalization.Widget_Title_Tooltip_Description)
                     <div class="bcms-content-titles">@PagesGlobalization.Widget_Title_Title</div>
+                    @Html.Tooltip(PagesGlobalization.Widget_Title_Tooltip_Description)
                     <div class="bcms-field-wrapper">
                         @Html.TextBoxFor(model => model.Name, new { @class = "bcms-field-text" })
                         @Html.BcmsValidationMessageFor(m => m.Name)
@@ -43,8 +43,8 @@
                 </div>
 
                 <div class="bcms-input-list-holder">
-                    @Html.Tooltip(PagesGlobalization.Widget_Url_Tooltip_Description)
                     <div class="bcms-content-titles">@PagesGlobalization.Widget_Url_Title</div>
+                    @Html.Tooltip(PagesGlobalization.Widget_Url_Tooltip_Description)
                     <div class="bcms-field-wrapper">
                         @Html.TextBoxFor(model => model.Url, new { @class = "bcms-field-text" })
                         @Html.BcmsValidationMessageFor(m => m.Url)
@@ -56,8 +56,8 @@
                 </div>
 
                 <div class="bcms-input-list-holder">
-                    @Html.Tooltip(PagesGlobalization.WidgetPreviewImageUrl_Tooltip_Description)
                     <div class="bcms-content-titles">@PagesGlobalization.WidgetPreviewImageUrl_Title</div>
+                    @Html.Tooltip(PagesGlobalization.WidgetPreviewImageUrl_Tooltip_Description)
                     <div class="bcms-field-wrapper">
                         @Html.TextBoxFor(model => model.PreviewImageUrl, new { @class = "bcms-field-text" })
                         @Html.BcmsValidationMessageFor(m => m.PreviewImageUrl)
@@ -65,8 +65,8 @@
                 </div>
 
                 <div class="bcms-input-list-holder">
-                    @Html.Tooltip(PagesGlobalization.WidgetPreviewImage_Tooltip_Description)
                     <div class="bcms-content-titles">@PagesGlobalization.WidgetPreviewImage_Title</div>
+                    @Html.Tooltip(PagesGlobalization.WidgetPreviewImage_Tooltip_Description)
                     <div class="bcms-preview-module-image">
                         <div style="display: none;">
                             <img id="bcms-widget-preview-image" src="@Model.PreviewImageUrl" alt="" />

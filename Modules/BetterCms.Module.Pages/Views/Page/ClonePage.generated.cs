@@ -161,31 +161,31 @@ WriteLiteral(">\r\n                <div>\r\n                    <div");
 
 WriteLiteral(" class=\"bcms-input-list-holder\"");
 
-WriteLiteral(">\r\n");
-
-WriteLiteral("                        ");
-
-            
-            #line 24 "..\..\Views\Page\ClonePage.cshtml"
-                   Write(Html.Tooltip(PagesGlobalization.ClonePage_Dialog_PageTitle_Tooltip_Description));
-
-            
-            #line default
-            #line hidden
-WriteLiteral("\r\n                        <div");
+WriteLiteral(">\r\n                        <div");
 
 WriteLiteral(" class=\"bcms-content-titles\"");
 
 WriteLiteral(">");
 
             
-            #line 25 "..\..\Views\Page\ClonePage.cshtml"
+            #line 24 "..\..\Views\Page\ClonePage.cshtml"
                                                     Write(PagesGlobalization.ClonePage_Dialog_PageTitle);
 
             
             #line default
             #line hidden
-WriteLiteral("</div>\r\n                        <div");
+WriteLiteral("</div>\r\n");
+
+WriteLiteral("                        ");
+
+            
+            #line 25 "..\..\Views\Page\ClonePage.cshtml"
+                   Write(Html.Tooltip(PagesGlobalization.ClonePage_Dialog_PageTitle_Tooltip_Description));
+
+            
+            #line default
+            #line hidden
+WriteLiteral("\r\n                        <div");
 
 WriteLiteral(" class=\"bcms-field-wrapper\"");
 
@@ -242,31 +242,31 @@ WriteLiteral("                        <div");
 
 WriteLiteral(" class=\"bcms-input-list-holder\"");
 
-WriteLiteral(">\r\n");
-
-WriteLiteral("                            ");
-
-            
-            #line 37 "..\..\Views\Page\ClonePage.cshtml"
-                       Write(Html.Tooltip(PagesGlobalization.ClonePage_Dialog_AsMasterPage_Tooltip_Description));
-
-            
-            #line default
-            #line hidden
-WriteLiteral("\r\n                            <div");
+WriteLiteral(">\r\n                            <div");
 
 WriteLiteral(" class=\"bcms-content-titles\"");
 
 WriteLiteral(">");
 
             
-            #line 38 "..\..\Views\Page\ClonePage.cshtml"
+            #line 37 "..\..\Views\Page\ClonePage.cshtml"
                                                         Write(PagesGlobalization.ClonePage_Dialog_AsMasterPage_Title);
 
             
             #line default
             #line hidden
-WriteLiteral("</div>\r\n\r\n                            <div");
+WriteLiteral("</div>\r\n");
+
+WriteLiteral("                            ");
+
+            
+            #line 38 "..\..\Views\Page\ClonePage.cshtml"
+                       Write(Html.Tooltip(PagesGlobalization.ClonePage_Dialog_AsMasterPage_Tooltip_Description));
+
+            
+            #line default
+            #line hidden
+WriteLiteral("\r\n\r\n                            <div");
 
 WriteLiteral(" class=\"bcms-checkbox-holder\"");
 
