@@ -14,16 +14,20 @@ $zone-padding: 15px;
 .bcms-tree {
     &-zones-holder {
         display: table;
+        margin-bottom: 20px;
         width: 100%;
     }
 
-    &-drag-area {
+    &-drag-area-ui {
         @include vertical-align($block: table-cell, $align: top);
+        padding-right: 30px;
         width: $settings-sidebar;
     }
 
     &-drop-area-ui {
         @include vertical-align($block: table-cell, $align: top);
+        border-left: $border-thin-smoke;
+        padding-left: 30px;
     }
 
     &-info-block {
@@ -86,6 +90,18 @@ $zone-padding: 15px;
         @include vertical-align();
         color: $text-blue;
         line-height: 42px;
+
+        &.bcms-node-box-title-sitemap {
+            line-height: 18px;
+            margin-top: 4px;
+        }
+    }
+
+    &-path {
+        > a {
+            color: $text-dark;
+            font-size: 11px;
+        }
     }
 
     &-drag {
@@ -97,6 +113,10 @@ $zone-padding: 15px;
         background-color: $sky-blue;
 
         .bcms-node-box-info {
+            display: none;
+        }
+
+        .bcms-node-box-path {
             display: none;
         }
 
@@ -211,6 +231,47 @@ $zone-padding: 15px;
     }
 }
 
+.bcms-drag-zone {
+    &-read-only {
+        overflow: hidden;
+        position: relative;
+
+        @include virtual(after) {
+            @include position(absolute, 0);
+            background-color: rgba($white, .5);
+        }
+    }
+
+    &-box {
+        background-color: $white;
+        border: $border-thin-smoke;
+        box-sizing: border-box;
+        margin: 8px 0;
+        min-height: 44px;
+        padding: 5px 10px;
+
+        &:last-of-type {
+            margin-bottom: 0;
+        }
+    }
+
+    &-title {
+        @include ellipsis();
+        color: $text-blue;
+        max-width: $settings-sidebar;
+    }
+
+    &-path {
+        > a {
+            @include ellipsis();
+            color: $text-dark;
+            display: block;
+            font-size: 11px;
+            max-width: $settings-sidebar;
+        }
+    }
+}
+
 //todo upgrade after design received
 //
 //
@@ -219,10 +280,6 @@ $zone-padding: 15px;
 //
 //
 //module sitemap "add new node"
-.bcms-sitemap-links-holder {
-    padding: 10px 20px;
-}
-
 .bcms-sidebar-search {
     margin: 15px 0;
     position: relative;
@@ -230,30 +287,6 @@ $zone-padding: 15px;
 
 .bcms-sidebar-search .bcms-editor-field-box {
     background-color: #fff;
-}
-
-.bcms-addnode-placement-holder {
-    display: block;
-    min-height: 52px;
-    padding: 0 0 4px;
-}
-
-.bcms-addnode-placement-holder-readonly {
-    display: block;
-    min-height: 52px;
-    padding: 0 0 4px;
-}
-
-.bcms-add-node-col {
-    border-top: 1px solid #C6C6C6;
-}
-
-.bcms-drop-area {
-    border: 2px dashed #0383df;
-    border-radius: 4px;
-    margin: 0 20px 20px;
-    min-height: 65px;
-    padding-top: 20px;
 }
 
 //module left-sidebar
@@ -282,35 +315,4 @@ $zone-padding: 15px;
 
 .bcms-dropable-page-box .bcms-dropable-text {
     padding-bottom: 20px;
-}
-
-////module editable node
-//.bcms-edit-node {
-//    display: none;
-//}
-//
-//.bcms-placement-node-edit .bcms-node-info {
-//    display: none;
-//}
-//
-//.bcms-placement-node-edit .bcms-edit-node {
-//    display: block;
-//}
-
-//module menu
-div.bcms-menu-left-col {
-    width: 50%;
-}
-
-div.bcms-add-node-col > .bcms-content-titles {
-    cursor: pointer;
-}
-
-div.bcms-add-node-col .bcms-placement-node {
-    margin-bottom: 5px;
-    width: 195px;
-}
-
-div.bcms-add-node-col .bcms-placement-dropzone {
-    margin-bottom: 5px;
 }
