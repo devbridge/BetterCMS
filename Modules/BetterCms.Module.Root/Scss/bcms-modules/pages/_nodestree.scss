@@ -127,7 +127,7 @@ $zone-padding: 15px;
         @include virtual(before) {
             @include position(absolute, 0 null null -15px);
             @include size(15px 100%);
-            background: url($bcms-node-step-long) repeat-y left top;
+            background: url($bcms-node-step) repeat-y left top;
         }
 
         @include virtual(after) {
@@ -148,7 +148,6 @@ $zone-padding: 15px;
 
         &:last-of-type {
             &:before {
-                background: url($bcms-node-step-last) no-repeat left top;
                 height: 23px;
             }
         }
@@ -165,6 +164,7 @@ $zone-padding: 15px;
 }
 
 //todo upgrade after design received
+//
 //
 //
 //

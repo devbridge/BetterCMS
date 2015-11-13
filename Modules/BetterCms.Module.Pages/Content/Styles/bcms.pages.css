@@ -144,7 +144,7 @@
   left: -15px;
   height: 100%;
   width: 15px;
-  background: url("data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxNyIgaGVpZ2h0PSIzNCIgdmlld0JveD0iLTI5NyAzMzggMTcgMzQiIGVuYWJsZS1iYWNrZ3JvdW5kPSJuZXcgLTI5NyAzMzggMTcgMzQiPjxnIGZpbGw9IiNkMmNmY2YiPjxwYXRoIGQ9Im0tMjk3IDMzOGgydjEwaC0ydi0xMCIvPjxwYXRoIGQ9Im0tMjk3IDM1NWgydjEwaC0ydi0xMCIvPjwvZz48L3N2Zz4=") repeat-y left top;
+  background: url("data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIyIiBoZWlnaHQ9IjE3IiB2aWV3Qm94PSItMjk3IDMzOCAyIDE3IiBlbmFibGUtYmFja2dyb3VuZD0ibmV3IC0yOTcgMzM4IDIgMTciPjxwYXRoIGQ9Im0tMjk3IDMzOGgydjEwaC0ydi0xMCIgZmlsbD0iI2QyY2ZjZiIvPjwvc3ZnPg==") repeat-y left top;
 }
 
 .bcms-zone-holder > .bcms-nodes-container:after {
@@ -166,7 +166,6 @@
 }
 
 .bcms-zone-holder > .bcms-nodes-container:last-of-type:before {
-  background: url("data:image/svg+xml;base64,PHN2ZyBoZWlnaHQ9IjIzIiB3aWR0aD0iMTciIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgdmlld0JveD0iMCAwIDE3IDIzIj48ZyBmaWxsPSIjZDJjZmNmIiBmaWxsLXJ1bGU9ImV2ZW5vZGQiPjxwYXRoIGQ9Im0wIDBoMnYxMGgtMnYtMTAiLz48cGF0aCBkPSJtMCAxN2gydjZoLTJ2LTYiLz48cGF0aCBkPSJtMiAyMWgxNXYyaC0xNXYtMiIvPjwvZz48L3N2Zz4=") no-repeat left top;
   height: 23px;
 }
 

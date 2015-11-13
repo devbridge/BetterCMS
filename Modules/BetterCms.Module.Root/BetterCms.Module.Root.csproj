@@ -1499,6 +1499,7 @@
     <Content Include="Scss\assets\icons\messages-info.svg" />
     <Content Include="Scss\assets\icons\messages-success.svg" />
     <Content Include="Scss\assets\icons\messages-warning.svg" />
+    <Content Include="Scss\assets\icons\node-step.svg" />
     <Content Include="Scss\assets\icons\overlay-delete.svg" />
     <Content Include="Scss\assets\icons\overlay-edit-child.svg" />
     <Content Include="Scss\assets\icons\overlay-edit.svg" />
