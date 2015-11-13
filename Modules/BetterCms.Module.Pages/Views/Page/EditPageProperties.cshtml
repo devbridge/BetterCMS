@@ -152,13 +152,14 @@
 @*                            @Html.Partial("~/Areas/bcms-root/Views/Category/CategoriesTemplate.cshtml", categoriesTemplateViewModel)*@
 @*                        </div>*@
                         <div class="bcms-input-list-holder">
+                            @Html.Tooltip(categoriesTemplateViewModel.TooltipDescription)
                             <div class="bcms-content-titles">
                                 @RootGlobalization.CategoriesTemplate_AddCategories_Title
-                                <input type="hidden" id="customSelect" />
                             </div>
-                        </div>
-                        <div class="bcms-single-tag-holder" data-bind="foreach: categories">
-                            <input type="hidden" data-bind="attr: { name: 'Categories['+ $index() +'].key', value: $data.id }" />
+                            <input type="hidden" id="bcms-js-categories-select"/>
+                            <div class="bcms-single-tag-holder" data-bind="foreach: categories">
+                                <input type="hidden" data-bind="attr: { name: 'Categories['+ $index() +'].key', value: $data.id }"/>
+                            </div>
                         </div>
 
 

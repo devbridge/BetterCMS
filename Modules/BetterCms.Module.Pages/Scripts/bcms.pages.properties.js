@@ -27,6 +27,7 @@ bettercms.define('bcms.pages.properties', ['bcms.jquery', 'bcms', 'bcms.modal', 
                 pagePropertiesMasterPageId: '#MasterPageId',
                 pagePropertiesActiveTemplateBox: '.bcms-grid-box-active',
                 pagePropertiesTemplatePreviewLink: '.bcms-preview-template',
+                pagePropertiesCategoriesSelect: '#bcms-js-categories-select',
 
                 pagePropertiesForm: 'form:first',
                 pagePropertiesPageIsPublishedCheckbox: '#IsPagePublished',
@@ -85,6 +86,22 @@ bettercms.define('bcms.pages.properties', ['bcms.jquery', 'bcms', 'bcms.modal', 
             self.categories = ko.observableArray(categoriesModel);
         }
 
+        function initCategoriesSelect(pageViewModel, content) {
+            var categoriesSelectBox = $(selectors.pagePropertiesCategoriesSelect).select2({
+                multiple: true,
+                width: '100%',
+                data: content.Data.CategoriesLookupList
+            }).on('select2-selecting', function (e) {
+                pageViewModel.categories.push({ id: e.choice.id, text: e.choice.text });
+            }).on('select2-removed', function (e) {
+                pageViewModel.categories.remove(function (item) {
+                    return item.id == e.val;
+                });
+            });
+
+            categoriesSelectBox.select2('data', content.Data.Categories);
+        }
+
         /**
         * Initializes EditPageProperties dialog events.
         */
@@ -99,20 +116,7 @@ bettercms.define('bcms.pages.properties', ['bcms.jquery', 'bcms', 'bcms.modal', 
                 form = dialog.container.find(selectors.pagePropertiesForm),
                 codeEditorInitialized = false;
 
-            var categoriesSelectBox = $("#customSelect").select2({
-                multiple: true,
-                width: 300,
-                data: content.Data.CategoriesLookupList
-            }).on('select2-selecting', function (e) {
-                pageViewModel.categories.push({ id: e.val });
-                })
-            .on('select2-removed', function(e) {
-                pageViewModel.categories.remove(function(item) {
-                    return item.id == e.val;
-                });
-            });
-
-            categoriesSelectBox.select2('data', content.Data.Categories);
+            initCategoriesSelect(pageViewModel, content);
              
             ko.applyBindings(pageViewModel, form.get(0));
 

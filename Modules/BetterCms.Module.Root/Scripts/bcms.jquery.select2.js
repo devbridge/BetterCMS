@@ -3265,15 +3265,16 @@ bettercms.define('bcms.jquery.select2', ['bcms.jquery'], function(jQuery) {
 
             createChoice: function(data) {
                 var enableChoice = !data.locked,
+                    
                     enabledItem = $(
-                        "<li class='select2-search-choice'>" +
-                        "    <div></div>" +
+                        "<div class='bcms-single-tag select2-search-choice'>" +
+                        "    <span>"+ data.text +"</span>" +
                         "    <a href='#' class='select2-search-choice-close' tabindex='-1'></a>" +
-                        "</li>"),
+                        "</div>"),
                     disabledItem = $(
-                        "<li class='select2-search-choice select2-locked'>" +
-                        "<div></div>" +
-                        "</li>");
+                        "<div class='bcms-single-tag select2-search-choice select2-locked'>" +
+                        "    <span>" + data.text + "</span>" +
+                        "</div>");
                 var choice = enableChoice ? enabledItem : disabledItem,
                     id = this.id(data),
                     formatted,
@@ -3307,7 +3308,7 @@ bettercms.define('bcms.jquery.select2', ['bcms.jquery'], function(jQuery) {
                 }
 
                 choice.data("select2-data", data);
-                choice.insertBefore(this.searchContainer);
+                choice.insertBefore(this.searchContainer.closest('.bcms-input-list-holder').find('.bcms-single-tag-holder'));
 
                 return id;
             },
