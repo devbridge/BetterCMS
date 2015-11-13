@@ -221,7 +221,7 @@ namespace BetterCms.Module.Blog.Services
                 if (level < AccessLevel.Read)
                 {
                     var message = BlogGlobalization.SaveBlogPost_FailedToSave_InaccessibleMasterPage;
-                    const string logMessage = "Failed to save blog post. Selected master page for page layout is inaccessible.";
+                    const string logMessage = "Failed to save blog post. Selected template for page layout is inaccessible.";
                     throw new ValidationException(() => message, logMessage);
                 }
             }

@@ -682,7 +682,7 @@ namespace BetterCms.Module.Blog.Content.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Cannot save blog post. Master page, which is selected as default blog post layout is inaccessible..
+        ///   Looks up a localized string similar to Cannot save blog post. Template, which is selected as default blog post layout is inaccessible..
         /// </summary>
         public static string SaveBlogPost_FailedToSave_InaccessibleMasterPage {
             get {
