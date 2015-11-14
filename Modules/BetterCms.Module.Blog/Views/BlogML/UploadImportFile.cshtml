@@ -12,22 +12,25 @@
         {
             <div class="bcms-input-list-holder">
                 <!-- ko if: uploaded() && !finished() -->
-                <h2>@BlogGlobalization.ImportBlogPosts_PleaseSelectPostsToImport_Message</h2>
+                <div class="bcms-content-titles">@BlogGlobalization.ImportBlogPosts_PleaseSelectPostsToImport_Message</div>
                 <!-- /ko -->
                 <!-- ko if: finished() -->
-                <h2 style="color: green;">@BlogGlobalization.ImportBlogPosts_ImportCompletedSuccessfully_Message</h2>
+                <div class="bcms-content-titles bcms-success">@BlogGlobalization.ImportBlogPosts_ImportCompletedSuccessfully_Message</div>
                 <!-- /ko -->
                 <!-- ko ifnot: uploaded() -->
-                <div id="bcms-files-dropzone" class="bcms-dropzone">
-                    <div class="bcms-dropzone-infotext">@BlogGlobalization.ImportBlogPosts_File_Description</div>
-                    <div class="bcms-btn-upload-files">
-                        <label for="uploadFile" class="bcms-btn-upload-files-text" data-bind="text: fixedFileName() || '@BlogGlobalization.ImportBlogPosts_File_ButtonTitle'"></label>
-                        <input type="file" name="uploadFile" id="uploadFile" style="position: absolute; left: -999em; top: -999em;" data-bind="value: fileName" />
+                <div class="bcms-file-drop-zone-container">
+                    <div id="bcms-files-drop-zone" class="bcms-file-drop-zone">
+                        <div class="bcms-file-drop-zone-text">@BlogGlobalization.ImportBlogPosts_File_Description</div>
+                        <div class="bcms-btn-main">
+                            <label for="uploadFile" class="bcms-btn-upload-files-text" data-bind="text: fixedFileName() || '@BlogGlobalization.ImportBlogPosts_File_ButtonTitle'"></label>
+                            <input type="file" name="uploadFile" id="uploadFile" style="position: absolute; left: -999em; top: -999em;" data-bind="value: fileName" />
+                        </div>
+
+                        <div class="bcms-file-drop-zone-download">
+                            <a href="/file/bcms-blog/Content/example.blog.post.import.xml" target="_blank">@BlogGlobalization.ImportBlogPosts_DownloadSampleFile_Title</a>
+                        </div>
                     </div>
 
-                    <div class="bcms-download-sample-file">
-                        <a href="/file/bcms-blog/Content/example.blog.post.import.xml" target="_blank">@BlogGlobalization.ImportBlogPosts_DownloadSampleFile_Title</a>
-                    </div>
                 </div>
 
                 <iframe id="bcms-import-form-target" name="bcms-import-form-target" style="position: absolute; left: -999em; top: -999em;"></iframe>
@@ -37,10 +40,12 @@
                         <input type="checkbox" data-bind="checked: createRedirects" />
                         <div class="bcms-edit-label">@Html.Raw(BlogGlobalization.ImportBlogPosts_CreateRedirects_Title)</div>
                     </div>
+
                     <div class="bcms-edit-check-field">
                         <input type="checkbox" data-bind="checked: recreateCategoryTree" />
                         <div class="bcms-edit-label">@Html.Raw(BlogGlobalization.ImportBlogPosts_RecreateCategoryTree_Title)</div>
                     </div>
+
                     <div class="bcms-edit-check-field">
                         <input type="checkbox" data-bind="checked: reuseExistingCategories" />
                         <div class="bcms-edit-label">@Html.Raw(BlogGlobalization.ImportBlogPosts_ReuseExistingCategories_Title)</div>

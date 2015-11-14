@@ -395,6 +395,15 @@ a:hover {
   margin-left: 10px;
 }
 
+.bcms-content-dialog-title {
+  border-bottom: 1px solid #dfdfdf;
+  color: #636363;
+  font-size: 18px;
+  font-weight: 600;
+  margin-top: 30px;
+  padding: 5px 0;
+}
+
 .bcms-edit-urlpath-box {
   background-color: #eae8e9;
   border: 1px solid #dfdfdf;
