@@ -333,7 +333,7 @@ WriteLiteral(" />\n");
 
 WriteLiteral("        <div");
 
-WriteLiteral(" class=\"bcms-btn-small\"");
+WriteLiteral(" class=\"bcms-btn-primary\"");
 
 WriteLiteral(" data-bind=\"\n                    click: onCustomOptionExecute.bind($data, $data, " +
 "");

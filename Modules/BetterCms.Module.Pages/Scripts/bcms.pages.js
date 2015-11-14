@@ -10,7 +10,7 @@ bettercms.define('bcms.pages', ['bcms.jquery', 'bcms', 'bcms.modal', 'bcms.siteS
             selectors = {
                 editPermalink: '#bcms-page-editpermalink',
                 editPermalinkBox: '.bcms-edit-urlpath-box',
-                editPermalinkClose: 'div.bcms-edit-urlpath-box .bcms-tip-close, div.bcms-edit-urlpath-box .bcms-btn-links-small',
+                editPermalinkClose: 'div.bcms-edit-urlpath-box .bcms-tip-close, div.bcms-edit-urlpath-box .bcms-btn-cancel',
                 editPermalinkSave: '#bcms-save-permalink',
                 editPermalinkHiddenField: '#bcms-page-permalink',
                 editPermalinkEditField: '#bcms-page-permalink-edit',

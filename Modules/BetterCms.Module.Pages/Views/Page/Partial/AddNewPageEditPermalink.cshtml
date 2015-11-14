@@ -5,7 +5,7 @@
 
 <div class="bcms-input-list-holder">
     <div class="bcms-content-titles">
-        @PagesGlobalization.AddNewPage_Permalink  
+        @PagesGlobalization.AddNewPage_Permalink
         @Html.Tooltip(PagesGlobalization.AddNewPage_Permalink_Tooltip_Description)
         <a id="bcms-page-editpermalink">@RootGlobalization.Button_Edit</a>
     </div>
@@ -17,7 +17,7 @@
             @Html.TextBoxFor(model => model.PageUrl, new { @id = "bcms-page-permalink-edit", @class = "bcms-field-text bcms-js-url-path" })
             @Html.BcmsValidationMessageFor(f => f.PageUrl)
         </div>
-        <div class="bcms-btn-small" id="bcms-save-permalink">@RootGlobalization.Button_Ok</div>
-        <div class="bcms-btn-links-small">@RootGlobalization.Button_Cancel</div>
+        <div class="bcms-btn-primary" id="bcms-save-permalink">@RootGlobalization.Button_Ok</div>
+        <div class="bcms-btn-cancel">@RootGlobalization.Button_Cancel</div>
     </div>
 </div>

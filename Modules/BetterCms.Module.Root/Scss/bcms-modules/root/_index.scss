@@ -13,6 +13,7 @@ $action-icons: (
         @include size(18px);
         background: url($icon) no-repeat center;
         cursor: pointer;
+        overflow: hidden;
         position: relative;
         text-indent: 999em;
     }
@@ -226,7 +227,7 @@ a.bcms-remove-image {
 //    position: relative;
 //}
 //
-//.bcms-controls-holder .bcms-btn-small {
+//.bcms-controls-holder .bcms-btn-primary {
 //    margin-right: 17px;
 //}
 

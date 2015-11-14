@@ -24,6 +24,7 @@
             <div class="bcms-node-box-container" data-bind="
                         attr: { id: containerId },
                         css: { 'bcms-node-box-drag': isBeingDragged(), 'bcms-node-box-edit': isActive(), 'bcms-node-box-active': !isBeingDragged() && superDraggable() }">
+
                 <!-- ko if: hasChildNodes() -->
                 <div class="bcms-node-expander" data-bind="click: $parents[$parents.length - 2].toggleNodeExpand, css: { 'bcms-node-expanded': isExpanded() }">&nbsp;</div>
                 <!-- /ko -->
@@ -54,13 +55,13 @@
                             @Html.BcmsValidationMessageFor(m => m.Title)
                         </div>
                         <!-- ko if: isUrlReadonly -->
-                        <div class="bcms-btn-small" data-bind="click: saveSitemapNodeWithValidation, text: getSitemap().settings.nodeSaveButtonTitle">@RootGlobalization.Button_Ok</div>
-                        <div class="bcms-btn-links-small" data-bind="click: cancelEditSitemapNode">@RootGlobalization.Button_Cancel</div>
+                        <div class="bcms-btn-primary" data-bind="click: saveSitemapNodeWithValidation, text: getSitemap().settings.nodeSaveButtonTitle">@RootGlobalization.Button_Ok</div>
+                        <div class="bcms-btn-cancel" data-bind="click: cancelEditSitemapNode">@RootGlobalization.Button_Cancel</div>
                         <!-- /ko -->
 
                         <!-- ko ifnot: isUrlReadonly -->
-                        <div class="bcms-btn-small" data-bind="click: saveSitemapNodeWithValidation, text: getSitemap().settings.nodeSaveButtonTitle">@RootGlobalization.Button_Ok</div>
-                        <div class="bcms-btn-links-small" data-bind="click: cancelEditSitemapNode">@RootGlobalization.Button_Cancel</div>
+                        <div class="bcms-btn-primary" data-bind="click: saveSitemapNodeWithValidation, text: getSitemap().settings.nodeSaveButtonTitle">@RootGlobalization.Button_Ok</div>
+                        <div class="bcms-btn-cancel" data-bind="click: cancelEditSitemapNode">@RootGlobalization.Button_Cancel</div>
                         <!-- /ko -->
                     </div>
 

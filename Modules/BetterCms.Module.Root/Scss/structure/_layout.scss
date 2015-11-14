@@ -131,13 +131,24 @@ a {
         background-color: $dark-main;
         box-sizing: border-box;
         height: $footer-height;
-        padding: 18px $page-frame-gutters;
+        padding: 14px $page-frame-gutters;
         z-index: 6;
     }
 
-    &-cmslogo {
-        @include positioning($center-y: true);
-        right: 0;
+    &-footer-buttons {
+        @include clearfix();
+
+        .bcms-btn-primary,
+        .bcms-btn-secondary,
+        .bcms-btn-tertiary {
+            float: right;
+            margin-left: 10px;
+        }
+
+        .bcms-btn-quaternary {
+            float: left;
+            margin-right: 10px;
+        }
     }
 
     &-edit-seo {
@@ -205,7 +216,10 @@ a {
         text-transform: uppercase;
         width: 210px;
 
-        &:hover,
+        &:hover {
+            color: $text-blue;
+        }
+
         &-active {
             background-color: $white;
             color: $black;

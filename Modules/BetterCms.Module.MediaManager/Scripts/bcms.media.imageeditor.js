@@ -79,7 +79,7 @@ bettercms.define('bcms.media.imageeditor', ['bcms.jquery', 'bcms', 'bcms.modal',
         */
         imageEditor.showImageEditorDialog = function (imageId, callback) {
 
-            var saveAsNewVersion = new modal.button(globalization.saveAsNewVersionButtonTitle, 'bcms-btn-small bcms-modal-accept-as-new', 5, function () {
+            var saveAsNewVersion = new modal.button(globalization.saveAsNewVersionButtonTitle, 'bcms-btn-primary bcms-modal-accept-as-new', 5, function () {
                     $(selectors.imageOverrideField).val(false);
                     modelDialog.acceptClick();
                 }),

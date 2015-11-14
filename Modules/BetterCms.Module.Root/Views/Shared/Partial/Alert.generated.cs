@@ -50,25 +50,26 @@ WriteLiteral(" type=\"text/html\"");
 WriteLiteral(" id=\"bcms-modal-alert-template\"");
 
 WriteLiteral(">\n    <div class=\"bcms-modal-alert\">\r\n        <div class=\"bcms-error-frame\" tabin" +
-"dex=\"-1\">\r\n            <a class=\"bcms-modal-close bcms-js-btn-close\">");
+"dex=\"-1\">\r\n            <div class=\"bcms-modal-close bcms-js-btn-close\">");
 
             
             #line 6 "..\..\Views\Shared\Partial\Alert.cshtml"
-                                                     Write(RootGlobalization.Button_Close);
+                                                       Write(RootGlobalization.Button_Close);
 
             
             #line default
             #line hidden
-WriteLiteral("</a>\r\n            <h4>");
+WriteLiteral("</div>\r\n            <div class=\"bcms-message-titles\">");
 
             
             #line 7 "..\..\Views\Shared\Partial\Alert.cshtml"
-           Write(RootGlobalization.Alert_DefaultTitle);
+                                        Write(RootGlobalization.Alert_DefaultTitle);
 
             
             #line default
             #line hidden
-WriteLiteral("</h4>\r\n            <p></p>\r\n        </div>\r\n    </div>\n</script>\n");
+WriteLiteral("</div>\r\n            <div class=\"bcms-message-description\"></div>\r\n        </div>\r" +
+"\n    </div>\n</script>\n");
 
         }
     }

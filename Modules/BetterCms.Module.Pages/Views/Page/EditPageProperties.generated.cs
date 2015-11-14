@@ -453,7 +453,7 @@ WriteLiteral(" />\r\n                                        </g>\r\n           
 "      </svg>\r\n                                    <!-- /ko -->\r\n                " +
 "                </div>\r\n\r\n                                <div");
 
-WriteLiteral(" class=\"bcms-btn-tertiary\"");
+WriteLiteral(" class=\"bcms-btn-selection\"");
 
 WriteLiteral(" data-bind=\"click: image().select.bind(image())\"");
 
@@ -566,7 +566,7 @@ WriteLiteral(" />\r\n                                        </g>\r\n           
 "      </svg>\r\n                                    <!-- /ko -->\r\n                " +
 "                </div>\r\n\r\n                                <div");
 
-WriteLiteral(" class=\"bcms-btn-tertiary\"");
+WriteLiteral(" class=\"bcms-btn-selection\"");
 
 WriteLiteral(" data-bind=\"click: featuredImage().select.bind(featuredImage())\"");
 
@@ -679,7 +679,7 @@ WriteLiteral(" />\r\n                                        </g>\r\n           
 "      </svg>\r\n                                    <!-- /ko -->\r\n                " +
 "                </div>\r\n\r\n                                <div");
 
-WriteLiteral(" class=\"bcms-btn-tertiary\"");
+WriteLiteral(" class=\"bcms-btn-selection\"");
 
 WriteLiteral(" data-bind=\"click: secondaryImage().select.bind(secondaryImage())\"");
 

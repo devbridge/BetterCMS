@@ -449,8 +449,8 @@
   transition: background-color 200ms;
   display: inline-block;
   vertical-align: middle;
-  height: 37px;
-  width: 37px;
+  height: 36px;
+  width: 36px;
   background: #0d7ce7 url("data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxNy44IiBoZWlnaHQ9IjEwLjMiIHZpZXdCb3g9Ii01OTEuNiA3ODMuNSAxNy44IDEwLjMiIGVuYWJsZS1iYWNrZ3JvdW5kPSJuZXcgLTU5MS42IDc4My41IDE3LjggMTAuMyI+PHBhdGggZD0ibS01NzUuMiA3ODQuOWwtNy41IDcuNS03LjUtNy41IiBmaWxsPSJub25lIiBzdHJva2U9IiNmZmYiIHN0cm9rZS1saW5lY2FwPSJzcXVhcmUiIHN0cm9rZS13aWR0aD0iMiIvPjwvc3ZnPg==") no-repeat center;
   cursor: pointer;
 }
@@ -481,7 +481,7 @@
   border-top: 1px solid #0d7ce7;
   color: #0d7ce7;
   cursor: pointer;
-  line-height: 37px;
+  line-height: 36px;
 }
 
 .bcms-btn-opener-link:first-child {
@@ -501,7 +501,7 @@
 }
 
 .bcms-search-field-box {
-  height: 37px;
+  height: 36px;
   width: 250px;
   border-top: 0;
   border-right: 0;

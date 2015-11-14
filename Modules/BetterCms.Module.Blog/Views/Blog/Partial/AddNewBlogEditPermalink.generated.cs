@@ -278,7 +278,7 @@ WriteLiteral("</div>\r\n            </div>\r\n");
             #line hidden
 WriteLiteral("        <div");
 
-WriteLiteral(" class=\"bcms-btn-small\"");
+WriteLiteral(" class=\"bcms-btn-primary\"");
 
 WriteLiteral(" id=\"bcms-save-permalink\"");
 
@@ -286,25 +286,25 @@ WriteLiteral(">");
 
             
             #line 37 "..\..\Views\Blog\Partial\AddNewBlogEditPermalink.cshtml"
-                                                        Write(RootGlobalization.Button_Ok);
+                                                          Write(RootGlobalization.Button_Ok);
 
             
             #line default
             #line hidden
 WriteLiteral("</div>\r\n        <div");
 
-WriteLiteral(" class=\"bcms-btn-links-small\"");
+WriteLiteral(" class=\"bcms-btn-cancel\"");
 
 WriteLiteral(">");
 
             
             #line 38 "..\..\Views\Blog\Partial\AddNewBlogEditPermalink.cshtml"
-                                     Write(RootGlobalization.Button_Cancel);
+                                Write(RootGlobalization.Button_Cancel);
 
             
             #line default
             #line hidden
-WriteLiteral("</div>\r\n    </div>\r\n</div>");
+WriteLiteral("</div>\r\n    </div>\r\n</div>\r\n");
 
         }
     }

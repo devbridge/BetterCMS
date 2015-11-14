@@ -47,8 +47,8 @@
                             })
                             @Html.BcmsValidationMessageFor(m => m.Title)
                         </div>
-                        <div class="bcms-btn-small" data-bind="click: saveCategoryTreeNodeWithValidation, text: getCategoryTree().settings.nodeSaveButtonTitle">@RootGlobalization.Button_Ok</div>
-                        <div class="bcms-btn-links-small" data-bind="click: cancelEditCategoryTreeNode">@RootGlobalization.Button_Cancel</div>
+                        <div class="bcms-btn-primary" data-bind="click: saveCategoryTreeNodeWithValidation, text: getCategoryTree().settings.nodeSaveButtonTitle">@RootGlobalization.Button_Ok</div>
+                        <div class="bcms-btn-cancel" data-bind="click: cancelEditCategoryTreeNode">@RootGlobalization.Button_Cancel</div>
                     </div>
 
                     <!-- ko if: getCategoryTree().showMacros -->

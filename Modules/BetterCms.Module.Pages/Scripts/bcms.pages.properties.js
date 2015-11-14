@@ -15,7 +15,7 @@ bettercms.define('bcms.pages.properties', ['bcms.jquery', 'bcms', 'bcms.modal', 
 
                 editPermalink: '#bcms-pageproperties-editpermalink',
                 editPermalinkBox: '.bcms-edit-urlpath-box',
-                editPermalinkClose: 'div.bcms-edit-urlpath-box .bcms-tip-close, div.bcms-edit-urlpath-box .bcms-btn-links-small',
+                editPermalinkClose: 'div.bcms-edit-urlpath-box .bcms-tip-close, div.bcms-edit-urlpath-box .bcms-btn-cancel',
                 editPermalinkSave: '#bcms-save-permalink',
 
                 permalinkHiddenField: '#bcms-page-permalink',

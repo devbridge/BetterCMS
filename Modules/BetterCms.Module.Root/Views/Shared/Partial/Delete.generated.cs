@@ -49,27 +49,27 @@ WriteLiteral(" type=\"text/html\"");
 
 WriteLiteral(" id=\"bcms-modal-delete-template\"");
 
-WriteLiteral(">\n    <div class=\"bcms-modal-alert\">\r\n        <div class=\"bcms-error-frame\" tabin" +
-"dex=\"-1\">\r\n            <a class=\"bcms-btn-close bcms-js-btn-close\">");
+WriteLiteral(">\n    <div class=\"bcms-modal-alert\">\n        <div class=\"bcms-error-frame\" tabind" +
+"ex=\"-1\">\n            <div class=\"bcms-btn-close bcms-js-btn-close\">");
 
             
             #line 6 "..\..\Views\Shared\Partial\Delete.cshtml"
-                                                   Write(RootGlobalization.Button_Close);
+                                                     Write(RootGlobalization.Button_Close);
 
             
             #line default
             #line hidden
-WriteLiteral("</a>\r\n            <h4>");
+WriteLiteral("</div>\n            <div class=\"bcms-message-titles\">");
 
             
             #line 7 "..\..\Views\Shared\Partial\Delete.cshtml"
-           Write(RootGlobalization.Confirm_Delete_DefaultMessage);
+                                        Write(RootGlobalization.Confirm_Delete_DefaultMessage);
 
             
             #line default
             #line hidden
-WriteLiteral(@"</h4>
-            <p></p>
+WriteLiteral(@"</div>
+            <div class=""bcms-message-description""></div>
             <div class=""bcms-success-buttons-holder"" data-bind=""foreach: buttons"">
                 <!-- ko if: disabled() === false -->
                 <div data-bind=""text: title, css: css, click: click, visible: !disabled()""></div>

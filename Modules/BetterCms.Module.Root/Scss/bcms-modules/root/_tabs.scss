@@ -6,7 +6,7 @@
     }
 
     &-ui {
-        @include transition(all 200ms ease);
+        @include transition(background-color 200ms ease, color 200ms ease);
         color: $text-gray;
         cursor: pointer;
         display: inline-block;
@@ -17,15 +17,16 @@
         text-decoration: none;
 
         &:hover {
-            background-color: $white;
+            color: $text-blue;
             text-decoration: none;
         }
 
         &.bcms-active {
-            background-color: $white;
+            background-color: $bg-modal-options;
+            cursor: default;
 
             &:hover {
-                background-color: $white;
+                color: $text-gray;
             }
         }
     }

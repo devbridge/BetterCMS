@@ -403,7 +403,7 @@ namespace BetterCms.Module.Root.Content.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to OK.
+        ///   Looks up a localized string similar to Ok.
         /// </summary>
         public static string Button_Ok {
             get {

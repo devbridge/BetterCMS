@@ -32,10 +32,11 @@ bettercms.define('bcms.modal', ['bcms.jquery', 'bcms', 'bcms.tabs', 'bcms.ko.ext
         },
 
         classes = {
-            saveButton: 'bcms-btn-small bcms-modal-accept',
+            saveButton: 'bcms-btn-tertiary bcms-modal-accept',
             deleteButton: 'bcms-btn-secondary bcms-modal-accept',
-            cancelButton: 'bcms-btn-links-small bcms-js-btn-cancel',
-            grayButton: 'bcms-btn-small bcms-btn-gray',
+            cancelButton: 'bcms-btn-secondary bcms-js-btn-cancel',
+            previewButton: 'bcms-btn-quaternary',
+            publishButton: 'bcms-btn-tertiary',
             inactive: 'bcms-inactive'
         },
 
@@ -219,7 +220,7 @@ bettercms.define('bcms.modal', ['bcms.jquery', 'bcms', 'bcms.tabs', 'bcms.ko.ext
                 var button = options.buttons[i];
                 button.dialog = this;
                 if (!button.css()) {
-                    button.css(classes.grayButton);
+                    button.css(classes.previewButton);
                 }
                 model.buttons.push(button);
             }
@@ -570,12 +571,12 @@ bettercms.define('bcms.modal', ['bcms.jquery', 'bcms', 'bcms.tabs', 'bcms.ko.ext
             };
 
         if (!options.disableSaveDraft && !options.disableSaveAndPublish) {
-            var saveAndPublishButton = new ButtonViewModel(globalization.saveAndPublish, classes.grayButton, 2, saveAndPublishAction);
+            var saveAndPublishButton = new ButtonViewModel(globalization.saveAndPublish, classes.publishButton, 2, saveAndPublishAction);
             extraButtons.push(saveAndPublishButton);
         }
 
         if (!!options.isPreviewAvailable) {
-            var previewButton = new ButtonViewModel(globalization.preview, classes.grayButton, 3, function (dialog) {
+            var previewButton = new ButtonViewModel(globalization.preview, classes.previewButton, 3, function (dialog) {
                 if ($.isFunction(options.onPreviewClick)) {
                     if (options.onPreviewClick(dialog) !== false) {
                         changeContentDesirableStatus(dialog, bcms.contentStatus.preview);
@@ -662,7 +663,7 @@ bettercms.define('bcms.modal', ['bcms.jquery', 'bcms', 'bcms.tabs', 'bcms.ko.ext
         if (!$.isArray(options.buttons)) {
             options.buttons = [];
         }
-        options.buttons.push(new ButtonViewModel(options.declineTitle, classes.grayButton, 2, function (confirmDialog) {
+        options.buttons.push(new ButtonViewModel(options.declineTitle, classes.previewButton, 2, function (confirmDialog) {
             var canClose = true;
 
             if ($.isFunction(options.onDecline)) {

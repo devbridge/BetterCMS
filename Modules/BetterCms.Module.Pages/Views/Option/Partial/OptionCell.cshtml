@@ -70,7 +70,7 @@
             visible: isActive()
             @(!string.IsNullOrEmpty(Model.FocusIdentifier) ? string.Format(", hasfocus: {0}", Model.FocusIdentifier) : string.Empty)
                " />
-        <div class="bcms-btn-small" data-bind="
+        <div class="bcms-btn-primary" data-bind="
                     click: onCustomOptionExecute.bind($data, $data, @(Model.CustomValueBind), @(Model.ValueBind)),
                     enterPress: onSave, 
                     escPress: onCancelEdit,

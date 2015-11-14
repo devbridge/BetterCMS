@@ -250,7 +250,7 @@ WriteLiteral(" />\r\n                </g>\r\n            </svg>\r\n");
             #line hidden
 WriteLiteral("    </div>\r\n\r\n    <div");
 
-WriteLiteral(" class=\"bcms-btn-tertiary bcms-js-grid-box\"");
+WriteLiteral(" class=\"bcms-btn-selection bcms-js-grid-box\"");
 
 WriteLiteral(">Select</div>\r\n</div>\r\n");
 

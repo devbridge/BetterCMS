@@ -61,7 +61,7 @@ namespace ASP
         }
         public override void Execute()
         {
-WriteLiteral("\n");
+WriteLiteral("\r\n");
 
 WriteLiteral("<div");
 
@@ -69,19 +69,19 @@ WriteLiteral(" class=\"bcms-filter-holder\"");
 
 WriteLiteral(" id=\"bcms-filter-template\"");
 
-WriteLiteral(">\n    <div");
+WriteLiteral(">\r\n    <div");
 
 WriteLiteral(" class=\"bcms-grid-filtering\"");
 
 WriteLiteral(" data-bind=\"css: { \'bcms-active-filter\': isVisible() }\"");
 
-WriteLiteral(">\n        <div");
+WriteLiteral(">\r\n        <div");
 
 WriteLiteral(" class=\"bcms-filterbox\"");
 
 WriteLiteral(" data-bind=\"click: toggleFilter\"");
 
-WriteLiteral(">\n");
+WriteLiteral(">\r\n");
 
 WriteLiteral("            ");
 
@@ -92,7 +92,7 @@ WriteLiteral("            ");
             
             #line default
             #line hidden
-WriteLiteral("\n            <div");
+WriteLiteral("\r\n            <div");
 
 WriteLiteral(" class=\"bcms-filter-modified\"");
 
@@ -107,7 +107,7 @@ WriteLiteral(">");
             
             #line default
             #line hidden
-WriteLiteral("</div>\n        </div>\n    </div>\n\n    <div");
+WriteLiteral("</div>\r\n        </div>\r\n    </div>\r\n\r\n    <div");
 
 WriteLiteral(" class=\"bcms-filter-selection-block\"");
 
@@ -450,7 +450,7 @@ WriteLiteral(" class=\"bcms-btn-field-holder\"");
 
 WriteLiteral(">\r\n                <div");
 
-WriteLiteral(" class=\"bcms-btn-links-small\"");
+WriteLiteral(" class=\"bcms-btn-cancel\"");
 
 WriteLiteral(" data-bind=\"click: clearFilter\"");
 
@@ -458,14 +458,14 @@ WriteLiteral(">");
 
             
             #line 99 "..\..\Views\Blog\Partial\BlogsFilterTemplate.cshtml"
-                                                                            Write(BlogGlobalization.SiteSettings_Blogs_FilterClear);
+                                                                       Write(BlogGlobalization.SiteSettings_Blogs_FilterClear);
 
             
             #line default
             #line hidden
 WriteLiteral("</div>\r\n                <div");
 
-WriteLiteral(" class=\"bcms-btn-small\"");
+WriteLiteral(" class=\"bcms-btn-primary\"");
 
 WriteLiteral(" data-bind=\"click: searchWithFilter\"");
 
@@ -473,12 +473,12 @@ WriteLiteral(">");
 
             
             #line 100 "..\..\Views\Blog\Partial\BlogsFilterTemplate.cshtml"
-                                                                           Write(BlogGlobalization.SiteSettings_Blogs_FilterSearch);
+                                                                             Write(BlogGlobalization.SiteSettings_Blogs_FilterSearch);
 
             
             #line default
             #line hidden
-WriteLiteral("</div>\r\n            </div>\r\n        </div>\r\n    </div>\n</div>\n");
+WriteLiteral("</div>\r\n            </div>\r\n        </div>\r\n    </div>\r\n</div>\r\n");
 
         }
     }

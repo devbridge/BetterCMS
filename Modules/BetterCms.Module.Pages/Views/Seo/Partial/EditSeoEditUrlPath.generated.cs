@@ -156,13 +156,13 @@ WriteLiteral("\r\n        </div>\r\n\r\n        <div");
 
 WriteLiteral(" id=\"bcms-editseo-editurlpath-save\"");
 
-WriteLiteral(" class=\"bcms-btn-small\"");
+WriteLiteral(" class=\"bcms-btn-primary\"");
 
 WriteLiteral(">");
 
             
             #line 21 "..\..\Views\Seo\Partial\EditSeoEditUrlPath.cshtml"
-                                                                  Write(RootGlobalization.Button_Ok);
+                                                                    Write(RootGlobalization.Button_Ok);
 
             
             #line default
@@ -171,13 +171,13 @@ WriteLiteral("</div>\r\n        <div");
 
 WriteLiteral(" id=\"bcms-editseo-editurlpath-cancel\"");
 
-WriteLiteral(" class=\"bcms-btn-links-small\"");
+WriteLiteral(" class=\"bcms-btn-cancel\"");
 
 WriteLiteral(">");
 
             
             #line 22 "..\..\Views\Seo\Partial\EditSeoEditUrlPath.cshtml"
-                                                                          Write(RootGlobalization.Button_Cancel);
+                                                                     Write(RootGlobalization.Button_Cancel);
 
             
             #line default

@@ -88,7 +88,7 @@
   overflow: hidden;
 }
 
-.bcms-blog-right .bcms-btn-small {
+.bcms-blog-right .bcms-btn-primary {
   margin-top: 10px;
 }
 
@@ -208,6 +208,6 @@
   width: 30%;
 }
 
-.bcms-blog-settings-holder .bcms-btn-small {
+.bcms-blog-settings-holder .bcms-btn-primary {
   margin-top: 10px;
 }

@@ -30,12 +30,13 @@ $validation-fields: ();
         padding: 30px 80px 30px 40px;
         width: 600px;
 
-        > h4 {
+        > .bcms-message-titles {
             color: $color;
             margin: 0;
+            font-size: 18px;
         }
 
-        > p {
+        > .bcms-message-description {
             font-size: 14px;
             line-height: 19px;
         }
@@ -96,6 +97,10 @@ $validation-fields: ();
         font-weight: 700;
         text-decoration: underline;
     }
+}
+
+.bcms-message-titles {
+
 }
 
 //todo upgrade after validation designs received

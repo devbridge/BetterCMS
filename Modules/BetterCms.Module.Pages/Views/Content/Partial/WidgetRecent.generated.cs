@@ -262,7 +262,7 @@ WriteLiteral(" class=\"bcms-grid-controls-holder\"");
 
 WriteLiteral(">\r\n                    <div");
 
-WriteLiteral(" class=\"bcms-btn-tertiary bcms-js-insert\"");
+WriteLiteral(" class=\"bcms-btn-selection bcms-js-insert\"");
 
 WriteLiteral(">");
 

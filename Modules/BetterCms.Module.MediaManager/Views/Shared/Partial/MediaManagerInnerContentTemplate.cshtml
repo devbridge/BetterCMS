@@ -221,8 +221,8 @@
                     }
                 </div>
                 <div class="bcms-media-inner-controls">
-                    <div class="bcms-btn-small" data-bind="click: saveMedia.bind($data, $root), clickBubble: false">@RootGlobalization.Button_Save</div>
-                    <div class="bcms-btn-links-small" data-bind="click: cancelEditMedia.bind($data, $root), clickBubble: false">@RootGlobalization.Button_Cancel</div>
+                    <div class="bcms-btn-primary" data-bind="click: saveMedia.bind($data, $root), clickBubble: false">@RootGlobalization.Button_Save</div>
+                    <div class="bcms-btn-cancel" data-bind="click: cancelEditMedia.bind($data, $root), clickBubble: false">@RootGlobalization.Button_Cancel</div>
                 </div>
                 @if ((ViewContext.Controller as CmsControllerBase).SecurityService.IsAuthorized(RootModuleConstants.UserRoles.EditContent))
                 {

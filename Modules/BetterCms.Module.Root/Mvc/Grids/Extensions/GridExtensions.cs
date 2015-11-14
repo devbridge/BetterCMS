@@ -26,7 +26,7 @@ namespace BetterCms.Module.Root.Mvc.Grids.Extensions
         public static IGridColumn<T> EditButtonColumn<T>(this ColumnBuilder<T> builder, bool renderId = true) where T : class
         {
             return builder
-                .For(f => string.Format("<a class=\"bcms-icn-edit bcms-grid-item-edit-button\"{0}>{1}</a>",
+                .For(f => string.Format("<div class=\"bcms-action-edit bcms-grid-item-edit-button\"{0}>{1}</div>",
                         renderId && f is IEditableGridItem
                             ? string.Format("data-id=\"{0}\"", ((IEditableGridItem)f).Id)
                             : string.Empty,
@@ -55,7 +55,7 @@ namespace BetterCms.Module.Root.Mvc.Grids.Extensions
         {
             return builder
                 .For(f => string.Format(
-                            "<a class=\"bcms-icn-delete bcms-grid-item-delete-button\"{0}>{1}</a><div style=\"display:none\" class=\"bcms-grid-item-message\"></div>",
+                            "<div class=\"bcms-action-delete bcms-grid-item-delete-button\"{0}>{1}</div><div style=\"display:none\" class=\"bcms-grid-item-message\"></div>",
                             renderId && f is IEditableGridItem
                                 ? string.Format("data-id=\"{0}\" data-version=\"{1}\"", ((IEditableGridItem)f).Id, ((IEditableGridItem)f).Version)
                                 : string.Empty,
@@ -72,9 +72,9 @@ namespace BetterCms.Module.Root.Mvc.Grids.Extensions
             saveButtonTitle = saveButtonTitle ?? @RootGlobalization.Button_Save;
 
             var stringBuilder = new StringBuilder();
-            stringBuilder.AppendFormat("<a class=\"bcms-icn-delete bcms-grid-item-delete-button\" data-id=\"{{0}}\" data-version=\"{{1}}\">{0}</a>", RootGlobalization.Button_Delete).AppendLine();
-            stringBuilder.AppendFormat("<div style=\"display:none\" class=\"bcms-btn-small\">{0}</div>", saveButtonTitle).AppendLine();
-            stringBuilder.AppendFormat("<a style=\"display:none\" class=\"bcms-btn-links-small\">{0}</a>", @RootGlobalization.Button_Cancel).AppendLine();
+            stringBuilder.AppendFormat("<div class=\"bcms-action-delete bcms-grid-item-delete-button\" data-id=\"{{0}}\" data-version=\"{{1}}\">{0}</div>", RootGlobalization.Button_Delete).AppendLine();
+            stringBuilder.AppendFormat("<div style=\"display:none\" class=\"bcms-btn-primary\">{0}</div>", saveButtonTitle).AppendLine();
+            stringBuilder.AppendFormat("<div style=\"display:none\" class=\"bcms-btn-cancel\">{0}</div>", @RootGlobalization.Button_Cancel).AppendLine();
             stringBuilder.AppendFormat("<div style=\"display:none\" class=\"bcms-grid-item-message\"></div>");
 
             return builder

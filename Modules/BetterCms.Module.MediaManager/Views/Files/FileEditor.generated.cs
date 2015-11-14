@@ -569,7 +569,7 @@ WriteLiteral(" data-bind=\"attr: { src: image().thumbnailUrl(), alt: image().too
 WriteLiteral(" />\r\n                        </a>\r\n                        <!-- /ko -->\r\n        " +
 "            </div>\r\n                    <div");
 
-WriteLiteral(" class=\"bcms-btn-small\"");
+WriteLiteral(" class=\"bcms-btn-primary\"");
 
 WriteLiteral(" data-bind=\"click: image().select.bind(image())\"");
 
@@ -577,7 +577,7 @@ WriteLiteral(">");
 
             
             #line 97 "..\..\Views\Files\FileEditor.cshtml"
-                                                                                           Write(MediaGlobalization.FileEditor_Dialog_Image_SelectButtonTitle);
+                                                                                             Write(MediaGlobalization.FileEditor_Dialog_Image_SelectButtonTitle);
 
             
             #line default

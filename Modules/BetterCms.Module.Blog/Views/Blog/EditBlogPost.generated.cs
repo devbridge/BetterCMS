@@ -918,7 +918,7 @@ WriteLiteral(" />\r\n                                        </g>\r\n           
 "      </svg>\r\n                                    <!-- /ko -->\r\n                " +
 "                </div>\r\n\r\n                                <div");
 
-WriteLiteral(" class=\"bcms-btn-tertiary\"");
+WriteLiteral(" class=\"bcms-btn-selection\"");
 
 WriteLiteral(" data-bind=\"");
 

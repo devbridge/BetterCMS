@@ -608,7 +608,7 @@ WriteLiteral(">");
             #line hidden
 WriteLiteral("</div>\r\n                            <div");
 
-WriteLiteral(" class=\"bcms-btn-small\"");
+WriteLiteral(" class=\"bcms-btn-primary\"");
 
 WriteLiteral(" data-bind=\"click: image().select.bind(image())\"");
 
@@ -616,7 +616,7 @@ WriteLiteral(">");
 
             
             #line 86 "..\..\Views\UserProfile\EditUserProfile.cshtml"
-                                                                                                   Write(UsersGlobalization.EditUser_UploadImage_Button_Title);
+                                                                                                     Write(UsersGlobalization.EditUser_UploadImage_Button_Title);
 
             
             #line default

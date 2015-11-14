@@ -155,23 +155,23 @@ WriteLiteral("                            ");
             
             #line default
             #line hidden
-WriteLiteral("\r\n                        </div>\r\n                        <div class=\"bcms-btn-sm" +
-"all\" data-bind=\"click: saveCategoryTreeNodeWithValidation, text: getCategoryTree" +
-"().settings.nodeSaveButtonTitle\">");
+WriteLiteral("\r\n                        </div>\r\n                        <div class=\"bcms-btn-pr" +
+"imary\" data-bind=\"click: saveCategoryTreeNodeWithValidation, text: getCategoryTr" +
+"ee().settings.nodeSaveButtonTitle\">");
 
             
             #line 50 "..\..\Views\Category\Partial\CategoryTreeTemplate.cshtml"
-                                                                                                                                                           Write(RootGlobalization.Button_Ok);
+                                                                                                                                                             Write(RootGlobalization.Button_Ok);
 
             
             #line default
             #line hidden
-WriteLiteral("</div>\r\n                        <div class=\"bcms-btn-links-small\" data-bind=\"clic" +
-"k: cancelEditCategoryTreeNode\">");
+WriteLiteral("</div>\r\n                        <div class=\"bcms-btn-cancel\" data-bind=\"click: ca" +
+"ncelEditCategoryTreeNode\">");
 
             
             #line 51 "..\..\Views\Category\Partial\CategoryTreeTemplate.cshtml"
-                                                                                                   Write(RootGlobalization.Button_Cancel);
+                                                                                              Write(RootGlobalization.Button_Cancel);
 
             
             #line default

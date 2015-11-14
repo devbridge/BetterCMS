@@ -193,7 +193,7 @@ WriteLiteral(" d=\"m-237 345h137v53h-137v-53z\"");
 WriteLiteral(" />\r\n                </g>\r\n            </svg>\r\n            <!-- /ko -->\r\n        " +
 "</div>\r\n\r\n        <!-- ko if: isCompatible && isActive() -->\r\n        <div");
 
-WriteLiteral(" class=\"bcms-btn-tertiary\"");
+WriteLiteral(" class=\"bcms-btn-selection\"");
 
 WriteLiteral(">");
 
@@ -207,7 +207,7 @@ WriteLiteral(">");
 WriteLiteral("</div>\r\n        <!-- /ko -->\r\n        <!-- ko if: isCompatible && !isActive() -->" +
 "\r\n        <div");
 
-WriteLiteral(" class=\"bcms-btn-tertiary\"");
+WriteLiteral(" class=\"bcms-btn-selection\"");
 
 WriteLiteral(" data-bind=\"click: select\"");
 
@@ -223,7 +223,7 @@ WriteLiteral(">");
 WriteLiteral("</div>\r\n        <!-- /ko -->\r\n        <!-- ko if: !isCompatible -->\r\n        <div" +
 "");
 
-WriteLiteral(" class=\"bcms-btn-tertiary\"");
+WriteLiteral(" class=\"bcms-btn-selection\"");
 
 WriteLiteral(">");
 

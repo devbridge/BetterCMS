@@ -41,13 +41,13 @@
         </div>
 
         <!-- ko if: isCompatible && isActive() -->
-        <div class="bcms-btn-tertiary">@BlogGlobalization.SiteSettings_Templates_DefaultTemplate</div>
+        <div class="bcms-btn-selection">@BlogGlobalization.SiteSettings_Templates_DefaultTemplate</div>
         <!-- /ko -->
         <!-- ko if: isCompatible && !isActive() -->
-        <div class="bcms-btn-tertiary" data-bind="click: select">@BlogGlobalization.SiteSettings_Templates_SelectButton</div>
+        <div class="bcms-btn-selection" data-bind="click: select">@BlogGlobalization.SiteSettings_Templates_SelectButton</div>
         <!-- /ko -->
         <!-- ko if: !isCompatible -->
-        <div class="bcms-btn-tertiary">@BlogGlobalization.SiteSettings_Templates_IncompatibleTemplate</div>
+        <div class="bcms-btn-selection">@BlogGlobalization.SiteSettings_Templates_IncompatibleTemplate</div>
         <!-- /ko -->
 
     </div>

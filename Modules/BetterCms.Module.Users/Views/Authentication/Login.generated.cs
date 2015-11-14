@@ -215,7 +215,7 @@ WriteLiteral("\n        </p>\n    </div>\n");
             #line 48 "..\..\Views\Authentication\Login.cshtml"
 
     Dictionary<string, object> submitProperties = new Dictionary<string, object>();
-    submitProperties.Add("class", "bcms-btn-small");
+    submitProperties.Add("class", "bcms-btn-primary");
     if (!Model.IsFormsAuthenticationEnabled)
     {
         submitProperties.Add("disabled", "disabled");
