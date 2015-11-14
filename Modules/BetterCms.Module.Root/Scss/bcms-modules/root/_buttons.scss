@@ -97,3 +97,8 @@ $global-button-structure: (
         @include close-button($icon: $bcms-close, $position: 15px 15px null null);
     }
 }
+
+.bcms-success-buttons-holder {
+    @include clearfix();
+    margin-top: 15px;
+}

@@ -108,12 +108,18 @@
                     <div>
                         @if (Model.ShowLanguages)
                         {
-                        <div class="bcms-input-list-holder">
-                            <div class="bcms-content-titles">@BlogGlobalization.EditBlogPost_Language_Title</div>
-                            @Html.Tooltip(BlogGlobalization.EditBlogPost_Language_Tooltip)
-                            @Html.DropDownListFor(model => model.LanguageId, Model.Languages.ToSelectList(Model.LanguageId), "Default language", new { @class = "bcms-global-select", @style = "width: 245px;" })
-                        </div>
+                            <div class="bcms-input-list-holder">
+                                <div class="bcms-content-titles">@BlogGlobalization.EditBlogPost_Language_Title</div>
+                                @Html.Tooltip(BlogGlobalization.EditBlogPost_Language_Tooltip)
+                                @Html.DropDownListFor(model => model.LanguageId, Model.Languages.ToSelectList(Model.LanguageId), "Default language", new { @class = "bcms-global-select", @style = "width: 245px;" })
+                            </div>
                         }
+
+                        <div class="bcms-input-list-holder">
+                            <div class="bcms-content-titles">@BlogGlobalization.EditBlogPost_Author_Title</div>
+                            @Html.Tooltip(BlogGlobalization.EditBlogPost_Author_Tooltip_Description)
+                            @Html.DropDownListFor(model => model.AuthorId, Model.Authors.ToSelectList(Model.AuthorId), string.Empty, new { @class = "bcms-global-select", @style = "width: 245px;" })
+                        </div>
 
                         <div class="bcms-input-list-holder">
                             <div class="bcms-content-titles">@BlogGlobalization.EditBlogPost_IntroText_Title</div>
@@ -122,12 +128,6 @@
                                 @Html.TextAreaFor(m => m.IntroText, new { @style = "height: 217px;", @class = "bcms-field-textarea" })
                                 @Html.BcmsValidationMessageFor(m => m.IntroText)
                             </div>
-                        </div>
-
-                        <div class="bcms-input-list-holder">
-                            <div class="bcms-content-titles">@BlogGlobalization.EditBlogPost_Author_Title</div>
-                            @Html.Tooltip(BlogGlobalization.EditBlogPost_Author_Tooltip_Description)
-                            @Html.DropDownListFor(model => model.AuthorId, Model.Authors.ToSelectList(Model.AuthorId), string.Empty, new { @class = "bcms-global-select", @style = "width: 245px;" })
                         </div>
                     </div>
 

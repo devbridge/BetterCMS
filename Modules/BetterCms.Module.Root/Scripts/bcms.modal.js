@@ -10,13 +10,13 @@ bettercms.define('bcms.modal', ['bcms.jquery', 'bcms', 'bcms.tabs', 'bcms.ko.ext
         resizeTimer,
 
         selectors = {
-            title: '.bcms-modal-title, .bcms-error-frame h4, .bcms-popinfo-frame h4',
-            accept: '.bcms-modal-accept, .bcms-popinfo-frame .bcms-success-buttons-holder .bcms-btn-main',
+            title: '.bcms-modal-title, .bcms-message-titles',
+            accept: '.bcms-modal-accept, .bcms-success-buttons-holder .bcms-btn-tertiary',
             cancel: '.bcms-js-btn-cancel',
             close: '.bcms-js-btn-close',
-            focusElements: '[tabindex=-1], .bcms-modal-close, .bcms-success-buttons-holder .bcms-btn-links-main, .bcms-preview-image-border .bcms-btn-close',
+            focusElements: '[tabindex=-1], .bcms-modal-close, .bcms-success-buttons-holder .bcms-btn-secondary, .bcms-preview-image-border .bcms-btn-close',
             body: '.bcms-modal-body, .bcms-error-frame, .bcms-popinfo-frame',
-            content: '.bcms-modal-content, .bcms-error-frame p, .bcms-popinfo-frame p',
+            content: '.bcms-modal-content, .bcms-message-description',
             loader: '.bcms-loader',
             scrollWindow: '.bcms-window-tabbed-options',
             previewImage: '.bcms-preview-image-frame img',

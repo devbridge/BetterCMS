@@ -203,6 +203,7 @@ a {
     }
 
     &-link {
+        @include transition(color 200ms);
         box-sizing: border-box;
         color: $gray-light;
         display: block;
