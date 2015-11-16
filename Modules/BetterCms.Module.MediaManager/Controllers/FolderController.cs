@@ -69,6 +69,10 @@ namespace BetterCms.Module.MediaManager.Controllers
             {
                 Messages.AddSuccess(MediaGlobalization.DeleteFolder_DeletedSuccessfully_Message);
             }
+            else
+            {
+                Messages.AddError(MediaGlobalization.DeleteFolder_DeletedError_Message);
+            }
 
             return Json(new WireJson(success));
         }
