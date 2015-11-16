@@ -395,6 +395,11 @@ a:hover {
   margin-left: 10px;
 }
 
+.bcms-content-titles-align {
+  display: inline-block;
+  vertical-align: middle;
+}
+
 .bcms-content-titles-helper {
   float: left;
 }

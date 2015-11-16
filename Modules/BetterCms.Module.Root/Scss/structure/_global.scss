@@ -64,6 +64,10 @@ $loading-spinner: (
         }
     }
 
+    &-titles-align {
+        @include vertical-align();
+    }
+
     &-titles-helper {
         float: left;
     }
