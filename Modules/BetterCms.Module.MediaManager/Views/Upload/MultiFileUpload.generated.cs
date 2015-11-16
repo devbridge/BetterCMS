@@ -518,14 +518,12 @@ WriteLiteral(@"
                             </div>
                         </div>
                         <!-- ko if: isProgressVisible() -->
-                        <div class=""bcms-uploaded-info"" data-bind=""text: uploadProgress() + '%'""></div>
+                        <div class=""bcms-upload-info"" data-bind=""text: uploadProgress() + '%'""></div>
                         <!-- /ko -->
-                        ");
-
-WriteLiteral("\r\n                        <div class=\"bcms-upload-size-info\"><b>");
+                        <div class=""bcms-upload-size-info""><b>");
 
             
-            #line 112 "..\..\Views\Upload\MultiFileUpload.cshtml"
+            #line 107 "..\..\Views\Upload\MultiFileUpload.cshtml"
                                                          Write(MediaGlobalization.MultiFileUpload_FileSize);
 
             
@@ -537,7 +535,7 @@ WriteLiteral(@"</b> <span data-bind=""text: fileSizeFormated""></span></div>
                             <div class=""bcms-action-delete"" data-bind=""click: function() { $root.removeUpload($data); }, text: uploadCompleted() || uploadFailed() ? '");
 
             
-            #line 115 "..\..\Views\Upload\MultiFileUpload.cshtml"
+            #line 110 "..\..\Views\Upload\MultiFileUpload.cshtml"
                                                                                                                                                                  Write(RootGlobalization.Button_Remove);
 
             
@@ -546,7 +544,7 @@ WriteLiteral(@"</b> <span data-bind=""text: fileSizeFormated""></span></div>
 WriteLiteral("\' : \'");
 
             
-            #line 115 "..\..\Views\Upload\MultiFileUpload.cshtml"
+            #line 110 "..\..\Views\Upload\MultiFileUpload.cshtml"
                                                                                                                                                                                                       Write(RootGlobalization.Button_Cancel);
 
             
@@ -556,7 +554,7 @@ WriteLiteral("\'\"></div>\r\n                        </div>\r\n                 
 "      </div>\r\n            </script>\r\n");
 
             
-            #line 120 "..\..\Views\Upload\MultiFileUpload.cshtml"
+            #line 115 "..\..\Views\Upload\MultiFileUpload.cshtml"
 
         }
 

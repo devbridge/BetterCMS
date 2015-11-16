@@ -66,6 +66,7 @@
     }
 
     &-link {
+        @include transition(background-color 200ms);
         @include pad(20px);
         background-color: $white;
         border-top: $border-thin-blue;

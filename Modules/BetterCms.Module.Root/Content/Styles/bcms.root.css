@@ -2896,7 +2896,7 @@ a.bcms-sort-arrow-top:hover {
 }
 
 .bcms-tab-header {
-  background-color: #e7f3ff;
+  background-color: #0d7ce7;
   height: 50px;
 }
 
@@ -2904,7 +2904,7 @@ a.bcms-sort-arrow-top:hover {
   -webkit-transition: background-color 200ms ease, color 200ms ease;
   -moz-transition: background-color 200ms ease, color 200ms ease;
   transition: background-color 200ms ease, color 200ms ease;
-  color: #636363;
+  color: #ffffff;
   cursor: pointer;
   display: inline-block;
   font-size: 16px;
@@ -2915,12 +2915,13 @@ a.bcms-sort-arrow-top:hover {
 }
 
 .bcms-tab-ui:hover {
-  color: #0d7ce7;
+  color: #303646;
   text-decoration: none;
 }
 
 .bcms-tab-ui.bcms-active {
   background-color: #f3f3f3;
+  color: #636363;
   cursor: default;
 }
 

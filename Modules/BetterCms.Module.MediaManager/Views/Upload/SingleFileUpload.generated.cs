@@ -541,7 +541,7 @@ WriteLiteral(@"
                         </div>
                     </div>
                     <!-- ko if: uploadCompleted() && !uploadFailed() -->
-                    <div class=""bcms-uploaded-info"" data-bind=""text: uploadProgress() + '%'""></div>
+                    <div class=""bcms-upload-info"" data-bind=""text: uploadProgress() + '%'""></div>
                     <div class=""bcms-upload-size-info""><b>");
 
             
@@ -567,7 +567,7 @@ WriteLiteral(@"</div>
                     <!-- /ko -->
 
                     <!-- ko if: uploadFailed() -->
-                    <div class=""bcms-uploaded-info"">&nbsp;</div>
+                    <div class=""bcms-upload-info"">&nbsp;</div>
                     <div class=""bcms-upload-size-info"">&nbsp;</div>
                     <div class=""bcms-media-delete-holder"">
                         <div class=""bcms-action-delete"" data-bind=""click: function() { $root.removeUpload($data); }"">");

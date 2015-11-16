@@ -1,13 +1,13 @@
 //module tabbed view
 .bcms-tab {
     &-header {
-        background-color: $sky-blue;
+        background-color: $bg-blue;
         height: $tab-height;
     }
 
     &-ui {
         @include transition(background-color 200ms ease, color 200ms ease);
-        color: $text-gray;
+        color: $white;
         cursor: pointer;
         display: inline-block;
         font-size: 16px;
@@ -17,12 +17,13 @@
         text-decoration: none;
 
         &:hover {
-            color: $text-blue;
+            color: $text-dark;
             text-decoration: none;
         }
 
         &.bcms-active {
             background-color: $bg-modal-options;
+            color: $text-gray;
             cursor: default;
 
             &:hover {
