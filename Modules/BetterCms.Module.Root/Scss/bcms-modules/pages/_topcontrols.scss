@@ -66,12 +66,17 @@
     }
 
     &-link {
+        @include transition(background-color 200ms);
         @include pad(20px);
         background-color: $white;
         border-top: $border-thin-blue;
         color: $text-blue;
         cursor: pointer;
         line-height: $form-element-height;
+
+        &:hover {
+            background-color: $sky-blue;
+        }
 
         &:first-child {
             border-top: 0;

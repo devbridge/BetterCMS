@@ -64,15 +64,24 @@ $loading-spinner: (
         }
     }
 
+    &-titles-helper {
+        float: left;
+    }
+
     &-dialog-title {
+        @include clearfix();
         border-bottom: $border-thin-smoke;
         color: $text-gray;
         font: {
             size: 18px;
             weight: 600;
         }
-        margin-top: 30px;
+        margin: 20px 0 15px;
         padding: 5px 0;
+
+        .bcms-btn-cancel {
+            float: right;
+        }
     }
 
     &-description {

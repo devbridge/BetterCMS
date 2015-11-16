@@ -311,11 +311,13 @@ div.bcms-align-right-active {
 
 .bcms-file-drop-zone-container {
   display: table;
+  margin-top: 20px;
   width: 100%;
 }
 
 .bcms-file-drop-zone-text {
   color: #a6a6a6;
+  cursor: default;
   font-size: 23px;
   margin-bottom: 25px;
   text-align: center;
@@ -385,6 +387,11 @@ div.bcms-align-right-active {
   width: 280px;
 }
 
+.bcms-upload-info {
+  font-weight: 700;
+  width: 40px;
+}
+
 .bcms-upload-bar-holder {
   overflow: hidden;
   text-align: right;
@@ -433,35 +440,6 @@ div.bcms-align-right-active {
   font-size: 14px;
   font-weight: 600;
   margin-left: 10px;
-}
-
-.bcms-upload-cancel-link {
-  float: right;
-  text-transform: uppercase;
-}
-
-.bcms-upload-cancel-link:hover {
-  text-decoration: underline;
-}
-
-.bcms-upload-holder .bcms-upload-block:first-child {
-  border-top: 1px solid #e3e3e3;
-}
-
-.bcms-uploaded-info {
-  font-weight: 700;
-  line-height: 39px;
-  padding-right: 15px;
-  text-align: right;
-  width: 40px;
-}
-
-div.bcms-upload-failed .bcms-upload-description {
-  color: #d9000d;
-}
-
-div.bcms-upload-success .bcms-upload-description {
-  color: #117000;
 }
 
 .bcms-select-list {

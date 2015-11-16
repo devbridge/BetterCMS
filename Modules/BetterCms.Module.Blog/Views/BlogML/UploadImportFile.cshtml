@@ -12,10 +12,10 @@
         {
             <div class="bcms-input-list-holder">
                 <!-- ko if: uploaded() && !finished() -->
-                <div class="bcms-content-titles">@BlogGlobalization.ImportBlogPosts_PleaseSelectPostsToImport_Message</div>
+                <div class="bcms-content-dialog-title">@BlogGlobalization.ImportBlogPosts_PleaseSelectPostsToImport_Message</div>
                 <!-- /ko -->
                 <!-- ko if: finished() -->
-                <div class="bcms-content-titles bcms-success">@BlogGlobalization.ImportBlogPosts_ImportCompletedSuccessfully_Message</div>
+                <div class="bcms-content-dialog-title">@BlogGlobalization.ImportBlogPosts_ImportCompletedSuccessfully_Message</div>
                 <!-- /ko -->
                 <!-- ko ifnot: uploaded() -->
                 <div class="bcms-file-drop-zone-container">

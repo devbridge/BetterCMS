@@ -151,17 +151,17 @@ WriteLiteral(" data-bind=\"options: languages, optionsText: \'value\', optionsVa
 WriteLiteral("></select>\r\n                    </div>\r\n                </div>\r\n            </div" +
 ">\r\n            <!-- /ko -->\r\n\r\n            <div");
 
-WriteLiteral(" class=\"bcms-tree-info-block\"");
+WriteLiteral(" class=\"bcms-content-dialog-title\"");
 
 WriteLiteral(">\r\n                <!-- ko if: !linkIsDropped() -->\r\n                <div");
 
-WriteLiteral(" class=\"bcms-content-titles\"");
+WriteLiteral(" class=\"bcms-content-titles-helper\"");
 
 WriteLiteral(">");
 
             
             #line 35 "..\..\Views\Sitemap\NewPage.cshtml"
-                                            Write(NavigationGlobalization.Sitemap_AddNewPageDialog_PageNodeHeader);
+                                                   Write(NavigationGlobalization.Sitemap_AddNewPageDialog_PageNodeHeader);
 
             
             #line default
@@ -169,13 +169,13 @@ WriteLiteral(">");
 WriteLiteral("</div>\r\n                <!-- /ko -->\r\n                <!-- ko if: linkIsDropped()" +
 " -->\r\n                <div");
 
-WriteLiteral(" class=\"bcms-content-titles\"");
+WriteLiteral(" class=\"bcms-content-titles-helper\"");
 
 WriteLiteral(">");
 
             
             #line 38 "..\..\Views\Sitemap\NewPage.cshtml"
-                                            Write(NavigationGlobalization.Sitemap_AddNewPageDialog_PageNodeFooter);
+                                                   Write(NavigationGlobalization.Sitemap_AddNewPageDialog_PageNodeFooter);
 
             
             #line default
