@@ -239,8 +239,7 @@ namespace BetterCms.Module.Root
         {
             return new[]
                        {
-                           new CssIncludeDescriptor(this, "bcms.root.css"),
-                           new CssIncludeDescriptor(this, "select2.css") 
+                           new CssIncludeDescriptor(this, "bcms.root.css")
                        };
         }
 

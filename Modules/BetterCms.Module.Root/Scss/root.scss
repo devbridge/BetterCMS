@@ -48,12 +48,12 @@
 'bcms-modules/root/tabs',
 'bcms-modules/root/templategrids',
 'bcms-modules/root/index',
-'bcms-modules/root/tooltips',
-'plugins/markitup';
+'bcms-modules/root/tooltips';
 
 //module plugins
 @import 'plugins/markitup',
-'plugins/jquerycalendar';
+'plugins/jquerycalendar',
+'plugins/select2';
 
 //module text & debug
 //@debug

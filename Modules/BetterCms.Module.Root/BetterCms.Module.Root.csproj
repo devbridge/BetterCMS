@@ -1349,7 +1349,6 @@
     <EmbeddedResource Include="Scripts\bcms.store.js" />
     <EmbeddedResource Include="Scripts\bcms.categories.js" />
     <EmbeddedResource Include="Scripts\bcms.multiple.select.js" />
-    <EmbeddedResource Include="Content\Styles\multiple-select.png" />
     <EmbeddedResource Include="Models\Migrations\Migration201502101136.sqlserver.sql" />
     <EmbeddedResource Include="Models\Migrations\Migration201502061445.sqlserver.sql" />
     <EmbeddedResource Include="Scripts\ace\ext-beautify.js" />
@@ -1407,8 +1406,6 @@
     <EmbeddedResource Include="Scripts\ckeditor\plugins\cms-togglelinewrap\plugin.js" />
     <EmbeddedResource Include="Content\Styles\bcms.root.css" />
     <EmbeddedResource Include="Content\Styles\bcms.root.min.css" />
-    <EmbeddedResource Include="Content\Styles\select2.css" />
-    <EmbeddedResource Include="Content\Styles\select2.png" />
     <Content Include="Gulpfile.js" />
     <Content Include="gulp\compile-sass\compile-sass.js" />
     <Content Include="gulp\create-data-uri-vars\create-data-uri-vars.js" />
@@ -1579,6 +1576,7 @@
     <Content Include="Scss\bcms-modules\pages\_taglabels.scss" />
     <Content Include="Scss\plugins\_jcrop.scss" />
     <Content Include="Scss\core\_colors.scss" />
+    <Content Include="Scss\plugins\_select2.scss" />
     <None Include="Views\Category\CategoryTrees.cshtml">
       <Generator>RazorGenerator</Generator>
       <LastGenOutput>CategoryTrees.generated.cs</LastGenOutput>
