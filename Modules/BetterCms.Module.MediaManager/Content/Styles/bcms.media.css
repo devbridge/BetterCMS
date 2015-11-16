@@ -311,6 +311,7 @@ div.bcms-align-right-active {
 
 .bcms-file-drop-zone-container {
   display: table;
+  margin-top: 20px;
   width: 100%;
 }
 

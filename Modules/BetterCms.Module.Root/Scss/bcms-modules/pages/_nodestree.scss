@@ -29,15 +29,15 @@
         padding-left: 30px;
     }
 
-    &-info-block {
-        @include clearfix();
-        border-bottom: $border-thin-smoke;
-        margin: 20px 0 15px;
-
-        .bcms-content-titles {
-            float: left;
-        }
-    }
+    //&-info-block {
+    //    @include clearfix();
+    //    border-bottom: $border-thin-smoke;
+    //    margin: 20px 0 15px;
+    //
+    //    .bcms-content-titles {
+    //        float: left;
+    //    }
+    //}
 
     &-controls-holder {
         @include clearfix();
@@ -48,6 +48,10 @@
         @extend %tree-links-ui;
         background: url($bcms-tree-plus) no-repeat right center;
         float: right;
+        font: {
+            size: 13px;
+            weight: 400;
+        }
         padding-right: 28px;
 
         &-close {

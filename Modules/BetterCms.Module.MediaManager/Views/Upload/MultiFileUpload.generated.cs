@@ -422,26 +422,28 @@ WriteLiteral(" type=\"text/html\"");
 
 WriteLiteral(" id=\"bcms-file-upload-template\"");
 
-WriteLiteral(">\r\n                <div data-bind=\"visible: activeUploads().length > 0\">\r\n       " +
-"             <div class=\"bcms-content-titles\">");
+WriteLiteral(">\r\n                <div class=\"bcms-content-dialog-title\" data-bind=\"visible: act" +
+"iveUploads().length > 0\">\r\n                    <div class=\"bcms-content-titles-h" +
+"elper\">");
 
             
             #line 71 "..\..\Views\Upload\MultiFileUpload.cshtml"
-                                                Write(MediaGlobalization.MultiFileUpload_Uploading);
+                                                       Write(MediaGlobalization.MultiFileUpload_Uploading);
 
             
             #line default
             #line hidden
-WriteLiteral("<a class=\"bcms-icn-delete-link\" data-bind=\"click: cancelAllActiveUploads\">");
+WriteLiteral("</div>\r\n                    <div class=\"bcms-btn-cancel\" data-bind=\"click: cancel" +
+"AllActiveUploads\">");
 
             
-            #line 71 "..\..\Views\Upload\MultiFileUpload.cshtml"
-                                                                                                                                                                       Write(MediaGlobalization.MultiFileUpload_CancelUploading);
+            #line 72 "..\..\Views\Upload\MultiFileUpload.cshtml"
+                                                                                      Write(MediaGlobalization.MultiFileUpload_CancelUploading);
 
             
             #line default
             #line hidden
-WriteLiteral(@"</a></div>
+WriteLiteral(@"</div>
                 </div>
 
                 <div data-bind=""foreach: uploads"">
@@ -458,7 +460,7 @@ WriteLiteral(@"</a></div>
 WriteLiteral("                        ");
 
             
-            #line 83 "..\..\Views\Upload\MultiFileUpload.cshtml"
+            #line 84 "..\..\Views\Upload\MultiFileUpload.cshtml"
                    Write(Html.HiddenFor(model => model.UploadedFiles, new { id = (string)null, data_bind = "value:fileId()" }));
 
             
@@ -477,7 +479,7 @@ WriteLiteral(@"
 WriteLiteral("                                ");
 
             
-            #line 91 "..\..\Views\Upload\MultiFileUpload.cshtml"
+            #line 92 "..\..\Views\Upload\MultiFileUpload.cshtml"
                            Write(MediaGlobalization.MultiFileUpload_Processing_ServerSide);
 
             
@@ -490,7 +492,7 @@ WriteLiteral(@"
                                 <span data-bind=""visible: !(failureMessage() != null && failureMessage().length > 0)"">");
 
             
-            #line 95 "..\..\Views\Upload\MultiFileUpload.cshtml"
+            #line 96 "..\..\Views\Upload\MultiFileUpload.cshtml"
                                                                                                                  Write(MediaGlobalization.MultiFileUpload_Failed);
 
             
@@ -506,7 +508,7 @@ WriteLiteral(@"</span>
 WriteLiteral("                                ");
 
             
-            #line 100 "..\..\Views\Upload\MultiFileUpload.cshtml"
+            #line 101 "..\..\Views\Upload\MultiFileUpload.cshtml"
                            Write(MediaGlobalization.MultiFileUpload_Success);
 
             
@@ -523,7 +525,7 @@ WriteLiteral(@"
 WriteLiteral("\r\n                        <div class=\"bcms-upload-size-info\"><b>");
 
             
-            #line 111 "..\..\Views\Upload\MultiFileUpload.cshtml"
+            #line 112 "..\..\Views\Upload\MultiFileUpload.cshtml"
                                                          Write(MediaGlobalization.MultiFileUpload_FileSize);
 
             
@@ -535,7 +537,7 @@ WriteLiteral(@"</b> <span data-bind=""text: fileSizeFormated""></span></div>
                             <div class=""bcms-action-delete"" data-bind=""click: function() { $root.removeUpload($data); }, text: uploadCompleted() || uploadFailed() ? '");
 
             
-            #line 114 "..\..\Views\Upload\MultiFileUpload.cshtml"
+            #line 115 "..\..\Views\Upload\MultiFileUpload.cshtml"
                                                                                                                                                                  Write(RootGlobalization.Button_Remove);
 
             
@@ -544,7 +546,7 @@ WriteLiteral(@"</b> <span data-bind=""text: fileSizeFormated""></span></div>
 WriteLiteral("\' : \'");
 
             
-            #line 114 "..\..\Views\Upload\MultiFileUpload.cshtml"
+            #line 115 "..\..\Views\Upload\MultiFileUpload.cshtml"
                                                                                                                                                                                                       Write(RootGlobalization.Button_Cancel);
 
             
@@ -554,7 +556,7 @@ WriteLiteral("\'\"></div>\r\n                        </div>\r\n                 
 "      </div>\r\n            </script>\r\n");
 
             
-            #line 119 "..\..\Views\Upload\MultiFileUpload.cshtml"
+            #line 120 "..\..\Views\Upload\MultiFileUpload.cshtml"
 
         }
 

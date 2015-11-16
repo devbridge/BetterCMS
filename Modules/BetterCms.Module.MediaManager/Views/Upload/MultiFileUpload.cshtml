@@ -67,8 +67,9 @@
             }
 
             <script type="text/html" id="bcms-file-upload-template">
-                <div data-bind="visible: activeUploads().length > 0">
-                    <div class="bcms-content-titles">@MediaGlobalization.MultiFileUpload_Uploading<a class="bcms-icn-delete-link" data-bind="click: cancelAllActiveUploads">@MediaGlobalization.MultiFileUpload_CancelUploading</a></div>
+                <div class="bcms-content-dialog-title" data-bind="visible: activeUploads().length > 0">
+                    <div class="bcms-content-titles-helper">@MediaGlobalization.MultiFileUpload_Uploading</div>
+                    <div class="bcms-btn-cancel" data-bind="click: cancelAllActiveUploads">@MediaGlobalization.MultiFileUpload_CancelUploading</div>
                 </div>
 
                 <div data-bind="foreach: uploads">

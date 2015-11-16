@@ -1,4 +1,4 @@
-.bcms-clearfix:after, .bcms-modal-footer-buttons:after, .bcms-success-buttons-holder:after, .bcms-buttons-block:after, .bcms-dragging:after, .bcms-form-block-holder:after, .bcms-inner-navigation:after, .bcms-templates-holder:after, .bcms-grid-controls-holder:after, .markItUpHeader:after, .markItUpFooter:after {
+.bcms-clearfix:after, .bcms-modal-footer-buttons:after, .bcms-content-dialog-title:after, .bcms-success-buttons-holder:after, .bcms-buttons-block:after, .bcms-dragging:after, .bcms-form-block-holder:after, .bcms-inner-navigation:after, .bcms-templates-holder:after, .bcms-grid-controls-holder:after, .markItUpHeader:after, .markItUpFooter:after {
   content: '';
   display: table;
   clear: both;
@@ -395,13 +395,21 @@ a:hover {
   margin-left: 10px;
 }
 
+.bcms-content-titles-helper {
+  float: left;
+}
+
 .bcms-content-dialog-title {
   border-bottom: 1px solid #dfdfdf;
   color: #636363;
   font-size: 18px;
   font-weight: 600;
-  margin-top: 30px;
+  margin: 20px 0 15px;
   padding: 5px 0;
+}
+
+.bcms-content-dialog-title .bcms-btn-cancel {
+  float: right;
 }
 
 .bcms-edit-urlpath-box {
@@ -807,7 +815,9 @@ a:hover {
   display: inline-block;
   vertical-align: middle;
   color: #0d7ce7;
+  cursor: pointer;
   font-size: 14px;
+  font-weight: 400;
   margin-left: 10px;
 }
 
@@ -2425,7 +2435,7 @@ span.bcms-tag-field-validation-error > span:before {
   position: absolute;
   top: 10px;
   left: 10px;
-  border: 1px solid #deeaf1;
+  border: 1px solid #e7f3ff;
   height: 42px;
 }
 
@@ -2436,7 +2446,7 @@ span.bcms-tag-field-validation-error > span:before {
   height: 42px;
   width: 42px;
   background-color: #0d7ce7;
-  border-left: 1px solid #deeaf1;
+  border-left: 1px solid #e7f3ff;
   cursor: pointer;
   display: block;
   float: left;
@@ -2886,7 +2896,7 @@ a.bcms-sort-arrow-top:hover {
 }
 
 .bcms-tab-header {
-  background-color: #deeaf1;
+  background-color: #e7f3ff;
   height: 50px;
 }
 
@@ -4032,13 +4042,13 @@ textarea.markItUpEditor:focus {
 }
 
 .ui-widget-content .ui-state-default:hover {
-  background-color: #deeaf1;
+  background-color: #e7f3ff;
   color: #ffffff;
   font-weight: normal;
 }
 
 .ui-widget-content .ui-state-active {
-  background: #deeaf1;
+  background: #e7f3ff;
 }
 
 .ui-widget-header {

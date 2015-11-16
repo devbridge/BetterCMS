@@ -73,6 +73,10 @@
         cursor: pointer;
         line-height: $form-element-height;
 
+        &:hover {
+            background-color: $sky-blue;
+        }
+
         &:first-child {
             border-top: 0;
         }

@@ -103,13 +103,13 @@ WriteLiteral(" class=\"bcms-input-list-holder\"");
 WriteLiteral(">\r\n                <!-- ko if: uploaded() && !finished() -->\r\n                <di" +
 "v");
 
-WriteLiteral(" class=\"bcms-content-titles\"");
+WriteLiteral(" class=\"bcms-content-dialog-title\"");
 
 WriteLiteral(">");
 
             
             #line 15 "..\..\Views\BlogML\UploadImportFile.cshtml"
-                                            Write(BlogGlobalization.ImportBlogPosts_PleaseSelectPostsToImport_Message);
+                                                  Write(BlogGlobalization.ImportBlogPosts_PleaseSelectPostsToImport_Message);
 
             
             #line default
@@ -117,13 +117,13 @@ WriteLiteral(">");
 WriteLiteral("</div>\r\n                <!-- /ko -->\r\n                <!-- ko if: finished() -->\r" +
 "\n                <div");
 
-WriteLiteral(" class=\"bcms-content-titles bcms-success\"");
+WriteLiteral(" class=\"bcms-content-dialog-title\"");
 
 WriteLiteral(">");
 
             
             #line 18 "..\..\Views\BlogML\UploadImportFile.cshtml"
-                                                         Write(BlogGlobalization.ImportBlogPosts_ImportCompletedSuccessfully_Message);
+                                                  Write(BlogGlobalization.ImportBlogPosts_ImportCompletedSuccessfully_Message);
 
             
             #line default
