@@ -195,8 +195,8 @@ WriteLiteral(" type=\"radio\"");
 
 WriteLiteral(" value=\"3\"");
 
-WriteLiteral(" data-bind=\"checked: AccessLevel, attr: { name: $parent.getPropertyIndexer($index" +
-"(), \'AccessLevel\') }\"");
+WriteLiteral(" data-bind=\"checked: AccessLevel.asString(), attr: { name: $parent.getPropertyInd" +
+"exer($index(), \'AccessLevel\') }\"");
 
 WriteLiteral(" /></div>\r\n                <div");
 
@@ -208,8 +208,8 @@ WriteLiteral(" type=\"radio\"");
 
 WriteLiteral(" value=\"2\"");
 
-WriteLiteral(" data-bind=\"checked: AccessLevel, attr: { name: $parent.getPropertyIndexer($index" +
-"(), \'AccessLevel\') }\"");
+WriteLiteral(" data-bind=\"checked: AccessLevel.asString(), attr: { name: $parent.getPropertyInd" +
+"exer($index(), \'AccessLevel\') }\"");
 
 WriteLiteral(" /></div>\r\n                <div");
 
@@ -221,8 +221,8 @@ WriteLiteral(" type=\"radio\"");
 
 WriteLiteral(" value=\"1\"");
 
-WriteLiteral(" data-bind=\"checked: AccessLevel, attr: { name: $parent.getPropertyIndexer($index" +
-"(), \'AccessLevel\') }\"");
+WriteLiteral(" data-bind=\"checked: AccessLevel.asString(), attr: { name: $parent.getPropertyInd" +
+"exer($index(), \'AccessLevel\') }\"");
 
 WriteLiteral(" /></div>\r\n            </div>\r\n            <input");
 

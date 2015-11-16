@@ -25,9 +25,9 @@
                     <div class="bcms-access-minus" data-bind="click: $parent.removeUser">&nbsp;</div>
                     <span data-bind="visible: IsForRole()">Role:</span><span data-bind="visible: !IsForRole()">User:</span>&nbsp;<span data-bind="text: Identity"></span>
                 </div>
-                <div class="bcms-access-value"><input type="radio" value="3" data-bind="checked: AccessLevel, attr: { name: $parent.getPropertyIndexer($index(), 'AccessLevel') }" /></div>
-                <div class="bcms-access-value"><input type="radio" value="2" data-bind="checked: AccessLevel, attr: { name: $parent.getPropertyIndexer($index(), 'AccessLevel') }" /></div>
-                <div class="bcms-access-value"><input type="radio" value="1" data-bind="checked: AccessLevel, attr: { name: $parent.getPropertyIndexer($index(), 'AccessLevel') }" /></div>
+                <div class="bcms-access-value"><input type="radio" value="3" data-bind="checked: AccessLevel.asString(), attr: { name: $parent.getPropertyIndexer($index(), 'AccessLevel') }" /></div>
+                <div class="bcms-access-value"><input type="radio" value="2" data-bind="checked: AccessLevel.asString(), attr: { name: $parent.getPropertyIndexer($index(), 'AccessLevel') }" /></div>
+                <div class="bcms-access-value"><input type="radio" value="1" data-bind="checked: AccessLevel.asString(), attr: { name: $parent.getPropertyIndexer($index(), 'AccessLevel') }" /></div>
             </div>
             <input type="hidden" data-bind="attr: { name: $parent.getPropertyIndexer($index(), 'Identity') }, value: Identity" />
             <input type="hidden" data-bind="attr: { name: $parent.getPropertyIndexer($index(), 'IsForRole') }, valueBinder: IsForRole" />
