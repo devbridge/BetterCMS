@@ -195,22 +195,9 @@ namespace BetterCms.Module.Api.Operations.MediaManager.Folders.Folder
                 return new DeleteFolderResponse { Data = false };
             }
 
-            var itemToDelete = repository.AsQueryable<MediaFolder>().Where(p => p.Id == request.Id).FirstOne();
+            var result = mediaService.DeleteMedia(request.Id, request.Data.Version, false);
 
-            if (request.Data.Version > 0 && itemToDelete.Version != request.Data.Version)
-            {
-                throw new ConcurrentDataException(itemToDelete);
-            }
-
-            unitOfWork.BeginTransaction();
-
-            mediaService.DeleteMedia(itemToDelete);
-
-            unitOfWork.Commit();
-
-            Events.MediaManagerEvents.Instance.OnMediaFolderDeleted(itemToDelete);
-
-            return new DeleteFolderResponse { Data = true };
+            return new DeleteFolderResponse { Data = result };
         }
     }
 }

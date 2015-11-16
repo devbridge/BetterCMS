@@ -112,47 +112,7 @@ namespace BetterCms.Module.MediaManager.Services
             }
         }
 
-        public void DeleteFileByMovingToTrash(Guid fileId)
-        {
-            var filesToTrash = repository
-                .AsQueryable<MediaFile>(f => f.Id == fileId || f.Original.Id == fileId)
-                .Fetch(f => f.AccessRules)
-                .Fetch(f => f.Categories)
-                .Fetch(f => f.MediaTags)
-                .ToList();
-
-            var mainFile = filesToTrash.FirstOrDefault(t => t.Id == fileId);
-
-            if (mainFile == null)
-            {
-                throw new CmsException(string.Format("A file was not found by given id={0}", fileId));
-            }
-
-            TrashFiles(filesToTrash, false);
-            
-            Events.MediaManagerEvents.Instance.OnMediaFileDeleted(mainFile);
-        }
-
-        public void DeleteFolderByMovingToTrash(Guid folderId)
-        {
-            var folderToTrash = repository
-                .AsQueryable<MediaFolder>(f => f.Id == folderId)
-                .Fetch(f => f.Medias)
-                // Without ToList() only first one media item would be fetched
-                .ToList()
-                .FirstOrDefault();
-
-            if (folderToTrash == null)
-            {
-                throw new CmsException(string.Format("A folder was not found by given id={0}", folderId));
-            }
-
-            TrashFiles(new List<MediaFolder> { folderToTrash }, true);
-
-            Events.MediaManagerEvents.Instance.OnMediaFolderDeleted(folderToTrash);
-        }
-
-        private void TrashFiles(IEnumerable<Media> filesToTrash, bool deleteFoldersAndSubMedias)
+        public void MoveFileToTrashFolder(IList<MediaFile> filesToTrash)
         {
             unitOfWork.BeginTransaction();
             var trashFolder = Path.Combine(GetContentRoot(configuration.Storage.ContentRoot), "trash");
@@ -162,22 +122,20 @@ namespace BetterCms.Module.MediaManager.Services
             {
                 foreach (var media in filesToTrash)
                 {
-                    if (media is MediaFile)
-                    {
-                        var mediaFile = (MediaFile)media;
+                        var mediaFile = media;
                         foreach (var category in mediaFile.Categories)
                         {
-                            unitOfWork.Session.Delete(category);
+                            repository.Delete(category);
                         }
                         while (mediaFile.AccessRules.Any())
                         {
                             var rule = mediaFile.AccessRules.First();
                             mediaFile.RemoveRule(rule);
-                            unitOfWork.Session.Delete(rule);
+                            repository.Delete(rule);
                         }
                         foreach (var tag in mediaFile.MediaTags)
                         {
-                            unitOfWork.Session.Delete(tag);
+                            repository.Delete(tag);
                         }
                         var sourceUri = mediaFile.FileUri;
                         var destinationUri = new Uri(Path.Combine(trashFolder, GetFolderWithFileName(mediaFile.FileUri, mediaFile.Type)));
@@ -226,16 +184,7 @@ namespace BetterCms.Module.MediaManager.Services
                                 mediaImage.PublicOriginallUrl = GenerateTrashPublicUrl(mediaImage.OriginalUri, mediaImage.Type);
                             }
                         }
-                    }
-                    else if (deleteFoldersAndSubMedias && media is MediaFolder)
-                    {
-                        var mediafolder = (MediaFolder)media;
-                        if (mediafolder.Medias != null && mediafolder.Medias.Count > 0)
-                        {
-                            TrashFiles(mediafolder.Medias, true);
-                        }
-                    }
-                    unitOfWork.Session.Delete(media);
+                    repository.Delete(media);
                 }
             }
             catch (Exception e)

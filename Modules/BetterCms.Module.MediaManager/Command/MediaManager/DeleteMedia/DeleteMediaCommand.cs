@@ -10,13 +10,13 @@ namespace BetterCms.Module.MediaManager.Command.MediaManager.DeleteMedia
     /// </summary>
     public class DeleteMediaCommand : CommandBase, ICommand<DeleteMediaCommandRequest, bool>
     {
-        private readonly IMediaFileService mediaFileService;
+        private readonly IMediaService mediaFileService;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="DeleteMediaCommand" /> class.
         /// </summary>
         /// <param name="mediaFileService">The media file service.</param>
-        public DeleteMediaCommand(IMediaFileService mediaFileService)
+        public DeleteMediaCommand(IMediaService mediaFileService)
         {
             this.mediaFileService = mediaFileService;
         }
@@ -28,9 +28,7 @@ namespace BetterCms.Module.MediaManager.Command.MediaManager.DeleteMedia
         /// <returns></returns>
         public bool Execute(DeleteMediaCommandRequest request)
         {
-            mediaFileService.DeleteFileByMovingToTrash(request.Id);
-
-            return true;
+            return mediaFileService.DeleteMedia(request.Id, request.Version, true, Context.Principal);
         }
-            }
+    }
 }
