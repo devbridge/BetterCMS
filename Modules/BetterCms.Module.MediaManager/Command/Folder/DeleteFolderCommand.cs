@@ -10,13 +10,13 @@ namespace BetterCms.Module.MediaManager.Command.Folder
     /// </summary>
     public class DeleteFolderCommand : CommandBase, ICommand<DeleteFolderCommandRequest, bool>
     {
-        private readonly IMediaFileService mediaFileService;
+        private readonly IMediaService mediaFileService;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="DeleteFolderCommand" /> class.
         /// </summary>
         /// <param name="mediaFileService">The media file service.</param>
-        public DeleteFolderCommand(IMediaFileService mediaFileService)
+        public DeleteFolderCommand(IMediaService mediaFileService)
         {
             this.mediaFileService = mediaFileService;
         }
@@ -28,9 +28,7 @@ namespace BetterCms.Module.MediaManager.Command.Folder
         /// <returns>Executed command result.</returns>
         public bool Execute(DeleteFolderCommandRequest request)
         {
-            mediaFileService.DeleteFolderByMovingToTrash(request.FolderId);
-
-            return true;
+            return mediaFileService.DeleteMedia(request.FolderId, request.Version, true, Context.Principal);
         }
-                }
+    }
 }

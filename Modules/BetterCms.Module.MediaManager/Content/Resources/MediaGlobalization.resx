@@ -672,4 +672,7 @@
   <data name="SiteSettings_FilterByCategory" xml:space="preserve">
     <value>By Category</value>
   </data>
+  <data name="DeleteFolder_DeletedError_Message" xml:space="preserve">
+    <value>Failed to delete folder. Some of folder items can not be removed.</value>
+  </data>
 </root>
