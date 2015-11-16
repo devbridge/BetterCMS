@@ -336,6 +336,17 @@
   margin-bottom: 20px;
 }
 
+.bcms-drop-button {
+  background: url("images/sprite-base-2.png") no-repeat -1px -96px;
+  height: 4px;
+  overflow: hidden;
+  position: absolute;
+  right: 9px;
+  text-indent: 9999px;
+  top: 8px;
+  width: 16px;
+}
+
 .bcms-history-preview-holder, .bcms-history-preview-data {
   background-color: #ffffff;
   height: calc(60vh - 105px);
