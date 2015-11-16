@@ -74,8 +74,11 @@
                 </div>
 
                 <div class="bcms-input-list-holder">
-                    <div class="bcms-content-titles">@PagesGlobalization.AddNewPage_Template</div>
-                    @Html.Tooltip(PagesGlobalization.AddNewPage_Template_Tooltip_Description)
+                    <div class="bcms-content-dialog-title">
+                        @PagesGlobalization.AddNewPage_Template
+                        @Html.Tooltip(PagesGlobalization.AddNewPage_Template_Tooltip_Description)
+                    </div>
+
                     @Html.Partial("Partial/TemplatesList", Model.Templates)
                 </div>
 
