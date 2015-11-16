@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Threading.Tasks;
 
@@ -11,10 +12,6 @@ namespace BetterCms.Module.MediaManager.Services
     public interface IMediaFileService
     {
         void RemoveFile(Guid fileId, int version, bool doNotCheckVersion = false);
-
-        void DeleteFileByMovingToTrash(Guid fileId);
-
-        void DeleteFolderByMovingToTrash(Guid folderId);
 
         MediaFile UploadFile(MediaType type, Guid rootFolderId, string fileName, long fileLength, Stream fileStream,
             bool isTemporary = true, string title = "", string description = "");
@@ -37,5 +34,7 @@ namespace BetterCms.Module.MediaManager.Services
         void SaveMediaFile(MediaFile file);
 
         void SwapOriginalMediaWithVersion(MediaFile originalEntity, MediaFile newVersion, ISession session = null);
+
+        void MoveFileToTrashFolder(IList<MediaFile> allVersions);
     }
 }

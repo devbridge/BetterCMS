@@ -2,6 +2,7 @@
 
 using Autofac;
 
+using BetterCms.Core.Security;
 using BetterCms.Core.Services.Storage;
 
 using BetterModules.Core.DataAccess;
@@ -10,6 +11,7 @@ using BetterCms.Module.MediaManager.Command.MediaManager.DeleteMedia;
 using BetterCms.Module.MediaManager.Models;
 using BetterCms.Module.MediaManager.Services;
 
+using BetterModules.Core.Web.Mvc.Commands;
 using BetterModules.Core.Web.Web;
 
 using Moq;
@@ -31,6 +33,8 @@ namespace BetterCms.Test.Module.MediaManager.CommandTests
                     var uow = new DefaultUnitOfWork(session);
                     var repository = new DefaultRepository(uow);
                     var storageService = new Mock<IStorageService>().Object;
+                    var accessControlService = new Mock<IAccessControlService>().Object;
+                    var commandContext = new Mock<ICommandContext>().Object;
                     var cmsConfiguration = Container.Resolve<ICmsConfiguration>();
                     var httpContextAccessor = new Mock<IHttpContextAccessor>();
                     httpContextAccessor.SetReturnsDefault("http://wwww.bcms.com/uploads/trash");
@@ -41,9 +45,11 @@ namespace BetterCms.Test.Module.MediaManager.CommandTests
                     session.Clear();
 
                     var mediafileService = new DefaultMediaFileService(storageService, repository, uow, cmsConfiguration, httpContextAccessor.Object, null, null, null);
-                    var command = new DeleteMediaCommand(mediafileService);
+                    var mediaService = new DefaultMediaService(repository, uow, accessControlService, cmsConfiguration, mediafileService);
+                    var command = new DeleteMediaCommand(mediaService);
                     command.Repository = repository;
                     command.UnitOfWork = uow;
+                    command.Context = commandContext;
 
                     var result = command.Execute(new DeleteMediaCommandRequest
                                         {

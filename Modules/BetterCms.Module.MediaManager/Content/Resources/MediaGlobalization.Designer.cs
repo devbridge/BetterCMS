@@ -196,6 +196,15 @@ namespace BetterCms.Module.MediaManager.Content.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Failed to delete folder. Some of folder items can not be removed..
+        /// </summary>
+        public static string DeleteFolder_DeletedError_Message {
+            get {
+                return ResourceManager.GetString("DeleteFolder_DeletedError_Message", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Folder deleted successfully..
         /// </summary>
         public static string DeleteFolder_DeletedSuccessfully_Message {
