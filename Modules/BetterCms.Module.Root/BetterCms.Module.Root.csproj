@@ -1427,9 +1427,6 @@
     <Content Include="Scss\assets\icons\btn-down-arrow.svg" />
     <Content Include="Scss\assets\icons\close-white.svg" />
     <Content Include="Scss\assets\icons\close.svg" />
-    <Content Include="Scss\assets\icons\cp-add-new.svg" />
-    <Content Include="Scss\assets\icons\cp-clone.svg" />
-    <Content Include="Scss\assets\icons\cp-delete.svg" />
     <Content Include="Scss\assets\icons\cp-drag-handle.svg" />
     <Content Include="Scss\assets\icons\cp-hide-right.svg" />
     <Content Include="Scss\assets\icons\cp-hide.svg" />
@@ -1440,16 +1437,10 @@
     <Content Include="Scss\assets\icons\cp-notification-warn.svg" />
     <Content Include="Scss\assets\icons\cp-pub-ok.svg" />
     <Content Include="Scss\assets\icons\cp-pub-warn.svg" />
-    <Content Include="Scss\assets\icons\cp-seo-ok.svg" />
-    <Content Include="Scss\assets\icons\cp-seo-warn.svg" />
-    <Content Include="Scss\assets\icons\cp-settings.svg" />
     <Content Include="Scss\assets\icons\cp-show-right.svg" />
     <Content Include="Scss\assets\icons\cp-show.svg" />
     <Content Include="Scss\assets\icons\cp-stick-handle-right.svg" />
     <Content Include="Scss\assets\icons\cp-stick-handle.svg" />
-    <Content Include="Scss\assets\icons\cp-texture.svg" />
-    <Content Include="Scss\assets\icons\cp-translate.svg" />
-    <Content Include="Scss\assets\icons\cp-user.svg" />
     <Content Include="Scss\assets\icons\datepicker-arrow-left.svg" />
     <Content Include="Scss\assets\icons\datepicker-arrow-right.svg" />
     <Content Include="Scss\assets\icons\editor-blockquote.svg" />

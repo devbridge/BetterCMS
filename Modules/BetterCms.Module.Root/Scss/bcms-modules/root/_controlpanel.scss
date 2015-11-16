@@ -1,10 +1,10 @@
 $control-panel-buttons: (
-                ('add', $bcms-cp-add-new, $blue-l30, $blue-l40),
-                ('clone', $bcms-cp-clone, $blue-l30, $blue-l40),
-                ('blog-add', $bcms-cp-add-new, $blue-l30, $blue-l40),
-                ('translate', $bcms-cp-translate, $blue-l30, $blue-l40),
-                ('settings', $bcms-cp-settings, $gray-smoke45, $gray-smoke46),
-                ('delete', $bcms-cp-delete, $red-l60, $red-l70)
+                ('add', null, $blue-l30, $blue-l40),
+                ('clone', null, $blue-l30, $blue-l40),
+                ('blog-add', null, $blue-l30, $blue-l40),
+                ('translate', null, $blue-l30, $blue-l40),
+                ('settings', null, $gray-smoke45, $gray-smoke46),
+                ('delete', null, $red-l60, $red-l70)
 );
 
 $control-panel-switch-status: (
@@ -14,12 +14,12 @@ $control-panel-switch-status: (
 
 $control-panel-status: (
                 ('pubstatus', $bcms-cp-pub-ok, $bcms-cp-pub-warn),
-                //fixme ('seostatus', $bcms-cp-seo-ok, $bcms-cp-seo-warn)
+    //fixme ('seostatus', $bcms-cp-seo-ok, $bcms-cp-seo-warn)
 );
+
 //module
 .bcms-user-profile {
     @include ellipsis();
-    background: url($bcms-cp-user) no-repeat left center;
     box-sizing: border-box;
     color: $white;
     cursor: pointer;
@@ -33,8 +33,7 @@ $control-panel-status: (
 .bcms-sidemenu {
     @include position(fixed, 100px null null -260px);
     @include user-select();
-    background-color: $black;
-    border-radius: 0 0 2px 0;
+    background-color: $bg-dark;
     color: $gray-smoke60;
     font-family: $font-base-family;
     font-size: 12px;
@@ -43,15 +42,12 @@ $control-panel-status: (
     z-index: 2000;
 
     &.bcms-sidemenu-right {
-        border-radius: 0 0 0 2px;
         left: auto;
         padding: 5px 0 0 5px;
         right: 0;
     }
 
     &-header {
-        background-color: $dark;
-        border-radius: 0 2px 2px 0;
         box-sizing: border-box;
         float: left;
         margin-bottom: 5px;
@@ -61,8 +57,6 @@ $control-panel-status: (
     }
 
     &-body {
-        background-color: $dark;
-        border-radius: 0 2px 2px 0;
         min-height: 190px;
         overflow: hidden;
         padding: 0 10px 10px;
@@ -88,7 +82,6 @@ $control-panel-status: (
     &-btn {
         @include size(100% 32px);
         @include add-gradient($top: $gray-smoke50, $bottom: $gray-smoke60);
-        border-radius: 2px;
         box-shadow: 0 0 1px 1px rgba($black, .2);
         box-sizing: border-box;
         color: $white;
@@ -112,8 +105,7 @@ $control-panel-status: (
     &-handle {
         @include user-select();
         @include position(absolute, 0 -50px null null);
-        background-color: $black;
-        border-radius: 0 2px 2px 0;
+        background-color: $bg-dark;
         padding-top: 5px;
         width: 50px;
     }
@@ -138,7 +130,6 @@ $control-panel-status: (
     &-switch {
         background-color: $dark;
         border: $border-hr-control-top;
-        border-radius: 2px;
         box-shadow: inset 0 0 6px 1px rgba($black, .7);
         box-sizing: border-box;
         cursor: pointer;
@@ -152,7 +143,6 @@ $control-panel-status: (
             @include position(absolute, 0 0 null);
             background: url($bcms-cp-indicate-button) no-repeat center;
             border: 1px solid #303030;
-            border-radius: 2px;
             box-sizing: border-box;
             height: 50%;
             overflow: hidden;
@@ -186,7 +176,6 @@ $control-panel-status: (
     }
 
     &-status {
-        background: url($bcms-cp-texture);
         overflow: hidden;
         padding: 0 9px 5px;
     }
@@ -212,7 +201,6 @@ $control-panel-status: (
 
     &-position-handle {
         background: $gray-smoke60 url($bcms-cp-stick-handle) no-repeat center;
-        border-radius: 2px;
         cursor: pointer;
         float: right;
         height: 20px;
@@ -238,17 +226,8 @@ $control-panel-status: (
     }
 
     .bcms-sidemenu-handle {
-        border-radius: 2px 0 0 2px;
         left: -50px;
         right: auto;
-    }
-
-    .bcms-sidemenu-header {
-        border-radius: 2px 0 0 2px;
-    }
-
-    .bcms-sidemenu-body {
-        border-radius: 2px 0 0 2px;
     }
 
     .bcms-version-number {
@@ -336,8 +315,6 @@ div {
 
         &-logout {
             @include add-gradient($top: $red-l60, $bottom: $red-l70);
-            border-radius: 2px;
-            box-shadow: 0 0 2px rgba($black, .3);
             color: $white;
             cursor: pointer;
             float: right;
