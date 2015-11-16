@@ -757,7 +757,6 @@
     <EmbeddedResource Include="Scripts\bcms.siteSettings.js" />
     <EmbeddedResource Include="Scripts\bcms.forms.js" />
     <EmbeddedResource Include="Content\Styles\images\icn-calendar.png" />
-    <EmbeddedResource Include="Content\Styles\images\icn-zoom.png" />
     <EmbeddedResource Include="Content\Styles\images\sprite-base-1.png" />
     <EmbeddedResource Include="Content\Styles\images\sprite-base-2.png" />
     <EmbeddedResource Include="Scripts\bcms.spinner.jquery.js" />
@@ -772,7 +771,6 @@
     <Content Include="BuildConfiguration.xml">
       <SubType>Designer</SubType>
     </Content>
-    <EmbeddedResource Include="Content\Styles\images\icn-zoom-notcompatible.png" />
     <EmbeddedResource Include="Scripts\bcms.require-2.1.5.js" />
     <EmbeddedResource Include="Content\Styles\images\cookies.png" />
     <EmbeddedResource Include="Content\Styles\images\error-back.png" />

@@ -388,7 +388,6 @@
       <LastGenOutput>MediaGlobalization.Designer.cs</LastGenOutput>
       <SubType>Designer</SubType>
     </EmbeddedResource>
-    <EmbeddedResource Include="Content\Styles\Images\icn-zoom.png" />
     <EmbeddedResource Include="Content\Styles\Images\sprite-media-1.png" />
     <EmbeddedResource Include="Content\Styles\Images\sprite-media-2.png" />
   </ItemGroup>

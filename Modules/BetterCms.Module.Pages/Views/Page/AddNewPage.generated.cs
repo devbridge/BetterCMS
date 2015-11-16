@@ -423,34 +423,36 @@ WriteLiteral(" class=\"bcms-input-list-holder\"");
 
 WriteLiteral(">\r\n                    <div");
 
-WriteLiteral(" class=\"bcms-content-titles\"");
+WriteLiteral(" class=\"bcms-content-dialog-title\"");
 
-WriteLiteral(">");
+WriteLiteral(">\r\n");
 
-            
-            #line 77 "..\..\Views\Page\AddNewPage.cshtml"
-                                                Write(PagesGlobalization.AddNewPage_Template);
-
-            
-            #line default
-            #line hidden
-WriteLiteral("</div>\r\n");
-
-WriteLiteral("                    ");
+WriteLiteral("                        ");
 
             
             #line 78 "..\..\Views\Page\AddNewPage.cshtml"
-               Write(Html.Tooltip(PagesGlobalization.AddNewPage_Template_Tooltip_Description));
+                   Write(PagesGlobalization.AddNewPage_Template);
 
             
             #line default
             #line hidden
 WriteLiteral("\r\n");
 
-WriteLiteral("                    ");
+WriteLiteral("                        ");
 
             
             #line 79 "..\..\Views\Page\AddNewPage.cshtml"
+                   Write(Html.Tooltip(PagesGlobalization.AddNewPage_Template_Tooltip_Description));
+
+            
+            #line default
+            #line hidden
+WriteLiteral("\r\n                    </div>\r\n\r\n");
+
+WriteLiteral("                    ");
+
+            
+            #line 82 "..\..\Views\Page\AddNewPage.cshtml"
                Write(Html.Partial("Partial/TemplatesList", Model.Templates));
 
             
@@ -461,7 +463,7 @@ WriteLiteral("\r\n                </div>\r\n\r\n");
 WriteLiteral("                ");
 
             
-            #line 82 "..\..\Views\Page\AddNewPage.cshtml"
+            #line 85 "..\..\Views\Page\AddNewPage.cshtml"
            Write(Html.HiddenFor(f => f.TemplateId, new { @id = "TemplateId" }));
 
             
@@ -472,7 +474,7 @@ WriteLiteral("\r\n");
 WriteLiteral("                ");
 
             
-            #line 83 "..\..\Views\Page\AddNewPage.cshtml"
+            #line 86 "..\..\Views\Page\AddNewPage.cshtml"
            Write(Html.HiddenFor(f => f.MasterPageId, new { @id = "MasterPageId" }));
 
             
@@ -483,7 +485,7 @@ WriteLiteral("\r\n");
 WriteLiteral("                ");
 
             
-            #line 84 "..\..\Views\Page\AddNewPage.cshtml"
+            #line 87 "..\..\Views\Page\AddNewPage.cshtml"
            Write(Html.HiddenFor(f => f.ParentPageUrl));
 
             
@@ -494,7 +496,7 @@ WriteLiteral("\r\n");
 WriteLiteral("                ");
 
             
-            #line 85 "..\..\Views\Page\AddNewPage.cshtml"
+            #line 88 "..\..\Views\Page\AddNewPage.cshtml"
            Write(Html.HiddenFor(f => f.CreateMasterPage));
 
             
@@ -503,7 +505,7 @@ WriteLiteral("                ");
 WriteLiteral("\r\n            </div>\r\n");
 
             
-            #line 87 "..\..\Views\Page\AddNewPage.cshtml"
+            #line 90 "..\..\Views\Page\AddNewPage.cshtml"
 
 
             
@@ -522,7 +524,7 @@ WriteLiteral(">\r\n");
 WriteLiteral("                ");
 
             
-            #line 89 "..\..\Views\Page\AddNewPage.cshtml"
+            #line 92 "..\..\Views\Page\AddNewPage.cshtml"
            Write(Html.Partial(PagesConstants.OptionValuesGridTemplate, new EditableGridViewModel { CanAddNewItems = true }));
 
             
@@ -531,13 +533,13 @@ WriteLiteral("                ");
 WriteLiteral("\r\n            </div>\r\n");
 
             
-            #line 91 "..\..\Views\Page\AddNewPage.cshtml"
+            #line 94 "..\..\Views\Page\AddNewPage.cshtml"
         }
 
             
             #line default
             #line hidden
-WriteLiteral("    </div>\r\n</div>");
+WriteLiteral("    </div>\r\n</div>\r\n");
 
         }
     }

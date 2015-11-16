@@ -800,9 +800,7 @@
       <SubType>Designer</SubType>
       <LastGenOutput>PagesGlobalization.Designer.cs</LastGenOutput>
     </EmbeddedResource>
-    <EmbeddedResource Include="Content\Styles\Images\icn-zoom.png" />
     <EmbeddedResource Include="Content\Styles\Images\logo.png" />
-    <EmbeddedResource Include="Content\Styles\Images\sprite-pages-2.png" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\BetterCMS.Configuration\BetterCms.Configuration.csproj">
