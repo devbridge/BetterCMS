@@ -875,7 +875,7 @@ a:hover {
 }
 
 .bcms-success-buttons-holder {
-  margin-top: 15px;
+  margin-top: 25px;
 }
 
 .bcms-msg-message-page {
@@ -1957,7 +1957,7 @@ td .bcms-field-wrapper {
 
 .bcms-error-frame > .bcms-message-titles {
   color: #dc4250;
-  margin: 0;
+  margin: 0 0 15px;
   font-size: 18px;
 }
 
@@ -1984,7 +1984,7 @@ td .bcms-field-wrapper {
 
 .bcms-popinfo-frame > .bcms-message-titles {
   color: #0d7ce7;
-  margin: 0;
+  margin: 0 0 15px;
   font-size: 18px;
 }
 
@@ -2118,6 +2118,7 @@ td .bcms-field-wrapper {
   right: 0;
   height: 36px;
   width: 10px;
+  z-index: 1;
 }
 
 .bcms-field-validation-error > span {
@@ -2823,12 +2824,12 @@ a.bcms-sort-arrow-top:hover {
 
 .bcms-tab-ui.bcms-active {
   background-color: #f3f3f3;
-  color: #636363;
+  color: #303646;
   cursor: default;
 }
 
 .bcms-tab-ui.bcms-active:hover {
-  color: #636363;
+  color: #303646;
 }
 
 .bcms-tab-single {

@@ -35,7 +35,7 @@ $validation-fields: ();
 
         > .bcms-message-titles {
             color: $color;
-            margin: 0;
+            margin: 0 0 15px;
             font-size: 18px;
         }
 
@@ -122,6 +122,7 @@ $validation-fields: ();
 .bcms-field-validation-error {
     @include position(absolute, 0 0 null null);
     @include size(10px $form-element-height);
+    z-index: 1;
 
     > span {
         @include position(absolute, null 0 ($form-element-height + 8px) null);

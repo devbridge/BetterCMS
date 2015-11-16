@@ -23,11 +23,11 @@
 
         &.bcms-active {
             background-color: $bg-modal-options;
-            color: $text-gray;
+            color: $text-dark;
             cursor: default;
 
             &:hover {
-                color: $text-gray;
+                color: $text-dark;
             }
         }
     }
