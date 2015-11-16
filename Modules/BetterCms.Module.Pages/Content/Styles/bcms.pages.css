@@ -514,6 +514,7 @@
 .bcms-search-field-box {
   height: 36px;
   width: 250px;
+  background-color: transparent;
   border-top: 0;
   border-right: 0;
   border-bottom: 2px solid #0d7ce7;

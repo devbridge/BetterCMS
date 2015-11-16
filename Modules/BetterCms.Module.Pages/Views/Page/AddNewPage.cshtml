@@ -75,19 +75,21 @@
 
                 <div class="bcms-input-list-holder">
                     <div class="bcms-content-dialog-title">
-                        @PagesGlobalization.AddNewPage_Template
-                        @Html.Tooltip(PagesGlobalization.AddNewPage_Template_Tooltip_Description)
-                    </div>
-
-                    <!-- ko with: templatesList -->
-                    <div class="bcms-top-block-inner" data-bind="css: { 'bcms-active-search': searchEnabled() }">
-                        <div class="bcms-btn-search" data-bind="click: toggleSearch">@RootGlobalization.Button_Search</div>
-                        <div class="bcms-search-block">
-                            <input type="text" class="bcms-search-field-box bcms-js-search-box" placeholder="@RootGlobalization.WaterMark_Search"
-                                   data-bind="value: searchQuery, valueUpdate: 'afterkeydown', enterPress: search, hasFocus: hasFocus, enable: searchEnabled">
+                        <div class="bcms-content-titles-align">
+                            @PagesGlobalization.AddNewPage_Template
+                            @Html.Tooltip(PagesGlobalization.AddNewPage_Template_Tooltip_Description)
                         </div>
+
+                        <!-- ko with: templatesList -->
+                        <div class="bcms-top-block-inner" data-bind="css: { 'bcms-active-search': searchEnabled() }">
+                            <div class="bcms-btn-search" data-bind="click: toggleSearch">@RootGlobalization.Button_Search</div>
+                            <div class="bcms-search-block">
+                                <input type="text" class="bcms-search-field-box bcms-js-search-box" placeholder="@RootGlobalization.WaterMark_Search"
+                                       data-bind="value: searchQuery, valueUpdate: 'afterkeydown', enterPress: search, hasFocus: hasFocus, enable: searchEnabled">
+                            </div>
+                        </div>
+                        <!-- /ko -->
                     </div>
-                    <!-- /ko -->
 
                     @Html.Partial("Partial/TemplatesList", Model.Templates)
                 </div>

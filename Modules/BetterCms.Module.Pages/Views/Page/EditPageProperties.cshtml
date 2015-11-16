@@ -55,8 +55,8 @@
                 <div class="bcms-form-block-holder">
                     <div>
                         <div class="bcms-input-list-holder">
-                            @Html.Tooltip(PagesGlobalization.EditPageProperties_BasicPropertiesTab_PageName_Tooltip_Description)
                             <div class="bcms-content-titles">@PagesGlobalization.EditPageProperties_BasicPropertiesTab_PageName_Title</div>
+                            @Html.Tooltip(PagesGlobalization.EditPageProperties_BasicPropertiesTab_PageName_Tooltip_Description)
                             <div class="bcms-field-wrapper">
                                 @Html.TextBoxFor(model => model.PageName, new { @class = "bcms-field-text" })
                                 @Html.BcmsValidationMessageFor(f => f.PageName)
@@ -68,8 +68,8 @@
                         <div class="bcms-thumb-container">
                             <div class="bcms-thumb-box">
                                 <div class="bcms-input-list-holder">
-                                    @Html.Tooltip(PagesGlobalization.EditPageProperties_BasicPropertiesTab_PageImage_Tooltip_Description)
                                     <div class="bcms-content-titles">@PagesGlobalization.EditPageProperties_BasicPropertiesTab_PageImage_Title</div>
+                                    @Html.Tooltip(PagesGlobalization.EditPageProperties_BasicPropertiesTab_PageImage_Tooltip_Description)
                                 </div>
 
                                 <div class="bcms-thumb-image">
@@ -95,8 +95,8 @@
 
                             <div class="bcms-thumb-box">
                                 <div class="bcms-input-list-holder">
-                                    @Html.Tooltip(PagesGlobalization.EditPageProperties_BasicPropertiesTab_PageFeaturedImage_Tooltip_Description)
                                     <div class="bcms-content-titles">@PagesGlobalization.EditPageProperties_BasicPropertiesTab_PageFeaturedImage_Title</div>
+                                    @Html.Tooltip(PagesGlobalization.EditPageProperties_BasicPropertiesTab_PageFeaturedImage_Tooltip_Description)
                                 </div>
 
                                 <div class="bcms-thumb-image">
@@ -122,8 +122,8 @@
 
                             <div class="bcms-thumb-box">
                                 <div class="bcms-input-list-holder">
-                                    @Html.Tooltip(PagesGlobalization.EditPageProperties_BasicPropertiesTab_PageSecondaryImage_Tooltip_Description)
                                     <div class="bcms-content-titles">@PagesGlobalization.EditPageProperties_BasicPropertiesTab_PageSecondaryImage_Title</div>
+                                    @Html.Tooltip(PagesGlobalization.EditPageProperties_BasicPropertiesTab_PageSecondaryImage_Tooltip_Description)
                                 </div>
 
                                 <div class="bcms-thumb-image">
@@ -148,17 +148,16 @@
                             </div>
                         </div>
 
-@*                        <div class="bcms-input-list-holder" data-bind="with: categories">*@
-@*                            @Html.Partial("~/Areas/bcms-root/Views/Category/CategoriesTemplate.cshtml", categoriesTemplateViewModel)*@
-@*                        </div>*@
+                        @*                        <div class="bcms-input-list-holder" data-bind="with: categories">*@
+                        @*                            @Html.Partial("~/Areas/bcms-root/Views/Category/CategoriesTemplate.cshtml", categoriesTemplateViewModel)*@
+                        @*                        </div>*@
                         <div class="bcms-input-list-holder">
+                            <div class="bcms-content-titles">@RootGlobalization.CategoriesTemplate_AddCategories_Title</div>
                             @Html.Tooltip(categoriesTemplateViewModel.TooltipDescription)
-                            <div class="bcms-content-titles">
-                                @RootGlobalization.CategoriesTemplate_AddCategories_Title
-                            </div>
-                            <input type="hidden" id="bcms-js-categories-select"/>
+
+                            <input type="hidden" id="bcms-js-categories-select" />
                             <div class="bcms-single-tag-holder" data-bind="foreach: categories">
-                                <input type="hidden" data-bind="attr: { name: 'Categories['+ $index() +'].key', value: $data.id }"/>
+                                <input type="hidden" data-bind="attr: { name: 'Categories['+ $index() +'].key', value: $data.id }" />
                             </div>
                         </div>
 
@@ -172,14 +171,15 @@
                         @if (!Model.IsMasterPage)
                         {
                             <div class="bcms-input-list-holder">
-                                @Html.Tooltip(PagesGlobalization.EditPageProperties_ForceProtocol_Tooltip_Description)
                                 <div class="bcms-content-titles">@PagesGlobalization.EditPageProperties_ForceProtocol_Title</div>
+                                @Html.Tooltip(PagesGlobalization.EditPageProperties_ForceProtocol_Tooltip_Description)
                                 @Html.DropDownListFor(model => model.ForceAccessProtocol, Model.PageAccessProtocols.ToSelectList(Model.ForceAccessProtocol), null, new { @class = "bcms-global-select" })
                             </div>
 
                             <div class="bcms-input-list-holder">
-                                @Html.Tooltip(PagesGlobalization.EditPageProperties_Properties_Tooltip_Description)
                                 <div class="bcms-content-titles">@PagesGlobalization.EditPageProperties_Properties_Title</div>
+                                @Html.Tooltip(PagesGlobalization.EditPageProperties_Properties_Tooltip_Description)
+
                                 <div class="bcms-checkbox-holder">
                                     @{
                             object options = null;
@@ -248,20 +248,21 @@
 
                 <div class="bcms-input-list-holder">
                     <div class="bcms-content-dialog-title">
-                        @PagesGlobalization.EditPageProperties_LayoutPropertiesTab_ChooseLayout_Title
-                        @Html.Tooltip(PagesGlobalization.EditPageProperties_LayoutPropertiesTab_Layout_Tooltip_Description)
-                    </div>
-
-                    <!-- ko with: templatesList -->
-                    <div class="bcms-top-block-inner" data-bind="css: { 'bcms-active-search': searchEnabled() }">
-                        <div class="bcms-btn-search" data-bind="click: toggleSearch">@RootGlobalization.Button_Search</div>
-                        <div class="bcms-search-block">
-                            <input type="text" class="bcms-search-field-box bcms-js-search-box" placeholder="@RootGlobalization.WaterMark_Search"
-                                   data-bind="value: searchQuery, valueUpdate: 'afterkeydown', enterPress: search, hasFocus: hasFocus, enable: searchEnabled">
+                        <div class="bcms-content-titles-align">
+                            @PagesGlobalization.EditPageProperties_LayoutPropertiesTab_ChooseLayout_Title
+                            @Html.Tooltip(PagesGlobalization.EditPageProperties_LayoutPropertiesTab_Layout_Tooltip_Description)
                         </div>
-                    </div>
-                    <!-- /ko -->
 
+                        <!-- ko with: templatesList -->
+                        <div class="bcms-top-block-inner" data-bind="css: { 'bcms-active-search': searchEnabled() }">
+                            <div class="bcms-btn-search" data-bind="click: toggleSearch">@RootGlobalization.Button_Search</div>
+                            <div class="bcms-search-block">
+                                <input type="text" class="bcms-search-field-box bcms-js-search-box" placeholder="@RootGlobalization.WaterMark_Search"
+                                       data-bind="value: searchQuery, valueUpdate: 'afterkeydown', enterPress: search, hasFocus: hasFocus, enable: searchEnabled">
+                            </div>
+                        </div>
+                        <!-- /ko -->
+                    </div>
                     @Html.Partial("Partial/TemplatesList", Model.Templates)
                 </div>
             </div>
@@ -272,14 +273,14 @@
 
             <div id="bcms-tab-4" class="bcms-tab-single">
                 <div class="bcms-input-list-holder">
-                    @Html.Tooltip(PagesGlobalization.EditPageProperties_AdvancedPropertiesTab_PageCss_Tooltip_Description)
                     <div class="bcms-content-titles">@PagesGlobalization.EditPageProperties_AdvancedPropertiesTab_PageCss_Title</div>
+                    @Html.Tooltip(PagesGlobalization.EditPageProperties_AdvancedPropertiesTab_PageCss_Tooltip_Description)
                     @Html.TextAreaFor(model => model.PageCSS, new { @class = "bcms-field-textarea bcms-code-field bcms-code-field-css", @id = Guid.NewGuid() })
                 </div>
 
                 <div class="bcms-input-list-holder">
-                    @Html.Tooltip(PagesGlobalization.EditPageProperties_AdvancedPropertiesTab_PageJavascript_Tooltip_Description)
                     <div class="bcms-content-titles">@PagesGlobalization.EditPageProperties_AdvancedPropertiesTab_PageJavascript_Title</div>
+                    @Html.Tooltip(PagesGlobalization.EditPageProperties_AdvancedPropertiesTab_PageJavascript_Tooltip_Description)
                     @Html.TextAreaFor(model => model.PageJavascript, new { @class = "bcms-field-textarea bcms-code-field bcms-code-field-javascript", id = Guid.NewGuid() })
                 </div>
             </div>
@@ -293,14 +294,14 @@
                     }
                     <div class="bcms-page-translations-content">
                         <div class="bcms-input-list-holder" data-bind="with: translations.language">
-                            @Html.Tooltip(PagesGlobalization.EditPageProperties_TranslationsTab_Language_Tooltip_Description)
                             <div class="bcms-content-titles">@PagesGlobalization.EditPageProperties_TranslationsTab_Language</div>
+                            @Html.Tooltip(PagesGlobalization.EditPageProperties_TranslationsTab_Language_Tooltip_Description)
                             <select class="bcms-global-select" data-bind="options: languages, optionsText: 'value', optionsValue: 'key', value: languageId"></select>
                         </div>
 
                         <div class="bcms-input-list-holder">
-                            @Html.Tooltip(PagesGlobalization.EditPageTranslations_OtherLanguages_Tooltip)
                             <div class="bcms-content-titles">@PagesGlobalization.EditPageTranslations_OtherLanguages_Title</div>
+                            @Html.Tooltip(PagesGlobalization.EditPageTranslations_OtherLanguages_Tooltip)
                         </div>
                     </div>
 
