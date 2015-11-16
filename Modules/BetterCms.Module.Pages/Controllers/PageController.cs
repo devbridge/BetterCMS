@@ -183,6 +183,7 @@ namespace BetterCms.Module.Pages.Controllers
                                Languages = success ? model.Languages : null,
                                LanguageId = success ? model.LanguageId : null,
                                Translations = success ? model.Translations : null,
+                               Templates = success ? model.Templates : null,
                                ShowTranslationsTab = success && model.ShowTranslationsTab,
                                CategoriesFilterKey = success ? model.CategoriesFilterKey : PageProperties.CategorizableItemKeyForPages,
                                CategoriesLookupList = success ? model.CategoriesLookupList : null,
