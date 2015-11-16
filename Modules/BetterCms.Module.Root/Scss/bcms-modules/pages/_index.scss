@@ -12,26 +12,12 @@
 //
 //
 //
-//todo update styles when design received this is for ckeditor region view
-.bcms-draggable-region {
-    @include size(100% 39px);
-    background: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAQAAAAECAIAAAFRlDm/AAAAHUlEQVQI12P4//8/AxRDqQcPHjAAMUIQyoFQEAAA0/UuXeg1e3EAAAAASUVORK5CYII=') repeat 0 0;
-    border: $border-overlay;
-    box-sizing: border-box;
-    color: $text-blue;
+.bcms-sitemap-title-link {
+    color: #0383df;
+    cursor: pointer;
     font-size: 12px;
-    font-weight: 700;
-    line-height: 39px;
-    margin: 0 -2px 0 0;
-    padding-left: 34px;
-    position: relative;
-
-    @include virtual(after) {
-        @include size(15px 18px);
-        @include positioning($center-y: true);
-        background: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAA8AAAASCAYAAACEnoQPAAAAV0lEQVQ4y2NgmPX6Pw78D4hLgJgBJ8ajGYZridGMLolsQAclmv+TqhndkOGsmRCf+poJYeprJj6AIOJclGgGYW1CmvHhr0CcQHXNDEQkGB1cziakGR5gAEOrBIwBImPOAAAAAElFTkSuQmCC") no-repeat 0 0;
-        left: 11px;
-    }
+    font-weight: 600;
+    margin-left: 20px;
 }
 
 //module content

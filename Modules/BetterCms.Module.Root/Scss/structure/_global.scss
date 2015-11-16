@@ -68,10 +68,6 @@ $loading-spinner: (
         float: left;
     }
 
-    &-titles-align {
-        @include vertical-align();
-    }
-
     &-dialog-title {
         @include clearfix();
         border-bottom: $border-thin-smoke;
@@ -105,7 +101,7 @@ $loading-spinner: (
 
         .bcms-field-wrapper {
             @include vertical-align();
-            width: 75%;
+            width: 80%;
         }
     }
 

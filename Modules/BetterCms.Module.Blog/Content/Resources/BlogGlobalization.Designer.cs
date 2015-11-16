@@ -133,15 +133,6 @@ namespace BetterCms.Module.Blog.Content.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Choose Blog Post Layout.
-        /// </summary>
-        public static string BlogPostTitle_ChooseLayout_Title {
-            get {
-                return ResourceManager.GetString("BlogPostTitle_ChooseLayout_Title", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Author created successfully.
         /// </summary>
         public static string CreateAuthor_CreatedSuccessfully_Message {

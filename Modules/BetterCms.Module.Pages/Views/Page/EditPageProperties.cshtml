@@ -247,10 +247,8 @@
                 }
 
                 <div class="bcms-input-list-holder">
-                    <div class="bcms-content-dialog-title">
-                        @PagesGlobalization.EditPageProperties_LayoutPropertiesTab_ChooseLayout_Title
-                        @Html.Tooltip(PagesGlobalization.EditPageProperties_LayoutPropertiesTab_Layout_Tooltip_Description)
-                    </div>
+                    @Html.Tooltip(PagesGlobalization.EditPageProperties_LayoutPropertiesTab_Layout_Tooltip_Description)
+                    <div class="bcms-content-titles">@PagesGlobalization.EditPageProperties_LayoutPropertiesTab_ChooseLayout_Title</div>
                     @Html.Partial("Partial/TemplatesList", Model.Templates)
                 </div>
             </div>
