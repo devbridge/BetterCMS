@@ -28,118 +28,104 @@ namespace ASP
     using System.Web.UI;
     using System.Web.WebPages;
     
-    #line 1 "..\..\Views\Page\Partial\TemplatesList.cshtml"
-    using BetterCms.Module.Root.Content.Resources;
-    
-    #line default
-    #line hidden
-    
     [System.CodeDom.Compiler.GeneratedCodeAttribute("RazorGenerator", "2.0.0.0")]
     [System.Web.WebPages.PageVirtualPathAttribute("~/Views/Page/Partial/TemplatesList.cshtml")]
-    public partial class _Views_Page_Partial_TemplatesList_cshtml : System.Web.Mvc.WebViewPage<IList<BetterCms.Module.Pages.ViewModels.Page.TemplateViewModel>>
+    public partial class _Views_Page_Partial_TemplatesList_cshtml : System.Web.Mvc.WebViewPage<dynamic>
     {
-
-#line 4 "..\..\Views\Page\Partial\TemplatesList.cshtml"
-public System.Web.WebPages.HelperResult Templates(IList<BetterCms.Module.Pages.ViewModels.Page.TemplateViewModel> model)
-{
-#line default
-#line hidden
-return new System.Web.WebPages.HelperResult(__razor_helper_writer => {
-
-#line 5 "..\..\Views\Page\Partial\TemplatesList.cshtml"
- 
-    if (model != null && model.Count > 0)
-    {
-        for (var i = 0; i < model.Count; i++)
-        {
-            
-
-#line default
-#line hidden
-
-#line 10 "..\..\Views\Page\Partial\TemplatesList.cshtml"
-WriteTo(__razor_helper_writer, Html.Partial("Partial/Template", model[i]));
-
-
-#line default
-#line hidden
-
-#line 10 "..\..\Views\Page\Partial\TemplatesList.cshtml"
-                                                       
-        }
-    }
-    else
-    {
-
-
-#line default
-#line hidden
-WriteLiteralTo(__razor_helper_writer, "        <p>");
-
-
-#line 15 "..\..\Views\Page\Partial\TemplatesList.cshtml"
-WriteTo(__razor_helper_writer, Html.Raw(RootGlobalization.Message_NoItemToSelect));
-
-
-#line default
-#line hidden
-WriteLiteralTo(__razor_helper_writer, "</p>\n");
-
-
-#line 16 "..\..\Views\Page\Partial\TemplatesList.cshtml"
-    }
-
-
-#line default
-#line hidden
-});
-
-#line 17 "..\..\Views\Page\Partial\TemplatesList.cshtml"
-}
-#line default
-#line hidden
-
         public _Views_Page_Partial_TemplatesList_cshtml()
         {
         }
         public override void Execute()
         {
-            
-            #line 18 "..\..\Views\Page\Partial\TemplatesList.cshtml"
-  
-    var active = Model.FirstOrDefault(m => m.IsActive);
-    var selectFirstTab = active == null || !active.IsMasterPage;
-
-            
-            #line default
-            #line hidden
-WriteLiteral("\n\n<div");
+WriteLiteral("<div");
 
 WriteLiteral(" class=\"bcms-templates-holder\"");
 
-WriteLiteral(">\n");
+WriteLiteral(" data-bind=\"foreach: templatesList.displayedTemplates\"");
 
-WriteLiteral("  ");
+WriteLiteral(">\r\n    <div");
 
-            
-            #line 24 "..\..\Views\Page\Partial\TemplatesList.cshtml"
-Write(Templates(Model.Where(m => !m.IsMasterPage).ToList()));
+WriteLiteral(" class=\"bcms-grid-box bcms-grid-box-pages bcms-js-grid-box\"");
 
-            
-            #line default
-            #line hidden
-WriteLiteral("\n");
+WriteLiteral(" data-bind=\"css: { \'bcms-grid-box-active\': isActive, \'bcms-grid-box-notcompatible" +
+"\': isCircularToCurrent }\"");
 
-WriteLiteral("  ");
+WriteLiteral(">\r\n        <div");
 
-            
-            #line 25 "..\..\Views\Page\Partial\TemplatesList.cshtml"
-Write(Templates(Model.Where(m => m.IsMasterPage).ToList()));
+WriteLiteral(" class=\"bcms-content-titles\"");
 
-            
-            #line default
-            #line hidden
-WriteLiteral("\n</div>\n");
+WriteLiteral(" data-bind=\"text: title\"");
+
+WriteLiteral("></div>\r\n\r\n        <div");
+
+WriteLiteral(" class=\"bcms-grid-image-holder\"");
+
+WriteLiteral(">\r\n            <!-- ko if: previewThumbnailUrl || previewUrl -->\r\n            <di" +
+"v");
+
+WriteLiteral(" class=\"bcms-grid-image\"");
+
+WriteLiteral(">\r\n                <img");
+
+WriteLiteral(" data-bind=\"attr: { src: previewThumbnailUrl || previewUrl, alt: title }\"");
+
+WriteLiteral(" />\r\n            </div>\r\n\r\n            <div");
+
+WriteLiteral(" class=\"bcms-zoom-overlay bcms-preview-template\"");
+
+WriteLiteral(" data-bind=\"click: previewImage\"");
+
+WriteLiteral("></div>}\r\n            <!-- /ko -->\r\n            <!-- ko ifnot: previewThumbnailUr" +
+"l || previewUrl -->\r\n            <svg");
+
+WriteLiteral(" class=\"bcms-grid-no-preview\"");
+
+WriteLiteral(" viewBox=\"-237.5 336 138 121.5\"");
+
+WriteLiteral(" enable-background=\"new -237.5 336 138 121.5\"");
+
+WriteLiteral(">\r\n                <path");
+
+WriteLiteral(" d=\"m-237 336h137v4h-137v-4\"");
+
+WriteLiteral(" fill=\"#e6e6e6\"");
+
+WriteLiteral(" />\r\n                <g");
+
+WriteLiteral(" fill=\"#fff\"");
+
+WriteLiteral(" stroke=\"#d7d4d4\"");
+
+WriteLiteral(" stroke-linecap=\"square\"");
+
+WriteLiteral(">\r\n                    <path");
+
+WriteLiteral(" d=\"m-237 404h43v27h-43v-27z\"");
+
+WriteLiteral(" />\r\n                    <path");
+
+WriteLiteral(" d=\"m-190 404h43v27h-43v-27z\"");
+
+WriteLiteral(" />\r\n                    <path");
+
+WriteLiteral(" d=\"m-237 437h137v20h-137v-20z\"");
+
+WriteLiteral(" />\r\n                    <path");
+
+WriteLiteral(" d=\"m-143 404h43v27h-43v-27z\"");
+
+WriteLiteral(" />\r\n                    <path");
+
+WriteLiteral(" d=\"m-237 345h137v53h-137v-53z\"");
+
+WriteLiteral(" />\r\n                </g>\r\n            </svg>\r\n            <!-- /ko -->\r\n        " +
+"</div>\r\n\r\n        <div");
+
+WriteLiteral(" class=\"bcms-btn-tertiary bcms-js-grid-box\"");
+
+WriteLiteral(" data-bind=\"click: $root.templatesList.setActive\"");
+
+WriteLiteral(">Select</div>\r\n    </div>\r\n</div>\r\n");
 
         }
     }

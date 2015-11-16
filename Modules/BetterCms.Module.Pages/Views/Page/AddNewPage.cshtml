@@ -76,6 +76,17 @@
                 <div class="bcms-input-list-holder">
                     <div class="bcms-content-titles">@PagesGlobalization.AddNewPage_Template</div>
                     @Html.Tooltip(PagesGlobalization.AddNewPage_Template_Tooltip_Description)
+
+                    <!-- ko with: templatesList -->
+                    <div class="bcms-top-block-inner" data-bind="css: { 'bcms-active-search': searchEnabled() }">
+                        <div class="bcms-btn-search" data-bind="click: toggleSearch">@RootGlobalization.Button_Search</div>
+                        <div class="bcms-search-block">
+                            <input type="text" class="bcms-search-field-box bcms-js-search-box" placeholder="@RootGlobalization.WaterMark_Search"
+                                   data-bind="value: searchQuery, valueUpdate: 'afterkeydown', enterPress: search, hasFocus: hasFocus, enable: searchEnabled">
+                        </div>
+                    </div>
+                    <!-- /ko -->
+
                     @Html.Partial("Partial/TemplatesList", Model.Templates)
                 </div>
 

@@ -25,8 +25,6 @@ bettercms.define('bcms.pages.properties', ['bcms.jquery', 'bcms', 'bcms.modal', 
                 pagePropertiesTemplateSelect: '.bcms-js-grid-box',
                 pagePropertiesTemplateId: '#TemplateId',
                 pagePropertiesMasterPageId: '#MasterPageId',
-                pagePropertiesActiveTemplateBox: '.bcms-grid-box-active',
-                pagePropertiesTemplatePreviewLink: '.bcms-preview-template',
                 pagePropertiesCategoriesSelect: '#bcms-js-categories-select',
 
                 pagePropertiesForm: 'form:first',
@@ -71,9 +69,129 @@ bettercms.define('bcms.pages.properties', ['bcms.jquery', 'bcms', 'bcms.modal', 
         page.globalization = globalization;
 
         /**
+        * Template view model
+        */
+        function TemplateViewModel(template) {
+            var self = this;
+
+            self.id = template.TemplateId;
+            self.previewUrl = template.PreviewUrl;
+            self.previewThumbnailUrl = template.PreviewThumbnailUrl;
+            self.title = template.Title;
+
+            self.isActive = ko.observable(template.IsActive);
+            self.isCircularToCurrent = template.IsCircularToCurrent;
+            self.isCompatible = template.IsCompatible;
+            self.isMasterPage = template.IsMasterPage;
+
+            self.select = function () {
+                
+            };
+
+            self.previewImage = function () {
+                modal.imagePreview(self.previewUrl, self.title);
+            };
+        }
+
+        /**
+        * Templates list view model
+        */
+        function TemplatesListViewModel(templates, dialog, optionsContainer, optionListViewModel) {
+            var self = this;
+
+            self.templates = ko.observableArray();
+            self.displayedTemplates = ko.observableArray();
+            self.searchQuery = ko.observable();
+            self.searchEnabled = ko.observable(false);
+            self.hasFocus = ko.observable(false);
+            self.optionsContainer = optionsContainer;
+            self.optionListViewModel = optionListViewModel;
+            self.dialog = dialog;
+            
+            for (var j = 0; j < templates.length; j++) {
+                var currentTemplate = new TemplateViewModel(templates[j]);
+                self.templates.push(currentTemplate);
+            }
+
+            self.searchQuery.subscribe(function() {
+                self.search();
+            });
+
+            self.displayTemplates = function () {
+                if (self.templates() != null) {
+                    self.displayedTemplates.removeAll();
+
+                    var query = (self.searchQuery() || '').toLowerCase();
+
+                    for (var j = 0; j < self.templates().length; j++) {
+                        var currentTemplate = self.templates()[j];
+                        if (query && currentTemplate.title.toLowerCase().indexOf(query) < 0) {
+                            continue;
+                        }
+                        self.displayedTemplates.push(currentTemplate);
+                    }
+                }
+            };
+
+            self.search = function () {
+                self.displayTemplates();
+            };
+
+            self.toggleSearch = function () {
+                if (!self.searchEnabled()) {
+                    self.searchEnabled(true);
+                    self.hasFocus(true);
+                } else {
+                    self.searchEnabled(false);
+                    self.searchQuery('');
+                }
+            };
+
+            self.setActive = function(template) {
+                var active = self.findCurrentActive();
+
+                if (active.id === template.id) {
+                    return;
+                }
+
+                var messagesBox = messages.box({ container: dialog.container });
+                messagesBox.clearMessages();
+                if (template.isCircular) {
+                    messagesBox.addWarningMessage(globalization.selectedMasterIsChildPage);
+                    return;
+                }
+
+                active.isActive(false);
+                if (template.isMasterPage) {
+                    dialog.container.find(selectors.pagePropertiesMasterPageId).val(template.id);
+                    dialog.container.find(selectors.pagePropertiesTemplateId).val('');
+                } else {
+                    dialog.container.find(selectors.pagePropertiesTemplateId).val(template.id);
+                    dialog.container.find(selectors.pagePropertiesMasterPageId).val('');
+                }
+
+                template.isActive(true);
+
+                page.loadLayoutOptions(template.id, template.isMasterPage, dialog.container, optionsContainer, optionListViewModel);
+            };
+
+            self.findCurrentActive = function() {
+                for (var i = 0; i < self.templates().length; i++) {
+                    if (self.templates()[i].isActive()) {
+                        return self.templates()[i];
+                    }
+                }
+
+                return null;
+            };
+
+            self.displayTemplates();
+        }
+
+        /**
         * Page view model
         */
-        function PageViewModel(image, secondaryImage, featuredImage, tagsViewModel, optionListViewModel, accessControlViewModel, translationsViewModel, categoriesModel) {
+        function PageViewModel(image, secondaryImage, featuredImage, tagsViewModel, optionListViewModel, accessControlViewModel, translationsViewModel, categoriesModel, templatesViewModel) {
             var self = this;
 
             self.tags = tagsViewModel;
@@ -84,6 +202,7 @@ bettercms.define('bcms.pages.properties', ['bcms.jquery', 'bcms', 'bcms.modal', 
             self.accessControl = accessControlViewModel;
             self.translations = translationsViewModel;
             self.categories = ko.observableArray(categoriesModel);
+            self.templatesList = templatesViewModel;
         }
 
         function initCategoriesSelect(pageViewModel, content) {
@@ -112,7 +231,9 @@ bettercms.define('bcms.pages.properties', ['bcms.jquery', 'bcms', 'bcms.modal', 
                 //categoriesModel = new categories.CategoriesListViewModel(content.Data.Categories, content.Data.CategoriesFilterKey),
                 accessControlViewModel = security.createUserAccessViewModel(content.Data.UserAccessList),
                 translationsViewModel = content.Data.Languages ? new pageLanguages.PageTranslationsListViewModel(content.Data.Translations, content.Data.Languages, content.Data.LanguageId, content.Data.PageId) : null,
-                pageViewModel = new PageViewModel(content.Data.Image, content.Data.SecondaryImage, content.Data.FeaturedImage, tagsViewModel, optionListViewModel, accessControlViewModel, translationsViewModel, content.Data.Categories),
+                templatesViewModel = new TemplatesListViewModel(content.Data.Templates, dialog, optionsContainer, optionListViewModel),
+                pageViewModel = new PageViewModel(content.Data.Image, content.Data.SecondaryImage, content.Data.FeaturedImage, tagsViewModel,
+                    optionListViewModel, accessControlViewModel, translationsViewModel, content.Data.Categories, templatesViewModel),
                 form = dialog.container.find(selectors.pagePropertiesForm),
                 codeEditorInitialized = false;
 
@@ -155,21 +276,6 @@ bettercms.define('bcms.pages.properties', ['bcms.jquery', 'bcms', 'bcms.modal', 
 
             dialog.container.find(selectors.editPagePropertiesCloseInfoMessage).on('click', function() {
                 dialog.container.find(selectors.editPagePropertiesInfoMessageBox).hide();
-            });
-
-            dialog.container.find(selectors.pagePropertiesTemplateSelect).on('click', function () {
-                page.highlightPagePropertiesActiveTemplate(dialog, this, function (id, isMasterPage) {
-                    page.loadLayoutOptions(id, isMasterPage, dialog.container, optionsContainer, optionListViewModel);
-                });
-            });
-
-            dialog.container.find(selectors.pagePropertiesTemplatePreviewLink).on('click', function (event) {
-                bcms.stopEventPropagation(event);
-                var template = $(this),
-                    url = template.data('url'),
-                    alt = template.data('alt');
-
-                modal.imagePreview(url, alt);
             });
 
             bcms.preventInputFromSubmittingForm(dialog.container.find(selectors.permalinkEditField), {
@@ -359,42 +465,6 @@ bettercms.define('bcms.pages.properties', ['bcms.jquery', 'bcms', 'bcms.modal', 
         */
         page.hideEditPagePropertiesInfoMessage = function (dialog) {
             dialog.container.find(selectors.editPagePropertiesCloseInfoMessageBox).hide();
-        };
-
-        /**
-        * highlights active template box in PageProperties dialog.
-        */
-        page.highlightPagePropertiesActiveTemplate = function (dialog, selectButton, onChangeCallback) {
-            var active = dialog.container.find(selectors.pagePropertiesActiveTemplateBox),
-                template = $(selectButton),
-                id = $(template).data('id'),
-                isMasterPage = $(template).data('master'),
-                isCircular = $(template).data('iscircular');
-
-            if (active.get(0) === template.get(0)) {
-                return;
-            }
-
-            var messagesBox = messages.box({ container: dialog.container });
-            messagesBox.clearMessages();
-            if (isCircular) {
-                messagesBox.addWarningMessage(globalization.selectedMasterIsChildPage);
-                return;
-            }
-
-            active.removeClass(classes.pagePropertiesActiveTemplateBox);
-            if (template) {
-                if (isMasterPage) {
-                    dialog.container.find(selectors.pagePropertiesMasterPageId).val(id);
-                    dialog.container.find(selectors.pagePropertiesTemplateId).val('');
-                } else {
-                    dialog.container.find(selectors.pagePropertiesTemplateId).val(id);
-                    dialog.container.find(selectors.pagePropertiesMasterPageId).val('');
-                }
-                $(template).addClass(classes.pagePropertiesActiveTemplateBox);
-
-                onChangeCallback.call(this, id, isMasterPage);
-            }
         };
 
         /**

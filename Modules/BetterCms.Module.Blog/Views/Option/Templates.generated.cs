@@ -116,7 +116,7 @@ WriteLiteral(">\r\n        </div>\r\n    </div>\r\n</div>\r\n\r\n<div");
 
 WriteLiteral(" class=\"bcms-templates-holder\"");
 
-WriteLiteral(">\r\n    <!-- ko foreach: templates() -->\r\n    <div");
+WriteLiteral(">\r\n    <!-- ko foreach: displayedTemplates -->\r\n    <div");
 
 WriteLiteral(" class=\"bcms-grid-box bcms-grid-box-blog\"");
 
@@ -199,7 +199,7 @@ WriteLiteral(">");
 
             
             #line 44 "..\..\Views\Option\Templates.cshtml"
-                                  Write(BlogGlobalization.SiteSettings_Templates_DefaultTemplate);
+                                   Write(BlogGlobalization.SiteSettings_Templates_DefaultTemplate);
 
             
             #line default
@@ -215,7 +215,7 @@ WriteLiteral(">");
 
             
             #line 47 "..\..\Views\Option\Templates.cshtml"
-                                                            Write(BlogGlobalization.SiteSettings_Templates_SelectButton);
+                                                             Write(BlogGlobalization.SiteSettings_Templates_SelectButton);
 
             
             #line default
@@ -229,7 +229,7 @@ WriteLiteral(">");
 
             
             #line 50 "..\..\Views\Option\Templates.cshtml"
-                                  Write(BlogGlobalization.SiteSettings_Templates_IncompatibleTemplate);
+                                   Write(BlogGlobalization.SiteSettings_Templates_IncompatibleTemplate);
 
             
             #line default

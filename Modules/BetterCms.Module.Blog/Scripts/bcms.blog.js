@@ -847,37 +847,34 @@ bettercms.define('bcms.blog', ['bcms.jquery', 'bcms', 'bcms.modal', 'bcms.siteSe
         }
 
         /**
-        * Template row view model
-        */
-        function TemplateRowViewModel() {
-            var self = this;
-
-            self.templates = ko.observableArray();
-        }
-
-        /**
         * Templates list view model
         */
         function TemplatesListViewModel(templates, container) {
             var self = this;
 
             self.templates = ko.observableArray();
+            self.displayedTemplates = ko.observableArray();
             self.searchQuery = ko.observable();
             self.searchEnabled = ko.observable(false);
             self.hasFocus = ko.observable(false);
 
+            for (var j = 0; j < templates.length; j++) {
+                var currentTemplate = new TemplateViewModel(templates[j], this, container);
+                self.templates.push(currentTemplate);
+            }
+
             self.displayTemplates = function () {
-                if(templates != null) {
-                    self.templates.removeAll();
+                if (self.templates() != null) {
+                    self.displayedTemplates.removeAll();
 
                     var query = (self.searchQuery() || '').toLowerCase();
 
-                    for (var j = 0; j < templates.length; j++) {
-                        var currentTemplate = new TemplateViewModel(templates[j], self, container);
+                    for (var j = 0; j < self.templates().length; j++) {
+                        var currentTemplate = self.templates()[j];
                         if (query && currentTemplate.title.toLowerCase().indexOf(query) < 0) {
                             continue;
                         }
-                        self.templates.push(currentTemplate);
+                        self.displayedTemplates.push(currentTemplate);
                     }
                 }
             };

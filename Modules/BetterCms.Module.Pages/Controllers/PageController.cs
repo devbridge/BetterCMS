@@ -186,6 +186,7 @@ namespace BetterCms.Module.Pages.Controllers
                                ShowTranslationsTab = success && model.ShowTranslationsTab,
                                CategoriesFilterKey = success ? model.CategoriesFilterKey : PageProperties.CategorizableItemKeyForPages,
                                CategoriesLookupList = success ? model.CategoriesLookupList : null,
+                               Templates = success ? model.Templates : null
                            };
 
             return ComboWireJson(success, view, json, JsonRequestBehavior.AllowGet);

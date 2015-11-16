@@ -252,7 +252,7 @@ WriteLiteral("    </div>\r\n\r\n    <div");
 
 WriteLiteral(" class=\"bcms-btn-selection bcms-js-grid-box\"");
 
-WriteLiteral(">Select</div>\r\n</div>\r\n");
+WriteLiteral(">Select</div>\r\n</div>");
 
         }
     }

@@ -445,12 +445,58 @@ WriteLiteral("                    ");
             
             #line default
             #line hidden
-WriteLiteral("\r\n");
+WriteLiteral("\r\n\r\n                    <!-- ko with: templatesList -->\r\n                    <div" +
+"");
+
+WriteLiteral(" class=\"bcms-top-block-inner\"");
+
+WriteLiteral(" data-bind=\"css: { \'bcms-active-search\': searchEnabled() }\"");
+
+WriteLiteral(">\r\n                        <div");
+
+WriteLiteral(" class=\"bcms-btn-search\"");
+
+WriteLiteral(" data-bind=\"click: toggleSearch\"");
+
+WriteLiteral(">");
+
+            
+            #line 82 "..\..\Views\Page\AddNewPage.cshtml"
+                                                                                Write(RootGlobalization.Button_Search);
+
+            
+            #line default
+            #line hidden
+WriteLiteral("</div>\r\n                        <div");
+
+WriteLiteral(" class=\"bcms-search-block\"");
+
+WriteLiteral(">\r\n                            <input");
+
+WriteLiteral(" type=\"text\"");
+
+WriteLiteral(" class=\"bcms-search-field-box bcms-js-search-box\"");
+
+WriteAttribute("placeholder", Tuple.Create(" placeholder=\"", 4619), Tuple.Create("\"", 4668)
+            
+            #line 84 "..\..\Views\Page\AddNewPage.cshtml"
+                             , Tuple.Create(Tuple.Create("", 4633), Tuple.Create<System.Object, System.Int32>(RootGlobalization.WaterMark_Search
+            
+            #line default
+            #line hidden
+, 4633), false)
+);
+
+WriteLiteral("\r\n                                   data-bind=\"value: searchQuery, valueUpdate: " +
+"\'afterkeydown\', enterPress: search, hasFocus: hasFocus, enable: searchEnabled\"");
+
+WriteLiteral(">\r\n                        </div>\r\n                    </div>\r\n                  " +
+"  <!-- /ko -->\r\n\r\n");
 
 WriteLiteral("                    ");
 
             
-            #line 79 "..\..\Views\Page\AddNewPage.cshtml"
+            #line 90 "..\..\Views\Page\AddNewPage.cshtml"
                Write(Html.Partial("Partial/TemplatesList", Model.Templates));
 
             
@@ -461,7 +507,7 @@ WriteLiteral("\r\n                </div>\r\n\r\n");
 WriteLiteral("                ");
 
             
-            #line 82 "..\..\Views\Page\AddNewPage.cshtml"
+            #line 93 "..\..\Views\Page\AddNewPage.cshtml"
            Write(Html.HiddenFor(f => f.TemplateId, new { @id = "TemplateId" }));
 
             
@@ -472,7 +518,7 @@ WriteLiteral("\r\n");
 WriteLiteral("                ");
 
             
-            #line 83 "..\..\Views\Page\AddNewPage.cshtml"
+            #line 94 "..\..\Views\Page\AddNewPage.cshtml"
            Write(Html.HiddenFor(f => f.MasterPageId, new { @id = "MasterPageId" }));
 
             
@@ -483,7 +529,7 @@ WriteLiteral("\r\n");
 WriteLiteral("                ");
 
             
-            #line 84 "..\..\Views\Page\AddNewPage.cshtml"
+            #line 95 "..\..\Views\Page\AddNewPage.cshtml"
            Write(Html.HiddenFor(f => f.ParentPageUrl));
 
             
@@ -494,7 +540,7 @@ WriteLiteral("\r\n");
 WriteLiteral("                ");
 
             
-            #line 85 "..\..\Views\Page\AddNewPage.cshtml"
+            #line 96 "..\..\Views\Page\AddNewPage.cshtml"
            Write(Html.HiddenFor(f => f.CreateMasterPage));
 
             
@@ -503,7 +549,7 @@ WriteLiteral("                ");
 WriteLiteral("\r\n            </div>\r\n");
 
             
-            #line 87 "..\..\Views\Page\AddNewPage.cshtml"
+            #line 98 "..\..\Views\Page\AddNewPage.cshtml"
 
 
             
@@ -522,7 +568,7 @@ WriteLiteral(">\r\n");
 WriteLiteral("                ");
 
             
-            #line 89 "..\..\Views\Page\AddNewPage.cshtml"
+            #line 100 "..\..\Views\Page\AddNewPage.cshtml"
            Write(Html.Partial(PagesConstants.OptionValuesGridTemplate, new EditableGridViewModel { CanAddNewItems = true }));
 
             
@@ -531,7 +577,7 @@ WriteLiteral("                ");
 WriteLiteral("\r\n            </div>\r\n");
 
             
-            #line 91 "..\..\Views\Page\AddNewPage.cshtml"
+            #line 102 "..\..\Views\Page\AddNewPage.cshtml"
         }
 
             
