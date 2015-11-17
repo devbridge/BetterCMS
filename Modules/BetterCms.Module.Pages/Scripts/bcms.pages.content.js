@@ -33,8 +33,9 @@ bettercms.define('bcms.pages.content', ['bcms.jquery', 'bcms', 'bcms.modal', 'bc
                 widgetContainerBlock: '.bcms-js-preview-block',
                 widgetCategory: '.bcms-category',
                 widgetName: '.bcms-content-titles',
-                widgetIFramePreview: ".bcms-preview-box[data-as-image='False'] .bcms-zoom-overlay",
-                widgetImagePreview: ".bcms-preview-box[data-as-image='True'] .bcms-zoom-overlay",
+                widgetPreviewBox: ".bcms-js-preview-box",
+                widgetIFramePreview: ".bcms-js-preview-box[data-as-image='False'] .bcms-zoom-overlay",
+                widgetImagePreview: ".bcms-js-preview-box[data-as-image='True'] .bcms-zoom-overlay",
                 widgetButtonOpener: ".bcms-btn-opener",
                 widgetButtonHolder: ".bcms-btn-opener-holder",
                 anyTab: '.bcms-tab-item',
@@ -442,9 +443,11 @@ bettercms.define('bcms.pages.content', ['bcms.jquery', 'bcms', 'bcms.modal', 'bc
         };
 
         /**
-        * Initializes widget categories list with sliders.
+        * Initializes widgets with categories list.
         */
         function initializeWidgets(container, dialog, onInsert, isSearchResult) {
+
+            pagesContent.initializeLivePreview(container);
 
             container.find(selectors.widgetInsertButtons).on('click', onInsert);
 
@@ -595,6 +598,26 @@ bettercms.define('bcms.pages.content', ['bcms.jquery', 'bcms', 'bcms.modal', 'bc
             });
 
             return false;
+        };
+
+        /**
+        * Initializes a content sliders.
+        */
+        pagesContent.initializeLivePreview = function (container) {
+            $(container).find(selectors.widgetPreviewBox).each(function() {
+                var previewBox = $(this),
+                    data = previewBox.data();
+                if (!data.isLoaded) {
+                    if (data.asImage === "True") {
+                        previewBox.append($.format("<img src=\"{0}\" alt=\"{1}\" />",
+                            data.previewUrl, data.title));
+                    } else {
+                        previewBox.append($.format("<iframe class=\"{0}\" width=\"{1}\" height=\"{2}\" scrolling=\"no\" border=\"0\" frameborder=\"0\" src=\"{3}\" style=\"background-color:white;\"/>",
+                            data.frameCssClass, data.width, data.height, data.previewUrl));
+                    }
+                    previewBox.data("isLoaded", true);
+                }
+            });
         };
 
         /**

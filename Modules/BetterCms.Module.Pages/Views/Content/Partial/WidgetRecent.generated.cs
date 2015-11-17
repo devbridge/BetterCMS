@@ -268,7 +268,7 @@ WriteLiteral(">");
 
             
             #line 41 "..\..\Views\Content\Partial\WidgetRecent.cshtml"
-                                                             Write(PagesGlobalization.AddPageContent_WidgetTab_InsertButton);
+                                                              Write(PagesGlobalization.AddPageContent_WidgetTab_InsertButton);
 
             
             #line default
