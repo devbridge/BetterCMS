@@ -7,6 +7,7 @@ using BetterCms.Module.MediaManager.Models;
 using BetterCms.Module.MediaManager.Models.Enum;
 using BetterCms.Module.Root.Content.Resources;
 using BetterCms.Module.Root.Models;
+using BetterCms.Module.Root.ViewModels.Category;
 
 using BetterModules.Core.Models;
 
@@ -245,6 +246,7 @@ namespace BetterCms.Module.MediaManager.ViewModels.Images
         /// </value>
         public IEnumerable<LookupKeyValue> Categories { get; set; }
 
+        public IEnumerable<CategoryLookupModel> CategoriesLookupList { get; set; } 
         /// <summary>
         /// Gets or sets the categories filter key.
         /// </summary>

@@ -35,6 +35,7 @@
                 siteSettingsGridRow: "tr",
                 siteSettingsGridRowTemplate: "#bcms-categorytree-list-row-template",
                 siteSettingsGridRowTemplateFirstRow: "tr:first",
+                siteSettingsCategoriesSelect: '#bcms-js-categories-select',
 
                 categoryTreeForm: ".bcms-categorytree-form",
 
@@ -1197,6 +1198,24 @@
                     });
                 }
             });
+        }
+
+        module.initCategoriesSelect = function (viewModel, selectedCategories, categoriesLookupList) {
+            var categoriesSelectBox = $(selectors.siteSettingsCategoriesSelect).select2({
+                multiple: true,
+                width: '100%',
+                data: categoriesLookupList
+            }).on('select2-selecting', function (e) {
+                viewModel.categories.push({ id: e.choice.id, text: e.choice.text });
+            }).on('select2-removed', function (e) {
+                viewModel.categories.remove(function (item) {
+                    return item.id == e.val;
+                });
+            });
+
+            if (selectedCategories) {
+                categoriesSelectBox.select2('data', selectedCategories);
+            }
         }
 
         /**

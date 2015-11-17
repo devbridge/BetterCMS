@@ -625,8 +625,7 @@ a:hover {
   font-size: 11px;
 }
 
-.bcms-loader:before,
-.bcms-loader:after {
+.bcms-loader:before, .bcms-loader:after {
   content: "";
   -webkit-animation: loader 800ms infinite ease-in-out;
   -moz-animation: loader 800ms infinite ease-in-out;
@@ -673,8 +672,7 @@ a:hover {
   font-size: 11px;
 }
 
-.bcms-loader-2:before,
-.bcms-loader-2:after {
+.bcms-loader-2:before, .bcms-loader-2:after {
   content: "";
   -webkit-animation: loader 800ms infinite ease-in-out;
   -moz-animation: loader 800ms infinite ease-in-out;
@@ -1603,8 +1601,7 @@ div.bcms-btn-logout:active {
   cursor: pointer;
 }
 
-.bcms-contents-tree-add-block:hover,
-.bcms-contents-tree-add-block.bcms-active {
+.bcms-contents-tree-add-block:hover, .bcms-contents-tree-add-block.bcms-active {
   background-color: #0a62b7;
 }
 
@@ -2208,13 +2205,11 @@ td .bcms-field-wrapper {
   background-color: #4e4e4e;
 }
 
-.bcms-region-contentstree,
-.bcms-region-sortcancel {
+.bcms-region-contentstree, .bcms-region-sortcancel {
   background-color: #676767;
 }
 
-.bcms-region-contentstree:hover,
-.bcms-region-sortcancel:hover {
+.bcms-region-contentstree:hover, .bcms-region-sortcancel:hover {
   background-color: #4e4e4e;
 }
 
@@ -2443,8 +2438,7 @@ td .bcms-field-wrapper {
   text-align: center;
 }
 
-.bcms-pager-no:hover,
-.bcms-pager-no.bcms-active-pager {
+.bcms-pager-no:hover, .bcms-pager-no.bcms-active-pager {
   background-color: #ffffff;
 }
 
@@ -3733,6 +3727,10 @@ textarea.markItUpEditor:focus {
 
 .select2-results li {
   list-style: none;
+}
+
+.select2-results .select2-selected {
+  display: none;
 }
 
 .select2-drop {
