@@ -3724,6 +3724,10 @@ textarea.markItUpEditor:focus {
   list-style: none;
 }
 
+.select2-results .select2-selected {
+  display: none;
+}
+
 .select2-drop {
   position: absolute;
   top: 100%;

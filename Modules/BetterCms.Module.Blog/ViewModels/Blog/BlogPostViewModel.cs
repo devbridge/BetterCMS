@@ -11,6 +11,7 @@ using BetterCms.Module.Pages.Models.Enums;
 using BetterCms.Module.Pages.Mvc.Attributes;
 using BetterCms.Module.Root.Content.Resources;
 using BetterCms.Module.Root.Models;
+using BetterCms.Module.Root.ViewModels.Category;
 using BetterCms.Module.Root.ViewModels.Security;
 
 using BetterModules.Core.Models;
@@ -193,6 +194,8 @@ namespace BetterCms.Module.Blog.ViewModels.Blog
         /// The list of categories.
         /// </value>
         public IList<LookupKeyValue> Categories { get; set; }
+
+        public IList<CategoryLookupModel> CategoriesLookupList { get; set; }
 
         /// <summary>
         /// Gets or sets the image view model.

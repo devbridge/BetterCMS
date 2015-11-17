@@ -571,8 +571,6 @@ WriteLiteral("\r\n                    <div");
 
 WriteLiteral(" class=\"bcms-input-list-holder\"");
 
-WriteLiteral(" data-bind=\"with: categories\"");
-
 WriteLiteral(">\r\n");
 
 WriteLiteral("                        ");

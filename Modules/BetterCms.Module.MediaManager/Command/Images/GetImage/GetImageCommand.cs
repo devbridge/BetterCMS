@@ -79,6 +79,7 @@ namespace BetterCms.Module.MediaManager.Command.Images.GetImage
                     Tags = TagService.GetMediaTagNames(imageId),
                     Categories = CategoryService.GetSelectedCategories<Media, MediaCategory>(imageId).ToList(),
                     CategoriesFilterKey = image.GetCategorizableItemKey(),
+                    CategoriesLookupList = CategoryService.GetCategoriesLookupList(image.GetCategorizableItemKey())
                 };
         }
     }

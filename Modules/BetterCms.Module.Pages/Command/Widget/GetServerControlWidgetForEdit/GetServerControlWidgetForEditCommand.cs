@@ -136,6 +136,7 @@ namespace BetterCms.Module.Pages.Command.Widget.GetServerControlWidgetForEdit
             model.Categories = categoryService.GetSelectedCategories<Root.Models.Widget, WidgetCategory>(widgetId).ToList();
             model.CustomOptions = optionService.GetCustomOptions();
             model.CategoriesFilterKey = Root.Models.Widget.CategorizableItemKeyForWidgets;
+            model.CategoriesLookupList = categoryService.GetCategoriesLookupList(Root.Models.Widget.CategorizableItemKeyForWidgets);
             
             return model;
         }
