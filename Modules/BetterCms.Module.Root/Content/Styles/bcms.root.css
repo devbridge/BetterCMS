@@ -3701,6 +3701,7 @@ textarea.markItUpEditor:focus {
 
 .select2-container {
   position: relative;
+  width: 100%;
 }
 
 .select2-container:after {
@@ -3839,4 +3840,32 @@ textarea.markItUpEditor:focus {
   background-color: #e7f3ff;
   display: block;
   padding: 5px 10px;
+}
+
+.select2-offscreen, .select2-offcsreen:focus {
+  clip: rect(0 0 0 0) !important;
+  width: 1px !important;
+  height: 1px !important;
+  border: 0 !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  overflow: hidden !important;
+  position: absolute !important;
+  outline: 0 !important;
+  left: 0px !important;
+  top: 0px !important;
+}
+
+.select2-choice {
+  background-color: #ffffff;
+  border: 1px solid #d0d0d0;
+  box-sizing: border-box;
+  cursor: text;
+  display: block;
+  height: 36px;
+  margin: 0;
+  overflow: hidden;
+  padding: 5px 10px;
+  position: relative;
+  color: #303646;
 }

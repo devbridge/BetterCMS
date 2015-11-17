@@ -26,6 +26,7 @@ bettercms.define('bcms.pages.properties', ['bcms.jquery', 'bcms', 'bcms.modal', 
                 pagePropertiesTemplateId: '#TemplateId',
                 pagePropertiesMasterPageId: '#MasterPageId',
                 pagePropertiesCategoriesSelect: '#bcms-js-categories-select',
+                pagePropertiesForceAccessProtocolSelect: '#ForceAccessProtocol',
 
                 pagePropertiesForm: 'form:first',
                 pagePropertiesPageIsPublishedCheckbox: '#IsPagePublished',
@@ -225,6 +226,10 @@ bettercms.define('bcms.pages.properties', ['bcms.jquery', 'bcms', 'bcms.modal', 
                 codeEditorInitialized = false;
 
             categories.initCategoriesSelect(pageViewModel, categoriesModel, content.Data.CategoriesLookupList);
+
+            $(selectors.pagePropertiesForceAccessProtocolSelect).select2({
+                minimumResultsForSearch: -1
+            });
 
             ko.applyBindings(pageViewModel, form.get(0));
 

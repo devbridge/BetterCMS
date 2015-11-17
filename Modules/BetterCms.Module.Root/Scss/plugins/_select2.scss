@@ -1,7 +1,7 @@
 .select2 {
     &-container {
         position: relative;
-
+        width: 100%;
         @include virtual(after) {
             @include positioning($center-y: true);
             @include size(18px 10px);
@@ -128,4 +128,32 @@
         padding: 5px 10px;
 
     }
+
+    &-offscreen, &-offcsreen:focus {
+        clip: rect(0 0 0 0) !important;
+        width: 1px !important;
+        height: 1px !important;
+        border: 0 !important;
+        margin: 0 !important;
+        padding: 0 !important;
+        overflow: hidden !important;
+        position: absolute !important;
+        outline: 0 !important;
+        left: 0px !important;
+        top: 0px !important;
+    }
+
+    &-choice {
+        background-color: $white;
+        border: $border-form-element;
+        box-sizing: border-box;
+        cursor: text;
+        display: block;
+        height: $form-element-height;
+        margin: 0;
+        overflow: hidden;
+        padding: 5px 10px;
+        position: relative;
+        color: #303646;
+   }
 }

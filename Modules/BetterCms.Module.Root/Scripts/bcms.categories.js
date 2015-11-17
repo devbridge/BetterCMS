@@ -1203,7 +1203,6 @@
         module.initCategoriesSelect = function (viewModel, selectedCategories, categoriesLookupList) {
             var categoriesSelectBox = $(selectors.siteSettingsCategoriesSelect).select2({
                 multiple: true,
-                width: '100%',
                 data: categoriesLookupList
             }).on('select2-selecting', function (e) {
                 viewModel.categories.push({ id: e.choice.id, text: e.choice.text });
