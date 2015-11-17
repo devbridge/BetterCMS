@@ -194,27 +194,24 @@ $control-panel-switch-status: (
 
 .bcms-buttons-block {
     @include clearfix();
+
+    .bcms-cp-settings-btn {
+        float: left;
+
+        + .bcms-cp-seo-btn {
+            width: 49%;
+        }
+    }
 }
 
 .bcms-cp {
-    @include with-layout(5 5/48) {
-        &-settings-btn {
-            @extend %cp-settings-btn-frame;
-            @include span(2 of 5 before);
-            margin: {
-                top: 5px;
-                bottom: 5px;
-            }
-            text-align: center;
-
-            &:first-child {
-                margin-left: 0;
-            }
-
-            &:nth-child(2) {
-                width: span(1 of 5);
-            }
+    &-settings-btn {
+        @extend %cp-settings-btn-frame;
+        margin: {
+            top: 5px;
+            bottom: 5px;
         }
+        text-align: center;
     }
 
     &-preview-btn {

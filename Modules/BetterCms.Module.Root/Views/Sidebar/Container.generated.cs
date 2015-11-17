@@ -207,7 +207,7 @@ WriteLiteral(" data-bcms-action=\"editPageProperties\"");
 
 WriteLiteral(">Properties</div>\r\n            <div");
 
-WriteLiteral(" class=\"bcms-cp-settings-btn bcms-onclick-action\"");
+WriteLiteral(" class=\"bcms-cp-settings-btn bcms-cp-seo-btn bcms-onclick-action\"");
 
 WriteLiteral(" data-bcms-order=\"20\"");
 
@@ -215,7 +215,7 @@ WriteLiteral(" data-bcms-module=\"bcms.pages.seo\"");
 
 WriteLiteral(" data-bcms-action=\"openEditSeoDialog\"");
 
-WriteLiteral(">SEO</div>\r\n            <div");
+WriteLiteral(">Edit SEO</div>\r\n        </div>\r\n\r\n        <div");
 
 WriteLiteral(" class=\"bcms-cp-settings-btn bcms-onclick-action\"");
 
@@ -225,7 +225,7 @@ WriteLiteral(" data-bcms-module=\"bcms.siteSettings\"");
 
 WriteLiteral(" data-bcms-action=\"openSiteSettings\"");
 
-WriteLiteral(">Site settings</div>\r\n        </div>\r\n\r\n        <div");
+WriteLiteral(">Site settings</div>\r\n\r\n        <div");
 
 WriteLiteral(" class=\"bcms-buttons-block\"");
 

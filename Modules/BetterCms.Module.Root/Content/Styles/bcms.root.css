@@ -1226,21 +1226,18 @@ a:hover {
   max-width: 140px;
 }
 
-.bcms-cp-settings-btn {
-  width: 38.84615%;
+.bcms-buttons-block .bcms-cp-settings-btn {
   float: left;
-  margin-left: 1.92308%;
+}
+
+.bcms-buttons-block .bcms-cp-settings-btn + .bcms-cp-seo-btn {
+  width: 49%;
+}
+
+.bcms-cp-settings-btn {
   margin-top: 5px;
   margin-bottom: 5px;
   text-align: center;
-}
-
-.bcms-cp-settings-btn:first-child {
-  margin-left: 0;
-}
-
-.bcms-cp-settings-btn:nth-child(2) {
-  width: 18.46154%;
 }
 
 .bcms-cp-preview-btn {
