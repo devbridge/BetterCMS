@@ -172,7 +172,7 @@ namespace BetterCms.Module.Pages.Controllers
             var json = new {
                                PageId = success ? model.Id : (System.Guid?)null,
                                Tags = success ? model.Tags : null,
-                               Categories = success ? model.Categories.Select(x => new {id = x.Key.ToLowerInvariant(), text = x.Value}).ToList() : null,
+                               Categories = success ? model.Categories : null,
                                Image = success ? model.Image : new ImageSelectorViewModel(),
                                SecondaryImage = success ? model.SecondaryImage : new ImageSelectorViewModel(),
                                FeaturedImage = success ? model.FeaturedImage : new ImageSelectorViewModel(),

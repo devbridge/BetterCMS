@@ -8,24 +8,8 @@
 
 <div class="bcms-content-titles">@RootGlobalization.CategoriesTemplate_AddCategories_Title</div>
 @Html.Tooltip(Model.TooltipDescription)
-
-<div class="bcms-field-wapper" data-bind="visible: isExpanded()">
-    <input type="text" class="bcms-field-text" data-bind="
-                    css: { 'bcms-tag-validation-error': newItem.hasError() },
-                    value: newItem,
-                    valueUpdate: 'afterkeydown',
-                    hasfocus: hasfocus,
-                    autocompleteList: 'onlyExisting',
-                    enterPress: function(){},
-                    escPress: clearItem" />
-    <!-- ko if: newItem.hasError()  -->
-    <span class="bcms-tag-field-validation-error">
-        <span data-bind="text: newItem.validationMessage()"></span>
-    </span>
-    <!-- /ko -->
+<input type="hidden" id="bcms-js-categories-select" />
+<div class="bcms-single-tag-holder" data-bind="foreach: categories">
+   <input type="hidden" data-bind="attr: { name: 'Categories['+ $index() +'].key', value: $data.id }" />
 </div>
 
-<div class="bcms-single-tag-holder" data-bind="foreach: items()">
-    <div class="bcms-single-tag" data-bind="css: { 'bcms-single-tag-active': isActive() }"><span data-bind="text: name()"></span><a data-bind="@(canEdit ? "click: remove" : string.Empty)">@RootGlobalization.Button_Remove</a></div>
-    <input type="hidden" data-bind="attr: { name: getItemInputName($index()), value: id() }" />
-</div>

@@ -205,22 +205,6 @@ bettercms.define('bcms.pages.properties', ['bcms.jquery', 'bcms', 'bcms.modal', 
             self.templatesList = templatesViewModel;
         }
 
-        function initCategoriesSelect(pageViewModel, content) {
-            var categoriesSelectBox = $(selectors.pagePropertiesCategoriesSelect).select2({
-                multiple: true,
-                width: '100%',
-                data: content.Data.CategoriesLookupList
-            }).on('select2-selecting', function (e) {
-                pageViewModel.categories.push({ id: e.choice.id, text: e.choice.text });
-            }).on('select2-removed', function (e) {
-                pageViewModel.categories.remove(function (item) {
-                    return item.id == e.val;
-                });
-            });
-
-            categoriesSelectBox.select2('data', content.Data.Categories);
-        }
-
         /**
         * Initializes EditPageProperties dialog events.
         */
@@ -228,16 +212,19 @@ bettercms.define('bcms.pages.properties', ['bcms.jquery', 'bcms', 'bcms.modal', 
             var optionsContainer = dialog.container.find(selectors.optionsTab),
                 optionListViewModel = options.createOptionValuesViewModel(optionsContainer, content.Data.OptionValues, content.Data.CustomOptions),
                 tagsViewModel = new tags.TagsListViewModel(content.Data.Tags),
-                //categoriesModel = new categories.CategoriesListViewModel(content.Data.Categories, content.Data.CategoriesFilterKey),
+                categoriesModel = content.Data.Categories.map(function (cat) {
+                    var obj = { id: cat.Key.toLowerCase(), text: cat.Value };
+                    return obj;
+                }),
                 accessControlViewModel = security.createUserAccessViewModel(content.Data.UserAccessList),
                 translationsViewModel = content.Data.Languages ? new pageLanguages.PageTranslationsListViewModel(content.Data.Translations, content.Data.Languages, content.Data.LanguageId, content.Data.PageId) : null,
                 templatesViewModel = new TemplatesListViewModel(content.Data.Templates, dialog, optionsContainer, optionListViewModel),
                 pageViewModel = new PageViewModel(content.Data.Image, content.Data.SecondaryImage, content.Data.FeaturedImage, tagsViewModel,
-                    optionListViewModel, accessControlViewModel, translationsViewModel, content.Data.Categories, templatesViewModel),
+                    optionListViewModel, accessControlViewModel, translationsViewModel, categoriesModel, templatesViewModel),
                 form = dialog.container.find(selectors.pagePropertiesForm),
                 codeEditorInitialized = false;
 
-            initCategoriesSelect(pageViewModel, content);
+            categories.initCategoriesSelect(pageViewModel, categoriesModel, content.Data.CategoriesLookupList);
 
             ko.applyBindings(pageViewModel, form.get(0));
 

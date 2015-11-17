@@ -21,6 +21,10 @@
         li {
             list-style: none;
         }
+
+        .select2-selected {
+            display: none;
+        }
     }
 
     &-drop {
