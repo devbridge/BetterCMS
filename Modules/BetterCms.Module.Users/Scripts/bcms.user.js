@@ -13,7 +13,7 @@ bettercms.define('bcms.user', ['bcms.jquery', 'bcms', 'bcms.modal', 'bcms.siteSe
                 usersSearchButton: '#bcms-users-search-btn',
                 usersSearchField: '.bcms-js-search-box',
                 userCells: 'td',
-                userEditButton: '.bcms-icn-edit',
+                userEditButton: '.bcms-action-edit',
                 userRowDeleteButton: '.bcms-grid-item-delete-button',
                 userParentRow: 'tr:first',
                 userNameCell: '.bcms-user-name',

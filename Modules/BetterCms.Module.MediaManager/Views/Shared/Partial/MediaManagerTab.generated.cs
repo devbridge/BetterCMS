@@ -49,7 +49,7 @@ WriteLiteral("\r\n");
             #line hidden
 WriteLiteral("    <div");
 
-WriteLiteral(" data-bind=\"template: { name: \'bcms-media-list-template\' }\"");
+WriteLiteral(" data-bind=\"template: { name: \'bcms-media-list-window-template\' }\"");
 
 WriteLiteral(" class=\"bcms-data-bind-container\"");
 

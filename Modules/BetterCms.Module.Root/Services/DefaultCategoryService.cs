@@ -248,5 +248,33 @@ namespace BetterCms.Module.Root.Services
             unitOfWork.Session.SaveOrUpdate(entity);
         }
 
+
+        public IList<CategoryLookupModel> GetCategoriesLookupList(string categoriesFilterKey)
+        {
+            var query = repository.AsQueryable<Category>().Where(c =>!c.IsDeleted);
+            query = query.Where(c => !c.CategoryTree.IsDeleted && c.CategoryTree.AvailableFor.Any(e => e.CategorizableItem.Name == categoriesFilterKey));
+            var parentCategories = query.Where(x => x.ParentCategory == null).ToList();
+            var treeLikeList = ConstructTreeList(parentCategories);
+            return treeLikeList;
+        }
+
+        private IList<CategoryLookupModel> ConstructTreeList(List<Category> categories)
+        {
+            var treeLikeList = new List<CategoryLookupModel>();
+            foreach (var category in categories)
+            {
+                var categoryModel = new CategoryLookupModel { id = category.Id.ToString(), text = category.Name };
+                if (category.ParentCategory != null)
+                {
+                    categoryModel.parent = category.ParentCategory.Id.ToString();
+                }
+                if (category.ChildCategories != null)
+                {
+                    categoryModel.children = ConstructTreeList(category.ChildCategories.ToList());
+                }
+                treeLikeList.Add(categoryModel);
+            }
+            return treeLikeList;
+        }
     }
 }

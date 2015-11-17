@@ -35,6 +35,7 @@
                 siteSettingsGridRow: "tr",
                 siteSettingsGridRowTemplate: "#bcms-categorytree-list-row-template",
                 siteSettingsGridRowTemplateFirstRow: "tr:first",
+                siteSettingsCategoriesSelect: '#bcms-js-categories-select',
 
                 categoryTreeForm: ".bcms-categorytree-form",
 
@@ -49,6 +50,9 @@
                 TopZone: "topZone",
                 MiddleZone: "middleZone",
                 BottomZone: "bottomZone"
+            },
+            events = {
+                categoryNodeAdded: 'categoryNodeAdded'
             },
             nodeId = 0;
 
@@ -229,6 +233,7 @@
                                 }
 
                                 updateValidation();
+                                bcms.trigger(events.categoryNodeAdded, dragObject);
                             }
                         };
                     if (dropZoneObject.getCategoryTree && !dropZoneObject.getCategoryTree().settings.canDropNode) {
@@ -692,6 +697,10 @@
                 }
                 return false;
             };
+
+            bcms.on(events.categoryNodeAdded, function () {
+                self.allNodesExpanded(self.checkIfAllNodesExpanded(self.childNodes()));
+            });
 
             // Updating display order and parent node info.
             self.updateNodesOrderAndParent = function () {
@@ -1189,6 +1198,23 @@
                     });
                 }
             });
+        }
+
+        module.initCategoriesSelect = function (viewModel, selectedCategories, categoriesLookupList) {
+            var categoriesSelectBox = $(selectors.siteSettingsCategoriesSelect).select2({
+                multiple: true,
+                data: categoriesLookupList
+            }).on('select2-selecting', function (e) {
+                viewModel.categories.push({ id: e.choice.id, text: e.choice.text });
+            }).on('select2-removed', function (e) {
+                viewModel.categories.remove(function (item) {
+                    return item.id == e.val;
+                });
+            });
+
+            if (selectedCategories) {
+                categoriesSelectBox.select2('data', selectedCategories);
+            }
         }
 
         /**

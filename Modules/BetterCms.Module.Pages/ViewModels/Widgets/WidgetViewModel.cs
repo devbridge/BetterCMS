@@ -6,6 +6,7 @@ using BetterCms.Module.Pages.Models;
 using BetterCms.Module.Pages.ViewModels.Content;
 using BetterCms.Module.Root.Content.Resources;
 using BetterCms.Module.Root.Models;
+using BetterCms.Module.Root.ViewModels.Category;
 
 using BetterModules.Core.Models;
 
@@ -23,6 +24,8 @@ namespace BetterCms.Module.Pages.ViewModels.Widgets
         /// The list of categories Ids.
         /// </value>
         public IList<LookupKeyValue> Categories { get; set; }
+
+        public IList<CategoryLookupModel> CategoriesLookupList { get; set; }
 
         /// <summary>
         /// Gets or sets the image URL.

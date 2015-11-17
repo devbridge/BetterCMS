@@ -209,147 +209,135 @@ WriteLiteral(">\r\n");
             
             #line 39 "..\..\Views\Files\FileEditor.cshtml"
                                                                                                     
-
+            
 
             
             #line default
             #line hidden
 WriteLiteral("            <div");
 
+WriteLiteral(" class=\"bcms-form-block-holder\"");
+
+WriteLiteral(">\r\n                <div>\r\n                    <div");
+
 WriteLiteral(" class=\"bcms-input-list-holder\"");
 
-WriteLiteral(">\r\n");
-
-WriteLiteral("                ");
-
-            
-            #line 42 "..\..\Views\Files\FileEditor.cshtml"
-           Write(Html.Tooltip(MediaGlobalization.FileEditor_Dialog_Title_Tooltip_Description));
-
-            
-            #line default
-            #line hidden
-WriteLiteral("\r\n                <div");
+WriteLiteral(">\r\n                        <div");
 
 WriteLiteral(" class=\"bcms-content-titles\"");
 
 WriteLiteral(">");
 
             
-            #line 43 "..\..\Views\Files\FileEditor.cshtml"
-                                            Write(MediaGlobalization.FileEditor_Dialog_Title_Title);
+            #line 44 "..\..\Views\Files\FileEditor.cshtml"
+                                                    Write(MediaGlobalization.FileEditor_Dialog_Title_Title);
 
             
             #line default
             #line hidden
-WriteLiteral("</div>\r\n                <div");
+WriteLiteral("</div>\r\n");
+
+WriteLiteral("                        ");
+
+            
+            #line 45 "..\..\Views\Files\FileEditor.cshtml"
+                   Write(Html.Tooltip(MediaGlobalization.FileEditor_Dialog_Title_Tooltip_Description));
+
+            
+            #line default
+            #line hidden
+WriteLiteral("\r\n                        <div");
 
 WriteLiteral(" class=\"bcms-field-wrapper\"");
 
 WriteLiteral(">\r\n");
 
-WriteLiteral("                    ");
+WriteLiteral("                            ");
 
             
-            #line 45 "..\..\Views\Files\FileEditor.cshtml"
-               Write(Html.TextBoxFor(f => f.Title, new { @class = "bcms-field-text", @id = "Title", data_bind = "event: {change: onValueChange}" }));
+            #line 47 "..\..\Views\Files\FileEditor.cshtml"
+                       Write(Html.TextBoxFor(f => f.Title, new { @class = "bcms-field-text", @id = "Title", data_bind = "event: {change: onValueChange}" }));
 
             
             #line default
             #line hidden
 WriteLiteral("\r\n");
 
-WriteLiteral("                    ");
+WriteLiteral("                            ");
 
             
-            #line 46 "..\..\Views\Files\FileEditor.cshtml"
-               Write(Html.BcmsValidationMessageFor(f => f.Title));
-
-            
-            #line default
-            #line hidden
-WriteLiteral("\r\n                </div>\r\n            </div>\r\n");
-
-            
-            #line 49 "..\..\Views\Files\FileEditor.cshtml"
-
+            #line 48 "..\..\Views\Files\FileEditor.cshtml"
+                       Write(Html.BcmsValidationMessageFor(f => f.Title));
 
             
             #line default
             #line hidden
-WriteLiteral("            <div");
+WriteLiteral("\r\n                        </div>\r\n                    </div>\r\n\r\n                 " +
+"   <div");
 
 WriteLiteral(" class=\"bcms-input-list-holder\"");
 
-WriteLiteral(">\r\n");
-
-WriteLiteral("                ");
-
-            
-            #line 51 "..\..\Views\Files\FileEditor.cshtml"
-           Write(Html.Tooltip(MediaGlobalization.FileEditor_Dialog_PublicUrl_Tooltip_Description));
-
-            
-            #line default
-            #line hidden
-WriteLiteral("\r\n                <div");
+WriteLiteral(">\r\n                        <div");
 
 WriteLiteral(" class=\"bcms-content-titles\"");
 
 WriteLiteral(">");
 
             
-            #line 52 "..\..\Views\Files\FileEditor.cshtml"
-                                            Write(MediaGlobalization.FileProperties_Dialog_PublicUrl);
+            #line 53 "..\..\Views\Files\FileEditor.cshtml"
+                                                    Write(MediaGlobalization.FileProperties_Dialog_PublicUrl);
 
             
             #line default
             #line hidden
-WriteLiteral("</div>\r\n                <div");
+WriteLiteral("</div>\r\n");
+
+WriteLiteral("                        ");
+
+            
+            #line 54 "..\..\Views\Files\FileEditor.cshtml"
+                   Write(Html.Tooltip(MediaGlobalization.FileEditor_Dialog_PublicUrl_Tooltip_Description));
+
+            
+            #line default
+            #line hidden
+WriteLiteral("\r\n                        <div");
 
 WriteLiteral(" class=\"bcms-field-wrapper\"");
 
-WriteLiteral(">\r\n                    <input");
+WriteLiteral(">\r\n                            <input");
 
 WriteLiteral(" class=\"bcms-field-text bcms-editor-selectable-field-box\"");
 
 WriteLiteral(" type=\"text\"");
 
-WriteAttribute("value", Tuple.Create(" value=\"", 2588), Tuple.Create("\"", 2606)
+WriteAttribute("value", Tuple.Create(" value=\"", 2777), Tuple.Create("\"", 2795)
             
-            #line 54 "..\..\Views\Files\FileEditor.cshtml"
-                       , Tuple.Create(Tuple.Create("", 2596), Tuple.Create<System.Object, System.Int32>(Model.Url
+            #line 56 "..\..\Views\Files\FileEditor.cshtml"
+                               , Tuple.Create(Tuple.Create("", 2785), Tuple.Create<System.Object, System.Int32>(Model.Url
             
             #line default
             #line hidden
-, 2596), false)
+, 2785), false)
 );
 
 WriteLiteral(" readonly=\"readonly\"");
 
-WriteLiteral(" />\r\n                </div>\r\n            </div>\r\n");
-
-            
-            #line 57 "..\..\Views\Files\FileEditor.cshtml"
-
-
-            
-            #line default
-            #line hidden
-WriteLiteral("            <div");
+WriteLiteral(" />\r\n                        </div>\r\n                    </div>\r\n\r\n              " +
+"      <div");
 
 WriteLiteral(" class=\"bcms-input-list-holder\"");
 
-WriteLiteral(">\r\n                <b>");
+WriteLiteral(">\r\n                        <b>");
 
             
-            #line 59 "..\..\Views\Files\FileEditor.cshtml"
-              Write(MediaGlobalization.FileEditor_Dialog_FileSize);
+            #line 61 "..\..\Views\Files\FileEditor.cshtml"
+                      Write(MediaGlobalization.FileEditor_Dialog_FileSize);
 
             
             #line default
             #line hidden
-WriteLiteral(":</b>\r\n                <div");
+WriteLiteral(":</b>\r\n                        <div");
 
 WriteLiteral(" class=\"bcms-editing-text\"");
 
@@ -358,240 +346,68 @@ WriteLiteral(" id=\"image-file-size\"");
 WriteLiteral(">");
 
             
-            #line 60 "..\..\Views\Files\FileEditor.cshtml"
-                                                               Write(Model.FileSize);
-
-            
-            #line default
-            #line hidden
-WriteLiteral("</div>\r\n            </div>\r\n");
-
-            
             #line 62 "..\..\Views\Files\FileEditor.cshtml"
-
+                                                                       Write(Model.FileSize);
 
             
             #line default
             #line hidden
-WriteLiteral("            <div");
+WriteLiteral("</div>\r\n                    </div>\r\n\r\n                    <div");
 
 WriteLiteral(" class=\"bcms-input-list-holder\"");
 
-WriteLiteral(">\r\n");
-
-WriteLiteral("                ");
-
-            
-            #line 64 "..\..\Views\Files\FileEditor.cshtml"
-           Write(Html.Tooltip(MediaGlobalization.FileEditor_Dialog_Description_Tooltip_Description));
-
-            
-            #line default
-            #line hidden
-WriteLiteral("\r\n                <div");
+WriteLiteral(">\r\n                        <div");
 
 WriteLiteral(" class=\"bcms-content-titles\"");
 
 WriteLiteral(">");
 
             
-            #line 65 "..\..\Views\Files\FileEditor.cshtml"
-                                            Write(MediaGlobalization.FileEditor_Dialog_Description);
+            #line 66 "..\..\Views\Files\FileEditor.cshtml"
+                                                    Write(MediaGlobalization.FileEditor_Dialog_Description);
 
             
             #line default
             #line hidden
-WriteLiteral("</div>\r\n                <div");
+WriteLiteral("</div>\r\n");
+
+WriteLiteral("                        ");
+
+            
+            #line 67 "..\..\Views\Files\FileEditor.cshtml"
+                   Write(Html.Tooltip(MediaGlobalization.FileEditor_Dialog_Description_Tooltip_Description));
+
+            
+            #line default
+            #line hidden
+WriteLiteral("\r\n                        <div");
 
 WriteLiteral(" class=\"bcms-textarea-box\"");
 
 WriteLiteral(">\r\n");
 
-WriteLiteral("                    ");
+WriteLiteral("                            ");
 
             
-            #line 67 "..\..\Views\Files\FileEditor.cshtml"
-               Write(Html.TextAreaFor(f => f.Description, new { @class = "bcms-field-textarea", @id = "Description", data_bind = "event: {change: onValueChange}" }));
+            #line 69 "..\..\Views\Files\FileEditor.cshtml"
+                       Write(Html.TextAreaFor(f => f.Description, new { @class = "bcms-field-textarea", @id = "Description", data_bind = "event: {change: onValueChange}" }));
 
             
             #line default
             #line hidden
 WriteLiteral("\r\n");
 
-WriteLiteral("                    ");
+WriteLiteral("                            ");
 
             
-            #line 68 "..\..\Views\Files\FileEditor.cshtml"
-               Write(Html.BcmsValidationMessageFor(f => f.Description));
-
-            
-            #line default
-            #line hidden
-WriteLiteral("\r\n                </div>\r\n            </div>\r\n");
-
-            
-            #line 71 "..\..\Views\Files\FileEditor.cshtml"
-
+            #line 70 "..\..\Views\Files\FileEditor.cshtml"
+                       Write(Html.BcmsValidationMessageFor(f => f.Description));
 
             
             #line default
             #line hidden
-WriteLiteral("            <div");
-
-WriteLiteral(" class=\"bcms-input-list-holder\"");
-
-WriteLiteral(" data-bind=\"with: categories\"");
-
-WriteLiteral(">\r\n");
-
-WriteLiteral("                ");
-
-            
-            #line 73 "..\..\Views\Files\FileEditor.cshtml"
-           Write(Html.Partial("~/Areas/bcms-root/Views/Category/CategoriesTemplate.cshtml", categoriesTemplateViewModel));
-
-            
-            #line default
-            #line hidden
-WriteLiteral("\r\n            </div>\r\n");
-
-            
-            #line 75 "..\..\Views\Files\FileEditor.cshtml"
-
-
-            
-            #line default
-            #line hidden
-WriteLiteral("            <div");
-
-WriteLiteral(" class=\"bcms-input-list-holder\"");
-
-WriteLiteral(" data-bind=\"with: tags\"");
-
-WriteLiteral(">\r\n");
-
-WriteLiteral("                ");
-
-            
-            #line 77 "..\..\Views\Files\FileEditor.cshtml"
-           Write(Html.Partial("~/Areas/bcms-root/Views/Tags/TagsTemplate.cshtml", tagsTemplateViewModel));
-
-            
-            #line default
-            #line hidden
-WriteLiteral("\r\n            </div>\r\n");
-
-            
-            #line 79 "..\..\Views\Files\FileEditor.cshtml"
-
-            if (Model.AccessControlEnabled)
-            {
-                
-            
-            #line default
-            #line hidden
-            
-            #line 82 "..\..\Views\Files\FileEditor.cshtml"
-           Write(Html.Partial(RootModuleConstants.AccessControlTemplate));
-
-            
-            #line default
-            #line hidden
-            
-            #line 82 "..\..\Views\Files\FileEditor.cshtml"
-                                                                        
-            }
-
-
-            
-            #line default
-            #line hidden
-WriteLiteral("            <div");
-
-WriteLiteral(" class=\"bcms-page-images-holder\"");
-
-WriteLiteral(">\r\n                <div");
-
-WriteLiteral(" class=\"bcms-input-list-holder\"");
-
-WriteLiteral(">\r\n");
-
-WriteLiteral("                    ");
-
-            
-            #line 87 "..\..\Views\Files\FileEditor.cshtml"
-               Write(Html.Tooltip(MediaGlobalization.FileEditor_Dialog_Image_Tooltip_Description));
-
-            
-            #line default
-            #line hidden
-WriteLiteral("\r\n                    <div");
-
-WriteLiteral(" class=\"bcms-content-titles\"");
-
-WriteLiteral(">");
-
-            
-            #line 88 "..\..\Views\Files\FileEditor.cshtml"
-                                                Write(MediaGlobalization.FileEditor_Dialog_Image_Title);
-
-            
-            #line default
-            #line hidden
-WriteLiteral("</div>\r\n                    <div");
-
-WriteLiteral(" class=\"bcms-uploaded-image\"");
-
-WriteLiteral(">\r\n                        <!-- ko if: image().url() -->\r\n                       " +
-" <a");
-
-WriteLiteral(" class=\"bcms-remove-image\"");
-
-WriteLiteral(" data-bind=\"click: image().remove.bind(image())\"");
-
-WriteLiteral(">");
-
-            
-            #line 91 "..\..\Views\Files\FileEditor.cshtml"
-                                                                                                Write(RootGlobalization.Button_Remove);
-
-            
-            #line default
-            #line hidden
-WriteLiteral("</a>\r\n                        <a");
-
-WriteLiteral(" data-bind=\"click: image().preview.bind(image())\"");
-
-WriteLiteral(">\r\n                            <img");
-
-WriteLiteral(" data-bind=\"attr: { src: image().thumbnailUrl(), alt: image().tooltip() }\"");
-
-WriteLiteral(" />\r\n                        </a>\r\n                        <!-- /ko -->\r\n        " +
-"            </div>\r\n                    <div");
-
-WriteLiteral(" class=\"bcms-btn-small\"");
-
-WriteLiteral(" data-bind=\"click: image().select.bind(image())\"");
-
-WriteLiteral(">");
-
-            
-            #line 97 "..\..\Views\Files\FileEditor.cshtml"
-                                                                                           Write(MediaGlobalization.FileEditor_Dialog_Image_SelectButtonTitle);
-
-            
-            #line default
-            #line hidden
-WriteLiteral("</div>\r\n                </div>\r\n            </div>\r\n");
-
-            
-            #line 100 "..\..\Views\Files\FileEditor.cshtml"
-
-
-            
-            #line default
-            #line hidden
-WriteLiteral("            <div");
+WriteLiteral("\r\n                        </div>\r\n                    </div>\r\n\r\n                 " +
+"   <div");
 
 WriteLiteral(" class=\"bcms-media-reupload\"");
 
@@ -600,37 +416,213 @@ WriteLiteral(" data-bind=\"click: reupload\"");
 WriteLiteral(">");
 
             
-            #line 101 "..\..\Views\Files\FileEditor.cshtml"
-                                                                    Write(MediaGlobalization.FileEditor_Dialog_Reupload_Title);
+            #line 74 "..\..\Views\Files\FileEditor.cshtml"
+                                                                            Write(MediaGlobalization.FileEditor_Dialog_Reupload_Title);
+
+            
+            #line default
+            #line hidden
+WriteLiteral("</div>\r\n                </div>\r\n\r\n                <div>\r\n                    <div" +
+"");
+
+WriteLiteral(" class=\"bcms-thumb-container\"");
+
+WriteLiteral(">\r\n                        <div");
+
+WriteLiteral(" class=\"bcms-thumb-box\"");
+
+WriteLiteral(">\r\n                            <div");
+
+WriteLiteral(" class=\"bcms-input-list-holder\"");
+
+WriteLiteral(">\r\n                                <div");
+
+WriteLiteral(" class=\"bcms-content-titles\"");
+
+WriteLiteral(">");
+
+            
+            #line 81 "..\..\Views\Files\FileEditor.cshtml"
+                                                            Write(MediaGlobalization.FileEditor_Dialog_Image_Title);
 
             
             #line default
             #line hidden
 WriteLiteral("</div>\r\n");
 
-            
-            #line 102 "..\..\Views\Files\FileEditor.cshtml"
+WriteLiteral("                                ");
 
+            
+            #line 82 "..\..\Views\Files\FileEditor.cshtml"
+                           Write(Html.Tooltip(MediaGlobalization.FileEditor_Dialog_Image_Tooltip_Description));
+
+            
+            #line default
+            #line hidden
+WriteLiteral("\r\n                            </div>\r\n\r\n                            <div");
+
+WriteLiteral(" class=\"bcms-thumb-image\"");
+
+WriteLiteral(">\r\n                                <!-- ko if: image().url() -->\r\n               " +
+"                 <div");
+
+WriteLiteral(" class=\"bcms-remove-image\"");
+
+WriteLiteral(" data-bind=\"click: image().remove.bind(image())\"");
+
+WriteLiteral(">");
+
+            
+            #line 87 "..\..\Views\Files\FileEditor.cshtml"
+                                                                                                          Write(RootGlobalization.Button_Remove);
+
+            
+            #line default
+            #line hidden
+WriteLiteral("</div>\r\n                                <div");
+
+WriteLiteral(" data-bind=\"click: image().preview.bind(image())\"");
+
+WriteLiteral(">\r\n                                    <img");
+
+WriteLiteral(" data-bind=\"attr: { src: image().thumbnailUrl(), alt: image().tooltip() }\"");
+
+WriteLiteral(" />\r\n                                </div>\r\n                                <!--" +
+" /ko -->\r\n                                <!-- ko ifnot: image().url() -->\r\n    " +
+"                            <svg");
+
+WriteLiteral(" class=\"bcms-grid-no-preview\"");
+
+WriteLiteral(" width=\"50\"");
+
+WriteLiteral(" height=\"50\"");
+
+WriteLiteral(" viewBox=\"-205 372 50 50\"");
+
+WriteLiteral(" enable-background=\"new -205 372 50 50\"");
+
+WriteLiteral(">\r\n                                    <g");
+
+WriteLiteral(" fill=\"#cdcdcd\"");
+
+WriteLiteral(">\r\n                                        <path");
+
+WriteLiteral(" d=\"m-205 422h50v-50h-50v50m2-48h46v46h-46v-46\"");
+
+WriteLiteral("></path>\r\n                                        <path");
+
+WriteLiteral(" d=\"m-164.3 406.2l1.4-1.4-11.5-11.5-7.7 7.6-3.6-3.6-11.5 11.5 1.4 1.4 10.1-10.1 1" +
+"1.1 11.1 1.4-1.4-7.5-7.5 6.3-6.2 10.1 10.1\"");
+
+WriteLiteral("></path>\r\n                                        <path");
+
+WriteLiteral(" d=\"m-187.9 382.4c-2.8 0-5 2.2-5 5 0 2.8 2.2 5 5 5 2.8 0 5-2.2 5-5 0-2.8-2.2-5-5-" +
+"5m0 2c1.7 0 3 1.4 3 3 0 1.7-1.3 3-3 3-1.6 0-3-1.3-3-3 0-1.7 1.3-3 3-3\"");
+
+WriteLiteral("></path>\r\n                                    </g>\r\n                             " +
+"   </svg>\r\n                                <!-- /ko -->\r\n                       " +
+"     </div>\r\n\r\n                            <div");
+
+WriteLiteral(" class=\"bcms-btn-selection\"");
+
+WriteLiteral(" data-bind=\"click: image().select.bind(image())\"");
+
+WriteLiteral(">");
+
+            
+            #line 103 "..\..\Views\Files\FileEditor.cshtml"
+                                                                                                       Write(MediaGlobalization.FileEditor_Dialog_Image_SelectButtonTitle);
+
+            
+            #line default
+            #line hidden
+WriteLiteral("</div>\r\n                        </div>\r\n                    </div>\r\n\r\n");
+
+            
+            #line 107 "..\..\Views\Files\FileEditor.cshtml"
+                    
+            
+            #line default
+            #line hidden
+            
+            #line 107 "..\..\Views\Files\FileEditor.cshtml"
+                     if (Model.AccessControlEnabled)
+                    {
+                        
+            
+            #line default
+            #line hidden
+            
+            #line 109 "..\..\Views\Files\FileEditor.cshtml"
+                   Write(Html.Partial(RootModuleConstants.AccessControlTemplate));
+
+            
+            #line default
+            #line hidden
+            
+            #line 109 "..\..\Views\Files\FileEditor.cshtml"
+                                                                                
+                    }
+
+            
+            #line default
+            #line hidden
+WriteLiteral("\r\n                    <div");
+
+WriteLiteral(" class=\"bcms-input-list-holder\"");
+
+WriteLiteral(">\r\n");
+
+WriteLiteral("                        ");
+
+            
+            #line 113 "..\..\Views\Files\FileEditor.cshtml"
+                   Write(Html.Partial("~/Areas/bcms-root/Views/Category/CategoriesTemplate.cshtml", categoriesTemplateViewModel));
+
+            
+            #line default
+            #line hidden
+WriteLiteral("\r\n                    </div>\r\n\r\n                    <div");
+
+WriteLiteral(" class=\"bcms-input-list-holder\"");
+
+WriteLiteral(" data-bind=\"with: tags\"");
+
+WriteLiteral(">\r\n");
+
+WriteLiteral("                        ");
+
+            
+            #line 117 "..\..\Views\Files\FileEditor.cshtml"
+                   Write(Html.Partial("~/Areas/bcms-root/Views/Tags/TagsTemplate.cshtml", tagsTemplateViewModel));
+
+            
+            #line default
+            #line hidden
+WriteLiteral("\r\n                    </div>\r\n                </div>\r\n            </div>\r\n");
+
+            
+            #line 121 "..\..\Views\Files\FileEditor.cshtml"
             
             
             #line default
             #line hidden
             
-            #line 103 "..\..\Views\Files\FileEditor.cshtml"
+            #line 121 "..\..\Views\Files\FileEditor.cshtml"
        Write(Html.HiddenSubmit());
 
             
             #line default
             #line hidden
             
-            #line 103 "..\..\Views\Files\FileEditor.cshtml"
+            #line 121 "..\..\Views\Files\FileEditor.cshtml"
                                 
         }
 
             
             #line default
             #line hidden
-WriteLiteral("    </div>\r\n</div>");
+WriteLiteral("    </div>\r\n</div>\r\n");
 
         }
     }

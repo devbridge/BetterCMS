@@ -1,83 +1,53 @@
 //module Tooltips
 .bcms-tooltip {
     &-mark {
-        @include size(18px);
-        @include position(absolute, 0 null null -25px);
+        @include size(15px);
+        @include vertical-align();
         background: url($bcms-tooltip-mark) no-repeat center;
         cursor: pointer;
-        z-index: 10;
+        margin-bottom: 4px;
+        position: relative;
+        z-index: 1;
     }
 
     &-holder {
         position: absolute;
     }
+
+    &-box {
+        background-color: $white;
+        box-shadow: 0 2px 24px 0 rgba($black, .2);
+        padding: 6px 8px;
+        position: relative;
+        width: 300px;
+
+        p {
+            color: $text-dark;
+            font: {
+                size: 11px;
+                weight: 400;
+            }
+            line-height: 19px;
+            margin: 0;
+            padding: 0;
+        }
+    }
 }
 
-.bcms-tooltip-box {
-    background: #eff9fd;
-    border: 1px solid #c6c6c6;
-    box-shadow: 1px 1px 5px 0 rgba(0, 0, 0, 0.4);
-    padding: 5px;
-    position: relative;
-    width: 300px;
-}
-
-.bcms-tooltip-box p {
-    font-size: 11px;
-    line-height: 19px;
-    margin: 0;
-    padding: 0;
-}
-
-div.bcms-tip-close {
-    background: url('images/sprite-base-1.png') no-repeat -9px -755px;
-    cursor: pointer;
-    height: 14px;
-    overflow: hidden;
-    position: absolute;
-    right: 10px;
-    text-decoration: none;
-    text-indent: 9999px;
-    top: 10px;
-    width: 15px;
-}
-
+//todo check if design requires position arrows to tooltip mark
 //.bcms-tooltip-tl:before,
 //.bcms-tooltip-bl:before,
 //.bcms-tooltip-tr:before,
-//.bcms-tooltip-br:before {
-//    background: url('images/sprite-base-2.png') no-repeat;
-//    content: " ";
-//    height: 7px;
-//    pointer-events: none;
+//.bcms-tooltip-br:before
+//div.bcms-tip-close {
+//    background-color: $bg-red;
+//    cursor: pointer;
+//    height: 14px;
+//    overflow: hidden;
 //    position: absolute;
-//    width: 12px;
-//}
-//
-////module top left
-//.bcms-tooltip-tl:before {
-//    background-position: -24px -129px;
-//    bottom: 100%;
-//    left: 19px;
-//}
-//
-////module bottom left
-//.bcms-tooltip-bl:before {
-//    background-position: -24px -137px;
-//    left: 19px;
-//    top: 100%;
-//}
-//
-////module top right
-//.bcms-tooltip-tr:before {
-//    background-position: -24px -129px;
-//    bottom: 100%;
-//    left: 320px;
-//}
-//
-////module bottom right
-//.bcms-tooltip-br:before {
-//    background-position: -24px -137px;
-//    left: 320px;
-//    top: 100%;
+//    right: 10px;
+//    text-decoration: none;
+//    text-indent: 999em;
+//    top: 10px;
+//    width: 15px;
 //}

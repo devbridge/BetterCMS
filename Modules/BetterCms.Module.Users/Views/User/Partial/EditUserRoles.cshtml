@@ -3,12 +3,10 @@
 @using BetterCms.Module.Users.Content.Resources
 
 <div class="bcms-input-list-holder" data-bind="with: roles">
+    <div class="bcms-content-titles">@UsersGlobalization.EditUser_Add_Role_Title</div>    
     @Html.Tooltip(UsersGlobalization.EditUser_Role_Tooltip_Description)
-    <div class="bcms-content-titles">
-        @UsersGlobalization.EditUser_Add_Role_Title
-    </div>
 
-    <div class="bcms-field-wrapper" data-bind="visible: isExpanded()" style="right: -170px;">
+    <div class="bcms-field-wrapper" data-bind="visible: isExpanded()">
         <input type="text" class="bcms-field-text" data-bind="
                 css: { 'bcms-tag-validation-error': newItem.hasError() },
                 value: newItem,

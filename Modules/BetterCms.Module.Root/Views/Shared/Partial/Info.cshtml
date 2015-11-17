@@ -3,9 +3,9 @@
 <script type="text/html" id="bcms-modal-info-template">
     <div class="bcms-modal-alert">
         <div class="bcms-popinfo-frame" tabindex="-1">
-            <a class="bcms-btn-close bcms-js-btn-close">@RootGlobalization.Button_Close</a>
-            <h4>@RootGlobalization.Info_DefaultTitle</h4>
-            <p></p>
+            <div class="bcms-btn-close bcms-js-btn-close">@RootGlobalization.Button_Close</div>
+            <div class="bcms-message-titles">@RootGlobalization.Info_DefaultTitle</div>
+            <div class="bcms-message-description"></div>
             <div class="bcms-success-buttons-holder" data-bind="foreach: buttons">
                 <!-- ko if: disabled() === false -->
                 <div data-bind="text: title, css: css, click: click, visible: !disabled()"></div>

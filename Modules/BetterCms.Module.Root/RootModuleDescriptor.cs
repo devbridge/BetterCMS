@@ -277,7 +277,6 @@ namespace BetterCms.Module.Root
                     new RedirectJsModuleIncludeDescriptor(this),
                     new SidemenuJsModuleIncludeDescriptor(this),                     
                     siteSettingsJsModuleIncludeDescriptor,
-                    new JsIncludeDescriptor(this, "bcms.slides.jquery"),
                     new JsIncludeDescriptor(this, "bcms.spinner.jquery"),
                     new JsIncludeDescriptor(this, "bcms.store"),
                     new TabsJsModuleIncludeDescriptor(this), 
@@ -291,7 +290,8 @@ namespace BetterCms.Module.Root
                     languagesJsModuleIncludeDescriptor,
                     new OptionsJsModuleIncludeDescriptor(this),
                     new JsIncludeDescriptor(this, "bcms.markdown"),
-                    new JsIncludeDescriptor(this, "bcms.jquery.markitup")
+                    new JsIncludeDescriptor(this, "bcms.jquery.markitup"),
+                    new JsIncludeDescriptor(this, "bcms.jquery.select2", "bcms.jquery.select2.js","bcms.jquery.select2.js") 
                 };
         }
 

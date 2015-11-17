@@ -1,13 +1,13 @@
 //module tabbed view
 .bcms-tab {
     &-header {
-        background-color: $sky-blue;
+        background-color: $bg-blue;
         height: $tab-height;
     }
 
     &-ui {
-        @include transition(all 200ms ease);
-        color: $main-text;
+        @include transition(background-color 200ms ease, color 200ms ease);
+        color: $white;
         cursor: pointer;
         display: inline-block;
         font-size: 16px;
@@ -17,15 +17,17 @@
         text-decoration: none;
 
         &:hover {
-            background-color: $white;
+            color: $text-dark;
             text-decoration: none;
         }
 
         &.bcms-active {
-            background-color: $white;
+            background-color: $bg-modal-options;
+            color: $text-dark;
+            cursor: default;
 
             &:hover {
-                background-color: $white;
+                color: $text-dark;
             }
         }
     }
@@ -51,7 +53,7 @@
     &-navigation-ui {
         @include transition(color 200ms, background-color 200ms);
         background-color: transparent;;
-        color: $light-text;
+        color: $text-light;
         cursor: pointer;
         float: left;
         font: {
@@ -63,12 +65,12 @@
         position: relative;
 
         &:hover {
-            color: darken($light-text, 10%);
+            color: darken($text-light, 10%);
         }
 
         &.bcms-active {
             background-color: $white;
-            color: $blue-main;
+            color: $text-blue;
         }
     }
 }

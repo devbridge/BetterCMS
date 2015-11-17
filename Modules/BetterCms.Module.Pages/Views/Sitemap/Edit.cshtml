@@ -37,8 +37,8 @@
                     <div class="bcms-form-block-holder">
                         <div>
                             <div class="bcms-input-list-holder">
-                                @Html.Tooltip(NavigationGlobalization.Sitemap_EditDialog_SitemapTitle_Tooltip_Description)
                                 <div class="bcms-content-titles">@NavigationGlobalization.Sitemap_EditDialog_SitemapTitle_Title</div>
+                                @Html.Tooltip(NavigationGlobalization.Sitemap_EditDialog_SitemapTitle_Tooltip_Description)
                                 <div class="bcms-field-wrapper">
                                     @Html.TextBoxFor(model => model.Title, new { @class = "bcms-field-text", data_bind = "value: title, valueUpdate: 'afterkeydown', hasfocus: true" })
                                     @Html.BcmsValidationMessageFor(f => f.Title)
@@ -56,7 +56,7 @@
                             @if (Model.AccessControlEnabled)
                             {
 
-                                @Html.Partial(RootModuleConstants.AccessControlTemplate)
+                            @Html.Partial(RootModuleConstants.AccessControlTemplate)
 
                             }
                         </div>
@@ -64,25 +64,27 @@
                 </div>
 
                 <div id="bcms-tab-2" class="bcms-tab-single">
-                    <div class="bcms-top-block-holder" data-bind="with: sitemap">
-                        <div style="display: none;" data-bind="visible: showLanguages, with: language">
+                    <!-- ko with: sitemap -->
+                    <div style="display: none;" data-bind="visible: showLanguages, with: language">
+                        <div class="bcms-top-block-holder">
                             <div class="bcms-filter-text">Edit sitemap in language:</div>
                             <div class="bcms-table-middle-box">
                                 <select class="bcms-global-select" data-bind="options: languages, optionsText: 'value', optionsValue: 'key', value: languageId"></select>
                             </div>
                         </div>
                     </div>
+                
+                    <div class="bcms-content-dialog-title">
+                        <div class="bcms-content-titles-helper">@NavigationGlobalization.Sitemap_EditDialog_PageLink_Header</div>
 
-                    <div class="bcms-tree-info-block" data-bind="with: sitemap">
                         <div class="bcms-tree-expander bcms-tree-expander-close" data-bind="click: callExpandOrCollapse, css: { 'bcms-tree-expander-close' : allNodesExpanded()}, text: allNodesExpanded() ? '@PagesGlobalization.CategoryTree_Button_CollapseAll' : '@PagesGlobalization.CategoryTree_Button_ExpandAll'"></div>
                     </div>
+                    <!-- /ko -->
 
                     <div class="bcms-tree-zones-holder">
-                        <div class="bcms-tree-drag-area bcms-add-node-col">
-                            <div class="bcms-sitemap-links-holder" data-bind="template: { name: 'bcms-navigation-pagelinks-template' }"></div>
-                        </div>
+                        <div class="bcms-tree-drag-area-ui" data-bind="template: { name: 'bcms-navigation-pagelinks-template' }"></div>
 
-                        <div class="bcms-tree-drop-area">
+                        <div class="bcms-tree-drop-area-ui">
                             <div class="bcms-addnode-placement-holder@(Model.IsReadOnly ? "-readonly" : string.Empty)">
                                 @Html.Partial("Partial/Sitemap", new SitemapNodeViewModel())
                             </div>
@@ -97,24 +99,27 @@
 </div>
 
 <script type="text/html" id="bcms-navigation-pagelinks-template">
-    <div class="bcms-plain-text">@NavigationGlobalization.Sitemap_EditDialog_PageLink_Header</div>
     <div class="bcms-sidebar-search">
-        <input type="text" class="bcms-field-text" placeholder="@NavigationGlobalization.Sitemap_EditDialog_AddPageLink_SearchPlaceHolder"
-               data-bind="hasfocus: hasfocus, value: searchQuery, valueUpdate: 'afterkeydown', enterPress: searchForPageLinks" />
+        <div class="bcms-field-wrapper">
+            <input type="text" class="bcms-field-text" placeholder="@NavigationGlobalization.Sitemap_EditDialog_AddPageLink_SearchPlaceHolder"
+                   data-bind="hasfocus: hasfocus, value: searchQuery, valueUpdate: 'afterkeydown', enterPress: searchForPageLinks" />
+        </div>
+        <div class="bcms-btn-search" data-bind="click: searchForPageLinks">@NavigationGlobalization.Sitemap_EditDialog_AddPageLink_SearchButton</div>
     </div>
-    <div class="bcms-btn-search" data-bind="click: searchForPageLinks">@NavigationGlobalization.Sitemap_EditDialog_AddPageLink_SearchButton</div>
 
-    <div class="bcms-addnode-placement-holder@(Model.IsReadOnly ? "-readonly" : string.Empty)" data-bind="template: { name: 'bcms-navigation-pagelink-template', foreach: pageLinks }"></div>
+    <div class="bcms-drag-zone@(Model.IsReadOnly ? "-read-only" : string.Empty)" data-bind="template: { name: 'bcms-navigation-pagelink-template', foreach: pageLinks }"></div>
 </script>
 
 <script type="text/html" id="bcms-navigation-pagelink-template">
     <!-- ko if: isVisible() || isCustom() -->
-    <div class="bcms-placement-node" data-bind="@(!Model.IsReadOnly ? "draggable: $parentContext.$index, " : string.Empty)css: { 'bcms-placement-node-drag': isBeingDragged() }, style: { borderColor: isOnSitemap() == true ? '#0383df' : '' }">
-        <div class="bcms-placement-title" data-bind="text: title()"></div>
-        <div class="bcms-placement-path"><a data-bind="text: url, attr: { href: url }" href="" target="_blank"></a></div>
+    <div class="bcms-drag-zone-box" data-bind="@(!Model.IsReadOnly ? "draggable: $parentContext.$index, " : string.Empty)css: { 'bcms-node-box-drag': isBeingDragged() }, style: { borderColor: isOnSitemap() == true ? '#dc4250' : '' }">
+        <div class="bcms-drag-zone-title" data-bind="text: title()"></div>
+        <div class="bcms-drag-zone-path">
+            <a data-bind="text: url, attr: { href: url }" href="" target="_blank"></a>
+        </div>
     </div>
     <!-- ko if: isBeingDragged() -->
-    <div class="bcms-placement-dropzone"></div>
+    <div class="bcms-node-drop-zone"></div>
     <!-- /ko -->
     <!-- /ko -->
 </script>

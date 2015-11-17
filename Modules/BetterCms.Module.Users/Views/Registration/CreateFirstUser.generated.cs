@@ -356,14 +356,14 @@ WriteLiteral("\n        </p>\n    </div>\n");
             #line hidden
             
             #line 64 "..\..\Views\Registration\CreateFirstUser.cshtml"
-Write(Html.SubmitButton("submit", "Save", new { @class = "bcms-btn-small" }));
+Write(Html.SubmitButton("submit", "Save", new { @class = "bcms-btn-primary" }));
 
             
             #line default
             #line hidden
             
             #line 64 "..\..\Views\Registration\CreateFirstUser.cshtml"
-                                                                           
+                                                                             
 }
 
             

@@ -43,7 +43,8 @@ bettercms.define('bcms.blog', ['bcms.jquery', 'bcms', 'bcms.modal', 'bcms.siteSe
                 siteSettingsBlogCloseInfoMessage: "#bcms-addnewblog-closeinfomessage",
                 siteSettingsBlogInfoMessageBox: ".bcms-warning-messages",
                 siteSettingsButtonOpener: ".bcms-btn-opener",
-                siteSettingsButtonHolder: ".bcms-btn-opener-holder"
+                siteSettingsButtonHolder: ".bcms-btn-opener-holder",
+                siteSettingsBlogCategoriesSelect: '#bcms-js-categories-select'
             },
             links = {
                 loadSiteSettingsBlogsUrl: null,
@@ -111,7 +112,7 @@ bettercms.define('bcms.blog', ['bcms.jquery', 'bcms', 'bcms.modal', 'bcms.siteSe
             self.id = ko.observable(id);
             self.version = ko.observable(version);
             self.editInSourceMode = ko.observable(editInSourceMode);
-            self.categories = categoriesModel;
+            self.categories = ko.observableArray(categoriesModel);
         }
 
         /**
@@ -265,8 +266,13 @@ bettercms.define('bcms.blog', ['bcms.jquery', 'bcms', 'bcms.modal', 'bcms.siteSe
             }
 
             var tagsViewModel = new tags.TagsListViewModel(tagsList);
-            var categoriesModel = new categories.CategoriesListViewModel(data.Categories, data.CategoriesFilterKey);
+            var categoriesModel = content.Data.Categories.map(function (cat) {
+                var obj = { id: cat.Key.toLowerCase(), text: cat.Value };
+                return obj;
+            });
             var blogViewModel = new BlogPostViewModel(image, tagsViewModel, data.Id, data.Version, data.EditInSourceMode, categoriesModel);
+
+            categories.initCategoriesSelect(blogViewModel, categoriesModel, content.Data.CategoriesLookupList);
 
             ko.applyBindings(blogViewModel, dialog.container.find(selectors.firstForm).get(0));
 
@@ -862,22 +868,28 @@ bettercms.define('bcms.blog', ['bcms.jquery', 'bcms', 'bcms.modal', 'bcms.siteSe
             var self = this;
 
             self.templates = ko.observableArray();
+            self.displayedTemplates = ko.observableArray();
             self.searchQuery = ko.observable();
             self.searchEnabled = ko.observable(false);
             self.hasFocus = ko.observable(false);
 
+            for (var j = 0; j < templates.length; j++) {
+                var currentTemplate = new TemplateViewModel(templates[j], this, container);
+                self.templates.push(currentTemplate);
+            }
+
             self.displayTemplates = function () {
-                if(templates != null) {
-                    self.templates.removeAll();
+                if (self.templates() != null) {
+                    self.displayedTemplates.removeAll();
 
                     var query = (self.searchQuery() || '').toLowerCase();
 
-                    for (var j = 0; j < templates.length; j++) {
-                        var currentTemplate = new TemplateViewModel(templates[j], self, container);
+                    for (var j = 0; j < self.templates().length; j++) {
+                        var currentTemplate = self.templates()[j];
                         if (query && currentTemplate.title.toLowerCase().indexOf(query) < 0) {
                             continue;
                         }
-                        self.templates.push(currentTemplate);
+                        self.displayedTemplates.push(currentTemplate);
                     }
                 }
             };
@@ -1065,28 +1077,36 @@ bettercms.define('bcms.blog', ['bcms.jquery', 'bcms', 'bcms.modal', 'bcms.siteSe
 
                             form = dialog.container.find(selectors.importBlogPostsForm);
 
-                            importModel = {
-                                createRedirects: ko.observable(true),
-                                fileName: ko.observable(''),
-                                fixedFileName: ko.observable(''),
-                                messageBox: messages.box({ container: form }),
-                                form: form,
-                                results: ko.observableArray(),
-                                uploaded: ko.observable(false),
-                                finished: ko.observable(false),
-                                dialog: dialog,
-                                fileId: '',
-                                checkedAll: ko.observable(true)
-                            };
-                            importModel.fileName.subscribe(function (fileName) {
-                                if (fileName) {
-                                    fileName = fileName.toUpperCase().replace('C:\\FAKEPATH\\', '');
-                                }
-                                importModel.fixedFileName(fileName);
-                            });
-                            importModel.checkedAll.subscribe(function (checked) {
-                                for (i = 0; i < importModel.results().length; i++) {
-                                    item = importModel.results()[i];
+                        importModel = {
+                            createRedirects: ko.observable(true),
+                            reuseExistingCategories: ko.observable(false),
+                            recreateCategoryTree: ko.observable(true),
+                            fileName: ko.observable(''),
+                            fixedFileName: ko.observable(''),
+                            messageBox: messages.box({ container: form }),
+                            form: form,
+                            results: ko.observableArray(),
+                            uploaded: ko.observable(false),
+                            finished: ko.observable(false),
+                            dialog: dialog,
+                            fileId: '',
+                            checkedAll: ko.observable(true)
+                        };
+                        importModel.fileName.subscribe(function (fileName) {
+                            if (fileName) {
+                                fileName = fileName.toUpperCase().replace('C:\\FAKEPATH\\', '');
+                            }
+                            importModel.fixedFileName(fileName);
+                        });
+                        importModel.reuseExistingCategories.subscribe(function (reuseExistingCategories) {
+                            importModel.recreateCategoryTree(!reuseExistingCategories);
+                        });
+                        importModel.recreateCategoryTree.subscribe(function (recreateCategoryTree) {
+                            importModel.reuseExistingCategories(!recreateCategoryTree);
+                        });
+                        importModel.checkedAll.subscribe(function(checked) {
+                            for (i = 0; i < importModel.results().length; i ++) {
+                                item = importModel.results()[i];
 
                                     item.checked(checked);
                                 }
@@ -1148,11 +1168,13 @@ bettercms.define('bcms.blog', ['bcms.jquery', 'bcms', 'bcms.modal', 'bcms.siteSe
                             }
                         }
                     } else {
-                        params = {
-                            BlogPosts: [],
-                            CreateRedirects: importModel.createRedirects(),
-                            FileId: importModel.fileId
-                        };
+                    params = {
+                        BlogPosts: [],
+                        CreateRedirects: importModel.createRedirects(),
+                        ReuseExistingCategories: importModel.reuseExistingCategories(),
+                        RecreateCategoryTree: importModel.recreateCategoryTree(),
+                        FileId: importModel.fileId
+                    };
 
                         // Start import
                         for (i = 0; i < importModel.results().length; i++) {

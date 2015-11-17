@@ -23,8 +23,8 @@
     </div>
 
     <div class="bcms-input-list-holder">
-        @Html.Tooltip(PagesGlobalization.DeletePage_Dialog_RedurectUrl_Tooltip_Description)
         <div class="bcms-content-titles">@PagesGlobalization.DeletePage_Dialog_RedirectUrl</div>
+        @Html.Tooltip(PagesGlobalization.DeletePage_Dialog_RedurectUrl_Tooltip_Description)
         <div class="bcms-field-wrapper">
             @Html.TextBoxFor(m => m.RedirectUrl, new { @class = "bcms-field-text", @id = "PageTitle" })
             @Html.BcmsValidationMessageFor(f => f.RedirectUrl)
@@ -32,8 +32,8 @@
     </div>
 
     <div class="bcms-input-list-holder">
-        @Html.Tooltip(PagesGlobalization.DeletePage_Dialog_SecurityWord_Tooltip_Description)
         <div class="bcms-content-titles">@PagesGlobalization.DeletePage_Dialog_SecurityWord</div>
+        @Html.Tooltip(PagesGlobalization.DeletePage_Dialog_SecurityWord_Tooltip_Description)
         <div class="bcms-field-wrapper">
             @Html.TextBoxFor(m => m.SecurityWord, new { @class = "bcms-field-text", @id = "SecurityWord" })
             @Html.BcmsValidationMessageFor(f => f.SecurityWord)
@@ -43,8 +43,8 @@
     if (Model.IsInSitemap && (ViewContext.Controller as CmsControllerBase).SecurityService.IsAuthorized(RootModuleConstants.UserRoles.EditContent))
     {
         <div class="bcms-input-list-holder">
-            @Html.Tooltip(PagesGlobalization.DeletePage_Dialog_UpdateSitemap_Description)
             <div class="bcms-content-titles">@PagesGlobalization.DeletePage_Dialog_UpdateSitemap</div>
+            @Html.Tooltip(PagesGlobalization.DeletePage_Dialog_UpdateSitemap_Description)
             <div class="bcms-edit-check-field">
                 @Html.CheckBoxFor(m => m.UpdateSitemap, new { @id = "UpdateSitemap" })
                 <div class="bcms-edit-label">@PagesGlobalization.DeletePage_Dialog_UpdateSitemap_RemovePageFromSitemap</div>

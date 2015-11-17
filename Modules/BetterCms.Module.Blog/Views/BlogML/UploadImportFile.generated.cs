@@ -100,55 +100,63 @@ WriteLiteral("            <div");
 
 WriteLiteral(" class=\"bcms-input-list-holder\"");
 
-WriteLiteral(">\r\n                <!-- ko if: uploaded() && !finished() -->\r\n                <h2" +
-">");
+WriteLiteral(">\r\n                <!-- ko if: uploaded() && !finished() -->\r\n                <di" +
+"v");
+
+WriteLiteral(" class=\"bcms-content-dialog-title\"");
+
+WriteLiteral(">");
 
             
             #line 15 "..\..\Views\BlogML\UploadImportFile.cshtml"
-               Write(BlogGlobalization.ImportBlogPosts_PleaseSelectPostsToImport_Message);
+                                                  Write(BlogGlobalization.ImportBlogPosts_PleaseSelectPostsToImport_Message);
 
             
             #line default
             #line hidden
-WriteLiteral("</h2>\r\n                <!-- /ko -->\r\n                <!-- ko if: finished() -->\r\n" +
-"                <h2");
+WriteLiteral("</div>\r\n                <!-- /ko -->\r\n                <!-- ko if: finished() -->\r" +
+"\n                <div");
 
-WriteLiteral(" style=\"color: green;\"");
+WriteLiteral(" class=\"bcms-content-dialog-title\"");
 
 WriteLiteral(">");
 
             
             #line 18 "..\..\Views\BlogML\UploadImportFile.cshtml"
-                                     Write(BlogGlobalization.ImportBlogPosts_ImportCompletedSuccessfully_Message);
+                                                  Write(BlogGlobalization.ImportBlogPosts_ImportCompletedSuccessfully_Message);
 
             
             #line default
             #line hidden
-WriteLiteral("</h2>\r\n                <!-- /ko -->\r\n                <!-- ko ifnot: uploaded() --" +
-">\r\n                <div");
+WriteLiteral("</div>\r\n                <!-- /ko -->\r\n                <!-- ko ifnot: uploaded() -" +
+"->\r\n                <div");
 
-WriteLiteral(" id=\"bcms-files-dropzone\"");
-
-WriteLiteral(" class=\"bcms-dropzone\"");
+WriteLiteral(" class=\"bcms-file-drop-zone-container\"");
 
 WriteLiteral(">\r\n                    <div");
 
-WriteLiteral(" class=\"bcms-dropzone-infotext\"");
+WriteLiteral(" id=\"bcms-files-drop-zone\"");
+
+WriteLiteral(" class=\"bcms-file-drop-zone\"");
+
+WriteLiteral(">\r\n                        <div");
+
+WriteLiteral(" class=\"bcms-file-drop-zone-text\"");
 
 WriteLiteral(">");
 
             
-            #line 22 "..\..\Views\BlogML\UploadImportFile.cshtml"
-                                                   Write(BlogGlobalization.ImportBlogPosts_File_Description);
+            #line 23 "..\..\Views\BlogML\UploadImportFile.cshtml"
+                                                         Write(BlogGlobalization.ImportBlogPosts_File_Description);
 
             
             #line default
             #line hidden
-WriteLiteral("</div>\r\n                    <div");
+WriteLiteral("</div>\r\n                        <div");
 
-WriteLiteral(" class=\"bcms-btn-upload-files\"");
+WriteLiteral(" class=\"bcms-btn-main\"");
 
-WriteLiteral(">\r\n                        <label");
+WriteLiteral(">\r\n                            <label");
 
 WriteLiteral(" for=\"uploadFile\"");
 
@@ -157,15 +165,15 @@ WriteLiteral(" class=\"bcms-btn-upload-files-text\"");
 WriteLiteral(" data-bind=\"text: fixedFileName() || \'");
 
             
-            #line 24 "..\..\Views\BlogML\UploadImportFile.cshtml"
-                                                                                                                   Write(BlogGlobalization.ImportBlogPosts_File_ButtonTitle);
+            #line 25 "..\..\Views\BlogML\UploadImportFile.cshtml"
+                                                                                                                       Write(BlogGlobalization.ImportBlogPosts_File_ButtonTitle);
 
             
             #line default
             #line hidden
 WriteLiteral("\'\"");
 
-WriteLiteral("></label>\r\n                        <input");
+WriteLiteral("></label>\r\n                            <input");
 
 WriteLiteral(" type=\"file\"");
 
@@ -177,11 +185,11 @@ WriteLiteral(" style=\"position: absolute; left: -999em; top: -999em;\"");
 
 WriteLiteral(" data-bind=\"value: fileName\"");
 
-WriteLiteral(" />\r\n                    </div>\r\n\r\n                    <div");
+WriteLiteral(" />\r\n                        </div>\r\n\r\n                        <div");
 
-WriteLiteral(" class=\"bcms-download-sample-file\"");
+WriteLiteral(" class=\"bcms-file-drop-zone-download\"");
 
-WriteLiteral(">\r\n                        <a");
+WriteLiteral(">\r\n                            <a");
 
 WriteLiteral(" href=\"/file/bcms-blog/Content/example.blog.post.import.xml\"");
 
@@ -190,14 +198,14 @@ WriteLiteral(" target=\"_blank\"");
 WriteLiteral(">");
 
             
-            #line 29 "..\..\Views\BlogML\UploadImportFile.cshtml"
-                                                                                                  Write(BlogGlobalization.ImportBlogPosts_DownloadSampleFile_Title);
+            #line 30 "..\..\Views\BlogML\UploadImportFile.cshtml"
+                                                                                                      Write(BlogGlobalization.ImportBlogPosts_DownloadSampleFile_Title);
 
             
             #line default
             #line hidden
-WriteLiteral("</a>\r\n                    </div>\r\n                </div>\r\n\r\n                <ifra" +
-"me");
+WriteLiteral("</a>\r\n                        </div>\r\n                    </div>\r\n\r\n             " +
+"   </div>\r\n\r\n                <iframe");
 
 WriteLiteral(" id=\"bcms-import-form-target\"");
 
@@ -226,8 +234,54 @@ WriteLiteral(" class=\"bcms-edit-label\"");
 WriteLiteral(">");
 
             
-            #line 38 "..\..\Views\BlogML\UploadImportFile.cshtml"
+            #line 41 "..\..\Views\BlogML\UploadImportFile.cshtml"
                                                 Write(Html.Raw(BlogGlobalization.ImportBlogPosts_CreateRedirects_Title));
+
+            
+            #line default
+            #line hidden
+WriteLiteral("</div>\r\n                    </div>\r\n\r\n                    <div");
+
+WriteLiteral(" class=\"bcms-edit-check-field\"");
+
+WriteLiteral(">\r\n                        <input");
+
+WriteLiteral(" type=\"checkbox\"");
+
+WriteLiteral(" data-bind=\"checked: recreateCategoryTree\"");
+
+WriteLiteral(" />\r\n                        <div");
+
+WriteLiteral(" class=\"bcms-edit-label\"");
+
+WriteLiteral(">");
+
+            
+            #line 46 "..\..\Views\BlogML\UploadImportFile.cshtml"
+                                                Write(Html.Raw(BlogGlobalization.ImportBlogPosts_RecreateCategoryTree_Title));
+
+            
+            #line default
+            #line hidden
+WriteLiteral("</div>\r\n                    </div>\r\n\r\n                    <div");
+
+WriteLiteral(" class=\"bcms-edit-check-field\"");
+
+WriteLiteral(">\r\n                        <input");
+
+WriteLiteral(" type=\"checkbox\"");
+
+WriteLiteral(" data-bind=\"checked: reuseExistingCategories\"");
+
+WriteLiteral(" />\r\n                        <div");
+
+WriteLiteral(" class=\"bcms-edit-label\"");
+
+WriteLiteral(">");
+
+            
+            #line 51 "..\..\Views\BlogML\UploadImportFile.cshtml"
+                                                Write(Html.Raw(BlogGlobalization.ImportBlogPosts_ReuseExistingCategories_Title));
 
             
             #line default
@@ -236,7 +290,7 @@ WriteLiteral("</div>\r\n                    </div>\r\n                </div>\r\n
 "/ko -->\r\n            </div>\r\n");
 
             
-            #line 43 "..\..\Views\BlogML\UploadImportFile.cshtml"
+            #line 56 "..\..\Views\BlogML\UploadImportFile.cshtml"
 
 
             
@@ -268,7 +322,7 @@ WriteLiteral(" class=\"bcms-tables-nohover\"");
 WriteLiteral(">");
 
             
-            #line 49 "..\..\Views\BlogML\UploadImportFile.cshtml"
+            #line 62 "..\..\Views\BlogML\UploadImportFile.cshtml"
                                                    Write(BlogGlobalization.ImportBlogPosts_Results_Title_Title);
 
             
@@ -281,7 +335,7 @@ WriteLiteral(" class=\"bcms-tables-nohover\"");
 WriteLiteral(">");
 
             
-            #line 50 "..\..\Views\BlogML\UploadImportFile.cshtml"
+            #line 63 "..\..\Views\BlogML\UploadImportFile.cshtml"
                                                    Write(BlogGlobalization.ImportBlogPosts_Results_Url_Title);
 
             
@@ -337,7 +391,7 @@ WriteLiteral("></a>\r\n                            <!-- /ko -->\r\n             
 WriteLiteral("                            ");
 
             
-            #line 69 "..\..\Views\BlogML\UploadImportFile.cshtml"
+            #line 82 "..\..\Views\BlogML\UploadImportFile.cshtml"
                        Write(BlogGlobalization.ImportBlogPosts_Skipped_Title);
 
             
@@ -375,7 +429,7 @@ WriteLiteral(" class=\"bcms-table-no-data\"");
 WriteLiteral(">");
 
             
-            #line 86 "..\..\Views\BlogML\UploadImportFile.cshtml"
+            #line 99 "..\..\Views\BlogML\UploadImportFile.cshtml"
                                                         Write(BlogGlobalization.ImportBlogPosts_ImportFileHasNoBlogs_Message);
 
             
@@ -387,13 +441,13 @@ WriteLiteral("</span>\r\n                        </td>\r\n                    </
 WriteLiteral("        <!-- /ko -->\r\n");
 
             
-            #line 93 "..\..\Views\BlogML\UploadImportFile.cshtml"
+            #line 106 "..\..\Views\BlogML\UploadImportFile.cshtml"
         }
 
             
             #line default
             #line hidden
-WriteLiteral("    </div>\r\n</div>");
+WriteLiteral("    </div>\r\n</div>\r\n");
 
         }
     }

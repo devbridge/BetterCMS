@@ -319,7 +319,7 @@
     <value>Import</value>
   </data>
   <data name="SaveBlogPost_FailedToSave_InaccessibleMasterPage" xml:space="preserve">
-    <value>Cannot save blog post. Master page, which is selected as default blog post layout is inaccessible.</value>
+    <value>Cannot save blog post. Template, which is selected as default blog post layout is inaccessible.</value>
   </data>
   <data name="ImportBlogPosts_Dialog_Title" xml:space="preserve">
     <value>Import blog posts</value>
@@ -362,6 +362,12 @@
   </data>
   <data name="ImportBlogPosts_CreateRedirects_Title" xml:space="preserve">
     <value>Create redirects</value>
+  </data>
+  <data name="ImportBlogPosts_ReuseExistingCategories_Title" xml:space="preserve">
+    <value>Reuse existing categories (no categories will be created)</value>
+  </data>
+  <data name="ImportBlogPosts_RecreateCategoryTree_Title" xml:space="preserve">
+    <value>Recreate category tree (if not found will create categories if possible)</value>
   </data>
   <data name="ImportBlogPosts_Results_Title_Title" xml:space="preserve">
     <value>Title</value>
@@ -408,9 +414,6 @@
   <data name="ImportBlogPosts_AuthorByRefNotFound_Message" xml:space="preserve">
     <value>Author with ID "{0}" wasn't found in the list of importing authors</value>
   </data>
-  <data name="ImportBlogPosts_CategoryByRefNotFound_Message" xml:space="preserve">
-    <value>Category with ID "{0}" wasn't found in the list of importing categories</value>
-  </data>
   <data name="SiteSettings_BlogSettingsTab_SettingName_Title" xml:space="preserve">
     <value>Setting</value>
   </data>
@@ -440,5 +443,8 @@
   </data>
   <data name="EditBlogPost_Language_Tooltip" xml:space="preserve">
     <value>Choose language for current page, which will be used in sitemap and determines the language and culture of the page</value>
+  </data>
+  <data name="BlogPostTitle_ChooseLayout_Title" xml:space="preserve">
+    <value>Choose Blog Post Template</value>
   </data>
 </root>

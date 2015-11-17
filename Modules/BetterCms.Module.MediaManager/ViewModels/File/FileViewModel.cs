@@ -3,6 +3,7 @@ using System.ComponentModel.DataAnnotations;
 
 using BetterCms.Module.Root.Content.Resources;
 using BetterCms.Module.Root.Models;
+using BetterCms.Module.Root.ViewModels.Category;
 using BetterCms.Module.Root.ViewModels.Security;
 
 using BetterModules.Core.Models;
@@ -131,6 +132,8 @@ namespace BetterCms.Module.MediaManager.ViewModels.File
         /// The list of categories.
         /// </value>
         public IEnumerable<LookupKeyValue> Categories { get; set; }
+
+        public IEnumerable<CategoryLookupModel> CategoriesLookupList { get; set; } 
 
         /// <summary>
         /// Gets or sets the categories filter key.

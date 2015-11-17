@@ -10,7 +10,7 @@ bettercms.define('bcms.pages', ['bcms.jquery', 'bcms', 'bcms.modal', 'bcms.siteS
             selectors = {
                 editPermalink: '#bcms-page-editpermalink',
                 editPermalinkBox: '.bcms-edit-urlpath-box',
-                editPermalinkClose: 'div.bcms-edit-urlpath-box .bcms-tip-close, div.bcms-edit-urlpath-box .bcms-btn-links-small',
+                editPermalinkClose: 'div.bcms-edit-urlpath-box .bcms-tip-close, div.bcms-edit-urlpath-box .bcms-btn-cancel',
                 editPermalinkSave: '#bcms-save-permalink',
                 editPermalinkHiddenField: '#bcms-page-permalink',
                 editPermalinkEditField: '#bcms-page-permalink-edit',
@@ -22,8 +22,6 @@ bettercms.define('bcms.pages', ['bcms.jquery', 'bcms', 'bcms.modal', 'bcms.siteS
                 addNewPageTemplateSelect: '.bcms-js-grid-box',
                 addNewPageTemplateId: '#TemplateId',
                 addNewPageMasterPageId: '#MasterPageId',
-                addNewPageActiveTemplateBox: '.bcms-grid-box-active',
-                addNewPageTemplatePreviewLink: '.bcms-preview-template',
 
 
                 addNewPageForm: 'form:first',
@@ -146,6 +144,129 @@ bettercms.define('bcms.pages', ['bcms.jquery', 'bcms', 'bcms.modal', 'bcms.siteS
             return self;
         }
 
+        /**
+        * Template view model
+        */
+        function TemplateViewModel(template) {
+            var self = this;
+
+            self.id = template.TemplateId;
+            self.previewUrl = template.PreviewUrl;
+            self.previewThumbnailUrl = template.PreviewThumbnailUrl;
+            self.title = template.Title;
+
+            self.isActive = ko.observable(template.IsActive);
+            self.isCircularToCurrent = template.IsCircularToCurrent;
+            self.isCompatible = template.IsCompatible;
+            self.isMasterPage = template.IsMasterPage;
+
+            self.select = function () {
+
+            };
+
+            self.previewImage = function () {
+                modal.imagePreview(self.previewUrl, self.title);
+            };
+        }
+
+        /**
+        * Templates list view model
+        */
+        function TemplatesListViewModel(templates, dialog, optionsContainer, optionListViewModel, accessContainer, accessControlViewModel) {
+            var self = this;
+
+            self.templates = ko.observableArray();
+            self.displayedTemplates = ko.observableArray();
+            self.searchQuery = ko.observable();
+            self.searchEnabled = ko.observable(false);
+            self.hasFocus = ko.observable(false);
+            self.optionsContainer = optionsContainer;
+            self.optionListViewModel = optionListViewModel;
+            self.accessContainer = accessContainer;
+            self.accessControlViewModel = accessControlViewModel;
+            self.dialog = dialog;
+
+            for (var j = 0; j < templates.length; j++) {
+                var currentTemplate = new TemplateViewModel(templates[j]);
+                self.templates.push(currentTemplate);
+            }
+
+            self.searchQuery.subscribe(function () {
+                self.search();
+            });
+
+            self.displayTemplates = function () {
+                if (self.templates() != null) {
+                    self.displayedTemplates.removeAll();
+
+                    var query = (self.searchQuery() || '').toLowerCase();
+
+                    for (var j = 0; j < self.templates().length; j++) {
+                        var currentTemplate = self.templates()[j];
+                        if (query && currentTemplate.title.toLowerCase().indexOf(query) < 0) {
+                            continue;
+                        }
+                        self.displayedTemplates.push(currentTemplate);
+                    }
+                }
+            };
+
+            self.search = function () {
+                self.displayTemplates();
+            };
+
+            self.toggleSearch = function () {
+                if (!self.searchEnabled()) {
+                    self.searchEnabled(true);
+                    self.hasFocus(true);
+                } else {
+                    self.searchEnabled(false);
+                    self.searchQuery('');
+                }
+            };
+
+            self.setActive = function (template) {
+                var active = self.findCurrentActive();
+
+                if (active.id === template.id) {
+                    return;
+                }
+
+                var messagesBox = messages.box({ container: dialog.container });
+                messagesBox.clearMessages();
+                if (template.isCircular) {
+                    messagesBox.addWarningMessage(globalization.selectedMasterIsChildPage);
+                    return;
+                }
+
+                active.isActive(false);
+                if (template.isMasterPage) {
+                    dialog.container.find(selectors.addNewPageMasterPageId).val(template.id);
+                    dialog.container.find(selectors.addNewPageTemplateId).val('');
+                } else {
+                    dialog.container.find(selectors.addNewPageTemplateId).val(template.id);
+                    dialog.container.find(selectors.addNewPageMasterPageId).val('');
+                }
+
+                template.isActive(true);
+
+                pageProperties.loadLayoutOptions(template.id, template.isMasterPage, dialog.container, self.optionsContainer, self.optionListViewModel);
+                pageProperties.loadLayoutUserAccess(template.id, template.isMasterPage, dialog.container, self.accessContainer, self.accessControlViewModel);
+            };
+
+            self.findCurrentActive = function () {
+                for (var i = 0; i < self.templates().length; i++) {
+                    if (self.templates()[i].isActive()) {
+                        return self.templates()[i];
+                    }
+                }
+
+                return null;
+            };
+
+            self.displayTemplates();
+        }
+
         page.initializePermalinkBox = function (dialog, addPrefix, actionUrl, titleField, autoGenerate, getParentPageId, getLanguageId, getCategoryId) {
             var generator = new urlGenerator(dialog, addPrefix, actionUrl, titleField, autoGenerate, getParentPageId, getLanguageId, getCategoryId);
             pageUrlManuallyEdited = false;
@@ -207,11 +328,14 @@ bettercms.define('bcms.pages', ['bcms.jquery', 'bcms', 'bcms.modal', 'bcms.siteS
             var infoMessageClosed = store.get(keys.addNewPageInfoMessageClosed),
                 optionsContainer = dialog.container.find(selectors.addNewPageOptionsTab),
                 accessContainer = dialog.container.find(selectors.addNewPageUserAccess),
+                accessControlViewModel = security.createUserAccessViewModel(content.Data.UserAccessList),
                 languageViewModel = content.Data.Languages ? new pageLanguages.PageLanguageViewModel(content.Data.Languages) : null,
+                optionsViewModel = options.createOptionValuesViewModel(optionsContainer, content.Data.OptionValues, content.Data.CustomOptions),
                 viewModel = {
-                    accessControl: security.createUserAccessViewModel(content.Data.UserAccessList),
+                    accessControl: accessControlViewModel,
                     language: languageViewModel,
-                    options: options.createOptionValuesViewModel(optionsContainer, content.Data.OptionValues, content.Data.CustomOptions)
+                    options: optionsViewModel,
+                    templatesList: new TemplatesListViewModel(content.Data.Templates, dialog, optionsContainer, optionsViewModel, accessContainer, accessControlViewModel)
                 },
                 getLanguageId = function () {
                     if (languageViewModel != null) {
@@ -235,22 +359,6 @@ bettercms.define('bcms.pages', ['bcms.jquery', 'bcms', 'bcms.modal', 'bcms.siteS
                     page.hideAddNewPageInfoMessage(dialog);
                 });
             }
-
-            dialog.container.find(selectors.addNewPageTemplateSelect).on('click', function () {
-                page.highlightAddNewPageActiveTemplate(dialog, this, function (id, isMasterPage) {
-                    pageProperties.loadLayoutOptions(id, isMasterPage, dialog.container, optionsContainer, viewModel.options);
-                    pageProperties.loadLayoutUserAccess(id, isMasterPage, dialog.container, accessContainer, viewModel.accessControl);
-                });
-            });
-
-            dialog.container.find(selectors.addNewPageTemplatePreviewLink).on('click', function (event) {
-                bcms.stopEventPropagation(event);
-                var template = $(this),
-                    url = template.data('url'),
-                    alt = template.data('alt');
-
-                modal.imagePreview(url, alt);
-            });
 
             ko.applyBindings(viewModel, dialog.container.find(selectors.addNewPageForm).get(0));
 
@@ -306,34 +414,6 @@ bettercms.define('bcms.pages', ['bcms.jquery', 'bcms', 'bcms.modal', 'bcms.siteS
         */
         page.hideAddNewPageInfoMessage = function (dialog) {
             dialog.container.find(selectors.addNewPageCloseInfoMessageBox).hide();
-        };
-
-        /**
-        * Highlights active template box in AddNewPage dialog.
-        */
-        page.highlightAddNewPageActiveTemplate = function (dialog, selectButton, onChangeCallback) {
-            var active = dialog.container.find(selectors.addNewPageActiveTemplateBox),
-                template = $(selectButton),
-                id = $(template).data('id'),
-                isMasterPage = $(template).data('master');
-
-            if (active.get(0) === template.get(0)) {
-                return;
-            }
-
-            active.removeClass(classes.addNewPageActiveTemplateBox);
-            if (template) {
-                if (isMasterPage) {
-                    dialog.container.find(selectors.addNewPageMasterPageId).val(id);
-                    dialog.container.find(selectors.addNewPageTemplateId).val('');
-                } else {
-                    dialog.container.find(selectors.addNewPageTemplateId).val(id);
-                    dialog.container.find(selectors.addNewPageMasterPageId).val('');
-                }
-                $(template).addClass(classes.addNewPageActiveTemplateBox);
-
-                onChangeCallback.call(this, id, isMasterPage);
-            }
         };
 
         page.changePublishStatus = function (sender) {
@@ -692,6 +772,7 @@ bettercms.define('bcms.pages', ['bcms.jquery', 'bcms', 'bcms.modal', 'bcms.siteS
             grid.submitGridForm(form, function (htmlContent, data) {
                 // Blur searh field - IE11 fix
                 container.find(selectors.siteSettingsPagesSearchField).blur();
+
 
                 //                opts.dialogContainer.setContent(htmlContent);
                 //                page.initializeSiteSettingsPagesList(htmlContent, data, opts, true);

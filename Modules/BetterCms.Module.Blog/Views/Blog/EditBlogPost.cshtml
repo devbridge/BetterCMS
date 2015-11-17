@@ -68,26 +68,26 @@
             @Html.HiddenFor(modal => modal.ContentTextMode, new { @id = "bcms-user-confirmed-region-deletion" })
 
             <div id="bcms-tab-1" class="bcms-tab-single">
-                <div class="bcms-newcontent-top">
-                    <div class="bcms-input-field-holder">
-                        @Html.Tooltip(BlogGlobalization.EditBlogPost_Title_Tooltip_Description)
+                <div class="bcms-content-info-block">
+                    <div class="bcms-input-list-holder">
                         <div class="bcms-content-titles">@BlogGlobalization.EditBlogPost_Title_Title</div>
+                        @Html.Tooltip(BlogGlobalization.EditBlogPost_Title_Tooltip_Description)
                         <div class="bcms-field-wrapper">
                             @Html.TextBoxFor(m => m.Title, new { @class = "bcms-field-text", @id = "bcms-editor-blog-title", @style = "width: 523px;" })
                             @Html.BcmsValidationMessageFor(m => m.Title)
                         </div>
                     </div>
-                    <div class="bcms-input-field-holder">
-                        @Html.Tooltip(BlogGlobalization.EditBlogPost_LiveDates_Tooltip_Description)
+                    <div class="bcms-input-list-holder">
                         <div class="bcms-content-titles">@BlogGlobalization.EditBlogPost_LiveFrom_Title</div>
-                        <div class="bcms-date-input-box">
+                        @Html.Tooltip(BlogGlobalization.EditBlogPost_LiveDates_Tooltip_Description)
+                        <div class="bcms-field-wrapper">
                             @Html.DateTextBoxFor(model => model.LiveFromDate, Model.LiveFromDate, new Dictionary<string, object> { { "class", "bcms-field-text bcms-datepicker" }, { "style", "width: 127px;" } })
                             @Html.BcmsValidationMessageFor(m => m.LiveFromDate)
                         </div>
                     </div>
-                    <div class="bcms-input-field-holder">
+                    <div class="bcms-input-list-holder">
                         <div class="bcms-content-titles">@BlogGlobalization.EditBlogPost_LiveTo_Title</div>
-                        <div class="bcms-date-input-box">
+                        <div class="bcms-field-wrapper">
                             @Html.DateTextBoxFor(model => model.LiveToDate, Model.LiveToDate, new Dictionary<string, object> { { "class", "bcms-field-text bcms-datepicker" }, { "style", "width: 127px;" } })
                             @Html.BcmsValidationMessageFor(m => m.LiveToDate)
                         </div>
@@ -97,8 +97,8 @@
                 @Html.Partial("Partial/AddNewBlogEditPermalink")
 
                 <div class="bcms-input-list-holder" id="bcms-blog-content-holder">
-                    @Html.Tooltip(BlogGlobalization.EditBlogPost_Content_Tooltip_Description)
                     <div class="bcms-content-titles">@BlogGlobalization.EditBlogPost_Content_Title</div>
+                    @Html.Tooltip(BlogGlobalization.EditBlogPost_Content_Tooltip_Description)
                     @Html.TextAreaFor(model => model.Content, new { @id = "bcms-blogcontent" })
                 </div>
             </div>
@@ -108,26 +108,26 @@
                     <div>
                         @if (Model.ShowLanguages)
                         {
-                        <div class="bcms-input-list-holder">
-                            @Html.Tooltip(BlogGlobalization.EditBlogPost_Language_Tooltip)
-                            <div class="bcms-content-titles">@BlogGlobalization.EditBlogPost_Language_Title</div>
-                            @Html.DropDownListFor(model => model.LanguageId, Model.Languages.ToSelectList(Model.LanguageId), "Default language", new { @class = "bcms-global-select", @style = "width: 245px;" })
-                        </div>
+                            <div class="bcms-input-list-holder">
+                                <div class="bcms-content-titles">@BlogGlobalization.EditBlogPost_Language_Title</div>
+                                @Html.Tooltip(BlogGlobalization.EditBlogPost_Language_Tooltip)
+                                @Html.DropDownListFor(model => model.LanguageId, Model.Languages.ToSelectList(Model.LanguageId), "Default language", new { @class = "bcms-global-select", @style = "width: 245px;" })
+                            </div>
                         }
 
                         <div class="bcms-input-list-holder">
-                            @Html.Tooltip(BlogGlobalization.EditBlogPost_IntroText_Tooltip_Description)
+                            <div class="bcms-content-titles">@BlogGlobalization.EditBlogPost_Author_Title</div>
+                            @Html.Tooltip(BlogGlobalization.EditBlogPost_Author_Tooltip_Description)
+                            @Html.DropDownListFor(model => model.AuthorId, Model.Authors.ToSelectList(Model.AuthorId), string.Empty, new { @class = "bcms-global-select", @style = "width: 245px;" })
+                        </div>
+
+                        <div class="bcms-input-list-holder">
                             <div class="bcms-content-titles">@BlogGlobalization.EditBlogPost_IntroText_Title</div>
+                            @Html.Tooltip(BlogGlobalization.EditBlogPost_IntroText_Tooltip_Description)
                             <div class="bcms-field-wrapper">
                                 @Html.TextAreaFor(m => m.IntroText, new { @style = "height: 217px;", @class = "bcms-field-textarea" })
                                 @Html.BcmsValidationMessageFor(m => m.IntroText)
                             </div>
-                        </div>
-
-                        <div class="bcms-input-list-holder">
-                            @Html.Tooltip(BlogGlobalization.EditBlogPost_Author_Tooltip_Description)
-                            <div class="bcms-content-titles">@BlogGlobalization.EditBlogPost_Author_Title</div>
-                            @Html.DropDownListFor(model => model.AuthorId, Model.Authors.ToSelectList(Model.AuthorId), string.Empty, new { @class = "bcms-global-select", @style = "width: 245px;" })
                         </div>
                     </div>
 
@@ -135,8 +135,8 @@
                         <div class="bcms-thumb-container">
                             <div class="bcms-thumb-box">
                                 <div class="bcms-input-list-holder">
-                                    @Html.Tooltip(BlogGlobalization.EditBlogPost_FeaturedImage_Tooltip_Description)
                                     <div class="bcms-content-titles">@BlogGlobalization.EditBlogPost_FeaturedImage_Title</div>
+                                    @Html.Tooltip(BlogGlobalization.EditBlogPost_FeaturedImage_Tooltip_Description)
                                 </div>
 
                                 <div class="bcms-thumb-image">
@@ -157,11 +157,11 @@
                                     <!-- /ko -->
                                 </div>
 
-                                <div class="bcms-btn-tertiary" data-bind="@(canEdit ? "click: image().select.bind(image())" : string.Empty)">@BlogGlobalization.EditBlogPost_SelectImage_Button_Title</div>
+                                <div class="bcms-btn-selection" data-bind="@(canEdit ? "click: image().select.bind(image())" : string.Empty)">@BlogGlobalization.EditBlogPost_SelectImage_Button_Title</div>
                             </div>
                         </div>
 
-                        <div class="bcms-input-list-holder" data-bind="with: categories">
+                        <div class="bcms-input-list-holder">
                             @Html.Partial("~/Areas/bcms-root/Views/Category/CategoriesTemplate.cshtml", categoriesTemplateViewModel)
                         </div>
 

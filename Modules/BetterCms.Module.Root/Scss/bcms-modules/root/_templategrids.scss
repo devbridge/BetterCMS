@@ -1,4 +1,4 @@
-$inactive-red: #e64343;
+$inactive-red: $red;
 
 $template-grid-box-states: (
                 ('active', $blue-main),
@@ -13,14 +13,18 @@ $template-grid-box-states: (
 .bcms-grid {
     &-box {
         margin-bottom: gutter();
+        padding: 5px;
 
         .bcms-content-titles {
             @include ellipsis;
-            font-size: 12px;
+            font: {
+                size: 12px;
+                weight: 400;
+            }
             padding-bottom: 0;
         }
 
-        .bcms-btn-tertiary {
+        .bcms-btn-selection {
             margin-top: 5px;
             width: 100%;
         }
@@ -41,7 +45,7 @@ $template-grid-box-states: (
             .bcms-grid-image-holder {
                 border-color: $color;
             }
-            .bcms-btn-tertiary {
+            .bcms-btn-selection {
                 background-color: $color;
                 border-color: $color;
                 color: $white;
@@ -52,11 +56,12 @@ $template-grid-box-states: (
 
     &-image-holder {
         @include transition(border-color 200ms);
-        background-color: $gray-l30;
-        border: $border-nav-bottom;
+        background-color: $white;
+        border: $border-thin-smoke;
         box-sizing: border-box;
-        height: 150px;
+        height: 140px;
         overflow: hidden;
+        padding: 5px;
         position: relative;
 
         img {
@@ -75,24 +80,20 @@ $template-grid-box-states: (
     }
 
     &-controls-holder {
-        display: table;
-        width: 100%;
+        @include clearfix();
 
-        .bcms-btn-tertiary {
+        .bcms-btn-selection {
             width: 50%;
         }
     }
-}
 
-//
-//
-//
-//
-//
-//
-//
-//.bcms-grid-active-message-text {
-//    color: #0383df;
-//    font-size: 19px;
-//    font-weight: 700;
-//}
+    &-controls-helper {
+        float: right;
+        line-height: 23px;
+        margin-top: 5px;
+
+        .bcms-action-delete {
+            margin-left: 10px;
+        }
+    }
+}

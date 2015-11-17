@@ -127,6 +127,7 @@ namespace BetterCms.Module.MediaManager.Command.Files.GetFile
             }
 
             model.CategoriesFilterKey = file.GetCategorizableItemKey();
+            model.CategoriesLookupList = categoryService.GetCategoriesLookupList(model.CategoriesFilterKey);
 
             return model;
         }

@@ -94,21 +94,21 @@ WriteLiteral(">\n            html, body {\n                margin: 0;\n         
 "kground-color: #f5f5f5;\n                border-radius: 0;\n                box-si" +
 "zing: border-box;\n                -moz-box-sizing: border-box;\n                -" +
 "webkit-appearance: none;\n                border-radius: 0;\n            }\n\n      " +
-"      .bcms-btn-small {\n                position: relative;\n                disp" +
-"lay: inline-block;\n                height: 28px;\n                line-height: 28" +
-"px;\n                padding: 0 10px;\n                margin: 10px 0;\n           " +
-"     border: 1px solid #24597e;\n                border-radius: 2px;\n            " +
-"    cursor: pointer;\n                vertical-align: middle;\n                col" +
-"or: #fff;\n                font-family: \'Open Sans\', sans-serif;\n                " +
-"font-size: 12px;\n                overflow: hidden;\n                text-transfor" +
-"m: uppercase;\n                background: #1890E6;\n                background: l" +
-"inear-gradient(to bottom, #1890E6 0, #0D7BC9 100%);\n                background: " +
-"-moz-linear-gradient(top, #1890E6 0, #0D7BC9 100%);\n                background: " +
-"-webkit-linear-gradient(top, #1890E6 0, #0D7BC9 100%);\n            }\n\n          " +
-"  .bcms-title {\n                display: block;\n                position: relati" +
-"ve;\n                padding: 10px 0 5px;\n                color: #000;\n          " +
-"      line-height: 20px;\n                font-size: 14px;\n                font-w" +
-"eight: 700;\n            }\n        </style>\n");
+"      .bcms-btn-primary {\n                position: relative;\n                di" +
+"splay: inline-block;\n                height: 28px;\n                line-height: " +
+"28px;\n                padding: 0 10px;\n                margin: 10px 0;\n         " +
+"       border: 1px solid #24597e;\n                border-radius: 2px;\n          " +
+"      cursor: pointer;\n                vertical-align: middle;\n                c" +
+"olor: #fff;\n                font-family: \'Open Sans\', sans-serif;\n              " +
+"  font-size: 12px;\n                overflow: hidden;\n                text-transf" +
+"orm: uppercase;\n                background: #1890E6;\n                background:" +
+" linear-gradient(to bottom, #1890E6 0, #0D7BC9 100%);\n                background" +
+": -moz-linear-gradient(top, #1890E6 0, #0D7BC9 100%);\n                background" +
+": -webkit-linear-gradient(top, #1890E6 0, #0D7BC9 100%);\n            }\n\n        " +
+"    .bcms-title {\n                display: block;\n                position: rela" +
+"tive;\n                padding: 10px 0 5px;\n                color: #000;\n        " +
+"        line-height: 20px;\n                font-size: 14px;\n                font" +
+"-weight: 700;\n            }\n        </style>\n");
 
 WriteLiteral("        ");
 

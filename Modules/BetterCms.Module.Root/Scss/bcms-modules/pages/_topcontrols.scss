@@ -29,8 +29,8 @@
     &-filters {
         @include clearfix();
         border: {
-            top: $border-nav-bottom;
-            bottom: $border-nav-bottom;
+            top: $border-thin-smoke;
+            bottom: $border-thin-smoke;
         }
         padding: 5px 0;
     }
@@ -46,16 +46,16 @@
     @include transition(background-color 200ms);
     @include vertical-align();
     @include size($form-element-height);
-    background: $blue-main url($bcms-btn-down-arrow) no-repeat center;
+    background: $bg-blue url($bcms-btn-down-arrow) no-repeat center;
     cursor: pointer;
 
     &:hover {
-        background-color: darken($blue-main, 10%);
+        background-color: darken($bg-blue, 10%);
     }
 
     &-holder {
         @include position(absolute, calc(100% + 1px) 0 null);
-        border: $border-blue;
+        border: $border-thin-blue;
         box-sizing: border-box;
         display: none;
         z-index: 5;
@@ -66,12 +66,17 @@
     }
 
     &-link {
+        @include transition(background-color 200ms);
         @include pad(20px);
         background-color: $white;
-        border-top: $border-blue;
-        color: $blue-main;
+        border-top: $border-thin-blue;
+        color: $text-blue;
         cursor: pointer;
         line-height: $form-element-height;
+
+        &:hover {
+            background-color: $sky-blue;
+        }
 
         &:first-child {
             border-top: 0;
@@ -93,21 +98,22 @@
     &-field-box {
         @extend %reset;
         @include size(250px $form-element-height);
+        background-color: transparent;
         border: {
             top: 0;
             right: 0;
-            bottom: $border-search-field;
+            bottom: $border-thick-blue;
             left: 0;
         }
         box-sizing: border-box;
-        color: $dark-text;
+        color: $text-dark;
         font: {
             size: 14px;
             style: italic;
         }
 
         @include placeholder {
-            color: $light-text;
+            color: $text-light;
             font: {
                 size: 14px;
                 style: italic;
@@ -130,7 +136,7 @@
 
     &.bcms-active-filter {
         border: {
-            color: $gray-l;
+            color: $gray-smoke;
             bottom-color: $white;
         }
     }
@@ -152,7 +158,7 @@
     &-selection-block {
         @include position(absolute, #{calc(100% - 1px)} 0 null null);
         background-color: $white;
-        border: $border-nav-bottom;
+        border: $border-thin-smoke;
         box-sizing: border-box;
         padding: 15px;
         width: 450px;
@@ -160,7 +166,7 @@
     }
 
     &-controls {
-        border-bottom: $border-nav-bottom;
+        border-bottom: $border-thin-smoke;
         margin-bottom: 8px;
         padding-bottom: 5px;
     }

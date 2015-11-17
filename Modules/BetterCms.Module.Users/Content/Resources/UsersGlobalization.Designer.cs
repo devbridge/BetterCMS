@@ -268,15 +268,6 @@ namespace BetterCms.Module.Users.Content.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Image will be displayed as a thumbnail with user..
-        /// </summary>
-        public static string EditUser_UploadImage_Info {
-            get {
-                return ResourceManager.GetString("EditUser_UploadImage_Info", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Select an image that will be shown as user thumbnail..
         /// </summary>
         public static string EditUser_UserImage_Tooltip_Description {

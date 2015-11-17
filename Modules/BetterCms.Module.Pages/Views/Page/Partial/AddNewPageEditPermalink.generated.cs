@@ -55,50 +55,50 @@ namespace ASP
         }
         public override void Execute()
         {
-WriteLiteral("\n");
-
 WriteLiteral("<div");
 
 WriteLiteral(" class=\"bcms-input-list-holder\"");
 
-WriteLiteral(">\r\n");
-
-WriteLiteral("    ");
-
-            
-            #line 7 "..\..\Views\Page\Partial\AddNewPageEditPermalink.cshtml"
-Write(Html.Tooltip(PagesGlobalization.AddNewPage_Permalink_Tooltip_Description));
-
-            
-            #line default
-            #line hidden
-WriteLiteral("\r\n    <div");
+WriteLiteral(">\r\n    <div");
 
 WriteLiteral(" class=\"bcms-content-titles\"");
 
-WriteLiteral(">");
+WriteLiteral(">\r\n");
+
+WriteLiteral("        ");
 
             
             #line 8 "..\..\Views\Page\Partial\AddNewPageEditPermalink.cshtml"
-                                Write(PagesGlobalization.AddNewPage_Permalink);
+   Write(PagesGlobalization.AddNewPage_Permalink);
 
             
             #line default
             #line hidden
-WriteLiteral("<a");
+WriteLiteral("\r\n");
+
+WriteLiteral("        ");
+
+            
+            #line 9 "..\..\Views\Page\Partial\AddNewPageEditPermalink.cshtml"
+   Write(Html.Tooltip(PagesGlobalization.AddNewPage_Permalink_Tooltip_Description));
+
+            
+            #line default
+            #line hidden
+WriteLiteral("\r\n        <a");
 
 WriteLiteral(" id=\"bcms-page-editpermalink\"");
 
 WriteLiteral(">");
 
             
-            #line 8 "..\..\Views\Page\Partial\AddNewPageEditPermalink.cshtml"
-                                                                                                        Write(RootGlobalization.Button_Edit);
+            #line 10 "..\..\Views\Page\Partial\AddNewPageEditPermalink.cshtml"
+                                   Write(RootGlobalization.Button_Edit);
 
             
             #line default
             #line hidden
-WriteLiteral("</a></div>\r\n    <div");
+WriteLiteral("</a>\r\n    </div>\r\n    <div");
 
 WriteLiteral(" class=\"bcms-editseo-urlpath\"");
 
@@ -107,7 +107,7 @@ WriteLiteral(" id=\"bcms-page-permalink-info\"");
 WriteLiteral(">");
 
             
-            #line 9 "..\..\Views\Page\Partial\AddNewPageEditPermalink.cshtml"
+            #line 12 "..\..\Views\Page\Partial\AddNewPageEditPermalink.cshtml"
                                                                 Write(string.IsNullOrWhiteSpace(Model.PageUrl) ? Html.Raw("&nbsp;") : new MvcHtmlString(Html.Encode(Model.PageUrl)));
 
             
@@ -124,7 +124,7 @@ WriteLiteral(">\r\n");
 WriteLiteral("        ");
 
             
-            #line 12 "..\..\Views\Page\Partial\AddNewPageEditPermalink.cshtml"
+            #line 15 "..\..\Views\Page\Partial\AddNewPageEditPermalink.cshtml"
    Write(Html.Hidden("PagePermalinkHidden", Model.PageUrl, new { @id = "bcms-page-permalink" }));
 
             
@@ -139,7 +139,7 @@ WriteLiteral(">\r\n");
 WriteLiteral("            ");
 
             
-            #line 14 "..\..\Views\Page\Partial\AddNewPageEditPermalink.cshtml"
+            #line 17 "..\..\Views\Page\Partial\AddNewPageEditPermalink.cshtml"
        Write(Html.TextBoxFor(model => model.PageUrl, new { @id = "bcms-page-permalink-edit", @class = "bcms-field-text bcms-js-url-path" }));
 
             
@@ -150,7 +150,7 @@ WriteLiteral("\r\n");
 WriteLiteral("            ");
 
             
-            #line 15 "..\..\Views\Page\Partial\AddNewPageEditPermalink.cshtml"
+            #line 18 "..\..\Views\Page\Partial\AddNewPageEditPermalink.cshtml"
        Write(Html.BcmsValidationMessageFor(f => f.PageUrl));
 
             
@@ -158,28 +158,28 @@ WriteLiteral("            ");
             #line hidden
 WriteLiteral("\r\n        </div>\r\n        <div");
 
-WriteLiteral(" class=\"bcms-btn-small\"");
+WriteLiteral(" class=\"bcms-btn-primary\"");
 
 WriteLiteral(" id=\"bcms-save-permalink\"");
 
 WriteLiteral(">");
 
             
-            #line 17 "..\..\Views\Page\Partial\AddNewPageEditPermalink.cshtml"
-                                                        Write(RootGlobalization.Button_Ok);
+            #line 20 "..\..\Views\Page\Partial\AddNewPageEditPermalink.cshtml"
+                                                          Write(RootGlobalization.Button_Ok);
 
             
             #line default
             #line hidden
 WriteLiteral("</div>\r\n        <div");
 
-WriteLiteral(" class=\"bcms-btn-links-small\"");
+WriteLiteral(" class=\"bcms-btn-cancel\"");
 
 WriteLiteral(">");
 
             
-            #line 18 "..\..\Views\Page\Partial\AddNewPageEditPermalink.cshtml"
-                                     Write(RootGlobalization.Button_Cancel);
+            #line 21 "..\..\Views\Page\Partial\AddNewPageEditPermalink.cshtml"
+                                Write(RootGlobalization.Button_Cancel);
 
             
             #line default

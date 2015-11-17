@@ -391,7 +391,7 @@ WriteLiteral("                    <!-- ko if: isActive() -->\r\n");
 
 WriteLiteral("                    <div");
 
-WriteLiteral(" class=\"bcms-btn-small\"");
+WriteLiteral(" class=\"bcms-btn-primary\"");
 
 WriteLiteral(" data-bind=\"click: onSave\"");
 
@@ -399,7 +399,7 @@ WriteLiteral(">");
 
             
             #line 75 "..\..\Views\Shared\EditableGrid\Grid.cshtml"
-                                                                     Write(Model.SaveButtonTitle);
+                                                                       Write(Model.SaveButtonTitle);
 
             
             #line default
@@ -408,7 +408,7 @@ WriteLiteral("</div>\r\n");
 
 WriteLiteral("                    <div");
 
-WriteLiteral(" class=\"bcms-btn-links-small\"");
+WriteLiteral(" class=\"bcms-btn-cancel\"");
 
 WriteLiteral(" data-bind=\"event : {mousedown: onCancelEdit}\"");
 
@@ -416,7 +416,7 @@ WriteLiteral(">");
 
             
             #line 76 "..\..\Views\Shared\EditableGrid\Grid.cshtml"
-                                                                                               Write(RootGlobalization.Button_Cancel);
+                                                                                          Write(RootGlobalization.Button_Cancel);
 
             
             #line default
@@ -457,14 +457,14 @@ WriteLiteral("                \r\n            </td>\r\n            <!-- /ko -->\
 "     <!-- /ko -->\r\n        <!-- ko if: items().length == 0 -->\r\n        <tr>\r\n  " +
 "          <td");
 
-WriteAttribute("colspan", Tuple.Create(" colspan=\"", 3418), Tuple.Create("\"", 3454)
+WriteAttribute("colspan", Tuple.Create(" colspan=\"", 3415), Tuple.Create("\"", 3451)
             
             #line 90 "..\..\Views\Shared\EditableGrid\Grid.cshtml"
-, Tuple.Create(Tuple.Create("", 3428), Tuple.Create<System.Object, System.Int32>(visibleColumnsCount + 2
+, Tuple.Create(Tuple.Create("", 3425), Tuple.Create<System.Object, System.Int32>(visibleColumnsCount + 2
             
             #line default
             #line hidden
-, 3428), false)
+, 3425), false)
 );
 
 WriteLiteral("><span");
@@ -510,11 +510,11 @@ WriteLiteral(" name=\"\"");
 
 WriteLiteral(" value=\"\"");
 
-WriteLiteral(" data-bind=\"valueBinder: ");
+WriteLiteral(" data-bind=\"value: ");
 
             
             #line 103 "..\..\Views\Shared\EditableGrid\Grid.cshtml"
-                                                                          Write(column.ValueBind);
+                                                                    Write(column.ValueBind);
 
             
             #line default
@@ -545,6 +545,7 @@ WriteLiteral("    <!-- /ko -->\r\n");
             
             #line 108 "..\..\Views\Shared\EditableGrid\Grid.cshtml"
 }
+
             
             #line default
             #line hidden

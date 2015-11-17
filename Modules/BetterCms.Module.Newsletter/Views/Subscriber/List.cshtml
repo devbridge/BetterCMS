@@ -8,6 +8,7 @@
     @{
         var gridViewModel = new EditableGridViewModel { ShowMessages = true, TopBlockTitle = NewsletterGlobalization.SiteSettings_NewsletterSubscribers_Title, Columns = new List<EditableGridColumn> { new EditableGridColumn(NewsletterGlobalization.SiteSettings_NewsletterSubscribers_Email_Title, "Email", "email") { AutoFocus = true, FocusIdentifier = "hasFocus" } } };
     }
+
     <div class="@gridViewModel.TopBlockClass">
         <div class="bcms-top-controls-btn-holder">
             @if (gridViewModel.CanAddNewItems)
@@ -80,6 +81,7 @@
                 <!-- /ko -->
             }
             <!-- /ko -->
+
             <!-- ko ifnot: saving() || deleting() -->
             @if (gridViewModel.CanEditItems)
             {
@@ -107,8 +109,8 @@
                 @if (gridViewModel.CanEditItems)
                 {
                     <!-- ko if: isActive() -->
-                    <div class="bcms-btn-small" data-bind="click: onSave">@gridViewModel.SaveButtonTitle</div>
-                    <div class="bcms-btn-links-small" data-bind="click: onCancelEdit">@RootGlobalization.Button_Cancel</div>
+                    <div class="bcms-btn-primary" data-bind="click: onSave">@gridViewModel.SaveButtonTitle</div>
+                    <div class="bcms-btn-cancel" data-bind="click: onCancelEdit">@RootGlobalization.Button_Cancel</div>
                     <!-- /ko -->
                 }
                 @if (!gridViewModel.CanDeleteItems && !gridViewModel.CanEditItems)
@@ -120,6 +122,7 @@
             <!-- /ko -->
         </tr>
         <!-- /ko -->
+
         <!-- ko if: items().length == 0 -->
         <tr>
             <td colspan="@(visibleColumnsCount + 2)"><span class="bcms-table-no-data">@RootGlobalization.Grid_NoDataAvailable_Message</span></td>

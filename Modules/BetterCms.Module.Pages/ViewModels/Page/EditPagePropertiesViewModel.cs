@@ -12,6 +12,7 @@ using BetterCms.Module.Pages.Mvc.Attributes;
 using BetterCms.Module.Root.Content.Resources;
 using BetterCms.Module.Root.Models;
 using BetterCms.Module.Root.Mvc.Attributes;
+using BetterCms.Module.Root.ViewModels.Category;
 using BetterCms.Module.Root.ViewModels.Option;
 using BetterCms.Module.Root.ViewModels.Security;
 
@@ -80,6 +81,8 @@ namespace BetterCms.Module.Pages.ViewModels.Page
         /// The list of categories.
         /// </value>
         public IEnumerable<LookupKeyValue> Categories { get; set; }
+
+        public IList<CategoryLookupModel> CategoriesLookupList { get; set; }
 
         /// <summary>
         /// Gets or sets the page custom CSS.

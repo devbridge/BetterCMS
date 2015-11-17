@@ -41,6 +41,12 @@ namespace ASP
     #line hidden
     
     #line 3 "..\..\Views\Page\Pages.cshtml"
+    using BetterCms.Module.Root.Mvc.Helpers;
+    
+    #line default
+    #line hidden
+    
+    #line 4 "..\..\Views\Page\Pages.cshtml"
     using Microsoft.Web.Mvc;
     
     #line default
@@ -58,7 +64,7 @@ namespace ASP
 WriteLiteral("\r\n");
 
             
-            #line 7 "..\..\Views\Page\Pages.cshtml"
+            #line 8 "..\..\Views\Page\Pages.cshtml"
  using (Html.BeginForm<PageController>(controller => controller.Pages(null), FormMethod.Post, new { @id = "bcms-pages-form", @class = "bcms-ajax-form" }))
 {
     
@@ -66,15 +72,39 @@ WriteLiteral("\r\n");
             #line default
             #line hidden
             
-            #line 9 "..\..\Views\Page\Pages.cshtml"
-Write(Html.Partial("Partial/SiteSettingsPagesList"));
+            #line 10 "..\..\Views\Page\Pages.cshtml"
+Write(Html.MessagesBox());
 
             
             #line default
             #line hidden
             
-            #line 9 "..\..\Views\Page\Pages.cshtml"
-                                                  
+            #line 10 "..\..\Views\Page\Pages.cshtml"
+                       
+
+
+            
+            #line default
+            #line hidden
+WriteLiteral("    <div");
+
+WriteLiteral(" class=\"bcms-window-settings\"");
+
+WriteLiteral(">\r\n");
+
+WriteLiteral("        ");
+
+            
+            #line 13 "..\..\Views\Page\Pages.cshtml"
+   Write(Html.Partial("Partial/SiteSettingsPagesList"));
+
+            
+            #line default
+            #line hidden
+WriteLiteral("\r\n    </div>\r\n");
+
+            
+            #line 15 "..\..\Views\Page\Pages.cshtml"
 }
 
             

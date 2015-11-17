@@ -2,6 +2,7 @@
 'bourbon',
 'core/assets',
 'core/mixins',
+'core/colors',
 'core/variables';
 
 @font-face {
@@ -39,7 +40,6 @@
 'bcms-modules/root/controlpanel',
 'bcms-modules/root/contentstree',
 'bcms-modules/root/formelements',
-'bcms-modules/root/messages',
 'bcms-modules/root/notifications',
 'bcms-modules/root/overlays',
 'bcms-modules/root/pager',
@@ -48,12 +48,12 @@
 'bcms-modules/root/tabs',
 'bcms-modules/root/templategrids',
 'bcms-modules/root/index',
-'bcms-modules/root/tooltips',
-'plugins/markitup';
+'bcms-modules/root/tooltips';
 
 //module plugins
 @import 'plugins/markitup',
-'plugins/jquerycalendar';
+'plugins/jquerycalendar',
+'plugins/select2';
 
 //module text & debug
 //@debug

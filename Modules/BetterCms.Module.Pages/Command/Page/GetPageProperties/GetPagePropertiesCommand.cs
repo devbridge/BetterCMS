@@ -246,6 +246,9 @@ namespace BetterCms.Module.Pages.Command.Page.GetPageProperties
                     .Where(x => x.TemplateId == model.Model.TemplateId || x.TemplateId == model.Model.MasterPageId)
                     .Take(1).ToList()
                     .ForEach(x => x.IsActive = true);
+
+                model.Model.CategoriesLookupList = categoryService.GetCategoriesLookupList(model.Model.CategoriesFilterKey);
+
             }
 
             return model != null ? model.Model : null;
@@ -261,5 +264,6 @@ namespace BetterCms.Module.Pages.Command.Page.GetPageProperties
                            };
             return list;
         }
+        
     }
 }

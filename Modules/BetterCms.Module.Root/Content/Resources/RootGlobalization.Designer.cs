@@ -403,7 +403,7 @@ namespace BetterCms.Module.Root.Content.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to OK.
+        ///   Looks up a localized string similar to Ok.
         /// </summary>
         public static string Button_Ok {
             get {
@@ -1114,7 +1114,7 @@ namespace BetterCms.Module.Root.Content.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Only one of master page and template can be specified..
+        ///   Looks up a localized string similar to Only one template can be specified..
         /// </summary>
         public static string MasterPage_Or_Layout_OnlyOne_ShouldBeSelected_ValidationMessage {
             get {
@@ -1123,7 +1123,7 @@ namespace BetterCms.Module.Root.Content.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Template or master page should be selected..
+        ///   Looks up a localized string similar to Template should be selected..
         /// </summary>
         public static string MasterPage_Or_Layout_ShouldBeSelected_ValidationMessage {
             get {

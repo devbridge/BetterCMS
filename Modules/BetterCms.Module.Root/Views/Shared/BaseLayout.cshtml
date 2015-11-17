@@ -11,14 +11,10 @@
 {
     @Html.Partial("~/Areas/bcms-root/Views/Shared/Partial/SupportBrowser.cshtml")
     @Html.Partial("~/Areas/bcms-root/Views/Shared/Partial/SupportJavascript.cshtml")
+    @Html.Partial("~/Areas/bcms-root/Views/Shared/Partial/MasterPagesPath.cshtml")
 }
 
 @RenderBody()
-
-@if (Model.CanManageContent)
-{
-    @Html.Partial("~/Areas/bcms-root/Views/Shared/Partial/MasterPagesPath.cshtml")
-}
 
 @section CmsMetaTitle {
     <title>@Model.MetaTitle</title>

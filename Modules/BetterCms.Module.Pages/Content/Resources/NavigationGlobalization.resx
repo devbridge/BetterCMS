@@ -124,13 +124,13 @@
     <value>Url is required.</value>
   </data>
   <data name="SiteSettings_SitemapMenuItem" xml:space="preserve">
-    <value>Site Maps</value>
+    <value>Menus</value>
   </data>
   <data name="Sitemap_Dialog_Title" xml:space="preserve">
     <value>Sitemap</value>
   </data>
   <data name="Sitemap_NodeEdit_Title_Tooltip_Message" xml:space="preserve">
-    <value>Edit the title of the page as you would like it displayed in the site map.</value>
+    <value>Edit the title of the page as you would like it displayed in the menu.</value>
   </data>
   <data name="Sitemap_NodeEdit_Url_Tooltip_Message" xml:space="preserve">
     <value>Edit the URL visitors will use to navigate to this post.</value>
@@ -139,7 +139,7 @@
     <value>Sitemap node deleted successfully.</value>
   </data>
   <data name="Sitemap_EditorDialog_Title" xml:space="preserve">
-    <value>Edit Site Map</value>
+    <value>Edit Menu</value>
   </data>
   <data name="Sitemap_EditDialog_AddPageLink_SearchButton" xml:space="preserve">
     <value>Search</value>
@@ -202,19 +202,19 @@
     <value>Search</value>
   </data>
   <data name="Sitemap_CreatorDialog_Title" xml:space="preserve">
-    <value>Add New Site Map</value>
+    <value>Add New Menu</value>
   </data>
   <data name="Sitemap_SitemapCreatedSuccessfully_Message" xml:space="preserve">
-    <value>Site map created successfully.</value>
+    <value>Menu created successfully.</value>
   </data>
   <data name="Sitemap_SitemapDeletedSuccessfully_Message" xml:space="preserve">
-    <value>Site map deleted successfully.</value>
+    <value>Menu deleted successfully.</value>
   </data>
   <data name="Sitemap_Delete_Confirmation_Message" xml:space="preserve">
-    <value>Are you sure you want to delete the site map?</value>
+    <value>Are you sure you want to delete the menu?</value>
   </data>
   <data name="Sitemap_HistoryDialog_Title" xml:space="preserve">
-    <value>Site Map History</value>
+    <value>Menu History</value>
   </data>
   <data name="SitemapHistory_Column_ArchivedBy" xml:space="preserve">
     <value>Archived By</value>
@@ -226,7 +226,7 @@
     <value>Status</value>
   </data>
   <data name="SitemapHistory_Column_Title" xml:space="preserve">
-    <value>Site Map Title</value>
+    <value>Menu Title</value>
   </data>
   <data name="SitemapStatus_Active" xml:space="preserve">
     <value>Active</value>
@@ -238,7 +238,7 @@
     <value>Are you sure you want to restore to older version? Restored sitemap will be immediately active.</value>
   </data>
   <data name="Sitemap_SitemapIsEmpty_Message" xml:space="preserve">
-    <value>Site map has no nodes.</value>
+    <value>Menu has no nodes.</value>
   </data>
   <data name="Sitemap_Button_CollapseAll" xml:space="preserve">
     <value>Collapse All</value>
@@ -256,7 +256,7 @@
     <value>Edit the title of this sitemap.</value>
   </data>
   <data name="SiteSettings_Sitemaps_Title" xml:space="preserve">
-    <value>Site Maps</value>
+    <value>Menus</value>
   </data>
   <data name="Sitemap_NodeEdit_Macro_Placeholder_Message" xml:space="preserve">
     <value>Type custom application data (macro) ...</value>

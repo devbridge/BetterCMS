@@ -291,31 +291,31 @@ WriteLiteral(">\r\n                    <div>\r\n                        <div");
 
 WriteLiteral(" class=\"bcms-input-list-holder\"");
 
-WriteLiteral(">\r\n");
-
-WriteLiteral("                            ");
-
-            
-            #line 58 "..\..\Views\Page\EditPageProperties.cshtml"
-                       Write(Html.Tooltip(PagesGlobalization.EditPageProperties_BasicPropertiesTab_PageName_Tooltip_Description));
-
-            
-            #line default
-            #line hidden
-WriteLiteral("\r\n                            <div");
+WriteLiteral(">\r\n                            <div");
 
 WriteLiteral(" class=\"bcms-content-titles\"");
 
 WriteLiteral(">");
 
             
-            #line 59 "..\..\Views\Page\EditPageProperties.cshtml"
+            #line 58 "..\..\Views\Page\EditPageProperties.cshtml"
                                                         Write(PagesGlobalization.EditPageProperties_BasicPropertiesTab_PageName_Title);
 
             
             #line default
             #line hidden
-WriteLiteral("</div>\r\n                            <div");
+WriteLiteral("</div>\r\n");
+
+WriteLiteral("                            ");
+
+            
+            #line 59 "..\..\Views\Page\EditPageProperties.cshtml"
+                       Write(Html.Tooltip(PagesGlobalization.EditPageProperties_BasicPropertiesTab_PageName_Tooltip_Description));
+
+            
+            #line default
+            #line hidden
+WriteLiteral("\r\n                            <div");
 
 WriteLiteral(" class=\"bcms-field-wrapper\"");
 
@@ -364,32 +364,31 @@ WriteLiteral(">\r\n                                <div");
 
 WriteLiteral(" class=\"bcms-input-list-holder\"");
 
-WriteLiteral(">\r\n");
-
-WriteLiteral("                                    ");
-
-            
-            #line 71 "..\..\Views\Page\EditPageProperties.cshtml"
-                               Write(Html.Tooltip(PagesGlobalization.EditPageProperties_BasicPropertiesTab_PageImage_Tooltip_Description));
-
-            
-            #line default
-            #line hidden
-WriteLiteral("\r\n                                    <div");
+WriteLiteral(">\r\n                                    <div");
 
 WriteLiteral(" class=\"bcms-content-titles\"");
 
 WriteLiteral(">");
 
             
-            #line 72 "..\..\Views\Page\EditPageProperties.cshtml"
+            #line 71 "..\..\Views\Page\EditPageProperties.cshtml"
                                                                 Write(PagesGlobalization.EditPageProperties_BasicPropertiesTab_PageImage_Title);
 
             
             #line default
             #line hidden
-WriteLiteral("</div>\r\n                                </div>\r\n\r\n                               " +
-" <div");
+WriteLiteral("</div>\r\n");
+
+WriteLiteral("                                    ");
+
+            
+            #line 72 "..\..\Views\Page\EditPageProperties.cshtml"
+                               Write(Html.Tooltip(PagesGlobalization.EditPageProperties_BasicPropertiesTab_PageImage_Tooltip_Description));
+
+            
+            #line default
+            #line hidden
+WriteLiteral("\r\n                                </div>\r\n\r\n                                <div");
 
 WriteLiteral(" class=\"bcms-thumb-image\"");
 
@@ -453,7 +452,7 @@ WriteLiteral(" />\r\n                                        </g>\r\n           
 "      </svg>\r\n                                    <!-- /ko -->\r\n                " +
 "                </div>\r\n\r\n                                <div");
 
-WriteLiteral(" class=\"bcms-btn-tertiary\"");
+WriteLiteral(" class=\"bcms-btn-selection\"");
 
 WriteLiteral(" data-bind=\"click: image().select.bind(image())\"");
 
@@ -461,7 +460,7 @@ WriteLiteral(">");
 
             
             #line 93 "..\..\Views\Page\EditPageProperties.cshtml"
-                                                                                                          Write(PagesGlobalization.EditPageProperties_BasicPropertiesTab_SelectImage_ButtonTitle);
+                                                                                                           Write(PagesGlobalization.EditPageProperties_BasicPropertiesTab_SelectImage_ButtonTitle);
 
             
             #line default
@@ -474,32 +473,31 @@ WriteLiteral(">\r\n                                <div");
 
 WriteLiteral(" class=\"bcms-input-list-holder\"");
 
-WriteLiteral(">\r\n");
-
-WriteLiteral("                                    ");
-
-            
-            #line 98 "..\..\Views\Page\EditPageProperties.cshtml"
-                               Write(Html.Tooltip(PagesGlobalization.EditPageProperties_BasicPropertiesTab_PageFeaturedImage_Tooltip_Description));
-
-            
-            #line default
-            #line hidden
-WriteLiteral("\r\n                                    <div");
+WriteLiteral(">\r\n                                    <div");
 
 WriteLiteral(" class=\"bcms-content-titles\"");
 
 WriteLiteral(">");
 
             
-            #line 99 "..\..\Views\Page\EditPageProperties.cshtml"
+            #line 98 "..\..\Views\Page\EditPageProperties.cshtml"
                                                                 Write(PagesGlobalization.EditPageProperties_BasicPropertiesTab_PageFeaturedImage_Title);
 
             
             #line default
             #line hidden
-WriteLiteral("</div>\r\n                                </div>\r\n\r\n                               " +
-" <div");
+WriteLiteral("</div>\r\n");
+
+WriteLiteral("                                    ");
+
+            
+            #line 99 "..\..\Views\Page\EditPageProperties.cshtml"
+                               Write(Html.Tooltip(PagesGlobalization.EditPageProperties_BasicPropertiesTab_PageFeaturedImage_Tooltip_Description));
+
+            
+            #line default
+            #line hidden
+WriteLiteral("\r\n                                </div>\r\n\r\n                                <div");
 
 WriteLiteral(" class=\"bcms-thumb-image\"");
 
@@ -566,7 +564,7 @@ WriteLiteral(" />\r\n                                        </g>\r\n           
 "      </svg>\r\n                                    <!-- /ko -->\r\n                " +
 "                </div>\r\n\r\n                                <div");
 
-WriteLiteral(" class=\"bcms-btn-tertiary\"");
+WriteLiteral(" class=\"bcms-btn-selection\"");
 
 WriteLiteral(" data-bind=\"click: featuredImage().select.bind(featuredImage())\"");
 
@@ -574,7 +572,7 @@ WriteLiteral(">");
 
             
             #line 120 "..\..\Views\Page\EditPageProperties.cshtml"
-                                                                                                                          Write(PagesGlobalization.EditPageProperties_BasicPropertiesTab_SelectImage_ButtonTitle);
+                                                                                                                           Write(PagesGlobalization.EditPageProperties_BasicPropertiesTab_SelectImage_ButtonTitle);
 
             
             #line default
@@ -587,32 +585,31 @@ WriteLiteral(">\r\n                                <div");
 
 WriteLiteral(" class=\"bcms-input-list-holder\"");
 
-WriteLiteral(">\r\n");
-
-WriteLiteral("                                    ");
-
-            
-            #line 125 "..\..\Views\Page\EditPageProperties.cshtml"
-                               Write(Html.Tooltip(PagesGlobalization.EditPageProperties_BasicPropertiesTab_PageSecondaryImage_Tooltip_Description));
-
-            
-            #line default
-            #line hidden
-WriteLiteral("\r\n                                    <div");
+WriteLiteral(">\r\n                                    <div");
 
 WriteLiteral(" class=\"bcms-content-titles\"");
 
 WriteLiteral(">");
 
             
-            #line 126 "..\..\Views\Page\EditPageProperties.cshtml"
+            #line 125 "..\..\Views\Page\EditPageProperties.cshtml"
                                                                 Write(PagesGlobalization.EditPageProperties_BasicPropertiesTab_PageSecondaryImage_Title);
 
             
             #line default
             #line hidden
-WriteLiteral("</div>\r\n                                </div>\r\n\r\n                               " +
-" <div");
+WriteLiteral("</div>\r\n");
+
+WriteLiteral("                                    ");
+
+            
+            #line 126 "..\..\Views\Page\EditPageProperties.cshtml"
+                               Write(Html.Tooltip(PagesGlobalization.EditPageProperties_BasicPropertiesTab_PageSecondaryImage_Tooltip_Description));
+
+            
+            #line default
+            #line hidden
+WriteLiteral("\r\n                                </div>\r\n\r\n                                <div");
 
 WriteLiteral(" class=\"bcms-thumb-image\"");
 
@@ -679,7 +676,7 @@ WriteLiteral(" />\r\n                                        </g>\r\n           
 "      </svg>\r\n                                    <!-- /ko -->\r\n                " +
 "                </div>\r\n\r\n                                <div");
 
-WriteLiteral(" class=\"bcms-btn-tertiary\"");
+WriteLiteral(" class=\"bcms-btn-selection\"");
 
 WriteLiteral(" data-bind=\"click: secondaryImage().select.bind(secondaryImage())\"");
 
@@ -687,7 +684,7 @@ WriteLiteral(">");
 
             
             #line 147 "..\..\Views\Page\EditPageProperties.cshtml"
-                                                                                                                            Write(PagesGlobalization.EditPageProperties_BasicPropertiesTab_SelectImage_ButtonTitle);
+                                                                                                                             Write(PagesGlobalization.EditPageProperties_BasicPropertiesTab_SelectImage_ButtonTitle);
 
             
             #line default
@@ -696,8 +693,6 @@ WriteLiteral("</div>\r\n                            </div>\r\n                  
 "                     <div");
 
 WriteLiteral(" class=\"bcms-input-list-holder\"");
-
-WriteLiteral(" data-bind=\"with: categories\"");
 
 WriteLiteral(">\r\n");
 
@@ -748,25 +743,14 @@ WriteLiteral("                            <div");
 
 WriteLiteral(" class=\"bcms-input-list-holder\"");
 
-WriteLiteral(">\r\n");
-
-WriteLiteral("                                ");
-
-            
-            #line 164 "..\..\Views\Page\EditPageProperties.cshtml"
-                           Write(Html.Tooltip(PagesGlobalization.EditPageProperties_ForceProtocol_Tooltip_Description));
-
-            
-            #line default
-            #line hidden
-WriteLiteral("\r\n                                <div");
+WriteLiteral(">\r\n                                <div");
 
 WriteLiteral(" class=\"bcms-content-titles\"");
 
 WriteLiteral(">");
 
             
-            #line 165 "..\..\Views\Page\EditPageProperties.cshtml"
+            #line 164 "..\..\Views\Page\EditPageProperties.cshtml"
                                                             Write(PagesGlobalization.EditPageProperties_ForceProtocol_Title);
 
             
@@ -777,8 +761,19 @@ WriteLiteral("</div>\r\n");
 WriteLiteral("                                ");
 
             
+            #line 165 "..\..\Views\Page\EditPageProperties.cshtml"
+                           Write(Html.Tooltip(PagesGlobalization.EditPageProperties_ForceProtocol_Tooltip_Description));
+
+            
+            #line default
+            #line hidden
+WriteLiteral("\r\n");
+
+WriteLiteral("                                ");
+
+            
             #line 166 "..\..\Views\Page\EditPageProperties.cshtml"
-                           Write(Html.DropDownListFor(model => model.ForceAccessProtocol, Model.PageAccessProtocols.ToSelectList(Model.ForceAccessProtocol), null, new { @class = "bcms-global-select" }));
+                           Write(Html.DropDownListFor(model => model.ForceAccessProtocol, Model.PageAccessProtocols.ToSelectList(Model.ForceAccessProtocol), null, new {}));
 
             
             #line default
@@ -796,44 +791,44 @@ WriteLiteral("                            <div");
 
 WriteLiteral(" class=\"bcms-input-list-holder\"");
 
-WriteLiteral(">\r\n");
-
-WriteLiteral("                                ");
-
-            
-            #line 170 "..\..\Views\Page\EditPageProperties.cshtml"
-                           Write(Html.Tooltip(PagesGlobalization.EditPageProperties_Properties_Tooltip_Description));
-
-            
-            #line default
-            #line hidden
-WriteLiteral("\r\n                                <div");
+WriteLiteral(">\r\n                                <div");
 
 WriteLiteral(" class=\"bcms-content-titles\"");
 
 WriteLiteral(">");
 
             
-            #line 171 "..\..\Views\Page\EditPageProperties.cshtml"
+            #line 170 "..\..\Views\Page\EditPageProperties.cshtml"
                                                             Write(PagesGlobalization.EditPageProperties_Properties_Title);
 
             
             #line default
             #line hidden
-WriteLiteral("</div>\r\n                                <div");
+WriteLiteral("</div>\r\n");
+
+WriteLiteral("                                ");
+
+            
+            #line 171 "..\..\Views\Page\EditPageProperties.cshtml"
+                           Write(Html.Tooltip(PagesGlobalization.EditPageProperties_Properties_Tooltip_Description));
+
+            
+            #line default
+            #line hidden
+WriteLiteral("\r\n\r\n                                <div");
 
 WriteLiteral(" class=\"bcms-checkbox-holder\"");
 
 WriteLiteral(">\r\n");
 
             
-            #line 173 "..\..\Views\Page\EditPageProperties.cshtml"
+            #line 174 "..\..\Views\Page\EditPageProperties.cshtml"
                                     
             
             #line default
             #line hidden
             
-            #line 173 "..\..\Views\Page\EditPageProperties.cshtml"
+            #line 174 "..\..\Views\Page\EditPageProperties.cshtml"
                                       
                             object options = null;
                             if (!Model.CanPublishPage)
@@ -849,7 +844,7 @@ WriteLiteral("\r\n\r\n");
 WriteLiteral("                                    ");
 
             
-            #line 181 "..\..\Views\Page\EditPageProperties.cshtml"
+            #line 182 "..\..\Views\Page\EditPageProperties.cshtml"
                                Write(Html.CheckBoxFor(model => model.IsPagePublished, options));
 
             
@@ -862,7 +857,7 @@ WriteLiteral(" class=\"bcms-edit-label\"");
 WriteLiteral(">");
 
             
-            #line 182 "..\..\Views\Page\EditPageProperties.cshtml"
+            #line 183 "..\..\Views\Page\EditPageProperties.cshtml"
                                                             Write(PagesGlobalization.EditPageProperties_AdvancedPropertiesTab_Privacy_VisibleToEveryone);
 
             
@@ -878,7 +873,7 @@ WriteLiteral(">\r\n");
 WriteLiteral("                                    ");
 
             
-            #line 186 "..\..\Views\Page\EditPageProperties.cshtml"
+            #line 187 "..\..\Views\Page\EditPageProperties.cshtml"
                                Write(Html.CheckBoxFor(model => model.UseNoFollow));
 
             
@@ -891,7 +886,7 @@ WriteLiteral(" class=\"bcms-edit-label\"");
 WriteLiteral(">");
 
             
-            #line 187 "..\..\Views\Page\EditPageProperties.cshtml"
+            #line 188 "..\..\Views\Page\EditPageProperties.cshtml"
                                                             Write(PagesGlobalization.EditPageProperties_AdvancedPropertiesTab_UseNoFollow);
 
             
@@ -907,7 +902,7 @@ WriteLiteral(">\r\n");
 WriteLiteral("                                    ");
 
             
-            #line 191 "..\..\Views\Page\EditPageProperties.cshtml"
+            #line 192 "..\..\Views\Page\EditPageProperties.cshtml"
                                Write(Html.CheckBoxFor(model => model.UseNoIndex));
 
             
@@ -920,7 +915,7 @@ WriteLiteral(" class=\"bcms-edit-label\"");
 WriteLiteral(">");
 
             
-            #line 192 "..\..\Views\Page\EditPageProperties.cshtml"
+            #line 193 "..\..\Views\Page\EditPageProperties.cshtml"
                                                             Write(PagesGlobalization.EditPageProperties_AdvancedPropertiesTab_UseNoIndex);
 
             
@@ -936,7 +931,7 @@ WriteLiteral(">\r\n");
 WriteLiteral("                                    ");
 
             
-            #line 196 "..\..\Views\Page\EditPageProperties.cshtml"
+            #line 197 "..\..\Views\Page\EditPageProperties.cshtml"
                                Write(Html.CheckBoxFor(model => model.IsArchived));
 
             
@@ -949,7 +944,7 @@ WriteLiteral(" class=\"bcms-edit-label\"");
 WriteLiteral(">");
 
             
-            #line 197 "..\..\Views\Page\EditPageProperties.cshtml"
+            #line 198 "..\..\Views\Page\EditPageProperties.cshtml"
                                                             Write(PagesGlobalization.EditPageProperties_AdvancedPropertiesTab_IsArchived);
 
             
@@ -959,7 +954,7 @@ WriteLiteral("</div>\r\n                                </div>\r\n              
 ">\r\n");
 
             
-            #line 200 "..\..\Views\Page\EditPageProperties.cshtml"
+            #line 201 "..\..\Views\Page\EditPageProperties.cshtml"
                         }
 
             
@@ -968,13 +963,13 @@ WriteLiteral("</div>\r\n                                </div>\r\n              
 WriteLiteral("\r\n");
 
             
-            #line 202 "..\..\Views\Page\EditPageProperties.cshtml"
+            #line 203 "..\..\Views\Page\EditPageProperties.cshtml"
                         
             
             #line default
             #line hidden
             
-            #line 202 "..\..\Views\Page\EditPageProperties.cshtml"
+            #line 203 "..\..\Views\Page\EditPageProperties.cshtml"
                          if (Model.AccessControlEnabled)
                         {
                             
@@ -982,14 +977,14 @@ WriteLiteral("\r\n");
             #line default
             #line hidden
             
-            #line 204 "..\..\Views\Page\EditPageProperties.cshtml"
+            #line 205 "..\..\Views\Page\EditPageProperties.cshtml"
                        Write(Html.Partial(RootModuleConstants.AccessControlTemplate));
 
             
             #line default
             #line hidden
             
-            #line 204 "..\..\Views\Page\EditPageProperties.cshtml"
+            #line 205 "..\..\Views\Page\EditPageProperties.cshtml"
                                                                                     
                         }
 
@@ -1001,7 +996,7 @@ WriteLiteral("\r\n");
 WriteLiteral("                        ");
 
             
-            #line 207 "..\..\Views\Page\EditPageProperties.cshtml"
+            #line 208 "..\..\Views\Page\EditPageProperties.cshtml"
                    Write(Html.HiddenFor(model => model.CanPublishPage));
 
             
@@ -1012,7 +1007,7 @@ WriteLiteral("\r\n");
 WriteLiteral("                        ");
 
             
-            #line 208 "..\..\Views\Page\EditPageProperties.cshtml"
+            #line 209 "..\..\Views\Page\EditPageProperties.cshtml"
                    Write(Html.HiddenFor(model => model.TemplateId, new { @id = "TemplateId" }));
 
             
@@ -1023,7 +1018,7 @@ WriteLiteral("\r\n");
 WriteLiteral("                        ");
 
             
-            #line 209 "..\..\Views\Page\EditPageProperties.cshtml"
+            #line 210 "..\..\Views\Page\EditPageProperties.cshtml"
                    Write(Html.HiddenFor(model => model.MasterPageId, new { @id = "MasterPageId" }));
 
             
@@ -1034,7 +1029,7 @@ WriteLiteral("\r\n");
 WriteLiteral("                        ");
 
             
-            #line 210 "..\..\Views\Page\EditPageProperties.cshtml"
+            #line 211 "..\..\Views\Page\EditPageProperties.cshtml"
                    Write(Html.HiddenFor(model => model.Id));
 
             
@@ -1045,7 +1040,7 @@ WriteLiteral("\r\n");
 WriteLiteral("                        ");
 
             
-            #line 211 "..\..\Views\Page\EditPageProperties.cshtml"
+            #line 212 "..\..\Views\Page\EditPageProperties.cshtml"
                    Write(Html.HiddenFor(model => model.Version));
 
             
@@ -1056,7 +1051,7 @@ WriteLiteral("\r\n");
 WriteLiteral("                        ");
 
             
-            #line 212 "..\..\Views\Page\EditPageProperties.cshtml"
+            #line 213 "..\..\Views\Page\EditPageProperties.cshtml"
                    Write(Html.HiddenFor(model => model.Image.ImageId, new { data_bind = "value: image().id()" }));
 
             
@@ -1067,7 +1062,7 @@ WriteLiteral("\r\n");
 WriteLiteral("                        ");
 
             
-            #line 213 "..\..\Views\Page\EditPageProperties.cshtml"
+            #line 214 "..\..\Views\Page\EditPageProperties.cshtml"
                    Write(Html.HiddenFor(model => model.SecondaryImage.ImageId, new { data_bind = "value: secondaryImage().id()" }));
 
             
@@ -1078,7 +1073,7 @@ WriteLiteral("\r\n");
 WriteLiteral("                        ");
 
             
-            #line 214 "..\..\Views\Page\EditPageProperties.cshtml"
+            #line 215 "..\..\Views\Page\EditPageProperties.cshtml"
                    Write(Html.HiddenFor(model => model.FeaturedImage.ImageId, new { data_bind = "value: featuredImage().id()" }));
 
             
@@ -1087,13 +1082,13 @@ WriteLiteral("                        ");
 WriteLiteral("\r\n");
 
             
-            #line 215 "..\..\Views\Page\EditPageProperties.cshtml"
+            #line 216 "..\..\Views\Page\EditPageProperties.cshtml"
                         
             
             #line default
             #line hidden
             
-            #line 215 "..\..\Views\Page\EditPageProperties.cshtml"
+            #line 216 "..\..\Views\Page\EditPageProperties.cshtml"
                          if (Model.ShowTranslationsTab)
                         {
                             
@@ -1101,14 +1096,14 @@ WriteLiteral("\r\n");
             #line default
             #line hidden
             
-            #line 217 "..\..\Views\Page\EditPageProperties.cshtml"
+            #line 218 "..\..\Views\Page\EditPageProperties.cshtml"
                        Write(Html.HiddenFor(model => model.LanguageId, new { data_bind = "value: translations.language.languageId()" }));
 
             
             #line default
             #line hidden
             
-            #line 217 "..\..\Views\Page\EditPageProperties.cshtml"
+            #line 218 "..\..\Views\Page\EditPageProperties.cshtml"
                                                                                                                                        
                         }
 
@@ -1118,7 +1113,7 @@ WriteLiteral("\r\n");
 WriteLiteral("                    </div>\r\n                </div>\r\n            </div>\r\n");
 
             
-            #line 222 "..\..\Views\Page\EditPageProperties.cshtml"
+            #line 223 "..\..\Views\Page\EditPageProperties.cshtml"
 
 
             
@@ -1145,7 +1140,7 @@ WriteLiteral(" class=\"bcms-messages-close bcms-js-btn-close\"");
 WriteLiteral(">");
 
             
-            #line 227 "..\..\Views\Page\EditPageProperties.cshtml"
+            #line 228 "..\..\Views\Page\EditPageProperties.cshtml"
                                                                         Write(RootGlobalization.Button_Close);
 
             
@@ -1156,7 +1151,7 @@ WriteLiteral("</a>\r\n");
 WriteLiteral("                            ");
 
             
-            #line 228 "..\..\Views\Page\EditPageProperties.cshtml"
+            #line 229 "..\..\Views\Page\EditPageProperties.cshtml"
                        Write(Html.Raw(PagesGlobalization.EditPageProperties_LayoutPropertiesTab_InfoMessage));
 
             
@@ -1166,13 +1161,13 @@ WriteLiteral("\r\n                        </li>\r\n                    </ul>\r\n
 ">\r\n\r\n");
 
             
-            #line 233 "..\..\Views\Page\EditPageProperties.cshtml"
+            #line 234 "..\..\Views\Page\EditPageProperties.cshtml"
                 
             
             #line default
             #line hidden
             
-            #line 233 "..\..\Views\Page\EditPageProperties.cshtml"
+            #line 234 "..\..\Views\Page\EditPageProperties.cshtml"
                  if (Model.IsMasterPage)
                 {
                     
@@ -1180,14 +1175,14 @@ WriteLiteral("\r\n                        </li>\r\n                    </ul>\r\n
             #line default
             #line hidden
             
-            #line 235 "..\..\Views\Page\EditPageProperties.cshtml"
+            #line 236 "..\..\Views\Page\EditPageProperties.cshtml"
                Write(Html.Partial("Partial/InfoMessageAboutMasterPage"));
 
             
             #line default
             #line hidden
             
-            #line 235 "..\..\Views\Page\EditPageProperties.cshtml"
+            #line 236 "..\..\Views\Page\EditPageProperties.cshtml"
                                                                        
                 }
 
@@ -1198,36 +1193,89 @@ WriteLiteral("\r\n                <div");
 
 WriteLiteral(" class=\"bcms-input-list-holder\"");
 
+WriteLiteral(">\r\n                    <div");
+
+WriteLiteral(" class=\"bcms-content-dialog-title\"");
+
+WriteLiteral(">\r\n                        <div");
+
+WriteLiteral(" class=\"bcms-content-titles-align\"");
+
 WriteLiteral(">\r\n");
 
-WriteLiteral("                    ");
+WriteLiteral("                            ");
 
             
-            #line 239 "..\..\Views\Page\EditPageProperties.cshtml"
-               Write(Html.Tooltip(PagesGlobalization.EditPageProperties_LayoutPropertiesTab_Layout_Tooltip_Description));
+            #line 242 "..\..\Views\Page\EditPageProperties.cshtml"
+                       Write(PagesGlobalization.EditPageProperties_LayoutPropertiesTab_ChooseLayout_Title);
 
             
             #line default
             #line hidden
-WriteLiteral("\r\n                    <div");
+WriteLiteral("\r\n");
 
-WriteLiteral(" class=\"bcms-content-titles\"");
+WriteLiteral("                            ");
+
+            
+            #line 243 "..\..\Views\Page\EditPageProperties.cshtml"
+                       Write(Html.Tooltip(PagesGlobalization.EditPageProperties_LayoutPropertiesTab_Layout_Tooltip_Description));
+
+            
+            #line default
+            #line hidden
+WriteLiteral("\r\n                        </div>\r\n\r\n                        <!-- ko with: templat" +
+"esList -->\r\n                        <div");
+
+WriteLiteral(" class=\"bcms-top-block-inner\"");
+
+WriteLiteral(" data-bind=\"css: { \'bcms-active-search\': searchEnabled() }\"");
+
+WriteLiteral(">\r\n                            <div");
+
+WriteLiteral(" class=\"bcms-btn-search\"");
+
+WriteLiteral(" data-bind=\"click: toggleSearch\"");
 
 WriteLiteral(">");
 
             
-            #line 240 "..\..\Views\Page\EditPageProperties.cshtml"
-                                                Write(PagesGlobalization.EditPageProperties_LayoutPropertiesTab_ChooseLayout_Title);
+            #line 248 "..\..\Views\Page\EditPageProperties.cshtml"
+                                                                                    Write(RootGlobalization.Button_Search);
 
             
             #line default
             #line hidden
-WriteLiteral("</div>\r\n");
+WriteLiteral("</div>\r\n                            <div");
+
+WriteLiteral(" class=\"bcms-search-block\"");
+
+WriteLiteral(">\r\n                                <input");
+
+WriteLiteral(" type=\"text\"");
+
+WriteLiteral(" class=\"bcms-search-field-box bcms-js-search-box\"");
+
+WriteAttribute("placeholder", Tuple.Create(" placeholder=\"", 16296), Tuple.Create("\"", 16345)
+            
+            #line 250 "..\..\Views\Page\EditPageProperties.cshtml"
+                                , Tuple.Create(Tuple.Create("", 16310), Tuple.Create<System.Object, System.Int32>(RootGlobalization.WaterMark_Search
+            
+            #line default
+            #line hidden
+, 16310), false)
+);
+
+WriteLiteral("\r\n                                       data-bind=\"value: searchQuery, valueUpda" +
+"te: \'afterkeydown\', enterPress: search, hasFocus: hasFocus, enable: searchEnable" +
+"d\"");
+
+WriteLiteral(">\r\n                            </div>\r\n                        </div>\r\n          " +
+"              <!-- /ko -->\r\n                    </div>\r\n");
 
 WriteLiteral("                    ");
 
             
-            #line 241 "..\..\Views\Page\EditPageProperties.cshtml"
+            #line 256 "..\..\Views\Page\EditPageProperties.cshtml"
                Write(Html.Partial("Partial/TemplatesList", Model.Templates));
 
             
@@ -1236,7 +1284,7 @@ WriteLiteral("                    ");
 WriteLiteral("\r\n                </div>\r\n            </div>\r\n");
 
             
-            #line 244 "..\..\Views\Page\EditPageProperties.cshtml"
+            #line 259 "..\..\Views\Page\EditPageProperties.cshtml"
 
 
             
@@ -1255,7 +1303,7 @@ WriteLiteral(">\r\n");
 WriteLiteral("                ");
 
             
-            #line 246 "..\..\Views\Page\EditPageProperties.cshtml"
+            #line 261 "..\..\Views\Page\EditPageProperties.cshtml"
            Write(Html.Partial(PagesConstants.OptionValuesGridTemplate, new EditableGridViewModel { CanAddNewItems = true }));
 
             
@@ -1264,7 +1312,7 @@ WriteLiteral("                ");
 WriteLiteral("\r\n            </div>\r\n");
 
             
-            #line 248 "..\..\Views\Page\EditPageProperties.cshtml"
+            #line 263 "..\..\Views\Page\EditPageProperties.cshtml"
 
 
             
@@ -1280,25 +1328,14 @@ WriteLiteral(">\r\n                <div");
 
 WriteLiteral(" class=\"bcms-input-list-holder\"");
 
-WriteLiteral(">\r\n");
-
-WriteLiteral("                    ");
-
-            
-            #line 251 "..\..\Views\Page\EditPageProperties.cshtml"
-               Write(Html.Tooltip(PagesGlobalization.EditPageProperties_AdvancedPropertiesTab_PageCss_Tooltip_Description));
-
-            
-            #line default
-            #line hidden
-WriteLiteral("\r\n                    <div");
+WriteLiteral(">\r\n                    <div");
 
 WriteLiteral(" class=\"bcms-content-titles\"");
 
 WriteLiteral(">");
 
             
-            #line 252 "..\..\Views\Page\EditPageProperties.cshtml"
+            #line 266 "..\..\Views\Page\EditPageProperties.cshtml"
                                                 Write(PagesGlobalization.EditPageProperties_AdvancedPropertiesTab_PageCss_Title);
 
             
@@ -1309,7 +1346,18 @@ WriteLiteral("</div>\r\n");
 WriteLiteral("                    ");
 
             
-            #line 253 "..\..\Views\Page\EditPageProperties.cshtml"
+            #line 267 "..\..\Views\Page\EditPageProperties.cshtml"
+               Write(Html.Tooltip(PagesGlobalization.EditPageProperties_AdvancedPropertiesTab_PageCss_Tooltip_Description));
+
+            
+            #line default
+            #line hidden
+WriteLiteral("\r\n");
+
+WriteLiteral("                    ");
+
+            
+            #line 268 "..\..\Views\Page\EditPageProperties.cshtml"
                Write(Html.TextAreaFor(model => model.PageCSS, new { @class = "bcms-field-textarea bcms-code-field bcms-code-field-css", @id = Guid.NewGuid() }));
 
             
@@ -1319,25 +1367,14 @@ WriteLiteral("\r\n                </div>\r\n\r\n                <div");
 
 WriteLiteral(" class=\"bcms-input-list-holder\"");
 
-WriteLiteral(">\r\n");
-
-WriteLiteral("                    ");
-
-            
-            #line 257 "..\..\Views\Page\EditPageProperties.cshtml"
-               Write(Html.Tooltip(PagesGlobalization.EditPageProperties_AdvancedPropertiesTab_PageJavascript_Tooltip_Description));
-
-            
-            #line default
-            #line hidden
-WriteLiteral("\r\n                    <div");
+WriteLiteral(">\r\n                    <div");
 
 WriteLiteral(" class=\"bcms-content-titles\"");
 
 WriteLiteral(">");
 
             
-            #line 258 "..\..\Views\Page\EditPageProperties.cshtml"
+            #line 272 "..\..\Views\Page\EditPageProperties.cshtml"
                                                 Write(PagesGlobalization.EditPageProperties_AdvancedPropertiesTab_PageJavascript_Title);
 
             
@@ -1348,7 +1385,18 @@ WriteLiteral("</div>\r\n");
 WriteLiteral("                    ");
 
             
-            #line 259 "..\..\Views\Page\EditPageProperties.cshtml"
+            #line 273 "..\..\Views\Page\EditPageProperties.cshtml"
+               Write(Html.Tooltip(PagesGlobalization.EditPageProperties_AdvancedPropertiesTab_PageJavascript_Tooltip_Description));
+
+            
+            #line default
+            #line hidden
+WriteLiteral("\r\n");
+
+WriteLiteral("                    ");
+
+            
+            #line 274 "..\..\Views\Page\EditPageProperties.cshtml"
                Write(Html.TextAreaFor(model => model.PageJavascript, new { @class = "bcms-field-textarea bcms-code-field bcms-code-field-javascript", id = Guid.NewGuid() }));
 
             
@@ -1357,7 +1405,7 @@ WriteLiteral("                    ");
 WriteLiteral("\r\n                </div>\r\n            </div>\r\n");
 
             
-            #line 262 "..\..\Views\Page\EditPageProperties.cshtml"
+            #line 277 "..\..\Views\Page\EditPageProperties.cshtml"
 
             if (Model.ShowTranslationsTab)
             {
@@ -1374,13 +1422,13 @@ WriteLiteral(" class=\"bcms-tab-single\"");
 WriteLiteral(">\r\n");
 
             
-            #line 266 "..\..\Views\Page\EditPageProperties.cshtml"
+            #line 281 "..\..\Views\Page\EditPageProperties.cshtml"
                     
             
             #line default
             #line hidden
             
-            #line 266 "..\..\Views\Page\EditPageProperties.cshtml"
+            #line 281 "..\..\Views\Page\EditPageProperties.cshtml"
                      if (Model.TranslationMessages != null)
                     {
                         
@@ -1388,14 +1436,14 @@ WriteLiteral(">\r\n");
             #line default
             #line hidden
             
-            #line 268 "..\..\Views\Page\EditPageProperties.cshtml"
+            #line 283 "..\..\Views\Page\EditPageProperties.cshtml"
                    Write(Html.CustomMessagesBox(Model.TranslationMessages));
 
             
             #line default
             #line hidden
             
-            #line 268 "..\..\Views\Page\EditPageProperties.cshtml"
+            #line 283 "..\..\Views\Page\EditPageProperties.cshtml"
                                                                           
                     }
 
@@ -1412,31 +1460,31 @@ WriteLiteral(" class=\"bcms-input-list-holder\"");
 
 WriteLiteral(" data-bind=\"with: translations.language\"");
 
-WriteLiteral(">\r\n");
-
-WriteLiteral("                            ");
-
-            
-            #line 272 "..\..\Views\Page\EditPageProperties.cshtml"
-                       Write(Html.Tooltip(PagesGlobalization.EditPageProperties_TranslationsTab_Language_Tooltip_Description));
-
-            
-            #line default
-            #line hidden
-WriteLiteral("\r\n                            <div");
+WriteLiteral(">\r\n                            <div");
 
 WriteLiteral(" class=\"bcms-content-titles\"");
 
 WriteLiteral(">");
 
             
-            #line 273 "..\..\Views\Page\EditPageProperties.cshtml"
+            #line 287 "..\..\Views\Page\EditPageProperties.cshtml"
                                                         Write(PagesGlobalization.EditPageProperties_TranslationsTab_Language);
 
             
             #line default
             #line hidden
-WriteLiteral("</div>\r\n                            <select");
+WriteLiteral("</div>\r\n");
+
+WriteLiteral("                            ");
+
+            
+            #line 288 "..\..\Views\Page\EditPageProperties.cshtml"
+                       Write(Html.Tooltip(PagesGlobalization.EditPageProperties_TranslationsTab_Language_Tooltip_Description));
+
+            
+            #line default
+            #line hidden
+WriteLiteral("\r\n                            <select");
 
 WriteLiteral(" class=\"bcms-global-select\"");
 
@@ -1447,36 +1495,36 @@ WriteLiteral("></select>\r\n                        </div>\r\n\r\n              
 
 WriteLiteral(" class=\"bcms-input-list-holder\"");
 
-WriteLiteral(">\r\n");
-
-WriteLiteral("                            ");
-
-            
-            #line 278 "..\..\Views\Page\EditPageProperties.cshtml"
-                       Write(Html.Tooltip(PagesGlobalization.EditPageTranslations_OtherLanguages_Tooltip));
-
-            
-            #line default
-            #line hidden
-WriteLiteral("\r\n                            <div");
+WriteLiteral(">\r\n                            <div");
 
 WriteLiteral(" class=\"bcms-content-titles\"");
 
 WriteLiteral(">");
 
             
-            #line 279 "..\..\Views\Page\EditPageProperties.cshtml"
+            #line 293 "..\..\Views\Page\EditPageProperties.cshtml"
                                                         Write(PagesGlobalization.EditPageTranslations_OtherLanguages_Title);
 
             
             #line default
             #line hidden
-WriteLiteral("</div>\r\n                        </div>\r\n                    </div>\r\n\r\n");
+WriteLiteral("</div>\r\n");
+
+WriteLiteral("                            ");
+
+            
+            #line 294 "..\..\Views\Page\EditPageProperties.cshtml"
+                       Write(Html.Tooltip(PagesGlobalization.EditPageTranslations_OtherLanguages_Tooltip));
+
+            
+            #line default
+            #line hidden
+WriteLiteral("\r\n                        </div>\r\n                    </div>\r\n\r\n");
 
 WriteLiteral("                    ");
 
             
-            #line 283 "..\..\Views\Page\EditPageProperties.cshtml"
+            #line 298 "..\..\Views\Page\EditPageProperties.cshtml"
                Write(Html.Partial("Partial/TranslationsGrid"));
 
             
@@ -1485,7 +1533,7 @@ WriteLiteral("                    ");
 WriteLiteral("\r\n                </div>\r\n");
 
             
-            #line 285 "..\..\Views\Page\EditPageProperties.cshtml"
+            #line 300 "..\..\Views\Page\EditPageProperties.cshtml"
             }
 
             
@@ -1493,21 +1541,21 @@ WriteLiteral("\r\n                </div>\r\n");
             #line default
             #line hidden
             
-            #line 287 "..\..\Views\Page\EditPageProperties.cshtml"
+            #line 302 "..\..\Views\Page\EditPageProperties.cshtml"
        Write(Html.HiddenSubmit());
 
             
             #line default
             #line hidden
             
-            #line 287 "..\..\Views\Page\EditPageProperties.cshtml"
+            #line 302 "..\..\Views\Page\EditPageProperties.cshtml"
                                 
         }
 
             
             #line default
             #line hidden
-WriteLiteral("    </div>\r\n</div>");
+WriteLiteral("    </div>\r\n</div>\r\n");
 
         }
     }

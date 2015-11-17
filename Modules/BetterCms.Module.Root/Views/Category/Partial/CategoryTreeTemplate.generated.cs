@@ -55,13 +55,14 @@ WriteLiteral(" type=\"text/html\"");
 
 WriteLiteral(" id=\"bcms-navigation-categorynode-template\"");
 
-WriteLiteral(">\r\n    <!-- ko if: !hasChildNodes() -->\r\n    <div class=\"bcms-nodes-dropzone bcms" +
-"-nodes-dropzone-active\" data-bind=\"droppableCategoryNode: \'emptyListZone\'\">\r\n   " +
-"     <div class=\"bcms-node-infotext\" data-bind=\"text: getNoDataMessage()\">");
+WriteLiteral(">\r\n    <!-- ko if: !hasChildNodes() -->\r\n    <div class=\"bcms-node-drop-zone bcms" +
+"-node-drop-zone-active\" data-bind=\"droppableCategoryNode: \'emptyListZone\'\">\r\n   " +
+"     <div class=\"bcms-node-drop-zone-text\" data-bind=\"text: getNoDataMessage()\">" +
+"");
 
             
             #line 8 "..\..\Views\Category\Partial\CategoryTreeTemplate.cshtml"
-                                                                        Write(RootGlobalization.CategoryTree_PlaceLinkHere_Message);
+                                                                              Write(RootGlobalization.CategoryTree_PlaceLinkHere_Message);
 
             
             #line default
@@ -69,17 +70,18 @@ WriteLiteral(">\r\n    <!-- ko if: !hasChildNodes() -->\r\n    <div class=\"bcms
 WriteLiteral(@"</div>
     </div>
     <!-- /ko -->
+
     <!-- ko foreach: childNodes -->
     <!-- ko if: isVisible() && !isDeleted() -->
-    <div class=""bcms-tree-holder"">
+    <div class=""bcms-node-container"">
         <!-- ko if: isFirstNode() -->
-        <div class=""bcms-nodes-dropzone""
-             data-bind=""css: { 'bcms-nodes-dropzone-active': activeZone() == 'topZone'  }, droppableCategoryNode: 'topZone'"">
-            <div class=""bcms-node-infotext"">");
+        <div class=""bcms-node-drop-zone""
+             data-bind=""css: { 'bcms-node-drop-zone-active': activeZone() == 'topZone'  }, droppableCategoryNode: 'topZone'"">
+            <div class=""bcms-node-drop-zone-text"">");
 
             
-            #line 17 "..\..\Views\Category\Partial\CategoryTreeTemplate.cshtml"
-                                       Write(RootGlobalization.CategoryTree_PlaceLinkHere_Message);
+            #line 18 "..\..\Views\Category\Partial\CategoryTreeTemplate.cshtml"
+                                             Write(RootGlobalization.CategoryTree_PlaceLinkHere_Message);
 
             
             #line default
@@ -88,25 +90,39 @@ WriteLiteral(@"</div>
         </div>
         <!-- /ko -->
         <div data-bind=""draggableCategoryNode: $parentContext.$index, style: { zIndex: !isBeingDragged() ? '0' : '9999' }"">
-            <div class=""bcms-placement-node"" data-bind=""
+            <div class=""bcms-node-box-container"" data-bind=""
                         attr: { id: containerId },
-                        css: { 'bcms-placement-node-drag': isBeingDragged(), 'bcms-placement-node-edit': isActive(), 'bcms-placement-one-active': !isBeingDragged() && superDraggable() },
-                        style: { height: getNodeHeight() }"">
+                        css: { 'bcms-node-box-drag': isBeingDragged(), 'bcms-node-box-edit': isActive(), 'bcms-node-box-active': !isBeingDragged() && superDraggable() }"">
+
                 <!-- ko if: hasChildNodes() -->
-                <a class=""bcms-expand-collapse-node"" data-bind=""click: $root.toggleNodeExpand, css: { 'bcms-expanded-nodes': isExpanded() }"">&nbsp;</a>
+                <div class=""bcms-node-expander"" data-bind=""click: $root.toggleNodeExpand, css: { 'bcms-node-expanded': isExpanded() }"">&nbsp;</div>
                 <!-- /ko -->
-                <div class=""bcms-node-info"" data-bind=""droppableCategoryNode: 'middleZone'"">
-                    <div class=""bcms-placement-title"" data-bind=""text: title""></div>
+
+                <div class=""bcms-node-box-info"" data-bind=""droppableCategoryNode: 'middleZone'"">
+                    <div class=""bcms-node-box-title"" data-bind=""text: title""></div>
+                    <!-- ko if: getCategoryTree().settings.canEditNode -->
+                    <div class=""bcms-action-edit"" data-bind=""click: startEditCategoryTreeNode"">");
+
+            
+            #line 33 "..\..\Views\Category\Partial\CategoryTreeTemplate.cshtml"
+                                                                                          Write(RootGlobalization.Button_Edit);
+
+            
+            #line default
+            #line hidden
+WriteLiteral(@"</div>
+                    <!-- /ko -->
                 </div>
+
                 <!-- ko if: getCategoryTree().settings.canEditNode && isActive() -->
-                <div class=""bcms-edit-node"">
-                    <div class=""bcms-edit-node-holder"">
+                <div class=""bcms-node-editable-box"">
+                    <div class=""bcms-node-edit-holder"">
 ");
 
 WriteLiteral("                        ");
 
             
-            #line 34 "..\..\Views\Category\Partial\CategoryTreeTemplate.cshtml"
+            #line 40 "..\..\Views\Category\Partial\CategoryTreeTemplate.cshtml"
                    Write(Html.Tooltip(RootGlobalization.CategoryTree_NodeEdit_Title_Tooltip_Message));
 
             
@@ -117,7 +133,7 @@ WriteLiteral("\r\n                        <div class=\"bcms-field-wrapper\">\r\n
 WriteLiteral("                            ");
 
             
-            #line 36 "..\..\Views\Category\Partial\CategoryTreeTemplate.cshtml"
+            #line 42 "..\..\Views\Category\Partial\CategoryTreeTemplate.cshtml"
                        Write(Html.TextBoxFor(m => m.Title, new
                             {
                                 data_bind = "value: title, valueUpdate: 'afterkeydown', enterPress: saveCategoryTreeNodeWithValidation, escPress: cancelEditCategoryTreeNode, hasfocus: isActive()",
@@ -133,52 +149,52 @@ WriteLiteral("\r\n");
 WriteLiteral("                            ");
 
             
-            #line 42 "..\..\Views\Category\Partial\CategoryTreeTemplate.cshtml"
+            #line 48 "..\..\Views\Category\Partial\CategoryTreeTemplate.cshtml"
                        Write(Html.BcmsValidationMessageFor(m => m.Title));
 
             
             #line default
             #line hidden
-WriteLiteral("\r\n                        </div>\r\n                        <div class=\"bcms-btn-sm" +
-"all\" data-bind=\"click: saveCategoryTreeNodeWithValidation, text: getCategoryTree" +
-"().settings.nodeSaveButtonTitle\">");
+WriteLiteral("\r\n                        </div>\r\n                        <div class=\"bcms-btn-pr" +
+"imary\" data-bind=\"click: saveCategoryTreeNodeWithValidation, text: getCategoryTr" +
+"ee().settings.nodeSaveButtonTitle\">");
 
             
-            #line 44 "..\..\Views\Category\Partial\CategoryTreeTemplate.cshtml"
-                                                                                                                                                           Write(RootGlobalization.Button_Ok);
-
-            
-            #line default
-            #line hidden
-WriteLiteral("</div>\r\n                        <div class=\"bcms-btn-links-small\" data-bind=\"clic" +
-"k: cancelEditCategoryTreeNode\">");
-
-            
-            #line 45 "..\..\Views\Category\Partial\CategoryTreeTemplate.cshtml"
-                                                                                                   Write(RootGlobalization.Button_Cancel);
+            #line 50 "..\..\Views\Category\Partial\CategoryTreeTemplate.cshtml"
+                                                                                                                                                             Write(RootGlobalization.Button_Ok);
 
             
             #line default
             #line hidden
-WriteLiteral("</div>\r\n                    </div>\r\n                    <!-- ko if: getCategoryTr" +
-"ee().showMacros -->\r\n                    <div class=\"bcms-edit-node-holder\">\r\n");
+WriteLiteral("</div>\r\n                        <div class=\"bcms-btn-cancel\" data-bind=\"click: ca" +
+"ncelEditCategoryTreeNode\">");
+
+            
+            #line 51 "..\..\Views\Category\Partial\CategoryTreeTemplate.cshtml"
+                                                                                              Write(RootGlobalization.Button_Cancel);
+
+            
+            #line default
+            #line hidden
+WriteLiteral("</div>\r\n                    </div>\r\n\r\n                    <!-- ko if: getCategory" +
+"Tree().showMacros -->\r\n                    <div class=\"bcms-node-edit-holder\">\r\n" +
+"");
 
 WriteLiteral("                        ");
 
             
-            #line 49 "..\..\Views\Category\Partial\CategoryTreeTemplate.cshtml"
+            #line 56 "..\..\Views\Category\Partial\CategoryTreeTemplate.cshtml"
                    Write(Html.Tooltip(RootGlobalization.CategoryTree_NodeEdit_Macro_Tooltip_Message));
 
             
             #line default
             #line hidden
-WriteLiteral("\r\n                        <div class=\"bcms-custom-input-box\" style=\"width: 100%;\"" +
-">\r\n");
+WriteLiteral("\r\n                        <div class=\"bcms-field-wrapper\">\r\n");
 
 WriteLiteral("                            ");
 
             
-            #line 51 "..\..\Views\Category\Partial\CategoryTreeTemplate.cshtml"
+            #line 58 "..\..\Views\Category\Partial\CategoryTreeTemplate.cshtml"
                        Write(Html.TextBoxFor(m => m.Macro, new
                             {
                                 data_bind = "value: macro, valueUpdate: 'afterkeydown', enterPress: saveCategoryTreeNodeWithValidation, escPress: cancelEditCategoryTreeNode",
@@ -195,7 +211,7 @@ WriteLiteral("\r\n");
 WriteLiteral("                            ");
 
             
-            #line 58 "..\..\Views\Category\Partial\CategoryTreeTemplate.cshtml"
+            #line 65 "..\..\Views\Category\Partial\CategoryTreeTemplate.cshtml"
                        Write(Html.BcmsValidationMessageFor(m => m.Macro));
 
             
@@ -207,40 +223,31 @@ WriteLiteral(@"
                     <!-- /ko -->
                 </div>
                 <!-- /ko -->
-                <div class=""bcms-node-controls"">
-                    <!-- ko if: getCategoryTree().settings.canEditNode -->
-                    <a class=""bcms-icn-edit"" data-bind=""click: startEditCategoryTreeNode"">");
+
+                <!-- ko if: getCategoryTree().settings.canDeleteNode -->
+                <div class=""bcms-node-delete-box"">
+                    <div class=""bcms-action-delete"" data-bind=""click: deleteCategoryTreeNode"">");
 
             
-            #line 66 "..\..\Views\Category\Partial\CategoryTreeTemplate.cshtml"
-                                                                                     Write(RootGlobalization.Button_Edit);
-
-            
-            #line default
-            #line hidden
-WriteLiteral("</a>\r\n                    <!-- /ko -->\r\n                    <!-- ko if: getCatego" +
-"ryTree().settings.canDeleteNode -->\r\n                    <a class=\"bcms-icn-dele" +
-"te\" data-bind=\"click: deleteCategoryTreeNode\">");
-
-            
-            #line 69 "..\..\Views\Category\Partial\CategoryTreeTemplate.cshtml"
-                                                                                    Write(RootGlobalization.Button_Delete);
+            #line 74 "..\..\Views\Category\Partial\CategoryTreeTemplate.cshtml"
+                                                                                         Write(RootGlobalization.Button_Delete);
 
             
             #line default
             #line hidden
-WriteLiteral(@"</a>
-                    <!-- /ko -->
+WriteLiteral(@"</div>
                 </div>
+                <!-- /ko -->
             </div>
+
             <!-- ko if: activeZone() == 'middleZone' -->
             <div class=""bcms-zone-holder"">
-                <div class=""bcms-nodes-dropzone bcms-nodes-dropzone-active"">
-                    <div class=""bcms-node-infotext"">");
+                <div class=""bcms-node-drop-zone bcms-node-drop-zone-active"">
+                    <div class=""bcms-node-drop-zone-text"">");
 
             
-            #line 76 "..\..\Views\Category\Partial\CategoryTreeTemplate.cshtml"
-                                               Write(RootGlobalization.CategoryTree_PlaceLinkHere_Message);
+            #line 82 "..\..\Views\Category\Partial\CategoryTreeTemplate.cshtml"
+                                                     Write(RootGlobalization.CategoryTree_PlaceLinkHere_Message);
 
             
             #line default
@@ -249,19 +256,21 @@ WriteLiteral(@"</div>
                 </div>
             </div>
             <!-- /ko -->
+
             <!-- ko if: isExpanded() && hasChildNodes() -->
             <div class=""bcms-zone-holder"" data-bind=""template: { name: 'bcms-navigation-categorynode-template' }""></div>
             <!-- /ko -->
+
             <!-- ko if: !isBeingDragged() -->
-            <div class=""bcms-nodes-dropzone""
-                 data-bind=""css: { 'bcms-nodes-dropzone-active': activeZone() == 'bottomZone' },
+            <div class=""bcms-node-drop-zone""
+                 data-bind=""css: { 'bcms-node-drop-zone-active': activeZone() == 'bottomZone' },
                             style: { paddingBottom: !(parentNode().parentNode) && isLastNode() ? '80px' : '' },
                             droppableCategoryNode: 'bottomZone'"">
-                <div class=""bcms-node-infotext"">");
+                <div class=""bcms-node-drop-zone-text"">");
 
             
-            #line 88 "..\..\Views\Category\Partial\CategoryTreeTemplate.cshtml"
-                                           Write(RootGlobalization.CategoryTree_PlaceLinkHere_Message);
+            #line 96 "..\..\Views\Category\Partial\CategoryTreeTemplate.cshtml"
+                                                 Write(RootGlobalization.CategoryTree_PlaceLinkHere_Message);
 
             
             #line default

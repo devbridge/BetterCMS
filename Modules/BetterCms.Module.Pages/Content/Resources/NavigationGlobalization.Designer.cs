@@ -151,7 +151,7 @@ namespace BetterCms.Module.Pages.Content.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Add New Site Map.
+        ///   Looks up a localized string similar to Add New Menu.
         /// </summary>
         public static string Sitemap_CreatorDialog_Title {
             get {
@@ -160,7 +160,7 @@ namespace BetterCms.Module.Pages.Content.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Are you sure you want to delete the site map?.
+        ///   Looks up a localized string similar to Are you sure you want to delete the menu?.
         /// </summary>
         public static string Sitemap_Delete_Confirmation_Message {
             get {
@@ -286,7 +286,7 @@ namespace BetterCms.Module.Pages.Content.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Edit Site Map.
+        ///   Looks up a localized string similar to Edit Menu.
         /// </summary>
         public static string Sitemap_EditorDialog_Title {
             get {
@@ -304,7 +304,7 @@ namespace BetterCms.Module.Pages.Content.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Site Map History.
+        ///   Looks up a localized string similar to Menu History.
         /// </summary>
         public static string Sitemap_HistoryDialog_Title {
             get {
@@ -358,7 +358,7 @@ namespace BetterCms.Module.Pages.Content.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Edit the title of the page as you would like it displayed in the site map..
+        ///   Looks up a localized string similar to Edit the title of the page as you would like it displayed in the menu..
         /// </summary>
         public static string Sitemap_NodeEdit_Title_Tooltip_Message {
             get {
@@ -376,7 +376,7 @@ namespace BetterCms.Module.Pages.Content.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Site map created successfully..
+        ///   Looks up a localized string similar to Menu created successfully..
         /// </summary>
         public static string Sitemap_SitemapCreatedSuccessfully_Message {
             get {
@@ -385,7 +385,7 @@ namespace BetterCms.Module.Pages.Content.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Site map deleted successfully..
+        ///   Looks up a localized string similar to Menu deleted successfully..
         /// </summary>
         public static string Sitemap_SitemapDeletedSuccessfully_Message {
             get {
@@ -394,7 +394,7 @@ namespace BetterCms.Module.Pages.Content.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Site map has no nodes..
+        ///   Looks up a localized string similar to Menu has no nodes..
         /// </summary>
         public static string Sitemap_SitemapIsEmpty_Message {
             get {
@@ -430,7 +430,7 @@ namespace BetterCms.Module.Pages.Content.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Site Map Title.
+        ///   Looks up a localized string similar to Menu Title.
         /// </summary>
         public static string SitemapHistory_Column_Title {
             get {
@@ -457,7 +457,7 @@ namespace BetterCms.Module.Pages.Content.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Site Maps.
+        ///   Looks up a localized string similar to Menus.
         /// </summary>
         public static string SiteSettings_SitemapMenuItem {
             get {
@@ -484,7 +484,7 @@ namespace BetterCms.Module.Pages.Content.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Site Maps.
+        ///   Looks up a localized string similar to Menus.
         /// </summary>
         public static string SiteSettings_Sitemaps_Title {
             get {

@@ -1,5 +1,5 @@
 $content-headers: (
-                ('region-header', $blue-main, 16px, $bcms-manager-region),
+                ('region-header', $text-blue, 16px, $bcms-manager-region),
                 ('content-header', $dark, 14px, $bcms-manager-content)
 );
 $contents-tree-controls: (
@@ -22,7 +22,7 @@ $contents-tree-controls: (
 .bcms-contents-tree {
     &-region {
         background-color: $white;
-        border: $border-overlay;
+        border: $border-thin-blue;
         box-sizing: border-box;
         margin-top: 15px;
         min-height: 48px;
@@ -67,12 +67,12 @@ $contents-tree-controls: (
         @include transition(background-color 150ms);
         @include position(absolute, -15px -15px null null);
         @include size(30px 26px);
-        background: $blue-main url($bcms-add-content) no-repeat center;
+        background: $bg-blue url($bcms-add-content) no-repeat center;
         cursor: pointer;
 
         &:hover,
         &.bcms-active {
-            background-color: darken($blue-main, 10%);
+            background-color: darken($bg-blue, 10%);
         }
     }
 
@@ -87,14 +87,14 @@ $contents-tree-controls: (
 
     &-controls {
         @include transition(all 200ms);
-        background-color: darken($blue-main, 10%);
+        background-color: darken($bg-blue, 10%);
         color: $white;
         line-height: 18px;
         padding: 5px 20px;
         white-space: nowrap;
 
         &:hover {
-            background-color: darken($gray-l50, 10%);
+            background-color: darken($gray-smoke50, 10%);
         }
     }
 
@@ -108,7 +108,7 @@ $contents-tree-controls: (
         // position: relative;
 
         &.bcms-contents-hover {
-            background-color: $gray-l30;
+            background-color: $gray-smoke30;
             cursor: move;
         }
     }
@@ -160,7 +160,7 @@ $contents-tree-controls: (
 
 .bcms-dragging {
     @include clearfix();
-    background-color: $gray-l30;
+    background-color: $gray-smoke30;
     cursor: move;
     min-height: 50px;
     opacity: .8;
@@ -178,9 +178,9 @@ $contents-tree-controls: (
 .bcms-draggable-region {
     @include size(100% 39px);
     background: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAQAAAAECAIAAAFRlDm/AAAAHUlEQVQI12P4//8/AxRDqQcPHjAAMUIQyoFQEAAA0/UuXeg1e3EAAAAASUVORK5CYII=') repeat 0 0;
-    border: $border-overlay;
+    border: $border-thin-blue;
     box-sizing: border-box;
-    color: $blue-main;
+    color: $text-blue;
     font-size: 12px;
     font-weight: 700;
     line-height: 39px;

@@ -43,33 +43,33 @@ namespace ASP
         }
         public override void Execute()
         {
-WriteLiteral("\n<script");
+WriteLiteral("\r\n<script");
 
 WriteLiteral(" type=\"text/html\"");
 
 WriteLiteral(" id=\"bcms-modal-info-template\"");
 
-WriteLiteral(">\n    <div class=\"bcms-modal-alert\">\r\n        <div class=\"bcms-popinfo-frame\" tab" +
-"index=\"-1\">\r\n            <a class=\"bcms-btn-close bcms-js-btn-close\">");
+WriteLiteral(">\r\n    <div class=\"bcms-modal-alert\">\r\n        <div class=\"bcms-popinfo-frame\" ta" +
+"bindex=\"-1\">\r\n            <div class=\"bcms-btn-close bcms-js-btn-close\">");
 
             
             #line 6 "..\..\Views\Shared\Partial\Info.cshtml"
-                                                   Write(RootGlobalization.Button_Close);
+                                                     Write(RootGlobalization.Button_Close);
 
             
             #line default
             #line hidden
-WriteLiteral("</a>\r\n            <h4>");
+WriteLiteral("</div>\r\n            <div class=\"bcms-message-titles\">");
 
             
             #line 7 "..\..\Views\Shared\Partial\Info.cshtml"
-           Write(RootGlobalization.Info_DefaultTitle);
+                                        Write(RootGlobalization.Info_DefaultTitle);
 
             
             #line default
             #line hidden
-WriteLiteral(@"</h4>
-            <p></p>
+WriteLiteral(@"</div>
+            <div class=""bcms-message-description""></div>
             <div class=""bcms-success-buttons-holder"" data-bind=""foreach: buttons"">
                 <!-- ko if: disabled() === false -->
                 <div data-bind=""text: title, css: css, click: click, visible: !disabled()""></div>

@@ -72,8 +72,8 @@
                 @if (Model.CanEditItems)
                 {
                     <!-- ko if: isActive() -->
-                    <div class="bcms-btn-small" data-bind="click: onSave">@Model.SaveButtonTitle</div>
-                    <div class="bcms-btn-links-small" data-bind="event : {mousedown: onCancelEdit}">@RootGlobalization.Button_Cancel</div>
+                    <div class="bcms-btn-primary" data-bind="click: onSave">@Model.SaveButtonTitle</div>
+                    <div class="bcms-btn-cancel" data-bind="event : {mousedown: onCancelEdit}">@RootGlobalization.Button_Cancel</div>
                     <!-- /ko -->
                 }
                 @if (!Model.CanDeleteItems && !Model.CanEditItems)
@@ -100,7 +100,7 @@
         {
             if (!string.IsNullOrWhiteSpace(column.HiddenFieldName))
             {
-                <input type="hidden" name="" value="" data-bind="valueBinder: @(column.ValueBind)
+                <input type="hidden" name="" value="" data-bind="value: @(column.ValueBind)
                     , attr: {name: hiddenFieldName('@(column.HiddenFieldName)', $index()) }">
             }
         }

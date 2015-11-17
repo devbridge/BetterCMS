@@ -7,7 +7,7 @@ bettercms.define('bcms.media.upload', ['bcms.jquery', 'bcms', 'bcms.dynamicConte
 
         var mediaUpload = {},
             selectors = {
-                dragZone: '#bcms-files-dropzone',
+                dragZone: '#bcms-files-drop-zone',
                 messageBox: "#bcms-multi-file-upload-messages",
                 fileUploadingContext: '#bcms-media-uploads',
                 fileUploadingMasterForm: '#SaveForm',
@@ -21,7 +21,7 @@ bettercms.define('bcms.media.upload', ['bcms.jquery', 'bcms', 'bcms.dynamicConte
                 overrideSelect: "bcms-media-reupload-override"
             },
             classes = {
-                dragZoneActive: 'bcms-dropzone-active'
+                dragZoneActive: 'bcms-file-drop-zone-active'
             },
             links = {
                 loadUploadFilesDialogUrl: null,
@@ -500,7 +500,7 @@ bettercms.define('bcms.media.upload', ['bcms.jquery', 'bcms', 'bcms.dynamicConte
 
             html5Upload.initialize({
                 uploadUrl: links.uploadFileToServerUrl,
-                dropContainer: document.getElementById('bcms-files-dropzone'),
+                dropContainer: document.getElementById('bcms-files-drop-zone'),
                 inputField: document.getElementById('bcms-files-upload-input'),
                 key: 'File',
                 data: { rootFolderId: options.rootFolderId, rootFolderType: options.rootFolderType, reuploadMediaId: options.reuploadMediaId },

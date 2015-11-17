@@ -213,31 +213,31 @@ WriteLiteral(">\r\n                    <div>\r\n                        <div");
 
 WriteLiteral(" class=\"bcms-input-list-holder\"");
 
-WriteLiteral(">\r\n");
-
-WriteLiteral("                            ");
-
-            
-            #line 39 "..\..\Views\Widgets\EditHtmlContentWidget.cshtml"
-                       Write(Html.Tooltip(PagesGlobalization.HtmlContentWidget_ContentName_Tooltip_Description));
-
-            
-            #line default
-            #line hidden
-WriteLiteral("\r\n                            <div");
+WriteLiteral(">\r\n                            <div");
 
 WriteLiteral(" class=\"bcms-content-titles\"");
 
 WriteLiteral(">");
 
             
-            #line 40 "..\..\Views\Widgets\EditHtmlContentWidget.cshtml"
+            #line 39 "..\..\Views\Widgets\EditHtmlContentWidget.cshtml"
                                                         Write(PagesGlobalization.HtmlContentWidget_ContentName_Title);
 
             
             #line default
             #line hidden
-WriteLiteral("</div>\r\n                            <div");
+WriteLiteral("</div>\r\n");
+
+WriteLiteral("                            ");
+
+            
+            #line 40 "..\..\Views\Widgets\EditHtmlContentWidget.cshtml"
+                       Write(Html.Tooltip(PagesGlobalization.HtmlContentWidget_ContentName_Tooltip_Description));
+
+            
+            #line default
+            #line hidden
+WriteLiteral("\r\n                            <div");
 
 WriteLiteral(" class=\"bcms-field-wrapper\"");
 
@@ -267,8 +267,6 @@ WriteLiteral("\r\n                            </div>\r\n                        
 "         </div>\r\n\r\n                    <div>\r\n                        <div");
 
 WriteLiteral(" class=\"bcms-input-list-holder\"");
-
-WriteLiteral(" data-bind=\"with: categories\"");
 
 WriteLiteral(">\r\n");
 

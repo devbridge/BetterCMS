@@ -1,6 +1,24 @@
+//module buttons colors
+$bg-button-primary: #0d7be3;
+$bg-button-secondary: #3e465c;
+$bg-button-tertiary: #0d7be3;
+$bg-button-quaternary: #286baa;
+
+//module buttons borders
+$border-button-primary: 1px solid #0d67bc;
+$border-button-secondary: 1px solid #798093;
+$border-button-tertiary: 1px solid #44a0f8;
+$border-button-quaternary: 1px solid #1e2434;
+
+$global-button-structure: (
+                ('primary', $bg-button-primary, $border-button-primary),
+                ('secondary', $bg-button-secondary, $border-button-secondary),
+                ('tertiary', $bg-button-tertiary, $border-button-tertiary),
+                ('quaternary', $bg-button-quaternary, $border-button-quaternary)
+);
+
 %btn-frame {
     @include vertical-align();
-    @include transition(background-color 200ms, color 200ms);
     box-sizing: border-box;
     cursor: pointer;
     font-family: $font-base-family;
@@ -8,82 +26,66 @@
     text-align: center;
 }
 
-%btn-extender {
+%global-button-structure {
     @extend %btn-frame;
-    border: 0;
-    text-transform: uppercase;
-}
-
-%btn-links-extender {
-    color: $blue-main;
-    margin: 0 20px 0 0;
-
-    &:hover {
-        color: darken($blue-main, 10%);
-    }
+    @include transition(background-color 200ms);
+    color: $white;
+    font-size: 14px;
+    height: 36px;
+    line-height: 34px;
+    padding: 0 12px;
 }
 
 .bcms-btn {
     &-main {
-        @extend %btn-extender;
-        background-color: $blue-main;
+        @extend %btn-frame;
+        @include transition(background-color 200ms, color 200ms);
+        background-color: $bg-blue;
         color: $white;
-        font-size: 15px;
+        font-size: 16px;
         line-height: $form-element-height;
         padding: 0 20px;
+        text-transform: uppercase;
 
         &:hover {
-            background-color: darken($blue-main, 10%);
+            background-color: darken($bg-blue, 10%);
         }
     }
 
-    &-small {
-        @extend %btn-extender;
-        background-color: $blue-main;
-        color: $white;
-        font-size: 12px;
-        line-height: 30px;
-        padding: 0 10px;
-
-        &.bcms-btn-gray {
-            background-color: $gray-l45;
-        }
-    }
-
-    &-tertiary {
+    &-selection {
         @extend %btn-frame;
+        @include transition(background-color 200ms, color 200ms);
         background-color: $white;
-        border: $border-nav-bottom;
-        color: $blue-main;
+        border: $border-thin-smoke;
+        color: $text-blue;
         font-size: 12px;
         height: 28px;
         line-height: 26px;
         padding: 0 20px;
     }
 
-    &-grid {
-        @extend %btn-extender;
-        background-color: $gray-l45;
-        color: $white;
-        font-size: 14px;
-        font-weight: 600;
-        line-height: 36px;
-        padding: 0 15px;
+    &-cancel {
+        @include transition(color 200ms);
+        @include vertical-align();
+        color: $text-blue;
+        cursor: pointer;
+        font: {
+            size: 14px;
+            weight: 400;
+        }
+        margin-left: 10px;
+
+        &:hover {
+            color: darken($text-blue, 10%);
+        }
     }
 
-    &-links-main {
-        @extend %btn-extender;
-        @extend %btn-links-extender;
-        font-size: 12px;
-        line-height: $form-element-height;
-    }
-
-    &-links-small {
-        @extend %btn-extender;
-        @extend %btn-links-extender;
-        font-size: 12px;
-        line-height: 30px;
-        margin: 0;
+    @each $name, $bg-color, $border in $global-button-structure {
+        &-#{$name} {
+            @extend %global-button-structure;
+            background-color: $bg-color;
+            border: $border;
+        }
     }
 
     &-search {
@@ -98,4 +100,9 @@
     &-close {
         @include close-button($icon: $bcms-close, $position: 15px 15px null null);
     }
+}
+
+.bcms-success-buttons-holder {
+    @include clearfix();
+    margin-top: 25px;
 }

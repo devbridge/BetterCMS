@@ -157,10 +157,10 @@
     <value>Create a unique page URL for your new page.</value>
   </data>
   <data name="AddNewPage_Template" xml:space="preserve">
-    <value>Select page layout</value>
+    <value>Select template</value>
   </data>
   <data name="AddNewPage_Template_InfoMessage_Text" xml:space="preserve">
-    <value>&lt;b&gt;The layout of this page is based on a template.&lt;/b&gt; Select a template from options below. If you need an additional template contact your system administrator to create a custom template.</value>
+    <value>The layout of this page is based on a template. Select a template from options below, or contact your system administrator to create a custom template.</value>
   </data>
   <data name="AddNewPage_Template_Tooltip_Description" xml:space="preserve">
     <value>Select the template you would like to use for your new page.</value>
@@ -394,7 +394,7 @@
     <value>Basic Properties</value>
   </data>
   <data name="EditPageProperties_LayoutPropertiesTab_InfoMessage" xml:space="preserve">
-    <value>&lt;b&gt;The layout of this page is based on a template.&lt;/b&gt; Select a template from options below. &#x3;If you need an additional template contact your system administrator to create a custom template.</value>
+    <value>The layout of this page is based on a template. Select a template from options below, or contact your system administrator to create a custom template.</value>
   </data>
   <data name="EditPageProperties_LayoutPropertiesTab_Layout_Tooltip_Description" xml:space="preserve">
     <value>Change the way content is displayed on this page by selecting a different template.</value>
@@ -757,7 +757,7 @@
     <value>Preview</value>
   </data>
   <data name="SiteSettings_TemplatesMenuItem" xml:space="preserve">
-    <value>Page layouts</value>
+    <value>Templates</value>
   </data>
   <data name="SiteSettings_Templates_NameColumn" xml:space="preserve">
     <value>Name</value>
@@ -871,7 +871,7 @@
     <value>Paste custom JavaScript code that will be executed only on this page.</value>
   </data>
   <data name="EditPageProperties_LayoutPropertiesTab_ChooseLayout_Title" xml:space="preserve">
-    <value>Choose Page Layout</value>
+    <value>Choose Template</value>
   </data>
   <data name="ContentHistory_Restore_ConfirmationMessage" xml:space="preserve">
     <value>Are you sure you want to restore to older version? Restored content will be immediately published.</value>
@@ -1111,52 +1111,52 @@
     <value>Use default</value>
   </data>
   <data name="SavePagePropertiesCommand_LayoutAndMasterIsSelected_Message" xml:space="preserve">
-    <value>Only one of master page and layout can be selected.</value>
+    <value>Only one template can be selected.</value>
   </data>
   <data name="SavePagePropertiesCommand_NoLayoutOrMasterSelected_Message" xml:space="preserve">
-    <value>Template or master page should be selected for page.</value>
+    <value>Template should be selected for page.</value>
   </data>
   <data name="SavePagePropertiesCommand_SelectedMasterIsChildPage_Message" xml:space="preserve">
-    <value>Selected master page is the current page or is a child of it.</value>
+    <value>Selected template is the current page or is a child of it.</value>
   </data>
   <data name="SavePagePropertiesCommand_SelectedMasterIsCurrentPage_Message" xml:space="preserve">
-    <value>Selected master page is the current page.</value>
+    <value>Selected template is the current page.</value>
   </data>
   <data name="EditPageProperties_PageConversionToMaster_ConfirmationMessage" xml:space="preserve">
-    <value>You are about to convert the page to Master Page. Master page is not accessible from the outside and is intended to be used as a template for other pages.&lt;br/&gt;Proceed?</value>
+    <value>You are about to convert the page to template. Template is not accessible from the outside and is intended to be used as a layout for other pages.&lt;br/&gt;Proceed?</value>
   </data>
   <data name="SaveContent_DynamicRegionsAreNotAllowed_Message" xml:space="preserve">
     <value>Page is not a master, so dynamic regions are not allowed.</value>
   </data>
   <data name="DeletePageCommand_MasterPageHasChildren_Message" xml:space="preserve">
-    <value>Cannot delete page. Other pages are using current page as a master page.</value>
+    <value>Cannot delete template. Other pages are using it.</value>
   </data>
   <data name="SiteSettings_MasterPages_Title" xml:space="preserve">
-    <value>Master Pages</value>
+    <value>Templates</value>
   </data>
   <data name="AddNewMasterPage_PageTitle" xml:space="preserve">
-    <value>Add New Master Page</value>
+    <value>Add New Template</value>
   </data>
   <data name="MasterPage_InfoMessage" xml:space="preserve">
-    <value>This page is a master page.</value>
+    <value>This page is a template.</value>
   </data>
   <data name="SiteSettings_Pages_FilterIncludeMasterPages" xml:space="preserve">
-    <value>Include master pages</value>
+    <value>Include templates</value>
   </data>
   <data name="EditPageProperties_EditMasterPage_Title" xml:space="preserve">
-    <value>Edit Master Page Properties</value>
+    <value>Edit Template Properties</value>
   </data>
   <data name="Sidebar_EditMasterPagePropertiesButtonTitle" xml:space="preserve">
-    <value>Edit master page properties</value>
+    <value>Edit template properties</value>
   </data>
   <data name="ClonePage_Dialog_AsMasterPage" xml:space="preserve">
-    <value>Clone the current page as a master page</value>
+    <value>Clone the current page as a template</value>
   </data>
   <data name="ClonePage_Dialog_AsMasterPage_Title" xml:space="preserve">
-    <value>Create Master Page</value>
+    <value>Create Template</value>
   </data>
   <data name="ClonePage_Dialog_AsMasterPage_Tooltip_Description" xml:space="preserve">
-    <value>Create new master page from the current page.</value>
+    <value>Create new template from the current page.</value>
   </data>
   <data name="DeletePageContent_ContentHasChildrenContents_DeleteConfirmationMessage" xml:space="preserve">
     <value>You are trying to delete content which contains dynamic regions. There are some children pages, which have contents created within these regions. If you delete this content, children page contens will be deleted also and there will be no possibility to restore them. &lt;br /&gt;&lt;br /&gt;Are you sure you want to continue and lose all the children contents?</value>
@@ -1279,7 +1279,7 @@
     <value>Current page translations - another pages with different language, which are associated with current page.</value>
   </data>
   <data name="SavePagePropertiesCommand_PageTranslationsIsMasterPage_Message" xml:space="preserve">
-    <value>Master pages cannot be assigned as translation.</value>
+    <value>Templates cannot be assigned as translation.</value>
   </data>
   <data name="ClonePageWithLanguage_NoLanguagesCreated_Message" xml:space="preserve">
     <value>There are no languages created yet. To create a language, go to Site Settings -&gt; Languages or contact your system administrator.</value>
@@ -1294,7 +1294,7 @@
     <value>Type page title here ...</value>
   </data>
   <data name="DeletePage_SitemapSkipped_Message" xml:space="preserve">
-    <value>The page was not removed from some site map or maps, because you do not have permission to modified it or them.</value>
+    <value>The page was not removed from one or more menus, because you do not have permission to modified it or them.</value>
   </data>
   <data name="PageStatusFilterType_ContainingUnpublishedContents" xml:space="preserve">
     <value>Containing unpublished contents</value>
@@ -1318,7 +1318,7 @@
     <value>By page status</value>
   </data>
   <data name="SiteSettings_Pages_FilterByLayout" xml:space="preserve">
-    <value>By Layout</value>
+    <value>By Template</value>
   </data>
   <data name="SiteSettings_MasterPages_Usage" xml:space="preserve">
     <value>Find usages</value>
@@ -1363,7 +1363,7 @@
     <value>Select protocol forcing if it is required that page must be server only via one protocol.&lt;br/&gt;&lt;strong&gt;Warning:&lt;/strong&gt; selected forced protocol must be properly configured in website hosting environment.</value>
   </data>
   <data name="WidgetUsages_Type_MasterPage" xml:space="preserve">
-    <value>Master page</value>
+    <value>Template</value>
   </data>
   <data name="SaveWidget_ContentHasChildrenWidgetWithDynamicContents_ConfirmationMessage" xml:space="preserve">
     <value>You are trying to remove child widget which has children with dynamic regions. There are some children pages, which have contents created within these regions. If you delete this region, children page contents will be deleted also. &lt;br /&gt;&lt;br /&gt;Are you sure you want to continue?</value>
@@ -1387,7 +1387,7 @@
     <value>Content</value>
   </data>
   <data name="EditPageProperties_ChangedLayoutMissingContent_Confirmation_Message" xml:space="preserve">
-    <value>You have selected a new page layout, which structure is not the same as previous layout and some page content will be missing. Missing content can be found in Page Structure Manager.&lt;/br&gt;Do you really want to change current layout?</value>
+    <value>For page layout you have selected template, which structure is not the same as previous template and some page content will be missing. Missing content can be found in Page Structure Manager.&lt;/br&gt;Do you really want to change current page template?</value>
   </data>
   <data name="CategoryTree_Button_CollapseAll" xml:space="preserve">
     <value>Collapse All</value>

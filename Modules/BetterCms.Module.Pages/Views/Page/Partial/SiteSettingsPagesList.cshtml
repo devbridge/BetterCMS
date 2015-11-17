@@ -67,9 +67,6 @@
     //        };
     }
 
-    @Html.MessagesBox()
-
-    <div class="bcms-window-settings">
         <div class="bcms-top-block-holder">
             @if ((ViewContext.Controller as CmsControllerBase).SecurityService.IsAuthorized(RootModuleConstants.UserRoles.EditContent))
             {
@@ -98,7 +95,6 @@
         @*        @Html.Partial(RootModuleConstants.EditableGridTemplate, gridViewModel)*@
         
         @*        @Html.Grid(Model.Items).Sort(Model.GridOptions).Columns(columns).Attributes(@class => "bcms-tables").RenderUsing(new EditableHtmlTableGridRenderer<SiteSettingPageViewModel>())*@
-    </div>
 
     <script type="text/html" id="bcms-pages-list-row-template">
     @*        @Html.Grid(new List<SiteSettingPageViewModel> { new SiteSettingPageViewModel() }).Columns(columns).Attributes(@class => "bcms-tables").RenderUsing(new HtmlTableGridSingleRowRenderer<SiteSettingPageViewModel>())*@

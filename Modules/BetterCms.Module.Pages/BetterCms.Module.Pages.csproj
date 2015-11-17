@@ -803,9 +803,7 @@
       <LastGenOutput>PagesGlobalization.Designer.cs</LastGenOutput>
     </EmbeddedResource>
     <EmbeddedResource Include="Content\Styles\Images\icn-zoom.png" />
-    <EmbeddedResource Include="Content\Styles\Images\loading.gif" />
     <EmbeddedResource Include="Content\Styles\Images\logo.png" />
-    <EmbeddedResource Include="Content\Styles\Images\sprite-pages-1.png" />
     <EmbeddedResource Include="Content\Styles\Images\sprite-pages-2.png" />
   </ItemGroup>
   <ItemGroup>

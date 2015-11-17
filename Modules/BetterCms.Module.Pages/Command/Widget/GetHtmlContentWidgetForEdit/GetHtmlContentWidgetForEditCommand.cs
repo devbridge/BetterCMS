@@ -148,6 +148,7 @@ namespace BetterCms.Module.Pages.Command.Widget.GetHtmlContentWidgetForEdit
             model.CustomOptions = optionService.GetCustomOptions();
             model.CanDestroyDraft = model.CurrentStatus == ContentStatus.Draft && model.HasPublishedContent;
             model.CategoriesFilterKey = Root.Models.Widget.CategorizableItemKeyForWidgets;
+            model.CategoriesLookupList = categoryService.GetCategoriesLookupList(Root.Models.Widget.CategorizableItemKeyForWidgets);
 
             return model;
         }

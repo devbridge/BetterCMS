@@ -444,11 +444,11 @@ WriteLiteral(" type=\"hidden\"");
 
 WriteLiteral(" data-bind=\"attr: { name: \'Categories[\' + $index() + \'].Value\', value: name() }\"");
 
-WriteLiteral(" />\r\n            </div>\r\n        </div>\r\n\r\n            <div");
+WriteLiteral(" />\r\n            </div>\r\n        </div>\r\n\r\n        <div");
 
 WriteLiteral(" class=\"bcms-clearfix\"");
 
-WriteLiteral(">\r\n                <div");
+WriteLiteral(">\r\n            <div");
 
 WriteLiteral(" class=\"bcms-check-field-holder\"");
 
@@ -456,16 +456,16 @@ WriteLiteral(" style=\"float: none;\"");
 
 WriteLiteral(">\r\n");
 
-WriteLiteral("                    ");
+WriteLiteral("                ");
 
             
             #line 103 "..\..\Views\Filter\PagesFilterTemplate.cshtml"
-               Write(Html.CheckBoxFor(model => model.IncludeArchived, new { data_bind = "checked: includeArchived" }));
+           Write(Html.CheckBoxFor(model => model.IncludeArchived, new { data_bind = "checked: includeArchived" }));
 
             
             #line default
             #line hidden
-WriteLiteral("\r\n                    <span");
+WriteLiteral("\r\n                <span");
 
 WriteLiteral(" class=\"bcms-pointer\"");
 
@@ -475,43 +475,43 @@ WriteLiteral(">");
 
             
             #line 104 "..\..\Views\Filter\PagesFilterTemplate.cshtml"
-                                                                                   Write(PagesGlobalization.SiteSettings_Pages_FilterIncludeArchived);
+                                                                               Write(PagesGlobalization.SiteSettings_Pages_FilterIncludeArchived);
 
             
             #line default
             #line hidden
-WriteLiteral("</span>\r\n                </div>\r\n");
+WriteLiteral("</span>\r\n            </div>\r\n");
 
             
             #line 106 "..\..\Views\Filter\PagesFilterTemplate.cshtml"
-                
+            
             
             #line default
             #line hidden
             
             #line 106 "..\..\Views\Filter\PagesFilterTemplate.cshtml"
-                 if (!Model.HideMasterPagesFiltering)
-                {
+             if (!Model.HideMasterPagesFiltering)
+            {
 
             
             #line default
             #line hidden
-WriteLiteral("                    <div");
+WriteLiteral("                <div");
 
 WriteLiteral(" class=\"bcms-check-field-holder\"");
 
 WriteLiteral(">\r\n");
 
-WriteLiteral("                        ");
+WriteLiteral("                    ");
 
             
             #line 109 "..\..\Views\Filter\PagesFilterTemplate.cshtml"
-                   Write(Html.CheckBoxFor(model => model.IncludeMasterPages, new { data_bind = "checked: includeMasterPages" }));
+               Write(Html.CheckBoxFor(model => model.IncludeMasterPages, new { data_bind = "checked: includeMasterPages" }));
 
             
             #line default
             #line hidden
-WriteLiteral("\r\n                        <span");
+WriteLiteral("\r\n                    <span");
 
 WriteLiteral(" class=\"bcms-pointer\"");
 
@@ -521,27 +521,27 @@ WriteLiteral(">");
 
             
             #line 110 "..\..\Views\Filter\PagesFilterTemplate.cshtml"
-                                                                                          Write(PagesGlobalization.SiteSettings_Pages_FilterIncludeMasterPages);
+                                                                                      Write(PagesGlobalization.SiteSettings_Pages_FilterIncludeMasterPages);
 
             
             #line default
             #line hidden
-WriteLiteral("</span>\r\n                    </div>\r\n");
+WriteLiteral("</span>\r\n                </div>\r\n");
 
             
             #line 112 "..\..\Views\Filter\PagesFilterTemplate.cshtml"
-                }
+            }
 
             
             #line default
             #line hidden
-WriteLiteral("\r\n                <div");
+WriteLiteral("\r\n            <div");
 
 WriteLiteral(" class=\"bcms-btn-field-holder\"");
 
-WriteLiteral(">\r\n                    <div");
+WriteLiteral(">\r\n                <div");
 
-WriteLiteral(" class=\"bcms-btn-links-small\"");
+WriteLiteral(" class=\"bcms-btn-cancel\"");
 
 WriteLiteral(" data-bind=\"click: clearFilter\"");
 
@@ -549,14 +549,14 @@ WriteLiteral(">");
 
             
             #line 115 "..\..\Views\Filter\PagesFilterTemplate.cshtml"
-                                                                                Write(PagesGlobalization.SiteSettings_Pages_FilterClear);
+                                                                       Write(PagesGlobalization.SiteSettings_Pages_FilterClear);
 
             
             #line default
             #line hidden
-WriteLiteral("</div>\r\n                    <div");
+WriteLiteral("</div>\r\n                <div");
 
-WriteLiteral(" class=\"bcms-btn-small\"");
+WriteLiteral(" class=\"bcms-btn-primary\"");
 
 WriteLiteral(" data-bind=\"click: searchWithFilter\"");
 
@@ -564,12 +564,12 @@ WriteLiteral(">");
 
             
             #line 116 "..\..\Views\Filter\PagesFilterTemplate.cshtml"
-                                                                               Write(PagesGlobalization.SiteSettings_Pages_FilterSearch);
+                                                                             Write(PagesGlobalization.SiteSettings_Pages_FilterSearch);
 
             
             #line default
             #line hidden
-WriteLiteral("</div>\r\n                </div>\r\n            </div>\r\n        </div>\r\n</div>\r\n");
+WriteLiteral("</div>\r\n            </div>\r\n        </div>\r\n    </div>\r\n</div>\r\n");
 
         }
     }

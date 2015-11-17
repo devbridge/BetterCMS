@@ -146,7 +146,7 @@ WriteLiteral("\r\n    <div>\r\n");
             #line hidden
             
             #line 21 "..\..\Views\MediaManager\Index.cshtml"
-                                                                           
+                                                              
         }
 
             
@@ -165,7 +165,7 @@ WriteLiteral("\r\n    </div>\r\n</div>\r\n\r\n");
 
             
             #line 27 "..\..\Views\MediaManager\Index.cshtml"
-Write(Html.Partial("Partial/MediaManagerTemplate"));
+Write(Html.Partial("Partial/MediaManagerWindowTemplate"));
 
             
             #line default

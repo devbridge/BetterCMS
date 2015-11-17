@@ -4,8 +4,11 @@
 @model BetterCms.Module.Pages.ViewModels.Seo.EditSeoViewModel
 
 <div class="bcms-input-list-holder">
-    @Html.Tooltip(PagesGlobalization.EditSeo_UrlPath_Tooltip_Description)
-    <div class="bcms-content-titles">@PagesGlobalization.EditSeo_UrlPath<a id="bcms-editseo-editurlpath">@RootGlobalization.Button_Edit</a></div>
+    <div class="bcms-content-titles">
+        @PagesGlobalization.EditSeo_UrlPath @Html.Tooltip(PagesGlobalization.EditSeo_UrlPath_Tooltip_Description)
+        <a id="bcms-editseo-editurlpath">@RootGlobalization.Button_Edit</a>
+    </div>
+
     <div class="bcms-editseo-urlpath">@Html.Raw(string.IsNullOrWhiteSpace(Model.PageUrlPath) ? "&nbsp;" : Html.Encode(Model.PageUrlPath))</div>
     @Html.HiddenFor(f => f.PageUrlPath)
 
@@ -14,12 +17,15 @@
             @Html.TextBoxFor(f => f.ChangedUrlPath, new { @class = "bcms-field-text bcms-js-url-path" })
             @Html.BcmsValidationMessageFor(f => f.ChangedUrlPath)
         </div>
-        <div id="bcms-editseo-editurlpath-save" class="bcms-btn-small">@RootGlobalization.Button_Ok</div>
-        <div id="bcms-editseo-editurlpath-cancel" class="bcms-btn-links-small">@RootGlobalization.Button_Cancel</div>
+
+        <div id="bcms-editseo-editurlpath-save" class="bcms-btn-primary">@RootGlobalization.Button_Ok</div>
+        <div id="bcms-editseo-editurlpath-cancel" class="bcms-btn-cancel">@RootGlobalization.Button_Cancel</div>
+
         <div class="bcms-edit-check-field">
             @Html.CheckBoxFor(f => f.CreatePermanentRedirect)
             <div class="bcms-edit-label">@PagesGlobalization.EditSeo_EditUrlPath_PermanentRedirect</div>
         </div>
+
         <div class="bcms-edit-check-field">
             @Html.CheckBoxFor(f => f.UseCanonicalUrl)
             <div class="bcms-edit-label">@PagesGlobalization.EditSeo_EditUrlPath_UseCanonicalUrl</div>

@@ -120,31 +120,31 @@ WriteLiteral(">\r\n                <div>\r\n                    <div");
 
 WriteLiteral(" class=\"bcms-input-list-holder\"");
 
-WriteLiteral(">\r\n");
-
-WriteLiteral("                        ");
-
-            
-            #line 19 "..\..\Views\Category\CategoryTreeEdit.cshtml"
-                   Write(Html.Tooltip(RootGlobalization.CategoryTree_EditDialog_Title_Tooltip_Description));
-
-            
-            #line default
-            #line hidden
-WriteLiteral("\r\n                        <div");
+WriteLiteral(">\r\n                        <div");
 
 WriteLiteral(" class=\"bcms-content-titles\"");
 
 WriteLiteral(">");
 
             
-            #line 20 "..\..\Views\Category\CategoryTreeEdit.cshtml"
+            #line 19 "..\..\Views\Category\CategoryTreeEdit.cshtml"
                                                     Write(RootGlobalization.CategoryTree_EditDialog_Title_Title);
 
             
             #line default
             #line hidden
-WriteLiteral("</div>\r\n\r\n                        <div");
+WriteLiteral("</div>\r\n");
+
+WriteLiteral("                        ");
+
+            
+            #line 20 "..\..\Views\Category\CategoryTreeEdit.cshtml"
+                   Write(Html.Tooltip(RootGlobalization.CategoryTree_EditDialog_Title_Tooltip_Description));
+
+            
+            #line default
+            #line hidden
+WriteLiteral("\r\n\r\n                        <div");
 
 WriteLiteral(" class=\"bcms-field-wrapper\"");
 
@@ -212,31 +212,31 @@ WriteLiteral("                        <div");
 
 WriteLiteral(" class=\"bcms-input-list-holder\"");
 
-WriteLiteral(">\r\n");
-
-WriteLiteral("                            ");
-
-            
-            #line 33 "..\..\Views\Category\CategoryTreeEdit.cshtml"
-                       Write(Html.Tooltip(RootGlobalization.CategoryTree_EditDialog_Macro_Tooltip_Message));
-
-            
-            #line default
-            #line hidden
-WriteLiteral("\r\n                            <div");
+WriteLiteral(">\r\n                            <div");
 
 WriteLiteral(" class=\"bcms-content-titles\"");
 
 WriteLiteral(">");
 
             
-            #line 34 "..\..\Views\Category\CategoryTreeEdit.cshtml"
+            #line 33 "..\..\Views\Category\CategoryTreeEdit.cshtml"
                                                         Write(RootGlobalization.CategoryTree_EditDialog_Macro_Title);
 
             
             #line default
             #line hidden
-WriteLiteral("</div>\r\n\r\n                            <div");
+WriteLiteral("</div>\r\n");
+
+WriteLiteral("                            ");
+
+            
+            #line 34 "..\..\Views\Category\CategoryTreeEdit.cshtml"
+                       Write(Html.Tooltip(RootGlobalization.CategoryTree_EditDialog_Macro_Tooltip_Message));
+
+            
+            #line default
+            #line hidden
+WriteLiteral("\r\n\r\n                            <div");
 
 WriteLiteral(" class=\"bcms-field-wrapper\"");
 
@@ -280,32 +280,32 @@ WriteLiteral("                </div>\r\n\r\n                <div>\r\n           
 
 WriteLiteral(" class=\"bcms-input-list-holder\"");
 
-WriteLiteral(">\r\n");
-
-WriteLiteral("                        ");
-
-            
-            #line 51 "..\..\Views\Category\CategoryTreeEdit.cshtml"
-                   Write(Html.Tooltip(RootGlobalization.CategoryTree_EditDialog_UsedFor_Tooltip_Description));
-
-            
-            #line default
-            #line hidden
-WriteLiteral("\r\n                        <div");
+WriteLiteral(">\r\n                        <div");
 
 WriteLiteral(" class=\"bcms-content-titles\"");
 
 WriteLiteral(">");
 
             
-            #line 52 "..\..\Views\Category\CategoryTreeEdit.cshtml"
+            #line 51 "..\..\Views\Category\CategoryTreeEdit.cshtml"
                                                     Write(RootGlobalization.CategoryTree_EditDialog_UsedFor_Title);
 
             
             #line default
             #line hidden
-WriteLiteral("</div>\r\n\r\n                        <!-- ko foreach: categorizableItems -->\r\n      " +
-"                  <div");
+WriteLiteral("</div>\r\n");
+
+WriteLiteral("                        ");
+
+            
+            #line 52 "..\..\Views\Category\CategoryTreeEdit.cshtml"
+                   Write(Html.Tooltip(RootGlobalization.CategoryTree_EditDialog_UsedFor_Tooltip_Description));
+
+            
+            #line default
+            #line hidden
+WriteLiteral("\r\n\r\n                        <!-- ko foreach: categorizableItems -->\r\n            " +
+"            <div");
 
 WriteLiteral(" class=\"bcms-checkbox-holder\"");
 
@@ -333,17 +333,17 @@ WriteLiteral("></div>\r\n                        </div>\r\n                     
             #line hidden
 WriteLiteral("            <div");
 
-WriteLiteral(" class=\"bcms-tree-info-block\"");
+WriteLiteral(" class=\"bcms-content-dialog-title\"");
 
 WriteLiteral(">\r\n                <div");
 
-WriteLiteral(" class=\"bcms-content-titles\"");
+WriteLiteral(" class=\"bcms-content-titles-helper\"");
 
 WriteLiteral(">");
 
             
             #line 65 "..\..\Views\Category\CategoryTreeEdit.cshtml"
-                                            Write(RootGlobalization.CategoryTree_EditDialog_Title_Title);
+                                                   Write(RootGlobalization.CategoryTree_EditDialog_Title_Title);
 
             
             #line default
@@ -407,15 +407,15 @@ WriteLiteral(" class=\"bcms-tree-drop-area\"");
 
 WriteLiteral(">\r\n                <div");
 
-WriteAttribute("class", Tuple.Create(" class=\"", 4077), Tuple.Create("\"", 4162)
-, Tuple.Create(Tuple.Create("", 4085), Tuple.Create("bcms-addnode-placement-holder", 4085), true)
+WriteAttribute("class", Tuple.Create(" class=\"", 4089), Tuple.Create("\"", 4174)
+, Tuple.Create(Tuple.Create("", 4097), Tuple.Create("bcms-addnode-placement-holder", 4097), true)
             
             #line 75 "..\..\Views\Category\CategoryTreeEdit.cshtml"
-, Tuple.Create(Tuple.Create("", 4114), Tuple.Create<System.Object, System.Int32>(Model.IsReadOnly ? "-readonly" : string.Empty
+, Tuple.Create(Tuple.Create("", 4126), Tuple.Create<System.Object, System.Int32>(Model.IsReadOnly ? "-readonly" : string.Empty
             
             #line default
             #line hidden
-, 4114), false)
+, 4126), false)
 );
 
 WriteLiteral(">\r\n");

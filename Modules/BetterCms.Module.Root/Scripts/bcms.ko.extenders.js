@@ -81,6 +81,24 @@ bettercms.define('bcms.ko.extenders', ['bcms.jquery', 'bcms', 'knockout', 'bcms.
     };
 
     /**
+    * Binds the observable value as a string (required for radio buttons checked binding) 
+    */
+    ko.observable.fn.asString = function () {
+        var source = this;
+        if (!source._asString) {
+            source._asString = ko.computed({
+                read: function () {
+                    return String(source());
+                },
+                write: function (newValue) {
+                    source(Number(newValue));
+                }
+            });
+        }
+        return source._asString;
+    };
+
+    /**
     * Knockout validation controller
     */
     function KnockoutValidator(target) {

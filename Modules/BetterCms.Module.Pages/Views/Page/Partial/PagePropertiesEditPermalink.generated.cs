@@ -55,52 +55,48 @@ namespace ASP
         }
         public override void Execute()
         {
-WriteLiteral("\n");
-
 WriteLiteral("<div");
 
 WriteLiteral(" class=\"bcms-input-list-holder\"");
 
-WriteLiteral(">\r\n");
-
-WriteLiteral("    ");
-
-            
-            #line 7 "..\..\Views\Page\Partial\PagePropertiesEditPermalink.cshtml"
-Write(Html.Tooltip(PagesGlobalization.EditPageProperties_AdvancedPropertiesTab_PageUrl_Tooltip_Description));
-
-            
-            #line default
-            #line hidden
-WriteLiteral("\r\n    <div");
+WriteLiteral(">\r\n    <div");
 
 WriteLiteral(" class=\"bcms-content-titles\"");
 
-WriteLiteral(">");
+WriteLiteral(">\r\n");
+
+WriteLiteral("        ");
 
             
             #line 8 "..\..\Views\Page\Partial\PagePropertiesEditPermalink.cshtml"
-                                Write(PagesGlobalization.EditPageProperties_AdvancedPropertiesTab_PageUrl_Title);
+   Write(PagesGlobalization.EditPageProperties_AdvancedPropertiesTab_PageUrl_Title);
 
             
             #line default
             #line hidden
-WriteLiteral("<a");
+WriteLiteral(" ");
 
-WriteLiteral(" onclick=\"return false\"");
+            
+            #line 8 "..\..\Views\Page\Partial\PagePropertiesEditPermalink.cshtml"
+                                                                              Write(Html.Tooltip(PagesGlobalization.EditPageProperties_AdvancedPropertiesTab_PageUrl_Tooltip_Description));
+
+            
+            #line default
+            #line hidden
+WriteLiteral("\r\n        <a");
 
 WriteLiteral(" id=\"bcms-pageproperties-editpermalink\"");
 
 WriteLiteral(">");
 
             
-            #line 8 "..\..\Views\Page\Partial\PagePropertiesEditPermalink.cshtml"
-                                                                                                                                                                           Write(RootGlobalization.Button_Edit);
+            #line 9 "..\..\Views\Page\Partial\PagePropertiesEditPermalink.cshtml"
+                                             Write(RootGlobalization.Button_Edit);
 
             
             #line default
             #line hidden
-WriteLiteral("</a></div>\r\n    <div");
+WriteLiteral("</a>\r\n    </div>\r\n    <div");
 
 WriteLiteral(" class=\"bcms-editseo-urlpath\"");
 
@@ -109,7 +105,7 @@ WriteLiteral(" id=\"bcms-page-permalink-info\"");
 WriteLiteral(">");
 
             
-            #line 9 "..\..\Views\Page\Partial\PagePropertiesEditPermalink.cshtml"
+            #line 11 "..\..\Views\Page\Partial\PagePropertiesEditPermalink.cshtml"
                                                                 Write(string.IsNullOrWhiteSpace(Model.PageUrl) ? Html.Raw("&nbsp;") : new MvcHtmlString(Html.Encode(Model.PageUrl)));
 
             
@@ -126,7 +122,7 @@ WriteLiteral(">\r\n");
 WriteLiteral("        ");
 
             
-            #line 12 "..\..\Views\Page\Partial\PagePropertiesEditPermalink.cshtml"
+            #line 14 "..\..\Views\Page\Partial\PagePropertiesEditPermalink.cshtml"
    Write(Html.Hidden("PagePermalinkHidden", Model.PageUrl, new { @id = "bcms-page-permalink" }));
 
             
@@ -141,7 +137,7 @@ WriteLiteral(">\r\n");
 WriteLiteral("            ");
 
             
-            #line 14 "..\..\Views\Page\Partial\PagePropertiesEditPermalink.cshtml"
+            #line 16 "..\..\Views\Page\Partial\PagePropertiesEditPermalink.cshtml"
        Write(Html.TextBoxFor(model => model.PageUrl, new { @id = "bcms-page-permalink-edit", @class = "bcms-field-text bcms-js-url-path" }));
 
             
@@ -152,41 +148,41 @@ WriteLiteral("\r\n");
 WriteLiteral("            ");
 
             
-            #line 15 "..\..\Views\Page\Partial\PagePropertiesEditPermalink.cshtml"
+            #line 17 "..\..\Views\Page\Partial\PagePropertiesEditPermalink.cshtml"
        Write(Html.BcmsValidationMessageFor(f => f.PageUrl));
 
             
             #line default
             #line hidden
-WriteLiteral("\r\n        </div>\r\n        <div");
+WriteLiteral("\r\n        </div>\r\n\r\n        <div");
 
-WriteLiteral(" class=\"bcms-btn-small\"");
+WriteLiteral(" class=\"bcms-btn-primary\"");
 
 WriteLiteral(" id=\"bcms-save-permalink\"");
 
 WriteLiteral(">");
 
             
-            #line 17 "..\..\Views\Page\Partial\PagePropertiesEditPermalink.cshtml"
-                                                        Write(RootGlobalization.Button_Ok);
+            #line 20 "..\..\Views\Page\Partial\PagePropertiesEditPermalink.cshtml"
+                                                          Write(RootGlobalization.Button_Ok);
 
             
             #line default
             #line hidden
 WriteLiteral("</div>\r\n        <div");
 
-WriteLiteral(" class=\"bcms-btn-links-small\"");
+WriteLiteral(" class=\"bcms-btn-cancel\"");
 
 WriteLiteral(">");
 
             
-            #line 18 "..\..\Views\Page\Partial\PagePropertiesEditPermalink.cshtml"
-                                     Write(RootGlobalization.Button_Cancel);
+            #line 21 "..\..\Views\Page\Partial\PagePropertiesEditPermalink.cshtml"
+                                Write(RootGlobalization.Button_Cancel);
 
             
             #line default
             #line hidden
-WriteLiteral("</div>\r\n        <div");
+WriteLiteral("</div>\r\n\r\n        <div");
 
 WriteLiteral(" class=\"bcms-edit-check-field\"");
 
@@ -195,7 +191,7 @@ WriteLiteral(">\r\n");
 WriteLiteral("            ");
 
             
-            #line 20 "..\..\Views\Page\Partial\PagePropertiesEditPermalink.cshtml"
+            #line 24 "..\..\Views\Page\Partial\PagePropertiesEditPermalink.cshtml"
        Write(Html.CheckBoxFor(model => model.RedirectFromOldUrl));
 
             
@@ -208,13 +204,13 @@ WriteLiteral(" class=\"bcms-edit-label\"");
 WriteLiteral(">");
 
             
-            #line 21 "..\..\Views\Page\Partial\PagePropertiesEditPermalink.cshtml"
+            #line 25 "..\..\Views\Page\Partial\PagePropertiesEditPermalink.cshtml"
                                     Write(PagesGlobalization.EditPageProperties_AdvancedPropertiesTab_CreatePermanentRedirectToOldUrl_Title);
 
             
             #line default
             #line hidden
-WriteLiteral("</div>\r\n        </div>\r\n        <div");
+WriteLiteral("</div>\r\n        </div>\r\n\r\n        <div");
 
 WriteLiteral(" class=\"bcms-edit-check-field\"");
 
@@ -223,7 +219,7 @@ WriteLiteral(">\r\n");
 WriteLiteral("            ");
 
             
-            #line 24 "..\..\Views\Page\Partial\PagePropertiesEditPermalink.cshtml"
+            #line 29 "..\..\Views\Page\Partial\PagePropertiesEditPermalink.cshtml"
        Write(Html.CheckBoxFor(model => model.UseCanonicalUrl));
 
             
@@ -236,7 +232,7 @@ WriteLiteral(" class=\"bcms-edit-label\"");
 WriteLiteral(">");
 
             
-            #line 25 "..\..\Views\Page\Partial\PagePropertiesEditPermalink.cshtml"
+            #line 30 "..\..\Views\Page\Partial\PagePropertiesEditPermalink.cshtml"
                                     Write(PagesGlobalization.EditPageProperties_AdvancedPropertiesTab_UseCanonicalUrl);
 
             
@@ -245,13 +241,13 @@ WriteLiteral(">");
 WriteLiteral("</div>\r\n        </div>\r\n");
 
             
-            #line 27 "..\..\Views\Page\Partial\PagePropertiesEditPermalink.cshtml"
+            #line 32 "..\..\Views\Page\Partial\PagePropertiesEditPermalink.cshtml"
         
             
             #line default
             #line hidden
             
-            #line 27 "..\..\Views\Page\Partial\PagePropertiesEditPermalink.cshtml"
+            #line 32 "..\..\Views\Page\Partial\PagePropertiesEditPermalink.cshtml"
          if (Model.IsInSitemap)
         {
 
@@ -267,7 +263,7 @@ WriteLiteral(">\r\n");
 WriteLiteral("                ");
 
             
-            #line 30 "..\..\Views\Page\Partial\PagePropertiesEditPermalink.cshtml"
+            #line 35 "..\..\Views\Page\Partial\PagePropertiesEditPermalink.cshtml"
            Write(Html.CheckBoxFor(model => model.UpdateSitemap));
 
             
@@ -280,7 +276,7 @@ WriteLiteral(" class=\"bcms-edit-label\"");
 WriteLiteral(">");
 
             
-            #line 31 "..\..\Views\Page\Partial\PagePropertiesEditPermalink.cshtml"
+            #line 36 "..\..\Views\Page\Partial\PagePropertiesEditPermalink.cshtml"
                                         Write(PagesGlobalization.EditPageProperties_AdvancedPropertiesTab_UpdateSitemap_Title);
 
             
@@ -289,7 +285,7 @@ WriteLiteral(">");
 WriteLiteral("</div>\r\n            </div>\r\n");
 
             
-            #line 33 "..\..\Views\Page\Partial\PagePropertiesEditPermalink.cshtml"
+            #line 38 "..\..\Views\Page\Partial\PagePropertiesEditPermalink.cshtml"
         }
 
             

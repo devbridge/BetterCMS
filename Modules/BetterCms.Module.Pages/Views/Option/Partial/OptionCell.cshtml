@@ -30,8 +30,8 @@
 <td @Html.Raw(Model.Attributes)>
     @if (Model.CanBeEdited)
     {
-        <div class="bcms-input-field-holder">
-            <div class="bcms-date-input-box bcms-options-date" data-bind="visible: isActive()">
+        <div class="bcms-input-list-holder">
+            <div class="bcms-field-wrapper bcms-options-date" data-bind="visible: isActive()">
                 <input class="bcms-field-text bcms-datepicker" data-bind="
                     css: { 'bcms-input-validation-error': !isNew() && @(Model.ValueBind).hasError && @(Model.ValueBind).hasError() },
                     value: @(Model.ValueBind),
@@ -70,7 +70,7 @@
             visible: isActive()
             @(!string.IsNullOrEmpty(Model.FocusIdentifier) ? string.Format(", hasfocus: {0}", Model.FocusIdentifier) : string.Empty)
                " />
-        <div class="bcms-btn-small" data-bind="
+        <div class="bcms-btn-primary" data-bind="
                     click: onCustomOptionExecute.bind($data, $data, @(Model.CustomValueBind), @(Model.ValueBind)),
                     enterPress: onSave, 
                     escPress: onCancelEdit,

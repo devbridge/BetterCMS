@@ -54,14 +54,14 @@ h4 {
   margin: 10px 0 20px;
 }
 
-hgroup h1 {
+div > h1 {
   color: #38393c;
   font-family: 'Open Sans', sans-serif;
   font-size: 28px;
   font-weight: 700;
 }
 
-hgroup h2 {
+div > h2 {
   font-size: 18px;
   font-weight: 400;
   line-height: 28px;
@@ -202,7 +202,6 @@ input[type="submit"].btn-primary {
   line-height: 48px;
   padding: 0 19px;
   transition: background 0.1s ease-in-out;
-  -webkit-transition: background 0.1s ease-in-out;
 }
 
 .submenu a:first-child {
@@ -297,8 +296,6 @@ a.bcms-logo {
 
 .btn-primary {
   background: #2eadd5;
-  background: -webkit-linear-gradient(top, #39b7df 0, #2eadd5 100%);
-  background: linear-gradient(to bottom, #39b7df 0, #2eadd5 100%);
   border: 1px solid #24a2c9;
   color: #fff;
   cursor: pointer;
@@ -327,8 +324,6 @@ a.bcms-logo {
 
 .btn-secondary {
   background: #eeeeee;
-  background: -webkit-linear-gradient(top, #f8f8f8 0, #eeeeee 100%);
-  background: linear-gradient(to bottom, #f8f8f8 0, #eeeeee 100%);
   border: 1px solid #cbd8dc;
   color: #4eaac7;
   cursor: pointer;
@@ -356,8 +351,6 @@ a.bcms-logo {
 
 a.action-arrow {
   background: url("images/icn-btn-arrow.png") no-repeat right center #2eadd5;
-  background: url("images/icn-btn-arrow.png") no-repeat right center, -webkit-linear-gradient(top, #39b7df 0, #2eadd5 100%);
-  background: url("images/icn-btn-arrow.png") no-repeat right center, linear-gradient(to bottom, #39b7df 0, #2eadd5 100%);
   margin-left: 24px;
   position: relative;
   z-index: 1;
@@ -378,7 +371,6 @@ a.action-arrow:active {
 .text-field {
   border: 1px solid #e8e8e8;
   box-sizing: border-box;
-  -moz-box-sizing: border-box;
   height: 28px;
   margin: 0;
   padding: 3px 5px;
@@ -394,7 +386,6 @@ a.action-arrow:active {
 .text-area {
   border: 1px solid #e8e8e8;
   box-sizing: border-box;
-  -moz-box-sizing: border-box;
   height: 138px;
   margin: 0;
   padding: 5px;

@@ -67,104 +67,47 @@ namespace ASP
             
             #line default
             #line hidden
-WriteLiteral("\r\n");
+WriteLiteral("\r\n\r\n<div");
+
+WriteLiteral(" class=\"bcms-content-titles\"");
+
+WriteLiteral(">");
 
             
-            #line 8 "..\..\Views\Category\CategoriesTemplate.cshtml"
+            #line 9 "..\..\Views\Category\CategoriesTemplate.cshtml"
+                            Write(RootGlobalization.CategoriesTemplate_AddCategories_Title);
+
+            
+            #line default
+            #line hidden
+WriteLiteral("</div>\r\n");
+
+            
+            #line 10 "..\..\Views\Category\CategoriesTemplate.cshtml"
 Write(Html.Tooltip(Model.TooltipDescription));
 
             
             #line default
             #line hidden
-WriteLiteral("\r\n\r\n<div");
-
-WriteLiteral(" class=\"bcms-content-titles\"");
-
-WriteLiteral(">\r\n");
-
-WriteLiteral("    ");
-
-            
-            #line 11 "..\..\Views\Category\CategoriesTemplate.cshtml"
-Write(RootGlobalization.CategoriesTemplate_AddCategories_Title);
-
-            
-            #line default
-            #line hidden
-WriteLiteral("\r\n</div>\r\n\r\n<div");
-
-WriteLiteral(" class=\"bcms-field-wapper\"");
-
-WriteLiteral(" data-bind=\"visible: isExpanded()\"");
-
-WriteLiteral(">\r\n    <input");
-
-WriteLiteral(" type=\"text\"");
-
-WriteLiteral(" class=\"bcms-field-text\"");
-
-WriteLiteral(@" data-bind=""
-                    css: { 'bcms-tag-validation-error': newItem.hasError() },
-                    value: newItem,
-                    valueUpdate: 'afterkeydown',
-                    hasfocus: hasfocus,
-                    autocompleteList: 'onlyExisting',
-                    enterPress: function(){},
-                    escPress: clearItem""");
-
-WriteLiteral(" />\r\n    <!-- ko if: newItem.hasError()  -->\r\n    <span");
-
-WriteLiteral(" class=\"bcms-tag-field-validation-error\"");
-
-WriteLiteral(">\r\n        <span");
-
-WriteLiteral(" data-bind=\"text: newItem.validationMessage()\"");
-
-WriteLiteral("></span>\r\n    </span>\r\n    <!-- /ko -->\r\n</div>\r\n\r\n<div");
-
-WriteLiteral(" class=\"bcms-single-tag-holder\"");
-
-WriteLiteral(" data-bind=\"foreach: items()\"");
-
-WriteLiteral(">\r\n    <div");
-
-WriteLiteral(" class=\"bcms-single-tag\"");
-
-WriteLiteral(" data-bind=\"css: { \'bcms-single-tag-active\': isActive() }\"");
-
-WriteLiteral("><span");
-
-WriteLiteral(" data-bind=\"text: name()\"");
-
-WriteLiteral("></span><a");
-
-WriteLiteral(" data-bind=\"");
-
-            
-            #line 31 "..\..\Views\Category\CategoriesTemplate.cshtml"
-                                                                                                                                           Write(canEdit ? "click: remove" : string.Empty);
-
-            
-            #line default
-            #line hidden
-WriteLiteral("\"");
-
-WriteLiteral(">");
-
-            
-            #line 31 "..\..\Views\Category\CategoriesTemplate.cshtml"
-                                                                                                                                                                                       Write(RootGlobalization.Button_Remove);
-
-            
-            #line default
-            #line hidden
-WriteLiteral("</a></div>\r\n    <input");
+WriteLiteral("\r\n<input");
 
 WriteLiteral(" type=\"hidden\"");
 
-WriteLiteral(" data-bind=\"attr: { name: getItemInputName($index()), value: id() }\"");
+WriteLiteral(" id=\"bcms-js-categories-select\"");
 
-WriteLiteral(" />\r\n</div>\r\n");
+WriteLiteral(" />\r\n<div");
+
+WriteLiteral(" class=\"bcms-single-tag-holder\"");
+
+WriteLiteral(" data-bind=\"foreach: categories\"");
+
+WriteLiteral(">\r\n   <input");
+
+WriteLiteral(" type=\"hidden\"");
+
+WriteLiteral(" data-bind=\"attr: { name: \'Categories[\'+ $index() +\'].key\', value: $data.id }\"");
+
+WriteLiteral(" />\r\n</div>\r\n\r\n");
 
         }
     }
