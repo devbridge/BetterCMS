@@ -22,7 +22,7 @@ $contents-tree-controls: (
 .bcms-contents-tree {
     &-region {
         background-color: $white;
-        border: $border-overlay;
+        border: $border-thin-blue;
         box-sizing: border-box;
         margin-top: 15px;
         min-height: 48px;
@@ -178,7 +178,7 @@ $contents-tree-controls: (
 .bcms-draggable-region {
     @include size(100% 39px);
     background: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAQAAAAECAIAAAFRlDm/AAAAHUlEQVQI12P4//8/AxRDqQcPHjAAMUIQyoFQEAAA0/UuXeg1e3EAAAAASUVORK5CYII=') repeat 0 0;
-    border: $border-overlay;
+    border: $border-thin-blue;
     box-sizing: border-box;
     color: $text-blue;
     font-size: 12px;

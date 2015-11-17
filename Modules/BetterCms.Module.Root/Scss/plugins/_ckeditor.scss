@@ -241,8 +241,8 @@ $ck-toolbar-icons: (
 }
 
 .cke_toolbar_break {
-    display: block;
     clear: left;
+    display: block;
 }
 
 //module footer path
@@ -468,7 +468,7 @@ a {
 
         &_ok {
             @include button() {
-                @include add-gradient($top: $blue-l30, $bottom: $blue-l40);
+                background-color: $bg-blue;
                 color: $white;
                 font-size: 12px;
                 line-height: 30px;

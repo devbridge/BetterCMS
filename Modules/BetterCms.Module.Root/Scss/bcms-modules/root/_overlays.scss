@@ -25,7 +25,7 @@ $overlay-control-buttons: (
         @include position(absolute, null);
         display: none;
         min-height: 35px;
-        outline: $border-overlay;
+        outline: $border-thin-blue;
         z-index: 100;
 
         &.bcms-show-overlay {
@@ -39,8 +39,8 @@ $overlay-control-buttons: (
     &-actions {
         @include position(absolute, 0 0 null null);
         border: {
-            bottom: $border-overlay;
-            left: $border-overlay;
+            bottom: $border-thin-blue;
+            left: $border-thin-blue;
         }
         cursor: default;
         height: 26px;
@@ -222,10 +222,10 @@ $overlay-control-buttons: (
 
     &-edit {
         &.bcms-active-draft {
-            background-color: $red-l70;
+            background-color: $bg-red;
 
             &:hover {
-                background-color: lighten($red-l70, 10%);
+                background-color: lighten($bg-red, 10%);
             }
         }
     }
