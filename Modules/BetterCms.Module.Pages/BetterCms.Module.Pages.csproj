@@ -359,6 +359,7 @@
     <Compile Include="Mvc\Attributes\CustomPageUrlValidationAttribute.cs" />
     <Compile Include="Mvc\Attributes\DateValidationAttribute.cs" />
     <Compile Include="Mvc\Attributes\EndDateValidationAttribute.cs" />
+    <Compile Include="Mvc\EditableGrid\CustomTitleEditableGridColumn.cs" />
     <Compile Include="Mvc\EditableGrid\OptionValueEditableGridColumn.cs" />
     <Compile Include="Mvc\PageHtmlRenderer\RenderingPageCategoryProperty.cs" />
     <Compile Include="Mvc\PageHtmlRenderer\RenderingPageFeaturedImageUrlProperty.cs" />
@@ -442,6 +443,7 @@
     <Compile Include="ViewModels\Sitemap\SitemapAndPageLinksViewModel.cs" />
     <Compile Include="ViewModels\Sitemap\SitemapNodeViewModel.cs" />
     <Compile Include="ViewModels\SiteSettings\SiteSettingSitemapViewModel.cs" />
+    <Compile Include="ViewModels\SiteSettings\SiteSettingPagesListViewModel.cs" />
     <Compile Include="ViewModels\SiteSettings\SiteSettingTemplateItemViewModel.cs" />
     <Compile Include="ViewModels\SiteSettings\SiteSettingTemplateListViewModel.cs" />
     <Compile Include="ViewModels\Templates\TemplateEditViewModel.cs" />
@@ -834,6 +836,12 @@
     <EmbeddedResource Include="Models\Migrations\Migration201502101138.sqlserver.sql" />
     <EmbeddedResource Include="Content\Styles\bcms.pages.css" />
     <EmbeddedResource Include="Content\Styles\bcms.pages.min.css" />
+    <Content Include="Content\bootstrap-theme.css" />
+    <Content Include="Content\bootstrap-theme.min.css" />
+    <Content Include="Content\bootstrap.css" />
+    <Content Include="Content\bootstrap.min.css" />
+    <Content Include="Content\Site.css" />
+    <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="packages.config">
       <SubType>Designer</SubType>
     </Content>
@@ -854,6 +862,12 @@
     <EmbeddedResource Include="Scripts\bcms.pages.masterpage.js" />
     <EmbeddedResource Include="Scripts\bcms.pages.languages.js" />
     <EmbeddedResource Include="Scripts\bcms.pages.content.js" />
+    <Content Include="Scripts\bootstrap.js" />
+    <Content Include="Scripts\bootstrap.min.js" />
+    <None Include="Scripts\jquery-1.10.2.intellisense.js" />
+    <Content Include="Scripts\jquery-1.10.2.js" />
+    <Content Include="Scripts\jquery-1.10.2.min.js" />
+    <Content Include="Scripts\modernizr-2.6.2.js" />
     <Content Include="web.config" />
   </ItemGroup>
   <ItemGroup>
@@ -885,10 +899,17 @@
       <Generator>RazorGenerator</Generator>
       <LastGenOutput>ServerWidgetPropertiesHistory.generated.cs</LastGenOutput>
     </Content>
+    <Content Include="fonts\glyphicons-halflings-regular.woff" />
+    <Content Include="fonts\glyphicons-halflings-regular.ttf" />
+    <Content Include="fonts\glyphicons-halflings-regular.eot" />
+    <Content Include="Scripts\jquery-1.10.2.min.map" />
+    <EmbeddedResource Include="Views\Shared\EditableGrid\CustomTitleCell.cshtml" />
+    <EmbeddedResource Include="Views\Page\Partial\PagesGrid.cshtml" />
     <None Include="Views\Shared\Partial\WarnMessageAboutDraft.cshtml">
       <Generator>RazorGenerator</Generator>
       <LastGenOutput>WarnMessageAboutDraft.generated.cs</LastGenOutput>
     </None>
+    <Content Include="Views\_ViewStart.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Views\Content\AddPageHtmlContent.cshtml">
@@ -975,6 +996,7 @@
     </None>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Views\Shared\_Layout.cshtml" />
     <None Include="Views\Templates\EditTemplate.cshtml">
       <Generator>RazorGenerator</Generator>
       <LastGenOutput>EditTemplate.generated.cs</LastGenOutput>

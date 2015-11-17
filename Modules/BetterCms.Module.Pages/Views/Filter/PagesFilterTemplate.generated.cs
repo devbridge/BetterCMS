@@ -49,7 +49,7 @@ namespace ASP
         }
         public override void Execute()
         {
-WriteLiteral("\n");
+WriteLiteral("\r\n");
 
 WriteLiteral("<div");
 
@@ -57,7 +57,7 @@ WriteLiteral(" class=\"bcms-filter-holder\"");
 
 WriteLiteral(" id=\"bcms-filter-template\"");
 
-WriteLiteral(">\n");
+WriteLiteral(">\r\n");
 
 WriteLiteral("    ");
 
@@ -68,19 +68,19 @@ Write(Html.HiddenFor(m => m.ContentId));
             
             #line default
             #line hidden
-WriteLiteral("\n    <div");
+WriteLiteral("\r\n    <div");
 
 WriteLiteral(" class=\"bcms-grid-filtering\"");
 
 WriteLiteral(" data-bind=\"css: { \'bcms-active-filter\': isVisible() }\"");
 
-WriteLiteral(">\n        <div");
+WriteLiteral(">\r\n        <div");
 
 WriteLiteral(" class=\"bcms-filterbox\"");
 
 WriteLiteral(" data-bind=\"click: toggleFilter\"");
 
-WriteLiteral(">\n");
+WriteLiteral(">\r\n");
 
 WriteLiteral("            ");
 
@@ -91,7 +91,7 @@ WriteLiteral("            ");
             
             #line default
             #line hidden
-WriteLiteral("\n            <div");
+WriteLiteral("\r\n            <div");
 
 WriteLiteral(" class=\"bcms-filter-modified\"");
 
@@ -106,7 +106,7 @@ WriteLiteral(">");
             
             #line default
             #line hidden
-WriteLiteral("</div>\n        </div>\n    </div>\n\n    <div");
+WriteLiteral("</div>\r\n        </div>\r\n    </div>\r\n\r\n    <div");
 
 WriteLiteral(" class=\"bcms-filter-selection-block\"");
 
@@ -114,7 +114,7 @@ WriteLiteral(" style=\"display: none;\"");
 
 WriteLiteral(" data-bind=\"visible: isVisible(), enterPress: searchWithFilter\"");
 
-WriteLiteral(">\n        <div");
+WriteLiteral(">\r\n        <div");
 
 WriteLiteral(" class=\"bcms-filter-controls\"");
 
@@ -444,17 +444,17 @@ WriteLiteral(" type=\"hidden\"");
 
 WriteLiteral(" data-bind=\"attr: { name: \'Categories[\' + $index() + \'].Value\', value: name() }\"");
 
-WriteLiteral(" />\r\n            </div>\r\n        </div>\n\n            <div");
+WriteLiteral(" />\r\n            </div>\r\n        </div>\r\n\r\n            <div");
 
 WriteLiteral(" class=\"bcms-clearfix\"");
 
-WriteLiteral(">\n                <div");
+WriteLiteral(">\r\n                <div");
 
 WriteLiteral(" class=\"bcms-check-field-holder\"");
 
 WriteLiteral(" style=\"float: none;\"");
 
-WriteLiteral(">\n");
+WriteLiteral(">\r\n");
 
 WriteLiteral("                    ");
 
@@ -465,7 +465,7 @@ WriteLiteral("                    ");
             
             #line default
             #line hidden
-WriteLiteral("\n                    <span");
+WriteLiteral("\r\n                    <span");
 
 WriteLiteral(" class=\"bcms-pointer\"");
 
@@ -480,7 +480,7 @@ WriteLiteral(">");
             
             #line default
             #line hidden
-WriteLiteral("</span>\n                </div>\n");
+WriteLiteral("</span>\r\n                </div>\r\n");
 
             
             #line 106 "..\..\Views\Filter\PagesFilterTemplate.cshtml"
@@ -500,7 +500,7 @@ WriteLiteral("                    <div");
 
 WriteLiteral(" class=\"bcms-check-field-holder\"");
 
-WriteLiteral(">\n");
+WriteLiteral(">\r\n");
 
 WriteLiteral("                        ");
 
@@ -511,7 +511,7 @@ WriteLiteral("                        ");
             
             #line default
             #line hidden
-WriteLiteral("\n                        <span");
+WriteLiteral("\r\n                        <span");
 
 WriteLiteral(" class=\"bcms-pointer\"");
 
@@ -526,7 +526,7 @@ WriteLiteral(">");
             
             #line default
             #line hidden
-WriteLiteral("</span>\n                    </div>\n");
+WriteLiteral("</span>\r\n                    </div>\r\n");
 
             
             #line 112 "..\..\Views\Filter\PagesFilterTemplate.cshtml"
@@ -535,11 +535,11 @@ WriteLiteral("</span>\n                    </div>\n");
             
             #line default
             #line hidden
-WriteLiteral("\n                <div");
+WriteLiteral("\r\n                <div");
 
 WriteLiteral(" class=\"bcms-btn-field-holder\"");
 
-WriteLiteral(">\n                    <div");
+WriteLiteral(">\r\n                    <div");
 
 WriteLiteral(" class=\"bcms-btn-links-small\"");
 
@@ -554,7 +554,7 @@ WriteLiteral(">");
             
             #line default
             #line hidden
-WriteLiteral("</div>\n                    <div");
+WriteLiteral("</div>\r\n                    <div");
 
 WriteLiteral(" class=\"bcms-btn-small\"");
 
@@ -569,7 +569,7 @@ WriteLiteral(">");
             
             #line default
             #line hidden
-WriteLiteral("</div>\n                </div>\n            </div>\n        </div>\n</div>\n");
+WriteLiteral("</div>\r\n                </div>\r\n            </div>\r\n        </div>\r\n</div>\r\n");
 
         }
     }

@@ -90,6 +90,16 @@ namespace BetterCms.Module.Pages.Controllers
             return ComboWireJson(success, view, model, JsonRequestBehavior.AllowGet);
         }
 
+        [BcmsAuthorize(RootModuleConstants.UserRoles.EditContent, RootModuleConstants.UserRoles.PublishContent, RootModuleConstants.UserRoles.DeleteContent)]
+        public ActionResult PagesList(PagesFilter request)
+        {
+            request.SetDefaultPaging();
+            var model = GetCommand<GetPagesListCommand>().ExecuteCommand(request);
+            var success = model != null;
+            return WireJson(success, model);
+        }
+
+
         /// <summary>
         /// Opens dialog for selecting the page.
         /// </summary>

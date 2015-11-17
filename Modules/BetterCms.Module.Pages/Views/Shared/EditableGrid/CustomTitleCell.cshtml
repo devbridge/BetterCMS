@@ -1,0 +1,21 @@
+﻿@model BetterCms.Module.Pages.Mvc.EditableGrid.CustomTitleEditableGridColumn
+<td>
+    <div>
+        <a data-bind="
+            text: @(Model.ValueBind)(),
+            href: @(Model.CustomBindings["url"])()
+             "></a>
+        <div data-bind="
+            text: @(Model.CustomBindings["createdOn"])()
+            "></div>
+        <div data-bind="
+            text: @(Model.CustomBindings["modifiedOn"]) ()
+            "></div>
+        <div data-bind="
+            text: @(Model.CustomBindings["modifiedBy"]) ()
+            "></div>
+    </div>
+    <div style="width: 85px; text-align: center" class="bcms-page-ispublished" data-bind="
+         text: @(Model.CustomBindings["pageStatus"]) ()
+         "></div>
+</td>

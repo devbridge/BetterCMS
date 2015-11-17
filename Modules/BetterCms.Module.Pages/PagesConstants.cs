@@ -27,5 +27,10 @@
         /// The content version preview template
         /// </summary>
         public const string ContentVersionPreviewTemplate = "~/Areas/bcms-pages/Views/History/ContentVersion.cshtml";
+
+        /// <summary>
+        /// The editable grid cell template.
+        /// </summary>
+        public const string CustomTitleCellTemplate = "~/Areas/bcms-pages/Views/Shared/EditableGrid/CustomTitleCell.cshtml";
     }
 }
