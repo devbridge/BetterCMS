@@ -33,7 +33,9 @@
   display: block;
 }
 
-.cke_top, .cke_contents, .cke_bottom {
+.cke_top,
+.cke_contents,
+.cke_bottom {
   display: block;
   overflow: hidden;
 }
@@ -189,8 +191,8 @@
 }
 
 .cke_toolbar_break {
-  display: block;
   clear: left;
+  display: block;
 }
 
 .cke_path_item {
@@ -410,17 +412,11 @@ a.cke_dialog_ui_button_ok {
   overflow: hidden;
   text-align: center;
   text-transform: uppercase;
-  background-image: -webkit-linear-gradient(top, #1892E4 0, #0C7FC7 100%);
-  background-image: linear-gradient(to bottom, #1892E4 0, #0C7FC7 100%);
+  background-color: #0d7ce7;
   color: #ffffff;
   font-size: 12px;
   line-height: 30px;
   padding: 0 10px;
-}
-
-a.cke_dialog_ui_button_ok:active {
-  background-image: -webkit-linear-gradient(top, #0C7FC7 0, #0C7FC7 100%);
-  background-image: linear-gradient(to bottom, #0C7FC7 0, #0C7FC7 100%);
 }
 
 a.cke_dialog_ui_button_ok.cke_disabled {

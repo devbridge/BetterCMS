@@ -21,7 +21,7 @@ namespace BetterCms.Module.Root.Mvc.Helpers
             StringBuilder sb = new StringBuilder();
 
             sb.AppendFormat(
-                "<div class=\"bcms-grid-image-holder\" data-as-image=\"{0}\", data-preview-url=\"{1}\", data-title=\"{2}\", data-frame-css-class=\"{3}\", data-width=\"{4}\", data-height=\"{5}\">",
+                "<div class=\"bcms-grid-image-holder bcms-js-preview-box\" data-as-image=\"{0}\", data-preview-url=\"{1}\", data-title=\"{2}\", data-frame-css-class=\"{3}\", data-width=\"{4}\", data-height=\"{5}\">",
                 asImage,
                 html.Encode(previewUrl),
                 html.Encode(title),

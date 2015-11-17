@@ -1427,14 +1427,12 @@
     <Content Include="Scss\assets\icons\btn-down-arrow.svg" />
     <Content Include="Scss\assets\icons\close-white.svg" />
     <Content Include="Scss\assets\icons\close.svg" />
+    <Content Include="Scss\assets\icons\cp-add.svg" />
+    <Content Include="Scss\assets\icons\cp-delete.svg" />
     <Content Include="Scss\assets\icons\cp-drag-handle.svg" />
     <Content Include="Scss\assets\icons\cp-hide-right.svg" />
     <Content Include="Scss\assets\icons\cp-hide.svg" />
-    <Content Include="Scss\assets\icons\cp-indicate-button.svg" />
-    <Content Include="Scss\assets\icons\cp-indicate-off.svg" />
-    <Content Include="Scss\assets\icons\cp-indicate-on.svg" />
-    <Content Include="Scss\assets\icons\cp-notification-ok.svg" />
-    <Content Include="Scss\assets\icons\cp-notification-warn.svg" />
+    <Content Include="Scss\assets\icons\cp-preview.svg" />
     <Content Include="Scss\assets\icons\cp-pub-ok.svg" />
     <Content Include="Scss\assets\icons\cp-pub-warn.svg" />
     <Content Include="Scss\assets\icons\cp-show-right.svg" />
@@ -1497,6 +1495,7 @@
     <Content Include="Scss\assets\icons\pager-arrow-left.svg" />
     <Content Include="Scss\assets\icons\pager-arrow-right.svg" />
     <Content Include="Scss\assets\icons\search.svg" />
+    <Content Include="Scss\assets\icons\select-arrow.svg" />
     <Content Include="Scss\assets\icons\tag-close.svg" />
     <Content Include="Scss\assets\icons\texture.svg" />
     <Content Include="Scss\assets\icons\toolbar-h1.svg" />
