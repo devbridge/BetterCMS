@@ -197,16 +197,6 @@ WriteLiteral(" data-bcms-order=\"10\"");
 
 WriteLiteral(">\r\n            <div");
 
-WriteLiteral(" class=\"bcms-cp-settings-btn bcms-onclick-action\"");
-
-WriteLiteral(" data-bcms-order=\"30\"");
-
-WriteLiteral(" data-bcms-module=\"bcms.pages.properties\"");
-
-WriteLiteral(" data-bcms-action=\"editPageProperties\"");
-
-WriteLiteral(">Properties</div>\r\n            <div");
-
 WriteLiteral(" class=\"bcms-cp-settings-btn bcms-cp-seo-btn bcms-onclick-action\"");
 
 WriteLiteral(" data-bcms-order=\"20\"");
@@ -215,7 +205,17 @@ WriteLiteral(" data-bcms-module=\"bcms.pages.seo\"");
 
 WriteLiteral(" data-bcms-action=\"openEditSeoDialog\"");
 
-WriteLiteral(">Edit SEO</div>\r\n        </div>\r\n\r\n        <div");
+WriteLiteral(">Edit SEO</div>\r\n            <div");
+
+WriteLiteral(" class=\"bcms-cp-settings-btn bcms-onclick-action\"");
+
+WriteLiteral(" data-bcms-order=\"30\"");
+
+WriteLiteral(" data-bcms-module=\"bcms.pages.properties\"");
+
+WriteLiteral(" data-bcms-action=\"editPageProperties\"");
+
+WriteLiteral(">Properties</div>\r\n        </div>\r\n\r\n        <div");
 
 WriteLiteral(" class=\"bcms-cp-settings-btn bcms-onclick-action\"");
 

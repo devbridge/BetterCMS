@@ -1226,16 +1226,21 @@ a:hover {
   max-width: 140px;
 }
 
-.bcms-buttons-block .bcms-cp-settings-btn {
-  float: left;
+.bcms-buttons-block {
+  margin-top: 10px;
 }
 
-.bcms-buttons-block .bcms-cp-settings-btn + .bcms-cp-seo-btn {
-  width: 49%;
+.bcms-buttons-block .bcms-cp-seo-btn {
+  float: left;
+  width: 48.93617%;
+}
+
+.bcms-buttons-block .bcms-cp-seo-btn + .bcms-cp-settings-btn {
+  float: right;
+  width: 48.93617%;
 }
 
 .bcms-cp-settings-btn {
-  margin-top: 5px;
   margin-bottom: 5px;
   text-align: center;
 }
@@ -1296,7 +1301,6 @@ a:hover {
   box-sizing: border-box;
   float: left;
   font-weight: 700;
-  margin-top: 5px;
   margin-bottom: 5px;
   padding: 0 40px 0 15px;
   position: relative;
@@ -1333,7 +1337,7 @@ a:hover {
 .bcms-cp-logout {
   background-color: #5c626f;
   font-weight: 700;
-  margin: 5px 0;
+  margin-bottom: 5px;
   text-align: center;
   text-transform: uppercase;
 }
@@ -1740,6 +1744,7 @@ a:hover {
   border: 1px solid #d0d0d0;
   box-sizing: border-box;
   color: #636363;
+  font-family: "Open Sans", sans-serif !important;
   font-size: 14px;
   padding: 9px 11px 10px;
   width: 100%;
@@ -2117,7 +2122,7 @@ td .bcms-field-wrapper {
   position: absolute;
   display: none;
   min-height: 35px;
-  outline: 1px solid #0d7ce7;
+  outline: 1px dashed #0d7ce7;
   z-index: 100;
 }
 
@@ -3692,6 +3697,13 @@ textarea.markItUpEditor:focus {
 }
 
 .select2-container {
+  background-color: #ffffff;
+  border: 1px solid #d0d0d0;
+  box-sizing: border-box;
+  cursor: pointer;
+  display: block;
+  height: 36px;
+  overflow: hidden;
   position: relative;
   width: 100%;
 }
@@ -3734,13 +3746,21 @@ textarea.markItUpEditor:focus {
   box-sizing: border-box;
   color: #303646;
   margin-top: -1px;
-  position: absolute;
   width: 100%;
   z-index: 9999;
 }
 
 .select2-drop.select2-display-none {
   display: none;
+}
+
+.select2-drop-active {
+  border-color: #0d7ce7;
+  border-top: 0;
+}
+
+.select2-dropdown-open {
+  border-color: #0d7ce7;
 }
 
 .select2-drop-mask {
@@ -3781,26 +3801,25 @@ textarea.markItUpEditor:focus {
   padding: 9px 11px 10px;
 }
 
-.select2-drop-active {
-  border-color: #0d7ce7;
-  border-top-color: #ffffff;
-}
-
-.select2-dropdown-open > .select2-choices {
-  border-color: #0d7ce7;
-}
-
+.select2-choice,
 .select2-choices {
-  background-color: #ffffff;
-  border: 1px solid #d0d0d0;
-  box-sizing: border-box;
-  cursor: text;
+  height: 100%;
+  width: 100%;
   display: block;
-  height: 36px;
   margin: 0;
-  overflow: hidden;
   padding: 0;
   position: relative;
+  z-index: 10;
+}
+
+.select2-chosen {
+  color: #636363;
+  display: block;
+  font-family: "Open Sans", sans-serif !important;
+  font-size: 14px;
+  height: 100%;
+  line-height: 34px;
+  padding: 0 10px;
 }
 
 .select2-result {
@@ -3834,30 +3853,14 @@ textarea.markItUpEditor:focus {
   padding: 5px 10px;
 }
 
-.select2-offscreen, .select2-offcsreen:focus {
-  clip: rect(0 0 0 0) !important;
-  width: 1px !important;
-  height: 1px !important;
+.select2-offscreen,
+.select2-offcsreen:focus {
   border: 0 !important;
+  clip: rect(0 0 0 0) !important;
+  height: 1px !important;
   margin: 0 !important;
-  padding: 0 !important;
-  overflow: hidden !important;
-  position: absolute !important;
   outline: 0 !important;
-  left: 0px !important;
-  top: 0px !important;
-}
-
-.select2-choice {
-  background-color: #ffffff;
-  border: 1px solid #d0d0d0;
-  box-sizing: border-box;
-  cursor: text;
-  display: block;
-  height: 36px;
-  margin: 0;
-  overflow: hidden;
-  padding: 5px 10px;
-  position: relative;
-  color: #303646;
+  overflow: hidden !important;
+  padding: 0 !important;
+  width: 1px !important;
 }

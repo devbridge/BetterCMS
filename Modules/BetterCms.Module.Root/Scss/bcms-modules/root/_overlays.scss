@@ -25,7 +25,7 @@ $overlay-control-buttons: (
         @include position(absolute, null);
         display: none;
         min-height: 35px;
-        outline: $border-thin-blue;
+        outline: $border-thin-blue-dashed;
         z-index: 100;
 
         &.bcms-show-overlay {

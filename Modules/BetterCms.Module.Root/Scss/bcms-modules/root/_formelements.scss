@@ -4,7 +4,10 @@
     border: $border-form-element;
     box-sizing: border-box;
     color: $text-gray;
-    font-size: 14px;
+    font: {
+        family: $font-base-family;
+        size: 14px;
+    }
     padding: 9px 11px 10px;
     width: 100%;
 

@@ -194,12 +194,15 @@ $control-panel-switch-status: (
 
 .bcms-buttons-block {
     @include clearfix();
+    margin-top: 10px;
 
-    .bcms-cp-settings-btn {
+    .bcms-cp-seo-btn {
         float: left;
+        width: span(6);
 
-        + .bcms-cp-seo-btn {
-            width: 49%;
+        + .bcms-cp-settings-btn {
+            float: right;
+            width: span(6);
         }
     }
 }
@@ -207,10 +210,7 @@ $control-panel-switch-status: (
 .bcms-cp {
     &-settings-btn {
         @extend %cp-settings-btn-frame;
-        margin: {
-            top: 5px;
-            bottom: 5px;
-        }
+        margin-bottom: 5px;
         text-align: center;
     }
 
@@ -261,10 +261,7 @@ $control-panel-switch-status: (
         box-sizing: border-box;
         float: left;
         font-weight: 700;
-        margin: {
-            top: 5px;
-            bottom: 5px;
-        }
+        margin-bottom: 5px;
         padding: 0 40px 0 15px;
         position: relative;
         text-transform: uppercase;
@@ -295,7 +292,7 @@ $control-panel-switch-status: (
         @extend %cp-btn-frame;
         background-color: $cp-gray;
         font-weight: 700;
-        margin: 5px 0;
+        margin-bottom: 5px;
         text-align: center;
         text-transform: uppercase;
 
