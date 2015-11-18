@@ -601,7 +601,7 @@
     <value>Add Tags</value>
   </data>
   <data name="Authentication_ViewAsPublic_Public" xml:space="preserve">
-    <value>Anonymous</value>
+    <value>Preview</value>
   </data>
   <data name="MasterPagesPath_CurrentPage_Title" xml:space="preserve">
     <value>Current page</value>

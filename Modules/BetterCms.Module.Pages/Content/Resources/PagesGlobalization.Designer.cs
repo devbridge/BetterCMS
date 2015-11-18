@@ -2950,7 +2950,7 @@ namespace BetterCms.Module.Pages.Content.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Create Master.
+        ///   Looks up a localized string similar to Create new template.
         /// </summary>
         public static string Sidebar_CreateMasterPageButtonTitle {
             get {
@@ -2968,7 +2968,7 @@ namespace BetterCms.Module.Pages.Content.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Edit template properties.
+        ///   Looks up a localized string similar to Properties.
         /// </summary>
         public static string Sidebar_EditMasterPagePropertiesButtonTitle {
             get {
@@ -2977,7 +2977,7 @@ namespace BetterCms.Module.Pages.Content.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Edit page properties.
+        ///   Looks up a localized string similar to Properties.
         /// </summary>
         public static string Sidebar_EditPagePropertiesButtonTitle {
             get {
@@ -3067,7 +3067,7 @@ namespace BetterCms.Module.Pages.Content.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Translate page.
+        ///   Looks up a localized string similar to Translate this page.
         /// </summary>
         public static string Sidebar_TranslatePageButtonTitle {
             get {
@@ -3076,7 +3076,7 @@ namespace BetterCms.Module.Pages.Content.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Clone page.
+        ///   Looks up a localized string similar to Duplicate this page.
         /// </summary>
         public static string Siderbar_ClonePageButtonTitle {
             get {
