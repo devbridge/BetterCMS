@@ -51,8 +51,10 @@
                 {
                     <div class="bcms-filter-options">
                         <div class="bcms-filter-text">@PagesGlobalization.SiteSettings_Pages_FilterByLanguage</div>
-                        <select class="bcms-global-select" name="LanguageId" data-bind="options: languages, value: languageId, optionsText: 'Value', optionsValue: 'Key'" />
-                    </div>
+                        <div class="bcms-field-wrapper">
+                            <select class="bcms-global-select" name="LanguageId" data-bind="options: languages, value: languageId, optionsText: 'Value', optionsValue: 'Key'" />
+                            </div>
+                   </div>
                 }
                 <div class="bcms-filter-options">
                     <div class="bcms-filter-text">@PagesGlobalization.SiteSettings_Pages_FilterByStatus</div>
@@ -118,8 +120,8 @@
             }
 
             <div class="bcms-btn-field-holder">
-                <div class="bcms-btn-cancel" data-bind="click: clearFilter">@PagesGlobalization.SiteSettings_Pages_FilterClear</div>
                 <div class="bcms-btn-primary" data-bind="click: searchWithFilter">@PagesGlobalization.SiteSettings_Pages_FilterSearch</div>
+                <div class="bcms-btn-cancel" data-bind="click: clearFilter">@PagesGlobalization.SiteSettings_Pages_FilterClear</div>
             </div>
         </div>
     </div>

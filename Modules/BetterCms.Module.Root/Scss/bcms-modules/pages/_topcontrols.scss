@@ -143,19 +143,23 @@
             color: $gray-smoke;
             bottom-color: $bg-smoke;
         }
+
+        .bcms-filterbox {
+            color: $text-gray;
+        }
     }
 }
 
 .bcms-filterbox {
+    @include transition(background-color 200ms, color 200ms);
     @include pad(5px 25px);
     background: url($bcms-grid-filter) no-repeat 92% center;
-    color: $gray-light;
+    color: $text-light;
     cursor: pointer;
     font-size: 11px;
     line-height: 28px;
     position: relative;
     text-transform: uppercase;
-
 }
 
 .bcms-filter {
@@ -181,22 +185,22 @@
 
         .bcms-filter-text {
             @include vertical-align();
+            width: 22%;
         }
 
         .bcms-field-wrapper {
             @include vertical-align();
+            width: 75%;
         }
 
         .bcms-global-select {
-            @include vertical-align();
-            height: 28px;
-            padding-top: 2px;
-            width: 200px;
+            //todo temp
+            width: 100%;
         }
     }
 
     &-text {
-        color: $text-light;
+        color: $text-gray;
         font-size: 11px;
         line-height: 20px;
         text-transform: uppercase;

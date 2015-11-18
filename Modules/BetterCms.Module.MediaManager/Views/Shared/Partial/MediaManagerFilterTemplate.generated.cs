@@ -350,22 +350,7 @@ WriteLiteral("</span>\n            </div>\n\n            <div");
 
 WriteLiteral(" class=\"bcms-btn-field-holder\"");
 
-WriteLiteral(">\n                <div");
-
-WriteLiteral(" class=\"bcms-btn-cancel\"");
-
-WriteLiteral(" data-bind=\"click: clearFilter\"");
-
-WriteLiteral(">");
-
-            
-            #line 84 "..\..\Views\Shared\Partial\MediaManagerFilterTemplate.cshtml"
-                                                                       Write(RootGlobalization.Button_Filter_Clear);
-
-            
-            #line default
-            #line hidden
-WriteLiteral("</div>\n                <div");
+WriteLiteral(">\r\n                <div");
 
 WriteLiteral(" class=\"bcms-btn-primary\"");
 
@@ -374,8 +359,23 @@ WriteLiteral(" data-bind=\"click: searchWithFilter\"");
 WriteLiteral(">");
 
             
-            #line 85 "..\..\Views\Shared\Partial\MediaManagerFilterTemplate.cshtml"
+            #line 84 "..\..\Views\Shared\Partial\MediaManagerFilterTemplate.cshtml"
                                                                              Write(RootGlobalization.Button_Filter_Search);
+
+            
+            #line default
+            #line hidden
+WriteLiteral("</div>\n                <div");
+
+WriteLiteral(" class=\"bcms-btn-cancel\"");
+
+WriteLiteral(" data-bind=\"click: clearFilter\"");
+
+WriteLiteral(">");
+
+            
+            #line 85 "..\..\Views\Shared\Partial\MediaManagerFilterTemplate.cshtml"
+                                                                       Write(RootGlobalization.Button_Filter_Clear);
 
             
             #line default
