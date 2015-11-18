@@ -118,7 +118,7 @@
                         <div class="bcms-input-list-holder">
                             <div class="bcms-content-titles">@BlogGlobalization.EditBlogPost_Author_Title</div>
                             @Html.Tooltip(BlogGlobalization.EditBlogPost_Author_Tooltip_Description)
-                            @Html.DropDownListFor(model => model.AuthorId, Model.Authors.ToSelectList(Model.AuthorId), string.Empty, new { @class = "bcms-global-select", @style = "width: 245px;" })
+                            @Html.DropDownListFor(model => model.AuthorId, Model.Authors.ToSelectList(Model.AuthorId), string.Empty, new { @id = "bcms-js-authors-select", @style = "width: 245px;" })
                         </div>
 
                         <div class="bcms-input-list-holder">

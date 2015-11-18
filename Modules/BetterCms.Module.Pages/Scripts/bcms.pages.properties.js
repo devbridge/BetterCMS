@@ -213,7 +213,7 @@ bettercms.define('bcms.pages.properties', ['bcms.jquery', 'bcms', 'bcms.modal', 
             var optionsContainer = dialog.container.find(selectors.optionsTab),
                 optionListViewModel = options.createOptionValuesViewModel(optionsContainer, content.Data.OptionValues, content.Data.CustomOptions),
                 tagsViewModel = new tags.TagsListViewModel(content.Data.Tags),
-                categoriesModel = new categories.CategoriesSelectListModel(content.Data.Categories),
+                categoriesModel = new categories.CategoriesSelectListModel(content.Data.Categories, dialog.container),
                 accessControlViewModel = security.createUserAccessViewModel(content.Data.UserAccessList),
                 translationsViewModel = content.Data.Languages ? new pageLanguages.PageTranslationsListViewModel(content.Data.Translations, content.Data.Languages, content.Data.LanguageId, content.Data.PageId) : null,
                 templatesViewModel = new TemplatesListViewModel(content.Data.Templates, dialog, optionsContainer, optionListViewModel),
@@ -222,7 +222,7 @@ bettercms.define('bcms.pages.properties', ['bcms.jquery', 'bcms', 'bcms.modal', 
                 form = dialog.container.find(selectors.pagePropertiesForm),
                 codeEditorInitialized = false;
 
-            categories.initCategoriesSelect(categoriesModel, content.Data.CategoriesLookupList);
+            categories.initCategoriesSelect(categoriesModel, content.Data.CategoriesLookupList, dialog.container);
 
             $(selectors.pagePropertiesForceAccessProtocolSelect).select2({
                 minimumResultsForSearch: -1
