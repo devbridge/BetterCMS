@@ -194,7 +194,7 @@ $control-panel-switch-status: (
 
 .bcms-buttons-block {
     @include clearfix();
-    margin-top: 10px;
+    margin: 5px 0;
 
     .bcms-cp-seo-btn {
         float: left;
@@ -210,7 +210,7 @@ $control-panel-switch-status: (
 .bcms-cp {
     &-settings-btn {
         @extend %cp-settings-btn-frame;
-        margin-bottom: 5px;
+        margin-top: 5px;
         text-align: center;
     }
 
@@ -256,16 +256,22 @@ $control-panel-switch-status: (
     }
 
     &-delete {
+        @include size(25px 20px);
+        @include position(absolute, null 10px 10px null);
+        background: url($bcms-cp-delete) no-repeat center;
+        box-sizing: border-box;
+        cursor: pointer;
+        overflow: hidden;
+        text-indent: -999em;
+    }
+
+    &-logout {
         @extend %cp-btn-frame;
         background-color: $cp-red;
-        box-sizing: border-box;
+        border-color: $cp-red;
+        color: $white;
         float: left;
-        font-weight: 700;
-        margin-bottom: 5px;
-        padding: 0 40px 0 15px;
-        position: relative;
-        text-transform: uppercase;
-        width: 145px;
+        width: span(6);
 
         &:hover {
             background-color: lighten($cp-red, 10%);
@@ -275,33 +281,9 @@ $control-panel-switch-status: (
             background-color: darken($cp-red, 5%);
         }
 
-        + .bcms-cp-logout {
+        + .bcms-cp-settings-btn {
             float: right;
-            width: 90px;
-        }
-
-        @include virtual(after) {
-            @include size(18px);
-            @include positioning($center-y: true);
-            background: url($bcms-cp-delete) no-repeat center;
-            right: 10px;
-        }
-    }
-
-    &-logout {
-        @extend %cp-btn-frame;
-        background-color: $cp-gray;
-        font-weight: 700;
-        margin-bottom: 5px;
-        text-align: center;
-        text-transform: uppercase;
-
-        &:hover {
-            background-color: lighten($cp-gray, 10%);
-        }
-
-        &:active {
-            background-color: darken($cp-gray, 5%);
+            width: span(6);
         }
     }
 
@@ -315,13 +297,6 @@ $control-panel-switch-status: (
         font-size: 12px;
         line-height: 1;
         margin: 10px 10px 0;
-    }
-
-    &-position-handle {
-        @include size(25px 22px);
-        background: $gray-smoke60 url($bcms-cp-stick-handle) no-repeat center;
-        cursor: pointer;
-        float: right;
     }
 }
 
@@ -436,8 +411,8 @@ $control-panel-switch-status: (
         float: right;
     }
 
-    .bcms-cp-position-handle {
-        background-image: url($bcms-cp-stick-handle-right);
-        float: left;
+    .bcms-cp-delete {
+        left: 10px;
+        right: auto;
     }
 }

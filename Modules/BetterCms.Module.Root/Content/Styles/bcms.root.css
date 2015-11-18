@@ -1051,7 +1051,7 @@ a:hover {
   width: 195px;
 }
 
-.bcms-cp-btn, .bcms-cp-delete, .bcms-cp-logout {
+.bcms-cp-btn, .bcms-cp-logout {
   -webkit-transition: background-color 200ms;
   -moz-transition: background-color 200ms;
   transition: background-color 200ms;
@@ -1251,7 +1251,7 @@ a:hover {
 }
 
 .bcms-buttons-block {
-  margin-top: 10px;
+  margin: 5px 0;
 }
 
 .bcms-buttons-block .bcms-cp-seo-btn {
@@ -1265,7 +1265,7 @@ a:hover {
 }
 
 .bcms-cp-settings-btn {
-  margin-bottom: 5px;
+  margin-top: 5px;
   text-align: center;
 }
 
@@ -1321,57 +1321,37 @@ a:hover {
 }
 
 .bcms-cp-delete {
-  background-color: #a1312e;
-  box-sizing: border-box;
-  float: left;
-  font-weight: 700;
-  margin-bottom: 5px;
-  padding: 0 40px 0 15px;
-  position: relative;
-  text-transform: uppercase;
-  width: 145px;
-}
-
-.bcms-cp-delete:hover {
-  background-color: #c73f3b;
-}
-
-.bcms-cp-delete:active {
-  background-color: #8d2b28;
-}
-
-.bcms-cp-delete + .bcms-cp-logout {
-  float: right;
-  width: 90px;
-}
-
-.bcms-cp-delete:after {
-  content: "";
-  height: 18px;
-  width: 18px;
+  height: 20px;
+  width: 25px;
   position: absolute;
-  -webkit-transform: translateY(-50%);
-  -moz-transform: translateY(-50%);
-  transform: translateY(-50%);
-  top: 50%;
-  background: url("data:image/svg+xml;base64,PHN2ZyBoZWlnaHQ9IjE4IiB3aWR0aD0iMTgiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgdmlld0JveD0iMCAwIDE4IDE4Ij48cGF0aCBmaWxsPSIjNjMxMjEwIiBmaWxsLXJ1bGU9ImV2ZW5vZGQiIGQ9Im01IDB2NGgtNXYyaDJ2MTJoMTR2LTEyaDJ2LTJoLTV2LTRoLThtMiAyaDR2MmgtNHYtMm0tMyA0aDEwdjEwaC0xMHYtMTBtNiA3aDJ2LTRoLTJ2NG0tNCAwaDJ2LTRoLTJ2NCIvPjwvc3ZnPg==") no-repeat center;
   right: 10px;
+  bottom: 10px;
+  background: url("data:image/svg+xml;base64,PHN2ZyBoZWlnaHQ9IjE4IiB3aWR0aD0iMTgiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgdmlld0JveD0iMCAwIDE4IDE4Ij48cGF0aCBmaWxsPSIjYzRjNGM0IiBmaWxsLXJ1bGU9ImV2ZW5vZGQiIGQ9Im01IDB2NGgtNXYyaDJ2MTJoMTR2LTEyaDJ2LTJoLTV2LTRoLThtMiAyaDR2MmgtNHYtMm0tMyA0aDEwdjEwaC0xMHYtMTBtNiA3aDJ2LTRoLTJ2NG0tNCAwaDJ2LTRoLTJ2NCIvPjwvc3ZnPg==") no-repeat center;
+  box-sizing: border-box;
+  cursor: pointer;
+  overflow: hidden;
+  text-indent: -999em;
 }
 
 .bcms-cp-logout {
-  background-color: #5c626f;
-  font-weight: 700;
-  margin-bottom: 5px;
-  text-align: center;
-  text-transform: uppercase;
+  background-color: #a1312e;
+  border-color: #a1312e;
+  color: #ffffff;
+  float: left;
+  width: 48.93617%;
 }
 
 .bcms-cp-logout:hover {
-  background-color: #737b8b;
+  background-color: #c73f3b;
 }
 
 .bcms-cp-logout:active {
-  background-color: #505661;
+  background-color: #8d2b28;
+}
+
+.bcms-cp-logout + .bcms-cp-settings-btn {
+  float: right;
+  width: 48.93617%;
 }
 
 .bcms-cp-logo {
@@ -1384,14 +1364,6 @@ a:hover {
   font-size: 12px;
   line-height: 1;
   margin: 10px 10px 0;
-}
-
-.bcms-cp-position-handle {
-  height: 22px;
-  width: 25px;
-  background: #555555 url("data:image/svg+xml;base64,PHN2ZyBoZWlnaHQ9IjI1IiB3aWR0aD0iMjYiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgdmlld0JveD0iMCAwIDI2IDI1Ij48ZyBmaWxsLXJ1bGU9ImV2ZW5vZGQiPjxwYXRoIGZpbGw9IiM1YzYyNmYiIGQ9Im0wIDBoMjZ2MjVoLTI2di0yNSIvPjxnIGZpbGw9IiNhN2IxYzYiPjxwYXRoIGQ9Im00IDRoMTh2MmgtMTh2LTIiLz48cGF0aCBkPSJtNCA5aDExdjJoLTExdi0yIi8+PHBhdGggZD0ibTQgMTRoMTF2MmgtMTF2LTIiLz48cGF0aCBkPSJtNCAxOWgxOHYyaC0xOHYtMiIvPjwvZz48L2c+PC9zdmc+") no-repeat center;
-  cursor: pointer;
-  float: right;
 }
 
 .bcms-publisher-block {
@@ -1518,9 +1490,9 @@ a:hover {
   float: right;
 }
 
-.bcms-sidemenu-right .bcms-cp-position-handle {
-  background-image: url("data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIyNiIgaGVpZ2h0PSIyNSIgdmlld0JveD0iLTI5MiAzODQgMjYgMjUiIGVuYWJsZS1iYWNrZ3JvdW5kPSJuZXcgLTI5MiAzODQgMjYgMjUiPjxwYXRoIGQ9Im0tMjY2IDQwOWgtMjZ2LTI1aDI2djI1IiBmaWxsPSIjNWM2MjZmIi8+PGcgZmlsbD0iI2E3YjFjNiI+PHBhdGggZD0ibS0yNzAgNDA1aC0xOHYtMmgxOHYyIi8+PHBhdGggZD0ibS0yNzAgNDAwaC0xMXYtMmgxMXYyIi8+PHBhdGggZD0ibS0yNzAgMzk1aC0xMXYtMmgxMXYyIi8+PHBhdGggZD0ibS0yNzAgMzkwaC0xOHYtMmgxOHYyIi8+PC9nPjwvc3ZnPg==");
-  float: left;
+.bcms-sidemenu-right .bcms-cp-delete {
+  left: 10px;
+  right: auto;
 }
 
 .bcms-tree-container {
