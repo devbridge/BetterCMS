@@ -14,8 +14,8 @@ $control-panel-buttons: (
 );
 
 $control-panel-switch-status: (
-                ('on'),
-                ('off')
+                ('on', $cp-blue, auto, 3px),
+                ('off', null, 3px, auto)
 );
 
 %cp-btn-frame {
@@ -309,54 +309,6 @@ $control-panel-switch-status: (
         margin-bottom: 10px;
     }
 
-    &-switch {
-        @include transition(background-color 200ms);
-        @include size(50px 20px);
-        @include vertical-align();
-        background-color: $cp-gray;
-        border-radius: 2px;
-        box-sizing: border-box;
-        cursor: pointer;
-        overflow: hidden;
-        position: relative;
-
-        @include virtual(after) {
-            @include positioning($center-y: true);
-            @include size(17px 14px);
-            background-color: $cp-light;
-            border-radius: 2px;
-            left: 3px;
-            overflow: hidden;
-
-            .bcms-publisher-switch-on & {
-                left: auto;
-                right: 3px;
-            }
-        }
-
-        .bcms-publisher-switch-on & {
-            background-color: $cp-blue;
-        }
-    }
-
-    @each $name, $name-icon in $control-panel-switch-status {
-        &-#{$name} {
-            color: $white;
-            float: left;
-            font: {
-                family: $font-base-family;
-                size: 10px;
-                weight: 600;
-            }
-            height: 100%;
-            line-height: 20px;
-            width: 50%;
-            overflow: hidden;
-            text-transform: uppercase;
-            text-align: center;
-        }
-    }
-
     &-info {
         @include vertical-align();
         color: $cp-smoke;
@@ -380,6 +332,53 @@ $control-panel-switch-status: (
         display: inline;
         font-weight: 700;
         margin-left: 5px;
+    }
+}
+
+.bcms-switch {
+    @include transition(background-color 200ms);
+    @include size(50px 20px);
+    @include vertical-align();
+    background-color: $cp-gray;
+    border-radius: 2px;
+    box-sizing: border-box;
+    cursor: pointer;
+    overflow: hidden;
+    position: relative;
+
+    @include virtual(after) {
+        @include positioning($center-y: true);
+        @include size(17px 14px);
+        background-color: $cp-light;
+        border-radius: 2px;
+        overflow: hidden;
+    }
+
+    @each $name, $bg-color, $left, $right in $control-panel-switch-status {
+        &.bcms-switch-#{$name} {
+            background-color: $bg-color;
+
+            &:after {
+                left: $left;
+                right: $right;
+            }
+        }
+    }
+
+    &-text {
+        color: $white;
+        float: left;
+        font: {
+            family: $font-base-family;
+            size: 10px;
+            weight: 600;
+        }
+        height: 100%;
+        line-height: 20px;
+        overflow: hidden;
+        text-align: center;
+        text-transform: uppercase;
+        width: 50%;
     }
 }
 

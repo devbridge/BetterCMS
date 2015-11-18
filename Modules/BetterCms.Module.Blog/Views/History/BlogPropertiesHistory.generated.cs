@@ -112,7 +112,7 @@ WriteLiteral("            ");
 
             
             #line 16 "..\..\Views\History\BlogPropertiesHistory.cshtml"
-       Write(Html.DateTextBoxFor(model => model.ActivationDate, Model.ActivationDate, new Dictionary<string, object> { { "readonly", "readonly" }, { "class", "bcms-field-text bcms-datepicker" }, { "style", "width: 127px;" } }));
+       Write(Html.DateTextBoxFor(model => model.ActivationDate, Model.ActivationDate, new Dictionary<string, object> { { "readonly", "readonly" }, { "class", "bcms-field-text bcms-datepicker" } }));
 
             
             #line default
@@ -144,7 +144,7 @@ WriteLiteral("            ");
 
             
             #line 23 "..\..\Views\History\BlogPropertiesHistory.cshtml"
-       Write(Html.DateTextBoxFor(model => model.ExpirationDate, Model.ExpirationDate, new Dictionary<string, object> { { "readonly", "readonly" }, { "class", "bcms-field-text bcms-datepicker" }, { "style", "width: 127px;" } }));
+       Write(Html.DateTextBoxFor(model => model.ExpirationDate, Model.ExpirationDate, new Dictionary<string, object> { { "readonly", "readonly" }, { "class", "bcms-field-text bcms-datepicker" } }));
 
             
             #line default

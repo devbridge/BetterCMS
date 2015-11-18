@@ -310,10 +310,8 @@
       <SubType>Designer</SubType>
       <LastGenOutput>BlogGlobalization.Designer.cs</LastGenOutput>
     </EmbeddedResource>
-    <EmbeddedResource Include="Content\Styles\Images\sprite-blog.png" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Content\Styles\Images\icn-zoom-notcompatible.png" />
     <EmbeddedResource Include="Scripts\bcms.blog.js" />
     <Content Include="BuildConfiguration.xml">
       <SubType>Designer</SubType>
@@ -421,7 +419,9 @@
       <LastGenOutput>UploadImportFile.generated.cs</LastGenOutput>
     </None>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="Content\Styles\Images\" />
+  </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
     <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>

@@ -799,7 +799,7 @@
     <value>Edit Template</value>
   </data>
   <data name="TemplateRegions_AddNewRegion" xml:space="preserve">
-    <value>Add New Region +</value>
+    <value>Add New Region</value>
   </data>
   <data name="TemplateRegions_IdentificatorColumn" xml:space="preserve">
     <value>Identificator</value>
@@ -820,7 +820,7 @@
     <value>Are you sure you want to delete the "{0}" template?</value>
   </data>
   <data name="SiteSettings_Template_RegisterNew" xml:space="preserve">
-    <value>Register +</value>
+    <value>Register</value>
   </data>
   <data name="SiteSettings_Template_Search" xml:space="preserve">
     <value>Search</value>
@@ -958,7 +958,7 @@
     <value>Cannot delete template, because it is in use.</value>
   </data>
   <data name="AddPageContent_WidgetTab_RegisterButton" xml:space="preserve">
-    <value>Register +</value>
+    <value>Register</value>
   </data>
   <data name="SaveTemplate_DublicateRegionIdentificator_Message" xml:space="preserve">
     <value>Duplicate template region found.</value>
@@ -1261,7 +1261,7 @@
     <value>There is already translation with current language. If you change current page's language to "{0}", translation will be removed from list. Are you sure you want to continue?</value>
   </data>
   <data name="EditPageTranslations_AddTranslation_ButtonTitle" xml:space="preserve">
-    <value>Add Translation +</value>
+    <value>Add Translation</value>
   </data>
   <data name="EditPageTranslations_Language_Title" xml:space="preserve">
     <value>Language</value>

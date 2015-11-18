@@ -37,7 +37,8 @@ namespace BetterCms.Module.Root.Controllers
                     { "png", "image/png" },
                     { "ico", "image/ico" },
                     { "jpg", "image/jpeg" },
-                    { "jpeg", "image/jpeg" },                    
+                    { "jpeg", "image/jpeg" },
+                    { "svg", "image/svg+xml" },                    
                     { "txt", "text/plain" },
                     { "xml", "application/xml" },
                     { "zip", "application/zip" }

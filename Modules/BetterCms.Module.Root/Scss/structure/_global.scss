@@ -34,11 +34,21 @@ $loading-spinner: (
     }
 
     &-info-block {
+        @include clearfix();
         margin: 30px 0;
 
         .bcms-input-list-holder {
-            @include vertical-align($align: top);
+            @include span(2 before);
             margin-top: 0;
+
+            &:first-child {
+                margin-left: 0;
+                width: span(8);
+            }
+        }
+
+        .bcms-drop-field-helper {
+            width: span(4);
         }
     }
 

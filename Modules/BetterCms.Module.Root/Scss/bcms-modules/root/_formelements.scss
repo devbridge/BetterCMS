@@ -35,6 +35,9 @@
         @extend %input-fields-ui;
         height: $form-element-height;
 
+        &.bcms-datepicker {
+            padding-right: 32px;
+        }
     }
 
     &-textarea {

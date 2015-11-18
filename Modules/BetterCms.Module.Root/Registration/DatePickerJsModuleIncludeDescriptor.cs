@@ -16,7 +16,7 @@ namespace BetterCms.Module.Root.Registration
 
             Links = new IActionProjection[]
                 { 
-                    new JavaScriptModuleLink(this, "calendarImageUrl", VirtualPath.Combine(module.CssBasePath, "images", "icn-calendar.png"))
+                    new JavaScriptModuleLink(this, "calendarImageUrl", VirtualPath.Combine(module.CssBasePath, "images", "calendar.svg"))
                 };
 
             Globalization = new IActionProjection[]

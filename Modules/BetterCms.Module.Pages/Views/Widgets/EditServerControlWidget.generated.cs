@@ -194,113 +194,174 @@ WriteLiteral(" class=\"bcms-tab-single\"");
 
 WriteLiteral(">\r\n                <div");
 
+WriteLiteral(" class=\"bcms-form-block-holder\"");
+
+WriteLiteral(">\r\n                    <div>\r\n                        <div");
+
 WriteLiteral(" class=\"bcms-input-list-holder\"");
 
-WriteLiteral(">\r\n                    <div");
+WriteLiteral(">\r\n                            <div");
 
 WriteLiteral(" class=\"bcms-content-titles\"");
 
 WriteLiteral(">");
 
             
-            #line 37 "..\..\Views\Widgets\EditServerControlWidget.cshtml"
-                                                Write(PagesGlobalization.Widget_Title_Title);
+            #line 39 "..\..\Views\Widgets\EditServerControlWidget.cshtml"
+                                                        Write(PagesGlobalization.Widget_Title_Title);
 
             
             #line default
             #line hidden
 WriteLiteral("</div>\r\n");
 
-WriteLiteral("                    ");
-
-            
-            #line 38 "..\..\Views\Widgets\EditServerControlWidget.cshtml"
-               Write(Html.Tooltip(PagesGlobalization.Widget_Title_Tooltip_Description));
-
-            
-            #line default
-            #line hidden
-WriteLiteral("\r\n                    <div");
-
-WriteLiteral(" class=\"bcms-field-wrapper\"");
-
-WriteLiteral(">\r\n");
-
-WriteLiteral("                        ");
+WriteLiteral("                            ");
 
             
             #line 40 "..\..\Views\Widgets\EditServerControlWidget.cshtml"
-                   Write(Html.TextBoxFor(model => model.Name, new { @class = "bcms-field-text" }));
+                       Write(Html.Tooltip(PagesGlobalization.Widget_Title_Tooltip_Description));
+
+            
+            #line default
+            #line hidden
+WriteLiteral("\r\n                            <div");
+
+WriteLiteral(" class=\"bcms-field-wrapper\"");
+
+WriteLiteral(">\r\n");
+
+WriteLiteral("                                ");
+
+            
+            #line 42 "..\..\Views\Widgets\EditServerControlWidget.cshtml"
+                           Write(Html.TextBoxFor(model => model.Name, new { @class = "bcms-field-text" }));
 
             
             #line default
             #line hidden
 WriteLiteral("\r\n");
 
-WriteLiteral("                        ");
+WriteLiteral("                                ");
 
             
-            #line 41 "..\..\Views\Widgets\EditServerControlWidget.cshtml"
-                   Write(Html.BcmsValidationMessageFor(m => m.Name));
+            #line 43 "..\..\Views\Widgets\EditServerControlWidget.cshtml"
+                           Write(Html.BcmsValidationMessageFor(m => m.Name));
 
             
             #line default
             #line hidden
-WriteLiteral("\r\n                    </div>\r\n                </div>\r\n\r\n                <div");
+WriteLiteral("\r\n                            </div>\r\n                        </div>\r\n\r\n         " +
+"               <div");
 
 WriteLiteral(" class=\"bcms-input-list-holder\"");
 
-WriteLiteral(">\r\n                    <div");
+WriteLiteral(">\r\n                            <div");
 
 WriteLiteral(" class=\"bcms-content-titles\"");
 
 WriteLiteral(">");
 
             
-            #line 46 "..\..\Views\Widgets\EditServerControlWidget.cshtml"
-                                                Write(PagesGlobalization.Widget_Url_Title);
+            #line 48 "..\..\Views\Widgets\EditServerControlWidget.cshtml"
+                                                        Write(PagesGlobalization.Widget_Url_Title);
 
             
             #line default
             #line hidden
 WriteLiteral("</div>\r\n");
 
-WriteLiteral("                    ");
+WriteLiteral("                            ");
 
             
-            #line 47 "..\..\Views\Widgets\EditServerControlWidget.cshtml"
-               Write(Html.Tooltip(PagesGlobalization.Widget_Url_Tooltip_Description));
+            #line 49 "..\..\Views\Widgets\EditServerControlWidget.cshtml"
+                       Write(Html.Tooltip(PagesGlobalization.Widget_Url_Tooltip_Description));
 
             
             #line default
             #line hidden
-WriteLiteral("\r\n                    <div");
+WriteLiteral("\r\n                            <div");
 
 WriteLiteral(" class=\"bcms-field-wrapper\"");
 
 WriteLiteral(">\r\n");
 
-WriteLiteral("                        ");
+WriteLiteral("                                ");
 
             
-            #line 49 "..\..\Views\Widgets\EditServerControlWidget.cshtml"
-                   Write(Html.TextBoxFor(model => model.Url, new { @class = "bcms-field-text" }));
+            #line 51 "..\..\Views\Widgets\EditServerControlWidget.cshtml"
+                           Write(Html.TextBoxFor(model => model.Url, new { @class = "bcms-field-text" }));
 
             
             #line default
             #line hidden
 WriteLiteral("\r\n");
 
-WriteLiteral("                        ");
+WriteLiteral("                                ");
 
             
-            #line 50 "..\..\Views\Widgets\EditServerControlWidget.cshtml"
-                   Write(Html.BcmsValidationMessageFor(m => m.Url));
+            #line 52 "..\..\Views\Widgets\EditServerControlWidget.cshtml"
+                           Write(Html.BcmsValidationMessageFor(m => m.Url));
 
             
             #line default
             #line hidden
-WriteLiteral("\r\n                    </div>\r\n                </div>\r\n\r\n                <div");
+WriteLiteral("\r\n                            </div>\r\n                        </div>\r\n\r\n         " +
+"               <div");
+
+WriteLiteral(" class=\"bcms-input-list-holder\"");
+
+WriteLiteral(">\r\n                            <div");
+
+WriteLiteral(" class=\"bcms-content-titles\"");
+
+WriteLiteral(">");
+
+            
+            #line 57 "..\..\Views\Widgets\EditServerControlWidget.cshtml"
+                                                        Write(PagesGlobalization.WidgetPreviewImageUrl_Title);
+
+            
+            #line default
+            #line hidden
+WriteLiteral("</div>\r\n");
+
+WriteLiteral("                            ");
+
+            
+            #line 58 "..\..\Views\Widgets\EditServerControlWidget.cshtml"
+                       Write(Html.Tooltip(PagesGlobalization.WidgetPreviewImageUrl_Tooltip_Description));
+
+            
+            #line default
+            #line hidden
+WriteLiteral("\r\n                            <div");
+
+WriteLiteral(" class=\"bcms-field-wrapper\"");
+
+WriteLiteral(">\r\n");
+
+WriteLiteral("                                ");
+
+            
+            #line 60 "..\..\Views\Widgets\EditServerControlWidget.cshtml"
+                           Write(Html.TextBoxFor(model => model.PreviewImageUrl, new { @class = "bcms-field-text" }));
+
+            
+            #line default
+            #line hidden
+WriteLiteral("\r\n");
+
+WriteLiteral("                                ");
+
+            
+            #line 61 "..\..\Views\Widgets\EditServerControlWidget.cshtml"
+                           Write(Html.BcmsValidationMessageFor(m => m.PreviewImageUrl));
+
+            
+            #line default
+            #line hidden
+WriteLiteral("\r\n                            </div>\r\n                        </div>\r\n\r\n         " +
+"               <div");
 
 WriteLiteral(" class=\"bcms-input-list-holder\"");
 
@@ -308,126 +369,74 @@ WriteLiteral(" data-bind=\"with: categories\"");
 
 WriteLiteral(">\r\n");
 
-WriteLiteral("                    ");
+WriteLiteral("                            ");
 
             
-            #line 55 "..\..\Views\Widgets\EditServerControlWidget.cshtml"
-               Write(Html.Partial("~/Areas/bcms-root/Views/Category/CategoriesTemplate.cshtml", categoriesTemplateViewModel));
+            #line 66 "..\..\Views\Widgets\EditServerControlWidget.cshtml"
+                       Write(Html.Partial("~/Areas/bcms-root/Views/Category/CategoriesTemplate.cshtml", categoriesTemplateViewModel));
 
             
             #line default
             #line hidden
-WriteLiteral("\r\n                </div>\r\n\r\n                <div");
+WriteLiteral("\r\n                        </div>\r\n                    </div>\r\n\r\n                 " +
+"   <div>\r\n                        <div");
 
 WriteLiteral(" class=\"bcms-input-list-holder\"");
 
-WriteLiteral(">\r\n                    <div");
+WriteLiteral(">\r\n                            <div");
 
 WriteLiteral(" class=\"bcms-content-titles\"");
 
 WriteLiteral(">");
 
             
-            #line 59 "..\..\Views\Widgets\EditServerControlWidget.cshtml"
-                                                Write(PagesGlobalization.WidgetPreviewImageUrl_Title);
+            #line 72 "..\..\Views\Widgets\EditServerControlWidget.cshtml"
+                                                        Write(PagesGlobalization.WidgetPreviewImage_Title);
 
             
             #line default
             #line hidden
 WriteLiteral("</div>\r\n");
 
-WriteLiteral("                    ");
+WriteLiteral("                            ");
 
             
-            #line 60 "..\..\Views\Widgets\EditServerControlWidget.cshtml"
-               Write(Html.Tooltip(PagesGlobalization.WidgetPreviewImageUrl_Tooltip_Description));
-
-            
-            #line default
-            #line hidden
-WriteLiteral("\r\n                    <div");
-
-WriteLiteral(" class=\"bcms-field-wrapper\"");
-
-WriteLiteral(">\r\n");
-
-WriteLiteral("                        ");
-
-            
-            #line 62 "..\..\Views\Widgets\EditServerControlWidget.cshtml"
-                   Write(Html.TextBoxFor(model => model.PreviewImageUrl, new { @class = "bcms-field-text" }));
+            #line 73 "..\..\Views\Widgets\EditServerControlWidget.cshtml"
+                       Write(Html.Tooltip(PagesGlobalization.WidgetPreviewImage_Tooltip_Description));
 
             
             #line default
             #line hidden
-WriteLiteral("\r\n");
-
-WriteLiteral("                        ");
-
-            
-            #line 63 "..\..\Views\Widgets\EditServerControlWidget.cshtml"
-                   Write(Html.BcmsValidationMessageFor(m => m.PreviewImageUrl));
-
-            
-            #line default
-            #line hidden
-WriteLiteral("\r\n                    </div>\r\n                </div>\r\n\r\n                <div");
-
-WriteLiteral(" class=\"bcms-input-list-holder\"");
-
-WriteLiteral(">\r\n                    <div");
-
-WriteLiteral(" class=\"bcms-content-titles\"");
-
-WriteLiteral(">");
-
-            
-            #line 68 "..\..\Views\Widgets\EditServerControlWidget.cshtml"
-                                                Write(PagesGlobalization.WidgetPreviewImage_Title);
-
-            
-            #line default
-            #line hidden
-WriteLiteral("</div>\r\n");
-
-WriteLiteral("                    ");
-
-            
-            #line 69 "..\..\Views\Widgets\EditServerControlWidget.cshtml"
-               Write(Html.Tooltip(PagesGlobalization.WidgetPreviewImage_Tooltip_Description));
-
-            
-            #line default
-            #line hidden
-WriteLiteral("\r\n                    <div");
+WriteLiteral("\r\n                            <div");
 
 WriteLiteral(" class=\"bcms-preview-module-image\"");
 
-WriteLiteral(">\r\n                        <div");
+WriteLiteral(">\r\n                                <div");
 
 WriteLiteral(" style=\"display: none;\"");
 
-WriteLiteral(">\r\n                            <img");
+WriteLiteral(">\r\n                                    <img");
 
 WriteLiteral(" id=\"bcms-widget-preview-image\"");
 
-WriteAttribute("src", Tuple.Create(" src=\"", 3657), Tuple.Create("\"", 3685)
+WriteAttribute("src", Tuple.Create(" src=\"", 4057), Tuple.Create("\"", 4085)
             
-            #line 72 "..\..\Views\Widgets\EditServerControlWidget.cshtml"
-, Tuple.Create(Tuple.Create("", 3663), Tuple.Create<System.Object, System.Int32>(Model.PreviewImageUrl
+            #line 76 "..\..\Views\Widgets\EditServerControlWidget.cshtml"
+, Tuple.Create(Tuple.Create("", 4063), Tuple.Create<System.Object, System.Int32>(Model.PreviewImageUrl
             
             #line default
             #line hidden
-, 3663), false)
+, 4063), false)
 );
 
 WriteLiteral(" alt=\"\"");
 
-WriteLiteral(" />\r\n                        </div>\r\n                    </div>\r\n                " +
-"</div>\r\n            </div>\r\n");
+WriteLiteral(" />\r\n                                </div>\r\n                            </div>\r\n" +
+"                        </div>\r\n                    </div>\r\n                </di" +
+"v>\r\n            </div>\r\n");
 
             
-            #line 77 "..\..\Views\Widgets\EditServerControlWidget.cshtml"
+            #line 83 "..\..\Views\Widgets\EditServerControlWidget.cshtml"
 
 
             
@@ -444,7 +453,7 @@ WriteLiteral(">\r\n");
 WriteLiteral("                ");
 
             
-            #line 79 "..\..\Views\Widgets\EditServerControlWidget.cshtml"
+            #line 85 "..\..\Views\Widgets\EditServerControlWidget.cshtml"
            Write(Html.Partial(PagesConstants.OptionsGridTemplate));
 
             
@@ -453,77 +462,77 @@ WriteLiteral("                ");
 WriteLiteral("\r\n            </div>\r\n");
 
             
-            #line 81 "..\..\Views\Widgets\EditServerControlWidget.cshtml"
+            #line 87 "..\..\Views\Widgets\EditServerControlWidget.cshtml"
 
             
             
             #line default
             #line hidden
             
-            #line 82 "..\..\Views\Widgets\EditServerControlWidget.cshtml"
+            #line 88 "..\..\Views\Widgets\EditServerControlWidget.cshtml"
        Write(Html.HiddenFor(model => model.Id, new { @id = "bcmsContentId" }));
 
             
             #line default
             #line hidden
             
-            #line 82 "..\..\Views\Widgets\EditServerControlWidget.cshtml"
+            #line 88 "..\..\Views\Widgets\EditServerControlWidget.cshtml"
                                                                              
             
             
             #line default
             #line hidden
             
-            #line 83 "..\..\Views\Widgets\EditServerControlWidget.cshtml"
+            #line 89 "..\..\Views\Widgets\EditServerControlWidget.cshtml"
        Write(Html.HiddenFor(model => model.Version, new { @id = "bcmsContentVersion" }));
 
             
             #line default
             #line hidden
             
-            #line 83 "..\..\Views\Widgets\EditServerControlWidget.cshtml"
+            #line 89 "..\..\Views\Widgets\EditServerControlWidget.cshtml"
                                                                                        
             
             
             #line default
             #line hidden
             
-            #line 84 "..\..\Views\Widgets\EditServerControlWidget.cshtml"
+            #line 90 "..\..\Views\Widgets\EditServerControlWidget.cshtml"
        Write(Html.HiddenFor(modal => modal.DesirableStatus, new { @class = "bcms-content-desirable-status" }));
 
             
             #line default
             #line hidden
             
-            #line 84 "..\..\Views\Widgets\EditServerControlWidget.cshtml"
+            #line 90 "..\..\Views\Widgets\EditServerControlWidget.cshtml"
                                                                                                              
             
             
             #line default
             #line hidden
             
-            #line 85 "..\..\Views\Widgets\EditServerControlWidget.cshtml"
+            #line 91 "..\..\Views\Widgets\EditServerControlWidget.cshtml"
        Write(Html.HiddenFor(modal => modal.PreviewOnPageContentId, new { @class = "bcms-preview-page-content-id" }));
 
             
             #line default
             #line hidden
             
-            #line 85 "..\..\Views\Widgets\EditServerControlWidget.cshtml"
+            #line 91 "..\..\Views\Widgets\EditServerControlWidget.cshtml"
                                                                                                                    
             
             
             #line default
             #line hidden
             
-            #line 86 "..\..\Views\Widgets\EditServerControlWidget.cshtml"
+            #line 92 "..\..\Views\Widgets\EditServerControlWidget.cshtml"
        Write(Html.HiddenSubmit());
 
             
             #line default
             #line hidden
             
-            #line 86 "..\..\Views\Widgets\EditServerControlWidget.cshtml"
+            #line 92 "..\..\Views\Widgets\EditServerControlWidget.cshtml"
                                 
         }
 

@@ -81,14 +81,14 @@
                         <div class="bcms-content-titles">@BlogGlobalization.EditBlogPost_LiveFrom_Title</div>
                         @Html.Tooltip(BlogGlobalization.EditBlogPost_LiveDates_Tooltip_Description)
                         <div class="bcms-field-wrapper">
-                            @Html.DateTextBoxFor(model => model.LiveFromDate, Model.LiveFromDate, new Dictionary<string, object> { { "class", "bcms-field-text bcms-datepicker" }, { "style", "width: 127px;" } })
+                            @Html.DateTextBoxFor(model => model.LiveFromDate, Model.LiveFromDate, new Dictionary<string, object> { { "class", "bcms-field-text bcms-datepicker" } })
                             @Html.BcmsValidationMessageFor(m => m.LiveFromDate)
                         </div>
                     </div>
                     <div class="bcms-input-list-holder">
                         <div class="bcms-content-titles">@BlogGlobalization.EditBlogPost_LiveTo_Title</div>
                         <div class="bcms-field-wrapper">
-                            @Html.DateTextBoxFor(model => model.LiveToDate, Model.LiveToDate, new Dictionary<string, object> { { "class", "bcms-field-text bcms-datepicker" }, { "style", "width: 127px;" } })
+                            @Html.DateTextBoxFor(model => model.LiveToDate, Model.LiveToDate, new Dictionary<string, object> { { "class", "bcms-field-text bcms-datepicker" } })
                             @Html.BcmsValidationMessageFor(m => m.LiveToDate)
                         </div>
                     </div>
