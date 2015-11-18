@@ -25,6 +25,7 @@ bettercms.define('bcms.pages', ['bcms.jquery', 'bcms', 'bcms.modal', 'bcms.siteS
 
 
                 addNewPageForm: 'form:first',
+                addNewPageTabContent: '.bcms-window-tabbed-options',
                 addNewPageOptionsTab: '#bcms-tab-2',
                 addNewPageUserAccess: '#bcms-accesscontrol-context',
 
@@ -172,7 +173,7 @@ bettercms.define('bcms.pages', ['bcms.jquery', 'bcms', 'bcms.modal', 'bcms.siteS
         /**
         * Templates list view model
         */
-        function TemplatesListViewModel(templates, dialog, optionsContainer, optionListViewModel, accessContainer, accessControlViewModel) {
+        function TemplatesListViewModel(templates, dialog, optionsContainer, optionListViewModel, accessControlViewModel) {
             var self = this;
 
             self.templates = ko.observableArray();
@@ -182,7 +183,6 @@ bettercms.define('bcms.pages', ['bcms.jquery', 'bcms', 'bcms.modal', 'bcms.siteS
             self.hasFocus = ko.observable(false);
             self.optionsContainer = optionsContainer;
             self.optionListViewModel = optionListViewModel;
-            self.accessContainer = accessContainer;
             self.accessControlViewModel = accessControlViewModel;
             self.dialog = dialog;
 
@@ -251,7 +251,8 @@ bettercms.define('bcms.pages', ['bcms.jquery', 'bcms', 'bcms.modal', 'bcms.siteS
                 template.isActive(true);
 
                 pageProperties.loadLayoutOptions(template.id, template.isMasterPage, dialog.container, self.optionsContainer, self.optionListViewModel);
-                pageProperties.loadLayoutUserAccess(template.id, template.isMasterPage, dialog.container, self.accessContainer, self.accessControlViewModel);
+                pageProperties.loadLayoutUserAccess(template.id, template.isMasterPage, dialog.container,
+                    self.accessControlViewModel, dialog.container.find(selectors.addNewPageTabContent));
             };
 
             self.findCurrentActive = function () {
@@ -327,7 +328,6 @@ bettercms.define('bcms.pages', ['bcms.jquery', 'bcms', 'bcms.modal', 'bcms.siteS
         page.initAddNewPageDialogEvents = function (dialog, content) {
             var infoMessageClosed = store.get(keys.addNewPageInfoMessageClosed),
                 optionsContainer = dialog.container.find(selectors.addNewPageOptionsTab),
-                accessContainer = dialog.container.find(selectors.addNewPageUserAccess),
                 accessControlViewModel = security.createUserAccessViewModel(content.Data.UserAccessList),
                 languageViewModel = content.Data.Languages ? new pageLanguages.PageLanguageViewModel(content.Data.Languages) : null,
                 optionsViewModel = options.createOptionValuesViewModel(optionsContainer, content.Data.OptionValues, content.Data.CustomOptions),
@@ -335,7 +335,7 @@ bettercms.define('bcms.pages', ['bcms.jquery', 'bcms', 'bcms.modal', 'bcms.siteS
                     accessControl: accessControlViewModel,
                     language: languageViewModel,
                     options: optionsViewModel,
-                    templatesList: new TemplatesListViewModel(content.Data.Templates, dialog, optionsContainer, optionsViewModel, accessContainer, accessControlViewModel)
+                    templatesList: new TemplatesListViewModel(content.Data.Templates, dialog, optionsContainer, optionsViewModel, accessControlViewModel)
                 },
                 getLanguageId = function () {
                     if (languageViewModel != null) {
