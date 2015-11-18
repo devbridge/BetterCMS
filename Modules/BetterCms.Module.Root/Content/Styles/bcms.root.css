@@ -493,6 +493,19 @@ a:hover {
   max-width: 100%;
 }
 
+.bcms-remove-image {
+  position: absolute;
+  top: 0;
+  right: 0;
+  height: 20px;
+  width: 20px;
+  background: rgba(255, 255, 255, 0.7) url("data:image/svg+xml;base64,PHN2ZyBoZWlnaHQ9IjE4IiB3aWR0aD0iMTgiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgdmlld0JveD0iMCAwIDE4IDE4Ij48cGF0aCBmaWxsPSIjMGQ3Y2U3IiBmaWxsLXJ1bGU9ImV2ZW5vZGQiIGQ9Im01IDB2NGgtNXYyaDJ2MTJoMTR2LTEyaDJ2LTJoLTV2LTRoLThtMiAyaDR2MmgtNHYtMm0tMyA0aDEwdjEwaC0xMHYtMTBtNiA3aDJ2LTRoLTJ2NG0tNCAwaDJ2LTRoLTJ2NCIvPjwvc3ZnPg==") no-repeat center center;
+  cursor: pointer;
+  overflow: hidden;
+  text-indent: -999em;
+  z-index: 1;
+}
+
 .bcms-access-title {
   border-top: 1px solid #dfdfdf;
   border-bottom: 1px solid #dfdfdf;
@@ -3137,21 +3150,6 @@ a.bcms-icn-history:hover {
 a.bcms-icn-history:active {
   background-position: right -399px;
   color: #df2200;
-}
-
-.bcms-remove-image {
-  background: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAoAAAAKCAYAAAH6Nf8rAAAAq0lEQVQY002QoQ6DQBBE9x8w5EJCgiHBYzH8IQKB7A80eAQG2/QLmqr+AXo7Q2bbE+8yN7O7d1n7jOMMTsOxADd3t/9B67pADCEKsFE8QUeRWAca8AJTNK/grrCmcTJQOPB1ikltjSpTVGwyini6lsGZa5g0OnXwS0vMZPAGffZoL8/zb5bgJnMXLq/8LUPFFThU4NJV5Cxos2kPbSdJx9TWYvWx2Rwth9n8BZEY4V//pq7DAAAAAElFTkSuQmCC") no-repeat center center #f5f5f5;
-  border: 1px solid #c6c6c6;
-  border-radius: 2px;
-  cursor: pointer;
-  height: 12px;
-  overflow: hidden;
-  position: absolute;
-  right: -6px;
-  text-indent: 9999px;
-  top: -6px;
-  width: 12px;
-  z-index: 1;
 }
 
 .bcms-icn-published {

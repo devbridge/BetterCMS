@@ -168,6 +168,16 @@ $loading-spinner: (
     }
 }
 
+.bcms-remove-image {
+    @include position(absolute, 0 0 null null);
+    @include size(20px);
+    background: rgba($white, .7) url($bcms-image-delete) no-repeat center center;
+    cursor: pointer;
+    overflow: hidden;
+    text-indent: -999em;
+    z-index: 1;
+}
+
 //module access control table
 .bcms-access {
     &-title {
