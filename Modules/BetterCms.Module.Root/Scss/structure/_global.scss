@@ -34,6 +34,8 @@ $loading-spinner: (
     }
 
     &-info-block {
+        margin: 30px 0;
+        
         .bcms-input-list-holder {
             @include vertical-align($align: top);
             margin-top: 0;
@@ -117,11 +119,11 @@ $loading-spinner: (
             vertical-align: middle;
         }
     }
-}
 
-.bcms-edit-label {
-    @include vertical-align();
-    cursor: pointer;
+    &-label {
+        @include vertical-align();
+        cursor: pointer;
+    }
 }
 
 //module image upload thumbnails
@@ -312,5 +314,21 @@ $loading-spinner: (
     40% {
         box-shadow: 0 -2em $bg-blue;
         height: $loader-height;
+    }
+}
+
+//module global helpers
+.bcms-check-field-helper {
+    background-color: $white;
+    border: $border-thin-smoke;
+    margin-top: -1px;
+    padding: 10px;
+
+    .bcms-edit-check-field {
+        padding: 0;
+    }
+
+    .bcms-edit-label {
+        font-size: 12px;
     }
 }

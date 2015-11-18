@@ -25,7 +25,7 @@ $toolbar-icons: (
 //module global styles
 textarea {
     &.markItUpEditor {
-        border: $border-thin-gray;
+        border: $border-thin-smoke;
         box-sizing: border-box;
         display: block;
         font-family: $font-code-family;
@@ -48,15 +48,15 @@ textarea {
         @include clearfix();
         background-color: $smoke;
         border: {
-            top: $border-thin-gray;
-            right: $border-thin-gray;
-            left: $border-thin-gray;
+            top: $border-thin-smoke;
+            right: $border-thin-smoke;
+            left: $border-thin-smoke;
         }
         padding: 6px 8px;
 
         > ul {
             > .markItUpButton {
-                border: $border-thin-gray;
+                border: $border-thin-smoke;
                 float: left;
                 height: 26px;
                 margin-left: 6px;
@@ -118,7 +118,7 @@ textarea {
 
         > ul {
             background-color: $white;
-            border: $border-thin-gray;
+            border: $border-thin-smoke;
             display: none;
             max-height: 170px;
             overflow-y: auto;
@@ -157,9 +157,9 @@ textarea {
     &Footer {
         @include clearfix();
         border: {
-            right: $border-thin-gray;
-            bottom: $border-thin-gray;
-            left: $border-thin-gray;
+            right: $border-thin-smoke;
+            bottom: $border-thin-smoke;
+            left: $border-thin-smoke;
         }
         background-color: $smoke;
         height: 28px;

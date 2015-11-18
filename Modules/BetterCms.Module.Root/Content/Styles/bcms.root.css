@@ -149,6 +149,7 @@ a:hover {
 }
 
 .bcms-window-settings {
+  box-sizing: border-box;
   height: calc(100vh - 120px);
   overflow-x: hidden;
   overflow-y: scroll;
@@ -158,19 +159,21 @@ a:hover {
 
 .bcms-window-tabbed-options {
   background-color: #f3f3f3;
+  box-sizing: border-box;
   height: calc(100vh - 170px);
   overflow-x: hidden;
   overflow-y: scroll;
-  padding: 0 30px;
+  padding: 0 30px 30px;
   position: relative;
 }
 
 .bcms-window-options {
   background-color: #f3f3f3;
+  box-sizing: border-box;
   height: calc(100vh - 120px);
   overflow-x: hidden;
   overflow-y: scroll;
-  padding: 0 30px;
+  padding: 0 30px 30px;
   position: relative;
 }
 
@@ -366,6 +369,10 @@ a:hover {
   box-sizing: border-box;
   max-width: 50%;
   padding: 30px 0 0 10px;
+}
+
+.bcms-content-info-block {
+  margin: 30px 0;
 }
 
 .bcms-content-info-block .bcms-input-list-holder {
@@ -735,6 +742,21 @@ a:hover {
     box-shadow: 0 -2em #0d7ce7;
     height: 2.30769rem;
   }
+}
+
+.bcms-check-field-helper {
+  background-color: #ffffff;
+  border: 1px solid #dfdfdf;
+  margin-top: -1px;
+  padding: 10px;
+}
+
+.bcms-check-field-helper .bcms-edit-check-field {
+  padding: 0;
+}
+
+.bcms-check-field-helper .bcms-edit-label {
+  font-size: 12px;
 }
 
 .autocomplete-suggestions {
@@ -3331,7 +3353,7 @@ a.bcms-icn-history:active {
 }
 
 textarea.markItUpEditor {
-  border: 1px solid #c6c6c6;
+  border: 1px solid #dfdfdf;
   box-sizing: border-box;
   display: block;
   font-family: "Courier New", Courier, monospace;
@@ -3349,14 +3371,14 @@ textarea.markItUpEditor:focus {
 
 .markItUpHeader {
   background-color: #f5f5f5;
-  border-top: 1px solid #c6c6c6;
-  border-right: 1px solid #c6c6c6;
-  border-left: 1px solid #c6c6c6;
+  border-top: 1px solid #dfdfdf;
+  border-right: 1px solid #dfdfdf;
+  border-left: 1px solid #dfdfdf;
   padding: 6px 8px;
 }
 
 .markItUpHeader > ul > .markItUpButton {
-  border: 1px solid #c6c6c6;
+  border: 1px solid #dfdfdf;
   float: left;
   height: 26px;
   margin-left: 6px;
@@ -3412,7 +3434,7 @@ textarea.markItUpEditor:focus {
 
 .markItUpDropMenu > ul {
   background-color: #ffffff;
-  border: 1px solid #c6c6c6;
+  border: 1px solid #dfdfdf;
   display: none;
   max-height: 170px;
   overflow-y: auto;
@@ -3450,9 +3472,9 @@ textarea.markItUpEditor:focus {
 }
 
 .markItUpFooter {
-  border-right: 1px solid #c6c6c6;
-  border-bottom: 1px solid #c6c6c6;
-  border-left: 1px solid #c6c6c6;
+  border-right: 1px solid #dfdfdf;
+  border-bottom: 1px solid #dfdfdf;
+  border-left: 1px solid #dfdfdf;
   background-color: #f5f5f5;
   height: 28px;
   line-height: 28px;
@@ -3655,7 +3677,7 @@ textarea.markItUpEditor:focus {
 
 .ui-widget-content {
   background-color: #ffffff;
-  border: 1px solid #c6c6c6;
+  border: 1px solid #dfdfdf;
   color: #303030;
 }
 
@@ -3721,7 +3743,7 @@ textarea.markItUpEditor:focus {
   height: 10px;
   width: 18px;
   background: url("data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxNy44IiBoZWlnaHQ9IjkuOCIgdmlld0JveD0iLTU5MS40IDc4My41IDE3LjggOS44IiBlbmFibGUtYmFja2dyb3VuZD0ibmV3IC01OTEuNCA3ODMuNSAxNy44IDkuOCI+PHBhdGggZD0ibS01NzUgNzg1bC03LjUgNy03LjUtNyIgZmlsbD0ibm9uZSIgc3Ryb2tlPSIjYTVhNWE1IiBzdHJva2UtbGluZWNhcD0ic3F1YXJlIiBzdHJva2Utd2lkdGg9IjIiLz48L3N2Zz4=") no-repeat center;
-  right: 20px;
+  right: 15px;
 }
 
 .select2-results {
@@ -3746,6 +3768,7 @@ textarea.markItUpEditor:focus {
   top: 100%;
   background: #ffffff;
   border: 1px solid #d0d0d0;
+  box-shadow: 0 15px 30px 0 rgba(0, 0, 0, 0.1);
   box-sizing: border-box;
   color: #303646;
   margin-top: -1px;
@@ -3755,15 +3778,6 @@ textarea.markItUpEditor:focus {
 
 .select2-drop.select2-display-none {
   display: none;
-}
-
-.select2-drop-active {
-  border-color: #0d7ce7;
-  border-top: 0;
-}
-
-.select2-dropdown-open {
-  border-color: #0d7ce7;
 }
 
 .select2-drop-mask {
@@ -3840,6 +3854,10 @@ textarea.markItUpEditor:focus {
 }
 
 .select2-result-label {
+  -webkit-transition: color 200ms;
+  -moz-transition: color 200ms;
+  transition: color 200ms;
+  color: #636363;
   font-size: 13px;
   font-weight: 600;
   cursor: pointer;
@@ -3847,7 +3865,7 @@ textarea.markItUpEditor:focus {
 }
 
 .select2-result-label:hover {
-  background-color: #e7f3ff;
+  color: #0d7ce7;
 }
 
 .select2-no-results {
