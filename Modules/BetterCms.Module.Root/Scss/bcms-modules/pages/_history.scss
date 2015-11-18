@@ -7,8 +7,8 @@ $history-states: (
 );
 
 %history-preview-frame {
-    background-color: $white;
-    height: calc(60vh - #{$history-preview-box});
+    background-color: $bg-modal-options;
+    height: calc(70vh - #{$history-preview-box});
     position: relative;
 }
 
@@ -47,7 +47,7 @@ $history-states: (
 
     &-items-list {
         background-color: $white;
-        height: calc(40vh - #{$footer-height + 44px});
+        height: calc(30vh - #{$footer-height + 44px});
         overflow-y: auto;
     }
 }

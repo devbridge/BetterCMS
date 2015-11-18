@@ -348,8 +348,8 @@
 }
 
 .bcms-history-preview-holder, .bcms-history-preview-data {
-  background-color: #ffffff;
-  height: calc(60vh - 105px);
+  background-color: #f3f3f3;
+  height: calc(70vh - 105px);
   position: relative;
 }
 
@@ -388,7 +388,7 @@
 
 .bcms-history-items-list {
   background-color: #ffffff;
-  height: calc(40vh - 109px);
+  height: calc(30vh - 109px);
   overflow-y: auto;
 }
 
