@@ -1189,9 +1189,9 @@ a:hover {
   user-select: none;
   position: absolute;
   top: 0;
-  right: -50px;
   background-color: #1e2332;
   padding-top: 5px;
+  right: -54px;
   width: 54px;
 }
 
@@ -1519,7 +1519,7 @@ a:hover {
 }
 
 .bcms-sidemenu-right .bcms-sidemenu-handle {
-  left: -50px;
+  left: -54px;
   right: auto;
 }
 
