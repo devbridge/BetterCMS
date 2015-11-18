@@ -53,52 +53,16 @@ WriteLiteral("<div");
 
 WriteLiteral(" class=\"bcms-sidemenu-body\"");
 
-WriteLiteral(">\r\n    ");
-
-WriteLiteral("\r\n    <div");
-
-WriteLiteral(" class=\"bcms-publisher-block bcms-publisher-switch-on\"");
-
-WriteLiteral(" data-bcms-order=\"10\"");
-
-WriteLiteral(">\r\n        <div");
-
-WriteLiteral(" class=\"bcms-publisher-switch\"");
-
-WriteLiteral(" title=\"Publish or Unpublish this page\"");
-
-WriteLiteral(">\r\n            <div");
-
-WriteLiteral(" class=\"bcms-publisher-on\"");
-
-WriteLiteral(">Yes</div>\r\n            <div");
-
-WriteLiteral(" class=\"bcms-publisher-off\"");
-
-WriteLiteral(">No</div>\r\n        </div>\r\n\r\n        <div");
-
-WriteLiteral(" class=\"bcms-publisher-info\"");
-
-WriteLiteral(" data-bcms-module=\"bcms.pages\"");
-
-WriteLiteral(" data-bcms-action=\"changePublishStatus\"");
-
-WriteLiteral(">Published<div");
-
-WriteLiteral(" class=\"bcms-publisher-includes-draft\"");
-
-WriteLiteral(">(Includes Drafts)</div></div>\r\n    </div>\r\n    ");
-
-WriteLiteral("\r\n");
+WriteLiteral(">\r\n");
 
             
-            #line 15 "..\..\Views\Sidebar\Body.cshtml"
+            #line 5 "..\..\Views\Sidebar\Body.cshtml"
     
             
             #line default
             #line hidden
             
-            #line 15 "..\..\Views\Sidebar\Body.cshtml"
+            #line 5 "..\..\Views\Sidebar\Body.cshtml"
       
         var lastItemWasSeparator = true;
         foreach (var projection in Model.Projections)

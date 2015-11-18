@@ -417,7 +417,7 @@ bettercms.define('bcms.pages', ['bcms.jquery', 'bcms', 'bcms.modal', 'bcms.siteS
         };
 
         page.changePublishStatus = function (sender) {
-            var publish = !sender.hasClass('bcms-btn-ok'),
+            var publish = !sender.hasClass('bcms-switch-on'),
                 message = publish ? globalization.pageStatusChangeConfirmationMessagePublish : globalization.pageStatusChangeConfirmationMessageUnPublish,
                 data = { PageId: bcms.pageId, IsPublished: publish },
                 onComplete = function (json) {
@@ -434,11 +434,11 @@ bettercms.define('bcms.pages', ['bcms.jquery', 'bcms', 'bcms.modal', 'bcms.siteS
                 content: message,
                 onAccept: function () {
                     if (data.IsPublished) {
-                        sender.removeClass("bcms-btn-warn");
-                        sender.addClass("bcms-btn-ok");
+                        sender.removeClass("bcms-switch-off");
+                        sender.addClass("bcms-switch-on");
                     } else {
-                        sender.removeClass("bcms-btn-ok");
-                        sender.addClass("bcms-btn-warn");
+                        sender.removeClass("bcms-switch-on");
+                        sender.addClass("bcms-switch-off");
                     }
                     $.ajax({
                         type: 'POST',

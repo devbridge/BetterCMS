@@ -207,6 +207,7 @@
     <Compile Include="Modules\CssIncludeDescriptor.cs" />
     <Compile Include="Modules\JsIncludeDescriptor.cs" />
     <Compile Include="Modules\JsShimConfigDescriptor.cs" />
+    <Compile Include="Modules\Projections\SwitchActionProjection.cs" />
     <Compile Include="Modules\Projections\JavaScriptModuleLink.cs" />
     <Compile Include="Modules\Projections\LinkToNewTabProjection.cs" />
     <Compile Include="Modules\Projections\PropertiesPreview.cs" />

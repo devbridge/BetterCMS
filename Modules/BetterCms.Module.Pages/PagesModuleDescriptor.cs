@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 
 using Autofac;
@@ -14,6 +13,7 @@ using BetterCms.Events;
 
 using BetterCms.Module.Pages.Accessors;
 using BetterCms.Module.Pages.Content.Resources;
+using BetterCms.Module.Pages.Controllers;
 using BetterCms.Module.Pages.Helpers.Extensions;
 using BetterCms.Module.Pages.Models;
 using BetterCms.Module.Pages.Models.Accessors;
@@ -25,7 +25,6 @@ using BetterCms.Module.Pages.Services;
 using BetterCms.Module.Root;
 using BetterCms.Module.Root.Accessors;
 using BetterCms.Module.Root.Content.Resources;
-using BetterCms.Module.Root.Models;
 using BetterCms.Module.Root.Mvc.PageHtmlRenderer;
 using BetterCms.Module.Root.Services;
 using BetterCms.Module.Root.ViewModels.Cms;
@@ -253,7 +252,7 @@ namespace BetterCms.Module.Pages
         [SuppressMessage("StyleCop.CSharp.NamingRules", "SA1305:FieldNamesMustNotUseHungarianNotation", Justification = "Reviewed. Suppression is OK here.")]
         public override IEnumerable<JsIncludeDescriptor> RegisterJsIncludes()
         {
-            return new JsIncludeDescriptor[]
+            return new[]
                 {
                     pagesJsModuleIncludeDescriptor,
                     pagePropertiesJsModuleIncludeDescriptor,
@@ -293,14 +292,28 @@ namespace BetterCms.Module.Pages
         {
             return new IPageActionProjection[]
                 {
-//TODO:                     new ButtonActionProjection(pagesJsModuleIncludeDescriptor, page => "changePublishStatus")
-//                            {
-//                                Order = 10,
-//                                Title = page => page.Status == PageStatus.Published ? PagesGlobalization.Sidebar_PageStatusUnpublish : PagesGlobalization.Sidebar_PageStatusPublish,
-//                                CssClass = page => page.Status == PageStatus.Published ? "bcms-sidemenu-btn bcms-btn-ok" : "bcms-sidemenu-btn bcms-btn-warn",
-//                                AccessRole = RootModuleConstants.UserRoles.PublishContent,
-//                                ShouldBeRendered = page => !page.IsMasterPage && !IsReadOnly(page)
-//                            },
+                    new InheriteProjection(
+                        "div",
+                        new IPageActionProjection[]
+                            {
+                                new SwitchActionProjection(pagesJsModuleIncludeDescriptor, page => "changePublishStatus")
+                                    {
+                                        Order = 10,
+                                        Title = page => page.Status == PageStatus.Published ? PagesGlobalization.Sidebar_PageStatusUnpublish : PagesGlobalization.Sidebar_PageStatusPublish,
+                                        CssClass = page => page.Status == PageStatus.Published ? "bcms-switch bcms-switch-on" : "bcms-switch bcms-switch-off",
+                                    }, 
+                                new HtmlElementProjection("div")
+                                    {
+                                        CssClass = page => "bcms-publisher-info",
+                                        InnerHtml = page => "Published<div class=\"bcms-publisher-includes-draft\">(Includes Drafts)</div>" // TODO: implement
+                                    }
+                             })
+                        {
+                            Order = 10,
+                            CssClass = page => "bcms-publisher-block",
+                            AccessRole = RootModuleConstants.UserRoles.PublishContent,
+                            ShouldBeRendered = page => !page.IsMasterPage && !IsReadOnly(page)
+                        }, 
                      new ButtonActionProjection(pagesJsModuleIncludeDescriptor, page => "addNewPage")
                         {
                             Order = 20,

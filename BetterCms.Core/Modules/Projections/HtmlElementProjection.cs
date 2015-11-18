@@ -82,6 +82,8 @@ namespace BetterCms.Core.Modules.Projections
         /// </summary>
         protected string Tag { get; private set; }
 
+        public Func<IPage, string> InnerHtml { get; set; }
+
         /// <summary>
         /// Renders a control.
         /// </summary>
@@ -150,6 +152,11 @@ namespace BetterCms.Core.Modules.Projections
             }
 
             controlRenderer.Attributes.Add("data-bcms-order", Order.ToString());
+
+            if (InnerHtml != null)
+            {
+                controlRenderer.InnerHtml = InnerHtml(page);
+            }
         }   
     }
 }

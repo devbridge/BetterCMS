@@ -2,16 +2,6 @@
 @using BetterCms.Module.Root.Mvc
 @model BetterCms.Module.Root.ViewModels.PageProjectionsViewModel
 <div class="bcms-sidemenu-body">
-    @* // TODO: move this to descriptor *@
-    <div class="bcms-publisher-block bcms-publisher-switch-on" data-bcms-order="10">
-        <div class="bcms-publisher-switch" title="Publish or Unpublish this page">
-            <div class="bcms-publisher-on">Yes</div>
-            <div class="bcms-publisher-off">No</div>
-        </div>
-
-        <div class="bcms-publisher-info" data-bcms-module="bcms.pages" data-bcms-action="changePublishStatus">Published<div class="bcms-publisher-includes-draft">(Includes Drafts)</div></div>
-    </div>
-    @* // TODO: move this to descriptor *@
     @{
         var lastItemWasSeparator = true;
         foreach (var projection in Model.Projections)
