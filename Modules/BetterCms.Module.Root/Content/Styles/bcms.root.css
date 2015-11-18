@@ -1248,7 +1248,7 @@ a:hover {
   width: 32px;
   background: url("data:image/svg+xml;base64,PHN2ZyBoZWlnaHQ9IjE3IiB3aWR0aD0iMzUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgdmlld0JveD0iMCAwIDM1IDE3Ij48ZyBmaWxsPSIjYTdiMWM2IiBmaWxsLXJ1bGU9ImV2ZW5vZGQiPjxwYXRoIGQ9Im0wIDBoMzV2MmgtMzV2LTIiLz48cGF0aCBkPSJtMCA1aDM1djJoLTM1di0yIi8+PHBhdGggZD0ibTAgMTBoMzV2MmgtMzV2LTIiLz48cGF0aCBkPSJtMCAxNWgzNXYyaC0zNXYtMiIvPjwvZz48L3N2Zz4=") no-repeat center;
   cursor: move;
-  margin: 5px auto 10px;
+  margin: 10px auto 10px;
 }
 
 .bcms-user-profile {
@@ -1264,7 +1264,8 @@ a:hover {
 }
 
 .bcms-buttons-block {
-  margin: 5px 0;
+  margin-bottom: 5px;
+  padding-top: 5px;
 }
 
 .bcms-buttons-block .bcms-cp-seo-btn {
@@ -1278,7 +1279,6 @@ a:hover {
 }
 
 .bcms-cp-settings-btn {
-  margin-top: 5px;
   text-align: center;
 }
 
