@@ -7,7 +7,10 @@ bettercms.define('bcms.blog.filter', ['bcms.jquery', 'bcms', 'bcms.ko.extenders'
 
         var filter = {},
             selectors = {
-                filterTemplate: '#bcms-filter-template'
+                filterTemplate: '#bcms-filter-template',
+                filterByLanguage: '#bcms-js-filter-languages',
+                filterByStatus: '#bcms-js-filter-status',
+                filterBySeoStatus: '#bcms-js-filter-seostatus'
             },
             links = {},
             globalization = {};
@@ -82,11 +85,24 @@ bettercms.define('bcms.blog.filter', ['bcms.jquery', 'bcms', 'bcms.ko.extenders'
 
         filter.bind = function (container, jsonData, onSearchClick) {
             var tagsViewModel = new tags.TagsListViewModel(jsonData.Tags),
-                categoriesViewModel = new categories.CategoriesListViewModel(jsonData.Categories, 'Blog Posts'),
+                categoriesViewModel = new categories.CategoriesSelectListModel(jsonData.Categories),
                 filterViewModel = new FilterViewModel(tagsViewModel, categoriesViewModel, container, onSearchClick, jsonData);
 
             filterViewModel.includeArchived(jsonData.IncludeArchived ? true : false);
+            categories.initCategoriesSelect(categoriesViewModel, jsonData.CategoriesLookupList);
             ko.applyBindings(filterViewModel, container.find(selectors.filterTemplate).get(0));
+
+            $(selectors.filterByLanguage).select2({
+                minimumResultsForSearch: -1
+            });
+
+            $(selectors.filterBySeoStatus).select2({
+                minimumResultsForSearch: -1
+            });
+
+            $(selectors.filterByStatus).select2({
+                minimumResultsForSearch: -1
+            });
         };
 
         /**

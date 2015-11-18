@@ -34,24 +34,14 @@
                 <div class="bcms-filter-options" data-bind="with: categories">
                     <div class="bcms-filter-text">@PagesGlobalization.SiteSettings_Pages_FilterByCategory</div>
                     <div class="bcms-filter-field-holder">
-                        <input type="text" class="bcms-field-text" data-bind="
-                            css: { 'bcms-tag-validation-error': newItem.hasError() },
-                            value: newItem,
-                            valueUpdate: 'afterkeydown',
-                            escPress: clearItem,
-                            autocompleteList: 'onlyExisting'" />
-                        <!-- ko if: newItem.hasError()  -->
-                        <span class="bcms-tag-field-validation-error">
-                            <span data-bind="text: newItem.validationMessage()"></span>
-                        </span>
-                        <!-- /ko -->
+                        <input type="hidden" id="bcms-js-categories-select" />
                     </div>
                 </div>
                 @if (Model.Languages != null && Model.Languages.Any())
                 {
                     <div class="bcms-filter-options">
                         <div class="bcms-filter-text">@PagesGlobalization.SiteSettings_Pages_FilterByLanguage</div>
-                        <select class="bcms-global-select" name="LanguageId" data-bind="options: languages, value: languageId, optionsText: 'Value', optionsValue: 'Key'" />
+                        <select name="LanguageId" data-bind="options: languages, value: languageId, optionsText: 'Value', optionsValue: 'Key'" id="bcms-js-filter-languages" />
                     </div>
                 }
                 <div class="bcms-filter-options">
@@ -59,7 +49,7 @@
                     @Html.DropDownListFor(m => m.Status, new List<SelectListItem>(), new
                                                                       {
                                                                           data_bind = "options: statuses, value: status, optionsText: 'Value', optionsValue: 'Key'",
-                                                                          @class = "bcms-global-select"
+                                                                          id = "bcms-js-filter-status"
                                                                       })
                 </div>
                 <div class="bcms-filter-options">
@@ -67,7 +57,7 @@
                     @Html.DropDownListFor(m => m.SeoStatus, new List<SelectListItem>(), new
                                                                                             {
                                                                                                 data_bind = "options: seoStatuses, value: seoStatus, optionsText: 'Value', optionsValue: 'Key'",
-                                                                                                @class = "bcms-global-select"
+                                                                                                id = "bcms-js-filter-seostatus"
                                                                                             })
                 </div>
 
@@ -76,7 +66,7 @@
                     @Html.DropDownListFor(m => m.Layout, new List<SelectListItem>(), new
                                                                       {
                                                                           data_bind = "options: layouts, value: layout, optionsText: 'Value', optionsValue: 'Key'",
-                                                                          @class = "bcms-global-select"
+                                                                          id = "bcms-js-filter-layout"
                                                                       })
                 </div>
             </div>
@@ -90,11 +80,11 @@
             </div>
 
             <div class="bcms-single-tag-holder" data-bind="foreach: categories.items()">
-                <div class="bcms-single-tag" data-bind="css: { 'bcms-single-tag-active': isActive() }">
-                    <span data-bind="text: name()"></span><a data-bind="    click: remove">@RootGlobalization.Button_Remove</a>
+                <div class="bcms-single-tag">
+                    <span data-bind="text: $data.text"></span><a data-bind="click: $parent.categories.remove">@RootGlobalization.Button_Remove</a>
                 </div>
-                <input type="hidden" data-bind="attr: { name: 'Categories[' + $index() + '].Key', value: id() }" />
-                <input type="hidden" data-bind="attr: { name: 'Categories[' + $index() + '].Value', value: name() }" />
+                <input type="hidden" data-bind="attr: { name: 'Categories[' + $index() + '].Key', value: $data.id }"/>
+                <input type="hidden" data-bind="attr: { name: 'Categories[' + $index() + '].Value', value: $data.text }"/>
             </div>
         </div>
 

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 
 using BetterCms.Module.Root.Models;
 using BetterCms.Module.Root.Mvc.Grids;
+using BetterCms.Module.Root.ViewModels.Category;
 using BetterCms.Module.Root.ViewModels.SiteSettings;
 
 namespace BetterCms.Module.Pages.ViewModels.Filter
@@ -14,6 +15,7 @@ namespace BetterCms.Module.Pages.ViewModels.Filter
         public Guid? LanguageId { get; set; }
         public Guid? ContentId { get; set; }
         public IEnumerable<LookupKeyValue> Categories { get; set; }
+        public IEnumerable<CategoryLookupModel> CategoriesLookupList { get; set; } 
         public IList<LookupKeyValue> Languages { get; set; }
         public IList<LookupKeyValue> Statuses { get; set; }
         public IList<LookupKeyValue> SeoStatuses { get; set; }

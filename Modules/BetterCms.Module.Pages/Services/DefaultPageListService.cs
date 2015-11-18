@@ -13,6 +13,7 @@ using BetterCms.Module.Root.Models;
 using BetterCms.Module.Root.Mvc;
 using BetterCms.Module.Root.Mvc.Grids.Extensions;
 using BetterCms.Module.Root.Services;
+using BetterCms.Module.Root.ViewModels.Category;
 
 using NHibernate;
 using NHibernate.Criterion;
@@ -109,7 +110,8 @@ namespace BetterCms.Module.Pages.Services
                             l.Title))
                         .ToList();
 
-            var model = CreateModel(pages, request, count, layouts);
+            var categoriesLookupList = categoryService.GetCategoriesLookupList(PageProperties.CategorizableItemKeyForPages);
+            var model = CreateModel(pages, request, count, layouts, categoriesLookupList);
 
             if (languagesFuture != null)
             {
@@ -121,12 +123,12 @@ namespace BetterCms.Module.Pages.Services
         }
 
         protected virtual PagesGridViewModel<SiteSettingPageViewModel> CreateModel(IEnumerable<SiteSettingPageViewModel> pages,
-            PagesFilter request, IFutureValue<int> count, IList<LookupKeyValue> layouts)
+            PagesFilter request, IFutureValue<int> count, IList<LookupKeyValue> layouts, IList<CategoryLookupModel> categoriesLookupList)
         {
             return new PagesGridViewModel<SiteSettingPageViewModel>(
                 pages.ToList(),
                 request,
-                count.Value) { Layouts = layouts };
+                count.Value) { Layouts = layouts, CategoriesLookupList = categoriesLookupList};
         }
 
         protected virtual IQueryOver<PagesView, PagesView> FilterQuery(IQueryOver<PagesView, PagesView> query,
