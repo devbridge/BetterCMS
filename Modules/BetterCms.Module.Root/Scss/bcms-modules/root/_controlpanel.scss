@@ -7,6 +7,7 @@ $cp-smoke: #c4c4c4;
 $cp-blue: #0d7be3;
 
 $border-cp-frame: 1px solid #536082;
+$cp-handle-width: 54px;
 
 $control-panel-buttons: (
                 ('settings', null, $gray-smoke45),
@@ -94,10 +95,11 @@ $control-panel-switch-status: (
 
     &-handle {
         @include user-select();
-        @include position(absolute, 0 -50px null null);
+        @include position(absolute, 0 null null null);
         background-color: $cp-dark;
         padding-top: 5px;
-        width: 54px;
+        right: -($cp-handle-width);
+        width: $cp-handle-width;
     }
 
     &-openclosearrow {
@@ -389,7 +391,7 @@ $control-panel-switch-status: (
     }
 
     .bcms-sidemenu-handle {
-        left: -50px;
+        left: -($cp-handle-width);
         right: auto;
     }
 
