@@ -360,6 +360,7 @@ $control-panel-switch-status: (
     &-info {
         @include vertical-align();
         color: $cp-smoke;
+        cursor: default;
         font: {
             family: $font-base-family;
             size: 10px;

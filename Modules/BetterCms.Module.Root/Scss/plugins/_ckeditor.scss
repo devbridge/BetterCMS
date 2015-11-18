@@ -64,6 +64,7 @@ $ck-toolbar-icons: (
 //module editor frame
 .cke {
     &_chrome {
+        background-color: $white;
         border: $border-thin-smoke;
         display: block;
         visibility: inherit !important;

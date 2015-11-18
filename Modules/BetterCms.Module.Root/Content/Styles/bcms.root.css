@@ -497,8 +497,8 @@ a:hover {
   position: absolute;
   top: 0;
   right: 0;
-  height: 20px;
-  width: 20px;
+  height: 24px;
+  width: 24px;
   background: rgba(255, 255, 255, 0.7) url("data:image/svg+xml;base64,PHN2ZyBoZWlnaHQ9IjE4IiB3aWR0aD0iMTgiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgdmlld0JveD0iMCAwIDE4IDE4Ij48cGF0aCBmaWxsPSIjMGQ3Y2U3IiBmaWxsLXJ1bGU9ImV2ZW5vZGQiIGQ9Im01IDB2NGgtNXYyaDJ2MTJoMTR2LTEyaDJ2LTJoLTV2LTRoLThtMiAyaDR2MmgtNHYtMm0tMyA0aDEwdjEwaC0xMHYtMTBtNiA3aDJ2LTRoLTJ2NG0tNCAwaDJ2LTRoLTJ2NCIvPjwvc3ZnPg==") no-repeat center center;
   cursor: pointer;
   overflow: hidden;
@@ -1459,6 +1459,7 @@ a:hover {
   display: inline-block;
   vertical-align: middle;
   color: #c4c4c4;
+  cursor: default;
   font-family: "Open Sans", sans-serif !important;
   font-size: 10px;
   font-weight: 600;
