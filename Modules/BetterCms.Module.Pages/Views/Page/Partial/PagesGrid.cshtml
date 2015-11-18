@@ -1,0 +1,31 @@
+﻿@using BetterCms.Module.Root
+@using BetterCms.Module.Root.Content.Resources
+@using BetterCms.Module.Root.Mvc
+@model BetterCms.Module.Pages.ViewModels.Filter.PagesGridViewModel<BetterCms.Module.Pages.ViewModels.SiteSettings.SiteSettingPageViewModel>
+<div id="bcms-pages-grid" class="bcms-tables">
+        <!-- ko foreach: items -->
+        <div class="bcms-grid-row">
+            @if ((ViewContext.Controller as CmsControllerBase).SecurityService.IsAuthorized(RootModuleConstants.UserRoles.MultipleRoles(RootModuleConstants.UserRoles.EditContent, RootModuleConstants.UserRoles.PublishContent)))
+            {
+                <div>
+                    <a class="bcms-icn-edit bcms-grid-item-edit-button" data-bind="attr: { 'data-id': id }">@RootGlobalization.Button_Edit</a>
+                </div>
+            }
+
+            <div>
+                <a class="bcms-bcms-tables-link bcms-page-title" data-bind="text: title, attr: { 'data-url': url, 'data-id': id }"></a>
+            </div>
+
+            <div class="bcms-page-created" data-bind="text: createdOnTitle"></div>
+            <div class="bcms-page-created" data-bind="text: modifiedOnTitle"></div>
+            <div class="bcms-page-ispublished" data-bind="text: pageStatus"></div>
+            @if ((ViewContext.Controller as CmsControllerBase).SecurityService.IsAuthorized(RootModuleConstants.UserRoles.DeleteContent))
+            {
+                <div>
+                    <a class="bcms-icn-delete bcms-grid-item-delete-button" data-bind="attr: { 'data-id': id, 'data-version': version }">@RootGlobalization.Button_Delete</a>
+                    <div style="display: none" class="bcms-grid-item.message"></div>
+                </div>
+            }
+        </div>
+        <!-- /ko -->
+</div>

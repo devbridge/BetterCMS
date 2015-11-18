@@ -47,6 +47,8 @@ namespace BetterCms.Module.Pages.ViewModels.SiteSettings
         /// </value>
         public DateTime CreatedOn { get; set; }
 
+        public string CreatedOnTitle { get; set; }
+
         /// <summary>
         /// Gets or sets the date the page is modified on.
         /// </summary>
@@ -54,6 +56,8 @@ namespace BetterCms.Module.Pages.ViewModels.SiteSettings
         /// The date the page is modified on.
         /// </value>
         public DateTime ModifiedOn { get; set; }
+
+        public string ModifiedOnTitle { get; set; }
 
         /// <summary>
         /// Gets or sets a value indicating whether page has SEO.
