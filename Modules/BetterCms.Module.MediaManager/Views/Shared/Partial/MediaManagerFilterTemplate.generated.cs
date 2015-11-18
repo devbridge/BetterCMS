@@ -129,9 +129,9 @@ WriteLiteral(">");
             #line hidden
 WriteLiteral("</div>\n                    <div");
 
-WriteLiteral(" class=\"bcms-filter-field-holder\"");
+WriteLiteral(" class=\"bcms-field-wrapper\"");
 
-WriteLiteral(">\n                        <input");
+WriteLiteral(">\r\n                        <input");
 
 WriteLiteral(" type=\"text\"");
 
@@ -144,17 +144,17 @@ WriteLiteral(@" data-bind=""
                                     escPress: clearItem,
                                     autocompleteList: 'onlyExisting'""");
 
-WriteLiteral(" />\n                        <!-- ko if: newItem.hasError() -->\n                  " +
-"      <span");
+WriteLiteral(" />\r\n                        <!-- ko if: newItem.hasError() -->\r\n                " +
+"        <span");
 
 WriteLiteral(" class=\"bcms-tag-field-validation-error\"");
 
-WriteLiteral(">\n                            <span");
+WriteLiteral(">\r\n                            <span");
 
 WriteLiteral(" data-bind=\"text: newItem.validationMessage()\"");
 
-WriteLiteral("></span>\n                        </span>\n                        <!-- /ko -->\n   " +
-"                 </div>\n                </div>\n\n                <div");
+WriteLiteral("></span>\r\n                        </span>\r\n                        <!-- /ko -->\r\n" +
+"                    </div>\n                </div>\n\n                <div");
 
 WriteLiteral(" class=\"bcms-filter-options\"");
 
@@ -175,9 +175,9 @@ WriteLiteral(">");
             #line hidden
 WriteLiteral("</div>\n                    <div");
 
-WriteLiteral(" class=\"bcms-filter-field-holder\"");
+WriteLiteral(" class=\"bcms-field-wrapper\"");
 
-WriteLiteral(">\n                        <input");
+WriteLiteral(">\r\n                        <input");
 
 WriteLiteral(" type=\"text\"");
 
@@ -190,18 +190,18 @@ WriteLiteral(@" data-bind=""
                                     escPress: clearItem,
                                     autocompleteList: 'onlyExisting'""");
 
-WriteLiteral(" />\n                        <!-- ko if: newItem.hasError() -->\n                  " +
-"      <span");
+WriteLiteral(" />\r\n                        <!-- ko if: newItem.hasError() -->\r\n                " +
+"        <span");
 
 WriteLiteral(" class=\"bcms-tag-field-validation-error\"");
 
-WriteLiteral(">\n                            <span");
+WriteLiteral(">\r\n                            <span");
 
 WriteLiteral(" data-bind=\"text: newItem.validationMessage()\"");
 
-WriteLiteral("></span>\n                        </span>\n                        <!-- /ko -->\n   " +
-"                 </div>\n                </div>\n            </div>\n\n            <" +
-"div");
+WriteLiteral("></span>\r\n                        </span>\r\n                        <!-- /ko -->\r\n" +
+"                    </div>\n                </div>\n            </div>\n\n          " +
+"  <div");
 
 WriteLiteral(" class=\"bcms-single-tag-holder\"");
 

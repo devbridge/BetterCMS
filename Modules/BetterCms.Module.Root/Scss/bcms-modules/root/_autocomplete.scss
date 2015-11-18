@@ -15,13 +15,13 @@
         padding: 4px 7px 3px;
 
         &:hover {
-            background-color: $gray-smoke30;
+            background-color: $smoke;
             color: $black;
         }
     }
 
     &-selected {
-        background-color: $gray-smoke30;
+        background-color: $smoke;
         color: $black;
     }
 }

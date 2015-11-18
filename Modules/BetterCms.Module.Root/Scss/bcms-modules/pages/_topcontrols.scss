@@ -126,25 +126,29 @@
 .bcms-filter-holder {
     float: right;
     position: relative;
+    width: 100%;
     z-index: 1;
 }
 
 .bcms-grid-filtering {
     border: $border-thin-transparent;
     box-sizing: border-box;
+    float: right;
     line-height: 30px;
+    min-width: 61px;
 
     &.bcms-active-filter {
+        background-color: $bg-smoke;
         border: {
             color: $gray-smoke;
-            bottom-color: $white;
+            bottom-color: $bg-smoke;
         }
     }
 }
 
 .bcms-filterbox {
-    @include pad(5px 20px);
-    background: url($bcms-grid-filter) no-repeat 90% center;
+    @include pad(5px 25px);
+    background: url($bcms-grid-filter) no-repeat 92% center;
     color: $gray-light;
     cursor: pointer;
     font-size: 11px;
@@ -156,12 +160,12 @@
 
 .bcms-filter {
     &-selection-block {
-        @include position(absolute, #{calc(100% - 1px)} 0 null null);
-        background-color: $white;
+        @include position(relative, -1px null null);
+        background-color: $bg-smoke;
         border: $border-thin-smoke;
         box-sizing: border-box;
+        clear: both;
         padding: 15px;
-        width: 450px;
         z-index: -1;
     }
 
@@ -175,7 +179,16 @@
         @include gallery(6);
         padding-bottom: 5px;
 
+        .bcms-filter-text {
+            @include vertical-align();
+        }
+
+        .bcms-field-wrapper {
+            @include vertical-align();
+        }
+
         .bcms-global-select {
+            @include vertical-align();
             height: 28px;
             padding-top: 2px;
             width: 200px;
@@ -183,14 +196,10 @@
     }
 
     &-text {
-        color: #000;
-        font-size: 12px;
-        font-weight: 700;
+        color: $text-light;
+        font-size: 11px;
         line-height: 20px;
-    }
-
-    &-field-holder {
-        position: relative;
+        text-transform: uppercase;
     }
 }
 

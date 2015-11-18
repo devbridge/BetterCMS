@@ -192,7 +192,7 @@ a {
 
     &-menu {
         @include vertical-align($block: table-cell, $align: top);
-        background-color: $gray-smoke30;
+        background-color: $smoke;
         padding-top: 40px;
         width: $settings-sidebar;
     }
