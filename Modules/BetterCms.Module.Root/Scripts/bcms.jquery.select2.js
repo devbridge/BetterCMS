@@ -1410,7 +1410,7 @@ bettercms.define('bcms.jquery.select2', ['bcms.jquery'], function(jQuery) {
                     container = this.container,
                     offset = container.offset(),
                     height = container.outerHeight(false),
-                    width = container.outerWidth(false),
+                    width = container[0].getBoundingClientRect().width,
                     dropHeight = $dropdown.outerHeight(false),
                     $window = $(window),
                     windowWidth = $window.width(),

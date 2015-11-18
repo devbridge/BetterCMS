@@ -181,7 +181,7 @@ function ($, bcms, modal, siteSettings, forms, dynamicContent, messages, mediaUp
             self.includeHistoryItems(false);
             self.tags.removeAll();
             self.categories.items([]);
-            $(selectors.filterCategoriesSelect).select2('data', self.categories.items());
+            $(context).find(selectors.filterCategoriesSelect).select2('data', self.categories.items());
         };
 
         self.toggleFilter = function () {

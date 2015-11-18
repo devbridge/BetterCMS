@@ -267,10 +267,10 @@ bettercms.define('bcms.blog', ['bcms.jquery', 'bcms', 'bcms.modal', 'bcms.siteSe
             }
 
             var tagsViewModel = new tags.TagsListViewModel(tagsList);
-            var categoriesModel = new categories.CategoriesSelectListModel(data.Categories);
+            var categoriesModel = new categories.CategoriesSelectListModel(data.Categories, dialog.container);
             var blogViewModel = new BlogPostViewModel(image, tagsViewModel, data.Id, data.Version, data.EditInSourceMode, categoriesModel);
 
-            categories.initCategoriesSelect(categoriesModel, content.Data.CategoriesLookupList);
+            categories.initCategoriesSelect(categoriesModel, content.Data.CategoriesLookupList, dialog.container);
 
             ko.applyBindings(blogViewModel, dialog.container.find(selectors.firstForm).get(0));
 
