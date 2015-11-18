@@ -305,7 +305,9 @@ namespace BetterCms.Module.Pages
                                 new HtmlElementProjection("div")
                                     {
                                         CssClass = page => "bcms-publisher-info",
-                                        InnerHtml = page => "Published<div class=\"bcms-publisher-includes-draft\">(Includes Drafts)</div>" // TODO: implement
+                                        InnerHtml = page => page.Status == PageStatus.Published ? PagesGlobalization.Sidebar_PageStatusPublished : PagesGlobalization.Sidebar_PageStatusUnpublished,
+                                            // TODO: add: <div class=\"bcms-publisher-includes-draft\">(Includes Drafts)</div>
+                                        Order = 11
                                     }
                              })
                         {
