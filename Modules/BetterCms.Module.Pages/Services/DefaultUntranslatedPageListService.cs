@@ -9,6 +9,7 @@ using BetterCms.Module.Pages.ViewModels.Filter;
 using BetterCms.Module.Pages.ViewModels.SiteSettings;
 using BetterCms.Module.Root.Models;
 using BetterCms.Module.Root.Services;
+using BetterCms.Module.Root.ViewModels.Category;
 
 using NHibernate.Criterion;
 
@@ -59,17 +60,18 @@ namespace BetterCms.Module.Pages.Services
         /// <param name="count">The count.</param>
         /// <param name="categoriesFuture">The categories future.</param>
         /// <param name="layouts">The layouts.</param>
+        /// <param name="categoriesLookupList">The categories.</param>
         /// <returns>
         /// Model
         /// </returns>
         protected override PagesGridViewModel<SiteSettingPageViewModel> CreateModel(System.Collections.Generic.IEnumerable<SiteSettingPageViewModel> pages,
             PagesFilter request, NHibernate.IFutureValue<int> count,
-            System.Collections.Generic.IList<LookupKeyValue> layouts)
+            System.Collections.Generic.IList<LookupKeyValue> layouts, System.Collections.Generic.IList<CategoryLookupModel> categoriesLookupList )
         {
             return new UntranslatedPagesGridViewModel<SiteSettingPageViewModel>(
                 pages.ToList(),
                 request as UntranslatedPagesFilter,
-                count.Value) { Layouts = layouts };
+                count.Value) { Layouts = layouts, CategoriesLookupList = categoriesLookupList};
         }
 
         /// <summary>

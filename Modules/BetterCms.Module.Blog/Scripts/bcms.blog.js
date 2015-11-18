@@ -113,7 +113,7 @@ bettercms.define('bcms.blog', ['bcms.jquery', 'bcms', 'bcms.modal', 'bcms.siteSe
             self.id = ko.observable(id);
             self.version = ko.observable(version);
             self.editInSourceMode = ko.observable(editInSourceMode);
-            self.categories = ko.observableArray(categoriesModel);
+            self.categories = categoriesModel;
         }
 
         /**
@@ -267,13 +267,10 @@ bettercms.define('bcms.blog', ['bcms.jquery', 'bcms', 'bcms.modal', 'bcms.siteSe
             }
 
             var tagsViewModel = new tags.TagsListViewModel(tagsList);
-            var categoriesModel = content.Data.Categories.map(function (cat) {
-                var obj = { id: cat.Key.toLowerCase(), text: cat.Value };
-                return obj;
-            });
+            var categoriesModel = new categories.CategoriesSelectListModel(data.Categories);
             var blogViewModel = new BlogPostViewModel(image, tagsViewModel, data.Id, data.Version, data.EditInSourceMode, categoriesModel);
 
-            categories.initCategoriesSelect(blogViewModel, categoriesModel, content.Data.CategoriesLookupList);
+            categories.initCategoriesSelect(categoriesModel, content.Data.CategoriesLookupList);
 
             ko.applyBindings(blogViewModel, dialog.container.find(selectors.firstForm).get(0));
 

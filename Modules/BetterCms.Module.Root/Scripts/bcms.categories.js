@@ -1200,22 +1200,48 @@
             });
         }
 
-        module.initCategoriesSelect = function (viewModel, selectedCategories, categoriesLookupList) {
-            var categoriesSelectBox = $(selectors.siteSettingsCategoriesSelect).select2({
+        module.initCategoriesSelect = function (selectedCategories, categoriesLookupList, context) {
+            var select = context ? $(context).find(selectors.siteSettingsCategoriesSelect) : $(selectors.siteSettingsCategoriesSelect);
+            var categoriesSelectBox = select.select2({
                 multiple: true,
                 data: categoriesLookupList
-            }).on('select2-selecting', function (e) {
-                viewModel.categories.push({ id: e.choice.id, text: e.choice.text });
-            }).on('select2-removed', function (e) {
-                viewModel.categories.remove(function (item) {
-                    return item.id == e.val;
-                });
+            }).on('select2-selecting', function(e) {
+                selectedCategories.items.push({ id: e.choice.id, text: e.choice.text });
             });
 
-            if (selectedCategories) {
-                categoriesSelectBox.select2('data', selectedCategories);
+            categoriesSelectBox.select2('data', selectedCategories.items());
+        }
+
+        module.CategoriesSelectListModel = function(items, context) {
+            var self = this,
+                categories = items ? items.map(function(cat) {
+                    var obj = { id: cat.Key.toLowerCase(), text: cat.Value };
+                    return obj;
+                }) : [];
+
+            self.items = ko.observableArray(categories);
+
+            self.remove = function(e) {
+                self.items.remove(function (item) {
+                    return item.id == e.id;
+                });
+                if (context) {
+                    $(context).find(selectors.siteSettingsCategoriesSelect).select2('data', self.items());
+                } else {
+                   $(selectors.siteSettingsCategoriesSelect).select2('data', self.items());
+                }
+            }
+
+            self.applyItemList = function(items) {
+                var categories = items ? items.map(function (cat) {
+                    var obj = { id: cat.Key.toLowerCase(), text: cat.Value };
+                    return obj;
+                }) : [];
+                self.items([]);
+                self.items(categories);
             }
         }
+
 
         /**
         * Initializes module.

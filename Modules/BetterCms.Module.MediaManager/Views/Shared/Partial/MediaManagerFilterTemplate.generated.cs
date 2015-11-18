@@ -53,19 +53,19 @@ WriteLiteral("<div");
 
 WriteLiteral(" class=\"bcms-filter-holder\"");
 
-WriteLiteral(">\n    <div");
+WriteLiteral(">\r\n    <div");
 
 WriteLiteral(" class=\"bcms-grid-filtering\"");
 
 WriteLiteral(" data-bind=\"css: { \'bcms-active-filter\': gridOptions().isFilterVisible() }\"");
 
-WriteLiteral(">\n        <div");
+WriteLiteral(">\r\n        <div");
 
 WriteLiteral(" class=\"bcms-filterbox\"");
 
 WriteLiteral(" data-bind=\"click: gridOptions().toggleFilter\"");
 
-WriteLiteral(">\n");
+WriteLiteral(">\r\n");
 
 WriteLiteral("            ");
 
@@ -76,7 +76,7 @@ WriteLiteral("            ");
             
             #line default
             #line hidden
-WriteLiteral("\n            <div");
+WriteLiteral("\r\n            <div");
 
 WriteLiteral(" class=\"bcms-filter-modified\"");
 
@@ -92,7 +92,7 @@ WriteLiteral(">");
             
             #line default
             #line hidden
-WriteLiteral("</div>\n        </div>\n    </div>\n\n    <div");
+WriteLiteral("</div>\r\n        </div>\r\n    </div>\r\n\r\n    <div");
 
 WriteLiteral(" class=\"bcms-filter-selection-block\"");
 
@@ -100,21 +100,21 @@ WriteLiteral(" style=\"display: none;\"");
 
 WriteLiteral(" data-bind=\"visible: gridOptions().isFilterVisible()\"");
 
-WriteLiteral(">\n        <div");
+WriteLiteral(">\r\n        <div");
 
 WriteLiteral(" class=\"bcms-filter-controls\"");
 
-WriteLiteral(">\n            <div");
+WriteLiteral(">\r\n            <div");
 
 WriteLiteral(" class=\"bcms-clearfix\"");
 
-WriteLiteral(">\n                <div");
+WriteLiteral(">\r\n                <div");
 
 WriteLiteral(" class=\"bcms-filter-options\"");
 
 WriteLiteral(" data-bind=\"with: gridOptions().tags\"");
 
-WriteLiteral(">\n                    <div");
+WriteLiteral(">\r\n                    <div");
 
 WriteLiteral(" class=\"bcms-filter-text\"");
 
@@ -127,7 +127,7 @@ WriteLiteral(">");
             
             #line default
             #line hidden
-WriteLiteral("</div>\n                    <div");
+WriteLiteral("</div>\r\n                    <div");
 
 WriteLiteral(" class=\"bcms-field-wrapper\"");
 
@@ -154,13 +154,13 @@ WriteLiteral(">\r\n                            <span");
 WriteLiteral(" data-bind=\"text: newItem.validationMessage()\"");
 
 WriteLiteral("></span>\r\n                        </span>\r\n                        <!-- /ko -->\r\n" +
-"                    </div>\n                </div>\n\n                <div");
+"                    </div>\r\n                </div>\r\n\r\n                <div");
 
 WriteLiteral(" class=\"bcms-filter-options\"");
 
 WriteLiteral(" data-bind=\"with: gridOptions().categories\"");
 
-WriteLiteral(">\n                    <div");
+WriteLiteral(">\r\n                    <div");
 
 WriteLiteral(" class=\"bcms-filter-text\"");
 
@@ -173,47 +173,30 @@ WriteLiteral(">");
             
             #line default
             #line hidden
-WriteLiteral("</div>\n                    <div");
+WriteLiteral("</div>\r\n                    <div");
 
 WriteLiteral(" class=\"bcms-field-wrapper\"");
 
 WriteLiteral(">\r\n                        <input");
 
-WriteLiteral(" type=\"text\"");
+WriteLiteral(" type=\"hidden\"");
 
-WriteLiteral(" class=\"bcms-field-text\"");
+WriteLiteral(" id=\"bcms-js-categories-select\"");
 
-WriteLiteral(@" data-bind=""
-                                    css: { 'bcms-tag-validation-error': newItem.hasError() },
-                                    value: newItem,
-                                    valueUpdate: 'afterkeydown',
-                                    escPress: clearItem,
-                                    autocompleteList: 'onlyExisting'""");
-
-WriteLiteral(" />\r\n                        <!-- ko if: newItem.hasError() -->\r\n                " +
-"        <span");
-
-WriteLiteral(" class=\"bcms-tag-field-validation-error\"");
-
-WriteLiteral(">\r\n                            <span");
-
-WriteLiteral(" data-bind=\"text: newItem.validationMessage()\"");
-
-WriteLiteral("></span>\r\n                        </span>\r\n                        <!-- /ko -->\r\n" +
-"                    </div>\n                </div>\n            </div>\n\n          " +
-"  <div");
+WriteLiteral(" />\r\n                    </div>\r\n                </div>\r\n            </div>\r\n\r\n  " +
+"          <div");
 
 WriteLiteral(" class=\"bcms-single-tag-holder\"");
 
 WriteLiteral(" data-bind=\"foreach: gridOptions().tags.items()\"");
 
-WriteLiteral(">\n                <div");
+WriteLiteral(">\r\n                <div");
 
 WriteLiteral(" class=\"bcms-single-tag\"");
 
 WriteLiteral(" data-bind=\"css: { \'bcms-single-tag-active\': isActive() }\"");
 
-WriteLiteral(">\n                    <span");
+WriteLiteral(">\r\n                    <span");
 
 WriteLiteral(" data-bind=\"text: name()\"");
 
@@ -224,85 +207,84 @@ WriteLiteral(" data-bind=\"    click: remove\"");
 WriteLiteral(">");
 
             
-            #line 53 "..\..\Views\Shared\Partial\MediaManagerFilterTemplate.cshtml"
+            #line 43 "..\..\Views\Shared\Partial\MediaManagerFilterTemplate.cshtml"
                                                                                       Write(RootGlobalization.Button_Remove);
 
             
             #line default
             #line hidden
-WriteLiteral("</a>\n                </div>\n                <input");
+WriteLiteral("</a>\r\n                </div>\r\n                <input");
 
 WriteLiteral(" type=\"hidden\"");
 
 WriteLiteral(" data-bind=\"attr: { name: getItemInputName($index()) + \'.Key\', value: id() }\"");
 
-WriteLiteral(" />\n                <input");
+WriteLiteral(" />\r\n                <input");
 
 WriteLiteral(" type=\"hidden\"");
 
 WriteLiteral(" data-bind=\"attr: { name: getItemInputName($index()) + \'.Value\', value: name() }\"" +
 "");
 
-WriteLiteral(" />\n            </div>\n\n            <div");
+WriteLiteral(" />\r\n            </div>\r\n\r\n            <div");
 
 WriteLiteral(" class=\"bcms-single-tag-holder\"");
 
 WriteLiteral(" data-bind=\"foreach: gridOptions().categories.items()\"");
 
-WriteLiteral(">\n                <div");
+WriteLiteral(">\r\n                <div");
 
 WriteLiteral(" class=\"bcms-single-tag\"");
 
-WriteLiteral(" data-bind=\"css: { \'bcms-single-tag-active\': isActive() }\"");
+WriteLiteral(">\r\n                    <span");
 
-WriteLiteral(">\n                    <span");
-
-WriteLiteral(" data-bind=\"text: name()\"");
+WriteLiteral(" data-bind=\"text: $data.text\"");
 
 WriteLiteral("></span><a");
 
-WriteLiteral(" data-bind=\"    click: remove\"");
+WriteLiteral(" data-bind=\"    click: $parent.gridOptions().categories.remove\"");
 
 WriteLiteral(">");
 
             
-            #line 61 "..\..\Views\Shared\Partial\MediaManagerFilterTemplate.cshtml"
-                                                                                      Write(RootGlobalization.Button_Remove);
+            #line 51 "..\..\Views\Shared\Partial\MediaManagerFilterTemplate.cshtml"
+                                                                                                                           Write(RootGlobalization.Button_Remove);
 
             
             #line default
             #line hidden
-WriteLiteral("</a>\n                </div>\n                <input");
+WriteLiteral("</a>\r\n                </div>\r\n                <input");
 
 WriteLiteral(" type=\"hidden\"");
 
-WriteLiteral(" data-bind=\"attr: { name: \'Categories[\' + $index() + \'].Key\', value: id() }\"");
+WriteLiteral(" data-bind=\"attr: { name: \'Categories[\' + $index() + \'].Key\', value: $data.id }\"");
 
-WriteLiteral(" />\n                <input");
+WriteLiteral("/>\r\n                <input");
 
 WriteLiteral(" type=\"hidden\"");
 
-WriteLiteral(" data-bind=\"attr: { name: \'Categories[\' + $index() + \'].Value\', value: name() }\"");
+WriteLiteral(" data-bind=\"attr: { name: \'Categories[\' + $index() + \'].Value\', value: $data.text" +
+" }\"");
 
-WriteLiteral(" />\n            </div>\n        </div>\n\n        <div");
+WriteLiteral("/>\r\n            </div>\r\n        </div>\r\n\r\n        <div");
 
 WriteLiteral(" class=\"bcms-clearfix\"");
 
-WriteLiteral(">\n            <div");
+WriteLiteral(">\r\n            <div");
 
 WriteLiteral(" class=\"bcms-check-field-holder\"");
 
-WriteLiteral(">\n                <div");
+WriteLiteral(">\r\n                <div");
 
 WriteLiteral(" class=\"bcms-check-field\"");
 
-WriteLiteral(">\n                    <input");
+WriteLiteral(">\r\n                    <input");
 
 WriteLiteral(" type=\"checkbox\"");
 
 WriteLiteral(" data-bind=\"checked: gridOptions().includeArchived\"");
 
-WriteLiteral(" />\n                </div>\n                <span");
+WriteLiteral(" />\r\n                </div>\r\n                <span");
 
 WriteLiteral(" class=\"bcms-pointer\"");
 
@@ -311,27 +293,27 @@ WriteLiteral(" data-bind=\"click: gridOptions().changeIncludeArchived\"");
 WriteLiteral(">");
 
             
-            #line 73 "..\..\Views\Shared\Partial\MediaManagerFilterTemplate.cshtml"
+            #line 63 "..\..\Views\Shared\Partial\MediaManagerFilterTemplate.cshtml"
                                                                                              Write(MediaGlobalization.MediaManager_IncludeArchived_Message);
 
             
             #line default
             #line hidden
-WriteLiteral("</span>\n            </div>\n\n            <div");
+WriteLiteral("</span>\r\n            </div>\r\n\r\n            <div");
 
 WriteLiteral(" class=\"bcms-check-field-holder\"");
 
-WriteLiteral(">\n                <div");
+WriteLiteral(">\r\n                <div");
 
 WriteLiteral(" class=\"bcms-check-field\"");
 
-WriteLiteral(">\n                    <input");
+WriteLiteral(">\r\n                    <input");
 
 WriteLiteral(" type=\"checkbox\"");
 
 WriteLiteral(" data-bind=\"checked: gridOptions().includeHistoryItems\"");
 
-WriteLiteral(" />\n                </div>\n                <span");
+WriteLiteral(" />\r\n                </div>\r\n                <span");
 
 WriteLiteral(" class=\"bcms-pointer\"");
 
@@ -340,13 +322,13 @@ WriteLiteral(" data-bind=\"click: gridOptions().changeIncludeHistoryItems\"");
 WriteLiteral(">");
 
             
-            #line 80 "..\..\Views\Shared\Partial\MediaManagerFilterTemplate.cshtml"
+            #line 70 "..\..\Views\Shared\Partial\MediaManagerFilterTemplate.cshtml"
                                                                                                  Write(MediaGlobalization.MediaManager_SearchInHistoryItems_Message);
 
             
             #line default
             #line hidden
-WriteLiteral("</span>\n            </div>\n\n            <div");
+WriteLiteral("</span>\r\n            </div>\r\n\r\n            <div");
 
 WriteLiteral(" class=\"bcms-btn-field-holder\"");
 
@@ -359,7 +341,7 @@ WriteLiteral(" data-bind=\"click: searchWithFilter\"");
 WriteLiteral(">");
 
             
-            #line 84 "..\..\Views\Shared\Partial\MediaManagerFilterTemplate.cshtml"
+            #line 74 "..\..\Views\Shared\Partial\MediaManagerFilterTemplate.cshtml"
                                                                              Write(RootGlobalization.Button_Filter_Search);
 
             
@@ -374,13 +356,13 @@ WriteLiteral(" data-bind=\"click: clearFilter\"");
 WriteLiteral(">");
 
             
-            #line 85 "..\..\Views\Shared\Partial\MediaManagerFilterTemplate.cshtml"
+            #line 75 "..\..\Views\Shared\Partial\MediaManagerFilterTemplate.cshtml"
                                                                        Write(RootGlobalization.Button_Filter_Clear);
 
             
             #line default
             #line hidden
-WriteLiteral("</div>\n            </div>\n        </div>\n    </div>\n</div>\n");
+WriteLiteral("</div>\r\n            </div>\r\n        </div>\r\n    </div>\r\n</div>\r\n");
 
         }
     }

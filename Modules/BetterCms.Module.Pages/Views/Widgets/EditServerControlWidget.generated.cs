@@ -304,6 +304,8 @@ WriteLiteral("\r\n                    </div>\r\n                </div>\r\n\r\n  
 
 WriteLiteral(" class=\"bcms-input-list-holder\"");
 
+WriteLiteral(" data-bind=\"with: categories\"");
+
 WriteLiteral(">\r\n");
 
 WriteLiteral("                    ");
@@ -409,14 +411,14 @@ WriteLiteral(">\r\n                            <img");
 
 WriteLiteral(" id=\"bcms-widget-preview-image\"");
 
-WriteAttribute("src", Tuple.Create(" src=\"", 3628), Tuple.Create("\"", 3656)
+WriteAttribute("src", Tuple.Create(" src=\"", 3657), Tuple.Create("\"", 3685)
             
             #line 72 "..\..\Views\Widgets\EditServerControlWidget.cshtml"
-, Tuple.Create(Tuple.Create("", 3634), Tuple.Create<System.Object, System.Int32>(Model.PreviewImageUrl
+, Tuple.Create(Tuple.Create("", 3663), Tuple.Create<System.Object, System.Int32>(Model.PreviewImageUrl
             
             #line default
             #line hidden
-, 3634), false)
+, 3663), false)
 );
 
 WriteLiteral(" alt=\"\"");

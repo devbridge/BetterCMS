@@ -299,12 +299,10 @@ namespace BetterCms.Module.Root
         {
             return new IPageActionProjection[]
                 {
-                    new ButtonActionProjection(authenticationJsModuleIncludeDescriptor, page => RootGlobalization.Sidebar_LogoutButton, page => "logout")
-                        {
-                            Order = 10,
-                            CssClass = page => "bcms-btn-logout",
-                        },
                     new RenderActionProjection<AuthenticationController>(f => f.Info())
+                        {
+                            Order = 5
+                        }
                 };
         }
 
@@ -312,12 +310,26 @@ namespace BetterCms.Module.Root
         {
             return new IPageActionProjection[]
                 {                    
-                    new ButtonActionProjection(siteSettingsJsModuleIncludeDescriptor, page => "openSiteSettings")
+                    new InheriteProjection(
+                        "div",
+                        new IPageActionProjection[]
+                            {
+                                new ButtonActionProjection(authenticationJsModuleIncludeDescriptor, page => RootGlobalization.Sidebar_LogoutButton, page => "logout")
+                                    {
+                                        Order = 10,
+                                        CssClass = page => "bcms-cp-settings-btn bcms-cp-logout",
+                                    },
+                                new ButtonActionProjection(siteSettingsJsModuleIncludeDescriptor, page => "openSiteSettings")
+                                    {
+                                        Title = page => RootGlobalization.Sidebar_SiteSettingsButtonTitle,
+                                        CssClass = page => "bcms-cp-settings-btn",
+                                        Order = 20,
+                                    },
+                             })
                         {
-                            Title = page => RootGlobalization.Sidebar_SiteSettingsButtonTitle,
-                            CssClass = page => "bcms-sidemenu-btn bcms-btn-settings",
                             Order = 900,
-                        }
+                            CssClass = page => "bcms-buttons-block"
+                        }, 
                 };
         }
 

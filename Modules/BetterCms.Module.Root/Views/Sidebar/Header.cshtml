@@ -1,8 +1,8 @@
 ﻿@using BetterCms.Module.Root.Mvc
 @model BetterCms.Module.Root.ViewModels.PageProjectionsViewModel
 <div class="bcms-sidemenu-header">
-        @foreach (var projection in Model.Projections)
-        {
-            projection.Render(Model.Page, (ViewContext.Controller as CmsControllerBase).SecurityService, Html);
-        }
+@foreach (var projection in Model.Projections)
+{
+    projection.Render(Model.Page, (ViewContext.Controller as CmsControllerBase).SecurityService, Html);
+}
 </div>

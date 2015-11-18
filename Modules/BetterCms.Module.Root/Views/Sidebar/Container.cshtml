@@ -1,69 +1,7 @@
 ﻿@model BetterCms.Module.Root.Models.Sidebar.SidebarContainerViewModel
 <div id="bcms-sidemenu" class="bcms-sidemenu bcms-layer" style="display: none">
-    @*@Html.Partial("Side", Model.SideProjections)
-        @Html.Partial("Header", Model.HeaderProjections)
-        @Html.Partial("Body", Model.BodyProjections)
-        @Html.Partial("Footer", Model.Version)*@
-
-    <div class="bcms-sidemenu-handle" id="bcms-sidemenu-handle">
-        <div class="bcms-sidemenu-toggler" id="bcms-sidemenu-hide" title="Open/Close CMS sidebar">
-            <div class="bcms-sidemenu-openclosearrow">Show/Hide</div>
-        </div>
-
-        <div class="bcms-sidemenu-switch" id="bcms-sidemenu-switch" title="Turn CMS edit mode ON or OFF">
-            <div class="bcms-sidemenu-on">On</div>
-            <div class="bcms-sidemenu-off">Off</div>
-        </div>
-
-        <div id="bcms-sidemenu-pubstatus" class="bcms-sidemenu-pubstatus" title="Page is published." data-bcms-order="10"></div>
-
-        <div class="bcms-sidemenu-drag-handle" id="bcms-sidemenu-draghandle" title="Drag to adjust sidebar position">&nbsp;</div>
-    </div>
-
-    <div class="bcms-sidemenu-header">
-        <div class="bcms-user-profile" id="bcms-user-profile" data-url="/bcms-users/UserProfile/EditProfile">Simonas</div>
-        <a class="bcms-cp-preview-btn" data-bcms-order="10" href="/" target="_blank">Preview</a>
-    </div>
-
-    <div class="bcms-sidemenu-body">
-        <div class="bcms-publisher-block bcms-publisher-switch-on" data-bcms-order="10">
-            <div class="bcms-publisher-switch" title="Publish or Unpublish this page">
-                <div class="bcms-publisher-on">Yes</div>
-                <div class="bcms-publisher-off">No</div>
-            </div>
-
-            <div class="bcms-publisher-info" data-bcms-module="bcms.pages" data-bcms-action="changePublishStatus">Published<div class="bcms-publisher-includes-draft">(Includes Drafts)</div></div>
-        </div>
-
-        <div class="bcms-cp-btn bcms-cp-btn-add bcms-onclick-action" data-bcms-order="10" data-bcms-module="bcms.pages" data-bcms-action="addNewPage">New page</div>
-        <div class="bcms-cp-btn bcms-onclick-action" data-bcms-order="30" data-bcms-module="bcms.pages" data-bcms-action="clonePage">Duplicate this page</div>
-        <div class="bcms-cp-btn bcms-onclick-action" data-bcms-order="200" data-bcms-module="bcms.blog" data-bcms-action="postNewArticle">Create new article</div>
-
-        @* New custom module buttons should be added here *@
-
-        <div class="bcms-buttons-block" data-bcms-order="10">
-            <div class="bcms-cp-settings-btn bcms-cp-seo-btn bcms-onclick-action" data-bcms-order="20" data-bcms-module="bcms.pages.seo" data-bcms-action="openEditSeoDialog">Edit SEO</div>
-            <div class="bcms-cp-settings-btn bcms-onclick-action" data-bcms-order="30" data-bcms-module="bcms.pages.properties" data-bcms-action="editPageProperties">Properties</div>
-        </div>
-
-        <div class="bcms-buttons-block" data-bcms-order="10">
-            <div class="bcms-cp-settings-btn bcms-cp-logout bcms-onclick-action" data-bcms-order="800" data-bcms-module="bcms.authentication" data-bcms-action="logout">Log Out</div>
-            <div class="bcms-cp-settings-btn bcms-onclick-action" data-bcms-order="900" data-bcms-module="bcms.siteSettings" data-bcms-action="openSiteSettings">Site settings</div>
-        </div>
-
-        <div class="bcms-cp-delete bcms-onclick-action" data-bcms-order="700" data-bcms-module="bcms.pages" data-bcms-action="deleteCurrentPage">Delete page</div>
-    </div>
-
-    <div class="bcms-sidemenu-footer">
-        <svg class="bcms-cp-logo" height="22" width="22" viewBox="0 0 22 22">
-            <g fill-rule="evenodd">
-                <path fill="#4ad8e5" d="m0 0h22v22h-22v-22" />
-                <path fill="#5d7293" d="m7 7h15v15h-15v-15" />
-                <path fill="#184258" d="m7 7h9v9h-9v-9" />
-                <path fill="#fff" d="m12 12h4v4h-4v-4" />
-            </g>
-        </svg>
-
-        <div class="bcms-cp-version-number">1.11.0-dev</div>
-    </div>
+@Html.Partial("Side", Model.SideProjections)
+@Html.Partial("Header", Model.HeaderProjections)
+@Html.Partial("Body", Model.BodyProjections)
+@Html.Partial("Footer", Model.Version)
 </div>

@@ -109,7 +109,7 @@
                         @Html.Partial(RootModuleConstants.AccessControlTemplate)
                     }
 
-                    <div class="bcms-input-list-holder">
+                    <div class="bcms-input-list-holder" data-bind="with: categories">
                         @Html.Partial("~/Areas/bcms-root/Views/Category/CategoriesTemplate.cshtml", categoriesTemplateViewModel)
                     </div>
 

@@ -80,10 +80,7 @@ bettercms.define('bcms.media.fileeditor', ['bcms.jquery', 'bcms', 'bcms.modal', 
         function FileEditViewModel(dialog, data, onSaveCallback) {
             var self = this,
                 tagsViewModel = new tags.TagsListViewModel(data.Tags),
-                categoriesViewModel = data.Categories.map(function (cat) {
-                    var obj = { id: cat.Key.toLowerCase(), text: cat.Value };
-                    return obj;
-                }),
+                categoriesViewModel = new categories.CategoriesSelectListModel(data.Categories),
                 accessControl = security.createUserAccessViewModel(data.UserAccessList),
                 image = data.Image,
                 userAccessList = accessControl.UserAccessList(),
@@ -91,7 +88,7 @@ bettercms.define('bcms.media.fileeditor', ['bcms.jquery', 'bcms', 'bcms.modal', 
                 i;
             
             self.tags = tagsViewModel;
-            self.categories = ko.observableArray(categoriesViewModel);
+            self.categories = categoriesViewModel;
             self.image = ko.observable(new media.ImageSelectorViewModel(image));
             self.accessControl = accessControl;
 
@@ -157,7 +154,7 @@ bettercms.define('bcms.media.fileeditor', ['bcms.jquery', 'bcms', 'bcms.modal', 
 
             var viewModel = new FileEditViewModel(dialog, content.Data, onSaveCallback);
 
-            categories.initCategoriesSelect(viewModel, viewModel.categories(), content.Data.CategoriesLookupList);
+            categories.initCategoriesSelect(viewModel.categories, content.Data.CategoriesLookupList);
 
             ko.applyBindings(viewModel, dialog.container.find(selectors.fileEditorForm).get(0));
 

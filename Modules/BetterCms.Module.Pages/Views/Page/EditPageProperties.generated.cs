@@ -694,6 +694,8 @@ WriteLiteral("</div>\r\n                            </div>\r\n                  
 
 WriteLiteral(" class=\"bcms-input-list-holder\"");
 
+WriteLiteral(" data-bind=\"with: categories\"");
+
 WriteLiteral(">\r\n");
 
 WriteLiteral("                            ");
@@ -1255,14 +1257,14 @@ WriteLiteral(" type=\"text\"");
 
 WriteLiteral(" class=\"bcms-search-field-box bcms-js-search-box\"");
 
-WriteAttribute("placeholder", Tuple.Create(" placeholder=\"", 16296), Tuple.Create("\"", 16345)
+WriteAttribute("placeholder", Tuple.Create(" placeholder=\"", 16325), Tuple.Create("\"", 16374)
             
             #line 250 "..\..\Views\Page\EditPageProperties.cshtml"
-                                , Tuple.Create(Tuple.Create("", 16310), Tuple.Create<System.Object, System.Int32>(RootGlobalization.WaterMark_Search
+                                , Tuple.Create(Tuple.Create("", 16339), Tuple.Create<System.Object, System.Int32>(RootGlobalization.WaterMark_Search
             
             #line default
             #line hidden
-, 16310), false)
+, 16339), false)
 );
 
 WriteLiteral("\r\n                                       data-bind=\"value: searchQuery, valueUpda" +
