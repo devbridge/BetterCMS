@@ -376,7 +376,7 @@ namespace BetterCms.Module.Pages.Content.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Register +.
+        ///   Looks up a localized string similar to Register.
         /// </summary>
         public static string AddPageContent_WidgetTab_RegisterButton {
             get {
@@ -1861,7 +1861,7 @@ namespace BetterCms.Module.Pages.Content.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Add Translation +.
+        ///   Looks up a localized string similar to Add Translation.
         /// </summary>
         public static string EditPageTranslations_AddTranslation_ButtonTitle {
             get {
@@ -3391,7 +3391,7 @@ namespace BetterCms.Module.Pages.Content.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Register +.
+        ///   Looks up a localized string similar to Register.
         /// </summary>
         public static string SiteSettings_Template_RegisterNew {
             get {
@@ -3643,7 +3643,7 @@ namespace BetterCms.Module.Pages.Content.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Add New Region +.
+        ///   Looks up a localized string similar to Add New Region.
         /// </summary>
         public static string TemplateRegions_AddNewRegion {
             get {

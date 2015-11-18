@@ -518,7 +518,7 @@ WriteLiteral("                            ");
 
             
             #line 84 "..\..\Views\Blog\EditBlogPost.cshtml"
-                       Write(Html.DateTextBoxFor(model => model.LiveFromDate, Model.LiveFromDate, new Dictionary<string, object> { { "class", "bcms-field-text bcms-datepicker" }, { "style", "width: 127px;" } }));
+                       Write(Html.DateTextBoxFor(model => model.LiveFromDate, Model.LiveFromDate, new Dictionary<string, object> { { "class", "bcms-field-text bcms-datepicker" } }));
 
             
             #line default
@@ -562,7 +562,7 @@ WriteLiteral("                            ");
 
             
             #line 91 "..\..\Views\Blog\EditBlogPost.cshtml"
-                       Write(Html.DateTextBoxFor(model => model.LiveToDate, Model.LiveToDate, new Dictionary<string, object> { { "class", "bcms-field-text bcms-datepicker" }, { "style", "width: 127px;" } }));
+                       Write(Html.DateTextBoxFor(model => model.LiveToDate, Model.LiveToDate, new Dictionary<string, object> { { "class", "bcms-field-text bcms-datepicker" } }));
 
             
             #line default
@@ -748,7 +748,7 @@ WriteLiteral("                            ");
 
             
             #line 121 "..\..\Views\Blog\EditBlogPost.cshtml"
-                       Write(Html.DropDownListFor(model => model.AuthorId, Model.Authors.ToSelectList(Model.AuthorId), string.Empty, new { @class = "bcms-global-select", @style = "width: 245px;" }));
+                       Write(Html.DropDownListFor(model => model.AuthorId, Model.Authors.ToSelectList(Model.AuthorId), string.Empty, new { @id = "bcms-js-authors-select", @style = "width: 245px;" }));
 
             
             #line default

@@ -10,10 +10,9 @@ $datepicker-arrows: (
     width: 200px;
 
     &-trigger {
+        @include positioning($center-y: true);
         cursor: pointer;
-        position: absolute;
-        right: 5px;
-        top: 6px;
+        right: 13px;
     }
 
     &-title {

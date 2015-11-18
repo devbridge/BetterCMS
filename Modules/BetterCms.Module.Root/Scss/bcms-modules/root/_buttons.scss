@@ -19,6 +19,7 @@ $global-button-structure: (
 
 %btn-frame {
     @include vertical-align();
+    @include user-select();
     box-sizing: border-box;
     cursor: pointer;
     font-family: $font-base-family;
@@ -85,6 +86,14 @@ $global-button-structure: (
             @extend %global-button-structure;
             background-color: $bg-color;
             border: $border;
+
+            &:hover {
+                background-color: lighten($bg-color, 10%);
+            }
+
+            &:active {
+                background-color: darken($bg-color, 5%);
+            }
         }
     }
 

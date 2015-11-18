@@ -156,7 +156,7 @@ WriteLiteral("            ");
 
             
             #line 22 "..\..\Views\Content\Partial\EditHtmlContent.cshtml"
-       Write(Html.DateTextBoxFor(model => model.LiveFrom, Model.LiveFrom, new Dictionary<string, object> { { "class", "bcms-field-text bcms-datepicker" }, { "style", "width: 127px;" } }));
+       Write(Html.DateTextBoxFor(model => model.LiveFrom, Model.LiveFrom, new Dictionary<string, object> { { "class", "bcms-field-text bcms-datepicker" } }));
 
             
             #line default
@@ -199,7 +199,7 @@ WriteLiteral("            ");
 
             
             #line 30 "..\..\Views\Content\Partial\EditHtmlContent.cshtml"
-       Write(Html.DateTextBoxFor(model => model.LiveTo, Model.LiveTo, new Dictionary<string, object> { { "class", "bcms-field-text bcms-datepicker" }, { "style", "width: 127px;" } }));
+       Write(Html.DateTextBoxFor(model => model.LiveTo, Model.LiveTo, new Dictionary<string, object> { { "class", "bcms-field-text bcms-datepicker" } }));
 
             
             #line default
