@@ -99,15 +99,45 @@ WriteLiteral(" />\r\n<div");
 
 WriteLiteral(" class=\"bcms-single-tag-holder\"");
 
-WriteLiteral(" data-bind=\"foreach: categories\"");
+WriteLiteral(" data-bind=\"foreach: items\"");
 
-WriteLiteral(">\r\n   <input");
+WriteLiteral(">\r\n    <div");
+
+WriteLiteral(" class=\"bcms-single-tag\"");
+
+WriteLiteral(" ><span");
+
+WriteLiteral(" data-bind=\"text: $data.text\"");
+
+WriteLiteral("></span><a");
+
+WriteLiteral(" data-bind=\"");
+
+            
+            #line 13 "..\..\Views\Category\CategoriesTemplate.cshtml"
+                                                                                      Write(canEdit ? "click: $parent.remove" : string.Empty);
+
+            
+            #line default
+            #line hidden
+WriteLiteral("\"");
+
+WriteLiteral(">");
+
+            
+            #line 13 "..\..\Views\Category\CategoriesTemplate.cshtml"
+                                                                                                                                          Write(RootGlobalization.Button_Remove);
+
+            
+            #line default
+            #line hidden
+WriteLiteral("</a></div>\r\n    <input");
 
 WriteLiteral(" type=\"hidden\"");
 
 WriteLiteral(" data-bind=\"attr: { name: \'Categories[\'+ $index() +\'].key\', value: $data.id }\"");
 
-WriteLiteral(" />\r\n</div>\r\n\r\n");
+WriteLiteral("/>\r\n</div>\r\n\r\n");
 
         }
     }

@@ -540,15 +540,12 @@ bettercms.define('bcms.media.imageeditor', ['bcms.jquery', 'bcms', 'bcms.modal',
             var self = this,
                 titleEditorViewModel = new TitleEditorViewModel(dialog, data.Title),
                 imageEditorViewModel = new ImageEditorViewModel(dialog, data, true),
-                categoriesViewModel = data.Categories.map(function (cat) {
-                    var obj = { id: cat.Key.toLowerCase(), text: cat.Value };
-                    return obj;
-                }),
+                categoriesViewModel = new categories.CategoriesSelectListModel(data.Categories),
                 tagsViewModel = new tags.TagsListViewModel(data.Tags);
 
             self.titleEditorViewModel = titleEditorViewModel;
             self.imageEditorViewModel = imageEditorViewModel;
-            self.categories = ko.observableArray(categoriesViewModel);
+            self.categories = categoriesViewModel;
             self.tags = tagsViewModel;
             
             // Track buttons
@@ -656,7 +653,7 @@ bettercms.define('bcms.media.imageeditor', ['bcms.jquery', 'bcms', 'bcms.modal',
 
             var viewModel = new ImageEditViewModel(dialog, data, callback);
 
-            categories.initCategoriesSelect(viewModel, viewModel.categories(), data.CategoriesLookupList);
+            categories.initCategoriesSelect(viewModel.categories, data.CategoriesLookupList);
 
             ko.applyBindings(viewModel, dialog.container.find(selectors.imageEditorForm).get(0));
 

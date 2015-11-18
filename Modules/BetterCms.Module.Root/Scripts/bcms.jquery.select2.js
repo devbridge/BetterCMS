@@ -3308,7 +3308,7 @@ bettercms.define('bcms.jquery.select2', ['bcms.jquery'], function(jQuery) {
                 }
 
                 choice.data("select2-data", data);
-                choice.insertBefore(this.searchContainer.closest('.bcms-input-list-holder').find('.bcms-single-tag-holder'));
+                //choice.insertBefore(this.searchContainer.closest('.bcms-input-list-holder').find('.bcms-single-tag-holder'));
 
                 return id;
             },

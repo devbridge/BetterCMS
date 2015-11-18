@@ -83,6 +83,7 @@ namespace BetterCms.Module.MediaManager.Command.MediaManager
             model.Path = LoadMediaFolder(request);
             model.Tags = request.Tags;
             model.Categories = request.Categories;
+            model.CategoriesLookupList = CategoryService.GetCategoriesLookupList(MediaFile.CategorizableItemKeyForFiles);
             return model;
         }
 

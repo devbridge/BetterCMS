@@ -314,11 +314,8 @@ bettercms.define('bcms.pages.widgets', ['bcms.jquery', 'bcms', 'bcms.modal', 'bc
 
         function WidgetEditViewModel(data) {
             var self = this,
-                categorieslist = data.Categories.map(function (cat) {
-                    var obj = { id: cat.Key.toLowerCase(), text: cat.Value };
-                    return obj;
-                });
-            self.categories = ko.observableArray(categorieslist);
+                categorieslist = new categories.CategoriesSelectListModel(data.Categories);
+            self.categories = categorieslist;
         }
 
         function initializeEditHtmlContentWidgetForm(dialog, availablePreviewOnPageContentId, onSaveCallback, editInSourceMode, content, editorId, includeChildRegions) {
@@ -334,7 +331,7 @@ bettercms.define('bcms.pages.widgets', ['bcms.jquery', 'bcms', 'bcms.modal', 'bc
                 codeEditorInitialized = false;
 
 
-            categories.initCategoriesSelect(widgetEditViewModel, widgetEditViewModel.categories(), data.CategoriesLookupList);
+            categories.initCategoriesSelect(widgetEditViewModel.categories, data.CategoriesLookupList);
 
             ko.applyBindings(optionListViewModel, optionsContainer.get(0));
             ko.applyBindings(widgetEditViewModel, widgetEditContainer.get(0));
@@ -399,7 +396,7 @@ bettercms.define('bcms.pages.widgets', ['bcms.jquery', 'bcms', 'bcms.modal', 'bc
                 optionListViewModel = options.createOptionsViewModel(optionsContainer, widgetOptions, customOptions, showLanguages, languages),
                 widgetEditViewModel = new WidgetEditViewModel(data);
 
-            categories.initCategoriesSelect(widgetEditViewModel, widgetEditViewModel.categories(), data.CategoriesLookupList);
+            categories.initCategoriesSelect(widgetEditViewModel.categories, data.CategoriesLookupList);
 
             ko.applyBindings(optionListViewModel, optionsContainer.get(0));
             ko.applyBindings(widgetEditViewModel, widgetEditContainer.get(0));

@@ -9,7 +9,8 @@
 <div class="bcms-content-titles">@RootGlobalization.CategoriesTemplate_AddCategories_Title</div>
 @Html.Tooltip(Model.TooltipDescription)
 <input type="hidden" id="bcms-js-categories-select" />
-<div class="bcms-single-tag-holder" data-bind="foreach: categories">
-   <input type="hidden" data-bind="attr: { name: 'Categories['+ $index() +'].key', value: $data.id }" />
+<div class="bcms-single-tag-holder" data-bind="foreach: items">
+    <div class="bcms-single-tag" ><span data-bind="text: $data.text"></span><a data-bind="@(canEdit ? "click: $parent.remove" : string.Empty)">@RootGlobalization.Button_Remove</a></div>
+    <input type="hidden" data-bind="attr: { name: 'Categories['+ $index() +'].key', value: $data.id }"/>
 </div>
 

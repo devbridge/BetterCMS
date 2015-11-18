@@ -202,7 +202,7 @@ bettercms.define('bcms.pages.properties', ['bcms.jquery', 'bcms', 'bcms.modal', 
             self.featuredImage = ko.observable(new media.ImageSelectorViewModel(featuredImage));
             self.accessControl = accessControlViewModel;
             self.translations = translationsViewModel;
-            self.categories = ko.observableArray(categoriesModel);
+            self.categories = categoriesModel;
             self.templatesList = templatesViewModel;
         }
 
@@ -213,10 +213,7 @@ bettercms.define('bcms.pages.properties', ['bcms.jquery', 'bcms', 'bcms.modal', 
             var optionsContainer = dialog.container.find(selectors.optionsTab),
                 optionListViewModel = options.createOptionValuesViewModel(optionsContainer, content.Data.OptionValues, content.Data.CustomOptions),
                 tagsViewModel = new tags.TagsListViewModel(content.Data.Tags),
-                categoriesModel = content.Data.Categories.map(function (cat) {
-                    var obj = { id: cat.Key.toLowerCase(), text: cat.Value };
-                    return obj;
-                }),
+                categoriesModel = new categories.CategoriesSelectListModel(content.Data.Categories),
                 accessControlViewModel = security.createUserAccessViewModel(content.Data.UserAccessList),
                 translationsViewModel = content.Data.Languages ? new pageLanguages.PageTranslationsListViewModel(content.Data.Translations, content.Data.Languages, content.Data.LanguageId, content.Data.PageId) : null,
                 templatesViewModel = new TemplatesListViewModel(content.Data.Templates, dialog, optionsContainer, optionListViewModel),
@@ -225,7 +222,7 @@ bettercms.define('bcms.pages.properties', ['bcms.jquery', 'bcms', 'bcms.modal', 
                 form = dialog.container.find(selectors.pagePropertiesForm),
                 codeEditorInitialized = false;
 
-            categories.initCategoriesSelect(pageViewModel, categoriesModel, content.Data.CategoriesLookupList);
+            categories.initCategoriesSelect(categoriesModel, content.Data.CategoriesLookupList);
 
             $(selectors.pagePropertiesForceAccessProtocolSelect).select2({
                 minimumResultsForSearch: -1
