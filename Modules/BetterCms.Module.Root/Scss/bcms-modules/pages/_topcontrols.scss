@@ -11,12 +11,12 @@
 
         &.bcms-active-search {
             .bcms-search-block {
-                min-width: 330px;
                 opacity: 1;
+                width: 280px;
             }
 
             .bcms-search-field-box {
-                min-width: 280px;
+                width: 280px;
             }
         }
     }
@@ -87,17 +87,17 @@
 //module search block
 .bcms-search {
     &-block {
-        @include transition(opacity 150ms ease-in, width 150ms ease-in);
+        @include transition(opacity 100ms ease-in);
         @include vertical-align();
+        margin-left: -35px;
         min-width: 250px;
         opacity: 0;
-        position: relative;
-        white-space: nowrap;
     }
 
     &-field-box {
+        @include transition(width 150ms ease-in);
         @extend %reset;
-        @include size(250px $form-element-height);
+        @include size(50px $form-element-height);
         background-color: transparent;
         border: {
             top: 0;
@@ -111,6 +111,7 @@
             size: 14px;
             style: italic;
         }
+        padding-left: 35px;
 
         @include placeholder {
             color: $text-light;
