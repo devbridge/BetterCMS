@@ -18,7 +18,7 @@
             <div class="bcms-clearfix">
                 <div class="bcms-filter-options" data-bind="with: tags">
                     <div class="bcms-filter-text">@BlogGlobalization.SiteSettings_Blogs_FilterByTags</div>
-                    <div class="bcms-filter-field-holder">
+                    <div class="bcms-field-wrapper">
                         <input type="text" class="bcms-field-text" data-bind="
     css: { 'bcms-tag-validation-error': newItem.hasError() },
     value: newItem,
@@ -35,35 +35,42 @@
 
                 <div class="bcms-filter-options" data-bind="with: categories">
                     <div class="bcms-filter-text">@BlogGlobalization.SiteSettings_Blogs_FilterByCategory</div>
-                    <div class="bcms-filter-field-holder">
+                    <div class="bcms-field-wrapper">
                         <input type="hidden" id="bcms-js-categories-select" /> 
                     </div>
                 </div>
 
                 <div class="bcms-filter-options">
                     <div class="bcms-filter-text">@BlogGlobalization.SiteSettings_Blogs_FilterByStatus</div>
-                    @Html.DropDownListFor(m => m.Status, new List<SelectListItem>(), new
+                        <div class="bcms-field-wrapper">
+                            @Html.DropDownListFor(m => m.Status, new List<SelectListItem>(), new
                                                                       {
                                                                           data_bind = "options: statuses, value: status, optionsText: 'Value', optionsValue: 'Key'",
                                                                           id = "bcms-js-filter-status"
                                                                       })
+                         </div>
                 </div>
                 <div class="bcms-filter-options">
                     <div class="bcms-filter-text">@BlogGlobalization.SiteSettings_Blogs_FilterBySEO</div>
-                    @Html.DropDownListFor(m => m.SeoStatus, new List<SelectListItem>(), new
+                    <div class="bcms-field-wrapper">
+                        @Html.DropDownListFor(m => m.SeoStatus, new List<SelectListItem>(), new
                                                                                             {
                                                                                                 data_bind = "options: seoStatuses, value: seoStatus, optionsText: 'Value', optionsValue: 'Key'",
                                                                                                 id = "bcms-js-filter-seostatus"
                                                                                             })
-                </div>
+                        </div>
+                    </div>
                 @if (Model.Languages != null && Model.Languages.Any())
                 {
                     <div class="bcms-filter-options">
                         <div class="bcms-filter-text">@BlogGlobalization.SiteSettings_Blogs_FilterByLanguage</div>
-                        <select name="LanguageId" data-bind="options: languages, value: languageId, optionsText: 'Value', optionsValue: 'Key'" id="bcms-js-filter-languages" />
+                        <div class="bcms-field-wrapper">
+                            <select name="LanguageId" data-bind="options: languages, value: languageId, optionsText: 'Value', optionsValue: 'Key'" id="bcms-js-filter-languages" />
+                        </div>
                     </div>
                 }
             </div>
+
             <div class="bcms-single-tag-holder" data-bind="foreach: tags.items()">
                 <div class="bcms-single-tag" data-bind="css: { 'bcms-single-tag-active': isActive() }">
                     <span data-bind="text: name()"></span><a data-bind="    click: remove">@RootGlobalization.Button_Remove</a>
@@ -86,8 +93,8 @@
                 <span class="bcms-pointer" data-bind="click: changeIncludeArchived">@BlogGlobalization.SiteSettings_Blogs_FilterIncludeArchived</span>
             </div>
             <div class="bcms-btn-field-holder">
-                <div class="bcms-btn-cancel" data-bind="click: clearFilter">@BlogGlobalization.SiteSettings_Blogs_FilterClear</div>
                 <div class="bcms-btn-primary" data-bind="click: searchWithFilter">@BlogGlobalization.SiteSettings_Blogs_FilterSearch</div>
+                <div class="bcms-btn-cancel" data-bind="click: clearFilter">@BlogGlobalization.SiteSettings_Blogs_FilterClear</div>
             </div>
         </div>
     </div>

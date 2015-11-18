@@ -4,7 +4,7 @@
 bettercms.define('bcms.blog', ['bcms.jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', 'bcms.dynamicContent', 'bcms.datepicker', 'bcms.htmlEditor', 'bcms.grid', 'bcms.pages', 'bcms.categories', 'bcms.ko.extenders', 'bcms.media', 'bcms.tags', 'bcms.ko.grid', 'bcms.messages', 'bcms.redirect', 'bcms.pages.history', 'bcms.preview', 'bcms.security', 'bcms.blog.filter', 'bcms.sidemenu', 'bcms.forms', 'bcms.pages.widgets', 'bcms.antiXss', 'bcms.content'],
     function ($, bcms, modal, siteSettings, dynamicContent, datepicker, htmlEditor, grid, pages, categories, ko, media, tags, kogrid, messages, redirect, history, preview, security, filter, sidemenu, forms, widgets, antiXss, bcmsContent) {
         'use strict';
-
+        
         var blog = {},
             selectors = {
                 datePickers: '.bcms-datepicker',
@@ -17,6 +17,7 @@ bettercms.define('bcms.blog', ['bcms.jquery', 'bcms', 'bcms.modal', 'bcms.siteSe
                 siteSettingsBlogCreateButton: '#bcms-create-blog-button',
                 siteSettingsBlogExportButton: '#bcms-export-blogs',
                 siteSettingsBlogImportButton: '#bcms-import-blogs',
+                siteSettingsBlogContentWindow: '.bcms-window-options',
                 siteSettingsBlogDeleteButton: '.bcms-grid-item-delete-button',
                 siteSettingsBlogParentRow: 'tr:first',
                 siteSettingsBlogEditButton: '.bcms-grid-item-edit-button',
@@ -1036,7 +1037,7 @@ bettercms.define('bcms.blog', ['bcms.jquery', 'bcms', 'bcms.modal', 'bcms.siteSe
         * Opens form for importing blog posts XML
         */
         function openImportBlogPostsForm(parentContainer, parentForm) {
-            var importModel, i, item, form;
+            var importModel, i, item, form, contentWindow;
 
             modal.open({
                 title: globalization.importBlogPostsTitle,
@@ -1073,6 +1074,7 @@ bettercms.define('bcms.blog', ['bcms.jquery', 'bcms', 'bcms.modal', 'bcms.siteSe
                                 };
 
                             form = dialog.container.find(selectors.importBlogPostsForm);
+                            contentWindow = dialog.container.find(selectors.siteSettingsBlogContentWindow);
 
                         importModel = {
                             createRedirects: ko.observable(true),
@@ -1121,7 +1123,7 @@ bettercms.define('bcms.blog', ['bcms.jquery', 'bcms', 'bcms.modal', 'bcms.siteSe
                             var items = [],
                                 j;
 
-                            form.hideLoading();
+                            contentWindow.hideLoading();
                             messages.refreshBox(form, json);
 
                             if (json.Success == true) {
@@ -1159,9 +1161,10 @@ bettercms.define('bcms.blog', ['bcms.jquery', 'bcms', 'bcms.modal', 'bcms.siteSe
                             importModel.messageBox.addErrorMessage(globalization.pleaseSelectAFile);
                         } else {
                             if (!importModel.started) {
-                                form.showLoading();
+                                contentWindow.showLoading();
                                 importModel.started = true;
                                 importModel.form.submit();
+                                contentWindow.hideLoading();
                             }
                         }
                     } else {
@@ -1182,7 +1185,7 @@ bettercms.define('bcms.blog', ['bcms.jquery', 'bcms', 'bcms.modal', 'bcms.siteSe
                         }
 
                         if (params.BlogPosts.length > 0) {
-                            form.showLoading();
+                            contentWindow.showLoading();
                             $.ajax({
                                 type: 'POST',
                                 contentType: 'application/json; charset=utf-8',

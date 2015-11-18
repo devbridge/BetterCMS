@@ -10,7 +10,10 @@
         color: $white;
         cursor: pointer;
         display: inline-block;
-        font-size: 16px;
+        font: {
+            size: 16px;
+            weight: 700;
+        }
         line-height: $tab-height;
         max-width: 250px;
         padding: 0 30px;

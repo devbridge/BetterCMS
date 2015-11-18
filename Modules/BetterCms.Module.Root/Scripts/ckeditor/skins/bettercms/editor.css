@@ -6,7 +6,7 @@
 
 .cke_dialog iframe.cke_pasteframe, select.cke_dialog_ui_input_select, input.cke_dialog_ui_input_text, textarea.cke_dialog_ui_input_textarea {
   background-color: #f5f5f5;
-  border: 1px solid #c6c6c6;
+  border: 1px solid #dfdfdf;
   box-sizing: border-box;
   color: #787878;
   font-family: "Open Sans", sans-serif !important;
@@ -24,7 +24,7 @@
 }
 
 .cke_chrome {
-  border: 1px solid #c6c6c6;
+  border: 1px solid #dfdfdf;
   display: block;
   visibility: inherit !important;
 }
@@ -42,7 +42,7 @@
 
 .cke_top {
   background-color: #f5f5f5;
-  border-bottom: 1px solid #c6c6c6;
+  border-bottom: 1px solid #dfdfdf;
   min-height: 13px;
   padding: 6px 8px 0;
   position: relative;
@@ -50,12 +50,12 @@
 }
 
 .cke_float .cke_top {
-  border: 1px solid #c6c6c6;
+  border: 1px solid #dfdfdf;
 }
 
 .cke_bottom {
   background: #f5f5f5;
-  border-top: 1px solid #c6c6c6;
+  border-top: 1px solid #dfdfdf;
   height: 28px;
   line-height: 28px;
   padding: 0 5px;
@@ -96,7 +96,7 @@
 
 .cke_toolgroup {
   background-color: #f5f5f5;
-  border: 1px solid #c6c6c6;
+  border: 1px solid #dfdfdf;
   float: left;
   margin-right: 6px;
 }
@@ -166,7 +166,7 @@
   height: 11px;
   width: 12px;
   background-color: #f5f5f5;
-  border: 1px solid #c6c6c6;
+  border: 1px solid #dfdfdf;
   cursor: pointer;
   overflow: hidden;
   text-align: center;
@@ -232,7 +232,7 @@
 
 .cke_dialog_title {
   background-color: #f5f5f5;
-  border-bottom: 1px solid #c6c6c6;
+  border-bottom: 1px solid #dfdfdf;
   color: #474747;
   cursor: move;
   font-size: 13px;
@@ -243,7 +243,7 @@
 
 .cke_dialog_body {
   background-color: #f5f5f5;
-  border: 1px solid #c6c6c6;
+  border: 1px solid #dfdfdf;
   z-index: 1;
 }
 
@@ -254,7 +254,7 @@
 .cke_dialog_contents {
   background-color: #ffffff;
   border-collapse: collapse;
-  border-top: 1px solid #c6c6c6;
+  border-top: 1px solid #dfdfdf;
   font-size: 12px;
   margin-top: 30px;
   overflow: auto;
@@ -269,7 +269,7 @@
 
 .cke_dialog_footer {
   background-color: #f5f5f5;
-  border-top: 1px solid #c6c6c6;
+  border-top: 1px solid #dfdfdf;
   padding: 5px;
   position: relative;
   text-align: right;
@@ -306,7 +306,7 @@
 
 .cke_dialog_tab {
   background-color: #f5f5f5;
-  border: 1px solid #c6c6c6;
+  border: 1px solid #dfdfdf;
   color: #474747;
   cursor: pointer;
   display: inline-block;
@@ -464,7 +464,7 @@ a.cke_specialchar:hover {
 
 .cke_combo_button {
   background-color: #f5f5f5;
-  border: 1px solid #c6c6c6;
+  border: 1px solid #dfdfdf;
   box-sizing: border-box;
   cursor: pointer;
   float: left;
@@ -512,7 +512,7 @@ a.cke_specialchar:hover {
 
 .cke_panel {
   background-color: #ffffff;
-  border: 1px solid #c6c6c6;
+  border: 1px solid #dfdfdf;
   height: 150px;
   overflow: hidden;
   visibility: visible;
@@ -604,7 +604,7 @@ a.cke_specialchar:hover {
 
 .cke_menubutton_on {
   background-color: #f5f5f5;
-  border: 1px solid #c6c6c6;
+  border: 1px solid #dfdfdf;
 }
 
 .cke_menubutton_disabled {

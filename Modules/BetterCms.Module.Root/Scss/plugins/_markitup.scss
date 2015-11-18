@@ -25,7 +25,7 @@ $toolbar-icons: (
 //module global styles
 textarea {
     &.markItUpEditor {
-        border: $border-thin-gray;
+        border: $border-thin-smoke;
         box-sizing: border-box;
         display: block;
         font-family: $font-code-family;
@@ -46,17 +46,17 @@ textarea {
 .markItUp {
     &Header {
         @include clearfix();
-        background-color: $gray-smoke30;
+        background-color: $smoke;
         border: {
-            top: $border-thin-gray;
-            right: $border-thin-gray;
-            left: $border-thin-gray;
+            top: $border-thin-smoke;
+            right: $border-thin-smoke;
+            left: $border-thin-smoke;
         }
         padding: 6px 8px;
 
         > ul {
             > .markItUpButton {
-                border: $border-thin-gray;
+                border: $border-thin-smoke;
                 float: left;
                 height: 26px;
                 margin-left: 6px;
@@ -118,7 +118,7 @@ textarea {
 
         > ul {
             background-color: $white;
-            border: $border-thin-gray;
+            border: $border-thin-smoke;
             display: none;
             max-height: 170px;
             overflow-y: auto;
@@ -141,7 +141,7 @@ textarea {
                 white-space: nowrap;
 
                 &:hover {
-                    background-color: $gray-smoke30;
+                    background-color: $smoke;
                     border-color: $gray-smoke40;
                     box-shadow: inset 0 0 2px rgba($black, .1);
                 }
@@ -157,11 +157,11 @@ textarea {
     &Footer {
         @include clearfix();
         border: {
-            right: $border-thin-gray;
-            bottom: $border-thin-gray;
-            left: $border-thin-gray;
+            right: $border-thin-smoke;
+            bottom: $border-thin-smoke;
+            left: $border-thin-smoke;
         }
-        background-color: $gray-smoke30;
+        background-color: $smoke;
         height: 28px;
         line-height: 28px;
         padding: 0 5px;

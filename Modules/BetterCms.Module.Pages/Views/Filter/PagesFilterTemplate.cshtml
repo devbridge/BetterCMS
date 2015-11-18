@@ -17,7 +17,7 @@
             <div class="bcms-clearfix">
                 <div class="bcms-filter-options" data-bind="with: tags">
                     <div class="bcms-filter-text">@PagesGlobalization.SiteSettings_Pages_FilterByTags</div>
-                    <div class="bcms-filter-field-holder">
+                    <div class="bcms-field-wrapper">
                         <input type="text" class="bcms-field-text" data-bind="
                             css: { 'bcms-tag-validation-error': newItem.hasError() },
                             value: newItem,
@@ -33,7 +33,7 @@
                 </div>
                 <div class="bcms-filter-options" data-bind="with: categories">
                     <div class="bcms-filter-text">@PagesGlobalization.SiteSettings_Pages_FilterByCategory</div>
-                    <div class="bcms-filter-field-holder">
+                    <div class="bcms-field-wrapper">
                         <input type="hidden" id="bcms-js-categories-select" />
                     </div>
                 </div>
@@ -41,34 +41,42 @@
                 {
                     <div class="bcms-filter-options">
                         <div class="bcms-filter-text">@PagesGlobalization.SiteSettings_Pages_FilterByLanguage</div>
-                        <select name="LanguageId" data-bind="options: languages, value: languageId, optionsText: 'Value', optionsValue: 'Key'" id="bcms-js-filter-languages" />
-                    </div>
+                        <div class="bcms-field-wrapper">
+                            <select name="LanguageId" data-bind="options: languages, value: languageId, optionsText: 'Value', optionsValue: 'Key'" id="bcms-js-filter-languages" />
+                        </div>
+                   </div>
                 }
                 <div class="bcms-filter-options">
                     <div class="bcms-filter-text">@PagesGlobalization.SiteSettings_Pages_FilterByStatus</div>
-                    @Html.DropDownListFor(m => m.Status, new List<SelectListItem>(), new
+                    <div class="bcms-field-wrapper">
+                        @Html.DropDownListFor(m => m.Status, new List<SelectListItem>(), new
                                                                       {
                                                                           data_bind = "options: statuses, value: status, optionsText: 'Value', optionsValue: 'Key'",
                                                                           id = "bcms-js-filter-status"
                                                                       })
-                </div>
+                        </div>
+                    </div>
                 <div class="bcms-filter-options">
                     <div class="bcms-filter-text">@PagesGlobalization.SiteSettings_Pages_FilterBySEO</div>
-                    @Html.DropDownListFor(m => m.SeoStatus, new List<SelectListItem>(), new
+                    <div class="bcms-field-wrapper">
+                        @Html.DropDownListFor(m => m.SeoStatus, new List<SelectListItem>(), new
                                                                                             {
                                                                                                 data_bind = "options: seoStatuses, value: seoStatus, optionsText: 'Value', optionsValue: 'Key'",
                                                                                                 id = "bcms-js-filter-seostatus"
                                                                                             })
-                </div>
+                        </div>
+                    </div>
 
                 <div class="bcms-filter-options">
                     <div class="bcms-filter-text">@PagesGlobalization.SiteSettings_Pages_FilterByLayout</div>
-                    @Html.DropDownListFor(m => m.Layout, new List<SelectListItem>(), new
+                    <div class="bcms-field-wrapper">
+                        @Html.DropDownListFor(m => m.Layout, new List<SelectListItem>(), new
                                                                       {
                                                                           data_bind = "options: layouts, value: layout, optionsText: 'Value', optionsValue: 'Key'",
                                                                           id = "bcms-js-filter-layout"
                                                                       })
-                </div>
+                        </div>
+                    </div>
             </div>
 
             <div class="bcms-single-tag-holder" data-bind="foreach: tags.items()">
@@ -102,8 +110,8 @@
             }
 
             <div class="bcms-btn-field-holder">
-                <div class="bcms-btn-cancel" data-bind="click: clearFilter">@PagesGlobalization.SiteSettings_Pages_FilterClear</div>
                 <div class="bcms-btn-primary" data-bind="click: searchWithFilter">@PagesGlobalization.SiteSettings_Pages_FilterSearch</div>
+                <div class="bcms-btn-cancel" data-bind="click: clearFilter">@PagesGlobalization.SiteSettings_Pages_FilterClear</div>
             </div>
         </div>
     </div>

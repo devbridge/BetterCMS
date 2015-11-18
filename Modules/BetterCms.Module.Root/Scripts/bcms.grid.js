@@ -75,6 +75,13 @@ bettercms.define('bcms.grid', ['bcms.jquery', 'bcms'], function ($, bcms) {
     };
 
     /**
+     * 
+     */
+    grid.submitGridFormPaged = function(form, onSuccess) {
+        return submitGridForm(form, onSuccess);
+    };
+
+    /**
     * Submits site settings list form
     */
     grid.submitGridForm = function (form, onSuccess) {

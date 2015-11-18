@@ -43,8 +43,8 @@ $ck-toolbar-icons: (
 //                ('horizontalrule_icon', $bcms-editor-horizontalrule),
 
 %text-field-extender {
-    background-color: $gray-smoke30;
-    border: $border-thin-gray;
+    background-color: $smoke;
+    border: $border-thin-smoke;
     box-sizing: border-box;
     color: $gray-smoke46;
     font-family: $font-base-family;
@@ -64,7 +64,7 @@ $ck-toolbar-icons: (
 //module editor frame
 .cke {
     &_chrome {
-        border: $border-thin-gray;
+        border: $border-thin-smoke;
         display: block;
         visibility: inherit !important;
     }
@@ -81,8 +81,8 @@ $ck-toolbar-icons: (
     }
 
     &_top {
-        background-color: $gray-smoke30;
-        border-bottom: $border-thin-gray;
+        background-color: $smoke;
+        border-bottom: $border-thin-smoke;
         min-height: 13px;
         padding: 6px 8px 0;
         position: relative;
@@ -91,13 +91,13 @@ $ck-toolbar-icons: (
 
     &_float {
         .cke_top {
-            border: $border-thin-gray;
+            border: $border-thin-smoke;
         }
     }
 
     &_bottom {
-        background: $gray-smoke30;
-        border-top: $border-thin-gray;
+        background: $smoke;
+        border-top: $border-thin-smoke;
         height: 28px;
         line-height: 28px;
         padding: 0 5px;
@@ -136,14 +136,14 @@ $ck-toolbar-icons: (
 }
 
 .cke_toolgroup {
-    background-color: $gray-smoke30;
-    border: $border-thin-gray;
+    background-color: $smoke;
+    border: $border-thin-smoke;
     float: left;
     margin-right: 6px;
 }
 
 .cke_button {
-    background-color: $gray-smoke30;
+    background-color: $smoke;
     cursor: pointer;
     float: left;
     height: 18px;
@@ -151,14 +151,14 @@ $ck-toolbar-icons: (
     padding: 4px 6px;
 
     &:hover {
-        background-color: darken($gray-smoke30, 10%);
+        background-color: darken($smoke, 10%);
     }
 
     &_on {
         box-shadow: inset 0 0 7px rgba($black, .5);
 
         &:hover {
-            background-color: $gray-smoke30;
+            background-color: $smoke;
         }
     }
 
@@ -170,7 +170,7 @@ $ck-toolbar-icons: (
         opacity: .3;
 
         &:hover {
-            background-color: $gray-smoke30;
+            background-color: $smoke;
         }
     }
 
@@ -210,8 +210,8 @@ $ck-toolbar-icons: (
 .cke_toolbox_collapser {
     @include position(absolute, null 8px 6px null);
     @include size(12px 11px);
-    background-color: $gray-smoke30;
-    border: $border-thin-gray;
+    background-color: $smoke;
+    border: $border-thin-smoke;
     cursor: pointer;
     overflow: hidden;
     text-align: center;
@@ -283,8 +283,8 @@ $ck-toolbar-icons: (
     }
 
     &_title {
-        background-color: $gray-smoke30;
-        border-bottom: $border-thin-gray;
+        background-color: $smoke;
+        border-bottom: $border-thin-smoke;
         color: $gray-smoke65;
         cursor: move;
         font-size: 13px;
@@ -294,8 +294,8 @@ $ck-toolbar-icons: (
     }
 
     &_body {
-        background-color: $gray-smoke30;
-        border: $border-thin-gray;
+        background-color: $smoke;
+        border: $border-thin-smoke;
         z-index: 1;
 
         label {
@@ -306,7 +306,7 @@ $ck-toolbar-icons: (
     &_contents {
         background-color: $white;
         border-collapse: collapse;
-        border-top: $border-thin-gray;
+        border-top: $border-thin-smoke;
         font-size: 12px;
         margin-top: 30px;
         overflow: auto;
@@ -320,8 +320,8 @@ $ck-toolbar-icons: (
     }
 
     &_footer {
-        background-color: $gray-smoke30;
-        border-top: $border-thin-gray;
+        background-color: $smoke;
+        border-top: $border-thin-smoke;
         padding: 5px;
         position: relative;
         text-align: right;
@@ -358,8 +358,8 @@ $ck-toolbar-icons: (
     }
 
     &_tab {
-        background-color: $gray-smoke30;
-        border: $border-thin-gray;
+        background-color: $smoke;
+        border: $border-thin-smoke;
         color: $gray-smoke65;
         cursor: pointer;
         display: inline-block;
@@ -371,7 +371,7 @@ $ck-toolbar-icons: (
         padding: 4px 8px;
 
         &:hover {
-            background-color: darken($gray-smoke30, 10%);
+            background-color: darken($smoke, 10%);
             text-decoration: none;
         }
 
@@ -521,8 +521,8 @@ a {
     }
 
     &_button {
-        background-color: $gray-smoke30;
-        border: $border-thin-gray;
+        background-color: $smoke;
+        border: $border-thin-smoke;
         box-sizing: border-box;
         cursor: pointer;
         float: left;
@@ -574,7 +574,7 @@ a {
 
 .cke_panel {
     background-color: $white;
-    border: $border-thin-gray;
+    border: $border-thin-smoke;
     height: 150px;
     overflow: hidden;
     visibility: visible;
@@ -623,7 +623,7 @@ a {
             white-space: nowrap;
 
             &:hover {
-                background-color: $gray-smoke30;
+                background-color: $smoke;
                 border-color: $gray-smoke40;
                 box-shadow: inset 0 0 2px rgba($black, .1);
             }
@@ -643,7 +643,7 @@ a {
     text-decoration: none;
 
     &:hover {
-        background-color: darken($gray-smoke30, 10%);
+        background-color: darken($smoke, 10%);
         text-decoration: none;
     }
 
@@ -665,8 +665,8 @@ a {
     }
 
     &_on {
-        background-color: $gray-smoke30;
-        border: $border-thin-gray;
+        background-color: $smoke;
+        border: $border-thin-smoke;
     }
 
     &_disabled {

@@ -382,9 +382,9 @@ bettercms.define('bcms.pages.properties', ['bcms.jquery', 'bcms', 'bcms.modal', 
         /**
         * Loads layout user access: when user changes layout, user access are reloaded.
         */
-        page.loadLayoutUserAccess = function (id, isMasterPage, mainContainer, accessContainer, accessControlViewModel) {
+        page.loadLayoutUserAccess = function (id, isMasterPage, mainContainer, accessControlViewModel, loaderContainer) {
             var onComplete = function (json) {
-                accessContainer.hideLoading();
+                loaderContainer.hideLoading();
                 if (json.Messages && json.Messages.length > 0) {
                     messages.refreshBox(mainContainer, json);
                 }
@@ -392,7 +392,7 @@ bettercms.define('bcms.pages.properties', ['bcms.jquery', 'bcms', 'bcms.modal', 
                     security.updateUserAccessViewModel(accessControlViewModel, json.Data);
                 }
             };
-            accessContainer.showLoading();
+            loaderContainer.showLoading();
             $.ajax({
                 type: 'GET',
                 url: $.format(links.loadLayoutUserAccessUrl, id, isMasterPage)

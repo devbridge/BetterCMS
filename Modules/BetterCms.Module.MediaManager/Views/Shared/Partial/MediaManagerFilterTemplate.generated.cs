@@ -129,7 +129,7 @@ WriteLiteral(">");
             #line hidden
 WriteLiteral("</div>\r\n                    <div");
 
-WriteLiteral(" class=\"bcms-filter-field-holder\"");
+WriteLiteral(" class=\"bcms-field-wrapper\"");
 
 WriteLiteral(">\r\n                        <input");
 
@@ -175,7 +175,7 @@ WriteLiteral(">");
             #line hidden
 WriteLiteral("</div>\r\n                    <div");
 
-WriteLiteral(" class=\"bcms-filter-field-holder\"");
+WriteLiteral(" class=\"bcms-field-wrapper\"");
 
 WriteLiteral(">\r\n                        <input");
 
@@ -334,21 +334,6 @@ WriteLiteral(" class=\"bcms-btn-field-holder\"");
 
 WriteLiteral(">\r\n                <div");
 
-WriteLiteral(" class=\"bcms-btn-cancel\"");
-
-WriteLiteral(" data-bind=\"click: clearFilter\"");
-
-WriteLiteral(">");
-
-            
-            #line 74 "..\..\Views\Shared\Partial\MediaManagerFilterTemplate.cshtml"
-                                                                       Write(RootGlobalization.Button_Filter_Clear);
-
-            
-            #line default
-            #line hidden
-WriteLiteral("</div>\r\n                <div");
-
 WriteLiteral(" class=\"bcms-btn-primary\"");
 
 WriteLiteral(" data-bind=\"click: searchWithFilter\"");
@@ -356,8 +341,23 @@ WriteLiteral(" data-bind=\"click: searchWithFilter\"");
 WriteLiteral(">");
 
             
-            #line 75 "..\..\Views\Shared\Partial\MediaManagerFilterTemplate.cshtml"
+            #line 74 "..\..\Views\Shared\Partial\MediaManagerFilterTemplate.cshtml"
                                                                              Write(RootGlobalization.Button_Filter_Search);
+
+            
+            #line default
+            #line hidden
+WriteLiteral("</div>\n                <div");
+
+WriteLiteral(" class=\"bcms-btn-cancel\"");
+
+WriteLiteral(" data-bind=\"click: clearFilter\"");
+
+WriteLiteral(">");
+
+            
+            #line 75 "..\..\Views\Shared\Partial\MediaManagerFilterTemplate.cshtml"
+                                                                       Write(RootGlobalization.Button_Filter_Clear);
 
             
             #line default

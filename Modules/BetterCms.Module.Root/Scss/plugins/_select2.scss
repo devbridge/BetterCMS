@@ -1,12 +1,20 @@
 .select2 {
     &-container {
+        background-color: $white;
+        border: $border-form-element;
+        box-sizing: border-box;
+        cursor: pointer;
+        display: block;
+        height: $form-element-height;
+        overflow: hidden;
         position: relative;
         width: 100%;
+
         @include virtual(after) {
             @include positioning($center-y: true);
             @include size(18px 10px);
             background: url($bcms-select-arrow) no-repeat center;
-            right: 20px;
+            right: 15px;
         }
     }
 
@@ -31,10 +39,10 @@
         @include position(absolute, 100% null null);
         background: $white;
         border: $border-form-element;
+        box-shadow: 0 15px 30px 0 rgba($black, .1);
         box-sizing: border-box;
         color: $text-dark;
         margin-top: -1px;
-        position: absolute;
         width: 100%;
         z-index: 9999;
 
@@ -42,6 +50,12 @@
             display: none;
         }
     }
+
+    //&-drop-active {
+    //}
+    //
+    //&-dropdown-open {
+    //}
 
     &-drop-mask {
         @include position(fixed, 0);
@@ -71,28 +85,26 @@
         }
     }
 
-    &-drop-active {
-        border-color: $border-blue;
-        border-top-color: $white;
-    }
-
-    &-dropdown-open {
-        > .select2-choices {
-            border-color: $border-blue;
-        }
-    }
-
+    &-choice,
     &-choices {
-        background-color: $white;
-        border: $border-form-element;
-        box-sizing: border-box;
-        cursor: text;
+        @include size(100%);
         display: block;
-        height: $form-element-height;
         margin: 0;
-        overflow: hidden;
         padding: 0;
         position: relative;
+        z-index: 10;
+    }
+
+    &-chosen {
+        color: $text-gray;
+        display: block;
+        font: {
+            family: $font-base-family;
+            size: 14px;
+        }
+        height: 100%;
+        line-height: ($form-element-height - 2px);
+        padding: 0 10px;
     }
 
     &-result {
@@ -110,6 +122,8 @@
     }
 
     &-result-label {
+        @include transition(color 200ms);
+        color: $text-gray;
         font: {
             size: 13px;
             weight: 600;
@@ -118,7 +132,7 @@
         padding: 5px 10px;
 
         &:hover {
-            background-color: $sky-blue;
+            color: $text-blue;
         }
     }
 
@@ -129,31 +143,15 @@
 
     }
 
-    &-offscreen, &-offcsreen:focus {
-        clip: rect(0 0 0 0) !important;
-        width: 1px !important;
-        height: 1px !important;
+    &-offscreen,
+    &-offcsreen:focus {
         border: 0 !important;
+        clip: rect(0 0 0 0) !important;
+        height: 1px !important;
         margin: 0 !important;
-        padding: 0 !important;
-        overflow: hidden !important;
-        position: absolute !important;
         outline: 0 !important;
-        left: 0px !important;
-        top: 0px !important;
+        overflow: hidden !important;
+        padding: 0 !important;
+        width: 1px !important;
     }
-
-    &-choice {
-        background-color: $white;
-        border: $border-form-element;
-        box-sizing: border-box;
-        cursor: text;
-        display: block;
-        height: $form-element-height;
-        margin: 0;
-        overflow: hidden;
-        padding: 5px 10px;
-        position: relative;
-        color: #303646;
-   }
 }

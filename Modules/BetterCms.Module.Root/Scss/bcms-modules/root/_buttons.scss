@@ -94,7 +94,9 @@ $global-button-structure: (
         background: url($bcms-search) no-repeat center;
         cursor: pointer;
         overflow: hidden;
+        position: relative;
         text-indent: -999em;
+        z-index: 1;
     }
 
     &-close {

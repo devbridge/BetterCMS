@@ -49,142 +49,145 @@ namespace ASP
         }
         public override void Execute()
         {
-WriteLiteral("\n");
-
 WriteLiteral("<div");
+
+WriteLiteral(" class=\"bcms-form-block-holder\"");
+
+WriteLiteral(">\r\n    <div>\r\n        <div");
 
 WriteLiteral(" class=\"bcms-input-list-holder\"");
 
 WriteLiteral(" id=\"bcms-custom-css-container\"");
 
-WriteLiteral(">\n    <div");
+WriteLiteral(">\r\n            <div");
 
 WriteLiteral(" class=\"bcms-content-titles\"");
 
 WriteLiteral(">");
 
             
-            #line 7 "..\..\Views\Content\Partial\EditHtmlContentJsCss.cshtml"
-                                Write(PagesGlobalization.HtmlContent_CustomCss_Title);
-
-            
-            #line default
-            #line hidden
-WriteLiteral("</div>\n");
-
-WriteLiteral("    ");
-
-            
             #line 8 "..\..\Views\Content\Partial\EditHtmlContentJsCss.cshtml"
-Write(Html.TextAreaFor(model => model.CustomCss, new { @class = "bcms-field-textarea bcms-code-field bcms-code-field-css", @style = "width:820px;", @id = Guid.NewGuid() }));
+                                        Write(PagesGlobalization.HtmlContent_CustomCss_Title);
 
             
             #line default
             #line hidden
-WriteLiteral("\n");
+WriteLiteral("</div>\r\n");
 
-WriteLiteral("    ");
+WriteLiteral("            ");
 
             
             #line 9 "..\..\Views\Content\Partial\EditHtmlContentJsCss.cshtml"
-Write(Html.BcmsValidationMessageFor(model => model.CustomCss));
+       Write(Html.TextAreaFor(model => model.CustomCss, new { @class = "bcms-field-textarea bcms-code-field bcms-code-field-css", @style = "width:820px;", @id = Guid.NewGuid() }));
 
             
             #line default
             #line hidden
-WriteLiteral("\n</div>\n\n<div");
+WriteLiteral("\r\n");
 
-WriteLiteral(" class=\"bcms-input-list-holder\"");
+WriteLiteral("            ");
 
-WriteLiteral(">\n    <div");
+            
+            #line 10 "..\..\Views\Content\Partial\EditHtmlContentJsCss.cshtml"
+       Write(Html.BcmsValidationMessageFor(model => model.CustomCss));
+
+            
+            #line default
+            #line hidden
+WriteLiteral("\r\n            <div");
+
+WriteLiteral(" class=\"bcms-check-field-helper\"");
+
+WriteLiteral(">\r\n                <div");
 
 WriteLiteral(" class=\"bcms-edit-check-field\"");
 
-WriteLiteral(">\n");
+WriteLiteral(">\r\n");
 
-WriteLiteral("        ");
+WriteLiteral("                    ");
 
             
-            #line 14 "..\..\Views\Content\Partial\EditHtmlContentJsCss.cshtml"
-   Write(Html.CheckBoxFor(model => model.EnabledCustomCss));
+            #line 13 "..\..\Views\Content\Partial\EditHtmlContentJsCss.cshtml"
+               Write(Html.CheckBoxFor(model => model.EnabledCustomCss));
 
             
             #line default
             #line hidden
-WriteLiteral("\n        <div");
+WriteLiteral("\r\n                    <div");
 
 WriteLiteral(" class=\"bcms-edit-label\"");
 
 WriteLiteral(">");
 
             
-            #line 15 "..\..\Views\Content\Partial\EditHtmlContentJsCss.cshtml"
-                                Write(Html.Raw(PagesGlobalization.HtmlContent_RenderCustomCss_Title));
+            #line 14 "..\..\Views\Content\Partial\EditHtmlContentJsCss.cshtml"
+                                            Write(Html.Raw(PagesGlobalization.HtmlContent_RenderCustomCss_Title));
 
             
             #line default
             #line hidden
-WriteLiteral("</div>\n    </div>\n</div>\n\n<div");
+WriteLiteral("</div>\r\n                </div>\r\n            </div>\r\n        </div>\r\n    </div>\r\n\r" +
+"\n    <div>\r\n        <div");
 
 WriteLiteral(" class=\"bcms-input-list-holder\"");
 
 WriteLiteral(" id=\"bcms-custom-js-container\"");
 
-WriteLiteral(">\n    <div");
+WriteLiteral(">\r\n            <div");
 
 WriteLiteral(" class=\"bcms-content-titles\"");
 
 WriteLiteral(">");
 
             
-            #line 20 "..\..\Views\Content\Partial\EditHtmlContentJsCss.cshtml"
-                                Write(PagesGlobalization.HtmlContent_CustomJs_Title);
-
-            
-            #line default
-            #line hidden
-WriteLiteral("</div>\n");
-
-WriteLiteral("    ");
-
-            
-            #line 21 "..\..\Views\Content\Partial\EditHtmlContentJsCss.cshtml"
-Write(Html.TextAreaFor(model => model.CustomJs, new { @class = "bcms-field-textarea bcms-code-field bcms-code-field-javascript", @style = "width:820px;", @id = Guid.NewGuid() }));
-
-            
-            #line default
-            #line hidden
-WriteLiteral("\n");
-
-WriteLiteral("    ");
-
-            
             #line 22 "..\..\Views\Content\Partial\EditHtmlContentJsCss.cshtml"
-Write(Html.BcmsValidationMessageFor(model => model.CustomJs));
+                                        Write(PagesGlobalization.HtmlContent_CustomJs_Title);
 
             
             #line default
             #line hidden
-WriteLiteral("\n</div>\n\n<div");
+WriteLiteral("</div>\r\n");
 
-WriteLiteral(" class=\"bcms-input-list-holder\"");
+WriteLiteral("            ");
 
-WriteLiteral(">\n    <div");
+            
+            #line 23 "..\..\Views\Content\Partial\EditHtmlContentJsCss.cshtml"
+       Write(Html.TextAreaFor(model => model.CustomJs, new { @class = "bcms-field-textarea bcms-code-field bcms-code-field-javascript", @style = "width:820px;", @id = Guid.NewGuid() }));
+
+            
+            #line default
+            #line hidden
+WriteLiteral("\r\n");
+
+WriteLiteral("            ");
+
+            
+            #line 24 "..\..\Views\Content\Partial\EditHtmlContentJsCss.cshtml"
+       Write(Html.BcmsValidationMessageFor(model => model.CustomJs));
+
+            
+            #line default
+            #line hidden
+WriteLiteral("\r\n            <div");
+
+WriteLiteral(" class=\"bcms-check-field-helper\"");
+
+WriteLiteral(">\r\n                <div");
 
 WriteLiteral(" class=\"bcms-edit-check-field\"");
 
-WriteLiteral(">\n");
+WriteLiteral(">\r\n");
 
-WriteLiteral("        ");
+WriteLiteral("                    ");
 
             
             #line 27 "..\..\Views\Content\Partial\EditHtmlContentJsCss.cshtml"
-   Write(Html.CheckBoxFor(model => model.EnabledCustomJs));
+               Write(Html.CheckBoxFor(model => model.EnabledCustomJs));
 
             
             #line default
             #line hidden
-WriteLiteral("\n        <div");
+WriteLiteral("\r\n                    <div");
 
 WriteLiteral(" class=\"bcms-edit-label\"");
 
@@ -192,12 +195,13 @@ WriteLiteral(">");
 
             
             #line 28 "..\..\Views\Content\Partial\EditHtmlContentJsCss.cshtml"
-                                Write(Html.Raw(PagesGlobalization.HtmlContent_RenderCustomJs_Title));
+                                            Write(Html.Raw(PagesGlobalization.HtmlContent_RenderCustomJs_Title));
 
             
             #line default
             #line hidden
-WriteLiteral("</div>\n    </div>\n</div>");
+WriteLiteral("</div>\r\n                </div>\r\n            </div>\r\n        </div>\r\n    </div>\r\n<" +
+"/div>\r\n");
 
         }
     }

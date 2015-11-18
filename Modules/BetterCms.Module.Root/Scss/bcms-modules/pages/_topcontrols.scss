@@ -11,12 +11,12 @@
 
         &.bcms-active-search {
             .bcms-search-block {
-                min-width: 330px;
                 opacity: 1;
+                width: 280px;
             }
 
             .bcms-search-field-box {
-                min-width: 280px;
+                width: 280px;
             }
         }
     }
@@ -87,17 +87,17 @@
 //module search block
 .bcms-search {
     &-block {
-        @include transition(opacity 150ms ease-in, width 150ms ease-in);
+        @include transition(opacity 100ms ease-in);
         @include vertical-align();
+        margin-left: -35px;
         min-width: 250px;
         opacity: 0;
-        position: relative;
-        white-space: nowrap;
     }
 
     &-field-box {
+        @include transition(width 150ms ease-in);
         @extend %reset;
-        @include size(250px $form-element-height);
+        @include size(50px $form-element-height);
         background-color: transparent;
         border: {
             top: 0;
@@ -111,6 +111,7 @@
             size: 14px;
             style: italic;
         }
+        padding-left: 35px;
 
         @include placeholder {
             color: $text-light;
@@ -126,42 +127,50 @@
 .bcms-filter-holder {
     float: right;
     position: relative;
+    width: 100%;
     z-index: 1;
 }
 
 .bcms-grid-filtering {
     border: $border-thin-transparent;
     box-sizing: border-box;
+    float: right;
     line-height: 30px;
+    min-width: 61px;
 
     &.bcms-active-filter {
+        background-color: $bg-smoke;
         border: {
             color: $gray-smoke;
-            bottom-color: $white;
+            bottom-color: $bg-smoke;
+        }
+
+        .bcms-filterbox {
+            color: $text-gray;
         }
     }
 }
 
 .bcms-filterbox {
-    @include pad(5px 20px);
-    background: url($bcms-grid-filter) no-repeat 90% center;
-    color: $gray-light;
+    @include transition(background-color 200ms, color 200ms);
+    @include pad(5px 25px);
+    background: url($bcms-grid-filter) no-repeat 92% center;
+    color: $text-light;
     cursor: pointer;
     font-size: 11px;
     line-height: 28px;
     position: relative;
     text-transform: uppercase;
-
 }
 
 .bcms-filter {
     &-selection-block {
-        @include position(absolute, #{calc(100% - 1px)} 0 null null);
-        background-color: $white;
+        @include position(relative, -1px null null);
+        background-color: $bg-smoke;
         border: $border-thin-smoke;
         box-sizing: border-box;
+        clear: both;
         padding: 15px;
-        width: 450px;
         z-index: -1;
     }
 
@@ -175,22 +184,27 @@
         @include gallery(6);
         padding-bottom: 5px;
 
+        .bcms-filter-text {
+            @include vertical-align();
+            width: 22%;
+        }
+
+        .bcms-field-wrapper {
+            @include vertical-align();
+            width: 75%;
+        }
+
         .bcms-global-select {
-            height: 28px;
-            padding-top: 2px;
-            width: 200px;
+            //todo temp
+            width: 100%;
         }
     }
 
     &-text {
-        color: #000;
-        font-size: 12px;
-        font-weight: 700;
+        color: $text-gray;
+        font-size: 11px;
         line-height: 20px;
-    }
-
-    &-field-holder {
-        position: relative;
+        text-transform: uppercase;
     }
 }
 

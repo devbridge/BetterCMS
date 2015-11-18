@@ -21,6 +21,7 @@ namespace BetterCms.Module.Pages.Registration
                 {
                     new JavaScriptModuleLinkTo<PageController>(this, "loadAddNewPageDialogUrl", c => c.AddNewPage("{0}", "{1}")),
                     new JavaScriptModuleLinkTo<PageController>(this, "loadSiteSettingsPageListUrl", c => c.Pages(null)),
+                    new JavaScriptModuleLinkTo<PageController>(this, "loadSiteSettingsPagesJsonUrl", c => c.PagesList(null)),
                     new JavaScriptModuleLinkTo<PageController>(this, "loadSelectPageUrl", c => c.SelectPage(null)),
                     new JavaScriptModuleLinkTo<PageController>(this, "deletePageConfirmationUrl", c => c.DeletePageConfirmation("{0}")),
                     new JavaScriptModuleLinkTo<PageController>(this, "changePublishStatusUrl", c => c.ChangePublishStatus(null)),

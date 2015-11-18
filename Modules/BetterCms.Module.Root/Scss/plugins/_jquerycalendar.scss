@@ -83,7 +83,7 @@ $datepicker-arrows: (
 
     &-content {
         background-color: $white;
-        border: $border-thin-gray;
+        border: $border-thin-smoke;
         color: $dark;
 
         a {
@@ -92,7 +92,7 @@ $datepicker-arrows: (
         }
 
         .ui-state-default {
-            background-color: $gray-smoke30;
+            background-color: $smoke;
             text-align: center;
 
             &:hover {

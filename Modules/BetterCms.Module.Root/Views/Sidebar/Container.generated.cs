@@ -197,6 +197,16 @@ WriteLiteral(" data-bcms-order=\"10\"");
 
 WriteLiteral(">\r\n            <div");
 
+WriteLiteral(" class=\"bcms-cp-settings-btn bcms-cp-seo-btn bcms-onclick-action\"");
+
+WriteLiteral(" data-bcms-order=\"20\"");
+
+WriteLiteral(" data-bcms-module=\"bcms.pages.seo\"");
+
+WriteLiteral(" data-bcms-action=\"openEditSeoDialog\"");
+
+WriteLiteral(">Edit SEO</div>\r\n            <div");
+
 WriteLiteral(" class=\"bcms-cp-settings-btn bcms-onclick-action\"");
 
 WriteLiteral(" data-bcms-order=\"30\"");
@@ -205,17 +215,23 @@ WriteLiteral(" data-bcms-module=\"bcms.pages.properties\"");
 
 WriteLiteral(" data-bcms-action=\"editPageProperties\"");
 
-WriteLiteral(">Properties</div>\r\n            <div");
+WriteLiteral(">Properties</div>\r\n        </div>\r\n\r\n        <div");
 
-WriteLiteral(" class=\"bcms-cp-settings-btn bcms-onclick-action\"");
+WriteLiteral(" class=\"bcms-buttons-block\"");
 
-WriteLiteral(" data-bcms-order=\"20\"");
+WriteLiteral(" data-bcms-order=\"10\"");
 
-WriteLiteral(" data-bcms-module=\"bcms.pages.seo\"");
+WriteLiteral(">\r\n            <div");
 
-WriteLiteral(" data-bcms-action=\"openEditSeoDialog\"");
+WriteLiteral(" class=\"bcms-cp-settings-btn bcms-cp-logout bcms-onclick-action\"");
 
-WriteLiteral(">SEO</div>\r\n            <div");
+WriteLiteral(" data-bcms-order=\"800\"");
+
+WriteLiteral(" data-bcms-module=\"bcms.authentication\"");
+
+WriteLiteral(" data-bcms-action=\"logout\"");
+
+WriteLiteral(">Log Out</div>\r\n            <div");
 
 WriteLiteral(" class=\"bcms-cp-settings-btn bcms-onclick-action\"");
 
@@ -227,12 +243,6 @@ WriteLiteral(" data-bcms-action=\"openSiteSettings\"");
 
 WriteLiteral(">Site settings</div>\r\n        </div>\r\n\r\n        <div");
 
-WriteLiteral(" class=\"bcms-buttons-block\"");
-
-WriteLiteral(" data-bcms-order=\"10\"");
-
-WriteLiteral(">\r\n            <div");
-
 WriteLiteral(" class=\"bcms-cp-delete bcms-onclick-action\"");
 
 WriteLiteral(" data-bcms-order=\"700\"");
@@ -241,17 +251,7 @@ WriteLiteral(" data-bcms-module=\"bcms.pages\"");
 
 WriteLiteral(" data-bcms-action=\"deleteCurrentPage\"");
 
-WriteLiteral(">Delete page</div>\r\n            <div");
-
-WriteLiteral(" class=\"bcms-cp-logout bcms-onclick-action\"");
-
-WriteLiteral(" data-bcms-order=\"800\"");
-
-WriteLiteral(" data-bcms-module=\"bcms.authentication\"");
-
-WriteLiteral(" data-bcms-action=\"logout\"");
-
-WriteLiteral(">Log Out</div>\r\n        </div>\r\n    </div>\r\n\r\n    <div");
+WriteLiteral(">Delete page</div>\r\n    </div>\r\n\r\n    <div");
 
 WriteLiteral(" class=\"bcms-sidemenu-footer\"");
 
@@ -297,21 +297,7 @@ WriteLiteral(" />\r\n            </g>\r\n        </svg>\r\n\r\n        <div");
 
 WriteLiteral(" class=\"bcms-cp-version-number\"");
 
-WriteLiteral(">1.11.0-dev</div>\r\n\r\n        <div");
-
-WriteLiteral(" class=\"bcms-cp-position-handle\"");
-
-WriteLiteral(" title=\"Move sidebar to the other side\"");
-
-WriteLiteral(" id=\"bcms-sidemenu-position-handle\"");
-
-WriteLiteral(">\r\n            <div");
-
-WriteLiteral(" class=\"bcms-sidemenu-stick-text\"");
-
-WriteLiteral(" title=\"stick to the right\"");
-
-WriteLiteral("></div>\r\n        </div>\r\n    </div>\r\n\r\n</div>\r\n");
+WriteLiteral(">1.11.0-dev</div>\r\n    </div>\r\n</div>\r\n");
 
         }
     }

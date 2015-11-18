@@ -125,8 +125,15 @@ namespace BetterCms.Module.Pages.Services
         protected virtual PagesGridViewModel<SiteSettingPageViewModel> CreateModel(IEnumerable<SiteSettingPageViewModel> pages,
             PagesFilter request, IFutureValue<int> count, IList<LookupKeyValue> layouts, IList<CategoryLookupModel> categoriesLookupList)
         {
+            var pagesList = pages.ToList();
+            foreach (var page in pagesList)
+            {
+                // todo : move to resources
+                page.CreatedOnTitle = string.Format("{0} {1}", "CREATED:", page.CreatedOn.ToFormattedDateString());
+                page.ModifiedOnTitle = string.Format("{0} {1}", "LAST EDITED:", page.ModifiedOn.ToFormattedDateString());
+            }
             return new PagesGridViewModel<SiteSettingPageViewModel>(
-                pages.ToList(),
+                pagesList,
                 request,
                 count.Value) { Layouts = layouts, CategoriesLookupList = categoriesLookupList};
         }

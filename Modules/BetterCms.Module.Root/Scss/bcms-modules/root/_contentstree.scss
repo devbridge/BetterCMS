@@ -108,7 +108,7 @@ $contents-tree-controls: (
         // position: relative;
 
         &.bcms-contents-hover {
-            background-color: $gray-smoke30;
+            background-color: $smoke;
             cursor: move;
         }
     }
@@ -160,7 +160,7 @@ $contents-tree-controls: (
 
 .bcms-dragging {
     @include clearfix();
-    background-color: $gray-smoke30;
+    background-color: $smoke;
     cursor: move;
     min-height: 50px;
     opacity: .8;

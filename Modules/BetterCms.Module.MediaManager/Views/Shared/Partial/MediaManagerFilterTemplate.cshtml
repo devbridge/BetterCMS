@@ -15,7 +15,7 @@
             <div class="bcms-clearfix">
                 <div class="bcms-filter-options" data-bind="with: gridOptions().tags">
                     <div class="bcms-filter-text">@MediaGlobalization.SiteSettings_FilterByTags</div>
-                    <div class="bcms-filter-field-holder">
+                    <div class="bcms-field-wrapper">
                         <input type="text" class="bcms-field-text" data-bind="
                                     css: { 'bcms-tag-validation-error': newItem.hasError() },
                                     value: newItem,
@@ -32,7 +32,7 @@
 
                 <div class="bcms-filter-options" data-bind="with: gridOptions().categories">
                     <div class="bcms-filter-text">@MediaGlobalization.SiteSettings_FilterByCategory</div>
-                    <div class="bcms-filter-field-holder">
+                    <div class="bcms-field-wrapper">
                         <input type="hidden" id="bcms-js-categories-select" />
                     </div>
                 </div>
@@ -71,8 +71,8 @@
             </div>
 
             <div class="bcms-btn-field-holder">
-                <div class="bcms-btn-cancel" data-bind="click: clearFilter">@RootGlobalization.Button_Filter_Clear</div>
                 <div class="bcms-btn-primary" data-bind="click: searchWithFilter">@RootGlobalization.Button_Filter_Search</div>
+                <div class="bcms-btn-cancel" data-bind="click: clearFilter">@RootGlobalization.Button_Filter_Clear</div>
             </div>
         </div>
     </div>
