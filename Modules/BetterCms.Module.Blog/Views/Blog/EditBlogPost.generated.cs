@@ -748,7 +748,7 @@ WriteLiteral("                            ");
 
             
             #line 121 "..\..\Views\Blog\EditBlogPost.cshtml"
-                       Write(Html.DropDownListFor(model => model.AuthorId, Model.Authors.ToSelectList(Model.AuthorId), string.Empty, new { @class = "bcms-global-select", @style = "width: 245px;" }));
+                       Write(Html.DropDownListFor(model => model.AuthorId, Model.Authors.ToSelectList(Model.AuthorId), string.Empty, new { @id = "bcms-js-authors-select", @style = "width: 245px;" }));
 
             
             #line default
