@@ -24,6 +24,7 @@
 }
 
 .cke_chrome {
+  background-color: #ffffff;
   border: 1px solid #dfdfdf;
   display: block;
   visibility: inherit !important;

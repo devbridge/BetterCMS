@@ -1433,6 +1433,7 @@
     <Content Include="Scss\assets\icons\cp-hide-right.svg" />
     <Content Include="Scss\assets\icons\cp-hide.svg" />
     <Content Include="Scss\assets\icons\cp-preview.svg" />
+    <Content Include="Scss\assets\icons\cp-pub-draft.svg" />
     <Content Include="Scss\assets\icons\cp-pub-ok.svg" />
     <Content Include="Scss\assets\icons\cp-pub-warn.svg" />
     <Content Include="Scss\assets\icons\cp-show-right.svg" />
@@ -1472,6 +1473,7 @@
     <Content Include="Scss\assets\icons\editor-undo.svg" />
     <Content Include="Scss\assets\icons\editor-unlink.svg" />
     <Content Include="Scss\assets\icons\grid-filter.svg" />
+    <Content Include="Scss\assets\icons\image-delete.svg" />
     <Content Include="Scss\assets\icons\manage.svg" />
     <Content Include="Scss\assets\icons\manager-add-content.svg" />
     <Content Include="Scss\assets\icons\manager-content.svg" />

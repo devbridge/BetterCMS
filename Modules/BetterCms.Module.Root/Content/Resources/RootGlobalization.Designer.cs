@@ -169,7 +169,7 @@ namespace BetterCms.Module.Root.Content.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Anonymous.
+        ///   Looks up a localized string similar to Preview.
         /// </summary>
         public static string Authentication_ViewAsPublic_Public {
             get {

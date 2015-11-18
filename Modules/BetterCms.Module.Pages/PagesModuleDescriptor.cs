@@ -270,116 +270,101 @@ namespace BetterCms.Module.Pages
                 };
         }
 
+        public override IEnumerable<IPageActionProjection> RegisterSidebarHeaderProjections(ContainerBuilder containerBuilder)
+        {
+            return new IPageActionProjection[]
+                {
+                    new LinkToNewTabProjection
+                    {
+                        InnerText = page => RootGlobalization.Authentication_ViewAsPublic_Public,
+                        LinkAddress = page => page.PageUrl,
+                        Order = 9,
+                        CssClass = page => "bcms-cp-preview-btn"
+                    },
+                };
+        }
+
         /// <summary>
         /// Registers the sidebar main projections.
         /// </summary>
         /// <param name="containerBuilder">The container builder.</param>
         /// <returns>Sidebar main action projections.</returns>
-        public override IEnumerable<IPageActionProjection> RegisterSidebarMainProjections(ContainerBuilder containerBuilder)
+        public override IEnumerable<IPageActionProjection> RegisterSidebarMainProjections(ContainerBuilder containerBuilder)    
         {
             return new IPageActionProjection[]
                 {
-                    new InheriteProjection(
-                        "div",
-                        new IPageActionProjection[]
-                            {
-                                new LinkToNewTabProjection
-                                {
-                                    InnerText = page => RootGlobalization.Authentication_ViewAsPublic_Public,
-                                    LinkAddress = page => page.PageUrl,
-                                    Order = 9,
-                                    CssClass = page => "bcms-sidemenu-btn bcms-as-public"
-                                },
-                                new ButtonActionProjection(pagesJsModuleIncludeDescriptor, page => "changePublishStatus")
-                                {
-                                    Order = 10,
-                                    Title = page => page.Status == PageStatus.Published ? PagesGlobalization.Sidebar_PageStatusUnpublish : PagesGlobalization.Sidebar_PageStatusPublish,
-                                    CssClass = page => page.Status == PageStatus.Published ? "bcms-sidemenu-btn bcms-btn-ok" : "bcms-sidemenu-btn bcms-btn-warn",
-                                    AccessRole = RootModuleConstants.UserRoles.PublishContent,
-                                    ShouldBeRendered = page => !page.IsMasterPage && !IsReadOnly(page)
-                                }
-                             })
+//TODO:                     new ButtonActionProjection(pagesJsModuleIncludeDescriptor, page => "changePublishStatus")
+//                            {
+//                                Order = 10,
+//                                Title = page => page.Status == PageStatus.Published ? PagesGlobalization.Sidebar_PageStatusUnpublish : PagesGlobalization.Sidebar_PageStatusPublish,
+//                                CssClass = page => page.Status == PageStatus.Published ? "bcms-sidemenu-btn bcms-btn-ok" : "bcms-sidemenu-btn bcms-btn-warn",
+//                                AccessRole = RootModuleConstants.UserRoles.PublishContent,
+//                                ShouldBeRendered = page => !page.IsMasterPage && !IsReadOnly(page)
+//                            },
+                     new ButtonActionProjection(pagesJsModuleIncludeDescriptor, page => "addNewPage")
                         {
-                            Order = 10,
-                            CssClass = page => "bcms-buttons-block"
-                        }, 
-                    
-                     new ButtonActionProjection(seoJsModuleIncludeDescriptor, page => "openEditSeoDialog")
-                            {
-                                Order = 20,
-                                Title = page => PagesGlobalization.Sidebar_EditSeoButtonTitle,
-                                CssClass = page => "bcms-sidemenu-btn",
-                                AccessRole = RootModuleConstants.UserRoles.EditContent,
-                                ShouldBeRendered = page => !page.IsMasterPage
-                            },
-
-                    new EditPagePropertiesButtonProjection(pagePropertiesJsModuleIncludeDescriptor, page => page.IsMasterPage ? "editMasterPageProperties" : "editPageProperties")
-                            {
-                                Order = 30,
-                                Title = page => page.IsMasterPage 
-                                    ? PagesGlobalization.Sidebar_EditMasterPagePropertiesButtonTitle
-                                    : PagesGlobalization.Sidebar_EditPagePropertiesButtonTitle,
-                                CssClass = page => "bcms-sidemenu-btn"
-                            },
-
-                    new SeparatorProjection(40) { CssClass = page => "bcms-sidebar-separator" }, 
-
-                    new InheriteProjection(
-                        "div",
-                        new IPageActionProjection[]
-                            {
-                                new ButtonActionProjection(pagesJsModuleIncludeDescriptor, page => "addNewPage")
-                                {
-                                    Order = 10,
-                                    Title = page => PagesGlobalization.Sidebar_AddNewPageButtonTitle,
-                                    CssClass = page => "bcms-sidemenu-btn bcms-btn-add",
-                                    AccessRole = RootModuleConstants.UserRoles.EditContent
-                                },
-                                new ButtonActionProjection(pagesJsModuleIncludeDescriptor, page => "clonePage")
-                                {
-                                    Order = 30,
-                                    Title = page => PagesGlobalization.Siderbar_ClonePageButtonTitle,
-                                    CssClass = page => "bcms-sidemenu-btn bcms-btn-clone",
-                                    AccessRole = RootModuleConstants.UserRoles.EditContent
-                                }
-                             })
+                            Order = 20,
+                            Title = page => PagesGlobalization.Sidebar_AddNewPageButtonTitle,
+                            CssClass = page => "bcms-cp-btn bcms-cp-btn-add",
+                            AccessRole = RootModuleConstants.UserRoles.EditContent
+                        },
+                     new ButtonActionProjection(pagesJsModuleIncludeDescriptor, page => "clonePage")
                         {
-                            Order = 50,
-                            CssClass = page => "bcms-buttons-block"
-                        }, 
-                        
+                            Order = 30,
+                            Title = page => PagesGlobalization.Siderbar_ClonePageButtonTitle,
+                            CssClass = page => "bcms-cp-btn",
+                            AccessRole = RootModuleConstants.UserRoles.EditContent
+                        },
+                    new ButtonActionProjection(pagesJsModuleIncludeDescriptor, page => "translatePage")
+                        {
+                            Title = page => PagesGlobalization.Sidebar_TranslatePageButtonTitle,
+                            CssClass = page => "bcms-cp-btn",
+                            Order = 40,
+                            ShouldBeRendered = page => CmsContext.Config.EnableMultilanguage && !page.IsMasterPage,
+                            AccessRole = RootModuleConstants.UserRoles.EditContent
+                        },
                     new ButtonActionProjection(masterPagesJsModuleIncludeDescriptor, page => "addMasterPage")
                         {
                             Title = page => PagesGlobalization.Sidebar_CreateMasterPageButtonTitle,
-                            CssClass = page => "bcms-sidemenu-btn bcms-btn-add js-redirect-to-new-page",
-                            Order = 300,
+                            CssClass = page => "bcms-cp-btn js-redirect-to-new-page",
+                            Order = 60,
                             ShouldBeRendered = page => page.IsMasterPage,
                             Id = page => "bcms-create-page-button-side-panel",
                             AccessRole = RootModuleConstants.UserRoles.EditContent
                         },
-                        
-                    new ButtonActionProjection(pagesJsModuleIncludeDescriptor, page => "translatePage")
-                        {
-                            Title = page => PagesGlobalization.Sidebar_TranslatePageButtonTitle,
-                            CssClass = page => "bcms-sidemenu-btn bcms-btn-translate",
-                            Order = 400,
-                            ShouldBeRendered = page => CmsContext.Config.EnableMultilanguage && !page.IsMasterPage,
-                            AccessRole = RootModuleConstants.UserRoles.EditContent
-                        },
-
-                    new ButtonActionProjection(pagesJsModuleIncludeDescriptor, page => "deleteCurrentPage")
+                    new InheriteProjection(
+                        "div",
+                        new IPageActionProjection[]
+                            {
+                                new ButtonActionProjection(seoJsModuleIncludeDescriptor, page => "openEditSeoDialog")
+                                    {
+                                        Order = 20,
+                                        Title = page => PagesGlobalization.Sidebar_EditSeoButtonTitle,
+                                        CssClass = page => "bcms-cp-settings-btn bcms-cp-seo-btn",
+                                        AccessRole = RootModuleConstants.UserRoles.EditContent,
+                                        ShouldBeRendered = page => !page.IsMasterPage
+                                    },
+                                new EditPagePropertiesButtonProjection(pagePropertiesJsModuleIncludeDescriptor, page => page.IsMasterPage ? "editMasterPageProperties" : "editPageProperties")
+                                    {
+                                        Order = 30,
+                                        Title = page => page.IsMasterPage 
+                                            ? PagesGlobalization.Sidebar_EditMasterPagePropertiesButtonTitle
+                                            : PagesGlobalization.Sidebar_EditPagePropertiesButtonTitle,
+                                        CssClass = page => "bcms-cp-settings-btn"
+                                    },
+                             })
                         {
                             Order = 800,
+                            CssClass = page => "bcms-buttons-block"
+                        }, 
+                    new ButtonActionProjection(pagesJsModuleIncludeDescriptor, page => "deleteCurrentPage")
+                        {
+                            Order = 10000,
                             Title = page => PagesGlobalization.Sidebar_DeletePageButtonTitle,
-                            CssClass = page => "bcms-sidemenu-btn bcms-btn-delete",
+                            CssClass = page => "bcms-cp-delete",
                             AccessRole = RootModuleConstants.UserRoles.DeleteContent
                         }
                 };
-        }
-
-        private bool ShouldBeRendered(IPage page)
-        {
-            return (page is PageProperties) ? !page.IsMasterPage && !((PageProperties)page).IsReadOnly : !page.IsMasterPage;
         }
 
         /// <summary>

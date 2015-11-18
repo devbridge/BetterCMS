@@ -645,6 +645,10 @@
   text-transform: uppercase;
 }
 
+.bcms-filter-modified {
+  display: inline;
+}
+
 .bcms-check-field-holder {
   float: left;
   margin: 4px 0 0 -3px;

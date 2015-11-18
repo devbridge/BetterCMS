@@ -1,8 +1,16 @@
 ﻿@using BetterCms.Module.Root.Content.Resources
 @model string
 <div class="bcms-sidemenu-footer">
-    <span class="bcms-version-number">@Model</span>
-    <div title="@RootGlobalization.Sidebar_Footer_DragTooltip" id="bcms-sidemenu-position-handle" class="bcms-sidemenu-position-handle">
-        <span class="bcms-sidemenu-stick-text" title="@RootGlobalization.Sidebar_Footer_Right_DragTitle"></span>
-    </div>
+    <svg class="bcms-cp-logo" height="22" width="22" viewBox="0 0 22 22">
+        <g fill-rule="evenodd">
+            <path fill="#4ad8e5" d="m0 0h22v22h-22v-22" />
+            <path fill="#5d7293" d="m7 7h15v15h-15v-15" />
+            <path fill="#184258" d="m7 7h9v9h-9v-9" />
+            <path fill="#fff" d="m12 12h4v4h-4v-4" />
+        </g>
+    </svg>
+    <div class="bcms-cp-version-number">@Model</div>
+@*    <div class="bcms-cp-position-handle" title="@RootGlobalization.Sidebar_Footer_DragTooltip" id="bcms-sidemenu-position-handle">*@
+@*        <div class="bcms-sidemenu-stick-text" title="@RootGlobalization.Sidebar_Footer_Right_DragTitle"></div>*@
+@*    </div>*@
 </div>

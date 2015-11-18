@@ -165,12 +165,16 @@ $control-panel-switch-status: (
     }
 
     &-pubstatus {
-        @include size(26px 40px);
+        @include size(24px);
         background: url($bcms-cp-pub-ok) no-repeat center;
-        margin: 10px auto 15px;
+        margin: 15px auto;
 
         &.bcms-pubstatus-warn {
             background-image: url($bcms-cp-pub-warn);
+        }
+
+        &.bcms-pubstatus-draft {
+            background-image: url($bcms-cp-pub-draft);
         }
     }
 
@@ -178,7 +182,7 @@ $control-panel-switch-status: (
         @include size(32px 17px);
         background: url($bcms-cp-drag-handle) no-repeat center;
         cursor: move;
-        margin: 5px auto 10px;
+        margin: 15px auto 10px;
     }
 }
 
@@ -194,7 +198,8 @@ $control-panel-switch-status: (
 
 .bcms-buttons-block {
     @include clearfix();
-    margin: 5px 0;
+    margin-bottom: 5px;
+    padding-top: 5px;
 
     .bcms-cp-seo-btn {
         float: left;
@@ -210,7 +215,6 @@ $control-panel-switch-status: (
 .bcms-cp {
     &-settings-btn {
         @extend %cp-settings-btn-frame;
-        margin-top: 5px;
         text-align: center;
     }
 
@@ -356,6 +360,7 @@ $control-panel-switch-status: (
     &-info {
         @include vertical-align();
         color: $cp-smoke;
+        cursor: default;
         font: {
             family: $font-base-family;
             size: 10px;

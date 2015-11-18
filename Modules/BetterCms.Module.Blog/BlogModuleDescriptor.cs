@@ -136,8 +136,8 @@ namespace BetterCms.Module.Blog
                     new ButtonActionProjection(blogJsModuleIncludeDescriptor, page => "postNewArticle")
                         {
                             Title = page => BlogGlobalization.Sidebar_AddNewPostButtonTitle,
-                            Order = 200,
-                            CssClass = page => "bcms-sidemenu-btn bcms-btn-blog-add",
+                            Order = 50,
+                            CssClass = page => "bcms-cp-btn",
                             AccessRole = RootModuleConstants.UserRoles.EditContent
                         }
                 };
