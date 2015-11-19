@@ -4,7 +4,10 @@ $action-icons: (
                 ('restore'),
                 ('history', $bcms-action-history),
                 ('settings'),
-                ('delete', $bcms-action-delete)
+                ('delete', $bcms-action-delete),
+                ('ok', $bcms-action-status-ok),
+                ('warn', $bcms-action-status-warn),
+                ('draft', $bcms-action-status-draft)
 );
 
 @each $name, $icon in $action-icons {
@@ -57,23 +60,23 @@ a.bcms-icn-restore:active {
 }
 
 //module published with draft icon
-.bcms-icn-published {
-    background: url('images/sprite-base-2.png') no-repeat 0 -129px;
-    height: 17px;
-    margin: 0 auto;
-    overflow: hidden;
-    text-indent: 9999px;
-    width: 17px;
-}
-
-.bcms-icn-unpublished {
-    background: url('images/sprite-base-2.png') no-repeat -2px -154px;
-    height: 17px;
-    margin: 0 auto;
-    overflow: hidden;
-    text-indent: 9999px;
-    width: 17px;
-}
+//.bcms-icn-published {
+//    background: url('images/sprite-base-2.png') no-repeat 0 -129px;
+//    height: 17px;
+//    margin: 0 auto;
+//    overflow: hidden;
+//    text-indent: 9999px;
+//    width: 17px;
+//}
+//
+//.bcms-icn-unpublished {
+//    background: url('images/sprite-base-2.png') no-repeat -2px -154px;
+//    height: 17px;
+//    margin: 0 auto;
+//    overflow: hidden;
+//    text-indent: 9999px;
+//    width: 17px;
+//}
 
 .bcms-icn-draft {
     background: url('images/sprite-base-2.png') no-repeat -25px -200px;

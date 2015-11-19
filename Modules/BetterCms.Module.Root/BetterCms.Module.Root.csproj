@@ -1421,6 +1421,11 @@
     <EmbeddedResource Include="Scripts\bcms.jquery.select2.js" />
     <Content Include="Scss\assets\icons\action-delete.svg" />
     <Content Include="Scss\assets\icons\action-edit.svg" />
+    <Content Include="Scss\assets\icons\action-history.svg" />
+    <Content Include="Scss\assets\icons\action-status-draft.svg" />
+    <Content Include="Scss\assets\icons\action-status-ok.svg" />
+    <Content Include="Scss\assets\icons\action-status-warn.svg" />
+    <Content Include="Scss\assets\icons\action-usage.svg" />
     <Content Include="Scss\assets\icons\add-content.svg" />
     <Content Include="Scss\assets\icons\btn-down-arrow.svg" />
     <Content Include="Scss\assets\icons\close-white.svg" />
