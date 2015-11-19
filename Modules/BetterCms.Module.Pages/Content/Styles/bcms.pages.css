@@ -408,7 +408,7 @@
   -webkit-user-select: none;
   -moz-user-select: none;
   user-select: none;
-  padding: 20px 0;
+  margin: 20px 0;
   position: relative;
 }
 

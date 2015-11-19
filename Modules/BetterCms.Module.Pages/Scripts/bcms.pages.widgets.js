@@ -78,7 +78,7 @@ bettercms.define('bcms.pages.widgets', ['bcms.jquery', 'bcms', 'bcms.modal', 'bc
                 widgetRowTemplateFirstRow: 'tr:first',
                 widgetsTableFirstRow: 'table.bcms-tables > tbody > tr:first',
                 widgetInsertButtons: '.bcms-widget-insert-button',
-                widgetRowUsageLinks: '.bcms-template-usage',
+                widgetRowUsageLinks: '.bcms-action-usage',
 
                 siteSettingsWidgetsListForm: '#bcms-widgets-form',
 

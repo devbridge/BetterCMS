@@ -3,26 +3,23 @@
 @model BetterCms.Module.Root.ViewModels.Shared.EditableGridViewModel
 
 @Html.Partial(Model.TopBlockView, Model)
-
 @if (Model.ShowMessages)
 {
     @Html.MessagesBox(null, new Dictionary<string, string> { { "data-bind", "attr: { id: messagesDomId() }" } })
 }
-
 @{
     var visibleColumns = Model.Columns.Where(c => c.IsRendered).ToList();
     var visibleColumnsCount = visibleColumns.Count;
 }
-
 <table class="bcms-tables">
     <thead>
         <tr>
-            <th class="bcms-tables-nohover">&nbsp;</th>
+            <th class="bcms-tables-nohover" style="width: 40px; padding: 10px 0;">&nbsp;</th>
             @foreach (var column in visibleColumns)
             {
                 @Html.Partial(column.HeaderView, column)
             }
-            <th class="bcms-tables-nohover" style="width: 145px;">&nbsp;</th>
+            <th class="bcms-tables-nohover">&nbsp;</th>
         </tr>
     </thead>
     <tbody>
@@ -38,19 +35,18 @@
             }
             @if (Model.CanEditItems)
             {
-                <td class="bcms-tables-nohover" style="width: 145px;">&nbsp;</td>
+                <td class="bcms-tables-nohover">&nbsp;</td>
                 <!-- ko if: deleting() -->
                 <td class="bcms-tables-nohover" colspan="@visibleColumnsCount">@RootGlobalization.Message_Deleting</td>
                 <!-- /ko -->
             }
             <!-- /ko -->
-            
             <!-- ko ifnot: saving() || deleting() -->
             @if (Model.CanEditItems)
             {
                 <td>
                     <!-- ko if: !editingIsDisabled() -->
-                    <a class="bcms-icn-edit" data-bind="click: onEdit">@RootGlobalization.Button_Edit</a>
+                    <a class="bcms-action-edit" data-bind="click: onEdit">@RootGlobalization.Button_Edit</a>
                     <!-- /ko -->
                 </td>
             }
@@ -62,47 +58,51 @@
             {
                 @Html.Partial(column.CellView, column)
             }
-            <td>
-                @if (Model.CanDeleteItems)
-                {
-                    <!-- ko if: !isActive() && !deletingIsDisabled() -->
-                    <a class="bcms-icn-delete" data-bind="click: onDelete">@RootGlobalization.Button_Delete</a>
-                    <!-- /ko -->
-                }
-                @if (Model.CanEditItems)
-                {
-                    <!-- ko if: isActive() -->
+
+            @if (Model.CanDeleteItems)
+            {
+                <!-- ko if: !isActive() && !deletingIsDisabled() -->
+                <td style="width: 40px; padding: 10px 0;">                   
+                    <a class="bcms-action-delete" data-bind="click: onDelete">@RootGlobalization.Button_Delete</a>                  
+                </td>
+                <!-- /ko -->
+            }
+            @if (Model.CanEditItems)
+            {
+                <!-- ko if: isActive() -->
+                <td style="width: 100px; padding: 10px 0;">
+                  
                     <div class="bcms-btn-primary" data-bind="click: onSave">@Model.SaveButtonTitle</div>
-                    <div class="bcms-btn-cancel" data-bind="event : {mousedown: onCancelEdit}">@RootGlobalization.Button_Cancel</div>
-                    <!-- /ko -->
-                }
-                @if (!Model.CanDeleteItems && !Model.CanEditItems)
-                {
-                    @:&nbsp;
-                }
-                
-            </td>
+                    <div class="bcms-btn-cancel" data-bind="event : {mousedown: onCancelEdit}">@RootGlobalization.Button_Cancel</div>             
+                </td>
+                <!-- /ko -->
+            }
+            @if (!Model.CanDeleteItems && !Model.CanEditItems)
+            {
+                @:<td>&nbsp;</td>
+            }
+
             <!-- /ko -->
         </tr>
         <!-- /ko -->
         <!-- ko if: items().length == 0 -->
         <tr>
-            <td colspan="@(visibleColumnsCount + 2)"><span class="bcms-table-no-data">@RootGlobalization.Grid_NoDataAvailable_Message</span></td>
+            <td colspan="@(visibleColumnsCount + 2)">
+                <div class="bcms-table-no-data">@RootGlobalization.Grid_NoDataAvailable_Message</div>
+            </td>
         </tr>
         <!-- /ko -->
     </tbody>
 </table>
-
 @if (Model.AddHiddenFields)
 {
     <!-- ko foreach: items -->
-        foreach (var column in Model.Columns)
+    foreach (var column in Model.Columns)
+    {
+        if (!string.IsNullOrWhiteSpace(column.HiddenFieldName))
         {
-            if (!string.IsNullOrWhiteSpace(column.HiddenFieldName))
-            {
-                <input type="hidden" name="" value="" data-bind="value: @(column.ValueBind)
-                    , attr: {name: hiddenFieldName('@(column.HiddenFieldName)', $index()) }">
-            }
+            <input type="hidden" name="" value="" data-bind="value: @(column.ValueBind), attr {name hiddenfieldname('@(column.HiddenFieldName)', $index()) }">
         }
+    }
     <!-- /ko -->
 }

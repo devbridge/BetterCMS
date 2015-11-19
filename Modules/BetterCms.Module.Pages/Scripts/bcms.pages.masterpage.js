@@ -24,7 +24,7 @@ bettercms.define('bcms.pages.masterpage', ['bcms.jquery', 'bcms', 'bcms.siteSett
                 siteSettingsPageTitleCell: '.bcms-page-title',
                 siteSettingsPageEditButton: '.bcms-grid-item-edit-button',
                 siteSettingsPageDeleteButton: '.bcms-grid-item-delete-button',
-                siteSettingsPageUsageLink: '.bcms-template-usage',
+                siteSettingsPageUsageLink: '.bcms-action-usage',
                 siteSettingsPagesListFormFilterIncludeArchived: "#IncludeArchived",
                 
                 siteSettingsPageRowTemplate: '#bcms-pages-list-row-template',

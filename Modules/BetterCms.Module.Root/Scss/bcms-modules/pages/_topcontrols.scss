@@ -2,7 +2,7 @@
 .bcms-top-block {
     &-holder {
         @include user-select();
-        padding: 20px 0;
+        margin: 20px 0;
         position: relative;
     }
 

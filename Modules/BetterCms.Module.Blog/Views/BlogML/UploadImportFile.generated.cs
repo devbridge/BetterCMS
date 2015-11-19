@@ -307,7 +307,7 @@ WriteLiteral(">\r\n                <thead>\r\n                    <tr>\r\n      
 
 WriteLiteral(" class=\"bcms-tables-nohover\"");
 
-WriteLiteral(" style=\"padding-left: 10px;\"");
+WriteLiteral(" style=\"width: 40px;\"");
 
 WriteLiteral("><input");
 

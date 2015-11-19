@@ -1195,30 +1195,30 @@ bettercms.define('bcms.content', ['bcms.jquery', 'bcms', 'bcms.modal', 'bcms.red
                 pathContainer.show();
             }
 
-            self.calculatePathPositions(onAfterCalculate);
+            //self.calculatePathPositions(onAfterCalculate);
         }
 
-        self.calculatePathPositions = function (onAfterCalculate) {
-            if (!hasPath()) {
-                return;
-            }
+        //self.calculatePathPositions = function (onAfterCalculate) {
+        //    if (!hasPath()) {
+        //        return;
+        //    }
 
-            var ww = $(window).width(),
-            cw = ww * 0.8,
-            totalItemsWidth = leftSlider.outerWidth() + leftSlider.outerWidth() + 30;
+        //    var ww = $(window).width(),
+        //    cw = ww * 0.8,
+        //    totalItemsWidth = leftSlider.outerWidth() + leftSlider.outerWidth() + 30;
 
-            $.each(items, function (index) {
-                totalItemsWidth += items[index].element.outerWidth();
-            });
+        //    $.each(items, function (index) {
+        //        totalItemsWidth += items[index].element.outerWidth();
+        //    });
 
-            pathContainer.css('width', cw > totalItemsWidth ? totalItemsWidth : cw);
-            pathContainer.css('left', ww / 2);
-            pathContainer.css('margin-left', cw > totalItemsWidth ? totalItemsWidth / -2 : cw / -2);
+        //    pathContainer.css('width', cw > totalItemsWidth ? totalItemsWidth : cw);
+        //    pathContainer.css('left', ww / 2);
+        //    pathContainer.css('margin-left', cw > totalItemsWidth ? totalItemsWidth / -2 : cw / -2);
 
-            if ($.isFunction(onAfterCalculate)) {
-                onAfterCalculate();
-            }
-        };
+        //    if ($.isFunction(onAfterCalculate)) {
+        //        onAfterCalculate();
+        //    }
+        //};
 
         self.initialize = function () {
             setPathVisibility(0, true);
@@ -1243,15 +1243,15 @@ bettercms.define('bcms.content', ['bcms.jquery', 'bcms', 'bcms.modal', 'bcms.red
 
             handle.on('click', onHandleClick);
 
-            leftSlider.on('click', function () {
-                slide(-1);
-            });
-            rightSlider.on('click', function () {
-                slide(1);
-            });
+            //leftSlider.on('click', function () {
+            //    slide(-1);
+            //});
+            //rightSlider.on('click', function () {
+            //    slide(1);
+            //});
 
             redraw(slideToTheFirstParent);
-            self.calculatePathPositions();
+            //self.calculatePathPositions();
             setPathVisibility(getPathVisibility());
         };
 

@@ -53,81 +53,84 @@
 
     <table class="bcms-tables">
         <thead>
-        <tr>
-            <th class="bcms-tables-nohover">&nbsp;</th>
-            @foreach (var column in visibleColumns)
-            {
-                @Html.Partial(column.HeaderView, column)
-            }
-            <th class="bcms-tables-nohover" style="width: 145px;">&nbsp;</th>
-        </tr>
+            <tr>
+                <th class="bcms-tables-nohover" style="width: 40px; padding: 10px 0;">&nbsp;</th>
+                @foreach (var column in visibleColumns)
+                {
+                    @Html.Partial(column.HeaderView, column)
+                }
+                <th class="bcms-tables-nohover">&nbsp;</th>
+            </tr>
         </thead>
         <tbody>
-        <!-- ko foreach: items -->
-        <tr data-bind="click: onOpen, css: {'bcms-table-row-active' : isActive() || isSelectedForInsert()}, attr: {id: getRowId()}">
-            <!-- ko if: saving() || deleting() -->
-            @if (gridViewModel.CanEditItems)
-            {
-                <td class="bcms-tables-nohover">&nbsp;</td>
+            <!-- ko foreach: items -->
+            <tr data-bind="click: onOpen, css: {'bcms-table-row-active' : isActive() || isSelectedForInsert()}, attr: {id: getRowId()}">
+                <!-- ko if: saving() || deleting() -->
+                @if (gridViewModel.CanEditItems)
+                {
+                    <td class="bcms-tables-nohover">&nbsp;</td>
                 <!-- ko if: saving() -->
-                <td class="bcms-tables-nohover" colspan="@visibleColumnsCount">@RootGlobalization.Message_Saving</td>
+                    <td class="bcms-tables-nohover" colspan="@visibleColumnsCount">@RootGlobalization.Message_Saving</td>
                 <!-- /ko -->
-            }
-            @if (gridViewModel.CanEditItems)
-            {
-                <td class="bcms-tables-nohover" style="width: 145px;">&nbsp;</td>
+                }
+                @if (gridViewModel.CanEditItems)
+                {
+                    <td class="bcms-tables-nohover">&nbsp;</td>
                 <!-- ko if: deleting() -->
-                <td class="bcms-tables-nohover" colspan="@visibleColumnsCount">@RootGlobalization.Message_Deleting</td>
+                    <td class="bcms-tables-nohover" colspan="@visibleColumnsCount">@RootGlobalization.Message_Deleting</td>
                 <!-- /ko -->
-            }
-            <!-- /ko -->
+                }
+                <!-- /ko -->
+                <!-- ko ifnot: saving() || deleting() -->
+                @if (gridViewModel.CanEditItems)
+                {
+                    <td>
+                        <!-- ko if: !editingIsDisabled() -->
+                        <a class="bcms-action-edit" data-bind="click: onEdit">@RootGlobalization.Button_Edit</a>
+                        <!-- /ko -->
+                    </td>
+                }
+                else
+                {
+                    <td>&nbsp;</td>
+                }
+                @foreach (var column in visibleColumns)
+                {
+                    @Html.Partial(column.CellView, column)
+                }
 
-            <!-- ko ifnot: saving() || deleting() -->
-            @if (gridViewModel.CanEditItems)
-            {
-                <td>
-                    <!-- ko if: !editingIsDisabled() -->
-                    <a class="bcms-icn-edit" data-bind="click: onEdit">@RootGlobalization.Button_Edit</a>
-                    <!-- /ko -->
-                </td>
-            }
-            else
-            {
-                <td>&nbsp;</td>
-            }
-            @foreach (var column in visibleColumns)
-            {
-                @Html.Partial(column.CellView, column)
-            }
-            <td>
                 @if (gridViewModel.CanDeleteItems)
                 {
                     <!-- ko if: !isActive() && !deletingIsDisabled() -->
-                    <a class="bcms-icn-delete" data-bind="click: onDelete">@RootGlobalization.Button_Delete</a>
+                    <td style="width: 40px; padding: 10px 0;">                 
+                        <a class="bcms-action-delete" data-bind="click: onDelete">@RootGlobalization.Button_Delete</a>
+                    </td>
                     <!-- /ko -->
                 }
                 @if (gridViewModel.CanEditItems)
                 {
                     <!-- ko if: isActive() -->
-                    <div class="bcms-btn-primary" data-bind="click: onSave">@gridViewModel.SaveButtonTitle</div>
-                    <div class="bcms-btn-cancel" data-bind="click: onCancelEdit">@RootGlobalization.Button_Cancel</div>
+                    <td style="width: 100px; padding: 10px 0;">                   
+                        <div class="bcms-btn-primary" data-bind="click: onSave">@gridViewModel.SaveButtonTitle</div>
+                        <div class="bcms-btn-cancel" data-bind="click: onCancelEdit">@RootGlobalization.Button_Cancel</div>                   
+                    </td>
                     <!-- /ko -->
                 }
                 @if (!gridViewModel.CanDeleteItems && !gridViewModel.CanEditItems)
                 {
-                    @:&nbsp;
+                    @:<td>&nbsp;</td>
                 }
 
-            </td>
+                <!-- /ko -->
+            </tr>
             <!-- /ko -->
-        </tr>
-        <!-- /ko -->
-
-        <!-- ko if: items().length == 0 -->
-        <tr>
-            <td colspan="@(visibleColumnsCount + 2)"><span class="bcms-table-no-data">@RootGlobalization.Grid_NoDataAvailable_Message</span></td>
-        </tr>
-        <!-- /ko -->
+            <!-- ko if: items().length == 0 -->
+            <tr>
+                <td colspan="@(visibleColumnsCount + 2)">
+                    <div class="bcms-table-no-data">@RootGlobalization.Grid_NoDataAvailable_Message</div>
+                </td>
+            </tr>
+            <!-- /ko -->
         </tbody>
     </table>
 
@@ -138,8 +141,7 @@
         {
             if (!string.IsNullOrWhiteSpace(column.HiddenFieldName))
             {
-                <input type="hidden" name="" value="" data-bind="valueBinder: @(column.ValueBind)
-                   , attr {name hiddenfieldname('@(column.HiddenFieldName)', $index()) }">
+                <input type="hidden" name="" value="" data-bind="valueBinder: @(column.ValueBind), attr {name hiddenfieldname('@(column.HiddenFieldName)', $index()) }">
             }
         }
         <!-- /ko -->

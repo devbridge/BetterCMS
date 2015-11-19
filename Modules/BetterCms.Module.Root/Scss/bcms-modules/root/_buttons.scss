@@ -49,7 +49,11 @@ $global-button-structure: (
         text-transform: uppercase;
 
         &:hover {
-            background-color: darken($bg-blue, 10%);
+            background-color: lighten($bg-blue, 10%);
+        }
+
+        &:active {
+            background-color: darken($bg-blue, 5%);
         }
     }
 

@@ -252,7 +252,7 @@ WriteLiteral("\r\n");
                .Encode(false)
                .Named("&nbsp;")
                .Sortable(false)
-               .HeaderAttributes(@style => "width: 40px; padding: 10px;", @class => "bcms-tables-nohover")
+               .HeaderAttributes(@style => "width: 40px;", @class => "bcms-tables-nohover")
                .Attributes(@style => "width: 40px;");
 
         column.For(m => m.SitemapTitle)

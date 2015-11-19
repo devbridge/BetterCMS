@@ -118,8 +118,6 @@ WriteLiteral("</th>\r\n                <th");
 
 WriteLiteral(" class=\"bcms-tables-nohover\"");
 
-WriteLiteral(" style=\"width: 145px;\"");
-
 WriteLiteral(">&nbsp;</th>\r\n            </tr>\r\n        </thead>\r\n        <tbody>\r\n            <" +
 "!-- ko foreach: items -->\r\n            <tr>\r\n                <td></td>\r\n        " +
 "        <td");
@@ -138,7 +136,7 @@ WriteLiteral(" target=\"_blank\"");
 
 WriteLiteral("></a></td>\r\n                <td>\r\n                    <a");
 
-WriteLiteral(" class=\"bcms-icn-delete\"");
+WriteLiteral(" class=\"bcms-action-delete\"");
 
 WriteLiteral(" data-bind=\"click: $parent.unassignPage\"");
 
@@ -146,7 +144,7 @@ WriteLiteral(">");
 
             
             #line 27 "..\..\Views\Page\Partial\TranslationsGrid.cshtml"
-                                                                                  Write(RootGlobalization.Button_Delete);
+                                                                                     Write(RootGlobalization.Button_Delete);
 
             
             #line default
@@ -157,21 +155,21 @@ WriteLiteral("</a>\r\n                </td>\r\n            </tr>\r\n            
 
 WriteLiteral(" colspan=\"5\"");
 
-WriteLiteral("><span");
+WriteLiteral(">\r\n                <div");
 
 WriteLiteral(" class=\"bcms-table-no-data\"");
 
 WriteLiteral(">");
 
             
-            #line 34 "..\..\Views\Page\Partial\TranslationsGrid.cshtml"
-                                                            Write(RootGlobalization.Grid_NoDataAvailable_Message);
+            #line 35 "..\..\Views\Page\Partial\TranslationsGrid.cshtml"
+                                           Write(RootGlobalization.Grid_NoDataAvailable_Message);
 
             
             #line default
             #line hidden
-WriteLiteral("</span></td>\r\n            </tr>\r\n            <!-- /ko -->\r\n\r\n            <!-- ko " +
-"if: isInAddMode() -->\r\n            <tr");
+WriteLiteral("</div>\r\n                </td>\r\n            </tr>\r\n            <!-- /ko -->\r\n\r\n   " +
+"         <!-- ko if: isInAddMode() -->\r\n            <tr");
 
 WriteLiteral(" class=\"bcms-table-row-active\"");
 
@@ -186,14 +184,14 @@ WriteLiteral(" class=\"bcms-field-text\"");
 WriteLiteral(" data-bind=\"value: addPageTitle, autocomplete: \'onlyExisting\', hasfocus: hasFocus" +
 ", enterPress: addTranslation, escPress: endEditMode\"");
 
-WriteAttribute("placeholder", Tuple.Create(" placeholder=\"", 2016), Tuple.Create("\"", 2109)
+WriteAttribute("placeholder", Tuple.Create(" placeholder=\"", 2031), Tuple.Create("\"", 2124)
             
-            #line 42 "..\..\Views\Page\Partial\TranslationsGrid.cshtml"
-                                                                                                                                                       , Tuple.Create(Tuple.Create("", 2030), Tuple.Create<System.Object, System.Int32>(PagesGlobalization.EditPageProperties_TranslationsTab_PageSelectionPlaceholder
+            #line 44 "..\..\Views\Page\Partial\TranslationsGrid.cshtml"
+                                                                                                                                                       , Tuple.Create(Tuple.Create("", 2045), Tuple.Create<System.Object, System.Int32>(PagesGlobalization.EditPageProperties_TranslationsTab_PageSelectionPlaceholder
             
             #line default
             #line hidden
-, 2030), false)
+, 2045), false)
 );
 
 WriteLiteral(" />\r\n                    <div");
@@ -232,7 +230,7 @@ WriteLiteral(" data-bind=\"click: addTranslation\"");
 WriteLiteral(">");
 
             
-            #line 56 "..\..\Views\Page\Partial\TranslationsGrid.cshtml"
+            #line 58 "..\..\Views\Page\Partial\TranslationsGrid.cshtml"
                                                                                Write(RootGlobalization.Button_Ok);
 
             
@@ -247,15 +245,15 @@ WriteLiteral(" data-bind=\"click: endEditMode\"");
 WriteLiteral(">");
 
             
-            #line 58 "..\..\Views\Page\Partial\TranslationsGrid.cshtml"
+            #line 60 "..\..\Views\Page\Partial\TranslationsGrid.cshtml"
                                                                            Write(RootGlobalization.Button_Cancel);
 
             
             #line default
             #line hidden
 WriteLiteral("</div>\r\n                </td>\r\n            </tr>\r\n            <!-- /ko -->\r\n     " +
-"   </tbody>\r\n    </table>\r\n</div>\r\n<!-- ko foreach: translations.items -->\r\n<inp" +
-"ut");
+"   </tbody>\r\n    </table>\r\n</div>\r\n\r\n<!-- ko foreach: translations.items -->\r\n<i" +
+"nput");
 
 WriteLiteral(" type=\"hidden\"");
 

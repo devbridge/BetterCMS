@@ -13,7 +13,7 @@
                 <th style="width: 350px;">@PagesGlobalization.EditPageTranslations_Title_Title</th>
                 <th style="width: 250px;">@PagesGlobalization.EditPageTranslations_Language_Title</th>
                 <th>@PagesGlobalization.EditPageTranslations_Url_Title</th>
-                <th class="bcms-tables-nohover" style="width: 145px;">&nbsp;</th>
+                <th class="bcms-tables-nohover">&nbsp;</th>
             </tr>
         </thead>
         <tbody>
@@ -24,14 +24,16 @@
                 <td data-bind="html: languageName()"></td>
                 <td><a data-bind="html: url(), attr: {href: url()}" target="_blank"></a></td>
                 <td>
-                    <a class="bcms-icn-delete" data-bind="click: $parent.unassignPage">@RootGlobalization.Button_Delete</a>
+                    <a class="bcms-action-delete" data-bind="click: $parent.unassignPage">@RootGlobalization.Button_Delete</a>
                 </td>
             </tr>
             <!-- /ko -->
 
             <!-- ko if: items().length == 0 && !isInAddMode() -->
             <tr>
-                <td colspan="5"><span class="bcms-table-no-data">@RootGlobalization.Grid_NoDataAvailable_Message</span></td>
+                <td colspan="5">
+                <div class="bcms-table-no-data">@RootGlobalization.Grid_NoDataAvailable_Message</div>
+                </td>
             </tr>
             <!-- /ko -->
 
@@ -62,6 +64,7 @@
         </tbody>
     </table>
 </div>
+
 <!-- ko foreach: translations.items -->
 <input type="hidden" data-bind="attr: { name: getPropertyIndexer($index(), 'LanguageId') }, value: languageId()" />
 <input type="hidden" data-bind="attr: { name: getPropertyIndexer($index(), 'Id') }, value: id()" />

@@ -42,7 +42,7 @@ bettercms.define('bcms.pages.template', ['bcms.jquery', 'bcms', 'bcms.modal', 'b
 
                 templatesRowDeleteButtons: '.bcms-grid-item-delete-button',
                 templatesRowDeleteMessage: '.bcms-grid-item-message',
-                templatesRowUsageLinks: '.bcms-template-usage',
+                templatesRowUsageLinks: '.bcms-action-usage',
                 templatesRowDeleteElementsToHide: '.bcms-grid-item-delete-button, .bcms-grid-item-edit-button',
                 templateParentRow: 'tr:first',
                 templateNameCell: '.bcms-template-name',

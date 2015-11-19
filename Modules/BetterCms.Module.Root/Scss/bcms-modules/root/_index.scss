@@ -1,8 +1,8 @@
 $action-icons: (
                 ('edit', $bcms-action-edit),
-                ('preview'),
+                ('usage', $bcms-action-usage),
                 ('restore'),
-                ('history'),
+                ('history', $bcms-action-history),
                 ('settings'),
                 ('delete', $bcms-action-delete)
 );
@@ -10,7 +10,7 @@ $action-icons: (
 @each $name, $icon in $action-icons {
     .bcms-action-#{$name} {
         @include vertical-align();
-        @include size(18px);
+        @include size(20px);
         background: url($icon) no-repeat center;
         cursor: pointer;
         overflow: hidden;
@@ -34,25 +34,6 @@ $action-icons: (
 }
 
 //module icons
-a.bcms-icn-preview {
-    background: url('images/sprite-base-2.png') no-repeat -60px -107px;
-    cursor: pointer;
-    display: block;
-    height: 12px;
-    margin: 0 auto;
-    overflow: hidden;
-    text-indent: 9999px;
-    width: 18px;
-}
-
-a.bcms-icn-preview:hover {
-    background-position: -60px -133px;
-}
-
-a.bcms-icn-preview:active {
-    background-position: -60px -159px;
-}
-
 a.bcms-icn-restore {
     background: url('images/sprite-base-1.png') no-repeat right -1090px;
     color: #c0c0c0;
@@ -72,28 +53,6 @@ a.bcms-icn-restore:hover {
 
 a.bcms-icn-restore:active {
     background-position: right -1151px;
-    color: #df2200;
-}
-
-a.bcms-icn-history {
-    background: url('images/sprite-base-1.png') no-repeat right -314px;
-    color: #c0c0c0;
-    cursor: pointer;
-    float: right;
-    font-size: 12px;
-    font-weight: 600;
-    height: 20px;
-    padding-right: 30px;
-}
-
-a.bcms-icn-history:hover {
-    background-position: right -357px;
-    color: #303030;
-    text-decoration: none;
-}
-
-a.bcms-icn-history:active {
-    background-position: right -399px;
     color: #df2200;
 }
 
