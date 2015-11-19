@@ -333,7 +333,7 @@ WriteLiteral(">\r\n        <thead>\r\n            <tr>\r\n                <th");
 
 WriteLiteral(" class=\"bcms-tables-nohover\"");
 
-WriteLiteral(" style=\"width: 40px; padding: 10px 0;\"");
+WriteLiteral(" style=\"width: 40px; padding: 8px 0;\"");
 
 WriteLiteral(">&nbsp;</th>\r\n");
 
@@ -404,14 +404,14 @@ WriteLiteral("                    <td");
 
 WriteLiteral(" class=\"bcms-tables-nohover\"");
 
-WriteAttribute("colspan", Tuple.Create(" colspan=\"", 3519), Tuple.Create("\"", 3549)
+WriteAttribute("colspan", Tuple.Create(" colspan=\"", 3518), Tuple.Create("\"", 3548)
             
             #line 73 "..\..\Views\Subscriber\List.cshtml"
-, Tuple.Create(Tuple.Create("", 3529), Tuple.Create<System.Object, System.Int32>(visibleColumnsCount
+, Tuple.Create(Tuple.Create("", 3528), Tuple.Create<System.Object, System.Int32>(visibleColumnsCount
             
             #line default
             #line hidden
-, 3529), false)
+, 3528), false)
 );
 
 WriteLiteral(">");
@@ -456,14 +456,14 @@ WriteLiteral("                    <td");
 
 WriteLiteral(" class=\"bcms-tables-nohover\"");
 
-WriteAttribute("colspan", Tuple.Create(" colspan=\"", 3869), Tuple.Create("\"", 3899)
+WriteAttribute("colspan", Tuple.Create(" colspan=\"", 3868), Tuple.Create("\"", 3898)
             
             #line 80 "..\..\Views\Subscriber\List.cshtml"
-, Tuple.Create(Tuple.Create("", 3879), Tuple.Create<System.Object, System.Int32>(visibleColumnsCount
+, Tuple.Create(Tuple.Create("", 3878), Tuple.Create<System.Object, System.Int32>(visibleColumnsCount
             
             #line default
             #line hidden
-, 3879), false)
+, 3878), false)
 );
 
 WriteLiteral(">");
@@ -626,7 +626,7 @@ WriteLiteral("                    <!-- ko if: isActive() -->\r\n");
 
 WriteLiteral("                    <td");
 
-WriteLiteral(" style=\"width: 100px; padding: 10px 0;\"");
+WriteLiteral(" style=\"width: 120px;\"");
 
 WriteLiteral(">                   \r\n                        <div");
 
@@ -694,14 +694,14 @@ WriteLiteral("\r\n                <!-- /ko -->\r\n            </tr>\r\n         
 "        <!-- ko if: items().length == 0 -->\r\n            <tr>\r\n                <" +
 "td");
 
-WriteAttribute("colspan", Tuple.Create(" colspan=\"", 5983), Tuple.Create("\"", 6019)
+WriteAttribute("colspan", Tuple.Create(" colspan=\"", 5965), Tuple.Create("\"", 6001)
             
             #line 129 "..\..\Views\Subscriber\List.cshtml"
-, Tuple.Create(Tuple.Create("", 5993), Tuple.Create<System.Object, System.Int32>(visibleColumnsCount + 2
+, Tuple.Create(Tuple.Create("", 5975), Tuple.Create<System.Object, System.Int32>(visibleColumnsCount + 2
             
             #line default
             #line hidden
-, 5993), false)
+, 5975), false)
 );
 
 WriteLiteral(">\r\n                    <div");

@@ -26,7 +26,6 @@
         column.For(f => string.Format("<a class=\"bcms-tables-link bcms-grid-item-edit-button bcms-widget-name\" data-id=\"{0}\">{1}</a>", f.Id, System.Web.Security.AntiXss.AntiXssEncoder.HtmlEncode(f.WidgetName ?? "", true)))
             .Named(PagesGlobalization.SiteSettings_Widgets_NameColumn)
             .SortColumnName("WidgetName")
-            .HeaderAttributes(@style => "width: 245px;")
             .Encode(false);
 
         column.For(f => Html.EditorFor(e => f.Status, "WidgetStatus"))
@@ -38,7 +37,7 @@
         {
             column.For(f => string.Format("<a class=\"bcms-action-usage\" title=\"{1}\">&nbsp;</a>", f.Id, PagesGlobalization.SiteSettings_Widgets_Usage))
                 .Named("")
-                .HeaderAttributes(@style => "width: 15px;")
+                .HeaderAttributes(@style => "width: 40px; padding: 8px 0;")
                 .Sortable(false)
                 .Encode(false);
         }

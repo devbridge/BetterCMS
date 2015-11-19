@@ -7,6 +7,11 @@ $text-th: #303646;
 
 $first-column-width: 44px;
 
+$sort-icons: (
+                ('top', $bcms-sort-up-active),
+                ('bottom', $bcms-sort-down-active)
+);
+
 .bcms-tables {
     background-color: $white;
     border: $border-thin-smoke;
@@ -24,11 +29,11 @@ $first-column-width: 44px;
         color: $text-th;
         cursor: default;
         font: {
+            family: $font-base-family;
             size: 14px;
             weight: 600;
         }
-        line-height: 20px;
-        padding: 9px 19px 8px;
+        padding: 9px 10px 8px;
         text-align: left;
 
         &:first-child {
@@ -36,14 +41,10 @@ $first-column-width: 44px;
                 left: $border-th;
                 right: $border-th;
             }
-            //padding: 0;
-            //width: $first-column-width;
         }
 
         &:last-child {
             border-right: $border-th;
-            //padding: 0;
-            //width: $first-column-width;
         }
     }
 
@@ -56,22 +57,31 @@ $first-column-width: 44px;
     }
 
     td {
-        border: $border-thin-smoke;
-        color: #787878;
+        border: {
+            top: $border-thin-smoke;
+            left: $border-thin-smoke;
+        }
+        color: $text-blue;
         padding: 10px;
         word-break: break-all;
 
-        &:first-child {
-            //padding: 0;
-            //width: $first-column-width;
+        &.bcms-widget-status {
+            border-left: 0;
+            width: 40px;
+
+            .bcms-action-ok,
+            .bcms-action-warn {
+                float: right;
+            }
         }
 
-        &:last-child {
-            //padding: 0;
-            //width: $first-column-width;
+        .bcms-page-url {
+            color: $text-red;
         }
 
         .bcms-action-edit,
+        .bcms-action-usage,
+        .bcms-action-history,
         .bcms-action-delete {
             display: block;
             margin: auto;
@@ -80,12 +90,13 @@ $first-column-width: 44px;
 }
 
 .bcms-table-row-active {
-    background-color: #effcfe;
+    > td {
+        background-color: $sky-blue;
+    }
 }
 
 .bcms-tables-link {
     color: #0383df;
-    line-height: 16px;
     text-decoration: none;
 }
 
@@ -94,16 +105,15 @@ $first-column-width: 44px;
 }
 
 .bcms-sort-arrow {
-    background: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAoAAAAGCAYAAAGN9z9QAAAAV0lEQVQI12N4+vTpNCD+zwAjQPgPiAaLIIu6whi3YTJALMSAxIHhaSBBfiSB2zADQdgJZgNMkBmI92IxBoZBcmww3SCsAsQfkBSA2OrIJqLjTCDOQRcHAEn2vvYOPcQQAAAAAElFTkSuQmCC') no-repeat right 4px;
+    background: url($bcms-sort-inactive) no-repeat right center;
+    cursor: pointer;
     display: inline;
     padding-right: 15px;
     text-align: left;
-}
 
-.bcms-sort-arrow-top {
-    background: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAoAAAAGCAYAAAGN9z9QAAAATklEQVQI12NgQAKZIIIZiP8D8V5kGbDIfxhHBcr5wIAGMtEF3kJVqsAEdiGZ9R9qGwpwAuKfQPwHysYA/EB8A80UEL4NlQODyVgUoONpAKCTHdQ696ExAAAAAElFTkSuQmCC') no-repeat right 4px;
-}
-
-.bcms-sort-arrow-bottom {
-    background: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAoAAAAGCAYAAAGN9z9QAAAAUElEQVQI12NgYGCYBsT/GWAECPyBMf4ji7rCGLeRZISQlcEwyEQGfiSB2wxIwAnZBhBgBuK9WIyBYZAcG7IGFSD+gKQAxFZnwAMygTgHXRAA+ZId8raGMaEAAAAASUVORK5CYII=') no-repeat right 4px;
+    @each $name, $icon in $sort-icons {
+        &-#{$name} {
+            background: url($icon) no-repeat right center;
+        }
+    }
 }

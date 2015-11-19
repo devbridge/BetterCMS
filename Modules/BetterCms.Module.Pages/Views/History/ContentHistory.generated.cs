@@ -361,7 +361,7 @@ WriteLiteralTo(__razor_helper_writer, "statusName\r\n");
                .Encode(false)
                .Named("&nbsp;")
                .Sortable(false)
-               .HeaderAttributes(@style => "width: 40px; padding: 10px 0;", @class => "bcms-tables-nohover");
+               .HeaderAttributes(@style => "width: 40px; padding: 8px 0;", @class => "bcms-tables-nohover");
 
         column.For(m => m.PublishedOn.ToFormattedDateString())
                .Named(PagesGlobalization.ContentHistory_Column_PublishedOn)

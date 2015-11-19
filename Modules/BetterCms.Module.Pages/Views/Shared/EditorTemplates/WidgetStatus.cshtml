@@ -4,7 +4,7 @@
 @model string
 @if (Model == ContentStatus.Published.ToString())
 {
-    <div class="bcms-icn-published">@RootGlobalization.WidgetStatus_Published</div>
+    <div class="bcms-action-ok bcms-js-action-ok">@RootGlobalization.WidgetStatus_Published</div>
 }
 else if (Model == ContentStatus.Draft.ToString())
 {

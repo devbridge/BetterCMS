@@ -3,9 +3,9 @@
 @model BetterCms.Core.DataContracts.Enums.PageStatus
 @if (Model == BetterCms.Core.DataContracts.Enums.PageStatus.Published)
 {
-    <div class="bcms-icn-published">@RootGlobalization.Boolean_Yes</div>
+    <div class="bcms-action-ok">@RootGlobalization.Boolean_Yes</div>
 }
 else
 {
-    <div class="bcms-icn-unpublished">@RootGlobalization.Boolean_No</div>
+    <div class="bcms-action-warn">@RootGlobalization.Boolean_No</div>
 }

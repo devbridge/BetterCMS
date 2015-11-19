@@ -101,7 +101,7 @@ bettercms.define('bcms.pages.widgets', ['bcms.jquery', 'bcms', 'bcms.modal', 'bc
                 regionAdvancedContent: 'bcms-content-advanced',
                 regionWidget: 'bcms-content-widget',
                 draftStatus: 'bcms-icn-draft',
-                publishStatus: 'bcms-icn-published',
+                publishStatus: 'bcms-js-action-ok',
                 draftPublStatus: 'bcms-icn-pubdraft'
             },
             contentTypes = {
