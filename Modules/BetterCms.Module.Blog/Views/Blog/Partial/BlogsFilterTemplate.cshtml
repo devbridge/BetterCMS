@@ -45,7 +45,7 @@
                         <div class="bcms-field-wrapper">
                             @Html.DropDownListFor(m => m.Status, new List<SelectListItem>(), new
                                                                       {
-                                                                          data_bind = "options: statuses, value: status, optionsText: 'Value', optionsValue: 'Key'",
+                                                                          data_bind = "options: statuses, value: status, optionsText: 'Value', optionsValue: 'Key', select2: { minimumResultsForSearch: -1 }",
                                                                           id = "bcms-js-filter-status"
                                                                       })
                          </div>
@@ -55,7 +55,7 @@
                     <div class="bcms-field-wrapper">
                         @Html.DropDownListFor(m => m.SeoStatus, new List<SelectListItem>(), new
                                                                                             {
-                                                                                                data_bind = "options: seoStatuses, value: seoStatus, optionsText: 'Value', optionsValue: 'Key'",
+                                                                                                data_bind = "options: seoStatuses, value: seoStatus, optionsText: 'Value', optionsValue: 'Key', select2: { minimumResultsForSearch: -1 }",
                                                                                                 id = "bcms-js-filter-seostatus"
                                                                                             })
                         </div>
@@ -65,7 +65,7 @@
                     <div class="bcms-filter-options">
                         <div class="bcms-filter-text">@BlogGlobalization.SiteSettings_Blogs_FilterByLanguage</div>
                         <div class="bcms-field-wrapper">
-                            <select name="LanguageId" data-bind="options: languages, value: languageId, optionsText: 'Value', optionsValue: 'Key'" id="bcms-js-filter-languages" />
+                            <select name="LanguageId" data-bind="options: languages, value: languageId, optionsText: 'Value', optionsValue: 'Key', select2: { minimumResultsForSearch: -1 }" id="bcms-js-filter-languages" />
                         </div>
                     </div>
                 }

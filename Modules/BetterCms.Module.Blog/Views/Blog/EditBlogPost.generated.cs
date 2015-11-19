@@ -700,7 +700,7 @@ WriteLiteral("                                ");
 
             
             #line 114 "..\..\Views\Blog\EditBlogPost.cshtml"
-                           Write(Html.DropDownListFor(model => model.LanguageId, Model.Languages.ToSelectList(Model.LanguageId), "Default language", new { @class = "bcms-global-select", @style = "width: 245px;" }));
+                           Write(Html.DropDownListFor(model => model.LanguageId, Model.Languages.ToSelectList(Model.LanguageId), "Default language", new { @id = "bcms-js-languages-select", @class = "bcms-global-select", @style = "width: 245px;" }));
 
             
             #line default

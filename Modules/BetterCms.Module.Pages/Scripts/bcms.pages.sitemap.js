@@ -45,7 +45,9 @@ bettercms.define('bcms.pages.sitemap', ['bcms.jquery', 'bcms', 'bcms.modal', 'bc
                 
                 tabsSlider: '.bcms-js-tab-header:first',
                 tabsSliderLeftArrow: '.bcms-sitemaps-arrow-left',
-                tabsSliderRightArrow: '.bcms-sitemaps-arrow-right'
+                tabsSliderRightArrow: '.bcms-sitemaps-arrow-right',
+
+                languageSelector: '.bcms-global-select'
             },
             links = {
                 loadSiteSettingsSitemapsListUrl: null,

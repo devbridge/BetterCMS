@@ -334,7 +334,7 @@ WriteLiteral(">\r\n                                <select");
 WriteLiteral(" class=\"bcms-global-select\"");
 
 WriteLiteral(" data-bind=\"options: languages, optionsText: \'value\', optionsValue: \'key\', value:" +
-" languageId\"");
+" languageId, select2: { minimumResultsForSearch: -1 }\"");
 
 WriteLiteral("></select>\r\n                            </div>\r\n                        </div>\r\n " +
 "                   </div>\r\n                \r\n                    <div");
@@ -396,15 +396,15 @@ WriteLiteral(" class=\"bcms-tree-drop-area-ui\"");
 
 WriteLiteral(">\r\n                            <div");
 
-WriteAttribute("class", Tuple.Create(" class=\"", 4489), Tuple.Create("\"", 4574)
-, Tuple.Create(Tuple.Create("", 4497), Tuple.Create("bcms-addnode-placement-holder", 4497), true)
+WriteAttribute("class", Tuple.Create(" class=\"", 4531), Tuple.Create("\"", 4616)
+, Tuple.Create(Tuple.Create("", 4539), Tuple.Create("bcms-addnode-placement-holder", 4539), true)
             
             #line 88 "..\..\Views\Sitemap\Edit.cshtml"
-, Tuple.Create(Tuple.Create("", 4526), Tuple.Create<System.Object, System.Int32>(Model.IsReadOnly ? "-readonly" : string.Empty
+, Tuple.Create(Tuple.Create("", 4568), Tuple.Create<System.Object, System.Int32>(Model.IsReadOnly ? "-readonly" : string.Empty
             
             #line default
             #line hidden
-, 4526), false)
+, 4568), false)
 );
 
 WriteLiteral(">\r\n");

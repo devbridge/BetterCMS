@@ -494,6 +494,10 @@ bettercms.define('bcms.media.upload', ['bcms.jquery', 'bcms', 'bcms.dynamicConte
 
         dialog.container.find(selectors.uploadButtonLabel).on('click', fixUploadButtonForMozilla);
 
+        dialog.container.find(selectors.folderDropDown).select2({
+            minimumResultsForSearch: -1
+        });
+
         if (fileApiSupported) {
 
             var context = document.getElementById('bcms-media-uploads');

@@ -1349,6 +1349,22 @@ bettercms.define('bcms.jquery.select2', ['bcms.jquery'], function(jQuery) {
                 // so here we trigger the click event manually
                 this.opts.element.click();
 
+                // FIX for KnockoutJS lib.
+                if (this.opts.ko_FIX === true) {
+                    var el = this.opts.element.get(0);
+                    setTimeout(function() {
+                        if (el != null) {
+                            if (document.createEventObject) {
+                                el.fireEvent("onchange");
+                            } else {
+                                var evt = document.createEvent("HTMLEvents");
+                                evt.initEvent("change", false, true);
+                                el.dispatchEvent(evt);
+                            }
+                        }
+                    }, 100);
+                }
+
                 // ValidationEngine ignores the change event and listens instead to blur
                 // so here we trigger the blur event manually if so desired
                 if (this.opts.blurOnChange)
