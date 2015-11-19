@@ -3113,6 +3113,18 @@ td .bcms-field-wrapper {
   text-indent: 999em;
 }
 
+.bcms-action-menu {
+  display: inline-block;
+  vertical-align: middle;
+  height: 20px;
+  width: 20px;
+  background: url("data:image/svg+xml;base64,PHN2ZyBoZWlnaHQ9IjQiIHdpZHRoPSIxOCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIiB2aWV3Qm94PSIwIDAgMTggNCI+PGcgZmlsbD0iIzlkYTBhOSIgZmlsbC1ydWxlPSJldmVub2RkIj48cGF0aCBkPSJtMCAwaDR2NGgtNHYtNCIvPjxwYXRoIGQ9Im03IDBoNHY0aC00di00Ii8+PHBhdGggZD0ibTE0IDBoNHY0aC00di00Ii8+PC9nPjwvc3ZnPg==") no-repeat center;
+  cursor: pointer;
+  overflow: hidden;
+  position: relative;
+  text-indent: 999em;
+}
+
 .bcms-draft {
   background: #0d7ce7;
 }

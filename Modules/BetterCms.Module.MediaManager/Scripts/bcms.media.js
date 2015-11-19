@@ -728,7 +728,7 @@ function ($, bcms, modal, siteSettings, forms, dynamicContent, messages, mediaUp
                 var iconClasses = '';
 
                 if (self.isFolder()) {
-                    iconClasses += ' bcms-system-folder';
+                    iconClasses += ' bcms-media-folder';
                 }
                 if (self.isImage()) {
                     iconClasses += ' bcms-media-file-holder';
