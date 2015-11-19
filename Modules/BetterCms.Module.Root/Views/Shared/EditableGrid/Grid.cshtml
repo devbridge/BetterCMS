@@ -100,7 +100,7 @@
     {
         if (!string.IsNullOrWhiteSpace(column.HiddenFieldName))
         {
-            <input type="hidden" name="" value="" data-bind="value: @(column.ValueBind), attr {name hiddenfieldname('@(column.HiddenFieldName)', $index()) }">
+            <input type="hidden" name="" value="" data-bind="value: @(column.ValueBind), attr: {name: hiddenFieldName('@(column.HiddenFieldName)', $index()) }">
         }
     }
     <!-- /ko -->
