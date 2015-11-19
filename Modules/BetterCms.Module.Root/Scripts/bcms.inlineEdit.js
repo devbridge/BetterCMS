@@ -120,10 +120,19 @@ bettercms.define('bcms.inlineEdit', ['bcms.jquery', 'bcms', 'bcms.messages', 'bc
                 var self = $(this);
                 if (id != self.find(selectors.editRowLink).data('id')) {
                     self.data('isSelected', false);
+// TODO:
+//                    self.find('td:last').css("width", "40px");
+//                    self.find('td:last').css("padding", "10px 0");
                 }
             });
         }
-
+//        if (isSelected) {
+//            row.find('td:last').css("width", "120px");
+//            row.find('td:last').css("padding", "");
+//        } else {
+//            row.find('td:last').css("width", "40px");
+//            row.find('td:last').css("padding", "10px 0");
+//        }
         row.data('isSelected', isSelected);
     }
 

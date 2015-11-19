@@ -626,7 +626,7 @@ WriteLiteral("                    <!-- ko if: isActive() -->\r\n");
 
 WriteLiteral("                    <td");
 
-WriteLiteral(" style=\"width: 100px; padding: 10px 0;\"");
+WriteLiteral(" style=\"width: 120px;\"");
 
 WriteLiteral(">                   \r\n                        <div");
 
@@ -694,14 +694,14 @@ WriteLiteral("\r\n                <!-- /ko -->\r\n            </tr>\r\n         
 "        <!-- ko if: items().length == 0 -->\r\n            <tr>\r\n                <" +
 "td");
 
-WriteAttribute("colspan", Tuple.Create(" colspan=\"", 5983), Tuple.Create("\"", 6019)
+WriteAttribute("colspan", Tuple.Create(" colspan=\"", 5966), Tuple.Create("\"", 6002)
             
             #line 129 "..\..\Views\Subscriber\List.cshtml"
-, Tuple.Create(Tuple.Create("", 5993), Tuple.Create<System.Object, System.Int32>(visibleColumnsCount + 2
+, Tuple.Create(Tuple.Create("", 5976), Tuple.Create<System.Object, System.Int32>(visibleColumnsCount + 2
             
             #line default
             #line hidden
-, 5993), false)
+, 5976), false)
 );
 
 WriteLiteral(">\r\n                    <div");
