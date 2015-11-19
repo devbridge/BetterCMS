@@ -824,7 +824,6 @@ bettercms.define('bcms.content', ['bcms.jquery', 'bcms', 'bcms.modal', 'bcms.red
             content.refreshOverlays();
 
             if (masterPagesModel != null) {
-                masterPagesModel.calculatePathPositions();
                 masterPagesModel.addParentContent(self.title, null, function () {
                     pageViewModel.currentParentContent = self;
 
@@ -964,10 +963,6 @@ bettercms.define('bcms.content', ['bcms.jquery', 'bcms', 'bcms.modal', 'bcms.red
             clearTimeout(resizeTimer);
             resizeTimer = setTimeout(function () {
                 content.refreshOverlays();
-
-                if (masterPagesModel != null) {
-                    masterPagesModel.calculatePathPositions();
-                }
             }, 100);
         });
     };
@@ -1045,7 +1040,6 @@ bettercms.define('bcms.content', ['bcms.jquery', 'bcms', 'bcms.modal', 'bcms.red
         }
 
         content.refreshOverlays();
-        content.refreshMasterPagesPath();
     }
 
     /**
@@ -1195,30 +1189,10 @@ bettercms.define('bcms.content', ['bcms.jquery', 'bcms', 'bcms.modal', 'bcms.red
                 pathContainer.show();
             }
 
-            self.calculatePathPositions(onAfterCalculate);
-        }
-
-        self.calculatePathPositions = function (onAfterCalculate) {
-            if (!hasPath()) {
-                return;
-            }
-
-            var ww = $(window).width(),
-            cw = ww * 0.8,
-            totalItemsWidth = leftSlider.outerWidth() + leftSlider.outerWidth() + 30;
-
-            $.each(items, function (index) {
-                totalItemsWidth += items[index].element.outerWidth();
-            });
-
-            pathContainer.css('width', cw > totalItemsWidth ? totalItemsWidth : cw);
-            pathContainer.css('left', ww / 2);
-            pathContainer.css('margin-left', cw > totalItemsWidth ? totalItemsWidth / -2 : cw / -2);
-
             if ($.isFunction(onAfterCalculate)) {
                 onAfterCalculate();
             }
-        };
+        }
 
         self.initialize = function () {
             setPathVisibility(0, true);
@@ -1251,7 +1225,6 @@ bettercms.define('bcms.content', ['bcms.jquery', 'bcms', 'bcms.modal', 'bcms.red
             });
 
             redraw(slideToTheFirstParent);
-            self.calculatePathPositions();
             setPathVisibility(getPathVisibility());
         };
 
@@ -1341,15 +1314,6 @@ bettercms.define('bcms.content', ['bcms.jquery', 'bcms', 'bcms.modal', 'bcms.red
 
         return self;
     }
-
-    /**
-    * Recalculates and shows / hides master page path
-    */
-    content.refreshMasterPagesPath = function () {
-        if (masterPagesModel != null) {
-            masterPagesModel.calculatePathPositions();
-        }
-    };
 
     /**
     * Is called everytime user clicks a mouse anywhere in the browser
