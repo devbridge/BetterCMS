@@ -46,7 +46,8 @@ bettercms.define('bcms.blog', ['bcms.jquery', 'bcms', 'bcms.modal', 'bcms.siteSe
                 siteSettingsButtonOpener: ".bcms-btn-opener",
                 siteSettingsButtonHolder: ".bcms-btn-opener-holder",
                 siteSettingsBlogCategoriesSelect: '#bcms-js-categories-select',
-                siteSettingsBlogAuthorsSelect: '#bcms-js-authors-select'
+                siteSettingsBlogAuthorsSelect: '#bcms-js-authors-select',
+                siteSettingsBlogLanguagesSelect: '#bcms-js-languages-select'
             },
             links = {
                 loadSiteSettingsBlogsUrl: null,
@@ -272,6 +273,9 @@ bettercms.define('bcms.blog', ['bcms.jquery', 'bcms', 'bcms.modal', 'bcms.siteSe
             var blogViewModel = new BlogPostViewModel(image, tagsViewModel, data.Id, data.Version, data.EditInSourceMode, categoriesModel);
 
             categories.initCategoriesSelect(categoriesModel, content.Data.CategoriesLookupList, dialog.container);
+            $(selectors.siteSettingsBlogLanguagesSelect).select2({
+                minimumResultsForSearch: -1
+            });
             $(selectors.siteSettingsBlogAuthorsSelect).select2({
                 minimumResultsForSearch: -1
             });
