@@ -1,4 +1,10 @@
 .bcms-media {
+    &-table {
+        .bcms-sort-arrow {
+            margin-right: 30px;
+        }
+    }
+
     &-new-folder {
         background: $white url($bcms-media-new-folder) no-repeat 10px center;
         border: $border-thin-smoke;
@@ -58,8 +64,8 @@
     &-preview {
         background-color: $white;
         border: $border-thin-smoke;
-        box-shadow: 0 0 20px 0 rgba($black, .2);
-        padding: 25px;
+        box-shadow: $pop-box-shadow;
+        padding: 15px 25px 25px;
         position: fixed;
         z-index: 9999;
 
@@ -72,6 +78,8 @@
 
 .bcms-folder-box {
     &-active {
+        background-color: $sky-blue;
+
         .bcms-media-item-info {
             display: none;
         }
@@ -82,36 +90,73 @@
     }
 }
 
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//module site settings media manager
-.bcms-select-list {
-    background: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAA8AAAAZCAYAAAGZXkRaAAAAe0lEQVQ4y2M4cODAQyD+z/D/PwQjGJE7390D4v8MIHncav6D1cBEMJTgFoAZC8XHyDGDsADMhVB8AEMFNnc9RHMbfncSdAQ2R91DcxjpjsTlQAocRytjaSSJJwj/D4SxxMTaPXxBjAcfoMzmkehsYHw9xBeXePCxkehsAFIWbewiC0rOAAAAAElFTkSuQmCC') no-repeat center 1px;
-    height: 12px;
-    margin-right: 10px;
-    overflow: hidden;
-    text-indent: 9999px;
-    width: 16px;
+.bcms-media-context {
+    @include position(absolute, null 0 null null);
+    background-color: $white;
+    border: $border-thin-smoke;
+    box-shadow: $pop-box-shadow;
+    box-sizing: border-box;
+    padding: 0 30px;
+    width: 250px;
+    z-index: 10;
+
+    @include virtual(after) {
+        @include position(absolute, -7px 10px null null);
+        @include triangle(14px, $white, up);
+        box-shadow: 0 -10px 20px 0 rgba($black, .2);
+    }
+
+    @include virtual(before) {
+        @include position(absolute, -8px 9px null null);
+        @include triangle(16px, $gray-smoke, up);
+    }
+
+    //todo add arrow to bottom
+    //&-arrow-down {
+    //    &:after {
+    //        bottom: -7px;
+    //        top: auto;
+    //    }
+    //}
+
+    &-block {
+        @include clearfix();
+        border-top: $border-thin-smoke;
+        padding: 20px 0;
+
+        &:first-child {
+            border-top: 0;
+        }
+    }
+
+    &-column {
+        float: left;
+        width: span(6);
+    }
 }
 
-.bcms-vertical-separator {
-    border-left: 1px solid #c0c0c0;
-    display: inline-block;
-    height: 34px;
-    vertical-align: middle;
+.bcms-media-content-link {
+    color: $text-blue;
+    font: {
+        family: $font-base-family;
+        size: 12px;
+        weight: 400;
+    }
+    line-height: 28px;
 }
 
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 //module breadcrumbs
 .bcms-breadcrumbs-holder {
     float: left;

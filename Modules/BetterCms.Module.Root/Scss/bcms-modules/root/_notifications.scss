@@ -140,7 +140,6 @@ $validation-fields: ();
         @include virtual(after) {
             @include position(absolute, null 10px -7px null);
             @include triangle(14px, $message-error, down);
-
         }
     }
 }

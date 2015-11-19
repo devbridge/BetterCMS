@@ -2720,6 +2720,7 @@ td .bcms-field-wrapper {
   border-left: 1px solid #dfdfdf;
   color: #0d7ce7;
   padding: 10px;
+  position: relative;
   word-break: break-all;
 }
 
