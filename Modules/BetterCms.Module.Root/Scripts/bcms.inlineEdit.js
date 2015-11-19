@@ -27,10 +27,10 @@ bettercms.define('bcms.inlineEdit', ['bcms.jquery', 'bcms', 'bcms.messages', 'bc
             fieldInputs: '.bcms-js-grid-input',
             allInputs: 'td input',
             fieldValues: '.bcms-grid-item-info',
-            deleteRowLink: 'a.bcms-icn-delete',
+            deleteRowLink: 'div.bcms-action-delete',
             rowMessage: '.bcms-grid-item-message',
             saveRowLink: '.bcms-btn-primary',
-            cancelLink: 'a.bcms-btn-secondary',
+            cancelLink: 'div.bcms-btn-cancel',
             editRowLink: '.bcms-grid-item-edit-button',
             firstTable: 'table.bcms-tables:first',
             templateFirstRow: 'tr:first',
@@ -120,19 +120,9 @@ bettercms.define('bcms.inlineEdit', ['bcms.jquery', 'bcms', 'bcms.messages', 'bc
                 var self = $(this);
                 if (id != self.find(selectors.editRowLink).data('id')) {
                     self.data('isSelected', false);
-// TODO:
-//                    self.find('td:last').css("width", "40px");
-//                    self.find('td:last').css("padding", "10px 0");
                 }
             });
         }
-//        if (isSelected) {
-//            row.find('td:last').css("width", "120px");
-//            row.find('td:last').css("padding", "");
-//        } else {
-//            row.find('td:last').css("width", "40px");
-//            row.find('td:last').css("padding", "10px 0");
-//        }
         row.data('isSelected', isSelected);
     }
 
@@ -313,7 +303,7 @@ bettercms.define('bcms.inlineEdit', ['bcms.jquery', 'bcms', 'bcms.messages', 'bc
             }
             
             row.data('blurred', false);
-        }, 500);
+        }, 100);
     };
 
     /**
@@ -389,6 +379,7 @@ bettercms.define('bcms.inlineEdit', ['bcms.jquery', 'bcms', 'bcms.messages', 'bc
                         if (json.Success) {
                             saveLink.hide();
                             cancelLink.hide();
+                            
                             if (json.Data) {
                                 if (json.Data.Version) {
                                     row.find(selectors.deleteRowLink).data('version', json.Data.Version);
@@ -527,6 +518,9 @@ bettercms.define('bcms.inlineEdit', ['bcms.jquery', 'bcms', 'bcms.messages', 'bc
         row.find(selectors.saveRowLink).show();
         row.find(selectors.cancelLink).show();
         row.find(selectors.rowMessage).hide();
+
+        row.find('td:last').css("width", "120px");
+        row.find('td:last').css("padding", "");
     };
 
     /**
@@ -542,6 +536,9 @@ bettercms.define('bcms.inlineEdit', ['bcms.jquery', 'bcms', 'bcms.messages', 'bc
         row.find(selectors.saveRowLink).hide();
         row.find(selectors.cancelLink).hide();
         row.find(selectors.rowMessage).hide();
+
+        row.find('td:last').css("width", "40px");
+        row.find('td:last').css("padding", "10px 0");
     };
 
     /**

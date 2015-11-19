@@ -387,6 +387,18 @@ function ($, bcms, modal, siteSettings, forms, dynamicContent, messages, mediaUp
             }
         };
 
+        self.toggleMenu = function (media, event) {
+            var i,
+                open = media.isMenuOpen();
+
+
+            for (i = 0; i < self.medias().length; i++) {
+                self.medias()[i].isMenuOpen(false);
+            }
+
+            media.isMenuOpen(!open);
+        }
+
         self.uploadMedia = function () {
             mediaUpload.openUploadFilesDialog(self.path().currentFolder().id(), self.path().currentFolder().type, onUploadFiles);
             messages.refreshBox($(selectors.fileListMessageBox + self.path().type), {});
@@ -618,31 +630,6 @@ function ($, bcms, modal, siteSettings, forms, dynamicContent, messages, mediaUp
     }
 
     /**
-    * Media item context menu view model
-    */
-    function MediaItemContextMenuViewModel() {
-        var self = this;
-
-        self.initialized = false;
-        self.domId = 'cmenu_' + staticDomId++;
-
-        self.show = function (data, event) {
-            var menuContainer = $('#' + self.domId);
-
-            if (!self.initialized) {
-                self.initialized = true;
-                menu.initContext(menuContainer, event.target, false);
-            }
-
-            menu.contextShow(event, menuContainer);
-        };
-
-        self.close = function (data, event) {
-            menu.closeContext();
-        };
-    }
-
-    /**
     * Media item base view model
     */
     var MediaItemBaseViewModel = (function () {
@@ -673,6 +660,7 @@ function ($, bcms, modal, siteSettings, forms, dynamicContent, messages, mediaUp
             self.tooltip = ko.observable(item.Tooltip);
             self.thumbnailUrl = ko.observable(item.ThumbnailUrl);
             self.isReadOnly = ko.observable(item.IsReadOnly);
+            self.isMenuOpen = ko.observable(false);
 
             self.getImageUrl = function () {
                 if (!self.publicUrl()) {
@@ -688,7 +676,10 @@ function ($, bcms, modal, siteSettings, forms, dynamicContent, messages, mediaUp
                 return self.thumbnailUrl();
             }
 
-            self.contextMenu = new MediaItemContextMenuViewModel();
+            self.toggleMenu = function (data, event) {
+                bcms.stopEventPropagation(event);
+                self.isMenuOpen(!self.isMenuOpen());
+            }
 
             self.isFile = function () {
                 return !self.isFolder();
