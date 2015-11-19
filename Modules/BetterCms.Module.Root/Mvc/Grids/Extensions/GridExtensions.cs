@@ -64,7 +64,8 @@ namespace BetterCms.Module.Root.Mvc.Grids.Extensions
                 .Named("&nbsp;")
                 .Sortable(false)
                 .Encode(false)
-                .HeaderAttributes(@style => "width: 40px; padding: 10px 0", @class => "bcms-tables-nohover");
+                .HeaderAttributes(@class => "bcms-tables-nohover")
+                .Attributes(@style => "width: 40px; padding: 10px 0");
         }
 
         public static IGridColumn<T> InlineEditControlsColumn<T>(this ColumnBuilder<T> builder, string saveButtonTitle = null) where T : class
@@ -89,7 +90,8 @@ namespace BetterCms.Module.Root.Mvc.Grids.Extensions
                 .Named("&nbsp;")
                 .Sortable(false)
                 .Encode(false)
-                .HeaderAttributes(@style => "width: 90px; padding: 10px 0;", @class => "bcms-tables-nohover");
+                .HeaderAttributes(@class => "bcms-tables-nohover")
+                .Attributes(@style => "width: 40px; padding: 10px 0;", @class => "bcms-tables-nohover");
         }
 
         public static HtmlString HiddenGridOptions(this HtmlHelper html, GridOptions.GridOptions gridOptions)
