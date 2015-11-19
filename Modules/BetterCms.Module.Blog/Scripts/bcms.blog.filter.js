@@ -91,18 +91,6 @@ bettercms.define('bcms.blog.filter', ['bcms.jquery', 'bcms', 'bcms.ko.extenders'
             filterViewModel.includeArchived(jsonData.IncludeArchived ? true : false);
             categories.initCategoriesSelect(categoriesViewModel, jsonData.CategoriesLookupList);
             ko.applyBindings(filterViewModel, container.find(selectors.filterTemplate).get(0));
-
-            $(selectors.filterByLanguage).select2({
-                minimumResultsForSearch: -1
-            });
-
-            $(selectors.filterBySeoStatus).select2({
-                minimumResultsForSearch: -1
-            });
-
-            $(selectors.filterByStatus).select2({
-                minimumResultsForSearch: -1
-            });
         };
 
         /**

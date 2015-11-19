@@ -915,6 +915,9 @@ bettercms.define('bcms.pages', ['bcms.jquery', 'bcms', 'bcms.modal', 'bcms.siteS
                                 languageSelector.on('change', function () {
                                     generator.Regenerate();
                                 });
+                                $(languageSelector[0]).select2({
+                                    minimumResultsForSearch: -1
+                                });
                             }
 
                             if (form.length > 0) {

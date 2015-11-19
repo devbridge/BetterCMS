@@ -212,7 +212,7 @@ WriteLiteral(" style=\"width: 100%;\"");
 WriteLiteral(" class=\"bcms-global-select\"");
 
 WriteLiteral(" data-bind=\"options: addingPageLanguages, optionsText: \'value\', optionsValue: \'ke" +
-"y\', value: addLanguageId\"");
+"y\', value: addLanguageId, select2: { minimumResultsForSearch: -1 }\"");
 
 WriteLiteral("></select>\r\n                    <!-- /ko -->\r\n\r\n                    <!-- ko if: a" +
 "ddPageId() && addingPageLanguages().length == 1 -->\r\n                    <span");

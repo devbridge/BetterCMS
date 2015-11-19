@@ -21,6 +21,27 @@ bettercms.define('bcms.ko.extenders', ['bcms.jquery', 'bcms', 'knockout', 'bcms.
     };
 
     /**
+    * Extend knockout handlers: select2 support.
+    */
+    ko.bindingHandlers.select2 = {
+        init: function (element, valueAccessor) {
+            var obj = valueAccessor();
+            obj.ko_FIX = true;
+            $(element).select2(obj);
+            ko.utils.domNodeDisposal.addDisposeCallback(element, function () {
+                $(element).select2('destroy');
+            });
+        },
+        update: function (element, valueAccessor, allBindingsAccessor) {
+            var options = allBindingsAccessor().select2Options || {};
+            for (var property in options) {
+                $(element).select2(property, ko.utils.unwrapObservable(options[property]));
+            }
+            $(element).trigger('change');
+        }
+    };
+
+    /**
     * Extend knockout handlers: add Enter key press event handler
     */
     ko.bindingHandlers.enterPress = {

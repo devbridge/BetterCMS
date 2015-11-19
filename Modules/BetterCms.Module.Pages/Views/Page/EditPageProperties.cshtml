@@ -292,7 +292,7 @@
                         <div class="bcms-input-list-holder" data-bind="with: translations.language">
                             <div class="bcms-content-titles">@PagesGlobalization.EditPageProperties_TranslationsTab_Language</div>
                             @Html.Tooltip(PagesGlobalization.EditPageProperties_TranslationsTab_Language_Tooltip_Description)
-                            <select class="bcms-global-select" data-bind="options: languages, optionsText: 'value', optionsValue: 'key', value: languageId"></select>
+                            <select class="bcms-global-select" data-bind="options: languages, optionsText: 'value', optionsValue: 'key', value: languageId, select2: { minimumResultsForSearch: -1 }"></select>
                         </div>
 
                         <div class="bcms-input-list-holder">

@@ -305,7 +305,7 @@ WriteLiteral("\r\n                                <select");
 WriteLiteral(" class=\"bcms-global-select\"");
 
 WriteLiteral(" data-bind=\"options: languages, optionsText: \'value\', optionsValue: \'key\', value:" +
-" languageId\"");
+" languageId, select2: { minimumResultsForSearch: -1 }\"");
 
 WriteLiteral("></select>\r\n                            </div>\r\n");
 
@@ -483,14 +483,14 @@ WriteLiteral(" type=\"text\"");
 
 WriteLiteral(" class=\"bcms-search-field-box bcms-js-search-box\"");
 
-WriteAttribute("placeholder", Tuple.Create(" placeholder=\"", 4774), Tuple.Create("\"", 4823)
+WriteAttribute("placeholder", Tuple.Create(" placeholder=\"", 4816), Tuple.Create("\"", 4865)
             
             #line 87 "..\..\Views\Page\AddNewPage.cshtml"
-                                 , Tuple.Create(Tuple.Create("", 4788), Tuple.Create<System.Object, System.Int32>(RootGlobalization.WaterMark_Search
+                                 , Tuple.Create(Tuple.Create("", 4830), Tuple.Create<System.Object, System.Int32>(RootGlobalization.WaterMark_Search
             
             #line default
             #line hidden
-, 4788), false)
+, 4830), false)
 );
 
 WriteLiteral("\r\n                                       data-bind=\"value: searchQuery, valueUpda" +

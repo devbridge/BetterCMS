@@ -5,7 +5,7 @@
 <div class="bcms-top-block-holder" data-bind="with: sitemap">
     <div style="display: none;" data-bind="visible: showLanguages, with: language">
         <div class="bcms-filter-text">Edit sitemap in language:</div>
-        <select class="bcms-global-select" data-bind="options: languages, optionsText: 'value', optionsValue: 'key', value: languageId"></select>
+        <select class="bcms-global-select" data-bind="options: languages, optionsText: 'value', optionsValue: 'key', value: languageId, select2: { minimumResultsForSearch: -1 }"></select>
     </div>
 </div>
 

@@ -239,7 +239,7 @@ WriteLiteral(">\r\n                            <select");
 WriteLiteral(" name=\"LanguageId\"");
 
 WriteLiteral(" data-bind=\"options: languages, value: languageId, optionsText: \'Value\', optionsV" +
-"alue: \'Key\'\"");
+"alue: \'Key\', select2: { minimumResultsForSearch: -1 }\"");
 
 WriteLiteral(" id=\"bcms-js-filter-languages\"");
 
@@ -281,7 +281,7 @@ WriteLiteral("                        ");
             #line 52 "..\..\Views\Filter\PagesFilterTemplate.cshtml"
                    Write(Html.DropDownListFor(m => m.Status, new List<SelectListItem>(), new
                                                                       {
-                                                                          data_bind = "options: statuses, value: status, optionsText: 'Value', optionsValue: 'Key'",
+                                                                          data_bind = "options: statuses, value: status, optionsText: 'Value', optionsValue: 'Key', select2: { minimumResultsForSearch: -1 }",
                                                                           id = "bcms-js-filter-status"
                                                                       }));
 
@@ -318,7 +318,7 @@ WriteLiteral("                        ");
             #line 62 "..\..\Views\Filter\PagesFilterTemplate.cshtml"
                    Write(Html.DropDownListFor(m => m.SeoStatus, new List<SelectListItem>(), new
                                                                                             {
-                                                                                                data_bind = "options: seoStatuses, value: seoStatus, optionsText: 'Value', optionsValue: 'Key'",
+                                                                                                data_bind = "options: seoStatuses, value: seoStatus, optionsText: 'Value', optionsValue: 'Key', select2: { minimumResultsForSearch: -1 }",
                                                                                                 id = "bcms-js-filter-seostatus"
                                                                                             }));
 
@@ -355,7 +355,7 @@ WriteLiteral("                        ");
             #line 73 "..\..\Views\Filter\PagesFilterTemplate.cshtml"
                    Write(Html.DropDownListFor(m => m.Layout, new List<SelectListItem>(), new
                                                                       {
-                                                                          data_bind = "options: layouts, value: layout, optionsText: 'Value', optionsValue: 'Key'",
+                                                                          data_bind = "options: layouts, value: layout, optionsText: 'Value', optionsValue: 'Key', select2: { minimumResultsForSearch: -1 }",
                                                                           id = "bcms-js-filter-layout"
                                                                       }));
 

@@ -103,22 +103,6 @@ bettercms.define('bcms.pages.filter', ['bcms.jquery', 'bcms', 'bcms.ko.extenders
             filterViewModel.includeArchived(jsonData.IncludeArchived ? true : false);
             filterViewModel.includeMasterPages(jsonData.IncludeMasterPages ? true : false);
             ko.applyBindings(filterViewModel, container.find(selectors.filterTemplate).get(0));
-
-            $(selectors.filterByLanguage).select2({
-                minimumResultsForSearch: -1
-            });
-
-            $(selectors.filterByLayout).select2({
-                minimumResultsForSearch: -1
-            });
-
-            $(selectors.filterBySeoStatus).select2({
-                minimumResultsForSearch: -1
-            });
-
-            $(selectors.filterByStatus).select2({
-                minimumResultsForSearch: -1
-            });
         };
 
         /**
