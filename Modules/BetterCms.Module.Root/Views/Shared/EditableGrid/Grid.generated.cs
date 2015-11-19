@@ -521,18 +521,18 @@ WriteLiteral(" data-bind=\"value: ");
             
             #line default
             #line hidden
-WriteLiteral(", attr {name hiddenfieldname(\'");
+WriteLiteral(", attr: {name: hiddenFieldName(\'");
 
             
             #line 103 "..\..\Views\Shared\EditableGrid\Grid.cshtml"
-                                                                                                                 Write(column.HiddenFieldName);
+                                                                                                                   Write(column.HiddenFieldName);
 
             
             #line default
             #line hidden
 WriteLiteral("\', $index()) }\"");
 
-WriteLiteral(">\r\n");
+WriteLiteral(">\n");
 
             
             #line 104 "..\..\Views\Shared\EditableGrid\Grid.cshtml"
