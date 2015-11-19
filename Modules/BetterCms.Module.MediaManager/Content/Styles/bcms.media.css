@@ -479,29 +479,18 @@ div.bcms-align-right-active {
 }
 
 .bcms-breadcrumbs-holder {
-  float: left;
-  font-size: 14px;
-  font-weight: 700;
-  line-height: 15px;
-  max-width: 600px;
-  padding: 5px 0;
-}
-
-.bcms-breadcrumbs-holder > div {
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
+  max-width: 600px;
 }
 
 .bcms-breadcrumbs-root {
-  color: #0383df;
-  display: inline-block;
-  height: 20px;
+  display: inline;
+  font-family: "Open Sans", sans-serif !important;
+  font-size: 12px;
+  font-weight: 600;
   line-height: 20px;
-  max-width: 575px;
-  overflow: hidden;
-  text-decoration: none;
-  vertical-align: top;
 }
 
 .bcms-breadcrumbs-root:first-child {

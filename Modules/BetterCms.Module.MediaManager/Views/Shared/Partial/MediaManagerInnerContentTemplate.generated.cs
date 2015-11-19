@@ -202,15 +202,13 @@ WriteLiteral(">\r\n        <div");
 
 WriteLiteral(" data-bind=\"foreach: path().pathFolders()\"");
 
-WriteLiteral(">\r\n            <a");
+WriteLiteral(">\r\n            <div");
 
 WriteLiteral(" class=\"bcms-breadcrumbs-root\"");
 
-WriteLiteral(" href=\"#\"");
-
 WriteLiteral(" data-bind=\"text: pathName(), click: openMedia.bind($data, $root)\"");
 
-WriteLiteral("></a>\r\n        </div>\r\n    </div>\r\n</div>\r\n\r\n<table");
+WriteLiteral("></div>\r\n        </div>\r\n    </div>\r\n</div>\r\n\r\n<table");
 
 WriteLiteral(" class=\"bcms-tables bcms-media-table\"");
 
