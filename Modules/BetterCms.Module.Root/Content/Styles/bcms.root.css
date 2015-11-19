@@ -2695,9 +2695,9 @@ td .bcms-field-wrapper {
   border-top: 1px solid #cbcbcb;
   color: #303646;
   cursor: default;
+  font-family: "Open Sans", sans-serif !important;
   font-size: 14px;
   font-weight: 600;
-  line-height: 20px;
   padding: 9px 10px 8px;
   text-align: left;
 }

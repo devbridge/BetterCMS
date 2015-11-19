@@ -29,10 +29,10 @@ $sort-icons: (
         color: $text-th;
         cursor: default;
         font: {
+            family: $font-base-family;
             size: 14px;
             weight: 600;
         }
-        line-height: 20px;
         padding: 9px 10px 8px;
         text-align: left;
 
