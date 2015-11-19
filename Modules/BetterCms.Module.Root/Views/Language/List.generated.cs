@@ -85,7 +85,6 @@ WriteLiteral(">\r\n");
                 new EditableGridColumn(RootGlobalization.SiteSettings_Languages_Code_Title, "Code", "code")
                     {
                         CustomBinding = "autocomplete: 'onlyExisting', attr: {tabindex: 50}",
-                        HeaderAttributes = "style=\"width: 200px;\"",
                         FocusIdentifier = "hasFocus"
                     },
                 new EditableGridColumn(RootGlobalization.SiteSettings_Languages_Name_Title, "Name", "name")
@@ -104,7 +103,7 @@ WriteLiteral("\r\n\r\n");
 WriteLiteral("    ");
 
             
-            #line 29 "..\..\Views\Language\List.cshtml"
+            #line 28 "..\..\Views\Language\List.cshtml"
 Write(Html.Partial(RootModuleConstants.EditableGridTemplate, gridViewModel));
 
             

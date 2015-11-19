@@ -133,7 +133,7 @@ WriteLiteral("\r\n");
         {
             column.For(f => string.Format("<a class=\"bcms-action-usage\" title=\"{1}\">&nbsp;</a>", f.Id, PagesGlobalization.SiteSettings_Widgets_Usage))
                 .Named("")
-                .HeaderAttributes(@style => "width: 40px; padding: 10px 0;")
+                .HeaderAttributes(@style => "width: 40px; padding: 8px 0;")
                 .Sortable(false)
                 .Encode(false);
         }

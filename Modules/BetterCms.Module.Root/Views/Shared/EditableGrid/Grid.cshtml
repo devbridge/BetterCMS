@@ -14,7 +14,7 @@
 <table class="bcms-tables">
     <thead>
         <tr>
-            <th class="bcms-tables-nohover" style="width: 40px; padding: 10px 0;">&nbsp;</th>
+            <th class="bcms-tables-nohover" style="width: 40px; padding: 8px 0;">&nbsp;</th>
             @foreach (var column in visibleColumns)
             {
                 @Html.Partial(column.HeaderView, column)
@@ -70,8 +70,7 @@
             @if (Model.CanEditItems)
             {
                 <!-- ko if: isActive() -->
-                <td style="width: 120px;">
-                  
+                <td style="width: 120px;">                 
                     <div class="bcms-btn-primary" data-bind="click: onSave">@Model.SaveButtonTitle</div>
                     <div class="bcms-btn-cancel" data-bind="event : {mousedown: onCancelEdit}">@RootGlobalization.Button_Cancel</div>             
                 </td>

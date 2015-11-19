@@ -34,7 +34,7 @@ namespace BetterCms.Module.Root.Mvc.Grids.Extensions
                 .Named("&nbsp;")
                 .Sortable(false)
                 .Encode(false)
-                .HeaderAttributes(@style => "width: 40px; padding: 10px 0;", @class => "bcms-tables-nohover");
+                .HeaderAttributes(@style => "width: 40px; padding: 8px 0;", @class => "bcms-tables-nohover");
         }
 
         public static IGridColumn<T> HistoryButtonColumn<T>(this ColumnBuilder<T> builder, bool renderId = true) where T : class
@@ -48,7 +48,7 @@ namespace BetterCms.Module.Root.Mvc.Grids.Extensions
                 .Named("&nbsp;")
                 .Sortable(false)
                 .Encode(false)
-                .HeaderAttributes(@style => "width: 40px; padding: 10px 0;", @class => "bcms-tables-nohover");
+                .HeaderAttributes(@style => "width: 40px; padding: 8px 0;", @class => "bcms-tables-nohover");
         }
 
         public static IGridColumn<T> DeleteButtonColumn<T>(this ColumnBuilder<T> builder, bool renderId = true) where T : class
