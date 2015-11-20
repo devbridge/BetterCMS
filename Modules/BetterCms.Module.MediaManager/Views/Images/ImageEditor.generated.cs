@@ -560,13 +560,13 @@ WriteLiteral(":\r\n                            <div");
 
 WriteLiteral(" class=\"bcms-editor-link\"");
 
-WriteLiteral(" data-bind=\"click: open, visible: !isOpened()\"");
+WriteLiteral(" data-bind=\"click: open\"");
 
 WriteLiteral(">");
 
             
             #line 96 "..\..\Views\Images\ImageEditor.cshtml"
-                                                                                                   Write(RootGlobalization.Button_Edit);
+                                                                             Write(RootGlobalization.Button_Edit);
 
             
             #line default
@@ -692,8 +692,7 @@ WriteLiteral(">");
             
             #line default
             #line hidden
-WriteLiteral("</div>\r\n                    </div>bcms-image-dimensions-editor-box\r\n\r\n           " +
-"         <div");
+WriteLiteral("</div>\r\n                    </div>\r\n\r\n                    <div");
 
 WriteLiteral(" class=\"bcms-input-list-holder\"");
 
@@ -720,14 +719,13 @@ WriteLiteral(":\r\n                            <div");
 
 WriteLiteral(" class=\"bcms-editor-link\"");
 
-WriteLiteral(" data-bind=\"click: open, visible: !isOpened() && $parent.imageEditorViewModel.ima" +
-"geType() == 1\"");
+WriteLiteral(" data-bind=\"click: open\"");
 
 WriteLiteral(">");
 
             
             #line 124 "..\..\Views\Images\ImageEditor.cshtml"
-                                                                                                                                                    Write(RootGlobalization.Button_Edit);
+                                                                             Write(RootGlobalization.Button_Edit);
 
             
             #line default
@@ -762,94 +760,105 @@ WriteLiteral(" class=\"bcms-editor-box\"");
 
 WriteLiteral(" data-bind=\"style: { \'display\': isOpened() ? \'block\' : \'none\' }\"");
 
+WriteLiteral(">\r\n                            ");
+
+WriteLiteral("\r\n                            <div");
+
+WriteLiteral(" class=\"bcms-media-editor-container\"");
+
 WriteLiteral(">\r\n                            <div");
+
+WriteLiteral(" class=\"bcms-media-editor-column\"");
+
+WriteLiteral(">\r\n                                <div");
 
 WriteLiteral(" class=\"bcms-content-titles\"");
 
 WriteLiteral(">");
 
             
-            #line 129 "..\..\Views\Images\ImageEditor.cshtml"
-                                                        Write(MediaGlobalization.ImageEditor_Dialog_ChangeSize_Title);
+            #line 132 "..\..\Views\Images\ImageEditor.cshtml"
+                                                            Write(MediaGlobalization.ImageEditor_Dialog_ChangeSize_Width);
 
             
             #line default
             #line hidden
-WriteLiteral("</div>\r\n                            <div");
+WriteLiteral(":</div>\r\n                                <div");
 
-WriteLiteral(" class=\"bcms-content-subtitle\"");
+WriteLiteral(" class=\"bcms-field-wrapper\"");
+
+WriteLiteral(">\r\n");
+
+WriteLiteral("                                    ");
+
+            
+            #line 134 "..\..\Views\Images\ImageEditor.cshtml"
+                               Write(Html.TextBoxFor(f => f.ImageWidth, new { @class = "bcms-field-text", @id = "image-width", @data_bind = "value: width, valueUpdate: 'afterkeydown', enterPress: save, escPress: close, event: { change: changeHeight }" }));
+
+            
+            #line default
+            #line hidden
+WriteLiteral("\r\n");
+
+WriteLiteral("                                    ");
+
+            
+            #line 135 "..\..\Views\Images\ImageEditor.cshtml"
+                               Write(Html.BcmsValidationMessageFor(f => f.ImageWidth));
+
+            
+            #line default
+            #line hidden
+WriteLiteral("\r\n                                </div>\r\n                            </div>\r\n\r\n " +
+"                           <div");
+
+WriteLiteral(" class=\"bcms-media-editor-column\"");
+
+WriteLiteral(">\r\n                                <div");
+
+WriteLiteral(" class=\"bcms-content-titles\"");
 
 WriteLiteral(">");
 
             
-            #line 130 "..\..\Views\Images\ImageEditor.cshtml"
-                                                          Write(MediaGlobalization.ImageEditor_Dialog_ChangeSize_Width);
-
-            
-            #line default
-            #line hidden
-WriteLiteral(":</div>\r\n                            <div");
-
-WriteLiteral(" class=\"bcms-field-wrapper\"");
-
-WriteLiteral(">\r\n");
-
-WriteLiteral("                                ");
-
-            
-            #line 132 "..\..\Views\Images\ImageEditor.cshtml"
-                           Write(Html.TextBoxFor(f => f.ImageWidth, new { @class = "bcms-field-text",  @id = "image-width", @data_bind = "value: width, valueUpdate: 'afterkeydown', enterPress: save, escPress: close, event: { change: changeHeight }"}));
-
-            
-            #line default
-            #line hidden
-WriteLiteral("\r\n");
-
-WriteLiteral("                                ");
-
-            
-            #line 133 "..\..\Views\Images\ImageEditor.cshtml"
-                           Write(Html.BcmsValidationMessageFor(f => f.ImageWidth));
-
-            
-            #line default
-            #line hidden
-WriteLiteral("\r\n                            </div>\r\n\r\n                            <div>");
-
-            
-            #line 136 "..\..\Views\Images\ImageEditor.cshtml"
-                            Write(MediaGlobalization.ImageEditor_Dialog_ChangeSize_Height);
-
-            
-            #line default
-            #line hidden
-WriteLiteral(":</div>\r\n\r\n                            <div");
-
-WriteLiteral(" class=\"bcms-field-wrapper\"");
-
-WriteLiteral(">\r\n");
-
-WriteLiteral("                                ");
-
-            
-            #line 139 "..\..\Views\Images\ImageEditor.cshtml"
-                           Write(Html.TextBoxFor(f => f.ImageHeight, new { @class = "bcms-field-text", @id = "image-height", @data_bind = "value: height, valueUpdate: 'afterkeydown', enterPress: save, escPress: close, event: { change: changeWidth }" }));
-
-            
-            #line default
-            #line hidden
-WriteLiteral("\r\n");
-
-WriteLiteral("                                ");
-
-            
             #line 140 "..\..\Views\Images\ImageEditor.cshtml"
-                           Write(Html.BcmsValidationMessageFor(f => f.ImageHeight));
+                                                            Write(MediaGlobalization.ImageEditor_Dialog_ChangeSize_Height);
 
             
             #line default
             #line hidden
-WriteLiteral("\r\n                            </div>\r\n                            <div");
+WriteLiteral(":</div>\r\n                                <div");
+
+WriteLiteral(" class=\"bcms-field-wrapper\"");
+
+WriteLiteral(">\r\n");
+
+WriteLiteral("                                    ");
+
+            
+            #line 142 "..\..\Views\Images\ImageEditor.cshtml"
+                               Write(Html.TextBoxFor(f => f.ImageHeight, new { @class = "bcms-field-text", @id = "image-height", @data_bind = "value: height, valueUpdate: 'afterkeydown', enterPress: save, escPress: close, event: { change: changeWidth }" }));
+
+            
+            #line default
+            #line hidden
+WriteLiteral("\r\n");
+
+WriteLiteral("                                    ");
+
+            
+            #line 143 "..\..\Views\Images\ImageEditor.cshtml"
+                               Write(Html.BcmsValidationMessageFor(f => f.ImageHeight));
+
+            
+            #line default
+            #line hidden
+WriteLiteral("\r\n                                </div>\r\n                            </div>\r\n\r\n " +
+"                           <div");
+
+WriteLiteral(" class=\"bcms-media-editor-column\"");
+
+WriteLiteral(">\r\n                                <div");
 
 WriteLiteral(" class=\"bcms-btn-primary\"");
 
@@ -858,13 +867,13 @@ WriteLiteral(" data-bind=\"click: save\"");
 WriteLiteral(">");
 
             
-            #line 142 "..\..\Views\Images\ImageEditor.cshtml"
-                                                                             Write(RootGlobalization.Button_Ok);
+            #line 148 "..\..\Views\Images\ImageEditor.cshtml"
+                                                                                 Write(RootGlobalization.Button_Ok);
 
             
             #line default
             #line hidden
-WriteLiteral("</div>\r\n                            <div");
+WriteLiteral("</div>\r\n                                <div");
 
 WriteLiteral(" class=\"bcms-btn-cancel\"");
 
@@ -873,21 +882,24 @@ WriteLiteral(" data-bind=\"click: close\"");
 WriteLiteral(">");
 
             
-            #line 143 "..\..\Views\Images\ImageEditor.cshtml"
-                                                                             Write(RootGlobalization.Button_Cancel);
+            #line 149 "..\..\Views\Images\ImageEditor.cshtml"
+                                                                                 Write(RootGlobalization.Button_Cancel);
 
             
             #line default
             #line hidden
-WriteLiteral("</div>\r\n                            <div");
+WriteLiteral("</div>\r\n                            </div>\r\n                            </div>\r\n\r" +
+"\n                            <div");
+
+WriteLiteral(" class=\"bcms-media-restore-size\"");
 
 WriteLiteral(" data-bind=\"click: restoreOriginalSize\"");
 
 WriteLiteral(">");
 
             
-            #line 144 "..\..\Views\Images\ImageEditor.cshtml"
-                                                                   Write(MediaGlobalization.ImageEditor_Dialog_RestoreOriginalSize_Title);
+            #line 153 "..\..\Views\Images\ImageEditor.cshtml"
+                                                                                                   Write(MediaGlobalization.ImageEditor_Dialog_RestoreOriginalSize_Title);
 
             
             #line default
@@ -906,7 +918,7 @@ WriteLiteral(" class=\"bcms-content-titles\"");
 WriteLiteral(">");
 
             
-            #line 149 "..\..\Views\Images\ImageEditor.cshtml"
+            #line 158 "..\..\Views\Images\ImageEditor.cshtml"
                                                     Write(MediaGlobalization.ImageEditor_Dialog_CroppedDimensions);
 
             
@@ -923,7 +935,7 @@ WriteLiteral(" data-bind=\"text: imageEditorViewModel.croppedWidthAndHeight()\""
 WriteLiteral(">");
 
             
-            #line 150 "..\..\Views\Images\ImageEditor.cshtml"
+            #line 159 "..\..\Views\Images\ImageEditor.cshtml"
                                                                                                                                           Write(Model.CroppedWidth);
 
             
@@ -932,7 +944,7 @@ WriteLiteral(">");
 WriteLiteral(" x ");
 
             
-            #line 150 "..\..\Views\Images\ImageEditor.cshtml"
+            #line 159 "..\..\Views\Images\ImageEditor.cshtml"
                                                                                                                                                                 Write(Model.CroppedHeight);
 
             
@@ -949,7 +961,7 @@ WriteLiteral(" class=\"bcms-content-titles\"");
 WriteLiteral(">");
 
             
-            #line 154 "..\..\Views\Images\ImageEditor.cshtml"
+            #line 163 "..\..\Views\Images\ImageEditor.cshtml"
                                                     Write(MediaGlobalization.ImageEditor_Dialog_AligmentTitle);
 
             
@@ -961,15 +973,15 @@ WriteLiteral(" class=\"bcms-alignment-controls\"");
 
 WriteLiteral(">\r\n                            <div");
 
-WriteAttribute("class", Tuple.Create(" class=\"", 10713), Tuple.Create("\"", 10810)
-, Tuple.Create(Tuple.Create("", 10721), Tuple.Create("bcms-align-center", 10721), true)
+WriteAttribute("class", Tuple.Create(" class=\"", 11119), Tuple.Create("\"", 11216)
+, Tuple.Create(Tuple.Create("", 11127), Tuple.Create("bcms-align-center", 11127), true)
             
-            #line 156 "..\..\Views\Images\ImageEditor.cshtml"
-, Tuple.Create(Tuple.Create("", 10738), Tuple.Create<System.Object, System.Int32>(Model.ImageAlign == MediaImageAlign.Center ? "-active" : string.Empty
+            #line 165 "..\..\Views\Images\ImageEditor.cshtml"
+, Tuple.Create(Tuple.Create("", 11144), Tuple.Create<System.Object, System.Int32>(Model.ImageAlign == MediaImageAlign.Center ? "-active" : string.Empty
             
             #line default
             #line hidden
-, 10738), false)
+, 11144), false)
 );
 
 WriteLiteral(">\r\n                                <input");
@@ -978,20 +990,20 @@ WriteLiteral(" type=\"radio\"");
 
 WriteLiteral(" name=\"ImageAlign\"");
 
-WriteAttribute("value", Tuple.Create(" value=\"", 10883), Tuple.Create("\"", 10921)
+WriteAttribute("value", Tuple.Create(" value=\"", 11289), Tuple.Create("\"", 11327)
             
-            #line 157 "..\..\Views\Images\ImageEditor.cshtml"
-, Tuple.Create(Tuple.Create("", 10891), Tuple.Create<System.Object, System.Int32>((int)MediaImageAlign.Center
+            #line 166 "..\..\Views\Images\ImageEditor.cshtml"
+, Tuple.Create(Tuple.Create("", 11297), Tuple.Create<System.Object, System.Int32>((int)MediaImageAlign.Center
             
             #line default
             #line hidden
-, 10891), false)
+, 11297), false)
 );
 
 WriteLiteral(" ");
 
             
-            #line 157 "..\..\Views\Images\ImageEditor.cshtml"
+            #line 166 "..\..\Views\Images\ImageEditor.cshtml"
                                                                                                          Write(Model.ImageAlign == MediaImageAlign.Center ? "checked" : string.Empty);
 
             
@@ -1000,15 +1012,15 @@ WriteLiteral(" ");
 WriteLiteral(" data-bind=\"checked: imageAlign\" />\r\n                            </div>\r\n        " +
 "                    <div");
 
-WriteAttribute("class", Tuple.Create(" class=\"", 11100), Tuple.Create("\"", 11193)
-, Tuple.Create(Tuple.Create("", 11108), Tuple.Create("bcms-align-left", 11108), true)
+WriteAttribute("class", Tuple.Create(" class=\"", 11506), Tuple.Create("\"", 11599)
+, Tuple.Create(Tuple.Create("", 11514), Tuple.Create("bcms-align-left", 11514), true)
             
-            #line 159 "..\..\Views\Images\ImageEditor.cshtml"
-, Tuple.Create(Tuple.Create("", 11123), Tuple.Create<System.Object, System.Int32>(Model.ImageAlign == MediaImageAlign.Left ? "-active" : string.Empty
+            #line 168 "..\..\Views\Images\ImageEditor.cshtml"
+, Tuple.Create(Tuple.Create("", 11529), Tuple.Create<System.Object, System.Int32>(Model.ImageAlign == MediaImageAlign.Left ? "-active" : string.Empty
             
             #line default
             #line hidden
-, 11123), false)
+, 11529), false)
 );
 
 WriteLiteral(">\r\n                                <input");
@@ -1017,20 +1029,20 @@ WriteLiteral(" type=\"radio\"");
 
 WriteLiteral(" name=\"ImageAlign\"");
 
-WriteAttribute("value", Tuple.Create(" value=\"", 11266), Tuple.Create("\"", 11302)
+WriteAttribute("value", Tuple.Create(" value=\"", 11672), Tuple.Create("\"", 11708)
             
-            #line 160 "..\..\Views\Images\ImageEditor.cshtml"
-, Tuple.Create(Tuple.Create("", 11274), Tuple.Create<System.Object, System.Int32>((int)MediaImageAlign.Left
+            #line 169 "..\..\Views\Images\ImageEditor.cshtml"
+, Tuple.Create(Tuple.Create("", 11680), Tuple.Create<System.Object, System.Int32>((int)MediaImageAlign.Left
             
             #line default
             #line hidden
-, 11274), false)
+, 11680), false)
 );
 
 WriteLiteral(" ");
 
             
-            #line 160 "..\..\Views\Images\ImageEditor.cshtml"
+            #line 169 "..\..\Views\Images\ImageEditor.cshtml"
                                                                                                        Write(Model.ImageAlign == MediaImageAlign.Left ? "checked" : string.Empty);
 
             
@@ -1039,15 +1051,15 @@ WriteLiteral(" ");
 WriteLiteral(" data-bind=\"checked: imageAlign\" />\r\n                            </div>\r\n        " +
 "                    <div");
 
-WriteAttribute("class", Tuple.Create(" class=\"", 11479), Tuple.Create("\"", 11574)
-, Tuple.Create(Tuple.Create("", 11487), Tuple.Create("bcms-align-right", 11487), true)
+WriteAttribute("class", Tuple.Create(" class=\"", 11885), Tuple.Create("\"", 11980)
+, Tuple.Create(Tuple.Create("", 11893), Tuple.Create("bcms-align-right", 11893), true)
             
-            #line 162 "..\..\Views\Images\ImageEditor.cshtml"
-, Tuple.Create(Tuple.Create("", 11503), Tuple.Create<System.Object, System.Int32>(Model.ImageAlign == MediaImageAlign.Right ? "-active" : string.Empty
+            #line 171 "..\..\Views\Images\ImageEditor.cshtml"
+, Tuple.Create(Tuple.Create("", 11909), Tuple.Create<System.Object, System.Int32>(Model.ImageAlign == MediaImageAlign.Right ? "-active" : string.Empty
             
             #line default
             #line hidden
-, 11503), false)
+, 11909), false)
 );
 
 WriteLiteral(">\r\n                                <input");
@@ -1056,20 +1068,20 @@ WriteLiteral(" type=\"radio\"");
 
 WriteLiteral(" name=\"ImageAlign\"");
 
-WriteAttribute("value", Tuple.Create(" value=\"", 11647), Tuple.Create("\"", 11684)
+WriteAttribute("value", Tuple.Create(" value=\"", 12053), Tuple.Create("\"", 12090)
             
-            #line 163 "..\..\Views\Images\ImageEditor.cshtml"
-, Tuple.Create(Tuple.Create("", 11655), Tuple.Create<System.Object, System.Int32>((int)MediaImageAlign.Right
+            #line 172 "..\..\Views\Images\ImageEditor.cshtml"
+, Tuple.Create(Tuple.Create("", 12061), Tuple.Create<System.Object, System.Int32>((int)MediaImageAlign.Right
             
             #line default
             #line hidden
-, 11655), false)
+, 12061), false)
 );
 
 WriteLiteral(" ");
 
             
-            #line 163 "..\..\Views\Images\ImageEditor.cshtml"
+            #line 172 "..\..\Views\Images\ImageEditor.cshtml"
                                                                                                         Write(Model.ImageAlign == MediaImageAlign.Right ? "checked" : string.Empty);
 
             
@@ -1080,7 +1092,7 @@ WriteLiteral(" data-bind=\"checked: imageAlign\" />\r\n                         
 "        </div>\r\n");
 
             
-            #line 169 "..\..\Views\Images\ImageEditor.cshtml"
+            #line 178 "..\..\Views\Images\ImageEditor.cshtml"
 
 
             
@@ -1101,7 +1113,7 @@ WriteLiteral(">\r\n");
 WriteLiteral("                        ");
 
             
-            #line 173 "..\..\Views\Images\ImageEditor.cshtml"
+            #line 182 "..\..\Views\Images\ImageEditor.cshtml"
                    Write(Html.Partial("~/Areas/bcms-root/Views/Category/CategoriesTemplate.cshtml", categoriesTemplateViewModel));
 
             
@@ -1119,7 +1131,7 @@ WriteLiteral(">\r\n");
 WriteLiteral("                        ");
 
             
-            #line 179 "..\..\Views\Images\ImageEditor.cshtml"
+            #line 188 "..\..\Views\Images\ImageEditor.cshtml"
                    Write(Html.Partial("~/Areas/bcms-root/Views/Tags/TagsTemplate.cshtml", tagsTemplateViewModel));
 
             
@@ -1128,21 +1140,21 @@ WriteLiteral("                        ");
 WriteLiteral("\r\n                    </div>\r\n                </div>\r\n            </div>\r\n");
 
             
-            #line 183 "..\..\Views\Images\ImageEditor.cshtml"
+            #line 192 "..\..\Views\Images\ImageEditor.cshtml"
 
             
             
             #line default
             #line hidden
             
-            #line 184 "..\..\Views\Images\ImageEditor.cshtml"
+            #line 193 "..\..\Views\Images\ImageEditor.cshtml"
        Write(Html.HiddenSubmit());
 
             
             #line default
             #line hidden
             
-            #line 184 "..\..\Views\Images\ImageEditor.cshtml"
+            #line 193 "..\..\Views\Images\ImageEditor.cshtml"
                                 
         }
 

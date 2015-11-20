@@ -1453,30 +1453,51 @@ WriteLiteral(">\r\n");
             
             #line 289 "..\..\Views\Page\EditPageProperties.cshtml"
                                                                           
-                    }
+                    }                   
 
             
             #line default
             #line hidden
 WriteLiteral("                    <div");
 
-WriteLiteral(" class=\"bcms-page-translations-content\"");
+WriteLiteral(" class=\"bcms-top-block-holder\"");
 
 WriteLiteral(">\r\n                        <div");
 
-WriteLiteral(" class=\"bcms-input-list-holder\"");
+WriteLiteral(" class=\"bcms-top-controls-btn-holder\"");
 
-WriteLiteral(" data-bind=\"with: translations.language\"");
+WriteLiteral(" data-bind=\"with: translations\"");
 
 WriteLiteral(">\r\n                            <div");
 
-WriteLiteral(" class=\"bcms-content-titles\"");
+WriteLiteral(" class=\"bcms-btn-main\"");
+
+WriteLiteral(" data-bind=\"click: startEditMode\"");
 
 WriteLiteral(">");
 
             
             #line 293 "..\..\Views\Page\EditPageProperties.cshtml"
-                                                        Write(PagesGlobalization.EditPageProperties_TranslationsTab_Language);
+                                                                                   Write(PagesGlobalization.EditPageTranslations_AddTranslation_ButtonTitle);
+
+            
+            #line default
+            #line hidden
+WriteLiteral("</div>\r\n                        </div>\r\n\r\n                        <div");
+
+WriteLiteral(" class=\"bcms-language-selector-box\"");
+
+WriteLiteral(" data-bind=\"with: translations.language\"");
+
+WriteLiteral(">\r\n                            <div");
+
+WriteLiteral(" class=\"bcms-filter-text\"");
+
+WriteLiteral(">");
+
+            
+            #line 297 "..\..\Views\Page\EditPageProperties.cshtml"
+                                                     Write(PagesGlobalization.EditPageProperties_TranslationsTab_Language);
 
             
             #line default
@@ -1486,7 +1507,7 @@ WriteLiteral("</div>\r\n");
 WriteLiteral("                            ");
 
             
-            #line 294 "..\..\Views\Page\EditPageProperties.cshtml"
+            #line 298 "..\..\Views\Page\EditPageProperties.cshtml"
                        Write(Html.Tooltip(PagesGlobalization.EditPageProperties_TranslationsTab_Language_Tooltip_Description));
 
             
@@ -1501,41 +1522,43 @@ WriteLiteral(">\r\n                                <select");
 WriteLiteral(" data-bind=\"options: languages, optionsText: \'value\', optionsValue: \'key\', value:" +
 " languageId, select2: { minimumResultsForSearch: -1 }\"");
 
-WriteLiteral("></select>\r\n                            </div>\r\n                            </div" +
-">\r\n\r\n                        <div");
+WriteLiteral("></select>\r\n                            </div>\r\n                        </div>\r\n " +
+"                   </div>\r\n\r\n                    <div");
 
-WriteLiteral(" class=\"bcms-input-list-holder\"");
+WriteLiteral(" class=\"bcms-content-dialog-title\"");
 
-WriteLiteral(">\r\n                            <div");
+WriteLiteral(">\r\n                        <div");
 
-WriteLiteral(" class=\"bcms-content-titles\"");
+WriteLiteral(" class=\"bcms-content-titles-align\"");
 
-WriteLiteral(">");
-
-            
-            #line 301 "..\..\Views\Page\EditPageProperties.cshtml"
-                                                        Write(PagesGlobalization.EditPageTranslations_OtherLanguages_Title);
-
-            
-            #line default
-            #line hidden
-WriteLiteral("</div>\r\n");
+WriteLiteral(">\r\n");
 
 WriteLiteral("                            ");
 
             
-            #line 302 "..\..\Views\Page\EditPageProperties.cshtml"
+            #line 307 "..\..\Views\Page\EditPageProperties.cshtml"
+                       Write(PagesGlobalization.EditPageTranslations_OtherLanguages_Title);
+
+            
+            #line default
+            #line hidden
+WriteLiteral("\r\n");
+
+WriteLiteral("                            ");
+
+            
+            #line 308 "..\..\Views\Page\EditPageProperties.cshtml"
                        Write(Html.Tooltip(PagesGlobalization.EditPageTranslations_OtherLanguages_Tooltip));
 
             
             #line default
             #line hidden
-WriteLiteral("\r\n                        </div>\r\n                    </div>\r\n\r\n");
+WriteLiteral("\r\n                        </div>\r\n                    </div>\r\n");
 
 WriteLiteral("                    ");
 
             
-            #line 306 "..\..\Views\Page\EditPageProperties.cshtml"
+            #line 311 "..\..\Views\Page\EditPageProperties.cshtml"
                Write(Html.Partial("Partial/TranslationsGrid"));
 
             
@@ -1544,7 +1567,7 @@ WriteLiteral("                    ");
 WriteLiteral("\r\n                </div>\r\n");
 
             
-            #line 308 "..\..\Views\Page\EditPageProperties.cshtml"
+            #line 313 "..\..\Views\Page\EditPageProperties.cshtml"
             }
 
             
@@ -1552,14 +1575,14 @@ WriteLiteral("\r\n                </div>\r\n");
             #line default
             #line hidden
             
-            #line 310 "..\..\Views\Page\EditPageProperties.cshtml"
+            #line 315 "..\..\Views\Page\EditPageProperties.cshtml"
        Write(Html.HiddenSubmit());
 
             
             #line default
             #line hidden
             
-            #line 310 "..\..\Views\Page\EditPageProperties.cshtml"
+            #line 315 "..\..\Views\Page\EditPageProperties.cshtml"
                                 
         }
 

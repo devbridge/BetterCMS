@@ -126,18 +126,11 @@ WriteLiteral(">Upload File</div>\r\n\r\n");
         {
             using (Html.BeginForm<UploadController>(f => f.SaveUploads(null), FormMethod.Post, new { @class = "bcms-ajax-form" }))
             {
-
+                
+                    
             
             #line default
             #line hidden
-WriteLiteral("                <div");
-
-WriteLiteral(" class=\"bcms-input-list-holder\"");
-
-WriteLiteral(">\r\n");
-
-WriteLiteral("                    ");
-
             
             #line 24 "..\..\Views\Upload\MultiFileUpload.cshtml"
                Write(Html.HiddenFor(f => f.ReuploadMediaId));
@@ -145,10 +138,13 @@ WriteLiteral("                    ");
             
             #line default
             #line hidden
-WriteLiteral("\r\n");
-
-WriteLiteral("                    ");
-
+            
+            #line 24 "..\..\Views\Upload\MultiFileUpload.cshtml"
+                                                           
+                    
+            
+            #line default
+            #line hidden
             
             #line 25 "..\..\Views\Upload\MultiFileUpload.cshtml"
                Write(Html.HiddenFor(f => f.RootFolderId));
@@ -156,10 +152,13 @@ WriteLiteral("                    ");
             
             #line default
             #line hidden
-WriteLiteral("\r\n");
-
-WriteLiteral("                    ");
-
+            
+            #line 25 "..\..\Views\Upload\MultiFileUpload.cshtml"
+                                                        
+                    
+            
+            #line default
+            #line hidden
             
             #line 26 "..\..\Views\Upload\MultiFileUpload.cshtml"
                Write(Html.HiddenFor(f => f.AccessControlEnabled));
@@ -167,10 +166,9 @@ WriteLiteral("                    ");
             
             #line default
             #line hidden
-WriteLiteral("\r\n");
-
             
-            #line 27 "..\..\Views\Upload\MultiFileUpload.cshtml"
+            #line 26 "..\..\Views\Upload\MultiFileUpload.cshtml"
+                                                                
                     
             
             #line default
@@ -185,58 +183,57 @@ WriteLiteral("\r\n");
             #line hidden
 WriteLiteral("                        <div");
 
+WriteLiteral(" class=\"bcms-form-block-holder\"");
+
+WriteLiteral(">\r\n                            <div>\r\n                                <div");
+
+WriteLiteral(" class=\"bcms-input-list-holder\"");
+
+WriteLiteral(">\r\n                                    <div");
+
 WriteLiteral(" class=\"bcms-content-titles\"");
 
 WriteLiteral(">");
 
             
-            #line 29 "..\..\Views\Upload\MultiFileUpload.cshtml"
-                                                    Write(MediaGlobalization.MultiFileUpload_SelectFolder);
+            #line 32 "..\..\Views\Upload\MultiFileUpload.cshtml"
+                                                                Write(MediaGlobalization.MultiFileUpload_SelectFolder);
 
             
             #line default
             #line hidden
 WriteLiteral("</div>\r\n");
 
+WriteLiteral("                                    ");
+
             
-            #line 30 "..\..\Views\Upload\MultiFileUpload.cshtml"
-                        
-            
-            #line default
-            #line hidden
-            
-            #line 30 "..\..\Views\Upload\MultiFileUpload.cshtml"
-                   Write(Html.Tooltip(MediaGlobalization.MultiFileUpload_SelectFolder_Help_Message));
+            #line 33 "..\..\Views\Upload\MultiFileUpload.cshtml"
+                               Write(Html.Tooltip(MediaGlobalization.MultiFileUpload_SelectFolder_Help_Message));
 
             
             #line default
             #line hidden
-            
-            #line 30 "..\..\Views\Upload\MultiFileUpload.cshtml"
-                                                                                                   
-
-            
-            #line default
-            #line hidden
-WriteLiteral("                        <div");
+WriteLiteral("\r\n                                    <div");
 
 WriteLiteral(" class=\"bcms-field-wrapper\"");
 
 WriteLiteral(">\r\n");
 
-WriteLiteral("                        ");
+WriteLiteral("                                        ");
 
             
-            #line 32 "..\..\Views\Upload\MultiFileUpload.cshtml"
-                   Write(Html.DropDownListFor(f => f.SelectedFolderId, Model.Folders.Select(o => new SelectListItem { Selected = Model.SelectedFolderId == o.Item1, Text = o.Item2, Value = o.Item1.ToString() })));
+            #line 35 "..\..\Views\Upload\MultiFileUpload.cshtml"
+                                   Write(Html.DropDownListFor(f => f.SelectedFolderId, Model.Folders.Select(o => new SelectListItem { Selected = Model.SelectedFolderId == o.Item1, Text = o.Item2, Value = o.Item1.ToString() })));
 
             
             #line default
             #line hidden
-WriteLiteral("\r\n                            </div>\r\n");
+WriteLiteral("\r\n                                    </div>\r\n                                </d" +
+"iv>\r\n                            </div>\r\n                            <div>  \r\n  " +
+"                          </div>\r\n                    </div>\r\n");
 
             
-            #line 34 "..\..\Views\Upload\MultiFileUpload.cshtml"
+            #line 42 "..\..\Views\Upload\MultiFileUpload.cshtml"
                     }
                     else
                     {
@@ -245,24 +242,23 @@ WriteLiteral("\r\n                            </div>\r\n");
             #line default
             #line hidden
             
-            #line 37 "..\..\Views\Upload\MultiFileUpload.cshtml"
+            #line 45 "..\..\Views\Upload\MultiFileUpload.cshtml"
                    Write(Html.HiddenFor(f => f.SelectedFolderId, new { @Value = Model.RootFolderId }));
 
             
             #line default
             #line hidden
             
-            #line 37 "..\..\Views\Upload\MultiFileUpload.cshtml"
+            #line 45 "..\..\Views\Upload\MultiFileUpload.cshtml"
                                                                                                      
                     }
-
             
             #line default
             #line hidden
-WriteLiteral("                </div>\r\n");
-
             
-            #line 40 "..\..\Views\Upload\MultiFileUpload.cshtml"
+            #line 46 "..\..\Views\Upload\MultiFileUpload.cshtml"
+                     
+              
 
 
             
@@ -281,13 +277,13 @@ WriteLiteral(" class=\"bcms-file-drop-zone\"");
 WriteLiteral(">\r\n");
 
             
-            #line 43 "..\..\Views\Upload\MultiFileUpload.cshtml"
+            #line 51 "..\..\Views\Upload\MultiFileUpload.cshtml"
                         
             
             #line default
             #line hidden
             
-            #line 43 "..\..\Views\Upload\MultiFileUpload.cshtml"
+            #line 51 "..\..\Views\Upload\MultiFileUpload.cshtml"
                          if (Model.ReuploadMediaId.HasDefaultValue())
                         {
 
@@ -301,7 +297,7 @@ WriteLiteral(" class=\"bcms-file-drop-zone-text\"");
 WriteLiteral(">");
 
             
-            #line 45 "..\..\Views\Upload\MultiFileUpload.cshtml"
+            #line 53 "..\..\Views\Upload\MultiFileUpload.cshtml"
                                                              Write(MediaGlobalization.MultiFileUpload_DragDropBox);
 
             
@@ -310,7 +306,7 @@ WriteLiteral(">");
 WriteLiteral("</div>\r\n");
 
             
-            #line 46 "..\..\Views\Upload\MultiFileUpload.cshtml"
+            #line 54 "..\..\Views\Upload\MultiFileUpload.cshtml"
                         }
                         else
                         {
@@ -325,7 +321,7 @@ WriteLiteral(" class=\"bcms-file-drop-zone-text\"");
 WriteLiteral(">");
 
             
-            #line 49 "..\..\Views\Upload\MultiFileUpload.cshtml"
+            #line 57 "..\..\Views\Upload\MultiFileUpload.cshtml"
                                                              Write(MediaGlobalization.MultiFileUpload_DragDropBox_Reupload);
 
             
@@ -334,7 +330,7 @@ WriteLiteral(">");
 WriteLiteral("</div>\r\n");
 
             
-            #line 50 "..\..\Views\Upload\MultiFileUpload.cshtml"
+            #line 58 "..\..\Views\Upload\MultiFileUpload.cshtml"
                         }
 
             
@@ -353,7 +349,7 @@ WriteLiteral(" class=\"bcms-btn-upload-files-text\"");
 WriteLiteral(">");
 
             
-            #line 52 "..\..\Views\Upload\MultiFileUpload.cshtml"
+            #line 60 "..\..\Views\Upload\MultiFileUpload.cshtml"
                                                                                                Write(MediaGlobalization.MultiFileUpload_UploadButton);
 
             
@@ -366,7 +362,7 @@ WriteLiteral(" type=\"file\"");
 WriteLiteral("\r\n                                   ");
 
             
-            #line 54 "..\..\Views\Upload\MultiFileUpload.cshtml"
+            #line 62 "..\..\Views\Upload\MultiFileUpload.cshtml"
                                Write(Model.ReuploadMediaId.HasDefaultValue() ? "multiple=\"multiple\"" : string.Empty);
 
             
@@ -381,7 +377,7 @@ WriteLiteral(@"
 ");
 
             
-            #line 60 "..\..\Views\Upload\MultiFileUpload.cshtml"
+            #line 68 "..\..\Views\Upload\MultiFileUpload.cshtml"
 
 
             
@@ -400,7 +396,7 @@ WriteLiteral(" data-bind=\"template: { name: \'bcms-file-upload-template\' }\"")
 WriteLiteral("></div>\r\n                </div>\r\n");
 
             
-            #line 64 "..\..\Views\Upload\MultiFileUpload.cshtml"
+            #line 72 "..\..\Views\Upload\MultiFileUpload.cshtml"
 
                 if (Model.AccessControlEnabled)
                 {
@@ -409,14 +405,14 @@ WriteLiteral("></div>\r\n                </div>\r\n");
             #line default
             #line hidden
             
-            #line 67 "..\..\Views\Upload\MultiFileUpload.cshtml"
+            #line 75 "..\..\Views\Upload\MultiFileUpload.cshtml"
                Write(Html.Partial(RootModuleConstants.AccessControlTemplate));
 
             
             #line default
             #line hidden
             
-            #line 67 "..\..\Views\Upload\MultiFileUpload.cshtml"
+            #line 75 "..\..\Views\Upload\MultiFileUpload.cshtml"
                                                                             
                 }
             }
@@ -436,7 +432,7 @@ WriteLiteral(">\r\n                <div class=\"bcms-content-dialog-title\" data
 "elper\">");
 
             
-            #line 73 "..\..\Views\Upload\MultiFileUpload.cshtml"
+            #line 81 "..\..\Views\Upload\MultiFileUpload.cshtml"
                                                        Write(MediaGlobalization.MultiFileUpload_Uploading);
 
             
@@ -446,7 +442,7 @@ WriteLiteral("</div>\r\n                    <div class=\"bcms-btn-cancel\" data-
 "AllActiveUploads\">");
 
             
-            #line 74 "..\..\Views\Upload\MultiFileUpload.cshtml"
+            #line 82 "..\..\Views\Upload\MultiFileUpload.cshtml"
                                                                                       Write(MediaGlobalization.MultiFileUpload_CancelUploading);
 
             
@@ -469,7 +465,7 @@ WriteLiteral(@"</div>
 WriteLiteral("                        ");
 
             
-            #line 86 "..\..\Views\Upload\MultiFileUpload.cshtml"
+            #line 94 "..\..\Views\Upload\MultiFileUpload.cshtml"
                    Write(Html.HiddenFor(model => model.UploadedFiles, new { id = (string)null, data_bind = "value:fileId()" }));
 
             
@@ -488,7 +484,7 @@ WriteLiteral(@"
 WriteLiteral("                                ");
 
             
-            #line 94 "..\..\Views\Upload\MultiFileUpload.cshtml"
+            #line 102 "..\..\Views\Upload\MultiFileUpload.cshtml"
                            Write(MediaGlobalization.MultiFileUpload_Processing_ServerSide);
 
             
@@ -501,7 +497,7 @@ WriteLiteral(@"
                                 <span data-bind=""visible: !(failureMessage() != null && failureMessage().length > 0)"">");
 
             
-            #line 98 "..\..\Views\Upload\MultiFileUpload.cshtml"
+            #line 106 "..\..\Views\Upload\MultiFileUpload.cshtml"
                                                                                                                  Write(MediaGlobalization.MultiFileUpload_Failed);
 
             
@@ -517,7 +513,7 @@ WriteLiteral(@"</span>
 WriteLiteral("                                ");
 
             
-            #line 103 "..\..\Views\Upload\MultiFileUpload.cshtml"
+            #line 111 "..\..\Views\Upload\MultiFileUpload.cshtml"
                            Write(MediaGlobalization.MultiFileUpload_Success);
 
             
@@ -532,7 +528,7 @@ WriteLiteral(@"
                         <div class=""bcms-upload-size-info""><b>");
 
             
-            #line 109 "..\..\Views\Upload\MultiFileUpload.cshtml"
+            #line 117 "..\..\Views\Upload\MultiFileUpload.cshtml"
                                                          Write(MediaGlobalization.MultiFileUpload_FileSize);
 
             
@@ -544,7 +540,7 @@ WriteLiteral(@"</b> <span data-bind=""text: fileSizeFormated""></span></div>
                             <div class=""bcms-action-delete"" data-bind=""click: function() { $root.removeUpload($data); }, text: uploadCompleted() || uploadFailed() ? '");
 
             
-            #line 112 "..\..\Views\Upload\MultiFileUpload.cshtml"
+            #line 120 "..\..\Views\Upload\MultiFileUpload.cshtml"
                                                                                                                                                                  Write(RootGlobalization.Button_Remove);
 
             
@@ -553,7 +549,7 @@ WriteLiteral(@"</b> <span data-bind=""text: fileSizeFormated""></span></div>
 WriteLiteral("\' : \'");
 
             
-            #line 112 "..\..\Views\Upload\MultiFileUpload.cshtml"
+            #line 120 "..\..\Views\Upload\MultiFileUpload.cshtml"
                                                                                                                                                                                                       Write(RootGlobalization.Button_Cancel);
 
             
@@ -563,7 +559,7 @@ WriteLiteral("\'\"></div>\r\n                        </div>\r\n                 
 "      </div>\r\n            </script>\r\n");
 
             
-            #line 117 "..\..\Views\Upload\MultiFileUpload.cshtml"
+            #line 125 "..\..\Views\Upload\MultiFileUpload.cshtml"
 
         }
 

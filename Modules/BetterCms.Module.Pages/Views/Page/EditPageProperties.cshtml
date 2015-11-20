@@ -287,22 +287,27 @@
                     @if (Model.TranslationMessages != null)
                     {
                         @Html.CustomMessagesBox(Model.TranslationMessages)
-                    }
-                    <div class="bcms-page-translations-content">
-                        <div class="bcms-input-list-holder" data-bind="with: translations.language">
-                            <div class="bcms-content-titles">@PagesGlobalization.EditPageProperties_TranslationsTab_Language</div>
+                    }                   
+                    <div class="bcms-top-block-holder">
+                        <div class="bcms-top-controls-btn-holder" data-bind="with: translations">
+                            <div class="bcms-btn-main" data-bind="click: startEditMode">@PagesGlobalization.EditPageTranslations_AddTranslation_ButtonTitle</div>
+                        </div>
+
+                        <div class="bcms-language-selector-box" data-bind="with: translations.language">
+                            <div class="bcms-filter-text">@PagesGlobalization.EditPageProperties_TranslationsTab_Language</div>
                             @Html.Tooltip(PagesGlobalization.EditPageProperties_TranslationsTab_Language_Tooltip_Description)
                             <div class="bcms-field-wrapper">
                                 <select data-bind="options: languages, optionsText: 'value', optionsValue: 'key', value: languageId, select2: { minimumResultsForSearch: -1 }"></select>
                             </div>
-                            </div>
-
-                        <div class="bcms-input-list-holder">
-                            <div class="bcms-content-titles">@PagesGlobalization.EditPageTranslations_OtherLanguages_Title</div>
-                            @Html.Tooltip(PagesGlobalization.EditPageTranslations_OtherLanguages_Tooltip)
                         </div>
                     </div>
 
+                    <div class="bcms-content-dialog-title">
+                        <div class="bcms-content-titles-align">
+                            @PagesGlobalization.EditPageTranslations_OtherLanguages_Title
+                            @Html.Tooltip(PagesGlobalization.EditPageTranslations_OtherLanguages_Tooltip)
+                        </div>
+                    </div>
                     @Html.Partial("Partial/TranslationsGrid")
                 </div>
             }

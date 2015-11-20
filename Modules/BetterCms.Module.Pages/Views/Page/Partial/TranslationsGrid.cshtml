@@ -2,14 +2,10 @@
 @using BetterCms.Module.Root.Content.Resources
 
 <div data-bind="with: translations" class="bcms-page-translations-content">
-    <div class="bcms-add-language-button">
-        <div class="bcms-btn-main" data-bind="click: startEditMode">@PagesGlobalization.EditPageTranslations_AddTranslation_ButtonTitle</div>
-    </div>
-
     <table class="bcms-tables">
         <thead>
             <tr>
-                <th></th>
+                <th style="width: 40px; padding: 0;"></th>
                 <th style="width: 350px;">@PagesGlobalization.EditPageTranslations_Title_Title</th>
                 <th style="width: 250px;">@PagesGlobalization.EditPageTranslations_Language_Title</th>
                 <th>@PagesGlobalization.EditPageTranslations_Url_Title</th>
@@ -24,36 +20,36 @@
                 <td data-bind="html: languageName()"></td>
                 <td><a data-bind="html: url(), attr: {href: url()}" target="_blank"></a></td>
                 <td>
-                    <a class="bcms-action-delete" data-bind="click: $parent.unassignPage">@RootGlobalization.Button_Delete</a>
+                    <div class="bcms-action-delete" data-bind="click: $parent.unassignPage">@RootGlobalization.Button_Delete</div>
                 </td>
             </tr>
             <!-- /ko -->
-
             <!-- ko if: items().length == 0 && !isInAddMode() -->
             <tr>
                 <td colspan="5">
-                <div class="bcms-table-no-data">@RootGlobalization.Grid_NoDataAvailable_Message</div>
+                    <div class="bcms-table-no-data">@RootGlobalization.Grid_NoDataAvailable_Message</div>
                 </td>
             </tr>
             <!-- /ko -->
-
             <!-- ko if: isInAddMode() -->
             <tr class="bcms-table-row-active">
                 <td></td>
-                <td>
-                    <input style="width: 230px;" type="text" class="bcms-field-text" data-bind="value: addPageTitle, autocomplete: 'onlyExisting', hasfocus: hasFocus, enterPress: addTranslation, escPress: endEditMode" placeholder="@PagesGlobalization.EditPageProperties_TranslationsTab_PageSelectionPlaceholder" />
-                    <div class="bcms-btn-main" data-bind="click: selectPage">BROWSE...</div>
+                <td class="bcms-table-translation-helper" style="width: 230px;">
+                    <div class="bcms-field-wrapper">
+                        <input type="text" class="bcms-field-text" data-bind="value: addPageTitle, autocomplete: 'onlyExisting', hasfocus: hasFocus, enterPress: addTranslation, escPress: endEditMode" placeholder="@PagesGlobalization.EditPageProperties_TranslationsTab_PageSelectionPlaceholder" />
+                    </div>
+                    <div class="bcms-btn-primary" data-bind="click: selectPage">BROWSE...</div>
                 </td>
                 <td colspan="2">
                     <!-- ko if: addPageId() && addingPageLanguages().length > 1 -->
                     <div class="bcms-field-wrapper">
                         <select data-bind="options: addingPageLanguages, optionsText: 'value', optionsValue: 'key', value: addLanguageId, select2: { minimumResultsForSearch: -1 }"></select>
-                        </div>
-                        <!-- /ko -->
-                        <!-- ko if: addPageId() && addingPageLanguages().length == 1 -->
-                        <span data-bind="html: addingPageLanguages()[0].value"></span>
-                        <!-- /ko -->
-</td>
+                    </div>
+                    <!-- /ko -->
+                    <!-- ko if: addPageId() && addingPageLanguages().length == 1 -->
+                    <span data-bind="html: addingPageLanguages()[0].value"></span>
+                    <!-- /ko -->
+                </td>
                 <td>
                     <!-- ko if: addLanguageId() -->
                     <div class="bcms-btn-primary" data-bind="click: addTranslation">@RootGlobalization.Button_Ok</div>

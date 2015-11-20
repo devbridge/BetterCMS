@@ -55,38 +55,22 @@ WriteLiteral(" data-bind=\"with: translations\"");
 
 WriteLiteral(" class=\"bcms-page-translations-content\"");
 
-WriteLiteral(">\r\n    <div");
-
-WriteLiteral(" class=\"bcms-add-language-button\"");
-
-WriteLiteral(">\r\n        <div");
-
-WriteLiteral(" class=\"bcms-btn-main\"");
-
-WriteLiteral(" data-bind=\"click: startEditMode\"");
-
-WriteLiteral(">");
-
-            
-            #line 6 "..\..\Views\Page\Partial\TranslationsGrid.cshtml"
-                                                               Write(PagesGlobalization.EditPageTranslations_AddTranslation_ButtonTitle);
-
-            
-            #line default
-            #line hidden
-WriteLiteral("</div>\r\n    </div>\r\n\r\n    <table");
+WriteLiteral(">\r\n    <table");
 
 WriteLiteral(" class=\"bcms-tables\"");
 
-WriteLiteral(">\r\n        <thead>\r\n            <tr>\r\n                <th></th>\r\n                " +
-"<th");
+WriteLiteral(">\r\n        <thead>\r\n            <tr>\r\n                <th");
+
+WriteLiteral(" style=\"width: 40px; padding: 0;\"");
+
+WriteLiteral("></th>\r\n                <th");
 
 WriteLiteral(" style=\"width: 350px;\"");
 
 WriteLiteral(">");
 
             
-            #line 13 "..\..\Views\Page\Partial\TranslationsGrid.cshtml"
+            #line 9 "..\..\Views\Page\Partial\TranslationsGrid.cshtml"
                                      Write(PagesGlobalization.EditPageTranslations_Title_Title);
 
             
@@ -99,7 +83,7 @@ WriteLiteral(" style=\"width: 250px;\"");
 WriteLiteral(">");
 
             
-            #line 14 "..\..\Views\Page\Partial\TranslationsGrid.cshtml"
+            #line 10 "..\..\Views\Page\Partial\TranslationsGrid.cshtml"
                                      Write(PagesGlobalization.EditPageTranslations_Language_Title);
 
             
@@ -108,7 +92,7 @@ WriteLiteral(">");
 WriteLiteral("</th>\r\n                <th>");
 
             
-            #line 15 "..\..\Views\Page\Partial\TranslationsGrid.cshtml"
+            #line 11 "..\..\Views\Page\Partial\TranslationsGrid.cshtml"
                Write(PagesGlobalization.EditPageTranslations_Url_Title);
 
             
@@ -134,7 +118,7 @@ WriteLiteral(" data-bind=\"html: url(), attr: {href: url()}\"");
 
 WriteLiteral(" target=\"_blank\"");
 
-WriteLiteral("></a></td>\r\n                <td>\r\n                    <a");
+WriteLiteral("></a></td>\r\n                <td>\r\n                    <div");
 
 WriteLiteral(" class=\"bcms-action-delete\"");
 
@@ -143,39 +127,47 @@ WriteLiteral(" data-bind=\"click: $parent.unassignPage\"");
 WriteLiteral(">");
 
             
-            #line 27 "..\..\Views\Page\Partial\TranslationsGrid.cshtml"
-                                                                                     Write(RootGlobalization.Button_Delete);
+            #line 23 "..\..\Views\Page\Partial\TranslationsGrid.cshtml"
+                                                                                       Write(RootGlobalization.Button_Delete);
 
             
             #line default
             #line hidden
-WriteLiteral("</a>\r\n                </td>\r\n            </tr>\r\n            <!-- /ko -->\r\n\r\n     " +
+WriteLiteral("</div>\r\n                </td>\r\n            </tr>\r\n            <!-- /ko -->\r\n     " +
 "       <!-- ko if: items().length == 0 && !isInAddMode() -->\r\n            <tr>\r\n" +
 "                <td");
 
 WriteLiteral(" colspan=\"5\"");
 
-WriteLiteral(">\r\n                <div");
+WriteLiteral(">\r\n                    <div");
 
 WriteLiteral(" class=\"bcms-table-no-data\"");
 
 WriteLiteral(">");
 
             
-            #line 35 "..\..\Views\Page\Partial\TranslationsGrid.cshtml"
-                                           Write(RootGlobalization.Grid_NoDataAvailable_Message);
+            #line 30 "..\..\Views\Page\Partial\TranslationsGrid.cshtml"
+                                               Write(RootGlobalization.Grid_NoDataAvailable_Message);
 
             
             #line default
             #line hidden
-WriteLiteral("</div>\r\n                </td>\r\n            </tr>\r\n            <!-- /ko -->\r\n\r\n   " +
-"         <!-- ko if: isInAddMode() -->\r\n            <tr");
+WriteLiteral("</div>\r\n                </td>\r\n            </tr>\r\n            <!-- /ko -->\r\n     " +
+"       <!-- ko if: isInAddMode() -->\r\n            <tr");
 
 WriteLiteral(" class=\"bcms-table-row-active\"");
 
-WriteLiteral(">\r\n                <td></td>\r\n                <td>\r\n                    <input");
+WriteLiteral(">\r\n                <td></td>\r\n                <td");
+
+WriteLiteral(" class=\"bcms-table-translation-helper\"");
 
 WriteLiteral(" style=\"width: 230px;\"");
+
+WriteLiteral(">\r\n                    <div");
+
+WriteLiteral(" class=\"bcms-field-wrapper\"");
+
+WriteLiteral(">\r\n                        <input");
 
 WriteLiteral(" type=\"text\"");
 
@@ -184,19 +176,19 @@ WriteLiteral(" class=\"bcms-field-text\"");
 WriteLiteral(" data-bind=\"value: addPageTitle, autocomplete: \'onlyExisting\', hasfocus: hasFocus" +
 ", enterPress: addTranslation, escPress: endEditMode\"");
 
-WriteAttribute("placeholder", Tuple.Create(" placeholder=\"", 2031), Tuple.Create("\"", 2124)
+WriteAttribute("placeholder", Tuple.Create(" placeholder=\"", 1963), Tuple.Create("\"", 2056)
             
-            #line 44 "..\..\Views\Page\Partial\TranslationsGrid.cshtml"
-                                                                                                                                                       , Tuple.Create(Tuple.Create("", 2045), Tuple.Create<System.Object, System.Int32>(PagesGlobalization.EditPageProperties_TranslationsTab_PageSelectionPlaceholder
+            #line 39 "..\..\Views\Page\Partial\TranslationsGrid.cshtml"
+                                                                                                                                     , Tuple.Create(Tuple.Create("", 1977), Tuple.Create<System.Object, System.Int32>(PagesGlobalization.EditPageProperties_TranslationsTab_PageSelectionPlaceholder
             
             #line default
             #line hidden
-, 2045), false)
+, 1977), false)
 );
 
-WriteLiteral(" />\r\n                    <div");
+WriteLiteral(" />\r\n                    </div>\r\n                    <div");
 
-WriteLiteral(" class=\"bcms-btn-main\"");
+WriteLiteral(" class=\"bcms-btn-primary\"");
 
 WriteLiteral(" data-bind=\"click: selectPage\"");
 
@@ -214,14 +206,15 @@ WriteLiteral(">\r\n                        <select");
 WriteLiteral(" data-bind=\"options: addingPageLanguages, optionsText: \'value\', optionsValue: \'ke" +
 "y\', value: addLanguageId, select2: { minimumResultsForSearch: -1 }\"");
 
-WriteLiteral("></select>\r\n                        </div>\r\n                        <!-- /ko -->\r" +
-"\n                        <!-- ko if: addPageId() && addingPageLanguages().length" +
-" == 1 -->\r\n                        <span");
+WriteLiteral("></select>\r\n                    </div>\r\n                    <!-- /ko -->\r\n       " +
+"             <!-- ko if: addPageId() && addingPageLanguages().length == 1 -->\r\n " +
+"                   <span");
 
 WriteLiteral(" data-bind=\"html: addingPageLanguages()[0].value\"");
 
-WriteLiteral("></span>\r\n                        <!-- /ko -->\r\n</td>\r\n                <td>\r\n    " +
-"                <!-- ko if: addLanguageId() -->\r\n                    <div");
+WriteLiteral("></span>\r\n                    <!-- /ko -->\r\n                </td>\r\n              " +
+"  <td>\r\n                    <!-- ko if: addLanguageId() -->\r\n                   " +
+" <div");
 
 WriteLiteral(" class=\"bcms-btn-primary\"");
 
@@ -230,7 +223,7 @@ WriteLiteral(" data-bind=\"click: addTranslation\"");
 WriteLiteral(">");
 
             
-            #line 59 "..\..\Views\Page\Partial\TranslationsGrid.cshtml"
+            #line 55 "..\..\Views\Page\Partial\TranslationsGrid.cshtml"
                                                                                Write(RootGlobalization.Button_Ok);
 
             
@@ -245,7 +238,7 @@ WriteLiteral(" data-bind=\"click: endEditMode\"");
 WriteLiteral(">");
 
             
-            #line 61 "..\..\Views\Page\Partial\TranslationsGrid.cshtml"
+            #line 57 "..\..\Views\Page\Partial\TranslationsGrid.cshtml"
                                                                            Write(RootGlobalization.Button_Cancel);
 
             

@@ -43,16 +43,20 @@ namespace ASP
         }
         public override void Execute()
         {
-WriteLiteral("<td ");
+WriteLiteral("<td");
+
+WriteLiteral(" style=\"width: 75px;\"");
+
+WriteLiteral(" ");
 
             
             #line 4 "..\..\Views\Shared\EditableGrid\Partial\BooleanCell.cshtml"
-Write(Html.Raw(Model.Attributes));
+                    Write(Html.Raw(Model.Attributes));
 
             
             #line default
             #line hidden
-WriteLiteral(">\n");
+WriteLiteral(">\r\n");
 
             
             #line 5 "..\..\Views\Shared\EditableGrid\Partial\BooleanCell.cshtml"
@@ -103,7 +107,7 @@ WriteLiteral("), escPress: onCancelEdit, visible: isActive() ");
             #line hidden
 WriteLiteral("\"");
 
-WriteLiteral("/>\n");
+WriteLiteral(" />\r\n");
 
             
             #line 8 "..\..\Views\Shared\EditableGrid\Partial\BooleanCell.cshtml"
@@ -200,7 +204,7 @@ WriteLiteral(" ");
             #line hidden
 WriteLiteral("\"");
 
-WriteLiteral("></div>\n");
+WriteLiteral("></div>\r\n");
 
             
             #line 12 "..\..\Views\Shared\EditableGrid\Partial\BooleanCell.cshtml"
@@ -246,7 +250,7 @@ WriteLiteral(" ");
             #line hidden
 WriteLiteral("\"");
 
-WriteLiteral("/>\n");
+WriteLiteral(" />\r\n");
 
             
             #line 16 "..\..\Views\Shared\EditableGrid\Partial\BooleanCell.cshtml"

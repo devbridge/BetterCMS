@@ -1,10 +1,10 @@
 ﻿@using BetterCms.Module.Root.Content.Resources
 @model BetterCms.Module.Root.Mvc.Grids.EditableGridBooleanColumn
 
-<td @Html.Raw(Model.Attributes)>
+<td style="width: 75px;" @Html.Raw(Model.Attributes)>
     @if (Model.CanBeEdited)
     {
-        <input type="checkbox" class="bcms-checkbox-holder bcms-pointer" data-bind="checked: @(Model.ValueBind), enterPress: onSave, afterRender: initInput($element, @Model.ValueBind), escPress: onCancelEdit, visible: isActive() @(!string.IsNullOrEmpty(Model.FocusIdentifier) ? string.Format(", hasfocus: {0}", Model.FocusIdentifier) : string.Empty)"/>
+        <input type="checkbox" class="bcms-checkbox-holder bcms-pointer" data-bind="checked: @(Model.ValueBind), enterPress: onSave, afterRender: initInput($element, @Model.ValueBind), escPress: onCancelEdit, visible: isActive() @(!string.IsNullOrEmpty(Model.FocusIdentifier) ? string.Format(", hasfocus: {0}", Model.FocusIdentifier) : string.Empty)" />
     }
     @if (Model.ShowValueAsText)
     {
@@ -12,6 +12,6 @@
     }
     else
     {
-        <input type="checkbox" class="bcms-checkbox-holder" data-bind="checked: @(Model.ValueBind)() @(!string.IsNullOrEmpty(Model.FocusIdentifier) ? string.Format(", click: onItemSelect.bind($data, {0})", Model.FocusIdentifier) : string.Empty) @(Model.CanBeEdited ? ", visible: !isActive()"  : string.Empty)"/>
+        <input type="checkbox" class="bcms-checkbox-holder" data-bind="checked: @(Model.ValueBind)() @(!string.IsNullOrEmpty(Model.FocusIdentifier) ? string.Format(", click: onItemSelect.bind($data, {0})", Model.FocusIdentifier) : string.Empty) @(Model.CanBeEdited ? ", visible: !isActive()"  : string.Empty)" />
     }
 </td>

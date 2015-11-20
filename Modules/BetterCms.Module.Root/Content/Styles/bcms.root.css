@@ -1,4 +1,4 @@
-.bcms-clearfix:after, .bcms-modal-footer-buttons:after, .bcms-content-info-block:after, .bcms-content-dialog-title:after, .bcms-success-buttons-holder:after, .bcms-sidemenu-header:after, .bcms-sidemenu-footer:after, .bcms-buttons-block:after, .bcms-dragging:after, .bcms-form-block-holder:after, .bcms-inner-navigation:after, .bcms-templates-holder:after, .bcms-grid-controls-holder:after, .markItUpHeader:after, .markItUpFooter:after {
+.bcms-clearfix:after, .bcms-modal-footer-buttons:after, .bcms-content-info-block:after, .bcms-content-dialog-title:after, .bcms-editor-box:after, .bcms-success-buttons-holder:after, .bcms-sidemenu-header:after, .bcms-sidemenu-footer:after, .bcms-buttons-block:after, .bcms-dragging:after, .bcms-form-block-holder:after, .bcms-inner-navigation:after, .bcms-templates-holder:after, .bcms-grid-controls-holder:after, .markItUpHeader:after, .markItUpFooter:after {
   content: '';
   display: table;
   clear: both;
@@ -451,20 +451,21 @@ a:hover {
 
 .bcms-editor-box {
   position: absolute;
-  bottom: 50%;
+  bottom: 0;
   left: 0;
   background-color: #ffffff;
   border: 1px solid #cdcdcd;
   box-shadow: 0 0 20px 0 rgba(0, 0, 0, 0.2);
   box-sizing: border-box;
-  padding: 15px;
-  width: 375px;
+  padding: 14px;
+  width: 380px;
+  z-index: 5;
 }
 
-.bcms-editor-box .bcms-field-wrapper {
+.bcms-editor-box > .bcms-field-wrapper {
   display: inline-block;
   vertical-align: middle;
-  width: 75%;
+  width: 70%;
 }
 
 .bcms-edit-urlpath-box {
@@ -2735,6 +2736,7 @@ td .bcms-field-wrapper {
 }
 
 .bcms-tables td.bcms-widget-status .bcms-action-ok,
+.bcms-tables td.bcms-widget-status .bcms-action-draft,
 .bcms-tables td.bcms-widget-status .bcms-action-warn {
   float: right;
 }
@@ -2764,6 +2766,17 @@ td .bcms-field-wrapper {
   width: 10.6383%;
   float: left;
   margin-left: 2.12766%;
+}
+
+.bcms-table-translation-helper .bcms-field-wrapper {
+  width: 69.23077%;
+  float: left;
+}
+
+.bcms-table-translation-helper .bcms-btn-primary {
+  width: 28.20513%;
+  float: left;
+  margin-left: 2.5641%;
 }
 
 .bcms-tables-link {

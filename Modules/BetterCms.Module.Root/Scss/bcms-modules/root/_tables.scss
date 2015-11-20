@@ -71,6 +71,7 @@ $sort-icons: (
             width: 40px;
 
             .bcms-action-ok,
+            .bcms-action-draft,
             .bcms-action-warn {
                 float: right;
             }
@@ -104,6 +105,16 @@ $sort-icons: (
 
         .bcms-btn-primary {
             @include span(1.5 before);
+        }
+    }
+
+    &-translation-helper {
+        .bcms-field-wrapper {
+            @include span(7 of 10 no-gutter);
+        }
+
+        .bcms-btn-primary {
+            @include span(3 of 10 before);
         }
     }
 }

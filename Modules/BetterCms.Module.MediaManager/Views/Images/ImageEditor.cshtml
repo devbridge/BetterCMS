@@ -93,7 +93,7 @@
                     <div class="bcms-input-list-holder" data-bind="with: titleEditorViewModel" id="bcms-image-title-editor-box">
                         <div class="bcms-content-titles">
                             @MediaGlobalization.ImageEditor_Dialog_ImageName_Title:
-                            <div class="bcms-editor-link" data-bind="click: open, visible: !isOpened()">@RootGlobalization.Button_Edit</div>
+                            <div class="bcms-editor-link" data-bind="click: open">@RootGlobalization.Button_Edit</div>
                         </div>
                         <div class="bcms-content-subtitle" data-bind="text: oldTitle()"></div>
 
@@ -116,32 +116,41 @@
                     <div class="bcms-input-list-holder">
                         <div class="bcms-content-titles">@MediaGlobalization.ImageEditor_Dialog_FileSize:</div>
                         <div class="bcms-content-subtitle" id="image-file-size">@Model.FileSize</div>
-                    </div>bcms-image-dimensions-editor-box
+                    </div>
 
                     <div class="bcms-input-list-holder" data-bind="with: imageEditorViewModel" id="bcms-image-dimensions-editor-box">
                         <div class="bcms-content-titles">
                             @MediaGlobalization.ImageEditor_Dialog_Dimensions:
-                            <div class="bcms-editor-link" data-bind="click: open, visible: !isOpened() && $parent.imageEditorViewModel.imageType() == 1">@RootGlobalization.Button_Edit</div>
+                            <div class="bcms-editor-link" data-bind="click: open">@RootGlobalization.Button_Edit</div>
                         </div>
                         <div class="bcms-content-subtitle" data-bind="text: widthAndHeight()">@Model.ImageWidth x @Model.ImageHeight</div>
 
                         <div class="bcms-editor-box" data-bind="style: { 'display': isOpened() ? 'block' : 'none' }">
-                            <div class="bcms-content-titles">@MediaGlobalization.ImageEditor_Dialog_ChangeSize_Title</div>
-                            <div class="bcms-content-subtitle">@MediaGlobalization.ImageEditor_Dialog_ChangeSize_Width:</div>
-                            <div class="bcms-field-wrapper">
-                                @Html.TextBoxFor(f => f.ImageWidth, new { @class = "bcms-field-text",  @id = "image-width", @data_bind = "value: width, valueUpdate: 'afterkeydown', enterPress: save, escPress: close, event: { change: changeHeight }"})
-                                @Html.BcmsValidationMessageFor(f => f.ImageWidth)
+                            @*<div class="bcms-content-titles">@MediaGlobalization.ImageEditor_Dialog_ChangeSize_Title</div>*@
+                            <div class="bcms-media-editor-container">
+                            <div class="bcms-media-editor-column">
+                                <div class="bcms-content-titles">@MediaGlobalization.ImageEditor_Dialog_ChangeSize_Width:</div>
+                                <div class="bcms-field-wrapper">
+                                    @Html.TextBoxFor(f => f.ImageWidth, new { @class = "bcms-field-text", @id = "image-width", @data_bind = "value: width, valueUpdate: 'afterkeydown', enterPress: save, escPress: close, event: { change: changeHeight }" })
+                                    @Html.BcmsValidationMessageFor(f => f.ImageWidth)
+                                </div>
                             </div>
 
-                            <div>@MediaGlobalization.ImageEditor_Dialog_ChangeSize_Height:</div>
-
-                            <div class="bcms-field-wrapper">
-                                @Html.TextBoxFor(f => f.ImageHeight, new { @class = "bcms-field-text", @id = "image-height", @data_bind = "value: height, valueUpdate: 'afterkeydown', enterPress: save, escPress: close, event: { change: changeWidth }" })
-                                @Html.BcmsValidationMessageFor(f => f.ImageHeight)
+                            <div class="bcms-media-editor-column">
+                                <div class="bcms-content-titles">@MediaGlobalization.ImageEditor_Dialog_ChangeSize_Height:</div>
+                                <div class="bcms-field-wrapper">
+                                    @Html.TextBoxFor(f => f.ImageHeight, new { @class = "bcms-field-text", @id = "image-height", @data_bind = "value: height, valueUpdate: 'afterkeydown', enterPress: save, escPress: close, event: { change: changeWidth }" })
+                                    @Html.BcmsValidationMessageFor(f => f.ImageHeight)
+                                </div>
                             </div>
-                            <div class="bcms-btn-primary" data-bind="click: save">@RootGlobalization.Button_Ok</div>
-                            <div class="bcms-btn-cancel" data-bind="click: close">@RootGlobalization.Button_Cancel</div>
-                            <div data-bind="click: restoreOriginalSize">@MediaGlobalization.ImageEditor_Dialog_RestoreOriginalSize_Title</div>
+
+                            <div class="bcms-media-editor-column">
+                                <div class="bcms-btn-primary" data-bind="click: save">@RootGlobalization.Button_Ok</div>
+                                <div class="bcms-btn-cancel" data-bind="click: close">@RootGlobalization.Button_Cancel</div>
+                            </div>
+                            </div>
+
+                            <div class="bcms-media-restore-size" data-bind="click: restoreOriginalSize">@MediaGlobalization.ImageEditor_Dialog_RestoreOriginalSize_Title</div>
                         </div>
                     </div>
 

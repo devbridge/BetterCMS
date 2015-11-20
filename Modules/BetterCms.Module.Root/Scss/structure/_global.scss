@@ -124,17 +124,19 @@ $loading-spinner: (
     }
 
     &-box {
-        @include position(absolute, null null 50% 0);
+        @include clearfix();
+        @include position(absolute, null null 0 0);
         background-color: $white;
         border: $border-pop-box;
         box-shadow: $pop-box-shadow;
         box-sizing: border-box;
-        padding: 15px;
-        width: 375px;
+        padding: 14px;
+        width: 380px;
+        z-index: 5;
 
-        .bcms-field-wrapper {
+        > .bcms-field-wrapper {
             @include vertical-align();
-            width: 75%;
+            width: 70%;
         }
     }
 }
