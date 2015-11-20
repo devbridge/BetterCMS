@@ -175,44 +175,20 @@ bettercms.define('bcms.media.imageeditor', ['bcms.jquery', 'bcms', 'bcms.modal',
                 self.dialog = dialog;
                 self.boxSelector = boxSelector;
                 self.isOpened = ko.observable(false);
-                
-                // IE8 re-rendering fix
-                // TODO: self.isIE8 = $.browser.msie && parseInt($.browser.version, 10) <= 8;
-                self.isIE8 = true;
-                self.boxHeightHidden = self.dialog.container.find(self.boxSelector).height();
-                self.boxHeightOpen = 0;
-
-                function onAfterBoxIsClosed(viewModel) {
-                    // IE8 fails to rerender dimensions box: need to set it's height manually
-                    if (viewModel.isIE8) {
-                        viewModel.dialog.container.find(viewModel.boxSelector).height(viewModel.boxHeightHidden);
-                    }
-                }
 
                 self.open = function() {
                     self.isOpened(true);
-
-                    // IE8 fails to rerender dimensions box: need to set it's height manually
-                    if (self.isIE8) {
-                        var box = self.dialog.container.find(self.boxSelector);
-                        if (!self.boxHeightOpen) {
-                            self.boxHeightOpen = box.height();
-                        }
-                        box.height(self.boxHeightOpen);
-                    }
                 };
 
                 self.close = function () {
                     if (self.onClose()) {
                         self.isOpened(false);
-                        onAfterBoxIsClosed(self);
                     }
                 };
 
                 self.save = function (element) {
                     if (self.onSave($(element))) {
                         self.isOpened(false);
-                        onAfterBoxIsClosed(self);
                     }
                 };
             }
