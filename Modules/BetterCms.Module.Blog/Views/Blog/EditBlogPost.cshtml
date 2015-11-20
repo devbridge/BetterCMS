@@ -113,14 +113,16 @@
                                 @Html.Tooltip(BlogGlobalization.EditBlogPost_Language_Tooltip)
                                 <div class="bcms-field-wrapper">
                                     @Html.DropDownListFor(model => model.LanguageId, Model.Languages.ToSelectList(Model.LanguageId), "Default language", new { @id = "bcms-js-languages-select" })
-                                    </div>
                                 </div>
+                            </div>
                         }
 
                         <div class="bcms-input-list-holder">
                             <div class="bcms-content-titles">@BlogGlobalization.EditBlogPost_Author_Title</div>
                             @Html.Tooltip(BlogGlobalization.EditBlogPost_Author_Tooltip_Description)
-                            @Html.DropDownListFor(model => model.AuthorId, Model.Authors.ToSelectList(Model.AuthorId), string.Empty, new { @id = "bcms-js-authors-select", @style = "width: 245px;" })
+                            <div class="bcms-field-wrapper">
+                                @Html.DropDownListFor(model => model.AuthorId, Model.Authors.ToSelectList(Model.AuthorId), string.Empty, new { @id = "bcms-js-authors-select" })
+                            </div>
                         </div>
 
                         <div class="bcms-input-list-holder">
@@ -143,10 +145,10 @@
 
                                 <div class="bcms-thumb-image">
                                     <!-- ko if: image().url() -->
-                                    <a class="bcms-remove-image" data-bind="@(canEdit ? "click: image().remove.bind(image())" : string.Empty)">@RootGlobalization.Button_Remove</a>
-                                    <a data-bind="click: image().preview.bind(image())">
+                                    <div class="bcms-remove-image" data-bind="@(canEdit ? "click: image().remove.bind(image())" : string.Empty)">@RootGlobalization.Button_Remove</div>
+                                    <div data-bind="click: image().preview.bind(image())">
                                         <img data-bind="attr: { src: image().thumbnailUrl(), alt: image().tooltip() }" />
-                                    </a>
+                                    </div>
                                     <!-- /ko -->
                                     <!-- ko ifnot: image().url() -->
                                     <svg class="bcms-grid-no-preview" width="50" height="50" viewBox="-205 372 50 50" enable-background="new -205 372 50 50">

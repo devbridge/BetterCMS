@@ -1,3 +1,4 @@
+
 .bcms-category-titles {
     border-bottom: $border-thin-smoke;
     color: $text-dark;
@@ -6,6 +7,11 @@
         weight: 700;
     }
     padding: 10px 0;
+}
+
+//fixme not sure that we using it
+.bcms-btn-field-holder {
+    float: right;
 }
 
 //
@@ -46,78 +52,4 @@
 .bcms-check-label {
     display: inline-block;
     vertical-align: middle;
-}
-
-.bcms-btn-field-holder {
-    float: right;
-}
-
-//module Analytics
-.bcms-tracking-code {
-    max-width: 170px;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
-}
-
-//module Sitemap slider
-.bcms-sitemaps-arrow-left {
-    background: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAgAAAAMCAYAAABfnvydAAAAbElEQVQY02NgmPGOAQnLAPFLIP4PxLP////PgCzJBsQnoZLHQXx0BXOgki+gJjEgK8iASv4EYluYJpgCK6gESEEOsptgCs5AJS+gOZh4E9DdYINNAQjPhSp6DsTS2BSwA/EpfOGAPSRBBD4MAL5/ytmW8CT1AAAAAElFTkSuQmCC") no-repeat center;
-    cursor: pointer;
-    float: left;
-    height: 100%;
-    width: 22px;
-}
-
-.bcms-sitemaps-arrow-left.bcms-sitemaps-arrow-inactive {
-    background-image: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAgAAAAMCAYAAABfnvydAAAAbElEQVQY02Pw9PRkQMIyQPwSiP8D8ez///8zIEuyAfFJqORxEB9dwRyo5AuoSQzICjKgkj+B2BamCabACioBUpCD7CaYgjNQyQtoDibeBHQ32GBTAMJzoYqeA7E0NgXsQHwKXzhgD0kQgQ8DAGp5l2oEYfPPAAAAAElFTkSuQmCC");
-}
-
-.bcms-sitemaps-arrow-right {
-    background: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAgAAAAMCAYAAABfnvydAAAAdElEQVQY02NgmPFuNhD/B+KXQCwDxAww/P//fwYQgw2Ij0MVnYTyURQwQHW+gCqai00BCNsA8U+oogxsCkA4B6oApNAKmwIQvgBVdAabgmwkE6zxuSET3Q3SQPwcly9A/j4GlTwFxOzoCmAh+QprSIIIfBgAv3TK2uB+QioAAAAASUVORK5CYII=") no-repeat center;
-    cursor: pointer;
-    float: right;
-    height: 100%;
-    width: 22px;
-}
-
-.bcms-sitemaps-arrow-right.bcms-sitemaps-arrow-inactive {
-    background-image: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAgAAAAMCAYAAABfnvydAAAAdElEQVQY02Pw9PScDcT/gfglEMsAMQMM////nwHEYAPi41BFJ6F8FAUMUJ0voIrmYlMAwjZA/BOqKAObAhDOgSoAKbTCpgCEL0AVncGmIBvJBGt8bshEd4M0ED/H5QuQv49BJU8BMTu6AlhIvsIakiACHwYAa26Xa0spcakAAAAASUVORK5CYII=");
-}
-
-.bcms-template-usage {
-    color: #C0C0C0;
-    display: inline-block;
-    font-size: 12px;
-    font-weight: 600;
-    padding-right: 22px;
-    position: relative;
-}
-
-.bcms-template-usage:hover {
-    color: #303030;
-    text-decoration: none;
-}
-
-.bcms-template-usage:after {
-    background: url('images/sprite-base-2.png') no-repeat -60px -107px;
-    content: "";
-    cursor: pointer;
-    height: 12px;
-    margin-top: -6px;
-    overflow: hidden;
-    position: absolute;
-    right: 0;
-    text-indent: 9999px;
-    top: 50%;
-    transition: all 0.1s ease-in-out 0s;
-    width: 18px;
-}
-
-.bcms-template-usage:hover:after {
-    background-position: -60px -133px;
-}
-
-.bcms-templates-holder {
-
 }

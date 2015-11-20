@@ -8,14 +8,18 @@ $font-code-family: 'Courier New', Courier, monospace;
 $border-thin-smoke: 1px solid $gray-smoke;
 $border-thin-dashed-smoke: 1px dashed $gray-smoke;
 $border-thick-dashed-smoke: 2px dashed $gray-smoke;
+//
 $border-thin-blue: 1px solid $border-blue;
 $border-thin-blue-dashed: 1px dashed $border-blue;
 $border-thick-blue: 2px solid $border-blue;
 $border-solid-red: 4px solid $border-red;
 $border-solid-blue: 4px solid $border-blue;
-$border-thin-frame: 1px solid $gray-smoke;
+//
 $border-form-element: 1px solid $light;
 $border-pop-box: 1px solid #cdcdcd;
+//
+$border-thin-sky: 1px solid $sky-blue;
+//
 $border-thin-transparent: 1px solid transparent;
 $border-thick-transparent: 2px solid transparent;
 
@@ -52,33 +56,3 @@ $susy: (
     }
     @return (($target + 0px ) / $context + 0rem);
 }
-
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//fixme delete trash bellow after refactoring
-$gray-smoke10: #eeeeee;
-
-//module text colors
-$gray-smoke5: #aaaaaa;
-$gray-smoke20: #e3e3e3;
-$gray-smoke25: #e5e5e5;
-$gray-smoke40: #c6c6c6;
-$gray-smoke45: #8E8E8E;
-$gray-smoke46: #787878;
-$gray-smoke50: #676767;
-$gray-smoke60: #555555;
-$gray-smoke65: #474747;
-//
-
-//module borders
-$border-thin-light-gray: 1px solid $gray-smoke20;
-$border-content-actions: 1px solid $sky-blue;
-$border-content-box: 1px solid $gray-smoke45;

@@ -19,8 +19,8 @@ $pager-buttons: (
 
     &-no {
         @extend %pager-buttons-extender;
-        background-color: $gray-smoke10;
-        border: $border-thin-frame;
+        background-color: $bg-gray-lighter;
+        border: $border-thin-smoke;
         box-sizing: border-box;
         color: $text-light;
         float: left;
@@ -53,10 +53,6 @@ $pager-buttons: (
         float: $float;
         margin-left: $margin;
         text-indent: 999em;
-
-        &:hover {
-            //fixme add hover state if needed background-image: url($icon-hover);
-        }
     }
 }
 

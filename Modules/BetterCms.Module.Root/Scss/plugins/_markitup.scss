@@ -80,7 +80,7 @@ textarea {
             position: relative;
 
             &:hover {
-                background-color: $gray-smoke25;
+                background-color: $border-thin-smoke;
 
                 ul {
                     //fixme temp
@@ -97,7 +97,7 @@ textarea {
                 size: 12px;
             }
             box-sizing: border-box;
-            color: $gray-smoke65;
+            color: $text-gray;
             display: block;
             height: 100%;
             line-height: 24px;
@@ -142,7 +142,7 @@ textarea {
 
                 &:hover {
                     background-color: $smoke;
-                    border-color: $gray-smoke40;
+                    border-color: $border-thin-smoke;
                     box-shadow: inset 0 0 2px rgba($black, .1);
                 }
             }
@@ -171,7 +171,7 @@ textarea {
     &ResizeHandle {
         @include position(absolute, null 5px 5px null);
         @include size(0);
-        border-color: transparent $gray-smoke65 transparent transparent;
+        border-color: transparent $text-gray transparent transparent;
         border-style: dashed solid dashed dashed;
         border-width: 10px 10px 0 0;
         cursor: se-resize;

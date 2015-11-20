@@ -393,7 +393,7 @@ WriteLiteral("\r\n                                </div>\r\n\r\n                
 WriteLiteral(" class=\"bcms-thumb-image\"");
 
 WriteLiteral(">\r\n                                    <!-- ko if: image().url() -->\r\n           " +
-"                         <a");
+"                         <div");
 
 WriteLiteral(" class=\"bcms-remove-image\"");
 
@@ -403,12 +403,12 @@ WriteLiteral(">");
 
             
             #line 77 "..\..\Views\Page\EditPageProperties.cshtml"
-                                                                                                            Write(RootGlobalization.Button_Remove);
+                                                                                                              Write(RootGlobalization.Button_Remove);
 
             
             #line default
             #line hidden
-WriteLiteral("</a>\r\n                                    <a");
+WriteLiteral("</div>\r\n                                    <div");
 
 WriteLiteral(" data-bind=\"click: image().preview.bind(image())\"");
 
@@ -416,9 +416,9 @@ WriteLiteral(">\r\n                                        <img");
 
 WriteLiteral(" data-bind=\"attr: { src: image().thumbnailUrl(), alt: image().tooltip() }\"");
 
-WriteLiteral(" />\r\n                                    </a>\r\n                                  " +
-"  <!-- /ko -->\r\n                                    <!-- ko ifnot: image().url()" +
-" -->\r\n                                    <svg");
+WriteLiteral(" />\r\n                                    </div>\r\n                                " +
+"    <!-- /ko -->\r\n                                    <!-- ko ifnot: image().url" +
+"() -->\r\n                                    <svg");
 
 WriteLiteral(" class=\"bcms-grid-no-preview\"");
 
@@ -502,7 +502,7 @@ WriteLiteral("\r\n                                </div>\r\n\r\n                
 WriteLiteral(" class=\"bcms-thumb-image\"");
 
 WriteLiteral(">\r\n                                    <!-- ko if: featuredImage().url() -->\r\n   " +
-"                                 <a");
+"                                 <div");
 
 WriteLiteral(" class=\"bcms-remove-image\"");
 
@@ -512,12 +512,12 @@ WriteLiteral(">");
 
             
             #line 104 "..\..\Views\Page\EditPageProperties.cshtml"
-                                                                                                                            Write(RootGlobalization.Button_Remove);
+                                                                                                                              Write(RootGlobalization.Button_Remove);
 
             
             #line default
             #line hidden
-WriteLiteral("</a>\r\n                                    <a");
+WriteLiteral("</div>\r\n                                    <div");
 
 WriteLiteral(" data-bind=\"click: featuredImage().preview.bind(featuredImage())\"");
 
@@ -526,9 +526,9 @@ WriteLiteral(">\r\n                                        <img");
 WriteLiteral(" data-bind=\"attr: { src: featuredImage().thumbnailUrl(), alt: featuredImage().too" +
 "ltip() }\"");
 
-WriteLiteral(" />\r\n                                    </a>\r\n                                  " +
-"  <!-- /ko -->\r\n                                    <!-- ko ifnot: featuredImage" +
-"().url() -->\r\n                                    <svg");
+WriteLiteral(" />\r\n                                    </div>\r\n                                " +
+"    <!-- /ko -->\r\n                                    <!-- ko ifnot: featuredIma" +
+"ge().url() -->\r\n                                    <svg");
 
 WriteLiteral(" class=\"bcms-grid-no-preview\"");
 
@@ -614,7 +614,7 @@ WriteLiteral("\r\n                                </div>\r\n\r\n                
 WriteLiteral(" class=\"bcms-thumb-image\"");
 
 WriteLiteral(">\r\n                                    <!-- ko if: secondaryImage().url() -->\r\n  " +
-"                                  <a");
+"                                  <div");
 
 WriteLiteral(" class=\"bcms-remove-image\"");
 
@@ -624,12 +624,12 @@ WriteLiteral(">");
 
             
             #line 131 "..\..\Views\Page\EditPageProperties.cshtml"
-                                                                                                                              Write(RootGlobalization.Button_Remove);
+                                                                                                                                Write(RootGlobalization.Button_Remove);
 
             
             #line default
             #line hidden
-WriteLiteral("</a>\r\n                                    <a");
+WriteLiteral("</div>\r\n                                    <div");
 
 WriteLiteral(" data-bind=\"click: secondaryImage().preview.bind(secondaryImage())\"");
 
@@ -638,9 +638,9 @@ WriteLiteral(">\r\n                                        <img");
 WriteLiteral(" data-bind=\"attr: { src: secondaryImage().thumbnailUrl(), alt: secondaryImage().t" +
 "ooltip() }\"");
 
-WriteLiteral(" />\r\n                                    </a>\r\n                                  " +
-"  <!-- /ko -->\r\n                                    <!-- ko ifnot: secondaryImag" +
-"e().url() -->\r\n                                    <svg");
+WriteLiteral(" />\r\n                                    </div>\r\n                                " +
+"    <!-- /ko -->\r\n                                    <!-- ko ifnot: secondaryIm" +
+"age().url() -->\r\n                                    <svg");
 
 WriteLiteral(" class=\"bcms-grid-no-preview\"");
 
@@ -1257,14 +1257,14 @@ WriteLiteral(" type=\"text\"");
 
 WriteLiteral(" class=\"bcms-search-field-box bcms-js-search-box\"");
 
-WriteAttribute("placeholder", Tuple.Create(" placeholder=\"", 16346), Tuple.Create("\"", 16395)
+WriteAttribute("placeholder", Tuple.Create(" placeholder=\"", 16370), Tuple.Create("\"", 16419)
             
             #line 250 "..\..\Views\Page\EditPageProperties.cshtml"
-                                , Tuple.Create(Tuple.Create("", 16360), Tuple.Create<System.Object, System.Int32>(RootGlobalization.WaterMark_Search
+                                , Tuple.Create(Tuple.Create("", 16384), Tuple.Create<System.Object, System.Int32>(RootGlobalization.WaterMark_Search
             
             #line default
             #line hidden
-, 16360), false)
+, 16384), false)
 );
 
 WriteLiteral("\r\n                                       data-bind=\"value: searchQuery, valueUpda" +

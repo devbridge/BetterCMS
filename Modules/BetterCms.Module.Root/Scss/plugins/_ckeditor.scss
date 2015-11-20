@@ -31,6 +31,7 @@ $ck-toolbar-icons: (
                 ('pastefromword_icon', $bcms-editor-pastefromword)
 );
 
+//todo remove after design complete
 //                ('pagebreak_icon', $bcms-editor-pagebreak),
 //                ('pastetext_icon', $bcms-editor-pastetext),
 //                ('placeholder_icon', $bcms-editor-placeholder),
@@ -46,7 +47,7 @@ $ck-toolbar-icons: (
     background-color: $smoke;
     border: $border-thin-smoke;
     box-sizing: border-box;
-    color: $gray-smoke46;
+    color: $text-gray;
     font-family: $font-base-family;
     font-size: 14px;
     margin: 0;
@@ -56,7 +57,7 @@ $ck-toolbar-icons: (
     &:focus {
         background-color: $white;
         border-color: $border-blue;
-        color: $gray-smoke65;
+        color: $text-gray;
         outline: none;
     }
 }
@@ -108,7 +109,7 @@ $ck-toolbar-icons: (
     &_resizer {
         @include position(absolute, null 5px 5px null);
         @include size(0);
-        border-color: transparent $gray-smoke65 transparent transparent;
+        border-color: transparent $text-gray transparent transparent;
         border-style: dashed solid dashed dashed;
         border-width: 10px 10px 0 0;
         cursor: se-resize;
@@ -187,7 +188,7 @@ $ck-toolbar-icons: (
     }
 
     &_label {
-        color: $gray-smoke65;
+        color: $text-gray;
         display: none;
         float: left;
         line-height: 16px;
@@ -203,7 +204,7 @@ $ck-toolbar-icons: (
         border: {
             style: solid;
             width: 3px;
-            color: transparent transparent $gray-smoke65 transparent;
+            color: transparent transparent $text-gray transparent;
         }
     }
 }
@@ -226,7 +227,7 @@ $ck-toolbar-icons: (
         border: {
             style: solid;
             width: 3px;
-            color: transparent transparent $gray-smoke65 transparent;
+            color: transparent transparent $text-gray transparent;
         }
     }
 
@@ -235,7 +236,7 @@ $ck-toolbar-icons: (
             margin-top: 4px;
             border: {
                 bottom-color: transparent;
-                top-color: $gray-smoke65;
+                top-color: $text-gray;
             }
         }
     }
@@ -248,7 +249,7 @@ $ck-toolbar-icons: (
 
 //module footer path
 .cke_path_item {
-    color: $gray-smoke65;
+    color: $text-gray;
     cursor: default;
     display: inline-block;
     font-size: 11px;
@@ -286,7 +287,7 @@ $ck-toolbar-icons: (
     &_title {
         background-color: $smoke;
         border-bottom: $border-thin-smoke;
-        color: $gray-smoke65;
+        color: $text-gray;
         cursor: move;
         font-size: 13px;
         font-weight: bold;
@@ -361,7 +362,7 @@ $ck-toolbar-icons: (
     &_tab {
         background-color: $smoke;
         border: $border-thin-smoke;
-        color: $gray-smoke65;
+        color: $text-gray;
         cursor: pointer;
         display: inline-block;
         font-size: 12px;
@@ -456,7 +457,7 @@ textarea {
 a {
     &.cke_dialog_ui_button {
         @include button() {
-            @include add-gradient($top: $gray-smoke45, $bottom: $gray-smoke46);
+            background-color: $bg-blue;
             color: $white;
             font-size: 12px;
             line-height: 30px;
@@ -485,8 +486,8 @@ a {
 
     &.cke_specialchar {
         @include size(24px);
-        border: $border-thin-light-gray;
-        color: $gray-smoke65;
+        border: $border-thin-smoke;
+        color: $text-gray;
         cursor: pointer;
         display: block;
         text-align: center;
@@ -532,7 +533,7 @@ a {
 
     &_text {
         @include vertical-align();
-        color: $gray-smoke65;
+        color: $text-gray;
         font-size: 12px;
         line-height: 26px;
         padding: 0 10px;
@@ -553,7 +554,7 @@ a {
         border: {
             style: solid;
             width: 4px;
-            color: $gray-smoke65 transparent transparent transparent;
+            color: $text-gray transparent transparent transparent;
         }
 
         float: right;
@@ -612,7 +613,7 @@ a {
         a {
             @include transition(all 200ms);
             box-sizing: border-box;
-            color: $gray-smoke65;
+            color: $text-gray;
             display: block;
             font-family: $font-arial;
             font-size: 12px;
@@ -625,7 +626,7 @@ a {
 
             &:hover {
                 background-color: $smoke;
-                border-color: $gray-smoke40;
+                border-color: $border-thin-smoke;
                 box-shadow: inset 0 0 2px rgba($black, .1);
             }
         }
@@ -637,7 +638,7 @@ a {
 }
 
 .cke_menubutton {
-    color: $gray-smoke65;
+    color: $text-gray;
     display: block;
     font-family: $font-arial;
     font-size: 12px;

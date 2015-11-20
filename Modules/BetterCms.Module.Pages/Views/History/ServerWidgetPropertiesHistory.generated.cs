@@ -201,6 +201,47 @@ WriteLiteral(" />\r\n");
             
             #line 35 "..\..\Views\History\ServerWidgetPropertiesHistory.cshtml"
                 }
+                else
+                {
+
+            
+            #line default
+            #line hidden
+WriteLiteral("                    <svg");
+
+WriteLiteral(" class=\"bcms-grid-no-preview\"");
+
+WriteLiteral(" width=\"50\"");
+
+WriteLiteral(" height=\"50\"");
+
+WriteLiteral(" viewBox=\"-205 372 50 50\"");
+
+WriteLiteral(" enable-background=\"new -205 372 50 50\"");
+
+WriteLiteral(">\r\n                        <g");
+
+WriteLiteral(" fill=\"#cdcdcd\"");
+
+WriteLiteral(">\r\n                            <path");
+
+WriteLiteral(" d=\"m-205 422h50v-50h-50v50m2-48h46v46h-46v-46\"");
+
+WriteLiteral(" />\r\n                            <path");
+
+WriteLiteral(" d=\"m-164.3 406.2l1.4-1.4-11.5-11.5-7.7 7.6-3.6-3.6-11.5 11.5 1.4 1.4 10.1-10.1 1" +
+"1.1 11.1 1.4-1.4-7.5-7.5 6.3-6.2 10.1 10.1\"");
+
+WriteLiteral(" />\r\n                            <path");
+
+WriteLiteral(" d=\"m-187.9 382.4c-2.8 0-5 2.2-5 5 0 2.8 2.2 5 5 5 2.8 0 5-2.2 5-5 0-2.8-2.2-5-5-" +
+"5m0 2c1.7 0 3 1.4 3 3 0 1.7-1.3 3-3 3-1.6 0-3-1.3-3-3 0-1.7 1.3-3 3-3\"");
+
+WriteLiteral(" />\r\n                        </g>\r\n                    </svg>\r\n");
+
+            
+            #line 45 "..\..\Views\History\ServerWidgetPropertiesHistory.cshtml"
+                }
 
             
             #line default

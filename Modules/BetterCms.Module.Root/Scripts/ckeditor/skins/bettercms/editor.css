@@ -8,7 +8,7 @@
   background-color: #f5f5f5;
   border: 1px solid #dfdfdf;
   box-sizing: border-box;
-  color: #787878;
+  color: #636363;
   font-family: "Open Sans", sans-serif !important;
   font-size: 14px;
   margin: 0;
@@ -19,7 +19,7 @@
 .cke_dialog iframe.cke_pasteframe:focus, select.cke_dialog_ui_input_select:focus, input.cke_dialog_ui_input_text:focus, textarea.cke_dialog_ui_input_textarea:focus {
   background-color: #ffffff;
   border-color: #0d7ce7;
-  color: #474747;
+  color: #636363;
   outline: none;
 }
 
@@ -67,7 +67,7 @@
   bottom: 5px;
   height: 0;
   width: 0;
-  border-color: transparent #474747 transparent transparent;
+  border-color: transparent #636363 transparent transparent;
   border-style: dashed solid dashed dashed;
   border-width: 10px 10px 0 0;
   cursor: se-resize;
@@ -139,7 +139,7 @@
 }
 
 .cke_button_label {
-  color: #474747;
+  color: #636363;
   display: none;
   float: left;
   line-height: 16px;
@@ -155,7 +155,7 @@
   vertical-align: top;
   border-style: solid;
   border-width: 3px;
-  border-color: transparent transparent #474747 transparent;
+  border-color: transparent transparent #636363 transparent;
 }
 
 .cke_toolbox_collapser {
@@ -180,13 +180,13 @@
   text-indent: -999em;
   border-style: solid;
   border-width: 3px;
-  border-color: transparent transparent #474747 transparent;
+  border-color: transparent transparent #636363 transparent;
 }
 
 .cke_toolbox_collapser_min .cke_arrow {
   margin-top: 4px;
   border-bottom-color: transparent;
-  border-top-color: #474747;
+  border-top-color: #636363;
 }
 
 .cke_toolbar_break {
@@ -195,7 +195,7 @@
 }
 
 .cke_path_item {
-  color: #474747;
+  color: #636363;
   cursor: default;
   display: inline-block;
   font-size: 11px;
@@ -232,7 +232,7 @@
 .cke_dialog_title {
   background-color: #f5f5f5;
   border-bottom: 1px solid #dfdfdf;
-  color: #474747;
+  color: #636363;
   cursor: move;
   font-size: 13px;
   font-weight: bold;
@@ -306,7 +306,7 @@
 .cke_dialog_tab {
   background-color: #f5f5f5;
   border: 1px solid #dfdfdf;
-  color: #474747;
+  color: #636363;
   cursor: pointer;
   display: inline-block;
   font-size: 12px;
@@ -383,17 +383,11 @@ a.cke_dialog_ui_button {
   overflow: hidden;
   text-align: center;
   text-transform: uppercase;
-  background-image: -webkit-linear-gradient(top, #8E8E8E 0, #787878 100%);
-  background-image: linear-gradient(to bottom, #8E8E8E 0, #787878 100%);
+  background-color: #0d7ce7;
   color: #ffffff;
   font-size: 12px;
   line-height: 30px;
   padding: 0 10px;
-}
-
-a.cke_dialog_ui_button:active {
-  background-image: -webkit-linear-gradient(top, #787878 0, #787878 100%);
-  background-image: linear-gradient(to bottom, #787878 0, #787878 100%);
 }
 
 a.cke_dialog_ui_button:hover {
@@ -426,8 +420,8 @@ a.cke_dialog_ui_button_ok.cke_disabled {
 a.cke_specialchar {
   height: 24px;
   width: 24px;
-  border: 1px solid #e3e3e3;
-  color: #474747;
+  border: 1px solid #dfdfdf;
+  color: #636363;
   cursor: pointer;
   display: block;
   text-align: center;
@@ -473,7 +467,7 @@ a.cke_specialchar:hover {
 .cke_combo_text {
   display: inline-block;
   vertical-align: middle;
-  color: #474747;
+  color: #636363;
   font-size: 12px;
   line-height: 26px;
   padding: 0 10px;
@@ -494,7 +488,7 @@ a.cke_specialchar:hover {
 .cke_combo_arrow {
   border-style: solid;
   border-width: 4px;
-  border-color: #474747 transparent transparent transparent;
+  border-color: #636363 transparent transparent transparent;
   float: right;
   margin-top: 4px;
 }
@@ -549,7 +543,7 @@ a.cke_specialchar:hover {
   -moz-transition: all 200ms;
   transition: all 200ms;
   box-sizing: border-box;
-  color: #474747;
+  color: #636363;
   display: block;
   font-family: "Arial", sans-serif;
   font-size: 12px;
@@ -563,7 +557,7 @@ a.cke_specialchar:hover {
 
 .cke_panel_listItem a:hover {
   background-color: #f5f5f5;
-  border-color: #c6c6c6;
+  border-color: 1px solid #dfdfdf;
   box-shadow: inset 0 0 2px rgba(0, 0, 0, 0.1);
 }
 
@@ -572,7 +566,7 @@ a.cke_specialchar:hover {
 }
 
 .cke_menubutton {
-  color: #474747;
+  color: #636363;
   display: block;
   font-family: "Arial", sans-serif;
   font-size: 12px;

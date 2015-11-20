@@ -9,11 +9,6 @@ $cp-blue: #0d7be3;
 $border-cp-frame: 1px solid #536082;
 $cp-handle-width: 54px;
 
-$control-panel-buttons: (
-                ('settings', null, $gray-smoke45),
-                ('delete', null, $cp-red)
-);
-
 $control-panel-switch-status: (
                 ('on', $cp-blue, auto, 3px),
                 ('off', null, 3px, auto)
@@ -62,7 +57,6 @@ $control-panel-switch-status: (
     @include user-select();
     background-color: $bg-dark;
     box-sizing: border-box;
-    color: $gray-smoke60;
     font-family: $font-base-family;
     font-size: 12px;
     padding: 10px;

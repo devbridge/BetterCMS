@@ -406,12 +406,13 @@ WriteAttribute("src", Tuple.Create(" src=\"", 3695), Tuple.Create("\"", 3723)
 
 WriteLiteral(" alt=\"\"");
 
-WriteLiteral(" />\r\n                                </div>\r\n                            </div>\r\n" +
-"                        </div>\r\n                    </div>\r\n                </di" +
-"v>\r\n            </div>\r\n");
+WriteLiteral(" />\r\n                                </div>\r\n\r\n                                ");
+
+WriteLiteral("\r\n                            </div>\r\n                        </div>\r\n           " +
+"         </div>\r\n                </div>\r\n            </div>\r\n");
 
             
-            #line 72 "..\..\Views\Templates\EditTemplate.cshtml"
+            #line 80 "..\..\Views\Templates\EditTemplate.cshtml"
 
 
             
@@ -428,7 +429,7 @@ WriteLiteral(">\r\n");
 WriteLiteral("                ");
 
             
-            #line 74 "..\..\Views\Templates\EditTemplate.cshtml"
+            #line 82 "..\..\Views\Templates\EditTemplate.cshtml"
            Write(Html.Partial("Partial/EditTemplateRegions"));
 
             
@@ -437,7 +438,7 @@ WriteLiteral("                ");
 WriteLiteral("\r\n            </div>\r\n");
 
             
-            #line 76 "..\..\Views\Templates\EditTemplate.cshtml"
+            #line 84 "..\..\Views\Templates\EditTemplate.cshtml"
 
 
             
@@ -454,7 +455,7 @@ WriteLiteral(">\r\n");
 WriteLiteral("                ");
 
             
-            #line 78 "..\..\Views\Templates\EditTemplate.cshtml"
+            #line 86 "..\..\Views\Templates\EditTemplate.cshtml"
            Write(Html.Partial(PagesConstants.OptionsGridTemplate, new EditableGridViewModel()));
 
             
@@ -463,49 +464,49 @@ WriteLiteral("                ");
 WriteLiteral("\r\n            </div>\r\n");
 
             
-            #line 80 "..\..\Views\Templates\EditTemplate.cshtml"
+            #line 88 "..\..\Views\Templates\EditTemplate.cshtml"
 
             
             
             #line default
             #line hidden
             
-            #line 81 "..\..\Views\Templates\EditTemplate.cshtml"
+            #line 89 "..\..\Views\Templates\EditTemplate.cshtml"
        Write(Html.HiddenFor(model => model.Id));
 
             
             #line default
             #line hidden
             
-            #line 81 "..\..\Views\Templates\EditTemplate.cshtml"
+            #line 89 "..\..\Views\Templates\EditTemplate.cshtml"
                                               
             
             
             #line default
             #line hidden
             
-            #line 82 "..\..\Views\Templates\EditTemplate.cshtml"
+            #line 90 "..\..\Views\Templates\EditTemplate.cshtml"
        Write(Html.HiddenFor(model => model.Version));
 
             
             #line default
             #line hidden
             
-            #line 82 "..\..\Views\Templates\EditTemplate.cshtml"
+            #line 90 "..\..\Views\Templates\EditTemplate.cshtml"
                                                    
             
             
             #line default
             #line hidden
             
-            #line 83 "..\..\Views\Templates\EditTemplate.cshtml"
+            #line 91 "..\..\Views\Templates\EditTemplate.cshtml"
        Write(Html.HiddenSubmit());
 
             
             #line default
             #line hidden
             
-            #line 83 "..\..\Views\Templates\EditTemplate.cshtml"
+            #line 91 "..\..\Views\Templates\EditTemplate.cshtml"
                                 
         }
 

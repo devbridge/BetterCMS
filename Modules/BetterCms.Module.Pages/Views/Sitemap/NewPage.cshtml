@@ -22,9 +22,11 @@
             <!-- ko with: sitemap -->
             <div style="display: none;" data-bind="visible: showLanguages, with: language">
                 <div class="bcms-top-block-holder">
-                    <div class="bcms-filter-text">Edit sitemap in language:</div>
-                    <div class="bcms-field-wrapper">
-                        <select data-bind="options: languages, optionsText: 'value', optionsValue: 'key', value: languageId, select2: { minimumResultsForSearch: -1 }"></select>
+                    <div class="bcms-language-selector-box">
+                        <div class="bcms-content-titles">Edit sitemap in language:</div>
+                        <div class="bcms-field-wrapper">
+                            <select data-bind="options: languages, optionsText: 'value', optionsValue: 'key', value: languageId, select2: { minimumResultsForSearch: -1 }"></select>
+                        </div>
                     </div>
                 </div>
             </div>

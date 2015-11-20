@@ -1,3 +1,8 @@
+$sitemap-tab-arrows: (
+                ('left' null, auto, 0),
+                ('right' null, 0, auto)
+);
+
 %tree-links-ui {
     color: $text-blue;
     cursor: pointer;
@@ -6,6 +11,16 @@
 
     &:hover {
         color: darken($text-blue, 10%);
+    }
+}
+
+@each $name, $icon, $right, $left in $sitemap-tab-arrows {
+    .bcms-sitemaps-arrow-#{$name} {
+        @include position(absolute, 0 $right null $left);
+        background: red; //todo temp bg
+        height: 100%;
+        width: 22px;
+        cursor: pointer;
     }
 }
 
@@ -316,7 +331,7 @@
 //
 //
 //
-//
+//todo
 .bcms-drop-button {
     background: url('images/sprite-base-2.png') no-repeat -1px -96px;
     height: 4px;

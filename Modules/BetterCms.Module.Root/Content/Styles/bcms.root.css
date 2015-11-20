@@ -816,7 +816,7 @@ a:hover {
 
 .autocomplete-suggestions {
   background-color: #ffffff;
-  border: 1px solid #e3e3e3;
+  border: 1px solid #dfdfdf;
   box-sizing: border-box;
   font-size: 12px;
   margin-top: -1px;
@@ -824,7 +824,7 @@ a:hover {
 }
 
 .autocomplete-suggestion {
-  color: #676767;
+  color: #a6a6a6;
   cursor: pointer;
   font-weight: 400;
   padding: 4px 7px 3px;
@@ -1191,7 +1191,6 @@ a:hover {
   user-select: none;
   background-color: #303646;
   box-sizing: border-box;
-  color: #555555;
   font-family: "Open Sans", sans-serif !important;
   font-size: 12px;
   padding: 10px;
@@ -1705,7 +1704,7 @@ a:hover {
 }
 
 .bcms-contents-tree-controls:hover {
-  background-color: #4e4e4e;
+  background-color: #4a4a4a;
 }
 
 .bcms-contents-tree-content {
@@ -1713,7 +1712,7 @@ a:hover {
   -moz-transition: background-color 150ms;
   transition: background-color 150ms;
   background-color: #ffffff;
-  border: 1px solid #8E8E8E;
+  border: 1px solid #dfdfdf;
   box-shadow: 0 0 5px 0 rgba(0, 0, 0, 0.2);
   margin-top: 15px;
   padding: 15px 15px 15px 30px;
@@ -1790,34 +1789,6 @@ a:hover {
   color: black;
   height: 48px;
   margin: 15px 0 0;
-}
-
-.bcms-draggable-region {
-  height: 39px;
-  width: 100%;
-  background: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAQAAAAECAIAAAFRlDm/AAAAHUlEQVQI12P4//8/AxRDqQcPHjAAMUIQyoFQEAAA0/UuXeg1e3EAAAAASUVORK5CYII=") repeat 0 0;
-  border: 1px solid #0d7ce7;
-  box-sizing: border-box;
-  color: #0d7ce7;
-  font-size: 12px;
-  font-weight: 700;
-  line-height: 39px;
-  margin: 0 -2px 0 0;
-  padding-left: 34px;
-  position: relative;
-}
-
-.bcms-draggable-region:after {
-  content: "";
-  height: 18px;
-  width: 15px;
-  position: absolute;
-  -webkit-transform: translateY(-50%);
-  -moz-transform: translateY(-50%);
-  transform: translateY(-50%);
-  top: 50%;
-  background: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAA8AAAASCAYAAACEnoQPAAAAV0lEQVQ4y2NgmPX6Pw78D4hLgJgBJ8ajGYZridGMLolsQAclmv+TqhndkOGsmRCf+poJYeprJj6AIOJclGgGYW1CmvHhr0CcQHXNDEQkGB1cziakGR5gAEOrBIwBImPOAAAAAElFTkSuQmCC") no-repeat 0 0;
-  left: 11px;
 }
 
 .bcms-field-text, .bcms-field-textarea {
@@ -2256,15 +2227,15 @@ td .bcms-field-wrapper {
 }
 
 .bcms-region-pick-editor:hover {
-  background-color: #4e4e4e;
+  background-color: #4a4a4a;
 }
 
 .bcms-region-contentstree, .bcms-region-sortcancel {
-  background-color: #676767;
+  background-color: #636363;
 }
 
 .bcms-region-contentstree:hover, .bcms-region-sortcancel:hover {
-  background-color: #4e4e4e;
+  background-color: #4a4a4a;
 }
 
 .bcms-region-addcontent {
@@ -2299,7 +2270,7 @@ td .bcms-field-wrapper {
   right: 0;
   bottom: 0;
   left: 0;
-  background-color: rgba(170, 170, 170, 0.2);
+  background-color: rgba(166, 166, 166, 0.2);
 }
 
 .bcms-show-overlay .bcms-sort-block {
@@ -2340,7 +2311,7 @@ td .bcms-field-wrapper {
   right: 0;
   bottom: 0;
   left: 0;
-  background-color: rgba(170, 170, 170, 0.2);
+  background-color: rgba(166, 166, 166, 0.2);
 }
 
 .bcms-sort-wrapper-placeholder {
@@ -2481,7 +2452,7 @@ td .bcms-field-wrapper {
 }
 
 .bcms-pager-no {
-  background-color: #eeeeee;
+  background-color: #eae8e9;
   border: 1px solid #dfdfdf;
   box-sizing: border-box;
   color: #a6a6a6;
@@ -2888,6 +2859,7 @@ td .bcms-field-wrapper {
   white-space: nowrap;
   font-size: 12px;
   font-weight: 400;
+  max-width: 100%;
   padding-bottom: 0;
 }
 
@@ -3388,7 +3360,7 @@ textarea.markItUpEditor:focus {
 }
 
 .markItUpHeader li:hover {
-  background-color: #e5e5e5;
+  background-color: 1px solid #dfdfdf;
 }
 
 .markItUpHeader li:hover ul {
@@ -3399,7 +3371,7 @@ textarea.markItUpEditor:focus {
   font-family: "Arial", sans-serif;
   font-size: 12px;
   box-sizing: border-box;
-  color: #474747;
+  color: #636363;
   display: block;
   height: 100%;
   line-height: 24px;
@@ -3446,7 +3418,7 @@ textarea.markItUpEditor:focus {
 
 .markItUpDropMenu > ul a:hover {
   background-color: #f5f5f5;
-  border-color: #c6c6c6;
+  border-color: 1px solid #dfdfdf;
   box-shadow: inset 0 0 2px rgba(0, 0, 0, 0.1);
 }
 
@@ -3472,7 +3444,7 @@ textarea.markItUpEditor:focus {
   bottom: 5px;
   height: 0;
   width: 0;
-  border-color: transparent #474747 transparent transparent;
+  border-color: transparent #636363 transparent transparent;
   border-style: dashed solid dashed dashed;
   border-width: 10px 10px 0 0;
   cursor: se-resize;

@@ -72,8 +72,8 @@ a {
 
     &-frame-holder {
         border: {
-            right: $border-thin-frame;
-            left: $border-thin-frame;
+            right: $border-thin-smoke;
+            left: $border-thin-smoke;
         }
         box-sizing: border-box;
         height: 100%;
@@ -183,8 +183,8 @@ a {
         @include size($page-width calc(100vh - #{$settings-frame}));
         background-color: $white;
         border: {
-            right: $border-thin-frame;
-            left: $border-thin-frame;
+            right: $border-thin-smoke;
+            left: $border-thin-smoke;
         }
         display: table;
         margin: auto;

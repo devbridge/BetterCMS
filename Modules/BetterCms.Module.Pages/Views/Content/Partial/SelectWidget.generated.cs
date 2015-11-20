@@ -175,8 +175,6 @@ WriteAttribute("placeholder", Tuple.Create(" placeholder=\"", 1248), Tuple.Creat
 
 WriteLiteral(" />\r\n        </div>\r\n    </div>\r\n</div>\r\n\r\n<div");
 
-WriteLiteral(" class=\"bcms-content-sliders\"");
-
 WriteLiteral(" id=\"bcms-advanced-contents-container\"");
 
 WriteLiteral(">\r\n");

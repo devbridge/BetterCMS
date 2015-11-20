@@ -20,6 +20,26 @@
   color: #0a62b7;
 }
 
+.bcms-sitemaps-arrow-left {
+  position: absolute;
+  top: 0;
+  right: 0;
+  background: red;
+  height: 100%;
+  width: 22px;
+  cursor: pointer;
+}
+
+.bcms-sitemaps-arrow-right {
+  position: absolute;
+  top: 0;
+  right: auto;
+  background: red;
+  height: 100%;
+  width: 22px;
+  cursor: pointer;
+}
+
 .bcms-tree-zones-holder {
   display: table;
   margin-bottom: 20px;
@@ -635,10 +655,6 @@
   width: 75%;
 }
 
-.bcms-filter-options .bcms-global-select {
-  width: 100%;
-}
-
 .bcms-filter-text {
   color: #636363;
   font-size: 11px;
@@ -765,6 +781,10 @@
   padding: 10px 0;
 }
 
+.bcms-btn-field-holder {
+  float: right;
+}
+
 .bcms-preview-module-image {
   background: url("images/bcms-no-image-1.png") no-repeat center center #f5f5f5;
   border: 1px solid #c6c6c6;
@@ -795,72 +815,4 @@
 .bcms-check-label {
   display: inline-block;
   vertical-align: middle;
-}
-
-.bcms-btn-field-holder {
-  float: right;
-}
-
-.bcms-tracking-code {
-  max-width: 170px;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-}
-
-.bcms-sitemaps-arrow-left {
-  background: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAgAAAAMCAYAAABfnvydAAAAbElEQVQY02NgmPGOAQnLAPFLIP4PxLP////PgCzJBsQnoZLHQXx0BXOgki+gJjEgK8iASv4EYluYJpgCK6gESEEOsptgCs5AJS+gOZh4E9DdYINNAQjPhSp6DsTS2BSwA/EpfOGAPSRBBD4MAL5/ytmW8CT1AAAAAElFTkSuQmCC") no-repeat center;
-  cursor: pointer;
-  float: left;
-  height: 100%;
-  width: 22px;
-}
-
-.bcms-sitemaps-arrow-left.bcms-sitemaps-arrow-inactive {
-  background-image: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAgAAAAMCAYAAABfnvydAAAAbElEQVQY02Pw9PRkQMIyQPwSiP8D8ez///8zIEuyAfFJqORxEB9dwRyo5AuoSQzICjKgkj+B2BamCabACioBUpCD7CaYgjNQyQtoDibeBHQ32GBTAMJzoYqeA7E0NgXsQHwKXzhgD0kQgQ8DAGp5l2oEYfPPAAAAAElFTkSuQmCC");
-}
-
-.bcms-sitemaps-arrow-right {
-  background: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAgAAAAMCAYAAABfnvydAAAAdElEQVQY02NgmPFuNhD/B+KXQCwDxAww/P//fwYQgw2Ij0MVnYTyURQwQHW+gCqai00BCNsA8U+oogxsCkA4B6oApNAKmwIQvgBVdAabgmwkE6zxuSET3Q3SQPwcly9A/j4GlTwFxOzoCmAh+QprSIIIfBgAv3TK2uB+QioAAAAASUVORK5CYII=") no-repeat center;
-  cursor: pointer;
-  float: right;
-  height: 100%;
-  width: 22px;
-}
-
-.bcms-sitemaps-arrow-right.bcms-sitemaps-arrow-inactive {
-  background-image: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAgAAAAMCAYAAABfnvydAAAAdElEQVQY02Pw9PScDcT/gfglEMsAMQMM////nwHEYAPi41BFJ6F8FAUMUJ0voIrmYlMAwjZA/BOqKAObAhDOgSoAKbTCpgCEL0AVncGmIBvJBGt8bshEd4M0ED/H5QuQv49BJU8BMTu6AlhIvsIakiACHwYAa26Xa0spcakAAAAASUVORK5CYII=");
-}
-
-.bcms-template-usage {
-  color: #C0C0C0;
-  display: inline-block;
-  font-size: 12px;
-  font-weight: 600;
-  padding-right: 22px;
-  position: relative;
-}
-
-.bcms-template-usage:hover {
-  color: #303030;
-  text-decoration: none;
-}
-
-.bcms-template-usage:after {
-  background: url("images/sprite-base-2.png") no-repeat -60px -107px;
-  content: "";
-  cursor: pointer;
-  height: 12px;
-  margin-top: -6px;
-  overflow: hidden;
-  position: absolute;
-  right: 0;
-  text-indent: 9999px;
-  top: 50%;
-  transition: all 0.1s ease-in-out 0s;
-  width: 18px;
-}
-
-.bcms-template-usage:hover:after {
-  background-position: -60px -133px;
 }

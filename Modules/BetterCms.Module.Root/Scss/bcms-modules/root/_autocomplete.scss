@@ -1,7 +1,7 @@
 .autocomplete {
     &-suggestions {
         background-color: $white;
-        border: $border-thin-light-gray;
+        border: $border-thin-smoke;
         box-sizing: border-box;
         font-size: 12px;
         margin-top: -1px;
@@ -9,7 +9,7 @@
     }
 
     &-suggestion {
-        color: $gray-smoke50;
+        color: $text-light;
         cursor: pointer;
         font-weight: 400;
         padding: 4px 7px 3px;
