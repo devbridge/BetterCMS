@@ -12,9 +12,9 @@
 <div class="bcms-top-block-holder">
     @if ((ViewContext.Controller as CmsControllerBase).SecurityService.IsAuthorized(RootModuleConstants.UserRoles.EditContent))
     {
-                    <!-- ko if: !isSearchResults() -->
-        <a class="bcms-btn-main" data-bind="click: uploadMedia, text: uploadButtonTitle()"></a>
-                    <!-- /ko -->
+        <!-- ko if: !isSearchResults() -->
+            <div class="bcms-btn-main" data-bind="click: uploadMedia, text: uploadButtonTitle()"></div>
+        <!-- /ko -->
     }
 
     <div class="bcms-top-block-inner" data-bind="css : { 'bcms-active-search': searchEnabled() }">
@@ -34,10 +34,8 @@
 <div class="bcms-top-block-filters">
     @Html.Partial("Partial/MediaManagerFilterTemplate", Model)
 
-    <div class="bcms-breadcrumbs-holder">
-        <div data-bind="foreach: path().pathFolders()">
-            <div class="bcms-breadcrumbs-root" data-bind="text: pathName(), click: openMedia.bind($data, $root)"></div>
-        </div>
+    <div class="bcms-breadcrumbs-holder" data-bind="foreach: path().pathFolders()">
+        <div class="bcms-breadcrumbs-root" data-bind="text: pathName(), click: openMedia.bind($data, $root)"></div>
     </div>
 </div>
 

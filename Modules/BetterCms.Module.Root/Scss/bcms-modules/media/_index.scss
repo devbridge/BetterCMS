@@ -137,6 +137,7 @@
 
 .bcms-media-content-link {
     color: $text-blue;
+    cursor: pointer;
     font: {
         family: $font-base-family;
         size: 12px;
@@ -145,44 +146,42 @@
     line-height: 28px;
 }
 
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
 //module breadcrumbs
 .bcms-breadcrumbs-holder {
     @include ellipsis();
-    max-width: 600px;
+    @include position(absolute, 5px null null 0);
+    color: $text-blue;
+    max-width: 700px;
+    z-index: 1;
 }
 
 .bcms-breadcrumbs-root {
+    cursor: pointer;
     display: inline;
     font: {
         family: $font-base-family;
         size: 12px;
         weight: 600;
     }
-    line-height: 20px;
+    line-height: 28px;
 }
 
-.bcms-breadcrumbs-root:first-child {
-    background: url('images/sprite-media-1.png') no-repeat -3px -29px;
-    color: #353535;
-    padding-left: 21px;
+.bcms-preview-image-frame {
+    @include positioning($center: true);
 }
 
-.bcms-breadcrumbs-root:first-child:hover {
-    color: #0383df;
-}
-
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 //module no data available in media manger
 div.bcms-nomedia-data {
     border-bottom: 1px solid #e3e3e3;

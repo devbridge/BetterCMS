@@ -1084,7 +1084,7 @@ function ($, bcms, modal, siteSettings, forms, dynamicContent, messages, mediaUp
             self.updateUrl = links.saveFolderUrl;
 
             self.pathName = ko.computed(function () {
-                return self.name() + '/';
+                return self.name() + ' / ';
             });
         }
 

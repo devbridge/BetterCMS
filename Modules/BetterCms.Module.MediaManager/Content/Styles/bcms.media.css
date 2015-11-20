@@ -472,6 +472,7 @@ div.bcms-align-right-active {
 
 .bcms-media-content-link {
   color: #0d7ce7;
+  cursor: pointer;
   font-family: "Open Sans", sans-serif !important;
   font-size: 12px;
   font-weight: 400;
@@ -482,25 +483,30 @@ div.bcms-align-right-active {
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
-  max-width: 600px;
+  position: absolute;
+  top: 5px;
+  left: 0;
+  color: #0d7ce7;
+  max-width: 700px;
+  z-index: 1;
 }
 
 .bcms-breadcrumbs-root {
+  cursor: pointer;
   display: inline;
   font-family: "Open Sans", sans-serif !important;
   font-size: 12px;
   font-weight: 600;
-  line-height: 20px;
+  line-height: 28px;
 }
 
-.bcms-breadcrumbs-root:first-child {
-  background: url("images/sprite-media-1.png") no-repeat -3px -29px;
-  color: #353535;
-  padding-left: 21px;
-}
-
-.bcms-breadcrumbs-root:first-child:hover {
-  color: #0383df;
+.bcms-preview-image-frame {
+  position: absolute;
+  -webkit-transform: translate(-50%, -50%);
+  -moz-transform: translate(-50%, -50%);
+  transform: translate(-50%, -50%);
+  left: 50%;
+  top: 50%;
 }
 
 div.bcms-nomedia-data {

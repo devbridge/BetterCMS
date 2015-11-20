@@ -14,13 +14,13 @@ bettercms.define('bcms.modal', ['bcms.jquery', 'bcms', 'bcms.tabs', 'bcms.ko.ext
             accept: '.bcms-modal-accept, .bcms-success-buttons-holder .bcms-btn-tertiary',
             cancel: '.bcms-js-btn-cancel',
             close: '.bcms-js-btn-close',
-            focusElements: '[tabindex=-1], .bcms-modal-close, .bcms-success-buttons-holder .bcms-btn-secondary, .bcms-preview-image-border .bcms-btn-close',
+            focusElements: '[tabindex=-1], .bcms-modal-close, .bcms-success-buttons-holder .bcms-btn-secondary, .bcms-js-preview-box .bcms-btn-close',
             body: '.bcms-modal-body, .bcms-error-frame, .bcms-popinfo-frame',
             content: '.bcms-modal-content, .bcms-message-description',
             loader: '.bcms-loader',
             scrollWindow: '.bcms-window-tabbed-options',
             previewImage: '.bcms-preview-image-frame img',
-            previewImageContainer: '.bcms-preview-image-border',
+            previewImageContainer: '.bcms-js-preview-box',
             previewFailure: '.bcms-grid-image-holder',
             footer: '.bcms-success-buttons-holder, .bcms-modal-footer',
             desirableStatus: '.bcms-content-desirable-status',
@@ -715,22 +715,16 @@ bettercms.define('bcms.modal', ['bcms.jquery', 'bcms', 'bcms.tabs', 'bcms.ko.ext
             imgLoaded = true;
 
             var imgContainer = dialog.container.find(selectors.previewImageContainer),
-                width = img.width(),
-                visibleWidth = $(window).width() - 150,
-                margin,
                 previewFailure = imgContainer.find(selectors.previewFailure);
 
             previewFailure.hide();
 
-            if (width > visibleWidth) {
-                width = visibleWidth;
-            }
+            //if (width > visibleWidth) {
+            //    width = visibleWidth;
+            //}
 
-            imgContainer.css('width', width + 'px');
-            img.css('width', '100%');
-
-            margin = (width + 50) / -2;
-            imgContainer.css('margin-left', margin + 'px');
+            //imgContainer.css('width', width + 'px');
+            //img.css('width', '100%');
 
             imgContainer.find(selectors.loader).hide();
             img.show();

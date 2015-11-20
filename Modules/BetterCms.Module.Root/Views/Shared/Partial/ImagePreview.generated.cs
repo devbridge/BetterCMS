@@ -45,8 +45,8 @@ WriteLiteral(" id=\"bcms-image-preview-template\"");
 
 WriteLiteral(@">
     <div class=""bcms-modal-alert"">
-        <div class=""bcms-preview-image-border"" tabindex=""-1"">
-            <a class=""bcms-btn-close bcms-js-btn-close"">Close</a>
+        <div class=""bcms-js-preview-box"" tabindex=""-1"">
+            <div class=""bcms-btn-close bcms-js-btn-close"">Close</div>
 
             <div class=""bcms-preview-image-frame"">
                 <img alt="""" src="""" style=""display: none;"" />
