@@ -255,7 +255,7 @@ WriteLiteral("</div>\r\n                </th>\r\n                <th");
 WriteLiteral(" style=\"width:40px; padding: 0;\"");
 
 WriteLiteral(">&nbsp;</th>\r\n            </tr>\r\n        </thead>\r\n        <tbody>\r\n            <" +
-"tr>\r\n                <td");
+"!-- ko if: !isSearchResults() -->\r\n            <tr>\r\n                <td");
 
 WriteLiteral(" colspan=\"3\"");
 
@@ -273,21 +273,19 @@ WriteLiteral(" class=\"bcms-media-name\"");
 WriteLiteral(">..</div>\r\n                    </div>\r\n                    <!-- /ko -->\r\n\r\n");
 
             
-            #line 63 "..\..\Views\Shared\Partial\MediaManagerInnerContentTemplate.cshtml"
+            #line 64 "..\..\Views\Shared\Partial\MediaManagerInnerContentTemplate.cshtml"
                     
             
             #line default
             #line hidden
             
-            #line 63 "..\..\Views\Shared\Partial\MediaManagerInnerContentTemplate.cshtml"
+            #line 64 "..\..\Views\Shared\Partial\MediaManagerInnerContentTemplate.cshtml"
                      if ((ViewContext.Controller as CmsControllerBase).SecurityService.IsAuthorized(RootModuleConstants.UserRoles.EditContent))
-                    {
+                    {                  
 
             
             #line default
             #line hidden
-WriteLiteral("                    <!-- ko if: !isSearchResults() -->\r\n");
-
 WriteLiteral("                        <div");
 
 WriteLiteral(" class=\"bcms-media-new-folder\"");
@@ -303,29 +301,24 @@ WriteLiteral(">");
             
             #line default
             #line hidden
-WriteLiteral("</div>\r\n");
-
-WriteLiteral("                    <!-- /ko -->\r\n");
+WriteLiteral("</div>       \r\n");
 
             
-            #line 68 "..\..\Views\Shared\Partial\MediaManagerInnerContentTemplate.cshtml"
+            #line 67 "..\..\Views\Shared\Partial\MediaManagerInnerContentTemplate.cshtml"
                     }
 
             
             #line default
             #line hidden
-WriteLiteral("                </td>\r\n            </tr>\r\n        </tbody>\r\n\r\n        <!-- ko if:" +
-" showNoDataInfoDiv() -->\r\n        <tbody>\r\n            <tr>\r\n                <td" +
-"");
+WriteLiteral("                </td>\r\n            </tr>\r\n            <!-- /ko -->\r\n            <" +
+"!-- ko if: showNoDataInfoDiv() -->    \r\n            <tr>\r\n                <td");
 
 WriteLiteral(" colspan=\"3\"");
-
-WriteLiteral(" class=\"bcms-nomedia-data\"");
 
 WriteLiteral(">\r\n                    <!-- ko if: isSearchResults() -->\r\n                    <di" +
 "v");
 
-WriteLiteral(" class=\"bcms-media-content-message\"");
+WriteLiteral(" class=\"bcms-media-content-link\"");
 
 WriteLiteral(">\r\n                        <!-- ko text: noSearchResultFound -->\r\n               " +
 "         <!-- /ko -->\r\n                    </div>\r\n                    <div");
@@ -336,7 +329,7 @@ WriteLiteral(" data-bind=\"visible: canSearchInHistory(), click: searchWithFilte
 WriteLiteral(">");
 
             
-            #line 82 "..\..\Views\Shared\Partial\MediaManagerInnerContentTemplate.cshtml"
+            #line 79 "..\..\Views\Shared\Partial\MediaManagerInnerContentTemplate.cshtml"
                                                                                                          Write(MediaGlobalization.MediaManager_Search_TrySearchInHistory);
 
             
@@ -345,32 +338,32 @@ WriteLiteral(">");
 WriteLiteral("</div>\r\n                    <!-- /ko -->\r\n                    <!-- ko ifnot: isSe" +
 "archResults() -->\r\n                    <div");
 
-WriteLiteral(" class=\"bcms-no-data-available\"");
+WriteLiteral(" class=\"bcms-media-content-link\"");
 
 WriteLiteral(">");
 
             
-            #line 85 "..\..\Views\Shared\Partial\MediaManagerInnerContentTemplate.cshtml"
-                                                   Write(RootGlobalization.Grid_NoDataAvailable_Message);
+            #line 82 "..\..\Views\Shared\Partial\MediaManagerInnerContentTemplate.cshtml"
+                                                    Write(RootGlobalization.Grid_NoDataAvailable_Message);
 
             
             #line default
             #line hidden
 WriteLiteral("</div>\r\n                    <!-- /ko -->\r\n                </td>\r\n            </tr" +
-">\r\n        </tbody>\r\n        <!-- /ko -->\r\n\r\n        <tbody");
+">\r\n            <!-- /ko -->\r\n        </tbody>\r\n        <tbody");
 
 WriteLiteral(" data-bind=\"foreach: medias()\"");
 
 WriteLiteral(">\r\n            <tr>\r\n                <td>\r\n");
 
             
-            #line 95 "..\..\Views\Shared\Partial\MediaManagerInnerContentTemplate.cshtml"
+            #line 91 "..\..\Views\Shared\Partial\MediaManagerInnerContentTemplate.cshtml"
                     
             
             #line default
             #line hidden
             
-            #line 95 "..\..\Views\Shared\Partial\MediaManagerInnerContentTemplate.cshtml"
+            #line 91 "..\..\Views\Shared\Partial\MediaManagerInnerContentTemplate.cshtml"
                      if ((ViewContext.Controller as CmsControllerBase).SecurityService.IsAuthorized(RootModuleConstants.UserRoles.EditContent))
                     {
 
@@ -389,7 +382,7 @@ WriteLiteral(" data-bind=\"click: editMedia.bind($data, $root), clickBubble: fal
 WriteLiteral(">");
 
             
-            #line 98 "..\..\Views\Shared\Partial\MediaManagerInnerContentTemplate.cshtml"
+            #line 94 "..\..\Views\Shared\Partial\MediaManagerInnerContentTemplate.cshtml"
                                                                                                                  Write(RootGlobalization.Button_Edit);
 
             
@@ -400,7 +393,7 @@ WriteLiteral("</div>\r\n");
 WriteLiteral("                    <!-- /ko -->\r\n");
 
             
-            #line 100 "..\..\Views\Shared\Partial\MediaManagerInnerContentTemplate.cshtml"
+            #line 96 "..\..\Views\Shared\Partial\MediaManagerInnerContentTemplate.cshtml"
                     }
 
             
@@ -443,7 +436,7 @@ WriteLiteral(" class=\"bcms-processing-file\"");
 WriteLiteral(">");
 
             
-            #line 115 "..\..\Views\Shared\Partial\MediaManagerInnerContentTemplate.cshtml"
+            #line 111 "..\..\Views\Shared\Partial\MediaManagerInnerContentTemplate.cshtml"
                                                          Write(MediaGlobalization.MediaManager_FileStillProcessing_Message);
 
             
@@ -458,7 +451,7 @@ WriteLiteral(" class=\"bcms-failed-file\"");
 WriteLiteral(">");
 
             
-            #line 119 "..\..\Views\Shared\Partial\MediaManagerInnerContentTemplate.cshtml"
+            #line 115 "..\..\Views\Shared\Partial\MediaManagerInnerContentTemplate.cshtml"
                                                      Write(MediaGlobalization.MediaManager_FailedToProcessFile_Message);
 
             
@@ -473,7 +466,7 @@ WriteLiteral(" class=\"bcms-failed-file\"");
 WriteLiteral(">");
 
             
-            #line 123 "..\..\Views\Shared\Partial\MediaManagerInnerContentTemplate.cshtml"
+            #line 119 "..\..\Views\Shared\Partial\MediaManagerInnerContentTemplate.cshtml"
                                                      Write(RootGlobalization.Message_Deleting);
 
             
@@ -485,23 +478,25 @@ WriteLiteral("</div>\r\n                            <!-- /ko -->\r\n            
 
 WriteLiteral(" class=\"bcms-parent-folder\"");
 
-WriteLiteral(">");
+WriteLiteral(">\r\n");
+
+WriteLiteral("                                ");
 
             
-            #line 127 "..\..\Views\Shared\Partial\MediaManagerInnerContentTemplate.cshtml"
-                                                       Write(MediaGlobalization.MediaManager_ItemParentFolder_Prefix);
+            #line 124 "..\..\Views\Shared\Partial\MediaManagerInnerContentTemplate.cshtml"
+                           Write(MediaGlobalization.MediaManager_ItemParentFolder_Prefix);
 
             
             #line default
             #line hidden
-WriteLiteral(": <div");
+WriteLiteral(": \r\n                                <div");
 
 WriteLiteral(" data-bind=\"click: openParent.bind($data, $root), clickBubble: false, text: paren" +
 "tFolderName()\"");
 
-WriteLiteral("></div></div>\r\n                            <!-- /ko -->\r\n                        " +
-"</div>\r\n                        <!-- /ko -->\r\n                    </div>\r\n\r\n    " +
-"                <div");
+WriteLiteral("></div>\r\n                            </div>\r\n                            <!-- /ko" +
+" -->\r\n                        </div>\r\n                        <!-- /ko -->\r\n    " +
+"                </div>\r\n\r\n                    <div");
 
 WriteLiteral(" class=\"bcms-media-controls\"");
 
@@ -512,13 +507,13 @@ WriteLiteral(" class=\"bcms-field-wrapper\"");
 WriteLiteral(">\r\n");
 
             
-            #line 135 "..\..\Views\Shared\Partial\MediaManagerInnerContentTemplate.cshtml"
+            #line 134 "..\..\Views\Shared\Partial\MediaManagerInnerContentTemplate.cshtml"
                             
             
             #line default
             #line hidden
             
-            #line 135 "..\..\Views\Shared\Partial\MediaManagerInnerContentTemplate.cshtml"
+            #line 134 "..\..\Views\Shared\Partial\MediaManagerInnerContentTemplate.cshtml"
                               
                                 var attributes = new Dictionary<string, object>
                             {
@@ -532,28 +527,28 @@ WriteLiteral(">\r\n");
             #line default
             #line hidden
             
-            #line 143 "..\..\Views\Shared\Partial\MediaManagerInnerContentTemplate.cshtml"
+            #line 142 "..\..\Views\Shared\Partial\MediaManagerInnerContentTemplate.cshtml"
                            Write(Html.TextBoxFor(m => m.Name, attributes));
 
             
             #line default
             #line hidden
             
-            #line 143 "..\..\Views\Shared\Partial\MediaManagerInnerContentTemplate.cshtml"
+            #line 142 "..\..\Views\Shared\Partial\MediaManagerInnerContentTemplate.cshtml"
                                                                          
                                 
             
             #line default
             #line hidden
             
-            #line 144 "..\..\Views\Shared\Partial\MediaManagerInnerContentTemplate.cshtml"
+            #line 143 "..\..\Views\Shared\Partial\MediaManagerInnerContentTemplate.cshtml"
                            Write(Html.BcmsValidationMessageFor(m => m.Name, null, new { @data_bind = "attr: {'data-valmsg-for': nameDomId}" }));
 
             
             #line default
             #line hidden
             
-            #line 144 "..\..\Views\Shared\Partial\MediaManagerInnerContentTemplate.cshtml"
+            #line 143 "..\..\Views\Shared\Partial\MediaManagerInnerContentTemplate.cshtml"
                                                                                                                                               
                             
             
@@ -572,7 +567,7 @@ WriteLiteral(" data-bind=\"click: saveMedia.bind($data, $root), clickBubble: fal
 WriteLiteral(">");
 
             
-            #line 149 "..\..\Views\Shared\Partial\MediaManagerInnerContentTemplate.cshtml"
+            #line 148 "..\..\Views\Shared\Partial\MediaManagerInnerContentTemplate.cshtml"
                                                                                                                          Write(RootGlobalization.Button_Save);
 
             
@@ -587,7 +582,7 @@ WriteLiteral(" data-bind=\"click: cancelEditMedia.bind($data, $root), clickBubbl
 WriteLiteral(">");
 
             
-            #line 150 "..\..\Views\Shared\Partial\MediaManagerInnerContentTemplate.cshtml"
+            #line 149 "..\..\Views\Shared\Partial\MediaManagerInnerContentTemplate.cshtml"
                                                                                                                               Write(RootGlobalization.Button_Cancel);
 
             
@@ -597,13 +592,13 @@ WriteLiteral("</div>\r\n                        </div>\r\n                    </
 "   </td>\r\n                <td>\r\n");
 
             
-            #line 155 "..\..\Views\Shared\Partial\MediaManagerInnerContentTemplate.cshtml"
+            #line 154 "..\..\Views\Shared\Partial\MediaManagerInnerContentTemplate.cshtml"
                     
             
             #line default
             #line hidden
             
-            #line 155 "..\..\Views\Shared\Partial\MediaManagerInnerContentTemplate.cshtml"
+            #line 154 "..\..\Views\Shared\Partial\MediaManagerInnerContentTemplate.cshtml"
                      if ((ViewContext.Controller as CmsControllerBase).SecurityService.IsAuthorized(RootModuleConstants.UserRoles.DeleteContent))
                     {
 
@@ -622,7 +617,7 @@ WriteLiteral(" data-bind=\"click: $parent.toggleMenu, clickBubble: false\"");
 WriteLiteral(">Menu</div>\r\n");
 
             
-            #line 159 "..\..\Views\Shared\Partial\MediaManagerInnerContentTemplate.cshtml"
+            #line 158 "..\..\Views\Shared\Partial\MediaManagerInnerContentTemplate.cshtml"
 
 
             
@@ -647,7 +642,7 @@ WriteLiteral(">\r\n                        <!--  ko if: isProcessing() -->\r\n")
 WriteLiteral("                        ");
 
             
-            #line 164 "..\..\Views\Shared\Partial\MediaManagerInnerContentTemplate.cshtml"
+            #line 163 "..\..\Views\Shared\Partial\MediaManagerInnerContentTemplate.cshtml"
                    Write(MediaGlobalization.MediaManager_FileStillProcessing_Message);
 
             
@@ -659,7 +654,7 @@ WriteLiteral("\r\n                        <!-- /ko -->\r\n                      
 WriteLiteral("                        ");
 
             
-            #line 167 "..\..\Views\Shared\Partial\MediaManagerInnerContentTemplate.cshtml"
+            #line 166 "..\..\Views\Shared\Partial\MediaManagerInnerContentTemplate.cshtml"
                    Write(RootGlobalization.Message_Deleting);
 
             
@@ -677,7 +672,7 @@ WriteLiteral(" data-bind=\"click: insertMedia.bind($data, $root), clickBubble: f
 WriteLiteral(">");
 
             
-            #line 171 "..\..\Views\Shared\Partial\MediaManagerInnerContentTemplate.cshtml"
+            #line 170 "..\..\Views\Shared\Partial\MediaManagerInnerContentTemplate.cshtml"
                                                                                                                               Write(MediaGlobalization.MediaManager_ButtonInsertFile);
 
             
@@ -694,7 +689,7 @@ WriteLiteral(" data-bind=\"click: insertMedia.bind($data, $root), clickBubble: f
 WriteLiteral(">");
 
             
-            #line 174 "..\..\Views\Shared\Partial\MediaManagerInnerContentTemplate.cshtml"
+            #line 173 "..\..\Views\Shared\Partial\MediaManagerInnerContentTemplate.cshtml"
                                                                                                                               Write(MediaGlobalization.MediaManager_ButtonInsertImage);
 
             
@@ -712,7 +707,7 @@ WriteLiteral(" data-bind=\"click: insertMediaWithOptions.bind($data, $root), cli
 WriteLiteral(">");
 
             
-            #line 177 "..\..\Views\Shared\Partial\MediaManagerInnerContentTemplate.cshtml"
+            #line 176 "..\..\Views\Shared\Partial\MediaManagerInnerContentTemplate.cshtml"
                                                                                                                                          Write(MediaGlobalization.MediaManager_ButtonInsertImageWithOptions);
 
             
@@ -733,7 +728,7 @@ WriteLiteral(" data-bind=\"click: openMedia.bind($data, $root), clickBubble: fal
 WriteLiteral(">");
 
             
-            #line 183 "..\..\Views\Shared\Partial\MediaManagerInnerContentTemplate.cshtml"
+            #line 182 "..\..\Views\Shared\Partial\MediaManagerInnerContentTemplate.cshtml"
                                                                                                                             Write(RootGlobalization.Button_Open);
 
             
@@ -749,7 +744,7 @@ WriteLiteral(" data-bind=\"click: previewImage.bind($data, $root), clickBubble: 
 WriteLiteral(">");
 
             
-            #line 186 "..\..\Views\Shared\Partial\MediaManagerInnerContentTemplate.cshtml"
+            #line 185 "..\..\Views\Shared\Partial\MediaManagerInnerContentTemplate.cshtml"
                                                                                                                                Write(MediaGlobalization.MediaManager_ButtonPreviewImage);
 
             
@@ -759,7 +754,7 @@ WriteLiteral("</div>\r\n                        <!-- /ko -->\r\n                
 " !isReadOnly() && !isFailed() && (isFolder() || isImage() && !publicUrl() || (");
 
             
-            #line 188 "..\..\Views\Shared\Partial\MediaManagerInnerContentTemplate.cshtml"
+            #line 187 "..\..\Views\Shared\Partial\MediaManagerInnerContentTemplate.cshtml"
                                                                                                              Write(canEdit ? "true" : "false");
 
             
@@ -769,13 +764,13 @@ WriteLiteral(" && !isFolder() && !publicUrl()) || (!isFolder() && !publicUrl()))
 "               <!-- /ko -->\r\n");
 
             
-            #line 190 "..\..\Views\Shared\Partial\MediaManagerInnerContentTemplate.cshtml"
+            #line 189 "..\..\Views\Shared\Partial\MediaManagerInnerContentTemplate.cshtml"
                         
             
             #line default
             #line hidden
             
-            #line 190 "..\..\Views\Shared\Partial\MediaManagerInnerContentTemplate.cshtml"
+            #line 189 "..\..\Views\Shared\Partial\MediaManagerInnerContentTemplate.cshtml"
                          if (canEdit)
                         {
 
@@ -794,7 +789,7 @@ WriteLiteral(" data-bind=\"click: archiveMedia.bind($data, $root), clickBubble: 
 WriteLiteral(">");
 
             
-            #line 193 "..\..\Views\Shared\Partial\MediaManagerInnerContentTemplate.cshtml"
+            #line 192 "..\..\Views\Shared\Partial\MediaManagerInnerContentTemplate.cshtml"
                                                                                                                                    Write(MediaGlobalization.MediaManager_ButtonArchive);
 
             
@@ -816,7 +811,7 @@ WriteLiteral(" data-bind=\"click: unarchiveMedia.bind($data, $root), clickBubble
 WriteLiteral(">");
 
             
-            #line 196 "..\..\Views\Shared\Partial\MediaManagerInnerContentTemplate.cshtml"
+            #line 195 "..\..\Views\Shared\Partial\MediaManagerInnerContentTemplate.cshtml"
                                                                                                                                      Write(MediaGlobalization.MediaManager_ButtonUnarchive);
 
             
@@ -827,7 +822,7 @@ WriteLiteral("</div>\r\n");
 WriteLiteral("                    <!-- /ko -->\r\n");
 
             
-            #line 198 "..\..\Views\Shared\Partial\MediaManagerInnerContentTemplate.cshtml"
+            #line 197 "..\..\Views\Shared\Partial\MediaManagerInnerContentTemplate.cshtml"
                         }
 
             
@@ -836,7 +831,7 @@ WriteLiteral("                    <!-- /ko -->\r\n");
 WriteLiteral("                        ");
 
             
-            #line 199 "..\..\Views\Shared\Partial\MediaManagerInnerContentTemplate.cshtml"
+            #line 198 "..\..\Views\Shared\Partial\MediaManagerInnerContentTemplate.cshtml"
                          if ((ViewContext.Controller as
                     CmsControllerBase).SecurityService.IsAuthorized(RootModuleConstants.UserRoles.DeleteContent))
                         {
@@ -854,7 +849,7 @@ WriteLiteral(" data-bind=\"click: deleteMedia.bind($data, $root), clickBubble: f
 WriteLiteral(">");
 
             
-            #line 202 "..\..\Views\Shared\Partial\MediaManagerInnerContentTemplate.cshtml"
+            #line 201 "..\..\Views\Shared\Partial\MediaManagerInnerContentTemplate.cshtml"
                                                                                                                                                           Write(RootGlobalization.Button_Delete);
 
             
@@ -863,7 +858,7 @@ WriteLiteral(">");
 WriteLiteral("</div>\r\n");
 
             
-            #line 203 "..\..\Views\Shared\Partial\MediaManagerInnerContentTemplate.cshtml"
+            #line 202 "..\..\Views\Shared\Partial\MediaManagerInnerContentTemplate.cshtml"
                         }
 
             
@@ -872,7 +867,7 @@ WriteLiteral("</div>\r\n");
 WriteLiteral("                        ");
 
             
-            #line 204 "..\..\Views\Shared\Partial\MediaManagerInnerContentTemplate.cshtml"
+            #line 203 "..\..\Views\Shared\Partial\MediaManagerInnerContentTemplate.cshtml"
                          if (canEdit)
                         {
 
@@ -891,7 +886,7 @@ WriteLiteral(" data-bind=\"click: renameMedia.bind($data, $root), clickBubble: f
 WriteLiteral(">");
 
             
-            #line 207 "..\..\Views\Shared\Partial\MediaManagerInnerContentTemplate.cshtml"
+            #line 206 "..\..\Views\Shared\Partial\MediaManagerInnerContentTemplate.cshtml"
                                                                                                                                                           Write(RootGlobalization.Button_Rename);
 
             
@@ -902,7 +897,7 @@ WriteLiteral("</div>\r\n");
 WriteLiteral("                    <!-- /ko -->\r\n");
 
             
-            #line 209 "..\..\Views\Shared\Partial\MediaManagerInnerContentTemplate.cshtml"
+            #line 208 "..\..\Views\Shared\Partial\MediaManagerInnerContentTemplate.cshtml"
                         }
 
             
@@ -923,7 +918,7 @@ WriteLiteral(" data-bind=\"click: downloadMedia, clickBubble: false\"");
 WriteLiteral(">");
 
             
-            #line 215 "..\..\Views\Shared\Partial\MediaManagerInnerContentTemplate.cshtml"
+            #line 214 "..\..\Views\Shared\Partial\MediaManagerInnerContentTemplate.cshtml"
                                                                                                              Write(MediaGlobalization.MediaManager_ButtonDownload);
 
             
@@ -932,13 +927,13 @@ WriteLiteral(">");
 WriteLiteral("</div>\r\n                        <!-- /ko -->\r\n");
 
             
-            #line 217 "..\..\Views\Shared\Partial\MediaManagerInnerContentTemplate.cshtml"
+            #line 216 "..\..\Views\Shared\Partial\MediaManagerInnerContentTemplate.cshtml"
                         
             
             #line default
             #line hidden
             
-            #line 217 "..\..\Views\Shared\Partial\MediaManagerInnerContentTemplate.cshtml"
+            #line 216 "..\..\Views\Shared\Partial\MediaManagerInnerContentTemplate.cshtml"
                          if (canEdit)
                         {
 
@@ -957,7 +952,7 @@ WriteLiteral(" data-bind=\"click: reuploadMedia.bind($data, $root), clickBubble:
 WriteLiteral(">");
 
             
-            #line 220 "..\..\Views\Shared\Partial\MediaManagerInnerContentTemplate.cshtml"
+            #line 219 "..\..\Views\Shared\Partial\MediaManagerInnerContentTemplate.cshtml"
                                                                                                                                                             Write(MediaGlobalization.Button_Reupload);
 
             
@@ -968,7 +963,7 @@ WriteLiteral("</div>\r\n");
 WriteLiteral("                    <!-- /ko -->\r\n");
 
             
-            #line 222 "..\..\Views\Shared\Partial\MediaManagerInnerContentTemplate.cshtml"
+            #line 221 "..\..\Views\Shared\Partial\MediaManagerInnerContentTemplate.cshtml"
                         }
 
             
@@ -977,7 +972,7 @@ WriteLiteral("                    <!-- /ko -->\r\n");
 WriteLiteral("                        <!-- ko if: (!isFolder() && ");
 
             
-            #line 223 "..\..\Views\Shared\Partial\MediaManagerInnerContentTemplate.cshtml"
+            #line 222 "..\..\Views\Shared\Partial\MediaManagerInnerContentTemplate.cshtml"
                                                 Write(canEdit ? "true" : "false");
 
             
@@ -986,13 +981,13 @@ WriteLiteral("                        <!-- ko if: (!isFolder() && ");
 WriteLiteral(") || (!isFailed() && isImage()) -->\r\n\r\n                        <!-- /ko -->\r\n");
 
             
-            #line 226 "..\..\Views\Shared\Partial\MediaManagerInnerContentTemplate.cshtml"
+            #line 225 "..\..\Views\Shared\Partial\MediaManagerInnerContentTemplate.cshtml"
                         
             
             #line default
             #line hidden
             
-            #line 226 "..\..\Views\Shared\Partial\MediaManagerInnerContentTemplate.cshtml"
+            #line 225 "..\..\Views\Shared\Partial\MediaManagerInnerContentTemplate.cshtml"
                          if (canEdit)
                         {
 
@@ -1010,7 +1005,7 @@ WriteLiteral(" data-bind=\"click: showHistory.bind($data, $root), clickBubble: f
 WriteLiteral(">");
 
             
-            #line 229 "..\..\Views\Shared\Partial\MediaManagerInnerContentTemplate.cshtml"
+            #line 228 "..\..\Views\Shared\Partial\MediaManagerInnerContentTemplate.cshtml"
                                                                                                                                   Write(MediaGlobalization.Button_ShowHistory);
 
             
@@ -1021,7 +1016,7 @@ WriteLiteral("</div>\r\n");
 WriteLiteral("                    <!-- /ko -->\r\n");
 
             
-            #line 231 "..\..\Views\Shared\Partial\MediaManagerInnerContentTemplate.cshtml"
+            #line 230 "..\..\Views\Shared\Partial\MediaManagerInnerContentTemplate.cshtml"
                         }
 
             
@@ -1030,7 +1025,7 @@ WriteLiteral("                    <!-- /ko -->\r\n");
 WriteLiteral("                        ");
 
             
-            #line 232 "..\..\Views\Shared\Partial\MediaManagerInnerContentTemplate.cshtml"
+            #line 231 "..\..\Views\Shared\Partial\MediaManagerInnerContentTemplate.cshtml"
                          if (canEdit)
                         {
 
@@ -1048,7 +1043,7 @@ WriteLiteral(" data-bind=\"click: editMedia.bind($data, $root), clickBubble: fal
 WriteLiteral(">");
 
             
-            #line 235 "..\..\Views\Shared\Partial\MediaManagerInnerContentTemplate.cshtml"
+            #line 234 "..\..\Views\Shared\Partial\MediaManagerInnerContentTemplate.cshtml"
                                                                                                                                 Write(MediaGlobalization.MediaManager_ButtonProperties);
 
             
@@ -1059,7 +1054,7 @@ WriteLiteral("</div>\r\n");
 WriteLiteral("                    <!-- /ko -->\r\n");
 
             
-            #line 237 "..\..\Views\Shared\Partial\MediaManagerInnerContentTemplate.cshtml"
+            #line 236 "..\..\Views\Shared\Partial\MediaManagerInnerContentTemplate.cshtml"
                         }
 
             
@@ -1087,7 +1082,7 @@ WriteLiteral(" />\r\n                        </div>\r\n                        <
 WriteLiteral("                    <!-- /ko -->\r\n");
 
             
-            #line 248 "..\..\Views\Shared\Partial\MediaManagerInnerContentTemplate.cshtml"
+            #line 247 "..\..\Views\Shared\Partial\MediaManagerInnerContentTemplate.cshtml"
                     }
 
             
@@ -1110,7 +1105,7 @@ WriteLiteral(" class=\"bcms-content-titles\"");
 WriteLiteral(">");
 
             
-            #line 255 "..\..\Views\Shared\Partial\MediaManagerInnerContentTemplate.cshtml"
+            #line 254 "..\..\Views\Shared\Partial\MediaManagerInnerContentTemplate.cshtml"
                                 Write(MediaGlobalization.MediaManager_ImageSize);
 
             
@@ -1124,7 +1119,7 @@ WriteLiteral("></span></div>\r\n    <!-- ko if: previewItem.dimensions() -->\r\n
 " class =\"bcms-content-titles\">");
 
             
-            #line 258 "..\..\Views\Shared\Partial\MediaManagerInnerContentTemplate.cshtml"
+            #line 257 "..\..\Views\Shared\Partial\MediaManagerInnerContentTemplate.cshtml"
                                  Write(MediaGlobalization.MediaManager_ImageDimensions);
 
             

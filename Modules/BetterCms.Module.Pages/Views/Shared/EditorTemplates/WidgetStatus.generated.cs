@@ -85,13 +85,13 @@ else if (Model == ContentStatus.Draft.ToString())
             #line hidden
 WriteLiteral("    <div");
 
-WriteLiteral(" class=\"bcms-icn-draft\"");
+WriteLiteral(" class=\"bcms-action-draft\"");
 
 WriteLiteral(">");
 
             
             #line 11 "..\..\Views\Shared\EditorTemplates\WidgetStatus.cshtml"
-                           Write(RootGlobalization.WidgetStatus_Draft);
+                              Write(RootGlobalization.WidgetStatus_Draft);
 
             
             #line default
@@ -109,7 +109,7 @@ else
             #line hidden
 WriteLiteral("    <div");
 
-WriteLiteral(" class=\"bcms-icn-pubdraft\"");
+WriteLiteral(" class=\"bcms-action-draft\"");
 
 WriteLiteral(">");
 
