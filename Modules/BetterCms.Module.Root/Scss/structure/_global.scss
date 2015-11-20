@@ -111,16 +111,6 @@ $loading-spinner: (
 }
 
 .bcms-editor {
-    &-box {
-        @include position(absolute, null null 50% 0);
-        background-color: $white;
-        border: $border-thin-smoke;
-        box-shadow: $pop-box-shadow;
-        box-sizing: border-box;
-        padding: 15px;
-        width: 375px;
-    }
-
     &-link {
         color: $text-blue;
         cursor: pointer;
@@ -131,6 +121,21 @@ $loading-spinner: (
         }
         margin-left: 5px;
         text-transform: uppercase;
+    }
+
+    &-box {
+        @include position(absolute, null null 50% 0);
+        background-color: $white;
+        border: $border-pop-box;
+        box-shadow: $pop-box-shadow;
+        box-sizing: border-box;
+        padding: 15px;
+        width: 375px;
+
+        .bcms-field-wrapper {
+            @include vertical-align();
+            width: 75%;
+        }
     }
 }
 

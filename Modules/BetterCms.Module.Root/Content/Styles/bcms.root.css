@@ -439,18 +439,6 @@ a:hover {
   float: right;
 }
 
-.bcms-editor-box {
-  position: absolute;
-  bottom: 50%;
-  left: 0;
-  background-color: #ffffff;
-  border: 1px solid #dfdfdf;
-  box-shadow: 0 0 20px 0 rgba(0, 0, 0, 0.2);
-  box-sizing: border-box;
-  padding: 15px;
-  width: 375px;
-}
-
 .bcms-editor-link {
   color: #0d7ce7;
   cursor: pointer;
@@ -459,6 +447,24 @@ a:hover {
   font-weight: 700;
   margin-left: 5px;
   text-transform: uppercase;
+}
+
+.bcms-editor-box {
+  position: absolute;
+  bottom: 50%;
+  left: 0;
+  background-color: #ffffff;
+  border: 1px solid #cdcdcd;
+  box-shadow: 0 0 20px 0 rgba(0, 0, 0, 0.2);
+  box-sizing: border-box;
+  padding: 15px;
+  width: 375px;
+}
+
+.bcms-editor-box .bcms-field-wrapper {
+  display: inline-block;
+  vertical-align: middle;
+  width: 75%;
 }
 
 .bcms-edit-urlpath-box {
