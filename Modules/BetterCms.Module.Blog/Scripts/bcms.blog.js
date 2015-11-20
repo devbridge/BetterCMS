@@ -241,8 +241,6 @@ bettercms.define('bcms.blog', ['bcms.jquery', 'bcms', 'bcms.modal', 'bcms.siteSe
                     return categorySelector != null ? categorySelector.val() : null;
                 };
 
-            var editorHeight = modal.maximizeChildHeight(dialog.container.find("#" + selectors.htmlEditor), dialog);
-
             if (contentTextMode == bcmsContent.contentTextModes.markdown) {
                 htmlEditor.initializeMarkdownEditor(selectors.htmlEditor, '', {});
             }
@@ -252,9 +250,25 @@ bettercms.define('bcms.blog', ['bcms.jquery', 'bcms', 'bcms.modal', 'bcms.siteSe
             }
 
             if (contentTextMode == bcmsContent.contentTextModes.html) {
-                htmlEditor.initializeHtmlEditor(selectors.htmlEditor, data.ContentId, {
-                    height: editorHeight
-                }, data.EditInSourceMode);
+                var heightOptions = {
+                    topElements: [
+                    {
+                        element: '.bcms-content-info-block',
+                        takeMargins: true
+                    },{
+                        element: '.bcms-js-blog-permalink',
+                        takeMargins: true
+                    },
+                    {
+                        element: '.bcms-content-titles',
+                        takeMargins: true
+                    }],
+                    container: '.bcms-window-tabbed-options',
+                    parent: '#bcms-tab-1',
+                    marginBottom: 1
+                };
+
+                htmlEditor.initializeHtmlEditor(selectors.htmlEditor, data.ContentId, {}, data.EditInSourceMode, heightOptions);
             }
 
             if (data.Version == 0) {

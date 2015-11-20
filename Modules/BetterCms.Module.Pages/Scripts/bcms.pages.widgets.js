@@ -355,12 +355,25 @@ bettercms.define('bcms.pages.widgets', ['bcms.jquery', 'bcms', 'bcms.modal', 'bc
                 });
             });
 
-            var editorHeight = modal.maximizeChildHeight(dialog.container.find("#" + editorId), dialog);
+            var heightOptions = {
+                topElements: [
+                {
+                    element: '.bcms-content-info-block',
+                    takeMargins: true
+                },
+                {
+                    element: '.bcms-content-titles',
+                    takeMargins: true
+                }],
+                container: '.bcms-window-tabbed-options',
+                bottomElement: '.bcms-check-field-helper',
+                parent: '#bcms-tab-1',
+                marginBottom: 1
+            };
 
             htmlEditor.initializeHtmlEditor(editorId, data.Id, {
-                cmsEditorType: htmlEditor.cmsEditorTypes.widget,
-                height: editorHeight
-            }, editInSourceMode);
+                cmsEditorType: htmlEditor.cmsEditorTypes.widget
+            }, editInSourceMode, heightOptions);
             htmlEditor.enableInsertDynamicRegion(editorId, false, data.LastDynamicRegionNumber);
 
             dialog.container.find(selectors.editContentCloseInfoMessage).on('click', function () {
@@ -369,9 +382,20 @@ bettercms.define('bcms.pages.widgets', ['bcms.jquery', 'bcms', 'bcms.modal', 'bc
 
             dialog.container.find(selectors.htmlWidgetJsCssTabOpener).on('click', function () {
                 if (!codeEditorInitialized) {
+                    var heightOptions = {
+                        marginTop: 30,
+                        topElements: [{
+                                element: '.bcms-content-titles',
+                                takeMargins: true
+                            }],
+                        container: '.bcms-window-tabbed-options',
+                        bottomElement: '.bcms-check-field-helper',
+                        parent: '.bcms-input-list-holder',
+                        marginBottom: 1
+                    };
                     codeEditor.initialize(dialog.container, dialog, {
                         cmsEditorType: htmlEditor.cmsEditorTypes.page
-                    });
+                    }, heightOptions);
                     codeEditorInitialized = true;
                 }
             });

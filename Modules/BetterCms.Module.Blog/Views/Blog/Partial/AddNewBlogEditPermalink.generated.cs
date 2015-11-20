@@ -69,7 +69,7 @@ namespace ASP
         {
 WriteLiteral("<div");
 
-WriteLiteral(" class=\"bcms-input-list-holder\"");
+WriteLiteral(" class=\"bcms-input-list-holder bcms-js-blog-permalink\"");
 
 WriteLiteral(">\r\n    <div");
 
