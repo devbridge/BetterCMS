@@ -421,6 +421,11 @@ a:hover {
   float: left;
 }
 
+.bcms-content-subtitle {
+  font-size: 14px;
+  line-height: 19px;
+}
+
 .bcms-content-dialog-title {
   border-bottom: 1px solid #dfdfdf;
   color: #636363;
@@ -432,6 +437,28 @@ a:hover {
 
 .bcms-content-dialog-title .bcms-btn-cancel {
   float: right;
+}
+
+.bcms-editor-box {
+  position: absolute;
+  bottom: 50%;
+  left: 0;
+  background-color: #ffffff;
+  border: 1px solid #dfdfdf;
+  box-shadow: 0 0 20px 0 rgba(0, 0, 0, 0.2);
+  box-sizing: border-box;
+  padding: 15px;
+  width: 375px;
+}
+
+.bcms-editor-link {
+  color: #0d7ce7;
+  cursor: pointer;
+  display: inline;
+  font-size: 12px;
+  font-weight: 700;
+  margin-left: 5px;
+  text-transform: uppercase;
 }
 
 .bcms-edit-urlpath-box {

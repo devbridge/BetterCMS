@@ -84,6 +84,11 @@ $loading-spinner: (
         float: left;
     }
 
+    &-subtitle {
+        font-size: 14px;
+        line-height: 19px;
+    }
+
     &-dialog-title {
         @include clearfix();
         border-bottom: $border-thin-smoke;
@@ -102,6 +107,30 @@ $loading-spinner: (
 
     &-description {
 
+    }
+}
+
+.bcms-editor {
+    &-box {
+        @include position(absolute, null null 50% 0);
+        background-color: $white;
+        border: $border-thin-smoke;
+        box-shadow: $pop-box-shadow;
+        box-sizing: border-box;
+        padding: 15px;
+        width: 375px;
+    }
+
+    &-link {
+        color: $text-blue;
+        cursor: pointer;
+        display: inline;
+        font: {
+            size: 12px;
+            weight: 700;
+        }
+        margin-left: 5px;
+        text-transform: uppercase;
     }
 }
 
