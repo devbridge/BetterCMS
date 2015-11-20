@@ -1492,14 +1492,17 @@ WriteLiteral("                            ");
             
             #line default
             #line hidden
-WriteLiteral("\r\n                            <select");
+WriteLiteral("\r\n                            <div");
 
-WriteLiteral(" class=\"bcms-global-select\"");
+WriteLiteral(" class=\"bcms-field-wrapper\"");
+
+WriteLiteral(">\r\n                                <select");
 
 WriteLiteral(" data-bind=\"options: languages, optionsText: \'value\', optionsValue: \'key\', value:" +
 " languageId, select2: { minimumResultsForSearch: -1 }\"");
 
-WriteLiteral("></select>\r\n                        </div>\r\n\r\n                        <div");
+WriteLiteral("></select>\r\n                            </div>\r\n                            </div" +
+">\r\n\r\n                        <div");
 
 WriteLiteral(" class=\"bcms-input-list-holder\"");
 
@@ -1510,7 +1513,7 @@ WriteLiteral(" class=\"bcms-content-titles\"");
 WriteLiteral(">");
 
             
-            #line 299 "..\..\Views\Page\EditPageProperties.cshtml"
+            #line 301 "..\..\Views\Page\EditPageProperties.cshtml"
                                                         Write(PagesGlobalization.EditPageTranslations_OtherLanguages_Title);
 
             
@@ -1521,7 +1524,7 @@ WriteLiteral("</div>\r\n");
 WriteLiteral("                            ");
 
             
-            #line 300 "..\..\Views\Page\EditPageProperties.cshtml"
+            #line 302 "..\..\Views\Page\EditPageProperties.cshtml"
                        Write(Html.Tooltip(PagesGlobalization.EditPageTranslations_OtherLanguages_Tooltip));
 
             
@@ -1532,7 +1535,7 @@ WriteLiteral("\r\n                        </div>\r\n                    </div>\r
 WriteLiteral("                    ");
 
             
-            #line 304 "..\..\Views\Page\EditPageProperties.cshtml"
+            #line 306 "..\..\Views\Page\EditPageProperties.cshtml"
                Write(Html.Partial("Partial/TranslationsGrid"));
 
             
@@ -1541,7 +1544,7 @@ WriteLiteral("                    ");
 WriteLiteral("\r\n                </div>\r\n");
 
             
-            #line 306 "..\..\Views\Page\EditPageProperties.cshtml"
+            #line 308 "..\..\Views\Page\EditPageProperties.cshtml"
             }
 
             
@@ -1549,14 +1552,14 @@ WriteLiteral("\r\n                </div>\r\n");
             #line default
             #line hidden
             
-            #line 308 "..\..\Views\Page\EditPageProperties.cshtml"
+            #line 310 "..\..\Views\Page\EditPageProperties.cshtml"
        Write(Html.HiddenSubmit());
 
             
             #line default
             #line hidden
             
-            #line 308 "..\..\Views\Page\EditPageProperties.cshtml"
+            #line 310 "..\..\Views\Page\EditPageProperties.cshtml"
                                 
         }
 

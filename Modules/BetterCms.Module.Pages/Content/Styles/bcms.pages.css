@@ -655,6 +655,10 @@
   margin: 4px 0 0 -3px;
 }
 
+.bcms-language-selector-box {
+  float: right;
+}
+
 .bcms-single-tag {
   overflow: hidden;
   text-overflow: ellipsis;

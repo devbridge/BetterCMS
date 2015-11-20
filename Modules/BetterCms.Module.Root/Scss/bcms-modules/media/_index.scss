@@ -74,6 +74,10 @@
             max-width: 400px;
         }
     }
+
+    &-click-active {
+        background-color: $sky-blue !important;
+    }
 }
 
 .bcms-folder-box {

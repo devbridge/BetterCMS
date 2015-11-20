@@ -211,20 +211,29 @@ WriteLiteral("</div>\r\n");
             
             #line 32 "..\..\Views\Upload\SingleFileUpload.cshtml"
                                                                                                
-                    
-            
-            #line default
-            #line hidden
-            
-            #line 33 "..\..\Views\Upload\SingleFileUpload.cshtml"
-               Write(Html.DropDownListFor(f => f.SelectedFolderId, Model.Folders.Select(o => new SelectListItem { Selected = Model.SelectedFolderId == o.Item1, Text = o.Item2, Value = o.Item1.ToString() }), new { @class = "bcms-global-select" }));
 
             
             #line default
             #line hidden
+WriteLiteral("                    <div");
+
+WriteLiteral(" class=\"bcms-field-wrapper\"");
+
+WriteLiteral(">\r\n");
+
+WriteLiteral("                    ");
+
             
-            #line 33 "..\..\Views\Upload\SingleFileUpload.cshtml"
-                                                                                                                                                                                                                                                     
+            #line 34 "..\..\Views\Upload\SingleFileUpload.cshtml"
+               Write(Html.DropDownListFor(f => f.SelectedFolderId, Model.Folders.Select(o => new SelectListItem { Selected = Model.SelectedFolderId == o.Item1, Text = o.Item2, Value = o.Item1.ToString() })));
+
+            
+            #line default
+            #line hidden
+WriteLiteral("\r\n                        </div>\r\n");
+
+            
+            #line 36 "..\..\Views\Upload\SingleFileUpload.cshtml"
                 }
                 else
                 {
@@ -233,14 +242,14 @@ WriteLiteral("</div>\r\n");
             #line default
             #line hidden
             
-            #line 37 "..\..\Views\Upload\SingleFileUpload.cshtml"
+            #line 39 "..\..\Views\Upload\SingleFileUpload.cshtml"
                Write(Html.HiddenFor(f => f.SelectedFolderId, new { @Value = Model.RootFolderId }));
 
             
             #line default
             #line hidden
             
-            #line 37 "..\..\Views\Upload\SingleFileUpload.cshtml"
+            #line 39 "..\..\Views\Upload\SingleFileUpload.cshtml"
                                                                                                  
                 }
 
@@ -250,7 +259,7 @@ WriteLiteral("</div>\r\n");
 WriteLiteral("            </div>\r\n");
 
             
-            #line 40 "..\..\Views\Upload\SingleFileUpload.cshtml"
+            #line 42 "..\..\Views\Upload\SingleFileUpload.cshtml"
 
 
             
@@ -273,7 +282,7 @@ WriteLiteral(" class=\"bcms-file-drop-zone-text\"");
 WriteLiteral(" data-bind=\"text: !(activeUploads().length > 0) ? \'");
 
             
-            #line 43 "..\..\Views\Upload\SingleFileUpload.cshtml"
+            #line 45 "..\..\Views\Upload\SingleFileUpload.cshtml"
                                                                                                        Write(MediaGlobalization.SingleFileUpload_DragDropBox);
 
             
@@ -282,7 +291,7 @@ WriteLiteral(" data-bind=\"text: !(activeUploads().length > 0) ? \'");
 WriteLiteral("\' : \'");
 
             
-            #line 43 "..\..\Views\Upload\SingleFileUpload.cshtml"
+            #line 45 "..\..\Views\Upload\SingleFileUpload.cshtml"
                                                                                                                                                             Write(MediaGlobalization.MultiFileUpload_Uploading);
 
             
@@ -305,7 +314,7 @@ WriteLiteral(" class=\"bcms-btn-upload-files-text\"");
 WriteLiteral(">");
 
             
-            #line 46 "..\..\Views\Upload\SingleFileUpload.cshtml"
+            #line 48 "..\..\Views\Upload\SingleFileUpload.cshtml"
                                                                               Write(MediaGlobalization.MultiFileUpload_UploadButton);
 
             
@@ -324,7 +333,7 @@ WriteLiteral(" style=\"position: absolute; left: -999em; top: -999em;\"");
 WriteLiteral(" />\r\n                    </div>\r\n                </div>\r\n            </div>\r\n");
 
             
-            #line 51 "..\..\Views\Upload\SingleFileUpload.cshtml"
+            #line 53 "..\..\Views\Upload\SingleFileUpload.cshtml"
         }
 
             
@@ -333,7 +342,7 @@ WriteLiteral(" />\r\n                    </div>\r\n                </div>\r\n   
 WriteLiteral("        ");
 
             
-            #line 52 "..\..\Views\Upload\SingleFileUpload.cshtml"
+            #line 54 "..\..\Views\Upload\SingleFileUpload.cshtml"
          using (Html.BeginForm<UploadController>(c => c.SaveUploads(null), FormMethod.Post, new { id = "SaveForm", name = "SaveForm", @class = "bcms-ajax-form" }))
         {
             
@@ -341,42 +350,42 @@ WriteLiteral("        ");
             #line default
             #line hidden
             
-            #line 54 "..\..\Views\Upload\SingleFileUpload.cshtml"
+            #line 56 "..\..\Views\Upload\SingleFileUpload.cshtml"
        Write(Html.HiddenFor(f => f.ReuploadMediaId));
 
             
             #line default
             #line hidden
             
-            #line 54 "..\..\Views\Upload\SingleFileUpload.cshtml"
+            #line 56 "..\..\Views\Upload\SingleFileUpload.cshtml"
                                                    
             
             
             #line default
             #line hidden
             
-            #line 55 "..\..\Views\Upload\SingleFileUpload.cshtml"
+            #line 57 "..\..\Views\Upload\SingleFileUpload.cshtml"
        Write(Html.HiddenFor(m => m.RootFolderId));
 
             
             #line default
             #line hidden
             
-            #line 55 "..\..\Views\Upload\SingleFileUpload.cshtml"
+            #line 57 "..\..\Views\Upload\SingleFileUpload.cshtml"
                                                 
             
             
             #line default
             #line hidden
             
-            #line 56 "..\..\Views\Upload\SingleFileUpload.cshtml"
+            #line 58 "..\..\Views\Upload\SingleFileUpload.cshtml"
        Write(Html.HiddenFor(m => m.RootFolderType));
 
             
             #line default
             #line hidden
             
-            #line 56 "..\..\Views\Upload\SingleFileUpload.cshtml"
+            #line 58 "..\..\Views\Upload\SingleFileUpload.cshtml"
                                                   
             if (Model.RootFolderId.HasDefaultValue())
             {
@@ -385,14 +394,14 @@ WriteLiteral("        ");
             #line default
             #line hidden
             
-            #line 59 "..\..\Views\Upload\SingleFileUpload.cshtml"
+            #line 61 "..\..\Views\Upload\SingleFileUpload.cshtml"
            Write(Html.HiddenFor(m => m.SelectedFolderId));
 
             
             #line default
             #line hidden
             
-            #line 59 "..\..\Views\Upload\SingleFileUpload.cshtml"
+            #line 61 "..\..\Views\Upload\SingleFileUpload.cshtml"
                                                         
             }
             else
@@ -402,14 +411,14 @@ WriteLiteral("        ");
             #line default
             #line hidden
             
-            #line 63 "..\..\Views\Upload\SingleFileUpload.cshtml"
+            #line 65 "..\..\Views\Upload\SingleFileUpload.cshtml"
            Write(Html.HiddenFor(m => m.SelectedFolderId, new { @Value = Model.RootFolderId }));
 
             
             #line default
             #line hidden
             
-            #line 63 "..\..\Views\Upload\SingleFileUpload.cshtml"
+            #line 65 "..\..\Views\Upload\SingleFileUpload.cshtml"
                                                                                              
             }
 
@@ -426,7 +435,7 @@ WriteLiteral(" data-bind=\"template: { name: \'bcms-file-upload-template\' }\"")
 WriteLiteral("></div>\r\n");
 
             
-            #line 67 "..\..\Views\Upload\SingleFileUpload.cshtml"
+            #line 69 "..\..\Views\Upload\SingleFileUpload.cshtml"
 
             if (Model.AccessControlEnabled)
             {
@@ -435,14 +444,14 @@ WriteLiteral("></div>\r\n");
             #line default
             #line hidden
             
-            #line 70 "..\..\Views\Upload\SingleFileUpload.cshtml"
+            #line 72 "..\..\Views\Upload\SingleFileUpload.cshtml"
            Write(Html.Partial(RootModuleConstants.AccessControlTemplate));
 
             
             #line default
             #line hidden
             
-            #line 70 "..\..\Views\Upload\SingleFileUpload.cshtml"
+            #line 72 "..\..\Views\Upload\SingleFileUpload.cshtml"
                                                                         
             }
         }
@@ -483,7 +492,7 @@ WriteLiteral(@">
 WriteLiteral("                    ");
 
             
-            #line 88 "..\..\Views\Upload\SingleFileUpload.cshtml"
+            #line 90 "..\..\Views\Upload\SingleFileUpload.cshtml"
                Write(Html.HiddenFor(model => model.UploadedFiles, new { id = (string)null, data_bind = "value:fileId()" }));
 
             
@@ -502,7 +511,7 @@ WriteLiteral(@"
 WriteLiteral("                            ");
 
             
-            #line 96 "..\..\Views\Upload\SingleFileUpload.cshtml"
+            #line 98 "..\..\Views\Upload\SingleFileUpload.cshtml"
                        Write(MediaGlobalization.MultiFileUpload_Processing_ServerSide);
 
             
@@ -515,7 +524,7 @@ WriteLiteral(@"
                             <span data-bind=""visible: !(failureMessage() != null && failureMessage().length > 0)"">");
 
             
-            #line 100 "..\..\Views\Upload\SingleFileUpload.cshtml"
+            #line 102 "..\..\Views\Upload\SingleFileUpload.cshtml"
                                                                                                              Write(MediaGlobalization.MultiFileUpload_Failed);
 
             
@@ -531,7 +540,7 @@ WriteLiteral(@"</span>
 WriteLiteral("                            ");
 
             
-            #line 105 "..\..\Views\Upload\SingleFileUpload.cshtml"
+            #line 107 "..\..\Views\Upload\SingleFileUpload.cshtml"
                        Write(MediaGlobalization.MultiFileUpload_Success);
 
             
@@ -545,7 +554,7 @@ WriteLiteral(@"
                     <div class=""bcms-upload-size-info""><b>");
 
             
-            #line 110 "..\..\Views\Upload\SingleFileUpload.cshtml"
+            #line 112 "..\..\Views\Upload\SingleFileUpload.cshtml"
                                                      Write(MediaGlobalization.MultiFileUpload_FileSize);
 
             
@@ -556,7 +565,7 @@ WriteLiteral("</b> <span data-bind=\"text: fileSizeFormated\"></span></div>\r\n 
 "-action-delete\" data-bind=\"click: function() { $root.removeUpload($data); }\">");
 
             
-            #line 112 "..\..\Views\Upload\SingleFileUpload.cshtml"
+            #line 114 "..\..\Views\Upload\SingleFileUpload.cshtml"
                                                                                                                 Write(RootGlobalization.Button_Remove);
 
             
@@ -573,7 +582,7 @@ WriteLiteral(@"</div>
                         <div class=""bcms-action-delete"" data-bind=""click: function() { $root.removeUpload($data); }"">");
 
             
-            #line 120 "..\..\Views\Upload\SingleFileUpload.cshtml"
+            #line 122 "..\..\Views\Upload\SingleFileUpload.cshtml"
                                                                                                                 Write(RootGlobalization.Button_Remove);
 
             

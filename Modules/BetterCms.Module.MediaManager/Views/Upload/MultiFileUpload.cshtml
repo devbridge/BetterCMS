@@ -28,7 +28,9 @@
                     {
                         <div class="bcms-content-titles">@MediaGlobalization.MultiFileUpload_SelectFolder</div>
                         @Html.Tooltip(MediaGlobalization.MultiFileUpload_SelectFolder_Help_Message)
-                        @Html.DropDownListFor(f => f.SelectedFolderId, Model.Folders.Select(o => new SelectListItem { Selected = Model.SelectedFolderId == o.Item1, Text = o.Item2, Value = o.Item1.ToString() }), new { @class = "bcms-global-select" })
+                        <div class="bcms-field-wrapper">
+                        @Html.DropDownListFor(f => f.SelectedFolderId, Model.Folders.Select(o => new SelectListItem { Selected = Model.SelectedFolderId == o.Item1, Text = o.Item2, Value = o.Item1.ToString() }))
+                            </div>
                     }
                     else
                     {

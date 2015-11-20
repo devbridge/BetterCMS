@@ -84,35 +84,6 @@
     vertical-align: middle;
 }
 
-//module Global Select
-.bcms-global-select {
-    background-color: #f3f3f3;
-    border: 1px solid #b8b8b8;
-    color: #000;
-    cursor: pointer;
-    display: block;
-    font-size: 12px;
-    height: 30px;
-    line-height: 17px;
-    overflow: hidden;
-    padding: 5px;
-    white-space: nowrap;
-    width: 285px;
-}
-
-.bcms-global-select:focus {
-    outline: none;
-}
-
-.bcms-select-holder {
-    display: inline-block;
-    position: relative;
-}
-
-.bcms-select-holder span.bcms-field-validation-error {
-    right: 24px;
-}
-
 .bcms-ajax-show {
     display: none;
 }

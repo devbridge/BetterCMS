@@ -23,10 +23,8 @@
                         <div class="bcms-content-titles">@PagesGlobalization.ClonePageWithLanguage_Dialog_Language_Title</div>
                         @Html.Tooltip(PagesGlobalization.ClonePageWithLanguage_Dialog_Language_Tootlip)
                         <div class="bcms-field-wrapper">
-                            <div class="bcms-select-holder">
-                                @Html.DropDownListFor(model => model.LanguageId, Model.Languages.ToSelectList(Model.LanguageId), string.Empty, new { @class = "bcms-global-select" })
+                                @Html.DropDownListFor(model => model.LanguageId, Model.Languages.ToSelectList(Model.LanguageId), string.Empty)
                                 @Html.BcmsValidationMessageFor(f => f.LanguageId)
-                            </div>
                         </div>
                     </div>
 

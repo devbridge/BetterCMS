@@ -5,17 +5,14 @@
     {
         <!-- ko if: !isActive() || (@(Model.ValueBind).editingIsDisabled && @(Model.ValueBind).editingIsDisabled()) -->
     }
-    <a class="bcms-tables-link" data-bind="text: @(Model.ValueTextBind)()"></a>
+    <div class="bcms-tables-link" data-bind="text: @(Model.ValueTextBind)()"></div>
     @if (Model.CanBeEdited)
     {
         <!-- /ko -->
         <!-- ko if: isActive() && (!@(Model.ValueBind).editingIsDisabled || !@(Model.ValueBind).editingIsDisabled()) -->
-        <select class="bcms-global-select" style="width: 125px;" data-bind="options: @(Model.OptionsBind),
-            optionsText: '@(Model.OptionsText)',
-            optionsValue: '@(Model.OptionsValue)',
-            value: @Model.ValueBind
-@*            event: {blur: onBlurField, focus: onStopEvent, click: onStopEvent}*@
-                "></select>
+        <div class="bcms-field-wrapper">
+            <select data-bind="options: @(Model.OptionsBind), optionsText: '@(Model.OptionsText)', optionsValue: '@(Model.OptionsValue)', value: @Model.ValueBind"></select>
+        </div>
         <!-- /ko -->
     }
 </td>

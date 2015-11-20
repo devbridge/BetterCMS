@@ -51,12 +51,6 @@
         }
     }
 
-    //&-drop-active {
-    //}
-    //
-    //&-dropdown-open {
-    //}
-
     &-drop-mask {
         @include position(fixed, 0);
         background-color: rgba($white, 0);
@@ -104,7 +98,7 @@
         }
         height: 100%;
         line-height: ($form-element-height - 2px);
-        padding: 0 10px;
+        padding: 0 45px 0 10px;
     }
 
     &-result {

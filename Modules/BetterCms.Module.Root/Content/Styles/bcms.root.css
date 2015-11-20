@@ -1927,34 +1927,6 @@ td .bcms-field-wrapper {
   vertical-align: middle;
 }
 
-.bcms-global-select {
-  background-color: #f3f3f3;
-  border: 1px solid #b8b8b8;
-  color: #000;
-  cursor: pointer;
-  display: block;
-  font-size: 12px;
-  height: 30px;
-  line-height: 17px;
-  overflow: hidden;
-  padding: 5px;
-  white-space: nowrap;
-  width: 285px;
-}
-
-.bcms-global-select:focus {
-  outline: none;
-}
-
-.bcms-select-holder {
-  display: inline-block;
-  position: relative;
-}
-
-.bcms-select-holder span.bcms-field-validation-error {
-  right: 24px;
-}
-
 .bcms-ajax-show {
   display: none;
 }
@@ -2748,6 +2720,17 @@ td .bcms-field-wrapper {
 
 .bcms-table-row-active > td {
   background-color: #e7f3ff;
+}
+
+.bcms-table-field-helper .bcms-field-wrapper {
+  width: 87.23404%;
+  float: left;
+}
+
+.bcms-table-field-helper .bcms-btn-primary {
+  width: 10.6383%;
+  float: left;
+  margin-left: 2.12766%;
 }
 
 .bcms-tables-link {
@@ -3799,7 +3782,7 @@ textarea.markItUpEditor:focus {
   font-size: 14px;
   height: 100%;
   line-height: 34px;
-  padding: 0 10px;
+  padding: 0 45px 0 10px;
 }
 
 .select2-result {

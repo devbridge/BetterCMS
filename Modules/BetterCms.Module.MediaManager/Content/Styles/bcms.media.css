@@ -407,6 +407,10 @@ div.bcms-align-right-active {
   max-width: 400px;
 }
 
+.bcms-media-click-active {
+  background-color: #e7f3ff !important;
+}
+
 .bcms-folder-box-active {
   background-color: #e7f3ff;
 }

@@ -65,14 +65,16 @@ WriteLiteral(">\r\n        <div");
 
 WriteLiteral(" class=\"bcms-filter-text\"");
 
-WriteLiteral(">Edit sitemap in language:</div>\r\n        <select");
+WriteLiteral(">Edit sitemap in language:</div>\r\n        <div");
 
-WriteLiteral(" class=\"bcms-global-select\"");
+WriteLiteral(" class=\"bcms-field-wrapper\"");
+
+WriteLiteral(">\r\n            <select");
 
 WriteLiteral(" data-bind=\"options: languages, optionsText: \'value\', optionsValue: \'key\', value:" +
 " languageId, select2: { minimumResultsForSearch: -1 }\"");
 
-WriteLiteral("></select>\r\n    </div>\r\n</div>\r\n\r\n<div");
+WriteLiteral("></select>\r\n        </div>\r\n    </div>\r\n</div>\r\n\r\n<div");
 
 WriteLiteral(" class=\"bcms-content-dialog-title\"");
 
@@ -86,7 +88,7 @@ WriteLiteral(" data-bind=\"click: callExpandOrCollapse, css: { \'bcms-tree-expan
 "odesExpanded()}, text: allNodesExpanded() ? \'");
 
             
-            #line 13 "..\..\Views\Sitemap\Preview.cshtml"
+            #line 15 "..\..\Views\Sitemap\Preview.cshtml"
                                                                                                                                                                                      Write(PagesGlobalization.CategoryTree_Button_CollapseAll);
 
             
@@ -95,7 +97,7 @@ WriteLiteral(" data-bind=\"click: callExpandOrCollapse, css: { \'bcms-tree-expan
 WriteLiteral("\' : \'");
 
             
-            #line 13 "..\..\Views\Sitemap\Preview.cshtml"
+            #line 15 "..\..\Views\Sitemap\Preview.cshtml"
                                                                                                                                                                                                                                              Write(PagesGlobalization.CategoryTree_Button_ExpandAll);
 
             
@@ -106,7 +108,7 @@ WriteLiteral("\'\"");
 WriteLiteral("></div>\r\n</div>\r\n\r\n");
 
             
-            #line 16 "..\..\Views\Sitemap\Preview.cshtml"
+            #line 18 "..\..\Views\Sitemap\Preview.cshtml"
 Write(Html.Partial("Partial/Sitemap", new SitemapNodeViewModel()));
 
             
@@ -115,7 +117,7 @@ Write(Html.Partial("Partial/Sitemap", new SitemapNodeViewModel()));
 WriteLiteral("\r\n\r\n");
 
             
-            #line 18 "..\..\Views\Sitemap\Preview.cshtml"
+            #line 20 "..\..\Views\Sitemap\Preview.cshtml"
 Write(Html.Partial("Partial/SitemapTemplate", new SitemapNodeViewModel()));
 
             

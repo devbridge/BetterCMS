@@ -139,11 +139,9 @@ WriteLiteral(" class=\"bcms-filter-text\"");
 
 WriteLiteral(">Edit sitemap in language:</div>\r\n                    <div");
 
-WriteLiteral(" class=\"bcms-table-middle-box\"");
+WriteLiteral(" class=\"bcms-field-wrapper\"");
 
 WriteLiteral(">\r\n                        <select");
-
-WriteLiteral(" class=\"bcms-global-select\"");
 
 WriteLiteral(" data-bind=\"options: languages, optionsText: \'value\', optionsValue: \'key\', value:" +
 " languageId, select2: { minimumResultsForSearch: -1 }\"");

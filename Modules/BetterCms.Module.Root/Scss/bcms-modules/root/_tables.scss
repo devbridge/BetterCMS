@@ -90,9 +90,21 @@ $sort-icons: (
     }
 }
 
-.bcms-table-row-active {
-    > td {
-        background-color: $sky-blue;
+.bcms-table {
+    &-row-active {
+        > td {
+            background-color: $sky-blue;
+        }
+    }
+
+    &-field-helper {
+        .bcms-field-wrapper {
+            @include span(10.5 no-gutter);
+        }
+
+        .bcms-btn-primary {
+            @include span(1.5 before);
+        }
     }
 }
 

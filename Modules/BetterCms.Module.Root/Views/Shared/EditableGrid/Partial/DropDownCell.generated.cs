@@ -89,7 +89,7 @@ WriteLiteral(".editingIsDisabled()) -->\r\n");
             
             #line default
             #line hidden
-WriteLiteral("    <a");
+WriteLiteral("    <div");
 
 WriteLiteral(" class=\"bcms-tables-link\"");
 
@@ -97,14 +97,14 @@ WriteLiteral(" data-bind=\"text: ");
 
             
             #line 8 "..\..\Views\Shared\EditableGrid\Partial\DropDownCell.cshtml"
-                                             Write(Model.ValueTextBind);
+                                               Write(Model.ValueTextBind);
 
             
             #line default
             #line hidden
 WriteLiteral("()\"");
 
-WriteLiteral("></a>\r\n");
+WriteLiteral("></div>\r\n");
 
             
             #line 9 "..\..\Views\Shared\EditableGrid\Partial\DropDownCell.cshtml"
@@ -142,64 +142,62 @@ WriteLiteral(".editingIsDisabled || !");
             #line hidden
 WriteLiteral(".editingIsDisabled()) -->\r\n");
 
-WriteLiteral("        <select");
+WriteLiteral("        <div");
 
-WriteLiteral(" class=\"bcms-global-select\"");
+WriteLiteral(" class=\"bcms-field-wrapper\"");
 
-WriteLiteral(" style=\"width: 125px;\"");
+WriteLiteral(">\r\n            <select");
 
 WriteLiteral(" data-bind=\"options: ");
 
             
-            #line 13 "..\..\Views\Shared\EditableGrid\Partial\DropDownCell.cshtml"
-                                                                                 Write(Model.OptionsBind);
+            #line 14 "..\..\Views\Shared\EditableGrid\Partial\DropDownCell.cshtml"
+                                    Write(Model.OptionsBind);
 
             
             #line default
             #line hidden
-WriteLiteral(",\r\n            optionsText: \'");
+WriteLiteral(", optionsText: \'");
 
             
             #line 14 "..\..\Views\Shared\EditableGrid\Partial\DropDownCell.cshtml"
-                      Write(Model.OptionsText);
+                                                                        Write(Model.OptionsText);
 
             
             #line default
             #line hidden
-WriteLiteral("\',\r\n            optionsValue: \'");
+WriteLiteral("\', optionsValue: \'");
 
             
-            #line 15 "..\..\Views\Shared\EditableGrid\Partial\DropDownCell.cshtml"
-                       Write(Model.OptionsValue);
-
-            
-            #line default
-            #line hidden
-WriteLiteral("\',\r\n            value: ");
-
-            
-            #line 16 "..\..\Views\Shared\EditableGrid\Partial\DropDownCell.cshtml"
-              Write(Model.ValueBind);
+            #line 14 "..\..\Views\Shared\EditableGrid\Partial\DropDownCell.cshtml"
+                                                                                                              Write(Model.OptionsValue);
 
             
             #line default
             #line hidden
-WriteLiteral("\r\n");
+WriteLiteral("\', value: ");
 
-WriteLiteral("\r\n                \"");
+            
+            #line 14 "..\..\Views\Shared\EditableGrid\Partial\DropDownCell.cshtml"
+                                                                                                                                            Write(Model.ValueBind);
 
-WriteLiteral("></select>\r\n");
+            
+            #line default
+            #line hidden
+WriteLiteral("\"");
+
+WriteLiteral("></select>\r\n        </div>\r\n");
 
 WriteLiteral("        <!-- /ko -->\r\n");
 
             
-            #line 20 "..\..\Views\Shared\EditableGrid\Partial\DropDownCell.cshtml"
+            #line 17 "..\..\Views\Shared\EditableGrid\Partial\DropDownCell.cshtml"
     }
 
             
             #line default
             #line hidden
-WriteLiteral("</td>");
+WriteLiteral("</td>\r\n");
 
         }
     }

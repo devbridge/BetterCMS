@@ -54,7 +54,7 @@
     <table class="bcms-tables">
         <thead>
             <tr>
-                <th class="bcms-tables-nohover" style="width: 40px; padding: 8px 0;">&nbsp;</th>
+                <th class="bcms-tables-nohover" style="width: 40px; padding: 0;">&nbsp;</th>
                 @foreach (var column in visibleColumns)
                 {
                     @Html.Partial(column.HeaderView, column)
@@ -86,7 +86,7 @@
                 {
                     <td>
                         <!-- ko if: !editingIsDisabled() -->
-                        <a class="bcms-action-edit" data-bind="click: onEdit">@RootGlobalization.Button_Edit</a>
+                        <div class="bcms-action-edit" data-bind="click: onEdit">@RootGlobalization.Button_Edit</div>
                         <!-- /ko -->
                     </td>
                 }
@@ -94,6 +94,7 @@
                 {
                     <td>&nbsp;</td>
                 }
+
                 @foreach (var column in visibleColumns)
                 {
                     @Html.Partial(column.CellView, column)
@@ -103,7 +104,7 @@
                 {
                     <!-- ko if: !isActive() && !deletingIsDisabled() -->
                     <td style="width: 40px; padding: 10px 0;">                 
-                        <a class="bcms-action-delete" data-bind="click: onDelete">@RootGlobalization.Button_Delete</a>
+                        <div class="bcms-action-delete" data-bind="click: onDelete">@RootGlobalization.Button_Delete</div>
                     </td>
                     <!-- /ko -->
                 }

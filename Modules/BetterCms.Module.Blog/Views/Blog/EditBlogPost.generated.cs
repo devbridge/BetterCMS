@@ -694,21 +694,26 @@ WriteLiteral("                                ");
             
             #line default
             #line hidden
-WriteLiteral("\r\n");
+WriteLiteral("\r\n                                <div");
 
-WriteLiteral("                                ");
+WriteLiteral(" class=\"bcms-field-wrapper\"");
+
+WriteLiteral(">\r\n");
+
+WriteLiteral("                                    ");
 
             
-            #line 114 "..\..\Views\Blog\EditBlogPost.cshtml"
-                           Write(Html.DropDownListFor(model => model.LanguageId, Model.Languages.ToSelectList(Model.LanguageId), "Default language", new { @id = "bcms-js-languages-select", @class = "bcms-global-select", @style = "width: 245px;" }));
+            #line 115 "..\..\Views\Blog\EditBlogPost.cshtml"
+                               Write(Html.DropDownListFor(model => model.LanguageId, Model.Languages.ToSelectList(Model.LanguageId), "Default language", new { @id = "bcms-js-languages-select" }));
 
             
             #line default
             #line hidden
-WriteLiteral("\r\n                            </div>\r\n");
+WriteLiteral("\r\n                                    </div>\r\n                                </d" +
+"iv>\r\n");
 
             
-            #line 116 "..\..\Views\Blog\EditBlogPost.cshtml"
+            #line 118 "..\..\Views\Blog\EditBlogPost.cshtml"
                         }
 
             
@@ -725,7 +730,7 @@ WriteLiteral(" class=\"bcms-content-titles\"");
 WriteLiteral(">");
 
             
-            #line 119 "..\..\Views\Blog\EditBlogPost.cshtml"
+            #line 121 "..\..\Views\Blog\EditBlogPost.cshtml"
                                                         Write(BlogGlobalization.EditBlogPost_Author_Title);
 
             
@@ -736,7 +741,7 @@ WriteLiteral("</div>\r\n");
 WriteLiteral("                            ");
 
             
-            #line 120 "..\..\Views\Blog\EditBlogPost.cshtml"
+            #line 122 "..\..\Views\Blog\EditBlogPost.cshtml"
                        Write(Html.Tooltip(BlogGlobalization.EditBlogPost_Author_Tooltip_Description));
 
             
@@ -747,7 +752,7 @@ WriteLiteral("\r\n");
 WriteLiteral("                            ");
 
             
-            #line 121 "..\..\Views\Blog\EditBlogPost.cshtml"
+            #line 123 "..\..\Views\Blog\EditBlogPost.cshtml"
                        Write(Html.DropDownListFor(model => model.AuthorId, Model.Authors.ToSelectList(Model.AuthorId), string.Empty, new { @id = "bcms-js-authors-select", @style = "width: 245px;" }));
 
             
@@ -764,7 +769,7 @@ WriteLiteral(" class=\"bcms-content-titles\"");
 WriteLiteral(">");
 
             
-            #line 125 "..\..\Views\Blog\EditBlogPost.cshtml"
+            #line 127 "..\..\Views\Blog\EditBlogPost.cshtml"
                                                         Write(BlogGlobalization.EditBlogPost_IntroText_Title);
 
             
@@ -775,7 +780,7 @@ WriteLiteral("</div>\r\n");
 WriteLiteral("                            ");
 
             
-            #line 126 "..\..\Views\Blog\EditBlogPost.cshtml"
+            #line 128 "..\..\Views\Blog\EditBlogPost.cshtml"
                        Write(Html.Tooltip(BlogGlobalization.EditBlogPost_IntroText_Tooltip_Description));
 
             
@@ -790,7 +795,7 @@ WriteLiteral(">\r\n");
 WriteLiteral("                                ");
 
             
-            #line 128 "..\..\Views\Blog\EditBlogPost.cshtml"
+            #line 130 "..\..\Views\Blog\EditBlogPost.cshtml"
                            Write(Html.TextAreaFor(m => m.IntroText, new { @style = "height: 217px;", @class = "bcms-field-textarea" }));
 
             
@@ -801,7 +806,7 @@ WriteLiteral("\r\n");
 WriteLiteral("                                ");
 
             
-            #line 129 "..\..\Views\Blog\EditBlogPost.cshtml"
+            #line 131 "..\..\Views\Blog\EditBlogPost.cshtml"
                            Write(Html.BcmsValidationMessageFor(m => m.IntroText));
 
             
@@ -827,7 +832,7 @@ WriteLiteral(" class=\"bcms-content-titles\"");
 WriteLiteral(">");
 
             
-            #line 138 "..\..\Views\Blog\EditBlogPost.cshtml"
+            #line 140 "..\..\Views\Blog\EditBlogPost.cshtml"
                                                                 Write(BlogGlobalization.EditBlogPost_FeaturedImage_Title);
 
             
@@ -838,7 +843,7 @@ WriteLiteral("</div>\r\n");
 WriteLiteral("                                    ");
 
             
-            #line 139 "..\..\Views\Blog\EditBlogPost.cshtml"
+            #line 141 "..\..\Views\Blog\EditBlogPost.cshtml"
                                Write(Html.Tooltip(BlogGlobalization.EditBlogPost_FeaturedImage_Tooltip_Description));
 
             
@@ -856,7 +861,7 @@ WriteLiteral(" class=\"bcms-remove-image\"");
 WriteLiteral(" data-bind=\"");
 
             
-            #line 144 "..\..\Views\Blog\EditBlogPost.cshtml"
+            #line 146 "..\..\Views\Blog\EditBlogPost.cshtml"
                                                                         Write(canEdit ? "click: image().remove.bind(image())" : string.Empty);
 
             
@@ -867,7 +872,7 @@ WriteLiteral("\"");
 WriteLiteral(">");
 
             
-            #line 144 "..\..\Views\Blog\EditBlogPost.cshtml"
+            #line 146 "..\..\Views\Blog\EditBlogPost.cshtml"
                                                                                                                                           Write(RootGlobalization.Button_Remove);
 
             
@@ -922,7 +927,7 @@ WriteLiteral(" class=\"bcms-btn-selection\"");
 WriteLiteral(" data-bind=\"");
 
             
-            #line 160 "..\..\Views\Blog\EditBlogPost.cshtml"
+            #line 162 "..\..\Views\Blog\EditBlogPost.cshtml"
                                                                        Write(canEdit ? "click: image().select.bind(image())" : string.Empty);
 
             
@@ -933,7 +938,7 @@ WriteLiteral("\"");
 WriteLiteral(">");
 
             
-            #line 160 "..\..\Views\Blog\EditBlogPost.cshtml"
+            #line 162 "..\..\Views\Blog\EditBlogPost.cshtml"
                                                                                                                                          Write(BlogGlobalization.EditBlogPost_SelectImage_Button_Title);
 
             
@@ -951,7 +956,7 @@ WriteLiteral(">\r\n");
 WriteLiteral("                            ");
 
             
-            #line 165 "..\..\Views\Blog\EditBlogPost.cshtml"
+            #line 167 "..\..\Views\Blog\EditBlogPost.cshtml"
                        Write(Html.Partial("~/Areas/bcms-root/Views/Category/CategoriesTemplate.cshtml", categoriesTemplateViewModel));
 
             
@@ -968,7 +973,7 @@ WriteLiteral(">\r\n");
 WriteLiteral("                            ");
 
             
-            #line 169 "..\..\Views\Blog\EditBlogPost.cshtml"
+            #line 171 "..\..\Views\Blog\EditBlogPost.cshtml"
                        Write(Html.Partial("~/Areas/bcms-root/Views/Tags/TagsTemplate.cshtml", tagsTemplateViewModel));
 
             
@@ -978,7 +983,7 @@ WriteLiteral("\r\n                        </div>\r\n                    </div>\r
 "iv>\r\n\r\n            </div>\r\n");
 
             
-            #line 175 "..\..\Views\Blog\EditBlogPost.cshtml"
+            #line 177 "..\..\Views\Blog\EditBlogPost.cshtml"
         }
 
             
