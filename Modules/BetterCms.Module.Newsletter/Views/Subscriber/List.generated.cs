@@ -333,7 +333,7 @@ WriteLiteral(">\r\n        <thead>\r\n            <tr>\r\n                <th");
 
 WriteLiteral(" class=\"bcms-tables-nohover\"");
 
-WriteLiteral(" style=\"width: 40px; padding: 8px 0;\"");
+WriteLiteral(" style=\"width: 40px; padding: 0;\"");
 
 WriteLiteral(">&nbsp;</th>\r\n");
 
@@ -404,14 +404,14 @@ WriteLiteral("                    <td");
 
 WriteLiteral(" class=\"bcms-tables-nohover\"");
 
-WriteAttribute("colspan", Tuple.Create(" colspan=\"", 3518), Tuple.Create("\"", 3548)
+WriteAttribute("colspan", Tuple.Create(" colspan=\"", 3514), Tuple.Create("\"", 3544)
             
             #line 73 "..\..\Views\Subscriber\List.cshtml"
-, Tuple.Create(Tuple.Create("", 3528), Tuple.Create<System.Object, System.Int32>(visibleColumnsCount
+, Tuple.Create(Tuple.Create("", 3524), Tuple.Create<System.Object, System.Int32>(visibleColumnsCount
             
             #line default
             #line hidden
-, 3528), false)
+, 3524), false)
 );
 
 WriteLiteral(">");
@@ -456,14 +456,14 @@ WriteLiteral("                    <td");
 
 WriteLiteral(" class=\"bcms-tables-nohover\"");
 
-WriteAttribute("colspan", Tuple.Create(" colspan=\"", 3868), Tuple.Create("\"", 3898)
+WriteAttribute("colspan", Tuple.Create(" colspan=\"", 3864), Tuple.Create("\"", 3894)
             
             #line 80 "..\..\Views\Subscriber\List.cshtml"
-, Tuple.Create(Tuple.Create("", 3878), Tuple.Create<System.Object, System.Int32>(visibleColumnsCount
+, Tuple.Create(Tuple.Create("", 3874), Tuple.Create<System.Object, System.Int32>(visibleColumnsCount
             
             #line default
             #line hidden
-, 3878), false)
+, 3874), false)
 );
 
 WriteLiteral(">");
@@ -504,7 +504,7 @@ WriteLiteral("                <!-- /ko -->\r\n                <!-- ko ifnot: sav
             #line default
             #line hidden
 WriteLiteral("                    <td>\r\n                        <!-- ko if: !editingIsDisabled(" +
-") -->\r\n                        <a");
+") -->\r\n                        <div");
 
 WriteLiteral(" class=\"bcms-action-edit\"");
 
@@ -514,12 +514,12 @@ WriteLiteral(">");
 
             
             #line 89 "..\..\Views\Subscriber\List.cshtml"
-                                                                         Write(RootGlobalization.Button_Edit);
+                                                                           Write(RootGlobalization.Button_Edit);
 
             
             #line default
             #line hidden
-WriteLiteral("</a>\r\n                        <!-- /ko -->\r\n                    </td>\r\n");
+WriteLiteral("</div>\r\n                        <!-- /ko -->\r\n                    </td>\r\n");
 
             
             #line 92 "..\..\Views\Subscriber\List.cshtml"
@@ -539,10 +539,16 @@ WriteLiteral("                    <td>&nbsp;</td>\r\n");
             
             #line default
             #line hidden
-WriteLiteral("                ");
+WriteLiteral("\r\n");
 
             
-            #line 97 "..\..\Views\Subscriber\List.cshtml"
+            #line 98 "..\..\Views\Subscriber\List.cshtml"
+                
+            
+            #line default
+            #line hidden
+            
+            #line 98 "..\..\Views\Subscriber\List.cshtml"
                  foreach (var column in visibleColumns)
                 {
                     
@@ -550,14 +556,14 @@ WriteLiteral("                ");
             #line default
             #line hidden
             
-            #line 99 "..\..\Views\Subscriber\List.cshtml"
+            #line 100 "..\..\Views\Subscriber\List.cshtml"
                Write(Html.Partial(column.CellView, column));
 
             
             #line default
             #line hidden
             
-            #line 99 "..\..\Views\Subscriber\List.cshtml"
+            #line 100 "..\..\Views\Subscriber\List.cshtml"
                                                           
                 }
 
@@ -567,13 +573,13 @@ WriteLiteral("                ");
 WriteLiteral("\r\n");
 
             
-            #line 102 "..\..\Views\Subscriber\List.cshtml"
+            #line 103 "..\..\Views\Subscriber\List.cshtml"
                 
             
             #line default
             #line hidden
             
-            #line 102 "..\..\Views\Subscriber\List.cshtml"
+            #line 103 "..\..\Views\Subscriber\List.cshtml"
                  if (gridViewModel.CanDeleteItems)
                 {
 
@@ -586,7 +592,7 @@ WriteLiteral("                    <td");
 
 WriteLiteral(" style=\"width: 40px; padding: 10px 0;\"");
 
-WriteLiteral(">                 \r\n                        <a");
+WriteLiteral(">                 \r\n                        <div");
 
 WriteLiteral(" class=\"bcms-action-delete\"");
 
@@ -595,18 +601,18 @@ WriteLiteral(" data-bind=\"click: onDelete\"");
 WriteLiteral(">");
 
             
-            #line 106 "..\..\Views\Subscriber\List.cshtml"
-                                                                             Write(RootGlobalization.Button_Delete);
+            #line 107 "..\..\Views\Subscriber\List.cshtml"
+                                                                               Write(RootGlobalization.Button_Delete);
 
             
             #line default
             #line hidden
-WriteLiteral("</a>\r\n                    </td>\r\n");
+WriteLiteral("</div>\r\n                    </td>\r\n");
 
 WriteLiteral("                    <!-- /ko -->\r\n");
 
             
-            #line 109 "..\..\Views\Subscriber\List.cshtml"
+            #line 110 "..\..\Views\Subscriber\List.cshtml"
                 }
 
             
@@ -615,7 +621,7 @@ WriteLiteral("                    <!-- /ko -->\r\n");
 WriteLiteral("                ");
 
             
-            #line 110 "..\..\Views\Subscriber\List.cshtml"
+            #line 111 "..\..\Views\Subscriber\List.cshtml"
                  if (gridViewModel.CanEditItems)
                 {
 
@@ -637,7 +643,7 @@ WriteLiteral(" data-bind=\"click: onSave\"");
 WriteLiteral(">");
 
             
-            #line 114 "..\..\Views\Subscriber\List.cshtml"
+            #line 115 "..\..\Views\Subscriber\List.cshtml"
                                                                            Write(gridViewModel.SaveButtonTitle);
 
             
@@ -652,7 +658,7 @@ WriteLiteral(" data-bind=\"click: onCancelEdit\"");
 WriteLiteral(">");
 
             
-            #line 115 "..\..\Views\Subscriber\List.cshtml"
+            #line 116 "..\..\Views\Subscriber\List.cshtml"
                                                                                 Write(RootGlobalization.Button_Cancel);
 
             
@@ -663,7 +669,7 @@ WriteLiteral("</div>                   \r\n                    </td>\r\n");
 WriteLiteral("                    <!-- /ko -->\r\n");
 
             
-            #line 118 "..\..\Views\Subscriber\List.cshtml"
+            #line 119 "..\..\Views\Subscriber\List.cshtml"
                 }
 
             
@@ -672,7 +678,7 @@ WriteLiteral("                    <!-- /ko -->\r\n");
 WriteLiteral("                ");
 
             
-            #line 119 "..\..\Views\Subscriber\List.cshtml"
+            #line 120 "..\..\Views\Subscriber\List.cshtml"
                  if (!gridViewModel.CanDeleteItems && !gridViewModel.CanEditItems)
                 {
 
@@ -684,7 +690,7 @@ WriteLiteral("                    ");
 WriteLiteral("<td>&nbsp;</td>\r\n");
 
             
-            #line 122 "..\..\Views\Subscriber\List.cshtml"
+            #line 123 "..\..\Views\Subscriber\List.cshtml"
                 }
 
             
@@ -694,14 +700,14 @@ WriteLiteral("\r\n                <!-- /ko -->\r\n            </tr>\r\n         
 "        <!-- ko if: items().length == 0 -->\r\n            <tr>\r\n                <" +
 "td");
 
-WriteAttribute("colspan", Tuple.Create(" colspan=\"", 5965), Tuple.Create("\"", 6001)
+WriteAttribute("colspan", Tuple.Create(" colspan=\"", 5971), Tuple.Create("\"", 6007)
             
-            #line 129 "..\..\Views\Subscriber\List.cshtml"
-, Tuple.Create(Tuple.Create("", 5975), Tuple.Create<System.Object, System.Int32>(visibleColumnsCount + 2
+            #line 130 "..\..\Views\Subscriber\List.cshtml"
+, Tuple.Create(Tuple.Create("", 5981), Tuple.Create<System.Object, System.Int32>(visibleColumnsCount + 2
             
             #line default
             #line hidden
-, 5975), false)
+, 5981), false)
 );
 
 WriteLiteral(">\r\n                    <div");
@@ -711,7 +717,7 @@ WriteLiteral(" class=\"bcms-table-no-data\"");
 WriteLiteral(">");
 
             
-            #line 130 "..\..\Views\Subscriber\List.cshtml"
+            #line 131 "..\..\Views\Subscriber\List.cshtml"
                                                Write(RootGlobalization.Grid_NoDataAvailable_Message);
 
             
@@ -721,13 +727,13 @@ WriteLiteral("</div>\r\n                </td>\r\n            </tr>\r\n          
 "   </tbody>\r\n    </table>\r\n\r\n");
 
             
-            #line 137 "..\..\Views\Subscriber\List.cshtml"
+            #line 138 "..\..\Views\Subscriber\List.cshtml"
     
             
             #line default
             #line hidden
             
-            #line 137 "..\..\Views\Subscriber\List.cshtml"
+            #line 138 "..\..\Views\Subscriber\List.cshtml"
      if (gridViewModel.AddHiddenFields)
     {
 
@@ -737,7 +743,7 @@ WriteLiteral("</div>\r\n                </td>\r\n            </tr>\r\n          
 WriteLiteral("        <!-- ko foreach: items -->\r\n");
 
             
-            #line 140 "..\..\Views\Subscriber\List.cshtml"
+            #line 141 "..\..\Views\Subscriber\List.cshtml"
         foreach (var column in gridViewModel.Columns)
         {
             if (!string.IsNullOrWhiteSpace(column.HiddenFieldName))
@@ -757,7 +763,7 @@ WriteLiteral(" value=\"\"");
 WriteLiteral(" data-bind=\"valueBinder: ");
 
             
-            #line 144 "..\..\Views\Subscriber\List.cshtml"
+            #line 145 "..\..\Views\Subscriber\List.cshtml"
                                                                           Write(column.ValueBind);
 
             
@@ -766,7 +772,7 @@ WriteLiteral(" data-bind=\"valueBinder: ");
 WriteLiteral(", attr {name hiddenfieldname(\'");
 
             
-            #line 144 "..\..\Views\Subscriber\List.cshtml"
+            #line 145 "..\..\Views\Subscriber\List.cshtml"
                                                                                                                            Write(column.HiddenFieldName);
 
             
@@ -777,7 +783,7 @@ WriteLiteral("\', $index()) }\"");
 WriteLiteral(">\r\n");
 
             
-            #line 145 "..\..\Views\Subscriber\List.cshtml"
+            #line 146 "..\..\Views\Subscriber\List.cshtml"
             }
         }
 
@@ -787,7 +793,7 @@ WriteLiteral(">\r\n");
 WriteLiteral("        <!-- /ko -->\r\n");
 
             
-            #line 148 "..\..\Views\Subscriber\List.cshtml"
+            #line 149 "..\..\Views\Subscriber\List.cshtml"
     }
 
             

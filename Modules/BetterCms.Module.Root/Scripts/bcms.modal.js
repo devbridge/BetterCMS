@@ -719,13 +719,6 @@ bettercms.define('bcms.modal', ['bcms.jquery', 'bcms', 'bcms.tabs', 'bcms.ko.ext
 
             previewFailure.hide();
 
-            //if (width > visibleWidth) {
-            //    width = visibleWidth;
-            //}
-
-            //imgContainer.css('width', width + 'px');
-            //img.css('width', '100%');
-
             imgContainer.find(selectors.loader).hide();
             img.show();
         });

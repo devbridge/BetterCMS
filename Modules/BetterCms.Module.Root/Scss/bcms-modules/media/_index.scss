@@ -74,6 +74,10 @@
             max-width: 400px;
         }
     }
+
+    &-click-active {
+        background-color: $sky-blue !important;
+    }
 }
 
 .bcms-folder-box {
@@ -168,54 +172,4 @@
 
 .bcms-preview-image-frame {
     @include positioning($center: true);
-}
-
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//module no data available in media manger
-div.bcms-nomedia-data {
-    border-bottom: 1px solid #e3e3e3;
-    font-size: 14px;
-    height: 62px;
-    padding: 0 20px 0 55px;
-    position: relative;
-}
-
-div.bcms-nomedia-data > a {
-    bottom: 10px;
-    cursor: pointer;
-    left: 55px;
-    position: absolute;
-}
-
-.bcms-no-data-available {
-    line-height: 62px;
-}
-
-//module images history
-.bcms-media-history-holder {
-    box-sizing: border-box;
-    -moz-box-sizing: border-box;
-    height: 100%;
-    overflow: auto;
-    padding: 10px;
-    width: 100%;
-}
-
-.bcms-media-history-holder .bcms-messages-type-1 {
-    margin: -10px -10px 10px;
-}
-
-.bcms-media-history-image-holder img {
-    max-width: 100%;
 }

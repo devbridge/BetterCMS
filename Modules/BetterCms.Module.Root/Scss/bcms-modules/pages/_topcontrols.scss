@@ -217,3 +217,16 @@
     float: left;
     margin: 4px 0 0 -3px;
 }
+
+.bcms-language-selector-box {
+    float: right;
+
+    .bcms-filter-text {
+        @include vertical-align();
+    }
+
+    .bcms-field-wrapper {
+        @include vertical-align();
+        width: 300px;
+    }
+}

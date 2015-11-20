@@ -205,23 +205,23 @@ WriteLiteral(">BROWSE...</div>\r\n                </td>\r\n                <td")
 WriteLiteral(" colspan=\"2\"");
 
 WriteLiteral(">\r\n                    <!-- ko if: addPageId() && addingPageLanguages().length > " +
-"1 -->\r\n                    <select");
+"1 -->\r\n                    <div");
 
-WriteLiteral(" style=\"width: 100%;\"");
+WriteLiteral(" class=\"bcms-field-wrapper\"");
 
-WriteLiteral(" class=\"bcms-global-select\"");
+WriteLiteral(">\r\n                        <select");
 
 WriteLiteral(" data-bind=\"options: addingPageLanguages, optionsText: \'value\', optionsValue: \'ke" +
 "y\', value: addLanguageId, select2: { minimumResultsForSearch: -1 }\"");
 
-WriteLiteral("></select>\r\n                    <!-- /ko -->\r\n\r\n                    <!-- ko if: a" +
-"ddPageId() && addingPageLanguages().length == 1 -->\r\n                    <span");
+WriteLiteral("></select>\r\n                        </div>\r\n                        <!-- /ko -->\r" +
+"\n                        <!-- ko if: addPageId() && addingPageLanguages().length" +
+" == 1 -->\r\n                        <span");
 
 WriteLiteral(" data-bind=\"html: addingPageLanguages()[0].value\"");
 
-WriteLiteral("></span>\r\n                    <!-- /ko -->\r\n                </td>\r\n              " +
-"  <td>\r\n                    <!-- ko if: addLanguageId() -->\r\n                   " +
-" <div");
+WriteLiteral("></span>\r\n                        <!-- /ko -->\r\n</td>\r\n                <td>\r\n    " +
+"                <!-- ko if: addLanguageId() -->\r\n                    <div");
 
 WriteLiteral(" class=\"bcms-btn-primary\"");
 
@@ -230,7 +230,7 @@ WriteLiteral(" data-bind=\"click: addTranslation\"");
 WriteLiteral(">");
 
             
-            #line 58 "..\..\Views\Page\Partial\TranslationsGrid.cshtml"
+            #line 59 "..\..\Views\Page\Partial\TranslationsGrid.cshtml"
                                                                                Write(RootGlobalization.Button_Ok);
 
             
@@ -245,7 +245,7 @@ WriteLiteral(" data-bind=\"click: endEditMode\"");
 WriteLiteral(">");
 
             
-            #line 60 "..\..\Views\Page\Partial\TranslationsGrid.cshtml"
+            #line 61 "..\..\Views\Page\Partial\TranslationsGrid.cshtml"
                                                                            Write(RootGlobalization.Button_Cancel);
 
             

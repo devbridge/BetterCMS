@@ -52,6 +52,7 @@
             </tr>
         </thead>
         <tbody>
+            <!-- ko if: !isSearchResults() -->
             <tr>
                 <td colspan="3">
                     <!-- ko if: !isRootFolder() && !isSearchResults() -->
@@ -61,34 +62,29 @@
                     <!-- /ko -->
 
                     @if ((ViewContext.Controller as CmsControllerBase).SecurityService.IsAuthorized(RootModuleConstants.UserRoles.EditContent))
-                    {
-                    <!-- ko if: !isSearchResults() -->
-                        <div class="bcms-media-new-folder" data-bind="click: addNewFolder">@MediaGlobalization.MediaManager_NewFolder</div>
-                    <!-- /ko -->
+                    {                  
+                        <div class="bcms-media-new-folder" data-bind="click: addNewFolder">@MediaGlobalization.MediaManager_NewFolder</div>       
                     }
                 </td>
             </tr>
-        </tbody>
-
-        <!-- ko if: showNoDataInfoDiv() -->
-        <tbody>
+            <!-- /ko -->
+            <!-- ko if: showNoDataInfoDiv() -->    
             <tr>
-                <td colspan="3" class="bcms-nomedia-data">
+                <td colspan="3">
                     <!-- ko if: isSearchResults() -->
-                    <div class="bcms-media-content-message">
+                    <div class="bcms-media-content-link">
                         <!-- ko text: noSearchResultFound -->
                         <!-- /ko -->
                     </div>
                     <div data-bind="visible: canSearchInHistory(), click: searchWithFilter.bind($data, true)">@MediaGlobalization.MediaManager_Search_TrySearchInHistory</div>
                     <!-- /ko -->
                     <!-- ko ifnot: isSearchResults() -->
-                    <div class="bcms-no-data-available">@RootGlobalization.Grid_NoDataAvailable_Message</div>
+                    <div class="bcms-media-content-link">@RootGlobalization.Grid_NoDataAvailable_Message</div>
                     <!-- /ko -->
                 </td>
             </tr>
+            <!-- /ko -->
         </tbody>
-        <!-- /ko -->
-
         <tbody data-bind="foreach: medias()">
             <tr>
                 <td>
@@ -124,7 +120,10 @@
                             <!-- /ko -->
                             <!-- ko if: showParentLink($root, $data) -->
                             <br />
-                            <div class="bcms-parent-folder">@MediaGlobalization.MediaManager_ItemParentFolder_Prefix: <div data-bind="click: openParent.bind($data, $root), clickBubble: false, text: parentFolderName()"></div></div>
+                            <div class="bcms-parent-folder">
+                                @MediaGlobalization.MediaManager_ItemParentFolder_Prefix: 
+                                <div data-bind="click: openParent.bind($data, $root), clickBubble: false, text: parentFolderName()"></div>
+                            </div>
                             <!-- /ko -->
                         </div>
                         <!-- /ko -->

@@ -655,6 +655,21 @@
   margin: 4px 0 0 -3px;
 }
 
+.bcms-language-selector-box {
+  float: right;
+}
+
+.bcms-language-selector-box .bcms-filter-text {
+  display: inline-block;
+  vertical-align: middle;
+}
+
+.bcms-language-selector-box .bcms-field-wrapper {
+  display: inline-block;
+  vertical-align: middle;
+  width: 300px;
+}
+
 .bcms-single-tag {
   overflow: hidden;
   text-overflow: ellipsis;

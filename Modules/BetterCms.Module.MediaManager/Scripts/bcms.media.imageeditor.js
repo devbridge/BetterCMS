@@ -48,8 +48,8 @@ bettercms.define('bcms.media.imageeditor', ['bcms.jquery', 'bcms', 'bcms.modal',
             constants = {
                 accept: 'bcms-modal-accept',
                 acceptAsNew: 'bcms-modal-accept-as-new',
-                maxHeightToFit: 557,
-                maxWidthToFit: 839,
+                maxHeightToFit: 600,
+                maxWidthToFit: 900,
                 jcropBackgroundColor: '#F5F5F5'
             },
             jCropApi = null;

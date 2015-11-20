@@ -421,6 +421,11 @@ a:hover {
   float: left;
 }
 
+.bcms-content-subtitle {
+  font-size: 14px;
+  line-height: 19px;
+}
+
 .bcms-content-dialog-title {
   border-bottom: 1px solid #dfdfdf;
   color: #636363;
@@ -432,6 +437,28 @@ a:hover {
 
 .bcms-content-dialog-title .bcms-btn-cancel {
   float: right;
+}
+
+.bcms-editor-box {
+  position: absolute;
+  bottom: 50%;
+  left: 0;
+  background-color: #ffffff;
+  border: 1px solid #dfdfdf;
+  box-shadow: 0 0 20px 0 rgba(0, 0, 0, 0.2);
+  box-sizing: border-box;
+  padding: 15px;
+  width: 375px;
+}
+
+.bcms-editor-link {
+  color: #0d7ce7;
+  cursor: pointer;
+  display: inline;
+  font-size: 12px;
+  font-weight: 700;
+  margin-left: 5px;
+  text-transform: uppercase;
 }
 
 .bcms-edit-urlpath-box {
@@ -1927,34 +1954,6 @@ td .bcms-field-wrapper {
   vertical-align: middle;
 }
 
-.bcms-global-select {
-  background-color: #f3f3f3;
-  border: 1px solid #b8b8b8;
-  color: #000;
-  cursor: pointer;
-  display: block;
-  font-size: 12px;
-  height: 30px;
-  line-height: 17px;
-  overflow: hidden;
-  padding: 5px;
-  white-space: nowrap;
-  width: 285px;
-}
-
-.bcms-global-select:focus {
-  outline: none;
-}
-
-.bcms-select-holder {
-  display: inline-block;
-  position: relative;
-}
-
-.bcms-select-holder span.bcms-field-validation-error {
-  right: 24px;
-}
-
 .bcms-ajax-show {
   display: none;
 }
@@ -2750,13 +2749,24 @@ td .bcms-field-wrapper {
   background-color: #e7f3ff;
 }
 
+.bcms-table-field-helper .bcms-field-wrapper {
+  width: 87.23404%;
+  float: left;
+}
+
+.bcms-table-field-helper .bcms-btn-primary {
+  width: 10.6383%;
+  float: left;
+  margin-left: 2.12766%;
+}
+
 .bcms-tables-link {
   color: #0383df;
   text-decoration: none;
 }
 
 .bcms-table-no-data {
-  margin-left: 37px;
+  margin-left: 30px;
 }
 
 .bcms-sort-arrow {
@@ -3799,7 +3809,7 @@ textarea.markItUpEditor:focus {
   font-size: 14px;
   height: 100%;
   line-height: 34px;
-  padding: 0 10px;
+  padding: 0 45px 0 10px;
 }
 
 .select2-result {

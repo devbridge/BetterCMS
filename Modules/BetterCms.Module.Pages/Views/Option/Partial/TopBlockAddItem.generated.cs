@@ -101,14 +101,16 @@ WriteLiteral(">\r\n    <div");
 
 WriteLiteral(" class=\"bcms-filter-text\"");
 
-WriteLiteral(">Edit in language:</div>\r\n    <select");
+WriteLiteral(">Edit in language:</div>\r\n    <div");
 
-WriteLiteral(" class=\"bcms-global-select\"");
+WriteLiteral(" class=\"bcms-field-wrapper\"");
+
+WriteLiteral(">\r\n        <select");
 
 WriteLiteral(" data-bind=\"options: languages, optionsText: \'value\', optionsValue: \'key\', value:" +
 " languageId, select2: { minimumResultsForSearch: -1 }\"");
 
-WriteLiteral("></select>\r\n</div>");
+WriteLiteral("></select>\r\n    </div>\r\n</div>");
 
         }
     }
