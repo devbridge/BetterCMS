@@ -1,6 +1,7 @@
 //module top block
 .bcms-top-block {
     &-holder {
+        @include clearfix();
         @include user-select();
         margin: 20px 0;
         position: relative;

@@ -373,13 +373,13 @@ WriteLiteral("></td>\r\n                        <td");
 WriteLiteral(" class=\"bcms-tables-nohover\"");
 
 WriteLiteral(">\r\n                            <!-- ko if: success && !$parent.finished() -->\r\n  " +
-"                          <span");
+"                          <div");
 
 WriteLiteral(" data-bind=\"text: url, attr: {title: url}\"");
 
-WriteLiteral("></span>\r\n                            <!-- /ko -->\r\n                            <" +
-"!-- ko if: success && $parent.finished() && !skipped -->\r\n                      " +
-"      <a");
+WriteLiteral("></div>\r\n                            <!-- /ko -->\r\n                            <!" +
+"-- ko if: success && $parent.finished() && !skipped -->\r\n                       " +
+"     <a");
 
 WriteLiteral(" data-bind=\"text: url, attr: {title: url, href: url}\"");
 
@@ -398,14 +398,14 @@ WriteLiteral("                            ");
             #line default
             #line hidden
 WriteLiteral("\r\n                            <!-- /ko -->\r\n                            <!-- ko i" +
-"f: !success -->\r\n                            <span");
+"f: !success -->\r\n                            <div");
 
 WriteLiteral(" class=\"bcms-import-error\"");
 
 WriteLiteral(" data-bind=\"text: errorMessage, attr: {title: errorMessage}\"");
 
-WriteLiteral("></span>\r\n                            <!-- /ko -->\r\n                        </td>" +
-"\r\n                        <td");
+WriteLiteral("></div>\r\n                            <!-- /ko -->\r\n                        </td>\r" +
+"\n                        <td");
 
 WriteLiteral(" class=\"bcms-tables-nohover\"");
 
@@ -422,7 +422,7 @@ WriteLiteral("></div>\r\n                        </td>\r\n                    </
 
 WriteLiteral(" colspan=\"4\"");
 
-WriteLiteral(">\r\n                            <span");
+WriteLiteral(">\r\n                            <div");
 
 WriteLiteral(" class=\"bcms-table-no-data\"");
 
@@ -430,13 +430,13 @@ WriteLiteral(">");
 
             
             #line 99 "..\..\Views\BlogML\UploadImportFile.cshtml"
-                                                        Write(BlogGlobalization.ImportBlogPosts_ImportFileHasNoBlogs_Message);
+                                                       Write(BlogGlobalization.ImportBlogPosts_ImportFileHasNoBlogs_Message);
 
             
             #line default
             #line hidden
-WriteLiteral("</span>\r\n                        </td>\r\n                    </tr>\r\n              " +
-"      <!-- /ko -->\r\n                </tbody>\r\n            </table>\r\n");
+WriteLiteral("</div>\r\n                        </td>\r\n                    </tr>\r\n               " +
+"     <!-- /ko -->\r\n                </tbody>\r\n            </table>\r\n");
 
 WriteLiteral("        <!-- /ko -->\r\n");
 

@@ -73,7 +73,7 @@
                         <td class="bcms-tables-nohover" data-bind="html: title, attr: {title: title}"></td>
                         <td class="bcms-tables-nohover">
                             <!-- ko if: success && !$parent.finished() -->
-                            <span data-bind="text: url, attr: {title: url}"></span>
+                            <div data-bind="text: url, attr: {title: url}"></div>
                             <!-- /ko -->
                             <!-- ko if: success && $parent.finished() && !skipped -->
                             <a data-bind="text: url, attr: {title: url, href: url}" target="_blank"></a>
@@ -82,7 +82,7 @@
                             @BlogGlobalization.ImportBlogPosts_Skipped_Title
                             <!-- /ko -->
                             <!-- ko if: !success -->
-                            <span class="bcms-import-error" data-bind="text: errorMessage, attr: {title: errorMessage}"></span>
+                            <div class="bcms-import-error" data-bind="text: errorMessage, attr: {title: errorMessage}"></div>
                             <!-- /ko -->
                         </td>
                         <td class="bcms-tables-nohover">
@@ -96,7 +96,7 @@
                     <!-- ko if: results().length == 0 -->
                     <tr>
                         <td colspan="4">
-                            <span class="bcms-table-no-data">@BlogGlobalization.ImportBlogPosts_ImportFileHasNoBlogs_Message</span>
+                            <div class="bcms-table-no-data">@BlogGlobalization.ImportBlogPosts_ImportFileHasNoBlogs_Message</div>
                         </td>
                     </tr>
                     <!-- /ko -->

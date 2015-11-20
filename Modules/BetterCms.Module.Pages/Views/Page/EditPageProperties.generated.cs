@@ -775,7 +775,7 @@ WriteLiteral("                                ");
 
             
             #line 166 "..\..\Views\Page\EditPageProperties.cshtml"
-                           Write(Html.DropDownListFor(model => model.ForceAccessProtocol, Model.PageAccessProtocols.ToSelectList(Model.ForceAccessProtocol), null, new {}));
+                           Write(Html.DropDownListFor(model => model.ForceAccessProtocol, Model.PageAccessProtocols.ToSelectList(Model.ForceAccessProtocol), null, new { }));
 
             
             #line default
@@ -1257,14 +1257,14 @@ WriteLiteral(" type=\"text\"");
 
 WriteLiteral(" class=\"bcms-search-field-box bcms-js-search-box\"");
 
-WriteAttribute("placeholder", Tuple.Create(" placeholder=\"", 16325), Tuple.Create("\"", 16374)
+WriteAttribute("placeholder", Tuple.Create(" placeholder=\"", 16326), Tuple.Create("\"", 16375)
             
             #line 250 "..\..\Views\Page\EditPageProperties.cshtml"
-                                , Tuple.Create(Tuple.Create("", 16339), Tuple.Create<System.Object, System.Int32>(RootGlobalization.WaterMark_Search
+                                , Tuple.Create(Tuple.Create("", 16340), Tuple.Create<System.Object, System.Int32>(RootGlobalization.WaterMark_Search
             
             #line default
             #line hidden
-, 16339), false)
+, 16340), false)
 );
 
 WriteLiteral("\r\n                                       data-bind=\"value: searchQuery, valueUpda" +
@@ -1453,7 +1453,7 @@ WriteLiteral(">\r\n");
             
             #line 289 "..\..\Views\Page\EditPageProperties.cshtml"
                                                                           
-                    }                   
+                    }
 
             
             #line default
@@ -1491,13 +1491,13 @@ WriteLiteral(" data-bind=\"with: translations.language\"");
 
 WriteLiteral(">\r\n                            <div");
 
-WriteLiteral(" class=\"bcms-filter-text\"");
+WriteLiteral(" class=\"bcms-content-titles\"");
 
 WriteLiteral(">");
 
             
             #line 297 "..\..\Views\Page\EditPageProperties.cshtml"
-                                                     Write(PagesGlobalization.EditPageProperties_TranslationsTab_Language);
+                                                        Write(PagesGlobalization.EditPageProperties_TranslationsTab_Language);
 
             
             #line default

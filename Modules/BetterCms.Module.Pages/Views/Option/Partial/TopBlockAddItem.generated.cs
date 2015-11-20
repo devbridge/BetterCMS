@@ -99,7 +99,7 @@ WriteLiteral(" data-bind=\"visible: showLanguages, with: language\"");
 
 WriteLiteral(">\r\n    <div");
 
-WriteLiteral(" class=\"bcms-filter-text\"");
+WriteLiteral(" class=\"bcms-content-titles\"");
 
 WriteLiteral(">Edit in language:</div>\r\n    <div");
 
@@ -110,7 +110,7 @@ WriteLiteral(">\r\n        <select");
 WriteLiteral(" data-bind=\"options: languages, optionsText: \'value\', optionsValue: \'key\', value:" +
 " languageId, select2: { minimumResultsForSearch: -1 }\"");
 
-WriteLiteral("></select>\r\n    </div>\r\n</div>");
+WriteLiteral("></select>\r\n    </div>\r\n</div>\r\n");
 
         }
     }

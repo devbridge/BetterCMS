@@ -339,7 +339,7 @@ $control-panel-switch-status: (
 
 .bcms-switch {
     @include transition(background-color 200ms);
-    @include size(50px 20px);
+    @include size(50px 22px);
     @include vertical-align();
     background-color: $cp-gray;
     border-radius: 2px;
@@ -350,7 +350,7 @@ $control-panel-switch-status: (
 
     @include virtual(after) {
         @include positioning($center-y: true);
-        @include size(17px 14px);
+        @include size(20px 16px);
         background-color: $cp-light;
         border-radius: 2px;
         overflow: hidden;
@@ -376,7 +376,7 @@ $control-panel-switch-status: (
             weight: 600;
         }
         height: 100%;
-        line-height: 20px;
+        line-height: 22px;
         overflow: hidden;
         text-align: center;
         text-transform: uppercase;

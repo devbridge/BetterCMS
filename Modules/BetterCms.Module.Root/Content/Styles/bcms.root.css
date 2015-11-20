@@ -1496,7 +1496,7 @@ a:hover {
   -webkit-transition: background-color 200ms;
   -moz-transition: background-color 200ms;
   transition: background-color 200ms;
-  height: 20px;
+  height: 22px;
   width: 50px;
   display: inline-block;
   vertical-align: middle;
@@ -1515,8 +1515,8 @@ a:hover {
   -moz-transform: translateY(-50%);
   transform: translateY(-50%);
   top: 50%;
-  height: 14px;
-  width: 17px;
+  height: 16px;
+  width: 20px;
   background-color: #efefef;
   border-radius: 2px;
   overflow: hidden;
@@ -1543,7 +1543,7 @@ a:hover {
   font-size: 10px;
   font-weight: 600;
   height: 100%;
-  line-height: 20px;
+  line-height: 22px;
   overflow: hidden;
   text-align: center;
   text-transform: uppercase;

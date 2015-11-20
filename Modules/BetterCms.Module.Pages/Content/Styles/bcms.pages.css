@@ -1,4 +1,4 @@
-.bcms-clearfix:after, .bcms-tree-controls-holder:after, .bcms-top-block-filters:after, .bcms-single-tag-holder:after {
+.bcms-clearfix:after, .bcms-tree-controls-holder:after, .bcms-top-block-holder:after, .bcms-top-block-filters:after, .bcms-single-tag-holder:after {
   content: '';
   display: table;
   clear: both;
