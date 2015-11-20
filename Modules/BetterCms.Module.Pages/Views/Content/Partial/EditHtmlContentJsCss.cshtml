@@ -18,9 +18,9 @@
     </div>
 
     <div>
-        <div class="bcms-input-list-holder" id="bcms-custom-js-container">
+        <div class="bcms-input-list-holder" id="bcms-custom-js-container" style="height: 800px">
             <div class="bcms-content-titles">@PagesGlobalization.HtmlContent_CustomJs_Title</div>
-            @Html.TextAreaFor(model => model.CustomJs, new { @class = "bcms-field-textarea bcms-code-field bcms-code-field-javascript", @style = "width:820px;", @id = Guid.NewGuid() })
+            @Html.TextAreaFor(model => model.CustomJs, new { @class = "bcms-field-textarea bcms-code-field bcms-code-field-javascript", @style = "width:820px", @id = Guid.NewGuid() })
             @Html.BcmsValidationMessageFor(model => model.CustomJs)
             <div class="bcms-check-field-helper">
                 <div class="bcms-edit-check-field">

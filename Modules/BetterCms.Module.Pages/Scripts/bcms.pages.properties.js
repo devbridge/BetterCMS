@@ -280,7 +280,17 @@ bettercms.define('bcms.pages.properties', ['bcms.jquery', 'bcms', 'bcms.modal', 
 
             dialog.container.find(selectors.javascriptCssTabOpener).on('click', function () {
                 if (!codeEditorInitialized) {
-                    codeEditor.initialize(dialog.container, dialog);
+                    var heightOptions = {
+                        marginTop: 30,
+                        topElements: [{
+                            element: '.bcms-content-titles',
+                            takeMargins: true
+                        }],
+                        container: '.bcms-window-tabbed-options',
+                        parent: '.bcms-input-list-holder',
+                        marginBottom: 1
+                    };
+                    codeEditor.initialize(dialog.container, dialog, null, heightOptions);
                     codeEditorInitialized = true;
                 }
             });

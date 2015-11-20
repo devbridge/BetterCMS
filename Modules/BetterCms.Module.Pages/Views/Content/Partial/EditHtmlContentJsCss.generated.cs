@@ -133,6 +133,8 @@ WriteLiteral(" class=\"bcms-input-list-holder\"");
 
 WriteLiteral(" id=\"bcms-custom-js-container\"");
 
+WriteLiteral(" style=\"height: 800px\"");
+
 WriteLiteral(">\r\n            <div");
 
 WriteLiteral(" class=\"bcms-content-titles\"");
@@ -152,7 +154,7 @@ WriteLiteral("            ");
 
             
             #line 23 "..\..\Views\Content\Partial\EditHtmlContentJsCss.cshtml"
-       Write(Html.TextAreaFor(model => model.CustomJs, new { @class = "bcms-field-textarea bcms-code-field bcms-code-field-javascript", @style = "width:820px;", @id = Guid.NewGuid() }));
+       Write(Html.TextAreaFor(model => model.CustomJs, new { @class = "bcms-field-textarea bcms-code-field bcms-code-field-javascript", @style = "width:820px", @id = Guid.NewGuid() }));
 
             
             #line default

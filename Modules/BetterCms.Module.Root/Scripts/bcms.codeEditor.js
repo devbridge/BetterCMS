@@ -32,7 +32,7 @@ bettercms.define('bcms.codeEditor', ['bcms.jquery', 'bcms', 'bcms.htmlEditor', '
     codeEditor.globalization = globalization;
     codeEditor.events = events;
 
-    function initCkEditor(textarea, mode, options) {
+    function initCkEditor(textarea, mode, options, heightOptions) {
         var configuration = $.extend({
                     aceEditorOptions: {
                         mode: mode
@@ -44,12 +44,12 @@ bettercms.define('bcms.codeEditor', ['bcms.jquery', 'bcms', 'bcms.htmlEditor', '
             isInitialized = textarea.data('isInitialized');
 
         if (!isInitialized) {
-            htmlEditor.initializeHtmlEditor(id, null, configuration, true);
+            htmlEditor.initializeHtmlEditor(id, null, configuration, true, heightOptions);
             textarea.data('isInitialized', true);
         }
     }
 
-    codeEditor.initialize = function (container, dialog, options) {
+    codeEditor.initialize = function (container, dialog, options, heightOptions) {
         if ($.browser.msie && parseInt($.browser.version, 10) <= 8) {
             bcms.logger.info('ACE editor is enabled only on IE versions > 8.');
             return;
@@ -72,10 +72,10 @@ bettercms.define('bcms.codeEditor', ['bcms.jquery', 'bcms', 'bcms.htmlEditor', '
         modal.maximizeChildHeight($.merge(jsObjects, cssObjects), dialog);
 
         $.each(jsObjects, function() {
-            initCkEditor($(this), "ace/mode/javascript", options);
+            initCkEditor($(this), "ace/mode/javascript", options, heightOptions);
         });
         $.each(cssObjects, function () {
-            initCkEditor($(this), "ace/mode/css", options);
+            initCkEditor($(this), "ace/mode/css", options, heightOptions);
         });
     };
 

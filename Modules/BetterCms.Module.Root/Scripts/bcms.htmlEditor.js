@@ -143,6 +143,30 @@ bettercms.define('bcms.htmlEditor', ['bcms.jquery', 'bcms', 'ckeditor', 'bcms.ma
             }
         }
     }
+    
+    function calculateHeight(element, options) {
+        options = $.extend({
+            marginTop: 0,
+            marginBottom: 0,
+            topElements: []
+        }, options);
+
+        var i, topElement,
+            containerHeight = element.closest(options.container).height(),
+            topElementsHeight = 0,
+            bottomElementHeight = options.parent
+                ? element.closest(options.parent).find(options.bottomElement).outerHeight(true)
+                : $(options.bottomElement).outerHeight(true);
+
+            for (i = 0; i < options.topElements.length; i++) {
+                topElement = options.topElements[i];
+                topElementsHeight += options.parent
+                    ? element.closest(options.parent).find(topElement.element).outerHeight(topElement.takeMargins)
+                    : $(topElement.element).outerHeight(topElement.takeMargins);
+            }
+
+        return containerHeight - topElementsHeight - bottomElementHeight - options.marginTop - options.marginBottom;
+    }
 
     htmlEditor.initializeMarkdownEditor = function (id, editingContentId, options) {
         options = $.extend({
@@ -174,7 +198,7 @@ bettercms.define('bcms.htmlEditor', ['bcms.jquery', 'bcms', 'ckeditor', 'bcms.ma
         return markdownEditor.getChildWidgetOptions(editorId);
     }
 
-    htmlEditor.initializeHtmlEditor = function (id, editingContentId, options, startInSourceMode) {
+    htmlEditor.initializeHtmlEditor = function (id, editingContentId, options, startInSourceMode, heightOptions) {
         var editMode = startInSourceMode;
         if (!CKEDITOR) {
             alert('Failed to load HTML editor.');
@@ -332,6 +356,19 @@ bettercms.define('bcms.htmlEditor', ['bcms.jquery', 'bcms', 'ckeditor', 'bcms.ma
 
             // Make sure advanced toolbars initially collapsed
             editor.execCommand('toolbarCollapse');
+            // Strech editor's height to fill the container
+            if (heightOptions) {
+                var callResize = function() {
+                        if($(heightOptions.container).length){
+                            editor.resize("100%", calculateHeight(element, heightOptions));
+                        }
+                };
+                callResize();
+                $(window).bind('resize', callResize);
+                $(window).on('disableResize', function() {
+                    $(window).unbind('resize', callResize);
+                });
+            }
         });
 
         CKEDITOR.instances[id].smartTags = getSmartTags();
@@ -349,6 +386,7 @@ bettercms.define('bcms.htmlEditor', ['bcms.jquery', 'bcms', 'ckeditor', 'bcms.ma
             instance = CKEDITOR.instances[name];
             closeMaximizedMode(instance);
             instance.destroy();
+            $(window).trigger('disableResize');
         }
         if (window.location.href.slice(-2) === '#-') {
             window.location.hash = '';
@@ -360,6 +398,7 @@ bettercms.define('bcms.htmlEditor', ['bcms.jquery', 'bcms', 'ckeditor', 'bcms.ma
         if (editor) {
             closeMaximizedMode(editor);
             editor.destroy();
+            $(window).trigger('disableResize');
         }
         if (window.location.href.slice(-2) === '#-') {
             window.location.hash = '';

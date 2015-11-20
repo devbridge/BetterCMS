@@ -301,7 +301,18 @@ bettercms.define('bcms.pages.content', ['bcms.jquery', 'bcms', 'bcms.modal', 'bc
 
             settings.dialog.container.find(selectors.htmlContentJsCssTabOpener).on('click', function () {
                 if (!codeEditorInitialized) {
-                    codeEditor.initialize(settings.dialog.container, settings.dialog);
+                    var heightOptions = {
+                        marginTop: 30,
+                        topElements: [{
+                            element: '.bcms-content-titles',
+                            takeMargins: true
+                        }],
+                        container: '.bcms-window-tabbed-options',
+                        bottomElement: '.bcms-check-field-helper',
+                        parent: '.bcms-input-list-holder',
+                        marginBottom: 1
+                    };
+                    codeEditor.initialize(settings.dialog.container, settings.dialog, null, heightOptions);
                     codeEditorInitialized = true;
                 }
             });
@@ -321,9 +332,14 @@ bettercms.define('bcms.pages.content', ['bcms.jquery', 'bcms', 'bcms.modal', 'bc
             }
 
             if (settings.contentTextMode == content.contentTextModes.html) {
-                htmlEditor.initializeHtmlEditor(settings.editorId, '', {
-                    height: editorHeight
-                }, settings.editInSourceMode);
+                var heightOptions = {
+                    topElements: [{
+                            element: '.bcms-content-info-block',
+                            takeMargins: true
+                        }],
+                    container: '.bcms-window-tabbed-options'
+                };
+                htmlEditor.initializeHtmlEditor(settings.editorId, '', {}, settings.editInSourceMode, heightOptions);
 
                 if (settings.enableInsertDynamicRegion) {
                     htmlEditor.enableInsertDynamicRegion(settings.editorId, true, settings.data.LastDynamicRegionNumber);
@@ -354,7 +370,18 @@ bettercms.define('bcms.pages.content', ['bcms.jquery', 'bcms', 'bcms.modal', 'bc
 
             settings.dialog.container.find(selectors.htmlContentJsCssTabOpener).on('click', function () {
                 if (!codeEditorInitialized) {
-                    codeEditor.initialize(settings.dialog.container, settings.dialog);
+                    var heightOptions = {
+                        marginTop: 30,
+                        topElements: [{
+                            element: '.bcms-content-titles',
+                            takeMargins: true
+                        }],
+                        container: '.bcms-window-tabbed-options',
+                        bottomElement: '.bcms-check-field-helper',
+                        parent: '.bcms-input-list-holder',
+                        marginBottom: 1
+                    };
+                    codeEditor.initialize(settings.dialog.container, settings.dialog, null, heightOptions);
                     codeEditorInitialized = true;
                 }
             });
@@ -374,9 +401,16 @@ bettercms.define('bcms.pages.content', ['bcms.jquery', 'bcms', 'bcms.modal', 'bc
             }
              
             if (settings.contentTextMode == content.contentTextModes.html) {
+                var heightOptions = {
+                    topElements: [{
+                        element: '.bcms-content-info-block',
+                        takeMargins: true
+                    }],
+                    container: '.bcms-window-tabbed-options'
+                };
                 htmlEditor.initializeHtmlEditor(settings.editorId, settings.data.ContentId, {
                     height: editorHeight
-                }, settings.editInSourceMode);
+                }, settings.editInSourceMode, heightOptions);
 
                 if (settings.enableInsertDynamicRegion) {
                     htmlEditor.enableInsertDynamicRegion(settings.editorId, true, settings.data.LastDynamicRegionNumber);
