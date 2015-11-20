@@ -689,8 +689,7 @@ a:hover {
   font-size: 11px;
 }
 
-.bcms-loader:before,
-.bcms-loader:after {
+.bcms-loader:before, .bcms-loader:after {
   content: "";
   -webkit-animation: loader 800ms infinite ease-in-out;
   -moz-animation: loader 800ms infinite ease-in-out;
@@ -737,8 +736,7 @@ a:hover {
   font-size: 11px;
 }
 
-.bcms-loader-2:before,
-.bcms-loader-2:after {
+.bcms-loader-2:before, .bcms-loader-2:after {
   content: "";
   -webkit-animation: loader 800ms infinite ease-in-out;
   -moz-animation: loader 800ms infinite ease-in-out;
@@ -1680,8 +1678,7 @@ a:hover {
   cursor: pointer;
 }
 
-.bcms-contents-tree-add-block:hover,
-.bcms-contents-tree-add-block.bcms-active {
+.bcms-contents-tree-add-block:hover, .bcms-contents-tree-add-block.bcms-active {
   background-color: #0a62b7;
 }
 
@@ -2262,13 +2259,11 @@ td .bcms-field-wrapper {
   background-color: #4e4e4e;
 }
 
-.bcms-region-contentstree,
-.bcms-region-sortcancel {
+.bcms-region-contentstree, .bcms-region-sortcancel {
   background-color: #676767;
 }
 
-.bcms-region-contentstree:hover,
-.bcms-region-sortcancel:hover {
+.bcms-region-contentstree:hover, .bcms-region-sortcancel:hover {
   background-color: #4e4e4e;
 }
 
@@ -2497,8 +2492,7 @@ td .bcms-field-wrapper {
   text-align: center;
 }
 
-.bcms-pager-no:hover,
-.bcms-pager-no.bcms-active-pager {
+.bcms-pager-no:hover, .bcms-pager-no.bcms-active-pager {
   background-color: #ffffff;
 }
 
@@ -2738,7 +2732,8 @@ td .bcms-field-wrapper {
 .bcms-tables td.bcms-widget-status .bcms-action-ok,
 .bcms-tables td.bcms-widget-status .bcms-action-draft,
 .bcms-tables td.bcms-widget-status .bcms-action-warn {
-  float: right;
+  display: block;
+  margin: auto;
 }
 
 .bcms-tables td .bcms-page-url {
@@ -2870,7 +2865,7 @@ td .bcms-field-wrapper {
 }
 
 .bcms-inner-navigation-ui:hover {
-  color: #8c8c8c;
+  color: #8d8d8d;
 }
 
 .bcms-inner-navigation-ui.bcms-active {
@@ -3810,8 +3805,7 @@ textarea.markItUpEditor:focus {
   padding: 9px 11px 10px;
 }
 
-.select2-choice,
-.select2-choices {
+.select2-choice, .select2-choices {
   height: 100%;
   width: 100%;
   display: block;
@@ -3866,8 +3860,7 @@ textarea.markItUpEditor:focus {
   padding: 5px 10px;
 }
 
-.select2-offscreen,
-.select2-offcsreen:focus {
+.select2-offscreen, .select2-offcsreen:focus {
   border: 0 !important;
   clip: rect(0 0 0 0) !important;
   height: 1px !important;

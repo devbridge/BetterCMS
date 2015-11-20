@@ -20,31 +20,27 @@
         {
             using (Html.BeginForm<UploadController>(f => f.SaveUploads(null), FormMethod.Post, new { @class = "bcms-ajax-form" }))
             {
-                
-                    @Html.HiddenFor(f => f.ReuploadMediaId)
-                    @Html.HiddenFor(f => f.RootFolderId)
-                    @Html.HiddenFor(f => f.AccessControlEnabled)
-                    @if (Model.RootFolderId.HasDefaultValue() && Model.ReuploadMediaId.HasDefaultValue())
-                    {
-                        <div class="bcms-form-block-holder">
-                            <div>
-                                <div class="bcms-input-list-holder">
-                                    <div class="bcms-content-titles">@MediaGlobalization.MultiFileUpload_SelectFolder</div>
-                                    @Html.Tooltip(MediaGlobalization.MultiFileUpload_SelectFolder_Help_Message)
-                                    <div class="bcms-field-wrapper">
-                                        @Html.DropDownListFor(f => f.SelectedFolderId, Model.Folders.Select(o => new SelectListItem { Selected = Model.SelectedFolderId == o.Item1, Text = o.Item2, Value = o.Item1.ToString() }))
-                                    </div>
-                                </div>
+                @Html.HiddenFor(f => f.ReuploadMediaId)
+                @Html.HiddenFor(f => f.RootFolderId)
+                @Html.HiddenFor(f => f.AccessControlEnabled)
+                @if (Model.RootFolderId.HasDefaultValue() && Model.ReuploadMediaId.HasDefaultValue())
+                {
+                    <div class="bcms-form-block-holder">
+                        <div>
+                            <div class="bcms-content-titles">@MediaGlobalization.MultiFileUpload_SelectFolder</div>
+                            @Html.Tooltip(MediaGlobalization.MultiFileUpload_SelectFolder_Help_Message)
+                            <div class="bcms-field-wrapper">
+                                @Html.DropDownListFor(f => f.SelectedFolderId, Model.Folders.Select(o => new SelectListItem { Selected = Model.SelectedFolderId == o.Item1, Text = o.Item2, Value = o.Item1.ToString() }))
                             </div>
-                            <div>  
-                            </div>
+                        </div>
+                        <div>
+                        </div>
                     </div>
-                    }
-                    else
-                    {
-                        @Html.HiddenFor(f => f.SelectedFolderId, new { @Value = Model.RootFolderId })
-                    }
-              
+                }
+                else
+                {
+                    @Html.HiddenFor(f => f.SelectedFolderId, new { @Value = Model.RootFolderId })
+                }
 
                 <div class="bcms-file-drop-zone-container">
                     <div id="bcms-files-drop-zone" class="bcms-file-drop-zone">
@@ -103,8 +99,8 @@
                             </div>
 
                             <div class="bcms-upload-description" data-bind="visible: uploadFailed(), attr: { title: failureMessage() }">
-                                <span data-bind="visible: !(failureMessage() != null && failureMessage().length > 0)">@MediaGlobalization.MultiFileUpload_Failed</span>
-                                <span data-bind="visible: failureMessage() != null && failureMessage().length > 0, text: failureMessage"></span>
+                                <div data-bind="visible: !(failureMessage() != null && failureMessage().length > 0)">@MediaGlobalization.MultiFileUpload_Failed</div>
+                                <div data-bind="visible: failureMessage() != null && failureMessage().length > 0, text: failureMessage"></div>
                             </div>
 
                             <div class="bcms-upload-description" data-bind="visible: uploadCompleted() && !uploadProcessing() && !uploadFailed()">
@@ -122,7 +118,6 @@
                     </div>
                 </div>
             </script>
-
         }
     </div>
 </div>

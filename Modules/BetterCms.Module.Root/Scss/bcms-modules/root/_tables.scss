@@ -73,7 +73,8 @@ $sort-icons: (
             .bcms-action-ok,
             .bcms-action-draft,
             .bcms-action-warn {
-                float: right;
+                display: block;
+                margin: auto;
             }
         }
 

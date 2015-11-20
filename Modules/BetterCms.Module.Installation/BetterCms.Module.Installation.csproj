@@ -273,7 +273,6 @@
     <EmbeddedResource Include="Models\Migrations\Migration201311181011.sqlserver.sql" />
     <EmbeddedResource Include="Content\Styles\bcms.installation.css" />
     <EmbeddedResource Include="Content\Styles\bcms.installation.min.css" />
-    <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="packages.config">
       <SubType>Designer</SubType>
     </Content>
@@ -295,9 +294,6 @@
       <Generator>RazorGenerator</Generator>
       <LastGenOutput>BlogPosts.generated.cs</LastGenOutput>
     </None>
-    <Content Include="fonts\glyphicons-halflings-regular.woff" />
-    <Content Include="fonts\glyphicons-halflings-regular.ttf" />
-    <Content Include="fonts\glyphicons-halflings-regular.eot" />
     <Content Include="Scripts\jquery-1.10.2.min.map" />
     <Content Include="Views\Widgets\BlogPostCategoriesWidgetInvoker.cshtml">
       <Generator>RazorGenerator</Generator>
