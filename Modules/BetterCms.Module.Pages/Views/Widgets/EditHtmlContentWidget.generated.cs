@@ -108,7 +108,7 @@ WriteLiteral(">\r\n    <div");
 
 WriteLiteral(" class=\"bcms-modal-frame-holder\"");
 
-WriteLiteral(">\r\n        <a");
+WriteLiteral(">\r\n        <div");
 
 WriteLiteral(" class=\"bcms-tab-ui bcms-tab-item bcms-active\"");
 
@@ -118,12 +118,12 @@ WriteLiteral(">");
 
             
             #line 23 "..\..\Views\Widgets\EditHtmlContentWidget.cshtml"
-                                                                            Write(PagesGlobalization.EditWidget_BasicPropertiesTab_Title);
+                                                                              Write(PagesGlobalization.EditWidget_BasicPropertiesTab_Title);
 
             
             #line default
             #line hidden
-WriteLiteral("</a>\r\n        <a");
+WriteLiteral("</div>\r\n        <div");
 
 WriteLiteral(" class=\"bcms-tab-ui bcms-tab-item\"");
 
@@ -133,12 +133,12 @@ WriteLiteral(">");
 
             
             #line 24 "..\..\Views\Widgets\EditHtmlContentWidget.cshtml"
-                                                                Write(PagesGlobalization.EditWidget_OptionsTab_Title);
+                                                                  Write(PagesGlobalization.EditWidget_OptionsTab_Title);
 
             
             #line default
             #line hidden
-WriteLiteral("</a>\r\n        <a");
+WriteLiteral("</div>\r\n        <div");
 
 WriteLiteral(" class=\"bcms-tab-ui bcms-tab-item\"");
 
@@ -148,12 +148,12 @@ WriteLiteral(">");
 
             
             #line 25 "..\..\Views\Widgets\EditHtmlContentWidget.cshtml"
-                                                                Write(PagesGlobalization.EditWidget_AdvancedOptionsTab_Title);
+                                                                  Write(PagesGlobalization.EditWidget_AdvancedOptionsTab_Title);
 
             
             #line default
             #line hidden
-WriteLiteral("</a>\r\n    </div>\r\n</div>\r\n\r\n<div");
+WriteLiteral("</div>\r\n    </div>\r\n</div>\r\n\r\n<div");
 
 WriteLiteral(" class=\"bcms-modal-frame-holder\"");
 

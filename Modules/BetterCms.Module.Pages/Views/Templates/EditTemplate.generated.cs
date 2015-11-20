@@ -99,7 +99,7 @@ WriteLiteral(">\r\n    <div");
 
 WriteLiteral(" class=\"bcms-modal-frame-holder\"");
 
-WriteLiteral(">\r\n        <a");
+WriteLiteral(">\r\n        <div");
 
 WriteLiteral(" class=\"bcms-tab-ui bcms-tab-item bcms-active\"");
 
@@ -109,12 +109,12 @@ WriteLiteral(">");
 
             
             #line 17 "..\..\Views\Templates\EditTemplate.cshtml"
-                                                                            Write(PagesGlobalization.EditTemplate_BasicPropertiesTab_Title);
+                                                                              Write(PagesGlobalization.EditTemplate_BasicPropertiesTab_Title);
 
             
             #line default
             #line hidden
-WriteLiteral("</a>\r\n        <a");
+WriteLiteral("</div>\r\n        <div");
 
 WriteLiteral(" class=\"bcms-tab-ui bcms-tab-item\"");
 
@@ -124,12 +124,12 @@ WriteLiteral(">");
 
             
             #line 18 "..\..\Views\Templates\EditTemplate.cshtml"
-                                                                Write(PagesGlobalization.EditTemplate_RegionsTab_Title);
+                                                                  Write(PagesGlobalization.EditTemplate_RegionsTab_Title);
 
             
             #line default
             #line hidden
-WriteLiteral("</a>\r\n        <a");
+WriteLiteral("</div>\r\n        <div");
 
 WriteLiteral(" class=\"bcms-tab-ui bcms-tab-item\"");
 
@@ -139,12 +139,12 @@ WriteLiteral(">");
 
             
             #line 19 "..\..\Views\Templates\EditTemplate.cshtml"
-                                                                Write(PagesGlobalization.EditTemplate_OptionsTab_Title);
+                                                                  Write(PagesGlobalization.EditTemplate_OptionsTab_Title);
 
             
             #line default
             #line hidden
-WriteLiteral("</a>\r\n    </div>\r\n</div>\r\n\r\n<div");
+WriteLiteral("</div>\r\n    </div>\r\n</div>\r\n\r\n<div");
 
 WriteLiteral(" class=\"bcms-modal-frame-holder\"");
 
@@ -394,14 +394,14 @@ WriteLiteral(">\r\n                                    <img");
 
 WriteLiteral(" id=\"bcms-template-preview-image\"");
 
-WriteAttribute("src", Tuple.Create(" src=\"", 3683), Tuple.Create("\"", 3711)
+WriteAttribute("src", Tuple.Create(" src=\"", 3695), Tuple.Create("\"", 3723)
             
             #line 65 "..\..\Views\Templates\EditTemplate.cshtml"
-, Tuple.Create(Tuple.Create("", 3689), Tuple.Create<System.Object, System.Int32>(Model.PreviewImageUrl
+, Tuple.Create(Tuple.Create("", 3701), Tuple.Create<System.Object, System.Int32>(Model.PreviewImageUrl
             
             #line default
             #line hidden
-, 3689), false)
+, 3701), false)
 );
 
 WriteLiteral(" alt=\"\"");

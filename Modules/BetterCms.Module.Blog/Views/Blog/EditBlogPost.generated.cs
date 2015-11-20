@@ -143,7 +143,7 @@ WriteLiteral(">\r\n    <div");
 
 WriteLiteral(" class=\"bcms-modal-frame-holder\"");
 
-WriteLiteral(">\r\n        <a");
+WriteLiteral(">\r\n        <div");
 
 WriteLiteral(" class=\"bcms-tab-ui bcms-tab-item bcms-active\"");
 
@@ -153,12 +153,12 @@ WriteLiteral(">");
 
             
             #line 32 "..\..\Views\Blog\EditBlogPost.cshtml"
-                                                                            Write(BlogGlobalization.EditBlogPost_ContentTab_Title);
+                                                                              Write(BlogGlobalization.EditBlogPost_ContentTab_Title);
 
             
             #line default
             #line hidden
-WriteLiteral("</a>\r\n        <a");
+WriteLiteral("</div>\r\n        <div");
 
 WriteLiteral(" class=\"bcms-tab-ui bcms-tab-item\"");
 
@@ -168,12 +168,12 @@ WriteLiteral(">");
 
             
             #line 33 "..\..\Views\Blog\EditBlogPost.cshtml"
-                                                                Write(BlogGlobalization.EditBlogPost_PropertiesTab_Title);
+                                                                  Write(BlogGlobalization.EditBlogPost_PropertiesTab_Title);
 
             
             #line default
             #line hidden
-WriteLiteral("</a>\r\n    </div>\r\n</div>\r\n\r\n<div");
+WriteLiteral("</div>\r\n    </div>\r\n</div>\r\n\r\n<div");
 
 WriteLiteral(" class=\"bcms-modal-frame-holder\"");
 

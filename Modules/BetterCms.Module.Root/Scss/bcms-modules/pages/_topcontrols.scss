@@ -222,8 +222,8 @@
 .bcms-language-selector-box {
     float: right;
 
-    .bcms-filter-text {
-        @include vertical-align();
+    .bcms-content-titles {
+        margin: 0;
     }
 
     .bcms-field-wrapper {

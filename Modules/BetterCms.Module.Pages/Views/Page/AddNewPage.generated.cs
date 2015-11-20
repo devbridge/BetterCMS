@@ -105,7 +105,7 @@ WriteLiteral(">\r\n    <div");
 
 WriteLiteral(" class=\"bcms-modal-frame-holder\"");
 
-WriteLiteral(">\r\n        <a");
+WriteLiteral(">\r\n        <div");
 
 WriteLiteral(" class=\"bcms-tab-ui bcms-tab-item bcms-active\"");
 
@@ -115,12 +115,12 @@ WriteLiteral(">");
 
             
             #line 15 "..\..\Views\Page\AddNewPage.cshtml"
-                                                                            Write(PagesGlobalization.AddNewPage_Title);
+                                                                              Write(PagesGlobalization.AddNewPage_Title);
 
             
             #line default
             #line hidden
-WriteLiteral("</a>\r\n        <a");
+WriteLiteral("</div>\r\n        <div");
 
 WriteLiteral(" class=\"bcms-tab-ui bcms-tab-item\"");
 
@@ -130,12 +130,12 @@ WriteLiteral(">");
 
             
             #line 16 "..\..\Views\Page\AddNewPage.cshtml"
-                                                                Write(PagesGlobalization.AddNewPage_Options);
+                                                                  Write(PagesGlobalization.AddNewPage_Options);
 
             
             #line default
             #line hidden
-WriteLiteral("</a>\r\n    </div>\r\n</div>\r\n\r\n<div");
+WriteLiteral("</div>\r\n    </div>\r\n</div>\r\n\r\n<div");
 
 WriteLiteral(" class=\"bcms-modal-frame-holder\"");
 
@@ -486,14 +486,14 @@ WriteLiteral(" type=\"text\"");
 
 WriteLiteral(" class=\"bcms-search-field-box bcms-js-search-box\"");
 
-WriteAttribute("placeholder", Tuple.Create(" placeholder=\"", 4907), Tuple.Create("\"", 4956)
+WriteAttribute("placeholder", Tuple.Create(" placeholder=\"", 4915), Tuple.Create("\"", 4964)
             
             #line 89 "..\..\Views\Page\AddNewPage.cshtml"
-                                 , Tuple.Create(Tuple.Create("", 4921), Tuple.Create<System.Object, System.Int32>(RootGlobalization.WaterMark_Search
+                                 , Tuple.Create(Tuple.Create("", 4929), Tuple.Create<System.Object, System.Int32>(RootGlobalization.WaterMark_Search
             
             #line default
             #line hidden
-, 4921), false)
+, 4929), false)
 );
 
 WriteLiteral("\r\n                                       data-bind=\"value: searchQuery, valueUpda" +

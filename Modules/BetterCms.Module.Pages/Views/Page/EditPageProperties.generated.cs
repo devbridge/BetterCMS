@@ -137,7 +137,7 @@ WriteLiteral(">\r\n    <div");
 
 WriteLiteral(" class=\"bcms-modal-frame-holder\"");
 
-WriteLiteral(">\r\n        <a");
+WriteLiteral(">\r\n        <div");
 
 WriteLiteral(" class=\"bcms-tab-ui bcms-tab-item bcms-active\"");
 
@@ -147,12 +147,12 @@ WriteLiteral(">");
 
             
             #line 32 "..\..\Views\Page\EditPageProperties.cshtml"
-                                                                            Write(PagesGlobalization.EditPageProperties_BasicPropertiesTab_Title);
+                                                                              Write(PagesGlobalization.EditPageProperties_BasicPropertiesTab_Title);
 
             
             #line default
             #line hidden
-WriteLiteral("</a>\r\n        <a");
+WriteLiteral("</div>\r\n        <div");
 
 WriteLiteral(" class=\"bcms-tab-ui bcms-tab-item\"");
 
@@ -162,12 +162,12 @@ WriteLiteral(">");
 
             
             #line 33 "..\..\Views\Page\EditPageProperties.cshtml"
-                                                                Write(PagesGlobalization.EditPageProperties_LayoutPropertiesTab_Title);
+                                                                  Write(PagesGlobalization.EditPageProperties_LayoutPropertiesTab_Title);
 
             
             #line default
             #line hidden
-WriteLiteral("</a>\r\n        <a");
+WriteLiteral("</div>\r\n        <div");
 
 WriteLiteral(" class=\"bcms-tab-ui bcms-tab-item\"");
 
@@ -177,12 +177,12 @@ WriteLiteral(">");
 
             
             #line 34 "..\..\Views\Page\EditPageProperties.cshtml"
-                                                                Write(PagesGlobalization.EditPageProperties_OptionsTab_Title);
+                                                                  Write(PagesGlobalization.EditPageProperties_OptionsTab_Title);
 
             
             #line default
             #line hidden
-WriteLiteral("</a>\r\n        <a");
+WriteLiteral("</div>\r\n        <div");
 
 WriteLiteral(" class=\"bcms-tab-ui bcms-tab-item\"");
 
@@ -192,12 +192,12 @@ WriteLiteral(">");
 
             
             #line 35 "..\..\Views\Page\EditPageProperties.cshtml"
-                                                                Write(PagesGlobalization.EditPageProperties_AdvancedPropertiesTab_Title);
+                                                                  Write(PagesGlobalization.EditPageProperties_AdvancedPropertiesTab_Title);
 
             
             #line default
             #line hidden
-WriteLiteral("</a>\r\n");
+WriteLiteral("</div>\r\n");
 
             
             #line 36 "..\..\Views\Page\EditPageProperties.cshtml"
@@ -213,7 +213,7 @@ WriteLiteral("</a>\r\n");
             
             #line default
             #line hidden
-WriteLiteral("            <a");
+WriteLiteral("            <div");
 
 WriteLiteral(" class=\"bcms-tab-ui bcms-tab-item\"");
 
@@ -223,12 +223,12 @@ WriteLiteral(">");
 
             
             #line 38 "..\..\Views\Page\EditPageProperties.cshtml"
-                                                                    Write(PagesGlobalization.EditPageProperties_TranslationsTab_Title);
+                                                                      Write(PagesGlobalization.EditPageProperties_TranslationsTab_Title);
 
             
             #line default
             #line hidden
-WriteLiteral("</a>\r\n");
+WriteLiteral("</div>\r\n");
 
             
             #line 39 "..\..\Views\Page\EditPageProperties.cshtml"
@@ -1257,14 +1257,14 @@ WriteLiteral(" type=\"text\"");
 
 WriteLiteral(" class=\"bcms-search-field-box bcms-js-search-box\"");
 
-WriteAttribute("placeholder", Tuple.Create(" placeholder=\"", 16326), Tuple.Create("\"", 16375)
+WriteAttribute("placeholder", Tuple.Create(" placeholder=\"", 16346), Tuple.Create("\"", 16395)
             
             #line 250 "..\..\Views\Page\EditPageProperties.cshtml"
-                                , Tuple.Create(Tuple.Create("", 16340), Tuple.Create<System.Object, System.Int32>(RootGlobalization.WaterMark_Search
+                                , Tuple.Create(Tuple.Create("", 16360), Tuple.Create<System.Object, System.Int32>(RootGlobalization.WaterMark_Search
             
             #line default
             #line hidden
-, 16340), false)
+, 16360), false)
 );
 
 WriteLiteral("\r\n                                       data-bind=\"value: searchQuery, valueUpda" +

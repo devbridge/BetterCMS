@@ -83,7 +83,7 @@ WriteLiteral(">\r\n    <div");
 
 WriteLiteral(" class=\"bcms-modal-frame-holder\"");
 
-WriteLiteral(">\r\n        <a");
+WriteLiteral(">\r\n        <div");
 
 WriteLiteral(" class=\"bcms-tab-ui bcms-tab-item bcms-active\"");
 
@@ -93,12 +93,12 @@ WriteLiteral(">");
 
             
             #line 12 "..\..\Views\Content\AddPageHtmlContent.cshtml"
-                                                                            Write(PagesGlobalization.AddPageContent_RegularContentTab_Title);
+                                                                              Write(PagesGlobalization.AddPageContent_RegularContentTab_Title);
 
             
             #line default
             #line hidden
-WriteLiteral("</a>\r\n        <a");
+WriteLiteral("</div>\r\n        <div");
 
 WriteLiteral(" class=\"bcms-tab-ui bcms-tab-item\"");
 
@@ -108,12 +108,12 @@ WriteLiteral(">");
 
             
             #line 13 "..\..\Views\Content\AddPageHtmlContent.cshtml"
-                                                                Write(PagesGlobalization.EditPageContent_AdvancedOptionsTab_Title);
+                                                                  Write(PagesGlobalization.EditPageContent_AdvancedOptionsTab_Title);
 
             
             #line default
             #line hidden
-WriteLiteral("</a>\r\n    </div>\r\n</div>\r\n\r\n");
+WriteLiteral("</div>\r\n    </div>\r\n</div>\r\n\r\n");
 
             
             #line 17 "..\..\Views\Content\AddPageHtmlContent.cshtml"

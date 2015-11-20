@@ -6,11 +6,11 @@
 
 <div class="bcms-tab-header bcms-js-tab-header">
     <div class="bcms-modal-frame-holder">
-        <a class="bcms-sitemaps-arrow-left" data-bind="css: { 'bcms-sitemaps-arrow-inactive': !slider.canSlideLeft() }, click: slider.slideLeft, visible: slider.showSliders"></a>
+        <div class="bcms-sitemaps-arrow-left" data-bind="css: { 'bcms-sitemaps-arrow-inactive': !slider.canSlideLeft() }, click: slider.slideLeft, visible: slider.showSliders"></div>
         <!-- ko foreach: tabs -->
-        <a class="bcms-tab-ui bcms-tab-item" data-bind="text: newPageViewModel.sitemap.title(), css: { 'bcms-active': isActive }, click: activate, attr: { id: tabId }, visible: isVisible"></a>
+        <div class="bcms-tab-ui bcms-tab-item" data-bind="text: newPageViewModel.sitemap.title(), css: { 'bcms-active': isActive }, click: activate, attr: { id: tabId }, visible: isVisible"></div>
         <!-- /ko -->
-        <a class="bcms-sitemaps-arrow-right" data-bind="css: { 'bcms-sitemaps-arrow-inactive': !slider.canSlideRight() }, click: slider.slideRight, visible: slider.showSliders"></a>
+        <div class="bcms-sitemaps-arrow-right" data-bind="css: { 'bcms-sitemaps-arrow-inactive': !slider.canSlideRight() }, click: slider.slideRight, visible: slider.showSliders"></div>
     </div>
 </div>
 

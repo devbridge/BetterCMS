@@ -53,7 +53,7 @@ WriteLiteral("<div");
 
 WriteLiteral(" class=\"bcms-inner-navigation\"");
 
-WriteLiteral(">\r\n    <a");
+WriteLiteral(">\r\n    <div");
 
 WriteLiteral(" class=\"bcms-inner-navigation-ui bcms-tab-item bcms-active\"");
 
@@ -65,12 +65,12 @@ WriteLiteral(">");
 
             
             #line 6 "..\..\Views\MediaManager\Index.cshtml"
-                                                                                                          Write(MediaGlobalization.ImagesTab_Title);
+                                                                                                            Write(MediaGlobalization.ImagesTab_Title);
 
             
             #line default
             #line hidden
-WriteLiteral("</a>\r\n    <a");
+WriteLiteral("</div>\r\n    <div");
 
 WriteLiteral(" class=\"bcms-inner-navigation-ui bcms-tab-item\"");
 
@@ -82,12 +82,12 @@ WriteLiteral(">");
 
             
             #line 7 "..\..\Views\MediaManager\Index.cshtml"
-                                                                                             Write(MediaGlobalization.FilesTab_Title);
+                                                                                               Write(MediaGlobalization.FilesTab_Title);
 
             
             #line default
             #line hidden
-WriteLiteral("</a>\r\n</div>\r\n\r\n");
+WriteLiteral("</div>\r\n</div>\r\n\r\n");
 
             
             #line 10 "..\..\Views\MediaManager\Index.cshtml"

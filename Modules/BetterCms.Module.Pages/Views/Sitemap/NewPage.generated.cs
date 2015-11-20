@@ -75,28 +75,28 @@ WriteLiteral(">\r\n    <div");
 
 WriteLiteral(" class=\"bcms-modal-frame-holder\"");
 
-WriteLiteral(">\r\n        <a");
+WriteLiteral(">\r\n        <div");
 
 WriteLiteral(" class=\"bcms-sitemaps-arrow-left\"");
 
 WriteLiteral(" data-bind=\"css: { \'bcms-sitemaps-arrow-inactive\': !slider.canSlideLeft() }, clic" +
 "k: slider.slideLeft, visible: slider.showSliders\"");
 
-WriteLiteral("></a>\r\n        <!-- ko foreach: tabs -->\r\n        <a");
+WriteLiteral("></div>\r\n        <!-- ko foreach: tabs -->\r\n        <div");
 
 WriteLiteral(" class=\"bcms-tab-ui bcms-tab-item\"");
 
 WriteLiteral(" data-bind=\"text: newPageViewModel.sitemap.title(), css: { \'bcms-active\': isActiv" +
 "e }, click: activate, attr: { id: tabId }, visible: isVisible\"");
 
-WriteLiteral("></a>\r\n        <!-- /ko -->\r\n        <a");
+WriteLiteral("></div>\r\n        <!-- /ko -->\r\n        <div");
 
 WriteLiteral(" class=\"bcms-sitemaps-arrow-right\"");
 
 WriteLiteral(" data-bind=\"css: { \'bcms-sitemaps-arrow-inactive\': !slider.canSlideRight() }, cli" +
 "ck: slider.slideRight, visible: slider.showSliders\"");
 
-WriteLiteral("></a>\r\n    </div>\r\n</div>\r\n\r\n<div");
+WriteLiteral("></div>\r\n    </div>\r\n</div>\r\n\r\n<div");
 
 WriteLiteral(" class=\"bcms-modal-frame-holder\"");
 

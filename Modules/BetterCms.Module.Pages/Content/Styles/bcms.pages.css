@@ -659,9 +659,8 @@
   float: right;
 }
 
-.bcms-language-selector-box .bcms-filter-text {
-  display: inline-block;
-  vertical-align: middle;
+.bcms-language-selector-box .bcms-content-titles {
+  margin: 0;
 }
 
 .bcms-language-selector-box .bcms-field-wrapper {

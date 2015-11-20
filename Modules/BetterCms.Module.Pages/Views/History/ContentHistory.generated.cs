@@ -422,7 +422,7 @@ WriteLiteral(">\r\n    <div");
 
 WriteLiteral(" class=\"bcms-modal-frame-holder\"");
 
-WriteLiteral(">\r\n        <a");
+WriteLiteral(">\r\n        <div");
 
 WriteLiteral(" class=\"bcms-tab-ui bcms-tab-item bcms-active\"");
 
@@ -432,12 +432,12 @@ WriteLiteral(">");
 
             
             #line 112 "..\..\Views\History\ContentHistory.cshtml"
-                                                                            Write(PagesGlobalization.ContentHistory_ContentTab_Title);
+                                                                              Write(PagesGlobalization.ContentHistory_ContentTab_Title);
 
             
             #line default
             #line hidden
-WriteLiteral("</a>\r\n        <a");
+WriteLiteral("</div>\r\n        <div");
 
 WriteLiteral(" class=\"bcms-tab-ui bcms-tab-item\"");
 
@@ -447,12 +447,12 @@ WriteLiteral(">");
 
             
             #line 113 "..\..\Views\History\ContentHistory.cshtml"
-                                                                Write(PagesGlobalization.ContentHistory_PropertiesTab_Title);
+                                                                  Write(PagesGlobalization.ContentHistory_PropertiesTab_Title);
 
             
             #line default
             #line hidden
-WriteLiteral("</a>\r\n    </div>\r\n</div>\r\n\r\n<div");
+WriteLiteral("</div>\r\n    </div>\r\n</div>\r\n\r\n<div");
 
 WriteLiteral(" class=\"bcms-modal-frame-holder\"");
 

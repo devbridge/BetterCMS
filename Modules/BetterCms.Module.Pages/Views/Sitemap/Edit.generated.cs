@@ -100,19 +100,19 @@ WriteLiteral(">\r\n    <div");
 
 WriteLiteral(" class=\"bcms-modal-frame-holder\"");
 
-WriteLiteral(">\r\n        <a");
+WriteLiteral(">\r\n        <div");
 
 WriteLiteral(" class=\"bcms-tab-ui bcms-tab-item bcms-active\"");
 
 WriteLiteral(" data-name=\"#bcms-tab-1\"");
 
-WriteLiteral(">Properties</a>\r\n        <a");
+WriteLiteral(">Properties</div>\r\n        <div");
 
 WriteLiteral(" class=\"bcms-tab-ui bcms-tab-item\"");
 
 WriteLiteral(" data-name=\"#bcms-tab-2\"");
 
-WriteLiteral(">Nodes</a>\r\n    </div>\r\n</div>\r\n\r\n<div");
+WriteLiteral(">Nodes</div>\r\n    </div>\r\n</div>\r\n\r\n<div");
 
 WriteLiteral(" class=\"bcms-modal-frame-holder\"");
 
@@ -397,15 +397,15 @@ WriteLiteral(" class=\"bcms-tree-drop-area-ui\"");
 
 WriteLiteral(">\r\n                            <div");
 
-WriteAttribute("class", Tuple.Create(" class=\"", 4610), Tuple.Create("\"", 4695)
-, Tuple.Create(Tuple.Create("", 4618), Tuple.Create("bcms-addnode-placement-holder", 4618), true)
+WriteAttribute("class", Tuple.Create(" class=\"", 4618), Tuple.Create("\"", 4703)
+, Tuple.Create(Tuple.Create("", 4626), Tuple.Create("bcms-addnode-placement-holder", 4626), true)
             
             #line 88 "..\..\Views\Sitemap\Edit.cshtml"
-, Tuple.Create(Tuple.Create("", 4647), Tuple.Create<System.Object, System.Int32>(Model.IsReadOnly ? "-readonly" : string.Empty
+, Tuple.Create(Tuple.Create("", 4655), Tuple.Create<System.Object, System.Int32>(Model.IsReadOnly ? "-readonly" : string.Empty
             
             #line default
             #line hidden
-, 4647), false)
+, 4655), false)
 );
 
 WriteLiteral(">\r\n");

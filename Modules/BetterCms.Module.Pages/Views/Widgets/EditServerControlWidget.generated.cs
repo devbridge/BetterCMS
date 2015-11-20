@@ -110,7 +110,7 @@ WriteLiteral(">\r\n    <div");
 
 WriteLiteral(" class=\"bcms-modal-frame-holder\"");
 
-WriteLiteral(">\r\n        <a");
+WriteLiteral(">\r\n        <div");
 
 WriteLiteral(" class=\"bcms-tab-ui bcms-tab-item bcms-active\"");
 
@@ -120,12 +120,12 @@ WriteLiteral(">");
 
             
             #line 23 "..\..\Views\Widgets\EditServerControlWidget.cshtml"
-                                                                            Write(PagesGlobalization.EditWidget_BasicPropertiesTab_Title);
+                                                                              Write(PagesGlobalization.EditWidget_BasicPropertiesTab_Title);
 
             
             #line default
             #line hidden
-WriteLiteral("</a>\r\n        <a");
+WriteLiteral("</div>\r\n        <div");
 
 WriteLiteral(" class=\"bcms-tab-ui bcms-tab-item\"");
 
@@ -135,12 +135,12 @@ WriteLiteral(">");
 
             
             #line 24 "..\..\Views\Widgets\EditServerControlWidget.cshtml"
-                                                                Write(PagesGlobalization.EditWidget_OptionsTab_Title);
+                                                                  Write(PagesGlobalization.EditWidget_OptionsTab_Title);
 
             
             #line default
             #line hidden
-WriteLiteral("</a>\r\n    </div>\r\n</div>\r\n\r\n<div");
+WriteLiteral("</div>\r\n    </div>\r\n</div>\r\n\r\n<div");
 
 WriteLiteral(" class=\"bcms-modal-frame-holder\"");
 
@@ -419,14 +419,14 @@ WriteLiteral(">\r\n                                    <img");
 
 WriteLiteral(" id=\"bcms-widget-preview-image\"");
 
-WriteAttribute("src", Tuple.Create(" src=\"", 4057), Tuple.Create("\"", 4085)
+WriteAttribute("src", Tuple.Create(" src=\"", 4065), Tuple.Create("\"", 4093)
             
             #line 76 "..\..\Views\Widgets\EditServerControlWidget.cshtml"
-, Tuple.Create(Tuple.Create("", 4063), Tuple.Create<System.Object, System.Int32>(Model.PreviewImageUrl
+, Tuple.Create(Tuple.Create("", 4071), Tuple.Create<System.Object, System.Int32>(Model.PreviewImageUrl
             
             #line default
             #line hidden
-, 4063), false)
+, 4071), false)
 );
 
 WriteLiteral(" alt=\"\"");
