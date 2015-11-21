@@ -174,7 +174,8 @@ $sort-icons: (
     }
 
     &-edit {
-        width: 65px;
+        padding-right: 0;
+        width: 55px;
     }
 
     &-status {
@@ -186,7 +187,6 @@ $sort-icons: (
     }
 
     &-row {
-
         &-active {
             //todo change to appropriate color
             background: red;
@@ -203,11 +203,15 @@ $sort-icons: (
     }
 
     &-link {
+        background: url($bcms-list-preview) no-repeat right center;
         color: $text-blue;
         cursor: pointer;
+        display: inline;
         font: {
             size: 14px;
             weight: 600;
         }
+        line-height: 20px;
+        padding-right: 16px;
     }
 }

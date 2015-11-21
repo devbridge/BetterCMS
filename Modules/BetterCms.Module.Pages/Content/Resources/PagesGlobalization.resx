@@ -133,7 +133,7 @@
     <value>Page title is required.</value>
   </data>
   <data name="AddNewPageProperties_TemplateId_RequiredMessage" xml:space="preserve">
-    <value>Layout template is required.</value>
+    <value>Template is required.</value>
   </data>
   <data name="AddNewPage_Dialog_Title" xml:space="preserve">
     <value>Add New Page</value>
@@ -400,7 +400,7 @@
     <value>Change the way content is displayed on this page by selecting a different template.</value>
   </data>
   <data name="EditPageProperties_LayoutPropertiesTab_Title" xml:space="preserve">
-    <value>Layout</value>
+    <value>Template</value>
   </data>
   <data name="EditPageProperties_PagePermalink_InvalidMessage" xml:space="preserve">
     <value>Page permalink is invalid. Link can contain only following characters: '0-9', 'a-z', '-', '/', '_' and no more than 260 alphanumeric characters between the '/'.</value>

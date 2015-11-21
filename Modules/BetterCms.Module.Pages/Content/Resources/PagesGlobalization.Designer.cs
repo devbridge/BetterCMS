@@ -250,7 +250,7 @@ namespace BetterCms.Module.Pages.Content.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Layout template is required..
+        ///   Looks up a localized string similar to Template is required..
         /// </summary>
         public static string AddNewPageProperties_TemplateId_RequiredMessage {
             get {
@@ -1690,7 +1690,7 @@ namespace BetterCms.Module.Pages.Content.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Layout.
+        ///   Looks up a localized string similar to Template.
         /// </summary>
         public static string EditPageProperties_LayoutPropertiesTab_Title {
             get {

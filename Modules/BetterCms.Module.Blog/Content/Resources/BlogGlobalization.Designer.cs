@@ -691,7 +691,7 @@ namespace BetterCms.Module.Blog.Content.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Cannot save blog post. Template, which is selected as default blog post layout is inaccessible..
+        ///   Looks up a localized string similar to Cannot save blog post. Template, which is selected as default is inaccessible..
         /// </summary>
         public static string SaveBlogPost_FailedToSave_InaccessibleMasterPage {
             get {
@@ -700,7 +700,7 @@ namespace BetterCms.Module.Blog.Content.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to There are no compatible layouts for blog post..
+        ///   Looks up a localized string similar to There are no compatible templates for blog post..
         /// </summary>
         public static string SaveBlogPost_LayoutNotFound_Message {
             get {
@@ -952,7 +952,7 @@ namespace BetterCms.Module.Blog.Content.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Layout.
+        ///   Looks up a localized string similar to Template.
         /// </summary>
         public static string SiteSettings_Blogs_TemplatesTab_Title {
             get {
@@ -1015,7 +1015,7 @@ namespace BetterCms.Module.Blog.Content.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Default Layout.
+        ///   Looks up a localized string similar to Default Template.
         /// </summary>
         public static string SiteSettings_Templates_DefaultTemplate {
             get {
@@ -1042,7 +1042,7 @@ namespace BetterCms.Module.Blog.Content.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Select Default Blog Layout.
+        ///   Looks up a localized string similar to Select Default Blog Template.
         /// </summary>
         public static string SiteSettings_Templates_Title {
             get {

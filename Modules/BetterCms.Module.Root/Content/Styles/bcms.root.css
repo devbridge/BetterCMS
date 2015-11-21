@@ -2801,7 +2801,8 @@ td .bcms-field-wrapper {
 }
 
 .bcms-list-edit {
-  width: 65px;
+  padding-right: 0;
+  width: 55px;
 }
 
 .bcms-list-status {
@@ -2826,10 +2827,14 @@ td .bcms-field-wrapper {
 }
 
 .bcms-list-link {
+  background: url("data:image/svg+xml;base64,PHN2ZyBoZWlnaHQ9IjEyIiB3aWR0aD0iMTIiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgdmlld0JveD0iMCAwIDEyIDEyIj48cGF0aCBmaWxsPSIjMGQ3Y2U3IiBmaWxsLXJ1bGU9ImV2ZW5vZGQiIGQ9Im02IDB2MmgyLjU5bC0yLjQyIDIuNDEgMS40MiAxLjQyIDIuNDEtMi40MnYyLjU5aDJ2LTZoLTZtLTYgMHYxMmgxMnYtNGgtMnYyaC04di04aDJ2LTJoLTQiLz48L3N2Zz4=") no-repeat right center;
   color: #0d7ce7;
   cursor: pointer;
+  display: inline;
   font-size: 14px;
   font-weight: 600;
+  line-height: 20px;
+  padding-right: 16px;
 }
 
 .bcms-tab-header {
