@@ -60,25 +60,6 @@ a.bcms-icn-restore:active {
     color: #df2200;
 }
 
-//module published with draft icon
-//.bcms-icn-published {
-//    background: url('images/sprite-base-2.png') no-repeat 0 -129px;
-//    height: 17px;
-//    margin: 0 auto;
-//    overflow: hidden;
-//    text-indent: 9999px;
-//    width: 17px;
-//}
-//
-//.bcms-icn-unpublished {
-//    background: url('images/sprite-base-2.png') no-repeat -2px -154px;
-//    height: 17px;
-//    margin: 0 auto;
-//    overflow: hidden;
-//    text-indent: 9999px;
-//    width: 17px;
-//}
-
 .bcms-icn-draft {
     background: url('images/sprite-base-2.png') no-repeat -25px -200px;
     height: 17px;
@@ -97,63 +78,7 @@ a.bcms-icn-restore:active {
     width: 16px;
 }
 
-//module image dialog
-.bcms-uploadimage-dragndrop {
-    border: 2px dashed #DDD;
-    color: #DDD;
-    margin: 20px 0;
-    padding: 50px 20px;
-    text-align: center;
-}
-
-.bcms-uploadimage-text {
-    font-size: 32px;
-    margin-bottom: 20px;
-}
-
-.bcms-uploadimage-input {
-    margin: 20px 0;
-}
-
-.bcms-uploadimage-upload {
-    background: #EEE;
-    margin: 4px 0;
-}
-
-.bcms-uploadimage-uploadcompleted {
-    background: #d1f4ac;
-}
-
-.bcms-uploadimage-fileinfo {
-    font-size: 11px;
-    padding: 5px;
-    position: relative;
-}
-
-.bcms-uploadimage-progresspct {
-    position: absolute;
-    right: 5px;
-    top: 5px;
-}
-
-.bcms-uploadimage-progress {
-    background: #999;
-}
-
-.bcms-uploadimage-progressbar {
-    background: #107EC2;
-    height: 2px;
-}
-
-.bcms-uploadimage-totalprogress {
-    background: #999;
-}
-
-.bcms-uploadimage-totalprogressbar {
-    background: #107EC2;
-    height: 6px;
-}
-
+//todo check where this has been used
 //module preview boxes & widgets grid
 .bcms-preview-block {
     float: left;
@@ -180,19 +105,4 @@ a.bcms-icn-restore:active {
     top: 50%;
     width: 74px;
     z-index: 1;
-}
-
-//module user access controls
-.bcms-pointer {
-    cursor: pointer;
-}
-
-//module tem for widget configuration
-.bcms-widget-option-box {
-    @include vertical-align();
-    width: 150px;
-
-    select {
-        width: 100%;
-    }
 }

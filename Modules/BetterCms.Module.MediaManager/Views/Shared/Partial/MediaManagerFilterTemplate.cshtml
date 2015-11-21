@@ -29,7 +29,6 @@
                         <!-- /ko -->
                     </div>
                 </div>
-
                 <div class="bcms-filter-options" data-bind="with: gridOptions().categories">
                     <div class="bcms-filter-text">@MediaGlobalization.SiteSettings_FilterByCategory</div>
                     <div class="bcms-field-wrapper">
@@ -50,24 +49,21 @@
                 <div class="bcms-single-tag">
                     <span data-bind="text: $data.text"></span><a data-bind="    click: $parent.gridOptions().categories.remove">@RootGlobalization.Button_Remove</a>
                 </div>
-                <input type="hidden" data-bind="attr: { name: 'Categories[' + $index() + '].Key', value: $data.id }"/>
-                <input type="hidden" data-bind="attr: { name: 'Categories[' + $index() + '].Value', value: $data.text }"/>
+                <input type="hidden" data-bind="attr: { name: 'Categories[' + $index() + '].Key', value: $data.id }" />
+                <input type="hidden" data-bind="attr: { name: 'Categories[' + $index() + '].Value', value: $data.text }" />
             </div>
         </div>
 
         <div class="bcms-clearfix">
-            <div class="bcms-check-field-holder">
-                <div class="bcms-check-field">
+            <div class="bcms-checkbox-block">
+                <div class="bcms-checkbox-holder">
                     <input type="checkbox" data-bind="checked: gridOptions().includeArchived" />
+                    <div class="bcms-checkbox-label bcms-pointer" data-bind="click: gridOptions().changeIncludeArchived">@MediaGlobalization.MediaManager_IncludeArchived_Message</div>
                 </div>
-                <span class="bcms-pointer" data-bind="click: gridOptions().changeIncludeArchived">@MediaGlobalization.MediaManager_IncludeArchived_Message</span>
-            </div>
-
-            <div class="bcms-check-field-holder">
-                <div class="bcms-check-field">
+                <div class="bcms-checkbox-holder">
                     <input type="checkbox" data-bind="checked: gridOptions().includeHistoryItems" />
+                    <div class="bcms-checkbox-label bcms-pointer" data-bind="click: gridOptions().changeIncludeHistoryItems">@MediaGlobalization.MediaManager_SearchInHistoryItems_Message</div>
                 </div>
-                <span class="bcms-pointer" data-bind="click: gridOptions().changeIncludeHistoryItems">@MediaGlobalization.MediaManager_SearchInHistoryItems_Message</span>
             </div>
 
             <div class="bcms-btn-field-holder">

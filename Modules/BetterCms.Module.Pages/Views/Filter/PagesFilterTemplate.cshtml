@@ -97,17 +97,19 @@
         </div>
 
         <div class="bcms-clearfix">
-            <div class="bcms-check-field-holder" style="float: none;">
-                @Html.CheckBoxFor(model => model.IncludeArchived, new { data_bind = "checked: includeArchived" })
-                <span class="bcms-pointer" data-bind="click: changeIncludeArchived">@PagesGlobalization.SiteSettings_Pages_FilterIncludeArchived</span>
-            </div>
-            @if (!Model.HideMasterPagesFiltering)
-            {
-                <div class="bcms-check-field-holder">
-                    @Html.CheckBoxFor(model => model.IncludeMasterPages, new { data_bind = "checked: includeMasterPages" })
-                    <span class="bcms-pointer" data-bind="click: changeIncludeMasterPages">@PagesGlobalization.SiteSettings_Pages_FilterIncludeMasterPages</span>
+            <div class="bcms-checkbox-block">
+                <div class="bcms-checkbox-holder">
+                    @Html.CheckBoxFor(model => model.IncludeArchived, new { data_bind = "checked: includeArchived" })
+                    <div class="bcms-checkbox-label bcms-pointer" data-bind="click: changeIncludeArchived">@PagesGlobalization.SiteSettings_Pages_FilterIncludeArchived</div>
                 </div>
-            }
+                @if (!Model.HideMasterPagesFiltering)
+                {
+                    <div class="bcms-checkbox-holder">
+                        @Html.CheckBoxFor(model => model.IncludeMasterPages, new { data_bind = "checked: includeMasterPages" })
+                        <div class="bcms-checkbox-label bcms-pointer" data-bind="click: changeIncludeMasterPages">@PagesGlobalization.SiteSettings_Pages_FilterIncludeMasterPages</div>
+                    </div>
+                }
+            </div>
 
             <div class="bcms-btn-field-holder">
                 <div class="bcms-btn-primary" data-bind="click: searchWithFilter">@PagesGlobalization.SiteSettings_Pages_FilterSearch</div>

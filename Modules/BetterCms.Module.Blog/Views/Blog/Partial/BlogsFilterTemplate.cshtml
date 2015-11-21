@@ -88,9 +88,11 @@
             </div>
         </div>
         <div class="bcms-clearfix">
-            <div class="bcms-check-field-holder">
-                @Html.CheckBoxFor(model => model.IncludeArchived, new { data_bind = "checked: includeArchived" })
-                <span class="bcms-pointer" data-bind="click: changeIncludeArchived">@BlogGlobalization.SiteSettings_Blogs_FilterIncludeArchived</span>
+            <div class="bcms-checkbox-block">
+                <div class="bcms-checkbox-holder">
+                    @Html.CheckBoxFor(model => model.IncludeArchived, new { data_bind = "checked: includeArchived" })
+                    <div class="bcms-checkbox-label bcms-pointer" data-bind="click: changeIncludeArchived">@BlogGlobalization.SiteSettings_Blogs_FilterIncludeArchived</div>
+                </div>
             </div>
             <div class="bcms-btn-field-holder">
                 <div class="bcms-btn-primary" data-bind="click: searchWithFilter">@BlogGlobalization.SiteSettings_Blogs_FilterSearch</div>

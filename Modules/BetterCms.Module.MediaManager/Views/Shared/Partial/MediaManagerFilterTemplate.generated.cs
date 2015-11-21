@@ -154,7 +154,7 @@ WriteLiteral(">\r\n                            <span");
 WriteLiteral(" data-bind=\"text: newItem.validationMessage()\"");
 
 WriteLiteral("></span>\r\n                        </span>\r\n                        <!-- /ko -->\r\n" +
-"                    </div>\r\n                </div>\r\n\r\n                <div");
+"                    </div>\r\n                </div>\r\n                <div");
 
 WriteLiteral(" class=\"bcms-filter-options\"");
 
@@ -167,7 +167,7 @@ WriteLiteral(" class=\"bcms-filter-text\"");
 WriteLiteral(">");
 
             
-            #line 34 "..\..\Views\Shared\Partial\MediaManagerFilterTemplate.cshtml"
+            #line 33 "..\..\Views\Shared\Partial\MediaManagerFilterTemplate.cshtml"
                                              Write(MediaGlobalization.SiteSettings_FilterByCategory);
 
             
@@ -207,7 +207,7 @@ WriteLiteral(" data-bind=\"    click: remove\"");
 WriteLiteral(">");
 
             
-            #line 43 "..\..\Views\Shared\Partial\MediaManagerFilterTemplate.cshtml"
+            #line 42 "..\..\Views\Shared\Partial\MediaManagerFilterTemplate.cshtml"
                                                                                       Write(RootGlobalization.Button_Remove);
 
             
@@ -247,7 +247,7 @@ WriteLiteral(" data-bind=\"    click: $parent.gridOptions().categories.remove\""
 WriteLiteral(">");
 
             
-            #line 51 "..\..\Views\Shared\Partial\MediaManagerFilterTemplate.cshtml"
+            #line 50 "..\..\Views\Shared\Partial\MediaManagerFilterTemplate.cshtml"
                                                                                                                            Write(RootGlobalization.Button_Remove);
 
             
@@ -259,24 +259,24 @@ WriteLiteral(" type=\"hidden\"");
 
 WriteLiteral(" data-bind=\"attr: { name: \'Categories[\' + $index() + \'].Key\', value: $data.id }\"");
 
-WriteLiteral("/>\r\n                <input");
+WriteLiteral(" />\r\n                <input");
 
 WriteLiteral(" type=\"hidden\"");
 
 WriteLiteral(" data-bind=\"attr: { name: \'Categories[\' + $index() + \'].Value\', value: $data.text" +
 " }\"");
 
-WriteLiteral("/>\r\n            </div>\r\n        </div>\r\n\r\n        <div");
+WriteLiteral(" />\r\n            </div>\r\n        </div>\r\n\r\n        <div");
 
 WriteLiteral(" class=\"bcms-clearfix\"");
 
 WriteLiteral(">\r\n            <div");
 
-WriteLiteral(" class=\"bcms-check-field-holder\"");
+WriteLiteral(" class=\"bcms-checkbox-block\"");
 
 WriteLiteral(">\r\n                <div");
 
-WriteLiteral(" class=\"bcms-check-field\"");
+WriteLiteral(" class=\"bcms-checkbox-holder\"");
 
 WriteLiteral(">\r\n                    <input");
 
@@ -284,28 +284,24 @@ WriteLiteral(" type=\"checkbox\"");
 
 WriteLiteral(" data-bind=\"checked: gridOptions().includeArchived\"");
 
-WriteLiteral(" />\r\n                </div>\r\n                <span");
+WriteLiteral(" />\r\n                    <div");
 
-WriteLiteral(" class=\"bcms-pointer\"");
+WriteLiteral(" class=\"bcms-checkbox-label bcms-pointer\"");
 
 WriteLiteral(" data-bind=\"click: gridOptions().changeIncludeArchived\"");
 
 WriteLiteral(">");
 
             
-            #line 63 "..\..\Views\Shared\Partial\MediaManagerFilterTemplate.cshtml"
-                                                                                             Write(MediaGlobalization.MediaManager_IncludeArchived_Message);
+            #line 61 "..\..\Views\Shared\Partial\MediaManagerFilterTemplate.cshtml"
+                                                                                                                    Write(MediaGlobalization.MediaManager_IncludeArchived_Message);
 
             
             #line default
             #line hidden
-WriteLiteral("</span>\r\n            </div>\r\n\r\n            <div");
+WriteLiteral("</div>\r\n                </div>\r\n                <div");
 
-WriteLiteral(" class=\"bcms-check-field-holder\"");
-
-WriteLiteral(">\r\n                <div");
-
-WriteLiteral(" class=\"bcms-check-field\"");
+WriteLiteral(" class=\"bcms-checkbox-holder\"");
 
 WriteLiteral(">\r\n                    <input");
 
@@ -313,22 +309,22 @@ WriteLiteral(" type=\"checkbox\"");
 
 WriteLiteral(" data-bind=\"checked: gridOptions().includeHistoryItems\"");
 
-WriteLiteral(" />\r\n                </div>\r\n                <span");
+WriteLiteral(" />\r\n                    <div");
 
-WriteLiteral(" class=\"bcms-pointer\"");
+WriteLiteral(" class=\"bcms-checkbox-label bcms-pointer\"");
 
 WriteLiteral(" data-bind=\"click: gridOptions().changeIncludeHistoryItems\"");
 
 WriteLiteral(">");
 
             
-            #line 70 "..\..\Views\Shared\Partial\MediaManagerFilterTemplate.cshtml"
-                                                                                                 Write(MediaGlobalization.MediaManager_SearchInHistoryItems_Message);
+            #line 65 "..\..\Views\Shared\Partial\MediaManagerFilterTemplate.cshtml"
+                                                                                                                        Write(MediaGlobalization.MediaManager_SearchInHistoryItems_Message);
 
             
             #line default
             #line hidden
-WriteLiteral("</span>\r\n            </div>\r\n\r\n            <div");
+WriteLiteral("</div>\r\n                </div>\r\n            </div>\r\n\r\n            <div");
 
 WriteLiteral(" class=\"bcms-btn-field-holder\"");
 
@@ -341,13 +337,13 @@ WriteLiteral(" data-bind=\"click: searchWithFilter\"");
 WriteLiteral(">");
 
             
-            #line 74 "..\..\Views\Shared\Partial\MediaManagerFilterTemplate.cshtml"
+            #line 70 "..\..\Views\Shared\Partial\MediaManagerFilterTemplate.cshtml"
                                                                              Write(RootGlobalization.Button_Filter_Search);
 
             
             #line default
             #line hidden
-WriteLiteral("</div>\n                <div");
+WriteLiteral("</div>\r\n                <div");
 
 WriteLiteral(" class=\"bcms-btn-cancel\"");
 
@@ -356,7 +352,7 @@ WriteLiteral(" data-bind=\"click: clearFilter\"");
 WriteLiteral(">");
 
             
-            #line 75 "..\..\Views\Shared\Partial\MediaManagerFilterTemplate.cshtml"
+            #line 71 "..\..\Views\Shared\Partial\MediaManagerFilterTemplate.cshtml"
                                                                        Write(RootGlobalization.Button_Filter_Clear);
 
             

@@ -9,9 +9,9 @@
             @Html.TextAreaFor(model => model.CustomCss, new { @class = "bcms-field-textarea bcms-code-field bcms-code-field-css", @style = "width:820px;", @id = Guid.NewGuid() })
             @Html.BcmsValidationMessageFor(model => model.CustomCss)
             <div class="bcms-check-field-helper">
-                <div class="bcms-edit-check-field">
+                <div class="bcms-checkbox-holder">
                     @Html.CheckBoxFor(model => model.EnabledCustomCss)
-                    <div class="bcms-edit-label">@Html.Raw(PagesGlobalization.HtmlContent_RenderCustomCss_Title)</div>
+                    <div class="bcms-checkbox-label bcms-js-edit-label">@Html.Raw(PagesGlobalization.HtmlContent_RenderCustomCss_Title)</div>
                 </div>
             </div>
         </div>
@@ -23,9 +23,9 @@
             @Html.TextAreaFor(model => model.CustomJs, new { @class = "bcms-field-textarea bcms-code-field bcms-code-field-javascript", @style = "width:820px", @id = Guid.NewGuid() })
             @Html.BcmsValidationMessageFor(model => model.CustomJs)
             <div class="bcms-check-field-helper">
-                <div class="bcms-edit-check-field">
+                <div class="bcms-checkbox-holder">
                     @Html.CheckBoxFor(model => model.EnabledCustomJs)
-                    <div class="bcms-edit-label">@Html.Raw(PagesGlobalization.HtmlContent_RenderCustomJs_Title)</div>
+                    <div class="bcms-checkbox-label bcms-js-edit-label">@Html.Raw(PagesGlobalization.HtmlContent_RenderCustomJs_Title)</div>
                 </div>
             </div>
         </div>

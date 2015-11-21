@@ -410,35 +410,39 @@ WriteLiteral(" class=\"bcms-clearfix\"");
 
 WriteLiteral(">\r\n            <div");
 
-WriteLiteral(" class=\"bcms-check-field-holder\"");
+WriteLiteral(" class=\"bcms-checkbox-block\"");
+
+WriteLiteral(">\r\n                <div");
+
+WriteLiteral(" class=\"bcms-checkbox-holder\"");
 
 WriteLiteral(">\r\n");
 
-WriteLiteral("                ");
+WriteLiteral("                    ");
 
             
-            #line 92 "..\..\Views\Blog\Partial\BlogsFilterTemplate.cshtml"
-           Write(Html.CheckBoxFor(model => model.IncludeArchived, new { data_bind = "checked: includeArchived" }));
+            #line 93 "..\..\Views\Blog\Partial\BlogsFilterTemplate.cshtml"
+               Write(Html.CheckBoxFor(model => model.IncludeArchived, new { data_bind = "checked: includeArchived" }));
 
             
             #line default
             #line hidden
-WriteLiteral("\r\n                <span");
+WriteLiteral("\r\n                    <div");
 
-WriteLiteral(" class=\"bcms-pointer\"");
+WriteLiteral(" class=\"bcms-checkbox-label bcms-pointer\"");
 
 WriteLiteral(" data-bind=\"click: changeIncludeArchived\"");
 
 WriteLiteral(">");
 
             
-            #line 93 "..\..\Views\Blog\Partial\BlogsFilterTemplate.cshtml"
-                                                                               Write(BlogGlobalization.SiteSettings_Blogs_FilterIncludeArchived);
+            #line 94 "..\..\Views\Blog\Partial\BlogsFilterTemplate.cshtml"
+                                                                                                      Write(BlogGlobalization.SiteSettings_Blogs_FilterIncludeArchived);
 
             
             #line default
             #line hidden
-WriteLiteral("</span>\r\n            </div>\r\n            <div");
+WriteLiteral("</div>\r\n                </div>\r\n            </div>\r\n            <div");
 
 WriteLiteral(" class=\"bcms-btn-field-holder\"");
 
@@ -451,7 +455,7 @@ WriteLiteral(" data-bind=\"click: searchWithFilter\"");
 WriteLiteral(">");
 
             
-            #line 96 "..\..\Views\Blog\Partial\BlogsFilterTemplate.cshtml"
+            #line 98 "..\..\Views\Blog\Partial\BlogsFilterTemplate.cshtml"
                                                                              Write(BlogGlobalization.SiteSettings_Blogs_FilterSearch);
 
             
@@ -466,7 +470,7 @@ WriteLiteral(" data-bind=\"click: clearFilter\"");
 WriteLiteral(">");
 
             
-            #line 97 "..\..\Views\Blog\Partial\BlogsFilterTemplate.cshtml"
+            #line 99 "..\..\Views\Blog\Partial\BlogsFilterTemplate.cshtml"
                                                                        Write(BlogGlobalization.SiteSettings_Blogs_FilterClear);
 
             

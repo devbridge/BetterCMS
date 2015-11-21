@@ -79,14 +79,11 @@
                                 @Html.Tooltip(MediaGlobalization.ImageEditor_Dialog_CropImage_Tooltip_Description)
                             </div>
 
-                            <div>
-                                <div class="bcms-crop-checkbox">
-                                    <input type="checkbox" data-bind="checked: imageEditorViewModel.fit" />
-                                    <div class="bcms-edit-label" data-bind="click: imageEditorViewModel.changeFit">@MediaGlobalization.ImageEditor_Dialog_FitImage_Title</div>
-                                </div>
-
-                                <div class="bcms-icn-delete-link" data-bind="visible: imageEditorViewModel.hasCrop(), click: imageEditorViewModel.removeCrop">Remove crop</div>
-                            </div>
+                            <div class="bcms-checkbox-holder">
+                                <input type="checkbox" data-bind="checked: imageEditorViewModel.fit" />
+                                <div class="bcms-checkbox-label bcms-js-edit-label" data-bind="click: imageEditorViewModel.changeFit">@MediaGlobalization.ImageEditor_Dialog_FitImage_Title</div>
+                                <div class="bcms-editor-link" data-bind="visible: imageEditorViewModel.hasCrop(), click: imageEditorViewModel.removeCrop">Remove crop</div>
+                            </div> 
                         </div>
                     </div>
 

@@ -226,3 +226,9 @@
         width: 300px;
     }
 }
+
+.bcms-btn-field-holder {
+    float: right;
+    //todo confirm do we need to align buttons to the filter bottom right corner
+    //@include position(absolute, null 15px 15px null);
+}

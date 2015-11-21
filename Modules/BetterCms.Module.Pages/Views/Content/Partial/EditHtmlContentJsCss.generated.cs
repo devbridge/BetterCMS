@@ -100,7 +100,7 @@ WriteLiteral(" class=\"bcms-check-field-helper\"");
 
 WriteLiteral(">\r\n                <div");
 
-WriteLiteral(" class=\"bcms-edit-check-field\"");
+WriteLiteral(" class=\"bcms-checkbox-holder\"");
 
 WriteLiteral(">\r\n");
 
@@ -115,13 +115,13 @@ WriteLiteral("                    ");
             #line hidden
 WriteLiteral("\r\n                    <div");
 
-WriteLiteral(" class=\"bcms-edit-label\"");
+WriteLiteral(" class=\"bcms-checkbox-label bcms-js-edit-label\"");
 
 WriteLiteral(">");
 
             
             #line 14 "..\..\Views\Content\Partial\EditHtmlContentJsCss.cshtml"
-                                            Write(Html.Raw(PagesGlobalization.HtmlContent_RenderCustomCss_Title));
+                                                                   Write(Html.Raw(PagesGlobalization.HtmlContent_RenderCustomCss_Title));
 
             
             #line default
@@ -176,7 +176,7 @@ WriteLiteral(" class=\"bcms-check-field-helper\"");
 
 WriteLiteral(">\r\n                <div");
 
-WriteLiteral(" class=\"bcms-edit-check-field\"");
+WriteLiteral(" class=\"bcms-checkbox-holder\"");
 
 WriteLiteral(">\r\n");
 
@@ -191,13 +191,13 @@ WriteLiteral("                    ");
             #line hidden
 WriteLiteral("\r\n                    <div");
 
-WriteLiteral(" class=\"bcms-edit-label\"");
+WriteLiteral(" class=\"bcms-checkbox-label bcms-js-edit-label\"");
 
 WriteLiteral(">");
 
             
             #line 28 "..\..\Views\Content\Partial\EditHtmlContentJsCss.cshtml"
-                                            Write(Html.Raw(PagesGlobalization.HtmlContent_RenderCustomJs_Title));
+                                                                   Write(Html.Raw(PagesGlobalization.HtmlContent_RenderCustomJs_Title));
 
             
             #line default

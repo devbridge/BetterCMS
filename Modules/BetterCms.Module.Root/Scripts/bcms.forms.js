@@ -13,7 +13,7 @@ bettercms.define('bcms.forms', ['bcms.jquery', 'bcms', 'bcms.messages', 'bcms.ta
 
             firstInvalidField: '.bcms-input-validation-error:first',
             
-            checkboxLabels: '.bcms-checkbox-holder:has(input[type="checkbox"]) .bcms-edit-label, .bcms-edit-check-field:has(input[type="checkbox"]) .bcms-edit-label',
+            checkboxLabels: '.bcms-checkbox-holder:has(input[type="checkbox"]) .bcms-js-edit-label, .bcms-edit-check-field:has(input[type="checkbox"]) .bcms-edit-label',
             checkboxParents: '.bcms-checkbox-holder, .bcms-edit-check-field',
             checkbox: 'input[type="checkbox"]'
         },

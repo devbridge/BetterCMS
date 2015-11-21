@@ -283,13 +283,13 @@ WriteLiteral("                                ");
             #line hidden
 WriteLiteral("\r\n                                <div");
 
-WriteLiteral(" class=\"bcms-edit-label\"");
+WriteLiteral(" class=\"bcms-checkbox-label bcms-js-edit-label\"");
 
 WriteLiteral(">");
 
             
             #line 42 "..\..\Views\Page\ClonePage.cshtml"
-                                                        Write(PagesGlobalization.ClonePage_Dialog_AsMasterPage);
+                                                                               Write(PagesGlobalization.ClonePage_Dialog_AsMasterPage);
 
             
             #line default

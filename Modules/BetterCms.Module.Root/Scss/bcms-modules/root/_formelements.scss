@@ -65,29 +65,48 @@
     }
 }
 
-//
-//
-//
-//
-//
-//
-//
-//module Input Fields & Field Holders
-.bcms-checkbox-holder {
-    color: #595959;
-    font-size: 12px;
-    padding: 5px 10px 5px 0;
+.bcms-checkbox {
+    &-block {
+        @include clearfix();
+        float: left;
+
+        .bcms-form-block-holder & {
+            float: none;
+        }
+    }
+
+    &-holder {
+        color: $text-dark;
+        font-size: 12px;
+        padding: 5px 10px 5px 0;
+
+        > input[type="checkbox"] {
+            margin: 0;
+            vertical-align: middle;
+        }
+
+        .bcms-form-block-holder & {
+            float: left;
+            width: 35%;
+        }
+    }
+
+    &-label {
+        @include vertical-align();
+        cursor: pointer;
+        margin-left: 5px;
+    }
 }
 
-.bcms-checkbox-holder > input[type="checkbox"] {
-    margin-top: 0;
-    vertical-align: middle;
-}
+.bcms-check-field-helper {
+    background-color: $white;
+    border: $border-thin-smoke;
+    margin-top: -1px;
+    padding: 10px;
 
-.bcms-ajax-show {
-    display: none;
-}
-
-.bcms-ajax-errors {
-    display: none;
+    .bcms-checkbox-holder {
+        float: none;
+        font-size: 11px;
+        width: auto;
+    }
 }

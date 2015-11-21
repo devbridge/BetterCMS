@@ -385,17 +385,10 @@ $loading-spinner: (
 }
 
 //module global helpers
-.bcms-check-field-helper {
-    background-color: $white;
-    border: $border-thin-smoke;
-    margin-top: -1px;
-    padding: 10px;
+.bcms-ajax-show {
+    display: none;
+}
 
-    .bcms-edit-check-field {
-        padding: 0;
-    }
-
-    .bcms-edit-label {
-        font-size: 12px;
-    }
+.bcms-ajax-errors {
+    display: none;
 }

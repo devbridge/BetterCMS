@@ -170,32 +170,34 @@
                                 <div class="bcms-content-titles">@PagesGlobalization.EditPageProperties_Properties_Title</div>
                                 @Html.Tooltip(PagesGlobalization.EditPageProperties_Properties_Tooltip_Description)
 
-                                <div class="bcms-checkbox-holder">
-                                    @{
-                            object options = null;
-                            if (!Model.CanPublishPage)
-                            {
-                                options = new { disabled = "disabled" };
-                            }
-                                    }
+                                <div class="bcms-checkbox-block">
+                                    <div class="bcms-checkbox-holder">
+                                        @{
+                                            object options = null;
+                                            if (!Model.CanPublishPage)
+                                            {
+                                                options = new { disabled = "disabled" };
+                                            }
+                                        }
 
-                                    @Html.CheckBoxFor(model => model.IsPagePublished, options)
-                                    <div class="bcms-edit-label">@PagesGlobalization.EditPageProperties_AdvancedPropertiesTab_Privacy_VisibleToEveryone</div>
-                                </div>
+                                        @Html.CheckBoxFor(model => model.IsPagePublished, options)
+                                        <div class="bcms-checkbox-label bcms-js-edit-label">@PagesGlobalization.EditPageProperties_AdvancedPropertiesTab_Privacy_VisibleToEveryone</div>
+                                    </div>
 
-                                <div class="bcms-checkbox-holder">
-                                    @Html.CheckBoxFor(model => model.UseNoFollow)
-                                    <div class="bcms-edit-label">@PagesGlobalization.EditPageProperties_AdvancedPropertiesTab_UseNoFollow</div>
-                                </div>
+                                    <div class="bcms-checkbox-holder">
+                                        @Html.CheckBoxFor(model => model.UseNoFollow)
+                                        <div class="bcms-checkbox-label bcms-js-edit-label">@PagesGlobalization.EditPageProperties_AdvancedPropertiesTab_UseNoFollow</div>
+                                    </div>
 
-                                <div class="bcms-checkbox-holder">
-                                    @Html.CheckBoxFor(model => model.UseNoIndex)
-                                    <div class="bcms-edit-label">@PagesGlobalization.EditPageProperties_AdvancedPropertiesTab_UseNoIndex</div>
-                                </div>
+                                    <div class="bcms-checkbox-holder">
+                                        @Html.CheckBoxFor(model => model.UseNoIndex)
+                                        <div class="bcms-checkbox-label bcms-js-edit-label">@PagesGlobalization.EditPageProperties_AdvancedPropertiesTab_UseNoIndex</div>
+                                    </div>
 
-                                <div class="bcms-checkbox-holder">
-                                    @Html.CheckBoxFor(model => model.IsArchived)
-                                    <div class="bcms-edit-label">@PagesGlobalization.EditPageProperties_AdvancedPropertiesTab_IsArchived</div>
+                                    <div class="bcms-checkbox-holder">
+                                        @Html.CheckBoxFor(model => model.IsArchived)
+                                        <div class="bcms-checkbox-label bcms-js-edit-label">@PagesGlobalization.EditPageProperties_AdvancedPropertiesTab_IsArchived</div>
+                                    </div>
                                 </div>
                             </div>
                         }

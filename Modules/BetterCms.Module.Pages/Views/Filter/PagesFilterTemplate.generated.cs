@@ -451,92 +451,94 @@ WriteLiteral(" class=\"bcms-clearfix\"");
 
 WriteLiteral(">\r\n            <div");
 
-WriteLiteral(" class=\"bcms-check-field-holder\"");
+WriteLiteral(" class=\"bcms-checkbox-block\"");
 
-WriteLiteral(" style=\"float: none;\"");
+WriteLiteral(">\r\n                <div");
 
-WriteLiteral(">\r\n");
-
-WriteLiteral("                ");
-
-            
-            #line 101 "..\..\Views\Filter\PagesFilterTemplate.cshtml"
-           Write(Html.CheckBoxFor(model => model.IncludeArchived, new { data_bind = "checked: includeArchived" }));
-
-            
-            #line default
-            #line hidden
-WriteLiteral("\r\n                <span");
-
-WriteLiteral(" class=\"bcms-pointer\"");
-
-WriteLiteral(" data-bind=\"click: changeIncludeArchived\"");
-
-WriteLiteral(">");
-
-            
-            #line 102 "..\..\Views\Filter\PagesFilterTemplate.cshtml"
-                                                                               Write(PagesGlobalization.SiteSettings_Pages_FilterIncludeArchived);
-
-            
-            #line default
-            #line hidden
-WriteLiteral("</span>\r\n            </div>\r\n");
-
-            
-            #line 104 "..\..\Views\Filter\PagesFilterTemplate.cshtml"
-            
-            
-            #line default
-            #line hidden
-            
-            #line 104 "..\..\Views\Filter\PagesFilterTemplate.cshtml"
-             if (!Model.HideMasterPagesFiltering)
-            {
-
-            
-            #line default
-            #line hidden
-WriteLiteral("                <div");
-
-WriteLiteral(" class=\"bcms-check-field-holder\"");
+WriteLiteral(" class=\"bcms-checkbox-holder\"");
 
 WriteLiteral(">\r\n");
 
 WriteLiteral("                    ");
 
             
-            #line 107 "..\..\Views\Filter\PagesFilterTemplate.cshtml"
-               Write(Html.CheckBoxFor(model => model.IncludeMasterPages, new { data_bind = "checked: includeMasterPages" }));
+            #line 102 "..\..\Views\Filter\PagesFilterTemplate.cshtml"
+               Write(Html.CheckBoxFor(model => model.IncludeArchived, new { data_bind = "checked: includeArchived" }));
 
             
             #line default
             #line hidden
-WriteLiteral("\r\n                    <span");
+WriteLiteral("\r\n                    <div");
 
-WriteLiteral(" class=\"bcms-pointer\"");
+WriteLiteral(" class=\"bcms-checkbox-label bcms-pointer\"");
+
+WriteLiteral(" data-bind=\"click: changeIncludeArchived\"");
+
+WriteLiteral(">");
+
+            
+            #line 103 "..\..\Views\Filter\PagesFilterTemplate.cshtml"
+                                                                                                      Write(PagesGlobalization.SiteSettings_Pages_FilterIncludeArchived);
+
+            
+            #line default
+            #line hidden
+WriteLiteral("</div>\r\n                </div>\r\n");
+
+            
+            #line 105 "..\..\Views\Filter\PagesFilterTemplate.cshtml"
+                
+            
+            #line default
+            #line hidden
+            
+            #line 105 "..\..\Views\Filter\PagesFilterTemplate.cshtml"
+                 if (!Model.HideMasterPagesFiltering)
+                {
+
+            
+            #line default
+            #line hidden
+WriteLiteral("                    <div");
+
+WriteLiteral(" class=\"bcms-checkbox-holder\"");
+
+WriteLiteral(">\r\n");
+
+WriteLiteral("                        ");
+
+            
+            #line 108 "..\..\Views\Filter\PagesFilterTemplate.cshtml"
+                   Write(Html.CheckBoxFor(model => model.IncludeMasterPages, new { data_bind = "checked: includeMasterPages" }));
+
+            
+            #line default
+            #line hidden
+WriteLiteral("\r\n                        <div");
+
+WriteLiteral(" class=\"bcms-checkbox-label bcms-pointer\"");
 
 WriteLiteral(" data-bind=\"click: changeIncludeMasterPages\"");
 
 WriteLiteral(">");
 
             
-            #line 108 "..\..\Views\Filter\PagesFilterTemplate.cshtml"
-                                                                                      Write(PagesGlobalization.SiteSettings_Pages_FilterIncludeMasterPages);
+            #line 109 "..\..\Views\Filter\PagesFilterTemplate.cshtml"
+                                                                                                             Write(PagesGlobalization.SiteSettings_Pages_FilterIncludeMasterPages);
 
             
             #line default
             #line hidden
-WriteLiteral("</span>\r\n                </div>\r\n");
+WriteLiteral("</div>\r\n                    </div>\r\n");
 
             
-            #line 110 "..\..\Views\Filter\PagesFilterTemplate.cshtml"
-            }
+            #line 111 "..\..\Views\Filter\PagesFilterTemplate.cshtml"
+                }
 
             
             #line default
             #line hidden
-WriteLiteral("\r\n            <div");
+WriteLiteral("            </div>\r\n\r\n            <div");
 
 WriteLiteral(" class=\"bcms-btn-field-holder\"");
 
@@ -549,7 +551,7 @@ WriteLiteral(" data-bind=\"click: searchWithFilter\"");
 WriteLiteral(">");
 
             
-            #line 113 "..\..\Views\Filter\PagesFilterTemplate.cshtml"
+            #line 115 "..\..\Views\Filter\PagesFilterTemplate.cshtml"
                                                                              Write(PagesGlobalization.SiteSettings_Pages_FilterSearch);
 
             
@@ -564,7 +566,7 @@ WriteLiteral(" data-bind=\"click: clearFilter\"");
 WriteLiteral(">");
 
             
-            #line 114 "..\..\Views\Filter\PagesFilterTemplate.cshtml"
+            #line 116 "..\..\Views\Filter\PagesFilterTemplate.cshtml"
                                                                        Write(PagesGlobalization.SiteSettings_Pages_FilterClear);
 
             
