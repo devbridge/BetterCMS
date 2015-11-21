@@ -684,6 +684,9 @@ a:hover {
   -webkit-animation-delay: -160ms;
   -moz-animation-delay: -160ms;
   animation-delay: -160ms;
+  -webkit-transition: all 200ms ease;
+  -moz-transition: all 200ms ease;
+  transition: all 200ms ease;
   background-color: #0d7ce7;
   z-index: 9999;
   font-size: 11px;
@@ -731,6 +734,9 @@ a:hover {
   -webkit-animation-delay: -160ms;
   -moz-animation-delay: -160ms;
   animation-delay: -160ms;
+  -webkit-transition: all 200ms ease;
+  -moz-transition: all 200ms ease;
+  transition: all 200ms ease;
   background-color: #0d7ce7;
   z-index: 9999;
   font-size: 11px;
@@ -2806,7 +2812,14 @@ td .bcms-field-wrapper {
 }
 
 .bcms-list-status {
-  width: 40px;
+  width: 50px;
+}
+
+.bcms-list-status .bcms-action-ok,
+.bcms-list-status .bcms-action-warn,
+.bcms-list-status .bcms.action-draft {
+  display: block;
+  margin: auto;
 }
 
 .bcms-list-delete {

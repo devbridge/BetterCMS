@@ -179,7 +179,14 @@ $sort-icons: (
     }
 
     &-status {
-        width: 40px;
+        width: 50px;
+
+        .bcms-action-ok,
+        .bcms-action-warn,
+        .bcms.action-draft {
+            display: block;
+            margin: auto;
+        }
     }
 
     &-delete {

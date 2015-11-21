@@ -391,7 +391,7 @@ WriteLiteral("        ");
             
             #line default
             #line hidden
-WriteLiteral("\r\n    </script>\r\n\r\n    <script");
+WriteLiteral("\r\n    </script>\r\n    \r\n    <script");
 
 WriteLiteral(" type=\"text/html\"");
 

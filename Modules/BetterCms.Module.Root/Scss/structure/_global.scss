@@ -336,6 +336,7 @@ $loading-spinner: (
         @include transform(translateZ(0));
         @include animation(loader 800ms infinite ease-in-out);
         @include animation-delay(-160ms);
+        @include transition(all 200ms ease);
         background-color: $bg-blue;
         z-index: 9999;
         font-size: 11px;
