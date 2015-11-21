@@ -454,7 +454,7 @@ a:hover {
   top: 0;
   left: 0;
   background-color: #ffffff;
-  border: 1px solid #cdcdcd;
+  border: 1px solid #d0d0d0;
   box-shadow: 0 0 20px 0 rgba(0, 0, 0, 0.2);
   box-sizing: border-box;
   padding: 14px;
@@ -2785,12 +2785,12 @@ td .bcms-field-wrapper {
 }
 
 .bcms-list-pages {
-  border: 1px solid #cdcdcd;
+  border: 1px solid #d0d0d0;
   margin-top: 20px;
 }
 
 .bcms-list-pages-row {
-  border-top: 1px solid #cdcdcd;
+  border-top: 1px solid #d0d0d0;
   display: table;
   width: 100%;
 }
@@ -3637,10 +3637,35 @@ textarea.markItUpEditor:focus {
 }
 
 .ui-datepicker {
+  background-color: #ffffff;
+  border: 1px solid #d0d0d0;
+  box-shadow: 0 0 20px 0 rgba(0, 0, 0, 0.2);
   display: none;
-  margin-top: -1px;
-  padding: 1px;
-  width: 200px;
+  margin-top: 20px;
+}
+
+.ui-datepicker:after {
+  content: "";
+  position: absolute;
+  top: -9px;
+  left: 18px;
+  height: 0;
+  width: 0;
+  border-bottom: 9px solid #ffffff;
+  border-left: 9px solid transparent;
+  border-right: 9px solid transparent;
+}
+
+.ui-datepicker:before {
+  content: "";
+  position: absolute;
+  top: -10px;
+  left: 17px;
+  height: 0;
+  width: 0;
+  border-bottom: 10px solid #d0d0d0;
+  border-left: 10px solid transparent;
+  border-right: 10px solid transparent;
 }
 
 .ui-datepicker-trigger {
@@ -3656,112 +3681,99 @@ textarea.markItUpEditor:focus {
 .ui-datepicker-title {
   cursor: default;
   font-family: "Open Sans", sans-serif !important;
-  font-size: 14px;
-  padding: 4px 0;
+  font-size: 13px;
+  font-weight: 600;
+  line-height: 18px;
   text-align: center;
-  text-transform: uppercase;
+}
+
+.ui-datepicker-header {
+  border-bottom: 1px solid #d0d0d0;
+  color: #303646;
+  margin-bottom: 20px;
+  padding: 12px 0 10px;
+  position: relative;
 }
 
 .ui-datepicker table {
   border-collapse: collapse;
-  font-size: 12px;
-  width: 100%;
+  color: #303646;
+  font-family: "Open Sans", sans-serif !important;
+  margin: 0 15px 20px;
 }
 
 .ui-datepicker th {
-  border: 0;
+  cursor: default;
+  padding: 0;
   text-align: center;
 }
 
+.ui-datepicker th > span {
+  font-size: 10px;
+  font-weight: 700;
+  text-transform: uppercase;
+}
+
 .ui-datepicker td {
-  border: 0;
-  padding: 1px;
+  padding: 0;
 }
 
 .ui-datepicker td a {
+  height: 32px;
+  width: 32px;
+  color: #303646;
+  cursor: pointer;
   display: block;
+  font-size: 11px;
+  font-weight: 700;
+  line-height: 32px;
   padding: 1px 2px;
+  text-align: center;
   text-decoration: none;
 }
 
 .ui-datepicker .ui-datepicker-prev {
   height: 100%;
-  width: 25px;
-  background: url("data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI4Ljg1IiBoZWlnaHQ9IjE2IiB2aWV3Qm94PSIwIDAgOC44NSAxNiIgZW5hYmxlLWJhY2tncm91bmQ9Im5ldyAwIDAgOC44NSAxNiI+CiA8cGF0aCBmaWxsPSIjZmZmIiBkPSJtOC4wNSAxNS44N2wtNy45LTcuMzZjLS4wOS0uMDgtLjE1LS4yLS4xNS0uMzQgMC0uMTMuMDUtLjI2LjE0LS4zNWw3LjktNy42OWMuMTktLjE4LjQ5LS4xOC42Ny4wMS4xOS4xOS4xOC40OSAwIC42N2wtNy41NSA3LjM1IDcuNTQgNy4wMmMuMTkuMTguMi40OC4wMy42Ny0uMS4xLS4yMy4xNS0uMzUuMTUtLjEyIDAtLjI0LS4wNC0uMzMtLjEzIi8+Cjwvc3ZnPgo=") no-repeat center;
+  width: 28px;
+  background: url("data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0idXRmLTgiPz4NCjwhLS0gR2VuZXJhdG9yOiBBZG9iZSBJbGx1c3RyYXRvciAxOS4xLjAsIFNWRyBFeHBvcnQgUGx1Zy1JbiAuIFNWRyBWZXJzaW9uOiA2LjAwIEJ1aWxkIDApICAtLT4NCjxzdmcgdmVyc2lvbj0iMS4xIiBpZD0iTGF5ZXJfMSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIiB4bWxuczp4bGluaz0iaHR0cDovL3d3dy53My5vcmcvMTk5OS94bGluayIgeD0iMHB4IiB5PSIwcHgiDQoJIHdpZHRoPSI2cHgiIGhlaWdodD0iMTBweCIgdmlld0JveD0iLTMwMiAzOTIgNiAxMCIgc3R5bGU9ImVuYWJsZS1iYWNrZ3JvdW5kOm5ldyAtMzAyIDM5MiA2IDEwOyIgeG1sOnNwYWNlPSJwcmVzZXJ2ZSI+DQo8cGF0aCBzdHlsZT0ib3BhY2l0eTowLjk7ZmlsbDojMEQ3QkUzO2VuYWJsZS1iYWNrZ3JvdW5kOm5ldyAgICA7IiBkPSJNLTI5Ni4yLDM5My4zYzAuMy0wLjMsMC4zLTAuOCwwLTEuMXMtMC44LTAuMy0xLjEsMGwtNC40LDQuMg0KCWMtMC4zLDAuMy0wLjMsMC44LDAsMS4xbDQuNCw0LjJjMC4zLDAuMywwLjgsMC4zLDEuMSwwczAuMy0wLjgsMC0xLjFsLTMuNi0zLjdMLTI5Ni4yLDM5My4zeiIvPg0KPC9zdmc+DQo=") no-repeat center;
   cursor: pointer;
+  top: 0;
   position: absolute;
   z-index: 2;
-  left: 5px;
+  left: 0;
 }
 
 .ui-datepicker .ui-datepicker-next {
   height: 100%;
-  width: 25px;
-  background: url("data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI4Ljg2IiBoZWlnaHQ9IjE2IiB2aWV3Qm94PSItOTYuMzYgNzc2LjAzIDguODYgMTYiIGVuYWJsZS1iYWNrZ3JvdW5kPSJuZXcgLTk2LjM2IDc3Ni4wMyA4Ljg2IDE2Ij4KIDxwYXRoIGZpbGw9IiNmZmYiIGQ9Im0tOTUuOTEgNzkyLjAzYy0uMTYgMC0uMjQtLjA4LS4zMi0uMTYtLjE2LS4xNi0uMTYtLjQ4IDAtLjY0bDcuNTQtNy4wNi03LjU0LTcuMzhjLS4xNi0uMTYtLjE2LS40OCAwLS42NHMuNDgtLjE2LjY0IDBsNy45NCA3LjdjLjA4LjA4LjE2LjI0LjE2LjMyIDAgLjA4LS4wOC4yNC0uMTYuMzJsLTcuOTQgNy4zOGMtLjA4LjE2LS4yNC4xNi0uMzIuMTYiLz4KPC9zdmc+Cg==") no-repeat center;
+  width: 28px;
+  background: url("data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0idXRmLTgiPz4KPCEtLSBHZW5lcmF0b3I6IEF2b2NvZGUgMi40LjUgLSBodHRwOi8vYXZvY29kZS5jb20gLS0+CjxzdmcgaGVpZ2h0PSIxMCIgd2lkdGg9IjYiIHhtbG5zOnhsaW5rPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5L3hsaW5rIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA2IDEwIj4KICAgIDxwYXRoIGZpbGw9IiMwZDdiZTMiIG9wYWNpdHk9IjAuOSIgZmlsbC1ydWxlPSJldmVub2RkIiBkPSJNIDAuMjMgOC43MiBDIC0wLjA4IDkuMDEgLTAuMDggOS40OSAwLjIzIDkuNzggQyAwLjU0IDEwLjA3IDEuMDQgMTAuMDcgMS4zNSA5Ljc4IEwgNS43NyA1LjUzIEMgNi4wOCA1LjI0IDYuMDggNC43NiA1Ljc3IDQuNDcgTCAxLjM1IDAuMjIgQyAxLjA0IC0wLjA3IDAuNTQgLTAuMDcgMC4yMyAwLjIyIEMgLTAuMDggMC41MSAtMC4wOCAwLjk5IDAuMjMgMS4yOCBMIDMuODYgNSBMIDAuMjMgOC43MiBaIE0gMC4yMyA4LjcyIiAvPgo8L3N2Zz4=") no-repeat center;
   cursor: pointer;
+  top: 0;
   position: absolute;
   z-index: 2;
-  right: 5px;
+  right: 0;
 }
 
-.ui-icon {
-  display: block;
-  overflow: hidden;
-  text-indent: -999em;
-}
-
-.ui-widget {
-  font-family: "Open Sans", sans-serif !important;
-  font-size: 14px;
-}
-
-.ui-widget input,
-.ui-widget select,
-.ui-widget textarea,
-.ui-widget button {
-  font-size: 14px;
-}
-
-.ui-widget-content {
-  background-color: #ffffff;
-  border: 1px solid #dfdfdf;
-  color: #303030;
-}
-
-.ui-widget-content a {
+.ui-datepicker a {
   -webkit-transition: background-color 200ms, color 200ms;
   -moz-transition: background-color 200ms, color 200ms;
   transition: background-color 200ms, color 200ms;
   color: #303030;
 }
 
-.ui-widget-content .ui-state-default {
-  background-color: #f5f5f5;
-  text-align: center;
+.ui-datepicker a:hover {
+  color: #0d7ce7;
 }
 
-.ui-widget-content .ui-state-default:hover {
-  background-color: #e7f3ff;
-  color: #ffffff;
-  font-weight: normal;
-}
-
-.ui-widget-content .ui-state-active {
-  background: #e7f3ff;
-}
-
-.ui-widget-header {
+.ui-datepicker a.ui-state-active {
   background-color: #0d7ce7;
   color: #ffffff;
-  position: relative;
 }
 
-.ui-widget-header a {
-  color: #ffffff;
-}
-
-.ui-widget .ui-widget {
-  font-size: 14px;
+.ui-icon {
+  display: block;
+  overflow: hidden;
+  text-indent: -999em;
 }
 
 .ui-state-disabled {

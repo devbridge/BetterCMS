@@ -388,8 +388,6 @@
       <LastGenOutput>MediaGlobalization.Designer.cs</LastGenOutput>
       <SubType>Designer</SubType>
     </EmbeddedResource>
-    <EmbeddedResource Include="Content\Styles\Images\icn-zoom.png" />
-    <EmbeddedResource Include="Content\Styles\Images\sprite-media-1.png" />
     <EmbeddedResource Include="Content\Styles\Images\sprite-media-2.png" />
   </ItemGroup>
   <ItemGroup>
@@ -410,7 +408,6 @@
     <Content Include="BuildConfiguration.xml">
       <SubType>Designer</SubType>
     </Content>
-    <EmbeddedResource Include="Content\Styles\Images\sprite-media-3.png" />
     <EmbeddedResource Include="Models\Migrations\Migration201306071105.sqlserver.sql" />
     <EmbeddedResource Include="Models\Migrations\Migration201306201216.sqlserver.sql" />
     <EmbeddedResource Include="Models\Migrations\Migration201502101137.sqlserver.sql" />

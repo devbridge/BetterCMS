@@ -1444,8 +1444,8 @@
     <Content Include="Scss\assets\icons\cp-show.svg" />
     <Content Include="Scss\assets\icons\cp-stick-handle-right.svg" />
     <Content Include="Scss\assets\icons\cp-stick-handle.svg" />
-    <Content Include="Scss\assets\icons\datepicker-arrow-left.svg" />
-    <Content Include="Scss\assets\icons\datepicker-arrow-right.svg" />
+    <Content Include="Scss\assets\icons\date-picker-left.svg" />
+    <Content Include="Scss\assets\icons\date-picker-right.svg" />
     <Content Include="Scss\assets\icons\editor-blockquote.svg" />
     <Content Include="Scss\assets\icons\editor-bold.svg" />
     <Content Include="Scss\assets\icons\editor-bulletedlist.svg" />
@@ -1487,6 +1487,9 @@
     <Content Include="Scss\assets\icons\manager-history.svg" />
     <Content Include="Scss\assets\icons\manager-options.svg" />
     <Content Include="Scss\assets\icons\manager-region.svg" />
+    <Content Include="Scss\assets\icons\media-folder-up.svg" />
+    <Content Include="Scss\assets\icons\media-folder.svg" />
+    <Content Include="Scss\assets\icons\media-new-folder.svg" />
     <Content Include="Scss\assets\icons\messages-error.svg" />
     <Content Include="Scss\assets\icons\messages-info.svg" />
     <Content Include="Scss\assets\icons\messages-success.svg" />
@@ -1502,6 +1505,9 @@
     <Content Include="Scss\assets\icons\pager-arrow-right.svg" />
     <Content Include="Scss\assets\icons\search.svg" />
     <Content Include="Scss\assets\icons\select-arrow.svg" />
+    <Content Include="Scss\assets\icons\sort-down-active.svg" />
+    <Content Include="Scss\assets\icons\sort-inactive.svg" />
+    <Content Include="Scss\assets\icons\sort-up-active.svg" />
     <Content Include="Scss\assets\icons\tag-close.svg" />
     <Content Include="Scss\assets\icons\texture.svg" />
     <Content Include="Scss\assets\icons\toolbar-h1.svg" />
