@@ -118,15 +118,27 @@
     &-result-label {
         @include transition(color 200ms);
         color: $text-gray;
+        cursor: pointer;
         font: {
             size: 13px;
-            weight: 600;
+            weight: 400;
         }
-        cursor: pointer;
         padding: 5px 10px;
 
         &:hover {
             color: $text-blue;
+        }
+    }
+
+    &-highlighted {
+        > .select2-result-label {
+            color: $text-blue;
+        }
+    }
+
+    &-result-with-children {
+        > .select2-result-label {
+            font-weight: 600;
         }
     }
 
@@ -137,15 +149,7 @@
 
     }
 
-    &-offscreen,
-    &-offcsreen:focus {
-        border: 0 !important;
-        clip: rect(0 0 0 0) !important;
-        height: 1px !important;
-        margin: 0 !important;
-        outline: 0 !important;
-        overflow: hidden !important;
-        padding: 0 !important;
-        width: 1px !important;
+    &-offscreen {
+        display: none !important;
     }
 }

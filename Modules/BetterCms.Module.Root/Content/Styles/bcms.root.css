@@ -3904,14 +3904,22 @@ textarea.markItUpEditor:focus {
   -moz-transition: color 200ms;
   transition: color 200ms;
   color: #636363;
-  font-size: 13px;
-  font-weight: 600;
   cursor: pointer;
+  font-size: 13px;
+  font-weight: 400;
   padding: 5px 10px;
 }
 
 .select2-result-label:hover {
   color: #0d7ce7;
+}
+
+.select2-highlighted > .select2-result-label {
+  color: #0d7ce7;
+}
+
+.select2-result-with-children > .select2-result-label {
+  font-weight: 600;
 }
 
 .select2-no-results {
@@ -3920,13 +3928,6 @@ textarea.markItUpEditor:focus {
   padding: 5px 10px;
 }
 
-.select2-offscreen, .select2-offcsreen:focus {
-  border: 0 !important;
-  clip: rect(0 0 0 0) !important;
-  height: 1px !important;
-  margin: 0 !important;
-  outline: 0 !important;
-  overflow: hidden !important;
-  padding: 0 !important;
-  width: 1px !important;
+.select2-offscreen {
+  display: none !important;
 }
