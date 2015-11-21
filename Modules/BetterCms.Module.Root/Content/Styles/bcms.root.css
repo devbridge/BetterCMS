@@ -3891,7 +3891,7 @@ textarea.markItUpEditor:focus {
 
 .select2-result-sub {
   margin: 0;
-  padding: 0;
+  padding: 0 0 0 10px;
 }
 
 .select2-result-sub .select2-result-label {
