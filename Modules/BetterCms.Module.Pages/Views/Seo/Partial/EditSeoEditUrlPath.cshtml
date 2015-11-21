@@ -6,13 +6,12 @@
 <div class="bcms-input-list-holder">
     <div class="bcms-content-titles">
         @PagesGlobalization.EditSeo_UrlPath @Html.Tooltip(PagesGlobalization.EditSeo_UrlPath_Tooltip_Description)
-        <a id="bcms-editseo-editurlpath">@RootGlobalization.Button_Edit</a>
+        <div class="bcms-editor-link" id="bcms-editseo-editurlpath">@RootGlobalization.Button_Edit</div>
     </div>
-
-    <div class="bcms-editseo-urlpath">@Html.Raw(string.IsNullOrWhiteSpace(Model.PageUrlPath) ? "&nbsp;" : Html.Encode(Model.PageUrlPath))</div>
+    <div class="bcms-editor-path" id="bcms-page-permalink-info">@Html.Raw(string.IsNullOrWhiteSpace(Model.PageUrlPath) ? "&nbsp;" : Html.Encode(Model.PageUrlPath))</div>
     @Html.HiddenFor(f => f.PageUrlPath)
 
-    <div class="bcms-edit-urlpath-box" style="display: none;">
+    <div class="bcms-editor-box bcms-js-edit-box" style="display: none;">
         <div class="bcms-field-wrapper">
             @Html.TextBoxFor(f => f.ChangedUrlPath, new { @class = "bcms-field-text bcms-js-url-path" })
             @Html.BcmsValidationMessageFor(f => f.ChangedUrlPath)

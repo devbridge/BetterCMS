@@ -451,14 +451,14 @@ a:hover {
 
 .bcms-editor-box {
   position: absolute;
-  bottom: 0;
+  top: 0;
   left: 0;
   background-color: #ffffff;
   border: 1px solid #cdcdcd;
   box-shadow: 0 0 20px 0 rgba(0, 0, 0, 0.2);
   box-sizing: border-box;
   padding: 14px;
-  width: 380px;
+  width: 410px;
   z-index: 5;
 }
 
@@ -466,6 +466,14 @@ a:hover {
   display: inline-block;
   vertical-align: middle;
   width: 70%;
+}
+
+.bcms-editor-path {
+  color: #303646;
+  cursor: default;
+  font-size: 14px;
+  font-weight: 600;
+  margin-top: 5px;
 }
 
 .bcms-edit-urlpath-box {

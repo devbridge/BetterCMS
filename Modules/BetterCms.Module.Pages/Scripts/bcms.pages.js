@@ -9,8 +9,8 @@ bettercms.define('bcms.pages', ['bcms.jquery', 'bcms', 'bcms.modal', 'bcms.siteS
         var page = {},
             selectors = {
                 editPermalink: '#bcms-page-editpermalink',
-                editPermalinkBox: '.bcms-edit-urlpath-box',
-                editPermalinkClose: 'div.bcms-edit-urlpath-box .bcms-tip-close, div.bcms-edit-urlpath-box .bcms-btn-cancel',
+                editPermalinkBox: '.bcms-js-edit-box',
+                editPermalinkClose: 'div.bcms-js-edit-box .bcms-tip-close, div.bcms-js-edit-box .bcms-btn-cancel',
                 editPermalinkSave: '#bcms-save-permalink',
                 editPermalinkHiddenField: '#bcms-page-permalink',
                 editPermalinkEditField: '#bcms-page-permalink-edit',
@@ -370,9 +370,7 @@ bettercms.define('bcms.pages', ['bcms.jquery', 'bcms', 'bcms.modal', 'bcms.siteS
         */
         page.showAddNewPageEditPermalinkBox = function (dialog) {
             dialog.container.find(selectors.editPermalinkBox).show();
-            dialog.container.find(selectors.editPermalink).hide();
             dialog.container.find(selectors.editPermalinkEditField).focus();
-            dialog.container.find(selectors.editPermalinkInfoField).hide();
         };
 
         /**
@@ -405,8 +403,6 @@ bettercms.define('bcms.pages', ['bcms.jquery', 'bcms', 'bcms.modal', 'bcms.siteS
         */
         page.hideAddNewPageEditPermalinkBox = function (dialog) {
             dialog.container.find(selectors.editPermalinkBox).hide();
-            dialog.container.find(selectors.editPermalink).show();
-            dialog.container.find(selectors.editPermalinkInfoField).show();
         };
 
         /**

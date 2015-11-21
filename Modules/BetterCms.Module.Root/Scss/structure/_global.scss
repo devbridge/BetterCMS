@@ -125,19 +125,29 @@ $loading-spinner: (
 
     &-box {
         @include clearfix();
-        @include position(absolute, null null 0 0);
+        @include position(absolute, 0 null null 0);
         background-color: $white;
         border: $border-pop-box;
         box-shadow: $pop-box-shadow;
         box-sizing: border-box;
         padding: 14px;
-        width: 380px;
+        width: 410px;
         z-index: 5;
 
         > .bcms-field-wrapper {
             @include vertical-align();
             width: 70%;
         }
+    }
+
+    &-path {
+        color: $text-dark;
+        cursor: default;
+        font: {
+            size: 14px;
+            weight: 600;
+        }
+        margin-top: 5px;
     }
 }
 

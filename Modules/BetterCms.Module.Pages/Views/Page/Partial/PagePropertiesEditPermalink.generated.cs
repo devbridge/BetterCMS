@@ -83,7 +83,9 @@ WriteLiteral(" ");
             
             #line default
             #line hidden
-WriteLiteral("\r\n        <a");
+WriteLiteral("\r\n        <div");
+
+WriteLiteral(" class=\"bcms-editor-link\"");
 
 WriteLiteral(" id=\"bcms-pageproperties-editpermalink\"");
 
@@ -91,14 +93,14 @@ WriteLiteral(">");
 
             
             #line 9 "..\..\Views\Page\Partial\PagePropertiesEditPermalink.cshtml"
-                                             Write(RootGlobalization.Button_Edit);
+                                                                        Write(RootGlobalization.Button_Edit);
 
             
             #line default
             #line hidden
-WriteLiteral("</a>\r\n    </div>\r\n    <div");
+WriteLiteral("</div>\r\n    </div>\r\n    <div");
 
-WriteLiteral(" class=\"bcms-editseo-urlpath\"");
+WriteLiteral(" class=\"bcms-editor-path\"");
 
 WriteLiteral(" id=\"bcms-page-permalink-info\"");
 
@@ -106,14 +108,14 @@ WriteLiteral(">");
 
             
             #line 11 "..\..\Views\Page\Partial\PagePropertiesEditPermalink.cshtml"
-                                                                Write(string.IsNullOrWhiteSpace(Model.PageUrl) ? Html.Raw("&nbsp;") : new MvcHtmlString(Html.Encode(Model.PageUrl)));
+                                                            Write(string.IsNullOrWhiteSpace(Model.PageUrl) ? Html.Raw("&nbsp;") : new MvcHtmlString(Html.Encode(Model.PageUrl)));
 
             
             #line default
             #line hidden
 WriteLiteral("</div>\r\n\r\n    <div");
 
-WriteLiteral(" class=\"bcms-edit-urlpath-box\"");
+WriteLiteral(" class=\"bcms-editor-box bcms-js-edit-box\"");
 
 WriteLiteral(" style=\"display: none;\"");
 

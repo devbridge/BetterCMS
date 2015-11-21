@@ -10,11 +10,11 @@ bettercms.define('bcms.pages.seo', ['bcms.jquery', 'bcms', 'bcms.modal', 'bcms.m
             editSeoDialogClass: 'bcms-modal-edit-seo'
         },
         selectors = {
-            pageUrlPath: '.bcms-editseo-urlpath',
+            pageUrlPath: '#bcms-page-permalink-info',
             editPageUrlLink: '#bcms-editseo-editurlpath',
-            editUrlPathBox: '.bcms-edit-urlpath-box',
+            editUrlPathBox: '.bcms-js-edit-box',
             editUrlSave: '#bcms-editseo-editurlpath-save',
-            editUrlCancel: '#bcms-editseo-editurlpath-cancel, .bcms-edit-urlpath-box .bcms-tip-close',
+            editUrlCancel: '#bcms-editseo-editurlpath-cancel, .bcms-js-edit-box .bcms-tip-close',
             editUrlTextBox: '.bcms-js-url-path',
             editSeoForm: 'form:first',
             editSeoCloseInfoMessage: '#bcms-seo-closeinfomessage',
@@ -39,14 +39,10 @@ bettercms.define('bcms.pages.seo', ['bcms.jquery', 'bcms', 'bcms.modal', 'bcms.m
     function setEditPagePathBoxVisibility(dialog, visible) {
         if (visible) {
             dialog.container.find(selectors.editUrlPathBox).show();
-            dialog.container.find(selectors.editPageUrlLink).hide();
-            dialog.container.find(selectors.pageUrlPath).hide();
             dialog.container.find(selectors.editUrlTextBox).focus();
         } else {
             dialog.container.find(selectors.editUrlTextBox).blur();
             dialog.container.find(selectors.editUrlPathBox).hide();
-            dialog.container.find(selectors.editPageUrlLink).show();
-            dialog.container.find(selectors.pageUrlPath).show();
         }
     }
     

@@ -6,11 +6,11 @@
 <div class="bcms-input-list-holder">
     <div class="bcms-content-titles">
         @PagesGlobalization.EditPageProperties_AdvancedPropertiesTab_PageUrl_Title @Html.Tooltip(PagesGlobalization.EditPageProperties_AdvancedPropertiesTab_PageUrl_Tooltip_Description)
-        <a id="bcms-pageproperties-editpermalink">@RootGlobalization.Button_Edit</a>
+        <div class="bcms-editor-link" id="bcms-pageproperties-editpermalink">@RootGlobalization.Button_Edit</div>
     </div>
-    <div class="bcms-editseo-urlpath" id="bcms-page-permalink-info">@(string.IsNullOrWhiteSpace(Model.PageUrl) ? Html.Raw("&nbsp;") : new MvcHtmlString(Html.Encode(Model.PageUrl)))</div>
+    <div class="bcms-editor-path" id="bcms-page-permalink-info">@(string.IsNullOrWhiteSpace(Model.PageUrl) ? Html.Raw("&nbsp;") : new MvcHtmlString(Html.Encode(Model.PageUrl)))</div>
 
-    <div class="bcms-edit-urlpath-box" style="display: none;">
+    <div class="bcms-editor-box bcms-js-edit-box" style="display: none;">
         @Html.Hidden("PagePermalinkHidden", Model.PageUrl, new { @id = "bcms-page-permalink" })
         <div class="bcms-field-wrapper">
             @Html.TextBoxFor(model => model.PageUrl, new { @id = "bcms-page-permalink-edit", @class = "bcms-field-text bcms-js-url-path" })
