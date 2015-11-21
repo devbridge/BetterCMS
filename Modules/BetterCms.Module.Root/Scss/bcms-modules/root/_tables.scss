@@ -142,3 +142,72 @@ $sort-icons: (
         }
     }
 }
+
+//module pages list
+.bcms-list {
+    &-pages {
+        border: $border-pop-box;
+        margin-top: 20px;
+    }
+
+    &-pages-row {
+        border-top: $border-pop-box;
+        display: table;
+        width: 100%;
+
+        &:first-child {
+            border-top: 0;
+        }
+    }
+
+    &-column {
+        @include vertical-align($block: table-cell);
+        box-sizing: border-box;
+        padding: 17px 10px 10px;
+
+        .bcms-action-edit,
+        .bcms-action-delete {
+            @include size(22px);
+            display: block;
+            margin: auto;
+        }
+    }
+
+    &-edit {
+        width: 65px;
+    }
+
+    &-status {
+        width: 40px;
+    }
+
+    &-delete {
+        width: 65px;
+    }
+
+    &-row {
+
+        &-active {
+            //todo change to appropriate color
+            background: red;
+        }
+    }
+
+    &-dates {
+        color: $text-gray;
+        display: inline;
+        font-size: 10px;
+        line-height: 18px;
+        margin-right: 40px;
+        text-transform: uppercase;
+    }
+
+    &-link {
+        color: $text-blue;
+        cursor: pointer;
+        font: {
+            size: 14px;
+            weight: 600;
+        }
+    }
+}

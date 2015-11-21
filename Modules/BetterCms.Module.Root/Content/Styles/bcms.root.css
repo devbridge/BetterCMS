@@ -2770,6 +2770,68 @@ td .bcms-field-wrapper {
   background: url("data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxMCIgaGVpZ2h0PSI2IiB2aWV3Qm94PSItMzAwIDM5NCAxMCA2IiBlbmFibGUtYmFja2dyb3VuZD0ibmV3IC0zMDAgMzk0IDEwIDYiPjxwYXRoIGQ9Im0tMzAwIDM5NGw1IDYgNS02aC0xMCIgZmlsbD0iIzMwMzY0NiIvPjwvc3ZnPg==") no-repeat right center;
 }
 
+.bcms-list-pages {
+  border: 1px solid #cdcdcd;
+  margin-top: 20px;
+}
+
+.bcms-list-pages-row {
+  border-top: 1px solid #cdcdcd;
+  display: table;
+  width: 100%;
+}
+
+.bcms-list-pages-row:first-child {
+  border-top: 0;
+}
+
+.bcms-list-column {
+  display: table-cell;
+  vertical-align: middle;
+  box-sizing: border-box;
+  padding: 17px 10px 10px;
+}
+
+.bcms-list-column .bcms-action-edit,
+.bcms-list-column .bcms-action-delete {
+  height: 22px;
+  width: 22px;
+  display: block;
+  margin: auto;
+}
+
+.bcms-list-edit {
+  width: 65px;
+}
+
+.bcms-list-status {
+  width: 40px;
+}
+
+.bcms-list-delete {
+  width: 65px;
+}
+
+.bcms-list-row-active {
+  background: red;
+}
+
+.bcms-list-dates {
+  color: #636363;
+  display: inline;
+  font-size: 10px;
+  line-height: 18px;
+  margin-right: 40px;
+  text-transform: uppercase;
+}
+
+.bcms-list-link {
+  color: #0d7ce7;
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: 600;
+}
+
 .bcms-tab-header {
   background-color: #0d7ce7;
   height: 50px;
