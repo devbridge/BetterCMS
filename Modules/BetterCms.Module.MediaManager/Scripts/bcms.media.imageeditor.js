@@ -629,7 +629,7 @@ bettercms.define('bcms.media.imageeditor', ['bcms.jquery', 'bcms', 'bcms.modal',
 
             var viewModel = new ImageEditViewModel(dialog, data, callback);
 
-            categories.initCategoriesSelect(viewModel.categories, data.CategoriesLookupList);
+            categories.initCategoriesSelect(viewModel.categories, data.CategoriesLookupList, dialog.container);
 
             ko.applyBindings(viewModel, dialog.container.find(selectors.imageEditorForm).get(0));
 

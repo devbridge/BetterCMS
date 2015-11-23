@@ -48,6 +48,7 @@ bettercms.define('bcms.blog', ['bcms.jquery', 'bcms', 'bcms.modal', 'bcms.siteSe
                 siteSettingsBlogCategoriesSelect: '#bcms-js-categories-select',
                 siteSettingsBlogAuthorsSelect: '#bcms-js-authors-select',
                 siteSettingsBlogLanguagesSelect: '#bcms-js-languages-select',
+                siteSettingsDefaultBlogContentModeSelect: '#bcms-js-content-mode-select',
 
                 contentTab: '#bcms-tab-1',
                 editorContainer: '.bcms-window-tabbed-options',
