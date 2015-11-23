@@ -103,7 +103,8 @@ bettercms.define('bcms.security', ['bcms.jquery', 'bcms', 'bcms.ko.extenders', '
 
         function AccessControlViewModel(identities, isRole, addMode, autoCompleteUrl, initialValues) {
             var options = {
-                serviceUrl: autoCompleteUrl
+                serviceUrl: autoCompleteUrl,
+                width: '100%'
             };
 
             var self = this;

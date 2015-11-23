@@ -93,13 +93,14 @@ bettercms.define('bcms.autocomplete', ['bcms.jquery', 'bcms', 'bcms.jquery.autoc
                                     autocompleteViewModel.autocompleteInstance.ignoreValueChange = false;
                                 }
                             },
-                            onSearchStart: function (params) {
+                            onSearchStart: function(params) {
                                 onSearchStart(params, autocompleteViewModel);
                             },
-                            onBeforeSearchStart: function (params) {
+                            onBeforeSearchStart: function(params) {
                                 onBeforeSearchStart(params, autocompleteViewModel);
-                            }
-                        });
+                            },
+                            width: autocompleteViewModel.width
+                });
                     
                     autocompleteViewModel.autocompleteInstance = complete;
                 }
@@ -164,6 +165,7 @@ bettercms.define('bcms.autocomplete', ['bcms.jquery', 'bcms', 'bcms.jquery.autoc
                 self.serviceUrl = options.serviceUrl;
                 self.pattern = options.pattern;
                 self.params = options.params;
+                self.width = options.width;
 
                 self.isExpanded = ko.observable(true);
                 self.hasfocus = ko.observable(false);
