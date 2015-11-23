@@ -2714,6 +2714,8 @@ td .bcms-field-wrapper {
   width: 10.6383%;
   float: left;
   margin-left: 2.12766%;
+  padding: 0;
+  text-align: center;
 }
 
 .bcms-table-translation-helper .bcms-field-wrapper {

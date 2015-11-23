@@ -113,6 +113,8 @@ $sort-icons: (
 
         .bcms-btn-primary {
             @include span(1.5 before);
+            padding: 0;
+            text-align: center;
         }
     }
 
