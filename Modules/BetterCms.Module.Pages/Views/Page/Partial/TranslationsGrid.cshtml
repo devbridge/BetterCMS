@@ -19,7 +19,7 @@
                 <td data-bind="html: title()"></td>
                 <td data-bind="html: languageName()"></td>
                 <td><a data-bind="html: url(), attr: {href: url()}" target="_blank"></a></td>
-                <td>
+                <td style="width: 40px; padding: 0;">
                     <div class="bcms-action-delete" data-bind="click: $parent.unassignPage">@RootGlobalization.Button_Delete</div>
                 </td>
             </tr>
@@ -50,7 +50,7 @@
                     <span data-bind="html: addingPageLanguages()[0].value"></span>
                     <!-- /ko -->
                 </td>
-                <td>
+                <td style="width: 100px;">
                     <!-- ko if: addLanguageId() -->
                     <div class="bcms-btn-primary" data-bind="click: addTranslation">@RootGlobalization.Button_Ok</div>
                     <!-- /ko -->

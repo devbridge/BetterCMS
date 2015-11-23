@@ -118,7 +118,11 @@ WriteLiteral(" data-bind=\"html: url(), attr: {href: url()}\"");
 
 WriteLiteral(" target=\"_blank\"");
 
-WriteLiteral("></a></td>\r\n                <td>\r\n                    <div");
+WriteLiteral("></a></td>\r\n                <td");
+
+WriteLiteral(" style=\"width: 40px; padding: 0;\"");
+
+WriteLiteral(">\r\n                    <div");
 
 WriteLiteral(" class=\"bcms-action-delete\"");
 
@@ -176,14 +180,14 @@ WriteLiteral(" class=\"bcms-field-text\"");
 WriteLiteral(" data-bind=\"value: addPageTitle, autocomplete: \'onlyExisting\', hasfocus: hasFocus" +
 ", enterPress: addTranslation, escPress: endEditMode\"");
 
-WriteAttribute("placeholder", Tuple.Create(" placeholder=\"", 1963), Tuple.Create("\"", 2056)
+WriteAttribute("placeholder", Tuple.Create(" placeholder=\"", 1996), Tuple.Create("\"", 2089)
             
             #line 39 "..\..\Views\Page\Partial\TranslationsGrid.cshtml"
-                                                                                                                                     , Tuple.Create(Tuple.Create("", 1977), Tuple.Create<System.Object, System.Int32>(PagesGlobalization.EditPageProperties_TranslationsTab_PageSelectionPlaceholder
+                                                                                                                                     , Tuple.Create(Tuple.Create("", 2010), Tuple.Create<System.Object, System.Int32>(PagesGlobalization.EditPageProperties_TranslationsTab_PageSelectionPlaceholder
             
             #line default
             #line hidden
-, 1977), false)
+, 2010), false)
 );
 
 WriteLiteral(" />\r\n                    </div>\r\n                    <div");
@@ -213,8 +217,11 @@ WriteLiteral("></select>\r\n                    </div>\r\n                    <!
 WriteLiteral(" data-bind=\"html: addingPageLanguages()[0].value\"");
 
 WriteLiteral("></span>\r\n                    <!-- /ko -->\r\n                </td>\r\n              " +
-"  <td>\r\n                    <!-- ko if: addLanguageId() -->\r\n                   " +
-" <div");
+"  <td");
+
+WriteLiteral(" style=\"width: 100px;\"");
+
+WriteLiteral(">\r\n                    <!-- ko if: addLanguageId() -->\r\n                    <div");
 
 WriteLiteral(" class=\"bcms-btn-primary\"");
 

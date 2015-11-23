@@ -331,8 +331,8 @@ WriteLiteral("            ");
             #line hidden
 WriteLiteral("            <td");
 
-WriteLiteral(" data-bind=\"style: { width: isActive() ? \'120px\' : \'40px\', padding: isActive() ? " +
-"\'10px\' : \'\' }\"");
+WriteLiteral(" data-bind=\"style: { width: isActive() ? \'100px\' : \'40px\', padding: isActive() ? " +
+"\'10px\' : \'0\' }\"");
 
 WriteLiteral(">\r\n");
 
@@ -453,14 +453,14 @@ WriteLiteral("&nbsp;\r\n");
 WriteLiteral("            </td>\r\n            <!-- /ko -->\r\n        </tr>\r\n        <!-- /ko -->\r" +
 "\n        <!-- ko if: items().length == 0 -->\r\n        <tr>\r\n            <td");
 
-WriteAttribute("colspan", Tuple.Create(" colspan=\"", 3412), Tuple.Create("\"", 3448)
+WriteAttribute("colspan", Tuple.Create(" colspan=\"", 3413), Tuple.Create("\"", 3449)
             
             #line 82 "..\..\Views\Shared\EditableGrid\Grid.cshtml"
-, Tuple.Create(Tuple.Create("", 3422), Tuple.Create<System.Object, System.Int32>(visibleColumnsCount + 2
+, Tuple.Create(Tuple.Create("", 3423), Tuple.Create<System.Object, System.Int32>(visibleColumnsCount + 2
             
             #line default
             #line hidden
-, 3422), false)
+, 3423), false)
 );
 
 WriteLiteral(">\r\n                <div");

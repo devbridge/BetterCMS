@@ -2657,6 +2657,7 @@ td .bcms-field-wrapper {
 
 .bcms-tables th:last-child {
   border-right: 1px solid #cbcbcb;
+  padding: 0;
 }
 
 .bcms-tables tr.bcms-table-row-active td {
