@@ -387,17 +387,32 @@ function ($, bcms, modal, siteSettings, forms, dynamicContent, messages, mediaUp
             }
         };
 
-        self.toggleMenu = function (media, event) {
+        self.toggleMenu = function(media, event) {
             var i,
-                open = media.isMenuOpen();
-
+                open = media.isMenuOpen(),
+                button = $(event.target),
+                menu = button.siblings(),
+                container = button.scrollParent(),
+                remainingSpace;
 
             for (i = 0; i < self.medias().length; i++) {
                 self.medias()[i].isMenuOpen(false);
             }
-
+            if (!open) {
+                remainingSpace = container.height() + container.offset().top - button.offset().top - button.outerHeight(true);
+                if (remainingSpace < menu.outerHeight(true)) {
+                    var bottom = button.outerHeight(true) + parseInt(button.parent().css('padding-bottom'));
+                    menu.css({ bottom: bottom });
+                    media.isMenuAbove(true);
+                } else {
+                    menu.css({ bottom: '' });
+                    media.isMenuAbove(false);
+                }
+            }
             media.isMenuOpen(!open);
-        }
+
+            bcms.stopEventPropagation(event);
+        };
 
         self.uploadMedia = function () {
             mediaUpload.openUploadFilesDialog(self.path().currentFolder().id(), self.path().currentFolder().type, onUploadFiles);
@@ -661,6 +676,7 @@ function ($, bcms, modal, siteSettings, forms, dynamicContent, messages, mediaUp
             self.thumbnailUrl = ko.observable(item.ThumbnailUrl);
             self.isReadOnly = ko.observable(item.IsReadOnly);
             self.isMenuOpen = ko.observable(false);
+            self.isMenuAbove = ko.observable(false);
 
             self.getImageUrl = function () {
                 if (!self.publicUrl()) {
@@ -676,10 +692,13 @@ function ($, bcms, modal, siteSettings, forms, dynamicContent, messages, mediaUp
                 return self.thumbnailUrl();
             }
 
-            self.toggleMenu = function (data, event) {
-                bcms.stopEventPropagation(event);
-                self.isMenuOpen(!self.isMenuOpen());
-            }
+            bcms.on(bcms.events.bodyClick, function (event) {
+                if ($(event.srcElement).closest('.bcms-media-context').length > 0) {
+                    bcms.stopEventPropagation(event);
+                } else {
+                    self.isMenuOpen(false);
+                }
+            });
 
             self.isFile = function () {
                 return !self.isFolder();
@@ -695,6 +714,7 @@ function ($, bcms, modal, siteSettings, forms, dynamicContent, messages, mediaUp
 
             self.downloadMedia = function () {
                 window.open($.format(links.downloadFileUrl, self.id()), '_newtab');
+                self.isMenuOpen(false);
             };
 
             self.rowClassNames = ko.computed(function () {
@@ -750,6 +770,7 @@ function ($, bcms, modal, siteSettings, forms, dynamicContent, messages, mediaUp
                     message = $.format(self.getArchiveMediaConfirmationMessage(), this.name());
 
                 archiveUnarchiveMediaItem(true, url, message, folderViewModel, this);
+                self.isMenuOpen(false);
             };
 
             self.unarchiveMedia = function (folderViewModel, data, event) {
@@ -759,6 +780,7 @@ function ($, bcms, modal, siteSettings, forms, dynamicContent, messages, mediaUp
                     message = $.format(self.getUnarchiveMediaConfirmationMessage(), this.name());
 
                 archiveUnarchiveMediaItem(false, url, message, folderViewModel, this);
+                self.isMenuOpen(false);
             };
 
             self.showParentLink = function (mediaItemsViewModel, data) {
@@ -808,6 +830,7 @@ function ($, bcms, modal, siteSettings, forms, dynamicContent, messages, mediaUp
                 return;
             }
             this.isActive(true);
+            this.isMenuOpen(false);
         };
 
         MediaItemBaseViewModel.prototype.reuploadMedia = function (folderViewModel, data, event) {
@@ -816,6 +839,7 @@ function ($, bcms, modal, siteSettings, forms, dynamicContent, messages, mediaUp
                 return;
             }
             folderViewModel.reuploadMedia(this);
+            this.isMenuOpen(false);
         };
 
         MediaItemBaseViewModel.prototype.openMedia = function (folderViewModel, data, event) {
@@ -894,6 +918,7 @@ function ($, bcms, modal, siteSettings, forms, dynamicContent, messages, mediaUp
             self.sizeText = item.SizeText;
 
             self.previewImage = function () {
+                self.isMenuOpen(false);
                 var previewUrl = self.publicUrl();
                 if (previewUrl) {
                     modal.imagePreview(previewUrl, self.tooltip);
@@ -912,13 +937,16 @@ function ($, bcms, modal, siteSettings, forms, dynamicContent, messages, mediaUp
                 message = $.format(globalization.deleteImageConfirmMessage, this.name());
 
             deleteMediaItem(url, message, folderViewModel, this);
+            this.isMenuOpen(false);
         };
 
         MediaImageViewModel.prototype.getArchiveMediaConfirmationMessage = function () {
+            this.isMenuOpen(false);
             return globalization.archiveImageConfirmMessage;
         };
 
         MediaImageViewModel.prototype.getUnarchiveMediaConfirmationMessage = function () {
+            this.isMenuOpen(false);
             return globalization.unarchiveImageConfirmMessage;
         };
 
