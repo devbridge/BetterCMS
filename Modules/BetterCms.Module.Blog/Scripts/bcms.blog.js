@@ -485,7 +485,7 @@ bettercms.define('bcms.blog', ['bcms.jquery', 'bcms', 'bcms.modal', 'bcms.siteSe
         /**
         * Initializes site settings blogs list
         */
-        function initializeSiteSettingsBlogsList(container, content, jsonData, isSearchResult) {
+        function initializeSiteSettingsBlogsList(container, content, jsonData, isSearchResult, isClearFilterResult) {
 
             var form = container.find(selectors.siteSettingsBlogsListForm);
             grid.bindGridForm(form, function (html, data) {
@@ -495,13 +495,13 @@ bettercms.define('bcms.blog', ['bcms.jquery', 'bcms', 'bcms.modal', 'bcms.siteSe
 
             form.on('submit', function (event) {
                 bcms.stopEventPropagation(event);
-                searchSiteSettingsBlogs(container, form);
+                searchSiteSettingsBlogs(container, form, true);
                 return false;
             });
 
             bcms.preventInputFromSubmittingForm(form.find(selectors.siteSettingsBlogsSearchInput), {
                 preventedEnter: function () {
-                    searchSiteSettingsBlogs(container, form);
+                    searchSiteSettingsBlogs(container, form, true);
                 }
             });
 
@@ -570,9 +570,9 @@ bettercms.define('bcms.blog', ['bcms.jquery', 'bcms', 'bcms.modal', 'bcms.siteSe
 
             initializeSiteSettingsBlogsListItems(container);
 
-            filter.bind(container, ((content.Data) ? content.Data : jsonData), function () {
-                searchSiteSettingsBlogs(container, form);
-            });
+            filter.bind(container, ((content.Data) ? content.Data : jsonData), function (isClearFilterResult) {
+                searchSiteSettingsBlogs(container, form, isSearchResult, isClearFilterResult);
+            }, isClearFilterResult);
 
             // Select search (timeout is required to work on IE11)
             grid.focusSearchInput(container.find(selectors.siteSettingsBlogsSearchInput), true);
@@ -618,10 +618,10 @@ bettercms.define('bcms.blog', ['bcms.jquery', 'bcms', 'bcms.modal', 'bcms.siteSe
         /**
         * Search site settings blogs
         */
-        function searchSiteSettingsBlogs(container, form) {
+        function searchSiteSettingsBlogs(container, form, isSearchResult, isClearFilterResult) {
             grid.submitGridForm(form, function (htmlContent, data) {
                 container.html(htmlContent);
-                initializeSiteSettingsBlogsList(container, htmlContent, data, true);
+                initializeSiteSettingsBlogsList(container, htmlContent, data, isSearchResult, isClearFilterResult);
             });
         }
 

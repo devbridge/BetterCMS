@@ -627,7 +627,8 @@ WriteLiteral("                    <div");
 
 WriteLiteral(" class=\"bcms-media-context\"");
 
-WriteLiteral(" data-bind=\"visible: isMenuOpen\"");
+WriteLiteral(" data-bind=\"visible: isMenuOpen, css: isMenuAbove() ? \'bcms-tooltip-br\' : \'bcms-t" +
+"ooltip-tr\'\"");
 
 WriteLiteral(">\r\n                        <div");
 
