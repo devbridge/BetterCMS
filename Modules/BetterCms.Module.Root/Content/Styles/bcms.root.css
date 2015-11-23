@@ -2471,17 +2471,10 @@ td .bcms-field-wrapper {
 }
 
 .bcms-pager-no, .bcms-pager-prev, .bcms-pager-next {
-  -webkit-transition: all 200ms;
-  -moz-transition: all 200ms;
-  transition: all 200ms;
   height: 30px;
   width: 30px;
   cursor: pointer;
   overflow: hidden;
-}
-
-.bcms-pager-no:hover, .bcms-pager-prev:hover, .bcms-pager-next:hover {
-  background-color: #ffffff;
 }
 
 .bcms-pager {
@@ -2489,6 +2482,9 @@ td .bcms-field-wrapper {
 }
 
 .bcms-pager-no {
+  -webkit-transition: background-color 200ms;
+  -moz-transition: background-color 200ms;
+  transition: background-color 200ms;
   background-color: #eae8e9;
   border: 1px solid #dfdfdf;
   box-sizing: border-box;
@@ -2720,6 +2716,14 @@ td .bcms-field-wrapper {
   border-right: 1px solid #cbcbcb;
 }
 
+.bcms-tables tr.bcms-table-row-active td {
+  background-color: #e7f3ff;
+}
+
+.bcms-tables tr.bcms-table-row-active:nth-child(even) td {
+  background-color: #e7f3ff;
+}
+
 .bcms-tables tr:nth-child(even) td {
   background-color: #f8f8f8;
 }
@@ -2752,13 +2756,10 @@ td .bcms-field-wrapper {
 .bcms-tables td .bcms-action-edit,
 .bcms-tables td .bcms-action-usage,
 .bcms-tables td .bcms-action-history,
-.bcms-tables td .bcms-action-delete {
+.bcms-tables td .bcms-action-delete,
+.bcms-tables td .bcms-action-restore {
   display: block;
   margin: auto;
-}
-
-.bcms-table-row-active > td {
-  background-color: #e7f3ff;
 }
 
 .bcms-table-field-helper .bcms-field-wrapper {
@@ -2809,6 +2810,7 @@ td .bcms-field-wrapper {
 }
 
 .bcms-list-pages {
+  background-color: #ffffff;
   border: 1px solid #d0d0d0;
   margin-top: 20px;
 }
@@ -3143,7 +3145,7 @@ td .bcms-field-wrapper {
   vertical-align: middle;
   height: 20px;
   width: 20px;
-  background: url() no-repeat center;
+  background: url("data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIyMCIgaGVpZ2h0PSIxOSIgdmlld0JveD0iMCAwIDIwIDE5IiBlbmFibGUtYmFja2dyb3VuZD0ibmV3IDAgMCAyMCAxOSI+PHBhdGggZD0ibTIwIDguOGMwIDUuNi00LjUgMTAuMi0xMCAxMC4yLTUuNSAwLTEwLTQuNi0xMC0xMC4yaDEuN2MwIDQuNyAzLjcgOC41IDguMyA4LjUgNC42IDAgOC4zLTMuOCA4LjMtOC41IDAtMi4xLS44LTQuMS0yLjEtNS42djEuOGgtMS43di01aDV2MS43aC0yLjVjLjEuMS4xLjEuMS4yLjYuNyAxLjIgMS40IDEuNiAyLjMuOSAxLjMgMS4zIDIuOSAxLjMgNC42IiBmaWxsPSIjMGQ3Y2U3Ii8+PC9zdmc+") no-repeat center;
   cursor: pointer;
   overflow: hidden;
   position: relative;
@@ -3162,7 +3164,7 @@ td .bcms-field-wrapper {
   text-indent: 999em;
 }
 
-.bcms-action-settings {
+.bcms-action-download {
   display: inline-block;
   vertical-align: middle;
   height: 20px;

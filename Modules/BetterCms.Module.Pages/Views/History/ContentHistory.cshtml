@@ -13,13 +13,13 @@
 @model ContentHistoryViewModel
 @helper PreviewLink(ContentHistoryItem item)
 {
-    <div class="bcms-action-preview" data-id="@item.Id">@RootGlobalization.Button_Preview</div>
+    <div class="bcms-action-usage bcms-js-preview" title="@RootGlobalization.Button_Preview" data-id="@item.Id">@RootGlobalization.Button_Preview</div>
 }
 @helper RestoreLink(ContentHistoryItem item)
 {
     if (item.CanCurrentUserRestoreIt)
     {
-        <div class="bcms-action-restore" data-id="@item.Id" data-version="@item.Version">@RootGlobalization.Button_Restore</div>
+        <div class="bcms-action-restore bcms-js-restore" title="@RootGlobalization.Button_Restore" data-id="@item.Id" data-version="@item.Version">@RootGlobalization.Button_Restore</div>
     }
     else
     {
@@ -64,45 +64,38 @@
                .Encode(false)
                .Named("&nbsp;")
                .Sortable(false)
-               .HeaderAttributes(@style => "width: 40px; padding: 8px 0;", @class => "bcms-tables-nohover");
+               .HeaderAttributes(@style => "width: 40px; padding: 0;", @class => "bcms-tables-nohover");
 
         column.For(m => m.PublishedOn.ToFormattedDateString())
                .Named(PagesGlobalization.ContentHistory_Column_PublishedOn)
                .SortColumnName("PublishedOn")
-               .HeaderAttributes(@style => "width: 95px;")
-               .Attributes(@style => "width: 100px;");
+               .HeaderAttributes(@style => "width: 130px;");
 
         column.For(m => m.PublishedByUser)
                .Named(PagesGlobalization.ContentHistory_Column_PublishedByUser)
-               .SortColumnName("PublishedByUser")
-               .HeaderAttributes(@style => "width: 200px;")
-               .Attributes(@style => "width: 200px;");
+               .SortColumnName("PublishedByUser");
 
         column.For(m => m.ArchivedOn.ToFormattedDateString())
                .Named(PagesGlobalization.ContentHistory_Column_ArchivedOn)
                .SortColumnName("ArchivedOn")
-               .HeaderAttributes(@style => "width: 100px;")
-               .Attributes(@style => "width: 100px;");
+               .HeaderAttributes(@style => "width: 130px;");
 
         column.For(m => m.DisplayedFor.ToFormatedTimeString())
                .Named(PagesGlobalization.ContentHistory_Column_DisplayedFor)
                .SortColumnName("DisplayedFor")
-               .HeaderAttributes(@style => "width: 105px;")
-               .Attributes(@style => "width: 105px;");
+               .HeaderAttributes(@style => "width: 130px;");
 
         column.For(m => DisplayStatus(m.StatusName, m.Status))
                .Named(PagesGlobalization.ContentHistory_Column_Status)
                .SortColumnName("StatusName")
                .Encode(false)
-               .HeaderAttributes(@style => "width: 90px;")
-               .Attributes(@style => "width: 90px;");
+               .HeaderAttributes(@style => "width: 95px;");
 
         column.For(f => RestoreLink(f))
                .Encode(false)
                .Named("&nbsp;")
                .Sortable(false)
-               .HeaderAttributes(@style => "width: 247px;", @class => "bcms-tables-nohover")
-               .Attributes(@style => "width: 217px;");
+               .HeaderAttributes(@style => "width: 40px; padding: 0;", @class => "bcms-tables-nohover");
     };
 }
 

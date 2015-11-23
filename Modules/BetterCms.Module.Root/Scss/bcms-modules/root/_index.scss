@@ -1,9 +1,9 @@
 $action-icons: (
                 ('edit', $bcms-action-edit),
                 ('usage', $bcms-action-usage),
-                ('restore'),
+                ('restore', $bcms-revert),
                 ('history', $bcms-action-history),
-                ('settings'),
+                ('download'),
                 ('delete', $bcms-action-delete),
                 ('ok', $bcms-action-status-ok),
                 ('warn', $bcms-action-status-warn),

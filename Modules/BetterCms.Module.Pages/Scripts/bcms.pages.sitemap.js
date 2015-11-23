@@ -28,9 +28,9 @@ bettercms.define('bcms.pages.sitemap', ['bcms.jquery', 'bcms', 'bcms.modal', 'bc
                 siteSettingsSitemapRowTemplateFirstRow: 'tr:first',
                 siteSettingsSitemapsTableFirstRow: 'table.bcms-tables > tbody > tr:first',
 
-                gridRestoreLinks: '#bcms-sitemaphistory-form tr a.bcms-icn-restore',
+                gridRestoreLinks: '#bcms-sitemaphistory-form tr .bcms-js-restore',
                 gridCells: '#bcms-sitemaphistory-form tr td',
-                gridRowPreviewLink: 'a.bcms-icn-preview:first',
+                gridRowPreviewLink: '.bcms-js-preview:first',
                 firstRow: 'tr:first',
                 gridRows: '#bcms-sitemaphistory-form tr',
                 versionPreviewContainer: '#bcms-history-preview',

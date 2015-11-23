@@ -12,9 +12,9 @@ bettercms.define('bcms.pages.history', ['bcms.jquery', 'bcms', 'bcms.modal', 'bc
         },
         
         selectors = {
-            gridRestoreLinks: '#bcms-pagecontenthistory-form tr a.bcms-icn-restore',
+            gridRestoreLinks: '#bcms-pagecontenthistory-form tr .bcms-js-restore',
             gridCells: '#bcms-pagecontenthistory-form tr td',
-            gridRowPreviewLink: 'a.bcms-icn-preview:first',
+            gridRowPreviewLink: '.bcms-js-preview:first',
             firstRow: 'tr:first',
             gridRows: '#bcms-pagecontenthistory-form tr',
             versionPreviewContainer: '#bcms-history-preview',
