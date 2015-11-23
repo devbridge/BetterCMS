@@ -38,28 +38,6 @@ $action-icons: (
 }
 
 //module icons
-a.bcms-icn-restore {
-    background: url('images/sprite-base-1.png') no-repeat right -1090px;
-    color: #c0c0c0;
-    cursor: pointer;
-    display: inline-block;
-    font-size: 12px;
-    font-weight: 600;
-    height: 20px;
-    padding-right: 30px;
-}
-
-a.bcms-icn-restore:hover {
-    background-position: right -1121px;
-    color: #303030;
-    text-decoration: none;
-}
-
-a.bcms-icn-restore:active {
-    background-position: right -1151px;
-    color: #df2200;
-}
-
 .bcms-icn-draft {
     background: url('images/sprite-base-2.png') no-repeat -25px -200px;
     height: 17px;
