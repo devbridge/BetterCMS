@@ -12,11 +12,11 @@ bettercms.define('bcms.pages.history', ['bcms.jquery', 'bcms', 'bcms.modal', 'bc
         },
         
         selectors = {
-            gridRestoreLinks: '#bcms-pagecontenthistory-form .bcms-history-cell a.bcms-icn-restore',
-            gridCells: '#bcms-pagecontenthistory-form .bcms-history-cell tbody td',
+            gridRestoreLinks: '#bcms-pagecontenthistory-form tr a.bcms-icn-restore',
+            gridCells: '#bcms-pagecontenthistory-form tr td',
             gridRowPreviewLink: 'a.bcms-icn-preview:first',
             firstRow: 'tr:first',
-            gridRows: '#bcms-pagecontenthistory-form .bcms-history-cell tbody tr',
+            gridRows: '#bcms-pagecontenthistory-form tr',
             versionPreviewContainer: '#bcms-history-preview',
             versionPreviewPropertiesContainer: '#bcms-history-preview-properties',
             versionPreviewLoaderContainer: '.bcms-history-preview',

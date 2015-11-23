@@ -429,7 +429,7 @@ WriteLiteral("                    ");
 
             
             #line 94 "..\..\Views\Sitemap\History.cshtml"
-               Write(Html.Grid(Model.Items).Sort(Model.GridOptions).Columns(columns).Attributes(@class => "bcms-tables bcms-history-grid").RenderUsing(new ScrollableEditableHtmlTableGridRenderer<SitemapHistoryItem>() { InternalTableCssClass = "bcms-history-cell" }));
+               Write(Html.Grid(Model.Items).Sort(Model.GridOptions).Columns(columns).Attributes(@class => "bcms-tables bcms-history-grid").RenderUsing(new EditableHtmlTableGridRenderer<SitemapHistoryItem>()));
 
             
             #line default

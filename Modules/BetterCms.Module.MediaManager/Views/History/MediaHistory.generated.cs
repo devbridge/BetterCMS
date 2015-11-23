@@ -607,10 +607,7 @@ WriteLiteral("                ");
 
             
             #line 138 "..\..\Views\History\MediaHistory.cshtml"
-           Write(Html.Grid(Model.Items).Sort(Model.GridOptions).Columns(columns).Attributes(@class => "bcms-tables bcms-history-grid").RenderUsing(new ScrollableEditableHtmlTableGridRenderer<MediaHistoryItem>()
-                                                                                                                                 {
-                                                                                                                                     InternalTableCssClass = "bcms-history-cell"
-                                                                                                                                 }));
+           Write(Html.Grid(Model.Items).Sort(Model.GridOptions).Columns(columns).Attributes(@class => "bcms-tables bcms-history-grid").RenderUsing(new EditableHtmlTableGridRenderer<MediaHistoryItem>()));
 
             
             #line default
@@ -620,7 +617,7 @@ WriteLiteral("\r\n");
 WriteLiteral("                ");
 
             
-            #line 142 "..\..\Views\History\MediaHistory.cshtml"
+            #line 139 "..\..\Views\History\MediaHistory.cshtml"
            Write(Html.HiddenSubmit());
 
             
@@ -629,7 +626,7 @@ WriteLiteral("                ");
 WriteLiteral("\r\n            </div>\r\n");
 
             
-            #line 144 "..\..\Views\History\MediaHistory.cshtml"
+            #line 141 "..\..\Views\History\MediaHistory.cshtml"
         }
 
             
