@@ -20,20 +20,21 @@
         <div class="bcms-btn-primary" id="bcms-save-permalink">@RootGlobalization.Button_Ok</div>
         <div class="bcms-btn-cancel">@RootGlobalization.Button_Cancel</div>
 
-        <div class="bcms-edit-check-field">
+        <div class="bcms-checkbox-holder">
             @Html.CheckBoxFor(model => model.RedirectFromOldUrl)
-            <div class="bcms-edit-label">@PagesGlobalization.EditPageProperties_AdvancedPropertiesTab_CreatePermanentRedirectToOldUrl_Title</div>
+            <div class="bcms-checkbox-label bcms-js-edit-label">@PagesGlobalization.EditPageProperties_AdvancedPropertiesTab_CreatePermanentRedirectToOldUrl_Title</div>
         </div>
 
-        <div class="bcms-edit-check-field">
+        <div class="bcms-checkbox-holder">
             @Html.CheckBoxFor(model => model.UseCanonicalUrl)
-            <div class="bcms-edit-label">@PagesGlobalization.EditPageProperties_AdvancedPropertiesTab_UseCanonicalUrl</div>
+            <div class="bcms-checkbox-label bcms-js-edit-label">@PagesGlobalization.EditPageProperties_AdvancedPropertiesTab_UseCanonicalUrl</div>
         </div>
+
         @if (Model.IsInSitemap)
         {
-            <div class="bcms-edit-check-field">
+            <div class="bcms-checkbox-holder">
                 @Html.CheckBoxFor(model => model.UpdateSitemap)
-                <div class="bcms-edit-label">@PagesGlobalization.EditPageProperties_AdvancedPropertiesTab_UpdateSitemap_Title</div>
+                <div class="bcms-checkbox-label bcms-js-edit-label">@PagesGlobalization.EditPageProperties_AdvancedPropertiesTab_UpdateSitemap_Title</div>
             </div>
         }
     </div>

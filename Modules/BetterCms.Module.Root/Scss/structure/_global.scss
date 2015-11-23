@@ -138,6 +138,17 @@ $loading-spinner: (
             @include vertical-align();
             width: 70%;
         }
+
+        .bcms-btn-cancel {
+            + .bcms-checkbox-holder {
+                margin-top: 10px;
+            }
+        }
+
+        > .bcms-checkbox-holder {
+            clear: both;
+            width: auto;
+        }
     }
 
     &-path {
@@ -148,37 +159,6 @@ $loading-spinner: (
             weight: 600;
         }
         margin-top: 5px;
-    }
-}
-
-//module url paths container
-.bcms-edit {
-    &-urlpath-box {
-        background-color: $bg-gray-lighter;
-        border: $border-thin-smoke;
-        box-sizing: border-box;
-        padding: 10px;
-        position: relative;
-        z-index: 1;
-
-        .bcms-field-wrapper {
-            @include vertical-align();
-            width: 75%;
-        }
-    }
-
-    &-check-field {
-        padding: 10px 0 0;
-
-        input[type="checkbox"] {
-            margin: 0 5px 0 0;
-            vertical-align: middle;
-        }
-    }
-
-    &-label {
-        @include vertical-align();
-        cursor: pointer;
     }
 }
 

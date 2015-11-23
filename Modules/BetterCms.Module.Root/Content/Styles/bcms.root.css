@@ -468,42 +468,21 @@ a:hover {
   width: 70%;
 }
 
+.bcms-editor-box .bcms-btn-cancel + .bcms-checkbox-holder {
+  margin-top: 10px;
+}
+
+.bcms-editor-box > .bcms-checkbox-holder {
+  clear: both;
+  width: auto;
+}
+
 .bcms-editor-path {
   color: #303646;
   cursor: default;
   font-size: 14px;
   font-weight: 600;
   margin-top: 5px;
-}
-
-.bcms-edit-urlpath-box {
-  background-color: #eae8e9;
-  border: 1px solid #dfdfdf;
-  box-sizing: border-box;
-  padding: 10px;
-  position: relative;
-  z-index: 1;
-}
-
-.bcms-edit-urlpath-box .bcms-field-wrapper {
-  display: inline-block;
-  vertical-align: middle;
-  width: 75%;
-}
-
-.bcms-edit-check-field {
-  padding: 10px 0 0;
-}
-
-.bcms-edit-check-field input[type="checkbox"] {
-  margin: 0 5px 0 0;
-  vertical-align: middle;
-}
-
-.bcms-edit-label {
-  display: inline-block;
-  vertical-align: middle;
-  cursor: pointer;
 }
 
 .bcms-thumb-container {
@@ -1928,12 +1907,9 @@ td .bcms-field-wrapper {
   width: 100%;
 }
 
-.bcms-checkbox-block {
+.bcms-checkbox-block .bcms-checkbox-holder {
   float: left;
-}
-
-.bcms-form-block-holder .bcms-checkbox-block {
-  float: none;
+  width: 35%;
 }
 
 .bcms-checkbox-holder {
@@ -1947,11 +1923,6 @@ td .bcms-field-wrapper {
   vertical-align: middle;
 }
 
-.bcms-form-block-holder .bcms-checkbox-holder {
-  float: left;
-  width: 35%;
-}
-
 .bcms-checkbox-label {
   display: inline-block;
   vertical-align: middle;
@@ -1962,6 +1933,7 @@ td .bcms-field-wrapper {
 .bcms-check-field-helper {
   background-color: #ffffff;
   border: 1px solid #dfdfdf;
+  line-height: 16px;
   margin-top: -1px;
   padding: 10px;
 }
@@ -3286,33 +3258,6 @@ a.bcms-icn-restore:active {
   overflow: hidden;
   text-indent: 9999px;
   width: 16px;
-}
-
-.bcms-preview-block {
-  float: left;
-  height: 265px;
-  overflow: hidden;
-  position: relative;
-  width: 210px;
-}
-
-.bcms-preview-box:hover > .bcms-zoom-overlay {
-  cursor: pointer;
-  filter: Alpha(opacity=100);
-  opacity: 1;
-}
-
-.bcms-zoom-overlay {
-  background: url("images/icn-zoom.png") no-repeat center center;
-  filter: Alpha(opacity=0);
-  height: 74px;
-  left: 50%;
-  margin: -37px 0 0 -37px;
-  opacity: 0;
-  position: absolute;
-  top: 50%;
-  width: 74px;
-  z-index: 1;
 }
 
 .bcms-tooltip-mark {

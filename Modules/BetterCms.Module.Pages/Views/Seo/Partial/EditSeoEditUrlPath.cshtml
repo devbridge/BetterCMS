@@ -20,20 +20,21 @@
         <div id="bcms-editseo-editurlpath-save" class="bcms-btn-primary">@RootGlobalization.Button_Ok</div>
         <div id="bcms-editseo-editurlpath-cancel" class="bcms-btn-cancel">@RootGlobalization.Button_Cancel</div>
 
-        <div class="bcms-edit-check-field">
+        <div class="bcms-checkbox-holder">
             @Html.CheckBoxFor(f => f.CreatePermanentRedirect)
-            <div class="bcms-edit-label">@PagesGlobalization.EditSeo_EditUrlPath_PermanentRedirect</div>
+            <div class="bcms-checkbox-label bcms-js-edit-label">@PagesGlobalization.EditSeo_EditUrlPath_PermanentRedirect</div>
         </div>
 
-        <div class="bcms-edit-check-field">
+        <div class="bcms-checkbox-holder">
             @Html.CheckBoxFor(f => f.UseCanonicalUrl)
-            <div class="bcms-edit-label">@PagesGlobalization.EditSeo_EditUrlPath_UseCanonicalUrl</div>
+            <div class="bcms-checkbox-label bcms-js-edit-label">@PagesGlobalization.EditSeo_EditUrlPath_UseCanonicalUrl</div>
         </div>
+
         @if (Model.IsInSitemap)
         {
-            <div class="bcms-edit-check-field">
+            <div class="bcms-checkbox-holder">
                 @Html.CheckBoxFor(f => f.UpdateSitemap)
-                <div class="bcms-edit-label">@PagesGlobalization.EditSeo_EditUrlPath_UpdateSitemap</div>
+                <div class="bcms-checkbox-label bcms-js-edit-label">@PagesGlobalization.EditSeo_EditUrlPath_UpdateSitemap</div>
             </div>
         }
     </div>
