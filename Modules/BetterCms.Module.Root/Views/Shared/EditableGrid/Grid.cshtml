@@ -1,7 +1,6 @@
 ﻿@using BetterCms.Module.Root.Content.Resources
 @using BetterCms.Module.Root.Mvc.Helpers
 @model BetterCms.Module.Root.ViewModels.Shared.EditableGridViewModel
-
 @Html.Partial(Model.TopBlockView, Model)
 @if (Model.ShowMessages)
 {
@@ -58,29 +57,21 @@
             {
                 @Html.Partial(column.CellView, column)
             }
-
-            @if (Model.CanDeleteItems)
-            {
-                <!-- ko if: !isActive() && !deletingIsDisabled() -->
-                <td style="width: 40px; padding: 10px 0;">                   
-                    <div class="bcms-action-delete" data-bind="click: onDelete">@RootGlobalization.Button_Delete</div>                  
-                </td>
-                <!-- /ko -->
-            }
-            @if (Model.CanEditItems)
-            {
-                <!-- ko if: isActive() -->
-                <td style="width: 120px;">                 
-                    <div class="bcms-btn-primary" data-bind="click: onSave">@Model.SaveButtonTitle</div>
-                    <div class="bcms-btn-cancel" data-bind="event : {mousedown: onCancelEdit}">@RootGlobalization.Button_Cancel</div>             
-                </td>
-                <!-- /ko -->
-            }
-            @if (!Model.CanDeleteItems && !Model.CanEditItems)
-            {
-                @:<td>&nbsp;</td>
-            }
-
+            <td data-bind="style: { width: isActive() ? '120px' : '40px', padding: isActive() ? '10px 0' : '' }">
+                @if (Model.CanDeleteItems)
+                {
+                    <div class="bcms-action-delete" data-bind="click: onDelete, visible: !isActive() && !deletingIsDisabled()">@RootGlobalization.Button_Delete</div>
+                }
+                @if (Model.CanEditItems)
+                {
+                    <div class="bcms-btn-primary" data-bind="click: onSave, visible: isActive()">@Model.SaveButtonTitle</div>
+                    <div class="bcms-btn-cancel" data-bind="event : {mousedown: onCancelEdit}, visible: isActive()">@RootGlobalization.Button_Cancel</div>
+                }
+                @if (!Model.CanDeleteItems && !Model.CanEditItems)
+                {
+                    @:&nbsp;
+                }
+            </td>
             <!-- /ko -->
         </tr>
         <!-- /ko -->
