@@ -109,7 +109,7 @@ namespace ASP
         }
         public override void Execute()
         {
-WriteLiteral("\n");
+WriteLiteral("\r\n");
 
             
             #line 15 "..\..\Views\Blog\Index.cshtml"
@@ -169,7 +169,7 @@ WriteLiteral("\n");
             
             #line default
             #line hidden
-WriteLiteral("\n\n");
+WriteLiteral("\r\n\r\n");
 
             
             #line 69 "..\..\Views\Blog\Index.cshtml"
@@ -356,7 +356,7 @@ WriteLiteral("                    ");
             
             #line default
             #line hidden
-WriteLiteral("\r\n                </div>\r\n            </div>\n\n            <div");
+WriteLiteral("\r\n                </div>\r\n            </div>\r\n\r\n            <div");
 
 WriteLiteral(" class=\"bcms-top-block-pager\"");
 
@@ -371,7 +371,7 @@ WriteLiteral("                ");
             
             #line default
             #line hidden
-WriteLiteral("\r\n            </div>\n    </div>\r\n");
+WriteLiteral("\r\n            </div>\r\n    </div>\r\n");
 
             
             #line 103 "..\..\Views\Blog\Index.cshtml"
@@ -419,13 +419,13 @@ Write(Html.Grid(Model.Items).Sort(Model.GridOptions).Columns(columns).Attributes
             
             #line default
             #line hidden
-WriteLiteral("\n<script");
+WriteLiteral("\r\n<script");
 
 WriteLiteral(" type=\"text/html\"");
 
 WriteLiteral(" id=\"bcms-blogs-list-row-template\"");
 
-WriteLiteral(">\n");
+WriteLiteral(">\r\n");
 
 WriteLiteral("    ");
 
@@ -436,13 +436,13 @@ Write(Html.Grid(new List<SiteSettingBlogPostViewModel> { new SiteSettingBlogPost
             
             #line default
             #line hidden
-WriteLiteral("\n</script>\n\n<script");
+WriteLiteral("\r\n</script>\r\n\r\n<script");
 
 WriteLiteral(" type=\"text/html\"");
 
 WriteLiteral(" id=\"bcms-pagestatus-published-template\"");
 
-WriteLiteral(">\n");
+WriteLiteral(">\r\n");
 
 WriteLiteral("    ");
 
@@ -453,13 +453,13 @@ Write(Html.Partial("EditorTemplates/PageStatus", PageStatus.Published));
             
             #line default
             #line hidden
-WriteLiteral("\n</script>\n\n<script");
+WriteLiteral("\r\n</script>\r\n\r\n<script");
 
 WriteLiteral(" type=\"text/html\"");
 
 WriteLiteral(" id=\"bcms-pagestatus-unpublished-template\"");
 
-WriteLiteral(">\n");
+WriteLiteral(">\r\n");
 
 WriteLiteral("    ");
 
@@ -470,13 +470,13 @@ Write(Html.Partial("EditorTemplates/PageStatus", PageStatus.Unpublished));
             
             #line default
             #line hidden
-WriteLiteral("\n</script>\n\n<script");
+WriteLiteral("\r\n</script>\r\n\r\n<script");
 
 WriteLiteral(" type=\"text/html\"");
 
 WriteLiteral(" id=\"bcms-pagestatus-draft-template\"");
 
-WriteLiteral(">\n");
+WriteLiteral(">\r\n");
 
 WriteLiteral("    ");
 
@@ -487,7 +487,7 @@ Write(Html.Partial("EditorTemplates/PageStatus", PageStatus.Draft));
             
             #line default
             #line hidden
-WriteLiteral("\n</script>");
+WriteLiteral("\r\n</script>");
 
         }
     }

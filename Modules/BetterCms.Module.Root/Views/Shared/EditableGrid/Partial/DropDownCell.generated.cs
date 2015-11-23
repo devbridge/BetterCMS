@@ -184,7 +184,7 @@ WriteLiteral("\', value: ");
             
             #line default
             #line hidden
-WriteLiteral("\"");
+WriteLiteral(", select2: { minimumResultsForSearch: -1 }\"");
 
 WriteLiteral("></select>\r\n        </div>\r\n");
 
