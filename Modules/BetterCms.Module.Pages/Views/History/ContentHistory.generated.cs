@@ -118,15 +118,15 @@ return new System.Web.WebPages.HelperResult(__razor_helper_writer => {
 
 #line default
 #line hidden
-WriteLiteralTo(__razor_helper_writer, "    <a");
+WriteLiteralTo(__razor_helper_writer, "    <div");
 
-WriteLiteralTo(__razor_helper_writer, " class=\"bcms-icn-preview\"");
+WriteLiteralTo(__razor_helper_writer, " class=\"bcms-action-preview\"");
 
 WriteLiteralTo(__razor_helper_writer, " data-id=\"");
 
 
 #line 16 "..\..\Views\History\ContentHistory.cshtml"
-           WriteTo(__razor_helper_writer, item.Id);
+                WriteTo(__razor_helper_writer, item.Id);
 
 
 #line default
@@ -137,12 +137,12 @@ WriteLiteralTo(__razor_helper_writer, ">");
 
 
 #line 16 "..\..\Views\History\ContentHistory.cshtml"
-                     WriteTo(__razor_helper_writer, RootGlobalization.Button_Preview);
+                          WriteTo(__razor_helper_writer, RootGlobalization.Button_Preview);
 
 
 #line default
 #line hidden
-WriteLiteralTo(__razor_helper_writer, "</a>\r\n");
+WriteLiteralTo(__razor_helper_writer, "</div>\r\n");
 
 
 #line 17 "..\..\Views\History\ContentHistory.cshtml"
@@ -172,15 +172,15 @@ return new System.Web.WebPages.HelperResult(__razor_helper_writer => {
 
 #line default
 #line hidden
-WriteLiteralTo(__razor_helper_writer, "        <a");
+WriteLiteralTo(__razor_helper_writer, "        <div");
 
-WriteLiteralTo(__razor_helper_writer, " class=\"bcms-icn-restore\"");
+WriteLiteralTo(__razor_helper_writer, " class=\"bcms-action-restore\"");
 
 WriteLiteralTo(__razor_helper_writer, " data-id=\"");
 
 
 #line 22 "..\..\Views\History\ContentHistory.cshtml"
-               WriteTo(__razor_helper_writer, item.Id);
+                    WriteTo(__razor_helper_writer, item.Id);
 
 
 #line default
@@ -191,7 +191,7 @@ WriteLiteralTo(__razor_helper_writer, " data-version=\"");
 
 
 #line 22 "..\..\Views\History\ContentHistory.cshtml"
-                                       WriteTo(__razor_helper_writer, item.Version);
+                                            WriteTo(__razor_helper_writer, item.Version);
 
 
 #line default
@@ -202,12 +202,12 @@ WriteLiteralTo(__razor_helper_writer, ">");
 
 
 #line 22 "..\..\Views\History\ContentHistory.cshtml"
-                                                      WriteTo(__razor_helper_writer, RootGlobalization.Button_Restore);
+                                                           WriteTo(__razor_helper_writer, RootGlobalization.Button_Restore);
 
 
 #line default
 #line hidden
-WriteLiteralTo(__razor_helper_writer, "</a>\r\n");
+WriteLiteralTo(__razor_helper_writer, "</div>\r\n");
 
 
 #line 23 "..\..\Views\History\ContentHistory.cshtml"

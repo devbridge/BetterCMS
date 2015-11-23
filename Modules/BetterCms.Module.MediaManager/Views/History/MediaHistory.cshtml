@@ -15,19 +15,19 @@
 
 @helper PreviewLink(MediaHistoryItem item)
 {
-    <a class="bcms-icn-preview" data-id="@item.Id">@RootGlobalization.Button_Preview</a>
+    <div class="bcms-action-preview" data-id="@item.Id">@RootGlobalization.Button_Preview</div>
 }
 
 @helper DownloadLink(MediaHistoryItem item)
 {
-    <a class="bcms-icn-download" data-id="@item.Id" data-version="@item.Version">@MediaGlobalization.MediaManager_ButtonDownload</a>
+    <div class="bcms-action-download" data-id="@item.Id" data-version="@item.Version">@MediaGlobalization.MediaManager_ButtonDownload</div>
 }
 
 @helper RestoreLink(MediaHistoryItem item)
 {
     if (item.CanCurrentUserRestoreIt)
     {
-        <a class="bcms-icn-restore" data-id="@item.Id" data-version="@item.Version">@RootGlobalization.Button_Restore</a>
+        <div class="bcms-action-restore" data-id="@item.Id" data-version="@item.Version">@RootGlobalization.Button_Restore</div>
     }
     else
     {
