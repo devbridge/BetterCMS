@@ -64,8 +64,10 @@
                 }
                 @if (Model.CanEditItems)
                 {
-                    <div class="bcms-btn-primary" data-bind="click: onSave, visible: isActive()">@Model.SaveButtonTitle</div>
-                    <div class="bcms-btn-cancel" data-bind="event : {mousedown: onCancelEdit}, visible: isActive()">@RootGlobalization.Button_Cancel</div>
+                    <!-- ko if: isActive() -->
+                    <div class="bcms-btn-primary" data-bind="click: onSave">@Model.SaveButtonTitle</div>
+                    <div class="bcms-btn-cancel" data-bind="event : {mousedown: onCancelEdit}">@RootGlobalization.Button_Cancel</div>
+                    <!-- /ko -->
                 }
                 @if (!Model.CanDeleteItems && !Model.CanEditItems)
                 {
