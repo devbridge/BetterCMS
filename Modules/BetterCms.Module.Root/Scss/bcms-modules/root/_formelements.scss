@@ -73,6 +73,15 @@
             float: left;
             width: 35%;
         }
+
+        .bcms-filter-selection-block & {
+            float: left;
+
+            .bcms-checkbox-holder {
+                float: none;
+                width: auto;
+            }
+        }
     }
 
     &-holder {
