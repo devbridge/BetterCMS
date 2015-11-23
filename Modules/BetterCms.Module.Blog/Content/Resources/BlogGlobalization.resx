@@ -442,7 +442,7 @@
     <value>Choose post language</value>
   </data>
   <data name="EditBlogPost_Language_Tooltip" xml:space="preserve">
-    <value>Choose language for current page, which will be used in sitemap and determines the language and culture of the page</value>
+    <value>Choose language for current page, which will be used in menu and determines the language and culture of the page</value>
   </data>
   <data name="BlogPostTitle_ChooseLayout_Title" xml:space="preserve">
     <value>Choose Blog Post Template</value>

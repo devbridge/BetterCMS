@@ -979,28 +979,28 @@
     <value>Page status is inappropriate. Can not change it.</value>
   </data>
   <data name="SavePage_CreatedSuccessfully_Message" xml:space="preserve">
-    <value>Page created succesfully.</value>
+    <value>Page created successfully.</value>
   </data>
   <data name="EditSeo_Messages_NotInSitemapWarnMessage" xml:space="preserve">
-    <value>Page is not in sitemap.</value>
+    <value>Page is not added to any menu.</value>
   </data>
   <data name="EditPageProperties_AdvancedPropertiesTab_UpdateSitemap_Title" xml:space="preserve">
-    <value>Update sitemap with new URL.</value>
+    <value>Update menu with new URL.</value>
   </data>
   <data name="EditSeo_EditUrlPath_UpdateSitemap" xml:space="preserve">
-    <value>Update sitemap with new URL.</value>
+    <value>Update menu with new URL.</value>
   </data>
   <data name="DeletePage_Dialog_UpdateSitemap" xml:space="preserve">
-    <value>Update sitemap</value>
+    <value>Update menu</value>
   </data>
   <data name="DeletePage_Dialog_UpdateSitemap_Description" xml:space="preserve">
-    <value>Removing this page from the sitemap will delete the page and remove it from the navigation elements throughout your website.</value>
+    <value>Removing this page from the menu will delete the page and remove it from the navigation elements throughout your website.</value>
   </data>
   <data name="DeletePage_Dialog_UpdateSitemap_RemovePageFromSitemap" xml:space="preserve">
-    <value>Remove this page from sitemap.</value>
+    <value>Remove this page from menu.</value>
   </data>
   <data name="DeletePageCommand_SitemapNodeHasChildNodes_Message" xml:space="preserve">
-    <value>Can not remove this page from the sitemap, because it has child nodes.</value>
+    <value>Can not remove this page from the menu, because it has child nodes.</value>
   </data>
   <data name="SortPageContent_Info_Message" xml:space="preserve">
     <value>Sorting page contents. Please wait.</value>
@@ -1168,7 +1168,7 @@
     <value>Choose page language</value>
   </data>
   <data name="AddNewPage_Language_Tooltip_Description" xml:space="preserve">
-    <value>Choose language for current page, which will be used in sitemap and determines the language and culture of the page</value>
+    <value>Choose language for current page, which will be used in menu and determines the language and culture of the page</value>
   </data>
   <data name="Sidebar_CreateMasterPageButtonTitle" xml:space="preserve">
     <value>Create new template</value>
@@ -1222,7 +1222,7 @@
     <value>Current page language</value>
   </data>
   <data name="EditPageProperties_TranslationsTab_Language_Tooltip_Description" xml:space="preserve">
-    <value>Edit current page language, which will be used in sitemap and determines the language and the culture of the page</value>
+    <value>Edit current page language, which will be used in menu and determines the language and the culture of the page</value>
   </data>
   <data name="SavePagePropertiesCommand_PageHasTranslationsWithItsLanguage_Message" xml:space="preserve">
     <value>Page cannot contain translations to the same language as itself.</value>
@@ -1243,7 +1243,7 @@
     <value>New Page Language</value>
   </data>
   <data name="ClonePageWithLanguage_Dialog_Language_Tootlip" xml:space="preserve">
-    <value>Choose creating page language, which will be used in sitemap and determines the language and culture of the page</value>
+    <value>Choose creating page language, which will be used in menu and determines the language and culture of the page</value>
   </data>
   <data name="ClonePageWithLanguage_Language_RequiredMessage" xml:space="preserve">
     <value>Page language is requred field.</value>

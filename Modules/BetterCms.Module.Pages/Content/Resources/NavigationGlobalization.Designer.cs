@@ -205,7 +205,7 @@ namespace BetterCms.Module.Pages.Content.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Sitemap.
+        ///   Looks up a localized string similar to Menu.
         /// </summary>
         public static string Sitemap_Dialog_Title {
             get {
@@ -232,11 +232,20 @@ namespace BetterCms.Module.Pages.Content.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Add tags to this sitemap to identify it..
+        ///   Looks up a localized string similar to Add tags to this menu to identify it..
         /// </summary>
         public static string Sitemap_EditDialog_AddTags_Tooltip_Description {
             get {
                 return ResourceManager.GetString("Sitemap_EditDialog_AddTags_Tooltip_Description", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Edit menu in language:.
+        /// </summary>
+        public static string Sitemap_EditDialog_LanguageSelectionTitle {
+            get {
+                return ResourceManager.GetString("Sitemap_EditDialog_LanguageSelectionTitle", resourceCulture);
             }
         }
         
@@ -259,7 +268,7 @@ namespace BetterCms.Module.Pages.Content.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Edit the title of this sitemap..
+        ///   Looks up a localized string similar to Edit the title of this menu..
         /// </summary>
         public static string Sitemap_EditDialog_SitemapTitle_Tooltip_Description {
             get {
@@ -295,7 +304,7 @@ namespace BetterCms.Module.Pages.Content.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Are you sure you want to restore to older version? Restored sitemap will be immediately active..
+        ///   Looks up a localized string similar to Are you sure you want to restore to older version? Restored menu will be immediately active..
         /// </summary>
         public static string Sitemap_HistoryDialog_RestoreConfirmationMessage {
             get {
@@ -313,7 +322,7 @@ namespace BetterCms.Module.Pages.Content.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Sitemap node created successfully..
+        ///   Looks up a localized string similar to Menu node created successfully..
         /// </summary>
         public static string Sitemap_NodeCreatedSuccessfully_Message {
             get {
@@ -322,7 +331,7 @@ namespace BetterCms.Module.Pages.Content.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Sitemap node deleted successfully..
+        ///   Looks up a localized string similar to Menu node deleted successfully..
         /// </summary>
         public static string Sitemap_NodeDeletedSuccessfully_Message {
             get {

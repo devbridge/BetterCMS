@@ -115,7 +115,7 @@ namespace BetterCms.Module.Pages.Content.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Choose language for current page, which will be used in sitemap and determines the language and culture of the page.
+        ///   Looks up a localized string similar to Choose language for current page, which will be used in menu and determines the language and culture of the page.
         /// </summary>
         public static string AddNewPage_Language_Tooltip_Description {
             get {
@@ -655,7 +655,7 @@ namespace BetterCms.Module.Pages.Content.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Choose creating page language, which will be used in sitemap and determines the language and culture of the page.
+        ///   Looks up a localized string similar to Choose creating page language, which will be used in menu and determines the language and culture of the page.
         /// </summary>
         public static string ClonePageWithLanguage_Dialog_Language_Tootlip {
             get {
@@ -1015,7 +1015,7 @@ namespace BetterCms.Module.Pages.Content.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Update sitemap.
+        ///   Looks up a localized string similar to Update menu.
         /// </summary>
         public static string DeletePage_Dialog_UpdateSitemap {
             get {
@@ -1024,7 +1024,7 @@ namespace BetterCms.Module.Pages.Content.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Removing this page from the sitemap will delete the page and remove it from the navigation elements throughout your website..
+        ///   Looks up a localized string similar to Removing this page from the menu will delete the page and remove it from the navigation elements throughout your website..
         /// </summary>
         public static string DeletePage_Dialog_UpdateSitemap_Description {
             get {
@@ -1033,7 +1033,7 @@ namespace BetterCms.Module.Pages.Content.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Remove this page from sitemap..
+        ///   Looks up a localized string similar to Remove this page from menu..
         /// </summary>
         public static string DeletePage_Dialog_UpdateSitemap_RemovePageFromSitemap {
             get {
@@ -1096,7 +1096,7 @@ namespace BetterCms.Module.Pages.Content.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Can not remove this page from the sitemap, because it has child nodes..
+        ///   Looks up a localized string similar to Can not remove this page from the menu, because it has child nodes..
         /// </summary>
         public static string DeletePageCommand_SitemapNodeHasChildNodes_Message {
             get {
@@ -1420,7 +1420,7 @@ namespace BetterCms.Module.Pages.Content.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Update sitemap with new URL..
+        ///   Looks up a localized string similar to Update menu with new URL..
         /// </summary>
         public static string EditPageProperties_AdvancedPropertiesTab_UpdateSitemap_Title {
             get {
@@ -1825,7 +1825,7 @@ namespace BetterCms.Module.Pages.Content.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Edit current page language, which will be used in sitemap and determines the language and the culture of the page.
+        ///   Looks up a localized string similar to Edit current page language, which will be used in menu and determines the language and the culture of the page.
         /// </summary>
         public static string EditPageProperties_TranslationsTab_Language_Tooltip_Description {
             get {
@@ -2005,7 +2005,7 @@ namespace BetterCms.Module.Pages.Content.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Update sitemap with new URL..
+        ///   Looks up a localized string similar to Update menu with new URL..
         /// </summary>
         public static string EditSeo_EditUrlPath_UpdateSitemap {
             get {
@@ -2023,7 +2023,7 @@ namespace BetterCms.Module.Pages.Content.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Page is not in sitemap..
+        ///   Looks up a localized string similar to Page is not added to any menu..
         /// </summary>
         public static string EditSeo_Messages_NotInSitemapWarnMessage {
             get {
@@ -2689,7 +2689,7 @@ namespace BetterCms.Module.Pages.Content.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Page created succesfully..
+        ///   Looks up a localized string similar to Page created successfully..
         /// </summary>
         public static string SavePage_CreatedSuccessfully_Message {
             get {

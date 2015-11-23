@@ -3,7 +3,6 @@
 @using BetterCms.Module.Pages.ViewModels.Sitemap
 @using BetterCms.Module.Root.Mvc.Helpers
 @using Microsoft.Web.Mvc
-
 <div class="bcms-tab-header bcms-js-tab-header">
     <div class="bcms-modal-frame-holder">
         <div class="bcms-sitemaps-arrow-left" data-bind="css: { 'bcms-sitemaps-arrow-inactive': !slider.canSlideLeft() }, click: slider.slideLeft, visible: slider.showSliders"></div>
@@ -13,17 +12,15 @@
         <div class="bcms-sitemaps-arrow-right" data-bind="css: { 'bcms-sitemaps-arrow-inactive': !slider.canSlideRight() }, click: slider.slideRight, visible: slider.showSliders"></div>
     </div>
 </div>
-
 <div class="bcms-modal-frame-holder" id="bcms-sitemap-addnewpage" data-bind="with: activeNewPageViewModel">
     @Html.MessagesBox()
-
     <div class="bcms-window-tabbed-options">
         <div class="bcms-tab-single">
             <!-- ko with: sitemap -->
             <div style="display: none;" data-bind="visible: showLanguages, with: language">
                 <div class="bcms-top-block-holder">
                     <div class="bcms-language-selector-box">
-                        <div class="bcms-content-titles">Edit sitemap in language:</div>
+                        <div class="bcms-content-titles">@NavigationGlobalization.Sitemap_EditDialog_LanguageSelectionTitle</div>
                         <div class="bcms-field-wrapper">
                             <select data-bind="options: languages, optionsText: 'value', optionsValue: 'key', value: languageId, select2: { minimumResultsForSearch: -1 }"></select>
                         </div>
@@ -31,7 +28,6 @@
                 </div>
             </div>
             <!-- /ko -->
-
             <div class="bcms-content-dialog-title">
                 <!-- ko if: !linkIsDropped() -->
                 <div class="bcms-content-titles-helper">@NavigationGlobalization.Sitemap_AddNewPageDialog_PageNodeHeader</div>
@@ -43,7 +39,6 @@
                 <div class="bcms-tree-expander bcms-tree-expander-close" data-bind="click: callExpandOrCollapse, css: { 'bcms-tree-expander-close' : allNodesExpanded()}, text: allNodesExpanded() ? '@PagesGlobalization.CategoryTree_Button_CollapseAll' : '@PagesGlobalization.CategoryTree_Button_ExpandAll'"></div>
                 <!-- /ko -->
             </div>
-
             <div class="bcms-tree-zones-holder">
                 <div class="bcms-tree-drag-area-ui">
                     <!-- ko if: !linkIsDropped() -->
@@ -61,10 +56,8 @@
                     <div class="bcms-content-titles">@NavigationGlobalization.Sitemap_AddNewPageDialog_UndoMessage</div>
                     <!-- /ko -->
                     <!-- /ko -->
-
                     <div class="bcms-btn-main" data-bind="click: skipClicked, visible: !linkIsDropped()">@NavigationGlobalization.Sitemap_AddNewPageDialog_SkipButton</div>
                 </div>
-
                 <div class="bcms-tree-drop-area-ui">
                     <div class="bcms-sitemap-newpage">
                         @* Form is required for unobtrusive validation. *@
@@ -78,5 +71,4 @@
         </div>
     </div>
 </div>
-
 @Html.Partial("Partial/SitemapTemplate", new SitemapNodeViewModel())

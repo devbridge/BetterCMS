@@ -331,7 +331,7 @@ namespace BetterCms.Module.Blog.Content.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Choose language for current page, which will be used in sitemap and determines the language and culture of the page.
+        ///   Looks up a localized string similar to Choose language for current page, which will be used in menu and determines the language and culture of the page.
         /// </summary>
         public static string EditBlogPost_Language_Tooltip {
             get {
