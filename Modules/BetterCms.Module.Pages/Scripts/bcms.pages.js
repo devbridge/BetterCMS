@@ -657,7 +657,7 @@ bettercms.define('bcms.pages', ['bcms.jquery', 'bcms', 'bcms.modal', 'bcms.siteS
                 container = dialog.container,
                 form = dialog.container.find(selectors.siteSettingsPagesListForm);
 
-            page.pagesGridViewModel = new PagesGridViewModel(content.Data, form, container, opts);
+            page.pagesGridViewModel = new PagesGridViewModel(((content.Data) ? content.Data : jsonData), form, container, opts);
             var gridDOM = container.find(selectors.siteSettingsPagesGrid);
             ko.cleanNode(gridDOM.get(0));
             var pagingDOM = container.find(selectors.siteSettingsPager);
