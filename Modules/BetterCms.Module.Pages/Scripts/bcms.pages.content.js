@@ -47,7 +47,15 @@ bettercms.define('bcms.pages.content', ['bcms.jquery', 'bcms', 'bcms.modal', 'bc
                 firstForm: 'form:first',
                 datePickers: 'input.bcms-datepicker',
                 editContentCloseInfoMessage: '#bcms-draft-closeinfomessage',
-                editContentInfoMessageBox: '.bcms-warning-messages'
+                editContentInfoMessageBox: '.bcms-warning-messages',
+
+                editorContainer: '.bcms-window-tabbed-options',
+                editorTitle: '.bcms-content-titles',
+                editorCheckBoxField: '.bcms-check-field-helper',
+                codeEditorParent: '.bcms-input-list-holder',
+                editorInfoBlock: '.bcms-content-info-block',
+                markdownEditorHeader: '.markItUpHeader',
+                markdownEditorFooter: '.markItUpFooter'
             },
             classes = {
                 sliderPrev: 'bcms-slider-prev',
@@ -280,7 +288,8 @@ bettercms.define('bcms.pages.content', ['bcms.jquery', 'bcms', 'bcms.modal', 'bc
         */
         pagesContent.initializeAddNewContentForm = function (settings) {
 
-            var codeEditorInitialized = false;
+            var codeEditorInitialized = false,
+                heightOptions;
             settings = $.extend({
                 enableInsertDynamicRegion: false,
                 editorId: null,
@@ -301,15 +310,15 @@ bettercms.define('bcms.pages.content', ['bcms.jquery', 'bcms', 'bcms.modal', 'bc
 
             settings.dialog.container.find(selectors.htmlContentJsCssTabOpener).on('click', function () {
                 if (!codeEditorInitialized) {
-                    var heightOptions = {
+                    heightOptions = {
                         marginTop: 30,
                         topElements: [{
-                            element: '.bcms-content-titles',
+                            element: selectors.editorTitle,
                             takeMargins: true
                         }],
-                        container: '.bcms-window-tabbed-options',
-                        bottomElement: '.bcms-check-field-helper',
-                        parent: '.bcms-input-list-holder',
+                        container: selectors.editorContainer,
+                        bottomElement: selectors.editorCheckBoxField,
+                        parent: selectors.codeEditorParent,
                         marginBottom: 1
                     };
                     codeEditor.initialize(settings.dialog.container, settings.dialog, null, heightOptions);
@@ -317,28 +326,45 @@ bettercms.define('bcms.pages.content', ['bcms.jquery', 'bcms', 'bcms.modal', 'bc
                 }
             });
 
-            var maxHeightOpts = {};
-            if (settings.contentTextMode == content.contentTextModes.simpleText) {
-                maxHeightOpts.substractHeight = 20;
-            }
-            var editorHeight = modal.maximizeChildHeight(settings.dialog.container.find("#" + settings.editorId), settings.dialog, maxHeightOpts);
-
             if (settings.contentTextMode == content.contentTextModes.markdown) {
-                htmlEditor.initializeMarkdownEditor(settings.editorId, '', {});
+                heightOptions = {
+                    topElements: [{
+                        element: selectors.editorInfoBlock,
+                        takeMargins: true
+                        },
+                        {
+                            element: selectors.markdownEditorHeader,
+                            takeMargins: true
+                        }],
+                    container: selectors.editorContainer,
+                    bottomElement: selectors.markdownEditorFooter
+                };
+
+                htmlEditor.initializeMarkdownEditor(settings.editorId, '', {}, heightOptions);
             }
 
             if (settings.contentTextMode == content.contentTextModes.simpleText) {
-                htmlEditor.initializeMarkdownEditor(settings.editorId, '', { hideIcons: true });
+                heightOptions = {
+                    topElements: [{
+                        element: selectors.editorInfoBlock,
+                        takeMargins: true
+                    }],
+                    container: selectors.editorContainer,
+                    bottomElement: selectors.markdownEditorFooter
+                };
+
+                htmlEditor.initializeMarkdownEditor(settings.editorId, '', { hideIcons: true }, heightOptions);
             }
 
             if (settings.contentTextMode == content.contentTextModes.html) {
-                var heightOptions = {
+                heightOptions = {
                     topElements: [{
-                            element: '.bcms-content-info-block',
+                            element: selectors.editorInfoBlock,
                             takeMargins: true
                         }],
-                    container: '.bcms-window-tabbed-options'
+                    container: selectors.editorContainer
                 };
+
                 htmlEditor.initializeHtmlEditor(settings.editorId, '', {}, settings.editInSourceMode, heightOptions);
 
                 if (settings.enableInsertDynamicRegion) {
@@ -351,7 +377,8 @@ bettercms.define('bcms.pages.content', ['bcms.jquery', 'bcms', 'bcms.modal', 'bc
         * Initializes content edit dialog form.
         */
         pagesContent.initializeEditContentForm = function (settings) {
-            var codeEditorInitialized = false;
+            var codeEditorInitialized = false,
+                heightOptions;
 
             settings = $.extend({
                 dialog: null,
@@ -370,47 +397,60 @@ bettercms.define('bcms.pages.content', ['bcms.jquery', 'bcms', 'bcms.modal', 'bc
 
             settings.dialog.container.find(selectors.htmlContentJsCssTabOpener).on('click', function () {
                 if (!codeEditorInitialized) {
-                    var heightOptions = {
+                    heightOptions = {
                         marginTop: 30,
                         topElements: [{
-                            element: '.bcms-content-titles',
+                            element: selectors.editorTitle,
                             takeMargins: true
                         }],
-                        container: '.bcms-window-tabbed-options',
-                        bottomElement: '.bcms-check-field-helper',
-                        parent: '.bcms-input-list-holder',
+                        container: selectors.editorContainer,
+                        bottomElement: selectors.editorCheckBoxField,
+                        parent: selectors.codeEditorParent,
                         marginBottom: 1
                     };
                     codeEditor.initialize(settings.dialog.container, settings.dialog, null, heightOptions);
                     codeEditorInitialized = true;
                 }
             });
-
-            var maxHeightOpts = {};
-            if (settings.contentTextMode == content.contentTextModes.simpleText) {
-                maxHeightOpts.substractHeight = 20;
-            }
-            var editorHeight = modal.maximizeChildHeight(settings.dialog.container.find("#" + settings.editorId), settings.dialog, maxHeightOpts);
-
+            
             if (settings.contentTextMode == content.contentTextModes.markdown) {
-                htmlEditor.initializeMarkdownEditor(settings.editorId, settings.data.ContentId, {});
+                heightOptions = {
+                    topElements: [{
+                        element: selectors.editorInfoBlock,
+                        takeMargins: true
+                    },
+                        {
+                            element: selectors.markdownEditorHeader,
+                            takeMargins: true
+                        }],
+                    container: selectors.editorContainer,
+                    bottomElement: selectors.markdownEditorFooter
+                };
+
+                htmlEditor.initializeMarkdownEditor(settings.editorId, settings.data.ContentId, {}, heightOptions);
             }
 
             if (settings.contentTextMode == content.contentTextModes.simpleText) {
-                htmlEditor.initializeMarkdownEditor(settings.editorId, settings.data.ContentId, { hideIcons: true });
+                heightOptions = {
+                    topElements: [{
+                        element: selectors.editorInfoBlock,
+                        takeMargins: true
+                    }],
+                    container: selectors.editorContainer,
+                    bottomElement: selectors.markdownEditorFooter
+                };
+                htmlEditor.initializeMarkdownEditor(settings.editorId, settings.data.ContentId, { hideIcons: true }, heightOptions);
             }
              
             if (settings.contentTextMode == content.contentTextModes.html) {
-                var heightOptions = {
+                heightOptions = {
                     topElements: [{
-                        element: '.bcms-content-info-block',
-                        takeMargins: true
-                    }],
-                    container: '.bcms-window-tabbed-options'
+                            element: selectors.editorInfoBlock,
+                            takeMargins: true
+                        }],
+                    container: selectors.editorContainer
                 };
-                htmlEditor.initializeHtmlEditor(settings.editorId, settings.data.ContentId, {
-                    height: editorHeight
-                }, settings.editInSourceMode, heightOptions);
+                htmlEditor.initializeHtmlEditor(settings.editorId, settings.data.ContentId, {}, settings.editInSourceMode, heightOptions);
 
                 if (settings.enableInsertDynamicRegion) {
                     htmlEditor.enableInsertDynamicRegion(settings.editorId, true, settings.data.LastDynamicRegionNumber);

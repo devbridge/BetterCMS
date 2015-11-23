@@ -95,7 +95,13 @@ bettercms.define('bcms.pages.widgets', ['bcms.jquery', 'bcms', 'bcms.modal', 'bc
                 editContentInfoMessageBox: '.bcms-warning-messages',
 
                 siteSettingsButtonOpener: ".bcms-btn-opener",
-                siteSettingsButtonHolder: ".bcms-btn-opener-holder"
+                siteSettingsButtonHolder: ".bcms-btn-opener-holder",
+
+                editorContainer: '.bcms-window-tabbed-options',
+                editorTitle: '.bcms-content-titles',
+                editorCheckBoxField: '.bcms-check-field-helper',
+                codeEditorParent: '.bcms-input-list-holder',
+                editorInfoBlock: '.bcms-content-info-block'
             },
             classes = {
                 regionAdvancedContent: 'bcms-content-advanced',
@@ -358,16 +364,16 @@ bettercms.define('bcms.pages.widgets', ['bcms.jquery', 'bcms', 'bcms.modal', 'bc
             var heightOptions = {
                 topElements: [
                 {
-                    element: '.bcms-content-info-block',
+                    element: selectors.editorInfoBlock,
                     takeMargins: true
                 },
                 {
-                    element: '.bcms-content-titles',
+                    element: selectors.editorTitle,
                     takeMargins: true
                 }],
-                container: '.bcms-window-tabbed-options',
-                bottomElement: '.bcms-check-field-helper',
-                parent: '#bcms-tab-1',
+                container: selectors.editorContainer,
+                bottomElement: selectors.editorCheckBoxField,
+                parent: selectors.widgetTab,
                 marginBottom: 1
             };
 
@@ -385,12 +391,12 @@ bettercms.define('bcms.pages.widgets', ['bcms.jquery', 'bcms', 'bcms.modal', 'bc
                     var heightOptions = {
                         marginTop: 30,
                         topElements: [{
-                                element: '.bcms-content-titles',
+                                element: selectors.editorTitle,
                                 takeMargins: true
                             }],
-                        container: '.bcms-window-tabbed-options',
-                        bottomElement: '.bcms-check-field-helper',
-                        parent: '.bcms-input-list-holder',
+                        container: selectors.editorContainer,
+                        bottomElement: selectors.editorCheckBoxField,
+                        parent: selectors.codeEditorParent,
                         marginBottom: 1
                     };
                     codeEditor.initialize(dialog.container, dialog, {

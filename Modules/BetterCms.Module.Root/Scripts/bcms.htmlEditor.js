@@ -168,12 +168,12 @@ bettercms.define('bcms.htmlEditor', ['bcms.jquery', 'bcms', 'ckeditor', 'bcms.ma
         return containerHeight - topElementsHeight - bottomElementHeight - options.marginTop - options.marginBottom;
     }
 
-    htmlEditor.initializeMarkdownEditor = function (id, editingContentId, options) {
+    htmlEditor.initializeMarkdownEditor = function (id, editingContentId, options, heightOptions) {
         options = $.extend({
             smartTags: getSmartTags()
         }, options);
-
-        markdownEditor.initializeInstance(htmlEditor, id, editingContentId, options);
+        
+        markdownEditor.initializeInstance(htmlEditor, id, editingContentId, options, heightOptions);
     }
 
     htmlEditor.editChildWidgetOptions = function (editor, widgetId, assignmentId, contentId, optionListViewModel, onCloseClick, enableTranslations) {
@@ -358,15 +358,13 @@ bettercms.define('bcms.htmlEditor', ['bcms.jquery', 'bcms', 'ckeditor', 'bcms.ma
             editor.execCommand('toolbarCollapse');
             // Strech editor's height to fill the container
             if (heightOptions) {
-                var callResize = function() {
-                        if($(heightOptions.container).length){
-                            editor.resize("100%", calculateHeight(element, heightOptions));
-                        }
+                var setHeight = function () {
+                    editor.resize("100%", calculateHeight(element, heightOptions));
                 };
-                callResize();
-                $(window).bind('resize', callResize);
+                setHeight();
+                $(window).bind('resize', setHeight);
                 $(window).on('disableResize', function() {
-                    $(window).unbind('resize', callResize);
+                    $(window).unbind('resize', setHeight);
                 });
             }
         });
@@ -386,11 +384,11 @@ bettercms.define('bcms.htmlEditor', ['bcms.jquery', 'bcms', 'ckeditor', 'bcms.ma
             instance = CKEDITOR.instances[name];
             closeMaximizedMode(instance);
             instance.destroy();
-            $(window).trigger('disableResize');
         }
         if (window.location.href.slice(-2) === '#-') {
             window.location.hash = '';
         }
+        $(window).trigger('disableResize');
     };
 
     htmlEditor.destroyHtmlEditorInstance = function (textareaId) {
