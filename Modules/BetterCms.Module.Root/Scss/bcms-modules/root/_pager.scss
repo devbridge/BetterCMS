@@ -4,14 +4,9 @@ $pager-buttons: (
 );
 
 %pager-buttons-extender {
-    @include transition(all 200ms);
     @include size(30px);
     cursor: pointer;
     overflow: hidden;
-
-    &:hover {
-        background-color: $white;
-    }
 }
 
 .bcms-pager {
@@ -19,6 +14,7 @@ $pager-buttons: (
 
     &-no {
         @extend %pager-buttons-extender;
+        @include transition(background-color 200ms);
         background-color: $bg-gray-lighter;
         border: $border-thin-smoke;
         box-sizing: border-box;

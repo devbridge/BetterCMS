@@ -186,7 +186,7 @@ WriteLiteral(">");
             #line hidden
 WriteLiteral("</div>\r\n\r\n        <div");
 
-WriteLiteral(" class=\"bcms-edit-check-field\"");
+WriteLiteral(" class=\"bcms-checkbox-holder\"");
 
 WriteLiteral(">\r\n");
 
@@ -201,20 +201,20 @@ WriteLiteral("            ");
             #line hidden
 WriteLiteral("\r\n            <div");
 
-WriteLiteral(" class=\"bcms-edit-label\"");
+WriteLiteral(" class=\"bcms-checkbox-label bcms-js-edit-label\"");
 
 WriteLiteral(">");
 
             
             #line 25 "..\..\Views\Page\Partial\PagePropertiesEditPermalink.cshtml"
-                                    Write(PagesGlobalization.EditPageProperties_AdvancedPropertiesTab_CreatePermanentRedirectToOldUrl_Title);
+                                                           Write(PagesGlobalization.EditPageProperties_AdvancedPropertiesTab_CreatePermanentRedirectToOldUrl_Title);
 
             
             #line default
             #line hidden
 WriteLiteral("</div>\r\n        </div>\r\n\r\n        <div");
 
-WriteLiteral(" class=\"bcms-edit-check-field\"");
+WriteLiteral(" class=\"bcms-checkbox-holder\"");
 
 WriteLiteral(">\r\n");
 
@@ -229,27 +229,27 @@ WriteLiteral("            ");
             #line hidden
 WriteLiteral("\r\n            <div");
 
-WriteLiteral(" class=\"bcms-edit-label\"");
+WriteLiteral(" class=\"bcms-checkbox-label bcms-js-edit-label\"");
 
 WriteLiteral(">");
 
             
             #line 30 "..\..\Views\Page\Partial\PagePropertiesEditPermalink.cshtml"
-                                    Write(PagesGlobalization.EditPageProperties_AdvancedPropertiesTab_UseCanonicalUrl);
+                                                           Write(PagesGlobalization.EditPageProperties_AdvancedPropertiesTab_UseCanonicalUrl);
 
             
             #line default
             #line hidden
-WriteLiteral("</div>\r\n        </div>\r\n");
+WriteLiteral("</div>\r\n        </div>\r\n\r\n");
 
             
-            #line 32 "..\..\Views\Page\Partial\PagePropertiesEditPermalink.cshtml"
+            #line 33 "..\..\Views\Page\Partial\PagePropertiesEditPermalink.cshtml"
         
             
             #line default
             #line hidden
             
-            #line 32 "..\..\Views\Page\Partial\PagePropertiesEditPermalink.cshtml"
+            #line 33 "..\..\Views\Page\Partial\PagePropertiesEditPermalink.cshtml"
          if (Model.IsInSitemap)
         {
 
@@ -258,14 +258,14 @@ WriteLiteral("</div>\r\n        </div>\r\n");
             #line hidden
 WriteLiteral("            <div");
 
-WriteLiteral(" class=\"bcms-edit-check-field\"");
+WriteLiteral(" class=\"bcms-checkbox-holder\"");
 
 WriteLiteral(">\r\n");
 
 WriteLiteral("                ");
 
             
-            #line 35 "..\..\Views\Page\Partial\PagePropertiesEditPermalink.cshtml"
+            #line 36 "..\..\Views\Page\Partial\PagePropertiesEditPermalink.cshtml"
            Write(Html.CheckBoxFor(model => model.UpdateSitemap));
 
             
@@ -273,13 +273,13 @@ WriteLiteral("                ");
             #line hidden
 WriteLiteral("\r\n                <div");
 
-WriteLiteral(" class=\"bcms-edit-label\"");
+WriteLiteral(" class=\"bcms-checkbox-label bcms-js-edit-label\"");
 
 WriteLiteral(">");
 
             
-            #line 36 "..\..\Views\Page\Partial\PagePropertiesEditPermalink.cshtml"
-                                        Write(PagesGlobalization.EditPageProperties_AdvancedPropertiesTab_UpdateSitemap_Title);
+            #line 37 "..\..\Views\Page\Partial\PagePropertiesEditPermalink.cshtml"
+                                                               Write(PagesGlobalization.EditPageProperties_AdvancedPropertiesTab_UpdateSitemap_Title);
 
             
             #line default
@@ -287,7 +287,7 @@ WriteLiteral(">");
 WriteLiteral("</div>\r\n            </div>\r\n");
 
             
-            #line 38 "..\..\Views\Page\Partial\PagePropertiesEditPermalink.cshtml"
+            #line 39 "..\..\Views\Page\Partial\PagePropertiesEditPermalink.cshtml"
         }
 
             

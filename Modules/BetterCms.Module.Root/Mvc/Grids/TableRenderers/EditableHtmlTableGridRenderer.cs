@@ -72,7 +72,7 @@ namespace BetterCms.Module.Root.Mvc.Grids.TableRenderers
                                             ? SortDirection.Descending
                                             : SortDirection.Ascending;
 
-                var link = string.Format("<a class=\"{0} bcms-sort-arrow\" data-column=\"{1}\" data-direction=\"{2}\">{3}</a>",
+                var link = string.Format("<div class=\"{0} bcms-sort-arrow\" data-column=\"{1}\" data-direction=\"{2}\">{3}</a>",
                     sortClass,
                     sortOptions.Column,
                     sortOptions.Direction,
@@ -110,7 +110,7 @@ namespace BetterCms.Module.Root.Mvc.Grids.TableRenderers
         private void RenderEmptyRow(bool isHidden)
         {
             var hidden = isHidden ? " style=\"display: none;\"" : string.Empty;
-            RenderText(string.Format("<tr class=\"bcms-grid-empty-row\"{0}><td colspan=\"{1}\"><span class=\"bcms-table-no-data\">{2}</span></td></tr>", hidden, VisibleColumns().Count(), RootGlobalization.Grid_NoDataAvailable_Message));
+            RenderText(string.Format("<tr class=\"bcms-grid-empty-row\"{0}><td colspan=\"{1}\"><div class=\"bcms-table-no-data\">{2}</div></td></tr>", hidden, VisibleColumns().Count(), RootGlobalization.Grid_NoDataAvailable_Message));
         }
     }
 }

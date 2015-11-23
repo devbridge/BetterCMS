@@ -468,42 +468,21 @@ a:hover {
   width: 70%;
 }
 
+.bcms-editor-box .bcms-btn-cancel + .bcms-checkbox-holder {
+  margin-top: 10px;
+}
+
+.bcms-editor-box > .bcms-checkbox-holder {
+  clear: both;
+  width: auto;
+}
+
 .bcms-editor-path {
   color: #303646;
   cursor: default;
   font-size: 14px;
   font-weight: 600;
   margin-top: 5px;
-}
-
-.bcms-edit-urlpath-box {
-  background-color: #eae8e9;
-  border: 1px solid #dfdfdf;
-  box-sizing: border-box;
-  padding: 10px;
-  position: relative;
-  z-index: 1;
-}
-
-.bcms-edit-urlpath-box .bcms-field-wrapper {
-  display: inline-block;
-  vertical-align: middle;
-  width: 75%;
-}
-
-.bcms-edit-check-field {
-  padding: 10px 0 0;
-}
-
-.bcms-edit-check-field input[type="checkbox"] {
-  margin: 0 5px 0 0;
-  vertical-align: middle;
-}
-
-.bcms-edit-label {
-  display: inline-block;
-  vertical-align: middle;
-  cursor: pointer;
 }
 
 .bcms-thumb-container {
@@ -700,7 +679,8 @@ a:hover {
   font-size: 11px;
 }
 
-.bcms-loader:before, .bcms-loader:after {
+.bcms-loader:before,
+.bcms-loader:after {
   content: "";
   -webkit-animation: loader 800ms infinite ease-in-out;
   -moz-animation: loader 800ms infinite ease-in-out;
@@ -750,7 +730,8 @@ a:hover {
   font-size: 11px;
 }
 
-.bcms-loader-2:before, .bcms-loader-2:after {
+.bcms-loader-2:before,
+.bcms-loader-2:after {
   content: "";
   -webkit-animation: loader 800ms infinite ease-in-out;
   -moz-animation: loader 800ms infinite ease-in-out;
@@ -1684,7 +1665,8 @@ a:hover {
   cursor: pointer;
 }
 
-.bcms-contents-tree-add-block:hover, .bcms-contents-tree-add-block.bcms-active {
+.bcms-contents-tree-add-block:hover,
+.bcms-contents-tree-add-block.bcms-active {
   background-color: #0a62b7;
 }
 
@@ -1925,12 +1907,18 @@ td .bcms-field-wrapper {
   width: 100%;
 }
 
-.bcms-checkbox-block {
+.bcms-checkbox-block .bcms-checkbox-holder {
+  float: left;
+  width: 35%;
+}
+
+.bcms-filter-selection-block .bcms-checkbox-block {
   float: left;
 }
 
-.bcms-form-block-holder .bcms-checkbox-block {
+.bcms-filter-selection-block .bcms-checkbox-block .bcms-checkbox-holder {
   float: none;
+  width: auto;
 }
 
 .bcms-checkbox-holder {
@@ -1944,11 +1932,6 @@ td .bcms-field-wrapper {
   vertical-align: middle;
 }
 
-.bcms-form-block-holder .bcms-checkbox-holder {
-  float: left;
-  width: 35%;
-}
-
 .bcms-checkbox-label {
   display: inline-block;
   vertical-align: middle;
@@ -1959,6 +1942,7 @@ td .bcms-field-wrapper {
 .bcms-check-field-helper {
   background-color: #ffffff;
   border: 1px solid #dfdfdf;
+  line-height: 16px;
   margin-top: -1px;
   padding: 10px;
 }
@@ -2262,11 +2246,13 @@ td .bcms-field-wrapper {
   background-color: #4a4a4a;
 }
 
-.bcms-region-contentstree, .bcms-region-sortcancel {
+.bcms-region-contentstree,
+.bcms-region-sortcancel {
   background-color: #636363;
 }
 
-.bcms-region-contentstree:hover, .bcms-region-sortcancel:hover {
+.bcms-region-contentstree:hover,
+.bcms-region-sortcancel:hover {
   background-color: #4a4a4a;
 }
 
@@ -2466,17 +2452,10 @@ td .bcms-field-wrapper {
 }
 
 .bcms-pager-no, .bcms-pager-prev, .bcms-pager-next {
-  -webkit-transition: all 200ms;
-  -moz-transition: all 200ms;
-  transition: all 200ms;
   height: 30px;
   width: 30px;
   cursor: pointer;
   overflow: hidden;
-}
-
-.bcms-pager-no:hover, .bcms-pager-prev:hover, .bcms-pager-next:hover {
-  background-color: #ffffff;
 }
 
 .bcms-pager {
@@ -2484,6 +2463,9 @@ td .bcms-field-wrapper {
 }
 
 .bcms-pager-no {
+  -webkit-transition: background-color 200ms;
+  -moz-transition: background-color 200ms;
+  transition: background-color 200ms;
   background-color: #eae8e9;
   border: 1px solid #dfdfdf;
   box-sizing: border-box;
@@ -2495,7 +2477,8 @@ td .bcms-field-wrapper {
   text-align: center;
 }
 
-.bcms-pager-no:hover, .bcms-pager-no.bcms-active-pager {
+.bcms-pager-no:hover,
+.bcms-pager-no.bcms-active-pager {
   background-color: #ffffff;
 }
 
@@ -2714,6 +2697,14 @@ td .bcms-field-wrapper {
   border-right: 1px solid #cbcbcb;
 }
 
+.bcms-tables tr.bcms-table-row-active td {
+  background-color: #e7f3ff;
+}
+
+.bcms-tables tr.bcms-table-row-active:nth-child(even) td {
+  background-color: #e7f3ff;
+}
+
 .bcms-tables tr:nth-child(even) td {
   background-color: #f8f8f8;
 }
@@ -2746,13 +2737,10 @@ td .bcms-field-wrapper {
 .bcms-tables td .bcms-action-edit,
 .bcms-tables td .bcms-action-usage,
 .bcms-tables td .bcms-action-history,
-.bcms-tables td .bcms-action-delete {
+.bcms-tables td .bcms-action-delete,
+.bcms-tables td .bcms-action-restore {
   display: block;
   margin: auto;
-}
-
-.bcms-table-row-active > td {
-  background-color: #e7f3ff;
 }
 
 .bcms-table-field-helper .bcms-field-wrapper {
@@ -2803,6 +2791,7 @@ td .bcms-field-wrapper {
 }
 
 .bcms-list-pages {
+  background-color: #ffffff;
   border: 1px solid #d0d0d0;
   margin-top: 20px;
 }
@@ -2942,7 +2931,7 @@ td .bcms-field-wrapper {
 }
 
 .bcms-inner-navigation-ui:hover {
-  color: #8d8d8d;
+  color: #8c8c8c;
 }
 
 .bcms-inner-navigation-ui.bcms-active {
@@ -3137,7 +3126,7 @@ td .bcms-field-wrapper {
   vertical-align: middle;
   height: 20px;
   width: 20px;
-  background: url() no-repeat center;
+  background: url("data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIyMCIgaGVpZ2h0PSIxOSIgdmlld0JveD0iMCAwIDIwIDE5IiBlbmFibGUtYmFja2dyb3VuZD0ibmV3IDAgMCAyMCAxOSI+PHBhdGggZD0ibTIwIDguOGMwIDUuNi00LjUgMTAuMi0xMCAxMC4yLTUuNSAwLTEwLTQuNi0xMC0xMC4yaDEuN2MwIDQuNyAzLjcgOC41IDguMyA4LjUgNC42IDAgOC4zLTMuOCA4LjMtOC41IDAtMi4xLS44LTQuMS0yLjEtNS42djEuOGgtMS43di01aDV2MS43aC0yLjVjLjEuMS4xLjEuMS4yLjYuNyAxLjIgMS40IDEuNiAyLjMuOSAxLjMgMS4zIDIuOSAxLjMgNC42IiBmaWxsPSIjMGQ3Y2U3Ii8+PC9zdmc+") no-repeat center;
   cursor: pointer;
   overflow: hidden;
   position: relative;
@@ -3156,7 +3145,7 @@ td .bcms-field-wrapper {
   text-indent: 999em;
 }
 
-.bcms-action-settings {
+.bcms-action-download {
   display: inline-block;
   vertical-align: middle;
   height: 20px;
@@ -3278,33 +3267,6 @@ a.bcms-icn-restore:active {
   overflow: hidden;
   text-indent: 9999px;
   width: 16px;
-}
-
-.bcms-preview-block {
-  float: left;
-  height: 265px;
-  overflow: hidden;
-  position: relative;
-  width: 210px;
-}
-
-.bcms-preview-box:hover > .bcms-zoom-overlay {
-  cursor: pointer;
-  filter: Alpha(opacity=100);
-  opacity: 1;
-}
-
-.bcms-zoom-overlay {
-  background: url("images/icn-zoom.png") no-repeat center center;
-  filter: Alpha(opacity=0);
-  height: 74px;
-  left: 50%;
-  margin: -37px 0 0 -37px;
-  opacity: 0;
-  position: absolute;
-  top: 50%;
-  width: 74px;
-  z-index: 1;
 }
 
 .bcms-tooltip-mark {
@@ -3825,7 +3787,8 @@ textarea.markItUpEditor:focus {
   padding: 9px 11px 10px;
 }
 
-.select2-choice, .select2-choices {
+.select2-choice,
+.select2-choices {
   height: 100%;
   width: 100%;
   display: block;

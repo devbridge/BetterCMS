@@ -1,9 +1,9 @@
 $action-icons: (
                 ('edit', $bcms-action-edit),
                 ('usage', $bcms-action-usage),
-                ('restore'),
+                ('restore', $bcms-revert),
                 ('history', $bcms-action-history),
-                ('settings'),
+                ('download'),
                 ('delete', $bcms-action-delete),
                 ('ok', $bcms-action-status-ok),
                 ('warn', $bcms-action-status-warn),
@@ -80,29 +80,29 @@ a.bcms-icn-restore:active {
 
 //todo check where this has been used
 //module preview boxes & widgets grid
-.bcms-preview-block {
-    float: left;
-    height: 265px;
-    overflow: hidden;
-    position: relative;
-    width: 210px;
-}
-
-.bcms-preview-box:hover > .bcms-zoom-overlay {
-    cursor: pointer;
-    filter: Alpha(opacity=100);
-    opacity: 1;
-}
-
-.bcms-zoom-overlay {
-    background: url('images/icn-zoom.png') no-repeat center center;
-    filter: Alpha(opacity=0);
-    height: 74px;
-    left: 50%;
-    margin: -37px 0 0 -37px;
-    opacity: 0;
-    position: absolute;
-    top: 50%;
-    width: 74px;
-    z-index: 1;
-}
+//.bcms-preview-block {
+//    float: left;
+//    height: 265px;
+//    overflow: hidden;
+//    position: relative;
+//    width: 210px;
+//}
+//
+//.bcms-preview-box:hover > .bcms-zoom-overlay {
+//    cursor: pointer;
+//    filter: Alpha(opacity=100);
+//    opacity: 1;
+//}
+//
+//.bcms-zoom-overlay {
+//    background: url('images/icn-zoom.png') no-repeat center center;
+//    filter: Alpha(opacity=0);
+//    height: 74px;
+//    left: 50%;
+//    margin: -37px 0 0 -37px;
+//    opacity: 0;
+//    position: absolute;
+//    top: 50%;
+//    width: 74px;
+//    z-index: 1;
+//}

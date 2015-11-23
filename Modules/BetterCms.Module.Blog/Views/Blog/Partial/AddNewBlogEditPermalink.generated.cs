@@ -137,7 +137,7 @@ WriteLiteral("</div>\r\n");
             
             #line default
             #line hidden
-WriteLiteral("    </div>    \r\n    <div");
+WriteLiteral("    </div>\r\n    <div");
 
 WriteLiteral(" class=\"bcms-editor-path\"");
 
@@ -195,90 +195,7 @@ WriteLiteral("            ");
             
             #line default
             #line hidden
-WriteLiteral("\r\n        </div>\r\n");
-
-            
-            #line 25 "..\..\Views\Blog\Partial\AddNewBlogEditPermalink.cshtml"
-        
-            
-            #line default
-            #line hidden
-            
-            #line 25 "..\..\Views\Blog\Partial\AddNewBlogEditPermalink.cshtml"
-         if (Model.Id != Guid.Empty)
-        {
-
-            
-            #line default
-            #line hidden
-WriteLiteral("            <div");
-
-WriteLiteral(" class=\"bcms-edit-check-field\"");
-
-WriteLiteral(">\r\n");
-
-WriteLiteral("                ");
-
-            
-            #line 28 "..\..\Views\Blog\Partial\AddNewBlogEditPermalink.cshtml"
-           Write(Html.CheckBoxFor(model => model.RedirectFromOldUrl));
-
-            
-            #line default
-            #line hidden
-WriteLiteral("\r\n                <div");
-
-WriteLiteral(" class=\"bcms-edit-label\"");
-
-WriteLiteral(">");
-
-            
-            #line 29 "..\..\Views\Blog\Partial\AddNewBlogEditPermalink.cshtml"
-                                        Write(BlogGlobalization.EditBlogPost_CreatePermanentRedirectToOldUrl_Title);
-
-            
-            #line default
-            #line hidden
-WriteLiteral("</div>\r\n            </div>\r\n");
-
-WriteLiteral("            <div");
-
-WriteLiteral(" class=\"bcms-edit-check-field\"");
-
-WriteLiteral(">\r\n");
-
-WriteLiteral("                ");
-
-            
-            #line 32 "..\..\Views\Blog\Partial\AddNewBlogEditPermalink.cshtml"
-           Write(Html.CheckBoxFor(model => model.UseCanonicalUrl));
-
-            
-            #line default
-            #line hidden
-WriteLiteral("\r\n                <div");
-
-WriteLiteral(" class=\"bcms-edit-label\"");
-
-WriteLiteral(">");
-
-            
-            #line 33 "..\..\Views\Blog\Partial\AddNewBlogEditPermalink.cshtml"
-                                        Write(BlogGlobalization.EditBlogPost_UseCanonicalUrl);
-
-            
-            #line default
-            #line hidden
-WriteLiteral("</div>\r\n            </div>\r\n");
-
-            
-            #line 35 "..\..\Views\Blog\Partial\AddNewBlogEditPermalink.cshtml"
-        }
-
-            
-            #line default
-            #line hidden
-WriteLiteral("        <div");
+WriteLiteral("\r\n        </div>\r\n\r\n        <div");
 
 WriteLiteral(" class=\"bcms-btn-primary\"");
 
@@ -287,7 +204,7 @@ WriteLiteral(" id=\"bcms-save-permalink\"");
 WriteLiteral(">");
 
             
-            #line 36 "..\..\Views\Blog\Partial\AddNewBlogEditPermalink.cshtml"
+            #line 26 "..\..\Views\Blog\Partial\AddNewBlogEditPermalink.cshtml"
                                                           Write(RootGlobalization.Button_Ok);
 
             
@@ -300,13 +217,96 @@ WriteLiteral(" class=\"bcms-btn-cancel\"");
 WriteLiteral(">");
 
             
-            #line 37 "..\..\Views\Blog\Partial\AddNewBlogEditPermalink.cshtml"
+            #line 27 "..\..\Views\Blog\Partial\AddNewBlogEditPermalink.cshtml"
                                 Write(RootGlobalization.Button_Cancel);
 
             
             #line default
             #line hidden
-WriteLiteral("</div>\r\n    </div>\r\n</div>\r\n");
+WriteLiteral("</div>\r\n\r\n");
+
+            
+            #line 29 "..\..\Views\Blog\Partial\AddNewBlogEditPermalink.cshtml"
+        
+            
+            #line default
+            #line hidden
+            
+            #line 29 "..\..\Views\Blog\Partial\AddNewBlogEditPermalink.cshtml"
+         if (Model.Id != Guid.Empty)
+        {
+
+            
+            #line default
+            #line hidden
+WriteLiteral("            <div");
+
+WriteLiteral(" class=\"bcms-checkbox-holder\"");
+
+WriteLiteral(">\r\n");
+
+WriteLiteral("                ");
+
+            
+            #line 32 "..\..\Views\Blog\Partial\AddNewBlogEditPermalink.cshtml"
+           Write(Html.CheckBoxFor(model => model.RedirectFromOldUrl));
+
+            
+            #line default
+            #line hidden
+WriteLiteral("\r\n                <div");
+
+WriteLiteral(" class=\"bcms-checkbox-label bcms-js-edit-label\"");
+
+WriteLiteral(">");
+
+            
+            #line 33 "..\..\Views\Blog\Partial\AddNewBlogEditPermalink.cshtml"
+                                                               Write(BlogGlobalization.EditBlogPost_CreatePermanentRedirectToOldUrl_Title);
+
+            
+            #line default
+            #line hidden
+WriteLiteral("</div>\r\n            </div>\r\n");
+
+WriteLiteral("            <div");
+
+WriteLiteral(" class=\"bcms-checkbox-holder\"");
+
+WriteLiteral(">\r\n");
+
+WriteLiteral("                ");
+
+            
+            #line 36 "..\..\Views\Blog\Partial\AddNewBlogEditPermalink.cshtml"
+           Write(Html.CheckBoxFor(model => model.UseCanonicalUrl));
+
+            
+            #line default
+            #line hidden
+WriteLiteral("\r\n                <div");
+
+WriteLiteral(" class=\"bcms-checkbox-label bcms-js-edit-label\"");
+
+WriteLiteral(">");
+
+            
+            #line 37 "..\..\Views\Blog\Partial\AddNewBlogEditPermalink.cshtml"
+                                                               Write(BlogGlobalization.EditBlogPost_UseCanonicalUrl);
+
+            
+            #line default
+            #line hidden
+WriteLiteral("</div>\r\n            </div>\r\n");
+
+            
+            #line 39 "..\..\Views\Blog\Partial\AddNewBlogEditPermalink.cshtml"
+        }
+
+            
+            #line default
+            #line hidden
+WriteLiteral("\r\n    </div>\r\n</div>\r\n");
 
         }
     }

@@ -68,10 +68,19 @@
 .bcms-checkbox {
     &-block {
         @include clearfix();
-        float: left;
 
-        .bcms-form-block-holder & {
-            float: none;
+        .bcms-checkbox-holder {
+            float: left;
+            width: 35%;
+        }
+
+        .bcms-filter-selection-block & {
+            float: left;
+
+            .bcms-checkbox-holder {
+                float: none;
+                width: auto;
+            }
         }
     }
 
@@ -83,11 +92,6 @@
         > input[type="checkbox"] {
             margin: 0;
             vertical-align: middle;
-        }
-
-        .bcms-form-block-holder & {
-            float: left;
-            width: 35%;
         }
     }
 
@@ -101,6 +105,7 @@
 .bcms-check-field-helper {
     background-color: $white;
     border: $border-thin-smoke;
+    line-height: 16px;
     margin-top: -1px;
     padding: 10px;
 
