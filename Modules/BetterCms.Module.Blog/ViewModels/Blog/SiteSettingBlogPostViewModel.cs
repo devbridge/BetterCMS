@@ -40,6 +40,14 @@ namespace BetterCms.Module.Blog.ViewModels.Blog
         public DateTime CreatedOn { get; set; }
 
         /// <summary>
+        /// Gets or sets the created on title.
+        /// </summary>
+        /// <value>
+        /// The created on title.
+        /// </value>
+        public string CreatedOnTitle { get; set; }
+
+        /// <summary>
         /// Gets or sets the date the blog post is modified on.
         /// </summary>
         /// <value>
@@ -48,12 +56,28 @@ namespace BetterCms.Module.Blog.ViewModels.Blog
         public DateTime ModifiedOn { get; set; }
 
         /// <summary>
+        /// Gets or sets the modified on title.
+        /// </summary>
+        /// <value>
+        /// The modified on title.
+        /// </value>
+        public string ModifiedOnTitle { get; set; }
+
+        /// <summary>
         /// Gets or sets the user, name which last modified the blog post.
         /// </summary>
         /// <value>
         /// The user name, which last modified the blog post.
         /// </value>
         public string ModifiedByUser { get; set; }
+
+        /// <summary>
+        /// Gets or sets the modified by user title.
+        /// </summary>
+        /// <value>
+        /// The modified by user title.
+        /// </value>
+        public string ModifiedByUserTitle { get; set; }
 
         /// <summary>
         /// Gets or sets the page status.

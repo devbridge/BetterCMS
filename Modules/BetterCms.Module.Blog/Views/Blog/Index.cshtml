@@ -9,61 +9,12 @@
 @using BetterCms.Module.Root.Mvc.Helpers
 @using BetterCms.Module.Root.Mvc
 @using Microsoft.Web.Mvc
-@using MvcContrib.UI.Grid
 
 @model BetterCms.Module.Blog.ViewModels.Filter.BlogsGridViewModel<SiteSettingBlogPostViewModel>
 @{
     var controller = (CmsControllerBase)ViewContext.Controller;
     var canEdit = controller.SecurityService.IsAuthorized(RootModuleConstants.UserRoles.EditContent);
     var canPublish = controller.SecurityService.IsAuthorized(RootModuleConstants.UserRoles.PublishContent);
-    
-    Action<ColumnBuilder<SiteSettingBlogPostViewModel>> columns = column =>
-    {
-        if (canEdit || canPublish)
-        {
-            column.EditButtonColumn();
-        }
-        else
-        {
-            column.EmptyColumn();
-        }
-
-        column.For(m => string.Format("<a class=\"bcms-tables-link bcms-blog-Title\" data-id=\"{0}\" data-url=\"{2}\">{1}</a>", m.Id, System.Web.Security.AntiXss.AntiXssEncoder.HtmlEncode(m.Title ?? "", true), m.PageUrl))
-            .Named(BlogGlobalization.SiteSettings_Blogs_TitleColumn)
-            .SortColumnName("Title")
-            .Attributes()
-            .Encode(false);
-
-        column.For(m => m.CreatedOn.ToFormattedDateString())
-           .Named(BlogGlobalization.SiteSettings_Blogs_CreatedColumn)
-           .SortColumnName("CreatedOn")
-           .Attributes(@class => "bcms-blog-CreatedOn");
-
-        column.For(m => m.ModifiedOn.ToFormattedDateString())
-           .Named(BlogGlobalization.SiteSettings_Blogs_ModifiedColumn)
-           .SortColumnName("ModifiedOn")
-           .Attributes(@class => "bcms-blog-ModifiedOn");
-
-        column.For(m => m.ModifiedByUser)
-           .Named(BlogGlobalization.SiteSettings_Blogs_ModifiedByColumn)
-           .SortColumnName("ModifiedByUser")
-           .Attributes(@class => "bcms-blog-ModifiedByUser");
-
-        column.For(m => Html.EditorFor(e => m.Status, "PageStatus"))
-           .Named(BlogGlobalization.SiteSettings_Blogs_PageStatusColumn)
-           .SortColumnName("Status")
-           .HeaderAttributes(@style => "width: 65px; text-align: center")
-           .Attributes(@class => "bcms-blog-IsPublished");
-
-        if (controller.SecurityService.IsAuthorized(RootModuleConstants.UserRoles.DeleteContent))
-        {
-            column.DeleteButtonColumn();
-        }
-        else
-        {
-            column.EmptyColumn();
-        }
-    };
 }
 
 @using (Html.BeginForm<BlogController>(f => f.Index(null), FormMethod.Post, new { @id = "bcms-blogs-form", @class = "bcms-ajax-form" }))
@@ -97,7 +48,7 @@
             </div>
 
             <div class="bcms-top-block-pager">
-                @Html.RenderPaging(Model)
+                @Html.Partial("~/Areas/bcms-root/Views/Shared/Partial/Paging.cshtml")
             </div>
     </div>
 
@@ -105,11 +56,12 @@
         @Html.Partial("~/Areas/bcms-blog/Views/Blog/Partial/BlogsFilterTemplate.cshtml", Model)
     </div>
     
-    @Html.Grid(Model.Items).Sort(Model.GridOptions).Columns(columns).Attributes(@class => "bcms-tables").RenderUsing(new EditableHtmlTableGridRenderer<SiteSettingBlogPostViewModel>())
+    @Html.Partial("~/Areas/bcms-blog/Views/Blog/Partial/BlogsGrid.cshtml", Model)
+@*    @Html.Grid(Model.Items).Sort(Model.GridOptions).Columns(columns).Attributes(@class => "bcms-tables").RenderUsing(new EditableHtmlTableGridRenderer<SiteSettingBlogPostViewModel>())*@
 }
 
 <script type="text/html" id="bcms-blogs-list-row-template">
-    @Html.Grid(new List<SiteSettingBlogPostViewModel> { new SiteSettingBlogPostViewModel() }).Columns(columns).Attributes(@class => "bcms-tables").RenderUsing(new HtmlTableGridSingleRowRenderer<SiteSettingBlogPostViewModel>())
+    @*    @Html.Grid(new List<SiteSettingBlogPostViewModel> { new SiteSettingBlogPostViewModel() }).Columns(columns).Attributes(@class => "bcms-tables").RenderUsing(new HtmlTableGridSingleRowRenderer<SiteSettingBlogPostViewModel>())*@
 </script>
 
 <script type="text/html" id="bcms-pagestatus-published-template">

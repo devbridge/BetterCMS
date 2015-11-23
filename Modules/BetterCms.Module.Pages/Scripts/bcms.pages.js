@@ -34,7 +34,7 @@ bettercms.define('bcms.pages', ['bcms.jquery', 'bcms', 'bcms.modal', 'bcms.siteS
                 siteSettingsPagesSearchButton: '#bcms-pages-search-btn',
                 siteSettingsPagesSearchField: '.bcms-search-query',
                 siteSettingsPageCreateButton: '#bcms-create-page-button',
-                siteSettingsPageEditButton: '.bcms-grid-item-edit-button',
+                siteSettingsPageEditButton: '.bcms-js-edit-button',
                 siteSettingsPageDeleteButton: '.bcms-grid-item-delete-button',
                 siteSettingsPageRowTemplate: '#bcms-pages-list-row-template',
                 siteSettingsPageBooleanTemplateTrue: '#bcms-boolean-true-template',
@@ -48,7 +48,7 @@ bettercms.define('bcms.pages', ['bcms.jquery', 'bcms', 'bcms.modal', 'bcms.siteS
                 siteSettingsPagesTableRows: '.bcms-js-list-row',
                 siteSettingsPagesTableActiveRow: '.bcms-list-pages > div.bcms-list-row-active:first',
                 siteSettingsPagesParentTable: '.bcms-list-pages:first',
-                siteSettingsRowCells: 'div',
+                siteSettingsRowCells: '.bcms-js-list-row',
                 siteSettingsPagesGrid: '#bcms-pages-grid',
 
                 siteSettingPageTitleCell: '.bcms-page-title',
@@ -664,7 +664,6 @@ bettercms.define('bcms.pages', ['bcms.jquery', 'bcms', 'bcms.modal', 'bcms.siteS
             ko.applyBindings(page.pagesGridViewModel, gridDOM.get(0));
             ko.applyBindings(page.pagesGridViewModel.paging, pagingDOM.get(0));
 
-
             form.on('submit', function (event) {
                 event.preventDefault();
                 page.searchSiteSettingsPages(form, container, opts);
@@ -714,8 +713,6 @@ bettercms.define('bcms.pages', ['bcms.jquery', 'bcms', 'bcms.modal', 'bcms.siteS
             self.createdOnTitle = ko.observable(item.CreatedOnTitle);
             self.modifiedOn = ko.observable(item.MofidiedOn);
             self.modifiedOnTitle = ko.observable(item.ModifiedOnTitle);
-            self.modifiedBy = ko.observable(item.ModifiedBy);
-            self.modifiedByTitle = ko.observable(item.ModifiedByTitle);
             self.pageStatus = ko.observable(item.PageStatus);
             self.url = ko.observable(item.Url);
             self.version = ko.observable(item.Version);
@@ -733,11 +730,14 @@ bettercms.define('bcms.pages', ['bcms.jquery', 'bcms', 'bcms.modal', 'bcms.siteS
                 page.addSiteSettingsPage(container, opts);
             });
 
-            container.find(editButtonSelector).on('click', function () {
-                var editButton = $(this).parents(selectors.siteSettingsPageParentRow).find(selectors.siteSettingsPageEditButton);
-                if (editButton.length > 0) {
-                    page.editSiteSettingsPage(editButton, container);
-                }
+//            container.find(editButtonSelector).on('click', function () {
+//                var editButton = $(this).parents(selectors.siteSettingsPageParentRow).find(selectors.siteSettingsPageEditButton);
+//                if (editButton.length > 0) {
+//                    page.editSiteSettingsPage(editButton, container);
+//                }
+            //            });
+            container.find(selectors.siteSettingsPageEditButton).on('click', function() {
+                page.editSiteSettingsPage($(this), container);
             });
 
             if (opts.canBeSelected) {

@@ -19,17 +19,17 @@ bettercms.define('bcms.blog', ['bcms.jquery', 'bcms', 'bcms.modal', 'bcms.siteSe
                 siteSettingsBlogImportButton: '#bcms-import-blogs',
                 siteSettingsBlogContentWindow: '.bcms-window-options',
                 siteSettingsBlogDeleteButton: '.bcms-grid-item-delete-button',
-                siteSettingsBlogParentRow: 'tr:first',
-                siteSettingsBlogEditButton: '.bcms-grid-item-edit-button',
-                siteSettingsRowCells: 'td',
+                siteSettingsBlogParentRow: '.bcms-js-list-row:first',
+                siteSettingsBlogEditButton: '.bcms-js-edit-button',
+                siteSettingsRowCells: '.bcms-js-list-row',
                 siteSettingsBlogCellPrefix: '.bcms-blog-',
-                siteSettingsBlogTitleCell: '.bcms-blog-Title',
+                siteSettingsBlogTitleCell: '.bcms-page-title',
                 siteSettingsPageStatusTemplatePublished: '#bcms-pagestatus-published-template',
                 siteSettingsPageStatusTemplateUnpublished: '#bcms-pagestatus-unpublished-template',
                 siteSettingsPageStatusTemplateDraft: '#bcms-pagestatus-draft-template',
                 siteSettingsBlogRowTemplate: '#bcms-blogs-list-row-template',
                 siteSettingsBlogRowTemplateFirstRow: 'tr:first',
-                siteSettingsBlogsTableFirstRow: 'table.bcms-tables > tbody > tr:first',
+                siteSettingsBlogsTableFirstRow: '.bcms-list-pages > .bcms-js-list-row:first',
                 overlayConfigure: '.bcms-content-configure',
                 overlayDelete: '.bcms-content-delete',
                 destroyDraftVersionLink: '.bcms-messages-draft-destroy',
@@ -47,7 +47,9 @@ bettercms.define('bcms.blog', ['bcms.jquery', 'bcms', 'bcms.modal', 'bcms.siteSe
                 siteSettingsButtonHolder: ".bcms-btn-opener-holder",
                 siteSettingsBlogCategoriesSelect: '#bcms-js-categories-select',
                 siteSettingsBlogAuthorsSelect: '#bcms-js-authors-select',
-                siteSettingsBlogLanguagesSelect: '#bcms-js-languages-select'
+                siteSettingsBlogLanguagesSelect: '#bcms-js-languages-select',
+                siteSettingsPager: '.bcms-top-block-pager',
+                siteSettingsBlogsGrid: '#bcms-blogs-grid'
             },
             links = {
                 loadSiteSettingsBlogsUrl: null,
@@ -427,12 +429,57 @@ bettercms.define('bcms.blog', ['bcms.jquery', 'bcms', 'bcms.modal', 'bcms.siteSe
             container.html(html);
         };
 
+        function BlogsGridViewModel(data, form, container) {
+            var self = this;
+
+            self.items = ko.observableArray();
+            self.setItems = function (_items) {
+                self.items([]);
+                for (var i = 0; i < _items.length; i++) {
+                    self.items.push(new BlogItemViewModel(_items[i]));
+                }
+            }
+
+            self.onOpenPage = function (pageNumber) {
+                form.find(selectors.hiddenPageNumberField).val(pageNumber);
+                grid.submitGridFormPages(form, function (content, data) {
+                    self.setItems(data.Items);
+                    initializeSiteSettingsBlogsListItems(container);
+                });
+            }
+            self.setItems(data.Items);
+            self.paging = new ko.PagingViewModel(data.GridOptions.PageSize, data.GridOptions.PageNumber, data.GridOptions.TotalCount, self.onOpenPage);
+            return self;
+        };
+
+        function BlogItemViewModel(item) {
+            var self = this;
+            self.id = ko.observable(item.Id);
+            self.title = ko.observable(item.Title);
+            self.createdOn = ko.observable(item.CreatedOn);
+            self.createdOnTitle = ko.observable(item.CreatedOnTitle);
+            self.modifiedOn = ko.observable(item.MofidiedOn);
+            self.modifiedOnTitle = ko.observable(item.ModifiedOnTitle);
+            self.modifiedByUserTitle = ko.observable(item.ModifiedByUserTitle);
+            self.pageStatus = ko.observable(item.PageStatus);
+            self.url = ko.observable(item.PageUrl);
+            self.version = ko.observable(item.Version);
+        }
+
         /**
         * Initializes site settings blogs list
         */
         function initializeSiteSettingsBlogsList(container, content, jsonData, isSearchResult) {
 
             var form = container.find(selectors.siteSettingsBlogsListForm);
+
+            blog.blogsGridViewModel = new BlogsGridViewModel(((content.Data) ? content.Data : jsonData), form, container);
+            var gridDOM = container.find(selectors.siteSettingsBlogsGrid);
+            ko.cleanNode(gridDOM.get(0));
+            var pagingDOM = container.find(selectors.siteSettingsPager);
+            ko.applyBindings(blog.blogsGridViewModel, gridDOM.get(0));
+            ko.applyBindings(blog.blogsGridViewModel.paging, pagingDOM.get(0));
+
             grid.bindGridForm(form, function (html, data) {
                 container.html(html);
                 initializeSiteSettingsBlogsList(container, html, data);
@@ -527,19 +574,31 @@ bettercms.define('bcms.blog', ['bcms.jquery', 'bcms', 'bcms.modal', 'bcms.siteSe
         * Initializes site settings blogs list items for current container
         */
         function initializeSiteSettingsBlogsListItems(container) {
-            container.find(selectors.siteSettingsRowCells).on('click', function () {
-                var row = $(this).parents(selectors.siteSettingsBlogParentRow),
-                    id = row.find(selectors.siteSettingsBlogEditButton).data("id"),
-                    onSave = function (json) {
-                        onAfterSiteSettingsBlogPostSaved(json, row);
-                    };
+//            container.find(selectors.siteSettingsRowCells).on('click', function () {
+//                var row = $(this).parents(selectors.siteSettingsBlogParentRow),
+//                    id = row.find(selectors.siteSettingsBlogEditButton).data("id"),
+//                    onSave = function (json) {
+//                        onAfterSiteSettingsBlogPostSaved(json, row);
+//                    };
+//
+//                editBlogPost(id, {
+//                    postSuccess: onSave,
+//                    calledFromPage: false
+//                });
+//            });
 
+            container.find(selectors.siteSettingsBlogEditButton).on('click', function(event) {
+                bcms.stopEventPropagation(event);
+                var row = $(this);
+                var id = row.data("id");
+                var onSave = function(json) {
+                    onAfterSiteSettingsBlogPostSaved(json, row);
+                };
                 editBlogPost(id, {
                     postSuccess: onSave,
                     calledFromPage: false
                 });
             });
-
             container.find(selectors.siteSettingsBlogTitleCell).on('click', function (event) {
                 bcms.stopEventPropagation(event);
                 var url = $(this).data('url');
@@ -565,8 +624,10 @@ bettercms.define('bcms.blog', ['bcms.jquery', 'bcms', 'bcms.modal', 'bcms.siteSe
         */
         function searchSiteSettingsBlogs(container, form) {
             grid.submitGridForm(form, function (htmlContent, data) {
-                container.html(htmlContent);
-                initializeSiteSettingsBlogsList(container, htmlContent, data, true);
+//                container.html(htmlContent);
+//                initializeSiteSettingsBlogsList(container, htmlContent, data, true);
+                blog.blogsGridViewModel.setItems(data.Items);
+                blog.initializeSiteSettingsBlogsListItems(container);
             });
         }
 

@@ -322,6 +322,18 @@
     <EmbeddedResource Include="Models\Migrations\Migration201502101139.sqlserver.sql" />
     <EmbeddedResource Include="Content\Styles\bcms.blog.css" />
     <EmbeddedResource Include="Content\Styles\bcms.blog.min.css" />
+    <Content Include="Content\bootstrap-theme.css" />
+    <Content Include="Content\bootstrap-theme.min.css" />
+    <Content Include="Content\bootstrap.css" />
+    <Content Include="Content\bootstrap.min.css" />
+    <Content Include="Content\Site.css" />
+    <Content Include="fonts\glyphicons-halflings-regular.svg" />
+    <Content Include="Scripts\bootstrap.js" />
+    <Content Include="Scripts\bootstrap.min.js" />
+    <None Include="Scripts\jquery-1.10.2.intellisense.js" />
+    <Content Include="Scripts\jquery-1.10.2.js" />
+    <Content Include="Scripts\jquery-1.10.2.min.js" />
+    <Content Include="Scripts\modernizr-2.6.2.js" />
     <Content Include="web.config" />
   </ItemGroup>
   <ItemGroup>
@@ -355,16 +367,23 @@
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="fonts\glyphicons-halflings-regular.woff" />
+    <Content Include="fonts\glyphicons-halflings-regular.ttf" />
+    <Content Include="fonts\glyphicons-halflings-regular.eot" />
+    <Content Include="Scripts\jquery-1.10.2.min.map" />
     <None Include="Views\Author\Partial\ImageCell.cshtml">
       <Generator>RazorGenerator</Generator>
       <LastGenOutput>ImageCell.generated.cs</LastGenOutput>
     </None>
+    <Content Include="Views\_ViewStart.cshtml" />
+    <Content Include="Views\Shared\_Layout.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\History\BlogPropertiesHistory.cshtml">
       <Generator>RazorGenerator</Generator>
       <LastGenOutput>BlogPropertiesHistory.generated.cs</LastGenOutput>
     </Content>
+    <EmbeddedResource Include="Views\Blog\Partial\BlogsGrid.cshtml" />
     <None Include="Views\Option\Settings.cshtml">
       <Generator>RazorGenerator</Generator>
       <LastGenOutput>Settings.generated.cs</LastGenOutput>

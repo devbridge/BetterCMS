@@ -443,7 +443,6 @@
     <Compile Include="ViewModels\Sitemap\SitemapAndPageLinksViewModel.cs" />
     <Compile Include="ViewModels\Sitemap\SitemapNodeViewModel.cs" />
     <Compile Include="ViewModels\SiteSettings\SiteSettingSitemapViewModel.cs" />
-    <Compile Include="ViewModels\SiteSettings\SiteSettingPagesListViewModel.cs" />
     <Compile Include="ViewModels\SiteSettings\SiteSettingTemplateItemViewModel.cs" />
     <Compile Include="ViewModels\SiteSettings\SiteSettingTemplateListViewModel.cs" />
     <Compile Include="ViewModels\Templates\TemplateEditViewModel.cs" />

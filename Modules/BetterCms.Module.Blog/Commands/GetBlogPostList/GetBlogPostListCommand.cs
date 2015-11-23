@@ -97,6 +97,13 @@ namespace BetterCms.Module.Blog.Commands.GetBlogPostList
                 model.Languages.Insert(0, languageService.GetInvariantLanguageModel());
             }
 
+            foreach (var blog in model.Items)
+            {
+                blog.CreatedOnTitle = string.Format("{0} {1}", "CREATED:", blog.CreatedOn.ToFormattedDateString());
+                blog.ModifiedOnTitle = string.Format("{0} {1}", "LAST EDITED:", blog.ModifiedOn.ToFormattedDateString());
+                blog.ModifiedByUserTitle = string.Format("{0} {1}", "LAST EDITED BY :", blog.ModifiedByUser);
+            }
+
             return model;
         }
     }

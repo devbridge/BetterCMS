@@ -9,7 +9,7 @@
         @if ((ViewContext.Controller as CmsControllerBase).SecurityService.IsAuthorized(RootModuleConstants.UserRoles.MultipleRoles(RootModuleConstants.UserRoles.EditContent, RootModuleConstants.UserRoles.PublishContent)))
         {
             <div class="bcms-list-column bcms-list-edit">
-                <div class="bcms-action-edit bcms-grid-item-edit-button" data-bind="attr: { 'data-id': id }">@RootGlobalization.Button_Edit</div>
+                <div class="bcms-action-edit bcms-grid-item-edit-button bcms-js-edit-button" data-bind="attr: { 'data-id': id }">@RootGlobalization.Button_Edit</div>
             </div>
         }
 
