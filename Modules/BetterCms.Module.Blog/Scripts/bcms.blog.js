@@ -47,7 +47,15 @@ bettercms.define('bcms.blog', ['bcms.jquery', 'bcms', 'bcms.modal', 'bcms.siteSe
                 siteSettingsButtonHolder: ".bcms-btn-opener-holder",
                 siteSettingsBlogCategoriesSelect: '#bcms-js-categories-select',
                 siteSettingsBlogAuthorsSelect: '#bcms-js-authors-select',
-                siteSettingsBlogLanguagesSelect: '#bcms-js-languages-select'
+                siteSettingsBlogLanguagesSelect: '#bcms-js-languages-select',
+
+                contentTab: '#bcms-tab-1',
+                editorContainer: '.bcms-window-tabbed-options',
+                editorTitle: '.bcms-content-titles',
+                editorInfoBlock: '.bcms-content-info-block',
+                blogPermalinkField: '.bcms-js-blog-permalink',
+                markdownEditorHeader: '.markItUpHeader',
+                markdownEditorFooter: '.markItUpFooter'
             },
             links = {
                 loadSiteSettingsBlogsUrl: null,
@@ -239,32 +247,79 @@ bettercms.define('bcms.blog', ['bcms.jquery', 'bcms', 'bcms.modal', 'bcms.siteSe
                     }
 
                     return categorySelector != null ? categorySelector.val() : null;
-                };
+                },
+                heightOptions;
 
             if (contentTextMode == bcmsContent.contentTextModes.markdown) {
-                htmlEditor.initializeMarkdownEditor(selectors.htmlEditor, '', {});
+                heightOptions = {
+                    topElements: [
+                        {
+                            element: selectors.editorInfoBlock,
+                            takeMargins: true
+                        },
+                        {
+                            element: selectors.blogPermalinkField,
+                            takeMargins: true
+                        },
+                        {
+                            element: selectors.editorTitle,
+                            takeMargins: true
+                        },
+                        {
+                            element: selectors.markdownEditorHeader,
+                            takeMargins: true
+                        }
+                    ],
+                    parent: selectors.contentTab,
+                    container: selectors.editorContainer,
+                    bottomElement: selectors.markdownEditorFooter,
+                    marginBottom: 1
+                };
+
+                htmlEditor.initializeMarkdownEditor(selectors.htmlEditor, '', {}, heightOptions);
             }
 
             if (contentTextMode == bcmsContent.contentTextModes.simpleText) {
+                heightOptions = {
+                    topElements: [
+                        {
+                            element: selectors.editorInfoBlock,
+                            takeMargins: true
+                        },
+                        {
+                            element: selectors.blogPermalinkField,
+                            takeMargins: true
+                        },
+                        {
+                            element: selectors.editorTitle,
+                            takeMargins: true
+                        }
+                    ],
+                    parent: selectors.contentTab,
+                    container: selectors.editorContainer,
+                    bottomElement: selectors.markdownEditorFooter,
+                    marginBottom: 1
+                };
+
                 htmlEditor.initializeMarkdownEditor(selectors.htmlEditor, '', { hideIcons: true });
             }
 
             if (contentTextMode == bcmsContent.contentTextModes.html) {
-                var heightOptions = {
+                heightOptions = {
                     topElements: [
                     {
-                        element: '.bcms-content-info-block',
+                        element: selectors.editorInfoBlock,
                         takeMargins: true
                     },{
-                        element: '.bcms-js-blog-permalink',
+                        element: selectors.blogPermalinkField,
                         takeMargins: true
                     },
                     {
-                        element: '.bcms-content-titles',
+                        element: selectors.editorTitle,
                         takeMargins: true
                     }],
-                    container: '.bcms-window-tabbed-options',
-                    parent: '#bcms-tab-1',
+                    container: selectors.editorContainer,
+                    parent: selectors.contentTab,
                     marginBottom: 1
                 };
 

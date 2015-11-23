@@ -261,10 +261,34 @@
             return markdownEditor.childWidgetOptions[editorId];
         };
 
+        function calculateHeight(element, options) {
+            options = $.extend({
+                marginTop: 0,
+                marginBottom: 0,
+                topElements: []
+            }, options);
+
+            var i, topElement,
+                containerHeight = element.closest(options.container).height(),
+                topElementsHeight = 0,
+                bottomElementHeight = options.parent
+                    ? element.closest(options.parent).find(options.bottomElement).outerHeight(true)
+                    : $(options.bottomElement).outerHeight(true);
+
+            for (i = 0; i < options.topElements.length; i++) {
+                topElement = options.topElements[i];
+                topElementsHeight += options.parent
+                    ? element.closest(options.parent).find(topElement.element).outerHeight(topElement.takeMargins)
+                    : $(topElement.element).outerHeight(topElement.takeMargins);
+            }
+
+            return containerHeight - topElementsHeight - bottomElementHeight - options.marginTop - options.marginBottom;
+        }
+
         /**
          * Initializes markdown editor instance
          */
-        markdownEditor.initializeInstance = function (editor, editorId, editingContentId, options) {
+        markdownEditor.initializeInstance = function (editor, editorId, editingContentId, options, heightOptions) {
 
             htmlEditor = editor;
             currentEditorId = editorId;
@@ -329,6 +353,17 @@
 
             textarea = $('#' + editorId);
             textarea.markItUp(options);
+            if (heightOptions) {
+                var setHeight = function() {
+                    textarea.height(calculateHeight(textarea, heightOptions));
+                }
+                setHeight();
+                $(window).bind('resize', setHeight);
+                $(window).on('disableResize', function () {
+                    $(window).unbind('resize', setHeight);
+                });
+
+            }
 
             setTimeout(function () {
                 $(selectors.widgetOptionsButton).hide();
@@ -339,6 +374,10 @@
                 }
             }, 50);
         };
+
+        markdownEditor.unbindResizeEvents = function() {
+            
+        }
 
         /**
          * Initializes markdown editor module.
