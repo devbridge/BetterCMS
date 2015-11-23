@@ -48,6 +48,15 @@ bettercms.define('bcms.blog', ['bcms.jquery', 'bcms', 'bcms.modal', 'bcms.siteSe
                 siteSettingsBlogCategoriesSelect: '#bcms-js-categories-select',
                 siteSettingsBlogAuthorsSelect: '#bcms-js-authors-select',
                 siteSettingsBlogLanguagesSelect: '#bcms-js-languages-select',
+                siteSettingsDefaultBlogContentModeSelect: '#bcms-js-content-mode-select',
+
+                contentTab: '#bcms-tab-1',
+                editorContainer: '.bcms-window-tabbed-options',
+                editorTitle: '.bcms-content-titles',
+                editorInfoBlock: '.bcms-content-info-block',
+                blogPermalinkField: '.bcms-js-blog-permalink',
+                markdownEditorHeader: '.markItUpHeader',
+                markdownEditorFooter: '.markItUpFooter',
                 siteSettingsPager: '.bcms-top-block-pager',
                 siteSettingsBlogsGrid: '#bcms-blogs-grid'
             },
@@ -241,32 +250,79 @@ bettercms.define('bcms.blog', ['bcms.jquery', 'bcms', 'bcms.modal', 'bcms.siteSe
                     }
 
                     return categorySelector != null ? categorySelector.val() : null;
-                };
+                },
+                heightOptions;
 
             if (contentTextMode == bcmsContent.contentTextModes.markdown) {
-                htmlEditor.initializeMarkdownEditor(selectors.htmlEditor, '', {});
+                heightOptions = {
+                    topElements: [
+                        {
+                            element: selectors.editorInfoBlock,
+                            takeMargins: true
+                        },
+                        {
+                            element: selectors.blogPermalinkField,
+                            takeMargins: true
+                        },
+                        {
+                            element: selectors.editorTitle,
+                            takeMargins: true
+                        },
+                        {
+                            element: selectors.markdownEditorHeader,
+                            takeMargins: true
+                        }
+                    ],
+                    parent: selectors.contentTab,
+                    container: selectors.editorContainer,
+                    bottomElement: selectors.markdownEditorFooter,
+                    marginBottom: 1
+                };
+
+                htmlEditor.initializeMarkdownEditor(selectors.htmlEditor, '', {}, heightOptions);
             }
 
             if (contentTextMode == bcmsContent.contentTextModes.simpleText) {
+                heightOptions = {
+                    topElements: [
+                        {
+                            element: selectors.editorInfoBlock,
+                            takeMargins: true
+                        },
+                        {
+                            element: selectors.blogPermalinkField,
+                            takeMargins: true
+                        },
+                        {
+                            element: selectors.editorTitle,
+                            takeMargins: true
+                        }
+                    ],
+                    parent: selectors.contentTab,
+                    container: selectors.editorContainer,
+                    bottomElement: selectors.markdownEditorFooter,
+                    marginBottom: 1
+                };
+
                 htmlEditor.initializeMarkdownEditor(selectors.htmlEditor, '', { hideIcons: true });
             }
 
             if (contentTextMode == bcmsContent.contentTextModes.html) {
-                var heightOptions = {
+                heightOptions = {
                     topElements: [
                     {
-                        element: '.bcms-content-info-block',
+                        element: selectors.editorInfoBlock,
                         takeMargins: true
                     },{
-                        element: '.bcms-js-blog-permalink',
+                        element: selectors.blogPermalinkField,
                         takeMargins: true
                     },
                     {
-                        element: '.bcms-content-titles',
+                        element: selectors.editorTitle,
                         takeMargins: true
                     }],
-                    container: '.bcms-window-tabbed-options',
-                    parent: '#bcms-tab-1',
+                    container: selectors.editorContainer,
+                    parent: selectors.contentTab,
                     marginBottom: 1
                 };
 
@@ -469,7 +525,7 @@ bettercms.define('bcms.blog', ['bcms.jquery', 'bcms', 'bcms.modal', 'bcms.siteSe
         /**
         * Initializes site settings blogs list
         */
-        function initializeSiteSettingsBlogsList(container, content, jsonData, isSearchResult) {
+        function initializeSiteSettingsBlogsList(container, content, jsonData, isSearchResult, isClearFilterResult) {
 
             var form = container.find(selectors.siteSettingsBlogsListForm);
 
@@ -487,13 +543,13 @@ bettercms.define('bcms.blog', ['bcms.jquery', 'bcms', 'bcms.modal', 'bcms.siteSe
 
             form.on('submit', function (event) {
                 bcms.stopEventPropagation(event);
-                searchSiteSettingsBlogs(container, form);
+                searchSiteSettingsBlogs(container, form, true);
                 return false;
             });
 
             bcms.preventInputFromSubmittingForm(form.find(selectors.siteSettingsBlogsSearchInput), {
                 preventedEnter: function () {
-                    searchSiteSettingsBlogs(container, form);
+                    searchSiteSettingsBlogs(container, form, true);
                 }
             });
 
@@ -562,9 +618,9 @@ bettercms.define('bcms.blog', ['bcms.jquery', 'bcms', 'bcms.modal', 'bcms.siteSe
 
             initializeSiteSettingsBlogsListItems(container);
 
-            filter.bind(container, ((content.Data) ? content.Data : jsonData), function () {
-                searchSiteSettingsBlogs(container, form);
-            });
+            filter.bind(container, ((content.Data) ? content.Data : jsonData), function (isClearFilterResult) {
+                searchSiteSettingsBlogs(container, form, isSearchResult, isClearFilterResult);
+            }, isClearFilterResult);
 
             // Select search (timeout is required to work on IE11)
             grid.focusSearchInput(container.find(selectors.siteSettingsBlogsSearchInput), true);
@@ -622,7 +678,7 @@ bettercms.define('bcms.blog', ['bcms.jquery', 'bcms', 'bcms.modal', 'bcms.siteSe
         /**
         * Search site settings blogs
         */
-        function searchSiteSettingsBlogs(container, form) {
+        function searchSiteSettingsBlogs(container, form, isSearchResult, isClearFilterResult) {
             grid.submitGridForm(form, function (htmlContent, data) {
 //                container.html(htmlContent);
 //                initializeSiteSettingsBlogsList(container, htmlContent, data, true);

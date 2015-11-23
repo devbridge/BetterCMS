@@ -11,7 +11,7 @@
         <!-- /ko -->
         <!-- ko if: isActive() && (!@(Model.ValueBind).editingIsDisabled || !@(Model.ValueBind).editingIsDisabled()) -->
         <div class="bcms-field-wrapper">
-            <select data-bind="options: @(Model.OptionsBind), optionsText: '@(Model.OptionsText)', optionsValue: '@(Model.OptionsValue)', value: @Model.ValueBind"></select>
+            <select data-bind="options: @(Model.OptionsBind), optionsText: '@(Model.OptionsText)', optionsValue: '@(Model.OptionsValue)', value: @Model.ValueBind, select2: { minimumResultsForSearch: -1 }"></select>
         </div>
         <!-- /ko -->
     }

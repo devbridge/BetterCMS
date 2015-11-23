@@ -409,7 +409,7 @@ WriteLiteral("                            ");
 WriteLiteral("\r\n                        </div>\r\n                    </div>\r\n\r\n                 " +
 "   <div");
 
-WriteLiteral(" class=\"bcms-media-reupload\"");
+WriteLiteral(" class=\"bcms-media-re-upload\"");
 
 WriteLiteral(" data-bind=\"click: reupload\"");
 
@@ -417,7 +417,7 @@ WriteLiteral(">");
 
             
             #line 74 "..\..\Views\Files\FileEditor.cshtml"
-                                                                            Write(MediaGlobalization.FileEditor_Dialog_Reupload_Title);
+                                                                             Write(MediaGlobalization.FileEditor_Dialog_Reupload_Title);
 
             
             #line default

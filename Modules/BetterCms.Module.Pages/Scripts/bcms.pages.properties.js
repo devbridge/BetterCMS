@@ -2,8 +2,8 @@
 /*global bettercms */
 
 bettercms.define('bcms.pages.properties', ['bcms.jquery', 'bcms', 'bcms.modal', 'bcms.forms', 'bcms.dynamicContent', 'bcms.tags', 'bcms.categories', 'bcms.ko.extenders',
-        'bcms.media', 'bcms.redirect', 'bcms.options', 'bcms.security', 'bcms.messages', 'bcms.codeEditor', 'bcms.pages.languages', 'bcms.store', 'bcms.multiple.select'],
-    function ($, bcms, modal, forms, dynamicContent, tags, categories, ko, media, redirect, options, security, messages, codeEditor, pageLanguages, store) {
+        'bcms.media', 'bcms.redirect', 'bcms.options', 'bcms.security', 'bcms.messages', 'bcms.codeEditor', 'bcms.pages.languages', 'bcms.store', 'bcms.htmlEditor', 'bcms.multiple.select'],
+    function ($, bcms, modal, forms, dynamicContent, tags, categories, ko, media, redirect, options, security, messages, codeEditor, pageLanguages, store, htmlEditor) {
         'use strict';
 
         var page = {},
@@ -34,7 +34,11 @@ bettercms.define('bcms.pages.properties', ['bcms.jquery', 'bcms', 'bcms.modal', 
 
                 optionsTab: '#bcms-tab-3',
                 translationsTabContent: '#bcms-tab-5 .bcms-page-translations-content',
-                javascriptCssTabOpener: '.bcms-tab-item[data-name="#bcms-tab-4"]'
+                javascriptCssTabOpener: '.bcms-tab-item[data-name="#bcms-tab-4"]',
+
+                codeEditorsContainer: '.bcms-window-tabbed-options',
+                codeEditorsTitles: '.bcms-content-titles',
+                codeEditorsParent: '.bcms-input-list-holder'
             },
             links = {
                 loadEditPropertiesDialogUrl: null,
@@ -283,11 +287,11 @@ bettercms.define('bcms.pages.properties', ['bcms.jquery', 'bcms', 'bcms.modal', 
                     var heightOptions = {
                         marginTop: 30,
                         topElements: [{
-                            element: '.bcms-content-titles',
+                            element: selectors.codeEditorsTitles,
                             takeMargins: true
                         }],
-                        container: '.bcms-window-tabbed-options',
-                        parent: '.bcms-input-list-holder',
+                        container: selectors.codeEditorsContainer,
+                        parent: selectors.codeEditorsParent,
                         marginBottom: 1
                     };
                     codeEditor.initialize(dialog.container, dialog, null, heightOptions);
@@ -581,6 +585,12 @@ bettercms.define('bcms.pages.properties', ['bcms.jquery', 'bcms', 'bcms.modal', 
 
                         postSuccess: postSuccess
                     });
+                },
+                onAccept: function () {
+                    htmlEditor.destroyAllHtmlEditorInstances();
+                },
+                onClose: function () {
+                    htmlEditor.destroyAllHtmlEditorInstances();
                 }
             });
         };

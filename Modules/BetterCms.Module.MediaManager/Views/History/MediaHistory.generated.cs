@@ -118,15 +118,25 @@ return new System.Web.WebPages.HelperResult(__razor_helper_writer => {
 
 #line default
 #line hidden
-WriteLiteralTo(__razor_helper_writer, "    <a");
+WriteLiteralTo(__razor_helper_writer, "    <div");
 
-WriteLiteralTo(__razor_helper_writer, " class=\"bcms-icn-preview\"");
+WriteLiteralTo(__razor_helper_writer, " class=\"bcms-action-usage bcms-js-preview\"");
+
+WriteAttributeTo(__razor_helper_writer, "title", Tuple.Create(" title=\"", 697), Tuple.Create("\"", 738)
+
+#line 18 "..\..\Views\History\MediaHistory.cshtml"
+, Tuple.Create(Tuple.Create("", 705), Tuple.Create<System.Object, System.Int32>(RootGlobalization.Button_Preview
+
+#line default
+#line hidden
+, 705), false)
+);
 
 WriteLiteralTo(__razor_helper_writer, " data-id=\"");
 
 
 #line 18 "..\..\Views\History\MediaHistory.cshtml"
-           WriteTo(__razor_helper_writer, item.Id);
+                                                                        WriteTo(__razor_helper_writer, item.Id);
 
 
 #line default
@@ -137,12 +147,12 @@ WriteLiteralTo(__razor_helper_writer, ">");
 
 
 #line 18 "..\..\Views\History\MediaHistory.cshtml"
-                     WriteTo(__razor_helper_writer, RootGlobalization.Button_Preview);
+                                                                                  WriteTo(__razor_helper_writer, RootGlobalization.Button_Preview);
 
 
 #line default
 #line hidden
-WriteLiteralTo(__razor_helper_writer, "</a>\r\n");
+WriteLiteralTo(__razor_helper_writer, "</div>\r\n");
 
 
 #line 19 "..\..\Views\History\MediaHistory.cshtml"
@@ -170,15 +180,25 @@ return new System.Web.WebPages.HelperResult(__razor_helper_writer => {
 
 #line default
 #line hidden
-WriteLiteralTo(__razor_helper_writer, "    <a");
+WriteLiteralTo(__razor_helper_writer, "    <div");
 
-WriteLiteralTo(__razor_helper_writer, " class=\"bcms-icn-download\"");
+WriteLiteralTo(__razor_helper_writer, " class=\"bcms-action-download bcms-js-download\"");
+
+WriteAttributeTo(__razor_helper_writer, "title", Tuple.Create(" title=\"", 907), Tuple.Create("\"", 962)
+
+#line 23 "..\..\Views\History\MediaHistory.cshtml"
+, Tuple.Create(Tuple.Create("", 915), Tuple.Create<System.Object, System.Int32>(MediaGlobalization.MediaManager_ButtonDownload
+
+#line default
+#line hidden
+, 915), false)
+);
 
 WriteLiteralTo(__razor_helper_writer, " data-id=\"");
 
 
 #line 23 "..\..\Views\History\MediaHistory.cshtml"
-            WriteTo(__razor_helper_writer, item.Id);
+                                                                                          WriteTo(__razor_helper_writer, item.Id);
 
 
 #line default
@@ -189,7 +209,7 @@ WriteLiteralTo(__razor_helper_writer, " data-version=\"");
 
 
 #line 23 "..\..\Views\History\MediaHistory.cshtml"
-                                    WriteTo(__razor_helper_writer, item.Version);
+                                                                                                                  WriteTo(__razor_helper_writer, item.Version);
 
 
 #line default
@@ -200,12 +220,12 @@ WriteLiteralTo(__razor_helper_writer, ">");
 
 
 #line 23 "..\..\Views\History\MediaHistory.cshtml"
-                                                   WriteTo(__razor_helper_writer, MediaGlobalization.MediaManager_ButtonDownload);
+                                                                                                                                 WriteTo(__razor_helper_writer, MediaGlobalization.MediaManager_ButtonDownload);
 
 
 #line default
 #line hidden
-WriteLiteralTo(__razor_helper_writer, "</a>\r\n");
+WriteLiteralTo(__razor_helper_writer, "</div>\r\n");
 
 
 #line 24 "..\..\Views\History\MediaHistory.cshtml"
@@ -235,15 +255,25 @@ return new System.Web.WebPages.HelperResult(__razor_helper_writer => {
 
 #line default
 #line hidden
-WriteLiteralTo(__razor_helper_writer, "        <a");
+WriteLiteralTo(__razor_helper_writer, "        <div");
 
-WriteLiteralTo(__razor_helper_writer, " class=\"bcms-icn-restore\"");
+WriteLiteralTo(__razor_helper_writer, " class=\"bcms-action-restore bcms-js-restore\"");
+
+WriteAttributeTo(__razor_helper_writer, "title", Tuple.Create(" title=\"", 1221), Tuple.Create("\"", 1262)
+
+#line 30 "..\..\Views\History\MediaHistory.cshtml"
+, Tuple.Create(Tuple.Create("", 1229), Tuple.Create<System.Object, System.Int32>(RootGlobalization.Button_Restore
+
+#line default
+#line hidden
+, 1229), false)
+);
 
 WriteLiteralTo(__razor_helper_writer, " data-id=\"");
 
 
 #line 30 "..\..\Views\History\MediaHistory.cshtml"
-               WriteTo(__razor_helper_writer, item.Id);
+                                                                              WriteTo(__razor_helper_writer, item.Id);
 
 
 #line default
@@ -254,7 +284,7 @@ WriteLiteralTo(__razor_helper_writer, " data-version=\"");
 
 
 #line 30 "..\..\Views\History\MediaHistory.cshtml"
-                                       WriteTo(__razor_helper_writer, item.Version);
+                                                                                                      WriteTo(__razor_helper_writer, item.Version);
 
 
 #line default
@@ -265,12 +295,12 @@ WriteLiteralTo(__razor_helper_writer, ">");
 
 
 #line 30 "..\..\Views\History\MediaHistory.cshtml"
-                                                      WriteTo(__razor_helper_writer, RootGlobalization.Button_Restore);
+                                                                                                                     WriteTo(__razor_helper_writer, RootGlobalization.Button_Restore);
 
 
 #line default
 #line hidden
-WriteLiteralTo(__razor_helper_writer, "</a>\r\n");
+WriteLiteralTo(__razor_helper_writer, "</div>\r\n");
 
 
 #line 31 "..\..\Views\History\MediaHistory.cshtml"
@@ -405,52 +435,44 @@ WriteLiteral("\r\n");
                .Encode(false)
                .Named("&nbsp;")
                .Sortable(false)
-               .HeaderAttributes(@style => "width: 40px; padding: 10px;", @class => "bcms-tables-nohover");
+               .HeaderAttributes(@style => "width: 40px; padding: 0;", @class => "bcms-tables-nohover");
 
         column.For(m => m.PublishedOn.ToFormattedDateString())
                .Named(MediaGlobalization.MediaHistory_Column_PublishedOn)
                .SortColumnName("PublishedOn")
-               .HeaderAttributes(@style => "width: 95px;")
-               .Attributes(@style => "width: 100px;");
+               .HeaderAttributes(@style => "width: 130px;");
 
         column.For(m => m.PublishedByUser)
                .Named(MediaGlobalization.MediaHistory_Column_PublishedByUser)
-               .SortColumnName("PublishedByUser")
-               .HeaderAttributes(@style => "width: 200px;")
-               .Attributes(@style => "width: 200px;");
+               .SortColumnName("PublishedByUser");
 
         column.For(m => m.ArchivedOn.ToFormattedDateString())
                .Named(MediaGlobalization.MediaHistory_Column_ArchivedOn)
                .SortColumnName("ArchivedOn")
-               .HeaderAttributes(@style => "width: 100px;")
-               .Attributes(@style => "width: 100px;");
+               .HeaderAttributes(@style => "width: 130px;");
 
         column.For(m => m.DisplayedFor.ToFormatedTimeString())
                .Named(MediaGlobalization.MediaHistory_Column_DisplayedFor)
                .SortColumnName("DisplayedFor")
-               .HeaderAttributes(@style => "width: 90px;")
-               .Attributes(@style => "width: 90px;");
+               .HeaderAttributes(@style => "width: 130px;");
 
         column.For(m => DisplayStatus(m.StatusName, m.Status))
                .Named(MediaGlobalization.MediaHistory_Column_Status)
                .SortColumnName("StatusName")
                .Encode(false)
-               .HeaderAttributes(@style => "width: 90px;")
-               .Attributes(@style => "width: 90px;");
+               .HeaderAttributes(@style => "width: 95px;");
 
         column.For(f => DownloadLink(f))
                .Encode(false)
                .Named("&nbsp;")
                .Sortable(false)
-               .HeaderAttributes(@style => "width: 57px;", @class => "bcms-tables-nohover")
-               .Attributes(@style => "width: 57px;");
+               .HeaderAttributes(@style => "width:130px;", @class => "bcms-tables-nohover");
 
         column.For(f => RestoreLink(f))
                .Encode(false)
                .Named("&nbsp;")
                .Sortable(false)
-               .HeaderAttributes(@style => "width: 115px;", @class => "bcms-tables-nohover")
-               .Attributes(@style => "width: 89px;");
+               .HeaderAttributes(@style => "width: 40px; padding: 0;", @class => "bcms-tables-nohover");
     };
 
             
@@ -459,7 +481,7 @@ WriteLiteral("\r\n");
 WriteLiteral("\r\n\r\n");
 
             
-            #line 115 "..\..\Views\History\MediaHistory.cshtml"
+            #line 107 "..\..\Views\History\MediaHistory.cshtml"
 Write(Html.MessagesBox());
 
             
@@ -471,7 +493,7 @@ WriteLiteral(" class=\"bcms-modal-frame-holder\"");
 
 WriteLiteral(">\r\n    <div");
 
-WriteLiteral(" class=\"bcms-history-preview-holder\"");
+WriteLiteral(" class=\"bcms-history-preview-holder bcms-history-preview-holder-media\"");
 
 WriteLiteral(" id=\"bcms-history-preview\"");
 
@@ -484,7 +506,7 @@ WriteLiteral(" style=\"display: block;\"");
 WriteLiteral(">");
 
             
-            #line 118 "..\..\Views\History\MediaHistory.cshtml"
+            #line 110 "..\..\Views\History\MediaHistory.cshtml"
                                                           Write(MediaGlobalization.MediaHistory_SelectVersionToPreviewMessage);
 
             
@@ -499,13 +521,13 @@ WriteLiteral(" class=\"bcms-history-table-holder\"");
 WriteLiteral(">\r\n");
 
             
-            #line 123 "..\..\Views\History\MediaHistory.cshtml"
+            #line 115 "..\..\Views\History\MediaHistory.cshtml"
         
             
             #line default
             #line hidden
             
-            #line 123 "..\..\Views\History\MediaHistory.cshtml"
+            #line 115 "..\..\Views\History\MediaHistory.cshtml"
          using (Html.BeginForm<HistoryController>(f => f.MediaHistory((GetMediaHistoryRequest)null), FormMethod.Post, new { @id = "bcms-pagecontenthistory-form", @class = "bcms-ajax-form" }))
         {
             
@@ -513,28 +535,28 @@ WriteLiteral(">\r\n");
             #line default
             #line hidden
             
-            #line 125 "..\..\Views\History\MediaHistory.cshtml"
+            #line 117 "..\..\Views\History\MediaHistory.cshtml"
        Write(Html.HiddenGridOptions(Model.GridOptions));
 
             
             #line default
             #line hidden
             
-            #line 125 "..\..\Views\History\MediaHistory.cshtml"
+            #line 117 "..\..\Views\History\MediaHistory.cshtml"
                                                       
             
             
             #line default
             #line hidden
             
-            #line 126 "..\..\Views\History\MediaHistory.cshtml"
+            #line 118 "..\..\Views\History\MediaHistory.cshtml"
        Write(Html.HiddenFor(model => model.MediaId));
 
             
             #line default
             #line hidden
             
-            #line 126 "..\..\Views\History\MediaHistory.cshtml"
+            #line 118 "..\..\Views\History\MediaHistory.cshtml"
                                                    
 
 
@@ -552,7 +574,7 @@ WriteLiteral(" class=\"bcms-large-titles\"");
 WriteLiteral(">");
 
             
-            #line 129 "..\..\Views\History\MediaHistory.cshtml"
+            #line 121 "..\..\Views\History\MediaHistory.cshtml"
                                           Write(MediaGlobalization.MediaHistory_OlderVersions);
 
             
@@ -567,7 +589,7 @@ WriteLiteral(" id=\"bcms-pagecontenthistory-search-btn\"");
 WriteLiteral(">");
 
             
-            #line 131 "..\..\Views\History\MediaHistory.cshtml"
+            #line 123 "..\..\Views\History\MediaHistory.cshtml"
                                                                                 Write(RootGlobalization.Button_Search);
 
             
@@ -582,7 +604,7 @@ WriteLiteral(">\r\n");
 WriteLiteral("                    ");
 
             
-            #line 133 "..\..\Views\History\MediaHistory.cshtml"
+            #line 125 "..\..\Views\History\MediaHistory.cshtml"
                Write(Html.TextBoxFor(m => m.SearchQuery, new { @class = "bcms-field-text", @placeholder = RootGlobalization.WaterMark_Search }));
 
             
@@ -591,7 +613,7 @@ WriteLiteral("                    ");
 WriteLiteral("\r\n                </div>            \r\n            </div>\r\n");
 
             
-            #line 136 "..\..\Views\History\MediaHistory.cshtml"
+            #line 128 "..\..\Views\History\MediaHistory.cshtml"
 
 
             
@@ -599,18 +621,15 @@ WriteLiteral("\r\n                </div>            \r\n            </div>\r\n")
             #line hidden
 WriteLiteral("            <div");
 
-WriteLiteral(" class=\"bcms-history-items-list\"");
+WriteLiteral(" class=\"bcms-history-items-list bcms-history-items-list-media\"");
 
 WriteLiteral(">\r\n");
 
 WriteLiteral("                ");
 
             
-            #line 138 "..\..\Views\History\MediaHistory.cshtml"
-           Write(Html.Grid(Model.Items).Sort(Model.GridOptions).Columns(columns).Attributes(@class => "bcms-tables bcms-history-grid").RenderUsing(new ScrollableEditableHtmlTableGridRenderer<MediaHistoryItem>()
-                                                                                                                                 {
-                                                                                                                                     InternalTableCssClass = "bcms-history-cell"
-                                                                                                                                 }));
+            #line 130 "..\..\Views\History\MediaHistory.cshtml"
+           Write(Html.Grid(Model.Items).Sort(Model.GridOptions).Columns(columns).Attributes(@class => "bcms-tables bcms-history-grid").RenderUsing(new EditableHtmlTableGridRenderer<MediaHistoryItem>()));
 
             
             #line default
@@ -620,7 +639,7 @@ WriteLiteral("\r\n");
 WriteLiteral("                ");
 
             
-            #line 142 "..\..\Views\History\MediaHistory.cshtml"
+            #line 131 "..\..\Views\History\MediaHistory.cshtml"
            Write(Html.HiddenSubmit());
 
             
@@ -629,7 +648,7 @@ WriteLiteral("                ");
 WriteLiteral("\r\n            </div>\r\n");
 
             
-            #line 144 "..\..\Views\History\MediaHistory.cshtml"
+            #line 133 "..\..\Views\History\MediaHistory.cshtml"
         }
 
             

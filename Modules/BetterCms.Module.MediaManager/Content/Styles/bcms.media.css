@@ -51,6 +51,17 @@
   margin-top: 10px;
 }
 
+.bcms-media-re-upload {
+  background: url("data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIyMCIgaGVpZ2h0PSIxOSIgdmlld0JveD0iMCAwIDIwIDE5IiBlbmFibGUtYmFja2dyb3VuZD0ibmV3IDAgMCAyMCAxOSI+PHBhdGggZD0ibTIwIDguOGMwIDUuNi00LjUgMTAuMi0xMCAxMC4yLTUuNSAwLTEwLTQuNi0xMC0xMC4yaDEuN2MwIDQuNyAzLjcgOC41IDguMyA4LjUgNC42IDAgOC4zLTMuOCA4LjMtOC41IDAtMi4xLS44LTQuMS0yLjEtNS42djEuOGgtMS43di01aDV2MS43aC0yLjVjLjEuMS4xLjEuMS4yLjYuNyAxLjIgMS40IDEuNiAyLjMuOSAxLjMgMS4zIDIuOSAxLjMgNC42IiBmaWxsPSIjMGQ3Y2U3Ii8+PC9zdmc+") no-repeat left center;
+  color: #0d7ce7;
+  cursor: pointer;
+  float: right;
+  font-size: 12px;
+  margin-top: 10px;
+  padding-left: 23px;
+  position: relative;
+}
+
 .bcms-alignment-controls > div {
   background: url("images/sprite-media-2.png") no-repeat;
   display: inline-block;
@@ -85,27 +96,6 @@ div.bcms-align-center-active {
 
 div.bcms-align-right-active {
   background-position: -260px 0;
-}
-
-.bcms-media-reupload {
-  color: #0383df;
-  cursor: pointer;
-  float: right;
-  font-size: 13px;
-  margin-top: 10px;
-  padding-left: 18px;
-  position: relative;
-}
-
-.bcms-media-reupload:after {
-  background: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAwAAAAOCAYAAAFsus16AAAA6ElEQVQoz2Ngbr7PAMS5DFAGA4g4BSJYQcQFZGEQ7odxOIH4C7IMCB9E5vxH5oCV8QDxUyRBayC+AWKoI6uE4tkwBgfILCB+BsSfgZgRJlEEdcJJqHPAdtwGYnMkY16BJEGMnVjsOA0i+LFIPEPmrITSnUDsCBPcDnUVCJcihwMjVJABPeiUgPgaEP8F4h1AXA/EDUC8G4j/AfElIFaEaaiCKjTD4jgYtoNqLAFxvgNxOx7FMNwHxG9xSTKj8dmA+DEQr2fAIrEByaMgvy2A8iejpwpQiExHCi6QE5KBWBRbKKHjDlx+AQDr4Bggwk5KagAAAABJRU5ErkJggg==") no-repeat center;
-  content: "";
-  height: 14px;
-  left: 0;
-  margin-top: -5px;
-  position: absolute;
-  top: 50%;
-  width: 12px;
 }
 
 .bcms-file-drop-zone {

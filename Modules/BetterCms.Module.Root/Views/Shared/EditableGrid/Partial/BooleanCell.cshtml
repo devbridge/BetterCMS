@@ -1,7 +1,7 @@
 ﻿@using BetterCms.Module.Root.Content.Resources
 @model BetterCms.Module.Root.Mvc.Grids.EditableGridBooleanColumn
 
-<td style="width: 75px;" @Html.Raw(Model.Attributes)>
+<td style="width: 100px;" @Html.Raw(Model.Attributes)>
     @if (Model.CanBeEdited)
     {
         <input type="checkbox" class="bcms-checkbox-holder bcms-pointer" data-bind="checked: @(Model.ValueBind), enterPress: onSave, afterRender: initInput($element, @Model.ValueBind), escPress: onCancelEdit, visible: isActive() @(!string.IsNullOrEmpty(Model.FocusIdentifier) ? string.Format(", hasfocus: {0}", Model.FocusIdentifier) : string.Empty)" />

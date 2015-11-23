@@ -377,6 +377,10 @@
   overflow: hidden;
 }
 
+.bcms-history-preview-holder-media {
+  height: calc(70vh - 55px);
+}
+
 .bcms-history-preview-data {
   box-sizing: border-box;
   overflow: auto;
@@ -396,13 +400,15 @@
 }
 
 .bcms-history-table-holder {
-  height: calc(40vh - 65px);
+  height: calc(30vh - 65px);
 }
 
 .bcms-history-table-top {
   background-color: #ffffff;
   border-top: 1px solid #dfdfdf;
   border-bottom: 1px solid #dfdfdf;
+  box-sizing: border-box;
+  height: 44px;
   padding: 3px 30px;
 }
 
@@ -410,6 +416,10 @@
   background-color: #ffffff;
   height: calc(30vh - 109px);
   overflow-y: auto;
+}
+
+.bcms-history-items-list-media {
+  height: calc(30vh - 109px);
 }
 
 .bcms-published-state {
@@ -422,6 +432,24 @@
 
 .bcms-archived-state {
   color: #dc4250;
+}
+
+.bcms-history-items-list .bcms-history-grid {
+  border-top: 0;
+  border-right: 0;
+  border-bottom: 1px solid #dfdfdf;
+  border-left: 0;
+  margin: -1px 0 0;
+}
+
+.bcms-history-items-list .bcms-history-grid th:first-child,
+.bcms-history-items-list .bcms-history-grid td:first-child {
+  border-left: 0;
+}
+
+.bcms-history-items-list .bcms-history-grid th:last-child,
+.bcms-history-items-list .bcms-history-grid td:last-child {
+  border-right: 0;
 }
 
 .bcms-top-block-holder {

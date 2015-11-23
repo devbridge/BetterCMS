@@ -45,10 +45,23 @@ $sort-icons: (
 
         &:last-child {
             border-right: $border-th;
+            padding: 0;
         }
     }
 
     tr {
+        &.bcms-table-row-active {
+            td {
+                background-color: $sky-blue;
+            }
+
+            &:nth-child(even) {
+                td {
+                    background-color: $sky-blue;
+                }
+            }
+        }
+
         &:nth-child(even) {
             td {
                 background-color: $bg-td-even;
@@ -85,7 +98,8 @@ $sort-icons: (
         .bcms-action-edit,
         .bcms-action-usage,
         .bcms-action-history,
-        .bcms-action-delete {
+        .bcms-action-delete,
+        .bcms-action-restore {
             display: block;
             margin: auto;
         }
@@ -93,12 +107,6 @@ $sort-icons: (
 }
 
 .bcms-table {
-    &-row-active {
-        > td {
-            background-color: $sky-blue;
-        }
-    }
-
     &-field-helper {
         .bcms-field-wrapper {
             @include span(10.5 no-gutter);
@@ -106,6 +114,8 @@ $sort-icons: (
 
         .bcms-btn-primary {
             @include span(1.5 before);
+            padding: 0;
+            text-align: center;
         }
     }
 
@@ -146,6 +156,7 @@ $sort-icons: (
 //module pages list
 .bcms-list {
     &-pages {
+        background-color: $white;
         border: $border-pop-box;
         margin-top: 20px;
     }

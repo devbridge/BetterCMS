@@ -6,6 +6,8 @@ $history-states: (
                 ('archived', $text-red)
 );
 
+$history-bar-height: 44px;
+
 %history-preview-frame {
     background-color: $bg-modal-options;
     height: calc(70vh - #{$history-preview-box});
@@ -16,12 +18,17 @@ $history-states: (
     &-preview-holder {
         @extend %history-preview-frame;
         overflow: hidden;
+
+        &-media {
+            height: calc(70vh - #{$header-height});
+        }
     }
 
     &-preview-data {
         @extend %history-preview-frame;
         box-sizing: border-box;
         overflow: auto;
+
         padding: 20px 30px;
     }
 
@@ -33,7 +40,7 @@ $history-states: (
     }
 
     &-table-holder {
-        height: calc(40vh - #{$footer-height});
+        height: calc(30vh - #{$footer-height});
     }
 
     &-table-top {
@@ -42,13 +49,19 @@ $history-states: (
             top: $border-thin-smoke;
             bottom: $border-thin-smoke;
         }
+        box-sizing: border-box;
+        height: $history-bar-height;
         padding: 3px 30px;
     }
 
     &-items-list {
         background-color: $white;
-        height: calc(30vh - #{$footer-height + 44px});
+        height: calc(30vh - #{$footer-height + $history-bar-height});
         overflow-y: auto;
+
+        &-media {
+            height: calc(30vh - #{$footer-height + $history-bar-height});
+        }
     }
 }
 
@@ -57,4 +70,27 @@ $history-states: (
         color: $state-color;
     }
 
+}
+
+.bcms-history-grid {
+    .bcms-history-items-list & {
+        border: {
+            top: 0;
+            right: 0;
+            bottom: $border-thin-smoke;
+            left: 0;
+        }
+        margin: -1px 0 0;
+
+        th,
+        td {
+            &:first-child {
+                border-left: 0;
+            }
+
+            &:last-child {
+                border-right: 0;
+            }
+        }
+    }
 }

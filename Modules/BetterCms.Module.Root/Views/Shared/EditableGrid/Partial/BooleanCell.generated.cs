@@ -45,13 +45,13 @@ namespace ASP
         {
 WriteLiteral("<td");
 
-WriteLiteral(" style=\"width: 75px;\"");
+WriteLiteral(" style=\"width: 100px;\"");
 
 WriteLiteral(" ");
 
             
             #line 4 "..\..\Views\Shared\EditableGrid\Partial\BooleanCell.cshtml"
-                    Write(Html.Raw(Model.Attributes));
+                     Write(Html.Raw(Model.Attributes));
 
             
             #line default

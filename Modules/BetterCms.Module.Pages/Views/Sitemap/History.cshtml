@@ -14,13 +14,13 @@
 
 @helper PreviewLink(SitemapHistoryItem item)
 {
-    <a class="bcms-icn-preview" data-id="@item.Id">@RootGlobalization.Button_Preview</a>
+    <div class="bcms-action-usage bcms-js-preview" title="@RootGlobalization.Button_Preview" data-id="@item.Id">@RootGlobalization.Button_Preview</div>
 }
 @helper RestoreLink(SitemapHistoryItem item)
 {
     if (item.CanCurrentUserRestoreIt)
     {
-        <a class="bcms-icn-restore" data-id="@item.Id" data-version="@item.Version">@RootGlobalization.Button_Restore</a>
+        <div class="bcms-action-restore bcms-js-restore" title="@RootGlobalization.Button_Restore" data-id="@item.Id" data-version="@item.Version">@RootGlobalization.Button_Restore</div>
     }
     else
     {
@@ -35,38 +35,33 @@
                .Encode(false)
                .Named("&nbsp;")
                .Sortable(false)
-               .HeaderAttributes(@style => "width: 40px;", @class => "bcms-tables-nohover")
-               .Attributes(@style => "width: 40px;");
+               .HeaderAttributes(@style => "width: 40px; psdding: 0;", @class => "bcms-tables-nohover");
 
         column.For(m => m.SitemapTitle)
                .Named(NavigationGlobalization.SitemapHistory_Column_Title)
-               .SortColumnName("SitemapTitle")
-               .HeaderAttributes(@style => "width: 410px;")
-               .Attributes(@style => "width: 410px;");
+               .SortColumnName("SitemapTitle");
 
         column.For(m => m.ArchivedOn.ToFormattedDateString())
                .Named(NavigationGlobalization.SitemapHistory_Column_ArchivedOn)
                .SortColumnName("ArchivedOn")
-               .HeaderAttributes(@style => "width: 100px;")
-               .Attributes(@style => "width: 100px;");
+               .HeaderAttributes(@style => "width: 130px;");
 
         column.For(m => m.ArchivedByUser)
                .Named(NavigationGlobalization.SitemapHistory_Column_ArchivedBy)
                .SortColumnName("ArchivedByUser")
-               .HeaderAttributes(@style => "width: 100px;")
-               .Attributes(@style => "width: 100px;");
+               .HeaderAttributes(@style => "width: 130px;");
 
         column.For(m => m.StatusName)
                .Named(NavigationGlobalization.SitemapHistory_Column_Status)
                .SortColumnName("StatusName")
                .Encode(false)
-               .HeaderAttributes(@style => "width: 90px;");
+               .HeaderAttributes(@style => "width: 95px;");
 
         column.For(f => RestoreLink(f))
                .Encode(false)
                .Named("&nbsp;")
                .Sortable(false)
-               .HeaderAttributes(@style => "width: 80px;", @class => "bcms-tables-nohover");
+               .HeaderAttributes(@style => "width: 40px; padding: 0;", @class => "bcms-tables-nohover");
     };
 }
 
@@ -91,7 +86,7 @@
                 </div>
 
                 <div class="bcms-history-items-list">
-                    @Html.Grid(Model.Items).Sort(Model.GridOptions).Columns(columns).Attributes(@class => "bcms-tables bcms-history-grid").RenderUsing(new ScrollableEditableHtmlTableGridRenderer<SitemapHistoryItem>() { InternalTableCssClass = "bcms-history-cell" })
+                    @Html.Grid(Model.Items).Sort(Model.GridOptions).Columns(columns).Attributes(@class => "bcms-tables bcms-history-grid").RenderUsing(new EditableHtmlTableGridRenderer<SitemapHistoryItem>())
                     @Html.HiddenSubmit()
                 </div>
             }

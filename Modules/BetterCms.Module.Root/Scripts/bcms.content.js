@@ -279,10 +279,10 @@ bettercms.define('bcms.content', ['bcms.jquery', 'bcms', 'bcms.modal', 'bcms.red
     /**
     * Returns the list with regions, where contents order have changed
     */
-    content.getChangedRegions = function() {
+    content.getChangedRegions = function () {
         var changedRegions = [];
 
-        $.each(pageViewModel.regions, function() {
+        $.each(pageViewModel.regions, function () {
             if (this.isInvisible || !pageViewModel.isRegionVisible(this)) {
                 return;
             }
@@ -290,7 +290,7 @@ bettercms.define('bcms.content', ['bcms.jquery', 'bcms', 'bcms.modal', 'bcms.red
             var regionContents = [],
                 regionViewModel = this;
 
-            $(selectors.regionSortWrappers, regionViewModel.overlay).each(function() {
+            $(selectors.regionSortWrappers, regionViewModel.overlay).each(function () {
                 var viewModel = $(this).data('target');
                 regionContents.push(viewModel);
             });
@@ -326,7 +326,7 @@ bettercms.define('bcms.content', ['bcms.jquery', 'bcms', 'bcms.modal', 'bcms.red
             content: globalization.saveSortChangesConfirmation,
             acceptTitle: globalization.saveSortChanges,
             buttons: [doNotsaveButton],
-            onAccept: function() {
+            onAccept: function () {
                 var changedRegions = content.getChangedRegions(),
                     i;
 
@@ -344,8 +344,8 @@ bettercms.define('bcms.content', ['bcms.jquery', 'bcms', 'bcms.modal', 'bcms.red
     */
     content.turnSortModeOff = function (cancel, confirmChanges, onAfterSave, onAfterTurnOff) {
         var changedRegions = content.getChangedRegions(),
-            turnOffAction = function() {
-                $.each(pageViewModel.regions, function() {
+            turnOffAction = function () {
+                $.each(pageViewModel.regions, function () {
                     if (this.isInvisible || !pageViewModel.isRegionVisible(this)) {
                         return;
                     }
@@ -363,7 +363,7 @@ bettercms.define('bcms.content', ['bcms.jquery', 'bcms', 'bcms.modal', 'bcms.red
                     }
                     regionViewModel.overlay.removeClass(classes.regionSortOverlay);
 
-                    $(selectors.regionSortWrappers, regionViewModel.overlay).each(function() {
+                    $(selectors.regionSortWrappers, regionViewModel.overlay).each(function () {
                         var viewModel = $(this).data('target');
                         regionContents.push(viewModel);
 
@@ -374,7 +374,7 @@ bettercms.define('bcms.content', ['bcms.jquery', 'bcms', 'bcms.modal', 'bcms.red
                         regionViewModel.setContents(regionContents);
                     }
 
-                    $.each(regionContents, function() {
+                    $.each(regionContents, function () {
                         if (this.isInvisible) {
                             return;
                         }
@@ -410,7 +410,7 @@ bettercms.define('bcms.content', ['bcms.jquery', 'bcms', 'bcms.modal', 'bcms.red
     /**
     * Turns region content sorting mode ON:
     */
-    content.turnSortModeOn = function() {
+    content.turnSortModeOn = function () {
         isSortMode = true;
 
         $.each(pageViewModel.regions, function () {
@@ -497,7 +497,7 @@ bettercms.define('bcms.content', ['bcms.jquery', 'bcms', 'bcms.modal', 'bcms.red
     /**
     * Page region view model
     */
-    content.RegionViewModel = function(regionStart, regionEnd, regionContents, parentRegionId, parentPageContentId) {
+    content.RegionViewModel = function (regionStart, regionEnd, regionContents, parentRegionId, parentPageContentId) {
         var self = this;
 
         self.id = null;
@@ -525,7 +525,7 @@ bettercms.define('bcms.content', ['bcms.jquery', 'bcms', 'bcms.modal', 'bcms.red
         self.width = 0;
         self.height = 0;
 
-        self.recalculatePositions = function() {
+        self.recalculatePositions = function () {
             var positions = calculatePositions(self.regionStart, self.regionEnd);
 
             self.left = positions.left;
@@ -543,7 +543,7 @@ bettercms.define('bcms.content', ['bcms.jquery', 'bcms', 'bcms.modal', 'bcms.red
             }
         };
 
-        self.initializeRegion = function() {
+        self.initializeRegion = function () {
 
             if (self.parentRegionId && !self.parentRegion) {
                 for (i = 0; i < pageViewModel.regions.length; i++) {
@@ -564,7 +564,7 @@ bettercms.define('bcms.content', ['bcms.jquery', 'bcms', 'bcms.modal', 'bcms.red
                 }
             }
 
-            self.onAddHtml = function(onSuccess, includeChildRegions) {
+            self.onAddHtml = function (onSuccess, includeChildRegions) {
                 bcms.trigger(bcms.events.addPageContent, {
                     regionViewModel: self,
                     onSuccess: onSuccess,
@@ -626,13 +626,13 @@ bettercms.define('bcms.content', ['bcms.jquery', 'bcms', 'bcms.modal', 'bcms.red
 
                     isOpenedAddContent = true;
                     suspendCloseAddContent = true;
-                    setTimeout(function() {
+                    setTimeout(function () {
                         suspendCloseAddContent = false;
                     }, 100);
                 }
             });
 
-            $(selectors.regionAddMarkdownButtons, self.overlay).on('click', function() {
+            $(selectors.regionAddMarkdownButtons, self.overlay).on('click', function () {
                 self.onAddMarkdown();
             });
 
@@ -648,26 +648,26 @@ bettercms.define('bcms.content', ['bcms.jquery', 'bcms', 'bcms.modal', 'bcms.red
                 self.onInsertWidget();
             });
 
-            $(selectors.regionSortButtons, self.overlay).on('click', function() {
+            $(selectors.regionSortButtons, self.overlay).on('click', function () {
                 content.turnSortModeOn();
             });
 
-            $(selectors.regionTreeButtons, self.overlay).on('click', function() {
+            $(selectors.regionTreeButtons, self.overlay).on('click', function () {
                 bcms.trigger(bcms.events.editContentsTree, {
                     pageViewModel: pageViewModel
                 });
             });
 
-            $(selectors.regionSortDoneButtons, self.overlay).on('click', function() {
+            $(selectors.regionSortDoneButtons, self.overlay).on('click', function () {
                 content.turnSortModeOff(false, false);
             });
 
-            $(selectors.regionSortCancelButtons, self.overlay).on('click', function() {
+            $(selectors.regionSortCancelButtons, self.overlay).on('click', function () {
                 content.cancelSortMode();
             });
         };
 
-        self.setContents = function(changedContents) {
+        self.setContents = function (changedContents) {
             self.contents = changedContents;
         };
     };
@@ -1060,6 +1060,7 @@ bettercms.define('bcms.content', ['bcms.jquery', 'bcms', 'bcms.modal', 'bcms.red
     function MasterPagesPathModel() {
         var self = this,
             pathContainer = $(selectors.masterPagesPathContainer),
+            pathContainerHeight = pathContainer.outerHeight(),
             innerContainer = pathContainer.find(selectors.masterPagesPathInnerContainer),
             handle = pathContainer.find(selectors.masterPagesPathHandler),
             leftSlider = pathContainer.find(selectors.masterPagesPathSliderLeft),
@@ -1090,19 +1091,19 @@ bettercms.define('bcms.content', ['bcms.jquery', 'bcms', 'bcms.modal', 'bcms.red
             }
 
             if (isVisible == 1) {
-                pathContainer.removeClass(classes.masterPagesPathToggler);
+                pathContainer.addClass(classes.masterPagesPathToggler);
                 handle.html(globalization.hideMasterPagesPath);
             } else {
-                pathContainer.addClass(classes.masterPagesPathToggler);
+                pathContainer.removeClass(classes.masterPagesPathToggler);
                 handle.html(globalization.showMasterPagesPath);
             }
         }
 
         function onHandleClick() {
             if (pathContainer.hasClass(classes.masterPagesPathToggler)) {
-                setPathVisibility(1);
-            } else {
                 setPathVisibility(0);
+            } else {
+                setPathVisibility(1);
             }
         }
 
@@ -1306,7 +1307,7 @@ bettercms.define('bcms.content', ['bcms.jquery', 'bcms', 'bcms.modal', 'bcms.red
             return div;
         };
 
-        self.removeParentContents = function() {
+        self.removeParentContents = function () {
             if (currentPage && $.isFunction(currentPage.click)) {
                 currentPage.click();
             }

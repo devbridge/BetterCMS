@@ -21,10 +21,10 @@ bettercms.define('bcms.blog.filter', ['bcms.jquery', 'bcms', 'bcms.ko.extenders'
         filter.links = links;
         filter.globalization = globalization;
 
-        function FilterViewModel(tagsViewModel, categoriesViewModel, container, onSearchClick, jsonData) {
+        function FilterViewModel(tagsViewModel, categoriesViewModel, container, onSearchClick, jsonData, isClearFilterResult) {
             var self = this;
             
-            self.isVisible = ko.observable(false);
+            self.isVisible = ko.observable(isClearFilterResult);
             self.tags = tagsViewModel;
             self.categories = categoriesViewModel;
             self.includeArchived = ko.observable(false);
@@ -63,9 +63,9 @@ bettercms.define('bcms.blog.filter', ['bcms.jquery', 'bcms', 'bcms.ko.extenders'
             self.closeFilter = function () {
                 self.isVisible(false);
             };
-            self.searchWithFilter = function () {
+            self.searchWithFilter = function (isClearFilterResult) {
                 if ($.isFunction(onSearchClick)) {
-                    onSearchClick();
+                    onSearchClick(isClearFilterResult);
                 }
             };
             self.clearFilter = function () {
@@ -75,7 +75,7 @@ bettercms.define('bcms.blog.filter', ['bcms.jquery', 'bcms', 'bcms.ko.extenders'
                 self.languageId('');
                 self.status('');
                 self.seoStatus('');
-                self.searchWithFilter();
+                self.searchWithFilter(true);
             };
 
             self.changeIncludeArchived = function () {
@@ -83,10 +83,10 @@ bettercms.define('bcms.blog.filter', ['bcms.jquery', 'bcms', 'bcms.ko.extenders'
             };
         }
 
-        filter.bind = function (container, jsonData, onSearchClick) {
+        filter.bind = function (container, jsonData, onSearchClick, isClearFilterResult) {
             var tagsViewModel = new tags.TagsListViewModel(jsonData.Tags),
                 categoriesViewModel = new categories.CategoriesSelectListModel(jsonData.Categories),
-                filterViewModel = new FilterViewModel(tagsViewModel, categoriesViewModel, container, onSearchClick, jsonData);
+                filterViewModel = new FilterViewModel(tagsViewModel, categoriesViewModel, container, onSearchClick, jsonData, isClearFilterResult);
 
             filterViewModel.includeArchived(jsonData.IncludeArchived ? true : false);
             categories.initCategoriesSelect(categoriesViewModel, jsonData.CategoriesLookupList);
