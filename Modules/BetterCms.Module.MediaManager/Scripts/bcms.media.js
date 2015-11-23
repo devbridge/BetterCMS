@@ -442,7 +442,7 @@ function ($, bcms, modal, siteSettings, forms, dynamicContent, messages, mediaUp
 
         self.searchMedia = function () {
             self.gridOptions().paging.pageNumber(1);
-            self.gridOptions().closeFilter();
+            //self.gridOptions().closeFilter();
             self.loadMedia();
         };
 
