@@ -1,3 +1,7 @@
+$toolbar-height: 40px;
+$editor-border: 1px solid #c6c6c6;
+$editor-collapser-border: 1px solid $dark-main;
+
 $ck-toolbar-icons: (
                 ('redo_icon', $bcms-editor-redo),
                 ('undo_icon', $bcms-editor-undo),
@@ -66,7 +70,7 @@ $ck-toolbar-icons: (
 .cke {
     &_chrome {
         background-color: $white;
-        border: $border-thin-smoke;
+        border: $editor-border;
         display: block;
         visibility: inherit !important;
     }
@@ -83,10 +87,9 @@ $ck-toolbar-icons: (
     }
 
     &_top {
-        background-color: $smoke;
-        border-bottom: $border-thin-smoke;
-        min-height: 13px;
-        padding: 6px 8px 0;
+        background-color: $white;
+        border-bottom: $editor-border;
+        min-height: $toolbar-height;
         position: relative;
         white-space: normal;
     }
@@ -133,35 +136,30 @@ $ck-toolbar-icons: (
 
 //module editor toolbar
 .cke_toolbar {
+    border-right: $editor-border;
     float: left;
-    margin-bottom: 6px;
 }
 
 .cke_toolgroup {
-    background-color: $smoke;
-    border: $border-thin-smoke;
-    float: left;
-    margin-right: 6px;
+
 }
 
 .cke_button {
-    background-color: $smoke;
+    @include transition(opacity 200ms);
+    @include size(35px $toolbar-height);
+    box-sizing: border-box;
     cursor: pointer;
     float: left;
-    height: 18px;
+    opacity: 1;
     outline: none;
     padding: 4px 6px;
 
     &:hover {
-        background-color: darken($smoke, 10%);
+        opacity: .8;
     }
 
     &_on {
-        box-shadow: inset 0 0 7px rgba($black, .5);
 
-        &:hover {
-            background-color: $smoke;
-        }
     }
 
     &_off {
@@ -172,19 +170,17 @@ $ck-toolbar-icons: (
         opacity: .3;
 
         &:hover {
-            background-color: $smoke;
         }
     }
 
     &_icon {
+        @include size(100%);
         background: {
             repeat: no-repeat;
             position: center !important;
         }
         display: block;
         float: left;
-        height: 18px;
-        width: 18px;
     }
 
     &_label {
@@ -210,34 +206,26 @@ $ck-toolbar-icons: (
 }
 
 .cke_toolbox_collapser {
-    @include position(absolute, null 8px 6px null);
-    @include size(12px 11px);
-    background-color: $smoke;
-    border: $border-thin-smoke;
+    @include position(absolute, 13px 17px null null);
+    @include size(15px);
+    border: $editor-collapser-border;
+    border-radius: 2px;
+    box-sizing: border-box;
     cursor: pointer;
     overflow: hidden;
     text-align: center;
 
     .cke_arrow {
-        @include size(0);
+        @include size(100%);
+        background: url($bcms-editor-open) no-repeat center;
         display: block;
-        margin: 1px auto 0;
         overflow: hidden;
         text-indent: -999em;
-        border: {
-            style: solid;
-            width: 3px;
-            color: transparent transparent $text-gray transparent;
-        }
     }
 
     &_min {
         .cke_arrow {
-            margin-top: 4px;
-            border: {
-                bottom-color: transparent;
-                top-color: $text-gray;
-            }
+            background-image: url($bcms-editor-close);
         }
     }
 }
@@ -523,19 +511,22 @@ a {
     }
 
     &_button {
-        background-color: $smoke;
-        border: $border-thin-smoke;
+        background-color: $white;
         box-sizing: border-box;
         cursor: pointer;
         float: left;
-        height: 28px;
+        height: $toolbar-height;
     }
 
     &_text {
         @include vertical-align();
         color: $text-gray;
-        font-size: 12px;
-        line-height: 26px;
+        font: {
+            family: $font-base-family;
+            size: 14px;
+            weight: 400;
+        }
+        line-height: $toolbar-height;
         padding: 0 10px;
         white-space: nowrap;
 

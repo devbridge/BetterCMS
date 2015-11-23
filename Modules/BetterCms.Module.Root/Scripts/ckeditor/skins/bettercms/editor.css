@@ -25,7 +25,7 @@
 
 .cke_chrome {
   background-color: #ffffff;
-  border: 1px solid #dfdfdf;
+  border: 1px solid #c6c6c6;
   display: block;
   visibility: inherit !important;
 }
@@ -42,10 +42,9 @@
 }
 
 .cke_top {
-  background-color: #f5f5f5;
-  border-bottom: 1px solid #dfdfdf;
-  min-height: 13px;
-  padding: 6px 8px 0;
+  background-color: #ffffff;
+  border-bottom: 1px solid #c6c6c6;
+  min-height: 40px;
   position: relative;
   white-space: normal;
 }
@@ -91,53 +90,39 @@
 }
 
 .cke_toolbar {
+  border-right: 1px solid #c6c6c6;
   float: left;
-  margin-bottom: 6px;
-}
-
-.cke_toolgroup {
-  background-color: #f5f5f5;
-  border: 1px solid #dfdfdf;
-  float: left;
-  margin-right: 6px;
 }
 
 .cke_button {
-  background-color: #f5f5f5;
+  -webkit-transition: opacity 200ms;
+  -moz-transition: opacity 200ms;
+  transition: opacity 200ms;
+  height: 40px;
+  width: 35px;
+  box-sizing: border-box;
   cursor: pointer;
   float: left;
-  height: 18px;
+  opacity: 1;
   outline: none;
   padding: 4px 6px;
 }
 
 .cke_button:hover {
-  background-color: gainsboro;
-}
-
-.cke_button_on {
-  box-shadow: inset 0 0 7px rgba(0, 0, 0, 0.5);
-}
-
-.cke_button_on:hover {
-  background-color: #f5f5f5;
+  opacity: .8;
 }
 
 .cke_button_disabled {
   opacity: .3;
 }
 
-.cke_button_disabled:hover {
-  background-color: #f5f5f5;
-}
-
 .cke_button_icon {
+  height: 100%;
+  width: 100%;
   background-repeat: no-repeat;
   background-position: center !important;
   display: block;
   float: left;
-  height: 18px;
-  width: 18px;
 }
 
 .cke_button_label {
@@ -162,33 +147,29 @@
 
 .cke_toolbox_collapser {
   position: absolute;
-  right: 8px;
-  bottom: 6px;
-  height: 11px;
-  width: 12px;
-  background-color: #f5f5f5;
-  border: 1px solid #dfdfdf;
+  top: 13px;
+  right: 17px;
+  height: 15px;
+  width: 15px;
+  border: 1px solid #303646;
+  border-radius: 2px;
+  box-sizing: border-box;
   cursor: pointer;
   overflow: hidden;
   text-align: center;
 }
 
 .cke_toolbox_collapser .cke_arrow {
-  height: 0;
-  width: 0;
+  height: 100%;
+  width: 100%;
+  background: url("data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0idXRmLTgiPz4KPCEtLSBHZW5lcmF0b3I6IEF2b2NvZGUgMi40LjUgLSBodHRwOi8vYXZvY29kZS5jb20gLS0+CjxzdmcgaGVpZ2h0PSI2IiB3aWR0aD0iMTAiIHhtbG5zOnhsaW5rPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5L3hsaW5rIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAxMCA2Ij4KICAgIDxwYXRoIGZpbGw9IiMzMDM2NDYiIGZpbGwtcnVsZT0iZXZlbm9kZCIgZD0iTSA4LjAyIDAuMiBDIDguMjkgLTAuMDcgOC43MyAtMC4wNyA5IDAuMiBDIDkuMjcgMC40NyA5LjI3IDAuOSA5IDEuMTcgTCA1LjA5IDUgQyA0LjgyIDUuMjcgNC4zOCA1LjI3IDQuMTEgNSBMIDAuMiAxLjE3IEMgLTAuMDcgMC45IC0wLjA3IDAuNDcgMC4yIDAuMiBDIDAuNDcgLTAuMDcgMC45MSAtMC4wNyAxLjE4IDAuMiBMIDQuNiAzLjM0IEwgOC4wMiAwLjIgWiBNIDguMDIgMC4yIiAvPgo8L3N2Zz4=") no-repeat center;
   display: block;
-  margin: 1px auto 0;
   overflow: hidden;
   text-indent: -999em;
-  border-style: solid;
-  border-width: 3px;
-  border-color: transparent transparent #636363 transparent;
 }
 
 .cke_toolbox_collapser_min .cke_arrow {
-  margin-top: 4px;
-  border-bottom-color: transparent;
-  border-top-color: #636363;
+  background-image: url("data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxMCIgaGVpZ2h0PSIxMCIgdmlld0JveD0iMCAwIDEwIDEwIiBlbmFibGUtYmFja2dyb3VuZD0ibmV3IDAgMCAxMCAxMCI+CiA8cGF0aCBmaWxsPSIjNDc0NzQ3IiBkPSJtOS45IDEuMTdjLjEzLjEzLjEzLjQgMCAuNTRsLTMuMDIgMy4wMmMtLjEzLjEzLS4xMy40IDAgLjU0bDMuMDIgMy4wMmMuMTMuMTMuMTMuNCAwIC41NGwtMS4wNyAxLjA3Yy0uMTMuMTMtLjQuMTMtLjU0IDBsLTMuMDItMy4wMmMtLjEzLS4xMy0uNC0uMTMtLjU0IDBsLTMuMDIgMy4wMmMtLjEzLjEzLS40LjEzLS41NCAwbC0xLjA3LTEuMDdjLS4xMy0uMTMtLjEzLS40IDAtLjU0bDMuMDItMy4wMmMuMTMtLjEzLjEzLS40IDAtLjU0bC0zLjAyLTMuMDJjLS4xMy0uMTMtLjEzLS40IDAtLjU0bDEuMDctMS4wN2MuMTMtLjEzLjQtLjEzLjU0IDBsMy4wMiAzLjAyYy4xMy4xMy40LjEzLjU0IDBsMy4wMi0zLjAyYy4xMy0uMTMuNC0uMTMuNTQgMGwxLjA3IDEuMDciLz4KPC9zdmc+Cg==");
 }
 
 .cke_toolbar_break {
@@ -458,20 +439,21 @@ a.cke_specialchar:hover {
 }
 
 .cke_combo_button {
-  background-color: #f5f5f5;
-  border: 1px solid #dfdfdf;
+  background-color: #ffffff;
   box-sizing: border-box;
   cursor: pointer;
   float: left;
-  height: 28px;
+  height: 40px;
 }
 
 .cke_combo_text {
   display: inline-block;
   vertical-align: middle;
   color: #636363;
-  font-size: 12px;
-  line-height: 26px;
+  font-family: "Open Sans", sans-serif !important;
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 40px;
   padding: 0 10px;
   white-space: nowrap;
 }
