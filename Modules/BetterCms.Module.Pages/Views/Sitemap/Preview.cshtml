@@ -1,20 +1,16 @@
 ﻿@using BetterCms.Module.Pages.Content.Resources
 @using BetterCms.Module.Pages.ViewModels.Sitemap
 @model SitemapViewModel
-
 <div class="bcms-top-block-holder" data-bind="with: sitemap">
     <div style="display: none;" data-bind="visible: showLanguages, with: language">
-        <div class="bcms-filter-text">Edit sitemap in language:</div>
+        <div class="bcms-filter-text">@NavigationGlobalization.Sitemap_EditDialog_LanguageSelectionTitle</div>
         <div class="bcms-field-wrapper">
             <select data-bind="options: languages, optionsText: 'value', optionsValue: 'key', value: languageId, select2: { minimumResultsForSearch: -1 }"></select>
         </div>
     </div>
 </div>
-
 <div class="bcms-content-dialog-title" data-bind="with: sitemap">
     <div class="bcms-tree-expander bcms-tree-expander-close" data-bind="click: callExpandOrCollapse, css: { 'bcms-tree-expander-close' : allNodesExpanded()}, text: allNodesExpanded() ? '@PagesGlobalization.CategoryTree_Button_CollapseAll' : '@PagesGlobalization.CategoryTree_Button_ExpandAll'"></div>
 </div>
-
 @Html.Partial("Partial/Sitemap", new SitemapNodeViewModel())
-
 @Html.Partial("Partial/SitemapTemplate", new SitemapNodeViewModel())

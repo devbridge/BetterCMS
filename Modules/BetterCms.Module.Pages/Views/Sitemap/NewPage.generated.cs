@@ -67,7 +67,7 @@ namespace ASP
         }
         public override void Execute()
         {
-WriteLiteral("\r\n<div");
+WriteLiteral("<div");
 
 WriteLiteral(" class=\"bcms-tab-header bcms-js-tab-header\"");
 
@@ -96,7 +96,7 @@ WriteLiteral(" class=\"bcms-sitemaps-arrow-right\"");
 WriteLiteral(" data-bind=\"css: { \'bcms-sitemaps-arrow-inactive\': !slider.canSlideRight() }, cli" +
 "ck: slider.slideRight, visible: slider.showSliders\"");
 
-WriteLiteral("></div>\r\n    </div>\r\n</div>\r\n\r\n<div");
+WriteLiteral("></div>\r\n    </div>\r\n</div>\r\n<div");
 
 WriteLiteral(" class=\"bcms-modal-frame-holder\"");
 
@@ -109,13 +109,13 @@ WriteLiteral(">\r\n");
 WriteLiteral("    ");
 
             
-            #line 18 "..\..\Views\Sitemap\NewPage.cshtml"
+            #line 16 "..\..\Views\Sitemap\NewPage.cshtml"
 Write(Html.MessagesBox());
 
             
             #line default
             #line hidden
-WriteLiteral("\r\n\r\n    <div");
+WriteLiteral("\r\n    <div");
 
 WriteLiteral(" class=\"bcms-window-tabbed-options\"");
 
@@ -141,7 +141,16 @@ WriteLiteral(">\r\n                        <div");
 
 WriteLiteral(" class=\"bcms-content-titles\"");
 
-WriteLiteral(">Edit sitemap in language:</div>\r\n                        <div");
+WriteLiteral(">");
+
+            
+            #line 23 "..\..\Views\Sitemap\NewPage.cshtml"
+                                                    Write(NavigationGlobalization.Sitemap_EditDialog_LanguageSelectionTitle);
+
+            
+            #line default
+            #line hidden
+WriteLiteral("</div>\r\n                        <div");
 
 WriteLiteral(" class=\"bcms-field-wrapper\"");
 
@@ -151,7 +160,7 @@ WriteLiteral(" data-bind=\"options: languages, optionsText: \'value\', optionsVa
 " languageId, select2: { minimumResultsForSearch: -1 }\"");
 
 WriteLiteral("></select>\r\n                        </div>\r\n                    </div>\r\n         " +
-"       </div>\r\n            </div>\r\n            <!-- /ko -->\r\n\r\n            <div");
+"       </div>\r\n            </div>\r\n            <!-- /ko -->\r\n            <div");
 
 WriteLiteral(" class=\"bcms-content-dialog-title\"");
 
@@ -162,7 +171,7 @@ WriteLiteral(" class=\"bcms-content-titles-helper\"");
 WriteLiteral(">");
 
             
-            #line 37 "..\..\Views\Sitemap\NewPage.cshtml"
+            #line 33 "..\..\Views\Sitemap\NewPage.cshtml"
                                                    Write(NavigationGlobalization.Sitemap_AddNewPageDialog_PageNodeHeader);
 
             
@@ -176,7 +185,7 @@ WriteLiteral(" class=\"bcms-content-titles-helper\"");
 WriteLiteral(">");
 
             
-            #line 40 "..\..\Views\Sitemap\NewPage.cshtml"
+            #line 36 "..\..\Views\Sitemap\NewPage.cshtml"
                                                    Write(NavigationGlobalization.Sitemap_AddNewPageDialog_PageNodeFooter);
 
             
@@ -191,7 +200,7 @@ WriteLiteral(" data-bind=\"click: callExpandOrCollapse, css: { \'bcms-tree-expan
 "odesExpanded()}, text: allNodesExpanded() ? \'");
 
             
-            #line 43 "..\..\Views\Sitemap\NewPage.cshtml"
+            #line 39 "..\..\Views\Sitemap\NewPage.cshtml"
                                                                                                                                                                                                  Write(PagesGlobalization.CategoryTree_Button_CollapseAll);
 
             
@@ -200,7 +209,7 @@ WriteLiteral(" data-bind=\"click: callExpandOrCollapse, css: { \'bcms-tree-expan
 WriteLiteral("\' : \'");
 
             
-            #line 43 "..\..\Views\Sitemap\NewPage.cshtml"
+            #line 39 "..\..\Views\Sitemap\NewPage.cshtml"
                                                                                                                                                                                                                                                          Write(PagesGlobalization.CategoryTree_Button_ExpandAll);
 
             
@@ -208,7 +217,7 @@ WriteLiteral("\' : \'");
             #line hidden
 WriteLiteral("\'\"");
 
-WriteLiteral("></div>\r\n                <!-- /ko -->\r\n            </div>\r\n\r\n            <div");
+WriteLiteral("></div>\r\n                <!-- /ko -->\r\n            </div>\r\n            <div");
 
 WriteLiteral(" class=\"bcms-tree-zones-holder\"");
 
@@ -236,7 +245,7 @@ WriteLiteral(" class=\"bcms-drop-button\"");
 WriteLiteral(">");
 
             
-            #line 53 "..\..\Views\Sitemap\NewPage.cshtml"
+            #line 48 "..\..\Views\Sitemap\NewPage.cshtml"
                                                      Write(NavigationGlobalization.Sitemap_AddNewPageDialog_DragButton);
 
             
@@ -249,7 +258,7 @@ WriteLiteral(" class=\"bcms-content-titles\"");
 WriteLiteral(">");
 
             
-            #line 54 "..\..\Views\Sitemap\NewPage.cshtml"
+            #line 49 "..\..\Views\Sitemap\NewPage.cshtml"
                                                         Write(NavigationGlobalization.Sitemap_AddNewPageDialog_PageName);
 
             
@@ -268,7 +277,7 @@ WriteLiteral(" class=\"bcms-content-titles\"");
 WriteLiteral(">");
 
             
-            #line 56 "..\..\Views\Sitemap\NewPage.cshtml"
+            #line 51 "..\..\Views\Sitemap\NewPage.cshtml"
                                                         Write(NavigationGlobalization.Sitemap_AddNewPageDialog_PageUrl);
 
             
@@ -294,14 +303,14 @@ WriteLiteral(" class=\"bcms-content-titles\"");
 WriteLiteral(">");
 
             
-            #line 61 "..\..\Views\Sitemap\NewPage.cshtml"
+            #line 56 "..\..\Views\Sitemap\NewPage.cshtml"
                                                 Write(NavigationGlobalization.Sitemap_AddNewPageDialog_UndoMessage);
 
             
             #line default
             #line hidden
-WriteLiteral("</div>\r\n                    <!-- /ko -->\r\n                    <!-- /ko -->\r\n\r\n   " +
-"                 <div");
+WriteLiteral("</div>\r\n                    <!-- /ko -->\r\n                    <!-- /ko -->\r\n     " +
+"               <div");
 
 WriteLiteral(" class=\"bcms-btn-main\"");
 
@@ -310,13 +319,13 @@ WriteLiteral(" data-bind=\"click: skipClicked, visible: !linkIsDropped()\"");
 WriteLiteral(">");
 
             
-            #line 65 "..\..\Views\Sitemap\NewPage.cshtml"
+            #line 59 "..\..\Views\Sitemap\NewPage.cshtml"
                                                                                                     Write(NavigationGlobalization.Sitemap_AddNewPageDialog_SkipButton);
 
             
             #line default
             #line hidden
-WriteLiteral("</div>\r\n                </div>\r\n\r\n                <div");
+WriteLiteral("</div>\r\n                </div>\r\n                <div");
 
 WriteLiteral(" class=\"bcms-tree-drop-area-ui\"");
 
@@ -329,13 +338,13 @@ WriteLiteral(">\r\n                        ");
 WriteLiteral("\r\n");
 
             
-            #line 71 "..\..\Views\Sitemap\NewPage.cshtml"
+            #line 64 "..\..\Views\Sitemap\NewPage.cshtml"
                         
             
             #line default
             #line hidden
             
-            #line 71 "..\..\Views\Sitemap\NewPage.cshtml"
+            #line 64 "..\..\Views\Sitemap\NewPage.cshtml"
                          using (Html.BeginForm<SitemapController>(f => f.SaveSitemap(null), FormMethod.Post, new { @class = "bcms-sitemap-form bcms-ajax-form" }))
                         {
                             
@@ -343,14 +352,14 @@ WriteLiteral("\r\n");
             #line default
             #line hidden
             
-            #line 73 "..\..\Views\Sitemap\NewPage.cshtml"
+            #line 66 "..\..\Views\Sitemap\NewPage.cshtml"
                        Write(Html.Partial("Partial/Sitemap", new SitemapNodeViewModel()));
 
             
             #line default
             #line hidden
             
-            #line 73 "..\..\Views\Sitemap\NewPage.cshtml"
+            #line 66 "..\..\Views\Sitemap\NewPage.cshtml"
                                                                                         
                         }
 
@@ -358,17 +367,15 @@ WriteLiteral("\r\n");
             #line default
             #line hidden
 WriteLiteral("                    </div>\r\n                </div>\r\n            </div>\r\n        <" +
-"/div>\r\n    </div>\r\n</div>\r\n\r\n");
+"/div>\r\n    </div>\r\n</div>\r\n");
 
             
-            #line 82 "..\..\Views\Sitemap\NewPage.cshtml"
+            #line 74 "..\..\Views\Sitemap\NewPage.cshtml"
 Write(Html.Partial("Partial/SitemapTemplate", new SitemapNodeViewModel()));
 
             
             #line default
             #line hidden
-WriteLiteral("\r\n");
-
         }
     }
 }

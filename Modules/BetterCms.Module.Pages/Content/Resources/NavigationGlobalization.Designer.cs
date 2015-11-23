@@ -241,6 +241,15 @@ namespace BetterCms.Module.Pages.Content.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Edit menu in language:.
+        /// </summary>
+        public static string Sitemap_EditDialog_LanguageSelectionTitle {
+            get {
+                return ResourceManager.GetString("Sitemap_EditDialog_LanguageSelectionTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Drag &amp; Drop your page where you want to place it..
         /// </summary>
         public static string Sitemap_EditDialog_PageLink_Header {
