@@ -156,7 +156,7 @@
                     <!--  ko if: !isProcessing() && !isDeleting() && !isReadOnly() -->
                     <div class="bcms-action-menu" data-bind="click: $parent.toggleMenu, clickBubble: false">Menu</div>
 
-                    <div class="bcms-media-context" data-bind="visible: isMenuOpen">
+                    <div class="bcms-media-context" data-bind="visible: isMenuOpen, css: isMenuAbove() ? 'bcms-tooltip-br' : 'bcms-tooltip-tr'">
                         <div class="bcms-media-context-block">
                         <div class="bcms-media-context-column">
                         <!--  ko if: isProcessing() -->

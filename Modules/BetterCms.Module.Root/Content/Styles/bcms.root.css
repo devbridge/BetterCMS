@@ -1912,6 +1912,15 @@ td .bcms-field-wrapper {
   width: 35%;
 }
 
+.bcms-filter-selection-block .bcms-checkbox-block {
+  float: left;
+}
+
+.bcms-filter-selection-block .bcms-checkbox-block .bcms-checkbox-holder {
+  float: none;
+  width: auto;
+}
+
 .bcms-checkbox-holder {
   color: #303646;
   font-size: 12px;
