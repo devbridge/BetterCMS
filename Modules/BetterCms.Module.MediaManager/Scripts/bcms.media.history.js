@@ -12,12 +12,12 @@ bettercms.define('bcms.media.history', ['bcms.jquery', 'bcms', 'bcms.modal', 'bc
         },
         
         selectors = {
-            gridRestoreLinks: '#bcms-pagecontenthistory-form .bcms-history-cell a.bcms-icn-restore',
-            gridDownloadLinks: '#bcms-pagecontenthistory-form .bcms-history-cell a.bcms-icn-download',
-            gridCells: '#bcms-pagecontenthistory-form .bcms-history-cell tbody td',
+            gridRestoreLinks: '#bcms-pagecontenthistory-form tr a.bcms-icn-restore',
+            gridDownloadLinks: '#bcms-pagecontenthistory-form tr a.bcms-icn-download',
+            gridCells: '#bcms-pagecontenthistory-form tr td',
             gridRowPreviewLink: 'a.bcms-icn-preview:first',
             firstRow: 'tr:first',
-            gridRows: '#bcms-pagecontenthistory-form .bcms-history-cell tbody tr',
+            gridRows: '#bcms-pagecontenthistory-form tr',
             versionPreviewContainer: '#bcms-history-preview',
             versionPreviewLoaderContainer: '.bcms-history-preview',
             mediaHistoryForm: '#bcms-pagecontenthistory-form',

@@ -135,10 +135,7 @@
             </div>
 
             <div class="bcms-history-items-list">
-                @Html.Grid(Model.Items).Sort(Model.GridOptions).Columns(columns).Attributes(@class => "bcms-tables bcms-history-grid").RenderUsing(new ScrollableEditableHtmlTableGridRenderer<MediaHistoryItem>()
-                                                                                                                                 {
-                                                                                                                                     InternalTableCssClass = "bcms-history-cell"
-                                                                                                                                 })
+                @Html.Grid(Model.Items).Sort(Model.GridOptions).Columns(columns).Attributes(@class => "bcms-tables bcms-history-grid").RenderUsing(new EditableHtmlTableGridRenderer<MediaHistoryItem>())
                 @Html.HiddenSubmit()
             </div>
         }
