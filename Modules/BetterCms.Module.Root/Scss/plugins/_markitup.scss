@@ -3,22 +3,21 @@ $editor-border: 1px solid #c6c6c6;
 $editor-collapser-border: 1px solid $dark-main;
 
 $toolbar-icons: (
-                ('H1', $bcms-toolbar-h1),
-                ('H2', $bcms-toolbar-h2),
-                ('H3', $bcms-toolbar-h3),
-                ('H4', $bcms-toolbar-h4),
-                ('H5', $bcms-toolbar-h5),
-                ('H6', $bcms-toolbar-h6),
+                ('H1', $bcms-editor-h1),
+                ('H2', $bcms-editor-h2),
+                ('H3', $bcms-editor-h3),
+                ('H4', $bcms-editor-h4),
+                ('H5', $bcms-editor-h5),
+                ('H6', $bcms-editor-h6),
                 ('Bold', $bcms-editor-bold),
                 ('Italic', $bcms-editor-italic),
                 ('ListBullet', $bcms-editor-bullet-list),
                 ('ListNumeric', $bcms-editor-number-list),
                 ('Picture', $bcms-editor-cms-image),
                 ('Link', $bcms-editor-link),
-            // ('Quotes', $bcms-editor-blockquote),
+                ('Quotes', $bcms-editor-block-quote),
                 ('Code', $bcms-editor-source),
                 ('Widget', $bcms-editor-cms-widget),
-                ('WidgetOption', $bcms-editor-cms-widget),
                 ('Option', $bcms-editor-cms-option)
 );
 
@@ -47,28 +46,6 @@ textarea {
     }
 }
 
-//module buttons override
-.markItUpButton {
-    &:hover {
-        opacity: .8;
-    }
-
-    &WidgetOption {
-        a {
-            background-position: 5px center;
-            padding-left: 25px !important;
-            text-indent: 0 !important;
-            width: auto;
-        }
-    }
-
-    &.markItUpButtonBold,
-    &.markItUpButtonItalic {
-        padding-top: 3px;
-        width: 30px !important;
-    }
-}
-
 //module markdown editor
 .markItUp {
     &Container {
@@ -83,13 +60,6 @@ textarea {
         position: relative;
         white-space: normal;
 
-        > ul {
-            > .markItUpButton {
-                @include size($toolbar-height);
-                float: left;
-            }
-        }
-
         ul {
             margin: 0;
             padding: 0;
@@ -102,70 +72,115 @@ textarea {
             position: relative;
 
             &:hover {
-                background-color: $border-thin-smoke;
-
-                ul {
-                    //fixme temp
-                    display: block !important;
-                }
-            }
-        }
-    }
-
-    &Button {
-        a {
-            font: {
-                family: $font-base-family;
-                size: 12px;
-            }
-            box-sizing: border-box;
-            color: $text-dark;
-            display: block;
-            height: 100%;
-            overflow: hidden;
-            text-indent: -999em;
-
-            &:hover {
+                opacity: .8;
                 text-decoration: none;
-            }
-        }
-    }
-
-    &DropMenu {
-        background: url($bcms-editor-drop-arrow) no-repeat right center;
-        padding: 0 15px 0 6px;
-        width: auto !important;
-
-        > a {
-            font-size: 14px;
-            line-height: $toolbar-height;
-            text-indent: 0;
-        }
-
-        > ul {
-            @include position(absolute, 100% null null 0);
-            background-color: $white;
-            border: $editor-border;
-            display: none;
-            max-height: 170px;
-            overflow-y: auto;
-            padding: 0;
-            width: 200px;
-            z-index: 50;
-
-            li {
-                margin: 3px;
-                padding: 0;
             }
 
             a {
-                @include transition(all 200ms);
-                padding: 3px 4px;
-                text-indent: 0;
-                white-space: nowrap;
+                font: {
+                    family: $font-base-family;
+                    size: 14px;
+                    weight: 400;
+                }
+            }
+
+            &.markItUpDropMenu {
+                background: url($bcms-editor-drop-arrow) no-repeat 90% center;
+                border: {
+                    right: $editor-border;
+                    left: $editor-border;
+                }
+                overflow: visible !important;
+                padding: 0 30px 0 20px;
+                width: auto !important;
 
                 &:hover {
-                    color: $text-blue;
+                    opacity: 1;
+
+                    > ul {
+                        display: block !important;
+                    }
+                }
+
+                > a {
+                    @include transition(color 200ms);
+                    color: $text-dark;
+                    font-size: 14px;
+                    line-height: $toolbar-height;
+                    text-indent: 0;
+
+                    &:hover {
+                        opacity: .8;
+                    }
+                }
+
+                > ul {
+                    @include position(absolute, 100% null null 0);
+                    background-color: $white;
+                    border: $editor-border;
+                    display: none;
+                    max-height: 170px;
+                    overflow-y: auto;
+                    padding: 0;
+                    width: 200px;
+                    z-index: 50;
+
+                    li {
+                        margin: 3px;
+                        padding: 0;
+                    }
+
+                    a {
+                        @include transition(all 200ms);
+                        color: $text-dark;
+                        font-size: 12px;
+                        padding: 3px 4px;
+                        text-indent: 0;
+                        white-space: nowrap;
+
+                        &:hover {
+                            color: $text-blue;
+                        }
+                    }
+                }
+            }
+        }
+
+        > ul {
+            > .markItUpButton {
+                @include size($toolbar-height);
+                box-sizing: border-box;
+                color: $text-dark;
+                display: block;
+                float: left;
+                overflow: hidden;
+                text-indent: -999em;
+
+                a {
+                    display: block;
+                    height: 100%;
+                }
+
+                &WidgetOption {
+                    border-right: $editor-border;
+                    margin-left: 20px;
+                    padding-right: 20px;
+                    text-indent: 0 !important;
+                    width: auto;
+
+                    a {
+                        background-position: left center;
+                        color: $text-dark;
+                        display: block;
+                        line-height: $toolbar-height;
+                        padding-left: 35px;
+                    }
+                }
+
+                &.markItUpButtonBold,
+                &.markItUpButtonItalic {
+                    padding-top: 3px;
+                    width: 30px !important;
                 }
             }
         }

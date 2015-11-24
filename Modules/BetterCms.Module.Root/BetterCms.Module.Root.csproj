@@ -1446,6 +1446,8 @@
     <Content Include="Scss\assets\icons\cp-stick-handle.svg" />
     <Content Include="Scss\assets\icons\date-picker-left.svg" />
     <Content Include="Scss\assets\icons\date-picker-right.svg" />
+    <Content Include="Scss\assets\icons\editor-block-quote-active.svg" />
+    <Content Include="Scss\assets\icons\editor-block-quote.svg" />
     <Content Include="Scss\assets\icons\editor-bold-active.svg" />
     <Content Include="Scss\assets\icons\editor-bold.svg" />
     <Content Include="Scss\assets\icons\editor-bullet-list-active.svg" />
@@ -1460,6 +1462,12 @@
     <Content Include="Scss\assets\icons\editor-copy.svg" />
     <Content Include="Scss\assets\icons\editor-cut.svg" />
     <Content Include="Scss\assets\icons\editor-drop-arrow.svg" />
+    <Content Include="Scss\assets\icons\editor-h1.svg" />
+    <Content Include="Scss\assets\icons\editor-h2.svg" />
+    <Content Include="Scss\assets\icons\editor-h3.svg" />
+    <Content Include="Scss\assets\icons\editor-h4.svg" />
+    <Content Include="Scss\assets\icons\editor-h5.svg" />
+    <Content Include="Scss\assets\icons\editor-h6.svg" />
     <Content Include="Scss\assets\icons\editor-hide.svg" />
     <Content Include="Scss\assets\icons\editor-italic-active.svg" />
     <Content Include="Scss\assets\icons\editor-italic.svg" />
@@ -1527,12 +1535,6 @@
     <Content Include="Scss\assets\icons\sort-up-active.svg" />
     <Content Include="Scss\assets\icons\tag-close.svg" />
     <Content Include="Scss\assets\icons\texture.svg" />
-    <Content Include="Scss\assets\icons\toolbar-h1.svg" />
-    <Content Include="Scss\assets\icons\toolbar-h2.svg" />
-    <Content Include="Scss\assets\icons\toolbar-h3.svg" />
-    <Content Include="Scss\assets\icons\toolbar-h4.svg" />
-    <Content Include="Scss\assets\icons\toolbar-h5.svg" />
-    <Content Include="Scss\assets\icons\toolbar-h6.svg" />
     <Content Include="Scss\assets\icons\tooltip-mark.svg" />
     <Content Include="Scss\assets\icons\tree-minus.svg" />
     <Content Include="Scss\assets\icons\tree-new-node.svg" />

@@ -8,8 +8,8 @@ $ck-toolbar-icons: (
                 ('bold_icon', $bcms-editor-bold, $bcms-editor-bold-active),
                 ('italic_icon', $bcms-editor-italic, $bcms-editor-italic-active),
                 ('underline_icon', $bcms-editor-underline, $bcms-editor-underline-active),
-                ('strike_icon', $bcms-editor-strike, $bcms-editor-strike),
-            //('blockquote_icon', $bcms-editor-blockquote),
+                ('strike_icon', $bcms-editor-strike, $bcms-editor-strike-active),
+                ('blockquote_icon', $bcms-editor-block-quote, $bcms-editor-block-quote-active),
                 ('link_icon', $bcms-editor-link, $bcms-editor-link-active),
                 ('unlink_icon', $bcms-editor-unlink, null),
                 ('copy_icon', $bcms-editor-copy, null),
@@ -34,18 +34,6 @@ $ck-toolbar-icons: (
                 ('cmstogglelinebreak_icon', $bcms-editor-cms-line-break, $bcms-editor-cms-line-break-active),
                 ('pastefromword_icon', $bcms-editor-paste-word, null)
 );
-
-//todo remove after design complete
-//                ('pagebreak_icon', $bcms-editor-pagebreak),
-//                ('pastetext_icon', $bcms-editor-pastetext),
-//                ('placeholder_icon', $bcms-editor-placeholder),
-//                ('preview_icon', $bcms-editor-preview),
-//                ('showblocks_icon', $bcms-editor-showblocks),
-//                ('anchor_icon', $bcms-editor-anchor),
-//                ('docprops_icon', $bcms-editor-docprops),
-//                ('replace_icon', $bcms-editor-replace),
-//                ('imagebutton_icon', $bcms-editor-imagebutton),
-//                ('horizontalrule_icon', $bcms-editor-horizontalrule),
 
 %text-field-extender {
     background-color: $smoke;
@@ -142,7 +130,7 @@ $ck-toolbar-icons: (
 
     &:last-child {
         @include virtual(after) {
-            @include position(absolute, $toolbar-height 0 null);
+            @include position(absolute, $toolbar-height 0 null 0);
             border-top: $editor-border;
             z-index: 1;
         }
@@ -624,9 +612,9 @@ a {
         a {
             @include transition(all 200ms);
             box-sizing: border-box;
-            color: $text-gray;
+            color: $text-dark;
             display: block;
-            font-family: $font-arial;
+            font-family: $font-base-family;
             font-size: 12px;
             height: 100%;
             line-height: 24px;
@@ -649,7 +637,7 @@ a {
 .cke_menubutton {
     color: $text-dark;
     display: block;
-    font-family: $font-arial;
+    font-family: $font-base-family;
     font-size: 12px;
     text-decoration: none;
 
@@ -662,7 +650,6 @@ a {
     }
 
     &_icon {
-        background-color: #D7D8D7;
         display: table-cell;
         padding: 4px;
     }
@@ -675,7 +662,7 @@ a {
     }
 
     &_on {
-        background-color: $smoke;
+        background-color: $white;
         border: $editor-border;
     }
 
