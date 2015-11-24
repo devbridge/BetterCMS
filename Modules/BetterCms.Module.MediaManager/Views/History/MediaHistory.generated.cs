@@ -466,7 +466,7 @@ WriteLiteral("\r\n");
                .Encode(false)
                .Named("&nbsp;")
                .Sortable(false)
-               .HeaderAttributes(@style => "width:130px;", @class => "bcms-tables-nohover");
+               .HeaderAttributes(@style => "width:40px; padding: 0;", @class => "bcms-tables-nohover");
 
         column.For(f => RestoreLink(f))
                .Encode(false)

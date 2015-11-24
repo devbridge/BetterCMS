@@ -212,12 +212,12 @@ WriteLiteral(" data-bind=\"options: addingPageLanguages, optionsText: \'value\',
 
 WriteLiteral("></select>\r\n                    </div>\r\n                    <!-- /ko -->\r\n       " +
 "             <!-- ko if: addPageId() && addingPageLanguages().length == 1 -->\r\n " +
-"                   <span");
+"                   <div");
 
 WriteLiteral(" data-bind=\"html: addingPageLanguages()[0].value\"");
 
-WriteLiteral("></span>\r\n                    <!-- /ko -->\r\n                </td>\r\n              " +
-"  <td");
+WriteLiteral("></div>\r\n                    <!-- /ko -->\r\n                </td>\r\n               " +
+" <td");
 
 WriteLiteral(" style=\"width: 100px;\"");
 

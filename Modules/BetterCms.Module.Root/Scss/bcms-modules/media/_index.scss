@@ -104,25 +104,6 @@
     width: 250px;
     z-index: 10;
 
-    @include virtual(after) {
-        @include position(absolute, -7px 10px null null);
-        @include triangle(14px, $white, up);
-        box-shadow: 0 -10px 20px 0 rgba($black, .2);
-    }
-
-    @include virtual(before) {
-        @include position(absolute, -8px 9px null null);
-        @include triangle(16px, $gray-smoke, up);
-    }
-
-    //todo add arrow to bottom
-    //&-arrow-down {
-    //    &:after {
-    //        bottom: -7px;
-    //        top: auto;
-    //    }
-    //}
-
     &-block {
         @include clearfix();
         border-top: $border-thin-smoke;

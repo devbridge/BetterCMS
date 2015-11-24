@@ -1,3 +1,10 @@
+$tooltip-arrows: (
+                ('tl', up, -8px null null 11px, -9px null null 10px),
+                ('bl', down, null null -8px 11px, null null -9px 10px),
+                ('tr', up, -8px 11px null null, -9px 10px null null),
+                ('br', down, null 11px -8px null, null 10px -9px null)
+);
+
 //module Tooltips
 .bcms-tooltip {
     &-mark {
@@ -16,7 +23,8 @@
 
     &-box {
         background-color: $white;
-        box-shadow: 0 2px 24px 0 rgba($black, .2);
+        border: $border-thin-smoke;
+        box-shadow: $pop-box-shadow;
         padding: 6px 8px;
         position: relative;
         width: 300px;
@@ -34,20 +42,16 @@
     }
 }
 
-//todo check if design requires position arrows to tooltip mark
-//.bcms-tooltip-tl:before,
-//.bcms-tooltip-bl:before,
-//.bcms-tooltip-tr:before,
-//.bcms-tooltip-br:before
-//div.bcms-tip-close {
-//    background-color: $bg-red;
-//    cursor: pointer;
-//    height: 14px;
-//    overflow: hidden;
-//    position: absolute;
-//    right: 10px;
-//    text-decoration: none;
-//    text-indent: 999em;
-//    top: 10px;
-//    width: 15px;
-//}
+@each $name, $position, $triangle, $triangle-border in $tooltip-arrows {
+    .bcms-tooltip-#{$name} {
+        @include virtual(after) {
+            @include position(absolute, $triangle);
+            @include triangle(16px, $white, $position);
+        }
+
+        @include virtual(before) {
+            @include position(absolute, $triangle-border);
+            @include triangle(18px, $light, $position);
+        }
+    }
+}

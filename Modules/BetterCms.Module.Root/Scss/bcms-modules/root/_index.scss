@@ -3,7 +3,7 @@ $action-icons: (
                 ('usage', $bcms-action-usage),
                 ('restore', $bcms-revert),
                 ('history', $bcms-action-history),
-                ('download'),
+                ('download', $bcms-download),
                 ('delete', $bcms-action-delete),
                 ('ok', $bcms-action-status-ok),
                 ('warn', $bcms-action-status-warn),
@@ -35,25 +35,6 @@ $action-icons: (
     color: transparent;
     height: 0;
     width: 0;
-}
-
-//module icons
-.bcms-icn-draft {
-    background: url('images/sprite-base-2.png') no-repeat -25px -200px;
-    height: 17px;
-    margin: 0 auto;
-    overflow: hidden;
-    text-indent: 9999px;
-    width: 13px;
-}
-
-.bcms-icn-pubdraft {
-    background: url('images/sprite-base-2.png') no-repeat -3px -200px;
-    height: 17px;
-    margin: 0 auto;
-    overflow: hidden;
-    text-indent: 9999px;
-    width: 16px;
 }
 
 //todo check where this has been used
