@@ -19,6 +19,8 @@ namespace BetterCms
 
         TimeSpan ProcessTimeout { get; set; }
 
+        bool MoveDeletedFilesToTrash { get; set; }
+
         string GetValue(string key);
     }
 }
