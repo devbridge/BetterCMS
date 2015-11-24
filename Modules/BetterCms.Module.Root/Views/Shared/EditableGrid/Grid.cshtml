@@ -57,7 +57,7 @@
             {
                 @Html.Partial(column.CellView, column)
             }
-            <td data-bind="style: { width: isActive() ? '100px' : '40px', padding: isActive() ? '10px' : '0' }">
+            <td data-bind="style: { width: isActive() ? '110px' : '40px', padding: isActive() ? '10px' : '0' }">
                 @if (Model.CanDeleteItems)
                 {
                     <div class="bcms-action-delete" data-bind="click: onDelete, visible: !isActive() && !deletingIsDisabled()">@RootGlobalization.Button_Delete</div>
