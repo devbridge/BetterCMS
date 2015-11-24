@@ -3,7 +3,6 @@
 using Autofac;
 
 using BetterCms.Core.Security;
-using BetterCms.Core.Services.Storage;
 
 using BetterModules.Core.DataAccess;
 using BetterModules.Core.DataAccess.DataContext;
@@ -32,7 +31,6 @@ namespace BetterCms.Test.Module.MediaManager.CommandTests
                 {
                     var uow = new DefaultUnitOfWork(session);
                     var repository = new DefaultRepository(uow);
-                    var storageService = new Mock<IStorageService>().Object;
                     var accessControlService = new Mock<IAccessControlService>().Object;
                     var commandContext = new Mock<ICommandContext>().Object;
                     var cmsConfiguration = Container.Resolve<ICmsConfiguration>();
@@ -44,8 +42,7 @@ namespace BetterCms.Test.Module.MediaManager.CommandTests
                     session.Flush();
                     session.Clear();
 
-                    var mediafileService = new DefaultMediaFileService(storageService, repository, uow, cmsConfiguration, httpContextAccessor.Object, null, null, null);
-                    var mediaService = new DefaultMediaService(repository, uow, accessControlService, cmsConfiguration, mediafileService);
+                    var mediaService = new DefaultMediaService(repository, uow, accessControlService, cmsConfiguration);
                     var command = new DeleteMediaCommand(mediaService);
                     command.Repository = repository;
                     command.UnitOfWork = uow;

@@ -4,6 +4,7 @@ using System.Diagnostics.CodeAnalysis;
 
 using Autofac;
 
+using BetterCms.Core.Exceptions.Api;
 using BetterCms.Core.Modules;
 using BetterCms.Core.Modules.Projections;
 
@@ -17,7 +18,11 @@ using BetterCms.Module.Root;
 using BetterCms.Module.Root.Accessors;
 using BetterCms.Module.Root.Providers;
 
+using BetterModules.Core.Dependencies;
 using BetterModules.Core.Modules.Registration;
+using BetterModules.Events;
+
+using Common.Logging;
 
 namespace BetterCms.Module.MediaManager
 {
@@ -26,6 +31,8 @@ namespace BetterCms.Module.MediaManager
     /// </summary>
     public class MediaManagerModuleDescriptor : CmsModuleDescriptor
     {
+        private static readonly ILog Log = LogManager.GetCurrentClassLogger();
+
         /// <summary>
         /// The module name.
         /// </summary>
@@ -87,6 +94,34 @@ namespace BetterCms.Module.MediaManager
             // Register images gallery custom option: album
             CustomOptionsProvider.RegisterProvider(MediaManagerFolderOptionProvider.Identifier, new MediaManagerFolderOptionProvider());
             CustomOptionsProvider.RegisterProvider(MediaManagerImageUrlOptionProvider.Identifier, new MediaManagerImageUrlOptionProvider());
+
+            Events.MediaManagerEvents.Instance.MediaFileDeleted += Instance_MediaFileDeleted;
+        }
+
+        private void Instance_MediaFileDeleted(SingleItemEventArgs<MediaFile> args)
+        {
+            try
+            {
+                var lifetimeScope = ContextScopeProvider.CreateChildContainer();
+                if (!lifetimeScope.IsRegistered<ICmsConfiguration>())
+                {
+                    throw new CmsApiException(string.Format("A '{0}' is unknown type in the Better CMS scope.", typeof(ICmsConfiguration).FullName));
+                }
+                var cmsConfiguration = lifetimeScope.Resolve<ICmsConfiguration>();
+                if (cmsConfiguration.Storage.MoveDeletedFilesToTrash)
+                {
+                    if (!lifetimeScope.IsRegistered<IMediaFileService>())
+                    {
+                        throw new CmsApiException(string.Format("A '{0}' is unknown type in the Better CMS scope.", typeof(IMediaFileService).FullName));
+                    }
+                    var mediaFileService = lifetimeScope.Resolve<IMediaFileService>();
+                    mediaFileService.MoveFilesToTrashFolder();
+                }
+            }
+            catch (Exception ex)
+            {
+                Log.Error("Failed to start up deleted media trash collector.", ex);
+            }
         }
 
         /// <summary>
