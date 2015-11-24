@@ -807,11 +807,13 @@ a.cke_specialchar:hover {
   color: #303646;
   display: block;
   font-family: "Open Sans", sans-serif !important;
-  font-size: 12px;
+  font-size: 13px;
+  line-height: 22px;
   text-decoration: none;
 }
 
 .cke_menubutton:hover {
+  color: #0d7ce7;
   text-decoration: none;
 }
 

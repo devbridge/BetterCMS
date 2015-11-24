@@ -638,10 +638,12 @@ a {
     color: $text-dark;
     display: block;
     font-family: $font-base-family;
-    font-size: 12px;
+    font-size: 13px;
+    line-height: 22px;
     text-decoration: none;
 
     &:hover {
+        color: $text-blue;
         text-decoration: none;
     }
 
