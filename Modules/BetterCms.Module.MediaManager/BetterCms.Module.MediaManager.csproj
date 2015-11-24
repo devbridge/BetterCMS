@@ -231,6 +231,7 @@
     <Compile Include="Models\MediaFolder.cs" />
     <Compile Include="Models\Media.cs" />
     <Compile Include="Models\MediaImage.cs" />
+    <Compile Include="Models\Migrations\Migration201511231705.cs" />
     <Compile Include="Models\Migrations\Migration201502031000.cs" />
     <Compile Include="Models\Migrations\Migration201409241658.cs" />
     <Compile Include="Models\Migrations\Migration201310211500.cs" />

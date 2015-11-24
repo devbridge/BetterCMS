@@ -25,12 +25,17 @@ using BetterModules.Core.Exceptions.DataTier;
 using BetterModules.Core.Web.Web;
 
 using NHibernate;
+using NHibernate.Linq;
 
 namespace BetterCms.Module.MediaManager.Services
 {
     internal class DefaultMediaFileService : IMediaFileService
     {
         private static readonly ILog Log = LogManager.GetCurrentClassLogger();
+
+        private static readonly object lockObject = new object();
+
+        private static bool IsRunning;
 
         private readonly IStorageService storageService;
 
@@ -112,126 +117,217 @@ namespace BetterCms.Module.MediaManager.Services
             }
         }
 
-        public void MoveFileToTrashFolder(IList<MediaFile> filesToTrash)
+        public void MoveFilesToTrashFolder()
         {
-            unitOfWork.BeginTransaction();
-            var trashFolder = Path.Combine(GetContentRoot(configuration.Storage.ContentRoot), "trash");
-            // in case of exception store moved files and restore them
-            var movedFilesDic = new Dictionary<Uri, Uri>();
-            try
+            lock (lockObject)
             {
-                foreach (var media in filesToTrash)
+                if (IsRunning)
                 {
-                        var mediaFile = media;
-                        foreach (var category in mediaFile.Categories)
-                        {
-                            repository.Delete(category);
-                        }
-                        while (mediaFile.AccessRules.Any())
-                        {
-                            var rule = mediaFile.AccessRules.First();
-                            mediaFile.RemoveRule(rule);
-                            repository.Delete(rule);
-                        }
-                        foreach (var tag in mediaFile.MediaTags)
-                        {
-                            repository.Delete(tag);
-                        }
-                        var sourceUri = mediaFile.FileUri;
-                        var destinationUri = new Uri(Path.Combine(trashFolder, GetFolderWithFileName(mediaFile.FileUri, mediaFile.Type)));
-
-                        // when only file properties are updated record on database is duplicated but file is not duplicated
-                        if (!movedFilesDic.ContainsValue(sourceUri))
-                        {
-                            storageService.CopyObject(sourceUri, destinationUri);
-                            movedFilesDic.Add(destinationUri, sourceUri);
-                        }
-
-                        mediaFile.FileUri = destinationUri;
-                        mediaFile.PublicUrl = GenerateTrashPublicUrl(mediaFile.FileUri, mediaFile.Type);
-
-                        if (mediaFile is MediaImage)
-                        {
-                            var mediaImage = (MediaImage)mediaFile;
-                            if (mediaImage.IsThumbnailUploaded.GetValueOrDefault())
-                            {
-                                var sourceImageUri = mediaImage.ThumbnailUri;
-                                var destinationImageUri = new Uri(Path.Combine(trashFolder, GetFolderWithFileName(mediaImage.ThumbnailUri, mediaImage.Type)));
-                                
-                                // thumbnail image can be duplicated so we only need to update reference
-                                if (!movedFilesDic.ContainsValue(sourceImageUri))
-                                {
-                                    storageService.CopyObject(sourceImageUri, destinationImageUri);
-                                    movedFilesDic.Add(destinationImageUri, sourceImageUri);
-                                }
-
-                                mediaImage.ThumbnailUri = destinationImageUri;
-                                mediaImage.PublicThumbnailUrl = GenerateTrashPublicUrl(mediaImage.ThumbnailUri, mediaImage.Type);
-                            }
-                            if (mediaImage.IsOriginalUploaded.GetValueOrDefault())
-                            {
-                                var sourceImageUri = mediaImage.OriginalUri;
-                                var destinationImageUri = new Uri(Path.Combine(trashFolder, GetFolderWithFileName(mediaImage.OriginalUri, mediaImage.Type)));
-
-                                // original image can be duplicated so we only need to update reference
-                                if (!movedFilesDic.ContainsValue(sourceImageUri))
-                                {
-                                    storageService.CopyObject(sourceImageUri, destinationImageUri);
-                                    movedFilesDic.Add(destinationImageUri, sourceImageUri);
-                                }
-
-                                mediaImage.OriginalUri = destinationImageUri;
-                                mediaImage.PublicOriginallUrl = GenerateTrashPublicUrl(mediaImage.OriginalUri, mediaImage.Type);
-                            }
-                        }
-                    repository.Delete(media);
+                    return;
                 }
-            }
-            catch (Exception e)
-            {
-                // Restore copied files.
+                IsRunning = true;
                 try
                 {
-                    foreach (var movedFile in movedFilesDic.Keys)
+                    var serverUrl = GetServerUrl(new HttpRequestWrapper(HttpContext.Current.Request)).TrimEnd('/'); // HACK: for local storage.
+                    Task.Factory.StartNew(
+                        () =>
+                            {
+                                try
+                                {
+                                    ExecuteActionOnThreadSeparatedSessionWithNoConcurrencyTracking(
+                                        session =>
+                                        {
+                                            while (true)
+                                            {
+                                                var fileToMove = session
+                                                    .Query<MediaFile>()
+                                                    .Where(f =>
+                                                        !f.IsTemporary && f.IsUploaded.HasValue && f.IsUploaded.Value && !f.IsCanceled &&
+                                                        f.IsDeleted && f.DeletedOn.HasValue &&
+                                                        !f.IsMovedToTrash && (!f.NextTryToMoveToTrash.HasValue || (f.NextTryToMoveToTrash.Value < DateTime.Now)))
+                                                    .ToList()
+                                                    .FirstOrDefault(f => !f.NextTryToMoveToTrash.HasValue || Math.Abs((f.NextTryToMoveToTrash - f.DeletedOn).Value.Days) < 5);
+                                                if (fileToMove == null)
+                                                {
+                                                    break;
+                                                }
+                                                if (!MoveToTrash(session, fileToMove, serverUrl))
+                                                {
+                                                    try
+                                                    {
+                                                        fileToMove.NextTryToMoveToTrash = DateTime.Now.AddDays(1);
+                                                        session.Save(fileToMove);
+                                                        session.Flush();
+                                                    }
+                                                    catch (Exception ex)
+                                                    {
+                                                        Log.Error(string.Format("Failed to mark deleted file Id={0} for later re-try to move to trash folder.", fileToMove.Id), ex);
+                                                    }
+                                                }
+                                            }
+                                        });
+                                }
+                                catch (Exception ex)
+                                {
+                                    Log.Error("Deleted media files cleanup failed.", ex);
+                                }
+                                IsRunning = false;
+                            });
+                }
+                catch (Exception)
+                {
+                    IsRunning = false;
+                    throw;
+                }
+            }
+        }
+
+        private bool MoveToTrash(ISession session, MediaFile fileToMove, string serverUrl)
+        {
+            try
+            {
+                var trashFolder = GetTrashFolder();
+                var movedFilesDic = new Dictionary<Uri, Uri>();
+                var trasaction = session.BeginTransaction();
+                try
+                {
+                    var sourceUri = fileToMove.FileUri;
+                    var destinationUri = new Uri(Path.Combine(trashFolder, GetFolderWithFileName(fileToMove.FileUri, fileToMove.Type)));
+                    storageService.CopyObject(sourceUri, destinationUri);
+                    movedFilesDic.Add(destinationUri, sourceUri);
+
+                    fileToMove.FileUri = destinationUri;
+                    fileToMove.PublicUrl = GenerateTrashPublicUrl(fileToMove.FileUri, fileToMove.Type, serverUrl);
+
+                    if (fileToMove is MediaImage)
+                    {
+                        var mediaImage = (MediaImage)fileToMove;
+                        if (mediaImage.IsThumbnailUploaded.GetValueOrDefault())
+                        {
+                            var sourceImageUri = mediaImage.ThumbnailUri;
+                            var destinationImageUri = new Uri(Path.Combine(trashFolder, GetFolderWithFileName(mediaImage.ThumbnailUri, mediaImage.Type)));
+
+                            // thumbnail image can be duplicated so we only need to update reference
+                            if (!movedFilesDic.ContainsValue(sourceImageUri))
+                            {
+                                storageService.CopyObject(sourceImageUri, destinationImageUri);
+                                movedFilesDic.Add(destinationImageUri, sourceImageUri);
+                            }
+
+                            mediaImage.ThumbnailUri = destinationImageUri;
+                            mediaImage.PublicThumbnailUrl = GenerateTrashPublicUrl(mediaImage.ThumbnailUri, mediaImage.Type, serverUrl);
+                        }
+                        if (mediaImage.IsOriginalUploaded.GetValueOrDefault())
+                        {
+                            var sourceImageUri = mediaImage.OriginalUri;
+                            var destinationImageUri = new Uri(Path.Combine(trashFolder, GetFolderWithFileName(mediaImage.OriginalUri, mediaImage.Type)));
+
+                            // original image can be duplicated so we only need to update reference
+                            if (!movedFilesDic.ContainsValue(sourceImageUri))
+                            {
+                                storageService.CopyObject(sourceImageUri, destinationImageUri);
+                                movedFilesDic.Add(destinationImageUri, sourceImageUri);
+                            }
+
+                            mediaImage.OriginalUri = destinationImageUri;
+                            mediaImage.PublicOriginallUrl = GenerateTrashPublicUrl(mediaImage.OriginalUri, mediaImage.Type, serverUrl);
+                        }
+                    }
+                    fileToMove.IsMovedToTrash = true;
+                    fileToMove.NextTryToMoveToTrash = null;
+                    session.Save(fileToMove);
+                }
+                catch (Exception)
+                {
+                    // Restore copied files.
+                    try
+                    {
+                        foreach (var movedFile in movedFilesDic.Keys)
+                        {
+                            storageService.RemoveObject(movedFile);
+                        }
+                    }
+                    catch (Exception exception)
+                    {
+                        LogFailedRemoveFiles(movedFilesDic.Keys, exception);
+                    }
+                    throw;
+                }
+                trasaction.Commit();
+                try
+                {
+                    foreach (var movedFile in movedFilesDic.Values)
                     {
                         storageService.RemoveObject(movedFile);
                     }
                 }
-                catch (Exception exception)
+                catch (Exception e)
                 {
-                    LogFailedRemoveFiles(movedFilesDic.Keys, exception);
+                    LogFailedRemoveFiles(movedFilesDic.Values, e);
                 }
-                throw;
+                return true;
             }
-            unitOfWork.Commit();
-            try
+            catch (Exception ex)
             {
-                foreach (var movedFile in movedFilesDic.Values)
-                {
-                    storageService.RemoveObject(movedFile);
-                }
-            }
-            catch (Exception e)
-            {
-                LogFailedRemoveFiles(movedFilesDic.Values, e);
+                Log.Error(string.Format("Failed to move file with Id={0}.", fileToMove.Id), ex);
+                return false;
             }
         }
 
-        private void LogFailedRemoveFiles(IEnumerable<Uri> movedFiles, Exception exception)
+        private string GetTrashFolder()
+        {
+            string contentRoot;
+
+            if (configuration.Storage.ServiceType == StorageServiceType.FileSystem && VirtualPathUtility.IsAppRelative(configuration.Storage.ContentRoot))
+            {
+                var path = VirtualPathUtility.ToAbsolute(configuration.Storage.PublicContentUrlRoot).Replace("/", "\\");
+                if (path.Length > 0 && path[0] == '\\')
+                {
+                    path = path.Substring(1);
+                }
+                contentRoot = Path.Combine(HttpRuntime.AppDomainAppPath, path);
+            }
+            else
+            {
+                contentRoot = configuration.Storage.ContentRoot;
+            }
+
+            return Path.Combine(contentRoot, "trash");
+        }
+
+        private static void LogFailedRemoveFiles(IEnumerable<Uri> movedFiles, Exception exception)
         {
             Log.Error("Failed to remove files: " + string.Join(", ", movedFiles), exception);
             throw exception;
         }
 
-        private string GenerateTrashPublicUrl(Uri fileUri, MediaType mediaType)
+        private string GenerateTrashPublicUrl(Uri fileUri, MediaType mediaType, string serverUrl)
         {
-            return Path.Combine(
-                GetContentPublicRoot("~/trash"),
-                GetFolderWithFileName(fileUri, mediaType))
-                .Replace('\\', '/');
+            var contentPublicRoot = configuration.Storage.ServiceType == StorageServiceType.FileSystem && !VirtualPathUtility.IsAbsolute(configuration.Storage.PublicContentUrlRoot)
+                                        ? string.Concat(serverUrl, VirtualPathUtility.ToAbsolute(configuration.Storage.PublicContentUrlRoot))
+                                        : configuration.Storage.PublicContentUrlRoot;
+
+            return Path.Combine(contentPublicRoot, "trash", GetFolderWithFileName(fileUri, mediaType)).Replace('\\', '/');
         }
 
-        private string GetFolderWithFileName(Uri fileUri, MediaType mediaType)
+        private string GetServerUrl(HttpRequestBase request)
+        {
+            if (request != null && string.IsNullOrWhiteSpace(configuration.WebSiteUrl) || configuration.WebSiteUrl.Equals("auto", StringComparison.InvariantCultureIgnoreCase))
+            {
+                var url = request.Url.AbsoluteUri;
+                var query = HttpContext.Current.Request.Url.PathAndQuery;
+                if (!string.IsNullOrEmpty(query) && query != "/")
+                {
+                    url = url.Replace(query, null);
+                }
+
+                return url;
+            }
+
+            return configuration.WebSiteUrl;
+        }
+
+        private static string GetFolderWithFileName(Uri fileUri, MediaType mediaType)
         {
             return Path.Combine(mediaType.ToString().ToLower(), GetElementFromEnd(fileUri.Segments, 1), GetElementFromEnd(fileUri.Segments, 0));
         }
