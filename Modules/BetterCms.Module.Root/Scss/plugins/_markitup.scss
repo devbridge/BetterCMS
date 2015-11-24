@@ -7,15 +7,15 @@ $toolbar-icons: (
                 ('H6', $bcms-toolbar-h6),
                 ('Bold', $bcms-editor-bold),
                 ('Italic', $bcms-editor-italic),
-                ('ListBullet', $bcms-editor-bulletedlist),
-                ('ListNumeric', $bcms-editor-numberedlist),
-                ('Picture', $bcms-editor-cmsimage),
+                ('ListBullet', $bcms-editor-bullet-list),
+                ('ListNumeric', $bcms-editor-number-list),
+                ('Picture', $bcms-editor-cms-image),
                 ('Link', $bcms-editor-link),
-                ('Quotes', $bcms-editor-blockquote),
+               // ('Quotes', $bcms-editor-blockquote),
                 ('Code', $bcms-editor-source),
-                ('Widget', $bcms-editor-cmswidget),
-                ('WidgetOption', $bcms-editor-cmswidget),
-                ('Option', $bcms-editor-cmsoption)
+                ('Widget', $bcms-editor-cms-widget),
+                ('WidgetOption', $bcms-editor-cms-widget),
+                ('Option', $bcms-editor-cms-option)
 );
 
 %toolbar-extender {

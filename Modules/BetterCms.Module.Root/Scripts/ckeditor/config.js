@@ -9,13 +9,20 @@ CKEDITOR.editorConfig = function (config) {
     config.toolbar = [
         ['Undo', 'Redo'],
         ['Link', 'Unlink'],
-        ['Bold', 'Italic', 'Underline', 'BulletedList', 'SpecialChar'],
+        ['Bold', 'Italic', 'Underline'],
+        ['JustifyLeft', 'JustifyCenter', 'JustifyRight', 'JustifyBlock'],
+        ['BulletedList', 'NumberedList'],
+        ['CmsModelValues'],
         ['CmsImageManager', 'CmsFileManager', 'Image'],
-        ['CmsDynamicRegion', 'CmsWidget', 'CmsOption', 'CmsModelValues'],
+        ['CmsDynamicRegion', 'CmsWidget', 'CmsOption'],
         ['Source', 'Maximize', 'CmsToggleLineWrap'],
         '/',
-        ['Table', 'Strike', 'NumberedList', 'JustifyLeft', 'JustifyCenter', 'JustifyRight', 'JustifyBlock', 'Styles', 'Format', 'Font', 'FontSize'],
-        ['Copy', 'Cut', 'Paste', 'PasteFromWord']
+        ['Styles'],
+        ['Format'],
+        ['Font'],
+        ['FontSize'],
+        ['Copy', 'Cut', 'Paste', 'PasteFromWord'],
+        ['Strike', 'SpecialChar', 'Table']
     ];
 
     config.skin = 'bettercms';
@@ -26,5 +33,4 @@ CKEDITOR.editorConfig = function (config) {
     config.autoParagraph = false;
     config.toolbarCanCollapse = true;
     config.forcePasteAsPlainText = true;
-
 };

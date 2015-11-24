@@ -9,31 +9,33 @@ $ck-toolbar-icons: (
                 ('italic_icon', $bcms-editor-italic),
                 ('underline_icon', $bcms-editor-underline),
                 ('strike_icon', $bcms-editor-strike),
-                ('blockquote_icon', $bcms-editor-blockquote),
+            //('blockquote_icon', $bcms-editor-blockquote),
                 ('link_icon', $bcms-editor-link),
                 ('unlink_icon', $bcms-editor-unlink),
                 ('copy_icon', $bcms-editor-copy),
                 ('cut_icon', $bcms-editor-cut),
                 ('paste_icon', $bcms-editor-paste),
-                ('bulletedlist_icon', $bcms-editor-bulletedlist),
-                ('numberedlist_icon', $bcms-editor-numberedlist),
-                ('specialchar_icon', $bcms-editor-specialchar),
+                ('bulletedlist_icon', $bcms-editor-bullet-list),
+                ('numberedlist_icon', $bcms-editor-number-list),
+                ('specialchar_icon', $bcms-editor-symbol),
                 ('table_icon', $bcms-editor-table),
-                ('justifyblock_icon', $bcms-editor-justifyblock),
-                ('justifycenter_icon', $bcms-editor-justifycenter),
-                ('justifyleft_icon', $bcms-editor-justifyleft),
-                ('justifyright_icon', $bcms-editor-justifyright),
-                ('image_icon', $bcms-editor-cmsimage),
-                ('templates_icon', $bcms-editor-templates),
+                ('justifyblock_icon', $bcms-editor-justify-block),
+                ('justifycenter_icon', $bcms-editor-justify-center),
+                ('justifyleft_icon', $bcms-editor-justify-left),
+                ('justifyright_icon', $bcms-editor-justify-right),
+                ('image_icon', $bcms-editor-cms-image),
+                ('templates_icon', $bcms-editor-cms-file),
                 ('maximize_icon', $bcms-editor-maximize),
                 ('source_icon', $bcms-editor-source),
-                ('cmsoption_icon', $bcms-editor-cmsoption),
-                ('cmsimage_icon', $bcms-editor-cmsimage),
-                ('cmswidget_icon', $bcms-editor-cmswidget),
-                ('cmsdynamicregion_icon', $bcms-editor-cmsdynamicregion),
-                ('cmstogglelinebreak_icon', $bcms-editor-cmstogglelinebreak),
-                ('pastefromword_icon', $bcms-editor-pastefromword)
+                ('cmsoption_icon', $bcms-editor-cms-option),
+                ('cmsimage_icon', $bcms-editor-cms-image),
+                ('cmswidget_icon', $bcms-editor-cms-widget),
+                ('cmsdynamicregion_icon', $bcms-editor-cms-region),
+                ('cmstogglelinebreak_icon', $bcms-editor-cms-line-break),
+                ('pastefromword_icon', $bcms-editor-paste-word)
 );
+
+$ck-button-states: ('off'), ('on');
 
 //todo remove after design complete
 //                ('pagebreak_icon', $bcms-editor-pagebreak),
@@ -138,6 +140,7 @@ $ck-toolbar-icons: (
 .cke_toolbar {
     border-right: $editor-border;
     float: left;
+    padding: 0 8px;
 }
 
 .cke_toolgroup {
@@ -146,25 +149,50 @@ $ck-toolbar-icons: (
 
 .cke_button {
     @include transition(opacity 200ms);
-    @include size(35px $toolbar-height);
+    @include size(32px $toolbar-height);
     box-sizing: border-box;
     cursor: pointer;
     float: left;
     opacity: 1;
     outline: none;
-    padding: 4px 6px;
+    padding: 4px 0;
 
     &:hover {
         opacity: .8;
     }
 
-    &_on {
-
+    @each $name, $icon-on, $icon-off in $ck-toolbar-icons {
+        .cke_button {
+            &__#{$name} {
+                background-image: url($icon-on) !important;
+            }
+        }
     }
 
-    &_off {
-        //keep for reference in case we need it
-    }
+    //module toolbar icons
+    //@each $state in $ck-button-states {
+    //    &_#{$state} {
+    //        @if ($state == nth($ck-button-states, 1)) {
+    //            @each $name, $icon-on, $icon-off in $ck-toolbar-icons {
+    //                .cke_button {
+    //                    &__#{$name} {
+    //                        background-image: url($icon-on) !important;
+    //                    }
+    //                }
+    //            }
+    //        }
+    //
+    //        @if ($state == nth($ck-button-states, 2)) {
+    //            @each $name, $icon-on, $icon-off in $ck-toolbar-icons {
+    //                .cke_button {
+    //                    &__#{$name} {
+    //                        //background-image: url($icon-off) !important;
+    //                    }
+    //                }
+    //            }
+    //        }
+    //    }
+    //}
 
     &_disabled {
         opacity: .3;
@@ -180,7 +208,7 @@ $ck-toolbar-icons: (
             position: center !important;
         }
         display: block;
-        float: left;
+        //float: left;
     }
 
     &_label {
@@ -217,7 +245,7 @@ $ck-toolbar-icons: (
 
     .cke_arrow {
         @include size(100%);
-        background: url($bcms-editor-open) no-repeat center;
+        background: url($bcms-editor-show) no-repeat center;
         display: block;
         overflow: hidden;
         text-indent: -999em;
@@ -225,7 +253,7 @@ $ck-toolbar-icons: (
 
     &_min {
         .cke_arrow {
-            background-image: url($bcms-editor-close);
+            background-image: url($bcms-editor-hide);
         }
     }
 }
@@ -257,7 +285,7 @@ $ck-toolbar-icons: (
 
     &_close_button {
         //fixme temp bg-color need to add image
-        background: url($bcms-editor-close) no-repeat center;
+        //background: url($bcms-editor-close) no-repeat center;
         cursor: pointer;
         height: 20px;
         position: absolute;
@@ -520,7 +548,7 @@ a {
 
     &_text {
         @include vertical-align();
-        color: $text-gray;
+        color: $text-dark;
         font: {
             family: $font-base-family;
             size: 14px;
@@ -538,16 +566,12 @@ a {
     &_open {
         @include vertical-align();
         cursor: default;
-        margin: 0 5px;
+        margin: 0 5px 0 0;
     }
 
     &_arrow {
-        border: {
-            style: solid;
-            width: 4px;
-            color: $text-gray transparent transparent transparent;
-        }
-
+        @include size(11px 6px);
+        background: url($bcms-editor-drop-arrow) no-repeat center;
         float: right;
         margin-top: 4px;
     }
@@ -700,14 +724,5 @@ a {
     }
     100% {
         @include transform(rotate(360deg));
-    }
-}
-
-//module toolbar icons
-@each $name, $icon in $ck-toolbar-icons {
-    .cke_button {
-        &__#{$name} {
-            background-image: url($icon) !important;
-        }
     }
 }

@@ -1,4 +1,5 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="13" height="15" viewBox="0 0 13 15" enable-background="new 0 0 13 15">
- <path fill="#474747" d="M0,0v10h3V9H2H1V1h4.5L8,3.5V4h1V3L6,0H5H0z M4,5v10h9V9V8l-3-3H9H4z M5,6
-	h4.5L12,8.5V14H7H6H5V6z"/>
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Generator: Avocode 2.4.5 - http://avocode.com -->
+<svg height="20" width="16" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 20">
+    <path fill="#303646" fill-rule="evenodd" d="M 4.06 16 L 3 16 C 2.45 16 2 15.55 2 15 L 2 3 C 2 2.45 2.45 2 3 2 L 11 2 C 11.55 2 12 2.45 12 3 L 12 4.03 L 14 4.03 L 14 3 C 14 1.34 12.66 0 11 0 L 3 0 C 1.34 0 0 1.34 0 3 L 0 15 C 0 16.66 1.34 18 3 18 L 4.06 18 L 4.06 16 Z M 15 17.92 C 15 18.47 14.55 18.91 14 18.91 L 8 18.91 C 7.45 18.91 7 18.47 7 17.92 L 7 7.91 C 7 7.36 7.45 6.91 8 6.91 L 14 6.91 C 14.55 6.91 15 7.36 15 7.91 L 15 17.92 Z M 14 5.91 L 8 5.91 C 6.89 5.91 6 6.81 6 7.91 L 6 17.92 C 6 19.02 6.89 19.91 8 19.91 L 14 19.91 C 15.11 19.91 16 19.02 16 17.92 L 16 7.91 C 16 6.81 15.11 5.91 14 5.91 L 14 5.91 Z M 14 5.91" />
 </svg>

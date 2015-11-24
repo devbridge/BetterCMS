@@ -463,7 +463,7 @@ WriteLiteral("                            ");
 
             
             #line 76 "..\..\Views\Blog\EditBlogPost.cshtml"
-                       Write(Html.TextBoxFor(m => m.Title, new { @class = "bcms-field-text", @id = "bcms-editor-blog-title", @style = "width: 523px;" }));
+                       Write(Html.TextBoxFor(m => m.Title, new { @class = "bcms-field-text", @id = "bcms-editor-blog-title" }));
 
             
             #line default
