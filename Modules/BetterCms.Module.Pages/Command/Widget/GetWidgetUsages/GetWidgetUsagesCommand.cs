@@ -39,7 +39,7 @@ namespace BetterCms.Module.Pages.Command.Widget.GetWidgetUsages
             var pageUsages = pages.Select(p => new WidgetUsageViewModel
                 {
                     Title = p.Title,
-                    Url = p.Url,
+                    Url = p.PageUrl,
                     Id = p.Id,
                     Version = p.Version,
                     Type = p.IsMasterPage ? WidgetUsageType.MasterPage : WidgetUsageType.Page

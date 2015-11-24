@@ -4,6 +4,7 @@ using BetterCms.Core.Modules;
 using BetterCms.Core.Modules.Projections;
 using BetterCms.Module.Blog.Content.Resources;
 using BetterCms.Module.Blog.Controllers;
+using BetterCms.Module.Pages.Content.Resources;
 using BetterCms.Module.Root.Content.Resources;
 
 namespace BetterCms.Module.Blog.Registration
@@ -58,7 +59,10 @@ namespace BetterCms.Module.Blog.Registration
                             new JavaScriptModuleGlobalization(this, "noBlogPostsSelectedToImport", () => BlogGlobalization.ImportBlogPosts_NoBlogPostSelected_Message),
                             new JavaScriptModuleGlobalization(this, "editModeHtmlTitle", () => RootGlobalization.ContentEditMode_Html),
                             new JavaScriptModuleGlobalization(this, "editModeMarkdownTitle", () => RootGlobalization.ContentEditMode_Markdown),
-                            new JavaScriptModuleGlobalization(this, "templatesTabTitle", () => BlogGlobalization.SiteSettings_Blogs_TemplatesTab_Title)
+                            new JavaScriptModuleGlobalization(this, "templatesTabTitle", () => BlogGlobalization.SiteSettings_Blogs_TemplatesTab_Title),
+                            new JavaScriptModuleGlobalization(this, "created", () => PagesGlobalization.Page_Created), 
+                            new JavaScriptModuleGlobalization(this, "lastEdited", () => PagesGlobalization.Page_LastEdited), 
+                            new JavaScriptModuleGlobalization(this, "lastEditedBy", () => PagesGlobalization.Page_LastEditedBy), 
                         };
         }
     }

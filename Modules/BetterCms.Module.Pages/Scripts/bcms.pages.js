@@ -39,9 +39,6 @@ bettercms.define('bcms.pages', ['bcms.jquery', 'bcms', 'bcms.modal', 'bcms.siteS
                 siteSettingsPageRowTemplate: '#bcms-pages-list-row-template',
                 siteSettingsPageBooleanTemplateTrue: '#bcms-boolean-true-template',
                 siteSettingsPageBooleanTemplateFalse: '#bcms-boolean-false-template',
-                siteSettingsPageStatusTemplatePublished: '#bcms-pagestatus-published-template',
-                siteSettingsPageStatusTemplateUnpublished: '#bcms-pagestatus-unpublished-template',
-                siteSettingsPageStatusTemplateDraft: '#bcms-pagestatus-draft-template',
                 siteSettingsPageRowTemplateFirstRow: '.bcms-list-row:first',
                 siteSettingsPageParentRow: '.bcms-js-list-row:first',
                 siteSettingsPagesTableFirstRow: '.bcms-list-pages > .bcms-js-list-row:first',
@@ -92,7 +89,9 @@ bettercms.define('bcms.pages', ['bcms.jquery', 'bcms', 'bcms.modal', 'bcms.siteS
                 selectPageDialogTitle: null,
                 selectPageSelectButtonTitle: null,
                 pageNotSelectedMessage: null,
-                pagesListTitle: null
+                pagesListTitle: null,
+                created: null,
+                lastEdited: null
             },
             keys = {
                 addNewPageInfoMessageClosed: 'bcms.addNewPageInfoBoxClosed'
@@ -619,15 +618,21 @@ bettercms.define('bcms.pages', ['bcms.jquery', 'bcms', 'bcms.modal', 'bcms.siteS
             });
         };
 
+        function onAfterSiteSettingsPageItemSaved(json, item) {
+            if (json.Data != null) {
+                item.update(json.Data);
+            }
+        }
+
         function PagesGridViewModel(data, form, container, opts) {
             var self = this;
 
             self.items = ko.observableArray();
-
+            self.items.extend({ rateLimit: 50 });
             self.setItems = function (_items) {
-                self.items([]);
+                self.items.removeAll();
                 for (var i = 0; i < _items.length; i++) {
-                    self.items.push(new PageItemViewModel(_items[i]));
+                    self.items.push(new PageItemViewModel(_items[i], opts.canBeSelected));
                 }
             }
 
@@ -635,7 +640,6 @@ bettercms.define('bcms.pages', ['bcms.jquery', 'bcms', 'bcms.modal', 'bcms.siteS
                 form.find(selectors.hiddenPageNumberField).val(pageNumber);
                 grid.submitGridFormPaged(form, function (content, data) {
                     self.setItems(data.Items);
-                    page.initializeSiteSettingsPagesListItems(container, opts);
                 });
             }
             self.setItems(data.Items);
@@ -694,8 +698,9 @@ bettercms.define('bcms.pages', ['bcms.jquery', 'bcms', 'bcms.modal', 'bcms.siteS
             } else {
                 form.find(selectors.siteSettingsPagesSearchField).prop('disabled', true);
             }
-
-            page.initializeSiteSettingsPagesListItems(container, opts);
+            container.find(selectors.siteSettingsPageCreateButton).on('click', function () {
+                page.addSiteSettingsPage(container, opts);
+            });
 
             filter.bind(container, ((content.Data) ? content.Data : jsonData), function () {
                 page.searchSiteSettingsPages(form, container, opts);
@@ -705,61 +710,49 @@ bettercms.define('bcms.pages', ['bcms.jquery', 'bcms', 'bcms.modal', 'bcms.siteS
             grid.focusSearchInput(dialog.container.find(selectors.siteSettingsPagesSearchField), true);
         };
 
-        function PageItemViewModel(item) {
+        function PageItemViewModel(item, canBeSelected) {
             var self = this;
             self.id = ko.observable(item.Id);
-            self.title = ko.observable(item.Title);
-            self.createdOn = ko.observable(item.CreatedOn);
-            self.createdOnTitle = ko.observable(item.CreatedOnTitle);
-            self.modifiedOn = ko.observable(item.MofidiedOn);
-            self.modifiedOnTitle = ko.observable(item.ModifiedOnTitle);
+            self.title = ko.observable(antiXss.encodeHtml(item.Title));
+            self.createdOn = ko.observable(globalization.created + ' ' + item.CreatedOn);
+            self.modifiedOn = ko.observable(globalization.lastEdited + ' ' + item.ModifiedOn);
             self.pageStatus = ko.observable(item.PageStatus);
-            self.url = ko.observable(item.Url);
+            self.url = ko.observable(item.PageUrl);
             self.version = ko.observable(item.Version);
 
+            self.update = function(_item) {
+                self.id(_item.Id);
+                self.title(antiXss.encodeHtml(_item.Title));
+                self.createdOn(globalization.created + ' ' + _item.CreatedOn);
+                self.modifiedOn(globalization.lastEdited + ' ' + _item.ModifiedOn);
+                self.pageStatus(_item.PageStatus);
+                self.url(_item.PageUrl);
+                self.version(_item.Version);
+            };
+            self.canBeSelected = canBeSelected;
+
+            self.onEditClick = function () {
+                page.editSiteSettingsPage(self);
+            };
+
+            self.onTitleClick = function() {
+                window.open(self.url());
+            };
+
+            self.onDeleteClick = function() {
+                page.deleteSiteSettingsPage(self);
+            };
+            self.onSelect = function () {
+                if (!self.canBeSelected) {
+                    return;
+                }
+                $(this).parents(selectors.siteSettingsPagesParentTable).find(selectors.siteSettingsPagesTableRows).removeClass(classes.gridActiveRow);
+
+                var row = $(this).parents(selectors.siteSettingsPageParentRow);
+                row.addClass(classes.gridActiveRow);
+            }
             return self;
         }
-
-        /**
-        * Initializes site settings pages list items
-        */
-        page.initializeSiteSettingsPagesListItems = function (container, opts) {
-            var editButtonSelector = opts.canBeSelected ? selectors.siteSettingsPageEditButton : selectors.siteSettingsRowCells;
-
-            container.find(selectors.siteSettingsPageCreateButton).on('click', function () {
-                page.addSiteSettingsPage(container, opts);
-            });
-
-//            container.find(editButtonSelector).on('click', function () {
-//                var editButton = $(this).parents(selectors.siteSettingsPageParentRow).find(selectors.siteSettingsPageEditButton);
-//                if (editButton.length > 0) {
-//                    page.editSiteSettingsPage(editButton, container);
-//                }
-            //            });
-            container.find(selectors.siteSettingsPageEditButton).on('click', function() {
-                page.editSiteSettingsPage($(this), container);
-            });
-
-            if (opts.canBeSelected) {
-                container.find(selectors.siteSettingsRowCells).on('click', function () {
-                    $(this).parents(selectors.siteSettingsPagesParentTable).find(selectors.siteSettingsPagesTableRows).removeClass(classes.gridActiveRow);
-
-                    var row = $(this).parents(selectors.siteSettingsPageParentRow);
-                    row.addClass(classes.gridActiveRow);
-                });
-            }
-
-            container.find(selectors.siteSettingPageTitleCell).on('click', function (event) {
-                bcms.stopEventPropagation(event);
-                var url = $(this).data('url');
-                window.open(url);
-            });
-
-            container.find(selectors.siteSettingsPageDeleteButton).on('click', function (event) {
-                bcms.stopEventPropagation(event);
-                page.deleteSiteSettingsPage($(this), container);
-            });
-        };
 
         /**
         * Search site settings pages
@@ -768,12 +761,8 @@ bettercms.define('bcms.pages', ['bcms.jquery', 'bcms', 'bcms.modal', 'bcms.siteS
             grid.submitGridForm(form, function (htmlContent, data) {
                 // Blur searh field - IE11 fix
                 container.find(selectors.siteSettingsPagesSearchField).blur();
-
-
-                //                opts.dialogContainer.setContent(htmlContent);
-                //                page.initializeSiteSettingsPagesList(htmlContent, data, opts, true);
                 page.pagesGridViewModel.setItems(data.Items);
-                page.initializeSiteSettingsPagesListItems(container, opts);
+                page.pagesGridViewModel.paging.setPaging(data.GridOptions.PageSize, data.GridOptions.PageNumber, data.GridOptions.TotalCount);
             });
         };
 
@@ -781,29 +770,9 @@ bettercms.define('bcms.pages', ['bcms.jquery', 'bcms', 'bcms.modal', 'bcms.siteS
         * Opens page create form from site settings pages list
         */
         page.addSiteSettingsPage = function (container, opts) {
-            page.openCreatePageDialog(function (data) {
-                if (data.Data != null) {
-                    var template = $(selectors.siteSettingsPageRowTemplate),
-                        newRow = $(template.html()).find(selectors.siteSettingsPageRowTemplateFirstRow);
-
-                    newRow.find(selectors.siteSettingPageTitleCell).html(antiXss.encodeHtml(data.Data.Title));
-                    newRow.find(selectors.siteSettingPageCreatedCell).html(data.Data.CreatedOn);
-                    newRow.find(selectors.siteSettingPageModifiedCell).html(data.Data.ModifiedOn);
-
-                    page.siteSettingsPageStatusTemplate(newRow.find(selectors.siteSettingPageStatusCell), data.Data.PageStatus);
-                    page.siteSettingsSetBooleanTemplate(newRow.find(selectors.siteSettingPageHasSeoCell), data.Data.HasSEO);
-
-                    newRow.find(selectors.siteSettingPageTitleCell).data('url', data.Data.PageUrl);
-                    newRow.find(selectors.siteSettingPageTitleCell).data('languageId', data.Data.LanguageId);
-                    newRow.find(selectors.siteSettingsPageEditButton).data('id', data.Data.PageId);
-                    newRow.find(selectors.siteSettingsPageDeleteButton).data('id', data.Data.PageId);
-                    newRow.find(selectors.siteSettingsPageDeleteButton).data('version', data.Data.Version);
-
-                    newRow.insertBefore($(selectors.siteSettingsPagesTableFirstRow, container));
-
-                    page.initializeSiteSettingsPagesListItems(newRow, opts);
-
-                    grid.showHideEmptyRow(container);
+            page.openCreatePageDialog(function (json) {
+                if (json.Data != null) {
+                    onAfterSiteSettingsPageItemSaved(json);
                 }
             });
         };
@@ -817,24 +786,6 @@ bettercms.define('bcms.pages', ['bcms.jquery', 'bcms', 'bcms.modal', 'bcms.siteS
             container.html(html);
         };
 
-        /**
-        * Creates html for page status value, using given PageStatus template
-        */
-        page.siteSettingsPageStatusTemplate = function (container, value) {
-            var template;
-
-            if (value == 2) {
-                template = $(selectors.siteSettingsPageStatusTemplateDraft);
-            } else if (value == 3) {
-                template = $(selectors.siteSettingsPageStatusTemplatePublished);
-            } else {
-                template = $(selectors.siteSettingsPageStatusTemplateUnpublished);
-            }
-
-            var html = $(template.html());
-            container.html(html);
-        };
-
         /*
          * Opens edit page form
          */
@@ -845,44 +796,31 @@ bettercms.define('bcms.pages', ['bcms.jquery', 'bcms', 'bcms.modal', 'bcms.siteS
         /**
             * Opens page edit form from site settings pages list
             */
-        page.editSiteSettingsPage = function (self, container, title) {
-            var id = self.data('id');
-
+        page.editSiteSettingsPage = function (item) {
+            var id = item.id();
+            var container = siteSettings.getModalDialog().container;
             page.openEditPageDialog(id, function (data) {
                 if (data.Data != null) {
                     if (data.Data.IsArchived) {
                         var form = container.find(selectors.siteSettingsPagesListForm),
                             includeArchivedField = form.find(selectors.siteSettingsPagesListFormFilterIncludeArchived);
                         if (!includeArchivedField.is(":checked")) {
-                            self.parents(selectors.siteSettingsPageParentRow).remove();
-                            grid.showHideEmptyRow(container);
+                            page.pagesGridViewModel.items.remove(item);
                             return;
                         }
                     }
-
-                    var row = self.parents(selectors.siteSettingsPageParentRow),
-                        cell = row.find(selectors.siteSettingPageTitleCell);
-                    cell.html(antiXss.encodeHtml(data.Data.Title));
-                    cell.data('url', data.Data.PageUrl);
-                    row.find(selectors.siteSettingPageCreatedCell).html(data.Data.CreatedOn);
-                    row.find(selectors.siteSettingPageModifiedCell).html(data.Data.ModifiedOn);
-
-                    page.siteSettingsPageStatusTemplate(row.find(selectors.siteSettingPageStatusCell), data.Data.PageStatus);
-                    page.siteSettingsSetBooleanTemplate(row.find(selectors.siteSettingPageHasSeoCell), data.Data.HasSEO);
+                    onAfterSiteSettingsPageItemSaved(data, item);
                 }
-            }, title);
+            }, item.title());
         };
 
         /**
         * Deletes page from site settings pages list
         */
-        page.deleteSiteSettingsPage = function (self, container) {
-            var id = self.data('id');
+        page.deleteSiteSettingsPage = function (item, container) {
 
-            page.deletePage(id, function (json) {
-                self.parents(selectors.siteSettingsPageParentRow).remove();
-                messages.refreshBox(selectors.siteSettingsPagesListForm, json);
-                grid.showHideEmptyRow(container);
+            page.deletePage(item.id(), function (json) {
+                page.pagesGridViewModel.items.remove(item);
             });
         };
 

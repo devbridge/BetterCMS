@@ -2464,6 +2464,33 @@ namespace BetterCms.Module.Pages.Content.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Created:.
+        /// </summary>
+        public static string Page_Created {
+            get {
+                return ResourceManager.GetString("Page_Created", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Last edited:.
+        /// </summary>
+        public static string Page_LastEdited {
+            get {
+                return ResourceManager.GetString("Page_LastEdited", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Last edited by:.
+        /// </summary>
+        public static string Page_LastEditedBy {
+            get {
+                return ResourceManager.GetString("Page_LastEditedBy", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Content name max length exceeded..
         /// </summary>
         public static string PageContent_ContentName_MaxLengthMessage {

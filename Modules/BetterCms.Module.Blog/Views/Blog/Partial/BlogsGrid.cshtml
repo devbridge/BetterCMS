@@ -7,28 +7,28 @@
         @if ((ViewContext.Controller as CmsControllerBase).SecurityService.IsAuthorized(RootModuleConstants.UserRoles.MultipleRoles(RootModuleConstants.UserRoles.EditContent, RootModuleConstants.UserRoles.PublishContent)))
         {
             <div class="bcms-list-column bcms-list-edit">
-                <div class="bcms-action-edit bcms-grid-item-edit-button bcms-js-edit-button" data-bind="attr: { 'data-id': id }">@RootGlobalization.Button_Edit</div>
+                <div class="bcms-action-edit bcms-grid-item-edit-button bcms-js-edit-button" data-bind="attr: { 'data-id': id }, click: onEditClick">@RootGlobalization.Button_Edit</div>
             </div>
         }
 
         <div class="bcms-list-column">
-            <div class="bcms-list-link bcms-page-title" data-bind="text: title, attr: { 'data-url': url, 'data-id': id }"></div>
+            <div class="bcms-list-link bcms-page-title" data-bind="text: title, attr: { 'data-url': url, 'data-id': id }, click: onTitleClick"></div>
 
             <div class="bcms-list-row">
-                <div class="bcms-list-dates bcms-page-created" data-bind="text: createdOnTitle"></div>
-                <div class="bcms-list-dates bcms-page-created" data-bind="text: modifiedOnTitle"></div>
-                <div class="bcms-list-dates bcms-page-created" data-bind="text: modifiedByUserTitle"></div>
+                <div class="bcms-list-dates bcms-page-created" data-bind="text: createdOn"></div>
+                <div class="bcms-list-dates bcms-page-created" data-bind="text: modifiedOn"></div>
+                <div class="bcms-list-dates bcms-page-created" data-bind="text: modifiedByUser"></div>
             </div>
         </div>
 
         <div class="bcms-list-column bcms-list-status">
-            <div class="bcms-page-ispublished" data-bind="text: pageStatus"></div>
+            <div class="bcms-page-ispublished" data-bind="attr: { class: pageStatus() == 3 ? 'bcms-action-ok' : 'bcms-action-warn' }"></div>
         </div>
 
         @if ((ViewContext.Controller as CmsControllerBase).SecurityService.IsAuthorized(RootModuleConstants.UserRoles.DeleteContent))
         {
             <div class="bcms-list-column bcms-list-delete">
-                <div class="bcms-action-delete bcms-grid-item-delete-button" data-bind="attr: { 'data-id': id, 'data-version': version }">@RootGlobalization.Button_Delete</div>
+                <div class="bcms-action-delete bcms-grid-item-delete-button" data-bind="attr: { 'data-id': id, 'data-version': version }, click: onDeleteClick">@RootGlobalization.Button_Delete</div>
                 <div style="display: none" class="bcms-grid-item.message"></div>
             </div>
         }

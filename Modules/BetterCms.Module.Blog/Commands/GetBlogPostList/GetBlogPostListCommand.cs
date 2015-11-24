@@ -5,7 +5,7 @@ using BetterCms.Module.Blog.Models;
 using BetterCms.Module.Blog.Services;
 using BetterCms.Module.Blog.ViewModels.Blog;
 using BetterCms.Module.Blog.ViewModels.Filter;
-
+using BetterCms.Module.Pages.Content.Resources;
 using BetterCms.Module.Pages.Services;
 using BetterCms.Module.Root.Models;
 using BetterCms.Module.Root.Mvc;
@@ -67,7 +67,8 @@ namespace BetterCms.Module.Blog.Commands.GetBlogPostList
         public BlogsGridViewModel<SiteSettingBlogPostViewModel> Execute(BlogsFilter request)
         {
             BlogPost alias = null;
-            SiteSettingBlogPostViewModel modelAlias = null;
+//            SiteSettingBlogPostViewModel modelAlias = null;
+            BlogPost modelAlias = null;
 
             var query = blogService.GetFilteredBlogPostsQuery(request);
 
@@ -81,27 +82,34 @@ namespace BetterCms.Module.Blog.Commands.GetBlogPostList
                     .Select(() => alias.Status).WithAlias(() => modelAlias.Status)
                     .Select(() => alias.Version).WithAlias(() => modelAlias.Version)
                     .Select(() => alias.PageUrl).WithAlias(() => modelAlias.PageUrl))
-                .TransformUsing(Transformers.AliasToBean<SiteSettingBlogPostViewModel>());
+                .TransformUsing(Transformers.AliasToBean<BlogPost>());
 
             var count = query.ToRowCountFutureValue();
 
-            var blogPosts = query.AddSortingAndPaging(request).Future<SiteSettingBlogPostViewModel>();
+            var blogPosts = query.AddSortingAndPaging(request).Future<BlogPost>();
             IEnumerable<LookupKeyValue> languagesFuture = configuration.EnableMultilanguage ? languageService.GetLanguagesLookupValues() : null;
 
             var categoriesLookupList = categoryService.GetCategoriesLookupList(BlogPost.CategorizableItemKeyForBlogs);
 
-            var model = new BlogsGridViewModel<SiteSettingBlogPostViewModel>(blogPosts.ToList(), request, count.Value) { CategoriesLookupList = categoriesLookupList} ;
+            var blogsList = new List<SiteSettingBlogPostViewModel>();
+            foreach (var blogPost in blogPosts)
+            {
+                var blogModel = new SiteSettingBlogPostViewModel();
+                blogModel.Id = blogPost.Id;
+                blogModel.Title = blogPost.Title;
+                blogModel.CreatedOn = blogPost.CreatedOn.ToFormattedDateString();
+                blogModel.ModifiedOn = blogPost.ModifiedOn.ToFormattedDateString();
+                blogModel.ModifiedByUser = blogPost.ModifiedByUser;
+                blogModel.Status = blogPost.Status;
+                blogModel.Version = blogPost.Version;
+                blogModel.PageUrl = blogPost.PageUrl;
+                blogsList.Add(blogModel);
+            }
+            var model = new BlogsGridViewModel<SiteSettingBlogPostViewModel>(blogsList, request, count.Value) { CategoriesLookupList = categoriesLookupList} ;
             if (languagesFuture != null)
             {
                 model.Languages = languagesFuture.ToList();
                 model.Languages.Insert(0, languageService.GetInvariantLanguageModel());
-            }
-
-            foreach (var blog in model.Items)
-            {
-                blog.CreatedOnTitle = string.Format("{0} {1}", "CREATED:", blog.CreatedOn.ToFormattedDateString());
-                blog.ModifiedOnTitle = string.Format("{0} {1}", "LAST EDITED:", blog.ModifiedOn.ToFormattedDateString());
-                blog.ModifiedByUserTitle = string.Format("{0} {1}", "LAST EDITED BY :", blog.ModifiedByUser);
             }
 
             return model;

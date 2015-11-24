@@ -1395,4 +1395,13 @@
   <data name="CategoryTree_Button_ExpandAll" xml:space="preserve">
     <value>Expand All</value>
   </data>
+  <data name="Page_Created" xml:space="preserve">
+    <value>Created:</value>
+  </data>
+  <data name="Page_LastEdited" xml:space="preserve">
+    <value>Last edited:</value>
+  </data>
+  <data name="Page_LastEditedBy" xml:space="preserve">
+    <value>Last edited by:</value>
+  </data>
 </root>

@@ -47,6 +47,8 @@ namespace BetterCms.Module.Pages.Registration
                     new JavaScriptModuleGlobalization(this, "selectPageSelectButtonTitle", () => PagesGlobalization.SelectPage_Select_ButtonTitle),
                     new JavaScriptModuleGlobalization(this, "pageNotSelectedMessage", () => PagesGlobalization.SelectPage_PageIsNotSelected_Message),
                     new JavaScriptModuleGlobalization(this, "pagesListTitle", () => PagesGlobalization.Pages_List_Title),
+                    new JavaScriptModuleGlobalization(this, "created", () => PagesGlobalization.Page_Created),
+                    new JavaScriptModuleGlobalization(this, "lastEdited", () => PagesGlobalization.Page_LastEdited), 
                 };
         }
     }
