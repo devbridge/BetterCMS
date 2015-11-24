@@ -98,13 +98,13 @@ $ck-button-states: ('off'), ('on');
 
     &_float {
         .cke_top {
-            border: $border-thin-smoke;
+            border: $editor-border;
         }
     }
 
     &_bottom {
         background: $smoke;
-        border-top: $border-thin-smoke;
+        border-top: $editor-border;
         height: 28px;
         line-height: 28px;
         padding: 0 5px;
@@ -114,7 +114,7 @@ $ck-button-states: ('off'), ('on');
     &_resizer {
         @include position(absolute, null 5px 5px null);
         @include size(0);
-        border-color: transparent $text-gray transparent transparent;
+        border-color: transparent $gray transparent transparent;
         border-style: dashed solid dashed dashed;
         border-width: 10px 10px 0 0;
         cursor: se-resize;
@@ -141,10 +141,22 @@ $ck-button-states: ('off'), ('on');
     border-right: $editor-border;
     float: left;
     padding: 0 8px;
+
+    &:last-child {
+        @include virtual(after) {
+            @include position(absolute, $toolbar-height 0 null);
+            border-top: $editor-border;
+            z-index: 1;
+        }
+    }
 }
 
 .cke_toolgroup {
-
+    .cke_button__bold,
+    .cke_button__italic,
+    .cke_button__underline {
+        padding-top: 8px;
+    }
 }
 
 .cke_button {
@@ -208,11 +220,10 @@ $ck-button-states: ('off'), ('on');
             position: center !important;
         }
         display: block;
-        //float: left;
     }
 
     &_label {
-        color: $text-gray;
+        color: $text-dark;
         display: none;
         float: left;
         line-height: 16px;
@@ -302,7 +313,7 @@ $ck-button-states: ('off'), ('on');
 
     &_title {
         background-color: $smoke;
-        border-bottom: $border-thin-smoke;
+        border-bottom: $editor-border;
         color: $text-gray;
         cursor: move;
         font-size: 13px;
@@ -313,7 +324,7 @@ $ck-button-states: ('off'), ('on');
 
     &_body {
         background-color: $smoke;
-        border: $border-thin-smoke;
+        border: $editor-border;
         z-index: 1;
 
         label {
@@ -324,7 +335,7 @@ $ck-button-states: ('off'), ('on');
     &_contents {
         background-color: $white;
         border-collapse: collapse;
-        border-top: $border-thin-smoke;
+        border-top: $editor-border;
         font-size: 12px;
         margin-top: 30px;
         overflow: auto;
@@ -339,7 +350,7 @@ $ck-button-states: ('off'), ('on');
 
     &_footer {
         background-color: $smoke;
-        border-top: $border-thin-smoke;
+        border-top: $editor-border;
         padding: 5px;
         position: relative;
         text-align: right;
@@ -377,7 +388,7 @@ $ck-button-states: ('off'), ('on');
 
     &_tab {
         background-color: $smoke;
-        border: $border-thin-smoke;
+        border: $editor-border;
         color: $text-gray;
         cursor: pointer;
         display: inline-block;
@@ -502,7 +513,7 @@ a {
 
     &.cke_specialchar {
         @include size(24px);
-        border: $border-thin-smoke;
+        border: $editor-border;
         color: $text-gray;
         cursor: pointer;
         display: block;
@@ -591,8 +602,9 @@ a {
 
 .cke_panel {
     background-color: $white;
-    border: $border-thin-smoke;
+    border: $editor-border;
     height: 150px;
+    margin-top: 1px;
     overflow: hidden;
     visibility: visible;
 
@@ -641,7 +653,7 @@ a {
 
             &:hover {
                 background-color: $smoke;
-                border-color: $border-thin-smoke;
+                border-color: $editor-border;
                 box-shadow: inset 0 0 2px rgba($black, .1);
             }
         }
@@ -683,7 +695,7 @@ a {
 
     &_on {
         background-color: $smoke;
-        border: $border-thin-smoke;
+        border: $editor-border;
     }
 
     &_disabled {

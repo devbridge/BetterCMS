@@ -1,5 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!-- Generator: Avocode 2.4.5 - http://avocode.com -->
-<svg height="13" width="11" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 11 13">
-    <path fill="#303646" fill-rule="evenodd" d="M 8.68 9.19 C 8.68 10.36 7.72 10.98 6.13 10.98 L 2.28 10.98 L 2.28 7.41 L 5.96 7.41 C 7.79 7.41 8.68 8.06 8.68 9.16 L 8.68 9.19 Z M 2.28 2.02 L 5.62 2.02 C 7.11 2.02 7.94 2.66 7.94 3.68 L 7.94 3.71 C 7.94 4.9 6.94 5.48 5.45 5.48 L 2.28 5.48 L 2.28 2.02 Z M 8.38 6.24 C 9.36 5.74 10.26 4.9 10.26 3.34 L 10.26 3.31 C 10.26 2.43 9.96 1.73 9.38 1.15 C 8.62 0.41 7.43 0 5.92 0 L 0 0 L 0 13 L 6.11 13 C 9.06 13 11 11.76 11 9.43 L 11 9.4 C 11 7.63 9.92 6.76 8.38 6.24 L 8.38 6.24 Z M 8.38 6.24" />
+<!-- Generator: Adobe Illustrator 19.1.0, SVG Export Plug-In . SVG Version: 6.00 Build 0)  -->
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+	 width="11px" height="16px" viewBox="0 0 11 16" style="enable-background:new 0 0 11 16;" xml:space="preserve">
+<style type="text/css">
+	.st0{fill:#313746;}
+</style>
+<path class="st0" d="M8.4,6.2c1-0.5,1.9-1.3,1.9-2.9v0c0-0.9-0.3-1.6-0.9-2.2C8.6,0.4,7.4,0,5.9,0H0v13h6.1c2.9,0,4.9-1.2,4.9-3.6v0
+	C11,7.6,9.9,6.8,8.4,6.2z M2.3,2h3.3c1.5,0,2.3,0.6,2.3,1.7v0c0,1.2-1,1.8-2.5,1.8H2.3V2z M8.7,9.2c0,1.2-1,1.8-2.5,1.8H2.3V7.4H6
+	C7.8,7.4,8.7,8.1,8.7,9.2L8.7,9.2z"/>
 </svg>
