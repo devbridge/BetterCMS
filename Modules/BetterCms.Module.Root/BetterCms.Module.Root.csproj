@@ -756,7 +756,6 @@
     <EmbeddedResource Include="Scripts\bcms.modal.js" />
     <EmbeddedResource Include="Scripts\bcms.siteSettings.js" />
     <EmbeddedResource Include="Scripts\bcms.forms.js" />
-    <EmbeddedResource Include="Content\Styles\images\sprite-base-1.png" />
     <EmbeddedResource Include="Content\Styles\images\sprite-base-2.png" />
     <EmbeddedResource Include="Scripts\bcms.spinner.jquery.js" />
     <EmbeddedResource Include="Scripts\ckeditor\plugins\icons.png" />
@@ -1446,6 +1445,7 @@
     <Content Include="Scss\assets\icons\cp-stick-handle.svg" />
     <Content Include="Scss\assets\icons\date-picker-left.svg" />
     <Content Include="Scss\assets\icons\date-picker-right.svg" />
+    <Content Include="Scss\assets\icons\download.svg" />
     <Content Include="Scss\assets\icons\editor-block-quote-active.svg" />
     <Content Include="Scss\assets\icons\editor-block-quote.svg" />
     <Content Include="Scss\assets\icons\editor-bold-active.svg" />

@@ -3091,7 +3091,7 @@ td .bcms-field-wrapper {
   vertical-align: middle;
   height: 20px;
   width: 20px;
-  background: url("data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIyMCIgaGVpZ2h0PSIxOSIgdmlld0JveD0iMCAwIDIwIDE5IiBlbmFibGUtYmFja2dyb3VuZD0ibmV3IDAgMCAyMCAxOSI+PHBhdGggZD0ibTIwIDguOGMwIDUuNi00LjUgMTAuMi0xMCAxMC4yLTUuNSAwLTEwLTQuNi0xMC0xMC4yaDEuN2MwIDQuNyAzLjcgOC41IDguMyA4LjUgNC42IDAgOC4zLTMuOCA4LjMtOC41IDAtMi4xLS44LTQuMS0yLjEtNS42djEuOGgtMS43di01aDV2MS43aC0yLjVjLjEuMS4xLjEuMS4yLjYuNyAxLjIgMS40IDEuNiAyLjMuOSAxLjMgMS4zIDIuOSAxLjMgNC42IiBmaWxsPSIjMGQ3Y2U3Ii8+PC9zdmc+") no-repeat center;
+  background: url("data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHhtbG5zOnhsaW5rPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5L3hsaW5rIiBwcmVzZXJ2ZUFzcGVjdFJhdGlvPSJ4TWlkWU1pZCIgd2lkdGg9IjIwIiBoZWlnaHQ9IjE3IiB2aWV3Qm94PSIwIDAgMjAgMTciPgogIDxkZWZzPgogICAgPHN0eWxlPgogICAgICAuY2xzLTEgewogICAgICAgIGZpbGw6ICNkMmNmY2Y7CiAgICAgICAgZmlsbC1ydWxlOiBldmVub2RkOwogICAgICB9CiAgICA8L3N0eWxlPgogIDwvZGVmcz4KICA8cGF0aCBkPSJNMS41ODIsMTcuMjEwIEMwLjcxMCwxNy4yMTAgMC4wMDAsMTYuNTAwIDAuMDAwLDE1LjYyOCBMMC4wMDAsMy43NjcgQzAuMDAwLDIuODk1IDAuNzEwLDIuMTg1IDEuNTgyLDIuMTg1IEw0Ljg3NywyLjE4NSBDNS40NzIsMi4xODUgNS43OTksMi44NzggNS43OTksMy4xMDggQzUuNzk5LDMuMzQ3IDUuNDgyLDQuMDQwIDQuODc3LDQuMDQwIEwyLjM4Niw0LjA0MCBDMi4wOTEsNC4wNDAgMS44NTIsNC4yNzkgMS44NTIsNC41NzMgTDEuODUyLDE0LjgwMiBDMS44NTIsMTUuMDk2IDIuMDkxLDE1LjMzNSAyLjM4NiwxNS4zMzUgTDE3LjYyMiwxNS4zNTYgQzE3LjkxNiwxNS4zNTYgMTguMTU1LDE1LjExNiAxOC4xNTUsMTQuODIyIEwxOC4xNTUsNC41NzMgQzE4LjE1NSw0LjI3OSAxNy45MTYsNC4wNDAgMTcuNjIyLDQuMDQwIEwxMS42MTcsNC4wNDAgTDEyLjY3NSw1LjAwMCBDMTIuODQ3LDUuMTYzIDEyLjk0MSw1LjM3NCAxMi45NDEsNS41ODQgQzEyLjk0MSw1Ljc2NCAxMi44NzEsNS45MjkgMTIuNzQzLDYuMDUxIEwxMi42NjYsNi4xNzUgQzEyLjQ4OCw2LjM1MyAxMi4yOTksNi40MjkgMTIuMDk5LDYuNDI5IEMxMS45MDAsNi40MjkgMTEuNzExLDYuMzUzIDExLjU2OSw2LjIxNyBMOC45MDIsMy43ODMgTDguNzEyLDMuNjA0IEM4LjU2OSwzLjQ2OCA4LjQ4NiwzLjI3NSA4LjQ4NywzLjA3OCBDOC40ODYsMi44ODEgOC41NjYsMi42OTQgOC43MTEsMi41NTUgTDguODg2LDIuMzg3IEM4Ljg5NiwyLjM3OCA4LjkwNywyLjM2OSA4LjkxOSwyLjM2MSBMMTEuNTMzLC0wLjAwNCBDMTEuNjcxLC0wLjEzNSAxMS44NTksLTAuMjEwIDEyLjA1OCwtMC4yMTAgQzEyLjI1OCwtMC4yMTAgMTIuNDQ2LC0wLjEzNSAxMi41ODksMC4wMDIgTDEyLjczOCwwLjIxMCBDMTIuODMwLDAuMjkwIDEyLjkwMCwwLjQ1NiAxMi45MDAsMC42MzQgQzEyLjkwMCwwLjg0NSAxMi44MDUsMS4wNTcgMTIuNjM5LDEuMjE1IEwxMS41NTgsMi4xODUgTDE4LjQxOCwyLjE4NSBDMTkuMjkwLDIuMTg1IDIwLjAwMCwyLjg5NSAyMC4wMDAsMy43NjcgTDIwLjAwMCwxNS42MjggQzIwLjAwMCwxNi41MDAgMTkuMjkwLDE3LjIxMCAxOC40MTgsMTcuMjEwIEwxLjU4MiwxNy4yMTAgWiIgY2xhc3M9ImNscy0xIi8+Cjwvc3ZnPgo=") no-repeat center;
   cursor: pointer;
   overflow: hidden;
   position: relative;
@@ -3115,7 +3115,7 @@ td .bcms-field-wrapper {
   vertical-align: middle;
   height: 20px;
   width: 20px;
-  background: url() no-repeat center;
+  background: url("data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHhtbG5zOnhsaW5rPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5L3hsaW5rIiBwcmVzZXJ2ZUFzcGVjdFJhdGlvPSJ4TWlkWU1pZCIgd2lkdGg9IjE5IiBoZWlnaHQ9IjE4IiB2aWV3Qm94PSIwIDAgMTkgMTgiPgogIDxkZWZzPgogICAgPHN0eWxlPgogICAgICAuY2xzLTEgewogICAgICAgIGZpbGw6ICNkMmNmY2Y7CiAgICAgICAgZmlsbC1ydWxlOiBldmVub2RkOwogICAgICB9CiAgICA8L3N0eWxlPgogIDwvZGVmcz4KICA8cGF0aCBkPSJNOS4yNDYsMTIuMzE2IEM5LjA3MywxMi4zMTYgOC43NTksMTIuMzE2IDguNjA4LDEyLjA2MyBMNS4wNjYsOC4zNTYgQzQuNzQ4LDguMDIyIDQuNzQ4LDcuNDgwIDUuMDY2LDcuMTQ2IEM1LjIxOSw2Ljk4NiA1LjQyNCw2Ljg5OCA1LjY0NCw2Ljg5OCBDNS44NjQsNi44OTggNi4wNjksNi45ODYgNi4yMjIsNy4xNDcgTDguNDExLDkuNDM3IEw4LjQxMSwwLjg3MyBDOC40MTEsMC4zNDMgOC43MzksLTAuMDAwIDkuMjQ2LC0wLjAwMCBDOS43NTMsLTAuMDAwIDEwLjA4MSwwLjM0MyAxMC4wODEsMC44NzMgTDEwLjA4MSw5LjI4MiBMMTIuMTIxLDcuMTQ2IEMxMi4yNzQsNi45ODYgMTIuNDgwLDYuODk4IDEyLjY5OSw2Ljg5OCBDMTIuOTE5LDYuODk4IDEzLjEyNCw2Ljk4NiAxMy4yNzgsNy4xNDcgQzEzLjU5Niw3LjQ4MCAxMy41OTYsOC4wMjIgMTMuMjc4LDguMzU2IEw5Ljc5NiwxMi4wMDAgQzkuNzkxLDEyLjA0NiA5Ljc3NiwxMi4wOTEgOS43NTMsMTIuMTMxIEM5LjY0NCwxMi4zMTYgOS40MTMsMTIuMzE2IDkuMjQ2LDEyLjMxNiBaTTEuNzMyLDE4LjAwMCBDMC43NzUsMTguMDAwIC0wLjAwMCwxNy4yMzkgLTAuMDAwLDE2LjMwMSBMLTAuMDAwLDEyLjMwOCBDLTAuMDAwLDExLjg2MSAwLjM1NiwxMS40NzkgMC44MTIsMTEuNDYwIEMxLjM2OCwxMS40MzYgMS43MzIsMTEuNzc1IDEuNzMyLDEyLjMwOCBMMS43MzIsMTYuMzAwIEwxNy4yNjcsMTYuMzAwIEwxNy4yNjcsMTIuMzA4IEMxNy4yNjcsMTEuODYxIDE3LjYyNSwxMS40NzkgMTguMDgxLDExLjQ2MCBDMTguNjM3LDExLjQzNyAxOS4wMDAsMTEuNzc1IDE5LjAwMCwxMi4zMDggTDE5LjAwMCwxNi4zMDAgQzE5LjAwMCwxNy4yMzkgMTguMjI0LDE4LjAwMCAxNy4yNjcsMTguMDAwIEwxLjczMiwxOC4wMDAgWiIgY2xhc3M9ImNscy0xIi8+Cjwvc3ZnPgo=") no-repeat center;
   cursor: pointer;
   overflow: hidden;
   position: relative;
@@ -3194,24 +3194,6 @@ td .bcms-field-wrapper {
   width: 0;
 }
 
-.bcms-icn-draft {
-  background: url("images/sprite-base-2.png") no-repeat -25px -200px;
-  height: 17px;
-  margin: 0 auto;
-  overflow: hidden;
-  text-indent: 9999px;
-  width: 13px;
-}
-
-.bcms-icn-pubdraft {
-  background: url("images/sprite-base-2.png") no-repeat -3px -200px;
-  height: 17px;
-  margin: 0 auto;
-  overflow: hidden;
-  text-indent: 9999px;
-  width: 16px;
-}
-
 .bcms-tooltip-mark {
   height: 15px;
   width: 15px;
@@ -3230,7 +3212,8 @@ td .bcms-field-wrapper {
 
 .bcms-tooltip-box {
   background-color: #ffffff;
-  box-shadow: 0 2px 24px 0 rgba(0, 0, 0, 0.2);
+  border: 1px solid #dfdfdf;
+  box-shadow: 0 0 20px 0 rgba(0, 0, 0, 0.2);
   padding: 6px 8px;
   position: relative;
   width: 300px;
@@ -3243,6 +3226,102 @@ td .bcms-field-wrapper {
   line-height: 19px;
   margin: 0;
   padding: 0;
+}
+
+.bcms-tooltip-tl:after {
+  content: "";
+  position: absolute;
+  top: -8px;
+  left: 11px;
+  height: 0;
+  width: 0;
+  border-bottom: 8px solid #ffffff;
+  border-left: 8px solid transparent;
+  border-right: 8px solid transparent;
+}
+
+.bcms-tooltip-tl:before {
+  content: "";
+  position: absolute;
+  top: -9px;
+  left: 10px;
+  height: 0;
+  width: 0;
+  border-bottom: 9px solid #d0d0d0;
+  border-left: 9px solid transparent;
+  border-right: 9px solid transparent;
+}
+
+.bcms-tooltip-bl:after {
+  content: "";
+  position: absolute;
+  bottom: -8px;
+  left: 11px;
+  height: 0;
+  width: 0;
+  border-left: 8px solid transparent;
+  border-right: 8px solid transparent;
+  border-top: 8px solid #ffffff;
+}
+
+.bcms-tooltip-bl:before {
+  content: "";
+  position: absolute;
+  bottom: -9px;
+  left: 10px;
+  height: 0;
+  width: 0;
+  border-left: 9px solid transparent;
+  border-right: 9px solid transparent;
+  border-top: 9px solid #d0d0d0;
+}
+
+.bcms-tooltip-tr:after {
+  content: "";
+  position: absolute;
+  top: -8px;
+  right: 11px;
+  height: 0;
+  width: 0;
+  border-bottom: 8px solid #ffffff;
+  border-left: 8px solid transparent;
+  border-right: 8px solid transparent;
+}
+
+.bcms-tooltip-tr:before {
+  content: "";
+  position: absolute;
+  top: -9px;
+  right: 10px;
+  height: 0;
+  width: 0;
+  border-bottom: 9px solid #d0d0d0;
+  border-left: 9px solid transparent;
+  border-right: 9px solid transparent;
+}
+
+.bcms-tooltip-br:after {
+  content: "";
+  position: absolute;
+  right: 11px;
+  bottom: -8px;
+  height: 0;
+  width: 0;
+  border-left: 8px solid transparent;
+  border-right: 8px solid transparent;
+  border-top: 8px solid #ffffff;
+}
+
+.bcms-tooltip-br:before {
+  content: "";
+  position: absolute;
+  right: 10px;
+  bottom: -9px;
+  height: 0;
+  width: 0;
+  border-left: 9px solid transparent;
+  border-right: 9px solid transparent;
+  border-top: 9px solid #d0d0d0;
 }
 
 .markItUpButtonH1 a, .markItUpButtonH2 a, .markItUpButtonH3 a, .markItUpButtonH4 a, .markItUpButtonH5 a, .markItUpButtonH6 a, .markItUpButtonBold a, .markItUpButtonItalic a, .markItUpButtonListBullet a, .markItUpButtonListNumeric a, .markItUpButtonPicture a, .markItUpButtonLink a, .markItUpButtonQuotes a, .markItUpButtonCode a, .markItUpButtonWidget a, .markItUpButtonOption a {
