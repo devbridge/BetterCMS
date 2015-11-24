@@ -133,10 +133,9 @@ bettercms.define('bcms.htmlEditor', ['bcms.jquery', 'bcms', 'ckeditor', 'bcms.ma
             position = $(element.$).position().top;
         }
         for (; elementIndex < elementsCount; element = elements.getItem(++elementIndex)) {
+            element.show();
             newPosition = element && element.$ ? $(element.$).position().top : 0;
-
             inFirstRow = (inFirstRow && newPosition === position);
-
             if (!inFirstRow) {
                 if (show) element.show();
                 else element.hide();
