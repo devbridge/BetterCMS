@@ -3,39 +3,37 @@ $editor-border: 1px solid #c6c6c6;
 $editor-collapser-border: 1px solid $dark-main;
 
 $ck-toolbar-icons: (
-                ('redo_icon', $bcms-editor-redo),
-                ('undo_icon', $bcms-editor-undo),
-                ('bold_icon', $bcms-editor-bold),
-                ('italic_icon', $bcms-editor-italic),
-                ('underline_icon', $bcms-editor-underline),
-                ('strike_icon', $bcms-editor-strike),
+                ('redo_icon', $bcms-editor-redo, null),
+                ('undo_icon', $bcms-editor-undo, null),
+                ('bold_icon', $bcms-editor-bold, $bcms-editor-bold-active),
+                ('italic_icon', $bcms-editor-italic, $bcms-editor-italic-active),
+                ('underline_icon', $bcms-editor-underline, $bcms-editor-underline-active),
+                ('strike_icon', $bcms-editor-strike, $bcms-editor-strike),
             //('blockquote_icon', $bcms-editor-blockquote),
-                ('link_icon', $bcms-editor-link),
-                ('unlink_icon', $bcms-editor-unlink),
-                ('copy_icon', $bcms-editor-copy),
-                ('cut_icon', $bcms-editor-cut),
-                ('paste_icon', $bcms-editor-paste),
-                ('bulletedlist_icon', $bcms-editor-bullet-list),
-                ('numberedlist_icon', $bcms-editor-number-list),
-                ('specialchar_icon', $bcms-editor-symbol),
-                ('table_icon', $bcms-editor-table),
-                ('justifyblock_icon', $bcms-editor-justify-block),
-                ('justifycenter_icon', $bcms-editor-justify-center),
-                ('justifyleft_icon', $bcms-editor-justify-left),
-                ('justifyright_icon', $bcms-editor-justify-right),
-                ('image_icon', $bcms-editor-cms-image),
-                ('templates_icon', $bcms-editor-cms-file),
-                ('maximize_icon', $bcms-editor-maximize),
-                ('source_icon', $bcms-editor-source),
-                ('cmsoption_icon', $bcms-editor-cms-option),
-                ('cmsimage_icon', $bcms-editor-cms-image),
-                ('cmswidget_icon', $bcms-editor-cms-widget),
-                ('cmsdynamicregion_icon', $bcms-editor-cms-region),
-                ('cmstogglelinebreak_icon', $bcms-editor-cms-line-break),
-                ('pastefromword_icon', $bcms-editor-paste-word)
+                ('link_icon', $bcms-editor-link, $bcms-editor-link-active),
+                ('unlink_icon', $bcms-editor-unlink, null),
+                ('copy_icon', $bcms-editor-copy, null),
+                ('cut_icon', $bcms-editor-cut, null),
+                ('paste_icon', $bcms-editor-paste, null),
+                ('bulletedlist_icon', $bcms-editor-bullet-list, $bcms-editor-bullet-list-active),
+                ('numberedlist_icon', $bcms-editor-number-list, $bcms-editor-number-list-active),
+                ('specialchar_icon', $bcms-editor-symbol, null),
+                ('table_icon', $bcms-editor-table, null),
+                ('justifyblock_icon', $bcms-editor-justify-block, $bcms-editor-justify-block-active),
+                ('justifycenter_icon', $bcms-editor-justify-center, $bcms-editor-justify-center-active),
+                ('justifyleft_icon', $bcms-editor-justify-left, $bcms-editor-justify-left-active),
+                ('justifyright_icon', $bcms-editor-justify-right, $bcms-editor-justify-right-active),
+                ('image_icon', $bcms-editor-cms-image, null),
+                ('templates_icon', $bcms-editor-cms-file, null),
+                ('maximize_icon', $bcms-editor-maximize, $bcms-editor-maximize-active),
+                ('source_icon', $bcms-editor-source, $bcms-editor-source-active),
+                ('cmsoption_icon', $bcms-editor-cms-option, null),
+                ('cmsimage_icon', $bcms-editor-cms-image, null),
+                ('cmswidget_icon', $bcms-editor-cms-widget, null),
+                ('cmsdynamicregion_icon', $bcms-editor-cms-region, null),
+                ('cmstogglelinebreak_icon', $bcms-editor-cms-line-break, $bcms-editor-cms-line-break-active),
+                ('pastefromword_icon', $bcms-editor-paste-word, null)
 );
-
-$ck-button-states: ('off'), ('on');
 
 //todo remove after design complete
 //                ('pagebreak_icon', $bcms-editor-pagebreak),
@@ -114,7 +112,7 @@ $ck-button-states: ('off'), ('on');
     &_resizer {
         @include position(absolute, null 5px 5px null);
         @include size(0);
-        border-color: transparent $gray transparent transparent;
+        border-color: transparent $bg-dark transparent transparent;
         border-style: dashed solid dashed dashed;
         border-width: 10px 10px 0 0;
         cursor: se-resize;
@@ -173,38 +171,24 @@ $ck-button-states: ('off'), ('on');
         opacity: .8;
     }
 
-    @each $name, $icon-on, $icon-off in $ck-toolbar-icons {
+    @each $name, $icon-off, $icon-on in $ck-toolbar-icons {
         .cke_button {
             &__#{$name} {
-                background-image: url($icon-on) !important;
+                background-image: url($icon-off) !important;
             }
         }
     }
 
     //module toolbar icons
-    //@each $state in $ck-button-states {
-    //    &_#{$state} {
-    //        @if ($state == nth($ck-button-states, 1)) {
-    //            @each $name, $icon-on, $icon-off in $ck-toolbar-icons {
-    //                .cke_button {
-    //                    &__#{$name} {
-    //                        background-image: url($icon-on) !important;
-    //                    }
-    //                }
-    //            }
-    //        }
-    //
-    //        @if ($state == nth($ck-button-states, 2)) {
-    //            @each $name, $icon-on, $icon-off in $ck-toolbar-icons {
-    //                .cke_button {
-    //                    &__#{$name} {
-    //                        //background-image: url($icon-off) !important;
-    //                    }
-    //                }
-    //            }
-    //        }
-    //    }
-    //}
+    &_on {
+        @each $name, $icon-off, $icon-on in $ck-toolbar-icons {
+            .cke_button {
+                &__#{$name} {
+                    background-image: url($icon-on) !important;
+                }
+            }
+        }
+    }
 
     &_disabled {
         opacity: .3;
@@ -652,9 +636,7 @@ a {
             white-space: nowrap;
 
             &:hover {
-                background-color: $smoke;
-                border-color: $editor-border;
-                box-shadow: inset 0 0 2px rgba($black, .1);
+                color: $text-blue;
             }
         }
     }
@@ -665,14 +647,13 @@ a {
 }
 
 .cke_menubutton {
-    color: $text-gray;
+    color: $text-dark;
     display: block;
     font-family: $font-arial;
     font-size: 12px;
     text-decoration: none;
 
     &:hover {
-        background-color: darken($smoke, 10%);
         text-decoration: none;
     }
 

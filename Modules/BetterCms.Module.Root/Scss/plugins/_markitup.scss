@@ -1,3 +1,7 @@
+$toolbar-height: 40px;
+$editor-border: 1px solid #c6c6c6;
+$editor-collapser-border: 1px solid $dark-main;
+
 $toolbar-icons: (
                 ('H1', $bcms-toolbar-h1),
                 ('H2', $bcms-toolbar-h2),
@@ -11,7 +15,7 @@ $toolbar-icons: (
                 ('ListNumeric', $bcms-editor-number-list),
                 ('Picture', $bcms-editor-cms-image),
                 ('Link', $bcms-editor-link),
-               // ('Quotes', $bcms-editor-blockquote),
+            // ('Quotes', $bcms-editor-blockquote),
                 ('Code', $bcms-editor-source),
                 ('Widget', $bcms-editor-cms-widget),
                 ('WidgetOption', $bcms-editor-cms-widget),
@@ -20,20 +24,21 @@ $toolbar-icons: (
 
 %toolbar-extender {
     background: no-repeat center;
+    display: block;
 }
 
 //module global styles
 textarea {
     &.markItUpEditor {
-        border: $border-thin-smoke;
+        border: 0;
         box-sizing: border-box;
         display: block;
         font-family: $font-code-family;
-        font-size: 12px;
+        font-size: 14px;
         line-height: 18px;
         overflow: auto;
         padding: 10px;
-        resize: vertical;
+        resize: none;
         width: 100%;
 
         &:focus {
@@ -42,29 +47,46 @@ textarea {
     }
 }
 
+//module buttons override
+.markItUpButton {
+    &:hover {
+        opacity: .8;
+    }
+
+    &WidgetOption {
+        a {
+            background-position: 5px center;
+            padding-left: 25px !important;
+            text-indent: 0 !important;
+            width: auto;
+        }
+    }
+
+    &.markItUpButtonBold,
+    &.markItUpButtonItalic {
+        padding-top: 3px;
+        width: 30px !important;
+    }
+}
+
 //module markdown editor
 .markItUp {
+    &Container {
+        border: $editor-border;
+    }
+
     &Header {
         @include clearfix();
-        background-color: $smoke;
-        border: {
-            top: $border-thin-smoke;
-            right: $border-thin-smoke;
-            left: $border-thin-smoke;
-        }
-        padding: 6px 8px;
+        background-color: $white;
+        border-bottom: $editor-border;
+        min-height: $toolbar-height;
+        position: relative;
+        white-space: normal;
 
         > ul {
             > .markItUpButton {
-                border: $border-thin-smoke;
+                @include size($toolbar-height);
                 float: left;
-                height: 26px;
-                margin-left: 6px;
-                min-width: 28px;
-
-                &:first-child {
-                    margin-left: 0;
-                }
             }
         }
 
@@ -93,16 +115,14 @@ textarea {
     &Button {
         a {
             font: {
-                family: $font-arial;
+                family: $font-base-family;
                 size: 12px;
             }
             box-sizing: border-box;
-            color: $text-gray;
+            color: $text-dark;
             display: block;
             height: 100%;
-            line-height: 24px;
             overflow: hidden;
-            padding: 0 10px;
             text-indent: -999em;
 
             &:hover {
@@ -112,20 +132,24 @@ textarea {
     }
 
     &DropMenu {
+        background: url($bcms-editor-drop-arrow) no-repeat right center;
+        padding: 0 15px 0 6px;
+        width: auto !important;
+
         > a {
+            font-size: 14px;
+            line-height: $toolbar-height;
             text-indent: 0;
         }
 
         > ul {
+            @include position(absolute, 100% null null 0);
             background-color: $white;
-            border: $border-thin-smoke;
+            border: $editor-border;
             display: none;
             max-height: 170px;
             overflow-y: auto;
             padding: 0;
-            position: absolute;
-            right: 0;
-            top: 100%;
             width: 200px;
             z-index: 50;
 
@@ -141,9 +165,7 @@ textarea {
                 white-space: nowrap;
 
                 &:hover {
-                    background-color: $smoke;
-                    border-color: $border-thin-smoke;
-                    box-shadow: inset 0 0 2px rgba($black, .1);
+                    color: $text-blue;
                 }
             }
         }
@@ -156,12 +178,8 @@ textarea {
 
     &Footer {
         @include clearfix();
-        border: {
-            right: $border-thin-smoke;
-            bottom: $border-thin-smoke;
-            left: $border-thin-smoke;
-        }
         background-color: $smoke;
+        border-top: $editor-border;
         height: 28px;
         line-height: 28px;
         padding: 0 5px;
@@ -171,7 +189,7 @@ textarea {
     &ResizeHandle {
         @include position(absolute, null 5px 5px null);
         @include size(0);
-        border-color: transparent $text-gray transparent transparent;
+        border-color: transparent $bg-dark transparent transparent;
         border-style: dashed solid dashed dashed;
         border-width: 10px 10px 0 0;
         cursor: se-resize;
@@ -189,19 +207,6 @@ textarea {
         a {
             @extend %toolbar-extender;
             background-image: url($icon);
-            width: 28px;
-        }
-    }
-}
-
-//module buttons override
-.markItUpButton {
-    &WidgetOption {
-        a {
-            background-position: 5px center;
-            padding-left: 25px !important;
-            text-indent: 0 !important;
-            width: auto;
         }
     }
 }
