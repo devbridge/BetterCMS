@@ -35,6 +35,6 @@ namespace BetterCms.Module.MediaManager.Services
 
         void SwapOriginalMediaWithVersion(MediaFile originalEntity, MediaFile newVersion, ISession session = null);
 
-        void MoveFileToTrashFolder(IList<MediaFile> allVersions);
+        void MoveFilesToTrashFolder();
     }
 }

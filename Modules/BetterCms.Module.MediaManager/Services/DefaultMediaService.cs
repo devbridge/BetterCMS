@@ -34,18 +34,15 @@ namespace BetterCms.Module.MediaManager.Services
 
         private readonly ICmsConfiguration configuration;
 
-        private readonly IMediaFileService fileService;
-
         /// <summary>
         /// Initializes a new instance of the <see cref="DefaultMediaService"/> class.
         /// </summary>
-        public DefaultMediaService(IRepository repository, IUnitOfWork unitOfWork, IAccessControlService accessControlService, ICmsConfiguration configuration, IMediaFileService fileService)
+        public DefaultMediaService(IRepository repository, IUnitOfWork unitOfWork, IAccessControlService accessControlService, ICmsConfiguration configuration)
         {
             this.repository = repository;
             this.unitOfWork = unitOfWork;
             this.accessControlService = accessControlService;
             this.configuration = configuration;
-            this.fileService = fileService;
         }
 
         /// <summary>
@@ -83,10 +80,9 @@ namespace BetterCms.Module.MediaManager.Services
                 .Fetch(f => f.AccessRules)
                 .Fetch(f => f.Categories)
                 .Fetch(f => f.MediaTags)
-                .ToList();
+                .ToList().Distinct().ToArray();
 
             var mainFile = allVersions.FirstOrDefault(t => t.Id == file.Id);
-
             if (mainFile == null)
             {
                 return true; // Already does not exist.
@@ -99,7 +95,27 @@ namespace BetterCms.Module.MediaManager.Services
                 {
                     accessControlService.DemandAccess(mainFile, currentPrincipal, AccessLevel.ReadWrite);
                 }
-                fileService.MoveFileToTrashFolder(allVersions);
+
+                unitOfWork.BeginTransaction();
+                foreach (var media in allVersions)
+                {
+                    var mediaFile = media;
+                    foreach (var category in mediaFile.Categories)
+                    {
+                        repository.Delete(category);
+                    }
+                    foreach (var rule in mediaFile.AccessRules.ToArray())
+                    {
+                        mediaFile.RemoveRule(rule);
+                        repository.Delete(rule);
+                    }
+                    foreach (var tag in mediaFile.MediaTags)
+                    {
+                        repository.Delete(tag);
+                    }
+                    repository.Delete(media);
+                }
+                unitOfWork.Commit();
             }
             catch (Exception ex)
             {

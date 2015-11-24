@@ -51,6 +51,10 @@ namespace BetterCms.Module.MediaManager.Models
             }
         }
 
+        public virtual bool IsMovedToTrash { get; set; }
+
+        public virtual DateTime? NextTryToMoveToTrash { get; set; }
+
         public virtual void AddRule(IAccessRule accessRule)
         {
             if (AccessRules == null)
