@@ -27,7 +27,9 @@
   display: block;
 }
 
-.cke_top, .cke_contents, .cke_bottom {
+.cke_top,
+.cke_contents,
+.cke_bottom {
   display: block;
   overflow: hidden;
 }
@@ -505,7 +507,7 @@ a.cke_specialchar:hover {
 
 .cke_combopanel {
   height: 170px;
-  max-width: 200px;
+  width: 200px;
 }
 
 .cke_panel {
@@ -567,7 +569,7 @@ a.cke_specialchar:hover {
 }
 
 .cke_menu_panel {
-  max-width: 200px;
+  width: 200px;
 }
 
 .cke_menubutton {
