@@ -41,6 +41,7 @@ $sort-icons: (
                 left: $border-th;
                 right: $border-th;
             }
+            text-align: center;
         }
 
         &:last-child {
@@ -89,6 +90,10 @@ $sort-icons: (
                 display: block;
                 margin: auto;
             }
+        }
+
+        > a {
+            color: $text-blue;
         }
 
         .bcms-page-url {

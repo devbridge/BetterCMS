@@ -45,28 +45,6 @@
   height: 150px;
 }
 
-.bcms-import-failed {
-  background-color: #fcecec;
-}
-
-.bcms-import-failed .bcms-import-error {
-  color: #d9000d;
-  font-size: 12px;
-}
-
-.bcms-import-success {
-  background-color: #e8fae5;
-}
-
-.bcms-icn-import-success {
-  background: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAwAAAANCAYAAAHqLr/UAAAAsklEQVQoz2NQOMvAAMIgggfGABMGDDA5IP4PY1yCq4HipcicELBaKEZRhsqBYhWYyauBuBoqeBiIXyHraIGaF4jPKBAWwib4GWQ8umA+shP/QwWZoWwhmMQ9IL4BxN+AeAW65f+RdKJIqMOMIORcXI5aSkghyKEHoIpBISXKALVyBVQSPYw/QxWvRnbSfKjgTyA2Q3MCCIdg84MlEP+BKviG5AQhdGcic9iA+CTMc7j8BQD3Drtv1DbDeQAAAABJRU5ErkJggg==");
-  height: 13px;
-  margin: 0 auto;
-  overflow: hidden;
-  text-indent: 9999px;
-  width: 12px;
-}
-
 .bcms-blog-settings-holder:after {
   content: '';
   display: table;

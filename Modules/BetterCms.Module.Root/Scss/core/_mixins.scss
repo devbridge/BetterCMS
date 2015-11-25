@@ -114,7 +114,6 @@
     text-indent: -999em;
 }
 
-//todo change to flexbox
 @mixin flexible-grid($elem-class: null) {
     $db-grid-columns: 12 !default;
 

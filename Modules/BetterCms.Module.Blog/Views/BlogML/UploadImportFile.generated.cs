@@ -219,7 +219,7 @@ WriteLiteral(" class=\"bcms-input-list-holder\"");
 
 WriteLiteral(">\r\n                    <div");
 
-WriteLiteral(" class=\"bcms-edit-check-field\"");
+WriteLiteral(" class=\"bcms-checkbox-holder\"");
 
 WriteLiteral(">\r\n                        <input");
 
@@ -229,20 +229,20 @@ WriteLiteral(" data-bind=\"checked: createRedirects\"");
 
 WriteLiteral(" />\r\n                        <div");
 
-WriteLiteral(" class=\"bcms-edit-label\"");
+WriteLiteral(" class=\"bcms-checkbox-label bcms-js-edit-label\"");
 
 WriteLiteral(">");
 
             
             #line 41 "..\..\Views\BlogML\UploadImportFile.cshtml"
-                                                Write(Html.Raw(BlogGlobalization.ImportBlogPosts_CreateRedirects_Title));
+                                                                       Write(Html.Raw(BlogGlobalization.ImportBlogPosts_CreateRedirects_Title));
 
             
             #line default
             #line hidden
 WriteLiteral("</div>\r\n                    </div>\r\n\r\n                    <div");
 
-WriteLiteral(" class=\"bcms-edit-check-field\"");
+WriteLiteral(" class=\"bcms-checkbox-holder\"");
 
 WriteLiteral(">\r\n                        <input");
 
@@ -252,20 +252,20 @@ WriteLiteral(" data-bind=\"checked: recreateCategoryTree\"");
 
 WriteLiteral(" />\r\n                        <div");
 
-WriteLiteral(" class=\"bcms-edit-label\"");
+WriteLiteral(" class=\"bcms-checkbox-label bcms-js-edit-label\"");
 
 WriteLiteral(">");
 
             
             #line 46 "..\..\Views\BlogML\UploadImportFile.cshtml"
-                                                Write(Html.Raw(BlogGlobalization.ImportBlogPosts_RecreateCategoryTree_Title));
+                                                                       Write(Html.Raw(BlogGlobalization.ImportBlogPosts_RecreateCategoryTree_Title));
 
             
             #line default
             #line hidden
 WriteLiteral("</div>\r\n                    </div>\r\n\r\n                    <div");
 
-WriteLiteral(" class=\"bcms-edit-check-field\"");
+WriteLiteral(" class=\"bcms-checkbox-holder\"");
 
 WriteLiteral(">\r\n                        <input");
 
@@ -275,13 +275,13 @@ WriteLiteral(" data-bind=\"checked: reuseExistingCategories\"");
 
 WriteLiteral(" />\r\n                        <div");
 
-WriteLiteral(" class=\"bcms-edit-label\"");
+WriteLiteral(" class=\"bcms-checkbox-label bcms-js-edit-label\"");
 
 WriteLiteral(">");
 
             
             #line 51 "..\..\Views\BlogML\UploadImportFile.cshtml"
-                                                Write(Html.Raw(BlogGlobalization.ImportBlogPosts_ReuseExistingCategories_Title));
+                                                                       Write(Html.Raw(BlogGlobalization.ImportBlogPosts_ReuseExistingCategories_Title));
 
             
             #line default
@@ -307,7 +307,7 @@ WriteLiteral(">\r\n                <thead>\r\n                    <tr>\r\n      
 
 WriteLiteral(" class=\"bcms-tables-nohover\"");
 
-WriteLiteral(" style=\"width: 40px;\"");
+WriteLiteral(" style=\"width: 40px; padding: 0;\"");
 
 WriteLiteral("><input");
 
