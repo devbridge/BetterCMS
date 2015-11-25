@@ -20,24 +20,34 @@
   color: #0a62b7;
 }
 
+.bcms-sitemap-tabs-holder {
+  float: left;
+}
+
 .bcms-sitemaps-arrow-left {
-  position: absolute;
-  top: 0;
-  right: 0;
-  background: red;
+  background: url("data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0idXRmLTgiPz4NCjwhLS0gR2VuZXJhdG9yOiBBZG9iZSBJbGx1c3RyYXRvciAxOS4xLjAsIFNWRyBFeHBvcnQgUGx1Zy1JbiAuIFNWRyBWZXJzaW9uOiA2LjAwIEJ1aWxkIDApICAtLT4NCjxzdmcgdmVyc2lvbj0iMS4xIiBpZD0iTGF5ZXJfMSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIiB4bWxuczp4bGluaz0iaHR0cDovL3d3dy53My5vcmcvMTk5OS94bGluayIgeD0iMHB4IiB5PSIwcHgiDQoJIHdpZHRoPSI2cHgiIGhlaWdodD0iMTBweCIgdmlld0JveD0iLTMwMiAzOTIgNiAxMCIgc3R5bGU9ImVuYWJsZS1iYWNrZ3JvdW5kOm5ldyAtMzAyIDM5MiA2IDEwOyIgeG1sOnNwYWNlPSJwcmVzZXJ2ZSI+DQo8cGF0aCBzdHlsZT0iZmlsbDojZmZmZmZmO2VuYWJsZS1iYWNrZ3JvdW5kOm5ldyAgICA7IiBkPSJNLTI5Ni4yLDM5My4zYzAuMy0wLjMsMC4zLTAuOCwwLTEuMXMtMC44LTAuMy0xLjEsMGwtNC40LDQuMg0KCWMtMC4zLDAuMy0wLjMsMC44LDAsMS4xbDQuNCw0LjJjMC4zLDAuMywwLjgsMC4zLDEuMSwwczAuMy0wLjgsMC0xLjFsLTMuNi0zLjdMLTI5Ni4yLDM5My4zeiIvPg0KPC9zdmc+DQo=") no-repeat center;
+  cursor: pointer;
+  float: left;
   height: 100%;
   width: 22px;
-  cursor: pointer;
+}
+
+.bcms-sitemaps-arrow-left.bcms-sitemaps-arrow-inactive {
+  background: none;
+  cursor: default;
 }
 
 .bcms-sitemaps-arrow-right {
-  position: absolute;
-  top: 0;
-  right: auto;
-  background: red;
+  background: url("data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0idXRmLTgiPz4KPCEtLSBHZW5lcmF0b3I6IEF2b2NvZGUgMi40LjUgLSBodHRwOi8vYXZvY29kZS5jb20gLS0+CjxzdmcgaGVpZ2h0PSIxMCIgd2lkdGg9IjYiIHhtbG5zOnhsaW5rPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5L3hsaW5rIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA2IDEwIj4KICAgIDxwYXRoIGZpbGw9IiNmZmZmZmYiIG9wYWNpdHk9IjAuOSIgZmlsbC1ydWxlPSJldmVub2RkIiBkPSJNIDAuMjMgOC43MiBDIC0wLjA4IDkuMDEgLTAuMDggOS40OSAwLjIzIDkuNzggQyAwLjU0IDEwLjA3IDEuMDQgMTAuMDcgMS4zNSA5Ljc4IEwgNS43NyA1LjUzIEMgNi4wOCA1LjI0IDYuMDggNC43NiA1Ljc3IDQuNDcgTCAxLjM1IDAuMjIgQyAxLjA0IC0wLjA3IDAuNTQgLTAuMDcgMC4yMyAwLjIyIEMgLTAuMDggMC41MSAtMC4wOCAwLjk5IDAuMjMgMS4yOCBMIDMuODYgNSBMIDAuMjMgOC43MiBaIE0gMC4yMyA4LjcyIiAvPgo8L3N2Zz4=") no-repeat center;
+  cursor: pointer;
+  float: right;
   height: 100%;
   width: 22px;
-  cursor: pointer;
+}
+
+.bcms-sitemaps-arrow-right.bcms-sitemaps-arrow-inactive {
+  background: none;
+  cursor: default;
 }
 
 .bcms-tree-zones-holder {

@@ -3,15 +3,19 @@
 @using BetterCms.Module.Pages.ViewModels.Sitemap
 @using BetterCms.Module.Root.Mvc.Helpers
 @using Microsoft.Web.Mvc
+
 <div class="bcms-tab-header bcms-js-tab-header">
     <div class="bcms-modal-frame-holder">
         <div class="bcms-sitemaps-arrow-left" data-bind="css: { 'bcms-sitemaps-arrow-inactive': !slider.canSlideLeft() }, click: slider.slideLeft, visible: slider.showSliders"></div>
-        <!-- ko foreach: tabs -->
-        <div class="bcms-tab-ui bcms-tab-item" data-bind="text: newPageViewModel.sitemap.title(), css: { 'bcms-active': isActive }, click: activate, attr: { id: tabId }, visible: isVisible"></div>
-        <!-- /ko -->
+        <div class="bcms-sitemap-tabs-holder">
+            <!-- ko foreach: tabs -->
+            <div class="bcms-tab-ui bcms-tab-item" data-bind="text: newPageViewModel.sitemap.title(), css: { 'bcms-active': isActive }, click: activate, attr: { id: tabId }, visible: isVisible"></div>
+            <!-- /ko -->
+        </div>
         <div class="bcms-sitemaps-arrow-right" data-bind="css: { 'bcms-sitemaps-arrow-inactive': !slider.canSlideRight() }, click: slider.slideRight, visible: slider.showSliders"></div>
     </div>
 </div>
+
 <div class="bcms-modal-frame-holder" id="bcms-sitemap-addnewpage" data-bind="with: activeNewPageViewModel">
     @Html.MessagesBox()
     <div class="bcms-window-tabbed-options">

@@ -331,7 +331,7 @@ WriteLiteral("            ");
             #line hidden
 WriteLiteral("            <td");
 
-WriteLiteral(" data-bind=\"style: { width: isActive() ? \'110px\' : \'40px\', padding: isActive() ? " +
+WriteLiteral(" data-bind=\"style: { width: isActive() ? \'120px\' : \'40px\', padding: isActive() ? " +
 "\'10px\' : \'0\' }\"");
 
 WriteLiteral(">\r\n");

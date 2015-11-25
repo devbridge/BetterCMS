@@ -1,6 +1,6 @@
 $sitemap-tab-arrows: (
-                ('left' null, auto, 0),
-                ('right' null, 0, auto)
+                ('left', $bcms-arrow-left, left),
+                ('right', $bcms-arrow-right, right)
 );
 
 %tree-links-ui {
@@ -14,13 +14,22 @@ $sitemap-tab-arrows: (
     }
 }
 
-@each $name, $icon, $right, $left in $sitemap-tab-arrows {
+.bcms-sitemap-tabs-holder {
+    float: left;
+}
+
+@each $name, $icon, $float in $sitemap-tab-arrows {
     .bcms-sitemaps-arrow-#{$name} {
-        @include position(absolute, 0 $right null $left);
-        background: red; //todo temp bg
+        background: url($icon) no-repeat center;
+        cursor: pointer;
+        float: $float;
         height: 100%;
         width: 22px;
-        cursor: pointer;
+
+        &.bcms-sitemaps-arrow-inactive {
+            background: none;
+            cursor: default;
+        }
     }
 }
 

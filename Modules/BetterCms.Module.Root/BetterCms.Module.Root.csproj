@@ -1428,6 +1428,8 @@
     <Content Include="Scss\assets\icons\action-status-warn.svg" />
     <Content Include="Scss\assets\icons\action-usage.svg" />
     <Content Include="Scss\assets\icons\add-content.svg" />
+    <Content Include="Scss\assets\icons\arrow-left.svg" />
+    <Content Include="Scss\assets\icons\arrow-right.svg" />
     <Content Include="Scss\assets\icons\btn-down-arrow.svg" />
     <Content Include="Scss\assets\icons\close-white.svg" />
     <Content Include="Scss\assets\icons\close.svg" />
