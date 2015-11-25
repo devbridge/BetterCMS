@@ -98,7 +98,7 @@ bettercms.define('bcms.pages', ['bcms.jquery', 'bcms', 'bcms.modal', 'bcms.siteS
             },
             classes = {
                 addNewPageActiveTemplateBox: 'bcms-grid-box-active',
-                gridActiveRow: 'bcms-table-row-active'
+                gridActiveRow: '.bcms-table-row-active'
             },
             pageUrlManuallyEdited = false,
             oldTitleValue = '';
@@ -627,12 +627,13 @@ bettercms.define('bcms.pages', ['bcms.jquery', 'bcms', 'bcms.modal', 'bcms.siteS
         function PagesGridViewModel(data, form, container, opts) {
             var self = this;
 
+            self.selectedRowId = ko.observable("");
             self.items = ko.observableArray();
             self.items.extend({ rateLimit: 50 });
             self.setItems = function (_items) {
                 self.items.removeAll();
                 for (var i = 0; i < _items.length; i++) {
-                    self.items.push(new PageItemViewModel(_items[i], opts.canBeSelected));
+                    self.items.push(new PageItemViewModel(_items[i], self, opts.canBeSelected));
                 }
             }
 
@@ -710,7 +711,7 @@ bettercms.define('bcms.pages', ['bcms.jquery', 'bcms', 'bcms.modal', 'bcms.siteS
             grid.focusSearchInput(dialog.container.find(selectors.siteSettingsPagesSearchField), true);
         };
 
-        function PageItemViewModel(item, canBeSelected) {
+        function PageItemViewModel(item, parent, canBeSelected) {
             var self = this;
             self.id = ko.observable(item.Id);
             self.title = ko.observable(antiXss.encodeHtml(item.Title));
@@ -746,10 +747,7 @@ bettercms.define('bcms.pages', ['bcms.jquery', 'bcms', 'bcms.modal', 'bcms.siteS
                 if (!self.canBeSelected) {
                     return;
                 }
-                $(this).parents(selectors.siteSettingsPagesParentTable).find(selectors.siteSettingsPagesTableRows).removeClass(classes.gridActiveRow);
-
-                var row = $(this).parents(selectors.siteSettingsPageParentRow);
-                row.addClass(classes.gridActiveRow);
+                parent.selectedRowId(self.id());
             }
             return self;
         }

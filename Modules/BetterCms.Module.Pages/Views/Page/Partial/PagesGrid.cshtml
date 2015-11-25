@@ -5,7 +5,7 @@
 
 <div id="bcms-pages-grid" class="bcms-list-pages">
     <!-- ko foreach: items -->
-    <div class="bcms-list-pages-row bcms-js-list-row" data-bind="click: onSelect">
+    <div class="bcms-list-pages-row bcms-js-list-row" data-bind="click: onSelect, css: { 'bcms-list-row-active': $parent.selectedRowId() == id() }">
         @if ((ViewContext.Controller as CmsControllerBase).SecurityService.IsAuthorized(RootModuleConstants.UserRoles.MultipleRoles(RootModuleConstants.UserRoles.EditContent, RootModuleConstants.UserRoles.PublishContent)))
         {
             <div class="bcms-list-column bcms-list-edit">
