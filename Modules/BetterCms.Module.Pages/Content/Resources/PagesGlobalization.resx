@@ -1404,4 +1404,31 @@
   <data name="Page_LastEditedBy" xml:space="preserve">
     <value>Last edited by:</value>
   </data>
+  <data name="SiteSettings_Pages_Sort" xml:space="preserve">
+    <value>SORT</value>
+  </data>
+  <data name="SiteSettings_Pages_Sort_AZ" xml:space="preserve">
+    <value>[A-Z]</value>
+  </data>
+  <data name="SiteSettings_Pages_Sort_LeastRecent" xml:space="preserve">
+    <value>Least recently edited</value>
+  </data>
+  <data name="SiteSettings_Pages_Sort_Newest" xml:space="preserve">
+    <value>Newest</value>
+  </data>
+  <data name="SiteSettings_Pages_Sort_Oldest" xml:space="preserve">
+    <value>Oldest</value>
+  </data>
+  <data name="SiteSettings_Pages_Sort_Recent" xml:space="preserve">
+    <value>Recently edited</value>
+  </data>
+  <data name="SiteSettings_Pages_Sort_StatusAsc" xml:space="preserve">
+    <value>Published first</value>
+  </data>
+  <data name="SiteSettings_Pages_Sort_StatusDesc" xml:space="preserve">
+    <value>Unpublished first</value>
+  </data>
+  <data name="SiteSettings_Pages_Sort_ZA" xml:space="preserve">
+    <value>[Z-A]</value>
+  </data>
 </root>

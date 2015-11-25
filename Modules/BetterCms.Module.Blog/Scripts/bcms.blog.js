@@ -623,11 +623,19 @@ bettercms.define('bcms.blog', ['bcms.jquery', 'bcms', 'bcms.modal', 'bcms.siteSe
         /**
         * Search site settings blogs
         */
-        function searchSiteSettingsBlogs(container, form, isSearchResult, isClearFilterResult) {
-            grid.submitGridForm(form, function (htmlContent, data) {
-                blog.blogsGridViewModel.setItems(data.Items);
-                blog.blogsGridViewModel.paging.setPaging(data.GridOptions.PageSize, data.GridOptions.PageNumber, data.GridOptions.TotalCount);
-            });
+        function searchSiteSettingsBlogs(container, form, usePaging) {
+            if (usePaging) {
+                grid.submitGridFormPaged(form, function(htmlContent, data) {
+                    blog.blogsGridViewModel.setItems(data.Items);
+                    blog.blogsGridViewModel.paging.setPaging(data.GridOptions.PageSize, data.GridOptions.PageNumber, data.GridOptions.TotalCount);
+                });
+            } else {
+                grid.submitGridForm(form, function (htmlContent, data) {
+                    blog.blogsGridViewModel.setItems(data.Items);
+                    blog.blogsGridViewModel.paging.setPaging(data.GridOptions.PageSize, data.GridOptions.PageNumber, data.GridOptions.TotalCount);
+                });
+            }
+
         }
 
         /**

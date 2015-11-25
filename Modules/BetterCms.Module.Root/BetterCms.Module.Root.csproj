@@ -213,6 +213,7 @@
     <Compile Include="Models\ChildContentOption.cs" />
     <Compile Include="Models\ChildContentOptionTranslation.cs" />
     <Compile Include="Models\ContentOptionTranslation.cs" />
+    <Compile Include="Models\Enums\Enum.cs" />
     <Compile Include="Models\ICategoryAccessor.cs" />
     <Compile Include="Models\Maps\ChildContentOptionTranslationMap.cs" />
     <Compile Include="Models\Maps\ContentOptionTranslationMap.cs" />
@@ -267,6 +268,7 @@
     <Compile Include="Mvc\Extensions\HtmlHelperExtensions.cs" />
     <Compile Include="Mvc\Extensions\StringExtensions.cs" />
     <Compile Include="Mvc\Grids\EditableGridMultilineColumn.cs" />
+    <Compile Include="Mvc\Grids\GridOptions\SortAlias.cs" />
     <Compile Include="Mvc\PageHtmlRenderer\PageContentRenderHelper.cs" />
     <Compile Include="Mvc\PageHtmlRenderer\PageContentHtmlRenderer.cs" />
     <Compile Include="Mvc\PageHtmlRenderer\RenderingContentOptionProperty.cs" />

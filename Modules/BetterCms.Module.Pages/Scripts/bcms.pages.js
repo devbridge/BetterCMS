@@ -670,13 +670,13 @@ bettercms.define('bcms.pages', ['bcms.jquery', 'bcms', 'bcms.modal', 'bcms.siteS
 
             form.on('submit', function (event) {
                 event.preventDefault();
-                page.searchSiteSettingsPages(form, container, opts);
+                page.searchSiteSettingsPages(form, container);
                 return false;
             });
 
             bcms.preventInputFromSubmittingForm(form.find(selectors.siteSettingsPagesSearchField), {
                 preventedEnter: function () {
-                    page.searchSiteSettingsPages(form, container, opts);
+                    page.searchSiteSettingsPages(form, container);
                 }
             });
 
@@ -702,8 +702,8 @@ bettercms.define('bcms.pages', ['bcms.jquery', 'bcms', 'bcms.modal', 'bcms.siteS
                 page.addSiteSettingsPage(container, opts);
             });
 
-            filter.bind(container, ((content.Data) ? content.Data : jsonData), function () {
-                page.searchSiteSettingsPages(form, container, opts);
+            filter.bind(container, ((content.Data) ? content.Data : jsonData), function (usePaging) {
+                page.searchSiteSettingsPages(form, container, usePaging);
             }, opts);
 
             // Select search (timeout is required to work on IE11)
@@ -757,13 +757,21 @@ bettercms.define('bcms.pages', ['bcms.jquery', 'bcms', 'bcms.modal', 'bcms.siteS
         /**
         * Search site settings pages
         */
-        page.searchSiteSettingsPages = function (form, container, opts) {
-            grid.submitGridForm(form, function (htmlContent, data) {
-                // Blur searh field - IE11 fix
-                container.find(selectors.siteSettingsPagesSearchField).blur();
-                page.pagesGridViewModel.setItems(data.Items);
-                page.pagesGridViewModel.paging.setPaging(data.GridOptions.PageSize, data.GridOptions.PageNumber, data.GridOptions.TotalCount);
-            });
+        page.searchSiteSettingsPages = function (form, container, usePaging) {
+            if (usePaging) {
+                grid.submitGridFormPaged(form, function(htmlContent, data) {
+                    container.find(selectors.siteSettingsPagesSearchField).blur();
+                    page.pagesGridViewModel.setItems(data.Items);
+                    page.pagesGridViewModel.paging.setPaging(data.GridOptions.PageSize, data.GridOptions.PageNumber, data.GridOptions.TotalCount);
+                });
+            } else {
+                grid.submitGridForm(form, function (htmlContent, data) {
+                    // Blur searh field - IE11 fix
+                    container.find(selectors.siteSettingsPagesSearchField).blur();
+                    page.pagesGridViewModel.setItems(data.Items);
+                    page.pagesGridViewModel.paging.setPaging(data.GridOptions.PageSize, data.GridOptions.PageNumber, data.GridOptions.TotalCount);
+                });
+            }
         };
 
         /**

@@ -48,28 +48,12 @@ namespace BetterCms.Module.Pages.ViewModels.SiteSettings
         public string CreatedOn { get; set; }
 
         /// <summary>
-        /// Gets or sets the created on title.
-        /// </summary>
-        /// <value>
-        /// The created on title.
-        /// </value>
-        public string CreatedOnTitle { get; set; }
-
-        /// <summary>
         /// Gets or sets the date the page is modified on.
         /// </summary>
         /// <value>
         /// The date the page is modified on.
         /// </value>
         public string ModifiedOn { get; set; }
-
-        /// <summary>
-        /// Gets or sets the modified on title.
-        /// </summary>
-        /// <value>
-        /// The modified on title.
-        /// </value>
-        public string ModifiedOnTitle { get; set; }
 
         /// <summary>
         /// Gets or sets a value indicating whether page has SEO.

@@ -3301,6 +3301,87 @@ namespace BetterCms.Module.Pages.Content.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to SORT.
+        /// </summary>
+        public static string SiteSettings_Pages_Sort {
+            get {
+                return ResourceManager.GetString("SiteSettings_Pages_Sort", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to [A-Z].
+        /// </summary>
+        public static string SiteSettings_Pages_Sort_AZ {
+            get {
+                return ResourceManager.GetString("SiteSettings_Pages_Sort_AZ", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Least recently edited.
+        /// </summary>
+        public static string SiteSettings_Pages_Sort_LeastRecent {
+            get {
+                return ResourceManager.GetString("SiteSettings_Pages_Sort_LeastRecent", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Newest.
+        /// </summary>
+        public static string SiteSettings_Pages_Sort_Newest {
+            get {
+                return ResourceManager.GetString("SiteSettings_Pages_Sort_Newest", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Oldest.
+        /// </summary>
+        public static string SiteSettings_Pages_Sort_Oldest {
+            get {
+                return ResourceManager.GetString("SiteSettings_Pages_Sort_Oldest", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Recently edited.
+        /// </summary>
+        public static string SiteSettings_Pages_Sort_Recent {
+            get {
+                return ResourceManager.GetString("SiteSettings_Pages_Sort_Recent", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Published first.
+        /// </summary>
+        public static string SiteSettings_Pages_Sort_StatusAsc {
+            get {
+                return ResourceManager.GetString("SiteSettings_Pages_Sort_StatusAsc", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Unpublished first.
+        /// </summary>
+        public static string SiteSettings_Pages_Sort_StatusDesc {
+            get {
+                return ResourceManager.GetString("SiteSettings_Pages_Sort_StatusDesc", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to [Z-A].
+        /// </summary>
+        public static string SiteSettings_Pages_Sort_ZA {
+            get {
+                return ResourceManager.GetString("SiteSettings_Pages_Sort_ZA", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Pages.
         /// </summary>
         public static string SiteSettings_Pages_Title {

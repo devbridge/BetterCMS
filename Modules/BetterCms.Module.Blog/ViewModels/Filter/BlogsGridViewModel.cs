@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using BetterCms.Module.Pages.ViewModels.Filter;
 using BetterCms.Module.Root.Models;
 using BetterCms.Module.Root.Mvc.Grids;
+using BetterCms.Module.Root.Mvc.Grids.GridOptions;
 using BetterCms.Module.Root.ViewModels.Category;
 using BetterCms.Module.Root.ViewModels.SiteSettings;
 
@@ -19,6 +20,7 @@ namespace BetterCms.Module.Blog.ViewModels.Filter
         public IList<LookupKeyValue> Languages { get; set; }
         public IList<LookupKeyValue> Statuses { get; set; }
         public IList<LookupKeyValue> SeoStatuses { get; set; }
+        public IList<SortAlias> SortAliases { get; set; }
         public bool IncludeArchived { get; set; }
         public PageStatusFilterType? Status { get; set; }
         public SeoStatusFilterType? SeoStatus { get; set; }
@@ -36,6 +38,7 @@ namespace BetterCms.Module.Blog.ViewModels.Filter
 
             Statuses = PagesFilter.PageStatuses;
             SeoStatuses = PagesFilter.SeoStatuses;
+            SortAliases = PagesFilter.SortAliases;
         }
     }
 }

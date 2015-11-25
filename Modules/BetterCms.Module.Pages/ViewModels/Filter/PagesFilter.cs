@@ -4,6 +4,7 @@ using System.Globalization;
 
 using BetterCms.Module.Pages.Content.Resources;
 using BetterCms.Module.Root.Models;
+using BetterCms.Module.Root.Models.Enums;
 using BetterCms.Module.Root.Mvc.Grids.GridOptions;
 
 namespace BetterCms.Module.Pages.ViewModels.Filter
@@ -32,6 +33,19 @@ namespace BetterCms.Module.Pages.ViewModels.Filter
             {
                 new LookupKeyValue(((int)SeoStatusFilterType.HasSeo).ToString(CultureInfo.InvariantCulture), PagesGlobalization.SeoStatusFilterType_HasSEO),
                 new LookupKeyValue(((int)SeoStatusFilterType.HasNotSeo).ToString(CultureInfo.InvariantCulture), PagesGlobalization.SeoStatusFilterType_HasNotSEO),
+            };
+        
+        public static IList<SortAlias> SortAliases = new []
+            {
+                new SortAlias(PagesGlobalization.SiteSettings_Pages_Sort_Newest, "CreatedOn", SortDirection.Descending), 
+                new SortAlias(PagesGlobalization.SiteSettings_Pages_Sort_Oldest, "CreatedOn", SortDirection.Ascending), 
+                new SortAlias(PagesGlobalization.SiteSettings_Pages_Sort_AZ, "Title", SortDirection.Ascending), 
+                new SortAlias(PagesGlobalization.SiteSettings_Pages_Sort_ZA, "Title", SortDirection.Descending), 
+                new SortAlias(PagesGlobalization.SiteSettings_Pages_Sort_Recent, "ModifiedOn", SortDirection.Descending), 
+                new SortAlias(PagesGlobalization.SiteSettings_Pages_Sort_LeastRecent, "ModifiedOn", SortDirection.Ascending), 
+                new SortAlias(PagesGlobalization.SiteSettings_Pages_Sort_StatusAsc, "Status", SortDirection.Ascending), 
+                new SortAlias(PagesGlobalization.SiteSettings_Pages_Sort_StatusDesc, "Status", SortDirection.Descending), 
+
             };
     }
 }

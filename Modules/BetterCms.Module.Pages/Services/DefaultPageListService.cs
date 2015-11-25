@@ -50,11 +50,10 @@ namespace BetterCms.Module.Pages.Services
 
         public PagesGridViewModel<SiteSettingPageViewModel> GetFilteredPagesList(PagesFilter request)
         {
-            request.SetDefaultSortingOptions("Title");
+            request.SetDefaultSortingOptions("CreatedOn", true);
 
             PageProperties alias = null;
             PagesView viewAlias = null;
-//            SiteSettingPageViewModel modelAlias = null;
             PageProperties modelAlias = null;
 
             var query = unitOfWork.Session

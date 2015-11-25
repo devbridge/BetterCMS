@@ -11,7 +11,12 @@ bettercms.define('bcms.pages.filter', ['bcms.jquery', 'bcms', 'bcms.ko.extenders
                 filterByLanguage: '#bcms-js-filter-languages',
                 filterByStatus: '#bcms-js-filter-status',
                 filterBySeoStatus: '#bcms-js-filter-seostatus',
-                filterByLayout: '#bcms-js-filter-layout'
+                filterByLayout: '#bcms-js-filter-layout',
+                filterSort: '#bcms-js-filter-sort',
+                hiddenSortColumnField: '#bcms-grid-sort-column',
+                hiddenSortDirectionField: '#bcms-grid-sort-direction',
+                hiddenPageNumberField: '#bcms-grid-page-number',
+                siteSettingsPagesListForm: '#bcms-pages-form'
             },
             links = {},
             globalization = {};
@@ -21,6 +26,14 @@ bettercms.define('bcms.pages.filter', ['bcms.jquery', 'bcms', 'bcms.ko.extenders
         */
         filter.links = links;
         filter.globalization = globalization;
+
+        function SortAliasModel(title, column, direction) {
+            var self = this;
+            self.title = title;
+            self.column = column;
+            self.direction = direction;
+            return self;
+        };
 
         function FilterViewModel(tagsViewModel, categoriesViewModel, container, onSearchClick, jsonData) {
             var self = this;
@@ -44,6 +57,18 @@ bettercms.define('bcms.pages.filter', ['bcms.jquery', 'bcms', 'bcms.ko.extenders
             self.seoStatuses.unshift({ Key: '', Value: '' });
             self.layouts.unshift({ Key: '', Value: '' });
 
+            self.showSorting = ko.observable(false);
+            self.sortColumn = ko.observable(jsonData.GridOptions.Column);
+            self.sortDirection = ko.observable(jsonData.GridOptions.Direction);
+            self.sortFields = ko.observableArray([]);
+            self.suspend = true;
+
+            if (jsonData.SortAliases) {
+                jsonData.SortAliases.forEach(function(sortAlias) {
+                    self.sortFields.push(new SortAliasModel(sortAlias.Title, sortAlias.Column, sortAlias.Direction));
+                });
+            }
+            
             self.isEdited = ko.computed(function () {
                 if (self.includeArchived()) {
                     return true;
@@ -62,8 +87,23 @@ bettercms.define('bcms.pages.filter', ['bcms.jquery', 'bcms', 'bcms.ko.extenders
                 }
                 return false;
             });
-
+            self.form = container.find(selectors.siteSettingsPagesListForm);
             // Actions.
+            self.toggleShowSorting = function() {
+                self.showSorting(!self.showSorting());
+                setTimeout(function() {
+                    self.suspend = false;
+                }, 100);
+            };
+            self.applySort = function(data, column, direction) {
+                self.sortColumn(column);
+                self.sortDirection(direction);
+                self.showSorting(false);
+                self.form.find(selectors.hiddenSortColumnField).val(column);
+                self.form.find(selectors.hiddenSortDirectionField).val(direction);
+                self.suspend = true;
+                onSearchClick(true);
+            };
             self.toggleFilter = function() {
                 self.isVisible(!self.isVisible());
             };
@@ -93,6 +133,12 @@ bettercms.define('bcms.pages.filter', ['bcms.jquery', 'bcms', 'bcms.ko.extenders
             self.changeIncludeMasterPages = function () {
                 self.includeMasterPages(!(self.includeMasterPages()));
             };
+            bcms.on(bcms.events.bodyClick, function (event) {
+                if (!self.suspend) {
+                    self.showSorting(false);
+                    self.suspend = true;
+                }
+            });
         }
 
         filter.bind = function (container, jsonData, onSearchClick) {

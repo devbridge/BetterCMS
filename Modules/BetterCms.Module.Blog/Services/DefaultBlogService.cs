@@ -659,7 +659,7 @@ namespace BetterCms.Module.Blog.Services
         /// </returns>
         public NHibernate.IQueryOver<BlogPost, BlogPost> GetFilteredBlogPostsQuery(ViewModels.Filter.BlogsFilter request, bool joinContents = false)
         {
-            request.SetDefaultSortingOptions("Title");
+            request.SetDefaultSortingOptions("CreatedOn", true);
 
             BlogPost alias = null;
 

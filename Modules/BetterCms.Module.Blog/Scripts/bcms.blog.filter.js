@@ -21,6 +21,14 @@ bettercms.define('bcms.blog.filter', ['bcms.jquery', 'bcms', 'bcms.ko.extenders'
         filter.links = links;
         filter.globalization = globalization;
 
+        function SortAliasModel(title, column, direction) {
+            var self = this;
+            self.title = title;
+            self.column = column;
+            self.direction = direction;
+            return self;
+        };
+
         function FilterViewModel(tagsViewModel, categoriesViewModel, container, onSearchClick, jsonData, isClearFilterResult) {
             var self = this;
             
@@ -39,6 +47,18 @@ bettercms.define('bcms.blog.filter', ['bcms.jquery', 'bcms', 'bcms.ko.extenders'
             self.statuses.unshift({ Key: '', Value: '' });
             self.seoStatuses.unshift({ Key: '', Value: '' });
 
+            self.showSorting = ko.observable(false);
+            self.sortColumn = ko.observable(jsonData.GridOptions.Column);
+            self.sortDirection = ko.observable(jsonData.GridOptions.Direction);
+            self.sortFields = ko.observableArray([]);
+            self.suspend = true;
+
+            if (jsonData.SortAliases) {
+                jsonData.SortAliases.forEach(function (sortAlias) {
+                    self.sortFields.push(new SortAliasModel(sortAlias.Title, sortAlias.Column, sortAlias.Direction));
+                });
+            }
+
             self.isEdited = ko.computed(function () {
                 if (self.includeArchived()) {
                     return true;
@@ -54,9 +74,24 @@ bettercms.define('bcms.blog.filter', ['bcms.jquery', 'bcms', 'bcms.ko.extenders'
                 }
                 return false;
             });
-
+            self.form = container.find(selectors.siteSettingsPagesListForm);
 
             // Actions.
+            self.toggleShowSorting = function () {
+                self.showSorting(!self.showSorting());
+                setTimeout(function () {
+                    self.suspend = false;
+                }, 100);
+            };
+            self.applySort = function (data, column, direction) {
+                self.sortColumn(column);
+                self.sortDirection(direction);
+                self.showSorting(false);
+                self.form.find(selectors.hiddenSortColumnField).val(column);
+                self.form.find(selectors.hiddenSortDirectionField).val(direction);
+                self.suspend = true;
+                onSearchClick(true);
+            };
             self.toggleFilter = function() {
                 self.isVisible(!self.isVisible());
             };
@@ -81,6 +116,12 @@ bettercms.define('bcms.blog.filter', ['bcms.jquery', 'bcms', 'bcms.ko.extenders'
             self.changeIncludeArchived = function () {
                 self.includeArchived(!(self.includeArchived()));
             };
+            bcms.on(bcms.events.bodyClick, function () {
+                if (!self.suspend) {
+                    self.showSorting(false);
+                    self.suspend = true;
+                }
+            });
         }
 
         filter.bind = function (container, jsonData, onSearchClick, isClearFilterResult) {
