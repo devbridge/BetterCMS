@@ -1546,6 +1546,7 @@
     <Content Include="Scss\assets\icons\revert.svg" />
     <Content Include="Scss\assets\icons\search.svg" />
     <Content Include="Scss\assets\icons\select-arrow.svg" />
+    <Content Include="Scss\assets\icons\sort-by-arrow.svg" />
     <Content Include="Scss\assets\icons\sort-down-active.svg" />
     <Content Include="Scss\assets\icons\sort-inactive.svg" />
     <Content Include="Scss\assets\icons\sort-up-active.svg" />

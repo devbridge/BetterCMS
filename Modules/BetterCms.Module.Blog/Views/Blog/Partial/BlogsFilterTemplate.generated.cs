@@ -476,13 +476,13 @@ WriteLiteral(">");
             #line hidden
 WriteLiteral("</div>\r\n            </div>\r\n        </div>\r\n    </div>\r\n\r\n    <div");
 
-WriteLiteral(" id=\"bcms-js-filter-sort\"");
+WriteLiteral(" class=\"bcms-sort-options\"");
 
-WriteLiteral(" class=\"bcms-filter-options\"");
+WriteLiteral(" id=\"bcms-js-filter-sort\"");
 
 WriteLiteral(">\r\n        <div");
 
-WriteLiteral(" class=\"bcms-filter-text\"");
+WriteLiteral(" class=\"bcms-sort-options-label\"");
 
 WriteLiteral(" data-bind=\"click: toggleShowSorting\"");
 
@@ -490,28 +490,30 @@ WriteLiteral(">");
 
             
             #line 93 "..\..\Views\Blog\Partial\BlogsFilterTemplate.cshtml"
-                                                                      Write(PagesGlobalization.SiteSettings_Pages_Sort);
+                                                                             Write(PagesGlobalization.SiteSettings_Pages_Sort);
 
             
             #line default
             #line hidden
-WriteLiteral("</div>\r\n        <div");
+WriteLiteral("</div>\r\n\r\n        <div");
 
-WriteLiteral(" class=\"bcms-field-wrapper\"");
+WriteLiteral(" class=\"bcms-sort-options-block bcms-tooltip-tr\"");
 
 WriteLiteral(" data-bind=\"visible: showSorting\"");
 
 WriteLiteral(">\r\n            <!-- ko foreach: sortFields -->\r\n            <div");
 
+WriteLiteral(" class=\"bcms-sort-option\"");
+
 WriteLiteral(" data-bind=\"click: $parent.applySort.bind($data, title, column, direction)\"");
 
-WriteLiteral(">\r\n                <span");
+WriteLiteral(">\r\n                <div");
 
-WriteLiteral(" data-bind=\"text: title, css: { \'bcms-filter-text\':direction == $parent.sortDirec" +
-"tion() && column == $parent.sortColumn() }\"");
+WriteLiteral(" data-bind=\"text: title, css: { \'bcms-sort-options-sorted\':direction == $parent.s" +
+"ortDirection() && column == $parent.sortColumn() }\"");
 
-WriteLiteral("></span>\r\n            </div>\r\n            <!-- /ko -->\r\n        </div>\r\n    </div" +
-">\r\n</div>\r\n");
+WriteLiteral("></div>\r\n            </div>\r\n            <!-- /ko -->\r\n        </div>\r\n    </div>" +
+"\r\n</div>\r\n");
 
         }
     }

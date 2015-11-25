@@ -106,12 +106,13 @@
         </div>
     </div>
 
-    <div id="bcms-js-filter-sort" class="bcms-filter-options">
-        <div class="bcms-filter-text" data-bind="click: toggleShowSorting">@PagesGlobalization.SiteSettings_Pages_Sort</div>
-        <div class="bcms-field-wrapper" data-bind="visible: showSorting">
+    <div class="bcms-sort-options" id="bcms-js-filter-sort">
+        <div class="bcms-sort-options-label" data-bind="click: toggleShowSorting">@PagesGlobalization.SiteSettings_Pages_Sort</div>
+
+        <div class="bcms-sort-options-block bcms-tooltip-tr" data-bind="visible: showSorting">
             <!-- ko foreach: sortFields -->
-            <div data-bind="click: $parent.applySort.bind($data, title, column, direction)">
-                <span data-bind="text: title, css: { 'bcms-filter-text':direction == $parent.sortDirection() && column == $parent.sortColumn() }"></span>
+            <div class="bcms-sort-option" data-bind="click: $parent.applySort.bind($data, title, column, direction)">
+                <div data-bind="text: title, css: { 'bcms-sort-options-sorted':direction == $parent.sortDirection() && column == $parent.sortColumn() }"></div>
             </div>
             <!-- /ko -->
         </div>
