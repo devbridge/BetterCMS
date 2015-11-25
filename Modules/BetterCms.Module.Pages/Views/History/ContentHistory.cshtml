@@ -1,103 +1,6 @@
-﻿@using BetterCms.Core.DataContracts.Enums
-@using BetterCms.Module.Pages.Command.History.GetContentHistory
-@using BetterCms.Module.Pages.Content.Resources
-@using BetterCms.Module.Pages.Controllers
-@using BetterCms.Module.Pages.ViewModels.History
-@using BetterCms.Module.Root.Content.Resources
-@using BetterCms.Module.Root.Mvc
-@using BetterCms.Module.Root.Mvc.Grids.Extensions
-@using BetterCms.Module.Root.Mvc.Grids.TableRenderers
+﻿@using BetterCms.Module.Pages.Content.Resources
 @using BetterCms.Module.Root.Mvc.Helpers
-@using Microsoft.Web.Mvc
-@using MvcContrib.UI.Grid
-@model ContentHistoryViewModel
-@helper PreviewLink(ContentHistoryItem item)
-{
-    <div class="bcms-action-usage bcms-js-preview" title="@RootGlobalization.Button_Preview" data-id="@item.Id">@RootGlobalization.Button_Preview</div>
-}
-@helper RestoreLink(ContentHistoryItem item)
-{
-    if (item.CanCurrentUserRestoreIt)
-    {
-        <div class="bcms-action-restore bcms-js-restore" title="@RootGlobalization.Button_Restore" data-id="@item.Id" data-version="@item.Version">@RootGlobalization.Button_Restore</div>
-    }
-    else
-    {
-        @:&nbsp;
-    }
-}
-@helper DisplayStatus(string statusName, ContentStatus status)
-{
-    switch (status)
-    {
-        case ContentStatus.Archived:
-            @:<div class="bcms-archived-state">@statusName</div>
-
-
-            break;
-
-        case ContentStatus.Draft:
-        @:<div class="bcms-draft-state">@statusName</div>
-
-
-
-
-            break;
-
-        case ContentStatus.Published:
-        @:<div class="bcms-published-state">@statusName</div>
-
-
-
-
-            break;
-
-        default:
-        @:statusName
-            break;
-    }
-}
-@{
-    Action<ColumnBuilder<ContentHistoryItem>> columns = column =>
-    {
-        column.For(f => PreviewLink(f))
-               .Encode(false)
-               .Named("&nbsp;")
-               .Sortable(false)
-               .HeaderAttributes(@style => "width: 40px; padding: 0;", @class => "bcms-tables-nohover");
-
-        column.For(m => m.PublishedOn.ToFormattedDateString())
-               .Named(PagesGlobalization.ContentHistory_Column_PublishedOn)
-               .SortColumnName("PublishedOn")
-               .HeaderAttributes(@style => "width: 130px;");
-
-        column.For(m => m.PublishedByUser)
-               .Named(PagesGlobalization.ContentHistory_Column_PublishedByUser)
-               .SortColumnName("PublishedByUser");
-
-        column.For(m => m.ArchivedOn.ToFormattedDateString())
-               .Named(PagesGlobalization.ContentHistory_Column_ArchivedOn)
-               .SortColumnName("ArchivedOn")
-               .HeaderAttributes(@style => "width: 130px;");
-
-        column.For(m => m.DisplayedFor.ToFormatedTimeString())
-               .Named(PagesGlobalization.ContentHistory_Column_DisplayedFor)
-               .SortColumnName("DisplayedFor")
-               .HeaderAttributes(@style => "width: 130px;");
-
-        column.For(m => DisplayStatus(m.StatusName, m.Status))
-               .Named(PagesGlobalization.ContentHistory_Column_Status)
-               .SortColumnName("StatusName")
-               .Encode(false)
-               .HeaderAttributes(@style => "width: 95px;");
-
-        column.For(f => RestoreLink(f))
-               .Encode(false)
-               .Named("&nbsp;")
-               .Sortable(false)
-               .HeaderAttributes(@style => "width: 40px; padding: 0;", @class => "bcms-tables-nohover");
-    };
-}
+@model BetterCms.Module.Pages.ViewModels.History.ContentHistoryViewModel
 
 @Html.MessagesBox()
 <div class="bcms-tab-header bcms-js-tab-header">
@@ -107,7 +10,7 @@
     </div>
 </div>
 
-<div class="bcms-modal-frame-holder"> 
+<div class="bcms-modal-frame-holder">
     <div id="bcms-tab-1" class="bcms-tab-single">
         <div class="bcms-history-preview-holder" id="bcms-history-preview">
             <div class="bcms-history-info" style="display: block;">@PagesGlobalization.ContentHistory_SelectVersionToPreviewMessage</div>
@@ -119,28 +22,8 @@
             <div class="bcms-history-info" style="display: block;">@PagesGlobalization.ContentHistory_SelectVersionToPreviewMessage</div>
         </div>
     </div>
-
     <div class="bcms-history-table-holder">
-        @using (Html.BeginForm<HistoryController>(f => f.ContentHistory((GetContentHistoryRequest)null), FormMethod.Post, new { @id = "bcms-pagecontenthistory-form", @class = "bcms-ajax-form" }))
-        {
-            @Html.HiddenGridOptions(Model.GridOptions)
-            @Html.HiddenFor(model => model.ContentId)
-
-            <div class="bcms-history-table-top">
-                <div class="bcms-large-titles">@PagesGlobalization.ContentHistory_OlderVersions</div>
-                <div class="bcms-top-block-inner">
-                    <div class="bcms-btn-search" id="bcms-pagecontenthistory-search-btn">@RootGlobalization.Button_Search</div>
-                    <div class="bcms-search-block">
-                        @Html.TextBoxFor(m => m.SearchQuery, new { @class = "bcms-search-field-box bcms-js-search-box bcms-search-query", @placeholder = RootGlobalization.WaterMark_Search })
-                    </div> 
-                </div>
-            </div>
-
-            <div class="bcms-history-items-list">
-            @Html.Grid(Model.Items).Sort(Model.GridOptions).Columns(columns).Attributes(@class => "bcms-tables bcms-history-grid").RenderUsing(new EditableHtmlTableGridRenderer<ContentHistoryItem>())
-            @Html.HiddenSubmit()
-            </div>
-        }
+        @Html.Partial("ContentHistoryTable", Model)
     </div>
 </div>
 

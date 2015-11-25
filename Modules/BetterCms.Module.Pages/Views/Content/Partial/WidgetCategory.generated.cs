@@ -263,7 +263,7 @@ WriteLiteral(">");
 
             
             #line 42 "..\..\Views\Content\Partial\WidgetCategory.cshtml"
-                                                         Write(PagesGlobalization.AddPageContent_WidgetTab_InsertButton);
+                                                          Write(PagesGlobalization.AddPageContent_WidgetTab_InsertButton);
 
             
             #line default
@@ -306,7 +306,7 @@ WriteLiteral(">\r\n");
             #line hidden
 WriteLiteral("                            <div");
 
-WriteLiteral(" class=\"bcms-action-edit bcms-js-content-edit bcms-draft\"");
+WriteLiteral(" class=\"bcms-action-edit bcms-draft bcms-js-content-edit\"");
 
 WriteLiteral(">");
 

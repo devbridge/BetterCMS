@@ -149,7 +149,7 @@ bettercms.define('bcms.pages.history', ['bcms.jquery', 'bcms', 'bcms.modal', 'bc
     */
     function searchPageContentHistory(dialog, container, form) {
         grid.submitGridForm(form, function (data) {
-            container.html(data);
+            form.html(data);
             history.initPageContentHistoryDialogEvents(dialog, data, true);
         });
     }

@@ -279,7 +279,7 @@ bettercms.define('bcms.blog', ['bcms.jquery', 'bcms', 'bcms.modal', 'bcms.siteSe
                     parent: selectors.contentTab,
                     container: selectors.editorContainer,
                     bottomElement: selectors.markdownEditorFooter,
-                    marginBottom: 1
+                    marginBottom: 3
                 };
 
                 htmlEditor.initializeMarkdownEditor(selectors.htmlEditor, '', {}, heightOptions);
@@ -304,7 +304,7 @@ bettercms.define('bcms.blog', ['bcms.jquery', 'bcms', 'bcms.modal', 'bcms.siteSe
                     parent: selectors.contentTab,
                     container: selectors.editorContainer,
                     bottomElement: selectors.markdownEditorFooter,
-                    marginBottom: 1
+                    marginBottom: 3
                 };
 
                 htmlEditor.initializeMarkdownEditor(selectors.htmlEditor, '', { hideIcons: true });

@@ -51,7 +51,7 @@ $tooltip-arrows: (
 
         @include virtual(before) {
             @include position(absolute, $triangle-border);
-            @include triangle(18px, $light, $position);
+            @include triangle(18px, $gray-smoke, $position);
         }
     }
 }

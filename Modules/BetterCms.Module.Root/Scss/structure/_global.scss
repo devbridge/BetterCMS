@@ -11,6 +11,19 @@ $loading-spinner: (
                 ('loader-2')
 );
 
+$action-icons: (
+                ('edit', $bcms-action-edit),
+                ('usage', $bcms-action-usage),
+                ('restore', $bcms-revert),
+                ('history', $bcms-action-history),
+                ('download', $bcms-download),
+                ('delete', $bcms-action-delete),
+                ('ok', $bcms-action-status-ok),
+                ('warn', $bcms-action-status-warn),
+                ('draft', $bcms-action-status-draft),
+                ('menu', $bcms-action-menu)
+);
+
 //module titles & containers
 .bcms-input-list-holder {
     margin: 30px 0 0;
@@ -127,7 +140,7 @@ $loading-spinner: (
         @include clearfix();
         @include position(absolute, 0 null null 0);
         background-color: $white;
-        border: $border-pop-box;
+        border: $border-thin-smoke;
         box-shadow: $pop-box-shadow;
         box-sizing: border-box;
         padding: 14px;
@@ -283,7 +296,7 @@ $loading-spinner: (
         }
 
         .bcms-field-text {
-            font-size: 12px;
+            font-size: 11px;
             height: 20px;
         }
     }
@@ -371,4 +384,23 @@ $loading-spinner: (
 
 .bcms-ajax-errors {
     display: none;
+}
+
+//module global icons
+@each $name, $icon in $action-icons {
+    .bcms-action-#{$name} {
+        @include vertical-align();
+        @include size(20px);
+        background: url($icon) no-repeat center;
+        cursor: pointer;
+        overflow: hidden;
+        position: relative;
+        text-indent: 999em;
+    }
+}
+
+.bcms-action-edit {
+    &.bcms-draft {
+        background-image: url($bcms-action-edit-draft);
+    }
 }

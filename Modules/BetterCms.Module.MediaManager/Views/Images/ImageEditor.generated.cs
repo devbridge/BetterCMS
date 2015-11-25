@@ -1007,18 +1007,18 @@ WriteLiteral(" ");
             
             #line default
             #line hidden
-WriteLiteral(" data-bind=\"checked: imageAlign\" />\r\n                            </div>\r\n        " +
-"                    <div");
+WriteLiteral(" data-bind=\"checked: imageAlign.asString()\" />\r\n                            </div" +
+">\r\n                            <div");
 
-WriteAttribute("class", Tuple.Create(" class=\"", 11440), Tuple.Create("\"", 11533)
-, Tuple.Create(Tuple.Create("", 11448), Tuple.Create("bcms-align-left", 11448), true)
+WriteAttribute("class", Tuple.Create(" class=\"", 11451), Tuple.Create("\"", 11544)
+, Tuple.Create(Tuple.Create("", 11459), Tuple.Create("bcms-align-left", 11459), true)
             
             #line 165 "..\..\Views\Images\ImageEditor.cshtml"
-, Tuple.Create(Tuple.Create("", 11463), Tuple.Create<System.Object, System.Int32>(Model.ImageAlign == MediaImageAlign.Left ? "-active" : string.Empty
+, Tuple.Create(Tuple.Create("", 11474), Tuple.Create<System.Object, System.Int32>(Model.ImageAlign == MediaImageAlign.Left ? "-active" : string.Empty
             
             #line default
             #line hidden
-, 11463), false)
+, 11474), false)
 );
 
 WriteLiteral(">\r\n                                <input");
@@ -1027,14 +1027,14 @@ WriteLiteral(" type=\"radio\"");
 
 WriteLiteral(" name=\"ImageAlign\"");
 
-WriteAttribute("value", Tuple.Create(" value=\"", 11606), Tuple.Create("\"", 11642)
+WriteAttribute("value", Tuple.Create(" value=\"", 11617), Tuple.Create("\"", 11653)
             
             #line 166 "..\..\Views\Images\ImageEditor.cshtml"
-, Tuple.Create(Tuple.Create("", 11614), Tuple.Create<System.Object, System.Int32>((int)MediaImageAlign.Left
+, Tuple.Create(Tuple.Create("", 11625), Tuple.Create<System.Object, System.Int32>((int)MediaImageAlign.Left
             
             #line default
             #line hidden
-, 11614), false)
+, 11625), false)
 );
 
 WriteLiteral(" ");
@@ -1046,18 +1046,18 @@ WriteLiteral(" ");
             
             #line default
             #line hidden
-WriteLiteral(" data-bind=\"checked: imageAlign\" />\r\n                            </div>\r\n        " +
-"                    <div");
+WriteLiteral(" data-bind=\"checked: imageAlign.asString()\" />\r\n                            </div" +
+">\r\n                            <div");
 
-WriteAttribute("class", Tuple.Create(" class=\"", 11819), Tuple.Create("\"", 11914)
-, Tuple.Create(Tuple.Create("", 11827), Tuple.Create("bcms-align-right", 11827), true)
+WriteAttribute("class", Tuple.Create(" class=\"", 11841), Tuple.Create("\"", 11936)
+, Tuple.Create(Tuple.Create("", 11849), Tuple.Create("bcms-align-right", 11849), true)
             
             #line 168 "..\..\Views\Images\ImageEditor.cshtml"
-, Tuple.Create(Tuple.Create("", 11843), Tuple.Create<System.Object, System.Int32>(Model.ImageAlign == MediaImageAlign.Right ? "-active" : string.Empty
+, Tuple.Create(Tuple.Create("", 11865), Tuple.Create<System.Object, System.Int32>(Model.ImageAlign == MediaImageAlign.Right ? "-active" : string.Empty
             
             #line default
             #line hidden
-, 11843), false)
+, 11865), false)
 );
 
 WriteLiteral(">\r\n                                <input");
@@ -1066,14 +1066,14 @@ WriteLiteral(" type=\"radio\"");
 
 WriteLiteral(" name=\"ImageAlign\"");
 
-WriteAttribute("value", Tuple.Create(" value=\"", 11987), Tuple.Create("\"", 12024)
+WriteAttribute("value", Tuple.Create(" value=\"", 12009), Tuple.Create("\"", 12046)
             
             #line 169 "..\..\Views\Images\ImageEditor.cshtml"
-, Tuple.Create(Tuple.Create("", 11995), Tuple.Create<System.Object, System.Int32>((int)MediaImageAlign.Right
+, Tuple.Create(Tuple.Create("", 12017), Tuple.Create<System.Object, System.Int32>((int)MediaImageAlign.Right
             
             #line default
             #line hidden
-, 11995), false)
+, 12017), false)
 );
 
 WriteLiteral(" ");
@@ -1085,9 +1085,9 @@ WriteLiteral(" ");
             
             #line default
             #line hidden
-WriteLiteral(" data-bind=\"checked: imageAlign\" />\r\n                            </div>\r\n        " +
-"                </div>\r\n                    </div>\r\n                </div>\r\n    " +
-"        </div>\r\n");
+WriteLiteral(" data-bind=\"checked: imageAlign.asString()\" />\r\n                            </div" +
+">\r\n                        </div>\r\n                    </div>\r\n                <" +
+"/div>\r\n            </div>\r\n");
 
             
             #line 175 "..\..\Views\Images\ImageEditor.cshtml"

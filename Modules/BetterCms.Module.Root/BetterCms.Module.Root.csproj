@@ -758,7 +758,6 @@
     <EmbeddedResource Include="Scripts\bcms.modal.js" />
     <EmbeddedResource Include="Scripts\bcms.siteSettings.js" />
     <EmbeddedResource Include="Scripts\bcms.forms.js" />
-    <EmbeddedResource Include="Content\Styles\images\sprite-base-2.png" />
     <EmbeddedResource Include="Scripts\bcms.spinner.jquery.js" />
     <EmbeddedResource Include="Scripts\ckeditor\plugins\icons.png" />
     <EmbeddedResource Include="Scripts\html5shiv.js" />
@@ -1421,6 +1420,7 @@
     <EmbeddedResource Include="Scripts\bcms.knockout-3.3.0.js" />
     <EmbeddedResource Include="Scripts\bcms.jquery.select2.js" />
     <Content Include="Scss\assets\icons\action-delete.svg" />
+    <Content Include="Scss\assets\icons\action-edit-draft.svg" />
     <Content Include="Scss\assets\icons\action-edit.svg" />
     <Content Include="Scss\assets\icons\action-history.svg" />
     <Content Include="Scss\assets\icons\action-menu.svg" />
@@ -1429,6 +1429,14 @@
     <Content Include="Scss\assets\icons\action-status-warn.svg" />
     <Content Include="Scss\assets\icons\action-usage.svg" />
     <Content Include="Scss\assets\icons\add-content.svg" />
+    <Content Include="Scss\assets\icons\align-center-active.svg" />
+    <Content Include="Scss\assets\icons\align-center.svg" />
+    <Content Include="Scss\assets\icons\align-left-active.svg" />
+    <Content Include="Scss\assets\icons\align-left.svg" />
+    <Content Include="Scss\assets\icons\align-right-active.svg" />
+    <Content Include="Scss\assets\icons\align-right.svg" />
+    <Content Include="Scss\assets\icons\arrow-left.svg" />
+    <Content Include="Scss\assets\icons\arrow-right.svg" />
     <Content Include="Scss\assets\icons\btn-down-arrow.svg" />
     <Content Include="Scss\assets\icons\close-white.svg" />
     <Content Include="Scss\assets\icons\close.svg" />
@@ -1448,6 +1456,7 @@
     <Content Include="Scss\assets\icons\date-picker-left.svg" />
     <Content Include="Scss\assets\icons\date-picker-right.svg" />
     <Content Include="Scss\assets\icons\download.svg" />
+    <Content Include="Scss\assets\icons\dragger.svg" />
     <Content Include="Scss\assets\icons\editor-block-quote-active.svg" />
     <Content Include="Scss\assets\icons\editor-block-quote.svg" />
     <Content Include="Scss\assets\icons\editor-bold-active.svg" />
@@ -1526,9 +1535,14 @@
     <Content Include="Scss\assets\icons\overlay-edit.svg" />
     <Content Include="Scss\assets\icons\overlay-history.svg" />
     <Content Include="Scss\assets\icons\overlay-options.svg" />
-    <Content Include="Scss\assets\icons\overlay-widget.svg" />
     <Content Include="Scss\assets\icons\pager-arrow-left.svg" />
     <Content Include="Scss\assets\icons\pager-arrow-right.svg" />
+    <Content Include="Scss\assets\icons\path-hide.svg" />
+    <Content Include="Scss\assets\icons\path-left.svg" />
+    <Content Include="Scss\assets\icons\path-page.svg" />
+    <Content Include="Scss\assets\icons\path-right.svg" />
+    <Content Include="Scss\assets\icons\path-show.svg" />
+    <Content Include="Scss\assets\icons\path-template.svg" />
     <Content Include="Scss\assets\icons\revert.svg" />
     <Content Include="Scss\assets\icons\search.svg" />
     <Content Include="Scss\assets\icons\select-arrow.svg" />
@@ -1542,6 +1556,7 @@
     <Content Include="Scss\assets\icons\tree-new-node.svg" />
     <Content Include="Scss\assets\icons\tree-plus.svg" />
     <Content Include="Scss\assets\icons\validation.svg" />
+    <Content Include="Scss\assets\icons\zoom.svg" />
     <Content Include="Views\Web.config" />
     <Content Include="Views\Category\CategoryTreeEdit.cshtml">
       <Generator>RazorGenerator</Generator>
@@ -1567,7 +1582,6 @@
     <Content Include="Scss\root.scss" />
     <Content Include="Scss\bcms-modules\root\_buttons.scss" />
     <Content Include="Scss\bcms-modules\root\_controlpanel.scss" />
-    <Content Include="Scss\bcms-modules\root\_index.scss" />
     <Content Include="Scss\bcms-modules\root\_notifications.scss" />
     <Content Include="Scss\bcms-modules\root\_overlays.scss" />
     <Content Include="Scss\assets\webfonts\OpenSans-Bold.ttf" />

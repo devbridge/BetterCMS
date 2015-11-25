@@ -52,6 +52,7 @@ bettercms.define('bcms.pages.widgets', ['bcms.jquery', 'bcms', 'bcms.modal', 'bc
 
                 widgetPreviewImageUrl: '#PreviewImageUrl',
                 widgetPreviewImage: '#bcms-widget-preview-image',
+                widgetNoImagePreview: '#bcms-widget-no-preview',
                 widgetPreviewPageContentId: '.bcms-preview-page-content-id',
                 htmlContentWidgetContentHtmlEditor: '.bcms-advanced-contenthtml',
 
@@ -432,24 +433,29 @@ bettercms.define('bcms.pages.widgets', ['bcms.jquery', 'bcms', 'bcms.modal', 'bc
             ko.applyBindings(widgetEditViewModel, widgetEditContainer.get(0));
 
             dialog.container.find(selectors.widgetPreviewImage).error(function () {
-                var image = dialog.container.find(selectors.widgetPreviewImage);
+                var image = dialog.container.find(selectors.widgetPreviewImage),
+                    noPreviewGrid = dialog.container.find(selectors.widgetNoImagePreview);
+                noPreviewGrid.show();
                 if (image.attr("src") != null && image.attr("src") != "") {
                     messages.box({ container: dialog.container.find(selectors.messagesContainer) }).addWarningMessage(globalization.previewImageNotFoundMessage);
-                    image.parent().hide();
+                    image.hide();
                     image.removeAttr("src");
                 }
             });
 
             dialog.container.find(selectors.widgetPreviewImageUrl).blur(function () {
                 var image = dialog.container.find(selectors.widgetPreviewImage),
-                    urlInput = dialog.container.find(selectors.widgetPreviewImageUrl);
+                    urlInput = dialog.container.find(selectors.widgetPreviewImageUrl),
+                    noPreviewGrid = dialog.container.find(selectors.widgetNoImagePreview);
 
                 if (urlInput.valid()) {
                     image.attr({ src: urlInput.val() });
-                    image.parent().show();
+                    noPreviewGrid.hide();
+                    image.show();
                 } else {
                     image.hide();
-                    image.parent().removeAttr("src");
+                    noPreviewGrid.show();
+                    image.removeAttr("src");
                 }
             });
 
@@ -473,9 +479,11 @@ bettercms.define('bcms.pages.widgets', ['bcms.jquery', 'bcms', 'bcms.modal', 'bc
             });
 
             // IE fix: by default, while loading, picture is hidden
-            var previewImage = dialog.container.find(selectors.widgetPreviewImage);
+            var previewImage = dialog.container.find(selectors.widgetPreviewImage),
+                noPreviewGrid = dialog.container.find(selectors.widgetNoImagePreview);
             if (previewImage.attr('src')) {
-                previewImage.parent().show();
+                noPreviewGrid.hide();
+                previewImage.show();
             }
 
 

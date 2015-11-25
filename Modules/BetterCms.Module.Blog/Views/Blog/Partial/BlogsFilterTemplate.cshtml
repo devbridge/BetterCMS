@@ -20,14 +20,9 @@
                 <div class="bcms-filter-options" data-bind="with: tags">
                     <div class="bcms-filter-text">@BlogGlobalization.SiteSettings_Blogs_FilterByTags</div>
                     <div class="bcms-field-wrapper">
-                        <input type="text" class="bcms-field-text" data-bind="
-    css: { 'bcms-tag-validation-error': newItem.hasError() },
-    value: newItem,
-    valueUpdate: 'afterkeydown',
-    escPress: clearItem,
-    autocompleteList: 'onlyExisting'"/>
-                        <!-- ko if: newItem.hasError() -->
-                        <span class="bcms-tag-field-validation-error">
+                        <input type="text" class="bcms-field-text" data-bind=" css: { 'bcms-input-validation-error': newItem.hasError() }, value: newItem, valueUpdate: 'afterkeydown', escPress: clearItem, autocompleteList: 'onlyExisting'" />
+                        <!-- ko if: newItem.hasError()  -->
+                        <span class="bcms-field-validation-error">
                             <span data-bind="text: newItem.validationMessage()"></span>
                         </span>
                         <!-- /ko -->

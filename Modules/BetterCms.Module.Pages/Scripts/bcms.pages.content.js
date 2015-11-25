@@ -34,8 +34,8 @@ bettercms.define('bcms.pages.content', ['bcms.jquery', 'bcms', 'bcms.modal', 'bc
                 widgetCategory: '.bcms-category',
                 widgetName: '.bcms-content-titles',
                 widgetPreviewBox: ".bcms-js-preview-box",
-                widgetIFramePreview: ".bcms-js-preview-box[data-as-image='False'] .bcms-zoom-overlay",
-                widgetImagePreview: ".bcms-js-preview-box[data-as-image='True'] .bcms-zoom-overlay",
+                widgetIFramePreview: ".bcms-js-preview-box[data-as-image='False'] .bcms-js-zoom-overlay",
+                widgetImagePreview: ".bcms-js-preview-box[data-as-image='True'] .bcms-js-zoom-overlay",
                 widgetButtonOpener: ".bcms-btn-opener",
                 widgetButtonHolder: ".bcms-btn-opener-holder",
                 anyTab: '.bcms-tab-item',
@@ -337,7 +337,8 @@ bettercms.define('bcms.pages.content', ['bcms.jquery', 'bcms', 'bcms.modal', 'bc
                             takeMargins: true
                         }],
                     container: selectors.editorContainer,
-                    bottomElement: selectors.markdownEditorFooter
+                    bottomElement: selectors.markdownEditorFooter,
+                    marginBottom: 2
                 };
 
                 htmlEditor.initializeMarkdownEditor(settings.editorId, '', {}, heightOptions);
@@ -350,7 +351,8 @@ bettercms.define('bcms.pages.content', ['bcms.jquery', 'bcms', 'bcms.modal', 'bc
                         takeMargins: true
                     }],
                     container: selectors.editorContainer,
-                    bottomElement: selectors.markdownEditorFooter
+                    bottomElement: selectors.markdownEditorFooter,
+                    marginBottom: 2
                 };
 
                 htmlEditor.initializeMarkdownEditor(settings.editorId, '', { hideIcons: true }, heightOptions);
@@ -424,7 +426,8 @@ bettercms.define('bcms.pages.content', ['bcms.jquery', 'bcms', 'bcms.modal', 'bc
                             takeMargins: true
                         }],
                     container: selectors.editorContainer,
-                    bottomElement: selectors.markdownEditorFooter
+                    bottomElement: selectors.markdownEditorFooter,
+                    marginBottom: 2
                 };
 
                 htmlEditor.initializeMarkdownEditor(settings.editorId, settings.data.ContentId, {}, heightOptions);
@@ -437,7 +440,8 @@ bettercms.define('bcms.pages.content', ['bcms.jquery', 'bcms', 'bcms.modal', 'bc
                         takeMargins: true
                     }],
                     container: selectors.editorContainer,
-                    bottomElement: selectors.markdownEditorFooter
+                    bottomElement: selectors.markdownEditorFooter,
+                    marginBottom: 2
                 };
                 htmlEditor.initializeMarkdownEditor(settings.editorId, settings.data.ContentId, { hideIcons: true }, heightOptions);
             }

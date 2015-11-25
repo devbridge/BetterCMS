@@ -8,32 +8,38 @@
     padding: 10px 0;
 }
 
-//
-//
-//
-//
-//
-//
-//
-//todo check where is this used for
-.bcms-preview-module-image {
-    background: url('images/bcms-no-image-1.png') no-repeat center center #f5f5f5;
-    border: 1px solid #c6c6c6;
-    float: left;
+.bcms-preview-thumb {
+    background-color: $white;
+    border: $border-thin-smoke;
     height: 350px;
-    margin-bottom: 20px;
     overflow: hidden;
-    width: 521px;
+    position: relative;
+
+    img {
+        @include positioning($center: true);
+        background: #f5f5f5;
+        max-height: 350px;
+        max-width: 100%;
+    }
 }
 
-.bcms-preview-module-image > div {
-    background-color: #ffffff;
-    height: 100%;
-    width: 100%;
-}
+.bcms-preview-zoom {
+    &-box {
+        &:hover {
+            > .bcms-preview-zoom-overlay {
+                cursor: pointer;
+                opacity: 1;
+                visibility: visible;
+            }
+        }
+    }
 
-.bcms-preview-module-image img {
-    background: #f5f5f5;
-    max-height: 350px;
-    max-width: 521px;
+    &-overlay {
+        @include transition(opacity 200ms);
+        @include position(absolute, 0);
+        background: rgba($bg-dark, .7) url($bcms-zoom) no-repeat center;
+        opacity: 0;
+        visibility: hidden;
+        z-index: 10;
+    }
 }

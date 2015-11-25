@@ -7,7 +7,7 @@
         @if ((ViewContext.Controller as CmsControllerBase).SecurityService.IsAuthorized(RootModuleConstants.UserRoles.MultipleRoles(RootModuleConstants.UserRoles.EditContent, RootModuleConstants.UserRoles.PublishContent)))
         {
             <div class="bcms-list-column bcms-list-edit">
-                <div class="bcms-action-edit bcms-grid-item-edit-button bcms-js-edit-button" data-bind="attr: { 'data-id': id }, click: onEditClick">@RootGlobalization.Button_Edit</div>
+                <div class="bcms-action-edit bcms-grid-item-edit-button bcms-js-edit-button" title="@RootGlobalization.Button_Edit" data-bind="attr: { 'data-id': id }, click: onEditClick">@RootGlobalization.Button_Edit</div>
             </div>
         }
 
@@ -28,7 +28,7 @@
         @if ((ViewContext.Controller as CmsControllerBase).SecurityService.IsAuthorized(RootModuleConstants.UserRoles.DeleteContent))
         {
             <div class="bcms-list-column bcms-list-delete">
-                <div class="bcms-action-delete bcms-grid-item-delete-button" data-bind="attr: { 'data-id': id, 'data-version': version }, click: onDeleteClick">@RootGlobalization.Button_Delete</div>
+                <div class="bcms-action-delete bcms-grid-item-delete-button" title="@RootGlobalization.Button_Delete" data-bind="attr: { 'data-id': id, 'data-version': version }, click: onDeleteClick">@RootGlobalization.Button_Delete</div>
                 <div style="display: none" class="bcms-grid-item.message"></div>
             </div>
         }

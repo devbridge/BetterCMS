@@ -162,7 +162,7 @@ WriteLiteral(">");
             #line hidden
 WriteLiteral("</div>\r\n            <div");
 
-WriteLiteral(" class=\"bcms-preview-module-image\"");
+WriteLiteral(" class=\"bcms-preview-thumb\"");
 
 WriteLiteral(">\r\n");
 
@@ -184,14 +184,14 @@ WriteLiteral("                    <img");
 
 WriteLiteral(" id=\"bcms-widget-preview-image\"");
 
-WriteAttribute("src", Tuple.Create(" src=\"", 1560), Tuple.Create("\"", 1583)
+WriteAttribute("src", Tuple.Create(" src=\"", 1553), Tuple.Create("\"", 1576)
             
             #line 34 "..\..\Views\History\ServerWidgetPropertiesHistory.cshtml"
-, Tuple.Create(Tuple.Create("", 1566), Tuple.Create<System.Object, System.Int32>(Model.PreviewUrl
+, Tuple.Create(Tuple.Create("", 1559), Tuple.Create<System.Object, System.Int32>(Model.PreviewUrl
             
             #line default
             #line hidden
-, 1566), false)
+, 1559), false)
 );
 
 WriteLiteral(" alt=\"\"");

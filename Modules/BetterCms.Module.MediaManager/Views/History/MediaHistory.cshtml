@@ -120,10 +120,12 @@
             <div class="bcms-history-table-top">
                 <div class="bcms-large-titles">@MediaGlobalization.MediaHistory_OlderVersions</div>
 
-                <div class="bcms-btn-search" id="bcms-pagecontenthistory-search-btn">@RootGlobalization.Button_Search</div>
-                <div class="bcms-search-block">
-                    @Html.TextBoxFor(m => m.SearchQuery, new { @class = "bcms-field-text", @placeholder = RootGlobalization.WaterMark_Search })
-                </div>            
+                <div class="bcms-top-block-inner">
+                    <div class="bcms-btn-search" id="bcms-pagecontenthistory-search-btn">@RootGlobalization.Button_Search</div>
+                    <div class="bcms-search-block">
+                        @Html.TextBoxFor(m => m.SearchQuery, new { @class = "bcms-search-field-box bcms-js-search-box bcms-search-query", @placeholder = RootGlobalization.WaterMark_Search })
+                    </div>
+                </div>           
             </div>
 
             <div class="bcms-history-items-list bcms-history-items-list-media">

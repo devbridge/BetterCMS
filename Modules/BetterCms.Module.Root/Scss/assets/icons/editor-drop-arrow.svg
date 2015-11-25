@@ -1,5 +1,1 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!-- Generator: Avocode 2.4.5 - http://avocode.com -->
-<svg height="6" width="10" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 10 6">
-    <path fill="#303646" fill-rule="evenodd" d="M 8.02 0.2 C 8.29 -0.07 8.73 -0.07 9 0.2 C 9.27 0.47 9.27 0.9 9 1.17 L 5.09 5 C 4.82 5.27 4.38 5.27 4.11 5 L 0.2 1.17 C -0.07 0.9 -0.07 0.47 0.2 0.2 C 0.47 -0.07 0.91 -0.07 1.18 0.2 L 4.6 3.34 L 8.02 0.2 Z M 8.02 0.2" />
-</svg>
+<svg height="6" width="10" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 10 6"><path fill="#303646" fill-rule="evenodd" d="m8.02.2c.27-.27.71-.27.98 0 .27.27.27.7 0 .97l-3.91 3.83c-.27.27-.71.27-.98 0l-3.91-3.83c-.27-.27-.27-.7 0-.97.27-.27.71-.27.98 0l3.42 3.14 3.42-3.14"/></svg>
