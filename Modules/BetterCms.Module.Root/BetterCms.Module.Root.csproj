@@ -1427,6 +1427,12 @@
     <Content Include="Scss\assets\icons\action-status-warn.svg" />
     <Content Include="Scss\assets\icons\action-usage.svg" />
     <Content Include="Scss\assets\icons\add-content.svg" />
+    <Content Include="Scss\assets\icons\align-center-active.svg" />
+    <Content Include="Scss\assets\icons\align-center.svg" />
+    <Content Include="Scss\assets\icons\align-left-active.svg" />
+    <Content Include="Scss\assets\icons\align-left.svg" />
+    <Content Include="Scss\assets\icons\align-right-active.svg" />
+    <Content Include="Scss\assets\icons\align-right.svg" />
     <Content Include="Scss\assets\icons\arrow-left.svg" />
     <Content Include="Scss\assets\icons\arrow-right.svg" />
     <Content Include="Scss\assets\icons\btn-down-arrow.svg" />

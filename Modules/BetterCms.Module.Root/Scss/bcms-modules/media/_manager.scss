@@ -1,3 +1,9 @@
+$alignment-position: (
+                ('left', $bcms-align-left, $bcms-align-left-active),
+                ('center', $bcms-align-center, $bcms-align-center-active),
+                ('right', $bcms-align-right, $bcms-align-right-active)
+);
+
 .bcms-croped-block {
     border: $border-thin-blue-dashed;
     max-height: 600px;
@@ -60,6 +66,29 @@
     position: relative;
 }
 
+.bcms-alignment-controls {
+    margin-top: 5px;
+
+    > div {
+        @include vertical-align();
+        cursor: pointer;
+        margin-right: 10px;
+        padding-top: 45px;
+        text-align: center;
+        width: 33px;
+    }
+
+    @each $name, $icon, $active-icon in $alignment-position {
+        .bcms-align-#{$name} {
+            background: url($icon) no-repeat center top;
+
+            &-active {
+                background: url($active-icon) no-repeat center top;
+            }
+        }
+    }
+}
+
 //
 //
 //
@@ -71,38 +100,38 @@
 //
 //
 //todo
-.bcms-alignment-controls > div {
-    background: url('images/sprite-media-2.png') no-repeat;
-    display: inline-block;
-    margin-right: 20px;
-    padding-top: 60px;
-    text-align: center;
-    width: 51px;
-}
-
-.bcms-alignment-controls .bcms-align-left {
-    background-position: 0 0;
-    cursor: pointer;
-}
-
-.bcms-alignment-controls .bcms-align-center {
-    background-position: -104px 0;
-    cursor: pointer;
-}
-
-.bcms-alignment-controls .bcms-align-right {
-    background-position: -208px 0;
-    cursor: pointer;
-}
-
-div.bcms-align-left-active {
-    background-position: -52px 0;
-}
-
-div.bcms-align-center-active {
-    background-position: -156px 0;
-}
-
-div.bcms-align-right-active {
-    background-position: -260px 0;
-}
+//.bcms-alignment-controls > div {
+//    background: url('images/sprite-media-2.png') no-repeat;
+//    display: inline-block;
+//    margin-right: 20px;
+//    padding-top: 60px;
+//    text-align: center;
+//    width: 51px;
+//}
+//
+//.bcms-alignment-controls .bcms-align-left {
+//    background-position: 0 0;
+//    cursor: pointer;
+//}
+//
+//.bcms-alignment-controls .bcms-align-center {
+//    background-position: -104px 0;
+//    cursor: pointer;
+//}
+//
+//.bcms-alignment-controls .bcms-align-right {
+//    background-position: -208px 0;
+//    cursor: pointer;
+//}
+//
+//div.bcms-align-left-active {
+//    background-position: -52px 0;
+//}
+//
+//div.bcms-align-center-active {
+//    background-position: -156px 0;
+//}
+//
+//div.bcms-align-right-active {
+//    background-position: -260px 0;
+//}
