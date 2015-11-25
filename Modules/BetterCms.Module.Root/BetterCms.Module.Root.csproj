@@ -1533,7 +1533,6 @@
     <Content Include="Scss\assets\icons\overlay-edit.svg" />
     <Content Include="Scss\assets\icons\overlay-history.svg" />
     <Content Include="Scss\assets\icons\overlay-options.svg" />
-    <Content Include="Scss\assets\icons\overlay-widget.svg" />
     <Content Include="Scss\assets\icons\pager-arrow-left.svg" />
     <Content Include="Scss\assets\icons\pager-arrow-right.svg" />
     <Content Include="Scss\assets\icons\path-hide.svg" />

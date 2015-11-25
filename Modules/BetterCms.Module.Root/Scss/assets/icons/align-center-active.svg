@@ -1,9 +1,1 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!-- Generator: Adobe Illustrator 19.1.0, SVG Export Plug-In . SVG Version: 6.00 Build 0)  -->
-<svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
-	 width="33px" height="39px" viewBox="-867.5 1131.5 33 39" style="enable-background:new -867.5 1131.5 33 39;"
-	 xml:space="preserve">
-<path style="fill:#EFF7FF;stroke:#0D7BE3;stroke-linecap:square;" d="M-867,1132h32v38h-32V1132z"/>
-<path style="fill:#0D7BE3;" d="M-860.5,1154.5h12v-8h-12V1154.5z M-860.5,1140.5h18v-2h-18V1140.5z M-860.5,1144.5h15v-2h-15V1144.5
-	z M-860.5,1158.5h18v-2h-18V1158.5z M-860.5,1162.5h15v-2h-15V1162.5z"/>
-</svg>
+<svg xmlns="http://www.w3.org/2000/svg" width="33" height="39" viewBox="-867.5 1131.5 33 39" enable-background="new -867.5 1131.5 33 39"><path d="m-867 1132h32v38h-32v-38z" fill="#eff7ff" stroke="#0d7be3" stroke-linecap="square"/><path d="m-860.5 1154.5h12v-8h-12v8m0-14h18v-2h-18v2m0 4h15v-2h-15v2m0 14h18v-2h-18v2m0 4h15v-2h-15v2" fill="#0d7be3"/></svg>
