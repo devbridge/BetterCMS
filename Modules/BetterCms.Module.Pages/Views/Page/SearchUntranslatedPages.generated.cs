@@ -55,17 +55,17 @@ namespace ASP
         }
         public override void Execute()
         {
-WriteLiteral("\n");
+WriteLiteral("\r\n");
 
 WriteLiteral("<div");
 
 WriteLiteral(" class=\"bcms-modal-frame-holder\"");
 
-WriteLiteral(">\n    <div");
+WriteLiteral(">\r\n    <div");
 
 WriteLiteral(" class=\"bcms-window-options\"");
 
-WriteLiteral(">\n");
+WriteLiteral(">\r\n");
 
             
             #line 9 "..\..\Views\Page\SearchUntranslatedPages.cshtml"
@@ -126,20 +126,20 @@ WriteLiteral(">\n");
             #line hidden
             
             #line 15 "..\..\Views\Page\SearchUntranslatedPages.cshtml"
-       Write(Html.Partial("Pages"));
+       Write(Html.Partial("Partial/SiteSettingsPagesList"));
 
             
             #line default
             #line hidden
             
             #line 15 "..\..\Views\Page\SearchUntranslatedPages.cshtml"
-                                  
+                                                          
         }
 
             
             #line default
             #line hidden
-WriteLiteral("    </div>\n</div>\n");
+WriteLiteral("    </div>\r\n</div>\r\n");
 
         }
     }
