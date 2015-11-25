@@ -9,19 +9,17 @@
     }
 
     &-suggestion {
-        color: $text-light;
+        color: $text-dark;
         cursor: pointer;
         font-weight: 400;
         padding: 4px 7px 3px;
 
         &:hover {
-            background-color: $smoke;
-            color: $black;
+            color: $text-blue;
         }
     }
 
     &-selected {
-        background-color: $smoke;
-        color: $black;
+        background-color: $sky-blue;
     }
 }

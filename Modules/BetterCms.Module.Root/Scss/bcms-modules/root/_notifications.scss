@@ -84,7 +84,7 @@ $validation-fields: ();
             line-height: 18px;
             list-style: none;
             margin: auto;
-            padding: 4px 35px;
+            padding: 4px 75px 4px 35px;
             position: relative;
             text-align: left;
             width: $page-width;
@@ -92,7 +92,7 @@ $validation-fields: ();
     }
 
     &-close {
-        @include close-button($icon: $bcms-close-white, $position: 4px 4px null null);
+        @include close-button($icon: $bcms-close-white, $position: 4px 47px null null);
     }
 
     &-draft-destroy {

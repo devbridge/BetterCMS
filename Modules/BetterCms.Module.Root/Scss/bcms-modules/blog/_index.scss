@@ -13,39 +13,6 @@
 //
 //
 //todo
-//module create new blog post
-.bcms-new-blog-content {
-    display: inline-block;
-    padding: 20px 0 20px 40px;
-}
-
-.bcms-blog-dates-holder {
-    display: inline-block;
-}
-
-.bcms-create-author-holder .bcms-tooltip-mark {
-    left: -15px;
-    top: 4px;
-}
-
-.bcms-blog-categories-holder {
-    margin: 5px 0 -17px 20px;
-    position: relative;
-}
-
-.bcms-blog-categories-holder .bcms-content-titles {
-    display: inline-block;
-}
-
-.bcms-blog-tags-holder {
-    margin: 0 0 0 20px;
-    position: relative;
-}
-
-.bcms-blog-tags-holder .bcms-content-titles {
-    display: inline-block;
-}
-
 //module Import blog posts
 .bcms-import-failed {
     background-color: #fcecec;
@@ -67,26 +34,4 @@
     overflow: hidden;
     text-indent: 9999px;
     width: 12px;
-}
-
-.bcms-icn-import-warn {
-    background: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAwAAAALCAYAAAE8d1zJAAAA+klEQVQoz13RP0tCURjH8asEBRGIDWltCs4J6dKrMME2oa1egbk2NjSka0OQe1ONOeomVITQJi0RQkHY4p/vT35HLg2fw33+3Oece2708ZKJsFySGOmhqmVLyzGG6onceB6CItYwVzBz9Sq0zVHGNp5wpOQZcm4YYB2T8IaCBzyjHt8x412rjpcFBX9I4RDTUNDGB7h2dwk1PUyc2Mct9nCqRAsnLhY8IRk2r/tEj9iInyqBCvr4xLuN8era6rRZvKGHbrjEmE3nNSAbbvkLO24oe8CNL0q5Xfc0In/yL5r/Juc9uY0L/Kg3FPVzOr48Xf2l3eMbd0irdwG2fCIWmRn0SgAAAABJRU5ErkJggg==');
-    height: 12px;
-    margin: 0 auto;
-    overflow: hidden;
-    text-indent: 9999px;
-    width: 12px;
-}
-
-.bcms-icn-import-error {
-    background: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAoAAAAJCAYAAAF8oY2FAAAAZElEQVQY02N45uw8DYi/MsAZ////Z0AQQKH/YA6QYYcsuhxD5D8QO0LpTOyCIAtAElBJO5ClIEYmskoUW2ACMDdgqsRlZgtU5Rcg9kZS4A0VA8m1MCBJZEAlkHEG3G6iFRJrNQAfBNhPNe12LwAAAABJRU5ErkJggg==');
-    height: 9px;
-    margin: 0 auto;
-    overflow: hidden;
-    text-indent: 9999px;
-    width: 10px;
-}
-
-.bcms-download-sample-file {
-    margin-top: -7px;
 }

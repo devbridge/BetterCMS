@@ -12,7 +12,7 @@ bettercms.define('bcms.preview', ['bcms.jquery', 'bcms', 'bcms.modal', 'bcms.dyn
 
     // Selectors used in the module to locate DOM elements:
         selectors = {
-            previewZoom: '.bcms-zoom-overlay',
+            previewZoom: '.bcms-js-zoom-overlay',
             elementsToDisable: '.bcms-modal-content a, .bcms-modal-content input, .bcms-modal-content select'
         },
 
