@@ -558,7 +558,12 @@ bettercms.define('bcms.options', ['bcms.jquery', 'bcms', 'bcms.ko.extenders', 'b
                     for (ci = 0, cl = registeredCustomOptions.length; ci < cl; ci++) {
                         if (registeredCustomOptions[ci].identifier == customType) {
                             self.preventFromSave = true;
-                            registeredCustomOptions[ci].onExecute(valueObservable, titleObservable, self);
+
+                            registeredCustomOptions[ci].onExecute(valueObservable, titleObservable, function () {
+                                setTimeout(function () {
+                                    self.preventFromSave = false;
+                                }, 100);
+                            });
 
                             return;
                         }
