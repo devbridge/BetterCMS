@@ -474,6 +474,11 @@
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
     </Compile>
+    <Compile Include="Views\History\ContentHistoryTable.generated.cs">
+      <DependentUpon>ContentHistoryTable.cshtml</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+    </Compile>
     <Compile Include="Views\History\ServerWidgetPropertiesHistory.generated.cs">
       <DependentUpon>ServerWidgetPropertiesHistory.cshtml</DependentUpon>
       <AutoGen>True</AutoGen>
@@ -890,6 +895,10 @@
     <Content Include="Scripts\jquery-1.10.2.min.map" />
     <EmbeddedResource Include="Views\Shared\EditableGrid\CustomTitleCell.cshtml" />
     <EmbeddedResource Include="Views\Page\Partial\PagesGrid.cshtml" />
+    <Content Include="Views\History\ContentHistoryTable.cshtml">
+      <Generator>RazorGenerator</Generator>
+      <LastGenOutput>ContentHistoryTable.generated.cs</LastGenOutput>
+    </Content>
     <None Include="Views\Shared\Partial\WarnMessageAboutDraft.cshtml">
       <Generator>RazorGenerator</Generator>
       <LastGenOutput>WarnMessageAboutDraft.generated.cs</LastGenOutput>

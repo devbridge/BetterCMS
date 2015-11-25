@@ -22,6 +22,7 @@ bettercms.define('bcms.media.history', ['bcms.jquery', 'bcms', 'bcms.modal', 'bc
             versionPreviewLoaderContainer: '.bcms-history-preview',
             mediaHistoryForm: '#bcms-pagecontenthistory-form',
             mediaHistorySearchButton: '.bcms-btn-search',
+            mediaHistorySearchField: '.bcms-js-search-box',
             modalContent: '.bcms-modal-content',
             popinfoFrame: '.bcms-popinfo-frame'
         },
@@ -165,14 +166,14 @@ bettercms.define('bcms.media.history', ['bcms.jquery', 'bcms', 'bcms.modal', 'bc
     function searchPageContentHistory(dialog, container, form, isImage) {
         grid.submitGridForm(form, function (data) {
             container.html(data);
-            history.initMediaHistoryDialogEvents(dialog, isImage, data);
+            history.initMediaHistoryDialogEvents(dialog, isImage, data, true);
         });
     }
 
     /**
     * Initializes EditSeo dialog events.
     */
-    history.initMediaHistoryDialogEvents = function (dialog, isImage) {
+    history.initMediaHistoryDialogEvents = function (dialog, isImage, data, isSearchResult) {
         var container = dialog.container.find(selectors.modalContent);
 
         container.find(selectors.gridRestoreLinks).on('click', function (event) {
@@ -211,8 +212,23 @@ bettercms.define('bcms.media.history', ['bcms.jquery', 'bcms', 'bcms.modal', 'bc
         });
 
         form.find(selectors.mediaHistorySearchButton).on('click', function () {
-            searchPageContentHistory(dialog, container, form, isImage);
+            var parent = $(this).parent();
+            if (!parent.hasClass('bcms-active-search')) {
+                form.find(selectors.mediaHistorySearchField).prop('disabled', false);
+                parent.addClass('bcms-active-search');
+                form.find(selectors.mediaHistorySearchField).focus();
+            } else {
+                form.find(selectors.mediaHistorySearchField).prop('disabled', true);
+                parent.removeClass('bcms-active-search');
+                form.find(selectors.mediaHistorySearchField).val('');
+            }
         });
+
+        if (isSearchResult === true) {
+            form.find(selectors.mediaHistorySearchButton).parent().addClass('bcms-active-search');
+        } else {
+            form.find(selectors.mediaHistorySearchField).prop('disabled', true);
+        }
     };   
     
     /**
