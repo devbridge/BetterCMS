@@ -407,38 +407,33 @@ WriteLiteral("                            ");
             
             #line default
             #line hidden
-WriteLiteral("\r\n                            <div");
+WriteLiteral("\r\n\r\n                            <div");
 
-WriteLiteral(" class=\"bcms-preview-module-image\"");
+WriteLiteral(" class=\"bcms-preview-thumb\"");
 
-WriteLiteral(">\r\n                                <div");
-
-WriteLiteral(" style=\"display: none;\"");
-
-WriteLiteral(">\r\n                                    <img");
+WriteLiteral(">\r\n                                <img");
 
 WriteLiteral(" id=\"bcms-widget-preview-image\"");
 
-WriteAttribute("src", Tuple.Create(" src=\"", 4065), Tuple.Create("\"", 4093)
+WriteAttribute("src", Tuple.Create(" src=\"", 3994), Tuple.Create("\"", 4022)
             
             #line 76 "..\..\Views\Widgets\EditServerControlWidget.cshtml"
-, Tuple.Create(Tuple.Create("", 4071), Tuple.Create<System.Object, System.Int32>(Model.PreviewImageUrl
+, Tuple.Create(Tuple.Create("", 4000), Tuple.Create<System.Object, System.Int32>(Model.PreviewImageUrl
             
             #line default
             #line hidden
-, 4071), false)
+, 4000), false)
 );
 
 WriteLiteral(" alt=\"\"");
 
-WriteLiteral(" />\r\n                                </div>\r\n                            </div>\r\n" +
-"\r\n                            ");
+WriteLiteral(" />\r\n\r\n                                ");
 
-WriteLiteral("\r\n                        </div>\r\n                    </div>\r\n                </d" +
-"iv>\r\n            </div>\r\n");
+WriteLiteral("\r\n                            </div>\r\n                        </div>\r\n           " +
+"         </div>\r\n                </div>\r\n            </div>\r\n");
 
             
-            #line 91 "..\..\Views\Widgets\EditServerControlWidget.cshtml"
+            #line 90 "..\..\Views\Widgets\EditServerControlWidget.cshtml"
 
 
             
@@ -455,7 +450,7 @@ WriteLiteral(">\r\n");
 WriteLiteral("                ");
 
             
-            #line 93 "..\..\Views\Widgets\EditServerControlWidget.cshtml"
+            #line 92 "..\..\Views\Widgets\EditServerControlWidget.cshtml"
            Write(Html.Partial(PagesConstants.OptionsGridTemplate));
 
             
@@ -464,77 +459,77 @@ WriteLiteral("                ");
 WriteLiteral("\r\n            </div>\r\n");
 
             
-            #line 95 "..\..\Views\Widgets\EditServerControlWidget.cshtml"
+            #line 94 "..\..\Views\Widgets\EditServerControlWidget.cshtml"
 
             
             
             #line default
             #line hidden
             
-            #line 96 "..\..\Views\Widgets\EditServerControlWidget.cshtml"
+            #line 95 "..\..\Views\Widgets\EditServerControlWidget.cshtml"
        Write(Html.HiddenFor(model => model.Id, new { @id = "bcmsContentId" }));
 
             
             #line default
             #line hidden
             
-            #line 96 "..\..\Views\Widgets\EditServerControlWidget.cshtml"
+            #line 95 "..\..\Views\Widgets\EditServerControlWidget.cshtml"
                                                                              
             
             
             #line default
             #line hidden
             
-            #line 97 "..\..\Views\Widgets\EditServerControlWidget.cshtml"
+            #line 96 "..\..\Views\Widgets\EditServerControlWidget.cshtml"
        Write(Html.HiddenFor(model => model.Version, new { @id = "bcmsContentVersion" }));
 
             
             #line default
             #line hidden
             
-            #line 97 "..\..\Views\Widgets\EditServerControlWidget.cshtml"
+            #line 96 "..\..\Views\Widgets\EditServerControlWidget.cshtml"
                                                                                        
             
             
             #line default
             #line hidden
             
-            #line 98 "..\..\Views\Widgets\EditServerControlWidget.cshtml"
+            #line 97 "..\..\Views\Widgets\EditServerControlWidget.cshtml"
        Write(Html.HiddenFor(modal => modal.DesirableStatus, new { @class = "bcms-content-desirable-status" }));
 
             
             #line default
             #line hidden
             
-            #line 98 "..\..\Views\Widgets\EditServerControlWidget.cshtml"
+            #line 97 "..\..\Views\Widgets\EditServerControlWidget.cshtml"
                                                                                                              
             
             
             #line default
             #line hidden
             
-            #line 99 "..\..\Views\Widgets\EditServerControlWidget.cshtml"
+            #line 98 "..\..\Views\Widgets\EditServerControlWidget.cshtml"
        Write(Html.HiddenFor(modal => modal.PreviewOnPageContentId, new { @class = "bcms-preview-page-content-id" }));
 
             
             #line default
             #line hidden
             
-            #line 99 "..\..\Views\Widgets\EditServerControlWidget.cshtml"
+            #line 98 "..\..\Views\Widgets\EditServerControlWidget.cshtml"
                                                                                                                    
             
             
             #line default
             #line hidden
             
-            #line 100 "..\..\Views\Widgets\EditServerControlWidget.cshtml"
+            #line 99 "..\..\Views\Widgets\EditServerControlWidget.cshtml"
        Write(Html.HiddenSubmit());
 
             
             #line default
             #line hidden
             
-            #line 100 "..\..\Views\Widgets\EditServerControlWidget.cshtml"
+            #line 99 "..\..\Views\Widgets\EditServerControlWidget.cshtml"
                                 
         }
 

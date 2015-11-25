@@ -382,37 +382,98 @@ WriteLiteral("                            ");
             
             #line default
             #line hidden
-WriteLiteral("\r\n                            <div");
+WriteLiteral("\r\n\r\n                            <div");
 
-WriteLiteral(" class=\"bcms-preview-module-image\"");
+WriteLiteral(" class=\"bcms-preview-thumb\"");
 
-WriteLiteral(">\r\n                                <div");
+WriteLiteral(">\r\n");
 
-WriteLiteral(" style=\"display: none;\"");
-
-WriteLiteral(">\r\n                                    <img");
-
-WriteLiteral(" id=\"bcms-template-preview-image\"");
-
-WriteAttribute("src", Tuple.Create(" src=\"", 3695), Tuple.Create("\"", 3723)
             
             #line 65 "..\..\Views\Templates\EditTemplate.cshtml"
-, Tuple.Create(Tuple.Create("", 3701), Tuple.Create<System.Object, System.Int32>(Model.PreviewImageUrl
+                                
             
             #line default
             #line hidden
-, 3701), false)
+            
+            #line 65 "..\..\Views\Templates\EditTemplate.cshtml"
+                                 if (!string.IsNullOrWhiteSpace(Model.PreviewImageUrl))
+                                {
+
+            
+            #line default
+            #line hidden
+WriteLiteral("                                    <img");
+
+WriteLiteral(" id=\"bcms-template-preview-image\"");
+
+WriteAttribute("src", Tuple.Create(" src=\"", 3752), Tuple.Create("\"", 3780)
+            
+            #line 67 "..\..\Views\Templates\EditTemplate.cshtml"
+, Tuple.Create(Tuple.Create("", 3758), Tuple.Create<System.Object, System.Int32>(Model.PreviewImageUrl
+            
+            #line default
+            #line hidden
+, 3758), false)
 );
 
 WriteLiteral(" alt=\"\"");
 
-WriteLiteral(" />\r\n                                </div>\r\n\r\n                                ");
-
-WriteLiteral("\r\n                            </div>\r\n                        </div>\r\n           " +
-"         </div>\r\n                </div>\r\n            </div>\r\n");
+WriteLiteral(" />\r\n");
 
             
-            #line 80 "..\..\Views\Templates\EditTemplate.cshtml"
+            #line 68 "..\..\Views\Templates\EditTemplate.cshtml"
+                                }
+                                else
+                                {
+
+            
+            #line default
+            #line hidden
+WriteLiteral("                                    <svg");
+
+WriteLiteral(" class=\"bcms-grid-no-preview\"");
+
+WriteLiteral(" width=\"50\"");
+
+WriteLiteral(" height=\"50\"");
+
+WriteLiteral(" viewBox=\"-205 372 50 50\"");
+
+WriteLiteral(" enable-background=\"new -205 372 50 50\"");
+
+WriteLiteral(">\r\n                                        <g");
+
+WriteLiteral(" fill=\"#cdcdcd\"");
+
+WriteLiteral(">\r\n                                            <path");
+
+WriteLiteral(" d=\"m-205 422h50v-50h-50v50m2-48h46v46h-46v-46\"");
+
+WriteLiteral(" />\r\n                                            <path");
+
+WriteLiteral(" d=\"m-164.3 406.2l1.4-1.4-11.5-11.5-7.7 7.6-3.6-3.6-11.5 11.5 1.4 1.4 10.1-10.1 1" +
+"1.1 11.1 1.4-1.4-7.5-7.5 6.3-6.2 10.1 10.1\"");
+
+WriteLiteral(" />\r\n                                            <path");
+
+WriteLiteral(" d=\"m-187.9 382.4c-2.8 0-5 2.2-5 5 0 2.8 2.2 5 5 5 2.8 0 5-2.2 5-5 0-2.8-2.2-5-5-" +
+"5m0 2c1.7 0 3 1.4 3 3 0 1.7-1.3 3-3 3-1.6 0-3-1.3-3-3 0-1.7 1.3-3 3-3\"");
+
+WriteLiteral(" />\r\n                                        </g>\r\n                              " +
+"      </svg>\r\n");
+
+            
+            #line 78 "..\..\Views\Templates\EditTemplate.cshtml"
+                                }
+
+            
+            #line default
+            #line hidden
+WriteLiteral("                            </div>\r\n                        </div>\r\n             " +
+"       </div>\r\n                </div>\r\n            </div>\r\n");
+
+            
+            #line 84 "..\..\Views\Templates\EditTemplate.cshtml"
 
 
             
@@ -429,7 +490,7 @@ WriteLiteral(">\r\n");
 WriteLiteral("                ");
 
             
-            #line 82 "..\..\Views\Templates\EditTemplate.cshtml"
+            #line 86 "..\..\Views\Templates\EditTemplate.cshtml"
            Write(Html.Partial("Partial/EditTemplateRegions"));
 
             
@@ -438,7 +499,7 @@ WriteLiteral("                ");
 WriteLiteral("\r\n            </div>\r\n");
 
             
-            #line 84 "..\..\Views\Templates\EditTemplate.cshtml"
+            #line 88 "..\..\Views\Templates\EditTemplate.cshtml"
 
 
             
@@ -455,7 +516,7 @@ WriteLiteral(">\r\n");
 WriteLiteral("                ");
 
             
-            #line 86 "..\..\Views\Templates\EditTemplate.cshtml"
+            #line 90 "..\..\Views\Templates\EditTemplate.cshtml"
            Write(Html.Partial(PagesConstants.OptionsGridTemplate, new EditableGridViewModel()));
 
             
@@ -464,49 +525,49 @@ WriteLiteral("                ");
 WriteLiteral("\r\n            </div>\r\n");
 
             
-            #line 88 "..\..\Views\Templates\EditTemplate.cshtml"
+            #line 92 "..\..\Views\Templates\EditTemplate.cshtml"
 
             
             
             #line default
             #line hidden
             
-            #line 89 "..\..\Views\Templates\EditTemplate.cshtml"
+            #line 93 "..\..\Views\Templates\EditTemplate.cshtml"
        Write(Html.HiddenFor(model => model.Id));
 
             
             #line default
             #line hidden
             
-            #line 89 "..\..\Views\Templates\EditTemplate.cshtml"
+            #line 93 "..\..\Views\Templates\EditTemplate.cshtml"
                                               
             
             
             #line default
             #line hidden
             
-            #line 90 "..\..\Views\Templates\EditTemplate.cshtml"
+            #line 94 "..\..\Views\Templates\EditTemplate.cshtml"
        Write(Html.HiddenFor(model => model.Version));
 
             
             #line default
             #line hidden
             
-            #line 90 "..\..\Views\Templates\EditTemplate.cshtml"
+            #line 94 "..\..\Views\Templates\EditTemplate.cshtml"
                                                    
             
             
             #line default
             #line hidden
             
-            #line 91 "..\..\Views\Templates\EditTemplate.cshtml"
+            #line 95 "..\..\Views\Templates\EditTemplate.cshtml"
        Write(Html.HiddenSubmit());
 
             
             #line default
             #line hidden
             
-            #line 91 "..\..\Views\Templates\EditTemplate.cshtml"
+            #line 95 "..\..\Views\Templates\EditTemplate.cshtml"
                                 
         }
 

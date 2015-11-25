@@ -60,18 +60,22 @@
                         <div class="bcms-input-list-holder">
                             <div class="bcms-content-titles">@PagesGlobalization.TemplatePreviewImage_Title</div>
                             @Html.Tooltip(PagesGlobalization.TemplateImagePreview_Tooltip_Description)
-                            <div class="bcms-preview-module-image">
-                                <div style="display: none;">
-                                    <img id="bcms-template-preview-image" src="@Model.PreviewImageUrl" alt="" />
-                                </div>
 
-                                @*ADD IF FOR IMAGES <svg class="bcms-grid-no-preview" width="50" height="50" viewBox="-205 372 50 50" enable-background="new -205 372 50 50">
+                            <div class="bcms-preview-thumb">
+                                @if (!string.IsNullOrWhiteSpace(Model.PreviewImageUrl))
+                                {
+                                    <img id="bcms-template-preview-image" src="@Model.PreviewImageUrl" alt="" />
+                                }
+                                else
+                                {
+                                    <svg class="bcms-grid-no-preview" width="50" height="50" viewBox="-205 372 50 50" enable-background="new -205 372 50 50">
                                         <g fill="#cdcdcd">
                                             <path d="m-205 422h50v-50h-50v50m2-48h46v46h-46v-46" />
                                             <path d="m-164.3 406.2l1.4-1.4-11.5-11.5-7.7 7.6-3.6-3.6-11.5 11.5 1.4 1.4 10.1-10.1 11.1 11.1 1.4-1.4-7.5-7.5 6.3-6.2 10.1 10.1" />
                                             <path d="m-187.9 382.4c-2.8 0-5 2.2-5 5 0 2.8 2.2 5 5 5 2.8 0 5-2.2 5-5 0-2.8-2.2-5-5-5m0 2c1.7 0 3 1.4 3 3 0 1.7-1.3 3-3 3-1.6 0-3-1.3-3-3 0-1.7 1.3-3 3-3" />
                                         </g>
-                                    </svg>*@
+                                    </svg>
+                                }
                             </div>
                         </div>
                     </div>
