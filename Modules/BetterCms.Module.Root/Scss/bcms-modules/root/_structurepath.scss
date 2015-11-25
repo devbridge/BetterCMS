@@ -1,10 +1,16 @@
 ﻿$cp-sky: #39bfff;
+$cp-dark: #1e2332;
 
 $path-height: 43px;
 
 $path-arrows: (
-                ('left', $bcms-date-picker-left, left),
-                ('right', $bcms-date-picker-right, right)
+                ('left', $bcms-path-left, left),
+                ('right', $bcms-path-right, right)
+);
+
+$path-icons: (
+                ('master', $bcms-path-template),
+                ('page', $bcms-path-page)
 );
 
 .bcms-layout-path {
@@ -33,77 +39,65 @@ $path-arrows: (
             weight: 400;
         }
         line-height: $path-height;
+        padding: 0 5px 0 25px;
+
+        @include virtual(after, $content: '/') {
+            margin-left: 5px;
+        }
+
+        &:last-of-type {
+            &:after {
+                display: none;
+            }
+        }
     }
 
+    &-handle {
+        @include position(absolute, null 0 -25px null null);
+        background: $cp-dark url($bcms-path-show) no-repeat 90% center;
+        box-sizing: border-box;
+        color: $white;
+        font: {
+            size: 10px;
+            weight: 700;
+        }
+        cursor: pointer;
+        height: 25px;
+        line-height: 25px;
+        padding: 0 30px 0 12px;
+        text-transform: uppercase;
+        width: 103px;
+
+        .bcms-path-toggler & {
+            background-image: url($bcms-path-hide);
+        }
+    }
 }
 
 .bcms-path-child-content-active {
     color: $white;
     cursor: default;
-    margin-left: 5px;
+    padding: 0;
+}
+
+@each $name, $icon in $path-icons {
+    .bcms-path-#{$name} {
+        position: relative;
+
+        @include virtual(before) {
+            @include positioning($center-y: true);
+            @include size(20px);
+            left: 0;
+            background: url($icon) no-repeat center;
+        }
+    }
 }
 
 @each $name, $icon, $side in $path-arrows {
     .bcms-path-arrow-#{$name} {
-        @include size(25px 100%);
+        @include size(45px 100%);
         background: url($icon) no-repeat center;
         cursor: pointer;
         float: $side;
     }
-}
-
-//
-//
-//
-//
-//
-//
-//
-//todo
-.bcms-path-toggler .bcms-layout-path-handle:after {
-    background: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAsAAAAICAYAAAAvOAWIAAAAdklEQVQY02NgmPFuJhCzAzEDHgySnwFi/AfiY0AsjUOhNFT+P4jzEqrhORDboCm0hor/B6sDEjJAfBIq8AuIs6EKs6B8kPgpsDqoBAcQz4VKgPBFJPZcqDwDuvsygfgnVNFPKB8hj8VDVkB8FupeVLn///8TjQFLALLwtMnQYQAAAABJRU5ErkJggg==") no-repeat center;
-}
-
-.bcms-layout-path-handle {
-    background-color: black;
-    border-radius: 0 0 2px 2px;
-    bottom: -15px;
-    color: white;
-    cursor: pointer;
-    font-size: 10px;
-    height: 15px;
-    left: 50%;
-    line-height: 15px;
-    margin-left: -45px;
-    padding: 2px 7px 0;
-    position: absolute;
-    text-transform: uppercase;
-    width: 76px;
-}
-
-.bcms-layout-path-item:after {
-    content: "";
-    height: 16px;
-    left: 5px;
-    margin-top: -8px;
-    position: absolute;
-    top: 50%;
-    width: 16px;
-}
-
-.bcms-path-master, .bcms-path-page, .bcms-path-child-content {
-    padding-left: 25px;
-    position: relative;
-}
-
-.bcms-path-master:after {
-    background: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAABD0lEQVQ4y62TsQ6CMBRFmUz8DyZlYGZmZWTkD9jY2JiYUBMwkW8x/oUR/0MHNZr6LukjpT5NjA4naW/fvaWvxWnb1rGYEQuiIy6ag9Zmdr05mRAN8SDUG7C2IaZ2AMzbD0abnfYMAesvzEzDAXPiDjHPcxUEgQrDUNV1PTJEUdSvoUZr8MwRsOSiLMuU67rK932zUBVF0WtYQ40RvHR0t0cB+ALsyHqSJL0mBHQIuNoBaZr2O+IYAGNoQsBVDCjLcjBBwxiaEHASj1BVlYrjeDgKjgBNCNiLTUQxGscNxfhNwAoBHl+jGYA5XynGQgA83stDYjPgJkpr2vO/p/zzz2SCp70ijsSNOKPbWvPs+icsXlv48mIk7AAAAABJRU5ErkJggg==') no-repeat center;
-}
-
-.bcms-path-page:after {
-    background: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAqUlEQVQ4y63TQQrCMBCF4awKHqW2Z9UuFPzOIt5CrPfQhUpL3aRSQq1iXTxIJm/+IZNJQEi0xAo1blGnGFum/uEmwwYtujdqscMiBWTYTySmOsScF2CLLs/zjxpANj2gQNMDpion5w2KgHVqeFd5pMA6xG7/CqgD7jMA91HAlz3ocJm8wtg6ARwnm/gFoAooZzxjOWeQtn8d5dmfaagCFc544IpjjJWp/wlSxkegoMPLBgAAAABJRU5ErkJggg==') no-repeat center;
-}
-
-.bcms-path-child-content:after {
-    background: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAApUlEQVQ4y63TMQ7CMAyF4UxIHKW0ZwUGKvGdBXGLCrgHDBSBYElRiVIElOEf4vg92Y4TEBJmmGOPc2QXY7M0v3+YYIUb7gPcsMY0NZhg80aYso2ap0H9hbhj1RmUuP5gcEUZsPhB3LEIcdovF0VRZMkY7APaERW0WYOhCjJVHLMtfEGTHeIHvXcsA6oRz1iNWaT6r6s8+jP1KbHEARec0MRYleY/AFT3fCBIyhQSAAAAAElFTkSuQmCC') no-repeat center;
 }

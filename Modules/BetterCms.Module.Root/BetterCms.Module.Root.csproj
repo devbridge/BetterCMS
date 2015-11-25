@@ -756,7 +756,6 @@
     <EmbeddedResource Include="Scripts\bcms.modal.js" />
     <EmbeddedResource Include="Scripts\bcms.siteSettings.js" />
     <EmbeddedResource Include="Scripts\bcms.forms.js" />
-    <EmbeddedResource Include="Content\Styles\images\sprite-base-2.png" />
     <EmbeddedResource Include="Scripts\bcms.spinner.jquery.js" />
     <EmbeddedResource Include="Scripts\ckeditor\plugins\icons.png" />
     <EmbeddedResource Include="Scripts\html5shiv.js" />
@@ -1531,6 +1530,12 @@
     <Content Include="Scss\assets\icons\overlay-widget.svg" />
     <Content Include="Scss\assets\icons\pager-arrow-left.svg" />
     <Content Include="Scss\assets\icons\pager-arrow-right.svg" />
+    <Content Include="Scss\assets\icons\path-hide.svg" />
+    <Content Include="Scss\assets\icons\path-left.svg" />
+    <Content Include="Scss\assets\icons\path-page.svg" />
+    <Content Include="Scss\assets\icons\path-right.svg" />
+    <Content Include="Scss\assets\icons\path-show.svg" />
+    <Content Include="Scss\assets\icons\path-template.svg" />
     <Content Include="Scss\assets\icons\revert.svg" />
     <Content Include="Scss\assets\icons\search.svg" />
     <Content Include="Scss\assets\icons\select-arrow.svg" />
