@@ -153,7 +153,7 @@ a:hover {
   height: calc(100vh - 120px);
   overflow-x: hidden;
   overflow-y: scroll;
-  padding: 0 30px 0 0;
+  padding: 0 30px 30px 0;
   position: relative;
 }
 
@@ -2836,6 +2836,10 @@ td .bcms-field-wrapper {
 .bcms-tables td .bcms-action-restore {
   display: block;
   margin: auto;
+}
+
+.bcms-tables td .bcms-thumb-box {
+  padding: 0;
 }
 
 .bcms-table-field-helper .bcms-field-wrapper {
