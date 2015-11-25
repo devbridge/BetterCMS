@@ -4,6 +4,8 @@ $font-base-family: 'Open Sans', sans-serif !important;
 $font-code-family: 'Courier New', Courier, monospace;
 
 //module borders
+$border-thin-dark: 1px solid $dark-main;
+$border-thin-dashed-dark: 1px dashed $dark-main;
 $border-thin-smoke: 1px solid $gray-smoke;
 $border-thin-dashed-smoke: 1px dashed $gray-smoke;
 $border-thick-dashed-smoke: 2px dashed $gray-smoke;
@@ -17,6 +19,7 @@ $border-solid-blue: 4px solid $border-blue;
 $border-form-element: 1px solid $light;
 $border-pop-box: 1px solid $light;
 //
+$border-thin-white: 1px solid $white;
 $border-thin-sky: 1px solid $sky-blue;
 //
 $border-thin-transparent: 1px solid transparent;

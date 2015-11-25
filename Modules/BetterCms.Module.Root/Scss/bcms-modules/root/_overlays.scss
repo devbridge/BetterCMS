@@ -24,7 +24,7 @@ $overlay-control-buttons: (
         @include position(absolute, null);
         display: none;
         min-height: 35px;
-        outline: $border-thin-blue-dashed;
+        outline: $border-thin-dashed-dark;
         z-index: 100;
 
         &.bcms-show-overlay {
@@ -33,13 +33,19 @@ $overlay-control-buttons: (
             height: 100%;
             width: 100%;
         }
+
+        @include virtual(before) {
+            @include position(absolute, -1px);
+            border: $border-thin-white;
+            z-index: -1;
+        }
     }
 
     &-actions {
         @include position(absolute, 0 0 null null);
         border: {
-            bottom: $border-thin-blue;
-            left: $border-thin-blue;
+            bottom: $border-thin-dashed-dark;
+            left: $border-thin-dashed-dark;
         }
         cursor: default;
         height: 26px;
@@ -49,7 +55,7 @@ $overlay-control-buttons: (
     &-button {
         @include transition(all 200ms);
         @include vertical-align($align: top);
-        background-color: $bg-blue;
+        background-color: $cp-dark;
         box-sizing: border-box;
         color: $white;
         cursor: pointer;
@@ -59,7 +65,7 @@ $overlay-control-buttons: (
         padding: 0 10px;
 
         &:hover {
-            background-color: darken($bg-blue, 10%);
+            background-color: darken($cp-dark, 5%);
             cursor: pointer;
         }
     }
@@ -105,10 +111,12 @@ $overlay-control-buttons: (
     @each $name, $icon in $overlay-mange-controls {
         &-#{$name} {
             @include size(30px 26px);
-            background: $bg-blue url($icon) no-repeat center;
+            background: $cp-dark url($icon) no-repeat center;
         }
     }
 }
+
+//todo update colors & icons
 
 .bcms-content-overlay {
     display: none;
@@ -185,16 +193,15 @@ $overlay-control-buttons: (
 //module content action controls
 .bcms-content {
     &-actions {
-        @include position(absolute, 10px null null 10px);
-        border: $border-thin-sky;
+        @include position(absolute, 0 null null -1px);
         height: 42px;
     }
 
     &-button {
         @include transition(all 200ms);
         @include size(42px);
-        background-color: $bg-blue;
-        border-left: $border-thin-sky;
+        background-color: $cp-dark;
+        border-left: $border-thin-dark;
         cursor: pointer;
         display: block;
         float: left;
@@ -205,7 +212,7 @@ $overlay-control-buttons: (
         }
 
         &:hover {
-            background-color: darken($bg-blue, 15%);
+            background-color: darken($cp-dark, 5%);
         }
     }
 
@@ -221,10 +228,10 @@ $overlay-control-buttons: (
 
     &-edit {
         &.bcms-active-draft {
-            background-color: $bg-red;
+            background-color: $cp-red-draft;
 
             &:hover {
-                background-color: lighten($bg-red, 10%);
+                background-color: darken($cp-red-draft, 5%);
             }
         }
     }
