@@ -16,6 +16,8 @@ $sitemap-tab-arrows: (
 
 .bcms-sitemap-tabs-holder {
     float: left;
+    height: 100%;
+    width: calc(#{$page-width} - 50px);
 }
 
 @each $name, $icon, $float in $sitemap-tab-arrows {

@@ -2919,6 +2919,7 @@ td .bcms-field-wrapper {
 }
 
 .bcms-list-status {
+  padding: 0 10px;
   width: 50px;
 }
 
@@ -2930,6 +2931,7 @@ td .bcms-field-wrapper {
 }
 
 .bcms-list-delete {
+  padding: 0 10px;
   width: 65px;
 }
 
@@ -2947,6 +2949,9 @@ td .bcms-field-wrapper {
 }
 
 .bcms-list-link {
+  -webkit-transition: opacity 200ms;
+  -moz-transition: opacity 200ms;
+  transition: opacity 200ms;
   background: url("data:image/svg+xml;base64,PHN2ZyBoZWlnaHQ9IjEyIiB3aWR0aD0iMTIiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgdmlld0JveD0iMCAwIDEyIDEyIj48cGF0aCBmaWxsPSIjMGQ3Y2U3IiBmaWxsLXJ1bGU9ImV2ZW5vZGQiIGQ9Im02IDB2MmgyLjU5bC0yLjQyIDIuNDEgMS40MiAxLjQyIDIuNDEtMi40MnYyLjU5aDJ2LTZoLTZtLTYgMHYxMmgxMnYtNGgtMnYyaC04di04aDJ2LTJoLTQiLz48L3N2Zz4=") no-repeat right center;
   color: #0d7ce7;
   cursor: pointer;
@@ -2954,7 +2959,12 @@ td .bcms-field-wrapper {
   font-size: 14px;
   font-weight: 600;
   line-height: 20px;
+  opacity: 1;
   padding-right: 16px;
+}
+
+.bcms-list-link:hover {
+  opacity: .7;
 }
 
 .bcms-tab-header {

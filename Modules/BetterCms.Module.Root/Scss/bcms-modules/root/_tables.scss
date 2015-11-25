@@ -190,6 +190,7 @@ $sort-icons: (
     }
 
     &-status {
+        padding: 0 10px;
         width: 50px;
 
         .bcms-action-ok,
@@ -201,6 +202,7 @@ $sort-icons: (
     }
 
     &-delete {
+        padding: 0 10px;
         width: 65px;
     }
 
@@ -221,6 +223,7 @@ $sort-icons: (
     }
 
     &-link {
+        @include transition(opacity 200ms);
         background: url($bcms-list-preview) no-repeat right center;
         color: $text-blue;
         cursor: pointer;
@@ -230,6 +233,11 @@ $sort-icons: (
             weight: 600;
         }
         line-height: 20px;
+        opacity: 1;
         padding-right: 16px;
+
+        &:hover {
+            opacity: .7;
+        }
     }
 }

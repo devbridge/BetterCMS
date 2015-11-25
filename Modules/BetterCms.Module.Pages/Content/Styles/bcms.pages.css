@@ -22,6 +22,8 @@
 
 .bcms-sitemap-tabs-holder {
   float: left;
+  height: 100%;
+  width: calc(1150px - 50px);
 }
 
 .bcms-sitemaps-arrow-left {
