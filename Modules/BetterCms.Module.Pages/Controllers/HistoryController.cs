@@ -56,7 +56,7 @@ namespace BetterCms.Module.Pages.Controllers
         {
             var model = GetCommand<GetContentHistoryCommand>().ExecuteCommand(request);
 
-            return View(model);
+            return View("ContentHistoryTable", model);
         }
 
         /// <summary>

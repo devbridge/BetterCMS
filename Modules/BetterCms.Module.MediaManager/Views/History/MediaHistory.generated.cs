@@ -582,6 +582,10 @@ WriteLiteral(">");
             #line hidden
 WriteLiteral("</div>\r\n\r\n                <div");
 
+WriteLiteral(" class=\"bcms-top-block-inner\"");
+
+WriteLiteral(">\r\n                    <div");
+
 WriteLiteral(" class=\"bcms-btn-search\"");
 
 WriteLiteral(" id=\"bcms-pagecontenthistory-search-btn\"");
@@ -589,31 +593,32 @@ WriteLiteral(" id=\"bcms-pagecontenthistory-search-btn\"");
 WriteLiteral(">");
 
             
-            #line 123 "..\..\Views\History\MediaHistory.cshtml"
-                                                                                Write(RootGlobalization.Button_Search);
+            #line 124 "..\..\Views\History\MediaHistory.cshtml"
+                                                                                    Write(RootGlobalization.Button_Search);
 
             
             #line default
             #line hidden
-WriteLiteral("</div>\r\n                <div");
+WriteLiteral("</div>\r\n                    <div");
 
 WriteLiteral(" class=\"bcms-search-block\"");
 
 WriteLiteral(">\r\n");
 
-WriteLiteral("                    ");
+WriteLiteral("                        ");
 
             
-            #line 125 "..\..\Views\History\MediaHistory.cshtml"
-               Write(Html.TextBoxFor(m => m.SearchQuery, new { @class = "bcms-field-text", @placeholder = RootGlobalization.WaterMark_Search }));
+            #line 126 "..\..\Views\History\MediaHistory.cshtml"
+                   Write(Html.TextBoxFor(m => m.SearchQuery, new { @class = "bcms-search-field-box bcms-js-search-box bcms-search-query", @placeholder = RootGlobalization.WaterMark_Search }));
 
             
             #line default
             #line hidden
-WriteLiteral("\r\n                </div>            \r\n            </div>\r\n");
+WriteLiteral("\r\n                    </div>\r\n                </div>           \r\n            </di" +
+"v>\r\n");
 
             
-            #line 128 "..\..\Views\History\MediaHistory.cshtml"
+            #line 130 "..\..\Views\History\MediaHistory.cshtml"
 
 
             
@@ -628,7 +633,7 @@ WriteLiteral(">\r\n");
 WriteLiteral("                ");
 
             
-            #line 130 "..\..\Views\History\MediaHistory.cshtml"
+            #line 132 "..\..\Views\History\MediaHistory.cshtml"
            Write(Html.Grid(Model.Items).Sort(Model.GridOptions).Columns(columns).Attributes(@class => "bcms-tables bcms-history-grid").RenderUsing(new EditableHtmlTableGridRenderer<MediaHistoryItem>()));
 
             
@@ -639,7 +644,7 @@ WriteLiteral("\r\n");
 WriteLiteral("                ");
 
             
-            #line 131 "..\..\Views\History\MediaHistory.cshtml"
+            #line 133 "..\..\Views\History\MediaHistory.cshtml"
            Write(Html.HiddenSubmit());
 
             
@@ -648,7 +653,7 @@ WriteLiteral("                ");
 WriteLiteral("\r\n            </div>\r\n");
 
             
-            #line 133 "..\..\Views\History\MediaHistory.cshtml"
+            #line 135 "..\..\Views\History\MediaHistory.cshtml"
         }
 
             
