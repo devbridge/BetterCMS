@@ -319,9 +319,9 @@ WriteLiteral(" class=\"bcms-modal-frame-holder\"");
 
 WriteLiteral(">\r\n    <div");
 
-WriteLiteral(" class=\"bcms-history-preview-holder\"");
+WriteLiteral(" class=\"bcms-history-preview-holder bcms-history-preview-holder-media\"");
 
-WriteLiteral(">  \r\n        <div");
+WriteLiteral(">\r\n        <div");
 
 WriteLiteral(" class=\"bcms-history-preview\"");
 
@@ -436,7 +436,7 @@ WriteLiteral("</div>\r\n                </div>\r\n");
             #line hidden
 WriteLiteral("                <div");
 
-WriteLiteral(" class=\"bcms-history-items-list\"");
+WriteLiteral(" class=\"bcms-history-items-list bcms-history-items-list-media\"");
 
 WriteLiteral(">\r\n");
 

@@ -279,7 +279,7 @@ WriteLiteral(" class=\"bcms-field-text\"");
 
 WriteLiteral(@" data-bind=""
                                 visible: isInAddMode() === 'user',
-                                css: { 'bcms-tag-validation-error': newItem.hasError() },
+                                css: { 'bcms-input-validation-error': newItem.hasError() },
                                 hasfocus: isInAddMode() === 'user' && isExpanded(),
                                 value: newItem,
                                 valueUpdate: 'afterkeydown',
@@ -290,7 +290,7 @@ WriteLiteral(@" data-bind=""
 WriteLiteral(" />\r\n                    <!-- ko if: newItem.hasError() -->\r\n                    " +
 "<span");
 
-WriteLiteral(" class=\"bcms-tag-field-validation-error\"");
+WriteLiteral(" class=\"bcms-field-validation-error\"");
 
 WriteLiteral(">\r\n                        <span");
 
@@ -338,7 +338,7 @@ WriteLiteral(" class=\"bcms-field-text\"");
 
 WriteLiteral(@" data-bind=""
                                 visible: isInAddMode() === 'role',
-                                css: { 'bcms-tag-validation-error': newItem.hasError() },
+                                css: { 'bcms-input-validation-error': newItem.hasError() },
                                 hasfocus: isInAddMode() === 'role' && isExpanded(),
                                 value: newItem,
                                 valueUpdate: 'afterkeydown',
@@ -349,7 +349,7 @@ WriteLiteral(@" data-bind=""
 WriteLiteral(" />\r\n                    <!-- ko if: newItem.hasError() -->\r\n                    " +
 "<span");
 
-WriteLiteral(" class=\"bcms-tag-field-validation-error\"");
+WriteLiteral(" class=\"bcms-field-validation-error\"");
 
 WriteLiteral(">\r\n                        <span");
 

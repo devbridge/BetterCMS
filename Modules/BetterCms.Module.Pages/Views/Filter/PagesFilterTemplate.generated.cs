@@ -152,7 +152,7 @@ WriteLiteral(" type=\"text\"");
 WriteLiteral(" class=\"bcms-field-text\"");
 
 WriteLiteral(@" data-bind=""
-                            css: { 'bcms-tag-validation-error': newItem.hasError() },
+                            css: { 'bcms-input-validation-error': newItem.hasError() },
                             value: newItem,
                             valueUpdate: 'afterkeydown',
                             escPress: clearItem,
@@ -161,7 +161,7 @@ WriteLiteral(@" data-bind=""
 WriteLiteral(" />\r\n                        <!-- ko if: newItem.hasError()  -->\r\n               " +
 "         <span");
 
-WriteLiteral(" class=\"bcms-tag-field-validation-error\"");
+WriteLiteral(" class=\"bcms-field-validation-error\"");
 
 WriteLiteral(">\r\n                            <span");
 
