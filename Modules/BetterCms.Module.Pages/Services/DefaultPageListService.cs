@@ -208,8 +208,9 @@ namespace BetterCms.Module.Pages.Services
                     Root.Models.Content contentHistoryAlias = null;
                     var subQuery = QueryOver.Of(() => pageContentAlias)
                         .Inner.JoinAlias(() => pageContentAlias.Content, () => contentAlias, () => !contentAlias.IsDeleted)
-                        .Inner.JoinAlias(() => contentAlias.History, () => contentHistoryAlias, () => !contentHistoryAlias.IsDeleted && contentHistoryAlias.Status == ContentStatus.Draft)
+                        .Left.JoinAlias(() => contentAlias.History, () => contentHistoryAlias, () => !contentHistoryAlias.IsDeleted)
                         .Where(() => pageContentAlias.Page.Id == alias.Id && !pageContentAlias.IsDeleted)
+                        .Where(() => contentHistoryAlias.Status == ContentStatus.Draft || contentAlias.Status == ContentStatus.Draft)
                         .Select(p => 1);
 
                     query = query.WithSubquery.WhereExists(subQuery);
