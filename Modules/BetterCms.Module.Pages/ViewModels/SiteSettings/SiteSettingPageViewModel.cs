@@ -37,7 +37,7 @@ namespace BetterCms.Module.Pages.ViewModels.SiteSettings
         /// <value>
         /// The page url.
         /// </value>
-        public string Url { get; set; }
+        public string PageUrl { get; set; }
 
         /// <summary>
         /// Gets or sets the date the page is created on.
@@ -45,8 +45,14 @@ namespace BetterCms.Module.Pages.ViewModels.SiteSettings
         /// <value>
         /// The date the page is created on.
         /// </value>
-        public DateTime CreatedOn { get; set; }
+        public string CreatedOn { get; set; }
 
+        /// <summary>
+        /// Gets or sets the created on title.
+        /// </summary>
+        /// <value>
+        /// The created on title.
+        /// </value>
         public string CreatedOnTitle { get; set; }
 
         /// <summary>
@@ -55,8 +61,14 @@ namespace BetterCms.Module.Pages.ViewModels.SiteSettings
         /// <value>
         /// The date the page is modified on.
         /// </value>
-        public DateTime ModifiedOn { get; set; }
+        public string ModifiedOn { get; set; }
 
+        /// <summary>
+        /// Gets or sets the modified on title.
+        /// </summary>
+        /// <value>
+        /// The modified on title.
+        /// </value>
         public string ModifiedOnTitle { get; set; }
 
         /// <summary>

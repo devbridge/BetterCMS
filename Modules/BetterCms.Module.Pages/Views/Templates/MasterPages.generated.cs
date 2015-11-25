@@ -103,7 +103,7 @@ namespace ASP
         }
         public override void Execute()
         {
-WriteLiteral("\n");
+WriteLiteral("\r\n");
 
             
             #line 14 "..\..\Views\Templates\MasterPages.cshtml"
@@ -118,7 +118,7 @@ WriteLiteral("\n");
     Action<ColumnBuilder<SiteSettingPageViewModel>> columns = column =>
     {
         column.EditButtonColumn();
-        column.For(m => string.Format("<a class=\"bcms-tables-link bcms-page-title\" data-id=\"{0}\" data-url=\"{2}\">{1}</a>", m.Id, System.Web.Security.AntiXss.AntiXssEncoder.HtmlEncode(m.Title ?? "", true), m.Url))
+        column.For(m => string.Format("<a class=\"bcms-tables-link bcms-page-title\" data-id=\"{0}\" data-url=\"{2}\">{1}</a>", m.Id, System.Web.Security.AntiXss.AntiXssEncoder.HtmlEncode(m.Title ?? "", true), m.PageUrl))
             .Named(PagesGlobalization.SiteSettings_Pages_TitleColumn)
             .SortColumnName("Title")
             .Attributes()
@@ -145,7 +145,7 @@ WriteLiteral("\n");
             
             #line default
             #line hidden
-WriteLiteral("\n\n");
+WriteLiteral("\r\n\r\n");
 
             
             #line 50 "..\..\Views\Templates\MasterPages.cshtml"

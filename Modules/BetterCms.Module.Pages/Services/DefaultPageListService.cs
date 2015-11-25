@@ -5,6 +5,7 @@ using System.Linq;
 using BetterModules.Core.DataAccess.DataContext;
 using BetterCms.Core.DataContracts.Enums;
 using BetterCms.Core.Security;
+using BetterCms.Module.Pages.Content.Resources;
 using BetterCms.Module.Pages.Models;
 using BetterCms.Module.Pages.ViewModels.Filter;
 using BetterCms.Module.Pages.ViewModels.SiteSettings;
@@ -53,7 +54,8 @@ namespace BetterCms.Module.Pages.Services
 
             PageProperties alias = null;
             PagesView viewAlias = null;
-            SiteSettingPageViewModel modelAlias = null;
+//            SiteSettingPageViewModel modelAlias = null;
+            PageProperties modelAlias = null;
 
             var query = unitOfWork.Session
                 .QueryOver(() => viewAlias)
@@ -78,14 +80,14 @@ namespace BetterCms.Module.Pages.Services
                     .Select(() => alias.Id).WithAlias(() => modelAlias.Id)
                     .Select(() => alias.Version).WithAlias(() => modelAlias.Version)
                     .Select(() => alias.Title).WithAlias(() => modelAlias.Title)
-                    .Select(() => alias.Status).WithAlias(() => modelAlias.PageStatus)
-                    .Select(hasSeoProjection).WithAlias(() => modelAlias.HasSEO)
+                    .Select(() => alias.Status).WithAlias(() => modelAlias.Status)
+//                    .Select(hasSeoProjection).WithAlias(() => modelAlias.HasSEO)
                     .Select(() => alias.CreatedOn).WithAlias(() => modelAlias.CreatedOn)
                     .Select(() => alias.ModifiedOn).WithAlias(() => modelAlias.ModifiedOn)
-                    .Select(() => alias.PageUrl).WithAlias(() => modelAlias.Url)
-                    .Select(() => alias.Language.Id).WithAlias(() => modelAlias.LanguageId)
+                    .Select(() => alias.PageUrl).WithAlias(() => modelAlias.PageUrl)
+                    .Select(() => alias.Language).WithAlias(() => modelAlias.Language)
                     .Select(() => alias.IsMasterPage).WithAlias(() => modelAlias.IsMasterPage))
-                .TransformUsing(Transformers.AliasToBean<SiteSettingPageViewModel>());
+                .TransformUsing(Transformers.AliasToBean<PageProperties>());
 
             if (configuration.Security.AccessControlEnabled)
             {
@@ -101,7 +103,7 @@ namespace BetterCms.Module.Pages.Services
 
             IEnumerable<LookupKeyValue> languagesFuture = configuration.EnableMultilanguage ? languageService.GetLanguagesLookupValues() : null;
 
-            var pages = query.AddSortingAndPaging(request).Future<SiteSettingPageViewModel>();
+            var pages = query.AddSortingAndPaging(request).Future<PageProperties>();
 
             var layouts = layoutService
                         .GetAvailableLayouts()
@@ -122,15 +124,23 @@ namespace BetterCms.Module.Pages.Services
             return model;
         }
 
-        protected virtual PagesGridViewModel<SiteSettingPageViewModel> CreateModel(IEnumerable<SiteSettingPageViewModel> pages,
+        protected virtual PagesGridViewModel<SiteSettingPageViewModel> CreateModel(IEnumerable<PageProperties> pages,
             PagesFilter request, IFutureValue<int> count, IList<LookupKeyValue> layouts, IList<CategoryLookupModel> categoriesLookupList)
         {
-            var pagesList = pages.ToList();
-            foreach (var page in pagesList)
+            var pagesList = new List<SiteSettingPageViewModel>();
+            foreach (var page in pages)
             {
-                // todo : move to resources
-                page.CreatedOnTitle = string.Format("{0} {1}", "CREATED:", page.CreatedOn.ToFormattedDateString());
-                page.ModifiedOnTitle = string.Format("{0} {1}", "LAST EDITED:", page.ModifiedOn.ToFormattedDateString());
+                var model = new SiteSettingPageViewModel();
+                model.Id = page.Id;
+                model.Version = page.Version;
+                model.Title = page.Title;
+                model.PageStatus = page.Status;
+                model.CreatedOn = page.CreatedOn.ToFormattedDateString();
+                model.ModifiedOn = page.ModifiedOn.ToFormattedDateString();
+                model.PageUrl = page.PageUrl;
+                model.IsMasterPage = page.IsMasterPage;
+                model.LanguageId = page.Language != null ? page.Language.Id : Guid.Empty;
+                pagesList.Add(model);
             }
             return new PagesGridViewModel<SiteSettingPageViewModel>(
                 pagesList,

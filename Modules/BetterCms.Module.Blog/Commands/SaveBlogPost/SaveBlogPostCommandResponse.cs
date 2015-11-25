@@ -71,7 +71,7 @@ namespace BetterCms.Module.Blog.Commands.SaveBlogPost
         /// The date the blog post is modified on.
         /// </value>
         public string ModifiedOn { get; set; }
-        
+
         /// <summary>
         /// Gets or sets the date the blog post is created on.
         /// </summary>

@@ -1,4 +1,6 @@
-﻿using System.Linq;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 
 using BetterModules.Core.DataAccess;
 using BetterModules.Core.DataAccess.DataContext;
@@ -8,6 +10,7 @@ using BetterCms.Module.Pages.Models;
 using BetterCms.Module.Pages.ViewModels.Filter;
 using BetterCms.Module.Pages.ViewModels.SiteSettings;
 using BetterCms.Module.Root.Models;
+using BetterCms.Module.Root.Mvc;
 using BetterCms.Module.Root.Services;
 using BetterCms.Module.Root.ViewModels.Category;
 
@@ -64,12 +67,27 @@ namespace BetterCms.Module.Pages.Services
         /// <returns>
         /// Model
         /// </returns>
-        protected override PagesGridViewModel<SiteSettingPageViewModel> CreateModel(System.Collections.Generic.IEnumerable<SiteSettingPageViewModel> pages,
+        protected override PagesGridViewModel<SiteSettingPageViewModel> CreateModel(System.Collections.Generic.IEnumerable<PageProperties> pages,
             PagesFilter request, NHibernate.IFutureValue<int> count,
             System.Collections.Generic.IList<LookupKeyValue> layouts, System.Collections.Generic.IList<CategoryLookupModel> categoriesLookupList )
         {
+            var pagesList = new List<SiteSettingPageViewModel>();
+            foreach (var page in pages)
+            {
+                var model = new SiteSettingPageViewModel();
+                model.Id = page.Id;
+                model.Version = page.Version;
+                model.Title = page.Title;
+                model.PageStatus = page.Status;
+                model.CreatedOn = page.CreatedOn.ToFormattedDateString();
+                model.ModifiedOn = page.ModifiedOn.ToFormattedDateString();
+                model.PageUrl = page.PageUrl;
+                model.IsMasterPage = page.IsMasterPage;
+                model.LanguageId = page.Language != null ? page.Language.Id : Guid.Empty;
+                pagesList.Add(model);
+            }
             return new UntranslatedPagesGridViewModel<SiteSettingPageViewModel>(
-                pages.ToList(),
+                pagesList,
                 request as UntranslatedPagesFilter,
                 count.Value) { Layouts = layouts, CategoriesLookupList = categoriesLookupList};
         }

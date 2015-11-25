@@ -3,6 +3,7 @@
 using BetterCms.Core.DataContracts.Enums;
 
 using BetterCms.Module.Blog.Services;
+using BetterCms.Module.Pages.Content.Resources;
 using BetterCms.Module.Pages.Models.Enums;
 using BetterCms.Module.Pages.Services;
 using BetterCms.Module.Root.Mvc;
@@ -65,7 +66,7 @@ namespace BetterCms.Module.Blog.Commands.SaveBlogPost
                            DesirableStatus = request.Content.DesirableStatus,
                            PageContentId = blogPost.PageContents[0].Id,
                            ContentId = blogPost.PageContents[0].Content.Id,
-                           ContentVersion = blogPost.PageContents[0].Content.Version
+                           ContentVersion = blogPost.PageContents[0].Content.Version,
                        };
 
             if (request.Content.IncludeChildRegions)
