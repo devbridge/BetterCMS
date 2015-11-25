@@ -86,7 +86,7 @@ namespace ASP
     { 
         new EditableGridColumn(PagesGlobalization.EditOptionsValues_OptionKeyColumn, null, "key")
         {
-            HeaderAttributes = "style=\"width: 200px;\"",
+            HeaderAttributes = "style=\"width: 250px;\"",
             HiddenFieldName = "OptionValues[{0}].OptionKey"
         },
         new EditableGridBooleanColumn(PagesGlobalization.EditOptionsValues_UseDefaultValueColumn, null, "useDefaultValueBinding")
@@ -109,7 +109,7 @@ namespace ASP
         },
         new OptionValueEditableGridColumn(PagesGlobalization.EditOptionsValues_OptionValueColumn, "valueBinding", "customOptionTitleBinding")
         {
-            HeaderAttributes = "style=\"width: 200px;\"", 
+            HeaderAttributes = "style=\"width: 250px;\"", 
             HiddenFieldName = "OptionValues[{0}].OptionValue",
             FocusIdentifier = "valueHasFocus"
             

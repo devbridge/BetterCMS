@@ -259,13 +259,24 @@ $sitemap-tab-arrows: (
     &-box {
         background-color: $white;
         border: $border-thin-smoke;
+        box-shadow: 5px 3px 0 2px rgba($sh-dark, .6);
         box-sizing: border-box;
-        margin: 8px 0;
+        cursor: move;
+        margin: 15px 0;
         min-height: 44px;
-        padding: 5px 10px;
+        padding: 5px 30px 5px 10px;
+        position: relative;
 
         &:last-of-type {
             margin-bottom: 0;
+        }
+
+        @include virtual(after) {
+            @include position(absolute, 10px 10px null null);
+            @include size(12px);
+            background: url($bcms-dragger) no-repeat center;
+            overflow: hidden;
+            text-indent: 9999px;
         }
     }
 
@@ -327,18 +338,10 @@ $sitemap-tab-arrows: (
     }
 }
 
-//
-//
-//
-//
-//todo
 .bcms-drop-button {
-    background: url('images/sprite-base-2.png') no-repeat -1px -96px;
-    height: 4px;
+    @include position(absolute, 10px 10px null null);
+    @include size(12px);
+    background: url($bcms-dragger) no-repeat center;
     overflow: hidden;
-    position: absolute;
-    right: 9px;
     text-indent: 9999px;
-    top: 8px;
-    width: 16px;
 }

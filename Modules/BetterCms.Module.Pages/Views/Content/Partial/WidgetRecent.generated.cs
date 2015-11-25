@@ -311,7 +311,7 @@ WriteLiteral(">\r\n");
             #line hidden
 WriteLiteral("                                <div");
 
-WriteLiteral(" class=\"bcms-action-edit bcms-js-content-edit bcms-draft\"");
+WriteLiteral(" class=\"bcms-action-edit bcms-draft bcms-js-content-edit\"");
 
 WriteLiteral(">");
 

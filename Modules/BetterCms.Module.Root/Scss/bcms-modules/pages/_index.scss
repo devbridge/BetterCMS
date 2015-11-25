@@ -22,3 +22,24 @@
         max-width: 100%;
     }
 }
+
+.bcms-preview-zoom {
+    &-box {
+        &:hover {
+            > .bcms-preview-zoom-overlay {
+                cursor: pointer;
+                opacity: 1;
+                visibility: visible;
+            }
+        }
+    }
+
+    &-overlay {
+        @include transition(opacity 200ms);
+        @include position(absolute, 0);
+        background: rgba($bg-dark, .7) url($bcms-zoom) no-repeat center;
+        opacity: 0;
+        visibility: hidden;
+        z-index: 10;
+    }
+}

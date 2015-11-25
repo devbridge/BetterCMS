@@ -90,7 +90,7 @@ WriteLiteral("\r\n");
             {
                 new EditableGridColumn(PagesGlobalization.Options_OptionKeyColumn, null, "key")
                     {
-                        HeaderAttributes = "style=\"width: 200px;\"",
+                        HeaderAttributes = "style=\"width: 250px;\"",
                         AutoFocus = true,
                         HiddenFieldName = "Options[{0}].OptionKey",
                         FocusIdentifier = "hasFocus"

@@ -1419,6 +1419,7 @@
     <EmbeddedResource Include="Scripts\bcms.knockout-3.3.0.js" />
     <EmbeddedResource Include="Scripts\bcms.jquery.select2.js" />
     <Content Include="Scss\assets\icons\action-delete.svg" />
+    <Content Include="Scss\assets\icons\action-edit-draft.svg" />
     <Content Include="Scss\assets\icons\action-edit.svg" />
     <Content Include="Scss\assets\icons\action-history.svg" />
     <Content Include="Scss\assets\icons\action-menu.svg" />
@@ -1446,6 +1447,7 @@
     <Content Include="Scss\assets\icons\date-picker-left.svg" />
     <Content Include="Scss\assets\icons\date-picker-right.svg" />
     <Content Include="Scss\assets\icons\download.svg" />
+    <Content Include="Scss\assets\icons\dragger.svg" />
     <Content Include="Scss\assets\icons\editor-block-quote-active.svg" />
     <Content Include="Scss\assets\icons\editor-block-quote.svg" />
     <Content Include="Scss\assets\icons\editor-bold-active.svg" />
@@ -1540,6 +1542,7 @@
     <Content Include="Scss\assets\icons\tree-new-node.svg" />
     <Content Include="Scss\assets\icons\tree-plus.svg" />
     <Content Include="Scss\assets\icons\validation.svg" />
+    <Content Include="Scss\assets\icons\zoom.svg" />
     <Content Include="Views\Web.config" />
     <Content Include="Views\Category\CategoryTreeEdit.cshtml">
       <Generator>RazorGenerator</Generator>
@@ -1565,7 +1568,6 @@
     <Content Include="Scss\root.scss" />
     <Content Include="Scss\bcms-modules\root\_buttons.scss" />
     <Content Include="Scss\bcms-modules\root\_controlpanel.scss" />
-    <Content Include="Scss\bcms-modules\root\_index.scss" />
     <Content Include="Scss\bcms-modules\root\_notifications.scss" />
     <Content Include="Scss\bcms-modules\root\_overlays.scss" />
     <Content Include="Scss\assets\webfonts\OpenSans-Bold.ttf" />

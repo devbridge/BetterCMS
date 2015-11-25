@@ -412,9 +412,9 @@ WriteLiteral(" class=\"bcms-tables-nohover\"");
 WriteLiteral(">\r\n                            <div");
 
 WriteLiteral(@" data-bind=""attr: { title: errorMessage || warnMessage || '' }, css: {
-                            'bcms-icn-import-success': success && !warnMessage && !skipped,
-                            'bcms-icn-import-warn': success && warnMessage && !skipped,
-                            'bcms-icn-import-error': !success }""");
+                            'bcms-action-ok': success && !warnMessage && !skipped,
+                            'bcms-action-warn': success && warnMessage && !skipped,
+                            'bcms-action-draft': !success }""");
 
 WriteLiteral("></div>\r\n                        </td>\r\n                    </tr>\r\n              " +
 "      <!-- /ko -->\r\n                    <!-- ko if: results().length == 0 -->\r\n " +
