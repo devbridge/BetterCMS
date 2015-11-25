@@ -27,6 +27,7 @@ bettercms.define('bcms.pages.template', ['bcms.jquery', 'bcms', 'bcms.modal', 'b
             selectors = {
                 templatePreviewImageUrl: '#PreviewImageUrl',
                 templatePreviewImage: '#bcms-template-preview-image',
+                templateNoImagePreview: '#bcms-template-no-preview',
                 htmlContentTemplateRowTemplate: '#bcms-advanced-content-list-row-template',
                 htmlContentTemplateRowTemplateFirstRow: 'tr:first',
                 htmlContentTemplateTableFirstRow: 'table.bcms-tables > tbody > tr:first',
@@ -151,31 +152,38 @@ bettercms.define('bcms.pages.template', ['bcms.jquery', 'bcms', 'bcms.modal', 'b
             ko.applyBindings(optionListViewModel, optionsContainer.get(0));
 
             dialog.container.find(selectors.templatePreviewImage).error(function () {
-                var image = dialog.container.find(selectors.templatePreviewImage);
+                var image = dialog.container.find(selectors.templatePreviewImage),
+                    noPreviewGrid = dialog.container.find(selectors.templateNoImagePreview);
+                noPreviewGrid.show();
                 if (image.attr("src") != null && image.attr("src") != "") {
                     messages.box({ container: dialog.container.find(selectors.messagesContainer) }).addWarningMessage(globalization.previewImageNotFoundMessage);
-                    image.parent().hide();
+                    image.hide();
                     image.removeAttr("src");
                 }
             });
 
             dialog.container.find(selectors.templatePreviewImageUrl).blur(function () {
                 var image = dialog.container.find(selectors.templatePreviewImage),
-                    urlInput = dialog.container.find(selectors.templatePreviewImageUrl);
+                    urlInput = dialog.container.find(selectors.templatePreviewImageUrl),
+                    noPreviewGrid = dialog.container.find(selectors.templateNoImagePreview);
 
                 if (urlInput.valid()) {
                     image.attr({ src: urlInput.val() });
-                    image.parent().show();
+                    noPreviewGrid.hide();
+                    image.show();
                 } else {
                     image.hide();
-                    image.parent().removeAttr("src");
+                    noPreviewGrid.show();
+                    image.removeAttr("src");
                 }
             });
             
             // IE fix: by default, while loading, picture is hidden
-            var previewImage = dialog.container.find(selectors.templatePreviewImage);
+            var previewImage = dialog.container.find(selectors.templatePreviewImage),
+                noPreviewGrid = dialog.container.find(selectors.templateNoImagePreview);
             if (previewImage.attr('src')) {
-                previewImage.parent().show();
+                noPreviewGrid.hide();
+                previewImage.show();
             }
 
             return optionListViewModel;
