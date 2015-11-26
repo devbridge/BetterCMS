@@ -197,7 +197,9 @@ bettercms.define('bcms.options', ['bcms.jquery', 'bcms', 'bcms.ko.extenders', 'b
                 _super.call(this, container, items, customOptions, showLanguages, languages);
 
                 var self = this;
-
+                if (!showLanguages && bcms.languageId) {
+                    self.onLanguageChanged(bcms.languageId);
+                }
                 self.attachDatePickers = function () {
                     attachDatePickers(self);
                 };
