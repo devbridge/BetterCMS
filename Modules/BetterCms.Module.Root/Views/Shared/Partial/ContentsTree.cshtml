@@ -25,7 +25,8 @@
                 'bcms-tree-region': type == types.region,
                 'bcms-tree-content': type == types.content,
                 'bcms-dragging': isBeingDragged(),
-                'bcms-contents-hover': isHover()
+                'bcms-contents-hover': isHover(),
+                'bcms-region-activated': type == types.region && isOpened()
             },
             event: {
                 mouseleave: onMouseLeave, mouseenter: onMouseEnter

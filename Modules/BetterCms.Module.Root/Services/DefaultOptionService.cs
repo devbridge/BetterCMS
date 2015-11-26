@@ -459,8 +459,15 @@ namespace BetterCms.Module.Root.Services
                     if (cmsConfiguration.EnableMultilanguage && multilangOptionValue != null && translationEntityCreator != null)
                     {
                         optionValue.Type = optionViewModel.Type;
-                        optionValue.CustomOption = optionViewModel.CustomOption;
                         optionValue.Key = optionViewModel.OptionKey;
+                        if (optionViewModel.Type == OptionType.Custom)
+                        {
+                            optionValue.CustomOption = repository.AsProxy<CustomOption>(customOptions.First(co => co.Identifier == optionViewModel.CustomOption.Identifier).Id);
+                        }
+                        else
+                        {
+                            optionValue.CustomOption = null;
+                        }
                         var viewModelTranslations = optionViewModel.ValueTranslations != null ? optionViewModel.ValueTranslations.Cast<IOptionTranslation>().ToList() : null;
                         var multilingualTranslations = SetMultilangualTranslations(viewModelTranslations, multilangOptionValue.Translations, optionValue, translationEntityCreator);
 
