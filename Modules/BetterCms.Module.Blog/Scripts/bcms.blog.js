@@ -50,6 +50,7 @@ bettercms.define('bcms.blog', ['bcms.jquery', 'bcms', 'bcms.modal', 'bcms.siteSe
                 siteSettingsBlogLanguagesSelect: '#bcms-js-languages-select',
                 siteSettingsDefaultBlogContentModeSelect: '#bcms-js-content-mode-select',
                 siteSettingsWindow: '.bcms-window-settings',
+                hiddenPageNumberField: '#bcms-grid-page-number',
 
                 contentTab: '#bcms-tab-1',
                 editorContainer: '.bcms-window-tabbed-options',
@@ -473,7 +474,7 @@ bettercms.define('bcms.blog', ['bcms.jquery', 'bcms', 'bcms.modal', 'bcms.siteSe
 
             self.onOpenPage = function (pageNumber) {
                 form.find(selectors.hiddenPageNumberField).val(pageNumber);
-                grid.submitGridFormPages(form, function (content, data) {
+                grid.submitGridFormPaged(form, function (content, data) {
                     self.setItems(data.Items);
                 });
             }
