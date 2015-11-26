@@ -154,7 +154,7 @@ bettercms.define('bcms.media.fileeditor', ['bcms.jquery', 'bcms', 'bcms.modal', 
 
             var viewModel = new FileEditViewModel(dialog, content.Data, onSaveCallback);
 
-            categories.initCategoriesSelect(viewModel.categories, content.Data.CategoriesLookupList);
+            categories.initCategoriesSelect(viewModel.categories, content.Data.CategoriesLookupList, dialog.container);
 
             ko.applyBindings(viewModel, dialog.container.find(selectors.fileEditorForm).get(0));
 
