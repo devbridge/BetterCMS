@@ -509,6 +509,11 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Sitemaps.cshtml</DependentUpon>
     </Compile>
+    <Compile Include="Views\Widgets\Partial\WidgetPreview.generated.cs">
+      <DependentUpon>WidgetPreview.cshtml</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+    </Compile>
     <Compile Include="Views\Widgets\Partial\WidgetUsagesTemplate.generated.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -1021,6 +1026,10 @@
     </None>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Views\Widgets\Partial\WidgetPreview.cshtml">
+      <Generator>RazorGenerator</Generator>
+      <LastGenOutput>WidgetPreview.generated.cs</LastGenOutput>
+    </Content>
     <None Include="Views\Widgets\Widgets.cshtml">
       <Generator>RazorGenerator</Generator>
       <LastGenOutput>Widgets.generated.cs</LastGenOutput>
