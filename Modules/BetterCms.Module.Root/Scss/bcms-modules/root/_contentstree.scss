@@ -1,11 +1,18 @@
+$ol-light: #536082;
+$ol-dark: $dark-main;
+$ol-red: #d82636;
+
+$border-ol-thin-light: 1px solid $ol-light;
+$border-ol-thin-dark: 1px solid $ol-dark;
+$border-manage-thin-dashed-dark: 1px dashed $ol-dark;
+
 $content-headers: (
-                ('region-header', $text-blue, 16px, $bcms-manager-region),
-                ('content-header', $dark, 14px, $bcms-manager-content)
+                ('region', $text-blue, 16px, $bcms-manager-region),
+                ('content', $text-dark, 14px, $bcms-manager-content)
 );
 $contents-tree-controls: (
                 ('config', $bcms-manager-options),
                 ('history', $bcms-manager-history),
-                ('edit', $bcms-manager-edit),
                 ('delete', $bcms-manager-delete)
 );
 
@@ -22,45 +29,13 @@ $contents-tree-controls: (
 .bcms-contents-tree {
     &-region {
         background-color: $white;
-        border: $border-thin-blue;
+        border: $border-manage-thin-dashed-dark;
         box-sizing: border-box;
         margin-top: 15px;
         min-height: 48px;
         padding: 15px 15px 15px 30px;
         position: relative;
         z-index: 0;
-    }
-
-    &-region-header {
-        z-index: 1;
-    }
-
-    @each $name, $color, $font-size, $icon in $content-headers {
-        &-#{$name} {
-            position: relative;
-
-            > span {
-                color: $color;
-                font-size: $font-size;
-                font-weight: 700;
-                text-transform: uppercase;
-
-                @include virtual(after) {
-                    @include positioning($center-y: true);
-                    @include size(16px);
-                    background: url($icon) no-repeat center;
-                    left: -20px;
-                }
-            }
-        }
-    }
-
-    &-region-header {
-        cursor: default;
-    }
-
-    &-content-header {
-        cursor: move;
     }
 
     &-add-block {
@@ -113,12 +88,27 @@ $contents-tree-controls: (
     }
 }
 
-.bcms-tree-controls {
+.bcms-tree-controls-box {
     @include positioning($center-y: true);
+    @include transition(all 150ms);
+    cursor: pointer;
     height: 20px;
+    opacity: 0;
     right: 0;
+    visibility: hidden;
+}
 
-    a {
+.bcms-tree {
+    &-header {
+        cursor: move;
+        position: relative;
+
+        &-region {
+            cursor: default;
+        }
+    }
+
+    &-button {
         @include size(18px);
         cursor: pointer;
         float: right;
@@ -127,25 +117,43 @@ $contents-tree-controls: (
         &.bcms-tree-controls-edit-draft {
             background-image: url($bcms-manager-edit-draft);
         }
-    }
 
-    &-box {
-        @include transition(all 150ms);
-        cursor: pointer;
-        float: right;
-        opacity: 0;
-        visibility: hidden;
-    }
-
-    @each $name, $icon, $icon-hover in $contents-tree-controls {
-        &-#{$name} {
-            background: url($icon) no-repeat center;
+        @each $name, $icon, $icon-hover in $contents-tree-controls {
+            &.bcms-tree-controls-#{$name} {
+                background: url($icon) no-repeat center;
+            }
         }
+    }
+
+    @each $name, $color, $font-size, $icon in $content-headers {
+        &-#{$name}-title {
+            @include vertical-align();
+            color: $color;
+            font-size: $font-size;
+            font-weight: 700;
+            position: relative;
+            text-transform: capitalize;
+
+            @include virtual(after) {
+                @include positioning($center-y: true);
+                @include size(16px);
+                background: url($icon) no-repeat center;
+                left: -20px;
+            }
+        }
+    }
+
+    &-content-edit {
+        @include vertical-align();
+        @include size(18px);
+        background: url($bcms-action-edit) no-repeat center;
+        cursor: pointer;
+        margin-left: 5px;
     }
 }
 
 .bcms-contents-hover {
-    > .bcms-contents-tree-content-header {
+    > .bcms-tree-header {
         .bcms-tree-controls-box {
             opacity: 1;
             visibility: visible;

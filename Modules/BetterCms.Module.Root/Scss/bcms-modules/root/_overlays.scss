@@ -1,4 +1,11 @@
-//module local maps/keys
+$ol-light: #536082;
+$ol-dark: $dark-main;
+$ol-red: #d82636;
+
+$border-ol-thin-light: 1px solid $ol-light;
+$border-ol-thin-dark: 1px solid $ol-dark;
+$border-ol-thin-dashed-dark: 1px dashed $ol-dark;
+
 $overlay-mange-controls: (
                 ('addcontent', $bcms-add-content),
                 ('sortcontent' $bcms-manage)
@@ -24,7 +31,7 @@ $overlay-control-buttons: (
         @include position(absolute, null);
         display: none;
         min-height: 35px;
-        outline: $border-thin-dashed-dark;
+        outline: $border-ol-thin-dashed-dark;
         z-index: 100;
 
         &.bcms-show-overlay {
@@ -43,10 +50,6 @@ $overlay-control-buttons: (
 
     &-actions {
         @include position(absolute, 0 0 null null);
-        border: {
-            bottom: $border-thin-dashed-dark;
-            left: $border-thin-dashed-dark;
-        }
         cursor: default;
         height: 26px;
         z-index: 10;
@@ -55,17 +58,20 @@ $overlay-control-buttons: (
     &-button {
         @include transition(all 200ms);
         @include vertical-align($align: top);
-        background-color: $cp-dark;
+        background-color: $ol-dark;
         box-sizing: border-box;
         color: $white;
         cursor: pointer;
-        font-size: 12px;
+        font: {
+            size: 12px;
+            weight: 600;
+        }
         height: 26px;
         line-height: 25px;
         padding: 0 10px;
 
         &:hover {
-            background-color: darken($cp-dark, 5%);
+            background-color: darken($ol-dark, 5%);
             cursor: pointer;
         }
     }
@@ -75,6 +81,22 @@ $overlay-control-buttons: (
 
         &.bcms-active {
             background-color: darken($bg-blue, 10%);
+        }
+    }
+
+    &-sortdone {
+        background-color: $bg-blue;
+
+        &:hover {
+            background-color: darken($bg-blue, 10%);
+        }
+    }
+
+    &-sortcancel {
+        background-color: $ol-red;
+
+        &:hover {
+            background-color: darken($ol-red, 10%);
         }
     }
 
@@ -95,28 +117,17 @@ $overlay-control-buttons: (
         padding: 5px 20px;
 
         &:hover {
-            background-color: darken($bg-gray, 10%);
-        }
-    }
-
-    &-contentstree,
-    &-sortcancel {
-        background-color: $bg-gray;
-
-        &:hover {
-            background-color: darken($bg-gray, 10%);
+            background-color: $ol-dark;
         }
     }
 
     @each $name, $icon in $overlay-mange-controls {
         &-#{$name} {
             @include size(30px 26px);
-            background: $cp-dark url($icon) no-repeat center;
+            background: $ol-dark url($icon) no-repeat center;
         }
     }
 }
-
-//todo update colors & icons
 
 .bcms-content-overlay {
     display: none;
@@ -200,8 +211,8 @@ $overlay-control-buttons: (
     &-button {
         @include transition(all 200ms);
         @include size(42px);
-        background-color: $cp-dark;
-        border-left: $border-thin-dark;
+        background-color: $ol-dark;
+        border-left: $border-ol-thin-light;
         cursor: pointer;
         display: block;
         float: left;
@@ -212,7 +223,7 @@ $overlay-control-buttons: (
         }
 
         &:hover {
-            background-color: darken($cp-dark, 5%);
+            background-color: darken($ol-dark, 5%);
         }
     }
 
@@ -228,10 +239,10 @@ $overlay-control-buttons: (
 
     &-edit {
         &.bcms-active-draft {
-            background-color: $cp-red-draft;
+            background-color: $ol-red;
 
             &:hover {
-                background-color: darken($cp-red-draft, 5%);
+                background-color: darken($ol-red, 5%);
             }
         }
     }

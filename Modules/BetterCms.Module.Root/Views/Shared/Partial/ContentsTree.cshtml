@@ -34,35 +34,36 @@
                 'data-item-id': itemId
             } ">
 
-            <div data-bind="css: { 'bcms-contents-tree-region-header': type == types.region, 'bcms-contents-tree-content-header': type == types.content }">
-                <span data-bind="text: title()"></span>
+            <div class="bcms-tree-header" data-bind="css: { 'bcms-tree-header-region': type == types.region }">
+                <div data-bind="text: title(), css: { 'bcms-tree-region-title': type == types.region, 'bcms-tree-content-title': type == types.content }"></div>
+                <!-- ko if: type == types.content -->
+                <!-- ko if: model.visibleButtons.edit -->
+                <div class="bcms-tree-content-edit" data-bind="click: editItem, css: {'bcms-tree-controls-edit-draft': draft()}"></div>
+                <!-- /ko -->
+                <!-- /ko -->
 
-                <div class="bcms-tree-controls" data-bind="visible: !isBeingDragged()">
-                    <!-- ko if: type == types.region -->
-                    <div class="bcms-contents-tree-add-block" data-bind="css: {'bcms-active': isOpened()}, click: toggleAddContent">
-                        <div class="bcms-contents-tree-add-content">
-                            <div class="bcms-contents-tree-controls bcms-region-addhtml" data-bind="click: addContent">HTML</div>
-                            <div class="bcms-contents-tree-controls bcms-region-addmarkdown" data-bind="click: addMarkdown">Markdown</div>
-                            <div class="bcms-contents-tree-controls bcms-region-addtext" data-bind="click: addSimpleText">Plain text</div>
-                            <div class="bcms-contents-tree-controls bcms-region-insertwidget" data-bind="click: insertWidget">Widget</div>
-                        </div>
+                <!-- ko if: type == types.region -->
+                <div class="bcms-contents-tree-add-block" data-bind="css: {'bcms-active': isOpened()}, click: toggleAddContent">
+                    <div class="bcms-contents-tree-add-content">
+                        <div class="bcms-contents-tree-controls bcms-region-addhtml" data-bind="click: addContent">HTML</div>
+                        <div class="bcms-contents-tree-controls bcms-region-addmarkdown" data-bind="click: addMarkdown">Markdown</div>
+                        <div class="bcms-contents-tree-controls bcms-region-addtext" data-bind="click: addSimpleText">Plain text</div>
+                        <div class="bcms-contents-tree-controls bcms-region-insertwidget" data-bind="click: insertWidget">Widget</div>
                     </div>
-                    <!-- /ko -->
+                </div>
+                <!-- /ko -->
+
+                <div class="bcms-tree-controls-box" data-bind="visible: !isBeingDragged()">
                     <!-- ko if: type == types.content -->
-                    <div class="bcms-tree-controls-box">
                         <!-- ko if: model.visibleButtons.delete -->
-                        <a class="bcms-tree-controls-delete" data-bind="click: deleteItem"></a>
+                        <div class="bcms-tree-button bcms-tree-controls-delete" data-bind="click: deleteItem"></div>
                         <!-- /ko -->
                         <!-- ko if: model.visibleButtons.configure -->
-                        <a class="bcms-tree-controls-config" data-bind="click: configure"></a>
-                        <!-- /ko -->
-                        <!-- ko if: model.visibleButtons.edit -->
-                        <a class="bcms-tree-controls-edit" data-bind="click: editItem, css: {'bcms-tree-controls-edit-draft': draft()}"></a>
+                        <div class="bcms-tree-button bcms-tree-controls-config" data-bind="click: configure"></div>
                         <!-- /ko -->
                         <!-- ko if: model.visibleButtons.history -->
-                        <a class="bcms-tree-controls-history" data-bind="click: history"></a>
+                        <div class="bcms-tree-button bcms-tree-controls-history" data-bind="click: history"></div>
                         <!-- /ko -->
-                    </div>
                     <!-- /ko -->
                 </div>
             </div>
