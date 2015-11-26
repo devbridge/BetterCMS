@@ -90,47 +90,48 @@ WriteLiteral(">\r\n    <!-- ko if: $data.length > 0 -->\r\n    <!-- ko foreach: 
 "iv data-bind=\"\r\n            css: {\r\n                \'bcms-tree-region\': type == " +
 "types.region,\r\n                \'bcms-tree-content\': type == types.content,\r\n    " +
 "            \'bcms-dragging\': isBeingDragged(),\r\n                \'bcms-contents-h" +
-"over\': isHover()\r\n            },\r\n            event: {\r\n                mouselea" +
-"ve: onMouseLeave, mouseenter: onMouseEnter\r\n            },\r\n            attr: {\r" +
-"\n                \'data-item-id\': itemId\r\n            } \">\r\n\r\n            <div cl" +
-"ass=\"bcms-tree-header\" data-bind=\"css: { \'bcms-tree-header-region\': type == type" +
-"s.region }\">\r\n                <div data-bind=\"text: title(), css: { \'bcms-tree-r" +
-"egion-title\': type == types.region, \'bcms-tree-content-title\': type == types.con" +
-"tent }\"></div>\r\n                <!-- ko if: type == types.content -->\r\n         " +
-"       <!-- ko if: model.visibleButtons.edit -->\r\n                <div class=\"bc" +
-"ms-action-edit\" data-bind=\"click: editItem, css: {\'bcms-draft\': draft()}\"></div>" +
-"\r\n                <!-- /ko -->\r\n                <!-- /ko -->\r\n\r\n                " +
-"<div class=\"bcms-tree-controls-box\" data-bind=\"visible: !isBeingDragged()\">\r\n   " +
-"                 <!-- ko if: type == types.content -->\r\n                    <!--" +
-" ko if: model.visibleButtons.history -->\r\n                    <div class=\"bcms-a" +
-"ction-history\" data-bind=\"click: history\"></div>\r\n                    <!-- /ko -" +
-"->\r\n                    <!-- ko if: model.visibleButtons.configure -->\r\n        " +
-"            <div class=\"bcms-action-options\" data-bind=\"click: configure\"></div>" +
-"\r\n                    <!-- /ko -->\r\n                    <!-- ko if: model.visibl" +
-"eButtons.delete -->\r\n                    <div class=\"bcms-action-delete\" data-bi" +
-"nd=\"click: deleteItem\"></div>\r\n                    <!-- /ko -->\r\n               " +
-"     <!-- /ko -->\r\n                </div>\r\n            </div>\r\n\r\n            <!-" +
-"- ko if: items().length > 0 -->\r\n            <div data-bind=\"with: items()\">\r\n  " +
-"              <div data-bind=\"template: { name: \'bcms-contents-tree-list-templat" +
-"e\' }\"></div>\r\n                <!-- ko if: $parent != null && $parent.types && $p" +
-"arent.type == $parent.types.region && $data.length == 1 -->\r\n                <di" +
-"v style=\"padding: 0; margin: 0;\" class=\"bcms-contents-tree-sort-block\" data-bind" +
-"=\"draggableContent: true\">&nbsp;</div>\r\n                <!-- /ko -->\r\n          " +
-"  </div>\r\n            <!-- /ko -->\r\n            <!-- ko if: type == types.region" +
-" && items().length == 0 -->\r\n            <div class=\"bcms-contents-tree-sort-blo" +
-"ck\" data-bind=\"draggableContent:true\">&nbsp;</div>\r\n            <!-- /ko -->\r\n  " +
-"          <!-- ko if: type == types.region -->\r\n            <div class=\"bcms-con" +
-"tents-tree-add-block\" data-bind=\"css: {\'bcms-active\': isOpened()}, click: toggle" +
-"AddContent\">\r\n                <div class=\"bcms-contents-tree-add-content\">\r\n    " +
-"                <div class=\"bcms-contents-tree-controls bcms-region-addhtml\" dat" +
-"a-bind=\"click: addContent\">HTML</div>\r\n                    <div class=\"bcms-cont" +
-"ents-tree-controls bcms-region-addmarkdown\" data-bind=\"click: addMarkdown\">Markd" +
-"own</div>\r\n                    <div class=\"bcms-contents-tree-controls bcms-regi" +
-"on-addtext\" data-bind=\"click: addSimpleText\">Plain text</div>\r\n                 " +
-"   <div class=\"bcms-contents-tree-controls bcms-region-insertwidget\" data-bind=\"" +
-"click: insertWidget\">Widget</div>\r\n                </div>\r\n            </div>\r\n " +
-"           <!-- /ko -->\r\n        </div>\r\n    </div>\r\n    <!-- /ko -->\r\n    <!-- " +
-"/ko -->\r\n</script>");
+"over\': isHover(),\r\n                \'bcms-region-activated\': type == types.region" +
+" && isOpened()\r\n            },\r\n            event: {\r\n                mouseleave" +
+": onMouseLeave, mouseenter: onMouseEnter\r\n            },\r\n            attr: {\r\n " +
+"               \'data-item-id\': itemId\r\n            } \">\r\n\r\n            <div clas" +
+"s=\"bcms-tree-header\" data-bind=\"css: { \'bcms-tree-header-region\': type == types." +
+"region }\">\r\n                <div data-bind=\"text: title(), css: { \'bcms-tree-reg" +
+"ion-title\': type == types.region, \'bcms-tree-content-title\': type == types.conte" +
+"nt }\"></div>\r\n                <!-- ko if: type == types.content -->\r\n           " +
+"     <!-- ko if: model.visibleButtons.edit -->\r\n                <div class=\"bcms" +
+"-action-edit\" data-bind=\"click: editItem, css: {\'bcms-draft\': draft()}\"></div>\r\n" +
+"                <!-- /ko -->\r\n                <!-- /ko -->\r\n\r\n                <d" +
+"iv class=\"bcms-tree-controls-box\" data-bind=\"visible: !isBeingDragged()\">\r\n     " +
+"               <!-- ko if: type == types.content -->\r\n                    <!-- k" +
+"o if: model.visibleButtons.history -->\r\n                    <div class=\"bcms-act" +
+"ion-history\" data-bind=\"click: history\"></div>\r\n                    <!-- /ko -->" +
+"\r\n                    <!-- ko if: model.visibleButtons.configure -->\r\n          " +
+"          <div class=\"bcms-action-options\" data-bind=\"click: configure\"></div>\r\n" +
+"                    <!-- /ko -->\r\n                    <!-- ko if: model.visibleB" +
+"uttons.delete -->\r\n                    <div class=\"bcms-action-delete\" data-bind" +
+"=\"click: deleteItem\"></div>\r\n                    <!-- /ko -->\r\n                 " +
+"   <!-- /ko -->\r\n                </div>\r\n            </div>\r\n\r\n            <!-- " +
+"ko if: items().length > 0 -->\r\n            <div data-bind=\"with: items()\">\r\n    " +
+"            <div data-bind=\"template: { name: \'bcms-contents-tree-list-template\'" +
+" }\"></div>\r\n                <!-- ko if: $parent != null && $parent.types && $par" +
+"ent.type == $parent.types.region && $data.length == 1 -->\r\n                <div " +
+"style=\"padding: 0; margin: 0;\" class=\"bcms-contents-tree-sort-block\" data-bind=\"" +
+"draggableContent: true\">&nbsp;</div>\r\n                <!-- /ko -->\r\n            " +
+"</div>\r\n            <!-- /ko -->\r\n            <!-- ko if: type == types.region &" +
+"& items().length == 0 -->\r\n            <div class=\"bcms-contents-tree-sort-block" +
+"\" data-bind=\"draggableContent:true\">&nbsp;</div>\r\n            <!-- /ko -->\r\n    " +
+"        <!-- ko if: type == types.region -->\r\n            <div class=\"bcms-conte" +
+"nts-tree-add-block\" data-bind=\"css: {\'bcms-active\': isOpened()}, click: toggleAd" +
+"dContent\">\r\n                <div class=\"bcms-contents-tree-add-content\">\r\n      " +
+"              <div class=\"bcms-contents-tree-controls bcms-region-addhtml\" data-" +
+"bind=\"click: addContent\">HTML</div>\r\n                    <div class=\"bcms-conten" +
+"ts-tree-controls bcms-region-addmarkdown\" data-bind=\"click: addMarkdown\">Markdow" +
+"n</div>\r\n                    <div class=\"bcms-contents-tree-controls bcms-region" +
+"-addtext\" data-bind=\"click: addSimpleText\">Plain text</div>\r\n                   " +
+" <div class=\"bcms-contents-tree-controls bcms-region-insertwidget\" data-bind=\"cl" +
+"ick: insertWidget\">Widget</div>\r\n                </div>\r\n            </div>\r\n   " +
+"         <!-- /ko -->\r\n        </div>\r\n    </div>\r\n    <!-- /ko -->\r\n    <!-- /k" +
+"o -->\r\n</script>");
 
         }
     }
