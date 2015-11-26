@@ -1517,7 +1517,6 @@
     <Content Include="Scss\assets\icons\manage.svg" />
     <Content Include="Scss\assets\icons\manager-add-content.svg" />
     <Content Include="Scss\assets\icons\manager-content.svg" />
-    <Content Include="Scss\assets\icons\manager-edit-draft.svg" />
     <Content Include="Scss\assets\icons\manager-region.svg" />
     <Content Include="Scss\assets\icons\media-folder-up.svg" />
     <Content Include="Scss\assets\icons\media-folder.svg" />
@@ -1555,7 +1554,6 @@
     <Content Include="Scss\assets\icons\tree-minus.svg" />
     <Content Include="Scss\assets\icons\tree-new-node.svg" />
     <Content Include="Scss\assets\icons\tree-plus.svg" />
-    <Content Include="Scss\assets\icons\validation.svg" />
     <Content Include="Scss\assets\icons\zoom.svg" />
     <Content Include="Views\Web.config" />
     <Content Include="Views\Category\CategoryTreeEdit.cshtml">
