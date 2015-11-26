@@ -914,11 +914,6 @@ namespace BetterCms.Module.Root.Services
         /// <param name="valueModels">The value models.</param>
         public void SetCustomOptionValueTitles(IEnumerable<OptionViewModel> optionModels, IEnumerable<OptionValueEditViewModel> valueModels = null)
         {
-//            var values = optionModels
-//                    .Where(m => m.Type == OptionType.Custom && m.CustomOption != null)
-//                    .Select(m => new { m.CustomOption.Identifier, Value = m.OptionDefaultValue });
-//            var customOptionModels = optionModels.Where(m => m.Type == OptionType.Custom);
-
             var values = new List<System.Tuple<string, string>>();
             foreach (var optionModel in optionModels)
             {
@@ -938,9 +933,6 @@ namespace BetterCms.Module.Root.Services
             }
             if (valueModels != null)
             {
-//                values = values.Concat(valueModels
-//                    .Where(m => m.Type == OptionType.Custom && m.CustomOption != null)
-//                    .Select(m => new { m.CustomOption.Identifier, Value = m.OptionValue }));
                 foreach (var valueModel in valueModels)
                 {
                     if (valueModel.Type != OptionType.Custom || valueModel.CustomOption == null)
