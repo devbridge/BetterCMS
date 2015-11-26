@@ -429,7 +429,7 @@ bettercms.define('bcms.content', ['bcms.jquery', 'bcms', 'bcms.modal', 'bcms.red
                 var sortWrapper = $('<div class="bcms-sort-wrapper" />');
 
                 $('<div class="bcms-sort-content" />').html(antiXss.encodeHtml(this.title)).appendTo(sortWrapper);
-                sortWrapper.append('<div class="bcms-sort-overlay bcms-content-overlaybg" />');
+                //sortWrapper.append('<div class="bcms-sort-overlay bcms-content-overlaybg" />');
 
                 // Store reference to content so it can be sorted later:
                 sortWrapper.data('target', this);

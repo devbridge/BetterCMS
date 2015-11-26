@@ -9,8 +9,8 @@ function ($, bcms, ko, modal, contentModule, redirect, antiXss) {
             treeTemplate: '#bcms-contents-tree-template',
             contentTreeContainer: '#bcms-contents-tree',
             sortableContentConnectors: '.bcms-contents-tree-sort-block',
-            firstParentRegion: '.bcms-contents-tree-region:first',
-            childContents: '.bcms-contents-tree-content'
+            firstParentRegion: '.bcms-tree-region:first',
+            childContents: '.bcms-tree-content'
         },
         links = {},
         globalization = {
