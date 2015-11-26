@@ -2112,7 +2112,7 @@ function ($, bcms, modal, siteSettings, forms, dynamicContent, messages, mediaUp
     /**
     * Called when user press browse button in the options grid with type = "Media Manager Folder".
     */
-    function onExecuteMediaManagerFolderOption(valueObservable, titleObservable, optionModel) {
+    function onExecuteMediaManagerFolderOption(valueObservable, titleObservable, callback) {
         var onMediaSelect = function (selectedFolder) {
             var id = selectedFolder.id(),
                 name = selectedFolder.name();
@@ -2125,29 +2125,22 @@ function ($, bcms, modal, siteSettings, forms, dynamicContent, messages, mediaUp
             valueObservable(id);
             titleObservable(name);
 
-            if (optionModel.key && !optionModel.key()) {
-                optionModel.key(name);
-            }
-            setTimeout(function () {
-                optionModel.preventFromSave = false;
-            }, 100);
+            callback();
         },
-            onMediaClose = function () {
-                setTimeout(function () {
-                    optionModel.preventFromSave = false;
-                }, 100);
-            },
-            mediasViewModelExtender = {
-                onMediaSelect: function (selectedFolder) {
-                    onMediaSelect(selectedFolder);
-                }
-            },
-            options = {
-                onAccept: onMediaSelect,
-                onClose: onMediaClose,
-                folderViewModelOptions: mediasViewModelExtender,
-                parentFolderId: valueObservable()
-            };
+        onMediaClose = function () {
+            callback();
+        },
+        mediasViewModelExtender = {
+            onMediaSelect: function (selectedFolder) {
+                onMediaSelect(selectedFolder);
+            }
+        },
+        options = {
+            onAccept: onMediaSelect,
+            onClose: onMediaClose,
+            folderViewModelOptions: mediasViewModelExtender,
+            parentFolderId: valueObservable()
+        };
 
         media.openFolderSelectDialog(options);
     }
@@ -2155,31 +2148,23 @@ function ($, bcms, modal, siteSettings, forms, dynamicContent, messages, mediaUp
     /**
     * Called when user press browse button in the options grid with type = "Media Manager Image Url".
     */
-    function onExecuteMediaManagerImageOption(valueObservable, titleObservable, optionModel) {
+    function onExecuteMediaManagerImageOption(valueObservable, titleObservable, callback) {
         var onMediaSelect = function (selectedImage) {
             var url = selectedImage.getImageUrl();
-
 
             valueObservable(url);
             titleObservable(url);
 
-            if (optionModel.key && !optionModel.key()) {
-                optionModel.key(name);
-            }
-            setTimeout(function () {
-                optionModel.preventFromSave = false;
-            }, 100);
+            callback();
         },
-            onMediaClose = function () {
-                setTimeout(function () {
-                    optionModel.preventFromSave = false;
-                }, 100);
-            },
+        onMediaClose = function () {
+            callback();
+        },
 
-            options = {
-                onAccept: onMediaSelect,
-                onClose: onMediaClose,
-            };
+        options = {
+            onAccept: onMediaSelect,
+            onClose: onMediaClose,
+        };
 
         media.openImageInsertDialog(options);
     }
