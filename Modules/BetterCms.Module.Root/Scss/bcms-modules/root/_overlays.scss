@@ -36,7 +36,8 @@ $overlay-control-buttons: (
 
         &.bcms-show-overlay {
             @include size(100%);
-            background-image: url($bcms-texture);
+            //background-image: url($bcms-texture);
+            background-color: $white;
             height: 100%;
             width: 100%;
         }
@@ -166,37 +167,35 @@ $overlay-control-buttons: (
     }
 
     &-wrapper {
+        background-color: $white;
+        border: $border-thin-smoke;
+        box-sizing: border-box;
+        color: $text-dark;
         cursor: move;
-        height: 30px;
-        line-height: 30px;
-        margin-top: 10px;
+        height: 40px;
+        margin: 5px 10px;
         overflow: hidden;
-        padding: 5px 10px;
-        position: relative;
+        padding: 0 10px;
 
-        &:first-child {
-            margin-top: 0;
-        }
-
-        @include virtual(before) {
-            @include position(absolute, 0);
-            background-color: rgba($bg-light, .2);
+        &.ui-sortable-helper {
+            background-color: $sky-blue;
+            border-color: $border-blue;
+            color: $text-blue;
         }
     }
 
     &-wrapper-placeholder {
-        background-color: $black;
-        height: 30px;
-        margin-top: 10px;
-        opacity: .1;
-        padding: 5px 10px;
+        border: $border-thick-dashed-smoke;
+        box-sizing: border-box;
+        height: 44px;
+        margin: 5px 10px;
         position: relative;
         z-index: 10;
     }
 
     &-content {
-        color: $text-dark;
-        font-weight: 700;
+        font-weight: 600;
+        line-height: 38px;
         text-transform: capitalize;
     }
 }

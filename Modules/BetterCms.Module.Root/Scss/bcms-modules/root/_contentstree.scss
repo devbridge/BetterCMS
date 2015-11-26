@@ -11,9 +11,9 @@ $content-headers: (
                 ('content', $text-dark, 14px, $bcms-manager-content)
 );
 $contents-tree-controls: (
-                ('config', $bcms-manager-options),
-                ('history', $bcms-manager-history),
-                ('delete', $bcms-manager-delete)
+                ('config', $bcms-action-options),
+                ('history', $bcms-action-history),
+                ('delete', $bcms-action-delete)
 );
 
 .bcms-tree-container {
@@ -27,23 +27,13 @@ $contents-tree-controls: (
 }
 
 .bcms-contents-tree {
-    &-region {
-        background-color: $white;
-        border: $border-manage-thin-dashed-dark;
-        box-sizing: border-box;
-        margin-top: 15px;
-        min-height: 48px;
-        padding: 15px 15px 15px 30px;
-        position: relative;
-        z-index: 0;
-    }
-
     &-add-block {
         @include transition(background-color 150ms);
-        @include position(absolute, -15px -15px null null);
+        @include position(absolute, 0 0 null null);
         @include size(30px 26px);
-        background: $bg-blue url($bcms-add-content) no-repeat center;
+        background: $dark-main url($bcms-add-content) no-repeat center;
         cursor: pointer;
+        z-index: 5;
 
         &:hover,
         &.bcms-active {
@@ -72,20 +62,6 @@ $contents-tree-controls: (
             background-color: darken($bg-gray, 10%);
         }
     }
-
-    &-content {
-        @include transition(background-color 150ms);
-        background-color: $white;
-        border: $border-thin-smoke;
-        box-shadow: 0 0 5px 0 rgba($black, .2);
-        margin-top: 15px;
-        padding: 15px 15px 15px 30px;
-
-        &.bcms-contents-hover {
-            background-color: $smoke;
-            cursor: move;
-        }
-    }
 }
 
 .bcms-tree-controls-box {
@@ -99,6 +75,38 @@ $contents-tree-controls: (
 }
 
 .bcms-tree {
+    &-item-container {
+        position: relative;
+    }
+
+    &-region {
+        background-color: $white;
+        border: $border-manage-thin-dashed-dark;
+        box-sizing: border-box;
+        margin-top: 15px;
+        min-height: 48px;
+        padding: 15px 15px 15px 30px;
+        position: relative;
+
+        &.bcms-contents-hover {
+            z-index: 10;
+        }
+    }
+
+    &-content {
+        @include transition(background-color 150ms);
+        background-color: $white;
+        border: $border-thin-smoke;
+        box-shadow: 0 0 6px 0 rgba($black, .1);
+        margin-top: 15px;
+        padding: 15px 15px 15px 30px;
+
+        &.bcms-contents-hover {
+            background-color: darken($white, 1%);
+            cursor: move;
+        }
+    }
+
     &-header {
         cursor: move;
         position: relative;
@@ -109,7 +117,7 @@ $contents-tree-controls: (
     }
 
     &-button {
-        @include size(18px);
+        @include size(20px);
         cursor: pointer;
         float: right;
         margin-left: 15px;
@@ -129,8 +137,10 @@ $contents-tree-controls: (
         &-#{$name}-title {
             @include vertical-align();
             color: $color;
-            font-size: $font-size;
-            font-weight: 700;
+            font: {
+                size: $font-size;
+                weight: 600;
+            }
             position: relative;
             text-transform: capitalize;
 
@@ -154,7 +164,7 @@ $contents-tree-controls: (
 
 .bcms-contents-hover {
     > .bcms-tree-header {
-        .bcms-tree-controls-box {
+        > .bcms-tree-controls-box {
             opacity: 1;
             visibility: visible;
         }
@@ -171,7 +181,8 @@ $contents-tree-controls: (
 }
 
 .bcms-contents-tree-drop-area {
-    border: 1px dashed black;
+    border: $border-thick-dashed-smoke;
+    box-sizing: border-box;
     color: black;
     height: 48px;
     margin: 15px 0 0;
