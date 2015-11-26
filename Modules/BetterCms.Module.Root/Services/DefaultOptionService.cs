@@ -216,7 +216,16 @@ namespace BetterCms.Module.Root.Services
             {
                 foreach (var optionValue in optionValues.Distinct())
                 {
+                    if (languageId != null && languageId != default(Guid) && optionValue is IMultilingualOption)
+                    {
+                        var multilingualOption = optionValue as IMultilingualOption;
+                        if (multilingualOption.Translations == null || !multilingualOption.Translations.Any())
+                        {
+                            continue;
+                        }
+                    }
                     var optionViewModel = CreateOptionValueViewModel(optionValue, languageId);
+                    optionViewModel.UseDefaultValue = optionValue.UseDefaultValue;
                     optionModels.Add(optionViewModel);
                 }
             }
@@ -230,12 +239,12 @@ namespace BetterCms.Module.Root.Services
                     {
                         optionViewModel = CreateOptionValueViewModel(option, languageId);
                         optionModels.Add(optionViewModel);
-                    } 
-//                    else if (optionViewModel.OptionValue == null && languageId != null)
-//                    {
-//                        var optViewModel = CreateOptionValueViewModel(option, languageId);
-//                        optionViewModel.OptionValue = optViewModel.OptionValue;
-//                    }
+                    }
+                    else if (optionViewModel.OptionValue == null && optionViewModel.UseDefaultValue && (languageId == null || languageId == default(Guid)))
+                    {
+                        var optViewModel = CreateOptionValueViewModel(option, languageId);
+                        optionViewModel.OptionValue = optViewModel.OptionValue;
+                    }
                 }
             }
 
