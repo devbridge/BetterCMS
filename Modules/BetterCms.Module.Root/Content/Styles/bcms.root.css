@@ -1885,7 +1885,7 @@ a:hover {
 .bcms-dragging {
   background-color: #f5f5f5;
   cursor: move;
-  min-height: 50px;
+  min-height: 46px;
   opacity: .8;
   z-index: 9999;
 }
@@ -1893,7 +1893,6 @@ a:hover {
 .bcms-contents-tree-drop-area {
   border: 2px dashed #dfdfdf;
   box-sizing: border-box;
-  color: black;
   height: 48px;
   margin: 15px 0 0;
 }
@@ -2479,7 +2478,7 @@ td .bcms-field-wrapper {
 
 .bcms-content-actions {
   position: absolute;
-  top: 0;
+  top: -1px;
   left: -1px;
   height: 42px;
 }

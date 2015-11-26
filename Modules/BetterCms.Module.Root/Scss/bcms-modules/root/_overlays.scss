@@ -210,7 +210,7 @@ $overlay-control-buttons: (
 //module content action controls
 .bcms-content {
     &-actions {
-        @include position(absolute, 0 null null -1px);
+        @include position(absolute, -1px null null -1px);
         height: 42px;
     }
 

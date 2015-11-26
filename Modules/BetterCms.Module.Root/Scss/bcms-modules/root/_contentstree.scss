@@ -149,9 +149,9 @@ $content-headers: (
 
 .bcms-dragging {
     @include clearfix();
-    background-color: $smoke;
+    background-color: $bg-smoke;
     cursor: move;
-    min-height: 50px;
+    min-height: 46px;
     opacity: .8;
     z-index: 9999;
 }
@@ -159,7 +159,6 @@ $content-headers: (
 .bcms-contents-tree-drop-area {
     border: $border-thick-dashed-smoke;
     box-sizing: border-box;
-    color: black;
     height: 48px;
     margin: 15px 0 0;
 }
