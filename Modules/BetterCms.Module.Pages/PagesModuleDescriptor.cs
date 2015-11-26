@@ -276,7 +276,7 @@ namespace BetterCms.Module.Pages
                     new LinkToNewTabProjection
                     {
                         InnerText = page => RootGlobalization.Authentication_ViewAsPublic_Public,
-                        LinkAddress = page => page.PageUrl,
+                        LinkAddress = page => string.Format("{0}?bcms-view-page-as-anonymous=1", page.PageUrl),
                         Order = 9,
                         CssClass = page => "bcms-cp-preview-btn"
                     },
