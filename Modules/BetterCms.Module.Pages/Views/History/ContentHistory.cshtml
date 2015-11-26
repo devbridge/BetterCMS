@@ -11,20 +11,7 @@
 </div>
 
 <div class="bcms-modal-frame-holder">
-    <div id="bcms-tab-1" class="bcms-tab-single">
-        <div class="bcms-history-preview-holder" id="bcms-history-preview">
-            <div class="bcms-history-info" style="display: block;">@PagesGlobalization.ContentHistory_SelectVersionToPreviewMessage</div>
-        </div>
-    </div>
-
-    <div id="bcms-tab-2" class="bcms-tab-single">
-        <div class="bcms-history-preview-data" id="bcms-history-preview-properties">
-            <div class="bcms-history-info" style="display: block;">@PagesGlobalization.ContentHistory_SelectVersionToPreviewMessage</div>
-        </div>
-    </div>
-    <div class="bcms-history-table-holder">
-        @Html.Partial("ContentHistoryTable", Model)
-    </div>
+    @Html.Partial("ContentHistoryTable", Model)
 </div>
 
 <script type="text/html" id="bcms-history-preview-template">
