@@ -49,6 +49,7 @@ bettercms.define('bcms.blog', ['bcms.jquery', 'bcms', 'bcms.modal', 'bcms.siteSe
                 siteSettingsBlogAuthorsSelect: '#bcms-js-authors-select',
                 siteSettingsBlogLanguagesSelect: '#bcms-js-languages-select',
                 siteSettingsDefaultBlogContentModeSelect: '#bcms-js-content-mode-select',
+                siteSettingsWindow: '.bcms-window-settings',
 
                 contentTab: '#bcms-tab-1',
                 editorContainer: '.bcms-window-tabbed-options',
@@ -1009,7 +1010,9 @@ bettercms.define('bcms.blog', ['bcms.jquery', 'bcms', 'bcms.modal', 'bcms.siteSe
             self.parent = parent;
             self.previewUrl = template.PreviewUrl;
             self.title = template.Title;
-            self.container = container;
+            self.container = container.closest(selectors.siteSettingsWindow).length > 0
+                            ? container.closest(selectors.siteSettingsWindow)
+                            : container;
 
             self.isActive = ko.observable(template.IsActive);
             self.isCompatible = template.IsCompatible;

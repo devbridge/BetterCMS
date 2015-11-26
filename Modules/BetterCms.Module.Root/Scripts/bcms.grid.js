@@ -112,7 +112,6 @@ bettercms.define('bcms.grid', ['bcms.jquery', 'bcms'], function ($, bcms) {
                 $(container).hideLoading();
             },
             success: function (data, status, response) {
-                $(container).hideLoading();
                 if ($.isFunction(onSuccess)) {
                     if (response.getResponseHeader('Content-Type').indexOf('application/json') === 0 && data.Html) {
                         onSuccess(data.Html, data.Data);
@@ -120,6 +119,7 @@ bettercms.define('bcms.grid', ['bcms.jquery', 'bcms'], function ($, bcms) {
                         onSuccess(data, null);
                     }
                 }
+                setTimeout(function () { $(container).hideLoading(); }, 100);
             }
         });
     }

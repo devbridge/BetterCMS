@@ -177,7 +177,9 @@ bettercms.define('bcms.ko.grid', ['bcms.jquery', 'bcms', 'bcms.ko.extenders', 'b
 
                 self.load = function (params) {
                     var indicatorId = 'koGridList',
-                        spinContainer = self.container,
+                        spinContainer = self.container.closest('.bcms-window-settings').length > 0
+                            ? self.container.closest('.bcms-window-settings')
+                            : self.container,
                         onComplete = function (json) {
                             if (spinContainer) {
                                 spinContainer.hideLoading(indicatorId);

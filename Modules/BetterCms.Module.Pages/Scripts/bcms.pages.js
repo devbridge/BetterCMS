@@ -250,8 +250,7 @@ bettercms.define('bcms.pages', ['bcms.jquery', 'bcms', 'bcms.modal', 'bcms.siteS
                 template.isActive(true);
 
                 pageProperties.loadLayoutOptions(template.id, template.isMasterPage, dialog.container, self.optionsContainer, self.optionListViewModel);
-                pageProperties.loadLayoutUserAccess(template.id, template.isMasterPage, dialog.container,
-                    self.accessControlViewModel, dialog.container.find(selectors.addNewPageTabContent));
+                pageProperties.loadLayoutUserAccess(template.id, template.isMasterPage, dialog.container, self.accessControlViewModel);
             };
 
             self.findCurrentActive = function () {

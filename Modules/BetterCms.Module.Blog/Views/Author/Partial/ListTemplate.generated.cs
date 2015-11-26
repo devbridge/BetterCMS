@@ -79,6 +79,7 @@ WriteLiteral("\r\n");
                     },
                 new EditableGridColumn(BlogGlobalization.SiteSettings_AuthorsTab_AuthorName_Title, "Name", "name")
                     {
+                        HeaderAttributes = "style=\"width: 150px;\"",
                         AutoFocus = true
                     },
                 new EditableGridMultilineColumn(BlogGlobalization.SiteSettings_AuthorsTab_AuthorDescription_Title, "Description", "description")
@@ -91,7 +92,7 @@ WriteLiteral("\r\n");
 WriteLiteral("\r\n\r\n");
 
             
-            #line 27 "..\..\Views\Author\Partial\ListTemplate.cshtml"
+            #line 28 "..\..\Views\Author\Partial\ListTemplate.cshtml"
 Write(Html.Partial(RootModuleConstants.EditableGridTemplate, gridViewModel));
 
             

@@ -129,7 +129,7 @@ WriteLiteral(">\r\n        </div>\r\n    </div>\r\n</div>\r\n\r\n<div");
 
 WriteLiteral(" class=\"bcms-templates-holder\"");
 
-WriteLiteral(">\r\n    <!-- ko foreach: templates() -->\r\n    <div");
+WriteLiteral(">\r\n    <!-- ko foreach: displayedTemplates() -->\r\n    <div");
 
 WriteLiteral(" class=\"bcms-grid-box bcms-grid-box-blog\"");
 
