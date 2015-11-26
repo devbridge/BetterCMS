@@ -1424,6 +1424,7 @@
     <Content Include="Scss\assets\icons\action-edit.svg" />
     <Content Include="Scss\assets\icons\action-history.svg" />
     <Content Include="Scss\assets\icons\action-menu.svg" />
+    <Content Include="Scss\assets\icons\action-options.svg" />
     <Content Include="Scss\assets\icons\action-status-draft.svg" />
     <Content Include="Scss\assets\icons\action-status-ok.svg" />
     <Content Include="Scss\assets\icons\action-status-warn.svg" />
@@ -1516,11 +1517,7 @@
     <Content Include="Scss\assets\icons\manage.svg" />
     <Content Include="Scss\assets\icons\manager-add-content.svg" />
     <Content Include="Scss\assets\icons\manager-content.svg" />
-    <Content Include="Scss\assets\icons\manager-delete.svg" />
     <Content Include="Scss\assets\icons\manager-edit-draft.svg" />
-    <Content Include="Scss\assets\icons\manager-edit.svg" />
-    <Content Include="Scss\assets\icons\manager-history.svg" />
-    <Content Include="Scss\assets\icons\manager-options.svg" />
     <Content Include="Scss\assets\icons\manager-region.svg" />
     <Content Include="Scss\assets\icons\media-folder-up.svg" />
     <Content Include="Scss\assets\icons\media-folder.svg" />
@@ -1531,6 +1528,8 @@
     <Content Include="Scss\assets\icons\messages-warning.svg" />
     <Content Include="Scss\assets\icons\node-step.svg" />
     <Content Include="Scss\assets\icons\overlay-delete.svg" />
+    <Content Include="Scss\assets\icons\overlay-drag-active.svg" />
+    <Content Include="Scss\assets\icons\overlay-drag.svg" />
     <Content Include="Scss\assets\icons\overlay-edit-child.svg" />
     <Content Include="Scss\assets\icons\overlay-edit.svg" />
     <Content Include="Scss\assets\icons\overlay-history.svg" />
