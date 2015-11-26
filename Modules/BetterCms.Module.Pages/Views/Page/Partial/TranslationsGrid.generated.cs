@@ -219,7 +219,7 @@ WriteLiteral(" data-bind=\"html: addingPageLanguages()[0].value\"");
 WriteLiteral("></div>\r\n                    <!-- /ko -->\r\n                </td>\r\n               " +
 " <td");
 
-WriteLiteral(" style=\"width: 100px;\"");
+WriteLiteral(" style=\"width: 110px;\"");
 
 WriteLiteral(">\r\n                    <!-- ko if: addLanguageId() -->\r\n                    <div");
 
