@@ -1,10 +1,7 @@
-$ol-light: #536082;
-$ol-dark: $dark-main;
 $ol-red: #d82636;
 
-$border-ol-thin-light: 1px solid $ol-light;
-$border-ol-thin-dark: 1px solid $ol-dark;
-$border-ol-thin-dashed-dark: 1px dashed $ol-dark;
+$border-ol-thin-light: 1px solid #536082;
+$border-ol-thin-dashed-dark: 1px dashed $dark-main;
 
 $overlay-mange-controls: (
                 ('addcontent', $bcms-add-content),
@@ -36,9 +33,11 @@ $overlay-control-buttons: (
 
         &.bcms-show-overlay {
             @include size(100%);
-            //background-image: url($bcms-texture);
+            //todo background-image: url($bcms-texture);
             background-color: $white;
+            box-sizing: border-box;
             height: 100%;
+            padding: 36px 0 10px;
             width: 100%;
         }
 
@@ -59,7 +58,7 @@ $overlay-control-buttons: (
     &-button {
         @include transition(all 200ms);
         @include vertical-align($align: top);
-        background-color: $ol-dark;
+        background-color: $bg-dark;
         box-sizing: border-box;
         color: $white;
         cursor: pointer;
@@ -72,7 +71,7 @@ $overlay-control-buttons: (
         padding: 0 10px;
 
         &:hover {
-            background-color: darken($ol-dark, 5%);
+            background-color: darken($bg-dark, 5%);
             cursor: pointer;
         }
     }
@@ -94,10 +93,10 @@ $overlay-control-buttons: (
     }
 
     &-sortcancel {
-        background-color: $ol-red;
+        background-color: $cp-gray;
 
         &:hover {
-            background-color: darken($ol-red, 10%);
+            background-color: darken($cp-gray, 10%);
         }
     }
 
@@ -118,14 +117,14 @@ $overlay-control-buttons: (
         padding: 5px 20px;
 
         &:hover {
-            background-color: $ol-dark;
+            background-color: $bg-dark;
         }
     }
 
     @each $name, $icon in $overlay-mange-controls {
         &-#{$name} {
             @include size(30px 26px);
-            background: $ol-dark url($icon) no-repeat center;
+            background: $bg-dark url($icon) no-repeat center;
         }
     }
 }
@@ -167,35 +166,43 @@ $overlay-control-buttons: (
     }
 
     &-wrapper {
-        background-color: $white;
-        border: $border-thin-smoke;
+        background: $white url($bcms-overlay-drag) no-repeat 10px center;
+        border: $border-form-element;
         box-sizing: border-box;
         color: $text-dark;
         cursor: move;
-        height: 40px;
+        height: 46px;
         margin: 5px 10px;
         overflow: hidden;
-        padding: 0 10px;
+        padding: 0 10px 0 25px;
+
+        &:first-of-type {
+            margin-top: 0;
+        }
 
         &.ui-sortable-helper {
-            background-color: $sky-blue;
+            background: $sky-blue url($bcms-overlay-drag-active) no-repeat 10px center;
             border-color: $border-blue;
+            box-shadow: 0 0 4px rgba($blue-main, .24);
             color: $text-blue;
         }
     }
 
     &-wrapper-placeholder {
-        border: $border-thick-dashed-smoke;
+        border: $border-form-element-dashed;
         box-sizing: border-box;
-        height: 44px;
-        margin: 5px 10px;
+        height: 46px;
+        margin: 0 10px 5px;
         position: relative;
         z-index: 10;
     }
 
     &-content {
-        font-weight: 600;
-        line-height: 38px;
+        font: {
+            size: 14px;
+            weight: 600;
+        }
+        line-height: 44px;
         text-transform: capitalize;
     }
 }
@@ -210,7 +217,7 @@ $overlay-control-buttons: (
     &-button {
         @include transition(all 200ms);
         @include size(42px);
-        background-color: $ol-dark;
+        background-color: $bg-dark;
         border-left: $border-ol-thin-light;
         cursor: pointer;
         display: block;
@@ -222,7 +229,7 @@ $overlay-control-buttons: (
         }
 
         &:hover {
-            background-color: darken($ol-dark, 5%);
+            background-color: darken($bg-dark, 5%);
         }
     }
 

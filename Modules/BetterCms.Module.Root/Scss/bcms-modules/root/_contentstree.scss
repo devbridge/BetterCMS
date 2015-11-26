@@ -1,19 +1,10 @@
 $ol-light: #536082;
-$ol-dark: $dark-main;
-$ol-red: #d82636;
 
-$border-ol-thin-light: 1px solid $ol-light;
-$border-ol-thin-dark: 1px solid $ol-dark;
-$border-manage-thin-dashed-dark: 1px dashed $ol-dark;
+$border-manage-thin-dashed-dark: 1px dashed $dark-main;
 
 $content-headers: (
                 ('region', $text-blue, 16px, $bcms-manager-region),
                 ('content', $text-dark, 14px, $bcms-manager-content)
-);
-$contents-tree-controls: (
-                ('config', $bcms-action-options),
-                ('history', $bcms-action-history),
-                ('delete', $bcms-action-delete)
 );
 
 .bcms-tree-container {
@@ -64,16 +55,6 @@ $contents-tree-controls: (
     }
 }
 
-.bcms-tree-controls-box {
-    @include positioning($center-y: true);
-    @include transition(all 150ms);
-    cursor: pointer;
-    height: 20px;
-    opacity: 0;
-    right: 0;
-    visibility: hidden;
-}
-
 .bcms-tree {
     &-item-container {
         position: relative;
@@ -81,10 +62,10 @@ $contents-tree-controls: (
 
     &-region {
         background-color: $white;
-        border: $border-manage-thin-dashed-dark;
         box-sizing: border-box;
         margin-top: 15px;
         min-height: 48px;
+        outline: $border-manage-thin-dashed-dark;
         padding: 15px 15px 15px 30px;
         position: relative;
 
@@ -98,12 +79,12 @@ $contents-tree-controls: (
         background-color: $white;
         border: $border-thin-smoke;
         box-shadow: 0 0 6px 0 rgba($black, .1);
+        cursor: move;
         margin-top: 15px;
         padding: 15px 15px 15px 30px;
 
         &.bcms-contents-hover {
             background-color: darken($white, 1%);
-            cursor: move;
         }
     }
 
@@ -111,25 +92,28 @@ $contents-tree-controls: (
         cursor: move;
         position: relative;
 
+        .bcms-action-edit {
+            @include vertical-align();
+            margin-left: 5px;
+        }
+
         &-region {
             cursor: default;
         }
     }
 
-    &-button {
-        @include size(20px);
+    &-controls-box {
+        @include positioning($center-y: true);
+        @include transition(all 150ms);
         cursor: pointer;
-        float: right;
-        margin-left: 15px;
+        height: 20px;
+        opacity: 0;
+        right: 0;
+        visibility: hidden;
 
-        &.bcms-tree-controls-edit-draft {
-            background-image: url($bcms-manager-edit-draft);
-        }
-
-        @each $name, $icon, $icon-hover in $contents-tree-controls {
-            &.bcms-tree-controls-#{$name} {
-                background: url($icon) no-repeat center;
-            }
+        > div {
+            @include vertical-align();
+            margin-left: 5px;
         }
     }
 
@@ -151,14 +135,6 @@ $contents-tree-controls: (
                 left: -20px;
             }
         }
-    }
-
-    &-content-edit {
-        @include vertical-align();
-        @include size(18px);
-        background: url($bcms-action-edit) no-repeat center;
-        cursor: pointer;
-        margin-left: 5px;
     }
 }
 
