@@ -215,11 +215,8 @@ $sort-icons: (
         width: 65px;
     }
 
-    &-row {
-        &-active {
-            //todo change to appropriate color
-            background: red;
-        }
+    &-row-active {
+        background-color: $sky-blue;
     }
 
     &-dates {

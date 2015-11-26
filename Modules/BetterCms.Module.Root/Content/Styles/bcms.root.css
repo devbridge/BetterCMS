@@ -2967,7 +2967,7 @@ td .bcms-field-wrapper {
 }
 
 .bcms-list-row-active {
-  background: red;
+  background-color: #e7f3ff;
 }
 
 .bcms-list-dates {
