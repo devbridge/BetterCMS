@@ -722,7 +722,7 @@ bettercms.define('bcms.pages', ['bcms.jquery', 'bcms', 'bcms.modal', 'bcms.siteS
             self.version = ko.observable(item.Version);
 
             self.update = function(_item) {
-                self.id(_item.Id);
+                self.id(_item.PageId);
                 self.title(antiXss.encodeHtml(_item.Title));
                 self.createdOn(globalization.created + ' ' + _item.CreatedOn);
                 self.modifiedOn(globalization.lastEdited + ' ' + _item.ModifiedOn);
