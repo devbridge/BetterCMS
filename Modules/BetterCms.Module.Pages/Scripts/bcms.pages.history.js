@@ -24,7 +24,10 @@ bettercms.define('bcms.pages.history', ['bcms.jquery', 'bcms', 'bcms.modal', 'bc
             pageContentHistoryForm: '#bcms-pagecontenthistory-form',
             pageContentHistorySearchButton: '.bcms-btn-search',
             pageContentHistorySearchField: '.bcms-search-query',
-            modalContent: '.bcms-modal-content'
+            modalContent: '.bcms-modal-content',
+            modalFrameHolder: '.bcms-modal-frame-holder',
+            activeTab: '.bcms-js-tab-header .bcms-modal-frame-holder>.bcms-active',
+            inactiveTab: '.bcms-js-tab-header .bcms-modal-frame-holder>:not(.bcms-active)'
         },
         
         links = {
@@ -149,7 +152,11 @@ bettercms.define('bcms.pages.history', ['bcms.jquery', 'bcms', 'bcms.modal', 'bc
     */
     function searchPageContentHistory(dialog, container, form) {
         grid.submitGridForm(form, function (data) {
-            form.html(data);
+            var activeTabName = dialog.container.find(selectors.activeTab).data('name'),
+                inactiveTabName = dialog.container.find(selectors.inactiveTab).data('name');
+            form.closest(selectors.modalFrameHolder).html(data);
+            dialog.container.find(activeTabName).show();
+            dialog.container.find(inactiveTabName).hide();
             history.initPageContentHistoryDialogEvents(dialog, data, true);
         });
     }

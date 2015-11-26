@@ -1,0 +1,8 @@
+﻿@using BetterCms.Module.Pages
+@model BetterCms.Module.Root.ViewModels.Cms.RenderPageViewModel
+
+<div class="bcms-modal-frame-holder">
+    <div class="bcms-window-options">
+            @Html.Partial(PagesConstants.ContentVersionPreviewTemplate, Model)
+    </div>
+</div>

@@ -233,7 +233,7 @@ namespace BetterCms.Module.Pages.Controllers
             var request = new PreviewWidgetCommandRequest { WidgetId = widgetId.ToGuidOrDefault(), IsJavaScriptEnabled = enableJavaScript };
             var model = GetCommand<PreviewWidgetCommand>().ExecuteCommand(request);
 
-            return View(PagesConstants.ContentVersionPreviewTemplate, model);
+            return View("Partial/WidgetPreview", model);
         }
 
         /// <summary>

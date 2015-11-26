@@ -98,24 +98,36 @@
                .HeaderAttributes(@style => "width: 40px; padding: 0;", @class => "bcms-tables-nohover");
     };
 }
+<div id="bcms-tab-1" class="bcms-tab-single">
+    <div class="bcms-history-preview-holder" id="bcms-history-preview">
+        <div class="bcms-history-info" style="display: block;">@PagesGlobalization.ContentHistory_SelectVersionToPreviewMessage</div>
+    </div>
+</div>
 
-@using (Html.BeginForm<HistoryController>(f => f.ContentHistory((GetContentHistoryRequest)null), FormMethod.Post, new { @id = "bcms-pagecontenthistory-form", @class = "bcms-ajax-form" }))
-{
-    @Html.HiddenGridOptions(Model.GridOptions)
-    @Html.HiddenFor(model => model.ContentId)
+<div id="bcms-tab-2" class="bcms-tab-single">
+    <div class="bcms-history-preview-data" id="bcms-history-preview-properties">
+        <div class="bcms-history-info" style="display: block;">@PagesGlobalization.ContentHistory_SelectVersionToPreviewMessage</div>
+    </div>
+</div>
+<div class="bcms-history-table-holder">
+    @using (Html.BeginForm<HistoryController>(f => f.ContentHistory((GetContentHistoryRequest)null), FormMethod.Post, new { @id = "bcms-pagecontenthistory-form", @class = "bcms-ajax-form" }))
+    {
+        @Html.HiddenGridOptions(Model.GridOptions)
+        @Html.HiddenFor(model => model.ContentId)
 
-    <div class="bcms-history-table-top">
-        <div class="bcms-large-titles">@PagesGlobalization.ContentHistory_OlderVersions</div>
-        <div class="bcms-top-block-inner">
-            <div class="bcms-btn-search" id="bcms-pagecontenthistory-search-btn">@RootGlobalization.Button_Search</div>
-            <div class="bcms-search-block">
-                @Html.TextBoxFor(m => m.SearchQuery, new { @class = "bcms-search-field-box bcms-js-search-box bcms-search-query", @placeholder = RootGlobalization.WaterMark_Search })
+        <div class="bcms-history-table-top">
+            <div class="bcms-large-titles">@PagesGlobalization.ContentHistory_OlderVersions</div>
+            <div class="bcms-top-block-inner">
+                <div class="bcms-btn-search" id="bcms-pagecontenthistory-search-btn">@RootGlobalization.Button_Search</div>
+                <div class="bcms-search-block">
+                    @Html.TextBoxFor(m => m.SearchQuery, new { @class = "bcms-search-field-box bcms-js-search-box bcms-search-query", @placeholder = RootGlobalization.WaterMark_Search })
+                </div>
             </div>
         </div>
-    </div>
 
-    <div class="bcms-history-items-list">
-        @Html.Grid(Model.Items).Sort(Model.GridOptions).Columns(columns).Attributes(@class => "bcms-tables bcms-history-grid").RenderUsing(new EditableHtmlTableGridRenderer<ContentHistoryItem>())
-        @Html.HiddenSubmit()
-    </div>
-}
+        <div class="bcms-history-items-list">
+            @Html.Grid(Model.Items).Sort(Model.GridOptions).Columns(columns).Attributes(@class => "bcms-tables bcms-history-grid").RenderUsing(new EditableHtmlTableGridRenderer<ContentHistoryItem>())
+            @Html.HiddenSubmit()
+        </div>
+    }
+</div>

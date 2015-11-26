@@ -98,76 +98,18 @@ WriteLiteral("</div>\r\n    </div>\r\n</div>\r\n\r\n<div");
 
 WriteLiteral(" class=\"bcms-modal-frame-holder\"");
 
-WriteLiteral(">\r\n    <div");
-
-WriteLiteral(" id=\"bcms-tab-1\"");
-
-WriteLiteral(" class=\"bcms-tab-single\"");
-
-WriteLiteral(">\r\n        <div");
-
-WriteLiteral(" class=\"bcms-history-preview-holder\"");
-
-WriteLiteral(" id=\"bcms-history-preview\"");
-
-WriteLiteral(">\r\n            <div");
-
-WriteLiteral(" class=\"bcms-history-info\"");
-
-WriteLiteral(" style=\"display: block;\"");
-
-WriteLiteral(">");
-
-            
-            #line 16 "..\..\Views\History\ContentHistory.cshtml"
-                                                              Write(PagesGlobalization.ContentHistory_SelectVersionToPreviewMessage);
-
-            
-            #line default
-            #line hidden
-WriteLiteral("</div>\r\n        </div>\r\n    </div>\r\n\r\n    <div");
-
-WriteLiteral(" id=\"bcms-tab-2\"");
-
-WriteLiteral(" class=\"bcms-tab-single\"");
-
-WriteLiteral(">\r\n        <div");
-
-WriteLiteral(" class=\"bcms-history-preview-data\"");
-
-WriteLiteral(" id=\"bcms-history-preview-properties\"");
-
-WriteLiteral(">\r\n            <div");
-
-WriteLiteral(" class=\"bcms-history-info\"");
-
-WriteLiteral(" style=\"display: block;\"");
-
-WriteLiteral(">");
-
-            
-            #line 22 "..\..\Views\History\ContentHistory.cshtml"
-                                                              Write(PagesGlobalization.ContentHistory_SelectVersionToPreviewMessage);
-
-            
-            #line default
-            #line hidden
-WriteLiteral("</div>\r\n        </div>\r\n    </div>\r\n    <div");
-
-WriteLiteral(" class=\"bcms-history-table-holder\"");
-
 WriteLiteral(">\r\n");
 
-WriteLiteral("        ");
+WriteLiteral("    ");
 
             
-            #line 26 "..\..\Views\History\ContentHistory.cshtml"
-   Write(Html.Partial("ContentHistoryTable", Model));
+            #line 14 "..\..\Views\History\ContentHistory.cshtml"
+Write(Html.Partial("ContentHistoryTable", Model));
 
             
             #line default
             #line hidden
-WriteLiteral("\r\n    </div>\r\n</div>\r\n\r\n<script");
+WriteLiteral("\r\n</div>\r\n\r\n<script");
 
 WriteLiteral(" type=\"text/html\"");
 
