@@ -391,7 +391,7 @@ $action-icons: (
 @each $name, $icon in $action-icons {
     .bcms-action-#{$name} {
         @include vertical-align();
-        @include size(20px);
+        @include size(22px);
         background: url($icon) no-repeat center;
         cursor: pointer;
         overflow: hidden;

@@ -1,11 +1,10 @@
 $ol-red: #d82636;
 
-$border-ol-thin-light: 1px solid #536082;
-$border-ol-thin-dashed-dark: 1px dashed $dark-main;
+$border-button-separator: 1px solid #44a0f8;
 
 $overlay-mange-controls: (
-                ('addcontent', $bcms-add-content),
-                ('sortcontent' $bcms-manage)
+                ('addcontent', $bcms-content-add),
+                ('sortcontent' $bcms-content-manage)
 );
 
 $overlay-control-buttons: (
@@ -26,30 +25,22 @@ $overlay-control-buttons: (
 .bcms-region {
     &-overlay {
         @include position(absolute, null);
+        border: $border-thin-blue-dashed;
+        box-sizing: border-box;
         display: none;
         min-height: 35px;
-        outline: $border-ol-thin-dashed-dark;
         z-index: 100;
 
         &.bcms-show-overlay {
-            @include size(100%);
-            //todo background-image: url($bcms-texture);
             background-color: $white;
             box-sizing: border-box;
-            height: 100%;
+            min-height: 93px;
             padding: 36px 0 10px;
-            width: 100%;
-        }
-
-        @include virtual(before) {
-            @include position(absolute, -1px);
-            border: $border-thin-white;
-            z-index: -1;
         }
     }
 
     &-actions {
-        @include position(absolute, 0 0 null null);
+        @include position(absolute, -1px -1px null null);
         cursor: default;
         height: 26px;
         z-index: 10;
@@ -57,11 +48,12 @@ $overlay-control-buttons: (
 
     &-button {
         @include transition(all 200ms);
-        @include vertical-align($align: top);
-        background-color: $bg-dark;
+        background-color: $bg-blue;
+        border-left: $border-button-separator;
         box-sizing: border-box;
         color: $white;
         cursor: pointer;
+        float: left;
         font: {
             size: 12px;
             weight: 600;
@@ -71,12 +63,13 @@ $overlay-control-buttons: (
         padding: 0 10px;
 
         &:hover {
-            background-color: darken($bg-dark, 5%);
+            background-color: darken($bg-blue, 5%);
             cursor: pointer;
         }
     }
 
     &-addcontent {
+        border-left: 0;
         position: relative;
 
         &.bcms-active {
@@ -86,6 +79,7 @@ $overlay-control-buttons: (
 
     &-sortdone {
         background-color: $bg-blue;
+        border-left: 0;
 
         &:hover {
             background-color: darken($bg-blue, 10%);
@@ -123,8 +117,8 @@ $overlay-control-buttons: (
 
     @each $name, $icon in $overlay-mange-controls {
         &-#{$name} {
-            @include size(30px 26px);
-            background: $bg-dark url($icon) no-repeat center;
+            @include size(26px);
+            background: $bg-blue url($icon) no-repeat center;
         }
     }
 }
@@ -217,8 +211,8 @@ $overlay-control-buttons: (
     &-button {
         @include transition(all 200ms);
         @include size(42px);
-        background-color: $bg-dark;
-        border-left: $border-ol-thin-light;
+        background-color: $bg-blue;
+        border-left: $border-button-separator;
         cursor: pointer;
         display: block;
         float: left;
@@ -229,7 +223,7 @@ $overlay-control-buttons: (
         }
 
         &:hover {
-            background-color: darken($bg-dark, 5%);
+            background-color: darken($bg-blue, 5%);
         }
     }
 

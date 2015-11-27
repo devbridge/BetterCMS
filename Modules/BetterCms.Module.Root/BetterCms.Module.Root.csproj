@@ -1429,7 +1429,6 @@
     <Content Include="Scss\assets\icons\action-status-ok.svg" />
     <Content Include="Scss\assets\icons\action-status-warn.svg" />
     <Content Include="Scss\assets\icons\action-usage.svg" />
-    <Content Include="Scss\assets\icons\add-content.svg" />
     <Content Include="Scss\assets\icons\align-center-active.svg" />
     <Content Include="Scss\assets\icons\align-center.svg" />
     <Content Include="Scss\assets\icons\align-left-active.svg" />
@@ -1441,6 +1440,8 @@
     <Content Include="Scss\assets\icons\btn-down-arrow.svg" />
     <Content Include="Scss\assets\icons\close-white.svg" />
     <Content Include="Scss\assets\icons\close.svg" />
+    <Content Include="Scss\assets\icons\content-add.svg" />
+    <Content Include="Scss\assets\icons\content-manage.svg" />
     <Content Include="Scss\assets\icons\cp-add.svg" />
     <Content Include="Scss\assets\icons\cp-delete.svg" />
     <Content Include="Scss\assets\icons\cp-drag-handle.svg" />
@@ -1514,8 +1515,6 @@
     <Content Include="Scss\assets\icons\grid-filter.svg" />
     <Content Include="Scss\assets\icons\image-delete.svg" />
     <Content Include="Scss\assets\icons\list-preview.svg" />
-    <Content Include="Scss\assets\icons\manage.svg" />
-    <Content Include="Scss\assets\icons\manager-add-content.svg" />
     <Content Include="Scss\assets\icons\manager-content.svg" />
     <Content Include="Scss\assets\icons\manager-region.svg" />
     <Content Include="Scss\assets\icons\media-folder-up.svg" />

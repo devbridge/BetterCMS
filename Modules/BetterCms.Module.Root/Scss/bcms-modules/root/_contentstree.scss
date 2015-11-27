@@ -1,10 +1,6 @@
-$ol-light: #536082;
-
-$border-manage-thin-dashed-dark: 1px dashed $dark-main;
-
 $content-headers: (
                 ('region', $text-blue, 16px, $bcms-manager-region),
-                ('content', $text-dark, 14px, $bcms-manager-content)
+                ('content', $text-dark, 15px, $bcms-manager-content)
 );
 
 .bcms-tree-container {
@@ -20,9 +16,9 @@ $content-headers: (
 .bcms-contents-tree {
     &-add-block {
         @include transition(background-color 150ms);
-        @include position(absolute, 0 0 null null);
-        @include size(30px 26px);
-        background: $dark-main url($bcms-add-content) no-repeat center;
+        @include position(absolute, -1px -1px null null);
+        @include size(26px);
+        background: $bg-blue url($bcms-content-add) no-repeat center;
         cursor: pointer;
         z-index: 5;
 
@@ -65,26 +61,26 @@ $content-headers: (
         box-sizing: border-box;
         margin-top: 15px;
         min-height: 48px;
-        outline: $border-manage-thin-dashed-dark;
-        padding: 15px 15px 15px 30px;
+        outline: $border-thin-blue-dashed;
+        padding: 15px 43px;
         position: relative;
 
-        &.bcms-contents-hover {
+        &.bcms-region-activated {
             z-index: 10;
         }
     }
 
     &-content {
-        @include transition(background-color 150ms);
+        @include transition(border-color 200ms);
         background-color: $white;
         border: $border-thin-smoke;
         box-shadow: 0 0 6px 0 rgba($black, .1);
         cursor: move;
         margin-top: 15px;
-        padding: 15px 15px 15px 30px;
+        padding: 15px 43px;
 
         &.bcms-contents-hover {
-            background-color: darken($white, 1%);
+            border-color: rgba($dark-main, .4);
         }
     }
 
@@ -106,7 +102,6 @@ $content-headers: (
         @include positioning($center-y: true);
         @include transition(all 150ms);
         cursor: pointer;
-        height: 20px;
         opacity: 0;
         right: 0;
         visibility: hidden;
@@ -132,7 +127,7 @@ $content-headers: (
                 @include positioning($center-y: true);
                 @include size(16px);
                 background: url($icon) no-repeat center;
-                left: -20px;
+                left: -25px;
             }
         }
     }
