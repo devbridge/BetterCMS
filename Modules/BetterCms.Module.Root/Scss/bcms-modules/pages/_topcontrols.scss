@@ -250,11 +250,11 @@
 
             &.bcms-tooltip-tl {
                 &:before {
-                    left: 36px;
+                    left: 91px;
                 }
 
                 &:after {
-                    left: 37px;
+                    left: 92px;
                 }
             }
         }
@@ -264,6 +264,7 @@
             color: $text-light;
             cursor: pointer;
             font-size: 11px;
+            line-height: 30px;
             padding-right: 15px;
             text-transform: uppercase;
         }

@@ -213,6 +213,7 @@ a:hover {
 .bcms-modal-content {
   background-color: #eae8e9;
   box-sizing: border-box;
+  line-height: 22px;
   margin: auto;
   padding: 55px 0 65px;
 }

@@ -147,6 +147,7 @@
   height: 100%;
   width: 100%;
   color: #ffffff;
+  cursor: pointer;
   display: block;
 }
 

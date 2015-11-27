@@ -51,6 +51,7 @@ $uploaded-states: (
     .bcms-btn-main & {
         @include size(100%);
         color: $white;
+        cursor: pointer;
         display: block;
     }
 }

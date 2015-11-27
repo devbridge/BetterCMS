@@ -767,11 +767,11 @@
 }
 
 .bcms-sort-options-block.bcms-tooltip-tl:before {
-  left: 36px;
+  left: 91px;
 }
 
 .bcms-sort-options-block.bcms-tooltip-tl:after {
-  left: 37px;
+  left: 92px;
 }
 
 .bcms-sort-options-label {
@@ -779,6 +779,7 @@
   color: #a6a6a6;
   cursor: pointer;
   font-size: 11px;
+  line-height: 30px;
   padding-right: 15px;
   text-transform: uppercase;
 }
