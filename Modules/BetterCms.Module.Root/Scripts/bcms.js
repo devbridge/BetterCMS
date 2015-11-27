@@ -1,6 +1,12 @@
 ﻿/*global bettercms */
 
 bettercms.define('bcms', ['bcms.jquery', 'bcms.store'], function ($, store) {
+    /// <summary>
+    /// s the specified $.
+    /// </summary>
+    /// <param name="$">The $.</param>
+    /// <param name="store">The store.</param>
+    /// <returns></returns>
     'use strict';
 
     var app = {
@@ -68,7 +74,10 @@ bettercms.define('bcms', ['bcms.jquery', 'bcms.store'], function ($, store) {
     * Current page language.
     */
     app.language = null;
-
+    /**
+    * Current page language ID.
+    */
+    app.languageId = null;
     /**
     * Indicates if error trace output is enabled.
     */

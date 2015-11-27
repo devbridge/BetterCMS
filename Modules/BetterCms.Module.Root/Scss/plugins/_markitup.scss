@@ -69,6 +69,7 @@ textarea {
             @include transition(all 200ms);
             box-sizing: border-box;
             list-style: none;
+            margin: 0;
             position: relative;
 
             &:hover {
