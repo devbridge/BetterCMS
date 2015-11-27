@@ -3771,6 +3771,11 @@ textarea.markItUpEditor:focus {
   right: 15px;
 }
 
+.select2-container.bcms-input-validation-error {
+  background-color: #ffe9e9;
+  border: 1px solid #e17777;
+}
+
 .select2-results {
   margin: 0;
   max-height: 200px;

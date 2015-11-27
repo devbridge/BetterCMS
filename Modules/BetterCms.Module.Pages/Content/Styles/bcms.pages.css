@@ -623,17 +623,18 @@
 }
 
 .bcms-filter-holder {
-  float: right;
   position: relative;
-  width: 100%;
+  text-align: right;
   z-index: 1;
 }
 
 .bcms-grid-filtering {
+  display: inline-block;
+  vertical-align: middle;
   border: 1px solid transparent;
   box-sizing: border-box;
-  float: right;
   line-height: 30px;
+  margin-left: 5px;
   min-width: 61px;
 }
 
@@ -670,6 +671,7 @@
   box-sizing: border-box;
   clear: both;
   padding: 15px;
+  text-align: left;
   z-index: -1;
 }
 
@@ -741,10 +743,9 @@
 }
 
 .bcms-sort-options {
-  position: absolute;
-  top: 5px;
-  right: 100px;
-  z-index: 10;
+  display: inline-block;
+  vertical-align: middle;
+  text-align: left;
 }
 
 .bcms-sort-options-sorted {
@@ -760,9 +761,17 @@
   border: 1px solid #dfdfdf;
   box-shadow: 0 0 20px 0 rgba(0, 0, 0, 0.2);
   box-sizing: border-box;
-  margin-top: 15px;
+  margin-top: 10px;
   padding: 14px 25px;
   width: 200px;
+}
+
+.bcms-sort-options-block.bcms-tooltip-tl:before {
+  left: 36px;
+}
+
+.bcms-sort-options-block.bcms-tooltip-tl:after {
+  left: 37px;
 }
 
 .bcms-sort-options-label {

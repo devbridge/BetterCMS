@@ -16,6 +16,11 @@
             background: url($bcms-select-arrow) no-repeat center;
             right: 15px;
         }
+
+        &.bcms-input-validation-error {
+            background-color: $validation-error-bg;
+            border: $validation-error-border;
+        }
     }
 
     &-results {

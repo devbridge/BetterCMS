@@ -57,12 +57,51 @@ WriteLiteral(" class=\"bcms-filter-holder\"");
 
 WriteLiteral(" id=\"bcms-filter-template\"");
 
-WriteLiteral(">\r\n");
+WriteLiteral(">\r\n    <div");
+
+WriteLiteral(" class=\"bcms-sort-options\"");
+
+WriteLiteral(" id=\"bcms-js-filter-sort\"");
+
+WriteLiteral(">\r\n        <div");
+
+WriteLiteral(" class=\"bcms-sort-options-label\"");
+
+WriteLiteral(" data-bind=\"click: toggleShowSorting\"");
+
+WriteLiteral(">");
+
+            
+            #line 8 "..\..\Views\Filter\PagesFilterTemplate.cshtml"
+                                                                             Write(PagesGlobalization.SiteSettings_Pages_Sort);
+
+            
+            #line default
+            #line hidden
+WriteLiteral("</div>\r\n\r\n        <div");
+
+WriteLiteral(" class=\"bcms-sort-options-block bcms-tooltip-tl\"");
+
+WriteLiteral(" data-bind=\"visible: showSorting\"");
+
+WriteLiteral(">\r\n            <!-- ko foreach: sortFields -->\r\n            <div");
+
+WriteLiteral(" class=\"bcms-sort-option\"");
+
+WriteLiteral(" data-bind=\"click: $parent.applySort.bind($data, title, column, direction)\"");
+
+WriteLiteral(">\r\n                <div");
+
+WriteLiteral(" data-bind=\"text: title, css: { \'bcms-sort-options-sorted\':direction == $parent.s" +
+"ortDirection() && column == $parent.sortColumn() }\"");
+
+WriteLiteral("></div>\r\n            </div>\r\n            <!-- /ko -->\r\n        </div>\r\n    </div>" +
+"\r\n\r\n");
 
 WriteLiteral("    ");
 
             
-            #line 7 "..\..\Views\Filter\PagesFilterTemplate.cshtml"
+            #line 19 "..\..\Views\Filter\PagesFilterTemplate.cshtml"
 Write(Html.HiddenFor(m => m.ContentId));
 
             
@@ -85,7 +124,7 @@ WriteLiteral(">\r\n");
 WriteLiteral("            ");
 
             
-            #line 10 "..\..\Views\Filter\PagesFilterTemplate.cshtml"
+            #line 22 "..\..\Views\Filter\PagesFilterTemplate.cshtml"
        Write(PagesGlobalization.SiteSettings_Pages_Filter);
 
             
@@ -100,7 +139,7 @@ WriteLiteral(" data-bind=\"style: { display: isEdited() ? \'inline-block\' : \'n
 WriteLiteral(">");
 
             
-            #line 11 "..\..\Views\Filter\PagesFilterTemplate.cshtml"
+            #line 23 "..\..\Views\Filter\PagesFilterTemplate.cshtml"
                                                                                                               Write(PagesGlobalization.SiteSettings_Pages_FilterIsModified);
 
             
@@ -135,7 +174,7 @@ WriteLiteral(" class=\"bcms-filter-text\"");
 WriteLiteral(">");
 
             
-            #line 19 "..\..\Views\Filter\PagesFilterTemplate.cshtml"
+            #line 31 "..\..\Views\Filter\PagesFilterTemplate.cshtml"
                                              Write(PagesGlobalization.SiteSettings_Pages_FilterByTags);
 
             
@@ -181,7 +220,7 @@ WriteLiteral(" class=\"bcms-filter-text\"");
 WriteLiteral(">");
 
             
-            #line 35 "..\..\Views\Filter\PagesFilterTemplate.cshtml"
+            #line 47 "..\..\Views\Filter\PagesFilterTemplate.cshtml"
                                              Write(PagesGlobalization.SiteSettings_Pages_FilterByCategory);
 
             
@@ -200,13 +239,13 @@ WriteLiteral(" id=\"bcms-js-categories-select\"");
 WriteLiteral("/>\r\n                    </div>\r\n                </div>\r\n");
 
             
-            #line 40 "..\..\Views\Filter\PagesFilterTemplate.cshtml"
+            #line 52 "..\..\Views\Filter\PagesFilterTemplate.cshtml"
                 
             
             #line default
             #line hidden
             
-            #line 40 "..\..\Views\Filter\PagesFilterTemplate.cshtml"
+            #line 52 "..\..\Views\Filter\PagesFilterTemplate.cshtml"
                  if (Model.Languages != null && Model.Languages.Any())
                 {
 
@@ -224,7 +263,7 @@ WriteLiteral(" class=\"bcms-filter-text\"");
 WriteLiteral(">");
 
             
-            #line 43 "..\..\Views\Filter\PagesFilterTemplate.cshtml"
+            #line 55 "..\..\Views\Filter\PagesFilterTemplate.cshtml"
                                                  Write(PagesGlobalization.SiteSettings_Pages_FilterByLanguage);
 
             
@@ -246,7 +285,7 @@ WriteLiteral(" id=\"bcms-js-filter-languages\"");
 WriteLiteral("/>\r\n                        </div>\r\n                    </div>\r\n");
 
             
-            #line 48 "..\..\Views\Filter\PagesFilterTemplate.cshtml"
+            #line 60 "..\..\Views\Filter\PagesFilterTemplate.cshtml"
                 }
 
             
@@ -263,7 +302,7 @@ WriteLiteral(" class=\"bcms-filter-text\"");
 WriteLiteral(">");
 
             
-            #line 50 "..\..\Views\Filter\PagesFilterTemplate.cshtml"
+            #line 62 "..\..\Views\Filter\PagesFilterTemplate.cshtml"
                                              Write(PagesGlobalization.SiteSettings_Pages_FilterByStatus);
 
             
@@ -278,7 +317,7 @@ WriteLiteral(">\r\n");
 WriteLiteral("                        ");
 
             
-            #line 52 "..\..\Views\Filter\PagesFilterTemplate.cshtml"
+            #line 64 "..\..\Views\Filter\PagesFilterTemplate.cshtml"
                    Write(Html.DropDownListFor(m => m.Status, new List<SelectListItem>(), new { data_bind = "options: statuses, value: status, optionsText: 'Value', optionsValue: 'Key', select2: { minimumResultsForSearch: -1 }", id = "bcms-js-filter-status" }));
 
             
@@ -295,7 +334,7 @@ WriteLiteral(" class=\"bcms-filter-text\"");
 WriteLiteral(">");
 
             
-            #line 56 "..\..\Views\Filter\PagesFilterTemplate.cshtml"
+            #line 68 "..\..\Views\Filter\PagesFilterTemplate.cshtml"
                                              Write(PagesGlobalization.SiteSettings_Pages_FilterBySEO);
 
             
@@ -310,7 +349,7 @@ WriteLiteral(">\r\n");
 WriteLiteral("                        ");
 
             
-            #line 58 "..\..\Views\Filter\PagesFilterTemplate.cshtml"
+            #line 70 "..\..\Views\Filter\PagesFilterTemplate.cshtml"
                    Write(Html.DropDownListFor(m => m.SeoStatus, new List<SelectListItem>(), new { data_bind = "options: seoStatuses, value: seoStatus, optionsText: 'Value', optionsValue: 'Key', select2: { minimumResultsForSearch: -1 }", id = "bcms-js-filter-seostatus" }));
 
             
@@ -327,7 +366,7 @@ WriteLiteral(" class=\"bcms-filter-text\"");
 WriteLiteral(">");
 
             
-            #line 63 "..\..\Views\Filter\PagesFilterTemplate.cshtml"
+            #line 75 "..\..\Views\Filter\PagesFilterTemplate.cshtml"
                                              Write(PagesGlobalization.SiteSettings_Pages_FilterByLayout);
 
             
@@ -342,7 +381,7 @@ WriteLiteral(">\r\n");
 WriteLiteral("                        ");
 
             
-            #line 65 "..\..\Views\Filter\PagesFilterTemplate.cshtml"
+            #line 77 "..\..\Views\Filter\PagesFilterTemplate.cshtml"
                    Write(Html.DropDownListFor(m => m.Layout, new List<SelectListItem>(), new { data_bind = "options: layouts, value: layout, optionsText: 'Value', optionsValue: 'Key', select2: { minimumResultsForSearch: -1 }", id = "bcms-js-filter-layout" }));
 
             
@@ -374,7 +413,7 @@ WriteLiteral(" data-bind=\"click: remove\"");
 WriteLiteral(">");
 
             
-            #line 73 "..\..\Views\Filter\PagesFilterTemplate.cshtml"
+            #line 85 "..\..\Views\Filter\PagesFilterTemplate.cshtml"
                                                                              Write(RootGlobalization.Button_Remove);
 
             
@@ -416,7 +455,7 @@ WriteLiteral(" data-bind=\"click: $parent.categories.remove\"");
 WriteLiteral(">");
 
             
-            #line 82 "..\..\Views\Filter\PagesFilterTemplate.cshtml"
+            #line 94 "..\..\Views\Filter\PagesFilterTemplate.cshtml"
                                                                                                 Write(RootGlobalization.Button_Remove);
 
             
@@ -452,7 +491,7 @@ WriteLiteral(">\r\n");
 WriteLiteral("                    ");
 
             
-            #line 92 "..\..\Views\Filter\PagesFilterTemplate.cshtml"
+            #line 104 "..\..\Views\Filter\PagesFilterTemplate.cshtml"
                Write(Html.CheckBoxFor(model => model.IncludeArchived, new { data_bind = "checked: includeArchived" }));
 
             
@@ -467,7 +506,7 @@ WriteLiteral(" data-bind=\"click: changeIncludeArchived\"");
 WriteLiteral(">");
 
             
-            #line 93 "..\..\Views\Filter\PagesFilterTemplate.cshtml"
+            #line 105 "..\..\Views\Filter\PagesFilterTemplate.cshtml"
                                                                                                       Write(PagesGlobalization.SiteSettings_Pages_FilterIncludeArchived);
 
             
@@ -476,13 +515,13 @@ WriteLiteral(">");
 WriteLiteral("</div>\r\n                </div>\r\n");
 
             
-            #line 95 "..\..\Views\Filter\PagesFilterTemplate.cshtml"
+            #line 107 "..\..\Views\Filter\PagesFilterTemplate.cshtml"
                 
             
             #line default
             #line hidden
             
-            #line 95 "..\..\Views\Filter\PagesFilterTemplate.cshtml"
+            #line 107 "..\..\Views\Filter\PagesFilterTemplate.cshtml"
                  if (!Model.HideMasterPagesFiltering)
                 {
 
@@ -498,7 +537,7 @@ WriteLiteral(">\r\n");
 WriteLiteral("                        ");
 
             
-            #line 98 "..\..\Views\Filter\PagesFilterTemplate.cshtml"
+            #line 110 "..\..\Views\Filter\PagesFilterTemplate.cshtml"
                    Write(Html.CheckBoxFor(model => model.IncludeMasterPages, new { data_bind = "checked: includeMasterPages" }));
 
             
@@ -513,7 +552,7 @@ WriteLiteral(" data-bind=\"click: changeIncludeMasterPages\"");
 WriteLiteral(">");
 
             
-            #line 99 "..\..\Views\Filter\PagesFilterTemplate.cshtml"
+            #line 111 "..\..\Views\Filter\PagesFilterTemplate.cshtml"
                                                                                                              Write(PagesGlobalization.SiteSettings_Pages_FilterIncludeMasterPages);
 
             
@@ -522,7 +561,7 @@ WriteLiteral(">");
 WriteLiteral("</div>\r\n                    </div>\r\n");
 
             
-            #line 101 "..\..\Views\Filter\PagesFilterTemplate.cshtml"
+            #line 113 "..\..\Views\Filter\PagesFilterTemplate.cshtml"
                 }
 
             
@@ -541,7 +580,7 @@ WriteLiteral(" data-bind=\"click: searchWithFilter\"");
 WriteLiteral(">");
 
             
-            #line 105 "..\..\Views\Filter\PagesFilterTemplate.cshtml"
+            #line 117 "..\..\Views\Filter\PagesFilterTemplate.cshtml"
                                                                              Write(PagesGlobalization.SiteSettings_Pages_FilterSearch);
 
             
@@ -556,52 +595,13 @@ WriteLiteral(" data-bind=\"click: clearFilter\"");
 WriteLiteral(">");
 
             
-            #line 106 "..\..\Views\Filter\PagesFilterTemplate.cshtml"
+            #line 118 "..\..\Views\Filter\PagesFilterTemplate.cshtml"
                                                                        Write(PagesGlobalization.SiteSettings_Pages_FilterClear);
 
             
             #line default
             #line hidden
-WriteLiteral("</div>\r\n            </div>\r\n        </div>\r\n    </div>\r\n\r\n    <div");
-
-WriteLiteral(" class=\"bcms-sort-options\"");
-
-WriteLiteral(" id=\"bcms-js-filter-sort\"");
-
-WriteLiteral(">\r\n        <div");
-
-WriteLiteral(" class=\"bcms-sort-options-label\"");
-
-WriteLiteral(" data-bind=\"click: toggleShowSorting\"");
-
-WriteLiteral(">");
-
-            
-            #line 112 "..\..\Views\Filter\PagesFilterTemplate.cshtml"
-                                                                             Write(PagesGlobalization.SiteSettings_Pages_Sort);
-
-            
-            #line default
-            #line hidden
-WriteLiteral("</div>\r\n\r\n        <div");
-
-WriteLiteral(" class=\"bcms-sort-options-block bcms-tooltip-tr\"");
-
-WriteLiteral(" data-bind=\"visible: showSorting\"");
-
-WriteLiteral(">\r\n            <!-- ko foreach: sortFields -->\r\n            <div");
-
-WriteLiteral(" class=\"bcms-sort-option\"");
-
-WriteLiteral(" data-bind=\"click: $parent.applySort.bind($data, title, column, direction)\"");
-
-WriteLiteral(">\r\n                <div");
-
-WriteLiteral(" data-bind=\"text: title, css: { \'bcms-sort-options-sorted\':direction == $parent.s" +
-"ortDirection() && column == $parent.sortColumn() }\"");
-
-WriteLiteral("></div>\r\n            </div>\r\n            <!-- /ko -->\r\n        </div>\r\n    </div>" +
-"\r\n</div>\r\n");
+WriteLiteral("</div>\r\n            </div>\r\n        </div>\r\n    </div>\r\n\r\n</div>");
 
         }
     }
