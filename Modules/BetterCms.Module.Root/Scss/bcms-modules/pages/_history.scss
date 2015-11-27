@@ -10,17 +10,24 @@ $history-bar-height: 44px;
 
 %history-preview-frame {
     background-color: $bg-modal-options;
+    box-sizing: border-box;
     height: calc(70vh - #{$history-preview-box});
+    padding: 10px 20px;
     position: relative;
 }
 
 .bcms-history {
     &-preview-holder {
         @extend %history-preview-frame;
-        overflow: hidden;
+        overflow: auto;
 
         &-media {
             height: calc(70vh - #{$header-height});
+        }
+
+        &.bcms-history-preview-iframe {
+            overflow: hidden;
+            padding: 0;
         }
     }
 
@@ -52,6 +59,10 @@ $history-bar-height: 44px;
         box-sizing: border-box;
         height: $history-bar-height;
         padding: 3px 30px;
+
+        .bcms-large-titles {
+            line-height: 36px;
+        }
     }
 
     &-items-list {
