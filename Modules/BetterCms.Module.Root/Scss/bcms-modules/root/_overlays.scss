@@ -247,3 +247,17 @@ $overlay-control-buttons: (
         }
     }
 }
+
+.bcms-draggable-region {
+    background-color: $white;
+    border: $border-thin-blue-dashed;
+    color: $text-blue;
+    font: {
+        family: $font-base-family;
+        size: 14px;
+        weight: 600;
+    }
+    line-height: 19px;
+    margin: 10px;
+    padding: 13px 15px 12px;
+}

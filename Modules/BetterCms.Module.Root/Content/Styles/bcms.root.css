@@ -2534,6 +2534,18 @@ td .bcms-field-wrapper {
   background-color: #c22231;
 }
 
+.bcms-draggable-region {
+  background-color: #ffffff;
+  border: 1px dashed #0d7ce7;
+  color: #0d7ce7;
+  font-family: "Open Sans", sans-serif !important;
+  font-size: 14px;
+  font-weight: 600;
+  line-height: 19px;
+  margin: 10px;
+  padding: 13px 15px 12px;
+}
+
 .bcms-pager-no, .bcms-pager-prev, .bcms-pager-next {
   height: 30px;
   width: 30px;
