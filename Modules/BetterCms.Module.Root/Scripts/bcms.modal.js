@@ -26,7 +26,7 @@ bettercms.define('bcms.modal', ['bcms.jquery', 'bcms', 'bcms.tabs', 'bcms.ko.ext
             desirableStatus: '.bcms-content-desirable-status',
             popinfoFrame: '.bcms-popinfo-frame',
             errorFrame: '.bcms-error-frame',
-            loaderContainer: '.bcms-modal-content',
+            loaderContainer: '.bcms-window-options,.bcms-window-tabbed-options',
 
             readonly: '[data-readonly=true]'
         },
