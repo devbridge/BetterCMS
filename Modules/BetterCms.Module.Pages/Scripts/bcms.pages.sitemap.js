@@ -1977,6 +1977,7 @@ bettercms.define('bcms.pages.sitemap', ['bcms.jquery', 'bcms', 'bcms.modal', 'bc
                 var context = container.get(0),
                     model = new VersionViewModel(json);
                 if (context) {
+                    ko.cleanNode(context);
                     ko.applyBindings(model, context);
                 }
             }
