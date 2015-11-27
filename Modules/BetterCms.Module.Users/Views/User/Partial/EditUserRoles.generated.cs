@@ -74,7 +74,7 @@ WriteLiteral(">");
             
             #line default
             #line hidden
-WriteLiteral("</div>    \r\n");
+WriteLiteral("</div>\r\n");
 
 WriteLiteral("    ");
 
@@ -125,24 +125,26 @@ WriteLiteral(" class=\"bcms-single-tag\"");
 
 WriteLiteral(" data-bind=\"css: { \'bcms-single-tag-active\': isActive() }\"");
 
-WriteLiteral("><span");
+WriteLiteral(">\r\n            <div");
 
 WriteLiteral(" data-bind=\"text: name()\"");
 
-WriteLiteral("></span><a");
+WriteLiteral("></div>\r\n            <div");
+
+WriteLiteral(" class=\"bcms-single-tag-remove\"");
 
 WriteLiteral(" data-bind=\"click: remove\"");
 
 WriteLiteral(">");
 
             
-            #line 25 "..\..\Views\User\Partial\EditUserRoles.cshtml"
-                                                                                                                                                             Write(RootGlobalization.Button_Remove);
+            #line 27 "..\..\Views\User\Partial\EditUserRoles.cshtml"
+                                                                     Write(RootGlobalization.Button_Remove);
 
             
             #line default
             #line hidden
-WriteLiteral("</a></div>\r\n        <input");
+WriteLiteral("</div>\r\n        </div>\r\n        <input");
 
 WriteLiteral(" type=\"hidden\"");
 

@@ -60,11 +60,15 @@
         cursor: pointer;
         float: left;
         font: {
-            weight: 700;
+            family: $font-base-family;
+            weight: 600;
             size: 16px;
         }
-        margin: 16px 20px 0 0;
-        padding: 10px 15px;
+        height: 42px;
+        line-height: 43px;
+        margin: 13px 20px 0 0;
+        overflow: hidden;
+        padding: 0 15px;
         position: relative;
 
         &:hover {

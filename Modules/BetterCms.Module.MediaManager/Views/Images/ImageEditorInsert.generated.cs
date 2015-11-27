@@ -622,7 +622,6 @@ WriteLiteral("                        ");
                                                                   {
                                                                       @class = "bcms-field-textarea",
                                                                       @id = "Description",
-                                                                      @style = "width: 380px;",
                                                                       @readonly = "readonly"
                                                                   }));
 
@@ -632,7 +631,7 @@ WriteLiteral("                        ");
 WriteLiteral("\r\n                    </div>\r\n                </div>\r\n            </div>\r\n");
 
             
-            #line 81 "..\..\Views\Images\ImageEditorInsert.cshtml"
+            #line 80 "..\..\Views\Images\ImageEditorInsert.cshtml"
 
             if (Model.Tags != null && Model.Tags.Count > 0)
             {
@@ -651,7 +650,7 @@ WriteLiteral(" class=\"bcms-content-titles\"");
 WriteLiteral(">");
 
             
-            #line 85 "..\..\Views\Images\ImageEditorInsert.cshtml"
+            #line 84 "..\..\Views\Images\ImageEditorInsert.cshtml"
                                             Write(MediaGlobalization.ImageEditor_Dialog_Tags_Title);
 
             
@@ -664,13 +663,13 @@ WriteLiteral(" class=\"bcms-single-tag-holder\"");
 WriteLiteral(">\r\n");
 
             
-            #line 87 "..\..\Views\Images\ImageEditorInsert.cshtml"
+            #line 86 "..\..\Views\Images\ImageEditorInsert.cshtml"
                     
             
             #line default
             #line hidden
             
-            #line 87 "..\..\Views\Images\ImageEditorInsert.cshtml"
+            #line 86 "..\..\Views\Images\ImageEditorInsert.cshtml"
                      foreach (var tag in Model.Tags)
                         {
 
@@ -684,7 +683,7 @@ WriteLiteral(" class=\"bcms-single-tag\"");
 WriteLiteral(">");
 
             
-            #line 89 "..\..\Views\Images\ImageEditorInsert.cshtml"
+            #line 88 "..\..\Views\Images\ImageEditorInsert.cshtml"
                                         Write(tag);
 
             
@@ -693,7 +692,7 @@ WriteLiteral(">");
 WriteLiteral("</div>\r\n");
 
             
-            #line 90 "..\..\Views\Images\ImageEditorInsert.cshtml"
+            #line 89 "..\..\Views\Images\ImageEditorInsert.cshtml"
                         }
 
             
@@ -702,7 +701,7 @@ WriteLiteral("</div>\r\n");
 WriteLiteral("                </div>\r\n            </div>\r\n");
 
             
-            #line 93 "..\..\Views\Images\ImageEditorInsert.cshtml"
+            #line 92 "..\..\Views\Images\ImageEditorInsert.cshtml"
             }
         }
 

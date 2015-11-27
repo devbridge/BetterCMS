@@ -25,16 +25,16 @@ $tag-label-bg: lighten($sky-blue, 5%);
         max-width: 280px;
         padding: 0 18px 0 6px;
         position: relative;
+    }
 
-        > a {
-            @include size(8px);
-            @include positioning($center-y: true);
-            background: url($bcms-tag-close) no-repeat center;
-            cursor: pointer;
-            overflow: hidden;
-            right: 4px;
-            text-indent: 999em;
-        }
+    &-tag-remove {
+        @include size(8px);
+        @include positioning($center-y: true);
+        background: url($bcms-tag-close) no-repeat center;
+        cursor: pointer;
+        overflow: hidden;
+        right: 4px;
+        text-indent: 999em;
     }
 
     &-tag-active {

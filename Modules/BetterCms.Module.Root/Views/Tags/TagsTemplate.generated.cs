@@ -130,17 +130,19 @@ WriteLiteral(" class=\"bcms-single-tag\"");
 
 WriteLiteral(" data-bind=\"css: { \'bcms-single-tag-active\': isActive() }\"");
 
-WriteLiteral("><span");
+WriteLiteral(">\r\n        <div");
 
 WriteLiteral(" data-bind=\"text: name()\"");
 
-WriteLiteral("></span><a");
+WriteLiteral("></div>\r\n        <div");
+
+WriteLiteral(" class=\"bcms-single-tag-remove\"");
 
 WriteLiteral(" data-bind=\"");
 
             
-            #line 29 "..\..\Views\Tags\TagsTemplate.cshtml"
-                                                                                                                                           Write(canEdit ? "click: remove" : string.Empty);
+            #line 31 "..\..\Views\Tags\TagsTemplate.cshtml"
+                                                   Write(canEdit ? "click: remove" : string.Empty);
 
             
             #line default
@@ -150,13 +152,13 @@ WriteLiteral("\"");
 WriteLiteral(">");
 
             
-            #line 29 "..\..\Views\Tags\TagsTemplate.cshtml"
-                                                                                                                                                                                       Write(RootGlobalization.Button_Remove);
+            #line 31 "..\..\Views\Tags\TagsTemplate.cshtml"
+                                                                                               Write(RootGlobalization.Button_Remove);
 
             
             #line default
             #line hidden
-WriteLiteral("</a></div>\r\n    <input");
+WriteLiteral("</div>\r\n    </div>\r\n    <input");
 
 WriteLiteral(" type=\"hidden\"");
 

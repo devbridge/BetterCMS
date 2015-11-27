@@ -9,7 +9,7 @@ bettercms.define('bcms.tags', ['bcms.jquery', 'bcms', 'bcms.dynamicContent', 'bc
         selectors = {
             deleteTagLink: 'div.bcms-action-delete',
             addTagButton: '#bcms-site-settings-add-tag',
-            tagName: 'a.bcms-tag-name',
+            tagName: '.bcms-tag-name',
             tagOldName: 'input.bcms-tag-old-name',
             tagNameEditor: 'input.bcms-tag-name',
             tagsListForm: '#bcms-tags-form',
@@ -18,7 +18,7 @@ bettercms.define('bcms.tags', ['bcms.jquery', 'bcms', 'bcms.dynamicContent', 'bc
             
             deleteCategoryLink: 'div.bcms-action-delete',
             addCategoryButton: '#bcms-site-settings-add-category',
-            categoryName: 'a.bcms-category-name',
+            categoryName: '.bcms-category-name',
             categoryOldName: 'input.bcms-category-old-name',
             categoryNameEditor: 'input.bcms-category-name',
             categoriesListForm: '#bcms-categories-form',

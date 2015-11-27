@@ -27,7 +27,7 @@
                         </div>
 
                         <div class="bcms-file-drop-zone-download">
-                            <a href="/file/bcms-blog/Content/example.blog.post.import.xml" target="_blank">@BlogGlobalization.ImportBlogPosts_DownloadSampleFile_Title</a>
+                            <div href="/file/bcms-blog/Content/example.blog.post.import.xml" target="_blank">@BlogGlobalization.ImportBlogPosts_DownloadSampleFile_Title</div>
                         </div>
                     </div>
 
@@ -76,7 +76,7 @@
                             <div data-bind="text: url, attr: {title: url}"></div>
                             <!-- /ko -->
                             <!-- ko if: success && $parent.finished() && !skipped -->
-                            <a data-bind="text: url, attr: {title: url, href: url}" target="_blank"></a>
+                            <div data-bind="text: url, attr: {title: url, href: url}" target="_blank"></div>
                             <!-- /ko -->
                             <!-- ko if: success && $parent.finished() && skipped -->
                             @BlogGlobalization.ImportBlogPosts_Skipped_Title

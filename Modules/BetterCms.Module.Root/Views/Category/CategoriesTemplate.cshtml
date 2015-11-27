@@ -13,7 +13,7 @@
 <div class="bcms-single-tag-holder" data-bind="foreach: items">
     <div class="bcms-single-tag" >
         <div data-bind="text: $data.text"></div>
-        <div data-bind="@(canEdit ? "click: $parent.remove" : string.Empty)">@RootGlobalization.Button_Remove</div>
+        <div class="bcms-single-tag-remove" data-bind="@(canEdit ? "click: $parent.remove" : string.Empty)">@RootGlobalization.Button_Remove</div>
     </div>
     <input type="hidden" data-bind="attr: { name: 'Categories['+ $index() +'].key', value: $data.id }"/>
 </div>

@@ -189,7 +189,7 @@ WriteLiteral(" />\r\n                        </div>\r\n\r\n                     
 
 WriteLiteral(" class=\"bcms-file-drop-zone-download\"");
 
-WriteLiteral(">\r\n                            <a");
+WriteLiteral(">\r\n                            <div");
 
 WriteLiteral(" href=\"/file/bcms-blog/Content/example.blog.post.import.xml\"");
 
@@ -199,13 +199,13 @@ WriteLiteral(">");
 
             
             #line 30 "..\..\Views\BlogML\UploadImportFile.cshtml"
-                                                                                                      Write(BlogGlobalization.ImportBlogPosts_DownloadSampleFile_Title);
+                                                                                                        Write(BlogGlobalization.ImportBlogPosts_DownloadSampleFile_Title);
 
             
             #line default
             #line hidden
-WriteLiteral("</a>\r\n                        </div>\r\n                    </div>\r\n\r\n             " +
-"   </div>\r\n\r\n                <iframe");
+WriteLiteral("</div>\r\n                        </div>\r\n                    </div>\r\n\r\n           " +
+"     </div>\r\n\r\n                <iframe");
 
 WriteLiteral(" id=\"bcms-import-form-target\"");
 
@@ -379,14 +379,14 @@ WriteLiteral(" data-bind=\"text: url, attr: {title: url}\"");
 
 WriteLiteral("></div>\r\n                            <!-- /ko -->\r\n                            <!" +
 "-- ko if: success && $parent.finished() && !skipped -->\r\n                       " +
-"     <a");
+"     <div");
 
 WriteLiteral(" data-bind=\"text: url, attr: {title: url, href: url}\"");
 
 WriteLiteral(" target=\"_blank\"");
 
-WriteLiteral("></a>\r\n                            <!-- /ko -->\r\n                            <!--" +
-" ko if: success && $parent.finished() && skipped -->\r\n");
+WriteLiteral("></div>\r\n                            <!-- /ko -->\r\n                            <!" +
+"-- ko if: success && $parent.finished() && skipped -->\r\n");
 
 WriteLiteral("                            ");
 

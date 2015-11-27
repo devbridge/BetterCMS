@@ -14,7 +14,7 @@
         {
             column.EditButtonColumn();
 
-            column.For(m => string.Format("<a class=\"bcms-tables-link bcms-grid-item-edit-button bcms-user-name\">{0}</a>", m.UserName))
+            column.For(m => string.Format("<div class=\"bcms-tables-link bcms-grid-item-edit-button bcms-user-name\">{0}</div>", m.UserName))
                 .Named(UsersGlobalization.SiteSettings_Users_NameColumn)
                 .SortColumnName("UserName")
                 .Encode(false);

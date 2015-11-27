@@ -39,7 +39,8 @@
 
             <div class="bcms-single-tag-holder" data-bind="foreach: gridOptions().tags.items()">
                 <div class="bcms-single-tag" data-bind="css: { 'bcms-single-tag-active': isActive() }">
-                    <span data-bind="text: name()"></span><a data-bind="    click: remove">@RootGlobalization.Button_Remove</a>
+                    <div data-bind="text: name()"></div>
+                    <div class="bcms-single-tag-remove" data-bind="click: remove">@RootGlobalization.Button_Remove</div>
                 </div>
                 <input type="hidden" data-bind="attr: { name: getItemInputName($index()) + '.Key', value: id() }" />
                 <input type="hidden" data-bind="attr: { name: getItemInputName($index()) + '.Value', value: name() }" />
@@ -47,7 +48,8 @@
 
             <div class="bcms-single-tag-holder" data-bind="foreach: gridOptions().categories.items()">
                 <div class="bcms-single-tag">
-                    <span data-bind="text: $data.text"></span><a data-bind="    click: $parent.gridOptions().categories.remove">@RootGlobalization.Button_Remove</a>
+                    <div data-bind="text: $data.text"></div>
+                    <div class="bcms-single-tag-remove" data-bind="click: $parent.gridOptions().categories.remove">@RootGlobalization.Button_Remove</div>
                 </div>
                 <input type="hidden" data-bind="attr: { name: 'Categories[' + $index() + '].Key', value: $data.id }" />
                 <input type="hidden" data-bind="attr: { name: 'Categories[' + $index() + '].Value', value: $data.text }" />

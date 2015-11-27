@@ -147,7 +147,7 @@ WriteLiteral(">\r\n        <ul");
 
 WriteLiteral(" class=\"bcms-info-messages bcms-js-info-message\"");
 
-WriteLiteral(">\r\n            <li>\r\n                <a");
+WriteLiteral(">\r\n            <li>\r\n                <div");
 
 WriteLiteral(" class=\"bcms-messages-close bcms-js-btn-close\"");
 
@@ -157,12 +157,12 @@ WriteLiteral(">");
 
             
             #line 24 "..\..\Views\Page\AddNewPage.cshtml"
-                                                                                                  Write(RootGlobalization.Button_Close);
+                                                                                                    Write(RootGlobalization.Button_Close);
 
             
             #line default
             #line hidden
-WriteLiteral("</a>\r\n");
+WriteLiteral("</div>\r\n");
 
 WriteLiteral("                ");
 
@@ -486,14 +486,14 @@ WriteLiteral(" type=\"text\"");
 
 WriteLiteral(" class=\"bcms-search-field-box bcms-js-search-box\"");
 
-WriteAttribute("placeholder", Tuple.Create(" placeholder=\"", 4915), Tuple.Create("\"", 4964)
+WriteAttribute("placeholder", Tuple.Create(" placeholder=\"", 4919), Tuple.Create("\"", 4968)
             
             #line 89 "..\..\Views\Page\AddNewPage.cshtml"
-                                 , Tuple.Create(Tuple.Create("", 4929), Tuple.Create<System.Object, System.Int32>(RootGlobalization.WaterMark_Search
+                                 , Tuple.Create(Tuple.Create("", 4933), Tuple.Create<System.Object, System.Int32>(RootGlobalization.WaterMark_Search
             
             #line default
             #line hidden
-, 4929), false)
+, 4933), false)
 );
 
 WriteLiteral("\r\n                                       data-bind=\"value: searchQuery, valueUpda" +

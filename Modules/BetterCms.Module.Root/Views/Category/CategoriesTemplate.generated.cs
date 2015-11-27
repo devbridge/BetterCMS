@@ -95,7 +95,7 @@ WriteLiteral(" type=\"hidden\"");
 
 WriteLiteral(" id=\"bcms-js-categories-select\"");
 
-WriteLiteral(" />\r\n<div");
+WriteLiteral(" />\r\n\r\n<div");
 
 WriteLiteral(" class=\"bcms-single-tag-holder\"");
 
@@ -105,17 +105,19 @@ WriteLiteral(">\r\n    <div");
 
 WriteLiteral(" class=\"bcms-single-tag\"");
 
-WriteLiteral(" ><span");
+WriteLiteral(" >\r\n        <div");
 
 WriteLiteral(" data-bind=\"text: $data.text\"");
 
-WriteLiteral("></span><a");
+WriteLiteral("></div>\r\n        <div");
+
+WriteLiteral(" class=\"bcms-single-tag-remove\"");
 
 WriteLiteral(" data-bind=\"");
 
             
-            #line 13 "..\..\Views\Category\CategoriesTemplate.cshtml"
-                                                                                      Write(canEdit ? "click: $parent.remove" : string.Empty);
+            #line 16 "..\..\Views\Category\CategoriesTemplate.cshtml"
+                                                   Write(canEdit ? "click: $parent.remove" : string.Empty);
 
             
             #line default
@@ -125,19 +127,19 @@ WriteLiteral("\"");
 WriteLiteral(">");
 
             
-            #line 13 "..\..\Views\Category\CategoriesTemplate.cshtml"
-                                                                                                                                          Write(RootGlobalization.Button_Remove);
+            #line 16 "..\..\Views\Category\CategoriesTemplate.cshtml"
+                                                                                                       Write(RootGlobalization.Button_Remove);
 
             
             #line default
             #line hidden
-WriteLiteral("</a></div>\r\n    <input");
+WriteLiteral("</div>\r\n    </div>\r\n    <input");
 
 WriteLiteral(" type=\"hidden\"");
 
 WriteLiteral(" data-bind=\"attr: { name: \'Categories[\'+ $index() +\'].key\', value: $data.id }\"");
 
-WriteLiteral("/>\r\n</div>\r\n\r\n");
+WriteLiteral("/>\r\n</div>\r\n");
 
         }
     }

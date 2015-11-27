@@ -810,7 +810,7 @@
   position: relative;
 }
 
-.bcms-single-tag > a {
+.bcms-single-tag-remove {
   height: 8px;
   width: 8px;
   position: absolute;

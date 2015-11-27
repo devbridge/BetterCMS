@@ -361,24 +361,26 @@ WriteLiteral(" class=\"bcms-single-tag\"");
 
 WriteLiteral(" data-bind=\"css: { \'bcms-single-tag-active\': isActive() }\"");
 
-WriteLiteral(">\r\n                    <span");
+WriteLiteral(">\r\n                    <div");
 
 WriteLiteral(" data-bind=\"text: name()\"");
 
-WriteLiteral("></span><a");
+WriteLiteral("></div>\r\n                    <div");
 
-WriteLiteral(" data-bind=\"    click: remove\"");
+WriteLiteral(" class=\"bcms-single-tag-remove\"");
+
+WriteLiteral(" data-bind=\"click: remove\"");
 
 WriteLiteral(">");
 
             
-            #line 72 "..\..\Views\Filter\PagesFilterTemplate.cshtml"
-                                                                                      Write(RootGlobalization.Button_Remove);
+            #line 73 "..\..\Views\Filter\PagesFilterTemplate.cshtml"
+                                                                             Write(RootGlobalization.Button_Remove);
 
             
             #line default
             #line hidden
-WriteLiteral("</a>\r\n                </div>\r\n                <input");
+WriteLiteral("</div>\r\n                </div>\r\n                <input");
 
 WriteLiteral(" type=\"hidden\"");
 
@@ -401,24 +403,26 @@ WriteLiteral(">\r\n                <div");
 
 WriteLiteral(" class=\"bcms-single-tag\"");
 
-WriteLiteral(">\r\n                    <span");
+WriteLiteral(">\r\n                    <div");
 
 WriteLiteral(" data-bind=\"text: $data.text\"");
 
-WriteLiteral("></span><a");
+WriteLiteral("></div>\r\n                    <div");
+
+WriteLiteral(" class=\"bcms-single-tag-remove\"");
 
 WriteLiteral(" data-bind=\"click: $parent.categories.remove\"");
 
 WriteLiteral(">");
 
             
-            #line 80 "..\..\Views\Filter\PagesFilterTemplate.cshtml"
-                                                                                                         Write(RootGlobalization.Button_Remove);
+            #line 82 "..\..\Views\Filter\PagesFilterTemplate.cshtml"
+                                                                                                Write(RootGlobalization.Button_Remove);
 
             
             #line default
             #line hidden
-WriteLiteral("</a>\r\n                </div>\r\n                <input");
+WriteLiteral("</div>\r\n                </div>\r\n                <input");
 
 WriteLiteral(" type=\"hidden\"");
 
@@ -448,7 +452,7 @@ WriteLiteral(">\r\n");
 WriteLiteral("                    ");
 
             
-            #line 90 "..\..\Views\Filter\PagesFilterTemplate.cshtml"
+            #line 92 "..\..\Views\Filter\PagesFilterTemplate.cshtml"
                Write(Html.CheckBoxFor(model => model.IncludeArchived, new { data_bind = "checked: includeArchived" }));
 
             
@@ -463,7 +467,7 @@ WriteLiteral(" data-bind=\"click: changeIncludeArchived\"");
 WriteLiteral(">");
 
             
-            #line 91 "..\..\Views\Filter\PagesFilterTemplate.cshtml"
+            #line 93 "..\..\Views\Filter\PagesFilterTemplate.cshtml"
                                                                                                       Write(PagesGlobalization.SiteSettings_Pages_FilterIncludeArchived);
 
             
@@ -472,13 +476,13 @@ WriteLiteral(">");
 WriteLiteral("</div>\r\n                </div>\r\n");
 
             
-            #line 93 "..\..\Views\Filter\PagesFilterTemplate.cshtml"
+            #line 95 "..\..\Views\Filter\PagesFilterTemplate.cshtml"
                 
             
             #line default
             #line hidden
             
-            #line 93 "..\..\Views\Filter\PagesFilterTemplate.cshtml"
+            #line 95 "..\..\Views\Filter\PagesFilterTemplate.cshtml"
                  if (!Model.HideMasterPagesFiltering)
                 {
 
@@ -494,7 +498,7 @@ WriteLiteral(">\r\n");
 WriteLiteral("                        ");
 
             
-            #line 96 "..\..\Views\Filter\PagesFilterTemplate.cshtml"
+            #line 98 "..\..\Views\Filter\PagesFilterTemplate.cshtml"
                    Write(Html.CheckBoxFor(model => model.IncludeMasterPages, new { data_bind = "checked: includeMasterPages" }));
 
             
@@ -509,7 +513,7 @@ WriteLiteral(" data-bind=\"click: changeIncludeMasterPages\"");
 WriteLiteral(">");
 
             
-            #line 97 "..\..\Views\Filter\PagesFilterTemplate.cshtml"
+            #line 99 "..\..\Views\Filter\PagesFilterTemplate.cshtml"
                                                                                                              Write(PagesGlobalization.SiteSettings_Pages_FilterIncludeMasterPages);
 
             
@@ -518,7 +522,7 @@ WriteLiteral(">");
 WriteLiteral("</div>\r\n                    </div>\r\n");
 
             
-            #line 99 "..\..\Views\Filter\PagesFilterTemplate.cshtml"
+            #line 101 "..\..\Views\Filter\PagesFilterTemplate.cshtml"
                 }
 
             
@@ -537,7 +541,7 @@ WriteLiteral(" data-bind=\"click: searchWithFilter\"");
 WriteLiteral(">");
 
             
-            #line 103 "..\..\Views\Filter\PagesFilterTemplate.cshtml"
+            #line 105 "..\..\Views\Filter\PagesFilterTemplate.cshtml"
                                                                              Write(PagesGlobalization.SiteSettings_Pages_FilterSearch);
 
             
@@ -552,7 +556,7 @@ WriteLiteral(" data-bind=\"click: clearFilter\"");
 WriteLiteral(">");
 
             
-            #line 104 "..\..\Views\Filter\PagesFilterTemplate.cshtml"
+            #line 106 "..\..\Views\Filter\PagesFilterTemplate.cshtml"
                                                                        Write(PagesGlobalization.SiteSettings_Pages_FilterClear);
 
             
@@ -573,7 +577,7 @@ WriteLiteral(" data-bind=\"click: toggleShowSorting\"");
 WriteLiteral(">");
 
             
-            #line 110 "..\..\Views\Filter\PagesFilterTemplate.cshtml"
+            #line 112 "..\..\Views\Filter\PagesFilterTemplate.cshtml"
                                                                              Write(PagesGlobalization.SiteSettings_Pages_Sort);
 
             

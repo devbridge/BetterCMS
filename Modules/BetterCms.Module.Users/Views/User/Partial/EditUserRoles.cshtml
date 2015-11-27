@@ -3,7 +3,7 @@
 @using BetterCms.Module.Users.Content.Resources
 
 <div class="bcms-input-list-holder" data-bind="with: roles">
-    <div class="bcms-content-titles">@UsersGlobalization.EditUser_Add_Role_Title</div>    
+    <div class="bcms-content-titles">@UsersGlobalization.EditUser_Add_Role_Title</div>
     @Html.Tooltip(UsersGlobalization.EditUser_Role_Tooltip_Description)
 
     <div class="bcms-field-wrapper" data-bind="visible: isExpanded()">
@@ -22,7 +22,10 @@
     </div>
 
     <div class="bcms-single-tag-holder" data-bind="foreach: items()">
-        <div class="bcms-single-tag" data-bind="css: { 'bcms-single-tag-active': isActive() }"><span data-bind="text: name()"></span><a data-bind="click: remove">@RootGlobalization.Button_Remove</a></div>
+        <div class="bcms-single-tag" data-bind="css: { 'bcms-single-tag-active': isActive() }">
+            <div data-bind="text: name()"></div>
+            <div class="bcms-single-tag-remove" data-bind="click: remove">@RootGlobalization.Button_Remove</div>
+        </div>
         <input type="hidden" data-bind="attr: { name: getItemInputName($index()), value: name() }" />
     </div>
 </div>

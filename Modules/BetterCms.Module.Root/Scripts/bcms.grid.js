@@ -9,7 +9,7 @@ bettercms.define('bcms.grid', ['bcms.jquery', 'bcms'], function ($, bcms) {
             firstTable: 'table.bcms-tables:first',
             emptyRow: 'tr.bcms-grid-empty-row',
             anyRow: 'tbody > tr:not(.bcms-grid-empty-row):first',
-            sortColumnHeaders: 'a.bcms-sort-arrow',
+            sortColumnHeaders: '.bcms-sort-arrow',
             hiddenSortColumnField: '#bcms-grid-sort-column',
             hiddenSortDirectionField: '#bcms-grid-sort-direction',
             hiddenPageNumberField: '#bcms-grid-page-number',

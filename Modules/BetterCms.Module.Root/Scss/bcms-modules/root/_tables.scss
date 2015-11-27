@@ -33,6 +33,7 @@ $sort-icons: (
             size: 14px;
             weight: 600;
         }
+        line-height: 18px;
         padding: 9px 10px 8px;
         text-align: left;
 
@@ -145,7 +146,23 @@ $sort-icons: (
 }
 
 .bcms-table-no-data {
+    cursor: default;
+    font: {
+        family: $font-base-family;
+        size: 14px;
+    }
     margin-left: 30px;
+}
+
+.bcms-pages-no-data {
+    color: $text-blue;
+    cursor: default;
+    font: {
+        family: $font-base-family;
+        size: 14px;
+    }
+    line-height: 28px;
+    padding: 10px 30px;
 }
 
 .bcms-sort-arrow {
@@ -183,6 +200,7 @@ $sort-icons: (
     &-column {
         @include vertical-align($block: table-cell);
         box-sizing: border-box;
+        line-height: 18px;
         padding: 17px 10px 10px;
 
         .bcms-action-edit,

@@ -63,7 +63,7 @@ WriteLiteral("></ul>\r\n    <ul");
 
 WriteLiteral(" class=\"bcms-info-messages\"");
 
-WriteLiteral(">\r\n        <li>\r\n            <a");
+WriteLiteral(">\r\n        <li>\r\n            <div");
 
 WriteLiteral(" class=\"bcms-messages-close bcms-js-btn-close\"");
 
@@ -73,12 +73,12 @@ WriteLiteral(">");
 
             
             #line 8 "..\..\Views\Shared\Partial\InfoMessageAboutMasterPage.cshtml"
-                                                                                            Write(RootGlobalization.Button_Close);
+                                                                                              Write(RootGlobalization.Button_Close);
 
             
             #line default
             #line hidden
-WriteLiteral("</a>\r\n");
+WriteLiteral("</div>\r\n");
 
 WriteLiteral("            ");
 
