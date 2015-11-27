@@ -206,7 +206,9 @@ bettercms.define('bcms.options', ['bcms.jquery', 'bcms', 'bcms.ko.extenders', 'b
                 _super.call(this, container, items, customOptions, showLanguages, languages);
 
                 var self = this;
-
+                if (!showLanguages && bcms.languageId) {
+                    self.onLanguageChanged(bcms.languageId);
+                }
                 self.attachDatePickers = function () {
                     attachDatePickers(self);
                 };
@@ -424,12 +426,6 @@ bettercms.define('bcms.options', ['bcms.jquery', 'bcms', 'bcms.ko.extenders', 'b
                             self.isSelected = true;
                         },
                         onClose: function (selectedDate, datePicker) {
-//                            setTimeout(function () {
-//                                var focusedElement = datePicker.input.parents('#' + self.rowId).find(selectors.focusedElements);
-//                                if (focusedElement.length === 0) {
-//                                    self.onBlurField();
-//                                }
-//                            }, 10);
                         }
                     },
                         row = $('#' + self.rowId),
@@ -442,11 +438,9 @@ bettercms.define('bcms.options', ['bcms.jquery', 'bcms', 'bcms.ko.extenders', 'b
                         datePickerTrigger = row.find(selectors.datePickerTrigger);
 
                         datePickerTrigger.on('click', function (event) {
-//                            self.onItemSelect(self.valueHasFocus, self, event);
                             self.valueHasFocus(true);
                         });
                         datePickerTrigger.on('focus', function (event) {
-//                            self.onItemSelect(self.valueHasFocus, self, event);
                             self.valueHasFocus(true);
                         });
                     }

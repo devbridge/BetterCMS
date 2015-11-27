@@ -216,7 +216,16 @@ namespace BetterCms.Module.Root.Services
             {
                 foreach (var optionValue in optionValues.Distinct())
                 {
+                    if (languageId != null && languageId != default(Guid) && optionValue is IMultilingualOption)
+                    {
+                        var multilingualOption = optionValue as IMultilingualOption;
+                        if (multilingualOption.Translations == null || !multilingualOption.Translations.Any())
+                        {
+                            continue;
+                        }
+                    }
                     var optionViewModel = CreateOptionValueViewModel(optionValue, languageId);
+                    optionViewModel.UseDefaultValue = optionValue.UseDefaultValue;
                     optionModels.Add(optionViewModel);
                 }
             }
@@ -230,12 +239,12 @@ namespace BetterCms.Module.Root.Services
                     {
                         optionViewModel = CreateOptionValueViewModel(option, languageId);
                         optionModels.Add(optionViewModel);
-                    } 
-//                    else if (optionViewModel.OptionValue == null && languageId != null)
-//                    {
-//                        var optViewModel = CreateOptionValueViewModel(option, languageId);
-//                        optionViewModel.OptionValue = optViewModel.OptionValue;
-//                    }
+                    }
+                    else if (optionViewModel.OptionValue == null && optionViewModel.UseDefaultValue && (languageId == null || languageId == default(Guid)))
+                    {
+                        var optViewModel = CreateOptionValueViewModel(option, languageId);
+                        optionViewModel.OptionValue = optViewModel.OptionValue;
+                    }
                 }
             }
 
@@ -905,11 +914,6 @@ namespace BetterCms.Module.Root.Services
         /// <param name="valueModels">The value models.</param>
         public void SetCustomOptionValueTitles(IEnumerable<OptionViewModel> optionModels, IEnumerable<OptionValueEditViewModel> valueModels = null)
         {
-//            var values = optionModels
-//                    .Where(m => m.Type == OptionType.Custom && m.CustomOption != null)
-//                    .Select(m => new { m.CustomOption.Identifier, Value = m.OptionDefaultValue });
-//            var customOptionModels = optionModels.Where(m => m.Type == OptionType.Custom);
-
             var values = new List<System.Tuple<string, string>>();
             foreach (var optionModel in optionModels)
             {
@@ -929,9 +933,6 @@ namespace BetterCms.Module.Root.Services
             }
             if (valueModels != null)
             {
-//                values = values.Concat(valueModels
-//                    .Where(m => m.Type == OptionType.Custom && m.CustomOption != null)
-//                    .Select(m => new { m.CustomOption.Identifier, Value = m.OptionValue }));
                 foreach (var valueModel in valueModels)
                 {
                     if (valueModel.Type != OptionType.Custom || valueModel.CustomOption == null)
