@@ -3788,7 +3788,9 @@ textarea.markItUpEditor:focus {
 }
 
 .select2-results li {
+  line-height: 20px;
   list-style: none;
+  margin: 0;
 }
 
 .select2-results .select2-selected {
@@ -3911,6 +3913,7 @@ textarea.markItUpEditor:focus {
 .select2-no-results {
   background-color: #e7f3ff;
   display: block;
+  font-size: 14px;
   padding: 5px 10px;
 }
 

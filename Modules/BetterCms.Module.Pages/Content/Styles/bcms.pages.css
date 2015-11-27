@@ -396,16 +396,23 @@
 
 .bcms-history-preview-holder, .bcms-history-preview-data {
   background-color: #f3f3f3;
+  box-sizing: border-box;
   height: calc(70vh - 105px);
+  padding: 10px 20px;
   position: relative;
 }
 
 .bcms-history-preview-holder {
-  overflow: hidden;
+  overflow: auto;
 }
 
 .bcms-history-preview-holder-media {
   height: calc(70vh - 55px);
+}
+
+.bcms-history-preview-holder.bcms-history-preview-iframe {
+  overflow: hidden;
+  padding: 0;
 }
 
 .bcms-history-preview-data {
@@ -437,6 +444,10 @@
   box-sizing: border-box;
   height: 44px;
   padding: 3px 30px;
+}
+
+.bcms-history-table-top .bcms-large-titles {
+  line-height: 36px;
 }
 
 .bcms-history-items-list {
