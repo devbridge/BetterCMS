@@ -250,6 +250,7 @@ namespace BetterCms.Module.Root.Mvc.Helpers
                     }
 
                     attributes = string.Format(@"{0} data-language=""{1}""", attributes, cultureCode);
+                    attributes = string.Format(@"{0} data-language-id=""{1}""", attributes, model.LanguageId);
                 }
             }
 
