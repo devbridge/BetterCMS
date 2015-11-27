@@ -1397,8 +1397,7 @@ div.bcms-btn-logout:active {
   cursor: pointer;
 }
 
-.bcms-contents-tree-add-block:hover,
-.bcms-contents-tree-add-block.bcms-active {
+.bcms-contents-tree-add-block:hover, .bcms-contents-tree-add-block.bcms-active {
   background-color: #0265ad;
 }
 
@@ -2267,13 +2266,11 @@ a.bcms-error-close {
   background-color: #4e4e4e;
 }
 
-.bcms-region-contentstree,
-.bcms-region-sortcancel {
+.bcms-region-contentstree, .bcms-region-sortcancel {
   background-color: #676767;
 }
 
-.bcms-region-contentstree:hover,
-.bcms-region-sortcancel:hover {
+.bcms-region-contentstree:hover, .bcms-region-sortcancel:hover {
   background-color: #4e4e4e;
 }
 
