@@ -27,6 +27,7 @@ bettercms.define('bcms.pages.sitemap', ['bcms.jquery', 'bcms', 'bcms.modal', 'bc
                 siteSettingsSitemapRowTemplate: '#bcms-sitemap-list-row-template',
                 siteSettingsSitemapRowTemplateFirstRow: 'tr:first',
                 siteSettingsSitemapsTableFirstRow: 'table.bcms-tables > tbody > tr:first',
+                siteSettingsSitemapsLoaderContainer: '.bcms-window-tabbed-options',
 
                 gridRestoreLinks: '#bcms-sitemaphistory-form tr .bcms-js-restore',
                 gridCells: '#bcms-sitemaphistory-form tr td',
@@ -427,7 +428,7 @@ bettercms.define('bcms.pages.sitemap', ['bcms.jquery', 'bcms', 'bcms.modal', 'bc
             self.initialize = function (content, dialog) {
                 self.container = dialog.container;
                 sitemap.activeMessageContainer = self.container;
-                sitemap.activeLoadingContainer = self.container.find(selectors.sitemapAddNodeDataBind);
+                sitemap.activeLoadingContainer = self.container.find(selectors.siteSettingsSitemapsLoaderContainer);
 
                 if (content.Success) {
                     // Create data models.

@@ -124,13 +124,8 @@ bettercms.define('bcms.pages.seo', ['bcms.jquery', 'bcms', 'bcms.modal', 'bcms.m
                     contentAvailable : function () {
                         seo.initEditSeoDialogEvents(dialog);
                     },
-                        
-                    beforePost: function () {
-                        dialog.container.showLoading();
-                    },
                                    
                     postComplete: function (data) {
-                        dialog.container.hideLoading();
                         if (data.Data && data.Data.PageUrlPath) {
                             redirect.RedirectWithAlert(data.Data.PageUrlPath);
                         }
