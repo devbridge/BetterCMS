@@ -48,8 +48,7 @@
 
         column.For(m => m.ArchivedByUser)
                .Named(NavigationGlobalization.SitemapHistory_Column_ArchivedBy)
-               .SortColumnName("ArchivedByUser")
-               .HeaderAttributes(@style => "width: 130px;");
+               .SortColumnName("ArchivedByUser");
 
         column.For(m => m.StatusName)
                .Named(NavigationGlobalization.SitemapHistory_Column_Status)
