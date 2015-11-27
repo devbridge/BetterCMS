@@ -166,13 +166,13 @@ WriteLiteral(">\r\n            <div");
 
 WriteLiteral(" class=\"bcms-btn-main\"");
 
-WriteLiteral(" id=\"bcms-create-redirectbutton\"");
+WriteLiteral(" id=\"bcms-create-redirect-button\"");
 
 WriteLiteral(">");
 
             
             #line 41 "..\..\Views\Redirect\Redirects.cshtml"
-                                                                  Write(PagesGlobalization.SiteSettings_Redirects_AddNew);
+                                                                   Write(PagesGlobalization.SiteSettings_Redirects_AddNew);
 
             
             #line default
