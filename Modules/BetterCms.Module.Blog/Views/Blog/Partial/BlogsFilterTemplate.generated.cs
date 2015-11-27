@@ -77,6 +77,45 @@ WriteLiteral(" id=\"bcms-filter-template\"");
 
 WriteLiteral(">\r\n    <div");
 
+WriteLiteral(" class=\"bcms-sort-options\"");
+
+WriteLiteral(" id=\"bcms-js-filter-sort\"");
+
+WriteLiteral(">\r\n        <div");
+
+WriteLiteral(" class=\"bcms-sort-options-label\"");
+
+WriteLiteral(" data-bind=\"click: toggleShowSorting\"");
+
+WriteLiteral(">");
+
+            
+            #line 11 "..\..\Views\Blog\Partial\BlogsFilterTemplate.cshtml"
+                                                                             Write(PagesGlobalization.SiteSettings_Pages_Sort);
+
+            
+            #line default
+            #line hidden
+WriteLiteral("</div>\r\n\r\n        <div");
+
+WriteLiteral(" class=\"bcms-sort-options-block bcms-tooltip-tl\"");
+
+WriteLiteral(" data-bind=\"visible: showSorting\"");
+
+WriteLiteral(">\r\n            <!-- ko foreach: sortFields -->\r\n            <div");
+
+WriteLiteral(" class=\"bcms-sort-option\"");
+
+WriteLiteral(" data-bind=\"click: $parent.applySort.bind($data, title, column, direction)\"");
+
+WriteLiteral(">\r\n                <div");
+
+WriteLiteral(" data-bind=\"text: title, css: { \'bcms-sort-options-sorted\':direction == $parent.s" +
+"ortDirection() && column == $parent.sortColumn() }\"");
+
+WriteLiteral("></div>\r\n            </div>\r\n            <!-- /ko -->\r\n        </div>\r\n    </div>" +
+"\r\n\r\n    <div");
+
 WriteLiteral(" class=\"bcms-grid-filtering\"");
 
 WriteLiteral(" data-bind=\"css: { \'bcms-active-filter\': isVisible() }\"");
@@ -92,7 +131,7 @@ WriteLiteral(">\r\n");
 WriteLiteral("            ");
 
             
-            #line 12 "..\..\Views\Blog\Partial\BlogsFilterTemplate.cshtml"
+            #line 24 "..\..\Views\Blog\Partial\BlogsFilterTemplate.cshtml"
        Write(BlogGlobalization.SiteSettings_Blogs_Filter);
 
             
@@ -107,7 +146,7 @@ WriteLiteral(" data-bind=\"style: { display: isEdited() ? \'inline-block\' : \'n
 WriteLiteral(">");
 
             
-            #line 13 "..\..\Views\Blog\Partial\BlogsFilterTemplate.cshtml"
+            #line 25 "..\..\Views\Blog\Partial\BlogsFilterTemplate.cshtml"
                                                                                                               Write(BlogGlobalization.SiteSettings_Blogs_FilterIsModified);
 
             
@@ -142,7 +181,7 @@ WriteLiteral(" class=\"bcms-filter-text\"");
 WriteLiteral(">");
 
             
-            #line 21 "..\..\Views\Blog\Partial\BlogsFilterTemplate.cshtml"
+            #line 33 "..\..\Views\Blog\Partial\BlogsFilterTemplate.cshtml"
                                              Write(BlogGlobalization.SiteSettings_Blogs_FilterByTags);
 
             
@@ -185,7 +224,7 @@ WriteLiteral(" class=\"bcms-filter-text\"");
 WriteLiteral(">");
 
             
-            #line 33 "..\..\Views\Blog\Partial\BlogsFilterTemplate.cshtml"
+            #line 45 "..\..\Views\Blog\Partial\BlogsFilterTemplate.cshtml"
                                              Write(BlogGlobalization.SiteSettings_Blogs_FilterByCategory);
 
             
@@ -212,7 +251,7 @@ WriteLiteral(" class=\"bcms-filter-text\"");
 WriteLiteral(">");
 
             
-            #line 40 "..\..\Views\Blog\Partial\BlogsFilterTemplate.cshtml"
+            #line 52 "..\..\Views\Blog\Partial\BlogsFilterTemplate.cshtml"
                                              Write(BlogGlobalization.SiteSettings_Blogs_FilterByStatus);
 
             
@@ -227,7 +266,7 @@ WriteLiteral(">\r\n");
 WriteLiteral("                        ");
 
             
-            #line 42 "..\..\Views\Blog\Partial\BlogsFilterTemplate.cshtml"
+            #line 54 "..\..\Views\Blog\Partial\BlogsFilterTemplate.cshtml"
                    Write(Html.DropDownListFor(m => m.Status, new List<SelectListItem>(), new { data_bind = "options: statuses, value: status, optionsText: 'Value', optionsValue: 'Key', select2: { minimumResultsForSearch: -1 }", id = "bcms-js-filter-status" }));
 
             
@@ -244,7 +283,7 @@ WriteLiteral(" class=\"bcms-filter-text\"");
 WriteLiteral(">");
 
             
-            #line 46 "..\..\Views\Blog\Partial\BlogsFilterTemplate.cshtml"
+            #line 58 "..\..\Views\Blog\Partial\BlogsFilterTemplate.cshtml"
                                              Write(BlogGlobalization.SiteSettings_Blogs_FilterBySEO);
 
             
@@ -259,7 +298,7 @@ WriteLiteral(">\r\n");
 WriteLiteral("                        ");
 
             
-            #line 48 "..\..\Views\Blog\Partial\BlogsFilterTemplate.cshtml"
+            #line 60 "..\..\Views\Blog\Partial\BlogsFilterTemplate.cshtml"
                    Write(Html.DropDownListFor(m => m.SeoStatus, new List<SelectListItem>(), new { data_bind = "options: seoStatuses, value: seoStatus, optionsText: 'Value', optionsValue: 'Key', select2: { minimumResultsForSearch: -1 }", id = "bcms-js-filter-seostatus" }));
 
             
@@ -268,13 +307,13 @@ WriteLiteral("                        ");
 WriteLiteral("\r\n                    </div>\r\n                </div>\r\n");
 
             
-            #line 51 "..\..\Views\Blog\Partial\BlogsFilterTemplate.cshtml"
+            #line 63 "..\..\Views\Blog\Partial\BlogsFilterTemplate.cshtml"
                 
             
             #line default
             #line hidden
             
-            #line 51 "..\..\Views\Blog\Partial\BlogsFilterTemplate.cshtml"
+            #line 63 "..\..\Views\Blog\Partial\BlogsFilterTemplate.cshtml"
                  if (Model.Languages != null && Model.Languages.Any())
                 {
 
@@ -292,7 +331,7 @@ WriteLiteral(" class=\"bcms-filter-text\"");
 WriteLiteral(">");
 
             
-            #line 54 "..\..\Views\Blog\Partial\BlogsFilterTemplate.cshtml"
+            #line 66 "..\..\Views\Blog\Partial\BlogsFilterTemplate.cshtml"
                                                  Write(BlogGlobalization.SiteSettings_Blogs_FilterByLanguage);
 
             
@@ -314,7 +353,7 @@ WriteLiteral(" id=\"bcms-js-filter-languages\"");
 WriteLiteral("/>\r\n                        </div>\r\n                    </div>\r\n");
 
             
-            #line 59 "..\..\Views\Blog\Partial\BlogsFilterTemplate.cshtml"
+            #line 71 "..\..\Views\Blog\Partial\BlogsFilterTemplate.cshtml"
                 }
 
             
@@ -345,7 +384,7 @@ WriteLiteral(" data-bind=\"click: remove\"");
 WriteLiteral(">");
 
             
-            #line 65 "..\..\Views\Blog\Partial\BlogsFilterTemplate.cshtml"
+            #line 77 "..\..\Views\Blog\Partial\BlogsFilterTemplate.cshtml"
                                                                              Write(RootGlobalization.Button_Remove);
 
             
@@ -387,7 +426,7 @@ WriteLiteral(" data-bind=\"click: $parent.categories.remove\"");
 WriteLiteral(">");
 
             
-            #line 74 "..\..\Views\Blog\Partial\BlogsFilterTemplate.cshtml"
+            #line 86 "..\..\Views\Blog\Partial\BlogsFilterTemplate.cshtml"
                                                                                                 Write(RootGlobalization.Button_Remove);
 
             
@@ -423,7 +462,7 @@ WriteLiteral(">\r\n");
 WriteLiteral("                    ");
 
             
-            #line 83 "..\..\Views\Blog\Partial\BlogsFilterTemplate.cshtml"
+            #line 95 "..\..\Views\Blog\Partial\BlogsFilterTemplate.cshtml"
                Write(Html.CheckBoxFor(model => model.IncludeArchived, new { data_bind = "checked: includeArchived" }));
 
             
@@ -438,7 +477,7 @@ WriteLiteral(" data-bind=\"click: changeIncludeArchived\"");
 WriteLiteral(">");
 
             
-            #line 84 "..\..\Views\Blog\Partial\BlogsFilterTemplate.cshtml"
+            #line 96 "..\..\Views\Blog\Partial\BlogsFilterTemplate.cshtml"
                                                                                                       Write(BlogGlobalization.SiteSettings_Blogs_FilterIncludeArchived);
 
             
@@ -457,7 +496,7 @@ WriteLiteral(" data-bind=\"click: searchWithFilter\"");
 WriteLiteral(">");
 
             
-            #line 88 "..\..\Views\Blog\Partial\BlogsFilterTemplate.cshtml"
+            #line 100 "..\..\Views\Blog\Partial\BlogsFilterTemplate.cshtml"
                                                                              Write(BlogGlobalization.SiteSettings_Blogs_FilterSearch);
 
             
@@ -472,52 +511,13 @@ WriteLiteral(" data-bind=\"click: clearFilter\"");
 WriteLiteral(">");
 
             
-            #line 89 "..\..\Views\Blog\Partial\BlogsFilterTemplate.cshtml"
+            #line 101 "..\..\Views\Blog\Partial\BlogsFilterTemplate.cshtml"
                                                                        Write(BlogGlobalization.SiteSettings_Blogs_FilterClear);
 
             
             #line default
             #line hidden
-WriteLiteral("</div>\r\n            </div>\r\n        </div>\r\n    </div>\r\n\r\n    <div");
-
-WriteLiteral(" class=\"bcms-sort-options\"");
-
-WriteLiteral(" id=\"bcms-js-filter-sort\"");
-
-WriteLiteral(">\r\n        <div");
-
-WriteLiteral(" class=\"bcms-sort-options-label\"");
-
-WriteLiteral(" data-bind=\"click: toggleShowSorting\"");
-
-WriteLiteral(">");
-
-            
-            #line 95 "..\..\Views\Blog\Partial\BlogsFilterTemplate.cshtml"
-                                                                             Write(PagesGlobalization.SiteSettings_Pages_Sort);
-
-            
-            #line default
-            #line hidden
-WriteLiteral("</div>\r\n\r\n        <div");
-
-WriteLiteral(" class=\"bcms-sort-options-block bcms-tooltip-tr\"");
-
-WriteLiteral(" data-bind=\"visible: showSorting\"");
-
-WriteLiteral(">\r\n            <!-- ko foreach: sortFields -->\r\n            <div");
-
-WriteLiteral(" class=\"bcms-sort-option\"");
-
-WriteLiteral(" data-bind=\"click: $parent.applySort.bind($data, title, column, direction)\"");
-
-WriteLiteral(">\r\n                <div");
-
-WriteLiteral(" data-bind=\"text: title, css: { \'bcms-sort-options-sorted\':direction == $parent.s" +
-"ortDirection() && column == $parent.sortColumn() }\"");
-
-WriteLiteral("></div>\r\n            </div>\r\n            <!-- /ko -->\r\n        </div>\r\n    </div>" +
-"\r\n</div>\r\n");
+WriteLiteral("</div>\r\n            </div>\r\n        </div>\r\n    </div>\r\n\r\n</div>");
 
         }
     }

@@ -123,6 +123,7 @@ a {
     &-content {
         background-color: $bg-gray-lighter;
         box-sizing: border-box;
+        line-height: 22px;
         margin: auto;
         padding: $header-height 0 $footer-height;
     }

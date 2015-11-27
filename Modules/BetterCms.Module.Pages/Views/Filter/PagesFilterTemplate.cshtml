@@ -4,6 +4,18 @@
 @model BetterCms.Module.Pages.ViewModels.Filter.PagesGridViewModel<BetterCms.Module.Pages.ViewModels.SiteSettings.SiteSettingPageViewModel>
 
 <div class="bcms-filter-holder" id="bcms-filter-template">
+    <div class="bcms-sort-options" id="bcms-js-filter-sort">
+        <div class="bcms-sort-options-label" data-bind="click: toggleShowSorting">@PagesGlobalization.SiteSettings_Pages_Sort</div>
+
+        <div class="bcms-sort-options-block bcms-tooltip-tl" data-bind="visible: showSorting">
+            <!-- ko foreach: sortFields -->
+            <div class="bcms-sort-option" data-bind="click: $parent.applySort.bind($data, title, column, direction)">
+                <div data-bind="text: title, css: { 'bcms-sort-options-sorted':direction == $parent.sortDirection() && column == $parent.sortColumn() }"></div>
+            </div>
+            <!-- /ko -->
+        </div>
+    </div>
+
     @Html.HiddenFor(m => m.ContentId)
     <div class="bcms-grid-filtering" data-bind="css: { 'bcms-active-filter': isVisible() }">
         <div class="bcms-filterbox" data-bind="click: toggleFilter">
@@ -108,15 +120,4 @@
         </div>
     </div>
 
-    <div class="bcms-sort-options" id="bcms-js-filter-sort">
-        <div class="bcms-sort-options-label" data-bind="click: toggleShowSorting">@PagesGlobalization.SiteSettings_Pages_Sort</div>
-
-        <div class="bcms-sort-options-block bcms-tooltip-tr" data-bind="visible: showSorting">
-            <!-- ko foreach: sortFields -->
-            <div class="bcms-sort-option" data-bind="click: $parent.applySort.bind($data, title, column, direction)">
-                <div data-bind="text: title, css: { 'bcms-sort-options-sorted':direction == $parent.sortDirection() && column == $parent.sortColumn() }"></div>
-            </div>
-            <!-- /ko -->
-        </div>
-    </div>
 </div>

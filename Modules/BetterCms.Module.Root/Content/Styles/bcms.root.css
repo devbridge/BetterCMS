@@ -213,6 +213,7 @@ a:hover {
 .bcms-modal-content {
   background-color: #eae8e9;
   box-sizing: border-box;
+  line-height: 22px;
   margin: auto;
   padding: 55px 0 65px;
 }
@@ -3769,6 +3770,11 @@ textarea.markItUpEditor:focus {
   width: 18px;
   background: url("data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxNy44IiBoZWlnaHQ9IjkuOCIgdmlld0JveD0iLTU5MS40IDc4My41IDE3LjggOS44IiBlbmFibGUtYmFja2dyb3VuZD0ibmV3IC01OTEuNCA3ODMuNSAxNy44IDkuOCI+PHBhdGggZD0ibS01NzUgNzg1bC03LjUgNy03LjUtNyIgZmlsbD0ibm9uZSIgc3Ryb2tlPSIjYTVhNWE1IiBzdHJva2UtbGluZWNhcD0ic3F1YXJlIiBzdHJva2Utd2lkdGg9IjIiLz48L3N2Zz4=") no-repeat center;
   right: 15px;
+}
+
+.select2-container.bcms-input-validation-error {
+  background-color: #ffe9e9;
+  border: 1px solid #e17777;
 }
 
 .select2-results {
