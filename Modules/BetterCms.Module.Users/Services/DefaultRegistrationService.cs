@@ -32,6 +32,10 @@ namespace BetterCms.Module.Users.Services
 
             if (http != null && http.Request != null && http.Request.Url != null)
             {
+                if (http.Request.Url.AbsolutePath.EndsWith(".css"))
+                {
+                    return;
+                }
                 if (!http.Request.Url.PathAndQuery.Contains(url))
                 {
                     http.Response.Redirect(url, true);

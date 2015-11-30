@@ -62,21 +62,18 @@ WriteLiteral(" type=\"text/css\"");
 
 WriteLiteral(" async>\r\n    <link");
 
-WriteAttribute("href", Tuple.Create(" href=\"", 260), Tuple.Create("\"", 302)
-, Tuple.Create(Tuple.Create("", 267), Tuple.Create<System.Object, System.Int32>(Href("~/Content/Styles/bcms.users.min.css")
-, 267), false)
-);
-
 WriteLiteral(" rel=\"stylesheet\"");
 
 WriteLiteral(" type=\"text/css\"");
 
-WriteLiteral(">\r\n");
+WriteLiteral(" href=\"/file/bcms-users/Content/Styles/bcms.users.min.css\"");
+
+WriteLiteral(" />\r\n\r\n");
 
 WriteLiteral("    ");
 
             
-            #line 8 "..\..\Views\Shared\PublicActionLayout.cshtml"
+            #line 9 "..\..\Views\Shared\PublicActionLayout.cshtml"
 Write(RenderSection("Head", false));
 
             
@@ -107,7 +104,7 @@ WriteLiteral(" class=\"bcms-modal-title\"");
 WriteLiteral(">");
 
             
-            #line 16 "..\..\Views\Shared\PublicActionLayout.cshtml"
+            #line 17 "..\..\Views\Shared\PublicActionLayout.cshtml"
                                              Write(ViewBag.Title);
 
             
@@ -126,7 +123,7 @@ WriteLiteral(">\r\n");
 WriteLiteral("                    ");
 
             
-            #line 22 "..\..\Views\Shared\PublicActionLayout.cshtml"
+            #line 23 "..\..\Views\Shared\PublicActionLayout.cshtml"
                Write(RenderBody());
 
             
