@@ -41,7 +41,9 @@ bettercms.define('bcms.content', ['bcms.jquery', 'bcms', 'bcms.modal', 'bcms.red
             masterPagesPathItem: '.bcms-layout-path-item',
             masterPagesPathInnerContainer: '.bcms-layout-path-inner',
             masterPagesPathSliderLeft: '.bcms-path-arrow-left',
-            masterPagesPathSliderRight: '.bcms-path-arrow-right'
+            masterPagesPathSliderRight: '.bcms-path-arrow-right',
+            masterPagesPathDragHandle: '#bcms-path-drag-handle',
+            masterPagesPathDraggable: '#bcms-path-draggable'
         },
         classes = {
             regionStart: 'bcms-region-start',
@@ -56,11 +58,13 @@ bettercms.define('bcms.content', ['bcms.jquery', 'bcms', 'bcms.modal', 'bcms.red
             masterPagesPathChildContentActiveItem: 'bcms-path-child-content-active',
             masterPagesPathPageItem: 'bcms-path-page',
             editingOnClass: 'bcms-on',
-            buttonActive: 'bcms-active'
+            buttonActive: 'bcms-active',
+            pathMenuBottom: 'bcms-path-menu-bottom',
         },
         keys = {
             showMasterPagesPath: 'bcms.showMasterPagesPath',
-            editingOn: 'bcms.editingOn'
+            editingOn: 'bcms.editingOn',
+            pathMenuAtBottom: 'bcms.pathMenuAtBottom'
         },
         resizeTimer,
         currentContentDom,
@@ -1067,7 +1071,44 @@ bettercms.define('bcms.content', ['bcms.jquery', 'bcms', 'bcms.modal', 'bcms.red
             items = [],
             currentItem = 0,
             maxItem = 0,
-            currentPage = null;
+            currentPage = null,
+            middleOfThePage,
+            isMenuAtBottom = store.get(keys.pathMenuAtBottom);
+
+
+        function moveToBottom() {
+            store.set(keys.pathMenuAtBottom, '1');
+            pathContainer.addClass(classes.pathMenuBottom);
+        }
+        function moveToTop() {
+            store.remove(keys.pathMenuAtBottom);
+            pathContainer.removeClass(classes.pathMenuBottom);
+        }
+        if (isMenuAtBottom) {
+            moveToBottom(true);
+        }
+        $(selectors.masterPagesPathDraggable).draggable({
+            axis: 'x',
+            handle: selectors.masterPagesPathDragHandle,
+            containment: 'window',
+            start: function () {
+                middleOfThePage = $(window).width() / 2;
+            },
+            drag: function (event) {
+                var posY = event.clientY;
+                if (isMenuAtBottom) {
+                    if (posY < middleOfThePage) {
+                        isMenuAtBottom = false;
+                        moveToTop();
+                    }
+                } else {
+                    if (posY > middleOfThePage) {
+                        isMenuAtBottom = true;
+                        moveToBottom();
+                    }
+                }
+            }
+        });
 
         function hasPath() {
             return items.length > 0;
