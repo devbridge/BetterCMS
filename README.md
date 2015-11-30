@@ -10,8 +10,7 @@ and follow [the setup instructions for the ASP.NET MVC 4 project](https://github
 Latest released version is deployed to http://demo.bettercms.com.
 
 ##License##
-Better CMS is licensed under [BETTER CMS LICENSE AGREEMENT](http://www.bettercms.com/license.txt).<br/>
-Copyright notice and permission notice shall be included in all copies or substantial portions of the Software.
+Better CMS is licensed under [GNU LESSER GENERAL PUBLIC LICENSE](http://www.gnu.org/licenses/lgpl-3.0.txt).
 
 ##Contacts##
 Devbridge Group LLC<br/>
