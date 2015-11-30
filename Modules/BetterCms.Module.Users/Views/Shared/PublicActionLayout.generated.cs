@@ -45,13 +45,13 @@ namespace ASP
             
             #line default
             #line hidden
-WriteLiteral("\n\n<!DOCTYPE html>\n\n<html>\n    <head>\n        <meta");
+WriteLiteral("\r\n\r\n<!DOCTYPE html>\r\n\r\n<html>\r\n    <head>\r\n        <meta");
 
 WriteLiteral(" http-equiv=\"Content-Type\"");
 
 WriteLiteral(" content=\"text/html; charset=UTF-8\"");
 
-WriteLiteral(">\n        <title>");
+WriteLiteral(">\r\n        <title>");
 
             
             #line 10 "..\..\Views\Shared\PublicActionLayout.cshtml"
@@ -60,7 +60,7 @@ WriteLiteral(">\n        <title>");
             
             #line default
             #line hidden
-WriteLiteral("</title>\n        <link");
+WriteLiteral("</title>\r\n        <link");
 
 WriteLiteral(" href=\'//fonts.googleapis.com/css?family=Open+Sans:400,700\'");
 
@@ -68,94 +68,103 @@ WriteLiteral(" rel=\'stylesheet\'");
 
 WriteLiteral(" type=\'text/css\'");
 
-WriteLiteral(" async>        \n        <style");
+WriteLiteral(" async>\r\n        <link");
+
+WriteLiteral(" rel=\"stylesheet\"");
 
 WriteLiteral(" type=\"text/css\"");
 
-WriteLiteral(">\n            html, body {\n                margin: 0;\n                width: 100%" +
-";\n                height: 100%;\n                font-family: \'Open Sans\', sans-s" +
-"erif;\n            }\n\n            p {\n                margin: 0;\n                " +
-"position: relative;\n            }\n\n            .bcms-page {\n                min-" +
-"height: 100%;\n                margin: 0 0 -74px;\n            }\n\n            .bcm" +
-"s-header {\n                background: #303030;\n                height: 50px;\n  " +
-"              line-height: 50px;\n            }\n\n            .bcms-header h1 {\n  " +
-"              width: 560px;\n                margin: 0 auto;\n                colo" +
-"r: #0383df;\n                font-size: 20px;\n                font-weight: 700;\n " +
-"           }\n\n            .bcms-body {\n                width: 560px;\n           " +
-"     margin: 0 auto;\n                padding: 20px 0 74px;\n            }\n\n      " +
-"      .bcms-footer {\n                height: 74px;\n                padding: 20px" +
-" 20px 20px 60px;\n                background-color: #303030;\n                box-" +
-"sizing: border-box;\n                -moz-box-sizing: border-box;\n            }\n\n" +
-"            .bcms-field-text {\n                height: 30px;\n                wid" +
-"th: 100%;\n                line-height: 18px;\n                padding: 6px;\n     " +
-"           margin: 0;\n                border: 1px solid #c6c6c6;\n               " +
-" font-family: \'Open Sans\', sans-serif;\n                font-size: 12px;\n        " +
-"        color: #000;\n                vertical-align: middle;\n                bac" +
-"kground-color: #f5f5f5;\n                border-radius: 0;\n                box-si" +
-"zing: border-box;\n                -moz-box-sizing: border-box;\n                -" +
-"webkit-appearance: none;\n                border-radius: 0;\n            }\n\n      " +
-"      .bcms-btn-primary {\n                position: relative;\n                di" +
-"splay: inline-block;\n                height: 28px;\n                line-height: " +
-"28px;\n                padding: 0 10px;\n                margin: 10px 0;\n         " +
-"       border: 1px solid #24597e;\n                border-radius: 2px;\n          " +
-"      cursor: pointer;\n                vertical-align: middle;\n                c" +
-"olor: #fff;\n                font-family: \'Open Sans\', sans-serif;\n              " +
-"  font-size: 12px;\n                overflow: hidden;\n                text-transf" +
-"orm: uppercase;\n                background: #1890E6;\n                background:" +
-" linear-gradient(to bottom, #1890E6 0, #0D7BC9 100%);\n                background" +
-": -moz-linear-gradient(top, #1890E6 0, #0D7BC9 100%);\n                background" +
-": -webkit-linear-gradient(top, #1890E6 0, #0D7BC9 100%);\n            }\n\n        " +
-"    .bcms-title {\n                display: block;\n                position: rela" +
-"tive;\n                padding: 10px 0 5px;\n                color: #000;\n        " +
-"        line-height: 20px;\n                font-size: 14px;\n                font" +
-"-weight: 700;\n            }\n        </style>\n");
+WriteLiteral(" href=\"/file/bcms-users/Content/Styles/bcms.users.min.css\"");
+
+WriteLiteral(" />\r\n        <style");
+
+WriteLiteral(" type=\"text/css\"");
+
+WriteLiteral(">\r\n            html, body {\r\n                margin: 0;\r\n                width: 1" +
+"00%;\r\n                height: 100%;\r\n                font-family: \'Open Sans\', s" +
+"ans-serif;\r\n            }\r\n\r\n            p {\r\n                margin: 0;\r\n      " +
+"          position: relative;\r\n            }\r\n\r\n            .bcms-page {\r\n      " +
+"          min-height: 100%;\r\n                margin: 0 0 -74px;\r\n            }\r\n" +
+"\r\n            .bcms-header {\r\n                background: #303030;\r\n            " +
+"    height: 50px;\r\n                line-height: 50px;\r\n            }\r\n\r\n        " +
+"    .bcms-header h1 {\r\n                width: 560px;\r\n                margin: 0 " +
+"auto;\r\n                color: #0383df;\r\n                font-size: 20px;\r\n      " +
+"          font-weight: 700;\r\n            }\r\n\r\n            .bcms-body {\r\n        " +
+"        width: 560px;\r\n                margin: 0 auto;\r\n                padding:" +
+" 20px 0 74px;\r\n            }\r\n\r\n            .bcms-footer {\r\n                heig" +
+"ht: 74px;\r\n                padding: 20px 20px 20px 60px;\r\n                backgr" +
+"ound-color: #303030;\r\n                box-sizing: border-box;\r\n                -" +
+"moz-box-sizing: border-box;\r\n            }\r\n\r\n            .bcms-field-text {\r\n  " +
+"              height: 30px;\r\n                width: 100%;\r\n                line-" +
+"height: 18px;\r\n                padding: 6px;\r\n                margin: 0;\r\n      " +
+"          border: 1px solid #c6c6c6;\r\n                font-family: \'Open Sans\', " +
+"sans-serif;\r\n                font-size: 12px;\r\n                color: #000;\r\n   " +
+"             vertical-align: middle;\r\n                background-color: #f5f5f5;" +
+"\r\n                border-radius: 0;\r\n                box-sizing: border-box;\r\n  " +
+"              -moz-box-sizing: border-box;\r\n                -webkit-appearance: " +
+"none;\r\n                border-radius: 0;\r\n            }\r\n\r\n            .bcms-btn" +
+"-primary {\r\n                position: relative;\r\n                display: inline" +
+"-block;\r\n                height: 28px;\r\n                line-height: 28px;\r\n    " +
+"            padding: 0 10px;\r\n                margin: 10px 0;\r\n                b" +
+"order: 1px solid #24597e;\r\n                border-radius: 2px;\r\n                " +
+"cursor: pointer;\r\n                vertical-align: middle;\r\n                color" +
+": #fff;\r\n                font-family: \'Open Sans\', sans-serif;\r\n                " +
+"font-size: 12px;\r\n                overflow: hidden;\r\n                text-transf" +
+"orm: uppercase;\r\n                background: #1890E6;\r\n                backgroun" +
+"d: linear-gradient(to bottom, #1890E6 0, #0D7BC9 100%);\r\n                backgro" +
+"und: -moz-linear-gradient(top, #1890E6 0, #0D7BC9 100%);\r\n                backgr" +
+"ound: -webkit-linear-gradient(top, #1890E6 0, #0D7BC9 100%);\r\n            }\r\n\r\n " +
+"           .bcms-title {\r\n                display: block;\r\n                posit" +
+"ion: relative;\r\n                padding: 10px 0 5px;\r\n                color: #00" +
+"0;\r\n                line-height: 20px;\r\n                font-size: 14px;\r\n      " +
+"          font-weight: 700;\r\n            }\r\n        </style>\r\n");
 
 WriteLiteral("        ");
 
             
-            #line 109 "..\..\Views\Shared\PublicActionLayout.cshtml"
+            #line 110 "..\..\Views\Shared\PublicActionLayout.cshtml"
    Write(RenderSection("Head", false));
 
             
             #line default
             #line hidden
-WriteLiteral("\n    </head>\n    <body>\n        <div");
+WriteLiteral("\r\n    </head>\r\n    <body>\r\n        <div");
 
 WriteLiteral(" class=\"bcms-page\"");
 
-WriteLiteral(">\n            <div");
+WriteLiteral(">\r\n            <div");
 
 WriteLiteral(" class=\"bcms-header\"");
 
-WriteLiteral(">\n                <h1>");
+WriteLiteral(">\r\n                <h1>");
 
             
-            #line 114 "..\..\Views\Shared\PublicActionLayout.cshtml"
+            #line 115 "..\..\Views\Shared\PublicActionLayout.cshtml"
                Write(ViewBag.Title);
 
             
             #line default
             #line hidden
-WriteLiteral("</h1>\n            </div>\n            <div");
+WriteLiteral("</h1>\r\n            </div>\r\n            <div");
 
 WriteLiteral(" class=\"bcms-body\"");
 
-WriteLiteral(">\n");
+WriteLiteral(">\r\n");
 
 WriteLiteral("                ");
 
             
-            #line 117 "..\..\Views\Shared\PublicActionLayout.cshtml"
+            #line 118 "..\..\Views\Shared\PublicActionLayout.cshtml"
            Write(RenderBody());
 
             
             #line default
             #line hidden
-WriteLiteral("\n            </div>            \n        </div>\n        <div");
+WriteLiteral("\r\n            </div>            \r\n        </div>\r\n        <div");
 
 WriteLiteral(" class=\"bcms-footer\"");
 
-WriteLiteral("></div>\n    </body>    \n</html>\n");
+WriteLiteral("></div>\r\n    </body>    \r\n</html>\r\n");
 
         }
     }
