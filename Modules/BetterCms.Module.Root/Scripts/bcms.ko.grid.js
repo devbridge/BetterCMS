@@ -14,7 +14,8 @@ bettercms.define('bcms.ko.grid', ['bcms.jquery', 'bcms', 'bcms.ko.extenders', 'b
                 descending: 1
             },
             staticDomId = 1,
-            saveTimers = [];
+            saveTimers = [],
+            rowId = 0;
 
         /**
         * Assign objects to module.
@@ -727,7 +728,10 @@ bettercms.define('bcms.ko.grid', ['bcms.jquery', 'bcms', 'bcms.ko.extenders', 'b
             };
 
             grid.ItemViewModel.prototype.getDeleteConfirmationMessage = function () {
-                return '';
+                if (!this.rowId) {
+                    this.rowId = 'bcms-ko-grid-row-' + rowId++;
+                }
+                return this.rowId;
             };
 
             grid.ItemViewModel.prototype.getRowId = function () {

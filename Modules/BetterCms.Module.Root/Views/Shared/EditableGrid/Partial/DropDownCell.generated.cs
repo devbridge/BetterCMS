@@ -46,102 +46,59 @@ Write(Html.Raw(Model.Attributes));
             
             #line default
             #line hidden
-WriteLiteral(">\r\n");
-
-            
-            #line 4 "..\..\Views\Shared\EditableGrid\Partial\DropDownCell.cshtml"
-    
-            
-            #line default
-            #line hidden
-            
-            #line 4 "..\..\Views\Shared\EditableGrid\Partial\DropDownCell.cshtml"
-     if (Model.CanBeEdited)
-    {
-
-            
-            #line default
-            #line hidden
-WriteLiteral("        <!-- ko if: !isActive() || (");
-
-            
-            #line 6 "..\..\Views\Shared\EditableGrid\Partial\DropDownCell.cshtml"
-                                Write(Model.ValueBind);
-
-            
-            #line default
-            #line hidden
-WriteLiteral(".editingIsDisabled && ");
-
-            
-            #line 6 "..\..\Views\Shared\EditableGrid\Partial\DropDownCell.cshtml"
-                                                                        Write(Model.ValueBind);
-
-            
-            #line default
-            #line hidden
-WriteLiteral(".editingIsDisabled()) -->\r\n");
-
-            
-            #line 7 "..\..\Views\Shared\EditableGrid\Partial\DropDownCell.cshtml"
-    }
-
-            
-            #line default
-            #line hidden
-WriteLiteral("    <a");
+WriteLiteral(">\r\n\r\n    <a");
 
 WriteLiteral(" class=\"bcms-tables-link\"");
 
-WriteLiteral(" data-bind=\"text: ");
+WriteLiteral(" data-bind=\"\r\n       text: ");
 
             
-            #line 8 "..\..\Views\Shared\EditableGrid\Partial\DropDownCell.cshtml"
-                                             Write(Model.ValueTextBind);
+            #line 6 "..\..\Views\Shared\EditableGrid\Partial\DropDownCell.cshtml"
+         Write(Model.ValueTextBind);
 
             
             #line default
             #line hidden
-WriteLiteral("()\"");
+WriteLiteral("()\r\n");
+
+WriteLiteral("       ");
+
+            
+            #line 7 "..\..\Views\Shared\EditableGrid\Partial\DropDownCell.cshtml"
+   Write(!string.IsNullOrEmpty(Model.FocusIdentifier) ? string.Format(", click: onItemSelect.bind($data, {0})", Model.FocusIdentifier) : string.Empty);
+
+            
+            #line default
+            #line hidden
+WriteLiteral("\r\n");
+
+WriteLiteral("       ");
+
+            
+            #line 8 "..\..\Views\Shared\EditableGrid\Partial\DropDownCell.cshtml"
+   Write(Model.CanBeEdited ? string.Format(", visible: !isActive() || ({0}.editingIsDisabled && {0}.editingIsDisabled())", Model.ValueBind) : string.Empty);
+
+            
+            #line default
+            #line hidden
+WriteLiteral("\r\n       \"");
 
 WriteLiteral("></a>\r\n");
 
             
-            #line 9 "..\..\Views\Shared\EditableGrid\Partial\DropDownCell.cshtml"
+            #line 10 "..\..\Views\Shared\EditableGrid\Partial\DropDownCell.cshtml"
     
             
             #line default
             #line hidden
             
-            #line 9 "..\..\Views\Shared\EditableGrid\Partial\DropDownCell.cshtml"
+            #line 10 "..\..\Views\Shared\EditableGrid\Partial\DropDownCell.cshtml"
      if (Model.CanBeEdited)
     {
 
             
             #line default
             #line hidden
-WriteLiteral("        <!-- /ko -->\r\n");
-
-WriteLiteral("        <!-- ko if: isActive() && (!");
-
-            
-            #line 12 "..\..\Views\Shared\EditableGrid\Partial\DropDownCell.cshtml"
-                                Write(Model.ValueBind);
-
-            
-            #line default
-            #line hidden
-WriteLiteral(".editingIsDisabled || !");
-
-            
-            #line 12 "..\..\Views\Shared\EditableGrid\Partial\DropDownCell.cshtml"
-                                                                         Write(Model.ValueBind);
-
-            
-            #line default
-            #line hidden
-WriteLiteral(".editingIsDisabled()) -->\r\n");
-
 WriteLiteral("        <select");
 
 WriteLiteral(" class=\"bcms-global-select\"");
@@ -151,7 +108,7 @@ WriteLiteral(" style=\"width: 125px;\"");
 WriteLiteral(" data-bind=\"options: ");
 
             
-            #line 13 "..\..\Views\Shared\EditableGrid\Partial\DropDownCell.cshtml"
+            #line 12 "..\..\Views\Shared\EditableGrid\Partial\DropDownCell.cshtml"
                                                                                  Write(Model.OptionsBind);
 
             
@@ -160,7 +117,7 @@ WriteLiteral(" data-bind=\"options: ");
 WriteLiteral(",\r\n            optionsText: \'");
 
             
-            #line 14 "..\..\Views\Shared\EditableGrid\Partial\DropDownCell.cshtml"
+            #line 13 "..\..\Views\Shared\EditableGrid\Partial\DropDownCell.cshtml"
                       Write(Model.OptionsText);
 
             
@@ -169,7 +126,7 @@ WriteLiteral(",\r\n            optionsText: \'");
 WriteLiteral("\',\r\n            optionsValue: \'");
 
             
-            #line 15 "..\..\Views\Shared\EditableGrid\Partial\DropDownCell.cshtml"
+            #line 14 "..\..\Views\Shared\EditableGrid\Partial\DropDownCell.cshtml"
                        Write(Model.OptionsValue);
 
             
@@ -178,7 +135,7 @@ WriteLiteral("\',\r\n            optionsValue: \'");
 WriteLiteral("\',\r\n            value: ");
 
             
-            #line 16 "..\..\Views\Shared\EditableGrid\Partial\DropDownCell.cshtml"
+            #line 15 "..\..\Views\Shared\EditableGrid\Partial\DropDownCell.cshtml"
               Write(Model.ValueBind);
 
             
@@ -186,14 +143,32 @@ WriteLiteral("\',\r\n            value: ");
             #line hidden
 WriteLiteral("\r\n");
 
+WriteLiteral("            ");
+
+            
+            #line 16 "..\..\Views\Shared\EditableGrid\Partial\DropDownCell.cshtml"
+        Write(!string.IsNullOrEmpty(Model.FocusIdentifier) ? string.Format(", hasfocus: {0}", Model.FocusIdentifier) : string.Empty);
+
+            
+            #line default
+            #line hidden
+WriteLiteral("\r\n");
+
+WriteLiteral("            ");
+
+            
+            #line 17 "..\..\Views\Shared\EditableGrid\Partial\DropDownCell.cshtml"
+        Write(string.Format(", visible: isActive() && (!{0}.editingIsDisabled || !{0}.editingIsDisabled())", Model.ValueBind));
+
+            
+            #line default
+            #line hidden
 WriteLiteral("\r\n                \"");
 
 WriteLiteral("></select>\r\n");
 
-WriteLiteral("        <!-- /ko -->\r\n");
-
             
-            #line 20 "..\..\Views\Shared\EditableGrid\Partial\DropDownCell.cshtml"
+            #line 19 "..\..\Views\Shared\EditableGrid\Partial\DropDownCell.cshtml"
     }
 
             
