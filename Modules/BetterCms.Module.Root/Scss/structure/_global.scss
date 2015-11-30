@@ -335,7 +335,7 @@ $action-icons: (
 
 @each $name, $color in $loading-spinner {
     .bcms-#{$name} {
-        @include positioning($center: true, $position: fixed);
+        @include positioning($center: true);
         @include size($loader-width $loader-height);
         @include transform(translateZ(0));
         @include animation(loader 800ms infinite ease-in-out);

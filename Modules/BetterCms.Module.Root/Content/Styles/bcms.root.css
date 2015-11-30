@@ -297,6 +297,7 @@ a:hover {
   display: table-cell;
   vertical-align: top;
   padding-left: 30px;
+  position: relative;
 }
 
 .bcms-settings-link {
@@ -1204,7 +1205,7 @@ td .bcms-field-wrapper {
 }
 
 .bcms-loader {
-  position: fixed;
+  position: absolute;
   -webkit-transform: translate(-50%, -50%);
   -moz-transform: translate(-50%, -50%);
   transform: translate(-50%, -50%);
@@ -1255,7 +1256,7 @@ td .bcms-field-wrapper {
 }
 
 .bcms-loader-2 {
-  position: fixed;
+  position: absolute;
   -webkit-transform: translate(-50%, -50%);
   -moz-transform: translate(-50%, -50%);
   transform: translate(-50%, -50%);
@@ -3097,7 +3098,7 @@ td .bcms-field-wrapper {
 
 .bcms-inner-navigation {
   position: absolute;
-  top: 0;
+  top: -55px;
   height: 55px;
   z-index: 10;
 }

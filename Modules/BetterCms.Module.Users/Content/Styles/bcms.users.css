@@ -350,6 +350,7 @@ a:hover {
   display: table-cell;
   vertical-align: top;
   padding-left: 30px;
+  position: relative;
 }
 
 .bcms-settings-link {
@@ -698,7 +699,7 @@ a:hover {
 }
 
 .bcms-loader {
-  position: fixed;
+  position: absolute;
   -webkit-transform: translate(-50%, -50%);
   -moz-transform: translate(-50%, -50%);
   transform: translate(-50%, -50%);
@@ -749,7 +750,7 @@ a:hover {
 }
 
 .bcms-loader-2 {
-  position: fixed;
+  position: absolute;
   -webkit-transform: translate(-50%, -50%);
   -moz-transform: translate(-50%, -50%);
   transform: translate(-50%, -50%);

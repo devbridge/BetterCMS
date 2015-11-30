@@ -202,6 +202,7 @@ a {
     &-window {
         @include vertical-align($block: table-cell, $align: top);
         padding-left: 30px;
+        position: relative;
     }
 
     &-link {
