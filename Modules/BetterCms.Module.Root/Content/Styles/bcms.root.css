@@ -1,3 +1,30 @@
+/* --------------------------------------------------------------------------------------------------------------------
+// <copyright file="bcms.root.css" company="Devbridge Group LLC">
+//
+// Copyright (C) 2015,2016 Devbridge Group LLC
+//
+// This program is free software: you can redistribute it and/or modify
+// it under the terms of the GNU Lesser General Public License as published by
+// the Free Software Foundation, either version 3 of the License, or
+// (at your option) any later version.
+//
+// This program is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU General Public License for more details.
+//
+// You should have received a copy of the GNU Lesser General Public License
+// along with this program.  If not, see http://www.gnu.org/licenses/.
+// </copyright>
+//
+// <summary>
+// Better CMS is a publishing focused and developer friendly .NET open source CMS.
+//
+// Website: https://www.bettercms.com
+// GitHub: https://github.com/devbridge/bettercms
+// Email: info@bettercms.com
+// </summary>
+// ------------------------------------------------------------------------------------------------------------------*/
 .bcms-clearfix:after {
   content: '';
   display: table;
@@ -1230,8 +1257,7 @@ td .bcms-field-wrapper {
   font-size: 11px;
 }
 
-.bcms-loader:before,
-.bcms-loader:after {
+.bcms-loader:before, .bcms-loader:after {
   content: "";
   -webkit-animation: loader 800ms infinite ease-in-out;
   -moz-animation: loader 800ms infinite ease-in-out;
@@ -1281,8 +1307,7 @@ td .bcms-field-wrapper {
   font-size: 11px;
 }
 
-.bcms-loader-2:before,
-.bcms-loader-2:after {
+.bcms-loader-2:before, .bcms-loader-2:after {
   content: "";
   -webkit-animation: loader 800ms infinite ease-in-out;
   -moz-animation: loader 800ms infinite ease-in-out;
@@ -2146,8 +2171,7 @@ td .bcms-field-wrapper {
   z-index: 5;
 }
 
-.bcms-contents-tree-add-block:hover,
-.bcms-contents-tree-add-block.bcms-active {
+.bcms-contents-tree-add-block:hover, .bcms-contents-tree-add-block.bcms-active {
   background-color: #0a62b7;
 }
 
@@ -2646,8 +2670,7 @@ td .bcms-field-wrapper {
   text-align: center;
 }
 
-.bcms-pager-no:hover,
-.bcms-pager-no.bcms-active-pager {
+.bcms-pager-no:hover, .bcms-pager-no.bcms-active-pager {
   background-color: #ffffff;
 }
 
@@ -3129,7 +3152,7 @@ td .bcms-field-wrapper {
 }
 
 .bcms-inner-navigation-ui:hover {
-  color: #8c8c8c;
+  color: #8d8d8d;
 }
 
 .bcms-inner-navigation-ui.bcms-active {
@@ -3603,8 +3626,7 @@ textarea.markItUpEditor:focus {
   padding-left: 35px;
 }
 
-.markItUpHeader > ul > .markItUpButton.markItUpButtonBold,
-.markItUpHeader > ul > .markItUpButton.markItUpButtonItalic {
+.markItUpHeader > ul > .markItUpButton.markItUpButtonBold, .markItUpHeader > ul > .markItUpButton.markItUpButtonItalic {
   padding-top: 3px;
   width: 30px !important;
 }
@@ -3959,8 +3981,7 @@ textarea.markItUpEditor:focus {
   padding: 9px 11px 10px;
 }
 
-.select2-choice,
-.select2-choices {
+.select2-choice, .select2-choices {
   height: 100%;
   width: 100%;
   display: block;
