@@ -74,341 +74,276 @@ WriteLiteral(" class=\"bcms-content-dialog-title\"");
 
 WriteLiteral(">Create first user for the Better CMS</div>\r\n");
 
-WriteLiteral("    <div");
-
-WriteLiteral(" class=\"validation-summary-valid\"");
-
-WriteLiteral(" data-valmsg-summary=\"true\"");
-
-WriteLiteral(">\r\n");
-
-WriteLiteral("        ");
-
             
-            #line 13 "..\..\Views\Registration\CreateFirstUser.cshtml"
-   Write(Html.ValidationSummary());
-
+            #line 12 "..\..\Views\Registration\CreateFirstUser.cshtml"
+    
             
             #line default
             #line hidden
-WriteLiteral("\r\n    </div>\r\n");
-
             
-            #line 15 "..\..\Views\Registration\CreateFirstUser.cshtml"
+            #line 14 "..\..\Views\Registration\CreateFirstUser.cshtml"
+            
 
 
             
             #line default
             #line hidden
 WriteLiteral("    <div");
+
+WriteLiteral(" class=\"bcms-form-block-holder\"");
+
+WriteLiteral(">\r\n        <div>\r\n            <div");
 
 WriteLiteral(" class=\"bcms-content-titles\"");
 
 WriteLiteral(">");
-
-            
-            #line 16 "..\..\Views\Registration\CreateFirstUser.cshtml"
-                                Write(UsersGlobalization.EditUser_FirstName_Title);
-
-            
-            #line default
-            #line hidden
-WriteLiteral("</div>\r\n");
-
-WriteLiteral("    <div");
-
-WriteLiteral(" class=\"bcms-field-wrapper\"");
-
-WriteLiteral(">\r\n");
-
-WriteLiteral("        ");
 
             
             #line 18 "..\..\Views\Registration\CreateFirstUser.cshtml"
-   Write(Html.TextBoxFor(m => m.FirstName, new { @class = "bcms-field-text", @id = "firstName" }));
+                                        Write(UsersGlobalization.EditUser_FirstName_Title);
 
             
             #line default
             #line hidden
-WriteLiteral("\r\n");
+WriteLiteral("</div>\r\n");
 
-WriteLiteral("        ");
+WriteLiteral("            ");
 
             
             #line 19 "..\..\Views\Registration\CreateFirstUser.cshtml"
-   Write(Html.ValidationMessageFor(m => m.FirstName));
+       Write(Html.ValidationMessageFor(m => m.FirstName));
 
             
             #line default
             #line hidden
-WriteLiteral("\r\n    </div>\r\n");
+WriteLiteral("\r\n            <div");
+
+WriteLiteral(" class=\"bcms-field-wrapper\"");
+
+WriteLiteral(">\r\n");
+
+WriteLiteral("                ");
 
             
             #line 21 "..\..\Views\Registration\CreateFirstUser.cshtml"
-
+           Write(Html.TextBoxFor(m => m.FirstName, new { @class = "bcms-field-text", @id = "firstName" }));
 
             
             #line default
             #line hidden
-WriteLiteral("    <div");
+WriteLiteral("\r\n            </div>\r\n\r\n            <div");
 
 WriteLiteral(" class=\"bcms-content-titles\"");
 
 WriteLiteral(">");
-
-            
-            #line 22 "..\..\Views\Registration\CreateFirstUser.cshtml"
-                                Write(UsersGlobalization.EditUser_LastName);
-
-            
-            #line default
-            #line hidden
-WriteLiteral("</div>\r\n");
-
-WriteLiteral("    <div");
-
-WriteLiteral(" class=\"bcms-field-wrapper\"");
-
-WriteLiteral(">\r\n");
-
-WriteLiteral("        ");
 
             
             #line 24 "..\..\Views\Registration\CreateFirstUser.cshtml"
-   Write(Html.TextBoxFor(m => m.LastName, new { @class = "bcms-field-text" }));
+                                        Write(UsersGlobalization.EditUser_LastName);
 
             
             #line default
             #line hidden
-WriteLiteral("\r\n");
+WriteLiteral("</div>\r\n");
 
-WriteLiteral("        ");
+WriteLiteral("            ");
 
             
             #line 25 "..\..\Views\Registration\CreateFirstUser.cshtml"
-   Write(Html.ValidationMessageFor(m => m.LastName));
+       Write(Html.ValidationMessageFor(m => m.LastName));
 
             
             #line default
             #line hidden
-WriteLiteral("\r\n    </div>\r\n");
+WriteLiteral("\r\n            <div");
+
+WriteLiteral(" class=\"bcms-field-wrapper\"");
+
+WriteLiteral(">\r\n");
+
+WriteLiteral("                ");
 
             
             #line 27 "..\..\Views\Registration\CreateFirstUser.cshtml"
-
+           Write(Html.TextBoxFor(m => m.LastName, new { @class = "bcms-field-text" }));
 
             
             #line default
             #line hidden
-WriteLiteral("    <div");
+WriteLiteral("\r\n            </div>\r\n\r\n            <div");
 
 WriteLiteral(" class=\"bcms-content-titles\"");
 
 WriteLiteral(">");
-
-            
-            #line 28 "..\..\Views\Registration\CreateFirstUser.cshtml"
-                                Write(UsersGlobalization.EditUser_UserName_Title);
-
-            
-            #line default
-            #line hidden
-WriteLiteral("</div>\r\n");
-
-WriteLiteral("    <div");
-
-WriteLiteral(" class=\"bcms-field-wrapper\"");
-
-WriteLiteral(">\r\n");
-
-WriteLiteral("        ");
 
             
             #line 30 "..\..\Views\Registration\CreateFirstUser.cshtml"
-   Write(Html.TextBoxFor(m => m.UserName, new { @class = "bcms-field-text" }));
+                                        Write(UsersGlobalization.EditUser_UserName_Title);
 
             
             #line default
             #line hidden
-WriteLiteral("\r\n");
+WriteLiteral("</div>\r\n");
 
-WriteLiteral("        ");
+WriteLiteral("            ");
 
             
             #line 31 "..\..\Views\Registration\CreateFirstUser.cshtml"
-   Write(Html.ValidationMessageFor(m => m.UserName));
+       Write(Html.ValidationMessageFor(m => m.UserName));
 
             
             #line default
             #line hidden
-WriteLiteral("\r\n    </div>\r\n");
+WriteLiteral("\r\n            <div");
+
+WriteLiteral(" class=\"bcms-field-wrapper\"");
+
+WriteLiteral(">\r\n");
+
+WriteLiteral("                ");
 
             
             #line 33 "..\..\Views\Registration\CreateFirstUser.cshtml"
-
+           Write(Html.TextBoxFor(m => m.UserName, new { @class = "bcms-field-text" }));
 
             
             #line default
             #line hidden
-WriteLiteral("    <div");
+WriteLiteral("\r\n            </div>\r\n        </div>\r\n\r\n        <div>\r\n            <div");
 
 WriteLiteral(" class=\"bcms-content-titles\"");
 
 WriteLiteral(">");
 
             
-            #line 34 "..\..\Views\Registration\CreateFirstUser.cshtml"
-                                Write(UsersGlobalization.EditUser_Email_Title);
+            #line 38 "..\..\Views\Registration\CreateFirstUser.cshtml"
+                                        Write(UsersGlobalization.EditUser_Email_Title);
 
             
             #line default
             #line hidden
 WriteLiteral("</div>\r\n");
 
-WriteLiteral("    <div");
-
-WriteLiteral(" class=\"bcms-field-wrapper\"");
-
-WriteLiteral(">\r\n");
-
-WriteLiteral("        ");
-
-            
-            #line 36 "..\..\Views\Registration\CreateFirstUser.cshtml"
-   Write(Html.TextBoxFor(m => m.Email, new { @class = "bcms-field-text" }));
-
-            
-            #line default
-            #line hidden
-WriteLiteral("\r\n");
-
-WriteLiteral("        ");
-
-            
-            #line 37 "..\..\Views\Registration\CreateFirstUser.cshtml"
-   Write(Html.ValidationMessageFor(m => m.Email));
-
-            
-            #line default
-            #line hidden
-WriteLiteral("\r\n    </div>\r\n");
+WriteLiteral("            ");
 
             
             #line 39 "..\..\Views\Registration\CreateFirstUser.cshtml"
-
+       Write(Html.ValidationMessageFor(m => m.Email));
 
             
             #line default
             #line hidden
-WriteLiteral("    <div");
+WriteLiteral("\r\n            <div");
+
+WriteLiteral(" class=\"bcms-field-wrapper\"");
+
+WriteLiteral(">\r\n");
+
+WriteLiteral("                ");
+
+            
+            #line 41 "..\..\Views\Registration\CreateFirstUser.cshtml"
+           Write(Html.TextBoxFor(m => m.Email, new { @class = "bcms-field-text" }));
+
+            
+            #line default
+            #line hidden
+WriteLiteral("\r\n            </div>\r\n\r\n            <div");
 
 WriteLiteral(" class=\"bcms-content-titles\"");
 
 WriteLiteral(">");
 
             
-            #line 40 "..\..\Views\Registration\CreateFirstUser.cshtml"
-                                Write(UsersGlobalization.EditUser_Password_Title);
+            #line 44 "..\..\Views\Registration\CreateFirstUser.cshtml"
+                                        Write(UsersGlobalization.EditUser_Password_Title);
 
             
             #line default
             #line hidden
 WriteLiteral("</div>\r\n");
 
-WriteLiteral("    <div");
-
-WriteLiteral(" class=\"bcms-field-wrapper\"");
-
-WriteLiteral(">\r\n");
-
-WriteLiteral("        ");
-
-            
-            #line 42 "..\..\Views\Registration\CreateFirstUser.cshtml"
-   Write(Html.PasswordFor(m => m.Password, new { @class = "bcms-field-text" }));
-
-            
-            #line default
-            #line hidden
-WriteLiteral("\r\n");
-
-WriteLiteral("        ");
-
-            
-            #line 43 "..\..\Views\Registration\CreateFirstUser.cshtml"
-   Write(Html.ValidationMessageFor(m => m.Password));
-
-            
-            #line default
-            #line hidden
-WriteLiteral("\r\n    </div>\r\n");
+WriteLiteral("            ");
 
             
             #line 45 "..\..\Views\Registration\CreateFirstUser.cshtml"
-
+       Write(Html.ValidationMessageFor(m => m.Password));
 
             
             #line default
             #line hidden
-WriteLiteral("    <div");
+WriteLiteral("\r\n            <div");
+
+WriteLiteral(" class=\"bcms-field-wrapper\"");
+
+WriteLiteral(">\r\n");
+
+WriteLiteral("                ");
+
+            
+            #line 47 "..\..\Views\Registration\CreateFirstUser.cshtml"
+           Write(Html.PasswordFor(m => m.Password, new { @class = "bcms-field-text" }));
+
+            
+            #line default
+            #line hidden
+WriteLiteral("\r\n            </div>\r\n\r\n            <div");
 
 WriteLiteral(" class=\"bcms-content-titles\"");
 
 WriteLiteral(">");
 
             
-            #line 46 "..\..\Views\Registration\CreateFirstUser.cshtml"
-                                Write(UsersGlobalization.EditUser_RetypePassword_Title);
+            #line 50 "..\..\Views\Registration\CreateFirstUser.cshtml"
+                                        Write(UsersGlobalization.EditUser_RetypePassword_Title);
 
             
             #line default
             #line hidden
 WriteLiteral("</div>\r\n");
 
-WriteLiteral("    <div");
+WriteLiteral("            ");
+
+            
+            #line 51 "..\..\Views\Registration\CreateFirstUser.cshtml"
+       Write(Html.ValidationMessageFor(m => m.RetypedPassword));
+
+            
+            #line default
+            #line hidden
+WriteLiteral("\r\n            <div");
 
 WriteLiteral(" class=\"bcms-field-wrapper\"");
 
 WriteLiteral(">\r\n");
 
-WriteLiteral("        ");
+WriteLiteral("                ");
 
             
-            #line 48 "..\..\Views\Registration\CreateFirstUser.cshtml"
-   Write(Html.PasswordFor(m => m.RetypedPassword, new { @class = "bcms-field-text" }));
-
-            
-            #line default
-            #line hidden
-WriteLiteral("\r\n");
-
-WriteLiteral("        ");
-
-            
-            #line 49 "..\..\Views\Registration\CreateFirstUser.cshtml"
-   Write(Html.ValidationMessageFor(m => m.RetypedPassword));
+            #line 53 "..\..\Views\Registration\CreateFirstUser.cshtml"
+           Write(Html.PasswordFor(m => m.RetypedPassword, new { @class = "bcms-field-text" }));
 
             
             #line default
             #line hidden
-WriteLiteral("\r\n    </div>\r\n");
+WriteLiteral("\r\n            </div>\r\n        </div>\r\n    </div>\r\n");
 
             
-            #line 51 "..\..\Views\Registration\CreateFirstUser.cshtml"
+            #line 57 "..\..\Views\Registration\CreateFirstUser.cshtml"
 
     
             
             #line default
             #line hidden
             
-            #line 52 "..\..\Views\Registration\CreateFirstUser.cshtml"
+            #line 58 "..\..\Views\Registration\CreateFirstUser.cshtml"
 Write(Html.SubmitButton("submit", "Save", new { @class = "bcms-btn-primary" }));
 
             
             #line default
             #line hidden
             
-            #line 52 "..\..\Views\Registration\CreateFirstUser.cshtml"
+            #line 58 "..\..\Views\Registration\CreateFirstUser.cshtml"
                                                                              
 }
 

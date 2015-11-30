@@ -8,8 +8,7 @@ $options: $settings-frame;
 $dialog-window-options: (
                 ('settings', null, null, $settings, 0 30px 30px 0),
                 ('tabbed-options', $bg-modal-options, null, $tabbed-options, 0 30px 30px),
-                ('options', $bg-modal-options, null, $options, 0 30px 30px),
-                ('installation', $bg-modal-options, 900px, $options, 30px)
+                ('options', $bg-modal-options, null, $options, 0 30px 30px)
 );
 
 html,

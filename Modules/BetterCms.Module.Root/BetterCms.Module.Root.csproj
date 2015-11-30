@@ -1577,9 +1577,7 @@
     <Content Include="Scss\bcms-modules\media\_uploader.scss" />
     <Content Include="Scss\bcms-modules\pages\_history.scss" />
     <Content Include="Scss\root.scss" />
-    <Content Include="Scss\bcms-modules\root\_buttons.scss" />
     <Content Include="Scss\bcms-modules\root\_controlpanel.scss" />
-    <Content Include="Scss\bcms-modules\root\_notifications.scss" />
     <Content Include="Scss\bcms-modules\root\_overlays.scss" />
     <Content Include="Scss\assets\webfonts\OpenSans-Bold.ttf" />
     <Content Include="Scss\assets\webfonts\OpenSans-Italic.ttf" />
@@ -1593,7 +1591,6 @@
     <Content Include="Scss\plugins\_jquerycalendar.scss" />
     <Content Include="Scss\bcms-modules\root\_contentstree.scss" />
     <Content Include="Scss\bcms-modules\blog\_settings.scss" />
-    <Content Include="Scss\bcms-modules\root\_formelements.scss" />
     <Content Include="Scss\bcms-modules\root\_tables.scss" />
     <Content Include="Scss\core\_normalize.scss" />
     <Content Include="Scss\bcms-modules\root\_autocomplete.scss" />
@@ -1610,6 +1607,10 @@
     <Content Include="Scss\plugins\_jcrop.scss" />
     <Content Include="Scss\core\_colors.scss" />
     <Content Include="Scss\plugins\_select2.scss" />
+    <Content Include="Scss\core\_webfonts.scss" />
+    <Content Include="Scss\structure\_buttons.scss" />
+    <Content Include="Scss\structure\_formelements.scss" />
+    <Content Include="Scss\structure\_notifications.scss" />
     <None Include="Views\Category\CategoryTrees.cshtml">
       <Generator>RazorGenerator</Generator>
       <LastGenOutput>CategoryTrees.generated.cs</LastGenOutput>

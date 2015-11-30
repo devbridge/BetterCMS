@@ -3,14 +3,18 @@
 'core/assets',
 'core/mixins',
 'core/colors',
-'core/variables';
+'core/variables',
+'core/webfonts',
+'core/normalize';
 
 //module styles
 @import 'bcms-modules/users/index';
 
 //module structure
 @import 'structure/layout',
+'structure/global',
 'structure/formelements',
+'structure/notifications',
 'structure/buttons';
 
 //module custom adjustments

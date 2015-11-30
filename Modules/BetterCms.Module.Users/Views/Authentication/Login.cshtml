@@ -8,40 +8,38 @@
     ViewBag.Title = "Login";
 }
 
-@using (Html.BeginForm())
-{
-    <div class="validation-summary-valid" data-valmsg-summary="true">
-        @Html.MessagesBox()
-    </div>
-
-    <div class="bcms-content-titles">@UsersGlobalization.Login_UserName</div>
-    <div class="bcms-field-wrapper">
-        @Html.TextBoxFor(m => m.UserName, new { id = "userName", @class = "bcms-field-text" })
-        @Html.ValidationMessageFor(m => m.UserName)
-    </div>
-
-    <div class="bcms-content-titles">@UsersGlobalization.Login_Password</div>
-    <div class="bcms-field-wrapper">
-        @Html.PasswordFor(m => m.Password, new { @class = "bcms-field-text" })
-        @Html.ValidationMessageFor(m => m.Password)
-    </div>
-
-    <div class="bcms-content-titles">&nbsp;</div>
-    <div class="bcms-field-wrapper">
-        @Html.CheckBoxFor(m => m.RememberMe)
-        @Html.LabelFor(m => m.RememberMe)
-    </div>
-
-    Dictionary<string, object> submitProperties = new Dictionary<string, object>();
-    submitProperties.Add("class", "bcms-btn-primary");
-    if (!Model.IsFormsAuthenticationEnabled)
+<div class="bcms-login-box">
+    @using (Html.BeginForm())
     {
-        submitProperties.Add("disabled", "disabled");
-    }
+        <div class="bcms-content-titles">@UsersGlobalization.Login_UserName</div>
+        @Html.ValidationMessageFor(m => m.UserName)
+        <div class="bcms-field-wrapper">
+            @Html.TextBoxFor(m => m.UserName, new { id = "userName", @class = "bcms-field-text" })
+        </div>
 
-    @Html.SubmitButton("submit", "Login", submitProperties)
-    @Html.HiddenFor(m => m.ReturnUrl)
-}
+        <div class="bcms-content-titles">@UsersGlobalization.Login_Password</div>
+        @Html.ValidationMessageFor(m => m.Password)
+        <div class="bcms-field-wrapper">
+            @Html.PasswordFor(m => m.Password, new { @class = "bcms-field-text" })
+        </div>
+
+        <div class="bcms-field-wrapper bcms-remember-box">
+            @Html.CheckBoxFor(m => m.RememberMe)
+            @Html.LabelFor(m => m.RememberMe)
+        </div>
+
+        Dictionary<string, object> submitProperties = new Dictionary<string, object>();
+        submitProperties.Add("class", "bcms-btn-primary");
+        if (!Model.IsFormsAuthenticationEnabled)
+        {
+            submitProperties.Add("disabled", "disabled");
+        }
+
+        @Html.SubmitButton("submit", "Login", submitProperties)
+        @Html.HiddenFor(m => m.ReturnUrl)
+    }
+</div>
+
 <script type="text/javascript">
     (function () {
         document.getElementById('userName').focus();

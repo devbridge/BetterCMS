@@ -54,14 +54,6 @@ WriteLiteral(">\r\n    <title>");
             #line hidden
 WriteLiteral("</title>\r\n    <link");
 
-WriteLiteral(" href=\"//fonts.googleapis.com/css?family=Open+Sans:400,700\"");
-
-WriteLiteral(" rel=\"stylesheet\"");
-
-WriteLiteral(" type=\"text/css\"");
-
-WriteLiteral(" async>\r\n    <link");
-
 WriteLiteral(" rel=\"stylesheet\"");
 
 WriteLiteral(" type=\"text/css\"");
@@ -73,7 +65,7 @@ WriteLiteral(" />\r\n\r\n");
 WriteLiteral("    ");
 
             
-            #line 9 "..\..\Views\Shared\PublicActionLayout.cshtml"
+            #line 8 "..\..\Views\Shared\PublicActionLayout.cshtml"
 Write(RenderSection("Head", false));
 
             
@@ -81,7 +73,7 @@ Write(RenderSection("Head", false));
             #line hidden
 WriteLiteral("\r\n</head>\r\n\r\n<body>\r\n    <div");
 
-WriteLiteral(" class=\"bcms-modal\"");
+WriteLiteral(" class=\"bcms-modal bcms-modal-installation\"");
 
 WriteLiteral(" spellcheck=\"true\"");
 
@@ -104,7 +96,7 @@ WriteLiteral(" class=\"bcms-modal-title\"");
 WriteLiteral(">");
 
             
-            #line 17 "..\..\Views\Shared\PublicActionLayout.cshtml"
+            #line 16 "..\..\Views\Shared\PublicActionLayout.cshtml"
                                              Write(ViewBag.Title);
 
             
@@ -123,7 +115,7 @@ WriteLiteral(">\r\n");
 WriteLiteral("                    ");
 
             
-            #line 23 "..\..\Views\Shared\PublicActionLayout.cshtml"
+            #line 22 "..\..\Views\Shared\PublicActionLayout.cshtml"
                Write(RenderBody());
 
             

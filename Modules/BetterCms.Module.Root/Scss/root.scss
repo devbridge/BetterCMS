@@ -3,28 +3,8 @@
 'core/assets',
 'core/mixins',
 'core/colors',
-'core/variables';
-
-@font-face {
-    font-family: 'Open Sans';
-    font-style: normal;
-    font-weight: 400;
-    src: url($bcms-OpenSans-Regular) format('truetype');
-}
-
-@font-face {
-    font-family: 'Open Sans';
-    font-style: normal;
-    font-weight: 600;
-    src: url($bcms-OpenSans-Semibold) format('truetype');
-}
-
-@font-face {
-    font-family: 'Open Sans';
-    font-style: normal;
-    font-weight: 700;
-    src: url($bcms-OpenSans-Bold) format('truetype');
-}
+'core/variables',
+'core/webfonts';
 
 //module components
 @import 'core/normalize';
@@ -32,6 +12,7 @@
 //module structure
 @import 'structure/layout',
 'structure/formelements',
+'structure/notifications',
 'structure/buttons',
 'structure/global';
 
@@ -40,7 +21,6 @@
 'bcms-modules/root/browsersupport',
 'bcms-modules/root/controlpanel',
 'bcms-modules/root/contentstree',
-'bcms-modules/root/notifications',
 'bcms-modules/root/overlays',
 'bcms-modules/root/pager',
 'bcms-modules/root/structurepath',
