@@ -67,6 +67,7 @@ namespace BetterCms.Module.Root.Models
             contentOption.Type = Type;
             contentOption.Value = Value;
             contentOption.CustomOption = CustomOption;
+            contentOption.UseDefaultValue = UseDefaultValue;
 
             if (copyCollections && Translations != null)
             {
