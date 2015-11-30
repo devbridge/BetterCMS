@@ -1,0 +1,23 @@
+@import 'bourbon',
+'assets';
+
+@font-face {
+    font-family: 'Open Sans';
+    font-style: normal;
+    font-weight: 400;
+    src: url($bcms-OpenSans-Regular) format('truetype');
+}
+
+@font-face {
+    font-family: 'Open Sans';
+    font-style: normal;
+    font-weight: 600;
+    src: url($bcms-OpenSans-Semibold) format('truetype');
+}
+
+@font-face {
+    font-family: 'Open Sans';
+    font-style: normal;
+    font-weight: 700;
+    src: url($bcms-OpenSans-Bold) format('truetype');
+}

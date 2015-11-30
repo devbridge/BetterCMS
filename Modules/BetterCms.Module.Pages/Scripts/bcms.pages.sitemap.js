@@ -1273,12 +1273,10 @@ bettercms.define('bcms.pages.sitemap', ['bcms.jquery', 'bcms', 'bcms.modal', 'bc
                                                 self.parentNode().childNodes.remove(self);
                                                 bcms.trigger(events.sitemapNodeRemoved, self);
                                             }
-                                            sitemap.showLoading(false);
                                         } finally {
                                             confirmDialog.close();
                                         }
                                     };
-                                sitemap.showLoading(true);
                                 $.ajax({
                                     url: links.deleteSitemapNodeUrl,
                                     type: 'POST',
@@ -1353,14 +1351,12 @@ bettercms.define('bcms.pages.sitemap', ['bcms.jquery', 'bcms', 'bcms.modal', 'bc
                 self.macro(self.translations[languageId].macro());
             };
             self.updateLanguageOnDropNewNode = function (pageLanguageId, currentLanguageId) {
-                sitemap.showLoading(true);
                 var isActive = self.isActive();
                 self.translationsEnabled = true;
                 if (self.pageId() == null || self.pageId() == defaultIdValue) {
                     self.activateTranslation("");
                     self.activateTranslation(currentLanguageId);
                     self.isActive(isActive);
-                    sitemap.showLoading(false);
                     return;
                 }
                 var onSaveCompleted = function(json) {

@@ -37,125 +37,95 @@ namespace ASP
         }
         public override void Execute()
         {
-            
-            #line 1 "..\..\Views\Shared\PublicActionLayout.cshtml"
-  
-    Layout = null;
-
-            
-            #line default
-            #line hidden
-WriteLiteral("\n\n<!DOCTYPE html>\n\n<html>\n    <head>\n        <meta");
+WriteLiteral("<!DOCTYPE html>\r\n<html>\r\n<head>\r\n    <meta");
 
 WriteLiteral(" http-equiv=\"Content-Type\"");
 
 WriteLiteral(" content=\"text/html; charset=UTF-8\"");
 
-WriteLiteral(">\n        <title>");
+WriteLiteral(">\r\n    <title>");
 
             
-            #line 10 "..\..\Views\Shared\PublicActionLayout.cshtml"
-          Write(ViewBag.Title);
+            #line 5 "..\..\Views\Shared\PublicActionLayout.cshtml"
+      Write(ViewBag.Title);
 
             
             #line default
             #line hidden
-WriteLiteral("</title>\n        <link");
+WriteLiteral("</title>\r\n    <link");
 
-WriteLiteral(" href=\'//fonts.googleapis.com/css?family=Open+Sans:400,700\'");
-
-WriteLiteral(" rel=\'stylesheet\'");
-
-WriteLiteral(" type=\'text/css\'");
-
-WriteLiteral(" async>        \n        <style");
+WriteLiteral(" rel=\"stylesheet\"");
 
 WriteLiteral(" type=\"text/css\"");
 
-WriteLiteral(">\n            html, body {\n                margin: 0;\n                width: 100%" +
-";\n                height: 100%;\n                font-family: \'Open Sans\', sans-s" +
-"erif;\n            }\n\n            p {\n                margin: 0;\n                " +
-"position: relative;\n            }\n\n            .bcms-page {\n                min-" +
-"height: 100%;\n                margin: 0 0 -74px;\n            }\n\n            .bcm" +
-"s-header {\n                background: #303030;\n                height: 50px;\n  " +
-"              line-height: 50px;\n            }\n\n            .bcms-header h1 {\n  " +
-"              width: 560px;\n                margin: 0 auto;\n                colo" +
-"r: #0383df;\n                font-size: 20px;\n                font-weight: 700;\n " +
-"           }\n\n            .bcms-body {\n                width: 560px;\n           " +
-"     margin: 0 auto;\n                padding: 20px 0 74px;\n            }\n\n      " +
-"      .bcms-footer {\n                height: 74px;\n                padding: 20px" +
-" 20px 20px 60px;\n                background-color: #303030;\n                box-" +
-"sizing: border-box;\n                -moz-box-sizing: border-box;\n            }\n\n" +
-"            .bcms-field-text {\n                height: 30px;\n                wid" +
-"th: 100%;\n                line-height: 18px;\n                padding: 6px;\n     " +
-"           margin: 0;\n                border: 1px solid #c6c6c6;\n               " +
-" font-family: \'Open Sans\', sans-serif;\n                font-size: 12px;\n        " +
-"        color: #000;\n                vertical-align: middle;\n                bac" +
-"kground-color: #f5f5f5;\n                border-radius: 0;\n                box-si" +
-"zing: border-box;\n                -moz-box-sizing: border-box;\n                -" +
-"webkit-appearance: none;\n                border-radius: 0;\n            }\n\n      " +
-"      .bcms-btn-primary {\n                position: relative;\n                di" +
-"splay: inline-block;\n                height: 28px;\n                line-height: " +
-"28px;\n                padding: 0 10px;\n                margin: 10px 0;\n         " +
-"       border: 1px solid #24597e;\n                border-radius: 2px;\n          " +
-"      cursor: pointer;\n                vertical-align: middle;\n                c" +
-"olor: #fff;\n                font-family: \'Open Sans\', sans-serif;\n              " +
-"  font-size: 12px;\n                overflow: hidden;\n                text-transf" +
-"orm: uppercase;\n                background: #1890E6;\n                background:" +
-" linear-gradient(to bottom, #1890E6 0, #0D7BC9 100%);\n                background" +
-": -moz-linear-gradient(top, #1890E6 0, #0D7BC9 100%);\n                background" +
-": -webkit-linear-gradient(top, #1890E6 0, #0D7BC9 100%);\n            }\n\n        " +
-"    .bcms-title {\n                display: block;\n                position: rela" +
-"tive;\n                padding: 10px 0 5px;\n                color: #000;\n        " +
-"        line-height: 20px;\n                font-size: 14px;\n                font" +
-"-weight: 700;\n            }\n        </style>\n");
+WriteLiteral(" href=\"/file/bcms-users/Content/Styles/bcms.users.min.css\"");
 
-WriteLiteral("        ");
+WriteLiteral(" />\r\n\r\n");
+
+WriteLiteral("    ");
 
             
-            #line 109 "..\..\Views\Shared\PublicActionLayout.cshtml"
-   Write(RenderSection("Head", false));
+            #line 8 "..\..\Views\Shared\PublicActionLayout.cshtml"
+Write(RenderSection("Head", false));
 
             
             #line default
             #line hidden
-WriteLiteral("\n    </head>\n    <body>\n        <div");
+WriteLiteral("\r\n</head>\r\n\r\n<body>\r\n    <div");
 
-WriteLiteral(" class=\"bcms-page\"");
+WriteLiteral(" class=\"bcms-modal bcms-modal-installation\"");
 
-WriteLiteral(">\n            <div");
+WriteLiteral(" spellcheck=\"true\"");
 
-WriteLiteral(" class=\"bcms-header\"");
+WriteLiteral(">\r\n        <div");
 
-WriteLiteral(">\n                <h1>");
+WriteLiteral(" class=\"bcms-modal-body\"");
+
+WriteLiteral(">\r\n            <div");
+
+WriteLiteral(" class=\"bcms-modal-header\"");
+
+WriteLiteral(">\r\n                <div");
+
+WriteLiteral(" class=\"bcms-modal-frame-holder\"");
+
+WriteLiteral(">\r\n                    <div");
+
+WriteLiteral(" class=\"bcms-modal-title\"");
+
+WriteLiteral(">");
 
             
-            #line 114 "..\..\Views\Shared\PublicActionLayout.cshtml"
-               Write(ViewBag.Title);
+            #line 16 "..\..\Views\Shared\PublicActionLayout.cshtml"
+                                             Write(ViewBag.Title);
 
             
             #line default
             #line hidden
-WriteLiteral("</h1>\n            </div>\n            <div");
+WriteLiteral("</div>\r\n                </div>\r\n            </div>\r\n\r\n            <div");
 
-WriteLiteral(" class=\"bcms-body\"");
+WriteLiteral(" class=\"bcms-modal-content\"");
 
-WriteLiteral(">\n");
+WriteLiteral(">\r\n                <div");
 
-WriteLiteral("                ");
+WriteLiteral(" class=\"bcms-window-installation\"");
+
+WriteLiteral(">\r\n");
+
+WriteLiteral("                    ");
 
             
-            #line 117 "..\..\Views\Shared\PublicActionLayout.cshtml"
-           Write(RenderBody());
+            #line 22 "..\..\Views\Shared\PublicActionLayout.cshtml"
+               Write(RenderBody());
 
             
             #line default
             #line hidden
-WriteLiteral("\n            </div>            \n        </div>\n        <div");
+WriteLiteral("\r\n                </div>\r\n            </div>\r\n\r\n            <div");
 
-WriteLiteral(" class=\"bcms-footer\"");
+WriteLiteral(" class=\"bcms-modal-footer\"");
 
-WriteLiteral("></div>\n    </body>    \n</html>\n");
+WriteLiteral("></div>\r\n        </div>\r\n    </div>\r\n</body>\r\n</html>\r\n");
 
         }
     }
