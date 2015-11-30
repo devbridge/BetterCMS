@@ -222,7 +222,7 @@ namespace BetterCms.Module.Root.Services
                     if (languageId != null && languageId != default(Guid) && optionValue is IMultilingualOption)
                     {
                         var multilingualOption = optionValue as IMultilingualOption;
-                        if (multilingualOption.Translations == null || !multilingualOption.Translations.Any())
+                        if (multilingualOption.Translations == null || multilingualOption.Translations.All(t => t.LanguageId != languageId.ToString()))
                         {
                             continue;
                         }
