@@ -28,37 +28,37 @@ namespace ASP
     using System.Web.UI;
     using System.Web.WebPages;
     
-    #line 1 "..\..\Views\Content\AddPageHtmlContent.cshtml"
+    #line 28 "..\..\Views\Content\AddPageHtmlContent.cshtml"
     using BetterCms.Module.Pages.Content.Resources;
     
     #line default
     #line hidden
     
-    #line 2 "..\..\Views\Content\AddPageHtmlContent.cshtml"
+    #line 29 "..\..\Views\Content\AddPageHtmlContent.cshtml"
     using BetterCms.Module.Pages.Controllers;
     
     #line default
     #line hidden
     
-    #line 3 "..\..\Views\Content\AddPageHtmlContent.cshtml"
+    #line 30 "..\..\Views\Content\AddPageHtmlContent.cshtml"
     using BetterCms.Module.Root;
     
     #line default
     #line hidden
     
-    #line 4 "..\..\Views\Content\AddPageHtmlContent.cshtml"
+    #line 31 "..\..\Views\Content\AddPageHtmlContent.cshtml"
     using BetterCms.Module.Root.Mvc;
     
     #line default
     #line hidden
     
-    #line 5 "..\..\Views\Content\AddPageHtmlContent.cshtml"
+    #line 32 "..\..\Views\Content\AddPageHtmlContent.cshtml"
     using BetterCms.Module.Root.Mvc.Helpers;
     
     #line default
     #line hidden
     
-    #line 6 "..\..\Views\Content\AddPageHtmlContent.cshtml"
+    #line 33 "..\..\Views\Content\AddPageHtmlContent.cshtml"
     using Microsoft.Web.Mvc;
     
     #line default
@@ -73,6 +73,8 @@ namespace ASP
         }
         public override void Execute()
         {
+WriteLiteral("\r\n");
+
 WriteLiteral("\r\n");
 
 WriteLiteral("<div");
@@ -92,7 +94,7 @@ WriteLiteral(" data-name=\"#bcms-tab-1\"");
 WriteLiteral(">");
 
             
-            #line 12 "..\..\Views\Content\AddPageHtmlContent.cshtml"
+            #line 39 "..\..\Views\Content\AddPageHtmlContent.cshtml"
                                                                               Write(PagesGlobalization.AddPageContent_RegularContentTab_Title);
 
             
@@ -107,7 +109,7 @@ WriteLiteral(" data-name=\"#bcms-tab-2\"");
 WriteLiteral(">");
 
             
-            #line 13 "..\..\Views\Content\AddPageHtmlContent.cshtml"
+            #line 40 "..\..\Views\Content\AddPageHtmlContent.cshtml"
                                                                   Write(PagesGlobalization.EditPageContent_AdvancedOptionsTab_Title);
 
             
@@ -116,7 +118,7 @@ WriteLiteral(">");
 WriteLiteral("</div>\r\n    </div>\r\n</div>\r\n\r\n");
 
             
-            #line 17 "..\..\Views\Content\AddPageHtmlContent.cshtml"
+            #line 44 "..\..\Views\Content\AddPageHtmlContent.cshtml"
    ViewBag.CanEdit = (ViewContext.Controller as CmsControllerBase).SecurityService.IsAuthorized(RootModuleConstants.UserRoles.EditContent); 
             
             #line default
@@ -130,7 +132,7 @@ WriteLiteral(">\r\n");
 WriteLiteral("    ");
 
             
-            #line 20 "..\..\Views\Content\AddPageHtmlContent.cshtml"
+            #line 47 "..\..\Views\Content\AddPageHtmlContent.cshtml"
 Write(Html.MessagesBox());
 
             
@@ -143,13 +145,13 @@ WriteLiteral(" class=\"bcms-window-tabbed-options\"");
 WriteLiteral(">\r\n");
 
             
-            #line 23 "..\..\Views\Content\AddPageHtmlContent.cshtml"
+            #line 50 "..\..\Views\Content\AddPageHtmlContent.cshtml"
         
             
             #line default
             #line hidden
             
-            #line 23 "..\..\Views\Content\AddPageHtmlContent.cshtml"
+            #line 50 "..\..\Views\Content\AddPageHtmlContent.cshtml"
          using (Html.BeginForm<ContentController>(c => c.SavePageHtmlContent(null), FormMethod.Post, new { @id = "bcms-content-form", @class = "bcms-ajax-form" }))
         {
 
@@ -167,7 +169,7 @@ WriteLiteral(">\r\n");
 WriteLiteral("                ");
 
             
-            #line 26 "..\..\Views\Content\AddPageHtmlContent.cshtml"
+            #line 53 "..\..\Views\Content\AddPageHtmlContent.cshtml"
            Write(Html.Partial("Partial/EditHtmlContent", Model));
 
             
@@ -178,7 +180,7 @@ WriteLiteral("\r\n");
 WriteLiteral("                ");
 
             
-            #line 27 "..\..\Views\Content\AddPageHtmlContent.cshtml"
+            #line 54 "..\..\Views\Content\AddPageHtmlContent.cshtml"
            Write(Html.HiddenFor(model => model.Id, new { @id = "bcmsPageContentId" }));
 
             
@@ -189,7 +191,7 @@ WriteLiteral("\r\n");
 WriteLiteral("                ");
 
             
-            #line 28 "..\..\Views\Content\AddPageHtmlContent.cshtml"
+            #line 55 "..\..\Views\Content\AddPageHtmlContent.cshtml"
            Write(Html.HiddenFor(model => model.ContentId, new { @id = "bcmsContentId" }));
 
             
@@ -200,7 +202,7 @@ WriteLiteral("\r\n");
 WriteLiteral("                ");
 
             
-            #line 29 "..\..\Views\Content\AddPageHtmlContent.cshtml"
+            #line 56 "..\..\Views\Content\AddPageHtmlContent.cshtml"
            Write(Html.HiddenFor(model => model.ParentPageContentId, new { @id = "bcmsParentPageContentId" }));
 
             
@@ -211,7 +213,7 @@ WriteLiteral("\r\n");
 WriteLiteral("                ");
 
             
-            #line 30 "..\..\Views\Content\AddPageHtmlContent.cshtml"
+            #line 57 "..\..\Views\Content\AddPageHtmlContent.cshtml"
            Write(Html.HiddenFor(model => model.PageId));
 
             
@@ -222,7 +224,7 @@ WriteLiteral("\r\n");
 WriteLiteral("                ");
 
             
-            #line 31 "..\..\Views\Content\AddPageHtmlContent.cshtml"
+            #line 58 "..\..\Views\Content\AddPageHtmlContent.cshtml"
            Write(Html.HiddenFor(model => model.RegionId, new { @id = "bcmsContentToRegionId" }));
 
             
@@ -233,7 +235,7 @@ WriteLiteral("\r\n");
 WriteLiteral("                ");
 
             
-            #line 32 "..\..\Views\Content\AddPageHtmlContent.cshtml"
+            #line 59 "..\..\Views\Content\AddPageHtmlContent.cshtml"
            Write(Html.HiddenFor(modal => modal.DesirableStatus, new { @class = "bcms-content-desirable-status" }));
 
             
@@ -242,7 +244,7 @@ WriteLiteral("                ");
 WriteLiteral("\r\n            </div>\r\n");
 
             
-            #line 34 "..\..\Views\Content\AddPageHtmlContent.cshtml"
+            #line 61 "..\..\Views\Content\AddPageHtmlContent.cshtml"
 
 
             
@@ -259,7 +261,7 @@ WriteLiteral(">\r\n");
 WriteLiteral("                ");
 
             
-            #line 36 "..\..\Views\Content\AddPageHtmlContent.cshtml"
+            #line 63 "..\..\Views\Content\AddPageHtmlContent.cshtml"
            Write(Html.Partial("Partial/EditHtmlContentJsCss", Model));
 
             
@@ -268,7 +270,7 @@ WriteLiteral("                ");
 WriteLiteral("\r\n            </div>\r\n");
 
             
-            #line 38 "..\..\Views\Content\AddPageHtmlContent.cshtml"
+            #line 65 "..\..\Views\Content\AddPageHtmlContent.cshtml"
         }
 
             

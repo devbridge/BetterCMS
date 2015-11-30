@@ -28,13 +28,13 @@ namespace ASP
     using System.Web.UI;
     using System.Web.WebPages;
     
-    #line 1 "..\..\Views\Shared\EditorTemplates\WidgetStatus.cshtml"
+    #line 28 "..\..\Views\Shared\EditorTemplates\WidgetStatus.cshtml"
     using BetterCms.Core.DataContracts.Enums;
     
     #line default
     #line hidden
     
-    #line 2 "..\..\Views\Shared\EditorTemplates\WidgetStatus.cshtml"
+    #line 29 "..\..\Views\Shared\EditorTemplates\WidgetStatus.cshtml"
     using BetterCms.Module.Root.Content.Resources;
     
     #line default
@@ -49,10 +49,12 @@ namespace ASP
         }
         public override void Execute()
         {
+WriteLiteral("\r\n");
+
 WriteLiteral("\n");
 
             
-            #line 5 "..\..\Views\Shared\EditorTemplates\WidgetStatus.cshtml"
+            #line 32 "..\..\Views\Shared\EditorTemplates\WidgetStatus.cshtml"
  if (Model == ContentStatus.Published.ToString())
 {
 
@@ -63,20 +65,20 @@ WriteLiteral("    <div");
 
 WriteLiteral(" class=\"bcms-action-ok bcms-js-action-ok\"");
 
-WriteAttribute("title", Tuple.Create(" title=\"", 207), Tuple.Create("\"", 256)
+WriteAttribute("title", Tuple.Create(" title=\"", 1517), Tuple.Create("\"", 1566)
             
-            #line 7 "..\..\Views\Shared\EditorTemplates\WidgetStatus.cshtml"
-, Tuple.Create(Tuple.Create("", 215), Tuple.Create<System.Object, System.Int32>(RootGlobalization.WidgetStatus_Published
+            #line 34 "..\..\Views\Shared\EditorTemplates\WidgetStatus.cshtml"
+, Tuple.Create(Tuple.Create("", 1525), Tuple.Create<System.Object, System.Int32>(RootGlobalization.WidgetStatus_Published
             
             #line default
             #line hidden
-, 215), false)
+, 1525), false)
 );
 
 WriteLiteral(">");
 
             
-            #line 7 "..\..\Views\Shared\EditorTemplates\WidgetStatus.cshtml"
+            #line 34 "..\..\Views\Shared\EditorTemplates\WidgetStatus.cshtml"
                                                                                                Write(RootGlobalization.WidgetStatus_Published);
 
             
@@ -85,7 +87,7 @@ WriteLiteral(">");
 WriteLiteral("</div>\r\n");
 
             
-            #line 8 "..\..\Views\Shared\EditorTemplates\WidgetStatus.cshtml"
+            #line 35 "..\..\Views\Shared\EditorTemplates\WidgetStatus.cshtml"
 }
 else if (Model == ContentStatus.Draft.ToString())
 {
@@ -97,20 +99,20 @@ WriteLiteral("    <div");
 
 WriteLiteral(" class=\"bcms-action-draft\"");
 
-WriteAttribute("title", Tuple.Create(" title=\"", 398), Tuple.Create("\"", 443)
+WriteAttribute("title", Tuple.Create(" title=\"", 1708), Tuple.Create("\"", 1753)
             
-            #line 11 "..\..\Views\Shared\EditorTemplates\WidgetStatus.cshtml"
-, Tuple.Create(Tuple.Create("", 406), Tuple.Create<System.Object, System.Int32>(RootGlobalization.WidgetStatus_Draft
+            #line 38 "..\..\Views\Shared\EditorTemplates\WidgetStatus.cshtml"
+, Tuple.Create(Tuple.Create("", 1716), Tuple.Create<System.Object, System.Int32>(RootGlobalization.WidgetStatus_Draft
             
             #line default
             #line hidden
-, 406), false)
+, 1716), false)
 );
 
 WriteLiteral(">");
 
             
-            #line 11 "..\..\Views\Shared\EditorTemplates\WidgetStatus.cshtml"
+            #line 38 "..\..\Views\Shared\EditorTemplates\WidgetStatus.cshtml"
                                                                             Write(RootGlobalization.WidgetStatus_Draft);
 
             
@@ -119,7 +121,7 @@ WriteLiteral(">");
 WriteLiteral("</div>\r\n");
 
             
-            #line 12 "..\..\Views\Shared\EditorTemplates\WidgetStatus.cshtml"
+            #line 39 "..\..\Views\Shared\EditorTemplates\WidgetStatus.cshtml"
 }
 else
 {
@@ -131,20 +133,20 @@ WriteLiteral("    <div");
 
 WriteLiteral(" class=\"bcms-action-draft\"");
 
-WriteAttribute("title", Tuple.Create(" title=\"", 536), Tuple.Create("\"", 594)
+WriteAttribute("title", Tuple.Create(" title=\"", 1846), Tuple.Create("\"", 1904)
             
-            #line 15 "..\..\Views\Shared\EditorTemplates\WidgetStatus.cshtml"
-, Tuple.Create(Tuple.Create("", 544), Tuple.Create<System.Object, System.Int32>(RootGlobalization.WidgetStatus_PublishedWithDraft
+            #line 42 "..\..\Views\Shared\EditorTemplates\WidgetStatus.cshtml"
+, Tuple.Create(Tuple.Create("", 1854), Tuple.Create<System.Object, System.Int32>(RootGlobalization.WidgetStatus_PublishedWithDraft
             
             #line default
             #line hidden
-, 544), false)
+, 1854), false)
 );
 
 WriteLiteral(">");
 
             
-            #line 15 "..\..\Views\Shared\EditorTemplates\WidgetStatus.cshtml"
+            #line 42 "..\..\Views\Shared\EditorTemplates\WidgetStatus.cshtml"
                                                                                          Write(RootGlobalization.WidgetStatus_PublishedWithDraft);
 
             
@@ -153,7 +155,7 @@ WriteLiteral(">");
 WriteLiteral("</div>\r\n");
 
             
-            #line 16 "..\..\Views\Shared\EditorTemplates\WidgetStatus.cshtml"
+            #line 43 "..\..\Views\Shared\EditorTemplates\WidgetStatus.cshtml"
 }
             
             #line default

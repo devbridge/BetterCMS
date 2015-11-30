@@ -37,10 +37,10 @@ namespace ASP
         }
         public override void Execute()
         {
-WriteLiteral("\r\n");
+WriteLiteral("\r\n\r\n");
 
             
-            #line 2 "..\..\Views\Shared\Partial\MediaManagerTab.cshtml"
+            #line 29 "..\..\Views\Shared\Partial\MediaManagerTab.cshtml"
  using (Html.BeginForm(null, null, null, FormMethod.Post, new {@class = "bcms-ajax-form"}))
 {
 
@@ -56,7 +56,7 @@ WriteLiteral(" class=\"bcms-data-bind-container\"");
 WriteLiteral("></div>\r\n");
 
             
-            #line 5 "..\..\Views\Shared\Partial\MediaManagerTab.cshtml"
+            #line 32 "..\..\Views\Shared\Partial\MediaManagerTab.cshtml"
 }
             
             #line default

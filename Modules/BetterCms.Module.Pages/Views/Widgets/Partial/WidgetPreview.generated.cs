@@ -28,7 +28,7 @@ namespace ASP
     using System.Web.UI;
     using System.Web.WebPages;
     
-    #line 1 "..\..\Views\Widgets\Partial\WidgetPreview.cshtml"
+    #line 28 "..\..\Views\Widgets\Partial\WidgetPreview.cshtml"
     using BetterCms.Module.Pages;
     
     #line default
@@ -43,6 +43,8 @@ namespace ASP
         }
         public override void Execute()
         {
+WriteLiteral("\r\n");
+
 WriteLiteral("<div");
 
 WriteLiteral(" class=\"bcms-modal-frame-holder\"");
@@ -56,7 +58,7 @@ WriteLiteral(">\r\n");
 WriteLiteral("            ");
 
             
-            #line 6 "..\..\Views\Widgets\Partial\WidgetPreview.cshtml"
+            #line 33 "..\..\Views\Widgets\Partial\WidgetPreview.cshtml"
        Write(Html.Partial(PagesConstants.ContentVersionPreviewTemplate, Model));
 
             

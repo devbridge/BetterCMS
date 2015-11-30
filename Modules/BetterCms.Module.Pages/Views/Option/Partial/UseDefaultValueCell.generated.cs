@@ -28,13 +28,13 @@ namespace ASP
     using System.Web.UI;
     using System.Web.WebPages;
     
-    #line 1 "..\..\Views\Option\Partial\UseDefaultValueCell.cshtml"
+    #line 28 "..\..\Views\Option\Partial\UseDefaultValueCell.cshtml"
     using BetterCms.Module.Root;
     
     #line default
     #line hidden
     
-    #line 2 "..\..\Views\Option\Partial\UseDefaultValueCell.cshtml"
+    #line 29 "..\..\Views\Option\Partial\UseDefaultValueCell.cshtml"
     using BetterCms.Module.Root.Mvc.Grids;
     
     #line default
@@ -51,11 +51,13 @@ namespace ASP
         {
 WriteLiteral("\r\n");
 
+WriteLiteral("\r\n");
+
 WriteLiteral("<!-- ko if: canEditOption() -->\r\n    <td>&nbsp;</td>\r\n<!-- /ko -->\r\n\r\n<!-- ko ifn" +
 "ot: canEditOption() -->\r\n");
 
             
-            #line 11 "..\..\Views\Option\Partial\UseDefaultValueCell.cshtml"
+            #line 38 "..\..\Views\Option\Partial\UseDefaultValueCell.cshtml"
 Write(Html.Partial(RootModuleConstants.EditableGridBooleanCellTemplate, new EditableGridBooleanColumn(Model.HeaderTitle, Model.SortColumn, Model.ValueBind)
                                                                         {
                                                                             HiddenFieldName = Model.HiddenFieldName,

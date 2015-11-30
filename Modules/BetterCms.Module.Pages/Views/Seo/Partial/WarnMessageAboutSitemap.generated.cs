@@ -28,13 +28,13 @@ namespace ASP
     using System.Web.UI;
     using System.Web.WebPages;
     
-    #line 1 "..\..\Views\Seo\Partial\WarnMessageAboutSitemap.cshtml"
+    #line 28 "..\..\Views\Seo\Partial\WarnMessageAboutSitemap.cshtml"
     using BetterCms.Module.Pages.Content.Resources;
     
     #line default
     #line hidden
     
-    #line 2 "..\..\Views\Seo\Partial\WarnMessageAboutSitemap.cshtml"
+    #line 29 "..\..\Views\Seo\Partial\WarnMessageAboutSitemap.cshtml"
     using BetterCms.Module.Root.Content.Resources;
     
     #line default
@@ -49,10 +49,12 @@ namespace ASP
         }
         public override void Execute()
         {
+WriteLiteral("\r\n");
+
 WriteLiteral("\n");
 
             
-            #line 6 "..\..\Views\Seo\Partial\WarnMessageAboutSitemap.cshtml"
+            #line 33 "..\..\Views\Seo\Partial\WarnMessageAboutSitemap.cshtml"
  if (!Model.IsInSitemap)
 {
 
@@ -88,7 +90,7 @@ WriteLiteral(" id=\"bcms-seo-closeinfomessage\"");
 WriteLiteral(">");
 
             
-            #line 13 "..\..\Views\Seo\Partial\WarnMessageAboutSitemap.cshtml"
+            #line 40 "..\..\Views\Seo\Partial\WarnMessageAboutSitemap.cshtml"
                                                                                              Write(RootGlobalization.Button_Close);
 
             
@@ -99,7 +101,7 @@ WriteLiteral("</div>\r\n");
 WriteLiteral("                ");
 
             
-            #line 14 "..\..\Views\Seo\Partial\WarnMessageAboutSitemap.cshtml"
+            #line 41 "..\..\Views\Seo\Partial\WarnMessageAboutSitemap.cshtml"
            Write(PagesGlobalization.EditSeo_Messages_NotInSitemapWarnMessage);
 
             
@@ -114,7 +116,7 @@ WriteLiteral(" style=\"display: none\"");
 WriteLiteral("></ul>\r\n    </div>\r\n");
 
             
-            #line 19 "..\..\Views\Seo\Partial\WarnMessageAboutSitemap.cshtml"
+            #line 46 "..\..\Views\Seo\Partial\WarnMessageAboutSitemap.cshtml"
 }
 
             

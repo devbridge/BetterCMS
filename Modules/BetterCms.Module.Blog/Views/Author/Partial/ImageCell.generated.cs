@@ -28,7 +28,7 @@ namespace ASP
     using System.Web.UI;
     using System.Web.WebPages;
     
-    #line 1 "..\..\Views\Author\Partial\ImageCell.cshtml"
+    #line 28 "..\..\Views\Author\Partial\ImageCell.cshtml"
     using BetterCms.Module.Root.Content.Resources;
     
     #line default
@@ -43,10 +43,12 @@ namespace ASP
         }
         public override void Execute()
         {
+WriteLiteral("\r\n");
+
 WriteLiteral("<td ");
 
             
-            #line 4 "..\..\Views\Author\Partial\ImageCell.cshtml"
+            #line 31 "..\..\Views\Author\Partial\ImageCell.cshtml"
 Write(Html.Raw(Model.Attributes));
 
             
@@ -69,7 +71,7 @@ WriteLiteral(" data-bind=\"click: image().remove.bind(image())\"");
 WriteLiteral(">");
 
             
-            #line 8 "..\..\Views\Author\Partial\ImageCell.cshtml"
+            #line 35 "..\..\Views\Author\Partial\ImageCell.cshtml"
                                                                                       Write(RootGlobalization.Button_Remove);
 
             
@@ -125,7 +127,7 @@ WriteLiteral(" data-bind=\"click: image().select.bind(image())\"");
 WriteLiteral(">");
 
             
-            #line 26 "..\..\Views\Author\Partial\ImageCell.cshtml"
+            #line 53 "..\..\Views\Author\Partial\ImageCell.cshtml"
                                                                                    Write(RootGlobalization.Button_Browse);
 
             

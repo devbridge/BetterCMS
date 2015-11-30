@@ -28,19 +28,19 @@ namespace ASP
     using System.Web.UI;
     using System.Web.WebPages;
     
-    #line 1 "..\..\Views\Content\Partial\EditHtmlContent.cshtml"
+    #line 28 "..\..\Views\Content\Partial\EditHtmlContent.cshtml"
     using BetterCms.Module.Pages.Content.Resources;
     
     #line default
     #line hidden
     
-    #line 2 "..\..\Views\Content\Partial\EditHtmlContent.cshtml"
+    #line 29 "..\..\Views\Content\Partial\EditHtmlContent.cshtml"
     using BetterCms.Module.Root.Mvc.Helpers;
     
     #line default
     #line hidden
     
-    #line 3 "..\..\Views\Content\Partial\EditHtmlContent.cshtml"
+    #line 30 "..\..\Views\Content\Partial\EditHtmlContent.cshtml"
     using BetterCms.Module.Root.Mvc.UI;
     
     #line default
@@ -55,8 +55,10 @@ namespace ASP
         }
         public override void Execute()
         {
+WriteLiteral("\r\n");
+
             
-            #line 6 "..\..\Views\Content\Partial\EditHtmlContent.cshtml"
+            #line 33 "..\..\Views\Content\Partial\EditHtmlContent.cshtml"
 Write(Html.HiddenFor(model => model.EditInSourceMode, new { @id = "bcms-edit-in-source-mode" }));
 
             
@@ -65,7 +67,7 @@ Write(Html.HiddenFor(model => model.EditInSourceMode, new { @id = "bcms-edit-in-
 WriteLiteral("\r\n");
 
             
-            #line 7 "..\..\Views\Content\Partial\EditHtmlContent.cshtml"
+            #line 34 "..\..\Views\Content\Partial\EditHtmlContent.cshtml"
 Write(Html.HiddenFor(model => model.ContentTextMode, new { @id = "bcms-content-text-mode" }));
 
             
@@ -86,7 +88,7 @@ WriteLiteral(" class=\"bcms-content-titles\"");
 WriteLiteral(">");
 
             
-            #line 11 "..\..\Views\Content\Partial\EditHtmlContent.cshtml"
+            #line 38 "..\..\Views\Content\Partial\EditHtmlContent.cshtml"
                                     Write(PagesGlobalization.AddPageContent_RegularContentTab_ContentName_Title);
 
             
@@ -97,7 +99,7 @@ WriteLiteral("</div>\r\n");
 WriteLiteral("        ");
 
             
-            #line 12 "..\..\Views\Content\Partial\EditHtmlContent.cshtml"
+            #line 39 "..\..\Views\Content\Partial\EditHtmlContent.cshtml"
    Write(Html.Tooltip(PagesGlobalization.AddPageContent_RegularContentTab_ContentName_Tooltip_Description));
 
             
@@ -112,7 +114,7 @@ WriteLiteral(">\r\n");
 WriteLiteral("            ");
 
             
-            #line 14 "..\..\Views\Content\Partial\EditHtmlContent.cshtml"
+            #line 41 "..\..\Views\Content\Partial\EditHtmlContent.cshtml"
        Write(Html.TextBoxFor(model => model.ContentName, new { @class = "bcms-field-text" }));
 
             
@@ -123,7 +125,7 @@ WriteLiteral("\r\n");
 WriteLiteral("            ");
 
             
-            #line 15 "..\..\Views\Content\Partial\EditHtmlContent.cshtml"
+            #line 42 "..\..\Views\Content\Partial\EditHtmlContent.cshtml"
        Write(Html.BcmsValidationMessageFor(model => model.ContentName));
 
             
@@ -140,7 +142,7 @@ WriteLiteral(" class=\"bcms-content-titles\"");
 WriteLiteral(">");
 
             
-            #line 20 "..\..\Views\Content\Partial\EditHtmlContent.cshtml"
+            #line 47 "..\..\Views\Content\Partial\EditHtmlContent.cshtml"
                                     Write(PagesGlobalization.AddPageContent_RegularContentTab_LiveFrom_Title);
 
             
@@ -155,7 +157,7 @@ WriteLiteral(">\r\n");
 WriteLiteral("            ");
 
             
-            #line 22 "..\..\Views\Content\Partial\EditHtmlContent.cshtml"
+            #line 49 "..\..\Views\Content\Partial\EditHtmlContent.cshtml"
        Write(Html.DateTextBoxFor(model => model.LiveFrom, Model.LiveFrom, new Dictionary<string, object> { { "class", "bcms-field-text bcms-datepicker" } }));
 
             
@@ -166,7 +168,7 @@ WriteLiteral("\r\n");
 WriteLiteral("            ");
 
             
-            #line 23 "..\..\Views\Content\Partial\EditHtmlContent.cshtml"
+            #line 50 "..\..\Views\Content\Partial\EditHtmlContent.cshtml"
        Write(Html.BcmsValidationMessageFor(model => model.LiveFrom));
 
             
@@ -183,7 +185,7 @@ WriteLiteral(" class=\"bcms-content-titles\"");
 WriteLiteral(">");
 
             
-            #line 28 "..\..\Views\Content\Partial\EditHtmlContent.cshtml"
+            #line 55 "..\..\Views\Content\Partial\EditHtmlContent.cshtml"
                                     Write(PagesGlobalization.AddPageContent_RegularContentTab_LiveTo_Title);
 
             
@@ -198,7 +200,7 @@ WriteLiteral(">\r\n");
 WriteLiteral("            ");
 
             
-            #line 30 "..\..\Views\Content\Partial\EditHtmlContent.cshtml"
+            #line 57 "..\..\Views\Content\Partial\EditHtmlContent.cshtml"
        Write(Html.DateTextBoxFor(model => model.LiveTo, Model.LiveTo, new Dictionary<string, object> { { "class", "bcms-field-text bcms-datepicker" } }));
 
             
@@ -209,7 +211,7 @@ WriteLiteral("\r\n");
 WriteLiteral("            ");
 
             
-            #line 31 "..\..\Views\Content\Partial\EditHtmlContent.cshtml"
+            #line 58 "..\..\Views\Content\Partial\EditHtmlContent.cshtml"
        Write(Html.BcmsValidationMessageFor(model => model.LiveTo));
 
             
@@ -224,7 +226,7 @@ WriteLiteral(">\r\n");
 WriteLiteral("    ");
 
             
-            #line 37 "..\..\Views\Content\Partial\EditHtmlContent.cshtml"
+            #line 64 "..\..\Views\Content\Partial\EditHtmlContent.cshtml"
 Write(Html.TextAreaFor(model => model.PageContent, new { @class = "bcms-contenthtml", @id = Guid.NewGuid() }));
 
             

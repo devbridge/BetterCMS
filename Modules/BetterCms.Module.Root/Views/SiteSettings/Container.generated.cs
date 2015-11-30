@@ -28,13 +28,13 @@ namespace ASP
     using System.Web.UI;
     using System.Web.WebPages;
     
-    #line 1 "..\..\Views\SiteSettings\Container.cshtml"
+    #line 28 "..\..\Views\SiteSettings\Container.cshtml"
     using BetterCms.Core.Modules.Projections;
     
     #line default
     #line hidden
     
-    #line 2 "..\..\Views\SiteSettings\Container.cshtml"
+    #line 29 "..\..\Views\SiteSettings\Container.cshtml"
     using BetterCms.Module.Root.Mvc;
     
     #line default
@@ -49,6 +49,8 @@ namespace ASP
         }
         public override void Execute()
         {
+WriteLiteral("\r\n");
+
 WriteLiteral("<div");
 
 WriteLiteral(" id=\"bcms-site-settings\"");
@@ -66,13 +68,13 @@ WriteLiteral(" id=\"bcms-site-settings-menu\"");
 WriteLiteral(">\r\n");
 
             
-            #line 8 "..\..\Views\SiteSettings\Container.cshtml"
+            #line 35 "..\..\Views\SiteSettings\Container.cshtml"
             
             
             #line default
             #line hidden
             
-            #line 8 "..\..\Views\SiteSettings\Container.cshtml"
+            #line 35 "..\..\Views\SiteSettings\Container.cshtml"
               
                 var lastItemIsHr = true;
                 foreach (var menuItem in Model.MenuItems.Projections)

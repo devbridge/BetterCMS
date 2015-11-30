@@ -28,25 +28,25 @@ namespace ASP
     using System.Web.UI;
     using System.Web.WebPages;
     
-    #line 1 "..\..\Views\Author\Partial\ListTemplate.cshtml"
+    #line 28 "..\..\Views\Author\Partial\ListTemplate.cshtml"
     using BetterCms.Module.Blog.Content.Resources;
     
     #line default
     #line hidden
     
-    #line 2 "..\..\Views\Author\Partial\ListTemplate.cshtml"
+    #line 29 "..\..\Views\Author\Partial\ListTemplate.cshtml"
     using BetterCms.Module.Root;
     
     #line default
     #line hidden
     
-    #line 3 "..\..\Views\Author\Partial\ListTemplate.cshtml"
+    #line 30 "..\..\Views\Author\Partial\ListTemplate.cshtml"
     using BetterCms.Module.Root.Mvc.Grids;
     
     #line default
     #line hidden
     
-    #line 4 "..\..\Views\Author\Partial\ListTemplate.cshtml"
+    #line 31 "..\..\Views\Author\Partial\ListTemplate.cshtml"
     using BetterCms.Module.Root.ViewModels.Shared;
     
     #line default
@@ -63,8 +63,10 @@ namespace ASP
         {
 WriteLiteral("\r\n");
 
+WriteLiteral("\r\n");
+
             
-            #line 6 "..\..\Views\Author\Partial\ListTemplate.cshtml"
+            #line 33 "..\..\Views\Author\Partial\ListTemplate.cshtml"
   
     var gridViewModel = new EditableGridViewModel
     {
@@ -92,7 +94,7 @@ WriteLiteral("\r\n");
 WriteLiteral("\r\n\r\n");
 
             
-            #line 28 "..\..\Views\Author\Partial\ListTemplate.cshtml"
+            #line 55 "..\..\Views\Author\Partial\ListTemplate.cshtml"
 Write(Html.Partial(RootModuleConstants.EditableGridTemplate, gridViewModel));
 
             

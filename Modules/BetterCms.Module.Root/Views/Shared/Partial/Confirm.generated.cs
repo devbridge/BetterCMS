@@ -28,7 +28,7 @@ namespace ASP
     using System.Web.UI;
     using System.Web.WebPages;
     
-    #line 1 "..\..\Views\Shared\Partial\Confirm.cshtml"
+    #line 28 "..\..\Views\Shared\Partial\Confirm.cshtml"
     using BetterCms.Module.Root.Content.Resources;
     
     #line default
@@ -43,6 +43,8 @@ namespace ASP
         }
         public override void Execute()
         {
+WriteLiteral("\r\n");
+
 WriteLiteral("\r\n<script");
 
 WriteLiteral(" type=\"text/html\"");
@@ -53,7 +55,7 @@ WriteLiteral(">\r\n    <div class=\"bcms-modal-alert\">\r\n        <div class=\"
 "bindex=\"-1\">\r\n            <div class=\"bcms-btn-close bcms-js-btn-close\">");
 
             
-            #line 6 "..\..\Views\Shared\Partial\Confirm.cshtml"
+            #line 33 "..\..\Views\Shared\Partial\Confirm.cshtml"
                                                      Write(RootGlobalization.Button_Close);
 
             
@@ -62,7 +64,7 @@ WriteLiteral(">\r\n    <div class=\"bcms-modal-alert\">\r\n        <div class=\"
 WriteLiteral("</div>\r\n            <div class=\"bcms-message-titles\">");
 
             
-            #line 7 "..\..\Views\Shared\Partial\Confirm.cshtml"
+            #line 34 "..\..\Views\Shared\Partial\Confirm.cshtml"
                                         Write(RootGlobalization.Confirm_DefaultTitle);
 
             

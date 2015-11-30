@@ -28,31 +28,31 @@ namespace ASP
     using System.Web.UI;
     using System.Web.WebPages;
     
-    #line 1 "..\..\Views\Seo\EditSeo.cshtml"
+    #line 28 "..\..\Views\Seo\EditSeo.cshtml"
     using BetterCms.Module.Pages.Content.Resources;
     
     #line default
     #line hidden
     
-    #line 2 "..\..\Views\Seo\EditSeo.cshtml"
+    #line 29 "..\..\Views\Seo\EditSeo.cshtml"
     using BetterCms.Module.Pages.Controllers;
     
     #line default
     #line hidden
     
-    #line 3 "..\..\Views\Seo\EditSeo.cshtml"
+    #line 30 "..\..\Views\Seo\EditSeo.cshtml"
     using BetterCms.Module.Pages.ViewModels.Seo;
     
     #line default
     #line hidden
     
-    #line 4 "..\..\Views\Seo\EditSeo.cshtml"
+    #line 31 "..\..\Views\Seo\EditSeo.cshtml"
     using BetterCms.Module.Root.Mvc.Helpers;
     
     #line default
     #line hidden
     
-    #line 5 "..\..\Views\Seo\EditSeo.cshtml"
+    #line 32 "..\..\Views\Seo\EditSeo.cshtml"
     using Microsoft.Web.Mvc;
     
     #line default
@@ -69,8 +69,10 @@ namespace ASP
         {
 WriteLiteral("\r\n");
 
+WriteLiteral("\r\n");
+
             
-            #line 8 "..\..\Views\Seo\EditSeo.cshtml"
+            #line 35 "..\..\Views\Seo\EditSeo.cshtml"
  if (Model == null)
 {
     return;
@@ -88,7 +90,7 @@ WriteLiteral(">\r\n");
 WriteLiteral("    ");
 
             
-            #line 14 "..\..\Views\Seo\EditSeo.cshtml"
+            #line 41 "..\..\Views\Seo\EditSeo.cshtml"
 Write(Html.MessagesBox());
 
             
@@ -99,7 +101,7 @@ WriteLiteral("\r\n");
 WriteLiteral("    ");
 
             
-            #line 15 "..\..\Views\Seo\EditSeo.cshtml"
+            #line 42 "..\..\Views\Seo\EditSeo.cshtml"
 Write(Html.Partial("Partial/WarnMessageAboutSitemap", Model));
 
             
@@ -112,13 +114,13 @@ WriteLiteral(" class=\"bcms-window-options\"");
 WriteLiteral(">\r\n");
 
             
-            #line 18 "..\..\Views\Seo\EditSeo.cshtml"
+            #line 45 "..\..\Views\Seo\EditSeo.cshtml"
         
             
             #line default
             #line hidden
             
-            #line 18 "..\..\Views\Seo\EditSeo.cshtml"
+            #line 45 "..\..\Views\Seo\EditSeo.cshtml"
          using (Html.BeginForm<SeoController>(f => f.EditSeo((EditSeoViewModel)null), FormMethod.Post,
                 new
                     {
@@ -141,7 +143,7 @@ WriteLiteral(" class=\"bcms-content-titles\"");
 WriteLiteral(">");
 
             
-            #line 26 "..\..\Views\Seo\EditSeo.cshtml"
+            #line 53 "..\..\Views\Seo\EditSeo.cshtml"
                                             Write(PagesGlobalization.EditSeo_PageTitle);
 
             
@@ -152,7 +154,7 @@ WriteLiteral("</div>\r\n");
 WriteLiteral("                ");
 
             
-            #line 27 "..\..\Views\Seo\EditSeo.cshtml"
+            #line 54 "..\..\Views\Seo\EditSeo.cshtml"
            Write(Html.Tooltip(PagesGlobalization.EditSeo_PageTitle_Tooltip_Description));
 
             
@@ -167,7 +169,7 @@ WriteLiteral(">\r\n");
 WriteLiteral("                    ");
 
             
-            #line 29 "..\..\Views\Seo\EditSeo.cshtml"
+            #line 56 "..\..\Views\Seo\EditSeo.cshtml"
                Write(Html.TextBoxFor(f => f.PageTitle, new { @class = "bcms-field-text" }));
 
             
@@ -178,7 +180,7 @@ WriteLiteral("\r\n");
 WriteLiteral("                    ");
 
             
-            #line 30 "..\..\Views\Seo\EditSeo.cshtml"
+            #line 57 "..\..\Views\Seo\EditSeo.cshtml"
                Write(Html.BcmsValidationMessageFor(f => f.PageTitle));
 
             
@@ -187,21 +189,21 @@ WriteLiteral("                    ");
 WriteLiteral("\r\n                </div>\r\n            </div>\r\n");
 
             
-            #line 33 "..\..\Views\Seo\EditSeo.cshtml"
+            #line 60 "..\..\Views\Seo\EditSeo.cshtml"
 
             
             
             #line default
             #line hidden
             
-            #line 34 "..\..\Views\Seo\EditSeo.cshtml"
+            #line 61 "..\..\Views\Seo\EditSeo.cshtml"
        Write(Html.Partial("Partial/EditSeoEditUrlPath", Model));
 
             
             #line default
             #line hidden
             
-            #line 34 "..\..\Views\Seo\EditSeo.cshtml"
+            #line 61 "..\..\Views\Seo\EditSeo.cshtml"
                                                               
 
 
@@ -219,7 +221,7 @@ WriteLiteral(" class=\"bcms-content-titles\"");
 WriteLiteral(">");
 
             
-            #line 37 "..\..\Views\Seo\EditSeo.cshtml"
+            #line 64 "..\..\Views\Seo\EditSeo.cshtml"
                                             Write(PagesGlobalization.EditSeo_MetaTitle);
 
             
@@ -230,7 +232,7 @@ WriteLiteral("</div>\r\n");
 WriteLiteral("                ");
 
             
-            #line 38 "..\..\Views\Seo\EditSeo.cshtml"
+            #line 65 "..\..\Views\Seo\EditSeo.cshtml"
            Write(Html.Tooltip(PagesGlobalization.EditSeo_MetaTitle_Tooltip_Description));
 
             
@@ -245,7 +247,7 @@ WriteLiteral(">\r\n");
 WriteLiteral("                    ");
 
             
-            #line 40 "..\..\Views\Seo\EditSeo.cshtml"
+            #line 67 "..\..\Views\Seo\EditSeo.cshtml"
                Write(Html.TextBoxFor(f => f.MetaTitle, new { @class = "bcms-field-text" }));
 
             
@@ -256,7 +258,7 @@ WriteLiteral("\r\n");
 WriteLiteral("                    ");
 
             
-            #line 41 "..\..\Views\Seo\EditSeo.cshtml"
+            #line 68 "..\..\Views\Seo\EditSeo.cshtml"
                Write(Html.BcmsValidationMessageFor(f => f.MetaTitle));
 
             
@@ -265,7 +267,7 @@ WriteLiteral("                    ");
 WriteLiteral("\r\n                </div>\r\n            </div>\r\n");
 
             
-            #line 44 "..\..\Views\Seo\EditSeo.cshtml"
+            #line 71 "..\..\Views\Seo\EditSeo.cshtml"
 
 
             
@@ -282,7 +284,7 @@ WriteLiteral(" class=\"bcms-content-titles\"");
 WriteLiteral(">");
 
             
-            #line 46 "..\..\Views\Seo\EditSeo.cshtml"
+            #line 73 "..\..\Views\Seo\EditSeo.cshtml"
                                             Write(PagesGlobalization.EditSeo_MetaKeywords);
 
             
@@ -293,7 +295,7 @@ WriteLiteral("</div>\r\n");
 WriteLiteral("                ");
 
             
-            #line 47 "..\..\Views\Seo\EditSeo.cshtml"
+            #line 74 "..\..\Views\Seo\EditSeo.cshtml"
            Write(Html.Tooltip(PagesGlobalization.EditSeo_MetaKeywords_Tooltip_Description));
 
             
@@ -308,7 +310,7 @@ WriteLiteral(">\r\n");
 WriteLiteral("                    ");
 
             
-            #line 49 "..\..\Views\Seo\EditSeo.cshtml"
+            #line 76 "..\..\Views\Seo\EditSeo.cshtml"
                Write(Html.TextAreaFor(f => f.MetaKeywords, new { @class = "bcms-field-textarea" }));
 
             
@@ -319,7 +321,7 @@ WriteLiteral("\r\n");
 WriteLiteral("                    ");
 
             
-            #line 50 "..\..\Views\Seo\EditSeo.cshtml"
+            #line 77 "..\..\Views\Seo\EditSeo.cshtml"
                Write(Html.BcmsValidationMessageFor(f => f.MetaKeywords));
 
             
@@ -328,7 +330,7 @@ WriteLiteral("                    ");
 WriteLiteral("\r\n                </div>\r\n            </div>\r\n");
 
             
-            #line 53 "..\..\Views\Seo\EditSeo.cshtml"
+            #line 80 "..\..\Views\Seo\EditSeo.cshtml"
 
 
             
@@ -345,7 +347,7 @@ WriteLiteral(" class=\"bcms-content-titles\"");
 WriteLiteral(">");
 
             
-            #line 55 "..\..\Views\Seo\EditSeo.cshtml"
+            #line 82 "..\..\Views\Seo\EditSeo.cshtml"
                                             Write(PagesGlobalization.EditSeo_MetaDescription);
 
             
@@ -356,7 +358,7 @@ WriteLiteral("</div>\r\n");
 WriteLiteral("                ");
 
             
-            #line 56 "..\..\Views\Seo\EditSeo.cshtml"
+            #line 83 "..\..\Views\Seo\EditSeo.cshtml"
            Write(Html.Tooltip(PagesGlobalization.EditSeo_MetaDescription_Tooltip_Description));
 
             
@@ -371,7 +373,7 @@ WriteLiteral(">\r\n");
 WriteLiteral("                    ");
 
             
-            #line 58 "..\..\Views\Seo\EditSeo.cshtml"
+            #line 85 "..\..\Views\Seo\EditSeo.cshtml"
                Write(Html.TextAreaFor(f => f.MetaDescription, new { @class = "bcms-field-textarea" }));
 
             
@@ -382,7 +384,7 @@ WriteLiteral("\r\n");
 WriteLiteral("                    ");
 
             
-            #line 59 "..\..\Views\Seo\EditSeo.cshtml"
+            #line 86 "..\..\Views\Seo\EditSeo.cshtml"
                Write(Html.BcmsValidationMessageFor(f => f.MetaDescription));
 
             
@@ -391,48 +393,48 @@ WriteLiteral("                    ");
 WriteLiteral("\r\n                </div>\r\n            </div>\r\n");
 
             
-            #line 62 "..\..\Views\Seo\EditSeo.cshtml"
+            #line 89 "..\..\Views\Seo\EditSeo.cshtml"
             
             
             #line default
             #line hidden
             
-            #line 62 "..\..\Views\Seo\EditSeo.cshtml"
+            #line 89 "..\..\Views\Seo\EditSeo.cshtml"
        Write(Html.HiddenSubmit());
 
             
             #line default
             #line hidden
             
-            #line 62 "..\..\Views\Seo\EditSeo.cshtml"
+            #line 89 "..\..\Views\Seo\EditSeo.cshtml"
                                 
             
             
             #line default
             #line hidden
             
-            #line 63 "..\..\Views\Seo\EditSeo.cshtml"
+            #line 90 "..\..\Views\Seo\EditSeo.cshtml"
        Write(Html.HiddenFor(f => f.PageId));
 
             
             #line default
             #line hidden
             
-            #line 63 "..\..\Views\Seo\EditSeo.cshtml"
+            #line 90 "..\..\Views\Seo\EditSeo.cshtml"
                                           
             
             
             #line default
             #line hidden
             
-            #line 64 "..\..\Views\Seo\EditSeo.cshtml"
+            #line 91 "..\..\Views\Seo\EditSeo.cshtml"
        Write(Html.HiddenFor(f => f.Version));
 
             
             #line default
             #line hidden
             
-            #line 64 "..\..\Views\Seo\EditSeo.cshtml"
+            #line 91 "..\..\Views\Seo\EditSeo.cshtml"
                                            
         }
 

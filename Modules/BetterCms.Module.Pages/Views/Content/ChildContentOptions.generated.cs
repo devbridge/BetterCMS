@@ -28,31 +28,31 @@ namespace ASP
     using System.Web.UI;
     using System.Web.WebPages;
     
-    #line 1 "..\..\Views\Content\ChildContentOptions.cshtml"
+    #line 28 "..\..\Views\Content\ChildContentOptions.cshtml"
     using BetterCms.Module.Pages;
     
     #line default
     #line hidden
     
-    #line 2 "..\..\Views\Content\ChildContentOptions.cshtml"
+    #line 29 "..\..\Views\Content\ChildContentOptions.cshtml"
     using BetterCms.Module.Pages.Controllers;
     
     #line default
     #line hidden
     
-    #line 3 "..\..\Views\Content\ChildContentOptions.cshtml"
+    #line 30 "..\..\Views\Content\ChildContentOptions.cshtml"
     using BetterCms.Module.Root.Mvc.Helpers;
     
     #line default
     #line hidden
     
-    #line 4 "..\..\Views\Content\ChildContentOptions.cshtml"
+    #line 31 "..\..\Views\Content\ChildContentOptions.cshtml"
     using BetterCms.Module.Root.ViewModels.Shared;
     
     #line default
     #line hidden
     
-    #line 5 "..\..\Views\Content\ChildContentOptions.cshtml"
+    #line 32 "..\..\Views\Content\ChildContentOptions.cshtml"
     using Microsoft.Web.Mvc;
     
     #line default
@@ -69,6 +69,8 @@ namespace ASP
         {
 WriteLiteral("\r\n");
 
+WriteLiteral("\r\n");
+
 WriteLiteral("<div");
 
 WriteLiteral(" class=\"bcms-modal-frame-holder\"");
@@ -78,7 +80,7 @@ WriteLiteral(">\r\n");
 WriteLiteral("    ");
 
             
-            #line 10 "..\..\Views\Content\ChildContentOptions.cshtml"
+            #line 37 "..\..\Views\Content\ChildContentOptions.cshtml"
 Write(Html.MessagesBox());
 
             
@@ -95,13 +97,13 @@ WriteLiteral(" class=\"bcms-input-list-holder\"");
 WriteLiteral(">\r\n");
 
             
-            #line 14 "..\..\Views\Content\ChildContentOptions.cshtml"
+            #line 41 "..\..\Views\Content\ChildContentOptions.cshtml"
             
             
             #line default
             #line hidden
             
-            #line 14 "..\..\Views\Content\ChildContentOptions.cshtml"
+            #line 41 "..\..\Views\Content\ChildContentOptions.cshtml"
              if (Model != null)
             {
                 using (Html.BeginForm<ContentController>(c => c.ChildContentOptions(null, null, null, null), FormMethod.Post,
@@ -117,14 +119,14 @@ WriteLiteral(">\r\n");
             #line default
             #line hidden
             
-            #line 24 "..\..\Views\Content\ChildContentOptions.cshtml"
+            #line 51 "..\..\Views\Content\ChildContentOptions.cshtml"
            Write(Html.Partial(PagesConstants.OptionValuesGridTemplate, new EditableGridViewModel {CanAddNewItems = false}));
 
             
             #line default
             #line hidden
             
-            #line 24 "..\..\Views\Content\ChildContentOptions.cshtml"
+            #line 51 "..\..\Views\Content\ChildContentOptions.cshtml"
                                                                                                                           
 
                     
@@ -132,14 +134,14 @@ WriteLiteral(">\r\n");
             #line default
             #line hidden
             
-            #line 26 "..\..\Views\Content\ChildContentOptions.cshtml"
+            #line 53 "..\..\Views\Content\ChildContentOptions.cshtml"
                Write(Html.HiddenFor(model => model.OptionValuesContainerId));
 
             
             #line default
             #line hidden
             
-            #line 26 "..\..\Views\Content\ChildContentOptions.cshtml"
+            #line 53 "..\..\Views\Content\ChildContentOptions.cshtml"
                                                                            
                 }
             }

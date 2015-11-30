@@ -28,13 +28,13 @@ namespace ASP
     using System.Web.UI;
     using System.Web.WebPages;
     
-    #line 1 "..\..\Views\History\ContentPropertiesHistory.cshtml"
+    #line 28 "..\..\Views\History\ContentPropertiesHistory.cshtml"
     using BetterCms.Module.Pages.Content.Resources;
     
     #line default
     #line hidden
     
-    #line 2 "..\..\Views\History\ContentPropertiesHistory.cshtml"
+    #line 29 "..\..\Views\History\ContentPropertiesHistory.cshtml"
     using BetterCms.Module.Root.Mvc.UI;
     
     #line default
@@ -49,6 +49,8 @@ namespace ASP
         }
         public override void Execute()
         {
+WriteLiteral("\r\n");
+
 WriteLiteral("<div");
 
 WriteLiteral(" class=\"bcms-content-info-block\"");
@@ -64,7 +66,7 @@ WriteLiteral(" class=\"bcms-content-titles\"");
 WriteLiteral(">");
 
             
-            #line 7 "..\..\Views\History\ContentPropertiesHistory.cshtml"
+            #line 34 "..\..\Views\History\ContentPropertiesHistory.cshtml"
                                     Write(PagesGlobalization.AddPageContent_RegularContentTab_ContentName_Title);
 
             
@@ -79,7 +81,7 @@ WriteLiteral(">\r\n");
 WriteLiteral("            ");
 
             
-            #line 9 "..\..\Views\History\ContentPropertiesHistory.cshtml"
+            #line 36 "..\..\Views\History\ContentPropertiesHistory.cshtml"
        Write(Html.TextBoxFor(model => model.Name, new { @readonly = "readonly", @class = "bcms-field-text" }));
 
             
@@ -96,7 +98,7 @@ WriteLiteral(" class=\"bcms-content-titles\"");
 WriteLiteral(">");
 
             
-            #line 14 "..\..\Views\History\ContentPropertiesHistory.cshtml"
+            #line 41 "..\..\Views\History\ContentPropertiesHistory.cshtml"
                                     Write(PagesGlobalization.AddPageContent_RegularContentTab_LiveFrom_Title);
 
             
@@ -111,7 +113,7 @@ WriteLiteral(">\r\n");
 WriteLiteral("            ");
 
             
-            #line 16 "..\..\Views\History\ContentPropertiesHistory.cshtml"
+            #line 43 "..\..\Views\History\ContentPropertiesHistory.cshtml"
        Write(Html.DateTextBoxFor(model => model.ActivationDate, Model.ActivationDate, new Dictionary<string, object> { { "readonly", "readonly" }, { "class", "bcms-field-text bcms-datepicker" } }));
 
             
@@ -128,7 +130,7 @@ WriteLiteral(" class=\"bcms-content-titles\"");
 WriteLiteral(">");
 
             
-            #line 21 "..\..\Views\History\ContentPropertiesHistory.cshtml"
+            #line 48 "..\..\Views\History\ContentPropertiesHistory.cshtml"
                                     Write(PagesGlobalization.AddPageContent_RegularContentTab_LiveTo_Title);
 
             
@@ -143,7 +145,7 @@ WriteLiteral(">\r\n");
 WriteLiteral("            ");
 
             
-            #line 23 "..\..\Views\History\ContentPropertiesHistory.cshtml"
+            #line 50 "..\..\Views\History\ContentPropertiesHistory.cshtml"
        Write(Html.DateTextBoxFor(model => model.ExpirationDate, Model.ExpirationDate, new Dictionary<string, object> { { "readonly", "readonly" }, { "class", "bcms-field-text bcms-datepicker" } }));
 
             
@@ -160,7 +162,7 @@ WriteLiteral(" class=\"bcms-content-titles\"");
 WriteLiteral(">");
 
             
-            #line 29 "..\..\Views\History\ContentPropertiesHistory.cshtml"
+            #line 56 "..\..\Views\History\ContentPropertiesHistory.cshtml"
                                 Write(PagesGlobalization.HtmlContent_Content_Title);
 
             
@@ -175,7 +177,7 @@ WriteLiteral(">\r\n");
 WriteLiteral("        ");
 
             
-            #line 31 "..\..\Views\History\ContentPropertiesHistory.cshtml"
+            #line 58 "..\..\Views\History\ContentPropertiesHistory.cshtml"
    Write(Html.TextAreaFor(model => model.RowText, new { @readonly = "readonly", @class = "bcms-field-textarea bcms-code-field ", @style = "width:820px;", @id = Guid.NewGuid() }));
 
             
@@ -192,7 +194,7 @@ WriteLiteral(" class=\"bcms-content-titles\"");
 WriteLiteral(">");
 
             
-            #line 36 "..\..\Views\History\ContentPropertiesHistory.cshtml"
+            #line 63 "..\..\Views\History\ContentPropertiesHistory.cshtml"
                                 Write(PagesGlobalization.HtmlContent_CustomCss_Title);
 
             
@@ -207,7 +209,7 @@ WriteLiteral(">\r\n");
 WriteLiteral("        ");
 
             
-            #line 38 "..\..\Views\History\ContentPropertiesHistory.cshtml"
+            #line 65 "..\..\Views\History\ContentPropertiesHistory.cshtml"
    Write(Html.TextAreaFor(model => model.CustomCss, new { @readonly = "readonly", @class = "bcms-field-textarea bcms-code-field bcms-code-field-css", @style = "width:820px;", @id = Guid.NewGuid() }));
 
             
@@ -226,7 +228,7 @@ WriteLiteral(">\r\n");
 WriteLiteral("        ");
 
             
-            #line 44 "..\..\Views\History\ContentPropertiesHistory.cshtml"
+            #line 71 "..\..\Views\History\ContentPropertiesHistory.cshtml"
    Write(Html.CheckBoxFor(model => model.UseCustomCss, new { @disabled = "disabled" }));
 
             
@@ -239,7 +241,7 @@ WriteLiteral(" class=\"bcms-edit-label\"");
 WriteLiteral(">");
 
             
-            #line 45 "..\..\Views\History\ContentPropertiesHistory.cshtml"
+            #line 72 "..\..\Views\History\ContentPropertiesHistory.cshtml"
                                 Write(Html.Raw(PagesGlobalization.HtmlContent_RenderCustomCss_Title));
 
             
@@ -256,7 +258,7 @@ WriteLiteral(" class=\"bcms-content-titles\"");
 WriteLiteral(">");
 
             
-            #line 50 "..\..\Views\History\ContentPropertiesHistory.cshtml"
+            #line 77 "..\..\Views\History\ContentPropertiesHistory.cshtml"
                                 Write(PagesGlobalization.HtmlContent_CustomJs_Title);
 
             
@@ -271,7 +273,7 @@ WriteLiteral(">\r\n");
 WriteLiteral("        ");
 
             
-            #line 52 "..\..\Views\History\ContentPropertiesHistory.cshtml"
+            #line 79 "..\..\Views\History\ContentPropertiesHistory.cshtml"
    Write(Html.TextAreaFor(model => model.CustomJs, new { @readonly = "readonly", @class = "bcms-field-textarea bcms-code-field bcms-code-field-javascript", @style = "width:820px;", @id = Guid.NewGuid() }));
 
             
@@ -290,7 +292,7 @@ WriteLiteral(">\r\n");
 WriteLiteral("        ");
 
             
-            #line 58 "..\..\Views\History\ContentPropertiesHistory.cshtml"
+            #line 85 "..\..\Views\History\ContentPropertiesHistory.cshtml"
    Write(Html.CheckBoxFor(model => model.UseCustomJs, new { @disabled = "disabled" }));
 
             
@@ -303,7 +305,7 @@ WriteLiteral(" class=\"bcms-edit-label\"");
 WriteLiteral(">");
 
             
-            #line 59 "..\..\Views\History\ContentPropertiesHistory.cshtml"
+            #line 86 "..\..\Views\History\ContentPropertiesHistory.cshtml"
                                 Write(Html.Raw(PagesGlobalization.HtmlContent_RenderCustomJs_Title));
 
             

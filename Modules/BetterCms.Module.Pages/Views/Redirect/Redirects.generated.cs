@@ -28,55 +28,55 @@ namespace ASP
     using System.Web.UI;
     using System.Web.WebPages;
     
-    #line 1 "..\..\Views\Redirect\Redirects.cshtml"
+    #line 28 "..\..\Views\Redirect\Redirects.cshtml"
     using BetterCms.Module.Pages.Content.Resources;
     
     #line default
     #line hidden
     
-    #line 2 "..\..\Views\Redirect\Redirects.cshtml"
+    #line 29 "..\..\Views\Redirect\Redirects.cshtml"
     using BetterCms.Module.Pages.Controllers;
     
     #line default
     #line hidden
     
-    #line 3 "..\..\Views\Redirect\Redirects.cshtml"
+    #line 30 "..\..\Views\Redirect\Redirects.cshtml"
     using BetterCms.Module.Pages.ViewModels.SiteSettings;
     
     #line default
     #line hidden
     
-    #line 4 "..\..\Views\Redirect\Redirects.cshtml"
+    #line 31 "..\..\Views\Redirect\Redirects.cshtml"
     using BetterCms.Module.Root.Content.Resources;
     
     #line default
     #line hidden
     
-    #line 5 "..\..\Views\Redirect\Redirects.cshtml"
+    #line 32 "..\..\Views\Redirect\Redirects.cshtml"
     using BetterCms.Module.Root.Mvc.Grids.Extensions;
     
     #line default
     #line hidden
     
-    #line 6 "..\..\Views\Redirect\Redirects.cshtml"
+    #line 33 "..\..\Views\Redirect\Redirects.cshtml"
     using BetterCms.Module.Root.Mvc.Grids.TableRenderers;
     
     #line default
     #line hidden
     
-    #line 7 "..\..\Views\Redirect\Redirects.cshtml"
+    #line 34 "..\..\Views\Redirect\Redirects.cshtml"
     using BetterCms.Module.Root.Mvc.Helpers;
     
     #line default
     #line hidden
     
-    #line 8 "..\..\Views\Redirect\Redirects.cshtml"
+    #line 35 "..\..\Views\Redirect\Redirects.cshtml"
     using Microsoft.Web.Mvc;
     
     #line default
     #line hidden
     
-    #line 9 "..\..\Views\Redirect\Redirects.cshtml"
+    #line 36 "..\..\Views\Redirect\Redirects.cshtml"
     using MvcContrib.UI.Grid;
     
     #line default
@@ -91,10 +91,12 @@ namespace ASP
         }
         public override void Execute()
         {
+WriteLiteral("\r\n");
+
 WriteLiteral("\n");
 
             
-            #line 13 "..\..\Views\Redirect\Redirects.cshtml"
+            #line 40 "..\..\Views\Redirect\Redirects.cshtml"
   
     Action<ColumnBuilder<SiteSettingRedirectViewModel>> columns;
 
@@ -104,7 +106,7 @@ WriteLiteral("\n");
 WriteLiteral("\n\n");
 
             
-            #line 17 "..\..\Views\Redirect\Redirects.cshtml"
+            #line 44 "..\..\Views\Redirect\Redirects.cshtml"
  using (Html.BeginForm<RedirectController>(f => f.Redirects(null), FormMethod.Post, new { @id = "bcms-redirects-form", @class = "bcms-ajax-form" }))
 {
     columns = column =>
@@ -129,14 +131,14 @@ WriteLiteral("\n\n");
             #line default
             #line hidden
             
-            #line 36 "..\..\Views\Redirect\Redirects.cshtml"
+            #line 63 "..\..\Views\Redirect\Redirects.cshtml"
 Write(Html.MessagesBox());
 
             
             #line default
             #line hidden
             
-            #line 36 "..\..\Views\Redirect\Redirects.cshtml"
+            #line 63 "..\..\Views\Redirect\Redirects.cshtml"
                    
 
 
@@ -152,7 +154,7 @@ WriteLiteral(">\r\n");
 WriteLiteral("        ");
 
             
-            #line 39 "..\..\Views\Redirect\Redirects.cshtml"
+            #line 66 "..\..\Views\Redirect\Redirects.cshtml"
    Write(Html.HiddenGridOptions(Model.GridOptions));
 
             
@@ -171,7 +173,7 @@ WriteLiteral(" id=\"bcms-create-redirect-button\"");
 WriteLiteral(">");
 
             
-            #line 41 "..\..\Views\Redirect\Redirects.cshtml"
+            #line 68 "..\..\Views\Redirect\Redirects.cshtml"
                                                                    Write(PagesGlobalization.SiteSettings_Redirects_AddNew);
 
             
@@ -190,7 +192,7 @@ WriteLiteral(" id=\"bcms-redirects-search-btn\"");
 WriteLiteral(">");
 
             
-            #line 44 "..\..\Views\Redirect\Redirects.cshtml"
+            #line 71 "..\..\Views\Redirect\Redirects.cshtml"
                                                                            Write(PagesGlobalization.SiteSettings_Redirects_Search);
 
             
@@ -205,7 +207,7 @@ WriteLiteral(">\r\n");
 WriteLiteral("                        ");
 
             
-            #line 46 "..\..\Views\Redirect\Redirects.cshtml"
+            #line 73 "..\..\Views\Redirect\Redirects.cshtml"
                    Write(Html.TextBoxFor(m => m.SearchQuery, new { @class = "bcms-search-field-box bcms-js-search-box bcms-search-query", @placeholder = RootGlobalization.WaterMark_Search }));
 
             
@@ -221,7 +223,7 @@ WriteLiteral(">\r\n");
 WriteLiteral("                ");
 
             
-            #line 51 "..\..\Views\Redirect\Redirects.cshtml"
+            #line 78 "..\..\Views\Redirect\Redirects.cshtml"
            Write(Html.RenderPaging(Model));
 
             
@@ -232,7 +234,7 @@ WriteLiteral("\r\n            </div>\r\n        </div>\r\n\r\n");
 WriteLiteral("        ");
 
             
-            #line 55 "..\..\Views\Redirect\Redirects.cshtml"
+            #line 82 "..\..\Views\Redirect\Redirects.cshtml"
    Write(Html.Grid(Model.Items).Sort(Model.GridOptions).Columns(columns).Attributes(@class => "bcms-tables").RenderUsing(new EditableHtmlTableGridRenderer<SiteSettingRedirectViewModel>()));
 
             
@@ -243,7 +245,7 @@ WriteLiteral("\r\n");
 WriteLiteral("        ");
 
             
-            #line 56 "..\..\Views\Redirect\Redirects.cshtml"
+            #line 83 "..\..\Views\Redirect\Redirects.cshtml"
    Write(Html.HiddenSubmit());
 
             
@@ -252,7 +254,7 @@ WriteLiteral("        ");
 WriteLiteral("\r\n    </div>\r\n");
 
             
-            #line 58 "..\..\Views\Redirect\Redirects.cshtml"
+            #line 85 "..\..\Views\Redirect\Redirects.cshtml"
 }
 
             
@@ -269,7 +271,7 @@ WriteLiteral(">\n");
 WriteLiteral("    ");
 
             
-            #line 61 "..\..\Views\Redirect\Redirects.cshtml"
+            #line 88 "..\..\Views\Redirect\Redirects.cshtml"
 Write(Html.Grid(new List<SiteSettingRedirectViewModel> {new SiteSettingRedirectViewModel()}).Columns(columns).Attributes(@class => "bcms-tables").RenderUsing(new HtmlTableGridSingleRowRenderer<SiteSettingRedirectViewModel>()));
 
             

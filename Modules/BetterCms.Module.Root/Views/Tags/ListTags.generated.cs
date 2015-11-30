@@ -28,49 +28,49 @@ namespace ASP
     using System.Web.UI;
     using System.Web.WebPages;
     
-    #line 1 "..\..\Views\Tags\ListTags.cshtml"
+    #line 28 "..\..\Views\Tags\ListTags.cshtml"
     using BetterCms.Module.Root.Content.Resources;
     
     #line default
     #line hidden
     
-    #line 2 "..\..\Views\Tags\ListTags.cshtml"
+    #line 29 "..\..\Views\Tags\ListTags.cshtml"
     using BetterCms.Module.Root.Controllers;
     
     #line default
     #line hidden
     
-    #line 4 "..\..\Views\Tags\ListTags.cshtml"
+    #line 31 "..\..\Views\Tags\ListTags.cshtml"
     using BetterCms.Module.Root.Mvc.Grids.Extensions;
     
     #line default
     #line hidden
     
-    #line 5 "..\..\Views\Tags\ListTags.cshtml"
+    #line 32 "..\..\Views\Tags\ListTags.cshtml"
     using BetterCms.Module.Root.Mvc.Grids.TableRenderers;
     
     #line default
     #line hidden
     
-    #line 6 "..\..\Views\Tags\ListTags.cshtml"
+    #line 33 "..\..\Views\Tags\ListTags.cshtml"
     using BetterCms.Module.Root.Mvc.Helpers;
     
     #line default
     #line hidden
     
-    #line 3 "..\..\Views\Tags\ListTags.cshtml"
+    #line 30 "..\..\Views\Tags\ListTags.cshtml"
     using BetterCms.Module.Root.ViewModels.Tags;
     
     #line default
     #line hidden
     
-    #line 7 "..\..\Views\Tags\ListTags.cshtml"
+    #line 34 "..\..\Views\Tags\ListTags.cshtml"
     using Microsoft.Web.Mvc;
     
     #line default
     #line hidden
     
-    #line 8 "..\..\Views\Tags\ListTags.cshtml"
+    #line 35 "..\..\Views\Tags\ListTags.cshtml"
     using MvcContrib.UI.Grid;
     
     #line default
@@ -85,10 +85,16 @@ namespace ASP
         }
         public override void Execute()
         {
-WriteLiteral("    ");
+WriteLiteral("\r\n");
 
             
-            #line 11 "..\..\Views\Tags\ListTags.cshtml"
+            #line 38 "..\..\Views\Tags\ListTags.cshtml"
+    
+            
+            #line default
+            #line hidden
+            
+            #line 38 "..\..\Views\Tags\ListTags.cshtml"
       
         Action<ColumnBuilder<TagItemViewModel>> columns;
     
@@ -98,13 +104,13 @@ WriteLiteral("    ");
 WriteLiteral("\r\n");
 
             
-            #line 14 "..\..\Views\Tags\ListTags.cshtml"
+            #line 41 "..\..\Views\Tags\ListTags.cshtml"
     
             
             #line default
             #line hidden
             
-            #line 14 "..\..\Views\Tags\ListTags.cshtml"
+            #line 41 "..\..\Views\Tags\ListTags.cshtml"
      using (Html.BeginForm<TagsController>(f => f.ListTags(null), FormMethod.Post, new { @id = "bcms-tags-form", @class = "bcms-ajax-form" }))
     {
         columns = column =>
@@ -124,14 +130,14 @@ WriteLiteral("\r\n");
             #line default
             #line hidden
             
-            #line 28 "..\..\Views\Tags\ListTags.cshtml"
+            #line 55 "..\..\Views\Tags\ListTags.cshtml"
    Write(Html.MessagesBox());
 
             
             #line default
             #line hidden
             
-            #line 28 "..\..\Views\Tags\ListTags.cshtml"
+            #line 55 "..\..\Views\Tags\ListTags.cshtml"
                            
         
 
@@ -147,7 +153,7 @@ WriteLiteral(">\r\n");
 WriteLiteral("            ");
 
             
-            #line 31 "..\..\Views\Tags\ListTags.cshtml"
+            #line 58 "..\..\Views\Tags\ListTags.cshtml"
        Write(Html.HiddenGridOptions(Model.GridOptions));
 
             
@@ -166,7 +172,7 @@ WriteLiteral(" id=\"bcms-site-settings-add-tag\"");
 WriteLiteral(">");
 
             
-            #line 33 "..\..\Views\Tags\ListTags.cshtml"
+            #line 60 "..\..\Views\Tags\ListTags.cshtml"
                                                                   Write(RootGlobalization.SiteSettings_Tags_AddNewTag);
 
             
@@ -185,7 +191,7 @@ WriteLiteral(" id=\"bcms-tags-search-btn\"");
 WriteLiteral(">");
 
             
-            #line 36 "..\..\Views\Tags\ListTags.cshtml"
+            #line 63 "..\..\Views\Tags\ListTags.cshtml"
                                                                       Write(RootGlobalization.SiteSettings_Tags_Search);
 
             
@@ -200,7 +206,7 @@ WriteLiteral(">\r\n");
 WriteLiteral("                        ");
 
             
-            #line 38 "..\..\Views\Tags\ListTags.cshtml"
+            #line 65 "..\..\Views\Tags\ListTags.cshtml"
                    Write(Html.TextBoxFor(m => m.SearchQuery, new { @class = "bcms-search-field-box bcms-js-search-box bcms-search-query", @placeholder = RootGlobalization.WaterMark_Search }));
 
             
@@ -215,7 +221,7 @@ WriteLiteral(">\r\n");
 WriteLiteral("                ");
 
             
-            #line 43 "..\..\Views\Tags\ListTags.cshtml"
+            #line 70 "..\..\Views\Tags\ListTags.cshtml"
            Write(Html.RenderPaging(Model));
 
             
@@ -226,7 +232,7 @@ WriteLiteral("\r\n            </div>\r\n        </div>\r\n\r\n\r\n");
 WriteLiteral("        ");
 
             
-            #line 48 "..\..\Views\Tags\ListTags.cshtml"
+            #line 75 "..\..\Views\Tags\ListTags.cshtml"
    Write(Html.Grid(Model.Items).Sort(Model.GridOptions).Columns(columns).Attributes(@class => "bcms-tables").RenderUsing(new EditableHtmlTableGridRenderer<TagItemViewModel>()));
 
             
@@ -237,7 +243,7 @@ WriteLiteral("\r\n");
 WriteLiteral("        ");
 
             
-            #line 49 "..\..\Views\Tags\ListTags.cshtml"
+            #line 76 "..\..\Views\Tags\ListTags.cshtml"
    Write(Html.HiddenSubmit());
 
             
@@ -246,7 +252,7 @@ WriteLiteral("        ");
 WriteLiteral("\r\n    </div>\r\n");
 
             
-            #line 51 "..\..\Views\Tags\ListTags.cshtml"
+            #line 78 "..\..\Views\Tags\ListTags.cshtml"
     }
 
             
@@ -263,7 +269,7 @@ WriteLiteral(">\r\n");
 WriteLiteral("        ");
 
             
-            #line 54 "..\..\Views\Tags\ListTags.cshtml"
+            #line 81 "..\..\Views\Tags\ListTags.cshtml"
    Write(Html.Grid(new List<TagItemViewModel> { new TagItemViewModel() }).Columns(columns).Attributes(@class => "bcms-tables").RenderUsing(new HtmlTableGridSingleRowRenderer<TagItemViewModel>()));
 
             

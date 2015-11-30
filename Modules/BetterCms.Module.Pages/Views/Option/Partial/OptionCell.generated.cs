@@ -28,13 +28,13 @@ namespace ASP
     using System.Web.UI;
     using System.Web.WebPages;
     
-    #line 1 "..\..\Views\Option\Partial\OptionCell.cshtml"
+    #line 28 "..\..\Views\Option\Partial\OptionCell.cshtml"
     using BetterCms.Module.Root;
     
     #line default
     #line hidden
     
-    #line 2 "..\..\Views\Option\Partial\OptionCell.cshtml"
+    #line 29 "..\..\Views\Option\Partial\OptionCell.cshtml"
     using BetterCms.Module.Root.Mvc.Grids;
     
     #line default
@@ -49,41 +49,43 @@ namespace ASP
         }
         public override void Execute()
         {
-WriteLiteral("\n");
+WriteLiteral("\r\n");
 
-WriteLiteral("\n<!-- ko if: !useDefaultValueBinding() && type() != 5 && type() != 4 && type() !=" +
-" 21 && type() != 99 -->\n");
+WriteLiteral("\r\n");
+
+WriteLiteral("\r\n<!-- ko if: !useDefaultValueBinding() && type() != 5 && type() != 4 && type() !" +
+"= 21 && type() != 99 -->\r\n");
 
 WriteLiteral("    ");
 
             
-            #line 8 "..\..\Views\Option\Partial\OptionCell.cshtml"
+            #line 35 "..\..\Views\Option\Partial\OptionCell.cshtml"
 Write(Html.Partial(RootModuleConstants.EditableGridCellTemplate));
 
             
             #line default
             #line hidden
-WriteLiteral("\n<!-- /ko -->\n\n");
+WriteLiteral("\r\n<!-- /ko -->\r\n\r\n");
 
-WriteLiteral("\n<!-- ko if: !useDefaultValueBinding() && type() == 21 -->\n");
+WriteLiteral("\r\n<!-- ko if: !useDefaultValueBinding() && type() == 21 -->\r\n");
 
 WriteLiteral("    ");
 
             
-            #line 13 "..\..\Views\Option\Partial\OptionCell.cshtml"
+            #line 40 "..\..\Views\Option\Partial\OptionCell.cshtml"
 Write(Html.Partial(RootModuleConstants.EditableGridMultilineTextCellTemplate));
 
             
             #line default
             #line hidden
-WriteLiteral("\n<!-- /ko -->\n\n");
+WriteLiteral("\r\n<!-- /ko -->\r\n\r\n");
 
-WriteLiteral("\n<!-- ko if: !useDefaultValueBinding() && type() == 5  -->\n");
+WriteLiteral("\r\n<!-- ko if: !useDefaultValueBinding() && type() == 5  -->\r\n");
 
 WriteLiteral("    ");
 
             
-            #line 18 "..\..\Views\Option\Partial\OptionCell.cshtml"
+            #line 45 "..\..\Views\Option\Partial\OptionCell.cshtml"
 Write(Html.Partial(RootModuleConstants.EditableGridBooleanCellTemplate, new EditableGridBooleanColumn(Model.HeaderTitle, Model.SortColumn, Model.ValueBind)
                                                                            {
                                                                                HiddenFieldName = Model.HiddenFieldName,
@@ -96,27 +98,27 @@ Write(Html.Partial(RootModuleConstants.EditableGridBooleanCellTemplate, new Edit
             
             #line default
             #line hidden
-WriteLiteral("\n<!-- /ko -->\n\n");
+WriteLiteral("\r\n<!-- /ko -->\r\n\r\n");
 
-WriteLiteral("\n<!-- ko if: !useDefaultValueBinding() && type() == 4  -->\n<td ");
+WriteLiteral("\r\n<!-- ko if: !useDefaultValueBinding() && type() == 4  -->\r\n<td ");
 
             
-            #line 30 "..\..\Views\Option\Partial\OptionCell.cshtml"
+            #line 57 "..\..\Views\Option\Partial\OptionCell.cshtml"
 Write(Html.Raw(Model.Attributes));
 
             
             #line default
             #line hidden
-WriteLiteral(">\n");
+WriteLiteral(">\r\n");
 
             
-            #line 31 "..\..\Views\Option\Partial\OptionCell.cshtml"
+            #line 58 "..\..\Views\Option\Partial\OptionCell.cshtml"
     
             
             #line default
             #line hidden
             
-            #line 31 "..\..\Views\Option\Partial\OptionCell.cshtml"
+            #line 58 "..\..\Views\Option\Partial\OptionCell.cshtml"
      if (Model.CanBeEdited)
     {
 
@@ -129,14 +131,14 @@ WriteLiteral(" class=\"bcms-field-wrapper bcms-options-date\"");
 
 WriteLiteral(" data-bind=\"visible: isActive()\"");
 
-WriteLiteral(">\n                <input");
+WriteLiteral(">\r\n                <input");
 
 WriteLiteral(" class=\"bcms-field-text bcms-datepicker\"");
 
 WriteLiteral(" data-bind=\"css: { \'bcms-input-validation-error\': !isNew() && ");
 
             
-            #line 34 "..\..\Views\Option\Partial\OptionCell.cshtml"
+            #line 61 "..\..\Views\Option\Partial\OptionCell.cshtml"
                                                                                                                         Write(Model.ValueBind);
 
             
@@ -145,7 +147,7 @@ WriteLiteral(" data-bind=\"css: { \'bcms-input-validation-error\': !isNew() && "
 WriteLiteral(".hasError && ");
 
             
-            #line 34 "..\..\Views\Option\Partial\OptionCell.cshtml"
+            #line 61 "..\..\Views\Option\Partial\OptionCell.cshtml"
                                                                                                                                                        Write(Model.ValueBind);
 
             
@@ -154,7 +156,7 @@ WriteLiteral(".hasError && ");
 WriteLiteral(".hasError() }, value: ");
 
             
-            #line 34 "..\..\Views\Option\Partial\OptionCell.cshtml"
+            #line 61 "..\..\Views\Option\Partial\OptionCell.cshtml"
                                                                                                                                                                                                Write(Model.ValueBind);
 
             
@@ -164,7 +166,7 @@ WriteLiteral(", valueUpdate: \'afterkeydown\', enterPress: onSave, escPress: onC
 "ender: initDatePickers(), visible: isActive() ");
 
             
-            #line 34 "..\..\Views\Option\Partial\OptionCell.cshtml"
+            #line 61 "..\..\Views\Option\Partial\OptionCell.cshtml"
                                                                                                                                                                                                                                                                                                                                                 Write(!string.IsNullOrEmpty(Model.FocusIdentifier) ? string.Format(", hasfocus: {0}", Model.FocusIdentifier) : string.Empty);
 
             
@@ -172,10 +174,10 @@ WriteLiteral(", valueUpdate: \'afterkeydown\', enterPress: onSave, escPress: onC
             #line hidden
 WriteLiteral("\"");
 
-WriteLiteral("/>\n                <!-- ko if: !isNew() &&  ");
+WriteLiteral("/>\r\n                <!-- ko if: !isNew() &&  ");
 
             
-            #line 35 "..\..\Views\Option\Partial\OptionCell.cshtml"
+            #line 62 "..\..\Views\Option\Partial\OptionCell.cshtml"
                                      Write(Model.ValueBind);
 
             
@@ -184,22 +186,22 @@ WriteLiteral("/>\n                <!-- ko if: !isNew() &&  ");
 WriteLiteral(".hasError && ");
 
             
-            #line 35 "..\..\Views\Option\Partial\OptionCell.cshtml"
+            #line 62 "..\..\Views\Option\Partial\OptionCell.cshtml"
                                                                     Write(Model.ValueBind);
 
             
             #line default
             #line hidden
-WriteLiteral(".hasError() -->\n                <span");
+WriteLiteral(".hasError() -->\r\n                <span");
 
 WriteLiteral(" class=\"bcms-field-validation-error\"");
 
-WriteLiteral(">\n                    <span");
+WriteLiteral(">\r\n                    <span");
 
 WriteLiteral(" data-bind=\"html: ");
 
             
-            #line 37 "..\..\Views\Option\Partial\OptionCell.cshtml"
+            #line 64 "..\..\Views\Option\Partial\OptionCell.cshtml"
                                        Write(Model.ValueBind);
 
             
@@ -207,11 +209,11 @@ WriteLiteral(" data-bind=\"html: ");
             #line hidden
 WriteLiteral(".validationMessage()\"");
 
-WriteLiteral("></span>\n                </span>\n                <!-- /ko -->\n            </div>\n" +
-"");
+WriteLiteral("></span>\r\n                </span>\r\n                <!-- /ko -->\r\n            </di" +
+"v>\r\n");
 
             
-            #line 41 "..\..\Views\Option\Partial\OptionCell.cshtml"
+            #line 68 "..\..\Views\Option\Partial\OptionCell.cshtml"
     }
 
             
@@ -224,7 +226,7 @@ WriteLiteral(" class=\"bcms-tables-link\"");
 WriteLiteral(" data-bind=\"text: ");
 
             
-            #line 42 "..\..\Views\Option\Partial\OptionCell.cshtml"
+            #line 69 "..\..\Views\Option\Partial\OptionCell.cshtml"
                                                Write(Model.ValueBind);
 
             
@@ -233,7 +235,7 @@ WriteLiteral(" data-bind=\"text: ");
 WriteLiteral("() ");
 
             
-            #line 42 "..\..\Views\Option\Partial\OptionCell.cshtml"
+            #line 69 "..\..\Views\Option\Partial\OptionCell.cshtml"
                                                                     Write(!string.IsNullOrEmpty(Model.FocusIdentifier) ? string.Format(", click: onItemSelect.bind($data, {0})", Model.FocusIdentifier) : string.Empty);
 
             
@@ -242,7 +244,7 @@ WriteLiteral("() ");
 WriteLiteral(" ");
 
             
-            #line 42 "..\..\Views\Option\Partial\OptionCell.cshtml"
+            #line 69 "..\..\Views\Option\Partial\OptionCell.cshtml"
                                                                                                                                                                                                                     Write(Model.CanBeEdited ? ", visible: !isActive()" : string.Empty);
 
             
@@ -250,31 +252,31 @@ WriteLiteral(" ");
             #line hidden
 WriteLiteral("\"");
 
-WriteLiteral("></div>    \n</td>\n<!-- /ko -->\n\n");
+WriteLiteral("></div>    \r\n</td>\r\n<!-- /ko -->\r\n\r\n");
 
-WriteLiteral("\n<!-- ko if: !useDefaultValueBinding() && type() == 99  -->\n<td");
+WriteLiteral("\r\n<!-- ko if: !useDefaultValueBinding() && type() == 99  -->\r\n<td");
 
 WriteLiteral(" class=\"bcms-table-field-helper\"");
 
 WriteLiteral(" ");
 
             
-            #line 48 "..\..\Views\Option\Partial\OptionCell.cshtml"
+            #line 75 "..\..\Views\Option\Partial\OptionCell.cshtml"
                                Write(Html.Raw(Model.Attributes));
 
             
             #line default
             #line hidden
-WriteLiteral(">\n");
+WriteLiteral(">\r\n");
 
             
-            #line 49 "..\..\Views\Option\Partial\OptionCell.cshtml"
+            #line 76 "..\..\Views\Option\Partial\OptionCell.cshtml"
     
             
             #line default
             #line hidden
             
-            #line 49 "..\..\Views\Option\Partial\OptionCell.cshtml"
+            #line 76 "..\..\Views\Option\Partial\OptionCell.cshtml"
      if (Model.CanBeEdited)
     {
 
@@ -285,7 +287,7 @@ WriteLiteral("        <div");
 
 WriteLiteral(" class=\"bcms-field-wrapper\"");
 
-WriteLiteral(">\n        <input");
+WriteLiteral(">\r\n        <input");
 
 WriteLiteral(" class=\"bcms-field-text\"");
 
@@ -296,7 +298,7 @@ WriteLiteral(" readonly=\"readonly\"");
 WriteLiteral(" data-bind=\"value: ");
 
             
-            #line 52 "..\..\Views\Option\Partial\OptionCell.cshtml"
+            #line 79 "..\..\Views\Option\Partial\OptionCell.cshtml"
                                                                                      Write(Model.CustomValueBind);
 
             
@@ -305,7 +307,7 @@ WriteLiteral(" data-bind=\"value: ");
 WriteLiteral("() || ");
 
             
-            #line 52 "..\..\Views\Option\Partial\OptionCell.cshtml"
+            #line 79 "..\..\Views\Option\Partial\OptionCell.cshtml"
                                                                                                                    Write(Model.ValueBind);
 
             
@@ -314,7 +316,7 @@ WriteLiteral("() || ");
 WriteLiteral("(), enterPress: onSave, escPress: onCancelEdit,visible: isActive() ");
 
             
-            #line 52 "..\..\Views\Option\Partial\OptionCell.cshtml"
+            #line 79 "..\..\Views\Option\Partial\OptionCell.cshtml"
                                                                                                                                                                                                         Write(!string.IsNullOrEmpty(Model.FocusIdentifier) ? string.Format(", hasfocus: {0}", Model.FocusIdentifier) : string.Empty);
 
             
@@ -322,7 +324,7 @@ WriteLiteral("(), enterPress: onSave, escPress: onCancelEdit,visible: isActive()
             #line hidden
 WriteLiteral("\"");
 
-WriteLiteral("/>\n        </div>\n");
+WriteLiteral("/>\r\n        </div>\r\n");
 
 WriteLiteral("        <div");
 
@@ -331,7 +333,7 @@ WriteLiteral(" class=\"bcms-btn-primary\"");
 WriteLiteral(" data-bind=\"click: onCustomOptionExecute.bind($data, $data, ");
 
             
-            #line 54 "..\..\Views\Option\Partial\OptionCell.cshtml"
+            #line 81 "..\..\Views\Option\Partial\OptionCell.cshtml"
                                                                                              Write(Model.CustomValueBind);
 
             
@@ -340,7 +342,7 @@ WriteLiteral(" data-bind=\"click: onCustomOptionExecute.bind($data, $data, ");
 WriteLiteral(", ");
 
             
-            #line 54 "..\..\Views\Option\Partial\OptionCell.cshtml"
+            #line 81 "..\..\Views\Option\Partial\OptionCell.cshtml"
                                                                                                                        Write(Model.ValueBind);
 
             
@@ -348,10 +350,10 @@ WriteLiteral(", ");
             #line hidden
 WriteLiteral("), enterPress: onSave, escPress: onCancelEdit, visible: isActive()\"");
 
-WriteLiteral(">...</div>\n");
+WriteLiteral(">...</div>\r\n");
 
             
-            #line 55 "..\..\Views\Option\Partial\OptionCell.cshtml"
+            #line 82 "..\..\Views\Option\Partial\OptionCell.cshtml"
     }
 
             
@@ -364,7 +366,7 @@ WriteLiteral(" class=\"bcms-tables-link\"");
 WriteLiteral(" data-bind=\" text: ");
 
             
-            #line 56 "..\..\Views\Option\Partial\OptionCell.cshtml"
+            #line 83 "..\..\Views\Option\Partial\OptionCell.cshtml"
                                                 Write(Model.CustomValueBind);
 
             
@@ -373,7 +375,7 @@ WriteLiteral(" data-bind=\" text: ");
 WriteLiteral("() || ");
 
             
-            #line 56 "..\..\Views\Option\Partial\OptionCell.cshtml"
+            #line 83 "..\..\Views\Option\Partial\OptionCell.cshtml"
                                                                               Write(Model.ValueBind);
 
             
@@ -382,7 +384,7 @@ WriteLiteral("() || ");
 WriteLiteral("() ");
 
             
-            #line 56 "..\..\Views\Option\Partial\OptionCell.cshtml"
+            #line 83 "..\..\Views\Option\Partial\OptionCell.cshtml"
                                                                                                    Write(!string.IsNullOrEmpty(Model.FocusIdentifier) ? string.Format(", click: onItemSelect.bind($data, {0})", Model.FocusIdentifier) : string.Empty);
 
             
@@ -391,7 +393,7 @@ WriteLiteral("() ");
 WriteLiteral(" ");
 
             
-            #line 56 "..\..\Views\Option\Partial\OptionCell.cshtml"
+            #line 83 "..\..\Views\Option\Partial\OptionCell.cshtml"
                                                                                                                                                                                                                                                    Write(Model.CanBeEdited ? ", visible: !isActive()" : string.Empty);
 
             
@@ -399,36 +401,36 @@ WriteLiteral(" ");
             #line hidden
 WriteLiteral("\"");
 
-WriteLiteral("></div>    \n</td>\n<!-- /ko -->\n\n");
+WriteLiteral("></div>    \r\n</td>\r\n<!-- /ko -->\r\n\r\n");
 
-WriteLiteral("\n<!-- ko if: useDefaultValueBinding() && type() == 5  -->\n");
+WriteLiteral("\r\n<!-- ko if: useDefaultValueBinding() && type() == 5  -->\r\n");
 
 WriteLiteral("    ");
 
             
-            #line 62 "..\..\Views\Option\Partial\OptionCell.cshtml"
+            #line 89 "..\..\Views\Option\Partial\OptionCell.cshtml"
 Write(Html.Partial(RootModuleConstants.EditableGridBooleanCellTemplate, new EditableGridBooleanColumn(null, null, Model.ValueBind) { CanBeEdited = false, ShowValueAsText = true }));
 
             
             #line default
             #line hidden
-WriteLiteral("\n<!-- /ko -->\n\n<!-- ko if: useDefaultValueBinding() && type() != 5  -->\n<td ");
+WriteLiteral("\r\n<!-- /ko -->\r\n\r\n<!-- ko if: useDefaultValueBinding() && type() != 5  -->\r\n<td ");
 
             
-            #line 66 "..\..\Views\Option\Partial\OptionCell.cshtml"
+            #line 93 "..\..\Views\Option\Partial\OptionCell.cshtml"
 Write(Html.Raw(Model.Attributes));
 
             
             #line default
             #line hidden
-WriteLiteral(">\n    <div");
+WriteLiteral(">\r\n    <div");
 
 WriteLiteral(" class=\"bcms-tables-link\"");
 
 WriteLiteral(" data-bind=\"text: ");
 
             
-            #line 67 "..\..\Views\Option\Partial\OptionCell.cshtml"
+            #line 94 "..\..\Views\Option\Partial\OptionCell.cshtml"
                                                Write(Model.CustomValueBind);
 
             
@@ -437,7 +439,7 @@ WriteLiteral(" data-bind=\"text: ");
 WriteLiteral("() || ");
 
             
-            #line 67 "..\..\Views\Option\Partial\OptionCell.cshtml"
+            #line 94 "..\..\Views\Option\Partial\OptionCell.cshtml"
                                                                              Write(Model.ValueBind);
 
             
@@ -446,7 +448,7 @@ WriteLiteral("() || ");
 WriteLiteral("() ");
 
             
-            #line 67 "..\..\Views\Option\Partial\OptionCell.cshtml"
+            #line 94 "..\..\Views\Option\Partial\OptionCell.cshtml"
                                                                                                   Write(!string.IsNullOrEmpty(Model.FocusIdentifier) ? string.Format(", click: onItemSelect.bind($data, {0})", Model.FocusIdentifier): string.Empty);
 
             
@@ -454,7 +456,7 @@ WriteLiteral("() ");
             #line hidden
 WriteLiteral("\"");
 
-WriteLiteral("></div>\n</td>\n<!-- /ko -->\n");
+WriteLiteral("></div>\r\n</td>\r\n<!-- /ko -->\r\n");
 
         }
     }

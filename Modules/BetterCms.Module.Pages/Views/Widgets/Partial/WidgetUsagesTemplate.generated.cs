@@ -28,25 +28,25 @@ namespace ASP
     using System.Web.UI;
     using System.Web.WebPages;
     
-    #line 1 "..\..\Views\Widgets\Partial\WidgetUsagesTemplate.cshtml"
+    #line 28 "..\..\Views\Widgets\Partial\WidgetUsagesTemplate.cshtml"
     using BetterCms.Module.Pages.Content.Resources;
     
     #line default
     #line hidden
     
-    #line 2 "..\..\Views\Widgets\Partial\WidgetUsagesTemplate.cshtml"
+    #line 29 "..\..\Views\Widgets\Partial\WidgetUsagesTemplate.cshtml"
     using BetterCms.Module.Root;
     
     #line default
     #line hidden
     
-    #line 3 "..\..\Views\Widgets\Partial\WidgetUsagesTemplate.cshtml"
+    #line 30 "..\..\Views\Widgets\Partial\WidgetUsagesTemplate.cshtml"
     using BetterCms.Module.Root.Mvc.Grids;
     
     #line default
     #line hidden
     
-    #line 4 "..\..\Views\Widgets\Partial\WidgetUsagesTemplate.cshtml"
+    #line 31 "..\..\Views\Widgets\Partial\WidgetUsagesTemplate.cshtml"
     using BetterCms.Module.Root.ViewModels.Shared;
     
     #line default
@@ -61,8 +61,10 @@ namespace ASP
         }
         public override void Execute()
         {
+WriteLiteral("\r\n");
+
             
-            #line 5 "..\..\Views\Widgets\Partial\WidgetUsagesTemplate.cshtml"
+            #line 32 "..\..\Views\Widgets\Partial\WidgetUsagesTemplate.cshtml"
   
     var gridViewModel = new EditableGridViewModel
     {
@@ -97,7 +99,7 @@ WriteLiteral(">\r\n");
 WriteLiteral("        ");
 
             
-            #line 24 "..\..\Views\Widgets\Partial\WidgetUsagesTemplate.cshtml"
+            #line 51 "..\..\Views\Widgets\Partial\WidgetUsagesTemplate.cshtml"
    Write(Html.Partial(RootModuleConstants.EditableGridTemplate, gridViewModel));
 
             

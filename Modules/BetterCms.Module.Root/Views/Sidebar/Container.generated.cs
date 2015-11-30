@@ -37,6 +37,8 @@ namespace ASP
         }
         public override void Execute()
         {
+WriteLiteral("\r\n");
+
 WriteLiteral("<div");
 
 WriteLiteral(" id=\"bcms-sidemenu\"");
@@ -48,7 +50,7 @@ WriteLiteral(" style=\"display: none\"");
 WriteLiteral(">\r\n");
 
             
-            #line 3 "..\..\Views\Sidebar\Container.cshtml"
+            #line 30 "..\..\Views\Sidebar\Container.cshtml"
 Write(Html.Partial("Side", Model.SideProjections));
 
             
@@ -57,7 +59,7 @@ Write(Html.Partial("Side", Model.SideProjections));
 WriteLiteral("\r\n");
 
             
-            #line 4 "..\..\Views\Sidebar\Container.cshtml"
+            #line 31 "..\..\Views\Sidebar\Container.cshtml"
 Write(Html.Partial("Header", Model.HeaderProjections));
 
             
@@ -66,7 +68,7 @@ Write(Html.Partial("Header", Model.HeaderProjections));
 WriteLiteral("\r\n");
 
             
-            #line 5 "..\..\Views\Sidebar\Container.cshtml"
+            #line 32 "..\..\Views\Sidebar\Container.cshtml"
 Write(Html.Partial("Body", Model.BodyProjections));
 
             
@@ -75,7 +77,7 @@ Write(Html.Partial("Body", Model.BodyProjections));
 WriteLiteral("\r\n");
 
             
-            #line 6 "..\..\Views\Sidebar\Container.cshtml"
+            #line 33 "..\..\Views\Sidebar\Container.cshtml"
 Write(Html.Partial("Footer", Model.Version));
 
             

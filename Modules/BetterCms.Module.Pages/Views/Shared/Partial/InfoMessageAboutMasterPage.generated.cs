@@ -28,13 +28,13 @@ namespace ASP
     using System.Web.UI;
     using System.Web.WebPages;
     
-    #line 1 "..\..\Views\Shared\Partial\InfoMessageAboutMasterPage.cshtml"
+    #line 28 "..\..\Views\Shared\Partial\InfoMessageAboutMasterPage.cshtml"
     using BetterCms.Module.Pages.Content.Resources;
     
     #line default
     #line hidden
     
-    #line 2 "..\..\Views\Shared\Partial\InfoMessageAboutMasterPage.cshtml"
+    #line 29 "..\..\Views\Shared\Partial\InfoMessageAboutMasterPage.cshtml"
     using BetterCms.Module.Root.Content.Resources;
     
     #line default
@@ -49,6 +49,8 @@ namespace ASP
         }
         public override void Execute()
         {
+WriteLiteral("\r\n");
+
 WriteLiteral("\r\n<div");
 
 WriteLiteral(" class=\"bcms-messages-ui bcms-js-messages\"");
@@ -72,7 +74,7 @@ WriteLiteral(" id=\"bcms-editpage-closeinfomessage\"");
 WriteLiteral(">");
 
             
-            #line 8 "..\..\Views\Shared\Partial\InfoMessageAboutMasterPage.cshtml"
+            #line 35 "..\..\Views\Shared\Partial\InfoMessageAboutMasterPage.cshtml"
                                                                                               Write(RootGlobalization.Button_Close);
 
             
@@ -83,7 +85,7 @@ WriteLiteral("</div>\r\n");
 WriteLiteral("            ");
 
             
-            #line 9 "..\..\Views\Shared\Partial\InfoMessageAboutMasterPage.cshtml"
+            #line 36 "..\..\Views\Shared\Partial\InfoMessageAboutMasterPage.cshtml"
        Write(PagesGlobalization.MasterPage_InfoMessage);
 
             

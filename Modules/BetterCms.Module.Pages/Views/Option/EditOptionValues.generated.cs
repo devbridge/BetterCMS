@@ -28,37 +28,37 @@ namespace ASP
     using System.Web.UI;
     using System.Web.WebPages;
     
-    #line 1 "..\..\Views\Option\EditOptionValues.cshtml"
+    #line 28 "..\..\Views\Option\EditOptionValues.cshtml"
     using BetterCms.Module.Pages.Content.Resources;
     
     #line default
     #line hidden
     
-    #line 2 "..\..\Views\Option\EditOptionValues.cshtml"
+    #line 29 "..\..\Views\Option\EditOptionValues.cshtml"
     using BetterCms.Module.Pages.Mvc.EditableGrid;
     
     #line default
     #line hidden
     
-    #line 3 "..\..\Views\Option\EditOptionValues.cshtml"
+    #line 30 "..\..\Views\Option\EditOptionValues.cshtml"
     using BetterCms.Module.Root;
     
     #line default
     #line hidden
     
-    #line 4 "..\..\Views\Option\EditOptionValues.cshtml"
+    #line 31 "..\..\Views\Option\EditOptionValues.cshtml"
     using BetterCms.Module.Root.Content.Resources;
     
     #line default
     #line hidden
     
-    #line 5 "..\..\Views\Option\EditOptionValues.cshtml"
+    #line 32 "..\..\Views\Option\EditOptionValues.cshtml"
     using BetterCms.Module.Root.Mvc.Grids;
     
     #line default
     #line hidden
     
-    #line 6 "..\..\Views\Option\EditOptionValues.cshtml"
+    #line 33 "..\..\Views\Option\EditOptionValues.cshtml"
     using BetterCms.Module.Root.ViewModels.Shared;
     
     #line default
@@ -73,8 +73,10 @@ namespace ASP
         }
         public override void Execute()
         {
+WriteLiteral("\r\n");
+
             
-            #line 8 "..\..\Views\Option\EditOptionValues.cshtml"
+            #line 35 "..\..\Views\Option\EditOptionValues.cshtml"
   
     Model.ShowSearch = false;
     Model.TopBlockClass = "bcms-top-block-holder";
@@ -123,7 +125,7 @@ namespace ASP
 WriteLiteral("\r\n");
 
             
-            #line 50 "..\..\Views\Option\EditOptionValues.cshtml"
+            #line 77 "..\..\Views\Option\EditOptionValues.cshtml"
 Write(Html.Partial(RootModuleConstants.EditableGridTemplate, Model));
 
             

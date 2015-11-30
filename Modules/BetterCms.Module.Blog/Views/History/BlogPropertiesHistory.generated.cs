@@ -28,13 +28,13 @@ namespace ASP
     using System.Web.UI;
     using System.Web.WebPages;
     
-    #line 1 "..\..\Views\History\BlogPropertiesHistory.cshtml"
+    #line 28 "..\..\Views\History\BlogPropertiesHistory.cshtml"
     using BetterCms.Module.Pages.Content.Resources;
     
     #line default
     #line hidden
     
-    #line 2 "..\..\Views\History\BlogPropertiesHistory.cshtml"
+    #line 29 "..\..\Views\History\BlogPropertiesHistory.cshtml"
     using BetterCms.Module.Root.Mvc.UI;
     
     #line default
@@ -49,6 +49,8 @@ namespace ASP
         }
         public override void Execute()
         {
+WriteLiteral("\r\n");
+
 WriteLiteral("<div");
 
 WriteLiteral(" class=\"bcms-content-info-block\"");
@@ -64,7 +66,7 @@ WriteLiteral(" class=\"bcms-content-titles\"");
 WriteLiteral(">");
 
             
-            #line 7 "..\..\Views\History\BlogPropertiesHistory.cshtml"
+            #line 34 "..\..\Views\History\BlogPropertiesHistory.cshtml"
                                     Write(PagesGlobalization.AddPageContent_RegularContentTab_ContentName_Title);
 
             
@@ -79,7 +81,7 @@ WriteLiteral(">\r\n");
 WriteLiteral("            ");
 
             
-            #line 9 "..\..\Views\History\BlogPropertiesHistory.cshtml"
+            #line 36 "..\..\Views\History\BlogPropertiesHistory.cshtml"
        Write(Html.TextBoxFor(model => model.Name, new { @readonly = "readonly", @class = "bcms-field-text" }));
 
             
@@ -96,7 +98,7 @@ WriteLiteral(" class=\"bcms-content-titles\"");
 WriteLiteral(">");
 
             
-            #line 14 "..\..\Views\History\BlogPropertiesHistory.cshtml"
+            #line 41 "..\..\Views\History\BlogPropertiesHistory.cshtml"
                                     Write(PagesGlobalization.AddPageContent_RegularContentTab_LiveFrom_Title);
 
             
@@ -111,7 +113,7 @@ WriteLiteral(">\r\n");
 WriteLiteral("            ");
 
             
-            #line 16 "..\..\Views\History\BlogPropertiesHistory.cshtml"
+            #line 43 "..\..\Views\History\BlogPropertiesHistory.cshtml"
        Write(Html.DateTextBoxFor(model => model.ActivationDate, Model.ActivationDate, new Dictionary<string, object> { { "readonly", "readonly" }, { "class", "bcms-field-text bcms-datepicker" } }));
 
             
@@ -128,7 +130,7 @@ WriteLiteral(" class=\"bcms-content-titles\"");
 WriteLiteral(">");
 
             
-            #line 21 "..\..\Views\History\BlogPropertiesHistory.cshtml"
+            #line 48 "..\..\Views\History\BlogPropertiesHistory.cshtml"
                                     Write(PagesGlobalization.AddPageContent_RegularContentTab_LiveTo_Title);
 
             
@@ -143,7 +145,7 @@ WriteLiteral(">\r\n");
 WriteLiteral("            ");
 
             
-            #line 23 "..\..\Views\History\BlogPropertiesHistory.cshtml"
+            #line 50 "..\..\Views\History\BlogPropertiesHistory.cshtml"
        Write(Html.DateTextBoxFor(model => model.ExpirationDate, Model.ExpirationDate, new Dictionary<string, object> { { "readonly", "readonly" }, { "class", "bcms-field-text bcms-datepicker" } }));
 
             
@@ -160,7 +162,7 @@ WriteLiteral(" class=\"bcms-content-titles\"");
 WriteLiteral(">");
 
             
-            #line 29 "..\..\Views\History\BlogPropertiesHistory.cshtml"
+            #line 56 "..\..\Views\History\BlogPropertiesHistory.cshtml"
                                 Write(PagesGlobalization.HtmlContent_Content_Title);
 
             
@@ -175,7 +177,7 @@ WriteLiteral(">\r\n");
 WriteLiteral("        ");
 
             
-            #line 31 "..\..\Views\History\BlogPropertiesHistory.cshtml"
+            #line 58 "..\..\Views\History\BlogPropertiesHistory.cshtml"
    Write(Html.TextAreaFor(model => model.RowText, new { @readonly = "readonly", @class = "bcms-field-textarea bcms-code-field ", style = "height: 500px;" }));
 
             

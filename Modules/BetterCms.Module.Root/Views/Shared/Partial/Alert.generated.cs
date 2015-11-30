@@ -28,7 +28,7 @@ namespace ASP
     using System.Web.UI;
     using System.Web.WebPages;
     
-    #line 1 "..\..\Views\Shared\Partial\Alert.cshtml"
+    #line 28 "..\..\Views\Shared\Partial\Alert.cshtml"
     using BetterCms.Module.Root.Content.Resources;
     
     #line default
@@ -43,6 +43,8 @@ namespace ASP
         }
         public override void Execute()
         {
+WriteLiteral("\r\n");
+
 WriteLiteral("\n<script");
 
 WriteLiteral(" type=\"text/html\"");
@@ -53,7 +55,7 @@ WriteLiteral(">\n    <div class=\"bcms-modal-alert\">\r\n        <div class=\"bc
 "dex=\"-1\">\r\n            <div class=\"bcms-modal-close bcms-js-btn-close\">");
 
             
-            #line 6 "..\..\Views\Shared\Partial\Alert.cshtml"
+            #line 33 "..\..\Views\Shared\Partial\Alert.cshtml"
                                                        Write(RootGlobalization.Button_Close);
 
             
@@ -62,7 +64,7 @@ WriteLiteral(">\n    <div class=\"bcms-modal-alert\">\r\n        <div class=\"bc
 WriteLiteral("</div>\r\n            <div class=\"bcms-message-titles\">");
 
             
-            #line 7 "..\..\Views\Shared\Partial\Alert.cshtml"
+            #line 34 "..\..\Views\Shared\Partial\Alert.cshtml"
                                         Write(RootGlobalization.Alert_DefaultTitle);
 
             

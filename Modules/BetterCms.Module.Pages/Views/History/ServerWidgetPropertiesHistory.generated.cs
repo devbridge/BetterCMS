@@ -28,7 +28,7 @@ namespace ASP
     using System.Web.UI;
     using System.Web.WebPages;
     
-    #line 1 "..\..\Views\History\ServerWidgetPropertiesHistory.cshtml"
+    #line 28 "..\..\Views\History\ServerWidgetPropertiesHistory.cshtml"
     using BetterCms.Module.Pages.Content.Resources;
     
     #line default
@@ -43,6 +43,8 @@ namespace ASP
         }
         public override void Execute()
         {
+WriteLiteral("\r\n");
+
 WriteLiteral("<div");
 
 WriteLiteral(" class=\"bcms-form-block-holder\"");
@@ -58,7 +60,7 @@ WriteLiteral(" class=\"bcms-content-titles\"");
 WriteLiteral(">");
 
             
-            #line 7 "..\..\Views\History\ServerWidgetPropertiesHistory.cshtml"
+            #line 34 "..\..\Views\History\ServerWidgetPropertiesHistory.cshtml"
                                         Write(PagesGlobalization.Widget_Title_Title);
 
             
@@ -73,7 +75,7 @@ WriteLiteral(">\r\n");
 WriteLiteral("                ");
 
             
-            #line 9 "..\..\Views\History\ServerWidgetPropertiesHistory.cshtml"
+            #line 36 "..\..\Views\History\ServerWidgetPropertiesHistory.cshtml"
            Write(Html.TextBoxFor(model => model.Name, new { @readonly = "readonly", @class = "bcms-field-text" }));
 
             
@@ -90,7 +92,7 @@ WriteLiteral(" class=\"bcms-content-titles\"");
 WriteLiteral(">");
 
             
-            #line 14 "..\..\Views\History\ServerWidgetPropertiesHistory.cshtml"
+            #line 41 "..\..\Views\History\ServerWidgetPropertiesHistory.cshtml"
                                         Write(PagesGlobalization.Widget_Url_Title);
 
             
@@ -105,7 +107,7 @@ WriteLiteral(">\r\n");
 WriteLiteral("                ");
 
             
-            #line 16 "..\..\Views\History\ServerWidgetPropertiesHistory.cshtml"
+            #line 43 "..\..\Views\History\ServerWidgetPropertiesHistory.cshtml"
            Write(Html.TextBoxFor(model => model.Url, new { @readonly = "readonly", @class = "bcms-field-text" }));
 
             
@@ -122,7 +124,7 @@ WriteLiteral(" class=\"bcms-content-titles\"");
 WriteLiteral(">");
 
             
-            #line 21 "..\..\Views\History\ServerWidgetPropertiesHistory.cshtml"
+            #line 48 "..\..\Views\History\ServerWidgetPropertiesHistory.cshtml"
                                         Write(PagesGlobalization.WidgetPreviewImageUrl_Title);
 
             
@@ -137,7 +139,7 @@ WriteLiteral(">\r\n");
 WriteLiteral("                ");
 
             
-            #line 23 "..\..\Views\History\ServerWidgetPropertiesHistory.cshtml"
+            #line 50 "..\..\Views\History\ServerWidgetPropertiesHistory.cshtml"
            Write(Html.TextBoxFor(model => model.PreviewUrl, new { @readonly = "readonly", @class = "bcms-field-text" }));
 
             
@@ -154,7 +156,7 @@ WriteLiteral(" class=\"bcms-content-titles\"");
 WriteLiteral(">");
 
             
-            #line 30 "..\..\Views\History\ServerWidgetPropertiesHistory.cshtml"
+            #line 57 "..\..\Views\History\ServerWidgetPropertiesHistory.cshtml"
                                         Write(PagesGlobalization.WidgetPreviewImage_Title);
 
             
@@ -167,13 +169,13 @@ WriteLiteral(" class=\"bcms-preview-thumb\"");
 WriteLiteral(">\r\n");
 
             
-            #line 32 "..\..\Views\History\ServerWidgetPropertiesHistory.cshtml"
+            #line 59 "..\..\Views\History\ServerWidgetPropertiesHistory.cshtml"
                 
             
             #line default
             #line hidden
             
-            #line 32 "..\..\Views\History\ServerWidgetPropertiesHistory.cshtml"
+            #line 59 "..\..\Views\History\ServerWidgetPropertiesHistory.cshtml"
                  if (!string.IsNullOrWhiteSpace(Model.PreviewUrl))
                 {
 
@@ -184,14 +186,14 @@ WriteLiteral("                    <img");
 
 WriteLiteral(" id=\"bcms-widget-preview-image\"");
 
-WriteAttribute("src", Tuple.Create(" src=\"", 1553), Tuple.Create("\"", 1576)
+WriteAttribute("src", Tuple.Create(" src=\"", 2880), Tuple.Create("\"", 2903)
             
-            #line 34 "..\..\Views\History\ServerWidgetPropertiesHistory.cshtml"
-, Tuple.Create(Tuple.Create("", 1559), Tuple.Create<System.Object, System.Int32>(Model.PreviewUrl
+            #line 61 "..\..\Views\History\ServerWidgetPropertiesHistory.cshtml"
+, Tuple.Create(Tuple.Create("", 2886), Tuple.Create<System.Object, System.Int32>(Model.PreviewUrl
             
             #line default
             #line hidden
-, 1559), false)
+, 2886), false)
 );
 
 WriteLiteral(" alt=\"\"");
@@ -199,7 +201,7 @@ WriteLiteral(" alt=\"\"");
 WriteLiteral(" />\r\n");
 
             
-            #line 35 "..\..\Views\History\ServerWidgetPropertiesHistory.cshtml"
+            #line 62 "..\..\Views\History\ServerWidgetPropertiesHistory.cshtml"
                 }
                 else
                 {
@@ -240,7 +242,7 @@ WriteLiteral(" d=\"m-187.9 382.4c-2.8 0-5 2.2-5 5 0 2.8 2.2 5 5 5 2.8 0 5-2.2 5-
 WriteLiteral(" />\r\n                        </g>\r\n                    </svg>\r\n");
 
             
-            #line 45 "..\..\Views\History\ServerWidgetPropertiesHistory.cshtml"
+            #line 72 "..\..\Views\History\ServerWidgetPropertiesHistory.cshtml"
                 }
 
             

@@ -37,7 +37,7 @@ namespace ASP
         }
         public override void Execute()
         {
-WriteLiteral("<div");
+WriteLiteral("\r\n<div");
 
 WriteLiteral(" class=\"bcms-modal-frame-holder\"");
 
@@ -50,7 +50,7 @@ WriteLiteral(">\r\n");
 WriteLiteral("        ");
 
             
-            #line 3 "..\..\Views\Files\FileInsert.cshtml"
+            #line 30 "..\..\Views\Files\FileInsert.cshtml"
    Write(Html.Partial("~/Areas/bcms-media/Views/Shared/Partial/MediaManagerInsertion.cshtml"));
 
             
@@ -61,7 +61,7 @@ WriteLiteral("\r\n    </div>\r\n\r\n");
 WriteLiteral("    ");
 
             
-            #line 6 "..\..\Views\Files\FileInsert.cshtml"
+            #line 33 "..\..\Views\Files\FileInsert.cshtml"
 Write(Html.Partial("~/Areas/bcms-media/Views/Shared/Partial/MediaManagerTemplate.cshtml"));
 
             

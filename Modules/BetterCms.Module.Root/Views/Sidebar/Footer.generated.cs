@@ -28,7 +28,7 @@ namespace ASP
     using System.Web.UI;
     using System.Web.WebPages;
     
-    #line 1 "..\..\Views\Sidebar\Footer.cshtml"
+    #line 28 "..\..\Views\Sidebar\Footer.cshtml"
     using BetterCms.Module.Root.Content.Resources;
     
     #line default
@@ -43,6 +43,8 @@ namespace ASP
         }
         public override void Execute()
         {
+WriteLiteral("\r\n");
+
 WriteLiteral("<div");
 
 WriteLiteral(" class=\"bcms-sidemenu-footer\"");
@@ -92,7 +94,7 @@ WriteLiteral(" class=\"bcms-cp-version-number\"");
 WriteLiteral(">");
 
             
-            #line 12 "..\..\Views\Sidebar\Footer.cshtml"
+            #line 39 "..\..\Views\Sidebar\Footer.cshtml"
                                    Write(Model);
 
             

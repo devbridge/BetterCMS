@@ -28,7 +28,7 @@ namespace ASP
     using System.Web.UI;
     using System.Web.WebPages;
     
-    #line 1 "..\..\Views\Shared\Partial\Modal.cshtml"
+    #line 28 "..\..\Views\Shared\Partial\Modal.cshtml"
     using BetterCms.Module.Root.Content.Resources;
     
     #line default
@@ -43,6 +43,8 @@ namespace ASP
         }
         public override void Execute()
         {
+WriteLiteral("\r\n");
+
 WriteLiteral("<script");
 
 WriteLiteral(" type=\"text/html\"");
@@ -55,7 +57,7 @@ WriteLiteral(">\r\n    <div class=\"bcms-modal bcms-layer\" spellcheck=\"true\">
 "al-title\">");
 
             
-            #line 7 "..\..\Views\Shared\Partial\Modal.cshtml"
+            #line 34 "..\..\Views\Shared\Partial\Modal.cshtml"
                                              Write(RootGlobalization.Message_Loading);
 
             

@@ -28,13 +28,13 @@ namespace ASP
     using System.Web.UI;
     using System.Web.WebPages;
     
-    #line 1 "..\..\Views\Page\Partial\TranslationsGrid.cshtml"
+    #line 28 "..\..\Views\Page\Partial\TranslationsGrid.cshtml"
     using BetterCms.Module.Pages.Content.Resources;
     
     #line default
     #line hidden
     
-    #line 2 "..\..\Views\Page\Partial\TranslationsGrid.cshtml"
+    #line 29 "..\..\Views\Page\Partial\TranslationsGrid.cshtml"
     using BetterCms.Module.Root.Content.Resources;
     
     #line default
@@ -49,6 +49,8 @@ namespace ASP
         }
         public override void Execute()
         {
+WriteLiteral("\r\n");
+
 WriteLiteral("\r\n<div");
 
 WriteLiteral(" data-bind=\"with: translations\"");
@@ -70,7 +72,7 @@ WriteLiteral(" style=\"width: 350px;\"");
 WriteLiteral(">");
 
             
-            #line 9 "..\..\Views\Page\Partial\TranslationsGrid.cshtml"
+            #line 36 "..\..\Views\Page\Partial\TranslationsGrid.cshtml"
                                      Write(PagesGlobalization.EditPageTranslations_Title_Title);
 
             
@@ -83,7 +85,7 @@ WriteLiteral(" style=\"width: 250px;\"");
 WriteLiteral(">");
 
             
-            #line 10 "..\..\Views\Page\Partial\TranslationsGrid.cshtml"
+            #line 37 "..\..\Views\Page\Partial\TranslationsGrid.cshtml"
                                      Write(PagesGlobalization.EditPageTranslations_Language_Title);
 
             
@@ -92,7 +94,7 @@ WriteLiteral(">");
 WriteLiteral("</th>\r\n                <th>");
 
             
-            #line 11 "..\..\Views\Page\Partial\TranslationsGrid.cshtml"
+            #line 38 "..\..\Views\Page\Partial\TranslationsGrid.cshtml"
                Write(PagesGlobalization.EditPageTranslations_Url_Title);
 
             
@@ -131,7 +133,7 @@ WriteLiteral(" data-bind=\"click: $parent.unassignPage\"");
 WriteLiteral(">");
 
             
-            #line 23 "..\..\Views\Page\Partial\TranslationsGrid.cshtml"
+            #line 50 "..\..\Views\Page\Partial\TranslationsGrid.cshtml"
                                                                                        Write(RootGlobalization.Button_Delete);
 
             
@@ -150,7 +152,7 @@ WriteLiteral(" class=\"bcms-table-no-data\"");
 WriteLiteral(">");
 
             
-            #line 30 "..\..\Views\Page\Partial\TranslationsGrid.cshtml"
+            #line 57 "..\..\Views\Page\Partial\TranslationsGrid.cshtml"
                                                Write(RootGlobalization.Grid_NoDataAvailable_Message);
 
             
@@ -180,14 +182,14 @@ WriteLiteral(" class=\"bcms-field-text\"");
 WriteLiteral(" data-bind=\"value: addPageTitle, autocomplete: \'onlyExisting\', hasfocus: hasFocus" +
 ", enterPress: addTranslation, escPress: endEditMode\"");
 
-WriteAttribute("placeholder", Tuple.Create(" placeholder=\"", 1996), Tuple.Create("\"", 2089)
+WriteAttribute("placeholder", Tuple.Create(" placeholder=\"", 3310), Tuple.Create("\"", 3403)
             
-            #line 39 "..\..\Views\Page\Partial\TranslationsGrid.cshtml"
-                                                                                                                                     , Tuple.Create(Tuple.Create("", 2010), Tuple.Create<System.Object, System.Int32>(PagesGlobalization.EditPageProperties_TranslationsTab_PageSelectionPlaceholder
+            #line 66 "..\..\Views\Page\Partial\TranslationsGrid.cshtml"
+                                                                                                                                     , Tuple.Create(Tuple.Create("", 3324), Tuple.Create<System.Object, System.Int32>(PagesGlobalization.EditPageProperties_TranslationsTab_PageSelectionPlaceholder
             
             #line default
             #line hidden
-, 2010), false)
+, 3324), false)
 );
 
 WriteLiteral(" />\r\n                    </div>\r\n                    <div");
@@ -230,7 +232,7 @@ WriteLiteral(" data-bind=\"click: addTranslation\"");
 WriteLiteral(">");
 
             
-            #line 55 "..\..\Views\Page\Partial\TranslationsGrid.cshtml"
+            #line 82 "..\..\Views\Page\Partial\TranslationsGrid.cshtml"
                                                                                Write(RootGlobalization.Button_Ok);
 
             
@@ -245,7 +247,7 @@ WriteLiteral(" data-bind=\"click: endEditMode\"");
 WriteLiteral(">");
 
             
-            #line 57 "..\..\Views\Page\Partial\TranslationsGrid.cshtml"
+            #line 84 "..\..\Views\Page\Partial\TranslationsGrid.cshtml"
                                                                            Write(RootGlobalization.Button_Cancel);
 
             

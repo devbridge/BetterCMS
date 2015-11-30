@@ -28,7 +28,7 @@ namespace ASP
     using System.Web.UI;
     using System.Web.WebPages;
     
-    #line 1 "..\..\Views\Shared\Partial\MasterPagesPath.cshtml"
+    #line 28 "..\..\Views\Shared\Partial\MasterPagesPath.cshtml"
     using BetterCms.Module.Root.ViewModels.Cms;
     
     #line default
@@ -39,14 +39,14 @@ namespace ASP
     public partial class _Views_Shared_Partial_MasterPagesPath_cshtml : System.Web.Mvc.WebViewPage<RenderPageViewModel>
     {
 
-#line 25 "..\..\Views\Shared\Partial\MasterPagesPath.cshtml"
+#line 52 "..\..\Views\Shared\Partial\MasterPagesPath.cshtml"
 public System.Web.WebPages.HelperResult RenderMasterPage(RenderPageViewModel viewModel)
 {
 #line default
 #line hidden
 return new System.Web.WebPages.HelperResult(__razor_helper_writer => {
 
-#line 26 "..\..\Views\Shared\Partial\MasterPagesPath.cshtml"
+#line 53 "..\..\Views\Shared\Partial\MasterPagesPath.cshtml"
  
     if (viewModel.MasterPage != null)
     {
@@ -55,14 +55,14 @@ return new System.Web.WebPages.HelperResult(__razor_helper_writer => {
 #line default
 #line hidden
 
-#line 29 "..\..\Views\Shared\Partial\MasterPagesPath.cshtml"
+#line 56 "..\..\Views\Shared\Partial\MasterPagesPath.cshtml"
 WriteTo(__razor_helper_writer, RenderMasterPage(viewModel.MasterPage));
 
 
 #line default
 #line hidden
 
-#line 29 "..\..\Views\Shared\Partial\MasterPagesPath.cshtml"
+#line 56 "..\..\Views\Shared\Partial\MasterPagesPath.cshtml"
                                                
 
 
@@ -75,7 +75,7 @@ WriteLiteralTo(__razor_helper_writer, " class=\"bcms-layout-path-item bcms-path-
 WriteLiteralTo(__razor_helper_writer, " data-url=\"");
 
 
-#line 30 "..\..\Views\Shared\Partial\MasterPagesPath.cshtml"
+#line 57 "..\..\Views\Shared\Partial\MasterPagesPath.cshtml"
                                         WriteTo(__razor_helper_writer, viewModel.MasterPage.PageUrl);
 
 
@@ -86,7 +86,7 @@ WriteLiteralTo(__razor_helper_writer, "\"");
 WriteLiteralTo(__razor_helper_writer, ">");
 
 
-#line 30 "..\..\Views\Shared\Partial\MasterPagesPath.cshtml"
+#line 57 "..\..\Views\Shared\Partial\MasterPagesPath.cshtml"
                                                                        WriteTo(__razor_helper_writer, viewModel.MasterPage.Title);
 
 
@@ -95,7 +95,7 @@ WriteLiteralTo(__razor_helper_writer, ">");
 WriteLiteralTo(__razor_helper_writer, "</div>\r\n");
 
 
-#line 31 "..\..\Views\Shared\Partial\MasterPagesPath.cshtml"
+#line 58 "..\..\Views\Shared\Partial\MasterPagesPath.cshtml"
     }
 
 
@@ -103,7 +103,7 @@ WriteLiteralTo(__razor_helper_writer, "</div>\r\n");
 #line hidden
 });
 
-#line 32 "..\..\Views\Shared\Partial\MasterPagesPath.cshtml"
+#line 59 "..\..\Views\Shared\Partial\MasterPagesPath.cshtml"
 }
 #line default
 #line hidden
@@ -115,8 +115,10 @@ WriteLiteralTo(__razor_helper_writer, "</div>\r\n");
         {
 WriteLiteral("\r\n");
 
+WriteLiteral("\r\n");
+
             
-            #line 5 "..\..\Views\Shared\Partial\MasterPagesPath.cshtml"
+            #line 32 "..\..\Views\Shared\Partial\MasterPagesPath.cshtml"
  if (Model.CanManageContent)
 {
 
@@ -144,13 +146,13 @@ WriteLiteral(" class=\"bcms-layout-path-inner\"");
 WriteLiteral(">\r\n");
 
             
-            #line 11 "..\..\Views\Shared\Partial\MasterPagesPath.cshtml"
+            #line 38 "..\..\Views\Shared\Partial\MasterPagesPath.cshtml"
             
             
             #line default
             #line hidden
             
-            #line 11 "..\..\Views\Shared\Partial\MasterPagesPath.cshtml"
+            #line 38 "..\..\Views\Shared\Partial\MasterPagesPath.cshtml"
              if (Model.RenderingPage != null)
             {
                 
@@ -158,14 +160,14 @@ WriteLiteral(">\r\n");
             #line default
             #line hidden
             
-            #line 13 "..\..\Views\Shared\Partial\MasterPagesPath.cshtml"
+            #line 40 "..\..\Views\Shared\Partial\MasterPagesPath.cshtml"
            Write(RenderMasterPage(Model.RenderingPage));
 
             
             #line default
             #line hidden
             
-            #line 13 "..\..\Views\Shared\Partial\MasterPagesPath.cshtml"
+            #line 40 "..\..\Views\Shared\Partial\MasterPagesPath.cshtml"
                                                       
             }
 
@@ -192,7 +194,7 @@ WriteLiteral(" class=\"bcms-layout-path-handle\"");
 WriteLiteral(">\r\n                Hide Path\r\n            </div>\r\n        </div>\r\n    </div>\r\n");
 
             
-            #line 23 "..\..\Views\Shared\Partial\MasterPagesPath.cshtml"
+            #line 50 "..\..\Views\Shared\Partial\MasterPagesPath.cshtml"
 }
 
             

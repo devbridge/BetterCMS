@@ -28,7 +28,7 @@ namespace ASP
     using System.Web.UI;
     using System.Web.WebPages;
     
-    #line 1 "..\..\Views\Shared\EditorTemplates\SEOStatus.cshtml"
+    #line 28 "..\..\Views\Shared\EditorTemplates\SEOStatus.cshtml"
     using BetterCms.Module.Root.Content.Resources;
     
     #line default
@@ -43,10 +43,12 @@ namespace ASP
         }
         public override void Execute()
         {
-WriteLiteral("\n");
+WriteLiteral("\r\n");
+
+WriteLiteral("\r\n");
 
             
-            #line 4 "..\..\Views\Shared\EditorTemplates\SEOStatus.cshtml"
+            #line 31 "..\..\Views\Shared\EditorTemplates\SEOStatus.cshtml"
  if (Model)
 {
 
@@ -60,16 +62,16 @@ WriteLiteral(" class=\"bcms-action-ok\"");
 WriteLiteral(">");
 
             
-            #line 6 "..\..\Views\Shared\EditorTemplates\SEOStatus.cshtml"
+            #line 33 "..\..\Views\Shared\EditorTemplates\SEOStatus.cshtml"
                            Write(RootGlobalization.Boolean_Yes);
 
             
             #line default
             #line hidden
-WriteLiteral("</div>\n");
+WriteLiteral("</div>\r\n");
 
             
-            #line 7 "..\..\Views\Shared\EditorTemplates\SEOStatus.cshtml"
+            #line 34 "..\..\Views\Shared\EditorTemplates\SEOStatus.cshtml"
 }
 else
 {
@@ -84,16 +86,16 @@ WriteLiteral(" class=\"bcms-action-warn\"");
 WriteLiteral(">");
 
             
-            #line 10 "..\..\Views\Shared\EditorTemplates\SEOStatus.cshtml"
+            #line 37 "..\..\Views\Shared\EditorTemplates\SEOStatus.cshtml"
                              Write(RootGlobalization.Boolean_No);
 
             
             #line default
             #line hidden
-WriteLiteral("</div>\n");
+WriteLiteral("</div>\r\n");
 
             
-            #line 11 "..\..\Views\Shared\EditorTemplates\SEOStatus.cshtml"
+            #line 38 "..\..\Views\Shared\EditorTemplates\SEOStatus.cshtml"
 }
             
             #line default

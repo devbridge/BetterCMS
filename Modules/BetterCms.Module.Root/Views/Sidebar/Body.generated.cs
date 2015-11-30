@@ -28,13 +28,13 @@ namespace ASP
     using System.Web.UI;
     using System.Web.WebPages;
     
-    #line 1 "..\..\Views\Sidebar\Body.cshtml"
+    #line 28 "..\..\Views\Sidebar\Body.cshtml"
     using BetterCms.Core.Modules.Projections;
     
     #line default
     #line hidden
     
-    #line 2 "..\..\Views\Sidebar\Body.cshtml"
+    #line 29 "..\..\Views\Sidebar\Body.cshtml"
     using BetterCms.Module.Root.Mvc;
     
     #line default
@@ -49,6 +49,8 @@ namespace ASP
         }
         public override void Execute()
         {
+WriteLiteral("\r\n");
+
 WriteLiteral("<div");
 
 WriteLiteral(" class=\"bcms-sidemenu-body\"");
@@ -56,13 +58,13 @@ WriteLiteral(" class=\"bcms-sidemenu-body\"");
 WriteLiteral(">\r\n");
 
             
-            #line 5 "..\..\Views\Sidebar\Body.cshtml"
+            #line 32 "..\..\Views\Sidebar\Body.cshtml"
     
             
             #line default
             #line hidden
             
-            #line 5 "..\..\Views\Sidebar\Body.cshtml"
+            #line 32 "..\..\Views\Sidebar\Body.cshtml"
       
         var lastItemWasSeparator = true;
         foreach (var projection in Model.Projections)

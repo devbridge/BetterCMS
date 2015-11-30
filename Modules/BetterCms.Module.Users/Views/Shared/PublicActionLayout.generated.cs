@@ -37,7 +37,7 @@ namespace ASP
         }
         public override void Execute()
         {
-WriteLiteral("<!DOCTYPE html>\r\n<html>\r\n<head>\r\n    <meta");
+WriteLiteral("\r\n<!DOCTYPE html>\r\n<html>\r\n<head>\r\n    <meta");
 
 WriteLiteral(" http-equiv=\"Content-Type\"");
 
@@ -46,7 +46,7 @@ WriteLiteral(" content=\"text/html; charset=UTF-8\"");
 WriteLiteral(">\r\n    <title>");
 
             
-            #line 5 "..\..\Views\Shared\PublicActionLayout.cshtml"
+            #line 32 "..\..\Views\Shared\PublicActionLayout.cshtml"
       Write(ViewBag.Title);
 
             
@@ -65,7 +65,7 @@ WriteLiteral(" />\r\n\r\n");
 WriteLiteral("    ");
 
             
-            #line 8 "..\..\Views\Shared\PublicActionLayout.cshtml"
+            #line 35 "..\..\Views\Shared\PublicActionLayout.cshtml"
 Write(RenderSection("Head", false));
 
             
@@ -96,7 +96,7 @@ WriteLiteral(" class=\"bcms-modal-title\"");
 WriteLiteral(">");
 
             
-            #line 16 "..\..\Views\Shared\PublicActionLayout.cshtml"
+            #line 43 "..\..\Views\Shared\PublicActionLayout.cshtml"
                                              Write(ViewBag.Title);
 
             
@@ -115,7 +115,7 @@ WriteLiteral(">\r\n");
 WriteLiteral("                    ");
 
             
-            #line 22 "..\..\Views\Shared\PublicActionLayout.cshtml"
+            #line 49 "..\..\Views\Shared\PublicActionLayout.cshtml"
                Write(RenderBody());
 
             

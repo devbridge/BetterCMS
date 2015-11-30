@@ -28,19 +28,19 @@ namespace ASP
     using System.Web.UI;
     using System.Web.WebPages;
     
-    #line 1 "..\..\Views\Page\SearchUntranslatedPages.cshtml"
+    #line 28 "..\..\Views\Page\SearchUntranslatedPages.cshtml"
     using BetterCms.Module.Pages.Controllers;
     
     #line default
     #line hidden
     
-    #line 2 "..\..\Views\Page\SearchUntranslatedPages.cshtml"
+    #line 29 "..\..\Views\Page\SearchUntranslatedPages.cshtml"
     using BetterCms.Module.Pages.ViewModels.SiteSettings;
     
     #line default
     #line hidden
     
-    #line 3 "..\..\Views\Page\SearchUntranslatedPages.cshtml"
+    #line 30 "..\..\Views\Page\SearchUntranslatedPages.cshtml"
     using Microsoft.Web.Mvc;
     
     #line default
@@ -57,6 +57,8 @@ namespace ASP
         {
 WriteLiteral("\r\n");
 
+WriteLiteral("\r\n");
+
 WriteLiteral("<div");
 
 WriteLiteral(" class=\"bcms-modal-frame-holder\"");
@@ -68,13 +70,13 @@ WriteLiteral(" class=\"bcms-window-options\"");
 WriteLiteral(">\r\n");
 
             
-            #line 9 "..\..\Views\Page\SearchUntranslatedPages.cshtml"
+            #line 36 "..\..\Views\Page\SearchUntranslatedPages.cshtml"
         
             
             #line default
             #line hidden
             
-            #line 9 "..\..\Views\Page\SearchUntranslatedPages.cshtml"
+            #line 36 "..\..\Views\Page\SearchUntranslatedPages.cshtml"
          using (Html.BeginForm<PageController>(controller => controller.SearchUntranslatedPages(null), FormMethod.Post, new { @id = "bcms-pages-form", @class = "bcms-ajax-form" }))
         {
             
@@ -82,42 +84,42 @@ WriteLiteral(">\r\n");
             #line default
             #line hidden
             
-            #line 11 "..\..\Views\Page\SearchUntranslatedPages.cshtml"
+            #line 38 "..\..\Views\Page\SearchUntranslatedPages.cshtml"
        Write(Html.HiddenFor(m => m.ExcplicitlyIncludedPages, new {@id = "bcms-pages-included-pages"}));
 
             
             #line default
             #line hidden
             
-            #line 11 "..\..\Views\Page\SearchUntranslatedPages.cshtml"
+            #line 38 "..\..\Views\Page\SearchUntranslatedPages.cshtml"
                                                                                                      
             
             
             #line default
             #line hidden
             
-            #line 12 "..\..\Views\Page\SearchUntranslatedPages.cshtml"
+            #line 39 "..\..\Views\Page\SearchUntranslatedPages.cshtml"
        Write(Html.HiddenFor(m => m.ExcludedLanguageId, new {@id = "bcms-pages-excluded-language"}));
 
             
             #line default
             #line hidden
             
-            #line 12 "..\..\Views\Page\SearchUntranslatedPages.cshtml"
+            #line 39 "..\..\Views\Page\SearchUntranslatedPages.cshtml"
                                                                                                   
             
             
             #line default
             #line hidden
             
-            #line 13 "..\..\Views\Page\SearchUntranslatedPages.cshtml"
+            #line 40 "..\..\Views\Page\SearchUntranslatedPages.cshtml"
        Write(Html.HiddenFor(m => m.ExistingItems, new {@id = "bcms-pages-excluded-pages"}));
 
             
             #line default
             #line hidden
             
-            #line 13 "..\..\Views\Page\SearchUntranslatedPages.cshtml"
+            #line 40 "..\..\Views\Page\SearchUntranslatedPages.cshtml"
                                                                                           
             
             
@@ -125,14 +127,14 @@ WriteLiteral(">\r\n");
             #line default
             #line hidden
             
-            #line 15 "..\..\Views\Page\SearchUntranslatedPages.cshtml"
+            #line 42 "..\..\Views\Page\SearchUntranslatedPages.cshtml"
        Write(Html.Partial("Partial/SiteSettingsPagesList"));
 
             
             #line default
             #line hidden
             
-            #line 15 "..\..\Views\Page\SearchUntranslatedPages.cshtml"
+            #line 42 "..\..\Views\Page\SearchUntranslatedPages.cshtml"
                                                           
         }
 

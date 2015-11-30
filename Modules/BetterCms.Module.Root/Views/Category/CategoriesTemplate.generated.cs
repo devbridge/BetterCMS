@@ -28,25 +28,25 @@ namespace ASP
     using System.Web.UI;
     using System.Web.WebPages;
     
-    #line 1 "..\..\Views\Category\CategoriesTemplate.cshtml"
+    #line 28 "..\..\Views\Category\CategoriesTemplate.cshtml"
     using BetterCms.Module.Root;
     
     #line default
     #line hidden
     
-    #line 2 "..\..\Views\Category\CategoriesTemplate.cshtml"
+    #line 29 "..\..\Views\Category\CategoriesTemplate.cshtml"
     using BetterCms.Module.Root.Content.Resources;
     
     #line default
     #line hidden
     
-    #line 3 "..\..\Views\Category\CategoriesTemplate.cshtml"
+    #line 30 "..\..\Views\Category\CategoriesTemplate.cshtml"
     using BetterCms.Module.Root.Mvc;
     
     #line default
     #line hidden
     
-    #line 4 "..\..\Views\Category\CategoriesTemplate.cshtml"
+    #line 31 "..\..\Views\Category\CategoriesTemplate.cshtml"
     using BetterCms.Module.Root.Mvc.Helpers;
     
     #line default
@@ -61,8 +61,10 @@ namespace ASP
         }
         public override void Execute()
         {
+WriteLiteral("\r\n");
+
             
-            #line 7 "..\..\Views\Category\CategoriesTemplate.cshtml"
+            #line 34 "..\..\Views\Category\CategoriesTemplate.cshtml"
    var canEdit = (ViewContext.Controller as CmsControllerBase).SecurityService.IsAuthorized(RootModuleConstants.UserRoles.EditContent); 
             
             #line default
@@ -74,7 +76,7 @@ WriteLiteral(" class=\"bcms-content-titles\"");
 WriteLiteral(">");
 
             
-            #line 9 "..\..\Views\Category\CategoriesTemplate.cshtml"
+            #line 36 "..\..\Views\Category\CategoriesTemplate.cshtml"
                             Write(RootGlobalization.CategoriesTemplate_AddCategories_Title);
 
             
@@ -83,7 +85,7 @@ WriteLiteral(">");
 WriteLiteral("</div>\r\n");
 
             
-            #line 10 "..\..\Views\Category\CategoriesTemplate.cshtml"
+            #line 37 "..\..\Views\Category\CategoriesTemplate.cshtml"
 Write(Html.Tooltip(Model.TooltipDescription));
 
             
@@ -116,7 +118,7 @@ WriteLiteral(" class=\"bcms-single-tag-remove\"");
 WriteLiteral(" data-bind=\"");
 
             
-            #line 16 "..\..\Views\Category\CategoriesTemplate.cshtml"
+            #line 43 "..\..\Views\Category\CategoriesTemplate.cshtml"
                                                    Write(canEdit ? "click: $parent.remove" : string.Empty);
 
             
@@ -127,7 +129,7 @@ WriteLiteral("\"");
 WriteLiteral(">");
 
             
-            #line 16 "..\..\Views\Category\CategoriesTemplate.cshtml"
+            #line 43 "..\..\Views\Category\CategoriesTemplate.cshtml"
                                                                                                        Write(RootGlobalization.Button_Remove);
 
             

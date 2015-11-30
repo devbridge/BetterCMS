@@ -28,43 +28,43 @@ namespace ASP
     using System.Web.UI;
     using System.Web.WebPages;
     
-    #line 1 "..\..\Views\Page\DeletePageConfirmation.cshtml"
+    #line 28 "..\..\Views\Page\DeletePageConfirmation.cshtml"
     using BetterCms.Module.Pages.Content.Resources;
     
     #line default
     #line hidden
     
-    #line 2 "..\..\Views\Page\DeletePageConfirmation.cshtml"
+    #line 29 "..\..\Views\Page\DeletePageConfirmation.cshtml"
     using BetterCms.Module.Pages.Controllers;
     
     #line default
     #line hidden
     
-    #line 3 "..\..\Views\Page\DeletePageConfirmation.cshtml"
+    #line 30 "..\..\Views\Page\DeletePageConfirmation.cshtml"
     using BetterCms.Module.Pages.ViewModels.Page;
     
     #line default
     #line hidden
     
-    #line 4 "..\..\Views\Page\DeletePageConfirmation.cshtml"
+    #line 31 "..\..\Views\Page\DeletePageConfirmation.cshtml"
     using BetterCms.Module.Root;
     
     #line default
     #line hidden
     
-    #line 5 "..\..\Views\Page\DeletePageConfirmation.cshtml"
+    #line 32 "..\..\Views\Page\DeletePageConfirmation.cshtml"
     using BetterCms.Module.Root.Mvc;
     
     #line default
     #line hidden
     
-    #line 6 "..\..\Views\Page\DeletePageConfirmation.cshtml"
+    #line 33 "..\..\Views\Page\DeletePageConfirmation.cshtml"
     using BetterCms.Module.Root.Mvc.Helpers;
     
     #line default
     #line hidden
     
-    #line 7 "..\..\Views\Page\DeletePageConfirmation.cshtml"
+    #line 34 "..\..\Views\Page\DeletePageConfirmation.cshtml"
     using Microsoft.Web.Mvc;
     
     #line default
@@ -81,10 +81,12 @@ namespace ASP
         {
 WriteLiteral("\r\n");
 
+WriteLiteral("\r\n");
+
 WriteLiteral("\r\n\r\n");
 
             
-            #line 13 "..\..\Views\Page\DeletePageConfirmation.cshtml"
+            #line 40 "..\..\Views\Page\DeletePageConfirmation.cshtml"
  using (Html.BeginForm<PageController>(f => f.DeletePage(null), FormMethod.Post,
             new
             {
@@ -107,7 +109,7 @@ WriteLiteral(" class=\"bcms-content-titles\"");
 WriteLiteral(">");
 
             
-            #line 21 "..\..\Views\Page\DeletePageConfirmation.cshtml"
+            #line 48 "..\..\Views\Page\DeletePageConfirmation.cshtml"
                                     Write(PagesGlobalization.DeletePage_Dialog_ConfirmationMessage_Header);
 
             
@@ -116,7 +118,7 @@ WriteLiteral(">");
 WriteLiteral("</div>\r\n        <div>");
 
             
-            #line 22 "..\..\Views\Page\DeletePageConfirmation.cshtml"
+            #line 49 "..\..\Views\Page\DeletePageConfirmation.cshtml"
         Write(PagesGlobalization.DeletePage_Dialog_ConfirmationMessage_Text);
 
             
@@ -125,7 +127,7 @@ WriteLiteral("</div>\r\n        <div>");
 WriteLiteral("</div>\r\n    </div>\r\n");
 
             
-            #line 24 "..\..\Views\Page\DeletePageConfirmation.cshtml"
+            #line 51 "..\..\Views\Page\DeletePageConfirmation.cshtml"
 
 
             
@@ -142,7 +144,7 @@ WriteLiteral(" class=\"bcms-content-titles\"");
 WriteLiteral(">");
 
             
-            #line 26 "..\..\Views\Page\DeletePageConfirmation.cshtml"
+            #line 53 "..\..\Views\Page\DeletePageConfirmation.cshtml"
                                     Write(PagesGlobalization.DeletePage_Dialog_RedirectUrl);
 
             
@@ -153,7 +155,7 @@ WriteLiteral("</div>\r\n");
 WriteLiteral("        ");
 
             
-            #line 27 "..\..\Views\Page\DeletePageConfirmation.cshtml"
+            #line 54 "..\..\Views\Page\DeletePageConfirmation.cshtml"
    Write(Html.Tooltip(PagesGlobalization.DeletePage_Dialog_RedurectUrl_Tooltip_Description));
 
             
@@ -168,7 +170,7 @@ WriteLiteral(">\r\n");
 WriteLiteral("            ");
 
             
-            #line 29 "..\..\Views\Page\DeletePageConfirmation.cshtml"
+            #line 56 "..\..\Views\Page\DeletePageConfirmation.cshtml"
        Write(Html.TextBoxFor(m => m.RedirectUrl, new { @class = "bcms-field-text", @id = "PageTitle" }));
 
             
@@ -179,7 +181,7 @@ WriteLiteral("\r\n");
 WriteLiteral("            ");
 
             
-            #line 30 "..\..\Views\Page\DeletePageConfirmation.cshtml"
+            #line 57 "..\..\Views\Page\DeletePageConfirmation.cshtml"
        Write(Html.BcmsValidationMessageFor(f => f.RedirectUrl));
 
             
@@ -188,7 +190,7 @@ WriteLiteral("            ");
 WriteLiteral("\r\n        </div>\r\n    </div>\r\n");
 
             
-            #line 33 "..\..\Views\Page\DeletePageConfirmation.cshtml"
+            #line 60 "..\..\Views\Page\DeletePageConfirmation.cshtml"
 
 
             
@@ -205,7 +207,7 @@ WriteLiteral(" class=\"bcms-content-titles\"");
 WriteLiteral(">");
 
             
-            #line 35 "..\..\Views\Page\DeletePageConfirmation.cshtml"
+            #line 62 "..\..\Views\Page\DeletePageConfirmation.cshtml"
                                     Write(PagesGlobalization.DeletePage_Dialog_SecurityWord);
 
             
@@ -216,7 +218,7 @@ WriteLiteral("</div>\r\n");
 WriteLiteral("        ");
 
             
-            #line 36 "..\..\Views\Page\DeletePageConfirmation.cshtml"
+            #line 63 "..\..\Views\Page\DeletePageConfirmation.cshtml"
    Write(Html.Tooltip(PagesGlobalization.DeletePage_Dialog_SecurityWord_Tooltip_Description));
 
             
@@ -231,7 +233,7 @@ WriteLiteral(">\r\n");
 WriteLiteral("            ");
 
             
-            #line 38 "..\..\Views\Page\DeletePageConfirmation.cshtml"
+            #line 65 "..\..\Views\Page\DeletePageConfirmation.cshtml"
        Write(Html.TextBoxFor(m => m.SecurityWord, new { @class = "bcms-field-text", @id = "SecurityWord" }));
 
             
@@ -242,7 +244,7 @@ WriteLiteral("\r\n");
 WriteLiteral("            ");
 
             
-            #line 39 "..\..\Views\Page\DeletePageConfirmation.cshtml"
+            #line 66 "..\..\Views\Page\DeletePageConfirmation.cshtml"
        Write(Html.BcmsValidationMessageFor(f => f.SecurityWord));
 
             
@@ -251,7 +253,7 @@ WriteLiteral("            ");
 WriteLiteral("\r\n        </div>\r\n    </div>\r\n");
 
             
-            #line 42 "..\..\Views\Page\DeletePageConfirmation.cshtml"
+            #line 69 "..\..\Views\Page\DeletePageConfirmation.cshtml"
 
     if (Model.IsInSitemap && (ViewContext.Controller as CmsControllerBase).SecurityService.IsAuthorized(RootModuleConstants.UserRoles.EditContent))
     {
@@ -270,7 +272,7 @@ WriteLiteral(" class=\"bcms-content-titles\"");
 WriteLiteral(">");
 
             
-            #line 46 "..\..\Views\Page\DeletePageConfirmation.cshtml"
+            #line 73 "..\..\Views\Page\DeletePageConfirmation.cshtml"
                                         Write(PagesGlobalization.DeletePage_Dialog_UpdateSitemap);
 
             
@@ -281,7 +283,7 @@ WriteLiteral("</div>\r\n");
 WriteLiteral("            ");
 
             
-            #line 47 "..\..\Views\Page\DeletePageConfirmation.cshtml"
+            #line 74 "..\..\Views\Page\DeletePageConfirmation.cshtml"
        Write(Html.Tooltip(PagesGlobalization.DeletePage_Dialog_UpdateSitemap_Description));
 
             
@@ -296,7 +298,7 @@ WriteLiteral(">\r\n");
 WriteLiteral("                ");
 
             
-            #line 49 "..\..\Views\Page\DeletePageConfirmation.cshtml"
+            #line 76 "..\..\Views\Page\DeletePageConfirmation.cshtml"
            Write(Html.CheckBoxFor(m => m.UpdateSitemap, new { @id = "UpdateSitemap" }));
 
             
@@ -309,7 +311,7 @@ WriteLiteral(" class=\"bcms-edit-label\"");
 WriteLiteral(">");
 
             
-            #line 50 "..\..\Views\Page\DeletePageConfirmation.cshtml"
+            #line 77 "..\..\Views\Page\DeletePageConfirmation.cshtml"
                                         Write(PagesGlobalization.DeletePage_Dialog_UpdateSitemap_RemovePageFromSitemap);
 
             
@@ -318,7 +320,7 @@ WriteLiteral(">");
 WriteLiteral("</div>\r\n            </div>\r\n        </div>\r\n");
 
             
-            #line 53 "..\..\Views\Page\DeletePageConfirmation.cshtml"
+            #line 80 "..\..\Views\Page\DeletePageConfirmation.cshtml"
     }
 
     
@@ -326,42 +328,42 @@ WriteLiteral("</div>\r\n            </div>\r\n        </div>\r\n");
             #line default
             #line hidden
             
-            #line 55 "..\..\Views\Page\DeletePageConfirmation.cshtml"
+            #line 82 "..\..\Views\Page\DeletePageConfirmation.cshtml"
 Write(Html.HiddenFor(m => m.PageId));
 
             
             #line default
             #line hidden
             
-            #line 55 "..\..\Views\Page\DeletePageConfirmation.cshtml"
+            #line 82 "..\..\Views\Page\DeletePageConfirmation.cshtml"
                                   
     
             
             #line default
             #line hidden
             
-            #line 56 "..\..\Views\Page\DeletePageConfirmation.cshtml"
+            #line 83 "..\..\Views\Page\DeletePageConfirmation.cshtml"
 Write(Html.HiddenFor(m => m.Version));
 
             
             #line default
             #line hidden
             
-            #line 56 "..\..\Views\Page\DeletePageConfirmation.cshtml"
+            #line 83 "..\..\Views\Page\DeletePageConfirmation.cshtml"
                                    
     
             
             #line default
             #line hidden
             
-            #line 57 "..\..\Views\Page\DeletePageConfirmation.cshtml"
+            #line 84 "..\..\Views\Page\DeletePageConfirmation.cshtml"
 Write(Html.HiddenSubmit());
 
             
             #line default
             #line hidden
             
-            #line 57 "..\..\Views\Page\DeletePageConfirmation.cshtml"
+            #line 84 "..\..\Views\Page\DeletePageConfirmation.cshtml"
                         
 }
             

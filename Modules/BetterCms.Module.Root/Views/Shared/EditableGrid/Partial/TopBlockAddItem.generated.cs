@@ -37,8 +37,10 @@ namespace ASP
         }
         public override void Execute()
         {
+WriteLiteral("\r\n");
+
             
-            #line 3 "..\..\Views\Shared\EditableGrid\Partial\TopBlockAddItem.cshtml"
+            #line 30 "..\..\Views\Shared\EditableGrid\Partial\TopBlockAddItem.cshtml"
  if (Model.CanAddNewItems)
 {
 
@@ -54,7 +56,7 @@ WriteLiteral(" data-bind=\"click: addNewItem\"");
 WriteLiteral(">");
 
             
-            #line 5 "..\..\Views\Shared\EditableGrid\Partial\TopBlockAddItem.cshtml"
+            #line 32 "..\..\Views\Shared\EditableGrid\Partial\TopBlockAddItem.cshtml"
                                                         Write(Model.AddNewTitle);
 
             
@@ -63,7 +65,7 @@ WriteLiteral(">");
 WriteLiteral("</div>\r\n");
 
             
-            #line 6 "..\..\Views\Shared\EditableGrid\Partial\TopBlockAddItem.cshtml"
+            #line 33 "..\..\Views\Shared\EditableGrid\Partial\TopBlockAddItem.cshtml"
 }
             
             #line default

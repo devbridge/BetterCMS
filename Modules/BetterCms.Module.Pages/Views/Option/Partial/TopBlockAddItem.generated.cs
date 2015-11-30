@@ -37,8 +37,10 @@ namespace ASP
         }
         public override void Execute()
         {
+WriteLiteral("\r\n");
+
             
-            #line 3 "..\..\Views\Option\Partial\TopBlockAddItem.cshtml"
+            #line 30 "..\..\Views\Option\Partial\TopBlockAddItem.cshtml"
  if (Model.CanAddNewItems)
 {
 
@@ -58,7 +60,7 @@ WriteLiteral(" data-bind=\"click: addNewItem\"");
 WriteLiteral(">");
 
             
-            #line 6 "..\..\Views\Option\Partial\TopBlockAddItem.cshtml"
+            #line 33 "..\..\Views\Option\Partial\TopBlockAddItem.cshtml"
                                                             Write(Model.AddNewTitle);
 
             
@@ -85,7 +87,7 @@ WriteLiteral(" data-bind=\"text: name, click: $parent.addOption, clickBubble: fa
 WriteLiteral("></div>\r\n        </div>\r\n    </div>\r\n");
 
             
-            #line 12 "..\..\Views\Option\Partial\TopBlockAddItem.cshtml"
+            #line 39 "..\..\Views\Option\Partial\TopBlockAddItem.cshtml"
 }
 
             

@@ -28,19 +28,19 @@ namespace ASP
     using System.Web.UI;
     using System.Web.WebPages;
     
-    #line 1 "..\..\Views\Authentication\Login.cshtml"
+    #line 28 "..\..\Views\Authentication\Login.cshtml"
     using BetterCms.Module.Root.Mvc.Helpers;
     
     #line default
     #line hidden
     
-    #line 2 "..\..\Views\Authentication\Login.cshtml"
+    #line 29 "..\..\Views\Authentication\Login.cshtml"
     using BetterCms.Module.Users.Content.Resources;
     
     #line default
     #line hidden
     
-    #line 3 "..\..\Views\Authentication\Login.cshtml"
+    #line 30 "..\..\Views\Authentication\Login.cshtml"
     using Microsoft.Web.Mvc;
     
     #line default
@@ -55,8 +55,10 @@ namespace ASP
         }
         public override void Execute()
         {
+WriteLiteral("\r\n");
+
             
-            #line 6 "..\..\Views\Authentication\Login.cshtml"
+            #line 33 "..\..\Views\Authentication\Login.cshtml"
   
     Layout = "~/Areas/bcms-users/Views/Shared/PublicActionLayout.cshtml";
     ViewBag.Title = "Login";
@@ -71,13 +73,13 @@ WriteLiteral(" class=\"bcms-login-box\"");
 WriteLiteral(">\r\n");
 
             
-            #line 12 "..\..\Views\Authentication\Login.cshtml"
+            #line 39 "..\..\Views\Authentication\Login.cshtml"
     
             
             #line default
             #line hidden
             
-            #line 12 "..\..\Views\Authentication\Login.cshtml"
+            #line 39 "..\..\Views\Authentication\Login.cshtml"
      using (Html.BeginForm())
     {
 
@@ -91,7 +93,7 @@ WriteLiteral(" class=\"bcms-content-titles\"");
 WriteLiteral(">");
 
             
-            #line 14 "..\..\Views\Authentication\Login.cshtml"
+            #line 41 "..\..\Views\Authentication\Login.cshtml"
                                     Write(UsersGlobalization.Login_UserName);
 
             
@@ -100,20 +102,20 @@ WriteLiteral(">");
 WriteLiteral("</div>\r\n");
 
             
-            #line 15 "..\..\Views\Authentication\Login.cshtml"
+            #line 42 "..\..\Views\Authentication\Login.cshtml"
         
             
             #line default
             #line hidden
             
-            #line 15 "..\..\Views\Authentication\Login.cshtml"
+            #line 42 "..\..\Views\Authentication\Login.cshtml"
    Write(Html.ValidationMessageFor(m => m.UserName));
 
             
             #line default
             #line hidden
             
-            #line 15 "..\..\Views\Authentication\Login.cshtml"
+            #line 42 "..\..\Views\Authentication\Login.cshtml"
                                                    
 
             
@@ -128,7 +130,7 @@ WriteLiteral(">\r\n");
 WriteLiteral("            ");
 
             
-            #line 17 "..\..\Views\Authentication\Login.cshtml"
+            #line 44 "..\..\Views\Authentication\Login.cshtml"
        Write(Html.TextBoxFor(m => m.UserName, new { id = "userName", @class = "bcms-field-text" }));
 
             
@@ -137,7 +139,7 @@ WriteLiteral("            ");
 WriteLiteral("\r\n        </div>\r\n");
 
             
-            #line 19 "..\..\Views\Authentication\Login.cshtml"
+            #line 46 "..\..\Views\Authentication\Login.cshtml"
 
 
             
@@ -150,7 +152,7 @@ WriteLiteral(" class=\"bcms-content-titles\"");
 WriteLiteral(">");
 
             
-            #line 20 "..\..\Views\Authentication\Login.cshtml"
+            #line 47 "..\..\Views\Authentication\Login.cshtml"
                                     Write(UsersGlobalization.Login_Password);
 
             
@@ -159,20 +161,20 @@ WriteLiteral(">");
 WriteLiteral("</div>\r\n");
 
             
-            #line 21 "..\..\Views\Authentication\Login.cshtml"
+            #line 48 "..\..\Views\Authentication\Login.cshtml"
         
             
             #line default
             #line hidden
             
-            #line 21 "..\..\Views\Authentication\Login.cshtml"
+            #line 48 "..\..\Views\Authentication\Login.cshtml"
    Write(Html.ValidationMessageFor(m => m.Password));
 
             
             #line default
             #line hidden
             
-            #line 21 "..\..\Views\Authentication\Login.cshtml"
+            #line 48 "..\..\Views\Authentication\Login.cshtml"
                                                    
 
             
@@ -187,7 +189,7 @@ WriteLiteral(">\r\n");
 WriteLiteral("            ");
 
             
-            #line 23 "..\..\Views\Authentication\Login.cshtml"
+            #line 50 "..\..\Views\Authentication\Login.cshtml"
        Write(Html.PasswordFor(m => m.Password, new { @class = "bcms-field-text" }));
 
             
@@ -196,7 +198,7 @@ WriteLiteral("            ");
 WriteLiteral("\r\n        </div>\r\n");
 
             
-            #line 25 "..\..\Views\Authentication\Login.cshtml"
+            #line 52 "..\..\Views\Authentication\Login.cshtml"
 
 
             
@@ -211,7 +213,7 @@ WriteLiteral(">\r\n");
 WriteLiteral("            ");
 
             
-            #line 27 "..\..\Views\Authentication\Login.cshtml"
+            #line 54 "..\..\Views\Authentication\Login.cshtml"
        Write(Html.CheckBoxFor(m => m.RememberMe));
 
             
@@ -222,7 +224,7 @@ WriteLiteral("\r\n");
 WriteLiteral("            ");
 
             
-            #line 28 "..\..\Views\Authentication\Login.cshtml"
+            #line 55 "..\..\Views\Authentication\Login.cshtml"
        Write(Html.LabelFor(m => m.RememberMe));
 
             
@@ -231,7 +233,7 @@ WriteLiteral("            ");
 WriteLiteral("\r\n        </div>\r\n");
 
             
-            #line 30 "..\..\Views\Authentication\Login.cshtml"
+            #line 57 "..\..\Views\Authentication\Login.cshtml"
 
         Dictionary<string, object> submitProperties = new Dictionary<string, object>();
         submitProperties.Add("class", "bcms-btn-primary");
@@ -245,28 +247,28 @@ WriteLiteral("\r\n        </div>\r\n");
             #line default
             #line hidden
             
-            #line 38 "..\..\Views\Authentication\Login.cshtml"
+            #line 65 "..\..\Views\Authentication\Login.cshtml"
    Write(Html.SubmitButton("submit", "Login", submitProperties));
 
             
             #line default
             #line hidden
             
-            #line 38 "..\..\Views\Authentication\Login.cshtml"
+            #line 65 "..\..\Views\Authentication\Login.cshtml"
                                                                
         
             
             #line default
             #line hidden
             
-            #line 39 "..\..\Views\Authentication\Login.cshtml"
+            #line 66 "..\..\Views\Authentication\Login.cshtml"
    Write(Html.HiddenFor(m => m.ReturnUrl));
 
             
             #line default
             #line hidden
             
-            #line 39 "..\..\Views\Authentication\Login.cshtml"
+            #line 66 "..\..\Views\Authentication\Login.cshtml"
                                          
     }
 

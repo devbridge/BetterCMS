@@ -28,13 +28,13 @@ namespace ASP
     using System.Web.UI;
     using System.Web.WebPages;
     
-    #line 1 "..\..\Views\Shared\Partial\MediaManagerFilterTemplate.cshtml"
+    #line 28 "..\..\Views\Shared\Partial\MediaManagerFilterTemplate.cshtml"
     using BetterCms.Module.MediaManager.Content.Resources;
     
     #line default
     #line hidden
     
-    #line 2 "..\..\Views\Shared\Partial\MediaManagerFilterTemplate.cshtml"
+    #line 29 "..\..\Views\Shared\Partial\MediaManagerFilterTemplate.cshtml"
     using BetterCms.Module.Root.Content.Resources;
     
     #line default
@@ -49,6 +49,8 @@ namespace ASP
         }
         public override void Execute()
         {
+WriteLiteral("\r\n");
+
 WriteLiteral("<div");
 
 WriteLiteral(" class=\"bcms-filter-holder\"");
@@ -70,7 +72,7 @@ WriteLiteral(">\r\n");
 WriteLiteral("            ");
 
             
-            #line 8 "..\..\Views\Shared\Partial\MediaManagerFilterTemplate.cshtml"
+            #line 35 "..\..\Views\Shared\Partial\MediaManagerFilterTemplate.cshtml"
        Write(RootGlobalization.Button_Filter);
 
             
@@ -86,7 +88,7 @@ WriteLiteral(" data-bind=\"style: { display: gridOptions().isEdited() ? \'inline
 WriteLiteral(">");
 
             
-            #line 9 "..\..\Views\Shared\Partial\MediaManagerFilterTemplate.cshtml"
+            #line 36 "..\..\Views\Shared\Partial\MediaManagerFilterTemplate.cshtml"
                                                                                                                             Write(MediaGlobalization.SiteSettings_Media_FilterIsModified);
 
             
@@ -121,7 +123,7 @@ WriteLiteral(" class=\"bcms-filter-text\"");
 WriteLiteral(">");
 
             
-            #line 17 "..\..\Views\Shared\Partial\MediaManagerFilterTemplate.cshtml"
+            #line 44 "..\..\Views\Shared\Partial\MediaManagerFilterTemplate.cshtml"
                                              Write(MediaGlobalization.SiteSettings_FilterByTags);
 
             
@@ -167,7 +169,7 @@ WriteLiteral(" class=\"bcms-filter-text\"");
 WriteLiteral(">");
 
             
-            #line 33 "..\..\Views\Shared\Partial\MediaManagerFilterTemplate.cshtml"
+            #line 60 "..\..\Views\Shared\Partial\MediaManagerFilterTemplate.cshtml"
                                              Write(MediaGlobalization.SiteSettings_FilterByCategory);
 
             
@@ -209,7 +211,7 @@ WriteLiteral(" data-bind=\"click: remove\"");
 WriteLiteral(">");
 
             
-            #line 43 "..\..\Views\Shared\Partial\MediaManagerFilterTemplate.cshtml"
+            #line 70 "..\..\Views\Shared\Partial\MediaManagerFilterTemplate.cshtml"
                                                                              Write(RootGlobalization.Button_Remove);
 
             
@@ -251,7 +253,7 @@ WriteLiteral(" data-bind=\"click: $parent.gridOptions().categories.remove\"");
 WriteLiteral(">");
 
             
-            #line 52 "..\..\Views\Shared\Partial\MediaManagerFilterTemplate.cshtml"
+            #line 79 "..\..\Views\Shared\Partial\MediaManagerFilterTemplate.cshtml"
                                                                                                               Write(RootGlobalization.Button_Remove);
 
             
@@ -297,7 +299,7 @@ WriteLiteral(" data-bind=\"click: gridOptions().changeIncludeArchived\"");
 WriteLiteral(">");
 
             
-            #line 63 "..\..\Views\Shared\Partial\MediaManagerFilterTemplate.cshtml"
+            #line 90 "..\..\Views\Shared\Partial\MediaManagerFilterTemplate.cshtml"
                                                                                                                     Write(MediaGlobalization.MediaManager_IncludeArchived_Message);
 
             
@@ -322,7 +324,7 @@ WriteLiteral(" data-bind=\"click: gridOptions().changeIncludeHistoryItems\"");
 WriteLiteral(">");
 
             
-            #line 67 "..\..\Views\Shared\Partial\MediaManagerFilterTemplate.cshtml"
+            #line 94 "..\..\Views\Shared\Partial\MediaManagerFilterTemplate.cshtml"
                                                                                                                         Write(MediaGlobalization.MediaManager_SearchInHistoryItems_Message);
 
             
@@ -341,7 +343,7 @@ WriteLiteral(" data-bind=\"click: searchWithFilter\"");
 WriteLiteral(">");
 
             
-            #line 72 "..\..\Views\Shared\Partial\MediaManagerFilterTemplate.cshtml"
+            #line 99 "..\..\Views\Shared\Partial\MediaManagerFilterTemplate.cshtml"
                                                                              Write(RootGlobalization.Button_Filter_Search);
 
             
@@ -356,7 +358,7 @@ WriteLiteral(" data-bind=\"click: clearFilter\"");
 WriteLiteral(">");
 
             
-            #line 73 "..\..\Views\Shared\Partial\MediaManagerFilterTemplate.cshtml"
+            #line 100 "..\..\Views\Shared\Partial\MediaManagerFilterTemplate.cshtml"
                                                                        Write(RootGlobalization.Button_Filter_Clear);
 
             

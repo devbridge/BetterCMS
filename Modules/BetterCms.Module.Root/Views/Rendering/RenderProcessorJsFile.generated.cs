@@ -28,7 +28,7 @@ namespace ASP
     using System.Web.UI;
     using System.Web.WebPages;
     
-    #line 1 "..\..\Views\Rendering\RenderProcessorJsFile.cshtml"
+    #line 28 "..\..\Views\Rendering\RenderProcessorJsFile.cshtml"
     using BetterCms.Module.Root.Mvc.Helpers;
     
     #line default
@@ -43,11 +43,13 @@ namespace ASP
         }
         public override void Execute()
         {
+WriteLiteral("\r\n");
+
 WriteLiteral("/*jslint unparam: true, white: true, browser: true, devel: true */\r\n/*global bett" +
 "ercms */\r\n\r\nbettercms.define(\'bcms.processor\', [");
 
             
-            #line 7 "..\..\Views\Rendering\RenderProcessorJsFile.cshtml"
+            #line 34 "..\..\Views\Rendering\RenderProcessorJsFile.cshtml"
                                Write(Model.JavaScriptModules.RenderCommaSeparatedNames());
 
             
@@ -56,7 +58,7 @@ WriteLiteral("/*jslint unparam: true, white: true, browser: true, devel: true */
 WriteLiteral("], function (");
 
             
-            #line 7 "..\..\Views\Rendering\RenderProcessorJsFile.cshtml"
+            #line 34 "..\..\Views\Rendering\RenderProcessorJsFile.cshtml"
                                                                                                 Write(Model.JavaScriptModules.RenderCommaSeparatedFriendlyNames());
 
             
@@ -92,13 +94,13 @@ WriteLiteral(") {\r\n    \'use strict\';\r\n    \r\n    var $ = bettercms.requir
 "   function registerExternalModules() {\r\n");
 
             
-            #line 71 "..\..\Views\Rendering\RenderProcessorJsFile.cshtml"
+            #line 98 "..\..\Views\Rendering\RenderProcessorJsFile.cshtml"
         
             
             #line default
             #line hidden
             
-            #line 71 "..\..\Views\Rendering\RenderProcessorJsFile.cshtml"
+            #line 98 "..\..\Views\Rendering\RenderProcessorJsFile.cshtml"
          foreach(var module in Model.JavaScriptModules)
         {
 
@@ -110,7 +112,7 @@ WriteLiteral("            ");
 WriteLiteral("\r\n                externalModules[\'");
 
             
-            #line 74 "..\..\Views\Rendering\RenderProcessorJsFile.cshtml"
+            #line 101 "..\..\Views\Rendering\RenderProcessorJsFile.cshtml"
                             Write(module.Name);
 
             
@@ -119,7 +121,7 @@ WriteLiteral("\r\n                externalModules[\'");
 WriteLiteral("\'] = ");
 
             
-            #line 74 "..\..\Views\Rendering\RenderProcessorJsFile.cshtml"
+            #line 101 "..\..\Views\Rendering\RenderProcessorJsFile.cshtml"
                                              Write(module.FriendlyName);
 
             
@@ -130,7 +132,7 @@ WriteLiteral(";\r\n            ");
 WriteLiteral("\r\n");
 
             
-            #line 76 "..\..\Views\Rendering\RenderProcessorJsFile.cshtml"
+            #line 103 "..\..\Views\Rendering\RenderProcessorJsFile.cshtml"
         }
 
             
@@ -139,13 +141,13 @@ WriteLiteral("\r\n");
 WriteLiteral("    }\r\n\r\n    function initializeLinks() {\r\n");
 
             
-            #line 80 "..\..\Views\Rendering\RenderProcessorJsFile.cshtml"
+            #line 107 "..\..\Views\Rendering\RenderProcessorJsFile.cshtml"
         
             
             #line default
             #line hidden
             
-            #line 80 "..\..\Views\Rendering\RenderProcessorJsFile.cshtml"
+            #line 107 "..\..\Views\Rendering\RenderProcessorJsFile.cshtml"
          foreach(var module in Model.JavaScriptModules)
         {
             if (module.Links != null && module.Links.Projections != null && module.Links.Projections.Any())
@@ -159,7 +161,7 @@ WriteLiteral("                ");
 WriteLiteral("\r\n                    /* Initialize ");
 
             
-            #line 85 "..\..\Views\Rendering\RenderProcessorJsFile.cshtml"
+            #line 112 "..\..\Views\Rendering\RenderProcessorJsFile.cshtml"
                              Write(module.Name);
 
             
@@ -171,7 +173,7 @@ WriteLiteral(" module links. */\r\n                    try\r\n                  
 WriteLiteral("\r\n");
 
             
-            #line 89 "..\..\Views\Rendering\RenderProcessorJsFile.cshtml"
+            #line 116 "..\..\Views\Rendering\RenderProcessorJsFile.cshtml"
                 foreach (var item in module.Links.Projections)
                 {
                     item.Render(Html);
@@ -187,7 +189,7 @@ WriteLiteral("\r\n                    }                    \r\n                 
 "ze ");
 
             
-            #line 97 "..\..\Views\Rendering\RenderProcessorJsFile.cshtml"
+            #line 124 "..\..\Views\Rendering\RenderProcessorJsFile.cshtml"
                                                            Write(module.Name);
 
             
@@ -198,7 +200,7 @@ WriteLiteral(" links. \", ex.message);\r\n                    }\r\n             
 WriteLiteral("\r\n");
 
             
-            #line 100 "..\..\Views\Rendering\RenderProcessorJsFile.cshtml"
+            #line 127 "..\..\Views\Rendering\RenderProcessorJsFile.cshtml"
             }
         }
 
@@ -208,13 +210,13 @@ WriteLiteral("\r\n");
 WriteLiteral("    }\r\n    \r\n    function initializeGlobalization() {\r\n");
 
             
-            #line 105 "..\..\Views\Rendering\RenderProcessorJsFile.cshtml"
+            #line 132 "..\..\Views\Rendering\RenderProcessorJsFile.cshtml"
         
             
             #line default
             #line hidden
             
-            #line 105 "..\..\Views\Rendering\RenderProcessorJsFile.cshtml"
+            #line 132 "..\..\Views\Rendering\RenderProcessorJsFile.cshtml"
          foreach(var module in Model.JavaScriptModules)
         {
             if (module.Globalization != null && module.Globalization.Projections != null && module.Globalization.Projections.Any())
@@ -228,7 +230,7 @@ WriteLiteral("                ");
 WriteLiteral("\r\n                    /* Initialize ");
 
             
-            #line 110 "..\..\Views\Rendering\RenderProcessorJsFile.cshtml"
+            #line 137 "..\..\Views\Rendering\RenderProcessorJsFile.cshtml"
                              Write(module.Name);
 
             
@@ -240,7 +242,7 @@ WriteLiteral(" module globalizations. */\r\n                    try\r\n         
 WriteLiteral("\r\n");
 
             
-            #line 114 "..\..\Views\Rendering\RenderProcessorJsFile.cshtml"
+            #line 141 "..\..\Views\Rendering\RenderProcessorJsFile.cshtml"
                 foreach (var item in module.Globalization.Projections)
                 {
                     item.Render(Html);
@@ -256,7 +258,7 @@ WriteLiteral("\r\n                    }                    \r\n                 
 "ze ");
 
             
-            #line 122 "..\..\Views\Rendering\RenderProcessorJsFile.cshtml"
+            #line 149 "..\..\Views\Rendering\RenderProcessorJsFile.cshtml"
                                                            Write(module.Name);
 
             
@@ -267,7 +269,7 @@ WriteLiteral(" globalization. \", ex.message);\r\n                    }\r\n     
 WriteLiteral("\r\n");
 
             
-            #line 125 "..\..\Views\Rendering\RenderProcessorJsFile.cshtml"
+            #line 152 "..\..\Views\Rendering\RenderProcessorJsFile.cshtml"
             }
         }
 

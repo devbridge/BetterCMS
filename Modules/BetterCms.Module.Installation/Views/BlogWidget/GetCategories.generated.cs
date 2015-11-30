@@ -37,10 +37,16 @@ namespace ASP
         }
         public override void Execute()
         {
-WriteLiteral("    ");
+WriteLiteral("\r\n");
 
             
-            #line 3 "..\..\Views\BlogWidget\GetCategories.cshtml"
+            #line 30 "..\..\Views\BlogWidget\GetCategories.cshtml"
+    
+            
+            #line default
+            #line hidden
+            
+            #line 30 "..\..\Views\BlogWidget\GetCategories.cshtml"
       
         var blogCategory = Request.Params["blogCategory"] ?? null;
     
@@ -53,36 +59,36 @@ WriteLiteral(" class=\"submenu\"");
 
 WriteLiteral(">\r\n        <a");
 
-WriteAttribute("href", Tuple.Create(" href=\"", 194), Tuple.Create("\"", 214)
+WriteAttribute("href", Tuple.Create(" href=\"", 1505), Tuple.Create("\"", 1525)
             
-            #line 8 "..\..\Views\BlogWidget\GetCategories.cshtml"
-, Tuple.Create(Tuple.Create("", 201), Tuple.Create<System.Object, System.Int32>(Request.Path
+            #line 35 "..\..\Views\BlogWidget\GetCategories.cshtml"
+, Tuple.Create(Tuple.Create("", 1512), Tuple.Create<System.Object, System.Int32>(Request.Path
             
             #line default
             #line hidden
-, 201), false)
+, 1512), false)
 );
 
-WriteAttribute("class", Tuple.Create(" class=\"", 215), Tuple.Create("\"", 272)
+WriteAttribute("class", Tuple.Create(" class=\"", 1526), Tuple.Create("\"", 1583)
             
-            #line 8 "..\..\Views\BlogWidget\GetCategories.cshtml"
-, Tuple.Create(Tuple.Create("", 223), Tuple.Create<System.Object, System.Int32>(blogCategory == null ? "submenu-active" : null
+            #line 35 "..\..\Views\BlogWidget\GetCategories.cshtml"
+, Tuple.Create(Tuple.Create("", 1534), Tuple.Create<System.Object, System.Int32>(blogCategory == null ? "submenu-active" : null
             
             #line default
             #line hidden
-, 223), false)
+, 1534), false)
 );
 
 WriteLiteral(">All</a>\r\n");
 
             
-            #line 9 "..\..\Views\BlogWidget\GetCategories.cshtml"
+            #line 36 "..\..\Views\BlogWidget\GetCategories.cshtml"
         
             
             #line default
             #line hidden
             
-            #line 9 "..\..\Views\BlogWidget\GetCategories.cshtml"
+            #line 36 "..\..\Views\BlogWidget\GetCategories.cshtml"
          foreach (var category in Model)
         {
             var active = blogCategory != null && blogCategory.ToUpper() == category.Name.ToUpper();
@@ -92,38 +98,38 @@ WriteLiteral(">All</a>\r\n");
             #line hidden
 WriteLiteral("            <a");
 
-WriteAttribute("href", Tuple.Create(" href=\"", 451), Tuple.Create("\"", 499)
+WriteAttribute("href", Tuple.Create(" href=\"", 1762), Tuple.Create("\"", 1810)
             
-            #line 12 "..\..\Views\BlogWidget\GetCategories.cshtml"
-, Tuple.Create(Tuple.Create("", 458), Tuple.Create<System.Object, System.Int32>(Request.Path
-            
-            #line default
-            #line hidden
-, 458), false)
-, Tuple.Create(Tuple.Create("", 471), Tuple.Create("?blogCategory=", 471), true)
-            
-            #line 12 "..\..\Views\BlogWidget\GetCategories.cshtml"
-, Tuple.Create(Tuple.Create("", 485), Tuple.Create<System.Object, System.Int32>(category.Name
+            #line 39 "..\..\Views\BlogWidget\GetCategories.cshtml"
+, Tuple.Create(Tuple.Create("", 1769), Tuple.Create<System.Object, System.Int32>(Request.Path
             
             #line default
             #line hidden
-, 485), false)
+, 1769), false)
+, Tuple.Create(Tuple.Create("", 1782), Tuple.Create("?blogCategory=", 1782), true)
+            
+            #line 39 "..\..\Views\BlogWidget\GetCategories.cshtml"
+, Tuple.Create(Tuple.Create("", 1796), Tuple.Create<System.Object, System.Int32>(category.Name
+            
+            #line default
+            #line hidden
+, 1796), false)
 );
 
-WriteAttribute("class", Tuple.Create(" class=\"", 500), Tuple.Create("\"", 542)
+WriteAttribute("class", Tuple.Create(" class=\"", 1811), Tuple.Create("\"", 1853)
             
-            #line 12 "..\..\Views\BlogWidget\GetCategories.cshtml"
-, Tuple.Create(Tuple.Create("", 508), Tuple.Create<System.Object, System.Int32>(active ? "submenu-active": null
+            #line 39 "..\..\Views\BlogWidget\GetCategories.cshtml"
+, Tuple.Create(Tuple.Create("", 1819), Tuple.Create<System.Object, System.Int32>(active ? "submenu-active": null
             
             #line default
             #line hidden
-, 508), false)
+, 1819), false)
 );
 
 WriteLiteral(">");
 
             
-            #line 12 "..\..\Views\BlogWidget\GetCategories.cshtml"
+            #line 39 "..\..\Views\BlogWidget\GetCategories.cshtml"
                                                                                                       Write(category.Name);
 
             
@@ -132,7 +138,7 @@ WriteLiteral(">");
 WriteLiteral("</a>\r\n");
 
             
-            #line 13 "..\..\Views\BlogWidget\GetCategories.cshtml"
+            #line 40 "..\..\Views\BlogWidget\GetCategories.cshtml"
         }
 
             

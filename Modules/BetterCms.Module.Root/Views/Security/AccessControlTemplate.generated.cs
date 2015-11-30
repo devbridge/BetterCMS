@@ -28,19 +28,19 @@ namespace ASP
     using System.Web.UI;
     using System.Web.WebPages;
     
-    #line 1 "..\..\Views\Security\AccessControlTemplate.cshtml"
+    #line 28 "..\..\Views\Security\AccessControlTemplate.cshtml"
     using BetterCms.Module.Root.Content.Resources;
     
     #line default
     #line hidden
     
-    #line 2 "..\..\Views\Security\AccessControlTemplate.cshtml"
+    #line 29 "..\..\Views\Security\AccessControlTemplate.cshtml"
     using BetterCms.Module.Root.Mvc.Helpers;
     
     #line default
     #line hidden
     
-    #line 3 "..\..\Views\Security\AccessControlTemplate.cshtml"
+    #line 30 "..\..\Views\Security\AccessControlTemplate.cshtml"
     using BetterCms.Module.Root.ViewModels.Security;
     
     #line default
@@ -55,8 +55,10 @@ namespace ASP
         }
         public override void Execute()
         {
+WriteLiteral("\r\n");
+
             
-            #line 4 "..\..\Views\Security\AccessControlTemplate.cshtml"
+            #line 31 "..\..\Views\Security\AccessControlTemplate.cshtml"
   
     UserAccessTemplateViewModel viewModel = (Model is UserAccessTemplateViewModel)
         ? (UserAccessTemplateViewModel)Model
@@ -82,7 +84,7 @@ WriteLiteral(" class=\"bcms-content-titles\"");
 WriteLiteral(">");
 
             
-            #line 12 "..\..\Views\Security\AccessControlTemplate.cshtml"
+            #line 39 "..\..\Views\Security\AccessControlTemplate.cshtml"
                                     Write(viewModel.Title);
 
             
@@ -93,7 +95,7 @@ WriteLiteral("</div>\r\n");
 WriteLiteral("        ");
 
             
-            #line 13 "..\..\Views\Security\AccessControlTemplate.cshtml"
+            #line 40 "..\..\Views\Security\AccessControlTemplate.cshtml"
    Write(Html.Tooltip(@viewModel.Tooltip));
 
             
@@ -110,7 +112,7 @@ WriteLiteral(" class=\"bcms-access-title-text\"");
 WriteLiteral(">");
 
             
-            #line 16 "..\..\Views\Security\AccessControlTemplate.cshtml"
+            #line 43 "..\..\Views\Security\AccessControlTemplate.cshtml"
                                            Write(RootGlobalization.AccessControl_UserAccess_User);
 
             
@@ -123,7 +125,7 @@ WriteLiteral(" class=\"bcms-access-title-text\"");
 WriteLiteral(">");
 
             
-            #line 17 "..\..\Views\Security\AccessControlTemplate.cshtml"
+            #line 44 "..\..\Views\Security\AccessControlTemplate.cshtml"
                                            Write(RootGlobalization.AccessControl_UserAccess_ReadAndEdit);
 
             
@@ -136,7 +138,7 @@ WriteLiteral(" class=\"bcms-access-title-text\"");
 WriteLiteral(">");
 
             
-            #line 18 "..\..\Views\Security\AccessControlTemplate.cshtml"
+            #line 45 "..\..\Views\Security\AccessControlTemplate.cshtml"
                                            Write(RootGlobalization.AccessControl_UserAccess_Read);
 
             
@@ -149,7 +151,7 @@ WriteLiteral(" class=\"bcms-access-title-text\"");
 WriteLiteral(">");
 
             
-            #line 19 "..\..\Views\Security\AccessControlTemplate.cshtml"
+            #line 46 "..\..\Views\Security\AccessControlTemplate.cshtml"
                                            Write(RootGlobalization.AccessControl_UserAccess_NoAccess);
 
             
@@ -261,7 +263,7 @@ WriteLiteral(" data-bind=\"visible: isInAddMode() !== \'user\', click: clickPlus
 WriteLiteral(">");
 
             
-            #line 39 "..\..\Views\Security\AccessControlTemplate.cshtml"
+            #line 66 "..\..\Views\Security\AccessControlTemplate.cshtml"
                                                                                  Write(RootGlobalization.AccessControl_UserAccess_AddNewUser);
 
             
@@ -320,7 +322,7 @@ WriteLiteral(" data-bind=\"visible: isInAddMode() !== \'role\', click: clickPlus
 WriteLiteral(">");
 
             
-            #line 62 "..\..\Views\Security\AccessControlTemplate.cshtml"
+            #line 89 "..\..\Views\Security\AccessControlTemplate.cshtml"
                                                                                  Write(RootGlobalization.AccessControl_UserAccess_AddNewRole);
 
             

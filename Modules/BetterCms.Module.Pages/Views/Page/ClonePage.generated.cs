@@ -28,43 +28,43 @@ namespace ASP
     using System.Web.UI;
     using System.Web.WebPages;
     
-    #line 1 "..\..\Views\Page\ClonePage.cshtml"
+    #line 28 "..\..\Views\Page\ClonePage.cshtml"
     using BetterCms.Module.Pages.Content.Resources;
     
     #line default
     #line hidden
     
-    #line 2 "..\..\Views\Page\ClonePage.cshtml"
+    #line 29 "..\..\Views\Page\ClonePage.cshtml"
     using BetterCms.Module.Pages.Controllers;
     
     #line default
     #line hidden
     
-    #line 3 "..\..\Views\Page\ClonePage.cshtml"
+    #line 30 "..\..\Views\Page\ClonePage.cshtml"
     using BetterCms.Module.Pages.ViewModels.Page;
     
     #line default
     #line hidden
     
-    #line 4 "..\..\Views\Page\ClonePage.cshtml"
+    #line 31 "..\..\Views\Page\ClonePage.cshtml"
     using BetterCms.Module.Root;
     
     #line default
     #line hidden
     
-    #line 5 "..\..\Views\Page\ClonePage.cshtml"
+    #line 32 "..\..\Views\Page\ClonePage.cshtml"
     using BetterCms.Module.Root.Mvc;
     
     #line default
     #line hidden
     
-    #line 6 "..\..\Views\Page\ClonePage.cshtml"
+    #line 33 "..\..\Views\Page\ClonePage.cshtml"
     using BetterCms.Module.Root.Mvc.Helpers;
     
     #line default
     #line hidden
     
-    #line 7 "..\..\Views\Page\ClonePage.cshtml"
+    #line 34 "..\..\Views\Page\ClonePage.cshtml"
     using Microsoft.Web.Mvc;
     
     #line default
@@ -79,6 +79,8 @@ namespace ASP
         }
         public override void Execute()
         {
+WriteLiteral("\r\n");
+
 WriteLiteral("<div");
 
 WriteLiteral(" class=\"bcms-modal-frame-holder\"");
@@ -88,7 +90,7 @@ WriteLiteral(">\r\n");
 WriteLiteral("    ");
 
             
-            #line 11 "..\..\Views\Page\ClonePage.cshtml"
+            #line 38 "..\..\Views\Page\ClonePage.cshtml"
 Write(Html.MessagesBox());
 
             
@@ -101,13 +103,13 @@ WriteLiteral(" class=\"bcms-window-options\"");
 WriteLiteral(">\r\n");
 
             
-            #line 14 "..\..\Views\Page\ClonePage.cshtml"
+            #line 41 "..\..\Views\Page\ClonePage.cshtml"
         
             
             #line default
             #line hidden
             
-            #line 14 "..\..\Views\Page\ClonePage.cshtml"
+            #line 41 "..\..\Views\Page\ClonePage.cshtml"
          using (Html.BeginForm<PageController>(f => f.ClonePage((ClonePageViewModel)null), FormMethod.Post, new { @class = "bcms-ajax-form" }))
         {
 
@@ -125,7 +127,7 @@ WriteLiteral(" class=\"bcms-content-titles\"");
 WriteLiteral(">");
 
             
-            #line 17 "..\..\Views\Page\ClonePage.cshtml"
+            #line 44 "..\..\Views\Page\ClonePage.cshtml"
                                             Write(PagesGlobalization.ClonePage_Dialog_ConfirmationMessage_Header);
 
             
@@ -138,7 +140,7 @@ WriteLiteral(" class=\"bcms-content-description\"");
 WriteLiteral(">");
 
             
-            #line 18 "..\..\Views\Page\ClonePage.cshtml"
+            #line 45 "..\..\Views\Page\ClonePage.cshtml"
                                                  Write(PagesGlobalization.ClonePage_Dialog_ConfirmationMessage_Text);
 
             
@@ -147,7 +149,7 @@ WriteLiteral(">");
 WriteLiteral("</div>\r\n            </div>\r\n");
 
             
-            #line 20 "..\..\Views\Page\ClonePage.cshtml"
+            #line 47 "..\..\Views\Page\ClonePage.cshtml"
             
 
             
@@ -168,7 +170,7 @@ WriteLiteral(" class=\"bcms-content-titles\"");
 WriteLiteral(">");
 
             
-            #line 24 "..\..\Views\Page\ClonePage.cshtml"
+            #line 51 "..\..\Views\Page\ClonePage.cshtml"
                                                     Write(PagesGlobalization.ClonePage_Dialog_PageTitle);
 
             
@@ -179,7 +181,7 @@ WriteLiteral("</div>\r\n");
 WriteLiteral("                        ");
 
             
-            #line 25 "..\..\Views\Page\ClonePage.cshtml"
+            #line 52 "..\..\Views\Page\ClonePage.cshtml"
                    Write(Html.Tooltip(PagesGlobalization.ClonePage_Dialog_PageTitle_Tooltip_Description));
 
             
@@ -194,7 +196,7 @@ WriteLiteral(">\r\n");
 WriteLiteral("                            ");
 
             
-            #line 27 "..\..\Views\Page\ClonePage.cshtml"
+            #line 54 "..\..\Views\Page\ClonePage.cshtml"
                        Write(Html.TextBoxFor(m => m.PageTitle, new { @class = "bcms-field-text" }));
 
             
@@ -205,7 +207,7 @@ WriteLiteral("\r\n");
 WriteLiteral("                            ");
 
             
-            #line 28 "..\..\Views\Page\ClonePage.cshtml"
+            #line 55 "..\..\Views\Page\ClonePage.cshtml"
                        Write(Html.BcmsValidationMessageFor(f => f.PageTitle));
 
             
@@ -216,7 +218,7 @@ WriteLiteral("\r\n                        </div>\r\n                    </div>\r
 WriteLiteral("                    ");
 
             
-            #line 32 "..\..\Views\Page\ClonePage.cshtml"
+            #line 59 "..\..\Views\Page\ClonePage.cshtml"
                Write(Html.Partial("Partial/ClonePageEditUrl"));
 
             
@@ -225,13 +227,13 @@ WriteLiteral("                    ");
 WriteLiteral("\r\n\r\n");
 
             
-            #line 34 "..\..\Views\Page\ClonePage.cshtml"
+            #line 61 "..\..\Views\Page\ClonePage.cshtml"
                     
             
             #line default
             #line hidden
             
-            #line 34 "..\..\Views\Page\ClonePage.cshtml"
+            #line 61 "..\..\Views\Page\ClonePage.cshtml"
                      if (!Model.IsMasterPage && (ViewContext.Controller as CmsControllerBase).SecurityService.IsAuthorized(RootModuleConstants.UserRoles.Administration))
                     {
 
@@ -249,7 +251,7 @@ WriteLiteral(" class=\"bcms-content-titles\"");
 WriteLiteral(">");
 
             
-            #line 37 "..\..\Views\Page\ClonePage.cshtml"
+            #line 64 "..\..\Views\Page\ClonePage.cshtml"
                                                         Write(PagesGlobalization.ClonePage_Dialog_AsMasterPage_Title);
 
             
@@ -260,7 +262,7 @@ WriteLiteral("</div>\r\n");
 WriteLiteral("                            ");
 
             
-            #line 38 "..\..\Views\Page\ClonePage.cshtml"
+            #line 65 "..\..\Views\Page\ClonePage.cshtml"
                        Write(Html.Tooltip(PagesGlobalization.ClonePage_Dialog_AsMasterPage_Tooltip_Description));
 
             
@@ -275,7 +277,7 @@ WriteLiteral(">\r\n");
 WriteLiteral("                                ");
 
             
-            #line 41 "..\..\Views\Page\ClonePage.cshtml"
+            #line 68 "..\..\Views\Page\ClonePage.cshtml"
                            Write(Html.CheckBoxFor(model => model.CloneAsMasterPage));
 
             
@@ -288,7 +290,7 @@ WriteLiteral(" class=\"bcms-checkbox-label bcms-js-edit-label\"");
 WriteLiteral(">");
 
             
-            #line 42 "..\..\Views\Page\ClonePage.cshtml"
+            #line 69 "..\..\Views\Page\ClonePage.cshtml"
                                                                                Write(PagesGlobalization.ClonePage_Dialog_AsMasterPage);
 
             
@@ -297,7 +299,7 @@ WriteLiteral(">");
 WriteLiteral("</div>\r\n                            </div>\r\n                        </div>\r\n");
 
             
-            #line 45 "..\..\Views\Page\ClonePage.cshtml"
+            #line 72 "..\..\Views\Page\ClonePage.cshtml"
                     }
 
             
@@ -306,13 +308,13 @@ WriteLiteral("</div>\r\n                            </div>\r\n                  
 WriteLiteral("                </div>\r\n\r\n                <div>\r\n");
 
             
-            #line 49 "..\..\Views\Page\ClonePage.cshtml"
+            #line 76 "..\..\Views\Page\ClonePage.cshtml"
                     
             
             #line default
             #line hidden
             
-            #line 49 "..\..\Views\Page\ClonePage.cshtml"
+            #line 76 "..\..\Views\Page\ClonePage.cshtml"
                      if (Model.AccessControlEnabled)
                     {
                         
@@ -320,14 +322,14 @@ WriteLiteral("                </div>\r\n\r\n                <div>\r\n");
             #line default
             #line hidden
             
-            #line 51 "..\..\Views\Page\ClonePage.cshtml"
+            #line 78 "..\..\Views\Page\ClonePage.cshtml"
                    Write(Html.Partial(RootModuleConstants.AccessControlTemplate));
 
             
             #line default
             #line hidden
             
-            #line 51 "..\..\Views\Page\ClonePage.cshtml"
+            #line 78 "..\..\Views\Page\ClonePage.cshtml"
                                                                                 
                     }
 
@@ -339,7 +341,7 @@ WriteLiteral("\r\n");
 WriteLiteral("                    ");
 
             
-            #line 54 "..\..\Views\Page\ClonePage.cshtml"
+            #line 81 "..\..\Views\Page\ClonePage.cshtml"
                Write(Html.HiddenFor(m => m.PageId));
 
             
@@ -350,7 +352,7 @@ WriteLiteral("\r\n");
 WriteLiteral("                    ");
 
             
-            #line 55 "..\..\Views\Page\ClonePage.cshtml"
+            #line 82 "..\..\Views\Page\ClonePage.cshtml"
                Write(Html.HiddenSubmit());
 
             
@@ -359,7 +361,7 @@ WriteLiteral("                    ");
 WriteLiteral("\r\n                </div>\r\n            </div>\r\n");
 
             
-            #line 58 "..\..\Views\Page\ClonePage.cshtml"
+            #line 85 "..\..\Views\Page\ClonePage.cshtml"
         }
 
             

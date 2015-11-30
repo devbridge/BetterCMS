@@ -28,19 +28,19 @@ namespace ASP
     using System.Web.UI;
     using System.Web.WebPages;
     
-    #line 1 "..\..\Views\Option\Templates.cshtml"
+    #line 28 "..\..\Views\Option\Templates.cshtml"
     using BetterCms.Module.Blog.Content.Resources;
     
     #line default
     #line hidden
     
-    #line 2 "..\..\Views\Option\Templates.cshtml"
+    #line 29 "..\..\Views\Option\Templates.cshtml"
     using BetterCms.Module.Root.Content.Resources;
     
     #line default
     #line hidden
     
-    #line 3 "..\..\Views\Option\Templates.cshtml"
+    #line 30 "..\..\Views\Option\Templates.cshtml"
     using BetterCms.Module.Root.Mvc.Helpers;
     
     #line default
@@ -57,8 +57,10 @@ namespace ASP
         {
 WriteLiteral("\r\n");
 
+WriteLiteral("\r\n");
+
             
-            #line 5 "..\..\Views\Option\Templates.cshtml"
+            #line 32 "..\..\Views\Option\Templates.cshtml"
 Write(Html.MessagesBox());
 
             
@@ -75,7 +77,7 @@ WriteLiteral(" class=\"bcms-content-titles-align\"");
 WriteLiteral(">");
 
             
-            #line 8 "..\..\Views\Option\Templates.cshtml"
+            #line 35 "..\..\Views\Option\Templates.cshtml"
                                       Write(BlogGlobalization.BlogPostTitle_ChooseLayout_Title);
 
             
@@ -96,7 +98,7 @@ WriteLiteral(" data-bind=\"click: toggleSearch\"");
 WriteLiteral(">");
 
             
-            #line 11 "..\..\Views\Option\Templates.cshtml"
+            #line 38 "..\..\Views\Option\Templates.cshtml"
                                                                                   Write(RootGlobalization.Button_Search);
 
             
@@ -112,14 +114,14 @@ WriteLiteral(" type=\"text\"");
 
 WriteLiteral(" class=\"bcms-search-field-box bcms-js-search-box\"");
 
-WriteAttribute("placeholder", Tuple.Create(" placeholder=\"", 654), Tuple.Create("\"", 703)
+WriteAttribute("placeholder", Tuple.Create(" placeholder=\"", 1961), Tuple.Create("\"", 2010)
             
-            #line 13 "..\..\Views\Option\Templates.cshtml"
-              , Tuple.Create(Tuple.Create("", 668), Tuple.Create<System.Object, System.Int32>(RootGlobalization.WaterMark_Search
+            #line 40 "..\..\Views\Option\Templates.cshtml"
+             , Tuple.Create(Tuple.Create("", 1975), Tuple.Create<System.Object, System.Int32>(RootGlobalization.WaterMark_Search
             
             #line default
             #line hidden
-, 668), false)
+, 1975), false)
 );
 
 WriteLiteral(" data-bind=\"value: searchQuery, valueUpdate: \'afterkeydown\', enterPress: search, " +
@@ -211,7 +213,7 @@ WriteLiteral(" class=\"bcms-btn-selection\"");
 WriteLiteral(">");
 
             
-            #line 46 "..\..\Views\Option\Templates.cshtml"
+            #line 73 "..\..\Views\Option\Templates.cshtml"
                                    Write(BlogGlobalization.SiteSettings_Templates_DefaultTemplate);
 
             
@@ -227,7 +229,7 @@ WriteLiteral(" data-bind=\"click: select\"");
 WriteLiteral(">");
 
             
-            #line 49 "..\..\Views\Option\Templates.cshtml"
+            #line 76 "..\..\Views\Option\Templates.cshtml"
                                                              Write(BlogGlobalization.SiteSettings_Templates_SelectButton);
 
             
@@ -241,7 +243,7 @@ WriteLiteral(" class=\"bcms-btn-selection\"");
 WriteLiteral(">");
 
             
-            #line 52 "..\..\Views\Option\Templates.cshtml"
+            #line 79 "..\..\Views\Option\Templates.cshtml"
                                    Write(BlogGlobalization.SiteSettings_Templates_IncompatibleTemplate);
 
             

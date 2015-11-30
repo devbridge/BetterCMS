@@ -28,37 +28,37 @@ namespace ASP
     using System.Web.UI;
     using System.Web.WebPages;
     
-    #line 1 "..\..\Views\User\EditUser.cshtml"
+    #line 28 "..\..\Views\User\EditUser.cshtml"
     using BetterCms.Module.Root.Content.Resources;
     
     #line default
     #line hidden
     
-    #line 2 "..\..\Views\User\EditUser.cshtml"
+    #line 29 "..\..\Views\User\EditUser.cshtml"
     using BetterCms.Module.Root.Mvc.Helpers;
     
     #line default
     #line hidden
     
-    #line 3 "..\..\Views\User\EditUser.cshtml"
+    #line 30 "..\..\Views\User\EditUser.cshtml"
     using BetterCms.Module.Users.Content.Resources;
     
     #line default
     #line hidden
     
-    #line 4 "..\..\Views\User\EditUser.cshtml"
+    #line 31 "..\..\Views\User\EditUser.cshtml"
     using BetterCms.Module.Users.Controllers;
     
     #line default
     #line hidden
     
-    #line 5 "..\..\Views\User\EditUser.cshtml"
+    #line 32 "..\..\Views\User\EditUser.cshtml"
     using BetterCms.Module.Users.ViewModels.User;
     
     #line default
     #line hidden
     
-    #line 6 "..\..\Views\User\EditUser.cshtml"
+    #line 33 "..\..\Views\User\EditUser.cshtml"
     using Microsoft.Web.Mvc;
     
     #line default
@@ -75,6 +75,8 @@ namespace ASP
         {
 WriteLiteral("\r\n");
 
+WriteLiteral("\r\n");
+
 WriteLiteral("<div");
 
 WriteLiteral(" class=\"bcms-modal-frame-holder\"");
@@ -84,7 +86,7 @@ WriteLiteral(">\r\n");
 WriteLiteral("    ");
 
             
-            #line 11 "..\..\Views\User\EditUser.cshtml"
+            #line 38 "..\..\Views\User\EditUser.cshtml"
 Write(Html.MessagesBox());
 
             
@@ -97,13 +99,13 @@ WriteLiteral(" class=\"bcms-window-options\"");
 WriteLiteral(">\r\n");
 
             
-            #line 14 "..\..\Views\User\EditUser.cshtml"
+            #line 41 "..\..\Views\User\EditUser.cshtml"
         
             
             #line default
             #line hidden
             
-            #line 14 "..\..\Views\User\EditUser.cshtml"
+            #line 41 "..\..\Views\User\EditUser.cshtml"
          using (Html.BeginForm<UserController>(c => c.SaveUser(null), FormMethod.Post, new { @class = "bcms-ajax-form" }))
         {
             
@@ -111,42 +113,42 @@ WriteLiteral(">\r\n");
             #line default
             #line hidden
             
-            #line 16 "..\..\Views\User\EditUser.cshtml"
+            #line 43 "..\..\Views\User\EditUser.cshtml"
        Write(Html.HiddenFor(m => m.Id));
 
             
             #line default
             #line hidden
             
-            #line 16 "..\..\Views\User\EditUser.cshtml"
+            #line 43 "..\..\Views\User\EditUser.cshtml"
                                       
             
             
             #line default
             #line hidden
             
-            #line 17 "..\..\Views\User\EditUser.cshtml"
+            #line 44 "..\..\Views\User\EditUser.cshtml"
        Write(Html.HiddenFor(m => m.Version));
 
             
             #line default
             #line hidden
             
-            #line 17 "..\..\Views\User\EditUser.cshtml"
+            #line 44 "..\..\Views\User\EditUser.cshtml"
                                            
             
             
             #line default
             #line hidden
             
-            #line 18 "..\..\Views\User\EditUser.cshtml"
+            #line 45 "..\..\Views\User\EditUser.cshtml"
        Write(Html.HiddenFor(model => model.Image.ImageId, new { data_bind = "value: image().id()" }));
 
             
             #line default
             #line hidden
             
-            #line 18 "..\..\Views\User\EditUser.cshtml"
+            #line 45 "..\..\Views\User\EditUser.cshtml"
                                                                                                     
 
 
@@ -168,7 +170,7 @@ WriteLiteral(" class=\"bcms-content-titles\"");
 WriteLiteral(">");
 
             
-            #line 23 "..\..\Views\User\EditUser.cshtml"
+            #line 50 "..\..\Views\User\EditUser.cshtml"
                                                     Write(UsersGlobalization.EditUser_FirstName_Title);
 
             
@@ -181,7 +183,7 @@ WriteLiteral(" class=\"bcms-tooltip-mark\"");
 WriteLiteral(" data-message=\"");
 
             
-            #line 24 "..\..\Views\User\EditUser.cshtml"
+            #line 51 "..\..\Views\User\EditUser.cshtml"
                                                                 Write(UsersGlobalization.EditUser_FirstName_Tooltip_Description);
 
             
@@ -198,7 +200,7 @@ WriteLiteral(">\r\n");
 WriteLiteral("                            ");
 
             
-            #line 26 "..\..\Views\User\EditUser.cshtml"
+            #line 53 "..\..\Views\User\EditUser.cshtml"
                        Write(Html.TextBoxFor(m => m.FirstName, new { @class = "bcms-field-text", data_bind = "value: firstName, valueUpdate: 'afterkeydown'" }));
 
             
@@ -209,7 +211,7 @@ WriteLiteral("\r\n");
 WriteLiteral("                            ");
 
             
-            #line 27 "..\..\Views\User\EditUser.cshtml"
+            #line 54 "..\..\Views\User\EditUser.cshtml"
                        Write(Html.BcmsValidationMessageFor(m => m.FirstName));
 
             
@@ -227,7 +229,7 @@ WriteLiteral(" class=\"bcms-content-titles\"");
 WriteLiteral(">");
 
             
-            #line 32 "..\..\Views\User\EditUser.cshtml"
+            #line 59 "..\..\Views\User\EditUser.cshtml"
                                                     Write(UsersGlobalization.EditUser_LastName);
 
             
@@ -240,7 +242,7 @@ WriteLiteral(" class=\"bcms-tooltip-mark\"");
 WriteLiteral(" data-message=\"");
 
             
-            #line 33 "..\..\Views\User\EditUser.cshtml"
+            #line 60 "..\..\Views\User\EditUser.cshtml"
                                                                 Write(UsersGlobalization.EditUser_LastName_Tooltip_Description);
 
             
@@ -257,7 +259,7 @@ WriteLiteral(">\r\n");
 WriteLiteral("                            ");
 
             
-            #line 35 "..\..\Views\User\EditUser.cshtml"
+            #line 62 "..\..\Views\User\EditUser.cshtml"
                        Write(Html.TextBoxFor(m => m.LastName, new { @class = "bcms-field-text", data_bind = "value: lastName, valueUpdate: 'afterkeydown'" }));
 
             
@@ -268,7 +270,7 @@ WriteLiteral("\r\n");
 WriteLiteral("                            ");
 
             
-            #line 36 "..\..\Views\User\EditUser.cshtml"
+            #line 63 "..\..\Views\User\EditUser.cshtml"
                        Write(Html.BcmsValidationMessageFor(m => m.LastName));
 
             
@@ -286,7 +288,7 @@ WriteLiteral(" class=\"bcms-content-titles\"");
 WriteLiteral(">");
 
             
-            #line 41 "..\..\Views\User\EditUser.cshtml"
+            #line 68 "..\..\Views\User\EditUser.cshtml"
                                                     Write(UsersGlobalization.EditUser_UserName_Title);
 
             
@@ -299,7 +301,7 @@ WriteLiteral(" class=\"bcms-tooltip-mark\"");
 WriteLiteral(" data-message=\"");
 
             
-            #line 42 "..\..\Views\User\EditUser.cshtml"
+            #line 69 "..\..\Views\User\EditUser.cshtml"
                                                                 Write(UsersGlobalization.EditUser_UserName_Tooltip_Description);
 
             
@@ -316,7 +318,7 @@ WriteLiteral(">\r\n");
 WriteLiteral("                            ");
 
             
-            #line 44 "..\..\Views\User\EditUser.cshtml"
+            #line 71 "..\..\Views\User\EditUser.cshtml"
                        Write(Html.TextBoxFor(m => m.UserName, new { @class = "bcms-field-text", data_bind = "value: userName, valueUpdate: 'afterkeydown', event: {keyup: userNameOnKeyUp}" }));
 
             
@@ -327,7 +329,7 @@ WriteLiteral("\r\n");
 WriteLiteral("                            ");
 
             
-            #line 45 "..\..\Views\User\EditUser.cshtml"
+            #line 72 "..\..\Views\User\EditUser.cshtml"
                        Write(Html.BcmsValidationMessageFor(m => m.UserName));
 
             
@@ -345,7 +347,7 @@ WriteLiteral(" class=\"bcms-content-titles\"");
 WriteLiteral(">");
 
             
-            #line 50 "..\..\Views\User\EditUser.cshtml"
+            #line 77 "..\..\Views\User\EditUser.cshtml"
                                                     Write(UsersGlobalization.EditUser_Email_Title);
 
             
@@ -358,7 +360,7 @@ WriteLiteral(" class=\"bcms-tooltip-mark\"");
 WriteLiteral(" data-message=\"");
 
             
-            #line 51 "..\..\Views\User\EditUser.cshtml"
+            #line 78 "..\..\Views\User\EditUser.cshtml"
                                                                 Write(UsersGlobalization.EditUser_Email_Tooltip_Description);
 
             
@@ -375,7 +377,7 @@ WriteLiteral(">\r\n");
 WriteLiteral("                            ");
 
             
-            #line 53 "..\..\Views\User\EditUser.cshtml"
+            #line 80 "..\..\Views\User\EditUser.cshtml"
                        Write(Html.TextBoxFor(m => m.Email, new { @class = "bcms-field-text" }));
 
             
@@ -386,7 +388,7 @@ WriteLiteral("\r\n");
 WriteLiteral("                            ");
 
             
-            #line 54 "..\..\Views\User\EditUser.cshtml"
+            #line 81 "..\..\Views\User\EditUser.cshtml"
                        Write(Html.BcmsValidationMessageFor(m => m.Email));
 
             
@@ -404,7 +406,7 @@ WriteLiteral(" class=\"bcms-content-titles\"");
 WriteLiteral(">");
 
             
-            #line 59 "..\..\Views\User\EditUser.cshtml"
+            #line 86 "..\..\Views\User\EditUser.cshtml"
                                                     Write(UsersGlobalization.EditUser_Password_Title);
 
             
@@ -417,7 +419,7 @@ WriteLiteral(" class=\"bcms-tooltip-mark\"");
 WriteLiteral(" data-message=\"");
 
             
-            #line 60 "..\..\Views\User\EditUser.cshtml"
+            #line 87 "..\..\Views\User\EditUser.cshtml"
                                                                 Write(UsersGlobalization.EditUser_Password_Tooltip_Description);
 
             
@@ -434,7 +436,7 @@ WriteLiteral(">\r\n");
 WriteLiteral("                            ");
 
             
-            #line 62 "..\..\Views\User\EditUser.cshtml"
+            #line 89 "..\..\Views\User\EditUser.cshtml"
                        Write(Html.TextBoxFor(m => m.Password, new { @class = "bcms-field-text", @type = "password" }));
 
             
@@ -445,7 +447,7 @@ WriteLiteral("\r\n");
 WriteLiteral("                            ");
 
             
-            #line 63 "..\..\Views\User\EditUser.cshtml"
+            #line 90 "..\..\Views\User\EditUser.cshtml"
                        Write(Html.BcmsValidationMessageFor(m => m.Password));
 
             
@@ -463,7 +465,7 @@ WriteLiteral(" class=\"bcms-content-titles\"");
 WriteLiteral(">");
 
             
-            #line 68 "..\..\Views\User\EditUser.cshtml"
+            #line 95 "..\..\Views\User\EditUser.cshtml"
                                                     Write(UsersGlobalization.EditUser_RetypePassword_Title);
 
             
@@ -476,7 +478,7 @@ WriteLiteral(" class=\"bcms-tooltip-mark\"");
 WriteLiteral(" data-message=\"");
 
             
-            #line 69 "..\..\Views\User\EditUser.cshtml"
+            #line 96 "..\..\Views\User\EditUser.cshtml"
                                                                 Write(UsersGlobalization.EditUser_RetypePassword_Tooltip_Description);
 
             
@@ -493,7 +495,7 @@ WriteLiteral(">\r\n");
 WriteLiteral("                            ");
 
             
-            #line 71 "..\..\Views\User\EditUser.cshtml"
+            #line 98 "..\..\Views\User\EditUser.cshtml"
                        Write(Html.TextBoxFor(m => m.RetypedPassword, new { @class = "bcms-field-text", @type = "password" }));
 
             
@@ -504,7 +506,7 @@ WriteLiteral("\r\n");
 WriteLiteral("                            ");
 
             
-            #line 72 "..\..\Views\User\EditUser.cshtml"
+            #line 99 "..\..\Views\User\EditUser.cshtml"
                        Write(Html.BcmsValidationMessageFor(m => m.RetypedPassword));
 
             
@@ -530,7 +532,7 @@ WriteLiteral(" class=\"bcms-content-titles\"");
 WriteLiteral(">");
 
             
-            #line 81 "..\..\Views\User\EditUser.cshtml"
+            #line 108 "..\..\Views\User\EditUser.cshtml"
                                                             Write(UsersGlobalization.EditUser_Image_Title);
 
             
@@ -543,7 +545,7 @@ WriteLiteral(" class=\"bcms-tooltip-mark\"");
 WriteLiteral(" data-message=\"");
 
             
-            #line 82 "..\..\Views\User\EditUser.cshtml"
+            #line 109 "..\..\Views\User\EditUser.cshtml"
                                                                         Write(UsersGlobalization.EditUser_UserImage_Tooltip_Description);
 
             
@@ -565,7 +567,7 @@ WriteLiteral(" data-bind=\"click: image().remove.bind(image())\"");
 WriteLiteral(">");
 
             
-            #line 87 "..\..\Views\User\EditUser.cshtml"
+            #line 114 "..\..\Views\User\EditUser.cshtml"
                                                                                                           Write(RootGlobalization.Button_Remove);
 
             
@@ -622,7 +624,7 @@ WriteLiteral(" data-bind=\"click: image().select.bind(image())\"");
 WriteLiteral(">");
 
             
-            #line 103 "..\..\Views\User\EditUser.cshtml"
+            #line 130 "..\..\Views\User\EditUser.cshtml"
                                                                                                        Write(UsersGlobalization.EditUser_UploadImage_Button_Title);
 
             
@@ -638,7 +640,7 @@ WriteLiteral(">\r\n");
 WriteLiteral("                        ");
 
             
-            #line 108 "..\..\Views\User\EditUser.cshtml"
+            #line 135 "..\..\Views\User\EditUser.cshtml"
                    Write(Html.Partial("Partial/EditUserRoles"));
 
             
@@ -647,7 +649,7 @@ WriteLiteral("                        ");
 WriteLiteral("\r\n                    </div>\r\n                </div>\r\n            </div>\r\n");
 
             
-            #line 112 "..\..\Views\User\EditUser.cshtml"
+            #line 139 "..\..\Views\User\EditUser.cshtml"
         }
 
             

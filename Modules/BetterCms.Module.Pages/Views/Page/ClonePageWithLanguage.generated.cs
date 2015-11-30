@@ -28,37 +28,37 @@ namespace ASP
     using System.Web.UI;
     using System.Web.WebPages;
     
-    #line 1 "..\..\Views\Page\ClonePageWithLanguage.cshtml"
+    #line 28 "..\..\Views\Page\ClonePageWithLanguage.cshtml"
     using BetterCms.Module.Pages.Content.Resources;
     
     #line default
     #line hidden
     
-    #line 2 "..\..\Views\Page\ClonePageWithLanguage.cshtml"
+    #line 29 "..\..\Views\Page\ClonePageWithLanguage.cshtml"
     using BetterCms.Module.Pages.Controllers;
     
     #line default
     #line hidden
     
-    #line 3 "..\..\Views\Page\ClonePageWithLanguage.cshtml"
+    #line 30 "..\..\Views\Page\ClonePageWithLanguage.cshtml"
     using BetterCms.Module.Pages.ViewModels.Page;
     
     #line default
     #line hidden
     
-    #line 4 "..\..\Views\Page\ClonePageWithLanguage.cshtml"
+    #line 31 "..\..\Views\Page\ClonePageWithLanguage.cshtml"
     using BetterCms.Module.Root;
     
     #line default
     #line hidden
     
-    #line 5 "..\..\Views\Page\ClonePageWithLanguage.cshtml"
+    #line 32 "..\..\Views\Page\ClonePageWithLanguage.cshtml"
     using BetterCms.Module.Root.Mvc.Helpers;
     
     #line default
     #line hidden
     
-    #line 6 "..\..\Views\Page\ClonePageWithLanguage.cshtml"
+    #line 33 "..\..\Views\Page\ClonePageWithLanguage.cshtml"
     using Microsoft.Web.Mvc;
     
     #line default
@@ -73,6 +73,8 @@ namespace ASP
         }
         public override void Execute()
         {
+WriteLiteral("\r\n");
+
 WriteLiteral("<div");
 
 WriteLiteral(" class=\"bcms-modal-frame-holder\"");
@@ -82,7 +84,7 @@ WriteLiteral(">\r\n");
 WriteLiteral("    ");
 
             
-            #line 10 "..\..\Views\Page\ClonePageWithLanguage.cshtml"
+            #line 37 "..\..\Views\Page\ClonePageWithLanguage.cshtml"
 Write(Html.MessagesBox());
 
             
@@ -95,13 +97,13 @@ WriteLiteral(" class=\"bcms-window-options\"");
 WriteLiteral(">\r\n");
 
             
-            #line 13 "..\..\Views\Page\ClonePageWithLanguage.cshtml"
+            #line 40 "..\..\Views\Page\ClonePageWithLanguage.cshtml"
         
             
             #line default
             #line hidden
             
-            #line 13 "..\..\Views\Page\ClonePageWithLanguage.cshtml"
+            #line 40 "..\..\Views\Page\ClonePageWithLanguage.cshtml"
          using (Html.BeginForm<PageController>(f => f.ClonePageWithLanguage((string)null), FormMethod.Post, new { @class = "bcms-ajax-form", data_readonly = (!Model.Languages.Any()).ToString().ToLower() }))
         {
 
@@ -119,7 +121,7 @@ WriteLiteral(" class=\"bcms-content-titles\"");
 WriteLiteral(">");
 
             
-            #line 16 "..\..\Views\Page\ClonePageWithLanguage.cshtml"
+            #line 43 "..\..\Views\Page\ClonePageWithLanguage.cshtml"
                                             Write(PagesGlobalization.ClonePageWithLanguage_Dialog_ConfirmationMessage_Header);
 
             
@@ -132,7 +134,7 @@ WriteLiteral(" class=\"bcms-content-description\"");
 WriteLiteral(">");
 
             
-            #line 17 "..\..\Views\Page\ClonePageWithLanguage.cshtml"
+            #line 44 "..\..\Views\Page\ClonePageWithLanguage.cshtml"
                                                  Write(PagesGlobalization.ClonePageWithLanguage_Dialog_ConfirmationMessage_Text);
 
             
@@ -141,7 +143,7 @@ WriteLiteral(">");
 WriteLiteral("</div>\r\n            </div>\r\n");
 
             
-            #line 19 "..\..\Views\Page\ClonePageWithLanguage.cshtml"
+            #line 46 "..\..\Views\Page\ClonePageWithLanguage.cshtml"
 
 
             
@@ -162,7 +164,7 @@ WriteLiteral(" class=\"bcms-content-titles\"");
 WriteLiteral(">");
 
             
-            #line 23 "..\..\Views\Page\ClonePageWithLanguage.cshtml"
+            #line 50 "..\..\Views\Page\ClonePageWithLanguage.cshtml"
                                                     Write(PagesGlobalization.ClonePageWithLanguage_Dialog_Language_Title);
 
             
@@ -173,7 +175,7 @@ WriteLiteral("</div>\r\n");
 WriteLiteral("                        ");
 
             
-            #line 24 "..\..\Views\Page\ClonePageWithLanguage.cshtml"
+            #line 51 "..\..\Views\Page\ClonePageWithLanguage.cshtml"
                    Write(Html.Tooltip(PagesGlobalization.ClonePageWithLanguage_Dialog_Language_Tootlip));
 
             
@@ -188,7 +190,7 @@ WriteLiteral(">\r\n");
 WriteLiteral("                                ");
 
             
-            #line 26 "..\..\Views\Page\ClonePageWithLanguage.cshtml"
+            #line 53 "..\..\Views\Page\ClonePageWithLanguage.cshtml"
                            Write(Html.DropDownListFor(model => model.LanguageId, Model.Languages.ToSelectList(Model.LanguageId), string.Empty));
 
             
@@ -199,7 +201,7 @@ WriteLiteral("\r\n");
 WriteLiteral("                                ");
 
             
-            #line 27 "..\..\Views\Page\ClonePageWithLanguage.cshtml"
+            #line 54 "..\..\Views\Page\ClonePageWithLanguage.cshtml"
                            Write(Html.BcmsValidationMessageFor(f => f.LanguageId));
 
             
@@ -217,7 +219,7 @@ WriteLiteral(" class=\"bcms-content-titles\"");
 WriteLiteral(">");
 
             
-            #line 32 "..\..\Views\Page\ClonePageWithLanguage.cshtml"
+            #line 59 "..\..\Views\Page\ClonePageWithLanguage.cshtml"
                                                     Write(PagesGlobalization.ClonePage_Dialog_PageTitle);
 
             
@@ -228,7 +230,7 @@ WriteLiteral("</div>\r\n");
 WriteLiteral("                        ");
 
             
-            #line 33 "..\..\Views\Page\ClonePageWithLanguage.cshtml"
+            #line 60 "..\..\Views\Page\ClonePageWithLanguage.cshtml"
                    Write(Html.Tooltip(PagesGlobalization.ClonePage_Dialog_PageTitle_Tooltip_Description));
 
             
@@ -243,7 +245,7 @@ WriteLiteral(">\r\n");
 WriteLiteral("                            ");
 
             
-            #line 35 "..\..\Views\Page\ClonePageWithLanguage.cshtml"
+            #line 62 "..\..\Views\Page\ClonePageWithLanguage.cshtml"
                        Write(Html.TextBoxFor(m => m.PageTitle, new { @class = "bcms-field-text" }));
 
             
@@ -254,7 +256,7 @@ WriteLiteral("\r\n");
 WriteLiteral("                            ");
 
             
-            #line 36 "..\..\Views\Page\ClonePageWithLanguage.cshtml"
+            #line 63 "..\..\Views\Page\ClonePageWithLanguage.cshtml"
                        Write(Html.BcmsValidationMessageFor(f => f.PageTitle));
 
             
@@ -265,7 +267,7 @@ WriteLiteral("\r\n                        </div>\r\n                    </div>\r
 WriteLiteral("                    ");
 
             
-            #line 40 "..\..\Views\Page\ClonePageWithLanguage.cshtml"
+            #line 67 "..\..\Views\Page\ClonePageWithLanguage.cshtml"
                Write(Html.Partial("Partial/ClonePageEditUrl"));
 
             
@@ -274,13 +276,13 @@ WriteLiteral("                    ");
 WriteLiteral("\r\n                </div>\r\n\r\n                <div>\r\n");
 
             
-            #line 44 "..\..\Views\Page\ClonePageWithLanguage.cshtml"
+            #line 71 "..\..\Views\Page\ClonePageWithLanguage.cshtml"
                     
             
             #line default
             #line hidden
             
-            #line 44 "..\..\Views\Page\ClonePageWithLanguage.cshtml"
+            #line 71 "..\..\Views\Page\ClonePageWithLanguage.cshtml"
                      if (Model.AccessControlEnabled)
                     {
                         
@@ -288,14 +290,14 @@ WriteLiteral("\r\n                </div>\r\n\r\n                <div>\r\n");
             #line default
             #line hidden
             
-            #line 46 "..\..\Views\Page\ClonePageWithLanguage.cshtml"
+            #line 73 "..\..\Views\Page\ClonePageWithLanguage.cshtml"
                    Write(Html.Partial(RootModuleConstants.AccessControlTemplate));
 
             
             #line default
             #line hidden
             
-            #line 46 "..\..\Views\Page\ClonePageWithLanguage.cshtml"
+            #line 73 "..\..\Views\Page\ClonePageWithLanguage.cshtml"
                                                                                 
                     }
 
@@ -305,49 +307,49 @@ WriteLiteral("\r\n                </div>\r\n\r\n                <div>\r\n");
 WriteLiteral("                </div>\r\n            </div>\r\n");
 
             
-            #line 50 "..\..\Views\Page\ClonePageWithLanguage.cshtml"
+            #line 77 "..\..\Views\Page\ClonePageWithLanguage.cshtml"
 
             
             
             #line default
             #line hidden
             
-            #line 51 "..\..\Views\Page\ClonePageWithLanguage.cshtml"
+            #line 78 "..\..\Views\Page\ClonePageWithLanguage.cshtml"
        Write(Html.HiddenFor(m => m.PageId));
 
             
             #line default
             #line hidden
             
-            #line 51 "..\..\Views\Page\ClonePageWithLanguage.cshtml"
+            #line 78 "..\..\Views\Page\ClonePageWithLanguage.cshtml"
                                           
             
             
             #line default
             #line hidden
             
-            #line 52 "..\..\Views\Page\ClonePageWithLanguage.cshtml"
+            #line 79 "..\..\Views\Page\ClonePageWithLanguage.cshtml"
        Write(Html.HiddenFor(m => m.LanguageId));
 
             
             #line default
             #line hidden
             
-            #line 52 "..\..\Views\Page\ClonePageWithLanguage.cshtml"
+            #line 79 "..\..\Views\Page\ClonePageWithLanguage.cshtml"
                                               
             
             
             #line default
             #line hidden
             
-            #line 53 "..\..\Views\Page\ClonePageWithLanguage.cshtml"
+            #line 80 "..\..\Views\Page\ClonePageWithLanguage.cshtml"
        Write(Html.HiddenSubmit());
 
             
             #line default
             #line hidden
             
-            #line 53 "..\..\Views\Page\ClonePageWithLanguage.cshtml"
+            #line 80 "..\..\Views\Page\ClonePageWithLanguage.cshtml"
                                 
         }
 

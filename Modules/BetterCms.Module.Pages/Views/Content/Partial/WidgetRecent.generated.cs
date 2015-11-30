@@ -28,43 +28,43 @@ namespace ASP
     using System.Web.UI;
     using System.Web.WebPages;
     
-    #line 1 "..\..\Views\Content\Partial\WidgetRecent.cshtml"
+    #line 28 "..\..\Views\Content\Partial\WidgetRecent.cshtml"
     using BetterCms.Core.DataContracts.Enums;
     
     #line default
     #line hidden
     
-    #line 2 "..\..\Views\Content\Partial\WidgetRecent.cshtml"
+    #line 29 "..\..\Views\Content\Partial\WidgetRecent.cshtml"
     using BetterCms.Module.Pages.Content.Resources;
     
     #line default
     #line hidden
     
-    #line 3 "..\..\Views\Content\Partial\WidgetRecent.cshtml"
+    #line 30 "..\..\Views\Content\Partial\WidgetRecent.cshtml"
     using BetterCms.Module.Pages.Controllers;
     
     #line default
     #line hidden
     
-    #line 4 "..\..\Views\Content\Partial\WidgetRecent.cshtml"
+    #line 31 "..\..\Views\Content\Partial\WidgetRecent.cshtml"
     using BetterCms.Module.Root;
     
     #line default
     #line hidden
     
-    #line 5 "..\..\Views\Content\Partial\WidgetRecent.cshtml"
+    #line 32 "..\..\Views\Content\Partial\WidgetRecent.cshtml"
     using BetterCms.Module.Root.Mvc;
     
     #line default
     #line hidden
     
-    #line 6 "..\..\Views\Content\Partial\WidgetRecent.cshtml"
+    #line 33 "..\..\Views\Content\Partial\WidgetRecent.cshtml"
     using BetterCms.Module.Root.Mvc.Helpers;
     
     #line default
     #line hidden
     
-    #line 7 "..\..\Views\Content\Partial\WidgetRecent.cshtml"
+    #line 34 "..\..\Views\Content\Partial\WidgetRecent.cshtml"
     using Microsoft.Web.Mvc;
     
     #line default
@@ -79,10 +79,16 @@ namespace ASP
         }
         public override void Execute()
         {
-WriteLiteral("    ");
+WriteLiteral("\r\n");
 
             
-            #line 10 "..\..\Views\Content\Partial\WidgetRecent.cshtml"
+            #line 37 "..\..\Views\Content\Partial\WidgetRecent.cshtml"
+    
+            
+            #line default
+            #line hidden
+            
+            #line 37 "..\..\Views\Content\Partial\WidgetRecent.cshtml"
      if (Model != null && Model.Count > 0)
     {
 
@@ -94,7 +100,7 @@ WriteLiteral("    ");
 WriteLiteral("<div class=\"bcms-category-titles\">");
 
             
-            #line 12 "..\..\Views\Content\Partial\WidgetRecent.cshtml"
+            #line 39 "..\..\Views\Content\Partial\WidgetRecent.cshtml"
                                    Write(PagesGlobalization.AddPageContent_WidgetTab_RecentWidgets_Title);
 
             
@@ -103,7 +109,7 @@ WriteLiteral("<div class=\"bcms-category-titles\">");
 WriteLiteral("</div>\r\n");
 
             
-            #line 13 "..\..\Views\Content\Partial\WidgetRecent.cshtml"
+            #line 40 "..\..\Views\Content\Partial\WidgetRecent.cshtml"
 
 
             
@@ -114,7 +120,7 @@ WriteLiteral("    ");
 WriteLiteral("<div class=\"bcms-templates-holder\">\r\n");
 
             
-            #line 15 "..\..\Views\Content\Partial\WidgetRecent.cshtml"
+            #line 42 "..\..\Views\Content\Partial\WidgetRecent.cshtml"
         for (int i = 0; i < Model.Count; i++)
         {
             var widget = Model[i];
@@ -130,7 +136,7 @@ WriteLiteral(" class=\"bcms-grid-box bcms-grid-box-pages bcms-js-preview-block\"
 WriteLiteral("\r\n                 data-id=\"");
 
             
-            #line 20 "..\..\Views\Content\Partial\WidgetRecent.cshtml"
+            #line 47 "..\..\Views\Content\Partial\WidgetRecent.cshtml"
                      Write(widget.Id);
 
             
@@ -141,7 +147,7 @@ WriteLiteral("\"");
 WriteLiteral("\r\n                 data-original-id=\"");
 
             
-            #line 21 "..\..\Views\Content\Partial\WidgetRecent.cshtml"
+            #line 48 "..\..\Views\Content\Partial\WidgetRecent.cshtml"
                               Write(widget.OriginalId);
 
             
@@ -152,7 +158,7 @@ WriteLiteral("\"");
 WriteLiteral("\r\n                 data-version=\"");
 
             
-            #line 22 "..\..\Views\Content\Partial\WidgetRecent.cshtml"
+            #line 49 "..\..\Views\Content\Partial\WidgetRecent.cshtml"
                           Write(widget.Version);
 
             
@@ -163,7 +169,7 @@ WriteLiteral("\"");
 WriteLiteral("\r\n                 data-original-version=\"");
 
             
-            #line 23 "..\..\Views\Content\Partial\WidgetRecent.cshtml"
+            #line 50 "..\..\Views\Content\Partial\WidgetRecent.cshtml"
                                    Write(widget.OriginalVersion);
 
             
@@ -174,7 +180,7 @@ WriteLiteral("\"");
 WriteLiteral("\r\n                 data-type=\"");
 
             
-            #line 24 "..\..\Views\Content\Partial\WidgetRecent.cshtml"
+            #line 51 "..\..\Views\Content\Partial\WidgetRecent.cshtml"
                        Write(widget.WidgetType);
 
             
@@ -185,7 +191,7 @@ WriteLiteral("\"");
 WriteLiteral("\r\n                 data-category-id=\"");
 
             
-            #line 25 "..\..\Views\Content\Partial\WidgetRecent.cshtml"
+            #line 52 "..\..\Views\Content\Partial\WidgetRecent.cshtml"
                                Write(Guid.Empty);
 
             
@@ -200,7 +206,7 @@ WriteLiteral(" class=\"bcms-content-titles\"");
 WriteLiteral(">");
 
             
-            #line 27 "..\..\Views\Content\Partial\WidgetRecent.cshtml"
+            #line 54 "..\..\Views\Content\Partial\WidgetRecent.cshtml"
                                             Write(widget.Name);
 
             
@@ -209,13 +215,13 @@ WriteLiteral(">");
 WriteLiteral("</div>\r\n\r\n");
 
             
-            #line 29 "..\..\Views\Content\Partial\WidgetRecent.cshtml"
+            #line 56 "..\..\Views\Content\Partial\WidgetRecent.cshtml"
                 
             
             #line default
             #line hidden
             
-            #line 29 "..\..\Views\Content\Partial\WidgetRecent.cshtml"
+            #line 56 "..\..\Views\Content\Partial\WidgetRecent.cshtml"
                  if (!string.IsNullOrWhiteSpace(widget.PreviewImageUrl))
                 {
                     
@@ -223,14 +229,14 @@ WriteLiteral("</div>\r\n\r\n");
             #line default
             #line hidden
             
-            #line 31 "..\..\Views\Content\Partial\WidgetRecent.cshtml"
+            #line 58 "..\..\Views\Content\Partial\WidgetRecent.cshtml"
                Write(Html.PreviewContentBox(widget.PreviewImageUrl, widget.PreviewImageUrl, widget.Name, true));
 
             
             #line default
             #line hidden
             
-            #line 31 "..\..\Views\Content\Partial\WidgetRecent.cshtml"
+            #line 58 "..\..\Views\Content\Partial\WidgetRecent.cshtml"
                                                                                                               
                 }
                 else
@@ -242,14 +248,14 @@ WriteLiteral("</div>\r\n\r\n");
             #line default
             #line hidden
             
-            #line 37 "..\..\Views\Content\Partial\WidgetRecent.cshtml"
+            #line 64 "..\..\Views\Content\Partial\WidgetRecent.cshtml"
                Write(Html.PreviewContentBox(url1, url2, widget.Name));
 
             
             #line default
             #line hidden
             
-            #line 37 "..\..\Views\Content\Partial\WidgetRecent.cshtml"
+            #line 64 "..\..\Views\Content\Partial\WidgetRecent.cshtml"
                                                                     
                 }
 
@@ -267,7 +273,7 @@ WriteLiteral(" class=\"bcms-btn-selection bcms-js-insert\"");
 WriteLiteral(">");
 
             
-            #line 41 "..\..\Views\Content\Partial\WidgetRecent.cshtml"
+            #line 68 "..\..\Views\Content\Partial\WidgetRecent.cshtml"
                                                               Write(PagesGlobalization.AddPageContent_WidgetTab_InsertButton);
 
             
@@ -276,13 +282,13 @@ WriteLiteral(">");
 WriteLiteral("</div>\r\n");
 
             
-            #line 42 "..\..\Views\Content\Partial\WidgetRecent.cshtml"
+            #line 69 "..\..\Views\Content\Partial\WidgetRecent.cshtml"
                     
             
             #line default
             #line hidden
             
-            #line 42 "..\..\Views\Content\Partial\WidgetRecent.cshtml"
+            #line 69 "..\..\Views\Content\Partial\WidgetRecent.cshtml"
                      if ((ViewContext.Controller as CmsControllerBase).SecurityService.IsAuthorized(RootModuleConstants.UserRoles.Administration))
                     {
 
@@ -296,13 +302,13 @@ WriteLiteral(" class=\"bcms-grid-controls-helper\"");
 WriteLiteral(">\r\n");
 
             
-            #line 45 "..\..\Views\Content\Partial\WidgetRecent.cshtml"
+            #line 72 "..\..\Views\Content\Partial\WidgetRecent.cshtml"
                             
             
             #line default
             #line hidden
             
-            #line 45 "..\..\Views\Content\Partial\WidgetRecent.cshtml"
+            #line 72 "..\..\Views\Content\Partial\WidgetRecent.cshtml"
                              if (!widget.Status.Equals(ContentStatus.Published.ToString()))
                             {
 
@@ -316,7 +322,7 @@ WriteLiteral(" class=\"bcms-action-edit bcms-draft bcms-js-content-edit\"");
 WriteLiteral(">");
 
             
-            #line 47 "..\..\Views\Content\Partial\WidgetRecent.cshtml"
+            #line 74 "..\..\Views\Content\Partial\WidgetRecent.cshtml"
                                                                                          Write(PagesGlobalization.AddPageContent_WidgetTab_EditButton);
 
             
@@ -325,7 +331,7 @@ WriteLiteral(">");
 WriteLiteral("</div>\r\n");
 
             
-            #line 48 "..\..\Views\Content\Partial\WidgetRecent.cshtml"
+            #line 75 "..\..\Views\Content\Partial\WidgetRecent.cshtml"
                             }
                             else
                             {
@@ -340,7 +346,7 @@ WriteLiteral(" class=\"bcms-action-edit bcms-js-content-edit\"");
 WriteLiteral(">");
 
             
-            #line 51 "..\..\Views\Content\Partial\WidgetRecent.cshtml"
+            #line 78 "..\..\Views\Content\Partial\WidgetRecent.cshtml"
                                                                               Write(PagesGlobalization.AddPageContent_WidgetTab_EditButton);
 
             
@@ -349,7 +355,7 @@ WriteLiteral(">");
 WriteLiteral("</div>\r\n");
 
             
-            #line 52 "..\..\Views\Content\Partial\WidgetRecent.cshtml"
+            #line 79 "..\..\Views\Content\Partial\WidgetRecent.cshtml"
                             }
 
             
@@ -362,7 +368,7 @@ WriteLiteral(" class=\"bcms-action-delete bcms-js-content-delete\"");
 WriteLiteral(">");
 
             
-            #line 53 "..\..\Views\Content\Partial\WidgetRecent.cshtml"
+            #line 80 "..\..\Views\Content\Partial\WidgetRecent.cshtml"
                                                                               Write(PagesGlobalization.AddPageContent_WidgetTab_DeleteButton);
 
             
@@ -371,7 +377,7 @@ WriteLiteral(">");
 WriteLiteral("</div>\r\n                        </div>\r\n");
 
             
-            #line 55 "..\..\Views\Content\Partial\WidgetRecent.cshtml"
+            #line 82 "..\..\Views\Content\Partial\WidgetRecent.cshtml"
                     }
 
             
@@ -380,7 +386,7 @@ WriteLiteral("</div>\r\n                        </div>\r\n");
 WriteLiteral("                </div>\r\n            </div>\r\n");
 
             
-            #line 58 "..\..\Views\Content\Partial\WidgetRecent.cshtml"
+            #line 85 "..\..\Views\Content\Partial\WidgetRecent.cshtml"
         }
 
             
@@ -391,7 +397,7 @@ WriteLiteral("    ");
 WriteLiteral("</div>\r\n");
 
             
-            #line 60 "..\..\Views\Content\Partial\WidgetRecent.cshtml"
+            #line 87 "..\..\Views\Content\Partial\WidgetRecent.cshtml"
 }
 
             

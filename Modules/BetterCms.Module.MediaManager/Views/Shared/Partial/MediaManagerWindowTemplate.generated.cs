@@ -28,7 +28,7 @@ namespace ASP
     using System.Web.UI;
     using System.Web.WebPages;
     
-    #line 1 "..\..\Views\Shared\Partial\MediaManagerWindowTemplate.cshtml"
+    #line 28 "..\..\Views\Shared\Partial\MediaManagerWindowTemplate.cshtml"
     using BetterCms.Module.Root.Mvc.Helpers;
     
     #line default
@@ -43,6 +43,8 @@ namespace ASP
         }
         public override void Execute()
         {
+WriteLiteral("\r\n");
+
 WriteLiteral("<script");
 
 WriteLiteral(" type=\"text/html\"");
@@ -54,7 +56,7 @@ WriteLiteral(">\r\n");
 WriteLiteral("    ");
 
             
-            #line 5 "..\..\Views\Shared\Partial\MediaManagerWindowTemplate.cshtml"
+            #line 32 "..\..\Views\Shared\Partial\MediaManagerWindowTemplate.cshtml"
 Write(Html.MessagesBox(null, new Dictionary<string, string> { { "data-bind", "attr: { id: domId() }" } }));
 
             
@@ -65,7 +67,7 @@ WriteLiteral("\r\n\r\n    <div class=\"bcms-window-settings\">\r\n");
 WriteLiteral("        ");
 
             
-            #line 8 "..\..\Views\Shared\Partial\MediaManagerWindowTemplate.cshtml"
+            #line 35 "..\..\Views\Shared\Partial\MediaManagerWindowTemplate.cshtml"
    Write(Html.Partial("Partial/MediaManagerInnerContentTemplate"));
 
             

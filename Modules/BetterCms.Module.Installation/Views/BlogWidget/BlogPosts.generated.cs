@@ -28,7 +28,7 @@ namespace ASP
     using System.Web.UI;
     using System.Web.WebPages;
     
-    #line 1 "..\..\Views\BlogWidget\BlogPosts.cshtml"
+    #line 28 "..\..\Views\BlogWidget\BlogPosts.cshtml"
     using BetterCms.Module.Installation.Models.Blog;
     
     #line default
@@ -43,8 +43,10 @@ namespace ASP
         }
         public override void Execute()
         {
+WriteLiteral("\r\n");
+
             
-            #line 4 "..\..\Views\BlogWidget\BlogPosts.cshtml"
+            #line 31 "..\..\Views\BlogWidget\BlogPosts.cshtml"
  foreach (var item in Model.Items)
 {
 
@@ -57,20 +59,20 @@ WriteLiteral(" class=\"blog-post\"");
 
 WriteLiteral(">\r\n        <h2>\r\n            <a");
 
-WriteAttribute("href", Tuple.Create(" href=\"", 175), Tuple.Create("\"", 191)
+WriteAttribute("href", Tuple.Create(" href=\"", 1482), Tuple.Create("\"", 1498)
             
-            #line 8 "..\..\Views\BlogWidget\BlogPosts.cshtml"
-, Tuple.Create(Tuple.Create("", 182), Tuple.Create<System.Object, System.Int32>(item.Url
+            #line 35 "..\..\Views\BlogWidget\BlogPosts.cshtml"
+, Tuple.Create(Tuple.Create("", 1489), Tuple.Create<System.Object, System.Int32>(item.Url
             
             #line default
             #line hidden
-, 182), false)
+, 1489), false)
 );
 
 WriteLiteral(">");
 
             
-            #line 8 "..\..\Views\BlogWidget\BlogPosts.cshtml"
+            #line 35 "..\..\Views\BlogWidget\BlogPosts.cshtml"
                            Write(item.Title);
 
             
@@ -79,13 +81,13 @@ WriteLiteral(">");
 WriteLiteral("</a>\r\n        </h2>\r\n");
 
             
-            #line 10 "..\..\Views\BlogWidget\BlogPosts.cshtml"
+            #line 37 "..\..\Views\BlogWidget\BlogPosts.cshtml"
         
             
             #line default
             #line hidden
             
-            #line 10 "..\..\Views\BlogWidget\BlogPosts.cshtml"
+            #line 37 "..\..\Views\BlogWidget\BlogPosts.cshtml"
          if (Model.ShowAuthor)
         {
 
@@ -99,7 +101,7 @@ WriteLiteral(" class=\"author\"");
 WriteLiteral(">");
 
             
-            #line 12 "..\..\Views\BlogWidget\BlogPosts.cshtml"
+            #line 39 "..\..\Views\BlogWidget\BlogPosts.cshtml"
                             Write(item.Author);
 
             
@@ -108,7 +110,7 @@ WriteLiteral(">");
 WriteLiteral("</span>\r\n");
 
             
-            #line 13 "..\..\Views\BlogWidget\BlogPosts.cshtml"
+            #line 40 "..\..\Views\BlogWidget\BlogPosts.cshtml"
         }
 
             
@@ -117,7 +119,7 @@ WriteLiteral("</span>\r\n");
 WriteLiteral("        ");
 
             
-            #line 14 "..\..\Views\BlogWidget\BlogPosts.cshtml"
+            #line 41 "..\..\Views\BlogWidget\BlogPosts.cshtml"
          if (Model.ShowDate)
         {
 
@@ -126,20 +128,20 @@ WriteLiteral("        ");
             #line hidden
 WriteLiteral("            <time");
 
-WriteAttribute("datetime", Tuple.Create(" datetime=\"", 391), Tuple.Create("\"", 442)
+WriteAttribute("datetime", Tuple.Create(" datetime=\"", 1698), Tuple.Create("\"", 1749)
             
-            #line 16 "..\..\Views\BlogWidget\BlogPosts.cshtml"
-, Tuple.Create(Tuple.Create("", 402), Tuple.Create<System.Object, System.Int32>(item.PublishedOn.ToString("yyyy-MM-dd")
+            #line 43 "..\..\Views\BlogWidget\BlogPosts.cshtml"
+, Tuple.Create(Tuple.Create("", 1709), Tuple.Create<System.Object, System.Int32>(item.PublishedOn.ToString("yyyy-MM-dd")
             
             #line default
             #line hidden
-, 402), false)
+, 1709), false)
 );
 
 WriteLiteral(">");
 
             
-            #line 16 "..\..\Views\BlogWidget\BlogPosts.cshtml"
+            #line 43 "..\..\Views\BlogWidget\BlogPosts.cshtml"
                                                                  Write(item.PublishedOn.ToString("MMM d, yyyy"));
 
             
@@ -148,7 +150,7 @@ WriteLiteral(">");
 WriteLiteral("</time>\r\n");
 
             
-            #line 17 "..\..\Views\BlogWidget\BlogPosts.cshtml"
+            #line 44 "..\..\Views\BlogWidget\BlogPosts.cshtml"
         }
 
             
@@ -157,13 +159,13 @@ WriteLiteral("</time>\r\n");
 WriteLiteral("        <br />\r\n        <span>\r\n");
 
             
-            #line 20 "..\..\Views\BlogWidget\BlogPosts.cshtml"
+            #line 47 "..\..\Views\BlogWidget\BlogPosts.cshtml"
             
             
             #line default
             #line hidden
             
-            #line 20 "..\..\Views\BlogWidget\BlogPosts.cshtml"
+            #line 47 "..\..\Views\BlogWidget\BlogPosts.cshtml"
              if (item.Tags.Count > 0 && Model.ShowTags)
             {
 
@@ -173,7 +175,7 @@ WriteLiteral("        <br />\r\n        <span>\r\n");
 WriteLiteral("                <span>Tags:</span>\r\n");
 
             
-            #line 23 "..\..\Views\BlogWidget\BlogPosts.cshtml"
+            #line 50 "..\..\Views\BlogWidget\BlogPosts.cshtml"
                 foreach (var tag in item.Tags)
                 {
 
@@ -182,22 +184,22 @@ WriteLiteral("                <span>Tags:</span>\r\n");
             #line hidden
 WriteLiteral("                    <a");
 
-WriteAttribute("href", Tuple.Create(" href=\"", 734), Tuple.Create("\"", 767)
+WriteAttribute("href", Tuple.Create(" href=\"", 2041), Tuple.Create("\"", 2074)
             
-            #line 25 "..\..\Views\BlogWidget\BlogPosts.cshtml"
-, Tuple.Create(Tuple.Create("", 741), Tuple.Create<System.Object, System.Int32>(Request.Path
-            
-            #line default
-            #line hidden
-, 741), false)
-, Tuple.Create(Tuple.Create("", 754), Tuple.Create("?blogtag=", 754), true)
-            
-            #line 25 "..\..\Views\BlogWidget\BlogPosts.cshtml"
-, Tuple.Create(Tuple.Create("", 763), Tuple.Create<System.Object, System.Int32>(tag
+            #line 52 "..\..\Views\BlogWidget\BlogPosts.cshtml"
+, Tuple.Create(Tuple.Create("", 2048), Tuple.Create<System.Object, System.Int32>(Request.Path
             
             #line default
             #line hidden
-, 763), false)
+, 2048), false)
+, Tuple.Create(Tuple.Create("", 2061), Tuple.Create("?blogtag=", 2061), true)
+            
+            #line 52 "..\..\Views\BlogWidget\BlogPosts.cshtml"
+, Tuple.Create(Tuple.Create("", 2070), Tuple.Create<System.Object, System.Int32>(tag
+            
+            #line default
+            #line hidden
+, 2070), false)
 );
 
 WriteLiteral(" class=\"single-tag\"");
@@ -205,7 +207,7 @@ WriteLiteral(" class=\"single-tag\"");
 WriteLiteral(">");
 
             
-            #line 25 "..\..\Views\BlogWidget\BlogPosts.cshtml"
+            #line 52 "..\..\Views\BlogWidget\BlogPosts.cshtml"
                                                                        Write(tag);
 
             
@@ -214,7 +216,7 @@ WriteLiteral(">");
 WriteLiteral("</a>\r\n");
 
             
-            #line 26 "..\..\Views\BlogWidget\BlogPosts.cshtml"
+            #line 53 "..\..\Views\BlogWidget\BlogPosts.cshtml"
                 }
             }
 
@@ -224,13 +226,13 @@ WriteLiteral("</a>\r\n");
 WriteLiteral("        </span>\r\n        <span>\r\n");
 
             
-            #line 30 "..\..\Views\BlogWidget\BlogPosts.cshtml"
+            #line 57 "..\..\Views\BlogWidget\BlogPosts.cshtml"
             
             
             #line default
             #line hidden
             
-            #line 30 "..\..\Views\BlogWidget\BlogPosts.cshtml"
+            #line 57 "..\..\Views\BlogWidget\BlogPosts.cshtml"
              if (item.Categories.Count > 0 && Model.ShowCategories)
             {
 
@@ -240,7 +242,7 @@ WriteLiteral("        </span>\r\n        <span>\r\n");
 WriteLiteral("                <span>Categories:</span>\r\n");
 
             
-            #line 33 "..\..\Views\BlogWidget\BlogPosts.cshtml"
+            #line 60 "..\..\Views\BlogWidget\BlogPosts.cshtml"
                 foreach (var category in item.Categories)
                 {
 
@@ -249,22 +251,22 @@ WriteLiteral("                <span>Categories:</span>\r\n");
             #line hidden
 WriteLiteral("                    <a");
 
-WriteAttribute("href", Tuple.Create(" href=\"", 1091), Tuple.Create("\"", 1139)
+WriteAttribute("href", Tuple.Create(" href=\"", 2398), Tuple.Create("\"", 2446)
             
-            #line 35 "..\..\Views\BlogWidget\BlogPosts.cshtml"
-, Tuple.Create(Tuple.Create("", 1098), Tuple.Create<System.Object, System.Int32>(Request.Path
-            
-            #line default
-            #line hidden
-, 1098), false)
-, Tuple.Create(Tuple.Create("", 1111), Tuple.Create("?blogcategory=", 1111), true)
-            
-            #line 35 "..\..\Views\BlogWidget\BlogPosts.cshtml"
-, Tuple.Create(Tuple.Create("", 1125), Tuple.Create<System.Object, System.Int32>(category.Name
+            #line 62 "..\..\Views\BlogWidget\BlogPosts.cshtml"
+, Tuple.Create(Tuple.Create("", 2405), Tuple.Create<System.Object, System.Int32>(Request.Path
             
             #line default
             #line hidden
-, 1125), false)
+, 2405), false)
+, Tuple.Create(Tuple.Create("", 2418), Tuple.Create("?blogcategory=", 2418), true)
+            
+            #line 62 "..\..\Views\BlogWidget\BlogPosts.cshtml"
+, Tuple.Create(Tuple.Create("", 2432), Tuple.Create<System.Object, System.Int32>(category.Name
+            
+            #line default
+            #line hidden
+, 2432), false)
 );
 
 WriteLiteral(" class=\"single-category\"");
@@ -272,7 +274,7 @@ WriteLiteral(" class=\"single-category\"");
 WriteLiteral(">");
 
             
-            #line 35 "..\..\Views\BlogWidget\BlogPosts.cshtml"
+            #line 62 "..\..\Views\BlogWidget\BlogPosts.cshtml"
                                                                                            Write(category.Name);
 
             
@@ -281,7 +283,7 @@ WriteLiteral(">");
 WriteLiteral("</a>\r\n");
 
             
-            #line 36 "..\..\Views\BlogWidget\BlogPosts.cshtml"
+            #line 63 "..\..\Views\BlogWidget\BlogPosts.cshtml"
                 }
             }
 
@@ -291,7 +293,7 @@ WriteLiteral("</a>\r\n");
 WriteLiteral("        </span>\r\n        <article>\r\n            <p>");
 
             
-            #line 40 "..\..\Views\BlogWidget\BlogPosts.cshtml"
+            #line 67 "..\..\Views\BlogWidget\BlogPosts.cshtml"
           Write(Html.Raw(item.IntroText));
 
             
@@ -299,20 +301,20 @@ WriteLiteral("        </span>\r\n        <article>\r\n            <p>");
             #line hidden
 WriteLiteral("</p>\r\n\r\n            <a");
 
-WriteAttribute("href", Tuple.Create(" href=\"", 1317), Tuple.Create("\"", 1333)
+WriteAttribute("href", Tuple.Create(" href=\"", 2624), Tuple.Create("\"", 2640)
             
-            #line 42 "..\..\Views\BlogWidget\BlogPosts.cshtml"
-, Tuple.Create(Tuple.Create("", 1324), Tuple.Create<System.Object, System.Int32>(item.Url
+            #line 69 "..\..\Views\BlogWidget\BlogPosts.cshtml"
+, Tuple.Create(Tuple.Create("", 2631), Tuple.Create<System.Object, System.Int32>(item.Url
             
             #line default
             #line hidden
-, 1324), false)
+, 2631), false)
 );
 
 WriteLiteral(">&lt; Read more &gt;</a>\r\n        </article>\r\n    </section>\r\n");
 
             
-            #line 45 "..\..\Views\BlogWidget\BlogPosts.cshtml"
+            #line 72 "..\..\Views\BlogWidget\BlogPosts.cshtml"
 }
 
             
@@ -321,7 +323,7 @@ WriteLiteral(">&lt; Read more &gt;</a>\r\n        </article>\r\n    </section>\r
 WriteLiteral("\r\n");
 
             
-            #line 47 "..\..\Views\BlogWidget\BlogPosts.cshtml"
+            #line 74 "..\..\Views\BlogWidget\BlogPosts.cshtml"
  if (Model.ShowPager && Model.Items.Count > 0)
 {
 
@@ -335,13 +337,13 @@ WriteLiteral(" class=\"blog-pager\"");
 WriteLiteral(">\r\n");
 
             
-            #line 50 "..\..\Views\BlogWidget\BlogPosts.cshtml"
+            #line 77 "..\..\Views\BlogWidget\BlogPosts.cshtml"
         
             
             #line default
             #line hidden
             
-            #line 50 "..\..\Views\BlogWidget\BlogPosts.cshtml"
+            #line 77 "..\..\Views\BlogWidget\BlogPosts.cshtml"
          for (int i = 1; i <= Model.NumberOfPages; i++)
         {
             if (Model.CurrentPage == i)
@@ -352,22 +354,22 @@ WriteLiteral(">\r\n");
             #line hidden
 WriteLiteral("                <a");
 
-WriteAttribute("href", Tuple.Create(" href=\"", 1628), Tuple.Create("\"", 1660)
+WriteAttribute("href", Tuple.Create(" href=\"", 2935), Tuple.Create("\"", 2967)
             
-            #line 54 "..\..\Views\BlogWidget\BlogPosts.cshtml"
-, Tuple.Create(Tuple.Create("", 1635), Tuple.Create<System.Object, System.Int32>(Request.Path
-            
-            #line default
-            #line hidden
-, 1635), false)
-, Tuple.Create(Tuple.Create("", 1648), Tuple.Create("?blogpage=", 1648), true)
-            
-            #line 54 "..\..\Views\BlogWidget\BlogPosts.cshtml"
-, Tuple.Create(Tuple.Create("", 1658), Tuple.Create<System.Object, System.Int32>(i
+            #line 81 "..\..\Views\BlogWidget\BlogPosts.cshtml"
+, Tuple.Create(Tuple.Create("", 2942), Tuple.Create<System.Object, System.Int32>(Request.Path
             
             #line default
             #line hidden
-, 1658), false)
+, 2942), false)
+, Tuple.Create(Tuple.Create("", 2955), Tuple.Create("?blogpage=", 2955), true)
+            
+            #line 81 "..\..\Views\BlogWidget\BlogPosts.cshtml"
+, Tuple.Create(Tuple.Create("", 2965), Tuple.Create<System.Object, System.Int32>(i
+            
+            #line default
+            #line hidden
+, 2965), false)
 );
 
 WriteLiteral(" class=\"blog-page\"");
@@ -377,7 +379,7 @@ WriteLiteral(" style=\"pointer-events: none; cursor: default\"");
 WriteLiteral(">");
 
             
-            #line 54 "..\..\Views\BlogWidget\BlogPosts.cshtml"
+            #line 81 "..\..\Views\BlogWidget\BlogPosts.cshtml"
                                                                                                                Write(i);
 
             
@@ -386,7 +388,7 @@ WriteLiteral(">");
 WriteLiteral("</a>\r\n");
 
             
-            #line 55 "..\..\Views\BlogWidget\BlogPosts.cshtml"
+            #line 82 "..\..\Views\BlogWidget\BlogPosts.cshtml"
             }
             else
             {
@@ -396,22 +398,22 @@ WriteLiteral("</a>\r\n");
             #line hidden
 WriteLiteral("                <a");
 
-WriteAttribute("href", Tuple.Create(" href=\"", 1800), Tuple.Create("\"", 1832)
+WriteAttribute("href", Tuple.Create(" href=\"", 3107), Tuple.Create("\"", 3139)
             
-            #line 58 "..\..\Views\BlogWidget\BlogPosts.cshtml"
-, Tuple.Create(Tuple.Create("", 1807), Tuple.Create<System.Object, System.Int32>(Request.Path
-            
-            #line default
-            #line hidden
-, 1807), false)
-, Tuple.Create(Tuple.Create("", 1820), Tuple.Create("?blogpage=", 1820), true)
-            
-            #line 58 "..\..\Views\BlogWidget\BlogPosts.cshtml"
-, Tuple.Create(Tuple.Create("", 1830), Tuple.Create<System.Object, System.Int32>(i
+            #line 85 "..\..\Views\BlogWidget\BlogPosts.cshtml"
+, Tuple.Create(Tuple.Create("", 3114), Tuple.Create<System.Object, System.Int32>(Request.Path
             
             #line default
             #line hidden
-, 1830), false)
+, 3114), false)
+, Tuple.Create(Tuple.Create("", 3127), Tuple.Create("?blogpage=", 3127), true)
+            
+            #line 85 "..\..\Views\BlogWidget\BlogPosts.cshtml"
+, Tuple.Create(Tuple.Create("", 3137), Tuple.Create<System.Object, System.Int32>(i
+            
+            #line default
+            #line hidden
+, 3137), false)
 );
 
 WriteLiteral(" class=\"blog-page\"");
@@ -419,7 +421,7 @@ WriteLiteral(" class=\"blog-page\"");
 WriteLiteral(">");
 
             
-            #line 58 "..\..\Views\BlogWidget\BlogPosts.cshtml"
+            #line 85 "..\..\Views\BlogWidget\BlogPosts.cshtml"
                                                                  Write(i);
 
             
@@ -428,7 +430,7 @@ WriteLiteral(">");
 WriteLiteral("</a>\r\n");
 
             
-            #line 59 "..\..\Views\BlogWidget\BlogPosts.cshtml"
+            #line 86 "..\..\Views\BlogWidget\BlogPosts.cshtml"
             }
         }
 
@@ -438,7 +440,7 @@ WriteLiteral("</a>\r\n");
 WriteLiteral("    </section>\r\n");
 
             
-            #line 62 "..\..\Views\BlogWidget\BlogPosts.cshtml"
+            #line 89 "..\..\Views\BlogWidget\BlogPosts.cshtml"
 }
 
             

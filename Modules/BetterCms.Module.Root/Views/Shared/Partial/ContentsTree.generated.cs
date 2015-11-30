@@ -28,7 +28,7 @@ namespace ASP
     using System.Web.UI;
     using System.Web.WebPages;
     
-    #line 1 "..\..\Views\Shared\Partial\ContentsTree.cshtml"
+    #line 28 "..\..\Views\Shared\Partial\ContentsTree.cshtml"
     using BetterCms.Module.Root.Content.Resources;
     
     #line default
@@ -43,6 +43,8 @@ namespace ASP
         }
         public override void Execute()
         {
+WriteLiteral("\r\n");
+
 WriteLiteral("\r\n<script");
 
 WriteLiteral(" type=\"text/html\"");
@@ -56,7 +58,7 @@ WriteLiteral(@">
                 <h2 data-bind=""visible: $parent.invisibleItems().length > 0"">");
 
             
-            #line 7 "..\..\Views\Shared\Partial\ContentsTree.cshtml"
+            #line 34 "..\..\Views\Shared\Partial\ContentsTree.cshtml"
                                                                         Write(RootGlobalization.ContentsTree_VisibleItems_Title);
 
             
@@ -70,7 +72,7 @@ WriteLiteral(@"</h2>
                 <h2>");
 
             
-            #line 12 "..\..\Views\Shared\Partial\ContentsTree.cshtml"
+            #line 39 "..\..\Views\Shared\Partial\ContentsTree.cshtml"
                Write(RootGlobalization.ContentsTree_InvisibleItems_Title);
 
             

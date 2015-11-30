@@ -28,25 +28,25 @@ namespace ASP
     using System.Web.UI;
     using System.Web.WebPages;
     
-    #line 1 "..\..\Views\Tags\TagsTemplate.cshtml"
+    #line 28 "..\..\Views\Tags\TagsTemplate.cshtml"
     using BetterCms.Module.Root;
     
     #line default
     #line hidden
     
-    #line 2 "..\..\Views\Tags\TagsTemplate.cshtml"
+    #line 29 "..\..\Views\Tags\TagsTemplate.cshtml"
     using BetterCms.Module.Root.Content.Resources;
     
     #line default
     #line hidden
     
-    #line 3 "..\..\Views\Tags\TagsTemplate.cshtml"
+    #line 30 "..\..\Views\Tags\TagsTemplate.cshtml"
     using BetterCms.Module.Root.Mvc;
     
     #line default
     #line hidden
     
-    #line 4 "..\..\Views\Tags\TagsTemplate.cshtml"
+    #line 31 "..\..\Views\Tags\TagsTemplate.cshtml"
     using BetterCms.Module.Root.Mvc.Helpers;
     
     #line default
@@ -61,8 +61,10 @@ namespace ASP
         }
         public override void Execute()
         {
+WriteLiteral("\r\n");
+
             
-            #line 7 "..\..\Views\Tags\TagsTemplate.cshtml"
+            #line 34 "..\..\Views\Tags\TagsTemplate.cshtml"
    var canEdit = (ViewContext.Controller as CmsControllerBase).SecurityService.IsAuthorized(RootModuleConstants.UserRoles.EditContent); 
             
             #line default
@@ -74,7 +76,7 @@ WriteLiteral(" class=\"bcms-content-titles\"");
 WriteLiteral(">");
 
             
-            #line 9 "..\..\Views\Tags\TagsTemplate.cshtml"
+            #line 36 "..\..\Views\Tags\TagsTemplate.cshtml"
                             Write(RootGlobalization.TagsTemplate_AddTags_Title);
 
             
@@ -83,7 +85,7 @@ WriteLiteral(">");
 WriteLiteral("</div>\r\n");
 
             
-            #line 10 "..\..\Views\Tags\TagsTemplate.cshtml"
+            #line 37 "..\..\Views\Tags\TagsTemplate.cshtml"
 Write(Html.Tooltip(Model.TooltipDescription));
 
             
@@ -141,7 +143,7 @@ WriteLiteral(" class=\"bcms-single-tag-remove\"");
 WriteLiteral(" data-bind=\"");
 
             
-            #line 31 "..\..\Views\Tags\TagsTemplate.cshtml"
+            #line 58 "..\..\Views\Tags\TagsTemplate.cshtml"
                                                    Write(canEdit ? "click: remove" : string.Empty);
 
             
@@ -152,7 +154,7 @@ WriteLiteral("\"");
 WriteLiteral(">");
 
             
-            #line 31 "..\..\Views\Tags\TagsTemplate.cshtml"
+            #line 58 "..\..\Views\Tags\TagsTemplate.cshtml"
                                                                                                Write(RootGlobalization.Button_Remove);
 
             

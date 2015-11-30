@@ -28,13 +28,13 @@ namespace ASP
     using System.Web.UI;
     using System.Web.WebPages;
     
-    #line 1 "..\..\Views\History\ContentHistory.cshtml"
+    #line 28 "..\..\Views\History\ContentHistory.cshtml"
     using BetterCms.Module.Pages.Content.Resources;
     
     #line default
     #line hidden
     
-    #line 2 "..\..\Views\History\ContentHistory.cshtml"
+    #line 29 "..\..\Views\History\ContentHistory.cshtml"
     using BetterCms.Module.Root.Mvc.Helpers;
     
     #line default
@@ -49,8 +49,10 @@ namespace ASP
         }
         public override void Execute()
         {
+WriteLiteral("\r\n");
+
             
-            #line 5 "..\..\Views\History\ContentHistory.cshtml"
+            #line 32 "..\..\Views\History\ContentHistory.cshtml"
 Write(Html.MessagesBox());
 
             
@@ -73,7 +75,7 @@ WriteLiteral(" data-name=\"#bcms-tab-1\"");
 WriteLiteral(">");
 
             
-            #line 8 "..\..\Views\History\ContentHistory.cshtml"
+            #line 35 "..\..\Views\History\ContentHistory.cshtml"
                                                                               Write(PagesGlobalization.ContentHistory_ContentTab_Title);
 
             
@@ -88,7 +90,7 @@ WriteLiteral(" data-name=\"#bcms-tab-2\"");
 WriteLiteral(">");
 
             
-            #line 9 "..\..\Views\History\ContentHistory.cshtml"
+            #line 36 "..\..\Views\History\ContentHistory.cshtml"
                                                                   Write(PagesGlobalization.ContentHistory_PropertiesTab_Title);
 
             
@@ -103,7 +105,7 @@ WriteLiteral(">\r\n");
 WriteLiteral("    ");
 
             
-            #line 14 "..\..\Views\History\ContentHistory.cshtml"
+            #line 41 "..\..\Views\History\ContentHistory.cshtml"
 Write(Html.Partial("ContentHistoryTable", Model));
 
             

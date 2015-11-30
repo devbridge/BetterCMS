@@ -37,32 +37,34 @@ namespace ASP
         }
         public override void Execute()
         {
+WriteLiteral("\r\n");
+
 WriteLiteral("<div");
 
-WriteAttribute("class", Tuple.Create(" class=\"", 71), Tuple.Create("\"", 263)
-, Tuple.Create(Tuple.Create("", 79), Tuple.Create("bcms-grid-box", 79), true)
-, Tuple.Create(Tuple.Create(" ", 92), Tuple.Create("bcms-grid-box-pages", 93), true)
-, Tuple.Create(Tuple.Create(" ", 112), Tuple.Create("bcms-js-grid-box", 113), true)
+WriteAttribute("class", Tuple.Create(" class=\"", 1377), Tuple.Create("\"", 1569)
+, Tuple.Create(Tuple.Create("", 1385), Tuple.Create("bcms-grid-box", 1385), true)
+, Tuple.Create(Tuple.Create(" ", 1398), Tuple.Create("bcms-grid-box-pages", 1399), true)
+, Tuple.Create(Tuple.Create(" ", 1418), Tuple.Create("bcms-js-grid-box", 1419), true)
             
-            #line 3 "..\..\Views\Page\Partial\Template.cshtml"
-, Tuple.Create(Tuple.Create(" ", 129), Tuple.Create<System.Object, System.Int32>(Model.IsActive ? "bcms-grid-box-active" : string.Empty
-            
-            #line default
-            #line hidden
-, 130), false)
-            
-            #line 3 "..\..\Views\Page\Partial\Template.cshtml"
-                                          , Tuple.Create(Tuple.Create(" ", 187), Tuple.Create<System.Object, System.Int32>(Model.IsCircularToCurrent ? "bcms-grid-box-notcompatible" : string.Empty
+            #line 30 "..\..\Views\Page\Partial\Template.cshtml"
+, Tuple.Create(Tuple.Create(" ", 1435), Tuple.Create<System.Object, System.Int32>(Model.IsActive ? "bcms-grid-box-active" : string.Empty
             
             #line default
             #line hidden
-, 188), false)
+, 1436), false)
+            
+            #line 30 "..\..\Views\Page\Partial\Template.cshtml"
+                                         , Tuple.Create(Tuple.Create(" ", 1493), Tuple.Create<System.Object, System.Int32>(Model.IsCircularToCurrent ? "bcms-grid-box-notcompatible" : string.Empty
+            
+            #line default
+            #line hidden
+, 1494), false)
 );
 
 WriteLiteral("\r\n     data-id=\"");
 
             
-            #line 4 "..\..\Views\Page\Partial\Template.cshtml"
+            #line 31 "..\..\Views\Page\Partial\Template.cshtml"
          Write(Model.TemplateId);
 
             
@@ -73,7 +75,7 @@ WriteLiteral("\"");
 WriteLiteral("\r\n     data-master=\"");
 
             
-            #line 5 "..\..\Views\Page\Partial\Template.cshtml"
+            #line 32 "..\..\Views\Page\Partial\Template.cshtml"
               Write(Model.IsMasterPage ? "1" : "0");
 
             
@@ -84,7 +86,7 @@ WriteLiteral("\"");
 WriteLiteral("\r\n     data-iscircular=\"");
 
             
-            #line 6 "..\..\Views\Page\Partial\Template.cshtml"
+            #line 33 "..\..\Views\Page\Partial\Template.cshtml"
                   Write(Model.IsCircularToCurrent ? "1" : "0");
 
             
@@ -99,7 +101,7 @@ WriteLiteral(" class=\"bcms-content-titles\"");
 WriteLiteral(">");
 
             
-            #line 8 "..\..\Views\Page\Partial\Template.cshtml"
+            #line 35 "..\..\Views\Page\Partial\Template.cshtml"
                                 Write(Model.Title);
 
             
@@ -112,13 +114,13 @@ WriteLiteral(" class=\"bcms-grid-image-holder\"");
 WriteLiteral(">\r\n");
 
             
-            #line 11 "..\..\Views\Page\Partial\Template.cshtml"
+            #line 38 "..\..\Views\Page\Partial\Template.cshtml"
         
             
             #line default
             #line hidden
             
-            #line 11 "..\..\Views\Page\Partial\Template.cshtml"
+            #line 38 "..\..\Views\Page\Partial\Template.cshtml"
          if (!string.IsNullOrWhiteSpace(Model.PreviewThumbnailUrl) || !string.IsNullOrWhiteSpace(Model.PreviewUrl))
         {
 
@@ -131,30 +133,30 @@ WriteLiteral(" class=\"bcms-grid-image\"");
 
 WriteLiteral(">\r\n                <img");
 
-WriteAttribute("src", Tuple.Create(" src=\"", 714), Tuple.Create("\"", 823)
+WriteAttribute("src", Tuple.Create(" src=\"", 2020), Tuple.Create("\"", 2129)
             
-            #line 14 "..\..\Views\Page\Partial\Template.cshtml"
-, Tuple.Create(Tuple.Create("", 720), Tuple.Create<System.Object, System.Int32>(!string.IsNullOrWhiteSpace(Model.PreviewThumbnailUrl) ? Model.PreviewThumbnailUrl : Model.PreviewUrl
+            #line 41 "..\..\Views\Page\Partial\Template.cshtml"
+, Tuple.Create(Tuple.Create("", 2026), Tuple.Create<System.Object, System.Int32>(!string.IsNullOrWhiteSpace(Model.PreviewThumbnailUrl) ? Model.PreviewThumbnailUrl : Model.PreviewUrl
             
             #line default
             #line hidden
-, 720), false)
+, 2026), false)
 );
 
-WriteAttribute("alt", Tuple.Create(" alt=\"", 824), Tuple.Create("\"", 842)
+WriteAttribute("alt", Tuple.Create(" alt=\"", 2130), Tuple.Create("\"", 2148)
             
-            #line 14 "..\..\Views\Page\Partial\Template.cshtml"
-                                                         , Tuple.Create(Tuple.Create("", 830), Tuple.Create<System.Object, System.Int32>(Model.Title
+            #line 41 "..\..\Views\Page\Partial\Template.cshtml"
+                                                        , Tuple.Create(Tuple.Create("", 2136), Tuple.Create<System.Object, System.Int32>(Model.Title
             
             #line default
             #line hidden
-, 830), false)
+, 2136), false)
 );
 
 WriteLiteral(" />\r\n            </div>\r\n");
 
             
-            #line 16 "..\..\Views\Page\Partial\Template.cshtml"
+            #line 43 "..\..\Views\Page\Partial\Template.cshtml"
 
 
             
@@ -167,7 +169,7 @@ WriteLiteral(" class=\"bcms-zoom-overlay bcms-preview-template\"");
 WriteLiteral(" data-url=\"");
 
             
-            #line 17 "..\..\Views\Page\Partial\Template.cshtml"
+            #line 44 "..\..\Views\Page\Partial\Template.cshtml"
                                                                        Write(!string.IsNullOrWhiteSpace(Model.PreviewUrl) ? Model.PreviewUrl : Model.PreviewThumbnailUrl);
 
             
@@ -178,7 +180,7 @@ WriteLiteral("\"");
 WriteLiteral(" data-alt=\"");
 
             
-            #line 17 "..\..\Views\Page\Partial\Template.cshtml"
+            #line 44 "..\..\Views\Page\Partial\Template.cshtml"
                                                                                                                                                                                 Write(Model.Title);
 
             
@@ -189,7 +191,7 @@ WriteLiteral("\"");
 WriteLiteral("></div>\r\n");
 
             
-            #line 18 "..\..\Views\Page\Partial\Template.cshtml"
+            #line 45 "..\..\Views\Page\Partial\Template.cshtml"
         }
         else
         {
@@ -242,7 +244,7 @@ WriteLiteral(" d=\"m-237 345h137v53h-137v-53z\"");
 WriteLiteral(" />\r\n                </g>\r\n            </svg>\r\n");
 
             
-            #line 31 "..\..\Views\Page\Partial\Template.cshtml"
+            #line 58 "..\..\Views\Page\Partial\Template.cshtml"
         }
 
             

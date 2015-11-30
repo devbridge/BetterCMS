@@ -28,19 +28,19 @@ namespace ASP
     using System.Web.UI;
     using System.Web.WebPages;
     
-    #line 1 "..\..\Views\Seo\Partial\EditSeoEditUrlPath.cshtml"
+    #line 28 "..\..\Views\Seo\Partial\EditSeoEditUrlPath.cshtml"
     using BetterCms.Module.Pages.Content.Resources;
     
     #line default
     #line hidden
     
-    #line 2 "..\..\Views\Seo\Partial\EditSeoEditUrlPath.cshtml"
+    #line 29 "..\..\Views\Seo\Partial\EditSeoEditUrlPath.cshtml"
     using BetterCms.Module.Root.Content.Resources;
     
     #line default
     #line hidden
     
-    #line 3 "..\..\Views\Seo\Partial\EditSeoEditUrlPath.cshtml"
+    #line 30 "..\..\Views\Seo\Partial\EditSeoEditUrlPath.cshtml"
     using BetterCms.Module.Root.Mvc.Helpers;
     
     #line default
@@ -55,6 +55,8 @@ namespace ASP
         }
         public override void Execute()
         {
+WriteLiteral("\r\n");
+
 WriteLiteral("<div");
 
 WriteLiteral(" class=\"bcms-input-list-holder\"");
@@ -68,7 +70,7 @@ WriteLiteral(">\r\n");
 WriteLiteral("        ");
 
             
-            #line 8 "..\..\Views\Seo\Partial\EditSeoEditUrlPath.cshtml"
+            #line 35 "..\..\Views\Seo\Partial\EditSeoEditUrlPath.cshtml"
    Write(PagesGlobalization.EditSeo_UrlPath);
 
             
@@ -77,7 +79,7 @@ WriteLiteral("        ");
 WriteLiteral(" ");
 
             
-            #line 8 "..\..\Views\Seo\Partial\EditSeoEditUrlPath.cshtml"
+            #line 35 "..\..\Views\Seo\Partial\EditSeoEditUrlPath.cshtml"
                                        Write(Html.Tooltip(PagesGlobalization.EditSeo_UrlPath_Tooltip_Description));
 
             
@@ -92,7 +94,7 @@ WriteLiteral(" id=\"bcms-editseo-editurlpath\"");
 WriteLiteral(">");
 
             
-            #line 9 "..\..\Views\Seo\Partial\EditSeoEditUrlPath.cshtml"
+            #line 36 "..\..\Views\Seo\Partial\EditSeoEditUrlPath.cshtml"
                                                                Write(RootGlobalization.Button_Edit);
 
             
@@ -107,7 +109,7 @@ WriteLiteral(" id=\"bcms-page-permalink-info\"");
 WriteLiteral(">");
 
             
-            #line 11 "..\..\Views\Seo\Partial\EditSeoEditUrlPath.cshtml"
+            #line 38 "..\..\Views\Seo\Partial\EditSeoEditUrlPath.cshtml"
                                                            Write(Html.Raw(string.IsNullOrWhiteSpace(Model.PageUrlPath) ? "&nbsp;" : Html.Encode(Model.PageUrlPath)));
 
             
@@ -118,7 +120,7 @@ WriteLiteral("</div>\r\n");
 WriteLiteral("    ");
 
             
-            #line 12 "..\..\Views\Seo\Partial\EditSeoEditUrlPath.cshtml"
+            #line 39 "..\..\Views\Seo\Partial\EditSeoEditUrlPath.cshtml"
 Write(Html.HiddenFor(f => f.PageUrlPath));
 
             
@@ -139,7 +141,7 @@ WriteLiteral(">\r\n");
 WriteLiteral("            ");
 
             
-            #line 16 "..\..\Views\Seo\Partial\EditSeoEditUrlPath.cshtml"
+            #line 43 "..\..\Views\Seo\Partial\EditSeoEditUrlPath.cshtml"
        Write(Html.TextBoxFor(f => f.ChangedUrlPath, new { @class = "bcms-field-text bcms-js-url-path" }));
 
             
@@ -150,7 +152,7 @@ WriteLiteral("\r\n");
 WriteLiteral("            ");
 
             
-            #line 17 "..\..\Views\Seo\Partial\EditSeoEditUrlPath.cshtml"
+            #line 44 "..\..\Views\Seo\Partial\EditSeoEditUrlPath.cshtml"
        Write(Html.BcmsValidationMessageFor(f => f.ChangedUrlPath));
 
             
@@ -165,7 +167,7 @@ WriteLiteral(" class=\"bcms-btn-primary\"");
 WriteLiteral(">");
 
             
-            #line 20 "..\..\Views\Seo\Partial\EditSeoEditUrlPath.cshtml"
+            #line 47 "..\..\Views\Seo\Partial\EditSeoEditUrlPath.cshtml"
                                                                     Write(RootGlobalization.Button_Ok);
 
             
@@ -180,7 +182,7 @@ WriteLiteral(" class=\"bcms-btn-cancel\"");
 WriteLiteral(">");
 
             
-            #line 21 "..\..\Views\Seo\Partial\EditSeoEditUrlPath.cshtml"
+            #line 48 "..\..\Views\Seo\Partial\EditSeoEditUrlPath.cshtml"
                                                                      Write(RootGlobalization.Button_Cancel);
 
             
@@ -195,7 +197,7 @@ WriteLiteral(">\r\n");
 WriteLiteral("            ");
 
             
-            #line 24 "..\..\Views\Seo\Partial\EditSeoEditUrlPath.cshtml"
+            #line 51 "..\..\Views\Seo\Partial\EditSeoEditUrlPath.cshtml"
        Write(Html.CheckBoxFor(f => f.CreatePermanentRedirect));
 
             
@@ -208,7 +210,7 @@ WriteLiteral(" class=\"bcms-checkbox-label bcms-js-edit-label\"");
 WriteLiteral(">");
 
             
-            #line 25 "..\..\Views\Seo\Partial\EditSeoEditUrlPath.cshtml"
+            #line 52 "..\..\Views\Seo\Partial\EditSeoEditUrlPath.cshtml"
                                                            Write(PagesGlobalization.EditSeo_EditUrlPath_PermanentRedirect);
 
             
@@ -223,7 +225,7 @@ WriteLiteral(">\r\n");
 WriteLiteral("            ");
 
             
-            #line 29 "..\..\Views\Seo\Partial\EditSeoEditUrlPath.cshtml"
+            #line 56 "..\..\Views\Seo\Partial\EditSeoEditUrlPath.cshtml"
        Write(Html.CheckBoxFor(f => f.UseCanonicalUrl));
 
             
@@ -236,7 +238,7 @@ WriteLiteral(" class=\"bcms-checkbox-label bcms-js-edit-label\"");
 WriteLiteral(">");
 
             
-            #line 30 "..\..\Views\Seo\Partial\EditSeoEditUrlPath.cshtml"
+            #line 57 "..\..\Views\Seo\Partial\EditSeoEditUrlPath.cshtml"
                                                            Write(PagesGlobalization.EditSeo_EditUrlPath_UseCanonicalUrl);
 
             
@@ -245,13 +247,13 @@ WriteLiteral(">");
 WriteLiteral("</div>\r\n        </div>\r\n\r\n");
 
             
-            #line 33 "..\..\Views\Seo\Partial\EditSeoEditUrlPath.cshtml"
+            #line 60 "..\..\Views\Seo\Partial\EditSeoEditUrlPath.cshtml"
         
             
             #line default
             #line hidden
             
-            #line 33 "..\..\Views\Seo\Partial\EditSeoEditUrlPath.cshtml"
+            #line 60 "..\..\Views\Seo\Partial\EditSeoEditUrlPath.cshtml"
          if (Model.IsInSitemap)
         {
 
@@ -267,7 +269,7 @@ WriteLiteral(">\r\n");
 WriteLiteral("                ");
 
             
-            #line 36 "..\..\Views\Seo\Partial\EditSeoEditUrlPath.cshtml"
+            #line 63 "..\..\Views\Seo\Partial\EditSeoEditUrlPath.cshtml"
            Write(Html.CheckBoxFor(f => f.UpdateSitemap));
 
             
@@ -280,7 +282,7 @@ WriteLiteral(" class=\"bcms-checkbox-label bcms-js-edit-label\"");
 WriteLiteral(">");
 
             
-            #line 37 "..\..\Views\Seo\Partial\EditSeoEditUrlPath.cshtml"
+            #line 64 "..\..\Views\Seo\Partial\EditSeoEditUrlPath.cshtml"
                                                                Write(PagesGlobalization.EditSeo_EditUrlPath_UpdateSitemap);
 
             
@@ -289,7 +291,7 @@ WriteLiteral(">");
 WriteLiteral("</div>\r\n            </div>\r\n");
 
             
-            #line 39 "..\..\Views\Seo\Partial\EditSeoEditUrlPath.cshtml"
+            #line 66 "..\..\Views\Seo\Partial\EditSeoEditUrlPath.cshtml"
         }
 
             

@@ -37,6 +37,8 @@ namespace ASP
         }
         public override void Execute()
         {
+WriteLiteral("\r\n");
+
 WriteLiteral("<script");
 
 WriteLiteral(" type=\"text/html\"");
@@ -53,13 +55,13 @@ WriteLiteral(@">
 ");
 
             
-            #line 9 "..\..\Views\Shared\Partial\ContentOverlay.cshtml"
+            #line 36 "..\..\Views\Shared\Partial\ContentOverlay.cshtml"
             
             
             #line default
             #line hidden
             
-            #line 9 "..\..\Views\Shared\Partial\ContentOverlay.cshtml"
+            #line 36 "..\..\Views\Shared\Partial\ContentOverlay.cshtml"
              if (!Model.IsReadOnly && Model.HasEditRole)
             {
 
@@ -73,7 +75,7 @@ WriteLiteral(" class=\"bcms-content-button bcms-content-delete\"");
 WriteLiteral("></div>\r\n");
 
             
-            #line 12 "..\..\Views\Shared\Partial\ContentOverlay.cshtml"
+            #line 39 "..\..\Views\Shared\Partial\ContentOverlay.cshtml"
             }
 
             

@@ -28,19 +28,19 @@ namespace ASP
     using System.Web.UI;
     using System.Web.WebPages;
     
-    #line 1 "..\..\Views\Shared\Partial\WarnMessageAboutDraft.cshtml"
+    #line 28 "..\..\Views\Shared\Partial\WarnMessageAboutDraft.cshtml"
     using BetterCms.Core.DataContracts.Enums;
     
     #line default
     #line hidden
     
-    #line 2 "..\..\Views\Shared\Partial\WarnMessageAboutDraft.cshtml"
+    #line 29 "..\..\Views\Shared\Partial\WarnMessageAboutDraft.cshtml"
     using BetterCms.Module.Pages.Content.Resources;
     
     #line default
     #line hidden
     
-    #line 3 "..\..\Views\Shared\Partial\WarnMessageAboutDraft.cshtml"
+    #line 30 "..\..\Views\Shared\Partial\WarnMessageAboutDraft.cshtml"
     using BetterCms.Module.Root.Content.Resources;
     
     #line default
@@ -57,8 +57,10 @@ namespace ASP
         {
 WriteLiteral("\r\n");
 
+WriteLiteral("\r\n");
+
             
-            #line 7 "..\..\Views\Shared\Partial\WarnMessageAboutDraft.cshtml"
+            #line 34 "..\..\Views\Shared\Partial\WarnMessageAboutDraft.cshtml"
  if (Model.CurrentStatus == ContentStatus.Draft)
 {
 
@@ -94,7 +96,7 @@ WriteLiteral(" id=\"bcms-draft-closeinfomessage\"");
 WriteLiteral(">");
 
             
-            #line 14 "..\..\Views\Shared\Partial\WarnMessageAboutDraft.cshtml"
+            #line 41 "..\..\Views\Shared\Partial\WarnMessageAboutDraft.cshtml"
                                                                                                Write(RootGlobalization.Button_Close);
 
             
@@ -105,7 +107,7 @@ WriteLiteral("</div>\r\n");
 WriteLiteral("                ");
 
             
-            #line 15 "..\..\Views\Shared\Partial\WarnMessageAboutDraft.cshtml"
+            #line 42 "..\..\Views\Shared\Partial\WarnMessageAboutDraft.cshtml"
            Write(PagesGlobalization.EditPageContent_Messages_DraftStatusWarnMessage);
 
             
@@ -114,13 +116,13 @@ WriteLiteral("                ");
 WriteLiteral("\r\n");
 
             
-            #line 16 "..\..\Views\Shared\Partial\WarnMessageAboutDraft.cshtml"
+            #line 43 "..\..\Views\Shared\Partial\WarnMessageAboutDraft.cshtml"
                 
             
             #line default
             #line hidden
             
-            #line 16 "..\..\Views\Shared\Partial\WarnMessageAboutDraft.cshtml"
+            #line 43 "..\..\Views\Shared\Partial\WarnMessageAboutDraft.cshtml"
                  if (Model.CanDestroyDraft)
                 {
                     
@@ -128,14 +130,14 @@ WriteLiteral("\r\n");
             #line default
             #line hidden
             
-            #line 18 "..\..\Views\Shared\Partial\WarnMessageAboutDraft.cshtml"
+            #line 45 "..\..\Views\Shared\Partial\WarnMessageAboutDraft.cshtml"
                Write(Html.Raw(PagesGlobalization.EditPageContent_Messages_DraftStatusWarnMessage_Destroy));
 
             
             #line default
             #line hidden
             
-            #line 18 "..\..\Views\Shared\Partial\WarnMessageAboutDraft.cshtml"
+            #line 45 "..\..\Views\Shared\Partial\WarnMessageAboutDraft.cshtml"
                                                                                                          
                 }
 
@@ -151,7 +153,7 @@ WriteLiteral(" style=\"display: none\"");
 WriteLiteral("></ul>\r\n    </div>\r\n");
 
             
-            #line 24 "..\..\Views\Shared\Partial\WarnMessageAboutDraft.cshtml"
+            #line 51 "..\..\Views\Shared\Partial\WarnMessageAboutDraft.cshtml"
 }
 
             

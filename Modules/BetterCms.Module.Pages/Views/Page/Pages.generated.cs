@@ -28,25 +28,25 @@ namespace ASP
     using System.Web.UI;
     using System.Web.WebPages;
     
-    #line 1 "..\..\Views\Page\Pages.cshtml"
+    #line 28 "..\..\Views\Page\Pages.cshtml"
     using BetterCms.Module.Pages.Controllers;
     
     #line default
     #line hidden
     
-    #line 2 "..\..\Views\Page\Pages.cshtml"
+    #line 29 "..\..\Views\Page\Pages.cshtml"
     using BetterCms.Module.Pages.ViewModels.SiteSettings;
     
     #line default
     #line hidden
     
-    #line 3 "..\..\Views\Page\Pages.cshtml"
+    #line 30 "..\..\Views\Page\Pages.cshtml"
     using BetterCms.Module.Root.Mvc.Helpers;
     
     #line default
     #line hidden
     
-    #line 4 "..\..\Views\Page\Pages.cshtml"
+    #line 31 "..\..\Views\Page\Pages.cshtml"
     using Microsoft.Web.Mvc;
     
     #line default
@@ -63,8 +63,10 @@ namespace ASP
         {
 WriteLiteral("\r\n");
 
+WriteLiteral("\r\n");
+
             
-            #line 8 "..\..\Views\Page\Pages.cshtml"
+            #line 35 "..\..\Views\Page\Pages.cshtml"
  using (Html.BeginForm<PageController>(controller => controller.Pages(null), FormMethod.Post, new { @id = "bcms-pages-form", @class = "bcms-ajax-form" }))
 {
     
@@ -72,14 +74,14 @@ WriteLiteral("\r\n");
             #line default
             #line hidden
             
-            #line 10 "..\..\Views\Page\Pages.cshtml"
+            #line 37 "..\..\Views\Page\Pages.cshtml"
 Write(Html.MessagesBox());
 
             
             #line default
             #line hidden
             
-            #line 10 "..\..\Views\Page\Pages.cshtml"
+            #line 37 "..\..\Views\Page\Pages.cshtml"
                        
 
 
@@ -95,7 +97,7 @@ WriteLiteral(">\r\n");
 WriteLiteral("        ");
 
             
-            #line 13 "..\..\Views\Page\Pages.cshtml"
+            #line 40 "..\..\Views\Page\Pages.cshtml"
    Write(Html.Partial("Partial/SiteSettingsPagesList"));
 
             
@@ -104,7 +106,7 @@ WriteLiteral("        ");
 WriteLiteral("\r\n    </div>\r\n");
 
             
-            #line 15 "..\..\Views\Page\Pages.cshtml"
+            #line 42 "..\..\Views\Page\Pages.cshtml"
 }
 
             

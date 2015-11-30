@@ -28,13 +28,13 @@ namespace ASP
     using System.Web.UI;
     using System.Web.WebPages;
     
-    #line 2 "..\..\Views\Widgets\BlogPostCategoriesWidgetInvoker.cshtml"
+    #line 29 "..\..\Views\Widgets\BlogPostCategoriesWidgetInvoker.cshtml"
     using BetterCms.Module.Installation.Controllers;
     
     #line default
     #line hidden
     
-    #line 1 "..\..\Views\Widgets\BlogPostCategoriesWidgetInvoker.cshtml"
+    #line 28 "..\..\Views\Widgets\BlogPostCategoriesWidgetInvoker.cshtml"
     using Microsoft.Web.Mvc;
     
     #line default
@@ -49,8 +49,10 @@ namespace ASP
         }
         public override void Execute()
         {
+WriteLiteral("\r\n");
+
             
-            #line 4 "..\..\Views\Widgets\BlogPostCategoriesWidgetInvoker.cshtml"
+            #line 31 "..\..\Views\Widgets\BlogPostCategoriesWidgetInvoker.cshtml"
   
     Html.RenderAction<BlogWidgetController>(c => c.GetCategories(Model));
 

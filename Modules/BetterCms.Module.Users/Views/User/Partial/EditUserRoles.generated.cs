@@ -28,19 +28,19 @@ namespace ASP
     using System.Web.UI;
     using System.Web.WebPages;
     
-    #line 1 "..\..\Views\User\Partial\EditUserRoles.cshtml"
+    #line 28 "..\..\Views\User\Partial\EditUserRoles.cshtml"
     using BetterCms.Module.Root.Content.Resources;
     
     #line default
     #line hidden
     
-    #line 2 "..\..\Views\User\Partial\EditUserRoles.cshtml"
+    #line 29 "..\..\Views\User\Partial\EditUserRoles.cshtml"
     using BetterCms.Module.Root.Mvc.Helpers;
     
     #line default
     #line hidden
     
-    #line 3 "..\..\Views\User\Partial\EditUserRoles.cshtml"
+    #line 30 "..\..\Views\User\Partial\EditUserRoles.cshtml"
     using BetterCms.Module.Users.Content.Resources;
     
     #line default
@@ -55,6 +55,8 @@ namespace ASP
         }
         public override void Execute()
         {
+WriteLiteral("\r\n");
+
 WriteLiteral("\r\n<div");
 
 WriteLiteral(" class=\"bcms-input-list-holder\"");
@@ -68,7 +70,7 @@ WriteLiteral(" class=\"bcms-content-titles\"");
 WriteLiteral(">");
 
             
-            #line 6 "..\..\Views\User\Partial\EditUserRoles.cshtml"
+            #line 33 "..\..\Views\User\Partial\EditUserRoles.cshtml"
                                 Write(UsersGlobalization.EditUser_Add_Role_Title);
 
             
@@ -79,7 +81,7 @@ WriteLiteral("</div>\r\n");
 WriteLiteral("    ");
 
             
-            #line 7 "..\..\Views\User\Partial\EditUserRoles.cshtml"
+            #line 34 "..\..\Views\User\Partial\EditUserRoles.cshtml"
 Write(Html.Tooltip(UsersGlobalization.EditUser_Role_Tooltip_Description));
 
             
@@ -138,7 +140,7 @@ WriteLiteral(" data-bind=\"click: remove\"");
 WriteLiteral(">");
 
             
-            #line 27 "..\..\Views\User\Partial\EditUserRoles.cshtml"
+            #line 54 "..\..\Views\User\Partial\EditUserRoles.cshtml"
                                                                      Write(RootGlobalization.Button_Remove);
 
             

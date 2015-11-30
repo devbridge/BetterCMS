@@ -28,7 +28,7 @@ namespace ASP
     using System.Web.UI;
     using System.Web.WebPages;
     
-    #line 1 "..\..\Views\Shared\Partial\Delete.cshtml"
+    #line 28 "..\..\Views\Shared\Partial\Delete.cshtml"
     using BetterCms.Module.Root.Content.Resources;
     
     #line default
@@ -43,26 +43,28 @@ namespace ASP
         }
         public override void Execute()
         {
-WriteLiteral("\n<script");
+WriteLiteral("\r\n");
+
+WriteLiteral("\r\n<script");
 
 WriteLiteral(" type=\"text/html\"");
 
 WriteLiteral(" id=\"bcms-modal-delete-template\"");
 
-WriteLiteral(">\n    <div class=\"bcms-modal-alert\">\n        <div class=\"bcms-error-frame\" tabind" +
-"ex=\"-1\">\n            <div class=\"bcms-btn-close bcms-js-btn-close\">");
+WriteLiteral(">\r\n    <div class=\"bcms-modal-alert\">\r\n        <div class=\"bcms-error-frame\" tabi" +
+"ndex=\"-1\">\r\n            <div class=\"bcms-btn-close bcms-js-btn-close\">");
 
             
-            #line 6 "..\..\Views\Shared\Partial\Delete.cshtml"
+            #line 33 "..\..\Views\Shared\Partial\Delete.cshtml"
                                                      Write(RootGlobalization.Button_Close);
 
             
             #line default
             #line hidden
-WriteLiteral("</div>\n            <div class=\"bcms-message-titles\">");
+WriteLiteral("</div>\r\n            <div class=\"bcms-message-titles\">");
 
             
-            #line 7 "..\..\Views\Shared\Partial\Delete.cshtml"
+            #line 34 "..\..\Views\Shared\Partial\Delete.cshtml"
                                         Write(RootGlobalization.Confirm_Delete_DefaultMessage);
 
             

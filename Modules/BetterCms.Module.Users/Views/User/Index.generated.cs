@@ -28,55 +28,55 @@ namespace ASP
     using System.Web.UI;
     using System.Web.WebPages;
     
-    #line 1 "..\..\Views\User\Index.cshtml"
+    #line 28 "..\..\Views\User\Index.cshtml"
     using BetterCms.Module.Root.Content.Resources;
     
     #line default
     #line hidden
     
-    #line 2 "..\..\Views\User\Index.cshtml"
+    #line 29 "..\..\Views\User\Index.cshtml"
     using BetterCms.Module.Root.Mvc.Grids.Extensions;
     
     #line default
     #line hidden
     
-    #line 3 "..\..\Views\User\Index.cshtml"
+    #line 30 "..\..\Views\User\Index.cshtml"
     using BetterCms.Module.Root.Mvc.Grids.TableRenderers;
     
     #line default
     #line hidden
     
-    #line 5 "..\..\Views\User\Index.cshtml"
+    #line 32 "..\..\Views\User\Index.cshtml"
     using BetterCms.Module.Root.Mvc.Helpers;
     
     #line default
     #line hidden
     
-    #line 4 "..\..\Views\User\Index.cshtml"
+    #line 31 "..\..\Views\User\Index.cshtml"
     using BetterCms.Module.Users.Content.Resources;
     
     #line default
     #line hidden
     
-    #line 6 "..\..\Views\User\Index.cshtml"
+    #line 33 "..\..\Views\User\Index.cshtml"
     using BetterCms.Module.Users.Controllers;
     
     #line default
     #line hidden
     
-    #line 7 "..\..\Views\User\Index.cshtml"
+    #line 34 "..\..\Views\User\Index.cshtml"
     using BetterCms.Module.Users.ViewModels.User;
     
     #line default
     #line hidden
     
-    #line 9 "..\..\Views\User\Index.cshtml"
+    #line 36 "..\..\Views\User\Index.cshtml"
     using Microsoft.Web.Mvc;
     
     #line default
     #line hidden
     
-    #line 8 "..\..\Views\User\Index.cshtml"
+    #line 35 "..\..\Views\User\Index.cshtml"
     using MvcContrib.UI.Grid;
     
     #line default
@@ -93,14 +93,16 @@ namespace ASP
         {
 WriteLiteral("\r\n");
 
+WriteLiteral("\r\n");
+
             
-            #line 12 "..\..\Views\User\Index.cshtml"
+            #line 39 "..\..\Views\User\Index.cshtml"
     
             
             #line default
             #line hidden
             
-            #line 12 "..\..\Views\User\Index.cshtml"
+            #line 39 "..\..\Views\User\Index.cshtml"
       
         Action<ColumnBuilder<UserItemViewModel>> columns = column =>
         {
@@ -131,13 +133,13 @@ WriteLiteral("\r\n");
 WriteLiteral("\r\n\r\n");
 
             
-            #line 37 "..\..\Views\User\Index.cshtml"
+            #line 64 "..\..\Views\User\Index.cshtml"
     
             
             #line default
             #line hidden
             
-            #line 37 "..\..\Views\User\Index.cshtml"
+            #line 64 "..\..\Views\User\Index.cshtml"
      using (Html.BeginForm<UserController>(f => f.Index(null), FormMethod.Post, new { @id = "bcms-users-form", @class = "bcms-ajax-form" }))
     {
         
@@ -145,14 +147,14 @@ WriteLiteral("\r\n\r\n");
             #line default
             #line hidden
             
-            #line 39 "..\..\Views\User\Index.cshtml"
+            #line 66 "..\..\Views\User\Index.cshtml"
    Write(Html.MessagesBox("bcms-users-messages"));
 
             
             #line default
             #line hidden
             
-            #line 39 "..\..\Views\User\Index.cshtml"
+            #line 66 "..\..\Views\User\Index.cshtml"
                                                 
 
         
@@ -160,14 +162,14 @@ WriteLiteral("\r\n\r\n");
             #line default
             #line hidden
             
-            #line 41 "..\..\Views\User\Index.cshtml"
+            #line 68 "..\..\Views\User\Index.cshtml"
    Write(Html.HiddenGridOptions(Model.GridOptions));
 
             
             #line default
             #line hidden
             
-            #line 41 "..\..\Views\User\Index.cshtml"
+            #line 68 "..\..\Views\User\Index.cshtml"
                                                   
 
             
@@ -186,7 +188,7 @@ WriteLiteral(" id=\"bcms-create-user-button\"");
 WriteLiteral(">");
 
             
-            #line 43 "..\..\Views\User\Index.cshtml"
+            #line 70 "..\..\Views\User\Index.cshtml"
                                                                Write(UsersGlobalization.User_Dialog_AddNew);
 
             
@@ -205,7 +207,7 @@ WriteLiteral(" id=\"bcms-users-search-btn\"");
 WriteLiteral(">");
 
             
-            #line 47 "..\..\Views\User\Index.cshtml"
+            #line 74 "..\..\Views\User\Index.cshtml"
                                                                    Write(UsersGlobalization.User_Dialog_Search);
 
             
@@ -220,7 +222,7 @@ WriteLiteral(">\r\n");
 WriteLiteral("                    ");
 
             
-            #line 49 "..\..\Views\User\Index.cshtml"
+            #line 76 "..\..\Views\User\Index.cshtml"
                Write(Html.TextBoxFor(m => m.SearchQuery, new { @class = "bcms-search-field-box bcms-js-search-box", @placeholder = RootGlobalization.WaterMark_Search }));
 
             
@@ -235,7 +237,7 @@ WriteLiteral(">\r\n");
 WriteLiteral("                ");
 
             
-            #line 54 "..\..\Views\User\Index.cshtml"
+            #line 81 "..\..\Views\User\Index.cshtml"
            Write(Html.RenderPaging(Model));
 
             
@@ -244,7 +246,7 @@ WriteLiteral("                ");
 WriteLiteral("\r\n            </div>\r\n        </div>\r\n");
 
             
-            #line 57 "..\..\Views\User\Index.cshtml"
+            #line 84 "..\..\Views\User\Index.cshtml"
 
 
         
@@ -252,14 +254,14 @@ WriteLiteral("\r\n            </div>\r\n        </div>\r\n");
             #line default
             #line hidden
             
-            #line 59 "..\..\Views\User\Index.cshtml"
+            #line 86 "..\..\Views\User\Index.cshtml"
    Write(Html.Grid(Model.Items).Sort(Model.GridOptions).Columns(columns).Attributes(@class => "bcms-tables").RenderUsing(new EditableHtmlTableGridRenderer<UserItemViewModel>()));
 
             
             #line default
             #line hidden
             
-            #line 59 "..\..\Views\User\Index.cshtml"
+            #line 86 "..\..\Views\User\Index.cshtml"
                                                                                                                                                                                 
     }
 
@@ -277,7 +279,7 @@ WriteLiteral(">\r\n");
 WriteLiteral("        ");
 
             
-            #line 63 "..\..\Views\User\Index.cshtml"
+            #line 90 "..\..\Views\User\Index.cshtml"
    Write(Html.Grid(new List<UserItemViewModel> { new UserItemViewModel() }).Columns(columns).Attributes(@class => "bcms-tables").RenderUsing(new HtmlTableGridSingleRowRenderer<UserItemViewModel>()));
 
             

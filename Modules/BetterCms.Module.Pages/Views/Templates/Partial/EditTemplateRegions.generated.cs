@@ -28,37 +28,37 @@ namespace ASP
     using System.Web.UI;
     using System.Web.WebPages;
     
-    #line 1 "..\..\Views\Templates\Partial\EditTemplateRegions.cshtml"
+    #line 28 "..\..\Views\Templates\Partial\EditTemplateRegions.cshtml"
     using BetterCms.Module.Pages.Content.Resources;
     
     #line default
     #line hidden
     
-    #line 2 "..\..\Views\Templates\Partial\EditTemplateRegions.cshtml"
+    #line 29 "..\..\Views\Templates\Partial\EditTemplateRegions.cshtml"
     using BetterCms.Module.Pages.ViewModels.Templates;
     
     #line default
     #line hidden
     
-    #line 3 "..\..\Views\Templates\Partial\EditTemplateRegions.cshtml"
+    #line 30 "..\..\Views\Templates\Partial\EditTemplateRegions.cshtml"
     using BetterCms.Module.Root.Content.Resources;
     
     #line default
     #line hidden
     
-    #line 4 "..\..\Views\Templates\Partial\EditTemplateRegions.cshtml"
+    #line 31 "..\..\Views\Templates\Partial\EditTemplateRegions.cshtml"
     using BetterCms.Module.Root.Mvc.Grids.Extensions;
     
     #line default
     #line hidden
     
-    #line 5 "..\..\Views\Templates\Partial\EditTemplateRegions.cshtml"
+    #line 32 "..\..\Views\Templates\Partial\EditTemplateRegions.cshtml"
     using BetterCms.Module.Root.Mvc.Grids.TableRenderers;
     
     #line default
     #line hidden
     
-    #line 6 "..\..\Views\Templates\Partial\EditTemplateRegions.cshtml"
+    #line 33 "..\..\Views\Templates\Partial\EditTemplateRegions.cshtml"
     using MvcContrib.UI.Grid;
     
     #line default
@@ -75,8 +75,10 @@ namespace ASP
         {
 WriteLiteral("\r\n");
 
+WriteLiteral("\r\n");
+
             
-            #line 9 "..\..\Views\Templates\Partial\EditTemplateRegions.cshtml"
+            #line 36 "..\..\Views\Templates\Partial\EditTemplateRegions.cshtml"
   
     Action<ColumnBuilder<TemplateRegionItemViewModel>> columns = column =>
     {
@@ -111,7 +113,7 @@ WriteLiteral(" id=\"bcms-add-region-button\"");
 WriteLiteral(">");
 
             
-            #line 29 "..\..\Views\Templates\Partial\EditTemplateRegions.cshtml"
+            #line 56 "..\..\Views\Templates\Partial\EditTemplateRegions.cshtml"
                                                        Write(PagesGlobalization.TemplateRegions_AddNewRegion);
 
             
@@ -120,7 +122,7 @@ WriteLiteral(">");
 WriteLiteral("</div>\r\n</div>\r\n\r\n");
 
             
-            #line 32 "..\..\Views\Templates\Partial\EditTemplateRegions.cshtml"
+            #line 59 "..\..\Views\Templates\Partial\EditTemplateRegions.cshtml"
 Write(Html.Grid(Model.Regions).Columns(columns).Attributes(@class => "bcms-tables", @id => "bcms-regions-grid").RowAttributes(delegate(GridRowViewData<TemplateRegionItemViewModel> row)
                   {
                       return new Dictionary<string, object>
@@ -144,7 +146,7 @@ WriteLiteral(">\r\n");
 WriteLiteral("    ");
 
             
-            #line 43 "..\..\Views\Templates\Partial\EditTemplateRegions.cshtml"
+            #line 70 "..\..\Views\Templates\Partial\EditTemplateRegions.cshtml"
 Write(Html
         .Grid(new List<TemplateRegionItemViewModel> { new TemplateRegionItemViewModel() })
         .Columns(columns)

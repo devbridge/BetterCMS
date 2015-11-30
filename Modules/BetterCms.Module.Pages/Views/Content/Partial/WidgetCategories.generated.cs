@@ -28,7 +28,7 @@ namespace ASP
     using System.Web.UI;
     using System.Web.WebPages;
     
-    #line 1 "..\..\Views\Content\Partial\WidgetCategories.cshtml"
+    #line 28 "..\..\Views\Content\Partial\WidgetCategories.cshtml"
     using BetterCms.Module.Root.Content.Resources;
     
     #line default
@@ -43,8 +43,10 @@ namespace ASP
         }
         public override void Execute()
         {
+WriteLiteral("\r\n");
+
             
-            #line 4 "..\..\Views\Content\Partial\WidgetCategories.cshtml"
+            #line 31 "..\..\Views\Content\Partial\WidgetCategories.cshtml"
  if (Model != null && Model.Count > 0)
 {
     foreach (var category in Model)
@@ -54,14 +56,14 @@ namespace ASP
             #line default
             #line hidden
             
-            #line 8 "..\..\Views\Content\Partial\WidgetCategories.cshtml"
+            #line 35 "..\..\Views\Content\Partial\WidgetCategories.cshtml"
    Write(Html.Partial("~/Areas/bcms-pages/Views/Content/Partial/WidgetCategory.cshtml", category));
 
             
             #line default
             #line hidden
             
-            #line 8 "..\..\Views\Content\Partial\WidgetCategories.cshtml"
+            #line 35 "..\..\Views\Content\Partial\WidgetCategories.cshtml"
                                                                                                  
     }
 }
@@ -75,23 +77,23 @@ WriteLiteral("    <div");
 
 WriteLiteral(" class=\"bcms-category\"");
 
-WriteLiteral(">           \n        <div");
+WriteLiteral(">           \r\n        <div");
 
 WriteLiteral(" class=\"bcms-category-titles\"");
 
 WriteLiteral(">");
 
             
-            #line 14 "..\..\Views\Content\Partial\WidgetCategories.cshtml"
+            #line 41 "..\..\Views\Content\Partial\WidgetCategories.cshtml"
                                      Write(RootGlobalization.Grid_NoDataAvailable_Message);
 
             
             #line default
             #line hidden
-WriteLiteral("</div>\n    </div>\n");
+WriteLiteral("</div>\r\n    </div>\r\n");
 
             
-            #line 16 "..\..\Views\Content\Partial\WidgetCategories.cshtml"
+            #line 43 "..\..\Views\Content\Partial\WidgetCategories.cshtml"
 }
             
             #line default

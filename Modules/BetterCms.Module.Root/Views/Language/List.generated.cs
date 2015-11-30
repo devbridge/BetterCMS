@@ -28,25 +28,25 @@ namespace ASP
     using System.Web.UI;
     using System.Web.WebPages;
     
-    #line 1 "..\..\Views\Language\List.cshtml"
+    #line 28 "..\..\Views\Language\List.cshtml"
     using BetterCms.Module.Root;
     
     #line default
     #line hidden
     
-    #line 2 "..\..\Views\Language\List.cshtml"
+    #line 29 "..\..\Views\Language\List.cshtml"
     using BetterCms.Module.Root.Content.Resources;
     
     #line default
     #line hidden
     
-    #line 3 "..\..\Views\Language\List.cshtml"
+    #line 30 "..\..\Views\Language\List.cshtml"
     using BetterCms.Module.Root.Mvc.Grids;
     
     #line default
     #line hidden
     
-    #line 4 "..\..\Views\Language\List.cshtml"
+    #line 31 "..\..\Views\Language\List.cshtml"
     using BetterCms.Module.Root.ViewModels.Shared;
     
     #line default
@@ -61,6 +61,8 @@ namespace ASP
         }
         public override void Execute()
         {
+WriteLiteral("\r\n");
+
 WriteLiteral("\r\n<div");
 
 WriteLiteral(" class=\"bcms-window-settings\"");
@@ -68,13 +70,13 @@ WriteLiteral(" class=\"bcms-window-settings\"");
 WriteLiteral(">\r\n");
 
             
-            #line 7 "..\..\Views\Language\List.cshtml"
+            #line 34 "..\..\Views\Language\List.cshtml"
     
             
             #line default
             #line hidden
             
-            #line 7 "..\..\Views\Language\List.cshtml"
+            #line 34 "..\..\Views\Language\List.cshtml"
       
         var gridViewModel = new EditableGridViewModel
         {
@@ -103,7 +105,7 @@ WriteLiteral("\r\n\r\n");
 WriteLiteral("    ");
 
             
-            #line 28 "..\..\Views\Language\List.cshtml"
+            #line 55 "..\..\Views\Language\List.cshtml"
 Write(Html.Partial(RootModuleConstants.EditableGridTemplate, gridViewModel));
 
             

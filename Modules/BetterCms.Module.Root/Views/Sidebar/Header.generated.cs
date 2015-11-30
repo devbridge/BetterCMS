@@ -28,7 +28,7 @@ namespace ASP
     using System.Web.UI;
     using System.Web.WebPages;
     
-    #line 1 "..\..\Views\Sidebar\Header.cshtml"
+    #line 28 "..\..\Views\Sidebar\Header.cshtml"
     using BetterCms.Module.Root.Mvc;
     
     #line default
@@ -43,6 +43,8 @@ namespace ASP
         }
         public override void Execute()
         {
+WriteLiteral("\r\n");
+
 WriteLiteral("<div");
 
 WriteLiteral(" class=\"bcms-sidemenu-header\"");
@@ -50,7 +52,7 @@ WriteLiteral(" class=\"bcms-sidemenu-header\"");
 WriteLiteral(">\r\n");
 
             
-            #line 4 "..\..\Views\Sidebar\Header.cshtml"
+            #line 31 "..\..\Views\Sidebar\Header.cshtml"
  foreach (var projection in Model.Projections)
 {
     projection.Render(Model.Page, (ViewContext.Controller as CmsControllerBase).SecurityService, Html);

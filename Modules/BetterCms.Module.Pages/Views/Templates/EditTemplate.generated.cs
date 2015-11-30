@@ -28,43 +28,43 @@ namespace ASP
     using System.Web.UI;
     using System.Web.WebPages;
     
-    #line 1 "..\..\Views\Templates\EditTemplate.cshtml"
+    #line 28 "..\..\Views\Templates\EditTemplate.cshtml"
     using BetterCms.Module.Pages;
     
     #line default
     #line hidden
     
-    #line 2 "..\..\Views\Templates\EditTemplate.cshtml"
+    #line 29 "..\..\Views\Templates\EditTemplate.cshtml"
     using BetterCms.Module.Pages.Content.Resources;
     
     #line default
     #line hidden
     
-    #line 3 "..\..\Views\Templates\EditTemplate.cshtml"
+    #line 30 "..\..\Views\Templates\EditTemplate.cshtml"
     using BetterCms.Module.Pages.Controllers;
     
     #line default
     #line hidden
     
-    #line 4 "..\..\Views\Templates\EditTemplate.cshtml"
+    #line 31 "..\..\Views\Templates\EditTemplate.cshtml"
     using BetterCms.Module.Pages.ViewModels.Templates;
     
     #line default
     #line hidden
     
-    #line 5 "..\..\Views\Templates\EditTemplate.cshtml"
+    #line 32 "..\..\Views\Templates\EditTemplate.cshtml"
     using BetterCms.Module.Root.Mvc.Helpers;
     
     #line default
     #line hidden
     
-    #line 6 "..\..\Views\Templates\EditTemplate.cshtml"
+    #line 33 "..\..\Views\Templates\EditTemplate.cshtml"
     using BetterCms.Module.Root.ViewModels.Shared;
     
     #line default
     #line hidden
     
-    #line 7 "..\..\Views\Templates\EditTemplate.cshtml"
+    #line 34 "..\..\Views\Templates\EditTemplate.cshtml"
     using Microsoft.Web.Mvc;
     
     #line default
@@ -81,8 +81,10 @@ namespace ASP
         {
 WriteLiteral("\r\n");
 
+WriteLiteral("\r\n");
+
             
-            #line 10 "..\..\Views\Templates\EditTemplate.cshtml"
+            #line 37 "..\..\Views\Templates\EditTemplate.cshtml"
  if (Model == null)
 {
     return;
@@ -108,7 +110,7 @@ WriteLiteral(" data-name=\"#bcms-tab-1\"");
 WriteLiteral(">");
 
             
-            #line 17 "..\..\Views\Templates\EditTemplate.cshtml"
+            #line 44 "..\..\Views\Templates\EditTemplate.cshtml"
                                                                               Write(PagesGlobalization.EditTemplate_BasicPropertiesTab_Title);
 
             
@@ -123,7 +125,7 @@ WriteLiteral(" data-name=\"#bcms-tab-2\"");
 WriteLiteral(">");
 
             
-            #line 18 "..\..\Views\Templates\EditTemplate.cshtml"
+            #line 45 "..\..\Views\Templates\EditTemplate.cshtml"
                                                                   Write(PagesGlobalization.EditTemplate_RegionsTab_Title);
 
             
@@ -138,7 +140,7 @@ WriteLiteral(" data-name=\"#bcms-tab-3\"");
 WriteLiteral(">");
 
             
-            #line 19 "..\..\Views\Templates\EditTemplate.cshtml"
+            #line 46 "..\..\Views\Templates\EditTemplate.cshtml"
                                                                   Write(PagesGlobalization.EditTemplate_OptionsTab_Title);
 
             
@@ -157,7 +159,7 @@ WriteLiteral(">\r\n");
 WriteLiteral("        ");
 
             
-            #line 25 "..\..\Views\Templates\EditTemplate.cshtml"
+            #line 52 "..\..\Views\Templates\EditTemplate.cshtml"
    Write(Html.MessagesBox("bcms-edit-template-messages"));
 
             
@@ -166,13 +168,13 @@ WriteLiteral("        ");
 WriteLiteral("\r\n");
 
             
-            #line 26 "..\..\Views\Templates\EditTemplate.cshtml"
+            #line 53 "..\..\Views\Templates\EditTemplate.cshtml"
         
             
             #line default
             #line hidden
             
-            #line 26 "..\..\Views\Templates\EditTemplate.cshtml"
+            #line 53 "..\..\Views\Templates\EditTemplate.cshtml"
          using (Html.BeginForm<TemplatesController>(c => c.RegisterTemplate((TemplateEditViewModel)null), FormMethod.Post, new { @id = "bcms-template-form", @class = "bcms-ajax-form" }))
         {
 
@@ -200,7 +202,7 @@ WriteLiteral(" class=\"bcms-content-titles\"");
 WriteLiteral(">");
 
             
-            #line 32 "..\..\Views\Templates\EditTemplate.cshtml"
+            #line 59 "..\..\Views\Templates\EditTemplate.cshtml"
                                                         Write(PagesGlobalization.Template_Title_Title);
 
             
@@ -211,7 +213,7 @@ WriteLiteral("</div>\r\n");
 WriteLiteral("                            ");
 
             
-            #line 33 "..\..\Views\Templates\EditTemplate.cshtml"
+            #line 60 "..\..\Views\Templates\EditTemplate.cshtml"
                        Write(Html.Tooltip(PagesGlobalization.Template_Title_Tooltip_Description));
 
             
@@ -226,7 +228,7 @@ WriteLiteral(">\r\n");
 WriteLiteral("                                ");
 
             
-            #line 35 "..\..\Views\Templates\EditTemplate.cshtml"
+            #line 62 "..\..\Views\Templates\EditTemplate.cshtml"
                            Write(Html.TextBoxFor(model => model.Name, new { @class = "bcms-field-text" }));
 
             
@@ -237,7 +239,7 @@ WriteLiteral("\r\n");
 WriteLiteral("                                ");
 
             
-            #line 36 "..\..\Views\Templates\EditTemplate.cshtml"
+            #line 63 "..\..\Views\Templates\EditTemplate.cshtml"
                            Write(Html.BcmsValidationMessageFor(m => m.Name));
 
             
@@ -255,7 +257,7 @@ WriteLiteral(" class=\"bcms-content-titles\"");
 WriteLiteral(">");
 
             
-            #line 41 "..\..\Views\Templates\EditTemplate.cshtml"
+            #line 68 "..\..\Views\Templates\EditTemplate.cshtml"
                                                         Write(PagesGlobalization.Template_Url_Title);
 
             
@@ -266,7 +268,7 @@ WriteLiteral("</div>\r\n");
 WriteLiteral("                            ");
 
             
-            #line 42 "..\..\Views\Templates\EditTemplate.cshtml"
+            #line 69 "..\..\Views\Templates\EditTemplate.cshtml"
                        Write(Html.Tooltip(PagesGlobalization.Template_Url_Tooltip_Description));
 
             
@@ -281,7 +283,7 @@ WriteLiteral(">\r\n");
 WriteLiteral("                                ");
 
             
-            #line 44 "..\..\Views\Templates\EditTemplate.cshtml"
+            #line 71 "..\..\Views\Templates\EditTemplate.cshtml"
                            Write(Html.TextBoxFor(model => model.Url, new { @class = "bcms-field-text" }));
 
             
@@ -292,7 +294,7 @@ WriteLiteral("\r\n");
 WriteLiteral("                                ");
 
             
-            #line 45 "..\..\Views\Templates\EditTemplate.cshtml"
+            #line 72 "..\..\Views\Templates\EditTemplate.cshtml"
                            Write(Html.BcmsValidationMessageFor(m => m.Url));
 
             
@@ -310,7 +312,7 @@ WriteLiteral(" class=\"bcms-content-titles\"");
 WriteLiteral(">");
 
             
-            #line 50 "..\..\Views\Templates\EditTemplate.cshtml"
+            #line 77 "..\..\Views\Templates\EditTemplate.cshtml"
                                                         Write(PagesGlobalization.TemplatePreviewImageUrl_Title);
 
             
@@ -321,7 +323,7 @@ WriteLiteral("</div>\r\n");
 WriteLiteral("                            ");
 
             
-            #line 51 "..\..\Views\Templates\EditTemplate.cshtml"
+            #line 78 "..\..\Views\Templates\EditTemplate.cshtml"
                        Write(Html.Tooltip(PagesGlobalization.TemplatePreviewImageUrl_Tooltip_Description));
 
             
@@ -336,7 +338,7 @@ WriteLiteral(">\r\n");
 WriteLiteral("                                ");
 
             
-            #line 53 "..\..\Views\Templates\EditTemplate.cshtml"
+            #line 80 "..\..\Views\Templates\EditTemplate.cshtml"
                            Write(Html.TextBoxFor(model => model.PreviewImageUrl, new { @class = "bcms-field-text" }));
 
             
@@ -347,7 +349,7 @@ WriteLiteral("\r\n");
 WriteLiteral("                                ");
 
             
-            #line 54 "..\..\Views\Templates\EditTemplate.cshtml"
+            #line 81 "..\..\Views\Templates\EditTemplate.cshtml"
                            Write(Html.BcmsValidationMessageFor(m => m.PreviewImageUrl));
 
             
@@ -365,7 +367,7 @@ WriteLiteral(" class=\"bcms-content-titles\"");
 WriteLiteral(">");
 
             
-            #line 61 "..\..\Views\Templates\EditTemplate.cshtml"
+            #line 88 "..\..\Views\Templates\EditTemplate.cshtml"
                                                         Write(PagesGlobalization.TemplatePreviewImage_Title);
 
             
@@ -376,7 +378,7 @@ WriteLiteral("</div>\r\n");
 WriteLiteral("                            ");
 
             
-            #line 62 "..\..\Views\Templates\EditTemplate.cshtml"
+            #line 89 "..\..\Views\Templates\EditTemplate.cshtml"
                        Write(Html.Tooltip(PagesGlobalization.TemplateImagePreview_Tooltip_Description));
 
             
@@ -390,14 +392,14 @@ WriteLiteral(">\r\n                                <img");
 
 WriteLiteral(" id=\"bcms-template-preview-image\"");
 
-WriteAttribute("src", Tuple.Create(" src=\"", 3624), Tuple.Create("\"", 3652)
+WriteAttribute("src", Tuple.Create(" src=\"", 4934), Tuple.Create("\"", 4962)
             
-            #line 65 "..\..\Views\Templates\EditTemplate.cshtml"
-, Tuple.Create(Tuple.Create("", 3630), Tuple.Create<System.Object, System.Int32>(Model.PreviewImageUrl
+            #line 92 "..\..\Views\Templates\EditTemplate.cshtml"
+, Tuple.Create(Tuple.Create("", 4940), Tuple.Create<System.Object, System.Int32>(Model.PreviewImageUrl
             
             #line default
             #line hidden
-, 3630), false)
+, 4940), false)
 );
 
 WriteLiteral(" alt=\"\"");
@@ -439,7 +441,7 @@ WriteLiteral(" />\r\n                                    </g>\r\n               
 "              </div>\r\n                </div>\r\n            </div>\r\n");
 
             
-            #line 78 "..\..\Views\Templates\EditTemplate.cshtml"
+            #line 105 "..\..\Views\Templates\EditTemplate.cshtml"
 
 
             
@@ -456,7 +458,7 @@ WriteLiteral(">\r\n");
 WriteLiteral("                ");
 
             
-            #line 80 "..\..\Views\Templates\EditTemplate.cshtml"
+            #line 107 "..\..\Views\Templates\EditTemplate.cshtml"
            Write(Html.Partial("Partial/EditTemplateRegions"));
 
             
@@ -465,7 +467,7 @@ WriteLiteral("                ");
 WriteLiteral("\r\n            </div>\r\n");
 
             
-            #line 82 "..\..\Views\Templates\EditTemplate.cshtml"
+            #line 109 "..\..\Views\Templates\EditTemplate.cshtml"
 
 
             
@@ -482,7 +484,7 @@ WriteLiteral(">\r\n");
 WriteLiteral("                ");
 
             
-            #line 84 "..\..\Views\Templates\EditTemplate.cshtml"
+            #line 111 "..\..\Views\Templates\EditTemplate.cshtml"
            Write(Html.Partial(PagesConstants.OptionsGridTemplate, new EditableGridViewModel()));
 
             
@@ -491,49 +493,49 @@ WriteLiteral("                ");
 WriteLiteral("\r\n            </div>\r\n");
 
             
-            #line 86 "..\..\Views\Templates\EditTemplate.cshtml"
+            #line 113 "..\..\Views\Templates\EditTemplate.cshtml"
 
             
             
             #line default
             #line hidden
             
-            #line 87 "..\..\Views\Templates\EditTemplate.cshtml"
+            #line 114 "..\..\Views\Templates\EditTemplate.cshtml"
        Write(Html.HiddenFor(model => model.Id));
 
             
             #line default
             #line hidden
             
-            #line 87 "..\..\Views\Templates\EditTemplate.cshtml"
+            #line 114 "..\..\Views\Templates\EditTemplate.cshtml"
                                               
             
             
             #line default
             #line hidden
             
-            #line 88 "..\..\Views\Templates\EditTemplate.cshtml"
+            #line 115 "..\..\Views\Templates\EditTemplate.cshtml"
        Write(Html.HiddenFor(model => model.Version));
 
             
             #line default
             #line hidden
             
-            #line 88 "..\..\Views\Templates\EditTemplate.cshtml"
+            #line 115 "..\..\Views\Templates\EditTemplate.cshtml"
                                                    
             
             
             #line default
             #line hidden
             
-            #line 89 "..\..\Views\Templates\EditTemplate.cshtml"
+            #line 116 "..\..\Views\Templates\EditTemplate.cshtml"
        Write(Html.HiddenSubmit());
 
             
             #line default
             #line hidden
             
-            #line 89 "..\..\Views\Templates\EditTemplate.cshtml"
+            #line 116 "..\..\Views\Templates\EditTemplate.cshtml"
                                 
         }
 

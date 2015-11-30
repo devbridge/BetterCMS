@@ -37,25 +37,27 @@ namespace ASP
         }
         public override void Execute()
         {
+WriteLiteral("\r\n");
+
 WriteLiteral("<th ");
 
             
-            #line 3 "..\..\Views\Shared\EditableGrid\Partial\Header.cshtml"
+            #line 30 "..\..\Views\Shared\EditableGrid\Partial\Header.cshtml"
 Write(Html.Raw(Model.HeaderAttributes));
 
             
             #line default
             #line hidden
-WriteLiteral(">\n");
+WriteLiteral(">\r\n");
 
             
-            #line 4 "..\..\Views\Shared\EditableGrid\Partial\Header.cshtml"
+            #line 31 "..\..\Views\Shared\EditableGrid\Partial\Header.cshtml"
     
             
             #line default
             #line hidden
             
-            #line 4 "..\..\Views\Shared\EditableGrid\Partial\Header.cshtml"
+            #line 31 "..\..\Views\Shared\EditableGrid\Partial\Header.cshtml"
      if (!string.IsNullOrEmpty(Model.SortColumn))
     {
 
@@ -67,7 +69,7 @@ WriteLiteral("        <div");
 WriteLiteral(" data-bind=\"click: sortItems.bind($root, \'");
 
             
-            #line 6 "..\..\Views\Shared\EditableGrid\Partial\Header.cshtml"
+            #line 33 "..\..\Views\Shared\EditableGrid\Partial\Header.cshtml"
                                                  Write(Model.SortColumn);
 
             
@@ -76,7 +78,7 @@ WriteLiteral(" data-bind=\"click: sortItems.bind($root, \'");
 WriteLiteral("\'), css: {\'bcms-sort-arrow-top\': isSortedAscending(\'");
 
             
-            #line 6 "..\..\Views\Shared\EditableGrid\Partial\Header.cshtml"
+            #line 33 "..\..\Views\Shared\EditableGrid\Partial\Header.cshtml"
                                                                                                                       Write(Model.SortColumn);
 
             
@@ -85,7 +87,7 @@ WriteLiteral("\'), css: {\'bcms-sort-arrow-top\': isSortedAscending(\'");
 WriteLiteral("\'), \'bcms-sort-arrow-bottom\': isSortedDescending(\'");
 
             
-            #line 6 "..\..\Views\Shared\EditableGrid\Partial\Header.cshtml"
+            #line 33 "..\..\Views\Shared\EditableGrid\Partial\Header.cshtml"
                                                                                                                                                                                          Write(Model.SortColumn);
 
             
@@ -98,16 +100,16 @@ WriteLiteral(" class=\"bcms-sort-arrow\"");
 WriteLiteral(">");
 
             
-            #line 6 "..\..\Views\Shared\EditableGrid\Partial\Header.cshtml"
+            #line 33 "..\..\Views\Shared\EditableGrid\Partial\Header.cshtml"
                                                                                                                                                                                                                                         Write(Model.HeaderTitle);
 
             
             #line default
             #line hidden
-WriteLiteral("</div>\n");
+WriteLiteral("</div>\r\n");
 
             
-            #line 7 "..\..\Views\Shared\EditableGrid\Partial\Header.cshtml"
+            #line 34 "..\..\Views\Shared\EditableGrid\Partial\Header.cshtml"
     }
     else
     {
@@ -116,14 +118,14 @@ WriteLiteral("</div>\n");
             #line default
             #line hidden
             
-            #line 10 "..\..\Views\Shared\EditableGrid\Partial\Header.cshtml"
+            #line 37 "..\..\Views\Shared\EditableGrid\Partial\Header.cshtml"
    Write(Model.HeaderTitle);
 
             
             #line default
             #line hidden
             
-            #line 10 "..\..\Views\Shared\EditableGrid\Partial\Header.cshtml"
+            #line 37 "..\..\Views\Shared\EditableGrid\Partial\Header.cshtml"
                           
     }
 

@@ -37,6 +37,8 @@ namespace ASP
         }
         public override void Execute()
         {
+WriteLiteral("\r\n");
+
 WriteLiteral("<div");
 
 WriteLiteral(" class=\"bcms-user-profile\"");
@@ -46,7 +48,7 @@ WriteLiteral(" id=\"bcms-user-profile\"");
 WriteLiteral(" data-url=\"");
 
             
-            #line 2 "..\..\Views\Authentication\Info.cshtml"
+            #line 29 "..\..\Views\Authentication\Info.cshtml"
                                                            Write(Model.EditUserProfileUrl);
 
             
@@ -57,7 +59,7 @@ WriteLiteral("\"");
 WriteLiteral(">");
 
             
-            #line 2 "..\..\Views\Authentication\Info.cshtml"
+            #line 29 "..\..\Views\Authentication\Info.cshtml"
                                                                                       Write(Html.Encode(Model.UserName));
 
             

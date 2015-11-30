@@ -28,25 +28,25 @@ namespace ASP
     using System.Web.UI;
     using System.Web.WebPages;
     
-    #line 1 "..\..\Views\Content\EditPageHtmlContent.cshtml"
+    #line 28 "..\..\Views\Content\EditPageHtmlContent.cshtml"
     using BetterCms.Module.Pages.Content.Resources;
     
     #line default
     #line hidden
     
-    #line 2 "..\..\Views\Content\EditPageHtmlContent.cshtml"
+    #line 29 "..\..\Views\Content\EditPageHtmlContent.cshtml"
     using BetterCms.Module.Pages.Controllers;
     
     #line default
     #line hidden
     
-    #line 3 "..\..\Views\Content\EditPageHtmlContent.cshtml"
+    #line 30 "..\..\Views\Content\EditPageHtmlContent.cshtml"
     using BetterCms.Module.Root.Mvc.Helpers;
     
     #line default
     #line hidden
     
-    #line 4 "..\..\Views\Content\EditPageHtmlContent.cshtml"
+    #line 31 "..\..\Views\Content\EditPageHtmlContent.cshtml"
     using Microsoft.Web.Mvc;
     
     #line default
@@ -63,8 +63,10 @@ namespace ASP
         {
 WriteLiteral("\r\n");
 
+WriteLiteral("\r\n");
+
             
-            #line 7 "..\..\Views\Content\EditPageHtmlContent.cshtml"
+            #line 34 "..\..\Views\Content\EditPageHtmlContent.cshtml"
  if (Model == null)
 {
     return;
@@ -90,7 +92,7 @@ WriteLiteral(" data-name=\"#bcms-tab-1\"");
 WriteLiteral(">");
 
             
-            #line 14 "..\..\Views\Content\EditPageHtmlContent.cshtml"
+            #line 41 "..\..\Views\Content\EditPageHtmlContent.cshtml"
                                                                               Write(PagesGlobalization.EditPageContent_RegularContentTab_Title);
 
             
@@ -105,7 +107,7 @@ WriteLiteral(" data-name=\"#bcms-tab-2\"");
 WriteLiteral(">");
 
             
-            #line 15 "..\..\Views\Content\EditPageHtmlContent.cshtml"
+            #line 42 "..\..\Views\Content\EditPageHtmlContent.cshtml"
                                                                   Write(PagesGlobalization.EditPageContent_AdvancedOptionsTab_Title);
 
             
@@ -120,7 +122,7 @@ WriteLiteral(">\r\n");
 WriteLiteral("    ");
 
             
-            #line 20 "..\..\Views\Content\EditPageHtmlContent.cshtml"
+            #line 47 "..\..\Views\Content\EditPageHtmlContent.cshtml"
 Write(Html.MessagesBox());
 
             
@@ -135,7 +137,7 @@ WriteLiteral(">\r\n");
 WriteLiteral("        ");
 
             
-            #line 23 "..\..\Views\Content\EditPageHtmlContent.cshtml"
+            #line 50 "..\..\Views\Content\EditPageHtmlContent.cshtml"
    Write(Html.Partial("Partial/WarnMessageAboutDraft", Model));
 
             
@@ -144,13 +146,13 @@ WriteLiteral("        ");
 WriteLiteral("\r\n\r\n");
 
             
-            #line 25 "..\..\Views\Content\EditPageHtmlContent.cshtml"
+            #line 52 "..\..\Views\Content\EditPageHtmlContent.cshtml"
         
             
             #line default
             #line hidden
             
-            #line 25 "..\..\Views\Content\EditPageHtmlContent.cshtml"
+            #line 52 "..\..\Views\Content\EditPageHtmlContent.cshtml"
          using (Html.BeginForm<ContentController>(c => c.SavePageHtmlContent(null), FormMethod.Post,
         new
         {
@@ -175,7 +177,7 @@ WriteLiteral(">\r\n");
 WriteLiteral("                ");
 
             
-            #line 35 "..\..\Views\Content\EditPageHtmlContent.cshtml"
+            #line 62 "..\..\Views\Content\EditPageHtmlContent.cshtml"
            Write(Html.Partial("Partial/EditHtmlContent", Model));
 
             
@@ -186,7 +188,7 @@ WriteLiteral("\r\n");
 WriteLiteral("                ");
 
             
-            #line 36 "..\..\Views\Content\EditPageHtmlContent.cshtml"
+            #line 63 "..\..\Views\Content\EditPageHtmlContent.cshtml"
            Write(Html.HiddenFor(model => model.Id, new { @id = "bcmsPageContentId" }));
 
             
@@ -197,7 +199,7 @@ WriteLiteral("\r\n");
 WriteLiteral("                ");
 
             
-            #line 37 "..\..\Views\Content\EditPageHtmlContent.cshtml"
+            #line 64 "..\..\Views\Content\EditPageHtmlContent.cshtml"
            Write(Html.HiddenFor(model => model.Version));
 
             
@@ -208,7 +210,7 @@ WriteLiteral("\r\n");
 WriteLiteral("                ");
 
             
-            #line 38 "..\..\Views\Content\EditPageHtmlContent.cshtml"
+            #line 65 "..\..\Views\Content\EditPageHtmlContent.cshtml"
            Write(Html.HiddenFor(model => model.ContentVersion, new { @id = "bcmsPageContentVersion" }));
 
             
@@ -219,7 +221,7 @@ WriteLiteral("\r\n");
 WriteLiteral("                ");
 
             
-            #line 39 "..\..\Views\Content\EditPageHtmlContent.cshtml"
+            #line 66 "..\..\Views\Content\EditPageHtmlContent.cshtml"
            Write(Html.HiddenFor(model => model.ContentId, new { @id = "bcmsContentId" }));
 
             
@@ -230,7 +232,7 @@ WriteLiteral("\r\n");
 WriteLiteral("                ");
 
             
-            #line 40 "..\..\Views\Content\EditPageHtmlContent.cshtml"
+            #line 67 "..\..\Views\Content\EditPageHtmlContent.cshtml"
            Write(Html.HiddenFor(model => model.ParentPageContentId, new { @id = "bcmsParentPageContentId" }));
 
             
@@ -241,7 +243,7 @@ WriteLiteral("\r\n");
 WriteLiteral("                ");
 
             
-            #line 41 "..\..\Views\Content\EditPageHtmlContent.cshtml"
+            #line 68 "..\..\Views\Content\EditPageHtmlContent.cshtml"
            Write(Html.HiddenFor(model => model.PageId));
 
             
@@ -252,7 +254,7 @@ WriteLiteral("\r\n");
 WriteLiteral("                ");
 
             
-            #line 42 "..\..\Views\Content\EditPageHtmlContent.cshtml"
+            #line 69 "..\..\Views\Content\EditPageHtmlContent.cshtml"
            Write(Html.HiddenFor(model => model.RegionId, new { @id = "bcmsContentToRegionId" }));
 
             
@@ -263,7 +265,7 @@ WriteLiteral("\r\n");
 WriteLiteral("                ");
 
             
-            #line 43 "..\..\Views\Content\EditPageHtmlContent.cshtml"
+            #line 70 "..\..\Views\Content\EditPageHtmlContent.cshtml"
            Write(Html.HiddenFor(modal => modal.DesirableStatus, new { @class = "bcms-content-desirable-status" }));
 
             
@@ -274,7 +276,7 @@ WriteLiteral("\r\n");
 WriteLiteral("                ");
 
             
-            #line 44 "..\..\Views\Content\EditPageHtmlContent.cshtml"
+            #line 71 "..\..\Views\Content\EditPageHtmlContent.cshtml"
            Write(Html.HiddenFor(modal => modal.IsUserConfirmed, new { @id = "bcms-user-confirmed-region-deletion" }));
 
             
@@ -283,7 +285,7 @@ WriteLiteral("                ");
 WriteLiteral("\r\n            </div>\r\n");
 
             
-            #line 46 "..\..\Views\Content\EditPageHtmlContent.cshtml"
+            #line 73 "..\..\Views\Content\EditPageHtmlContent.cshtml"
 
 
             
@@ -300,7 +302,7 @@ WriteLiteral(">\r\n");
 WriteLiteral("                ");
 
             
-            #line 48 "..\..\Views\Content\EditPageHtmlContent.cshtml"
+            #line 75 "..\..\Views\Content\EditPageHtmlContent.cshtml"
            Write(Html.Partial("Partial/EditHtmlContentJsCss", Model));
 
             
@@ -309,7 +311,7 @@ WriteLiteral("                ");
 WriteLiteral("\r\n            </div>\r\n");
 
             
-            #line 50 "..\..\Views\Content\EditPageHtmlContent.cshtml"
+            #line 77 "..\..\Views\Content\EditPageHtmlContent.cshtml"
         }
 
             

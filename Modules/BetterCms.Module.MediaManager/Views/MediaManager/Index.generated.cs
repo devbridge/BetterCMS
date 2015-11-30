@@ -28,13 +28,13 @@ namespace ASP
     using System.Web.UI;
     using System.Web.WebPages;
     
-    #line 1 "..\..\Views\MediaManager\Index.cshtml"
+    #line 28 "..\..\Views\MediaManager\Index.cshtml"
     using BetterCms.Module.MediaManager.Content.Resources;
     
     #line default
     #line hidden
     
-    #line 2 "..\..\Views\MediaManager\Index.cshtml"
+    #line 29 "..\..\Views\MediaManager\Index.cshtml"
     using BetterCms.Module.Root.Mvc.Helpers;
     
     #line default
@@ -49,6 +49,8 @@ namespace ASP
         }
         public override void Execute()
         {
+WriteLiteral("\r\n");
+
 WriteLiteral("<div");
 
 WriteLiteral(" class=\"bcms-inner-navigation\"");
@@ -64,7 +66,7 @@ WriteLiteral(" id=\"bcms-tab-images\"");
 WriteLiteral(">");
 
             
-            #line 6 "..\..\Views\MediaManager\Index.cshtml"
+            #line 33 "..\..\Views\MediaManager\Index.cshtml"
                                                                                                             Write(MediaGlobalization.ImagesTab_Title);
 
             
@@ -81,7 +83,7 @@ WriteLiteral(" id=\"bcms-tab-files\"");
 WriteLiteral(">");
 
             
-            #line 7 "..\..\Views\MediaManager\Index.cshtml"
+            #line 34 "..\..\Views\MediaManager\Index.cshtml"
                                                                                                Write(MediaGlobalization.FilesTab_Title);
 
             
@@ -90,7 +92,7 @@ WriteLiteral(">");
 WriteLiteral("</div>\r\n</div>\r\n\r\n");
 
             
-            #line 10 "..\..\Views\MediaManager\Index.cshtml"
+            #line 37 "..\..\Views\MediaManager\Index.cshtml"
 Write(Html.MessagesBox());
 
             
@@ -107,7 +109,7 @@ WriteLiteral(">\r\n");
 WriteLiteral("    ");
 
             
-            #line 13 "..\..\Views\MediaManager\Index.cshtml"
+            #line 40 "..\..\Views\MediaManager\Index.cshtml"
 Write(Html.Partial("Partial/MediaManagerTab"));
 
             
@@ -124,13 +126,13 @@ WriteLiteral(">\r\n    ");
 WriteLiteral("\r\n    <div>\r\n");
 
             
-            #line 19 "..\..\Views\MediaManager\Index.cshtml"
+            #line 46 "..\..\Views\MediaManager\Index.cshtml"
         
             
             #line default
             #line hidden
             
-            #line 19 "..\..\Views\MediaManager\Index.cshtml"
+            #line 46 "..\..\Views\MediaManager\Index.cshtml"
          if (Model.CustomFilesMessages != null)
         {
             
@@ -138,14 +140,14 @@ WriteLiteral("\r\n    <div>\r\n");
             #line default
             #line hidden
             
-            #line 21 "..\..\Views\MediaManager\Index.cshtml"
+            #line 48 "..\..\Views\MediaManager\Index.cshtml"
        Write(Html.CustomMessagesBox(Model.CustomFilesMessages));
 
             
             #line default
             #line hidden
             
-            #line 21 "..\..\Views\MediaManager\Index.cshtml"
+            #line 48 "..\..\Views\MediaManager\Index.cshtml"
                                                               
         }
 
@@ -155,7 +157,7 @@ WriteLiteral("\r\n    <div>\r\n");
 WriteLiteral("        ");
 
             
-            #line 23 "..\..\Views\MediaManager\Index.cshtml"
+            #line 50 "..\..\Views\MediaManager\Index.cshtml"
    Write(Html.Partial("Partial/MediaManagerTab"));
 
             
@@ -164,7 +166,7 @@ WriteLiteral("        ");
 WriteLiteral("\r\n    </div>\r\n</div>\r\n\r\n");
 
             
-            #line 27 "..\..\Views\MediaManager\Index.cshtml"
+            #line 54 "..\..\Views\MediaManager\Index.cshtml"
 Write(Html.Partial("Partial/MediaManagerWindowTemplate"));
 
             

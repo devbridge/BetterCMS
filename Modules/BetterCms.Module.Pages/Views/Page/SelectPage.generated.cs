@@ -28,25 +28,25 @@ namespace ASP
     using System.Web.UI;
     using System.Web.WebPages;
     
-    #line 1 "..\..\Views\Page\SelectPage.cshtml"
+    #line 28 "..\..\Views\Page\SelectPage.cshtml"
     using BetterCms.Module.Pages.Controllers;
     
     #line default
     #line hidden
     
-    #line 2 "..\..\Views\Page\SelectPage.cshtml"
+    #line 29 "..\..\Views\Page\SelectPage.cshtml"
     using BetterCms.Module.Pages.ViewModels.SiteSettings;
     
     #line default
     #line hidden
     
-    #line 3 "..\..\Views\Page\SelectPage.cshtml"
+    #line 30 "..\..\Views\Page\SelectPage.cshtml"
     using BetterCms.Module.Root.Mvc.Helpers;
     
     #line default
     #line hidden
     
-    #line 4 "..\..\Views\Page\SelectPage.cshtml"
+    #line 31 "..\..\Views\Page\SelectPage.cshtml"
     using Microsoft.Web.Mvc;
     
     #line default
@@ -63,6 +63,8 @@ namespace ASP
         {
 WriteLiteral("\r\n");
 
+WriteLiteral("\r\n");
+
 WriteLiteral("<div");
 
 WriteLiteral(" class=\"bcms-modal-frame-holder\"");
@@ -72,7 +74,7 @@ WriteLiteral(">\r\n");
 WriteLiteral("    ");
 
             
-            #line 9 "..\..\Views\Page\SelectPage.cshtml"
+            #line 36 "..\..\Views\Page\SelectPage.cshtml"
 Write(Html.MessagesBox());
 
             
@@ -85,13 +87,13 @@ WriteLiteral(" class=\"bcms-window-options\"");
 WriteLiteral(">\r\n");
 
             
-            #line 12 "..\..\Views\Page\SelectPage.cshtml"
+            #line 39 "..\..\Views\Page\SelectPage.cshtml"
         
             
             #line default
             #line hidden
             
-            #line 12 "..\..\Views\Page\SelectPage.cshtml"
+            #line 39 "..\..\Views\Page\SelectPage.cshtml"
          using (Html.BeginForm<PageController>(controller => controller.SelectPage(null), FormMethod.Post, new { @id = "bcms-pages-form", @class = "bcms-ajax-form" }))
         {
             
@@ -99,14 +101,14 @@ WriteLiteral(">\r\n");
             #line default
             #line hidden
             
-            #line 14 "..\..\Views\Page\SelectPage.cshtml"
+            #line 41 "..\..\Views\Page\SelectPage.cshtml"
        Write(Html.Partial("Partial/SiteSettingsPagesList"));
 
             
             #line default
             #line hidden
             
-            #line 14 "..\..\Views\Page\SelectPage.cshtml"
+            #line 41 "..\..\Views\Page\SelectPage.cshtml"
                                                           
         }
 

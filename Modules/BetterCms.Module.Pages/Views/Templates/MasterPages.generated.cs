@@ -28,67 +28,67 @@ namespace ASP
     using System.Web.UI;
     using System.Web.WebPages;
     
-    #line 1 "..\..\Views\Templates\MasterPages.cshtml"
+    #line 28 "..\..\Views\Templates\MasterPages.cshtml"
     using BetterCms.Module.Pages.Content.Resources;
     
     #line default
     #line hidden
     
-    #line 2 "..\..\Views\Templates\MasterPages.cshtml"
+    #line 29 "..\..\Views\Templates\MasterPages.cshtml"
     using BetterCms.Module.Pages.Controllers;
     
     #line default
     #line hidden
     
-    #line 3 "..\..\Views\Templates\MasterPages.cshtml"
+    #line 30 "..\..\Views\Templates\MasterPages.cshtml"
     using BetterCms.Module.Pages.ViewModels.SiteSettings;
     
     #line default
     #line hidden
     
-    #line 4 "..\..\Views\Templates\MasterPages.cshtml"
+    #line 31 "..\..\Views\Templates\MasterPages.cshtml"
     using BetterCms.Module.Root;
     
     #line default
     #line hidden
     
-    #line 5 "..\..\Views\Templates\MasterPages.cshtml"
+    #line 32 "..\..\Views\Templates\MasterPages.cshtml"
     using BetterCms.Module.Root.Content.Resources;
     
     #line default
     #line hidden
     
-    #line 6 "..\..\Views\Templates\MasterPages.cshtml"
+    #line 33 "..\..\Views\Templates\MasterPages.cshtml"
     using BetterCms.Module.Root.Mvc;
     
     #line default
     #line hidden
     
-    #line 7 "..\..\Views\Templates\MasterPages.cshtml"
+    #line 34 "..\..\Views\Templates\MasterPages.cshtml"
     using BetterCms.Module.Root.Mvc.Grids.Extensions;
     
     #line default
     #line hidden
     
-    #line 8 "..\..\Views\Templates\MasterPages.cshtml"
+    #line 35 "..\..\Views\Templates\MasterPages.cshtml"
     using BetterCms.Module.Root.Mvc.Grids.TableRenderers;
     
     #line default
     #line hidden
     
-    #line 9 "..\..\Views\Templates\MasterPages.cshtml"
+    #line 36 "..\..\Views\Templates\MasterPages.cshtml"
     using BetterCms.Module.Root.Mvc.Helpers;
     
     #line default
     #line hidden
     
-    #line 10 "..\..\Views\Templates\MasterPages.cshtml"
+    #line 37 "..\..\Views\Templates\MasterPages.cshtml"
     using Microsoft.Web.Mvc;
     
     #line default
     #line hidden
     
-    #line 11 "..\..\Views\Templates\MasterPages.cshtml"
+    #line 38 "..\..\Views\Templates\MasterPages.cshtml"
     using MvcContrib.UI.Grid;
     
     #line default
@@ -105,8 +105,10 @@ namespace ASP
         {
 WriteLiteral("\r\n");
 
+WriteLiteral("\r\n");
+
             
-            #line 14 "..\..\Views\Templates\MasterPages.cshtml"
+            #line 41 "..\..\Views\Templates\MasterPages.cshtml"
   
     var controller = (CmsControllerBase)ViewContext.Controller;
     var roles = string.Format("{0},{1},{2}",
@@ -148,7 +150,7 @@ WriteLiteral("\r\n");
 WriteLiteral("\r\n\r\n");
 
             
-            #line 50 "..\..\Views\Templates\MasterPages.cshtml"
+            #line 77 "..\..\Views\Templates\MasterPages.cshtml"
  using (Html.BeginForm<TemplatesController>(f => f.MasterPages(null), FormMethod.Post, new { @id = "bcms-master-pages-form", @class = "bcms-ajax-form" }))
 {
     
@@ -156,14 +158,14 @@ WriteLiteral("\r\n\r\n");
             #line default
             #line hidden
             
-            #line 52 "..\..\Views\Templates\MasterPages.cshtml"
+            #line 79 "..\..\Views\Templates\MasterPages.cshtml"
 Write(Html.MessagesBox());
 
             
             #line default
             #line hidden
             
-            #line 52 "..\..\Views\Templates\MasterPages.cshtml"
+            #line 79 "..\..\Views\Templates\MasterPages.cshtml"
                        
 
         
@@ -171,14 +173,14 @@ Write(Html.MessagesBox());
             #line default
             #line hidden
             
-            #line 54 "..\..\Views\Templates\MasterPages.cshtml"
+            #line 81 "..\..\Views\Templates\MasterPages.cshtml"
    Write(Html.HiddenGridOptions(Model.GridOptions));
 
             
             #line default
             #line hidden
             
-            #line 54 "..\..\Views\Templates\MasterPages.cshtml"
+            #line 81 "..\..\Views\Templates\MasterPages.cshtml"
                                                   
 
             
@@ -197,7 +199,7 @@ WriteLiteral(" id=\"bcms-create-page-button\"");
 WriteLiteral(">");
 
             
-            #line 56 "..\..\Views\Templates\MasterPages.cshtml"
+            #line 83 "..\..\Views\Templates\MasterPages.cshtml"
                                                                Write(PagesGlobalization.SiteSettings_Pages_AddNew);
 
             
@@ -216,7 +218,7 @@ WriteLiteral(" id=\"bcms-pages-search-btn\"");
 WriteLiteral(">");
 
             
-            #line 59 "..\..\Views\Templates\MasterPages.cshtml"
+            #line 86 "..\..\Views\Templates\MasterPages.cshtml"
                                                                        Write(PagesGlobalization.SiteSettings_Pages_Search);
 
             
@@ -231,7 +233,7 @@ WriteLiteral(">\r\n");
 WriteLiteral("                        ");
 
             
-            #line 61 "..\..\Views\Templates\MasterPages.cshtml"
+            #line 88 "..\..\Views\Templates\MasterPages.cshtml"
                    Write(Html.TextBoxFor(m => m.SearchQuery, new { @class = "bcms-field-text bcms-search-query", @placeholder = RootGlobalization.WaterMark_Search }));
 
             
@@ -246,7 +248,7 @@ WriteLiteral(">\r\n");
 WriteLiteral("                ");
 
             
-            #line 66 "..\..\Views\Templates\MasterPages.cshtml"
+            #line 93 "..\..\Views\Templates\MasterPages.cshtml"
            Write(Html.RenderPaging(Model));
 
             
@@ -255,7 +257,7 @@ WriteLiteral("                ");
 WriteLiteral("\r\n            </div>\r\n        </div>\r\n");
 
             
-            #line 69 "..\..\Views\Templates\MasterPages.cshtml"
+            #line 96 "..\..\Views\Templates\MasterPages.cshtml"
 
 
             
@@ -270,7 +272,7 @@ WriteLiteral(">\r\n");
 WriteLiteral("        ");
 
             
-            #line 71 "..\..\Views\Templates\MasterPages.cshtml"
+            #line 98 "..\..\Views\Templates\MasterPages.cshtml"
    Write(Html.Grid(Model.Items).Sort(Model.GridOptions).Columns(columns).Attributes(@class => "bcms-tables").RenderUsing(new EditableHtmlTableGridRenderer<SiteSettingPageViewModel>()));
 
             
@@ -279,7 +281,7 @@ WriteLiteral("        ");
 WriteLiteral("\r\n    </div>\r\n");
 
             
-            #line 73 "..\..\Views\Templates\MasterPages.cshtml"
+            #line 100 "..\..\Views\Templates\MasterPages.cshtml"
 }
 
             
@@ -296,7 +298,7 @@ WriteLiteral(">\r\n");
 WriteLiteral("    ");
 
             
-            #line 76 "..\..\Views\Templates\MasterPages.cshtml"
+            #line 103 "..\..\Views\Templates\MasterPages.cshtml"
 Write(Html.Grid(new List<SiteSettingPageViewModel> { new SiteSettingPageViewModel() }).Columns(columns).Attributes(@class => "bcms-tables").RenderUsing(new HtmlTableGridSingleRowRenderer<SiteSettingPageViewModel>()));
 
             

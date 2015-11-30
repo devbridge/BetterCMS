@@ -28,13 +28,13 @@ namespace ASP
     using System.Web.UI;
     using System.Web.WebPages;
     
-    #line 1 "..\..\Views\Category\Partial\CategoryTreeTemplate.cshtml"
+    #line 28 "..\..\Views\Category\Partial\CategoryTreeTemplate.cshtml"
     using BetterCms.Module.Root.Content.Resources;
     
     #line default
     #line hidden
     
-    #line 2 "..\..\Views\Category\Partial\CategoryTreeTemplate.cshtml"
+    #line 29 "..\..\Views\Category\Partial\CategoryTreeTemplate.cshtml"
     using BetterCms.Module.Root.Mvc.Helpers;
     
     #line default
@@ -49,6 +49,8 @@ namespace ASP
         }
         public override void Execute()
         {
+WriteLiteral("\r\n");
+
 WriteLiteral("<script");
 
 WriteLiteral(" type=\"text/html\"");
@@ -61,7 +63,7 @@ WriteLiteral(">\r\n    <!-- ko if: !hasChildNodes() -->\r\n    <div class=\"bcms
 "");
 
             
-            #line 8 "..\..\Views\Category\Partial\CategoryTreeTemplate.cshtml"
+            #line 35 "..\..\Views\Category\Partial\CategoryTreeTemplate.cshtml"
                                                                               Write(RootGlobalization.CategoryTree_PlaceLinkHere_Message);
 
             
@@ -80,7 +82,7 @@ WriteLiteral(@"</div>
             <div class=""bcms-node-drop-zone-text"">");
 
             
-            #line 18 "..\..\Views\Category\Partial\CategoryTreeTemplate.cshtml"
+            #line 45 "..\..\Views\Category\Partial\CategoryTreeTemplate.cshtml"
                                              Write(RootGlobalization.CategoryTree_PlaceLinkHere_Message);
 
             
@@ -104,7 +106,7 @@ WriteLiteral(@"</div>
                     <div class=""bcms-action-edit"" data-bind=""click: startEditCategoryTreeNode"">");
 
             
-            #line 33 "..\..\Views\Category\Partial\CategoryTreeTemplate.cshtml"
+            #line 60 "..\..\Views\Category\Partial\CategoryTreeTemplate.cshtml"
                                                                                           Write(RootGlobalization.Button_Edit);
 
             
@@ -122,7 +124,7 @@ WriteLiteral(@"</div>
 WriteLiteral("                        ");
 
             
-            #line 40 "..\..\Views\Category\Partial\CategoryTreeTemplate.cshtml"
+            #line 67 "..\..\Views\Category\Partial\CategoryTreeTemplate.cshtml"
                    Write(Html.Tooltip(RootGlobalization.CategoryTree_NodeEdit_Title_Tooltip_Message));
 
             
@@ -133,7 +135,7 @@ WriteLiteral("\r\n                        <div class=\"bcms-field-wrapper\">\r\n
 WriteLiteral("                            ");
 
             
-            #line 42 "..\..\Views\Category\Partial\CategoryTreeTemplate.cshtml"
+            #line 69 "..\..\Views\Category\Partial\CategoryTreeTemplate.cshtml"
                        Write(Html.TextBoxFor(m => m.Title, new
                             {
                                 data_bind = "value: title, valueUpdate: 'afterkeydown', enterPress: saveCategoryTreeNodeWithValidation, escPress: cancelEditCategoryTreeNode, hasfocus: isActive()",
@@ -149,7 +151,7 @@ WriteLiteral("\r\n");
 WriteLiteral("                            ");
 
             
-            #line 48 "..\..\Views\Category\Partial\CategoryTreeTemplate.cshtml"
+            #line 75 "..\..\Views\Category\Partial\CategoryTreeTemplate.cshtml"
                        Write(Html.BcmsValidationMessageFor(m => m.Title));
 
             
@@ -160,7 +162,7 @@ WriteLiteral("\r\n                        </div>\r\n                        <div
 "ee().settings.nodeSaveButtonTitle\">");
 
             
-            #line 50 "..\..\Views\Category\Partial\CategoryTreeTemplate.cshtml"
+            #line 77 "..\..\Views\Category\Partial\CategoryTreeTemplate.cshtml"
                                                                                                                                                              Write(RootGlobalization.Button_Ok);
 
             
@@ -170,7 +172,7 @@ WriteLiteral("</div>\r\n                        <div class=\"bcms-btn-cancel\" d
 "ncelEditCategoryTreeNode\">");
 
             
-            #line 51 "..\..\Views\Category\Partial\CategoryTreeTemplate.cshtml"
+            #line 78 "..\..\Views\Category\Partial\CategoryTreeTemplate.cshtml"
                                                                                               Write(RootGlobalization.Button_Cancel);
 
             
@@ -183,7 +185,7 @@ WriteLiteral("</div>\r\n                    </div>\r\n\r\n                    <!
 WriteLiteral("                        ");
 
             
-            #line 56 "..\..\Views\Category\Partial\CategoryTreeTemplate.cshtml"
+            #line 83 "..\..\Views\Category\Partial\CategoryTreeTemplate.cshtml"
                    Write(Html.Tooltip(RootGlobalization.CategoryTree_NodeEdit_Macro_Tooltip_Message));
 
             
@@ -194,7 +196,7 @@ WriteLiteral("\r\n                        <div class=\"bcms-field-wrapper\">\r\n
 WriteLiteral("                            ");
 
             
-            #line 58 "..\..\Views\Category\Partial\CategoryTreeTemplate.cshtml"
+            #line 85 "..\..\Views\Category\Partial\CategoryTreeTemplate.cshtml"
                        Write(Html.TextBoxFor(m => m.Macro, new
                             {
                                 data_bind = "value: macro, valueUpdate: 'afterkeydown', enterPress: saveCategoryTreeNodeWithValidation, escPress: cancelEditCategoryTreeNode",
@@ -211,7 +213,7 @@ WriteLiteral("\r\n");
 WriteLiteral("                            ");
 
             
-            #line 65 "..\..\Views\Category\Partial\CategoryTreeTemplate.cshtml"
+            #line 92 "..\..\Views\Category\Partial\CategoryTreeTemplate.cshtml"
                        Write(Html.BcmsValidationMessageFor(m => m.Macro));
 
             
@@ -229,7 +231,7 @@ WriteLiteral(@"
                     <div class=""bcms-action-delete"" data-bind=""click: deleteCategoryTreeNode"">");
 
             
-            #line 74 "..\..\Views\Category\Partial\CategoryTreeTemplate.cshtml"
+            #line 101 "..\..\Views\Category\Partial\CategoryTreeTemplate.cshtml"
                                                                                          Write(RootGlobalization.Button_Delete);
 
             
@@ -246,7 +248,7 @@ WriteLiteral(@"</div>
                     <div class=""bcms-node-drop-zone-text"">");
 
             
-            #line 82 "..\..\Views\Category\Partial\CategoryTreeTemplate.cshtml"
+            #line 109 "..\..\Views\Category\Partial\CategoryTreeTemplate.cshtml"
                                                      Write(RootGlobalization.CategoryTree_PlaceLinkHere_Message);
 
             
@@ -269,7 +271,7 @@ WriteLiteral(@"</div>
                 <div class=""bcms-node-drop-zone-text"">");
 
             
-            #line 96 "..\..\Views\Category\Partial\CategoryTreeTemplate.cshtml"
+            #line 123 "..\..\Views\Category\Partial\CategoryTreeTemplate.cshtml"
                                                  Write(RootGlobalization.CategoryTree_PlaceLinkHere_Message);
 
             

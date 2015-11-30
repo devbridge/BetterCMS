@@ -37,7 +37,7 @@ namespace ASP
         }
         public override void Execute()
         {
-WriteLiteral("<div");
+WriteLiteral("\r\n<div");
 
 WriteLiteral(" class=\"bcms-modal-frame-holder\"");
 
@@ -78,7 +78,7 @@ WriteLiteral(">\r\n");
 WriteLiteral("        ");
 
             
-            #line 10 "..\..\Views\Widgets\SelectWidget.cshtml"
+            #line 37 "..\..\Views\Widgets\SelectWidget.cshtml"
    Write(Html.Partial("~/Areas/bcms-pages/Views/Content/Partial/SelectWidget.cshtml"));
 
             

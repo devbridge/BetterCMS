@@ -28,55 +28,55 @@ namespace ASP
     using System.Web.UI;
     using System.Web.WebPages;
     
-    #line 1 "..\..\Views\Blog\Index.cshtml"
+    #line 28 "..\..\Views\Blog\Index.cshtml"
     using BetterCms.Module.Blog.Content.Resources;
     
     #line default
     #line hidden
     
-    #line 2 "..\..\Views\Blog\Index.cshtml"
+    #line 29 "..\..\Views\Blog\Index.cshtml"
     using BetterCms.Module.Blog.Controllers;
     
     #line default
     #line hidden
     
-    #line 3 "..\..\Views\Blog\Index.cshtml"
+    #line 30 "..\..\Views\Blog\Index.cshtml"
     using BetterCms.Module.Blog.ViewModels.Blog;
     
     #line default
     #line hidden
     
-    #line 4 "..\..\Views\Blog\Index.cshtml"
+    #line 31 "..\..\Views\Blog\Index.cshtml"
     using BetterCms.Module.Root;
     
     #line default
     #line hidden
     
-    #line 5 "..\..\Views\Blog\Index.cshtml"
+    #line 32 "..\..\Views\Blog\Index.cshtml"
     using BetterCms.Module.Root.Content.Resources;
     
     #line default
     #line hidden
     
-    #line 8 "..\..\Views\Blog\Index.cshtml"
+    #line 35 "..\..\Views\Blog\Index.cshtml"
     using BetterCms.Module.Root.Mvc;
     
     #line default
     #line hidden
     
-    #line 6 "..\..\Views\Blog\Index.cshtml"
+    #line 33 "..\..\Views\Blog\Index.cshtml"
     using BetterCms.Module.Root.Mvc.Grids.Extensions;
     
     #line default
     #line hidden
     
-    #line 7 "..\..\Views\Blog\Index.cshtml"
+    #line 34 "..\..\Views\Blog\Index.cshtml"
     using BetterCms.Module.Root.Mvc.Helpers;
     
     #line default
     #line hidden
     
-    #line 9 "..\..\Views\Blog\Index.cshtml"
+    #line 36 "..\..\Views\Blog\Index.cshtml"
     using Microsoft.Web.Mvc;
     
     #line default
@@ -93,8 +93,10 @@ namespace ASP
         {
 WriteLiteral("\r\n");
 
+WriteLiteral("\r\n");
+
             
-            #line 12 "..\..\Views\Blog\Index.cshtml"
+            #line 39 "..\..\Views\Blog\Index.cshtml"
   
     var controller = (CmsControllerBase)ViewContext.Controller;
     var canEdit = controller.SecurityService.IsAuthorized(RootModuleConstants.UserRoles.EditContent);
@@ -106,7 +108,7 @@ WriteLiteral("\r\n");
 WriteLiteral("\r\n\r\n");
 
             
-            #line 18 "..\..\Views\Blog\Index.cshtml"
+            #line 45 "..\..\Views\Blog\Index.cshtml"
  using (Html.BeginForm<BlogController>(f => f.Index(null), FormMethod.Post, new { @id = "bcms-blogs-form", @class = "bcms-ajax-form" }))
 {
     
@@ -114,14 +116,14 @@ WriteLiteral("\r\n\r\n");
             #line default
             #line hidden
             
-            #line 20 "..\..\Views\Blog\Index.cshtml"
+            #line 47 "..\..\Views\Blog\Index.cshtml"
 Write(Html.MessagesBox());
 
             
             #line default
             #line hidden
             
-            #line 20 "..\..\Views\Blog\Index.cshtml"
+            #line 47 "..\..\Views\Blog\Index.cshtml"
                        
 
     
@@ -129,14 +131,14 @@ Write(Html.MessagesBox());
             #line default
             #line hidden
             
-            #line 22 "..\..\Views\Blog\Index.cshtml"
+            #line 49 "..\..\Views\Blog\Index.cshtml"
 Write(Html.HiddenGridOptions(Model.GridOptions));
 
             
             #line default
             #line hidden
             
-            #line 22 "..\..\Views\Blog\Index.cshtml"
+            #line 49 "..\..\Views\Blog\Index.cshtml"
                                               
 
 
@@ -154,13 +156,13 @@ WriteLiteral(" class=\"bcms-top-controls-btn-holder\"");
 WriteLiteral(">\r\n");
 
             
-            #line 26 "..\..\Views\Blog\Index.cshtml"
+            #line 53 "..\..\Views\Blog\Index.cshtml"
             
             
             #line default
             #line hidden
             
-            #line 26 "..\..\Views\Blog\Index.cshtml"
+            #line 53 "..\..\Views\Blog\Index.cshtml"
              if (canEdit)
             {
 
@@ -176,7 +178,7 @@ WriteLiteral(" id=\"bcms-create-blog-button\"");
 WriteLiteral(">");
 
             
-            #line 28 "..\..\Views\Blog\Index.cshtml"
+            #line 55 "..\..\Views\Blog\Index.cshtml"
                                                                    Write(BlogGlobalization.SiteSettings_Blogs_AddNew);
 
             
@@ -185,7 +187,7 @@ WriteLiteral(">");
 WriteLiteral("</div>\r\n");
 
             
-            #line 29 "..\..\Views\Blog\Index.cshtml"
+            #line 56 "..\..\Views\Blog\Index.cshtml"
             }
 
             
@@ -194,13 +196,13 @@ WriteLiteral("</div>\r\n");
 WriteLiteral("\r\n");
 
             
-            #line 31 "..\..\Views\Blog\Index.cshtml"
+            #line 58 "..\..\Views\Blog\Index.cshtml"
             
             
             #line default
             #line hidden
             
-            #line 31 "..\..\Views\Blog\Index.cshtml"
+            #line 58 "..\..\Views\Blog\Index.cshtml"
              if (canPublish && canEdit)
             {
 
@@ -226,7 +228,7 @@ WriteLiteral(" id=\"bcms-import-blogs\"");
 WriteLiteral(">");
 
             
-            #line 35 "..\..\Views\Blog\Index.cshtml"
+            #line 62 "..\..\Views\Blog\Index.cshtml"
                                                                         Write(BlogGlobalization.SiteSettings_Blogs_Import);
 
             
@@ -241,7 +243,7 @@ WriteLiteral(" id=\"bcms-export-blogs\"");
 WriteLiteral(">");
 
             
-            #line 36 "..\..\Views\Blog\Index.cshtml"
+            #line 63 "..\..\Views\Blog\Index.cshtml"
                                                                         Write(BlogGlobalization.SiteSettings_Blogs_Export);
 
             
@@ -250,7 +252,7 @@ WriteLiteral(">");
 WriteLiteral("</div>\r\n                </div>\r\n");
 
             
-            #line 38 "..\..\Views\Blog\Index.cshtml"
+            #line 65 "..\..\Views\Blog\Index.cshtml"
             }
 
             
@@ -269,7 +271,7 @@ WriteLiteral(" id=\"bcms-blogs-search-btn\"");
 WriteLiteral(">");
 
             
-            #line 42 "..\..\Views\Blog\Index.cshtml"
+            #line 69 "..\..\Views\Blog\Index.cshtml"
                                                                    Write(BlogGlobalization.SiteSettings_Blogs_Search);
 
             
@@ -284,7 +286,7 @@ WriteLiteral(">                 \r\n");
 WriteLiteral("                    ");
 
             
-            #line 44 "..\..\Views\Blog\Index.cshtml"
+            #line 71 "..\..\Views\Blog\Index.cshtml"
                Write(Html.TextBoxFor(m => m.SearchQuery, new { @class = "bcms-search-field-box bcms-js-search-box bcms-search-query", @placeholder = RootGlobalization.WaterMark_Search }));
 
             
@@ -299,7 +301,7 @@ WriteLiteral(">\r\n");
 WriteLiteral("                ");
 
             
-            #line 49 "..\..\Views\Blog\Index.cshtml"
+            #line 76 "..\..\Views\Blog\Index.cshtml"
            Write(Html.Partial("~/Areas/bcms-root/Views/Shared/Partial/Paging.cshtml"));
 
             
@@ -308,7 +310,7 @@ WriteLiteral("                ");
 WriteLiteral("\r\n            </div>\r\n    </div>\r\n");
 
             
-            #line 52 "..\..\Views\Blog\Index.cshtml"
+            #line 79 "..\..\Views\Blog\Index.cshtml"
 
 
             
@@ -323,7 +325,7 @@ WriteLiteral(">\r\n");
 WriteLiteral("        ");
 
             
-            #line 54 "..\..\Views\Blog\Index.cshtml"
+            #line 81 "..\..\Views\Blog\Index.cshtml"
    Write(Html.Partial("~/Areas/bcms-blog/Views/Blog/Partial/BlogsFilterTemplate.cshtml", Model));
 
             
@@ -332,21 +334,21 @@ WriteLiteral("        ");
 WriteLiteral("\r\n    </div>\r\n");
 
             
-            #line 56 "..\..\Views\Blog\Index.cshtml"
+            #line 83 "..\..\Views\Blog\Index.cshtml"
     
     
             
             #line default
             #line hidden
             
-            #line 57 "..\..\Views\Blog\Index.cshtml"
+            #line 84 "..\..\Views\Blog\Index.cshtml"
 Write(Html.Partial("~/Areas/bcms-blog/Views/Blog/Partial/BlogsGrid.cshtml", Model));
 
             
             #line default
             #line hidden
             
-            #line 57 "..\..\Views\Blog\Index.cshtml"
+            #line 84 "..\..\Views\Blog\Index.cshtml"
                                                                                  
 }
 
