@@ -45,7 +45,6 @@
       <JavaScriptFiles Include="$(ProjectDir)Scripts\bcms.tabs.js" />
       <JavaScriptFiles Include="$(ProjectDir)Scripts\bcms.tooltip.js" />
       <JavaScriptFiles Include="$(ProjectDir)Scripts\bcms.tags.js" />
-      <JavaScriptFiles Include="$(ProjectDir)Scripts\bcms.multiple.select.js" />
     </ItemGroup>
 
     <JavaScriptCompressorTask

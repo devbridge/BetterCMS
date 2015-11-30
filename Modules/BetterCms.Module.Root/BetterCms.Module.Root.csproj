@@ -1345,7 +1345,6 @@
     <EmbeddedResource Include="Scripts\bcms.content.tree.js" />
     <EmbeddedResource Include="Scripts\bcms.store.js" />
     <EmbeddedResource Include="Scripts\bcms.categories.js" />
-    <EmbeddedResource Include="Scripts\bcms.multiple.select.js" />
     <EmbeddedResource Include="Models\Migrations\Migration201502101136.sqlserver.sql" />
     <EmbeddedResource Include="Models\Migrations\Migration201502061445.sqlserver.sql" />
     <EmbeddedResource Include="Scripts\ace\ext-beautify.js" />
