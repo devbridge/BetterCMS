@@ -384,6 +384,7 @@ namespace BetterCms.Module.Pages.Controllers
         /// URL, created from text.
         /// </returns>
         [BcmsAuthorize]
+        [ValidateInput(false)]
         public ActionResult ConvertStringToSlug(string text, string senderId, string parentPageUrl, string parentPageId, string languageId, string categoryId)
         {
             var category = categoryId.ToGuidOrNull();
