@@ -407,7 +407,7 @@ namespace BetterCms.Module.Pages.Services
 
             var query = repository.AsQueryable<Widget>()
                         .Where(f => !f.IsDeleted
-                                && (f.Status == ContentStatus.Published || f.Status == ContentStatus.Draft)
+                                && ((f.Status == ContentStatus.Published && f.History.All(h => h.Status != ContentStatus.Draft))|| f.Status == ContentStatus.Draft)
                                 && (f.Original == null || !f.Original.IsDeleted));
 
             if (filter.ChildContentId.HasValue && !filter.ChildContentId.Value.HasDefaultValue())
