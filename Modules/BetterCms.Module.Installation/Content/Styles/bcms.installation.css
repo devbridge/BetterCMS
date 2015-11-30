@@ -1,4 +1,4 @@
-.bcms-clearfix:after {
+.bcms-clearfix:after, .clearfix:after {
   content: '';
   display: table;
   clear: both;
@@ -18,68 +18,48 @@ body {
   margin: 0;
 }
 
+h1, h2, h3, h4 {
+  color: #303646;
+  font-family: "Open Sans", sans-serif !important;
+  line-height: 1.5;
+}
+
 h1 {
-  color: #282a2e;
-  font-family: 'Open Sans', sans-serif;
   font-size: 30px;
   font-weight: 700;
-  line-height: 1.5em;
   margin: 0 0 20px;
 }
 
 h2 {
-  color: #282a2e;
-  font-family: 'Open Sans', sans-serif;
   font-size: 22px;
   font-weight: 400;
-  line-height: 1.5em;
   margin: 0 0 20px;
 }
 
 h3 {
-  color: #282a2e;
-  font-family: 'Open Sans', sans-serif;
   font-size: 18px;
   font-weight: 400;
-  line-height: 1.5em;
   margin: 10px 0 20px;
 }
 
 h4 {
-  color: #282a2e;
-  font-family: 'Open Sans', sans-serif;
   font-size: 17px;
   font-weight: 700;
-  line-height: 1.5em;
   margin: 10px 0 20px;
 }
 
-div > h1 {
-  color: #38393c;
-  font-family: 'Open Sans', sans-serif;
-  font-size: 28px;
-  font-weight: 700;
-}
-
-div > h2 {
-  font-size: 18px;
-  font-weight: 400;
-  line-height: 28px;
-  margin-bottom: 30px;
-}
-
-p {
-  margin: 0;
-  padding: 20px 0;
-}
-
 a {
-  color: #2eadd5;
+  color: #368fd3;
   transition: color 0.1s ease-in;
 }
 
+a.bcms-logo {
+  float: left;
+  margin-top: 30px;
+}
+
 time {
-  color: #b5b5b5;
+  color: #a6a6a6;
   font-size: 12px;
 }
 
@@ -96,17 +76,9 @@ img {
   display: block;
 }
 
-.clearfix:after {
-  clear: both;
-  content: ".";
-  display: block;
-  height: 0;
-  visibility: hidden;
-}
-
 .page {
-  background-color: #fff;
-  color: #6d7076;
+  background-color: #ffffff;
+  color: #636363;
   margin: 0 0 -55px 0;
   min-height: 100%;
   min-width: 940px;
@@ -133,21 +105,16 @@ img {
 }
 
 .page-footer {
-  border-top: 1px solid #ececec;
+  border-top: 1px solid #dfdfdf;
   height: 49px;
   margin: 0 auto;
   width: 940px;
 }
 
-a.bcms-logo {
-  float: left;
-  margin-top: 30px;
-}
-
 .copyright {
-  color: #afafaf;
+  color: #636363;
   float: left;
-  font-family: 'Open Sans', sans-serif;
+  font-family: "Open Sans", sans-serif !important;
   font-size: 11px;
   font-weight: 400;
   padding-top: 9px;
