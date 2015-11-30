@@ -64,19 +64,10 @@ namespace ASP
             
             #line default
             #line hidden
-WriteLiteral("\n\n");
-
-DefineSection("Head", () => {
-
-WriteLiteral("\n    <style>\n        .bcms-body {\n            width: 260px;\n            margin: 0" +
-" auto;\n            padding: 20px 0 74px;\n        }\n    </style>\n");
-
-});
-
-WriteLiteral("\n");
+WriteLiteral("\r\n\r\n");
 
             
-            #line 21 "..\..\Views\Authentication\Login.cshtml"
+            #line 11 "..\..\Views\Authentication\Login.cshtml"
  using (Html.BeginForm())
 {
 
@@ -89,130 +80,162 @@ WriteLiteral(" class=\"validation-summary-valid\"");
 
 WriteLiteral(" data-valmsg-summary=\"true\"");
 
-WriteLiteral(">\n");
+WriteLiteral(">\r\n");
 
-WriteLiteral("       ");
+WriteLiteral("        ");
 
             
-            #line 24 "..\..\Views\Authentication\Login.cshtml"
-  Write(Html.MessagesBox());
+            #line 14 "..\..\Views\Authentication\Login.cshtml"
+   Write(Html.MessagesBox());
 
             
             #line default
             #line hidden
-WriteLiteral("\n    </div>\n");
+WriteLiteral("\r\n    </div>\r\n");
 
-WriteLiteral("    <div>\n        <span");
+            
+            #line 16 "..\..\Views\Authentication\Login.cshtml"
 
-WriteLiteral(" class=\"bcms-title\"");
+
+            
+            #line default
+            #line hidden
+WriteLiteral("    <div");
+
+WriteLiteral(" class=\"bcms-content-titles\"");
 
 WriteLiteral(">");
 
             
-            #line 27 "..\..\Views\Authentication\Login.cshtml"
-                            Write(UsersGlobalization.Login_UserName);
+            #line 17 "..\..\Views\Authentication\Login.cshtml"
+                                Write(UsersGlobalization.Login_UserName);
 
             
             #line default
             #line hidden
-WriteLiteral("</span>\n        <p>\n");
+WriteLiteral("</div>\r\n");
 
-WriteLiteral("            ");
+WriteLiteral("    <div");
 
-            
-            #line 29 "..\..\Views\Authentication\Login.cshtml"
-       Write(Html.TextBoxFor(m => m.UserName, new { id = "userName", @class = "bcms-field-text"}));
+WriteLiteral(" class=\"bcms-field-wrapper\"");
 
-            
-            #line default
-            #line hidden
-WriteLiteral("\n");
+WriteLiteral(">\r\n");
 
-WriteLiteral("            ");
+WriteLiteral("        ");
 
             
-            #line 30 "..\..\Views\Authentication\Login.cshtml"
-       Write(Html.ValidationMessageFor(m => m.UserName));
+            #line 19 "..\..\Views\Authentication\Login.cshtml"
+   Write(Html.TextBoxFor(m => m.UserName, new { id = "userName", @class = "bcms-field-text" }));
 
             
             #line default
             #line hidden
-WriteLiteral("\n        </p>\n    </div>\n");
+WriteLiteral("\r\n");
+
+WriteLiteral("        ");
 
             
-            #line 33 "..\..\Views\Authentication\Login.cshtml"
+            #line 20 "..\..\Views\Authentication\Login.cshtml"
+   Write(Html.ValidationMessageFor(m => m.UserName));
+
+            
+            #line default
+            #line hidden
+WriteLiteral("\r\n    </div>\r\n");
+
+            
+            #line 22 "..\..\Views\Authentication\Login.cshtml"
 
 
             
             #line default
             #line hidden
-WriteLiteral("    <div>\n        <span");
+WriteLiteral("    <div");
 
-WriteLiteral(" class=\"bcms-title\"");
+WriteLiteral(" class=\"bcms-content-titles\"");
 
 WriteLiteral(">");
 
             
-            #line 35 "..\..\Views\Authentication\Login.cshtml"
-                            Write(UsersGlobalization.Login_Password);
+            #line 23 "..\..\Views\Authentication\Login.cshtml"
+                                Write(UsersGlobalization.Login_Password);
 
             
             #line default
             #line hidden
-WriteLiteral("</span>\n        <p>\n");
+WriteLiteral("</div>\r\n");
 
-WriteLiteral("            ");
+WriteLiteral("    <div");
 
-            
-            #line 37 "..\..\Views\Authentication\Login.cshtml"
-       Write(Html.PasswordFor(m => m.Password, new { @class = "bcms-field-text" }));
+WriteLiteral(" class=\"bcms-field-wrapper\"");
 
-            
-            #line default
-            #line hidden
-WriteLiteral("\n");
+WriteLiteral(">\r\n");
 
-WriteLiteral("            ");
+WriteLiteral("        ");
 
             
-            #line 38 "..\..\Views\Authentication\Login.cshtml"
-       Write(Html.ValidationMessageFor(m => m.Password));
+            #line 25 "..\..\Views\Authentication\Login.cshtml"
+   Write(Html.PasswordFor(m => m.Password, new { @class = "bcms-field-text" }));
 
             
             #line default
             #line hidden
-WriteLiteral("\n        </p>\n    </div>\n");
+WriteLiteral("\r\n");
 
-WriteLiteral("    <div>\n        <span");
-
-WriteLiteral(" class=\"bcms-title\"");
-
-WriteLiteral(">&nbsp;</span>\n        <p>\n");
-
-WriteLiteral("            ");
+WriteLiteral("        ");
 
             
-            #line 44 "..\..\Views\Authentication\Login.cshtml"
-       Write(Html.CheckBoxFor(m => m.RememberMe));
+            #line 26 "..\..\Views\Authentication\Login.cshtml"
+   Write(Html.ValidationMessageFor(m => m.Password));
 
             
             #line default
             #line hidden
-WriteLiteral("\n");
-
-WriteLiteral("            ");
+WriteLiteral("\r\n    </div>\r\n");
 
             
-            #line 45 "..\..\Views\Authentication\Login.cshtml"
-       Write(Html.LabelFor(m => m.RememberMe));
+            #line 28 "..\..\Views\Authentication\Login.cshtml"
+
 
             
             #line default
             #line hidden
-WriteLiteral("\n        </p>\n    </div>\n");
+WriteLiteral("    <div");
+
+WriteLiteral(" class=\"bcms-content-titles\"");
+
+WriteLiteral(">&nbsp;</div>\r\n");
+
+WriteLiteral("    <div");
+
+WriteLiteral(" class=\"bcms-field-wrapper\"");
+
+WriteLiteral(">\r\n");
+
+WriteLiteral("        ");
 
             
-            #line 48 "..\..\Views\Authentication\Login.cshtml"
+            #line 31 "..\..\Views\Authentication\Login.cshtml"
+   Write(Html.CheckBoxFor(m => m.RememberMe));
+
+            
+            #line default
+            #line hidden
+WriteLiteral("\r\n");
+
+WriteLiteral("        ");
+
+            
+            #line 32 "..\..\Views\Authentication\Login.cshtml"
+   Write(Html.LabelFor(m => m.RememberMe));
+
+            
+            #line default
+            #line hidden
+WriteLiteral("\r\n    </div>\r\n");
+
+            
+            #line 34 "..\..\Views\Authentication\Login.cshtml"
 
     Dictionary<string, object> submitProperties = new Dictionary<string, object>();
     submitProperties.Add("class", "bcms-btn-primary");
@@ -220,34 +243,34 @@ WriteLiteral("\n        </p>\n    </div>\n");
     {
         submitProperties.Add("disabled", "disabled");
     }
-    
+
     
             
             #line default
             #line hidden
             
-            #line 56 "..\..\Views\Authentication\Login.cshtml"
+            #line 42 "..\..\Views\Authentication\Login.cshtml"
 Write(Html.SubmitButton("submit", "Login", submitProperties));
 
             
             #line default
             #line hidden
             
-            #line 56 "..\..\Views\Authentication\Login.cshtml"
+            #line 42 "..\..\Views\Authentication\Login.cshtml"
                                                            
     
             
             #line default
             #line hidden
             
-            #line 57 "..\..\Views\Authentication\Login.cshtml"
+            #line 43 "..\..\Views\Authentication\Login.cshtml"
 Write(Html.HiddenFor(m => m.ReturnUrl));
 
             
             #line default
             #line hidden
             
-            #line 57 "..\..\Views\Authentication\Login.cshtml"
+            #line 43 "..\..\Views\Authentication\Login.cshtml"
                                      
 }
 
@@ -258,8 +281,8 @@ WriteLiteral("<script");
 
 WriteLiteral(" type=\"text/javascript\"");
 
-WriteLiteral(">\n    (function() {\n        document.getElementById(\'userName\').focus();\n    })()" +
-";    \n</script>");
+WriteLiteral(">\r\n    (function () {\r\n        document.getElementById(\'userName\').focus();\r\n    " +
+"})();\r\n</script>");
 
         }
     }

@@ -8,42 +8,28 @@
     ViewBag.Title = "Login";
 }
 
-@section Head {
-    <style>
-        .bcms-body {
-            width: 260px;
-            margin: 0 auto;
-            padding: 20px 0 74px;
-        }
-    </style>
-}
-
 @using (Html.BeginForm())
 {
     <div class="validation-summary-valid" data-valmsg-summary="true">
-       @Html.MessagesBox()
-    </div>
-    <div>
-        <span class="bcms-title">@UsersGlobalization.Login_UserName</span>
-        <p>
-            @Html.TextBoxFor(m => m.UserName, new { id = "userName", @class = "bcms-field-text"})
-            @Html.ValidationMessageFor(m => m.UserName)
-        </p>
+        @Html.MessagesBox()
     </div>
 
-    <div>
-        <span class="bcms-title">@UsersGlobalization.Login_Password</span>
-        <p>
-            @Html.PasswordFor(m => m.Password, new { @class = "bcms-field-text" })
-            @Html.ValidationMessageFor(m => m.Password)
-        </p>
+    <div class="bcms-content-titles">@UsersGlobalization.Login_UserName</div>
+    <div class="bcms-field-wrapper">
+        @Html.TextBoxFor(m => m.UserName, new { id = "userName", @class = "bcms-field-text" })
+        @Html.ValidationMessageFor(m => m.UserName)
     </div>
-    <div>
-        <span class="bcms-title">&nbsp;</span>
-        <p>
-            @Html.CheckBoxFor(m => m.RememberMe)
-            @Html.LabelFor(m => m.RememberMe)
-        </p>
+
+    <div class="bcms-content-titles">@UsersGlobalization.Login_Password</div>
+    <div class="bcms-field-wrapper">
+        @Html.PasswordFor(m => m.Password, new { @class = "bcms-field-text" })
+        @Html.ValidationMessageFor(m => m.Password)
+    </div>
+
+    <div class="bcms-content-titles">&nbsp;</div>
+    <div class="bcms-field-wrapper">
+        @Html.CheckBoxFor(m => m.RememberMe)
+        @Html.LabelFor(m => m.RememberMe)
     </div>
 
     Dictionary<string, object> submitProperties = new Dictionary<string, object>();
@@ -52,12 +38,12 @@
     {
         submitProperties.Add("disabled", "disabled");
     }
-    
+
     @Html.SubmitButton("submit", "Login", submitProperties)
     @Html.HiddenFor(m => m.ReturnUrl)
 }
 <script type="text/javascript">
-    (function() {
+    (function () {
         document.getElementById('userName').focus();
-    })();    
+    })();
 </script>

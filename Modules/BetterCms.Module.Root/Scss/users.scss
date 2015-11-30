@@ -8,4 +8,9 @@
 //module styles
 @import 'bcms-modules/users/index';
 
+//module structure
+@import 'structure/layout',
+'structure/formelements',
+'structure/buttons';
+
 //module custom adjustments

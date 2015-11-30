@@ -31,15 +31,15 @@
 
 //module structure
 @import 'structure/layout',
+'structure/formelements',
+'structure/buttons',
 'structure/global';
 
 //module styles
 @import 'bcms-modules/root/autocomplete',
-'bcms-modules/root/buttons',
 'bcms-modules/root/browsersupport',
 'bcms-modules/root/controlpanel',
 'bcms-modules/root/contentstree',
-'bcms-modules/root/formelements',
 'bcms-modules/root/notifications',
 'bcms-modules/root/overlays',
 'bcms-modules/root/pager',
