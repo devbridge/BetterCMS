@@ -97,9 +97,12 @@ namespace BetterCms.Module.Root.Services
                                                   OptionKey = optionValue.Key.Trim(),
                                                   OptionValue = ClearFixValueForEdit(optionValue.Type, optionValue.Value),
                                                   OptionDefaultValue = option != null ? ClearFixValueForEdit(option.Type, option.Value) : null,
-//                                                  UseDefaultValue = option != null && optionValue.Value == null // false
-                                                UseDefaultValue = optionValue.UseDefaultValue
+                                                  UseDefaultValue = optionValue.UseDefaultValue
                                               };
+                    if (optionValue.UseDefaultValue && option != null)
+                    {
+                        optionViewModel.OptionValue = ClearFixValueForEdit(option.Type, option.Value);
+                    }
                     if (cmsConfiguration.EnableMultilanguage && optionValue is IMultilingualOption)
                     {
                         var translations = new List<OptionTranslationViewModel>();
