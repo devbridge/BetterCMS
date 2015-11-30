@@ -1,3 +1,58 @@
-.bcms-page-button {
-    color: red;
+$message-error: #dc4250;
+
+.bcms-window-installation {
+    background-color: #f3f3f3;
+    border: {
+        left: $border-dialog;
+        right: $border-dialog;
+    }
+    box-sizing: border-box;
+    height: calc(100vh - #{$header-height + $footer-height});
+    margin: auto;
+    overflow: auto;
+    padding: 0 30px;
+    position: relative;
+    width: 900px;
+}
+
+.bcms-modal-installation {
+    .bcms-modal-frame-holder {
+        width: 900px;
+    }
+
+    .bcms-field-wrapper {
+        margin-bottom: 15px;
+    }
+
+    .bcms-form-block-holder {
+        margin-top: 30px;
+    }
+}
+
+.bcms-login-box {
+    margin: 50px auto;
+    width: 300px;
+
+    label {
+        cursor: pointer;
+    }
+
+    .bcms-btn-primary {
+        float: left;
+    }
+
+    .bcms-remember-box {
+        float: right;
+        margin-top: 8px;
+    }
+}
+
+.field-validation-error {
+    color: $message-error;
+    font-size: 11px;
+    margin-left: 5px;
+}
+
+.input-validation-error {
+    border-color: $message-error !important;
 }

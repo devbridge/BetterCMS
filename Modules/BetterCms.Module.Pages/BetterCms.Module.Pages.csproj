@@ -860,11 +860,6 @@
     <EmbeddedResource Include="Scripts\bcms.pages.masterpage.js" />
     <EmbeddedResource Include="Scripts\bcms.pages.languages.js" />
     <EmbeddedResource Include="Scripts\bcms.pages.content.js" />
-    <Content Include="Scripts\bootstrap.js" />
-    <Content Include="Scripts\bootstrap.min.js" />
-    <None Include="Scripts\jquery-1.10.2.intellisense.js" />
-    <Content Include="Scripts\jquery-1.10.2.js" />
-    <Content Include="Scripts\jquery-1.10.2.min.js" />
     <Content Include="Scripts\modernizr-2.6.2.js" />
     <Content Include="web.config" />
   </ItemGroup>
@@ -897,7 +892,6 @@
       <Generator>RazorGenerator</Generator>
       <LastGenOutput>ServerWidgetPropertiesHistory.generated.cs</LastGenOutput>
     </Content>
-    <Content Include="Scripts\jquery-1.10.2.min.map" />
     <EmbeddedResource Include="Views\Shared\EditableGrid\CustomTitleCell.cshtml" />
     <EmbeddedResource Include="Views\Page\Partial\PagesGrid.cshtml" />
     <Content Include="Views\History\ContentHistoryTable.cshtml">

@@ -48,7 +48,7 @@
 .bcms-inner {
     &-navigation {
         @include clearfix();
-        @include position(absolute, 0 null null);
+        @include position(absolute, -($header-height) null null);
         height: $header-height;
         z-index: 10;
     }
