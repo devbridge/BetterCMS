@@ -468,6 +468,9 @@
     <Content Include="Views\Widgets\ApiTestWidgetInvoker.cshtml" />
     <Content Include="Views\Shared\Layouts\MasterLayout.cshtml" />
   </ItemGroup>
+  <ItemGroup>
+    <Content Include="..\..\licensing.licenseheader" />
+  </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
     <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>

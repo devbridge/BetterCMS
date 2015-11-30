@@ -11,6 +11,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Shared", "Shared", "{DF71B1
 	ProjectSection(SolutionItems) = preProject
 		COPYING = COPYING
 		COPYING.LESSER = COPYING.LESSER
+		licensing.licenseheader = licensing.licenseheader
 		README.md = README.md
 		Settings.StyleCop = Settings.StyleCop
 		SharedAssemblyInfo.cs = SharedAssemblyInfo.cs
