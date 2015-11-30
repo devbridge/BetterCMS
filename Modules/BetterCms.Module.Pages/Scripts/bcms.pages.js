@@ -97,8 +97,7 @@ bettercms.define('bcms.pages', ['bcms.jquery', 'bcms', 'bcms.modal', 'bcms.siteS
                 addNewPageInfoMessageClosed: 'bcms.addNewPageInfoBoxClosed'
             },
             classes = {
-                addNewPageActiveTemplateBox: 'bcms-grid-box-active',
-                gridActiveRow: '.bcms-table-row-active'
+                inputValidationError: 'bcms-input-validation-error'
             },
             pageUrlManuallyEdited = false,
             oldTitleValue = '';
@@ -549,6 +548,9 @@ bettercms.define('bcms.pages', ['bcms.jquery', 'bcms', 'bcms.modal', 'bcms.siteS
                     dynamicContent.bindDialog(dialog, url, {
                         postSuccess: postSuccess
                     });
+                },
+                onAcceptClick: function() {
+                    $('.bcms-error-frame').showLoading();
                 }
             });
         };
@@ -922,6 +924,12 @@ bettercms.define('bcms.pages', ['bcms.jquery', 'bcms', 'bcms.modal', 'bcms.siteS
                 title = globalization.clonePageWithLanguageDialogTitle;
 
             clonePage(url, title, function (clonePageDialog) {
+                clonePageDialog.container.find(selectors.languageSelection).on('change', function () {
+                    var select = $(this);
+                    if (select.hasClass(classes.inputValidationError)) {
+                        select.removeClass(classes.inputValidationError);
+                    }
+                });
                 clonePageDialog.container.find(selectors.cloneWithLanguageGoToPagePropertiesLink).on('click', function () {
                     clonePageDialog.close();
                     pageProperties.editPageProperties(function (pagePropertiesDialog) {
