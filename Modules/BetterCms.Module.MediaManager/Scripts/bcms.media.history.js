@@ -19,7 +19,7 @@ bettercms.define('bcms.media.history', ['bcms.jquery', 'bcms', 'bcms.modal', 'bc
             firstRow: 'tr:first',
             gridRows: '#bcms-pagecontenthistory-form tr',
             versionPreviewContainer: '#bcms-history-preview',
-            versionPreviewLoaderContainer: '.bcms-history-preview',
+            versionPreviewLoaderContainer: '.bcms-history-preview-holder',
             mediaHistoryForm: '#bcms-pagecontenthistory-form',
             mediaHistorySearchButton: '.bcms-btn-search',
             mediaHistorySearchField: '.bcms-js-search-box',

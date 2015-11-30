@@ -61,6 +61,7 @@ bettercms.define('bcms.pages.history', ['bcms.jquery', 'bcms', 'bcms.modal', 'bc
             previewIFrame = $(container.find(selectors.versionPreviewTemplate).html()),
             previewContainer = container.find(selectors.versionPreviewContainer),
             loaderContainer = container.find(selectors.versionPreviewContainer),
+            activeTab = container.find(selectors.activeTab),
 
             propertiesUrl = $.format(links.loadContentVersionPreviewPropertiesUrl, id),
             previewPropertiesContainer = container.find(selectors.versionPreviewPropertiesContainer),
@@ -70,8 +71,11 @@ bettercms.define('bcms.pages.history', ['bcms.jquery', 'bcms', 'bcms.modal', 'bc
                                            globalization.versionPreviewNotAvailableMessage + "</div></div>";
 
         previewContainer.html(previewIFrame);
-        loaderContainer.showLoading();
-        previewPropertiesLoaderContainer.showLoading();
+        if (activeTab.data('name') === '#bcms-tab-1') {
+            loaderContainer.showLoading();
+        } else {
+            previewPropertiesLoaderContainer.showLoading();
+        }
 
         previewIFrame.on('load', function () {
             loaderContainer.hideLoading();
