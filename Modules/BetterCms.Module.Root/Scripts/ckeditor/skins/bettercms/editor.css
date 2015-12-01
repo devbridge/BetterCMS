@@ -370,6 +370,12 @@
 }
 
 .cke_button_disabled {
+  cursor: default;
+  opacity: .3;
+}
+
+.cke_button_disabled:hover {
+  cursor: default;
   opacity: .3;
 }
 
@@ -419,14 +425,14 @@
 .cke_toolbox_collapser .cke_arrow {
   height: 100%;
   width: 100%;
-  background: url("data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI5LjIiIGhlaWdodD0iNS4yIiB2aWV3Qm94PSItMzAwIDM5NCA5LjIgNS4yIiBlbmFibGUtYmFja2dyb3VuZD0ibmV3IC0zMDAgMzk0IDkuMiA1LjIiPjxwYXRoIGQ9Im0tMjkyIDM5NC4yYy4zLS4zLjctLjMgMSAwIC4zLjMuMy43IDAgMWwtMy45IDMuOGMtLjMuMy0uNy4zLTEgMGwtMy45LTMuOGMtLjMtLjMtLjMtLjcgMC0xIC4zLS4zLjctLjMgMSAwbDMuNCAzLjEgMy40LTMuMSIgZmlsbD0iIzMwMzY0NiIvPjwvc3ZnPg==") no-repeat center;
+  background: url("data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI5LjIiIGhlaWdodD0iNS4yIiB2aWV3Qm94PSItMzAwIDM5NCA5LjIgNS4yIiBlbmFibGUtYmFja2dyb3VuZD0ibmV3IC0zMDAgMzk0IDkuMiA1LjIiPjxwYXRoIGQ9Im0tMjk1LjQgMzk1LjlsLTMuNCAzLjFjLS4zLjMtLjcuMy0xIDAtLjMtLjMtLjMtLjcgMC0xbDMuOS0zLjhjLjMtLjMuNy0uMyAxIDBsMy45IDMuOGMuMy4zLjMuNyAwIDFzLS43LjMtMSAwbC0zLjQtMy4xIiBmaWxsPSIjMzAzNjQ2Ii8+PC9zdmc+") no-repeat center;
   display: block;
   overflow: hidden;
   text-indent: -999em;
 }
 
 .cke_toolbox_collapser_min .cke_arrow {
-  background-image: url("data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI5LjIiIGhlaWdodD0iNS4yIiB2aWV3Qm94PSItMzAwIDM5NCA5LjIgNS4yIiBlbmFibGUtYmFja2dyb3VuZD0ibmV3IC0zMDAgMzk0IDkuMiA1LjIiPjxwYXRoIGQ9Im0tMjk1LjQgMzk1LjlsLTMuNCAzLjFjLS4zLjMtLjcuMy0xIDAtLjMtLjMtLjMtLjcgMC0xbDMuOS0zLjhjLjMtLjMuNy0uMyAxIDBsMy45IDMuOGMuMy4zLjMuNyAwIDFzLS43LjMtMSAwbC0zLjQtMy4xIiBmaWxsPSIjMzAzNjQ2Ii8+PC9zdmc+");
+  background-image: url("data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI5LjIiIGhlaWdodD0iNS4yIiB2aWV3Qm94PSItMzAwIDM5NCA5LjIgNS4yIiBlbmFibGUtYmFja2dyb3VuZD0ibmV3IC0zMDAgMzk0IDkuMiA1LjIiPjxwYXRoIGQ9Im0tMjkyIDM5NC4yYy4zLS4zLjctLjMgMSAwIC4zLjMuMy43IDAgMWwtMy45IDMuOGMtLjMuMy0uNy4zLTEgMGwtMy45LTMuOGMtLjMtLjMtLjMtLjcgMC0xIC4zLS4zLjctLjMgMSAwbDMuNCAzLjEgMy40LTMuMSIgZmlsbD0iIzMwMzY0NiIvPjwvc3ZnPg==");
 }
 
 .cke_toolbar_break {
