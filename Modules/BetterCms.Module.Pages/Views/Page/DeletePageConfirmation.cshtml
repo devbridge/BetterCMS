@@ -72,9 +72,9 @@
         <div class="bcms-input-list-holder">
             <div class="bcms-content-titles">@PagesGlobalization.DeletePage_Dialog_UpdateSitemap</div>
             @Html.Tooltip(PagesGlobalization.DeletePage_Dialog_UpdateSitemap_Description)
-            <div class="bcms-edit-check-field">
+            <div class="bcms-checkbox-holder">
                 @Html.CheckBoxFor(m => m.UpdateSitemap, new { @id = "UpdateSitemap" })
-                <div class="bcms-edit-label">@PagesGlobalization.DeletePage_Dialog_UpdateSitemap_RemovePageFromSitemap</div>
+                <div class="bcms-checkbox-label bcms-js-edit-label">@PagesGlobalization.DeletePage_Dialog_UpdateSitemap_RemovePageFromSitemap</div>
             </div>
         </div>
     }

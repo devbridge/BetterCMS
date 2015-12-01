@@ -291,7 +291,7 @@ WriteLiteral("            ");
             #line hidden
 WriteLiteral("\r\n            <div");
 
-WriteLiteral(" class=\"bcms-edit-check-field\"");
+WriteLiteral(" class=\"bcms-checkbox-holder\"");
 
 WriteLiteral(">\r\n");
 
@@ -306,13 +306,13 @@ WriteLiteral("                ");
             #line hidden
 WriteLiteral("\r\n                <div");
 
-WriteLiteral(" class=\"bcms-edit-label\"");
+WriteLiteral(" class=\"bcms-checkbox-label bcms-js-edit-label\"");
 
 WriteLiteral(">");
 
             
             #line 77 "..\..\Views\Page\DeletePageConfirmation.cshtml"
-                                        Write(PagesGlobalization.DeletePage_Dialog_UpdateSitemap_RemovePageFromSitemap);
+                                                               Write(PagesGlobalization.DeletePage_Dialog_UpdateSitemap_RemovePageFromSitemap);
 
             
             #line default

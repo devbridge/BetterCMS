@@ -1211,7 +1211,7 @@ td .bcms-field-wrapper {
   box-shadow: 0 25px 80px 5px rgba(0, 0, 0, 0.4);
   box-sizing: border-box;
   color: #303646;
-  padding: 29px 40px 30px;
+  padding: 30px 40px;
   width: 600px;
 }
 
@@ -1238,7 +1238,7 @@ td .bcms-field-wrapper {
   box-shadow: 0 25px 80px 5px rgba(0, 0, 0, 0.4);
   box-sizing: border-box;
   color: #303646;
-  padding: 29px 40px 30px;
+  padding: 30px 40px;
   width: 600px;
 }
 
@@ -1560,7 +1560,7 @@ td .bcms-field-wrapper {
 }
 
 .bcms-success-buttons-holder {
-  margin-top: 25px;
+  margin-top: 24px;
 }
 
 .bcms-success-buttons-holder::after {
