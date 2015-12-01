@@ -182,18 +182,6 @@ namespace BetterCms.Module.Users
         }
 
         /// <summary>
-        /// Registers the style sheet files.
-        /// </summary>        
-        /// <returns>Enumerator of known module style sheet files.</returns>
-        public override IEnumerable<CssIncludeDescriptor> RegisterCssIncludes()
-        {
-            return new[]
-                {
-                    new CssIncludeDescriptor(this, "bcms.users.css") 
-                };
-        }
-
-        /// <summary>
         /// Gets known client side modules in page module.
         /// </summary>
         /// <returns>List of known client side modules in page module.</returns>

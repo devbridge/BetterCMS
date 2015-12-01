@@ -206,9 +206,12 @@ $ck-toolbar-icons: (
     }
 
     &_disabled {
+        cursor: default;
         opacity: .3;
 
         &:hover {
+            cursor: default;
+            opacity: .3;
         }
     }
 
@@ -256,7 +259,7 @@ $ck-toolbar-icons: (
 
     .cke_arrow {
         @include size(100%);
-        background: url($bcms-editor-show) no-repeat center;
+        background: url($bcms-editor-hide) no-repeat center;
         display: block;
         overflow: hidden;
         text-indent: -999em;
@@ -264,7 +267,7 @@ $ck-toolbar-icons: (
 
     &_min {
         .cke_arrow {
-            background-image: url($bcms-editor-hide);
+            background-image: url($bcms-editor-show);
         }
     }
 }

@@ -506,7 +506,7 @@ td .bcms-field-wrapper {
 }
 
 .bcms-filter-selection-block .bcms-checkbox-block .bcms-checkbox-holder {
-  float: none;
+  margin-right: 20px;
   width: auto;
 }
 
@@ -525,7 +525,7 @@ td .bcms-field-wrapper {
   display: inline-block;
   vertical-align: middle;
   cursor: pointer;
-  margin-left: 5px;
+  margin-left: 3px;
 }
 
 .bcms-check-field-helper {
@@ -903,7 +903,7 @@ td .bcms-field-wrapper {
 }
 
 .bcms-success-buttons-holder {
-  margin-top: 25px;
+  margin-top: 24px;
 }
 
 .bcms-success-buttons-holder::after {
@@ -1513,7 +1513,7 @@ td .bcms-field-wrapper {
 }
 
 .bcms-action-edit.bcms-draft {
-  background-image: url("data:image/svg+xml;base64,PHN2ZyBoZWlnaHQ9IjE1IiB3aWR0aD0iMTUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgdmlld0JveD0iMCAwIDE1IDE1Ij48cGF0aCBmaWxsPSIjZTVhMTJhIiBmaWxsLXJ1bGU9ImV2ZW5vZGQiIGQ9Im0xMC42MSAwbC05Ljk2IDkuOTYtLjY1IDQuODkgNC44OS0uNjUgOS45Ni05Ljk2LTQuMjQtNC4yNG0tNi4zNyA5LjE5bDYuMzctNi4zNiAxLjQxIDEuNDEtNi4zNiA2LjM3LTEuNDItMS40Mm0tMS41OCAxLjU5bC4xNy0uMTcgMS40MSAxLjQxLS4xNy4xNy0yLjA5LjY4LjY4LTIuMDkiLz48L3N2Zz4=");
+  background-image: url("data:image/svg+xml;base64,PHN2ZyBoZWlnaHQ9IjE1IiB3aWR0aD0iMTUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgdmlld0JveD0iMCAwIDE1IDE1Ij48cGF0aCBmaWxsPSIjZGM0MjUwIiBmaWxsLXJ1bGU9ImV2ZW5vZGQiIGQ9Im0xMC42MSAwbC05Ljk2IDkuOTYtLjY1IDQuODkgNC44OS0uNjUgOS45Ni05Ljk2LTQuMjQtNC4yNG0tNi4zNyA5LjE5bDYuMzctNi4zNiAxLjQxIDEuNDEtNi4zNiA2LjM3LTEuNDItMS40Mm0tMS41OCAxLjU5bC4xNy0uMTcgMS40MSAxLjQxLS4xNy4xNy0yLjA5LjY4LjY4LTIuMDkiLz48L3N2Zz4=");
 }
 
 .autocomplete-suggestions {

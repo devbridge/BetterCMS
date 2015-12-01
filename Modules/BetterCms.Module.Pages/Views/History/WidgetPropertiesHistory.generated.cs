@@ -109,20 +109,16 @@ WriteLiteral("        ");
             
             #line default
             #line hidden
-WriteLiteral("\r\n    </div>\r\n</div>\r\n\r\n<div");
+WriteLiteral("\r\n    </div>\r\n\r\n    <div");
 
-WriteLiteral(" class=\"bcms-input-list-holder\"");
-
-WriteLiteral(">\r\n    <div");
-
-WriteLiteral(" class=\"bcms-edit-check-field\"");
+WriteLiteral(" class=\"bcms-checkbox-holder\"");
 
 WriteLiteral(">\r\n");
 
 WriteLiteral("        ");
 
             
-            #line 47 "..\..\Views\History\WidgetPropertiesHistory.cshtml"
+            #line 45 "..\..\Views\History\WidgetPropertiesHistory.cshtml"
    Write(Html.CheckBoxFor(model => model.UseCustomHtml, new { @disabled = "disabled" }));
 
             
@@ -130,13 +126,13 @@ WriteLiteral("        ");
             #line hidden
 WriteLiteral("\r\n        <div");
 
-WriteLiteral(" class=\"bcms-edit-label\"");
+WriteLiteral(" class=\"bcms-checkbox-label\"");
 
 WriteLiteral(">");
 
             
-            #line 48 "..\..\Views\History\WidgetPropertiesHistory.cshtml"
-                                Write(Html.Raw(PagesGlobalization.HtmlContentWidget_RenderCustomHTML_Title));
+            #line 46 "..\..\Views\History\WidgetPropertiesHistory.cshtml"
+                                    Write(Html.Raw(PagesGlobalization.HtmlContentWidget_RenderCustomHTML_Title));
 
             
             #line default
@@ -152,7 +148,7 @@ WriteLiteral(" class=\"bcms-content-titles\"");
 WriteLiteral(">");
 
             
-            #line 53 "..\..\Views\History\WidgetPropertiesHistory.cshtml"
+            #line 51 "..\..\Views\History\WidgetPropertiesHistory.cshtml"
                                 Write(PagesGlobalization.HtmlContentWidget_CustomCSS_Title);
 
             
@@ -167,26 +163,22 @@ WriteLiteral(">\r\n");
 WriteLiteral("        ");
 
             
-            #line 55 "..\..\Views\History\WidgetPropertiesHistory.cshtml"
+            #line 53 "..\..\Views\History\WidgetPropertiesHistory.cshtml"
    Write(Html.TextAreaFor(model => model.CustomCss, new { @readonly = "readonly", @class = "bcms-field-textarea bcms-code-field bcms-code-field-css" }));
 
             
             #line default
             #line hidden
-WriteLiteral("\r\n    </div>\r\n</div>\r\n\r\n<div");
+WriteLiteral("\r\n    </div>\r\n\r\n    <div");
 
-WriteLiteral(" class=\"bcms-input-list-holder\"");
-
-WriteLiteral(">\r\n    <div");
-
-WriteLiteral(" class=\"bcms-edit-check-field\"");
+WriteLiteral(" class=\"bcms-checkbox-holder\"");
 
 WriteLiteral(">\r\n");
 
 WriteLiteral("        ");
 
             
-            #line 61 "..\..\Views\History\WidgetPropertiesHistory.cshtml"
+            #line 57 "..\..\Views\History\WidgetPropertiesHistory.cshtml"
    Write(Html.CheckBoxFor(model => model.UseCustomCss, new { @disabled = "disabled" }));
 
             
@@ -194,13 +186,13 @@ WriteLiteral("        ");
             #line hidden
 WriteLiteral("\r\n        <div");
 
-WriteLiteral(" class=\"bcms-edit-label\"");
+WriteLiteral(" class=\"bcms-checkbox-label\"");
 
 WriteLiteral(">");
 
             
-            #line 62 "..\..\Views\History\WidgetPropertiesHistory.cshtml"
-                                Write(Html.Raw(PagesGlobalization.HtmlContentWidget_RenderCustomCSS_Title));
+            #line 58 "..\..\Views\History\WidgetPropertiesHistory.cshtml"
+                                    Write(Html.Raw(PagesGlobalization.HtmlContentWidget_RenderCustomCSS_Title));
 
             
             #line default
@@ -216,7 +208,7 @@ WriteLiteral(" class=\"bcms-content-titles\"");
 WriteLiteral(">");
 
             
-            #line 67 "..\..\Views\History\WidgetPropertiesHistory.cshtml"
+            #line 63 "..\..\Views\History\WidgetPropertiesHistory.cshtml"
                                 Write(PagesGlobalization.HtmlContentWidget_CustomJS_Title);
 
             
@@ -231,26 +223,22 @@ WriteLiteral(">\r\n");
 WriteLiteral("        ");
 
             
-            #line 69 "..\..\Views\History\WidgetPropertiesHistory.cshtml"
+            #line 65 "..\..\Views\History\WidgetPropertiesHistory.cshtml"
    Write(Html.TextAreaFor(model => model.CustomJs, new { @readonly = "readonly", @class = "bcms-field-textarea bcms-code-field bcms-code-field-javascript" }));
 
             
             #line default
             #line hidden
-WriteLiteral("\r\n    </div>\r\n</div>\r\n\r\n<div");
+WriteLiteral("\r\n    </div>\r\n\r\n    <div");
 
-WriteLiteral(" class=\"bcms-input-list-holder\"");
-
-WriteLiteral(">\r\n    <div");
-
-WriteLiteral(" class=\"bcms-edit-check-field\"");
+WriteLiteral(" class=\"bcms-checkbox-holder\"");
 
 WriteLiteral(">\r\n");
 
 WriteLiteral("        ");
 
             
-            #line 75 "..\..\Views\History\WidgetPropertiesHistory.cshtml"
+            #line 69 "..\..\Views\History\WidgetPropertiesHistory.cshtml"
    Write(Html.CheckBoxFor(model => model.UseCustomJs, new { @disabled = "disabled" }));
 
             
@@ -258,13 +246,13 @@ WriteLiteral("        ");
             #line hidden
 WriteLiteral("\r\n        <div");
 
-WriteLiteral(" class=\"bcms-edit-label\"");
+WriteLiteral(" class=\"bcms-checkbox-label\"");
 
 WriteLiteral(">");
 
             
-            #line 76 "..\..\Views\History\WidgetPropertiesHistory.cshtml"
-                                Write(Html.Raw(PagesGlobalization.HtmlContentWidget_RenderCustomJS_Title));
+            #line 70 "..\..\Views\History\WidgetPropertiesHistory.cshtml"
+                                    Write(Html.Raw(PagesGlobalization.HtmlContentWidget_RenderCustomJS_Title));
 
             
             #line default

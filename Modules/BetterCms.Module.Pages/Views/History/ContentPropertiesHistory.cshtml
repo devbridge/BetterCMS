@@ -55,34 +55,30 @@
 <div class="bcms-input-list-holder">
     <div class="bcms-content-titles">@PagesGlobalization.HtmlContent_Content_Title</div>
     <div class="bcms-field-wrapper">
-        @Html.TextAreaFor(model => model.RowText, new { @readonly = "readonly", @class = "bcms-field-textarea bcms-code-field ", @style = "width:820px;", @id = Guid.NewGuid() })
+        @Html.TextAreaFor(model => model.RowText, new { @readonly = "readonly", @class = "bcms-field-textarea bcms-code-field ", @id = Guid.NewGuid() })
     </div>
 </div>
 
 <div class="bcms-input-list-holder">
     <div class="bcms-content-titles">@PagesGlobalization.HtmlContent_CustomCss_Title</div>
     <div class="bcms-field-wrapper">
-        @Html.TextAreaFor(model => model.CustomCss, new { @readonly = "readonly", @class = "bcms-field-textarea bcms-code-field bcms-code-field-css", @style = "width:820px;", @id = Guid.NewGuid() })
+        @Html.TextAreaFor(model => model.CustomCss, new { @readonly = "readonly", @class = "bcms-field-textarea bcms-code-field bcms-code-field-css", @id = Guid.NewGuid() })
     </div>
-</div>
 
-<div class="bcms-input-list-holder">
-    <div class="bcms-edit-check-field">
+    <div class="bcms-checkbox-holder">
         @Html.CheckBoxFor(model => model.UseCustomCss, new { @disabled = "disabled" })
-        <div class="bcms-edit-label">@Html.Raw(PagesGlobalization.HtmlContent_RenderCustomCss_Title)</div>
+        <div class="bcms-checkbox-label">@Html.Raw(PagesGlobalization.HtmlContent_RenderCustomCss_Title)</div>
     </div>
 </div>
 
 <div class="bcms-input-list-holder">
     <div class="bcms-content-titles">@PagesGlobalization.HtmlContent_CustomJs_Title</div>
     <div class="bcms-field-wrapper">
-        @Html.TextAreaFor(model => model.CustomJs, new { @readonly = "readonly", @class = "bcms-field-textarea bcms-code-field bcms-code-field-javascript", @style = "width:820px;", @id = Guid.NewGuid() })
+        @Html.TextAreaFor(model => model.CustomJs, new { @readonly = "readonly", @class = "bcms-field-textarea bcms-code-field bcms-code-field-javascript", @id = Guid.NewGuid() })
     </div>
-</div>
 
-<div class="bcms-input-list-holder">
-    <div class="bcms-edit-check-field">
+    <div class="bcms-checkbox-holder">
         @Html.CheckBoxFor(model => model.UseCustomJs, new { @disabled = "disabled" })
-        <div class="bcms-edit-label">@Html.Raw(PagesGlobalization.HtmlContent_RenderCustomJs_Title)</div>
+        <div class="bcms-checkbox-label">@Html.Raw(PagesGlobalization.HtmlContent_RenderCustomJs_Title)</div>
     </div>
 </div>
