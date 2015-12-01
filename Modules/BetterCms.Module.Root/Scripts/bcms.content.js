@@ -63,7 +63,7 @@ bettercms.define('bcms.content', ['bcms.jquery', 'bcms', 'bcms.modal', 'bcms.red
             regionTreeButtons: '.bcms-region-contentstree',
 
             masterPagesPathContainer: '.bcms-layout-path',
-            masterPagesPathHandler: '.bcms-layout-path-handle',
+            masterPagesPathHandler: '.bcms-js-layout-path-handle',
             masterPagesPathItem: '.bcms-layout-path-item',
             masterPagesPathInnerContainer: '.bcms-layout-path-inner',
             masterPagesPathSliderLeft: '.bcms-path-arrow-left',

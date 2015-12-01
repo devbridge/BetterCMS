@@ -39,14 +39,14 @@ namespace ASP
     public partial class _Views_Shared_Partial_MasterPagesPath_cshtml : System.Web.Mvc.WebViewPage<RenderPageViewModel>
     {
 
-#line 52 "..\..\Views\Shared\Partial\MasterPagesPath.cshtml"
+#line 50 "..\..\Views\Shared\Partial\MasterPagesPath.cshtml"
 public System.Web.WebPages.HelperResult RenderMasterPage(RenderPageViewModel viewModel)
 {
 #line default
 #line hidden
 return new System.Web.WebPages.HelperResult(__razor_helper_writer => {
 
-#line 53 "..\..\Views\Shared\Partial\MasterPagesPath.cshtml"
+#line 51 "..\..\Views\Shared\Partial\MasterPagesPath.cshtml"
  
     if (viewModel.MasterPage != null)
     {
@@ -55,14 +55,14 @@ return new System.Web.WebPages.HelperResult(__razor_helper_writer => {
 #line default
 #line hidden
 
-#line 56 "..\..\Views\Shared\Partial\MasterPagesPath.cshtml"
+#line 54 "..\..\Views\Shared\Partial\MasterPagesPath.cshtml"
 WriteTo(__razor_helper_writer, RenderMasterPage(viewModel.MasterPage));
 
 
 #line default
 #line hidden
 
-#line 56 "..\..\Views\Shared\Partial\MasterPagesPath.cshtml"
+#line 54 "..\..\Views\Shared\Partial\MasterPagesPath.cshtml"
                                                
 
 
@@ -75,7 +75,7 @@ WriteLiteralTo(__razor_helper_writer, " class=\"bcms-layout-path-item bcms-path-
 WriteLiteralTo(__razor_helper_writer, " data-url=\"");
 
 
-#line 57 "..\..\Views\Shared\Partial\MasterPagesPath.cshtml"
+#line 55 "..\..\Views\Shared\Partial\MasterPagesPath.cshtml"
                                         WriteTo(__razor_helper_writer, viewModel.MasterPage.PageUrl);
 
 
@@ -86,16 +86,16 @@ WriteLiteralTo(__razor_helper_writer, "\"");
 WriteLiteralTo(__razor_helper_writer, ">");
 
 
-#line 57 "..\..\Views\Shared\Partial\MasterPagesPath.cshtml"
+#line 55 "..\..\Views\Shared\Partial\MasterPagesPath.cshtml"
                                                                        WriteTo(__razor_helper_writer, viewModel.MasterPage.Title);
 
 
 #line default
 #line hidden
-WriteLiteralTo(__razor_helper_writer, "</div>\r\n");
+WriteLiteralTo(__razor_helper_writer, "</div>\n");
 
 
-#line 58 "..\..\Views\Shared\Partial\MasterPagesPath.cshtml"
+#line 56 "..\..\Views\Shared\Partial\MasterPagesPath.cshtml"
     }
 
 
@@ -103,7 +103,7 @@ WriteLiteralTo(__razor_helper_writer, "</div>\r\n");
 #line hidden
 });
 
-#line 59 "..\..\Views\Shared\Partial\MasterPagesPath.cshtml"
+#line 57 "..\..\Views\Shared\Partial\MasterPagesPath.cshtml"
 }
 #line default
 #line hidden
@@ -113,9 +113,9 @@ WriteLiteralTo(__razor_helper_writer, "</div>\r\n");
         }
         public override void Execute()
         {
-WriteLiteral("\r\n");
+WriteLiteral("\n");
 
-WriteLiteral("\r\n");
+WriteLiteral("\n");
 
             
             #line 32 "..\..\Views\Shared\Partial\MasterPagesPath.cshtml"
@@ -131,19 +131,19 @@ WriteLiteral(" class=\"bcms-layout-path\"");
 
 WriteLiteral(" style=\"display:none\"");
 
-WriteLiteral(">\r\n        <div");
+WriteLiteral(">\n        <div");
 
 WriteLiteral(" class=\"bcms-path-arrow-left bcms-path-arrow-inactive\"");
 
-WriteLiteral("></div>\r\n        <div");
+WriteLiteral("></div>\n        <div");
 
 WriteLiteral(" class=\"bcms-path-arrow-right\"");
 
-WriteLiteral("></div>\r\n        <div");
+WriteLiteral("></div>\n        <div");
 
 WriteLiteral(" class=\"bcms-layout-path-inner\"");
 
-WriteLiteral(">\r\n");
+WriteLiteral(">\n");
 
             
             #line 38 "..\..\Views\Shared\Partial\MasterPagesPath.cshtml"
@@ -174,7 +174,9 @@ WriteLiteral(">\r\n");
             
             #line default
             #line hidden
-WriteLiteral("        </div>\r\n        <div");
+WriteLiteral("        </div>\n        <div");
+
+WriteLiteral(" class=\"bcms-layout-path-handle\"");
 
 WriteLiteral(" id=\"bcms-path-draggable\"");
 
@@ -182,25 +184,24 @@ WriteLiteral(" style=\"position: absolute\"");
 
 WriteLiteral(">\r\n            <div");
 
-WriteLiteral(" id=\"bcms-path-drag-handle\"");
+WriteLiteral(" class=\"bcms-layout-path-drag-handle\"");
 
-WriteLiteral(" style=\"font-family: Comic Sans MS, cursive, sans-serif; width: 65px; height: 25p" +
-"x; background-color: pink; font-size: 10px\"");
+WriteLiteral(" id=\"bcms-path-drag-handle\"");
 
 WriteLiteral(">DRAG ME</div>\r\n            <div");
 
-WriteLiteral(" class=\"bcms-layout-path-handle\"");
+WriteLiteral(" class=\"bcms-layout-path-text bcms-js-layout-path-handle\"");
 
-WriteLiteral(">\r\n                Hide Path\r\n            </div>\r\n        </div>\r\n    </div>\r\n");
+WriteLiteral(">Hide Path</div>\r\n        </div>\n    </div>\n");
 
             
-            #line 50 "..\..\Views\Shared\Partial\MasterPagesPath.cshtml"
+            #line 48 "..\..\Views\Shared\Partial\MasterPagesPath.cshtml"
 }
 
             
             #line default
             #line hidden
-WriteLiteral("\r\n");
+WriteLiteral("\n");
 
         }
     }

@@ -77,20 +77,35 @@ $path-icons: (
     }
 
     &-handle {
-        @include position(absolute, null 0 -25px null null);
-        background: $cp-dark url($bcms-path-show) no-repeat 90% center;
+        @include position(absolute, null 0 -26px null null);
+        background-color: $cp-dark;
         box-sizing: border-box;
+        height: 26px;
+        padding-left: 40px;
+        text-transform: uppercase;
+        width: 130px;
+
+    }
+
+    &-drag-handle {
+        @include position(absolute, 0 null null 0);
+        @include size(28px 26px);
+        background: url($bcms-path-drag) no-repeat 8px center;
+        cursor: move;
+        overflow: hidden;
+        text-indent: -999em;
+    }
+
+    &-text {
+        background: url($bcms-path-show) no-repeat 90% center;
         color: $white;
+        cursor: pointer;
         font: {
             size: 10px;
             weight: 700;
         }
-        cursor: pointer;
-        height: 25px;
-        line-height: 25px;
-        padding: 0 30px 0 12px;
-        text-transform: uppercase;
-        width: 103px;
+        line-height: 26px;
+        padding-right: 30px;
 
         .bcms-path-toggler & {
             background-image: url($bcms-path-hide);

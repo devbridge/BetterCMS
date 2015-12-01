@@ -1257,7 +1257,8 @@ td .bcms-field-wrapper {
   font-size: 11px;
 }
 
-.bcms-loader:before, .bcms-loader:after {
+.bcms-loader:before,
+.bcms-loader:after {
   content: "";
   -webkit-animation: loader 800ms infinite ease-in-out;
   -moz-animation: loader 800ms infinite ease-in-out;
@@ -1307,7 +1308,8 @@ td .bcms-field-wrapper {
   font-size: 11px;
 }
 
-.bcms-loader-2:before, .bcms-loader-2:after {
+.bcms-loader-2:before,
+.bcms-loader-2:after {
   content: "";
   -webkit-animation: loader 800ms infinite ease-in-out;
   -moz-animation: loader 800ms infinite ease-in-out;
@@ -2171,7 +2173,8 @@ td .bcms-field-wrapper {
   z-index: 5;
 }
 
-.bcms-contents-tree-add-block:hover, .bcms-contents-tree-add-block.bcms-active {
+.bcms-contents-tree-add-block:hover,
+.bcms-contents-tree-add-block.bcms-active {
   background-color: #0a62b7;
 }
 
@@ -2670,7 +2673,8 @@ td .bcms-field-wrapper {
   text-align: center;
 }
 
-.bcms-pager-no:hover, .bcms-pager-no.bcms-active-pager {
+.bcms-pager-no:hover,
+.bcms-pager-no.bcms-active-pager {
   background-color: #ffffff;
 }
 
@@ -2763,21 +2767,38 @@ td .bcms-field-wrapper {
 .bcms-layout-path-handle {
   position: absolute;
   right: 0;
-  bottom: -25px;
-  background: #1e2332 url("data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI5LjIiIGhlaWdodD0iNS4yIiB2aWV3Qm94PSItMzAwIDM5NCA5LjIgNS4yIiBlbmFibGUtYmFja2dyb3VuZD0ibmV3IC0zMDAgMzk0IDkuMiA1LjIiPjxwYXRoIGQ9Im0tMjkyIDM5NC4yYy4zLS4zLjctLjMgMSAwIC4zLjMuMy43IDAgMWwtMy45IDMuOGMtLjMuMy0uNy4zLTEgMGwtMy45LTMuOGMtLjMtLjMtLjMtLjcgMC0xIC4zLS4zLjctLjMgMSAwbDMuNCAzLjEgMy40LTMuMSIgZmlsbD0iIzM5YmZmZiIvPjwvc3ZnPg==") no-repeat 90% center;
+  bottom: -26px;
+  background-color: #1e2332;
   box-sizing: border-box;
-  color: #ffffff;
-  font-size: 10px;
-  font-weight: 700;
-  cursor: pointer;
-  height: 25px;
-  line-height: 25px;
-  padding: 0 30px 0 12px;
+  height: 26px;
+  padding-left: 40px;
   text-transform: uppercase;
-  width: 103px;
+  width: 130px;
 }
 
-.bcms-path-toggler .bcms-layout-path-handle {
+.bcms-layout-path-drag-handle {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 26px;
+  width: 28px;
+  background: url("data:image/svg+xml;base64,PHN2ZyBoZWlnaHQ9IjE2IiB3aWR0aD0iMTkiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgdmlld0JveD0iMCAwIDE5IDE2Ij48ZyBmaWxsLXJ1bGU9ImV2ZW5vZGQiPjxwYXRoIGZpbGw9IiNhN2IxYzYiIGQ9Im0wIDVoMTB2MWgtMTB2LTFtMCAzaDEwdjFoLTEwdi0xbTAgM2gxMHYxaC0xMHYtMSIvPjxwYXRoIGZpbGw9IiM1MzYwODIiIGQ9Im0xOCAwaDF2MTZoLTF2LTE2Ii8+PC9nPjwvc3ZnPg==") no-repeat 8px center;
+  cursor: move;
+  overflow: hidden;
+  text-indent: -999em;
+}
+
+.bcms-layout-path-text {
+  background: url("data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI5LjIiIGhlaWdodD0iNS4yIiB2aWV3Qm94PSItMzAwIDM5NCA5LjIgNS4yIiBlbmFibGUtYmFja2dyb3VuZD0ibmV3IC0zMDAgMzk0IDkuMiA1LjIiPjxwYXRoIGQ9Im0tMjkyIDM5NC4yYy4zLS4zLjctLjMgMSAwIC4zLjMuMy43IDAgMWwtMy45IDMuOGMtLjMuMy0uNy4zLTEgMGwtMy45LTMuOGMtLjMtLjMtLjMtLjcgMC0xIC4zLS4zLjctLjMgMSAwbDMuNCAzLjEgMy40LTMuMSIgZmlsbD0iIzM5YmZmZiIvPjwvc3ZnPg==") no-repeat 90% center;
+  color: #ffffff;
+  cursor: pointer;
+  font-size: 10px;
+  font-weight: 700;
+  line-height: 26px;
+  padding-right: 30px;
+}
+
+.bcms-path-toggler .bcms-layout-path-text {
   background-image: url("data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI5LjIiIGhlaWdodD0iNS4yIiB2aWV3Qm94PSItMzAwIDM5NCA5LjIgNS4yIiBlbmFibGUtYmFja2dyb3VuZD0ibmV3IC0zMDAgMzk0IDkuMiA1LjIiPjxwYXRoIGQ9Im0tMjk1LjQgMzk1LjlsLTMuNCAzLjFjLS4zLjMtLjcuMy0xIDAtLjMtLjMtLjMtLjcgMC0xbDMuOS0zLjhjLjMtLjMuNy0uMyAxIDBsMy45IDMuOGMuMy4zLjMuNyAwIDFzLS43LjMtMSAwbC0zLjQtMy4xIiBmaWxsPSIjMzliZmZmIi8+PC9zdmc+");
 }
 
@@ -3152,7 +3173,7 @@ td .bcms-field-wrapper {
 }
 
 .bcms-inner-navigation-ui:hover {
-  color: #8d8d8d;
+  color: #8c8c8c;
 }
 
 .bcms-inner-navigation-ui.bcms-active {
@@ -3626,7 +3647,8 @@ textarea.markItUpEditor:focus {
   padding-left: 35px;
 }
 
-.markItUpHeader > ul > .markItUpButton.markItUpButtonBold, .markItUpHeader > ul > .markItUpButton.markItUpButtonItalic {
+.markItUpHeader > ul > .markItUpButton.markItUpButtonBold,
+.markItUpHeader > ul > .markItUpButton.markItUpButtonItalic {
   padding-top: 3px;
   width: 30px !important;
 }
@@ -3981,7 +4003,8 @@ textarea.markItUpEditor:focus {
   padding: 9px 11px 10px;
 }
 
-.select2-choice, .select2-choices {
+.select2-choice,
+.select2-choices {
   height: 100%;
   width: 100%;
   display: block;
