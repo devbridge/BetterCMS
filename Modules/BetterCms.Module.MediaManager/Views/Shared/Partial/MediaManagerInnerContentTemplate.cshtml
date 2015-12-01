@@ -184,20 +184,19 @@
                     <div class="bcms-action-menu" data-bind="click: $parent.toggleMenu, clickBubble: false">Menu</div>
 
                     <div class="bcms-media-context" data-bind="visible: isMenuOpen, css: isMenuAbove() ? 'bcms-tooltip-br' : 'bcms-tooltip-tr'">
-                        
+                        <!--  ko if: !isFailed() && !isProcessing() && !isDeleting() && ($root.canInsertMedia() || $root.canInsertMediaWithOptions()) -->
                         <div class="bcms-media-context-block">
-                            <!-- ko if: !isFailed() && isImage() && $root.canInsertMedia() -->
+                            <!-- ko if: isImage() && $root.canInsertMedia() -->
                             <div class="bcms-media-content-link" data-bind="click: insertMedia.bind($data, $root), clickBubble: false">@MediaGlobalization.MediaManager_ButtonInsertImage</div>
                             <!-- /ko -->
-                            <!-- ko if: !isFailed() && isImage() && $root.canInsertMediaWithOptions() -->
+                            <!-- ko if: isImage() && $root.canInsertMediaWithOptions() -->
                             <div class="bcms-media-content-link" data-bind="click: insertMediaWithOptions.bind($data, $root), clickBubble: false">@MediaGlobalization.MediaManager_ButtonInsertImageWithOptions</div>
                             <!-- /ko -->
-                            <!--  ko if: !isProcessing() && !isDeleting() -->
-                            <!-- ko if: !isFailed() && !isFolder() && !isImage() && $root.canInsertMedia() -->
+                            <!-- ko if: !isImage() && !isFolder() && $root.canInsertMedia() -->
                             <div class="bcms-media-content-link" data-bind="click: insertMedia.bind($data, $root), clickBubble: false">@MediaGlobalization.MediaManager_ButtonInsertFile</div>
                             <!-- /ko -->
-                            <!-- /ko -->
                         </div>
+                        <!-- /ko -->
 
                             <div class="bcms-media-context-block">
                                 <div class="bcms-media-context-column">
