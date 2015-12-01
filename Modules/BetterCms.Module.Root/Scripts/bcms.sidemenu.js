@@ -176,14 +176,25 @@ bettercms.define('bcms.sidemenu', ['bcms.jquery', 'bcms', 'bcms.security', 'bcms
             editingOn = store.get(keys.editingOn),
             middleOfThePage;
 
-        if (offsetTop) {
+
+
+        function setOffset(offset) {
             var windowHeight = $(window).height();
             var sidemenuHeight = sidemenuContainer.height();
-            if (offsetTop > windowHeight - sidemenuHeight) {
-                sidemenuContainer.css('top', (windowHeight - sidemenuHeight - 15) + 'px');
-            } else if (offsetTop >= 0) {
-                sidemenuContainer.css('top', offsetTop + 'px');
+            if (offset > windowHeight - sidemenuHeight) {
+                sidemenuContainer.css('top', (windowHeight - sidemenuHeight - 20) + 'px');
+            } else if (offset >= 0) {
+                sidemenuContainer.css('top', offset + 'px');
             }
+        }
+
+        function onWindowResize() {
+            if (offsetTop) {
+                setOffset(offsetTop);
+            }
+        }
+        if (offsetTop) {
+            setOffset(offsetTop);
         }
 
         if (isMenuOnTheRight) {
@@ -235,12 +246,13 @@ bettercms.define('bcms.sidemenu', ['bcms.jquery', 'bcms', 'bcms.security', 'bcms
                 var wHeight = $(window).height();
                 var sHeight = sidemenuContainer.height();
                 if (top > wHeight - sHeight) {
-                    top = (windowHeight - sidemenuHeight - 15);
+                    top = (windowHeight - sidemenuHeight - 20);
                     sidemenuContainer.css('top', top +'px');
                 } else if (top < 0) {
                     top = 0;
                     sidemenuContainer.css('top', '0px');
-                } 
+                }
+                offsetTop = top;
                 store.set(keys.sideMenuOffsetTop, top);
             },
             start: function () {
@@ -263,6 +275,7 @@ bettercms.define('bcms.sidemenu', ['bcms.jquery', 'bcms', 'bcms.security', 'bcms
         });
 
         sidemenuContainer.show();
+        window.addEventListener('resize', onWindowResize);
     };
 
     bcms.registerInit(sidemenu.init);

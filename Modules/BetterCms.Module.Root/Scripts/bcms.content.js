@@ -90,7 +90,8 @@ bettercms.define('bcms.content', ['bcms.jquery', 'bcms', 'bcms.modal', 'bcms.red
         keys = {
             showMasterPagesPath: 'bcms.showMasterPagesPath',
             editingOn: 'bcms.editingOn',
-            pathMenuAtBottom: 'bcms.pathMenuAtBottom'
+            pathMenuAtBottom: 'bcms.pathMenuAtBottom',
+            pathMenuOffsetLeft: 'bcms.pathMenuOffsetLeft'
         },
         resizeTimer,
         currentContentDom,
@@ -1099,8 +1100,9 @@ bettercms.define('bcms.content', ['bcms.jquery', 'bcms', 'bcms.modal', 'bcms.red
             maxItem = 0,
             currentPage = null,
             middleOfThePage,
-            isMenuAtBottom = store.get(keys.pathMenuAtBottom);
-
+            isMenuAtBottom = store.get(keys.pathMenuAtBottom),
+            draggableContainer = pathContainer.find(selectors.masterPagesPathDraggable),
+            pathMenuOffsetLeft = store.get(keys.pathMenuOffsetLeft);
 
         function moveToBottom() {
             store.set(keys.pathMenuAtBottom, '1');
@@ -1110,15 +1112,32 @@ bettercms.define('bcms.content', ['bcms.jquery', 'bcms', 'bcms.modal', 'bcms.red
             store.remove(keys.pathMenuAtBottom);
             pathContainer.removeClass(classes.pathMenuBottom);
         }
-        if (isMenuAtBottom) {
-            moveToBottom(true);
+        function setLeftOffset(offset) {
+            var windowWidth = $(window).width();
+            var containerWidth = draggableContainer.width();
+            if (offset > windowWidth - containerWidth) {
+                draggableContainer.css('left', (windowWidth - containerWidth - 40) + 'px');
+            } else if (offset < 0) {
+                draggableContainer.css('left', '0px');
+            } else {
+                draggableContainer.css('left', offset + 'px');
+            }
         }
-        $(selectors.masterPagesPathDraggable).draggable({
+        function onWindowResize() {
+            setLeftOffset(pathMenuOffsetLeft);
+        }
+        draggableContainer.draggable({
             axis: 'x',
             handle: selectors.masterPagesPathDragHandle,
             containment: 'window',
+            stop: function (event, ui) {
+                var offset = ui.position.left;
+                setLeftOffset(offset);
+                pathMenuOffsetLeft = offset;
+                store.set(keys.pathMenuOffsetLeft, offset);
+            },
             start: function () {
-                middleOfThePage = $(window).width() / 2;
+                middleOfThePage = $(window).height() / 2;
             },
             drag: function (event) {
                 var posY = event.clientY;
@@ -1135,6 +1154,10 @@ bettercms.define('bcms.content', ['bcms.jquery', 'bcms', 'bcms.modal', 'bcms.red
                 }
             }
         });
+
+        if (isMenuAtBottom) {
+            moveToBottom(true);
+        }
 
         function hasPath() {
             return items.length > 0;
@@ -1293,6 +1316,10 @@ bettercms.define('bcms.content', ['bcms.jquery', 'bcms', 'bcms.modal', 'bcms.red
 
             redraw(slideToTheFirstParent);
             setPathVisibility(getPathVisibility());
+            if (pathMenuOffsetLeft) {
+                setLeftOffset(pathMenuOffsetLeft);
+            }
+            window.addEventListener('resize', onWindowResize);
         };
 
         function setLastParentInactive() {
