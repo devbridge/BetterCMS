@@ -2733,13 +2733,6 @@ td .bcms-field-wrapper {
   z-index: 1100;
 }
 
-.bcms-layout-path.bcms-path-toggler {
-  top: 0;
-  -webkit-transition: top 200ms;
-  -moz-transition: top 200ms;
-  transition: top 200ms;
-}
-
 .bcms-layout-path-inner {
   padding: 0 25px;
 }
@@ -2798,8 +2791,40 @@ td .bcms-field-wrapper {
   padding-right: 30px;
 }
 
+.bcms-path-toggler {
+  top: 0;
+  -webkit-transition: top 200ms;
+  -moz-transition: top 200ms;
+  transition: top 200ms;
+}
+
 .bcms-path-toggler .bcms-layout-path-text {
   background-image: url("data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI5LjIiIGhlaWdodD0iNS4yIiB2aWV3Qm94PSItMzAwIDM5NCA5LjIgNS4yIiBlbmFibGUtYmFja2dyb3VuZD0ibmV3IC0zMDAgMzk0IDkuMiA1LjIiPjxwYXRoIGQ9Im0tMjk1LjQgMzk1LjlsLTMuNCAzLjFjLS4zLjMtLjcuMy0xIDAtLjMtLjMtLjMtLjcgMC0xbDMuOS0zLjhjLjMtLjMuNy0uMyAxIDBsMy45IDMuOGMuMy4zLjMuNyAwIDFzLS43LjMtMSAwbC0zLjQtMy4xIiBmaWxsPSIjMzliZmZmIi8+PC9zdmc+");
+}
+
+.bcms-path-menu-bottom {
+  -webkit-transition: bottom 200ms;
+  -moz-transition: bottom 200ms;
+  transition: bottom 200ms;
+  bottom: -43px;
+  top: auto;
+}
+
+.bcms-path-menu-bottom .bcms-layout-path-handle {
+  bottom: auto;
+  top: -26px;
+}
+
+.bcms-path-menu-bottom .bcms-layout-path-text {
+  background-image: url("data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI5LjIiIGhlaWdodD0iNS4yIiB2aWV3Qm94PSItMzAwIDM5NCA5LjIgNS4yIiBlbmFibGUtYmFja2dyb3VuZD0ibmV3IC0zMDAgMzk0IDkuMiA1LjIiPjxwYXRoIGQ9Im0tMjk1LjQgMzk1LjlsLTMuNCAzLjFjLS4zLjMtLjcuMy0xIDAtLjMtLjMtLjMtLjcgMC0xbDMuOS0zLjhjLjMtLjMuNy0uMyAxIDBsMy45IDMuOGMuMy4zLjMuNyAwIDFzLS43LjMtMSAwbC0zLjQtMy4xIiBmaWxsPSIjMzliZmZmIi8+PC9zdmc+");
+}
+
+.bcms-path-menu-bottom.bcms-path-toggler {
+  bottom: 0;
+}
+
+.bcms-path-menu-bottom.bcms-path-toggler .bcms-layout-path-text {
+  background-image: url("data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI5LjIiIGhlaWdodD0iNS4yIiB2aWV3Qm94PSItMzAwIDM5NCA5LjIgNS4yIiBlbmFibGUtYmFja2dyb3VuZD0ibmV3IC0zMDAgMzk0IDkuMiA1LjIiPjxwYXRoIGQ9Im0tMjkyIDM5NC4yYy4zLS4zLjctLjMgMSAwIC4zLjMuMy43IDAgMWwtMy45IDMuOGMtLjMuMy0uNy4zLTEgMGwtMy45LTMuOGMtLjMtLjMtLjMtLjcgMC0xIC4zLS4zLjctLjMgMSAwbDMuNCAzLjEgMy40LTMuMSIgZmlsbD0iIzM5YmZmZiIvPjwvc3ZnPg==");
 }
 
 .bcms-path-child-content-active {

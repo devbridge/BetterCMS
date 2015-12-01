@@ -44,11 +44,6 @@ $path-icons: (
     background-color: $bg-dark;
     z-index: 1100;
 
-    &.bcms-path-toggler {
-        top: 0;
-        @include transition(top 200ms);
-    }
-
     &-inner {
         padding: 0 25px;
     }
@@ -106,9 +101,38 @@ $path-icons: (
         }
         line-height: 26px;
         padding-right: 30px;
+    }
+}
 
-        .bcms-path-toggler & {
-            background-image: url($bcms-path-hide);
+.bcms-path-toggler {
+    top: 0;
+    @include transition(top 200ms);
+
+    .bcms-layout-path-text {
+        background-image: url($bcms-path-hide);
+    }
+
+}
+
+.bcms-path-menu-bottom {
+    @include transition(bottom 200ms);
+    bottom: -43px;
+    top: auto;
+
+    .bcms-layout-path-handle {
+        bottom: auto;
+        top: -26px;
+    }
+
+    .bcms-layout-path-text {
+        background-image: url($bcms-path-hide);
+    }
+
+    &.bcms-path-toggler {
+        bottom: 0;
+
+        .bcms-layout-path-text {
+            background-image: url($bcms-path-show);
         }
     }
 }
