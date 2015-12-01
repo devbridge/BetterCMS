@@ -135,7 +135,8 @@ bettercms.define('bcms.blog', ['bcms.jquery', 'bcms', 'bcms.modal', 'bcms.siteSe
             },
             contentTypes = {
                 blogContent: 'blog-post-content'
-            };
+            },
+        rowId = 0;
 
         // Assign objects to module.
         blog.links = links;
@@ -934,7 +935,13 @@ bettercms.define('bcms.blog', ['bcms.jquery', 'bcms', 'bcms.modal', 'bcms.siteSe
                 // this.valueTitle(json.Data.ValueTitle);
             };
 
-            return SettingItemViewModel;
+        SettingItemViewModel.prototype.getRowId = function() {
+            if (!this.rowId) {
+                this.rowId = 'bcms-blog-settings-row-' + rowId++;
+            }
+            return this.rowId;
+        };
+        return SettingItemViewModel;
 
         })(kogrid.ItemViewModel);
 

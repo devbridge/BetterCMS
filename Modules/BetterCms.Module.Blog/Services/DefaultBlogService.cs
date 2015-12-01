@@ -751,14 +751,17 @@ namespace BetterCms.Module.Blog.Services
                 }
                 else if (request.Status.Value == PageStatusFilterType.ContainingUnpublishedContents)
                 {
-                    const ContentStatus draft = ContentStatus.Draft;
+                    PageContent pageContentAlias = null;
                     Root.Models.Content contentAlias = null;
-                    var subQuery = QueryOver.Of<PageContent>()
-                        .JoinAlias(p => p.Content, () => contentAlias)
-                        .Where(pageContent => pageContent.Page.Id == alias.Id)
-                        .And(() => contentAlias.Status == draft)
-                        .And(() => !contentAlias.IsDeleted)
-                        .Select(pageContent => 1);
+                    Root.Models.Content contentHistoryAlias = null;
+
+                    var subQuery =
+                        QueryOver.Of(() => pageContentAlias)
+                            .Inner.JoinAlias(() => pageContentAlias.Content, () => contentAlias, () => !contentAlias.IsDeleted)
+                            .Left.JoinAlias(() => contentAlias.History, () => contentHistoryAlias, () => !contentHistoryAlias.IsDeleted)
+                            .Where(() => pageContentAlias.Page.Id == alias.Id && !pageContentAlias.IsDeleted)
+                            .Where(() => contentHistoryAlias.Status == ContentStatus.Draft || contentAlias.Status == ContentStatus.Draft)
+                            .Select(p => 1);
 
                     query = query.WithSubquery.WhereExists(subQuery);
                 }

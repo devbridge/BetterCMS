@@ -56,10 +56,10 @@
                     {
                         OptionsBind = "contentEditModes",
                         ValueTextBind = "valueTitle",
-                        CanBeEdited = true
+                        CanBeEdited = true,
+                        FocusIdentifier = "hasFocus"
                     }
             }
     };
 }
-
 @Html.Partial(RootModuleConstants.EditableGridTemplate, gridViewModel)

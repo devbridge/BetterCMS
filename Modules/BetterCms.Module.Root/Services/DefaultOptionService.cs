@@ -124,9 +124,12 @@ namespace BetterCms.Module.Root.Services
                                                   OptionKey = optionValue.Key.Trim(),
                                                   OptionValue = ClearFixValueForEdit(optionValue.Type, optionValue.Value),
                                                   OptionDefaultValue = option != null ? ClearFixValueForEdit(option.Type, option.Value) : null,
-//                                                  UseDefaultValue = option != null && optionValue.Value == null // false
-                                                UseDefaultValue = optionValue.UseDefaultValue
+                                                  UseDefaultValue = optionValue.UseDefaultValue
                                               };
+                    if (optionValue.UseDefaultValue && option != null)
+                    {
+                        optionViewModel.OptionValue = ClearFixValueForEdit(option.Type, option.Value);
+                    }
                     if (cmsConfiguration.EnableMultilanguage && optionValue is IMultilingualOption)
                     {
                         var translations = new List<OptionTranslationViewModel>();
@@ -246,7 +249,7 @@ namespace BetterCms.Module.Root.Services
                     if (languageId != null && languageId != default(Guid) && optionValue is IMultilingualOption)
                     {
                         var multilingualOption = optionValue as IMultilingualOption;
-                        if (multilingualOption.Translations == null || !multilingualOption.Translations.Any())
+                        if (multilingualOption.Translations == null || multilingualOption.Translations.All(t => t.LanguageId != languageId.ToString()))
                         {
                             continue;
                         }

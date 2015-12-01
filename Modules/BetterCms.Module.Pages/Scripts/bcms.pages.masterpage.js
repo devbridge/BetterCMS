@@ -149,9 +149,7 @@ bettercms.define('bcms.pages.masterpage', ['bcms.jquery', 'bcms', 'bcms.siteSett
                     if (container.hasClass('js-redirect-to-new-page') && data.Data.IsMasterPage) {
                         window.location.href = data.Data.PageUrl;
                     }
-
-                    newRow.find(selectors.siteSettingsPageTitleCell).html(data.Data.Title);
-
+                    
                     newRow.find(selectors.siteSettingsPageTitleCell).data('url', data.Data.PageUrl);
                     newRow.find(selectors.siteSettingsPageEditButton).data('id', data.Data.PageId);
                     newRow.find(selectors.siteSettingsPageDeleteButton).data('id', data.Data.PageId);

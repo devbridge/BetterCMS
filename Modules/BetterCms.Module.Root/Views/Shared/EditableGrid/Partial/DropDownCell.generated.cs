@@ -199,7 +199,7 @@ WriteLiteral("        <!-- /ko -->\r\n");
             
             #line default
             #line hidden
-WriteLiteral("</td>\r\n");
+WriteLiteral("</td>");
 
         }
     }

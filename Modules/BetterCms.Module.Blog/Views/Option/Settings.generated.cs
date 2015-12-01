@@ -105,7 +105,8 @@ WriteLiteral("\r\n\r\n");
                     {
                         OptionsBind = "contentEditModes",
                         ValueTextBind = "valueTitle",
-                        CanBeEdited = true
+                        CanBeEdited = true,
+                        FocusIdentifier = "hasFocus"
                     }
             }
     };
@@ -113,7 +114,7 @@ WriteLiteral("\r\n\r\n");
             
             #line default
             #line hidden
-WriteLiteral("\r\n\r\n");
+WriteLiteral("\r\n");
 
             
             #line 65 "..\..\Views\Option\Settings.cshtml"
@@ -122,8 +123,6 @@ Write(Html.Partial(RootModuleConstants.EditableGridTemplate, gridViewModel));
             
             #line default
             #line hidden
-WriteLiteral("\r\n");
-
         }
     }
 }
