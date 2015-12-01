@@ -1163,7 +1163,7 @@ td .bcms-field-wrapper {
 }
 
 .bcms-filter-selection-block .bcms-checkbox-block .bcms-checkbox-holder {
-  float: none;
+  margin-right: 20px;
   width: auto;
 }
 
@@ -1182,7 +1182,7 @@ td .bcms-field-wrapper {
   display: inline-block;
   vertical-align: middle;
   cursor: pointer;
-  margin-left: 5px;
+  margin-left: 3px;
 }
 
 .bcms-check-field-helper {
