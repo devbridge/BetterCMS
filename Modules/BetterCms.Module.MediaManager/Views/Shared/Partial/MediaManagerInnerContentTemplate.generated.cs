@@ -375,17 +375,27 @@ WriteLiteral(">\r\n            <tr>\r\n                <td>\r\n");
 WriteLiteral("                    <!--  ko if: !isProcessing() && !isFailed() && !isDeleting() " +
 "&& !isReadOnly() -->\r\n");
 
-WriteLiteral("                    <div");
+WriteLiteral("    <div");
 
 WriteLiteral(" class=\"bcms-action-edit\"");
 
 WriteLiteral(" data-bind=\"click: editMedia.bind($data, $root), clickBubble: false\"");
 
+WriteAttribute("title", Tuple.Create(" title=\"", 6255), Tuple.Create("\"", 6293)
+            
+            #line 121 "..\..\Views\Shared\Partial\MediaManagerInnerContentTemplate.cshtml"
+                             , Tuple.Create(Tuple.Create("", 6263), Tuple.Create<System.Object, System.Int32>(RootGlobalization.Button_Edit
+            
+            #line default
+            #line hidden
+, 6263), false)
+);
+
 WriteLiteral(">");
 
             
             #line 121 "..\..\Views\Shared\Partial\MediaManagerInnerContentTemplate.cshtml"
-                                                                                                                 Write(RootGlobalization.Button_Edit);
+                                                                                                                                        Write(RootGlobalization.Button_Edit);
 
             
             #line default

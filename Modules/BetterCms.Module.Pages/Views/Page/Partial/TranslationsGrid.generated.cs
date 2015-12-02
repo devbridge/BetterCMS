@@ -130,11 +130,21 @@ WriteLiteral(" class=\"bcms-action-delete\"");
 
 WriteLiteral(" data-bind=\"click: $parent.unassignPage\"");
 
+WriteAttribute("title", Tuple.Create(" title=\"", 2454), Tuple.Create("\"", 2494)
+            
+            #line 50 "..\..\Views\Page\Partial\TranslationsGrid.cshtml"
+                   , Tuple.Create(Tuple.Create("", 2462), Tuple.Create<System.Object, System.Int32>(RootGlobalization.Button_Delete
+            
+            #line default
+            #line hidden
+, 2462), false)
+);
+
 WriteLiteral(">");
 
             
             #line 50 "..\..\Views\Page\Partial\TranslationsGrid.cshtml"
-                                                                                       Write(RootGlobalization.Button_Delete);
+                                                                                                                                Write(RootGlobalization.Button_Delete);
 
             
             #line default
@@ -182,14 +192,14 @@ WriteLiteral(" class=\"bcms-field-text\"");
 WriteLiteral(" data-bind=\"value: addPageTitle, autocomplete: \'onlyExisting\', hasfocus: hasFocus" +
 ", enterPress: addTranslation, escPress: endEditMode\"");
 
-WriteAttribute("placeholder", Tuple.Create(" placeholder=\"", 3310), Tuple.Create("\"", 3403)
+WriteAttribute("placeholder", Tuple.Create(" placeholder=\"", 3351), Tuple.Create("\"", 3444)
             
             #line 66 "..\..\Views\Page\Partial\TranslationsGrid.cshtml"
-                                                                                                                                     , Tuple.Create(Tuple.Create("", 3324), Tuple.Create<System.Object, System.Int32>(PagesGlobalization.EditPageProperties_TranslationsTab_PageSelectionPlaceholder
+                                                                                                                                     , Tuple.Create(Tuple.Create("", 3365), Tuple.Create<System.Object, System.Int32>(PagesGlobalization.EditPageProperties_TranslationsTab_PageSelectionPlaceholder
             
             #line default
             #line hidden
-, 3324), false)
+, 3365), false)
 );
 
 WriteLiteral(" />\r\n                    </div>\r\n                    <div");

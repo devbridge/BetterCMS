@@ -103,11 +103,20 @@ WriteLiteral(@"</div>
                 <div class=""bcms-node-box-info"" data-bind=""droppableCategoryNode: 'middleZone'"">
                     <div class=""bcms-node-box-title"" data-bind=""text: title""></div>
                     <!-- ko if: getCategoryTree().settings.canEditNode -->
-                    <div class=""bcms-action-edit"" data-bind=""click: startEditCategoryTreeNode"">");
+                    <div class=""bcms-action-edit"" data-bind=""click: startEditCategoryTreeNode"" title=""");
 
             
             #line 60 "..\..\Views\Category\Partial\CategoryTreeTemplate.cshtml"
-                                                                                          Write(RootGlobalization.Button_Edit);
+                                                                                                 Write(RootGlobalization.Button_Edit);
+
+            
+            #line default
+            #line hidden
+WriteLiteral("\">");
+
+            
+            #line 60 "..\..\Views\Category\Partial\CategoryTreeTemplate.cshtml"
+                                                                                                                                 Write(RootGlobalization.Button_Edit);
 
             
             #line default
@@ -228,11 +237,20 @@ WriteLiteral(@"
 
                 <!-- ko if: getCategoryTree().settings.canDeleteNode -->
                 <div class=""bcms-node-delete-box"">
-                    <div class=""bcms-action-delete"" data-bind=""click: deleteCategoryTreeNode"">");
+                    <div class=""bcms-action-delete"" data-bind=""click: deleteCategoryTreeNode"" title=""");
 
             
             #line 101 "..\..\Views\Category\Partial\CategoryTreeTemplate.cshtml"
-                                                                                         Write(RootGlobalization.Button_Delete);
+                                                                                                Write(RootGlobalization.Button_Delete);
+
+            
+            #line default
+            #line hidden
+WriteLiteral("\">");
+
+            
+            #line 101 "..\..\Views\Category\Partial\CategoryTreeTemplate.cshtml"
+                                                                                                                                  Write(RootGlobalization.Button_Delete);
 
             
             #line default

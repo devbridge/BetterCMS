@@ -558,11 +558,21 @@ WriteLiteral(@"
             #line hidden
 WriteLiteral("</b> <span data-bind=\"text: fileSizeFormated\"></span></div>\r\n                    " +
 "<div class=\"bcms-media-delete-holder\">\r\n                        <div class=\"bcms" +
-"-action-delete\" data-bind=\"click: function() { $root.removeUpload($data); }\">");
+"-action-delete\" data-bind=\"click: function() { $root.removeUpload($data); }\" tit" +
+"le=\"");
 
             
             #line 147 "..\..\Views\Upload\SingleFileUpload.cshtml"
-                                                                                                                Write(RootGlobalization.Button_Remove);
+                                                                                                                       Write(RootGlobalization.Button_Remove);
+
+            
+            #line default
+            #line hidden
+WriteLiteral("\">");
+
+            
+            #line 147 "..\..\Views\Upload\SingleFileUpload.cshtml"
+                                                                                                                                                         Write(RootGlobalization.Button_Remove);
 
             
             #line default
@@ -575,11 +585,20 @@ WriteLiteral(@"</div>
                     <div class=""bcms-upload-info"">&nbsp;</div>
                     <div class=""bcms-upload-size-info"">&nbsp;</div>
                     <div class=""bcms-media-delete-holder"">
-                        <div class=""bcms-action-delete"" data-bind=""click: function() { $root.removeUpload($data); }"">");
+                        <div class=""bcms-action-delete"" data-bind=""click: function() { $root.removeUpload($data); }"" title=""");
 
             
             #line 155 "..\..\Views\Upload\SingleFileUpload.cshtml"
-                                                                                                                Write(RootGlobalization.Button_Remove);
+                                                                                                                       Write(RootGlobalization.Button_Remove);
+
+            
+            #line default
+            #line hidden
+WriteLiteral("\">");
+
+            
+            #line 155 "..\..\Views\Upload\SingleFileUpload.cshtml"
+                                                                                                                                                         Write(RootGlobalization.Button_Remove);
 
             
             #line default

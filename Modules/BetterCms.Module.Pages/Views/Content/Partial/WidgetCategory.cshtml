@@ -72,13 +72,13 @@
                     <div class="bcms-grid-controls-helper">
                         @if (!widget.Status.Equals(ContentStatus.Published.ToString()))
                         {
-                            <div class="bcms-action-edit bcms-draft bcms-js-content-edit">@PagesGlobalization.AddPageContent_WidgetTab_EditButton</div>
+                            <div class="bcms-action-edit bcms-draft bcms-js-content-edit" title="@PagesGlobalization.AddPageContent_WidgetTab_EditButton">@PagesGlobalization.AddPageContent_WidgetTab_EditButton</div>
                         }
                         else
                         {
-                            <div class="bcms-action-edit bcms-js-content-edit">@PagesGlobalization.AddPageContent_WidgetTab_EditButton</div>
+                            <div class="bcms-action-edit bcms-js-content-edit" title="@PagesGlobalization.AddPageContent_WidgetTab_EditButton">@PagesGlobalization.AddPageContent_WidgetTab_EditButton</div>
                         }
-                        <div class="bcms-action-delete bcms-js-content-delete">@PagesGlobalization.AddPageContent_WidgetTab_DeleteButton</div>
+                        <div class="bcms-action-delete bcms-js-content-delete" title="@PagesGlobalization.AddPageContent_WidgetTab_DeleteButton">@PagesGlobalization.AddPageContent_WidgetTab_DeleteButton</div>
                     </div>
                 }
             </div>

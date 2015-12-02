@@ -110,11 +110,20 @@ WriteLiteral(@"</div>
                     <div class=""bcms-node-box-title bcms-node-box-title-sitemap"" data-bind=""text: title""></div>
 
                     <!-- ko if: getSitemap().settings.canEditNode -->
-                    <div class=""bcms-action-edit"" data-bind=""click: startEditSitemapNode"">");
+                    <div class=""bcms-action-edit"" data-bind=""click: startEditSitemapNode"" title=""");
 
             
             #line 63 "..\..\Views\Sitemap\Partial\SitemapTemplate.cshtml"
-                                                                                     Write(RootGlobalization.Button_Edit);
+                                                                                            Write(RootGlobalization.Button_Edit);
+
+            
+            #line default
+            #line hidden
+WriteLiteral("\">");
+
+            
+            #line 63 "..\..\Views\Sitemap\Partial\SitemapTemplate.cshtml"
+                                                                                                                            Write(RootGlobalization.Button_Edit);
 
             
             #line default
@@ -314,11 +323,20 @@ WriteLiteral(@"
 
                 <!-- ko if: getSitemap().settings.canDeleteNode -->
                 <div class=""bcms-node-delete-box"">
-                    <div class=""bcms-action-delete"" data-bind=""click: deleteSitemapNode"">");
+                    <div class=""bcms-action-delete"" data-bind=""click: deleteSitemapNode"" title=""");
 
             
             #line 136 "..\..\Views\Sitemap\Partial\SitemapTemplate.cshtml"
-                                                                                    Write(RootGlobalization.Button_Delete);
+                                                                                           Write(RootGlobalization.Button_Delete);
+
+            
+            #line default
+            #line hidden
+WriteLiteral("\">");
+
+            
+            #line 136 "..\..\Views\Sitemap\Partial\SitemapTemplate.cshtml"
+                                                                                                                             Write(RootGlobalization.Button_Delete);
 
             
             #line default

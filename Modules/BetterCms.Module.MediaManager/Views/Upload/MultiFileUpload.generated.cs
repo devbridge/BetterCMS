@@ -551,8 +551,17 @@ WriteLiteral("\' : \'");
             
             #line default
             #line hidden
-WriteLiteral("\'\"></div>\r\n                        </div>\r\n                    </div>\r\n          " +
-"      </div>\r\n            </script>\r\n");
+WriteLiteral("\'\" title=\"");
+
+            
+            #line 143 "..\..\Views\Upload\MultiFileUpload.cshtml"
+                                                                                                                                                                                                                                                Write(RootGlobalization.Button_Remove);
+
+            
+            #line default
+            #line hidden
+WriteLiteral("\"></div>\r\n                        </div>\r\n                    </div>\r\n           " +
+"     </div>\r\n            </script>\r\n");
 
             
             #line 148 "..\..\Views\Upload\MultiFileUpload.cshtml"

@@ -512,11 +512,21 @@ WriteLiteral(" class=\"bcms-action-edit\"");
 
 WriteLiteral(" data-bind=\"click: onEdit\"");
 
+WriteAttribute("title", Tuple.Create(" title=\"", 5614), Tuple.Create("\"", 5652)
+            
+            #line 116 "..\..\Views\Subscriber\List.cshtml"
+       , Tuple.Create(Tuple.Create("", 5622), Tuple.Create<System.Object, System.Int32>(RootGlobalization.Button_Edit
+            
+            #line default
+            #line hidden
+, 5622), false)
+);
+
 WriteLiteral(">");
 
             
             #line 116 "..\..\Views\Subscriber\List.cshtml"
-                                                                           Write(RootGlobalization.Button_Edit);
+                                                                                                                  Write(RootGlobalization.Button_Edit);
 
             
             #line default
@@ -600,11 +610,21 @@ WriteLiteral(" class=\"bcms-action-delete\"");
 
 WriteLiteral(" data-bind=\"click: onDelete\"");
 
+WriteAttribute("title", Tuple.Create(" title=\"", 6341), Tuple.Create("\"", 6381)
+            
+            #line 134 "..\..\Views\Subscriber\List.cshtml"
+           , Tuple.Create(Tuple.Create("", 6349), Tuple.Create<System.Object, System.Int32>(RootGlobalization.Button_Delete
+            
+            #line default
+            #line hidden
+, 6349), false)
+);
+
 WriteLiteral(">");
 
             
             #line 134 "..\..\Views\Subscriber\List.cshtml"
-                                                                               Write(RootGlobalization.Button_Delete);
+                                                                                                                        Write(RootGlobalization.Button_Delete);
 
             
             #line default
@@ -702,14 +722,14 @@ WriteLiteral("\r\n                <!-- /ko -->\r\n            </tr>\r\n         
 "        <!-- ko if: items().length == 0 -->\r\n            <tr>\r\n                <" +
 "td");
 
-WriteAttribute("colspan", Tuple.Create(" colspan=\"", 7273), Tuple.Create("\"", 7309)
+WriteAttribute("colspan", Tuple.Create(" colspan=\"", 7353), Tuple.Create("\"", 7389)
             
             #line 157 "..\..\Views\Subscriber\List.cshtml"
-, Tuple.Create(Tuple.Create("", 7283), Tuple.Create<System.Object, System.Int32>(visibleColumnsCount + 2
+, Tuple.Create(Tuple.Create("", 7363), Tuple.Create<System.Object, System.Int32>(visibleColumnsCount + 2
             
             #line default
             #line hidden
-, 7283), false)
+, 7363), false)
 );
 
 WriteLiteral(">\r\n                    <div");

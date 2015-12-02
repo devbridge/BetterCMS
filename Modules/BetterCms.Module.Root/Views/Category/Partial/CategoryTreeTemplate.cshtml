@@ -57,7 +57,7 @@
                 <div class="bcms-node-box-info" data-bind="droppableCategoryNode: 'middleZone'">
                     <div class="bcms-node-box-title" data-bind="text: title"></div>
                     <!-- ko if: getCategoryTree().settings.canEditNode -->
-                    <div class="bcms-action-edit" data-bind="click: startEditCategoryTreeNode">@RootGlobalization.Button_Edit</div>
+                    <div class="bcms-action-edit" data-bind="click: startEditCategoryTreeNode" title="@RootGlobalization.Button_Edit">@RootGlobalization.Button_Edit</div>
                     <!-- /ko -->
                 </div>
 
@@ -98,7 +98,7 @@
 
                 <!-- ko if: getCategoryTree().settings.canDeleteNode -->
                 <div class="bcms-node-delete-box">
-                    <div class="bcms-action-delete" data-bind="click: deleteCategoryTreeNode">@RootGlobalization.Button_Delete</div>
+                    <div class="bcms-action-delete" data-bind="click: deleteCategoryTreeNode" title="@RootGlobalization.Button_Delete">@RootGlobalization.Button_Delete</div>
                 </div>
                 <!-- /ko -->
             </div>

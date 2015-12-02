@@ -277,11 +277,21 @@ WriteLiteral(" class=\"bcms-action-edit\"");
 
 WriteLiteral(" data-bind=\"click: onEdit\"");
 
+WriteAttribute("title", Tuple.Create(" title=\"", 3326), Tuple.Create("\"", 3364)
+            
+            #line 75 "..\..\Views\Shared\EditableGrid\Grid.cshtml"
+   , Tuple.Create(Tuple.Create("", 3334), Tuple.Create<System.Object, System.Int32>(RootGlobalization.Button_Edit
+            
+            #line default
+            #line hidden
+, 3334), false)
+);
+
 WriteLiteral(">");
 
             
             #line 75 "..\..\Views\Shared\EditableGrid\Grid.cshtml"
-                                                                       Write(RootGlobalization.Button_Edit);
+                                                                                                              Write(RootGlobalization.Button_Edit);
 
             
             #line default
@@ -358,11 +368,21 @@ WriteLiteral(" class=\"bcms-action-delete\"");
 
 WriteLiteral(" data-bind=\"click: onDelete, visible: !isActive() && !deletingIsDisabled()\"");
 
+WriteAttribute("title", Tuple.Create(" title=\"", 3999), Tuple.Create("\"", 4039)
+            
+            #line 90 "..\..\Views\Shared\EditableGrid\Grid.cshtml"
+                                                      , Tuple.Create(Tuple.Create("", 4007), Tuple.Create<System.Object, System.Int32>(RootGlobalization.Button_Delete
+            
+            #line default
+            #line hidden
+, 4007), false)
+);
+
 WriteLiteral(">");
 
             
             #line 90 "..\..\Views\Shared\EditableGrid\Grid.cshtml"
-                                                                                                                          Write(RootGlobalization.Button_Delete);
+                                                                                                                                                                   Write(RootGlobalization.Button_Delete);
 
             
             #line default
@@ -455,14 +475,14 @@ WriteLiteral("&nbsp;\r\n");
 WriteLiteral("            </td>\r\n            <!-- /ko -->\r\n        </tr>\r\n        <!-- /ko -->\r" +
 "\n        <!-- ko if: items().length == 0 -->\r\n        <tr>\r\n            <td");
 
-WriteAttribute("colspan", Tuple.Create(" colspan=\"", 4715), Tuple.Create("\"", 4751)
+WriteAttribute("colspan", Tuple.Create(" colspan=\"", 4795), Tuple.Create("\"", 4831)
             
             #line 109 "..\..\Views\Shared\EditableGrid\Grid.cshtml"
-, Tuple.Create(Tuple.Create("", 4725), Tuple.Create<System.Object, System.Int32>(visibleColumnsCount + 2
+, Tuple.Create(Tuple.Create("", 4805), Tuple.Create<System.Object, System.Int32>(visibleColumnsCount + 2
             
             #line default
             #line hidden
-, 4725), false)
+, 4805), false)
 );
 
 WriteLiteral(">\r\n                <div");

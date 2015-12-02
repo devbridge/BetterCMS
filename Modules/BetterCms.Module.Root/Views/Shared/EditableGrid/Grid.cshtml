@@ -72,7 +72,7 @@
             {
                 <td>
                     <!-- ko if: !editingIsDisabled() -->
-                    <div class="bcms-action-edit" data-bind="click: onEdit">@RootGlobalization.Button_Edit</div>
+                    <div class="bcms-action-edit" data-bind="click: onEdit" title="@RootGlobalization.Button_Edit">@RootGlobalization.Button_Edit</div>
                     <!-- /ko -->
                 </td>
             }
@@ -87,7 +87,7 @@
             <td data-bind="style: { width: isActive() ? '120px' : '40px', padding: isActive() ? '10px' : '0' }">
                 @if (Model.CanDeleteItems)
                 {
-                    <div class="bcms-action-delete" data-bind="click: onDelete, visible: !isActive() && !deletingIsDisabled()">@RootGlobalization.Button_Delete</div>
+                    <div class="bcms-action-delete" data-bind="click: onDelete, visible: !isActive() && !deletingIsDisabled()" title="@RootGlobalization.Button_Delete">@RootGlobalization.Button_Delete</div>
                 }
                 @if (Model.CanEditItems)
                 {

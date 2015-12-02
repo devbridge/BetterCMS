@@ -60,7 +60,7 @@
                     <div class="bcms-node-box-title bcms-node-box-title-sitemap" data-bind="text: title"></div>
 
                     <!-- ko if: getSitemap().settings.canEditNode -->
-                    <div class="bcms-action-edit" data-bind="click: startEditSitemapNode">@RootGlobalization.Button_Edit</div>
+                    <div class="bcms-action-edit" data-bind="click: startEditSitemapNode" title="@RootGlobalization.Button_Edit">@RootGlobalization.Button_Edit</div>
                     <!-- /ko -->
 
                     <div class="bcms-node-box-path">
@@ -133,7 +133,7 @@
 
                 <!-- ko if: getSitemap().settings.canDeleteNode -->
                 <div class="bcms-node-delete-box">
-                    <div class="bcms-action-delete" data-bind="click: deleteSitemapNode">@RootGlobalization.Button_Delete</div>
+                    <div class="bcms-action-delete" data-bind="click: deleteSitemapNode" title="@RootGlobalization.Button_Delete">@RootGlobalization.Button_Delete</div>
                 </div>
                 <!-- /ko -->
             </div>

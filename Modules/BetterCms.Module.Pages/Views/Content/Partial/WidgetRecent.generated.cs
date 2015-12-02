@@ -319,11 +319,21 @@ WriteLiteral("                                <div");
 
 WriteLiteral(" class=\"bcms-action-edit bcms-draft bcms-js-content-edit\"");
 
+WriteAttribute("title", Tuple.Create(" title=\"", 3681), Tuple.Create("\"", 3744)
+            
+            #line 74 "..\..\Views\Content\Partial\WidgetRecent.cshtml"
+                     , Tuple.Create(Tuple.Create("", 3689), Tuple.Create<System.Object, System.Int32>(PagesGlobalization.AddPageContent_WidgetTab_EditButton
+            
+            #line default
+            #line hidden
+, 3689), false)
+);
+
 WriteLiteral(">");
 
             
             #line 74 "..\..\Views\Content\Partial\WidgetRecent.cshtml"
-                                                                                         Write(PagesGlobalization.AddPageContent_WidgetTab_EditButton);
+                                                                                                                                                         Write(PagesGlobalization.AddPageContent_WidgetTab_EditButton);
 
             
             #line default
@@ -343,11 +353,21 @@ WriteLiteral("                                <div");
 
 WriteLiteral(" class=\"bcms-action-edit bcms-js-content-edit\"");
 
+WriteAttribute("title", Tuple.Create(" title=\"", 3987), Tuple.Create("\"", 4050)
+            
+            #line 78 "..\..\Views\Content\Partial\WidgetRecent.cshtml"
+          , Tuple.Create(Tuple.Create("", 3995), Tuple.Create<System.Object, System.Int32>(PagesGlobalization.AddPageContent_WidgetTab_EditButton
+            
+            #line default
+            #line hidden
+, 3995), false)
+);
+
 WriteLiteral(">");
 
             
             #line 78 "..\..\Views\Content\Partial\WidgetRecent.cshtml"
-                                                                              Write(PagesGlobalization.AddPageContent_WidgetTab_EditButton);
+                                                                                                                                              Write(PagesGlobalization.AddPageContent_WidgetTab_EditButton);
 
             
             #line default
@@ -365,11 +385,21 @@ WriteLiteral("                            <div");
 
 WriteLiteral(" class=\"bcms-action-delete bcms-js-content-delete\"");
 
+WriteAttribute("title", Tuple.Create(" title=\"", 4228), Tuple.Create("\"", 4293)
+            
+            #line 80 "..\..\Views\Content\Partial\WidgetRecent.cshtml"
+          , Tuple.Create(Tuple.Create("", 4236), Tuple.Create<System.Object, System.Int32>(PagesGlobalization.AddPageContent_WidgetTab_DeleteButton
+            
+            #line default
+            #line hidden
+, 4236), false)
+);
+
 WriteLiteral(">");
 
             
             #line 80 "..\..\Views\Content\Partial\WidgetRecent.cshtml"
-                                                                              Write(PagesGlobalization.AddPageContent_WidgetTab_DeleteButton);
+                                                                                                                                                Write(PagesGlobalization.AddPageContent_WidgetTab_DeleteButton);
 
             
             #line default

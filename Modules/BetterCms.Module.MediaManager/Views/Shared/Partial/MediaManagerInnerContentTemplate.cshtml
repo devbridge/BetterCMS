@@ -118,7 +118,7 @@
                     @if ((ViewContext.Controller as CmsControllerBase).SecurityService.IsAuthorized(RootModuleConstants.UserRoles.EditContent))
                     {
                     <!--  ko if: !isProcessing() && !isFailed() && !isDeleting() && !isReadOnly() -->
-                    <div class="bcms-action-edit" data-bind="click: editMedia.bind($data, $root), clickBubble: false">@RootGlobalization.Button_Edit</div>
+    <div class="bcms-action-edit" data-bind="click: editMedia.bind($data, $root), clickBubble: false" title="@RootGlobalization.Button_Edit">@RootGlobalization.Button_Edit</div>
                     <!-- /ko -->
                     }
                 </td>
