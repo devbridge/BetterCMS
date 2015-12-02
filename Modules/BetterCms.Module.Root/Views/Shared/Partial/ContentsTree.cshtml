@@ -73,13 +73,13 @@
                 <div class="bcms-tree-controls-box" data-bind="visible: !isBeingDragged()">
                     <!-- ko if: type == types.content -->
                     <!-- ko if: model.visibleButtons.history -->
-                    <div class="bcms-action-history" data-bind="click: history" title="@RootGlobalization.Button_History"></div>
+                    <div class="bcms-action-history" data-bind="click: history" title="@RootGlobalization.Button_History">@RootGlobalization.Button_History</div>
                     <!-- /ko -->
                     <!-- ko if: model.visibleButtons.configure -->
-                    <div class="bcms-action-options" data-bind="click: configure"></div>
+                    <div class="bcms-action-options" data-bind="click: configure" title="@RootGlobalization.Button_Options">@RootGlobalization.Button_Options</div>
                     <!-- /ko -->
                     <!-- ko if: model.visibleButtons.delete -->
-                    <div class="bcms-action-delete" data-bind="click: deleteItem" title="@RootGlobalization.Button_Delete"></div>
+                    <div class="bcms-action-delete" data-bind="click: deleteItem" title="@RootGlobalization.Button_Delete">@RootGlobalization.Button_Delete</div>
                     <!-- /ko -->
                     <!-- /ko -->
                 </div>

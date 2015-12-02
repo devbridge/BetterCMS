@@ -134,13 +134,38 @@ WriteLiteral(@"""></div>
             
             #line default
             #line hidden
-WriteLiteral(@"""></div>
-                    <!-- /ko -->
-                    <!-- ko if: model.visibleButtons.configure -->
-                    <div class=""bcms-action-options"" data-bind=""click: configure""></div>
-                    <!-- /ko -->
-                    <!-- ko if: model.visibleButtons.delete -->
-                    <div class=""bcms-action-delete"" data-bind=""click: deleteItem"" title=""");
+WriteLiteral("\">");
+
+            
+            #line 76 "..\..\Views\Shared\Partial\ContentsTree.cshtml"
+                                                                                                                     Write(RootGlobalization.Button_History);
+
+            
+            #line default
+            #line hidden
+WriteLiteral("</div>\r\n                    <!-- /ko -->\r\n                    <!-- ko if: model.v" +
+"isibleButtons.configure -->\r\n                    <div class=\"bcms-action-options" +
+"\" data-bind=\"click: configure\" title=\"");
+
+            
+            #line 79 "..\..\Views\Shared\Partial\ContentsTree.cshtml"
+                                                                                    Write(RootGlobalization.Button_Options);
+
+            
+            #line default
+            #line hidden
+WriteLiteral("\">");
+
+            
+            #line 79 "..\..\Views\Shared\Partial\ContentsTree.cshtml"
+                                                                                                                       Write(RootGlobalization.Button_Options);
+
+            
+            #line default
+            #line hidden
+WriteLiteral("</div>\r\n                    <!-- /ko -->\r\n                    <!-- ko if: model.v" +
+"isibleButtons.delete -->\r\n                    <div class=\"bcms-action-delete\" da" +
+"ta-bind=\"click: deleteItem\" title=\"");
 
             
             #line 82 "..\..\Views\Shared\Partial\ContentsTree.cshtml"
@@ -149,28 +174,37 @@ WriteLiteral(@"""></div>
             
             #line default
             #line hidden
-WriteLiteral("\"></div>\r\n                    <!-- /ko -->\r\n                    <!-- /ko -->\r\n   " +
-"             </div>\r\n            </div>\r\n\r\n            <!-- ko if: items().lengt" +
-"h > 0 -->\r\n            <div data-bind=\"with: items()\">\r\n                <div dat" +
-"a-bind=\"template: { name: \'bcms-contents-tree-list-template\' }\"></div>\r\n        " +
-"        <!-- ko if: $parent != null && $parent.types && $parent.type == $parent." +
-"types.region && $data.length == 1 -->\r\n                <div style=\"padding: 0; m" +
-"argin: 0;\" class=\"bcms-contents-tree-sort-block\" data-bind=\"draggableContent: tr" +
-"ue\">&nbsp;</div>\r\n                <!-- /ko -->\r\n            </div>\r\n            " +
-"<!-- /ko -->\r\n            <!-- ko if: type == types.region && items().length == " +
-"0 -->\r\n            <div class=\"bcms-contents-tree-sort-block\" data-bind=\"draggab" +
-"leContent:true\">&nbsp;</div>\r\n            <!-- /ko -->\r\n            <!-- ko if: " +
-"type == types.region -->\r\n            <div class=\"bcms-contents-tree-add-block\" " +
-"data-bind=\"css: {\'bcms-active\': isOpened()}, click: toggleAddContent\">\r\n        " +
-"        <div class=\"bcms-contents-tree-add-content\">\r\n                    <div c" +
-"lass=\"bcms-contents-tree-controls bcms-region-addhtml\" data-bind=\"click: addCont" +
-"ent\">HTML</div>\r\n                    <div class=\"bcms-contents-tree-controls bcm" +
-"s-region-addmarkdown\" data-bind=\"click: addMarkdown\">Markdown</div>\r\n           " +
-"         <div class=\"bcms-contents-tree-controls bcms-region-addtext\" data-bind=" +
-"\"click: addSimpleText\">Plain text</div>\r\n                    <div class=\"bcms-co" +
-"ntents-tree-controls bcms-region-insertwidget\" data-bind=\"click: insertWidget\">W" +
-"idget</div>\r\n                </div>\r\n            </div>\r\n            <!-- /ko --" +
-">\r\n        </div>\r\n    </div>\r\n    <!-- /ko -->\r\n    <!-- /ko -->\r\n</script>");
+WriteLiteral("\">");
+
+            
+            #line 82 "..\..\Views\Shared\Partial\ContentsTree.cshtml"
+                                                                                                                      Write(RootGlobalization.Button_Delete);
+
+            
+            #line default
+            #line hidden
+WriteLiteral("</div>\r\n                    <!-- /ko -->\r\n                    <!-- /ko -->\r\n     " +
+"           </div>\r\n            </div>\r\n\r\n            <!-- ko if: items().length " +
+"> 0 -->\r\n            <div data-bind=\"with: items()\">\r\n                <div data-" +
+"bind=\"template: { name: \'bcms-contents-tree-list-template\' }\"></div>\r\n          " +
+"      <!-- ko if: $parent != null && $parent.types && $parent.type == $parent.ty" +
+"pes.region && $data.length == 1 -->\r\n                <div style=\"padding: 0; mar" +
+"gin: 0;\" class=\"bcms-contents-tree-sort-block\" data-bind=\"draggableContent: true" +
+"\">&nbsp;</div>\r\n                <!-- /ko -->\r\n            </div>\r\n            <!" +
+"-- /ko -->\r\n            <!-- ko if: type == types.region && items().length == 0 " +
+"-->\r\n            <div class=\"bcms-contents-tree-sort-block\" data-bind=\"draggable" +
+"Content:true\">&nbsp;</div>\r\n            <!-- /ko -->\r\n            <!-- ko if: ty" +
+"pe == types.region -->\r\n            <div class=\"bcms-contents-tree-add-block\" da" +
+"ta-bind=\"css: {\'bcms-active\': isOpened()}, click: toggleAddContent\">\r\n          " +
+"      <div class=\"bcms-contents-tree-add-content\">\r\n                    <div cla" +
+"ss=\"bcms-contents-tree-controls bcms-region-addhtml\" data-bind=\"click: addConten" +
+"t\">HTML</div>\r\n                    <div class=\"bcms-contents-tree-controls bcms-" +
+"region-addmarkdown\" data-bind=\"click: addMarkdown\">Markdown</div>\r\n             " +
+"       <div class=\"bcms-contents-tree-controls bcms-region-addtext\" data-bind=\"c" +
+"lick: addSimpleText\">Plain text</div>\r\n                    <div class=\"bcms-cont" +
+"ents-tree-controls bcms-region-insertwidget\" data-bind=\"click: insertWidget\">Wid" +
+"get</div>\r\n                </div>\r\n            </div>\r\n            <!-- /ko -->\r" +
+"\n        </div>\r\n    </div>\r\n    <!-- /ko -->\r\n    <!-- /ko -->\r\n</script>");
 
         }
     }

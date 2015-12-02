@@ -201,6 +201,9 @@
   <data name="Button_History" xml:space="preserve">
     <value>History</value>
   </data>
+  <data name="Button_Options" xml:space="preserve">
+    <value>Options</value>
+  </data>
   <data name="Button_Insert" xml:space="preserve">
     <value>Insert</value>
   </data>
