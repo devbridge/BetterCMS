@@ -4,6 +4,7 @@ using System.Linq;
 
 using BetterCms.Core.DataContracts;
 using BetterCms.Core.DataContracts.Enums;
+using BetterCms.Module.Root.Models;
 using BetterCms.Module.Root.Services;
 
 using BetterModules.Core.Web.Services.Caching;
@@ -19,7 +20,9 @@ namespace BetterCms.Test.Module.Root.ServiceTests
     {
         private DefaultOptionService CreateOptionService()
         {
-            return new DefaultOptionService(null, new HttpRuntimeCacheService(), new Mock<ICmsConfiguration>().Object);
+            var cmsConfiguration = new Mock<ICmsConfiguration>();
+            cmsConfiguration.Setup(x => x.EnableMultilanguage).Returns(true);
+            return new DefaultOptionService(null, new HttpRuntimeCacheService(), cmsConfiguration.Object);
         }
         [Test]
         public void Should_Return_MergedEmptyOptionsSuccessfully()
@@ -270,6 +273,365 @@ namespace BetterCms.Test.Module.Root.ServiceTests
             Assert.AreEqual(result.Count(o => o.OptionKey == option2.Key 
                 && o.OptionDefaultValue == option2.DefaultValue
                 && o.OptionValue == optionValue2.Value), 1);
+        }
+
+        [Test]
+        public void ShouldReturnCorrectOptionValueForDefaultLanguage()
+        {
+            var option1 = TestDataProvider.CreateNewContentOption();
+            option1.Type = OptionType.Text;
+            var service = CreateOptionService();
+            var options = new List<IOptionEntity> { option1 };
+            var result = service.GetMergedOptionValues(options, new List<IOptionValueEntity>());
+            Assert.NotNull(result);
+            Assert.AreEqual(option1.DefaultValue, result[0].Value);
+        }
+
+        [Test]
+        public void ShouldReturnCorrectOptionValueForDefaultLanguage2()
+        {
+            Language lang = new Language();
+            lang.Id = Guid.NewGuid();
+            var option1 = TestDataProvider.CreateNewContentOption();
+            option1.Type = OptionType.Text;
+            var translation = new ContentOptionTranslation();
+            translation.ContentOption = option1;
+            translation.Value = TestDataProvider.ProvideRandomString(100);
+            translation.Language = lang;
+            option1.Translations.Add(translation);
+            var service = CreateOptionService();
+            var options = new List<IOptionEntity> { option1 };
+            var result = service.GetMergedOptionValues(options, new List<IOptionValueEntity>());
+            Assert.NotNull(result);
+            Assert.AreEqual(option1.DefaultValue, result[0].Value);
+        }
+
+        [Test]
+        public void ShouldReturnCorrectOptionValueForDefaultLanguage3()
+        {
+            Language lang = new Language();
+            lang.Id = Guid.NewGuid();
+            var option1 = TestDataProvider.CreateNewContentOption();
+            option1.Type = OptionType.Text;
+            var optionValue1 = TestDataProvider.CreateNewChildContentOption();
+
+            optionValue1.Key = option1.Key;
+            optionValue1.Type = option1.Type;
+
+            var service = CreateOptionService();
+            var options = new List<IOptionEntity> { option1 };
+            var optionValues = new List<IOptionValueEntity> { optionValue1 };
+
+            var result = service.GetMergedOptionValues(options, optionValues);
+            Assert.NotNull(result);
+            Assert.AreEqual(optionValue1.Value, result[0].Value);
+        }
+
+        [Test]
+        public void ShouldReturnCorrectOptionValueForDefaultLanguage4()
+        {
+            Language lang = new Language();
+            lang.Id = Guid.NewGuid();
+            var option1 = TestDataProvider.CreateNewContentOption();
+            var translation = new ContentOptionTranslation();
+            translation.ContentOption = option1;
+            translation.Value = TestDataProvider.ProvideRandomString(100);
+            translation.Language = lang;
+            option1.Translations.Add(translation);
+            option1.Type = OptionType.Text;
+            var optionValue1 = TestDataProvider.CreateNewChildContentOption();
+
+            optionValue1.Key = option1.Key;
+            optionValue1.Type = option1.Type;
+
+            var service = CreateOptionService();
+            var options = new List<IOptionEntity> { option1 };
+            var optionValues = new List<IOptionValueEntity> { optionValue1 };
+
+            var result = service.GetMergedOptionValues(options, optionValues);
+            Assert.NotNull(result);
+            Assert.AreEqual(optionValue1.Value, result[0].Value);
+        }
+
+        [Test]
+        public void ShouldReturnCorrectOptionValueForDefaultLanguage5()
+        {
+            Language lang = new Language();
+            lang.Id = Guid.NewGuid();
+            var option1 = TestDataProvider.CreateNewContentOption();
+            option1.Type = OptionType.Text;
+            var optionValue1 = TestDataProvider.CreateNewChildContentOption();
+
+            optionValue1.UseDefaultValue = true;
+            optionValue1.Value = null;
+
+            optionValue1.Key = option1.Key;
+            optionValue1.Type = option1.Type;
+            var valueTranslation = new ChildContentOptionTranslation();
+            valueTranslation.Language = lang;
+            valueTranslation.Value = TestDataProvider.ProvideRandomString(100);
+            valueTranslation.ChildContentOption = optionValue1;
+            optionValue1.Translations.Add(valueTranslation);
+            var service = CreateOptionService();
+            var options = new List<IOptionEntity> { option1 };
+            var optionValues = new List<IOptionValueEntity> { optionValue1 };
+
+            var result = service.GetMergedOptionValues(options, optionValues);
+            Assert.NotNull(result);
+            Assert.AreEqual(option1.DefaultValue, result[0].Value);
+        }
+
+        [Test]
+        public void ShouldReturnCorrectOptionValueForDefaultLanguage6()
+        {
+            Language lang = new Language();
+            lang.Id = Guid.NewGuid();
+            var option1 = TestDataProvider.CreateNewContentOption();
+            var translation = new ContentOptionTranslation();
+            translation.ContentOption = option1;
+            translation.Value = TestDataProvider.ProvideRandomString(100);
+            translation.Language = lang;
+            option1.Translations.Add(translation);
+            option1.Type = OptionType.Text;
+            var optionValue1 = TestDataProvider.CreateNewChildContentOption();
+
+            optionValue1.UseDefaultValue = true;
+            optionValue1.Value = null;
+
+            optionValue1.Key = option1.Key;
+            optionValue1.Type = option1.Type;
+            var valueTranslation = new ChildContentOptionTranslation();
+            valueTranslation.Language = lang;
+            valueTranslation.Value = TestDataProvider.ProvideRandomString(100);
+            valueTranslation.ChildContentOption = optionValue1;
+            optionValue1.Translations.Add(valueTranslation);
+            var service = CreateOptionService();
+            var options = new List<IOptionEntity> { option1 };
+            var optionValues = new List<IOptionValueEntity> { optionValue1 };
+
+            var result = service.GetMergedOptionValues(options, optionValues);
+            Assert.NotNull(result);
+            Assert.AreEqual(option1.DefaultValue, result[0].Value);
+        }
+
+        [Test]
+        public void ShouldReturnCorrectOptionValueForDefaultLanguage7()
+        {
+            Language lang = new Language();
+            lang.Id = Guid.NewGuid();
+            var option1 = TestDataProvider.CreateNewContentOption();
+
+            option1.Type = OptionType.Text;
+            var optionValue1 = TestDataProvider.CreateNewChildContentOption();
+
+            optionValue1.Key = option1.Key;
+            optionValue1.Type = option1.Type;
+            var valueTranslation = new ChildContentOptionTranslation();
+            valueTranslation.Language = lang;
+            valueTranslation.Value = TestDataProvider.ProvideRandomString(100);
+            valueTranslation.ChildContentOption = optionValue1;
+            optionValue1.Translations.Add(valueTranslation);
+            var service = CreateOptionService();
+            var options = new List<IOptionEntity> { option1 };
+            var optionValues = new List<IOptionValueEntity> { optionValue1 };
+
+            var result = service.GetMergedOptionValues(options, optionValues);
+            Assert.NotNull(result);
+            Assert.AreEqual(optionValue1.Value, result[0].Value);
+        }
+
+        [Test]
+        public void ShouldReturnCorrectOptionValueForDefaultLanguage8()
+        {
+            Language lang = new Language();
+            lang.Id = Guid.NewGuid();
+            var option1 = TestDataProvider.CreateNewContentOption();
+            var translation = new ContentOptionTranslation();
+            translation.ContentOption = option1;
+            translation.Value = TestDataProvider.ProvideRandomString(100);
+            translation.Language = lang;
+            option1.Translations.Add(translation);
+            option1.Type = OptionType.Text;
+            var optionValue1 = TestDataProvider.CreateNewChildContentOption();
+
+            optionValue1.Key = option1.Key;
+            optionValue1.Type = option1.Type;
+            var valueTranslation = new ChildContentOptionTranslation();
+            valueTranslation.Language = lang;
+            valueTranslation.Value = TestDataProvider.ProvideRandomString(100);
+            valueTranslation.ChildContentOption = optionValue1;
+            optionValue1.Translations.Add(valueTranslation);
+            var service = CreateOptionService();
+            var options = new List<IOptionEntity> { option1 };
+            var optionValues = new List<IOptionValueEntity> { optionValue1 };
+
+            var result = service.GetMergedOptionValues(options, optionValues);
+            Assert.NotNull(result);
+            Assert.AreEqual(optionValue1.Value, result[0].Value);
+        }
+
+        [Test]
+        public void ShouldReturnCorrectOptionValueForSpecificLanguage3()
+        {
+            Language lang = new Language();
+            lang.Id = Guid.NewGuid();
+            var option1 = TestDataProvider.CreateNewContentOption();
+            option1.Type = OptionType.Text;
+            var optionValue1 = TestDataProvider.CreateNewChildContentOption();
+
+            optionValue1.Key = option1.Key;
+            optionValue1.Type = option1.Type;
+
+            var service = CreateOptionService();
+            var options = new List<IOptionEntity> { option1 };
+            var optionValues = new List<IOptionValueEntity> { optionValue1 };
+
+            var result = service.GetMergedOptionValues(options, optionValues, lang.Id);
+            Assert.NotNull(result);
+            Assert.AreEqual(optionValue1.Value, result[0].Value);
+        }
+
+        [Test]
+        public void ShouldReturnCorrectOptionValueForSpecificLanguage4()
+        {
+            Language lang = new Language();
+            lang.Id = Guid.NewGuid();
+            var option1 = TestDataProvider.CreateNewContentOption();
+            var translation = new ContentOptionTranslation();
+            translation.ContentOption = option1;
+            translation.Value = TestDataProvider.ProvideRandomString(100);
+            translation.Language = lang;
+            option1.Translations.Add(translation);
+            option1.Type = OptionType.Text;
+            var optionValue1 = TestDataProvider.CreateNewChildContentOption();
+
+            optionValue1.Key = option1.Key;
+            optionValue1.Type = option1.Type;
+
+            var service = CreateOptionService();
+            var options = new List<IOptionEntity> { option1 };
+            var optionValues = new List<IOptionValueEntity> { optionValue1 };
+
+            var result = service.GetMergedOptionValues(options, optionValues, lang.Id);
+            Assert.NotNull(result);
+            Assert.AreEqual(optionValue1.Value, result[0].Value);
+        }
+
+        [Test]
+        public void ShouldReturnCorrectOptionValueForSpecificLanguage5()
+        {
+            Language lang = new Language();
+            lang.Id = Guid.NewGuid();
+            var option1 = TestDataProvider.CreateNewContentOption();
+            option1.Type = OptionType.Text;
+            var optionValue1 = TestDataProvider.CreateNewChildContentOption();
+
+            optionValue1.UseDefaultValue = true;
+            optionValue1.Value = null;
+
+            optionValue1.Key = option1.Key;
+            optionValue1.Type = option1.Type;
+            var valueTranslation = new ChildContentOptionTranslation();
+            valueTranslation.Language = lang;
+            valueTranslation.Value = TestDataProvider.ProvideRandomString(100);
+            valueTranslation.ChildContentOption = optionValue1;
+            optionValue1.Translations.Add(valueTranslation);
+            var service = CreateOptionService();
+            var options = new List<IOptionEntity> { option1 };
+            var optionValues = new List<IOptionValueEntity> { optionValue1 };
+
+            var result = service.GetMergedOptionValues(options, optionValues, lang.Id);
+            Assert.NotNull(result);
+            Assert.AreEqual(valueTranslation.Value, result[0].Value);
+        }
+
+        [Test]
+        public void ShouldReturnCorrectOptionValueForSpecificLanguage6()
+        {
+            Language lang = new Language();
+            lang.Id = Guid.NewGuid();
+            var option1 = TestDataProvider.CreateNewContentOption();
+            var translation = new ContentOptionTranslation();
+            translation.ContentOption = option1;
+            translation.Value = TestDataProvider.ProvideRandomString(100);
+            translation.Language = lang;
+            option1.Translations.Add(translation);
+            option1.Type = OptionType.Text;
+            var optionValue1 = TestDataProvider.CreateNewChildContentOption();
+
+            optionValue1.UseDefaultValue = true;
+            optionValue1.Value = null;
+
+            optionValue1.Key = option1.Key;
+            optionValue1.Type = option1.Type;
+            var valueTranslation = new ChildContentOptionTranslation();
+            valueTranslation.Language = lang;
+            valueTranslation.Value = TestDataProvider.ProvideRandomString(100);
+            valueTranslation.ChildContentOption = optionValue1;
+            optionValue1.Translations.Add(valueTranslation);
+            var service = CreateOptionService();
+            var options = new List<IOptionEntity> { option1 };
+            var optionValues = new List<IOptionValueEntity> { optionValue1 };
+
+            var result = service.GetMergedOptionValues(options, optionValues, lang.Id);
+            Assert.NotNull(result);
+            Assert.AreEqual(valueTranslation.Value, result[0].Value);
+        }
+
+        [Test]
+        public void ShouldReturnCorrectOptionValueForSpecificLanguage7()
+        {
+            Language lang = new Language();
+            lang.Id = Guid.NewGuid();
+            var option1 = TestDataProvider.CreateNewContentOption();
+
+            option1.Type = OptionType.Text;
+            var optionValue1 = TestDataProvider.CreateNewChildContentOption();
+
+            optionValue1.Key = option1.Key;
+            optionValue1.Type = option1.Type;
+            var valueTranslation = new ChildContentOptionTranslation();
+            valueTranslation.Language = lang;
+            valueTranslation.Value = TestDataProvider.ProvideRandomString(100);
+            valueTranslation.ChildContentOption = optionValue1;
+            optionValue1.Translations.Add(valueTranslation);
+            var service = CreateOptionService();
+            var options = new List<IOptionEntity> { option1 };
+            var optionValues = new List<IOptionValueEntity> { optionValue1 };
+
+            var result = service.GetMergedOptionValues(options, optionValues, lang.Id);
+            Assert.NotNull(result);
+            Assert.AreEqual(valueTranslation.Value, result[0].Value);
+        }
+
+        [Test]
+        public void ShouldReturnCorrectOptionValueForSpecificLanguage8()
+        {
+            Language lang = new Language();
+            lang.Id = Guid.NewGuid();
+            var option1 = TestDataProvider.CreateNewContentOption();
+            var translation = new ContentOptionTranslation();
+            translation.ContentOption = option1;
+            translation.Value = TestDataProvider.ProvideRandomString(100);
+            translation.Language = lang;
+            option1.Translations.Add(translation);
+            option1.Type = OptionType.Text;
+            var optionValue1 = TestDataProvider.CreateNewChildContentOption();
+
+            optionValue1.Key = option1.Key;
+            optionValue1.Type = option1.Type;
+            var valueTranslation = new ChildContentOptionTranslation();
+            valueTranslation.Language = lang;
+            valueTranslation.Value = TestDataProvider.ProvideRandomString(100);
+            valueTranslation.ChildContentOption = optionValue1;
+            optionValue1.Translations.Add(valueTranslation);
+            var service = CreateOptionService();
+            var options = new List<IOptionEntity> { option1 };
+            var optionValues = new List<IOptionValueEntity> { optionValue1 };
+
+            var result = service.GetMergedOptionValues(options, optionValues, lang.Id);
+            Assert.NotNull(result);
+            Assert.AreEqual(valueTranslation.Value, result[0].Value);
         }
     }
 }

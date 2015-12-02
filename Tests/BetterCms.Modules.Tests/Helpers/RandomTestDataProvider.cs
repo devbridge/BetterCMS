@@ -355,6 +355,30 @@ namespace BetterCms.Tests.Helpers
 
             return entity;
         }
+
+        public ChildContentOption CreateNewChildContentOption(ChildContent childContent = null)
+        {
+            var entity = new ChildContentOption();
+            PopulateBaseFields(entity);
+
+            entity.Key = ProvideRandomString(MaxLength.Name);
+            entity.ChildContent = childContent ?? CreateNewChildContent();
+            entity.Type = ProvideRandomEnumValue<OptionType>();
+            entity.UseDefaultValue = false;
+            entity.Value = ProvideRandomString(100);
+
+            return entity;
+        }
+
+        public ChildContent CreateNewChildContent(Content parent = null, Content child = null)
+        {
+            var entity = new ChildContent();
+            PopulateBaseFields(entity);
+
+            entity.Parent = parent ?? CreateNewContent();
+            entity.Child = child ?? CreateNewContent();
+            return entity;
+        }
         
         public LayoutOption CreateNewLayoutOption(Layout layout = null)
         {
