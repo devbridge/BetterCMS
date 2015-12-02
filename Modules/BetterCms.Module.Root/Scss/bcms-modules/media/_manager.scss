@@ -83,13 +83,9 @@ $alignment-position: (
 }
 
 .bcms-media-re-upload {
-    background: url($bcms-revert) no-repeat left center;
     color: $text-blue;
     cursor: pointer;
-    float: right;
     font-size: 12px;
-    margin-top: 10px;
-    padding-left: 23px;
     position: relative;
 }
 

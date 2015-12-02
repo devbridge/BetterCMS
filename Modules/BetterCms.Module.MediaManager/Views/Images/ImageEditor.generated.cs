@@ -446,23 +446,8 @@ WriteLiteral("                            ");
             
             #line default
             #line hidden
-WriteLiteral("\r\n                        </div>\r\n                    </div>\r\n\r\n                 " +
-"   <div");
-
-WriteLiteral(" class=\"bcms-media-re-upload\"");
-
-WriteLiteral(" data-bind=\"click: reupload\"");
-
-WriteLiteral(">");
-
-            
-            #line 98 "..\..\Views\Images\ImageEditor.cshtml"
-                                                                             Write(MediaGlobalization.ImageEditor_Dialog_Reupload_Title);
-
-            
-            #line default
-            #line hidden
-WriteLiteral("</div>\r\n                </div>\r\n\r\n                <div");
+WriteLiteral("\r\n                        </div>\r\n                    </div>\r\n                </d" +
+"iv>\r\n\r\n                <div");
 
 WriteLiteral(" class=\"bcms-media-manager-column-right\"");
 
@@ -483,7 +468,7 @@ WriteLiteral(">\r\n");
 WriteLiteral("                                ");
 
             
-            #line 105 "..\..\Views\Images\ImageEditor.cshtml"
+            #line 103 "..\..\Views\Images\ImageEditor.cshtml"
                            Write(MediaGlobalization.ImageEditor_Dialog_CropImage_Title);
 
             
@@ -494,7 +479,7 @@ WriteLiteral("\r\n");
 WriteLiteral("                                ");
 
             
-            #line 106 "..\..\Views\Images\ImageEditor.cshtml"
+            #line 104 "..\..\Views\Images\ImageEditor.cshtml"
                            Write(Html.Tooltip(MediaGlobalization.ImageEditor_Dialog_CropImage_Tooltip_Description));
 
             
@@ -519,7 +504,7 @@ WriteLiteral(" data-bind=\"click: imageEditorViewModel.changeFit\"");
 WriteLiteral(">");
 
             
-            #line 111 "..\..\Views\Images\ImageEditor.cshtml"
+            #line 109 "..\..\Views\Images\ImageEditor.cshtml"
                                                                                                                                  Write(MediaGlobalization.ImageEditor_Dialog_FitImage_Title);
 
             
@@ -532,8 +517,24 @@ WriteLiteral(" class=\"bcms-editor-link\"");
 WriteLiteral(" data-bind=\"visible: imageEditorViewModel.hasCrop(), click: imageEditorViewModel." +
 "removeCrop\"");
 
-WriteLiteral(">Remove crop</div>\r\n                            </div> \r\n                        " +
-"</div>\r\n                    </div>\r\n\r\n                    <div");
+WriteLiteral(">Remove crop</div>\r\n                            </div> \r\n\r\n                      " +
+"      <div");
+
+WriteLiteral(" class=\"bcms-media-re-upload\"");
+
+WriteLiteral(" data-bind=\"click: reupload\"");
+
+WriteLiteral(">");
+
+            
+            #line 113 "..\..\Views\Images\ImageEditor.cshtml"
+                                                                                     Write(MediaGlobalization.ImageEditor_Dialog_Reupload_Title);
+
+            
+            #line default
+            #line hidden
+WriteLiteral("</div>\r\n                        </div>\r\n                    </div>\r\n\r\n           " +
+"         <div");
 
 WriteLiteral(" class=\"bcms-input-list-holder\"");
 
@@ -973,15 +974,15 @@ WriteLiteral(" class=\"bcms-alignment-controls\"");
 
 WriteLiteral(">\r\n                            <div");
 
-WriteAttribute("class", Tuple.Create(" class=\"", 12362), Tuple.Create("\"", 12459)
-, Tuple.Create(Tuple.Create("", 12370), Tuple.Create("bcms-align-center", 12370), true)
+WriteAttribute("class", Tuple.Create(" class=\"", 12370), Tuple.Create("\"", 12467)
+, Tuple.Create(Tuple.Create("", 12378), Tuple.Create("bcms-align-center", 12378), true)
             
             #line 189 "..\..\Views\Images\ImageEditor.cshtml"
-, Tuple.Create(Tuple.Create("", 12387), Tuple.Create<System.Object, System.Int32>(Model.ImageAlign == MediaImageAlign.Center ? "-active" : string.Empty
+, Tuple.Create(Tuple.Create("", 12395), Tuple.Create<System.Object, System.Int32>(Model.ImageAlign == MediaImageAlign.Center ? "-active" : string.Empty
             
             #line default
             #line hidden
-, 12387), false)
+, 12395), false)
 );
 
 WriteLiteral(">\r\n                                <input");
@@ -990,14 +991,14 @@ WriteLiteral(" type=\"radio\"");
 
 WriteLiteral(" name=\"ImageAlign\"");
 
-WriteAttribute("value", Tuple.Create(" value=\"", 12532), Tuple.Create("\"", 12570)
+WriteAttribute("value", Tuple.Create(" value=\"", 12540), Tuple.Create("\"", 12578)
             
             #line 190 "..\..\Views\Images\ImageEditor.cshtml"
-, Tuple.Create(Tuple.Create("", 12540), Tuple.Create<System.Object, System.Int32>((int)MediaImageAlign.Center
+, Tuple.Create(Tuple.Create("", 12548), Tuple.Create<System.Object, System.Int32>((int)MediaImageAlign.Center
             
             #line default
             #line hidden
-, 12540), false)
+, 12548), false)
 );
 
 WriteLiteral(" ");
@@ -1012,15 +1013,15 @@ WriteLiteral(" ");
 WriteLiteral(" data-bind=\"checked: imageAlign.asString()\" />\r\n                            </div" +
 ">\r\n                            <div");
 
-WriteAttribute("class", Tuple.Create(" class=\"", 12760), Tuple.Create("\"", 12853)
-, Tuple.Create(Tuple.Create("", 12768), Tuple.Create("bcms-align-left", 12768), true)
+WriteAttribute("class", Tuple.Create(" class=\"", 12768), Tuple.Create("\"", 12861)
+, Tuple.Create(Tuple.Create("", 12776), Tuple.Create("bcms-align-left", 12776), true)
             
             #line 192 "..\..\Views\Images\ImageEditor.cshtml"
-, Tuple.Create(Tuple.Create("", 12783), Tuple.Create<System.Object, System.Int32>(Model.ImageAlign == MediaImageAlign.Left ? "-active" : string.Empty
+, Tuple.Create(Tuple.Create("", 12791), Tuple.Create<System.Object, System.Int32>(Model.ImageAlign == MediaImageAlign.Left ? "-active" : string.Empty
             
             #line default
             #line hidden
-, 12783), false)
+, 12791), false)
 );
 
 WriteLiteral(">\r\n                                <input");
@@ -1029,14 +1030,14 @@ WriteLiteral(" type=\"radio\"");
 
 WriteLiteral(" name=\"ImageAlign\"");
 
-WriteAttribute("value", Tuple.Create(" value=\"", 12926), Tuple.Create("\"", 12962)
+WriteAttribute("value", Tuple.Create(" value=\"", 12934), Tuple.Create("\"", 12970)
             
             #line 193 "..\..\Views\Images\ImageEditor.cshtml"
-, Tuple.Create(Tuple.Create("", 12934), Tuple.Create<System.Object, System.Int32>((int)MediaImageAlign.Left
+, Tuple.Create(Tuple.Create("", 12942), Tuple.Create<System.Object, System.Int32>((int)MediaImageAlign.Left
             
             #line default
             #line hidden
-, 12934), false)
+, 12942), false)
 );
 
 WriteLiteral(" ");
@@ -1051,15 +1052,15 @@ WriteLiteral(" ");
 WriteLiteral(" data-bind=\"checked: imageAlign.asString()\" />\r\n                            </div" +
 ">\r\n                            <div");
 
-WriteAttribute("class", Tuple.Create(" class=\"", 13150), Tuple.Create("\"", 13245)
-, Tuple.Create(Tuple.Create("", 13158), Tuple.Create("bcms-align-right", 13158), true)
+WriteAttribute("class", Tuple.Create(" class=\"", 13158), Tuple.Create("\"", 13253)
+, Tuple.Create(Tuple.Create("", 13166), Tuple.Create("bcms-align-right", 13166), true)
             
             #line 195 "..\..\Views\Images\ImageEditor.cshtml"
-, Tuple.Create(Tuple.Create("", 13174), Tuple.Create<System.Object, System.Int32>(Model.ImageAlign == MediaImageAlign.Right ? "-active" : string.Empty
+, Tuple.Create(Tuple.Create("", 13182), Tuple.Create<System.Object, System.Int32>(Model.ImageAlign == MediaImageAlign.Right ? "-active" : string.Empty
             
             #line default
             #line hidden
-, 13174), false)
+, 13182), false)
 );
 
 WriteLiteral(">\r\n                                <input");
@@ -1068,14 +1069,14 @@ WriteLiteral(" type=\"radio\"");
 
 WriteLiteral(" name=\"ImageAlign\"");
 
-WriteAttribute("value", Tuple.Create(" value=\"", 13318), Tuple.Create("\"", 13355)
+WriteAttribute("value", Tuple.Create(" value=\"", 13326), Tuple.Create("\"", 13363)
             
             #line 196 "..\..\Views\Images\ImageEditor.cshtml"
-, Tuple.Create(Tuple.Create("", 13326), Tuple.Create<System.Object, System.Int32>((int)MediaImageAlign.Right
+, Tuple.Create(Tuple.Create("", 13334), Tuple.Create<System.Object, System.Int32>((int)MediaImageAlign.Right
             
             #line default
             #line hidden
-, 13326), false)
+, 13334), false)
 );
 
 WriteLiteral(" ");

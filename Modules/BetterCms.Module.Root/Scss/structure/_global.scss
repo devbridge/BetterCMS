@@ -417,6 +417,7 @@ $action-icons: (
 //module global icons
 @each $name, $icon in $action-icons {
     .bcms-action-#{$name} {
+        @include transition(opacity 200ms);
         @include vertical-align();
         @include size(22px);
         background: url($icon) no-repeat center;
@@ -424,6 +425,11 @@ $action-icons: (
         overflow: hidden;
         position: relative;
         text-indent: 999em;
+        opacity: .6;
+
+        &:hover {
+            opacity: 1;
+        }
     }
 }
 

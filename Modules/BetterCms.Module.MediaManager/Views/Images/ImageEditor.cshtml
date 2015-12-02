@@ -94,8 +94,6 @@
                             @Html.BcmsValidationMessageFor(f => f.Description)
                         </div>
                     </div>
-
-                    <div class="bcms-media-re-upload" data-bind="click: reupload">@MediaGlobalization.ImageEditor_Dialog_Reupload_Title</div>
                 </div>
 
                 <div class="bcms-media-manager-column-right">
@@ -111,6 +109,8 @@
                                 <div class="bcms-checkbox-label bcms-js-edit-label" data-bind="click: imageEditorViewModel.changeFit">@MediaGlobalization.ImageEditor_Dialog_FitImage_Title</div>
                                 <div class="bcms-editor-link" data-bind="visible: imageEditorViewModel.hasCrop(), click: imageEditorViewModel.removeCrop">Remove crop</div>
                             </div> 
+
+                            <div class="bcms-media-re-upload" data-bind="click: reupload">@MediaGlobalization.ImageEditor_Dialog_Reupload_Title</div>
                         </div>
                     </div>
 
