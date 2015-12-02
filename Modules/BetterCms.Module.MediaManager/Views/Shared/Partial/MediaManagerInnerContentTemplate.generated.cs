@@ -626,7 +626,26 @@ WriteLiteral(" class=\"bcms-action-menu\"");
 
 WriteLiteral(" data-bind=\"click: $parent.toggleMenu, clickBubble: false\"");
 
-WriteLiteral(">Menu</div>\r\n");
+WriteAttribute("title", Tuple.Create(" title=\"", 10513), Tuple.Create("\"", 10558)
+            
+            #line 184 "..\..\Views\Shared\Partial\MediaManagerInnerContentTemplate.cshtml"
+                                  , Tuple.Create(Tuple.Create("", 10521), Tuple.Create<System.Object, System.Int32>(MediaGlobalization.MediaManager_Menu
+            
+            #line default
+            #line hidden
+, 10521), false)
+);
+
+WriteLiteral(">");
+
+            
+            #line 184 "..\..\Views\Shared\Partial\MediaManagerInnerContentTemplate.cshtml"
+                                                                                                                                                     Write(MediaGlobalization.MediaManager_Menu);
+
+            
+            #line default
+            #line hidden
+WriteLiteral("</div>\r\n");
 
             
             #line 185 "..\..\Views\Shared\Partial\MediaManagerInnerContentTemplate.cshtml"

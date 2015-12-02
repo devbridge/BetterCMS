@@ -128,7 +128,7 @@ WriteLiteral("\r\n");
 
         if (canViewPages)
         {
-            column.For(f => string.Format("<div class=\"bcms-action-usage\" data-id=\"{0}\">{1}</div>", f.Id, PagesGlobalization.SiteSettings_Templates_Usage))
+            column.For(f => string.Format("<div class=\"bcms-action-usage\" data-id=\"{0}\" title=\"{1}\">{1}</div>", f.Id, PagesGlobalization.SiteSettings_Templates_Usage))
                 .HeaderAttributes(@style => "width: 40px; padding: 8px 0;")
                 .Named("")
                 .Sortable(false)

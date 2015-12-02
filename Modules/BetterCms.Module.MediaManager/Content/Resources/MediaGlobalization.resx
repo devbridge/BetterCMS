@@ -675,4 +675,7 @@
   <data name="DeleteFolder_DeletedError_Message" xml:space="preserve">
     <value>Failed to delete folder. Some of folder items can not be removed.</value>
   </data>
+    <data name="MediaManager_Menu" xml:space="preserve">
+    <value>Menu</value>
+  </data>
 </root>

@@ -181,7 +181,7 @@
                     @if ((ViewContext.Controller as CmsControllerBase).SecurityService.IsAuthorized(RootModuleConstants.UserRoles.DeleteContent))
                     {
                     <!--  ko if: !isProcessing() && !isDeleting() && !isReadOnly() -->
-                    <div class="bcms-action-menu" data-bind="click: $parent.toggleMenu, clickBubble: false">Menu</div>
+                    <div class="bcms-action-menu" data-bind="click: $parent.toggleMenu, clickBubble: false" title="@MediaGlobalization.MediaManager_Menu">@MediaGlobalization.MediaManager_Menu</div>
 
                     <div class="bcms-media-context" data-bind="visible: isMenuOpen, css: isMenuAbove() ? 'bcms-tooltip-br' : 'bcms-tooltip-tr'">
                         <!--  ko if: !isFailed() && !isProcessing() && !isDeleting() && ($root.canInsertMedia() || $root.canInsertMediaWithOptions()) -->

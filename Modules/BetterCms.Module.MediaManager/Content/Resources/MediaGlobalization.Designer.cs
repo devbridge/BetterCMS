@@ -1357,6 +1357,15 @@ namespace BetterCms.Module.MediaManager.Content.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Menu.
+        /// </summary>
+        public static string MediaManager_Menu {
+            get {
+                return ResourceManager.GetString("MediaManager_Menu", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to You can select only one file to re-upload..
         /// </summary>
         public static string MediaManager_MultipleFilesWarning_Message {
