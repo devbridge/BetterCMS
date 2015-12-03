@@ -71,17 +71,22 @@ namespace BetterCms.Module.Pages.Command.Content.GetChildContentOptions
                             && f.AssignmentIdentifier == request.AssignmentIdentifier
                             && !f.IsDeleted
                             && !f.Child.IsDeleted);
-                    var childContent = AddFetches(draftQuery).ToList().FirstOrDefault();
+//                    var childContent = AddFetches(draftQuery).ToList().FirstOrDefault();
+                    var childContent = draftQuery.FirstOrDefault();
+//                    var childContent = GetChildContent(request);
 
                     // If draft not found, load content
-                    if (childContent == null) {
-                        var query = Repository.AsQueryable<ChildContent>()
-                            .Where(f => f.Parent.Id == request.ContentId 
-                                && f.AssignmentIdentifier == request.AssignmentIdentifier 
-                                && !f.IsDeleted 
-                                && !f.Child.IsDeleted);
+                    if (childContent == null)
+                    {
+                        var query = Repository.AsQueryable<ChildContent>().Where(
+                                    f => f.Parent.Id == request.ContentId && f.AssignmentIdentifier == request.AssignmentIdentifier && !f.IsDeleted && !f.Child.IsDeleted);
 
-                        childContent = AddFetches(query).ToList().FirstOrDefault();
+                        childContent = query.First();
+                        FetchCollections(childContent);
+                    }
+                    else
+                    {
+                        FetchCollections(childContent);
                     }
 
                     if (childContent != null)
@@ -136,9 +141,77 @@ namespace BetterCms.Module.Pages.Command.Content.GetChildContentOptions
         {
             // TODO: fix this !!! This has critical performance impact
             return query
-                .Fetch(f => f.Child).ThenFetchMany(f => f.ContentOptions).ThenFetch(f => f.CustomOption)
-                .FetchMany(f => f.Options).ThenFetch(f => f.CustomOption)
-                .Fetch(f => f.Child).ThenFetchMany(f => f.History).ThenFetchMany(f => f.ContentOptions).ThenFetch(f => f.CustomOption);
+                .Fetch(f => f.Child)
+                .ThenFetchMany(f => f.ContentOptions)
+                .ThenFetch(f => f.CustomOption)
+
+                .FetchMany(f => f.Options)
+                .ThenFetch(f => f.CustomOption)
+
+                .Fetch(f => f.Child)
+                .ThenFetchMany(f => f.History)
+                .ThenFetchMany(f => f.ContentOptions)
+                .ThenFetch(f => f.CustomOption);
+        }
+        private ChildContent GetChildContent(GetChildContentOptionsCommandRequest request)
+        {
+//            var draftQuery = Repository.AsQueryable<ChildContent>()
+//                .Where(f => f.Parent.Original.Id == request.ContentId
+//                    && !f.Parent.Original.IsDeleted
+//                    && f.Parent.Original.Status == ContentStatus.Published
+//                    && f.Parent.Status == ContentStatus.Draft
+//                    && f.AssignmentIdentifier == request.AssignmentIdentifier
+//                    && !f.IsDeleted
+//                    && !f.Child.IsDeleted);
+//            var childContent = AddFetches(draftQuery).ToList().FirstOrDefault();
+            var query = Repository.AsQueryable<ChildContent>()
+
+                .Where(f => f.Parent.Original.Id == request.ContentId
+                    && !f.Parent.Original.IsDeleted
+                    && f.Parent.Original.Status == ContentStatus.Published
+                    && f.Parent.Status == ContentStatus.Draft
+                    && f.AssignmentIdentifier == request.AssignmentIdentifier
+                    && !f.IsDeleted
+                    && !f.Child.IsDeleted)
+                .Fetch(x => x.Parent)
+                .ThenFetch(x => x.Original);
+            var childContent = query.ToList().FirstOrDefault();
+
+            if (childContent != null)
+            {
+
+            }
+            return childContent;
+        }
+
+        private void FetchCollections(ChildContent childContent)
+        {
+            var childQuery = Repository.AsQueryable<Root.Models.Content>().Where(x => x.Id == childContent.Child.Id).ToFuture();
+            var historyQuery = Repository.AsQueryable<Root.Models.Content>().Where(x => x.Original.Id == childContent.Child.Id).ToFuture();
+
+            childContent.Child = childQuery.First();
+            childContent.Child.History = historyQuery as IList<Root.Models.Content> ?? historyQuery.ToList();
+
+            var historyIds = childContent.Child.History.Select(x => x.Id).ToList();
+            var contentOptionsQuery =
+                Repository.AsQueryable<ContentOption>()
+                    .Where(x => x.Content.Id == childContent.Child.Id)
+                    .FetchMany(x => x.Translations)
+                    .Fetch(x => x.CustomOption)
+                    .ToFuture();
+
+            var childContentOptionsQuery = Repository.AsQueryable<ChildContentOption>().Where(x => x.ChildContent.Id == childContent.Id).Fetch(x => x.CustomOption).FetchMany(x => x.Translations).ToFuture();
+            var historyContentOptionsQuery = Repository.AsQueryable<ContentOption>().Where(x => historyIds.Contains(x.Id)).Fetch(x => x.CustomOption).FetchMany(x => x.Translations).ToFuture();
+            childContent.Child.ContentOptions = contentOptionsQuery.ToList();
+            childContent.Options = childContentOptionsQuery as IList<ChildContentOption> ?? childContentOptionsQuery.ToList();
+            if (childContent.Child.History.Any())
+            {
+                var historyContentOptions = historyContentOptionsQuery as IList<ContentOption> ?? historyContentOptionsQuery.ToList();
+                foreach (var content in childContent.Child.History)
+                {
+                    content.ContentOptions = historyContentOptions.Where(x => x.Content.Id == content.Id).ToList();
+                }
+            }
         }
     }
 }
