@@ -471,6 +471,39 @@ namespace BetterCms.Test.Module.Root.ServiceTests
         }
 
         [Test]
+        public void ShouldReturnCorrectOptionValueForSpecificLanguage()
+        {
+            Language lang = new Language();
+            lang.Id = Guid.NewGuid();
+            var option1 = TestDataProvider.CreateNewContentOption();
+            option1.Type = OptionType.Text;
+            var service = CreateOptionService();
+            var options = new List<IOptionEntity> { option1 };
+            var result = service.GetMergedOptionValues(options, new List<IOptionValueEntity>(), lang.Id);
+            Assert.NotNull(result);
+            Assert.AreEqual(option1.DefaultValue, result[0].Value);
+        }
+
+        [Test]
+        public void ShouldReturnCorrectOptionValueForSpecificLanguage2()
+        {
+            Language lang = new Language();
+            lang.Id = Guid.NewGuid();
+            var option1 = TestDataProvider.CreateNewContentOption();
+            option1.Type = OptionType.Text;
+            var translation = new ContentOptionTranslation();
+            translation.ContentOption = option1;
+            translation.Value = TestDataProvider.ProvideRandomString(100);
+            translation.Language = lang;
+            option1.Translations.Add(translation);
+            var service = CreateOptionService();
+            var options = new List<IOptionEntity> { option1 };
+            var result = service.GetMergedOptionValues(options, new List<IOptionValueEntity>(), lang.Id);
+            Assert.NotNull(result);
+            Assert.AreEqual(translation.Value, result[0].Value);
+        }
+
+        [Test]
         public void ShouldReturnCorrectOptionValueForSpecificLanguage3()
         {
             Language lang = new Language();

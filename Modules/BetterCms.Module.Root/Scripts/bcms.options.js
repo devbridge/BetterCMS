@@ -93,6 +93,13 @@ bettercms.define('bcms.options', ['bcms.jquery', 'bcms', 'bcms.ko.extenders', 'b
             function OptionsListViewModel(container, items, customOptions, opts) {
                 var self = this,
                     ci, cl, cOption;
+                opts = $.extend({
+                    showLanguages: false,
+                    languages: [],
+                    translationsEnabled: false,
+                    editorType: ""
+                }, opts);
+
                 self.customOptions = addCustomOptions(customOptions);
 
                 self.optionTypes = ko.observableArray();
@@ -139,6 +146,7 @@ bettercms.define('bcms.options', ['bcms.jquery', 'bcms', 'bcms.ko.extenders', 'b
                 self.languageId = ko.observable("");
                 self.language = opts.showLanguages ? new LanguageViewModel(opts.languages, null, self) : null;
                 self.translationsEnabled = opts.translationsEnabled;
+                self.editorType = opts.editorType;
                 self.suspendAddItemSubscribe = true;
                 self.selectedTypeId = ko.observable();
                 self.isAddNewSelected = ko.observable(false);
@@ -198,8 +206,11 @@ bettercms.define('bcms.options', ['bcms.jquery', 'bcms', 'bcms.ko.extenders', 'b
                 _super.call(this, container, items, customOptions, opts);
 
                 var self = this;
-                if (bcms.languageId && self.translationsEnabled) {
-                    self.onLanguageChanged(bcms.languageId);
+                if (self.editorType == "page" && bcms.languageId && self.translationsEnabled) {
+                    var allItems = self.items();
+                    for (var i = 0; i < allItems.length; i++) {
+                        allItems[i].activateDefaultOptionForLanguage(bcms.languageId);
+                    }
                 }
                 self.attachDatePickers = function () {
                     attachDatePickers(self);
@@ -311,6 +322,7 @@ bettercms.define('bcms.options', ['bcms.jquery', 'bcms', 'bcms.ko.extenders', 'b
                 self.calcType = ko.observable();
                 self.translationsEnabled = parent.translationsEnabled;
                 self.oldValues = {};
+                self.editorType = parent.editorType;
 
                 // NOTE: useDefaultValueBinding should be registered before defaultValue and type
                 // because in other case, when cancelling edit mode, it sets wrong values.
@@ -461,7 +473,6 @@ bettercms.define('bcms.options', ['bcms.jquery', 'bcms', 'bcms.ko.extenders', 'b
                 if (item.Translations != null) {
                     self.translations = item.Translations;
                 }
-                self.translationsEnabled = parent.showLanguages();
 
                 if (item.ValueTranslations != null) {
                     self.valueTranslations = item.ValueTranslations;
@@ -674,41 +685,41 @@ bettercms.define('bcms.options', ['bcms.jquery', 'bcms', 'bcms.ko.extenders', 'b
 
                 self.useDefaultValueBinding.subscribe(function (newValue) {
                     var languageId = self.parent.languageId();
-                    if (self.isActive()) {
-                        if ((self.translationsEnabled && languageId == "") || !self.translationsEnabled) {
-                            if (newValue) {
+
+                    if (!self.isActive()) {
+                        return;
+                    }
+
+                    if ((self.translationsEnabled && languageId == "" && self.parent.editorType == "widget") || !self.translationsEnabled) {
+                        if (newValue) {
+                            self.valueBinding(self.defaultValue());
+                            self.customOptionTitleBinding(self.customOptionDefaultTitle());
+                        } else {
+                            var val = self.type() == optionTypes.boolType ? false : '';
+                            self.valueBinding(val);
+                            self.customOptionTitleBinding(val);
+                        }
+                    } else {
+                        if (self.parent.editorType == "page" && bcms.languageId) {
+                            languageId = bcms.languageId;
+                        }
+                        var translation = self.getTranslation(languageId);
+                        if (newValue) {
+                            var optionValue;
+                            var customOptionValue;
+                            if (translation != null) {
+                                optionValue = self.ClearFixValue(translation.OptionValue);
+                                customOptionValue = self.ClearFixValue(translation.CustomOptionTitle);
+                                self.valueBinding(optionValue);
+                                self.customOptionTitleBinding(customOptionValue);
+                            } else {
                                 self.valueBinding(self.defaultValue());
                                 self.customOptionTitleBinding(self.customOptionDefaultTitle());
-                            } else {
-                                var val = self.type() == optionTypes.boolType ? false : '';
-                                self.valueBinding(val);
-                                self.customOptionTitleBinding(val);
                             }
                         } else {
-                            var translation = self.getTranslation(languageId);
-                            if (newValue) {
-                                var optionValue;
-                                var customOptionValue;
-                                if (translation != null) {
-                                    optionValue = self.ClearFixValue(translation.OptionValue);
-                                    customOptionValue = self.ClearFixValue(translation.CustomOptionTitle);
-                                    self.valueBinding(optionValue);
-                                    self.customOptionTitleBinding(customOptionValue);
-                                } else {
-                                    self.valueBinding(self.defaultValue());
-                                    self.customOptionTitleBinding(self.customOptionDefaultTitle());
-                                }
-                                if (self.useDefaultValue() == false) {
-                                    optionValue = self.ClearFixValue(self.value());
-                                    customOptionValue = self.ClearFixValue(self.customOptionTitle());
-                                    self.valueBinding(optionValue);
-                                    self.customOptionTitleBinding(customOptionValue);
-                                }
-                            } else {
-                                var val = self.type() == optionTypes.boolType ? false : '';
-                                self.valueBinding(val);
-                                self.customOptionTitleBinding(val);
-                            }
+                            var val = self.type() == optionTypes.boolType ? false : '';
+                            self.valueBinding(val);
+                            self.customOptionTitleBinding(val);
                         }
                     }
                 });
@@ -824,6 +835,26 @@ bettercms.define('bcms.options', ['bcms.jquery', 'bcms', 'bcms.ko.extenders', 'b
                 return null;
             }
 
+            OptionValueViewModel.prototype.activateDefaultOptionForLanguage = function (languageId) {
+                if (languageId) {
+                    var translation = this.getTranslation(languageId);
+                    if (translation != null) {
+                        var optionValue = this.ClearFixValue(translation.OptionValue);
+                        this.defaultValueBinding(optionValue);
+                        if (this.useDefaultValue()) {
+                            this.valueBinding(optionValue);
+                        }
+                        if (this.type() == optionTypes.customType) {
+                            var customOptionTitle = this.ClearFixValue(translation.CustomOptionTitle);
+                            this.customOptionDefaultTitleBinding(customOptionTitle);
+                            if (this.useDefaultValue()) {
+                                this.customOptionTitleBinding(customOptionTitle);
+                            }
+                        }
+                    }
+                }
+            }
+
             OptionValueViewModel.prototype.activateTranslation = function (languageId) {
                 var defaultValue = this.ClearFixValue(this.defaultValue());
                 var value = this.ClearFixValue(this.value());
@@ -864,8 +895,10 @@ bettercms.define('bcms.options', ['bcms.jquery', 'bcms', 'bcms.ko.extenders', 'b
                     }
 
                     if (this.useDefaultValue() == false) {
+//                        if (this.editorType != "widget") {
                         this.defaultValueBinding(value);
                         this.customOptionDefaultTitleBinding(customOptionTitle);
+//                        }
                         this.valueBinding(value);
                         this.customOptionTitleBinding(customOptionTitle);
                     }
@@ -916,15 +949,15 @@ bettercms.define('bcms.options', ['bcms.jquery', 'bcms', 'bcms.ko.extenders', 'b
         /**
         * Creates options list view model
         */
-        options.createOptionsViewModel = function (container, items, customOptions, showLanguages, languages) {
-            return new OptionsListViewModel(container, items, customOptions, showLanguages, languages);
+        options.createOptionsViewModel = function (container, items, customOptions, opts) {
+            return new OptionsListViewModel(container, items, customOptions, opts);
         };
 
         /**
         * Creates option values list view model
         */
-        options.createOptionValuesViewModel = function (container, items, customOptions, showLanguages, languages) {
-            return new OptionValuesListViewModel(container, items, customOptions, showLanguages, languages);
+        options.createOptionValuesViewModel = function (container, items, customOptions, opts) {
+            return new OptionValuesListViewModel(container, items, customOptions, opts);
         };
 
         ko.extenders.optionValue = function (target, opts) {

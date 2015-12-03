@@ -54,7 +54,7 @@
 
                                 return true;
                             },
-                            editor.cmsEditorType == "widget");
+                            editor.cmsEditorType);
                     }
                 }),
 

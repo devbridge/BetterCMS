@@ -250,7 +250,7 @@
                     return true;
                 },
                 optionListViewModel: optionListViewModel,
-                showLanguages: htmlEditor.cmsEditorType == "widget"
+                editorType: htmlEditor.cmsEditorType
             });
         }
 
