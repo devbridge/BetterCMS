@@ -31,11 +31,11 @@
 @model string
 @if (Model == ContentStatus.Published.ToString())
 {
-    <div class="bcms-action-ok bcms-js-action-ok" title="@RootGlobalization.WidgetStatus_Published">@RootGlobalization.WidgetStatus_Published</div>
+    <div class="bcms-action-ok" title="@RootGlobalization.WidgetStatus_Published">@RootGlobalization.WidgetStatus_Published</div>
 }
 else if (Model == ContentStatus.Draft.ToString())
 {
-    <div class="bcms-action-draft" title="@RootGlobalization.WidgetStatus_Draft">@RootGlobalization.WidgetStatus_Draft</div>
+    <div class="bcms-action-warn" title="@RootGlobalization.WidgetStatus_Draft">@RootGlobalization.WidgetStatus_Draft</div>
 }
 else
 {

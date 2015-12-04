@@ -63,23 +63,23 @@ WriteLiteral("\n");
             #line hidden
 WriteLiteral("    <div");
 
-WriteLiteral(" class=\"bcms-action-ok bcms-js-action-ok\"");
+WriteLiteral(" class=\"bcms-action-ok\"");
 
-WriteAttribute("title", Tuple.Create(" title=\"", 1517), Tuple.Create("\"", 1566)
+WriteAttribute("title", Tuple.Create(" title=\"", 1499), Tuple.Create("\"", 1548)
             
             #line 34 "..\..\Views\Shared\EditorTemplates\WidgetStatus.cshtml"
-, Tuple.Create(Tuple.Create("", 1525), Tuple.Create<System.Object, System.Int32>(RootGlobalization.WidgetStatus_Published
+, Tuple.Create(Tuple.Create("", 1507), Tuple.Create<System.Object, System.Int32>(RootGlobalization.WidgetStatus_Published
             
             #line default
             #line hidden
-, 1525), false)
+, 1507), false)
 );
 
 WriteLiteral(">");
 
             
             #line 34 "..\..\Views\Shared\EditorTemplates\WidgetStatus.cshtml"
-                                                                                               Write(RootGlobalization.WidgetStatus_Published);
+                                                                             Write(RootGlobalization.WidgetStatus_Published);
 
             
             #line default
@@ -97,23 +97,23 @@ else if (Model == ContentStatus.Draft.ToString())
             #line hidden
 WriteLiteral("    <div");
 
-WriteLiteral(" class=\"bcms-action-draft\"");
+WriteLiteral(" class=\"bcms-action-warn\"");
 
-WriteAttribute("title", Tuple.Create(" title=\"", 1708), Tuple.Create("\"", 1753)
+WriteAttribute("title", Tuple.Create(" title=\"", 1689), Tuple.Create("\"", 1734)
             
             #line 38 "..\..\Views\Shared\EditorTemplates\WidgetStatus.cshtml"
-, Tuple.Create(Tuple.Create("", 1716), Tuple.Create<System.Object, System.Int32>(RootGlobalization.WidgetStatus_Draft
+, Tuple.Create(Tuple.Create("", 1697), Tuple.Create<System.Object, System.Int32>(RootGlobalization.WidgetStatus_Draft
             
             #line default
             #line hidden
-, 1716), false)
+, 1697), false)
 );
 
 WriteLiteral(">");
 
             
             #line 38 "..\..\Views\Shared\EditorTemplates\WidgetStatus.cshtml"
-                                                                            Write(RootGlobalization.WidgetStatus_Draft);
+                                                                           Write(RootGlobalization.WidgetStatus_Draft);
 
             
             #line default
@@ -133,14 +133,14 @@ WriteLiteral("    <div");
 
 WriteLiteral(" class=\"bcms-action-draft\"");
 
-WriteAttribute("title", Tuple.Create(" title=\"", 1846), Tuple.Create("\"", 1904)
+WriteAttribute("title", Tuple.Create(" title=\"", 1827), Tuple.Create("\"", 1885)
             
             #line 42 "..\..\Views\Shared\EditorTemplates\WidgetStatus.cshtml"
-, Tuple.Create(Tuple.Create("", 1854), Tuple.Create<System.Object, System.Int32>(RootGlobalization.WidgetStatus_PublishedWithDraft
+, Tuple.Create(Tuple.Create("", 1835), Tuple.Create<System.Object, System.Int32>(RootGlobalization.WidgetStatus_PublishedWithDraft
             
             #line default
             #line hidden
-, 1854), false)
+, 1835), false)
 );
 
 WriteLiteral(">");

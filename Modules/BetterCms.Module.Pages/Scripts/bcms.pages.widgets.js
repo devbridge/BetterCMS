@@ -133,9 +133,9 @@ bettercms.define('bcms.pages.widgets', ['bcms.jquery', 'bcms', 'bcms.modal', 'bc
             classes = {
                 regionAdvancedContent: 'bcms-content-advanced',
                 regionWidget: 'bcms-content-widget',
-                draftStatus: 'bcms-icn-draft',
-                publishStatus: 'bcms-js-action-ok',
-                draftPublStatus: 'bcms-icn-pubdraft'
+                draftStatus: 'bcms-action-warn',
+                publishStatus: 'bcms-action-ok',
+                draftPublStatus: 'bcms-action-draft'
             },
             contentTypes = {
                 htmlWidget: 'html-widget',
@@ -911,6 +911,7 @@ bettercms.define('bcms.pages.widgets', ['bcms.jquery', 'bcms', 'bcms.modal', 'bc
                 status = globalization.widgetStatusDraft;
             }
             statusContainer.html(status);
+            statusContainer.attr('title', status);
             row.find(selectors.widgetStatusCell).html(statusContainer);
         };
 
