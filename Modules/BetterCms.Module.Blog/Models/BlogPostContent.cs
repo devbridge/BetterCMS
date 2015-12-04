@@ -14,9 +14,9 @@ namespace BetterCms.Module.Blog.Models
             return copy;
         }
 
-        public override Root.Models.Content Clone()
+        public override Root.Models.Content Clone(bool copyCollections = true)
         {
-            return CopyDataTo(new BlogPostContent());
+            return CopyDataTo(new BlogPostContent(), copyCollections);
         }
     }
 }

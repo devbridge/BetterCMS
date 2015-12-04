@@ -50,9 +50,9 @@ namespace BetterCms.Module.Pages.Models
             return copy;
         }
 
-        public override Root.Models.Content Clone()
+        public override Root.Models.Content Clone(bool copyCollections = true)
         {
-            return CopyDataTo(new HtmlContent());
+            return CopyDataTo(new HtmlContent(), copyCollections);
         }
     }
 }
