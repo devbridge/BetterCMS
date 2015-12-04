@@ -25,8 +25,6 @@
 // Email: info@bettercms.com
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
-using System;
-
 namespace BetterCms.Module.Pages.ViewModels.History
 {
     public class HtmlContentWidgetHistoryViewModel
@@ -44,5 +42,10 @@ namespace BetterCms.Module.Pages.ViewModels.History
         public bool UseCustomJs { get; set; }
 
         public bool UseCustomHtml { get; set; }
+
+        public override string ToString()
+        {
+            return string.Format("Name: {0}", Name);
+        }
     }
 }

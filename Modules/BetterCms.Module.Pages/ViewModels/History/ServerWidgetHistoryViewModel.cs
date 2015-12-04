@@ -34,5 +34,10 @@ namespace BetterCms.Module.Pages.ViewModels.History
         public string Url { get; set; }
 
         public string PreviewUrl { get; set; }
+
+        public override string ToString()
+        {
+            return string.Format("Name: {0}, Url:{1}", Name, Url);
+        }
     }
 }

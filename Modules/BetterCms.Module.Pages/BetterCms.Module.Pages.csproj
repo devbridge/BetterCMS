@@ -426,7 +426,6 @@
     <Compile Include="ViewModels\Filter\WidgetsFilter.cs" />
     <Compile Include="ViewModels\History\ContentHistoryItem.cs" />
     <Compile Include="ViewModels\History\ContentHistoryViewModel.cs" />
-    <Compile Include="ViewModels\History\HistoryPropertiesViewModel.cs" />
     <Compile Include="ViewModels\History\SitemapRestoreViewModel.cs" />
     <Compile Include="ViewModels\Page\ClonePageWithLanguageViewModel.cs" />
     <Compile Include="ViewModels\Page\PageLookupKeyValue.cs" />

@@ -94,6 +94,7 @@ namespace BetterCms.Test.Module.Common
                     { "FilesController",                new[] { "Download" } },
                     { "AuthenticationController",       new[] { "Login", "Logout", "IsAuthorized" } },
                     { "RegistrationController",         new[] { "*" } },
+                    { "BlogWidgetController",         new[] { "*" } },
                 };
 
             var testItems = new List<Type>

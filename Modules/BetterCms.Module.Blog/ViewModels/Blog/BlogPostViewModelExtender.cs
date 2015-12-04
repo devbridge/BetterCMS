@@ -152,13 +152,5 @@ namespace BetterCms.Module.Blog.ViewModels.Blog
         /// The language group identifier.
         /// </value>
         public Guid? LanguageGroupIdentifier { get; set; }
-
-        /// <summary>
-        /// Gets or sets the language identifier.
-        /// </summary>
-        /// <value>
-        /// The language identifier.
-        /// </value>
-        public Guid? LanguageId { get; set; }
     }
 }

@@ -46,5 +46,10 @@ namespace BetterCms.Module.Pages.ViewModels.History
         public bool UseCustomCss { get; set; }
 
         public bool UseCustomJs { get; set; }
+
+        public override string ToString()
+        {
+            return string.Format("Name: {0}", Name);
+        }
     }
 }
