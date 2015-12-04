@@ -278,7 +278,7 @@ bettercms.define("bcms.markdown", ['bcms.jquery', 'bcms', 'bcms.jquery.markitup'
                     return true;
                 },
                 optionListViewModel: optionListViewModel,
-                enableTranslations: htmlEditor.cmsEditorType == "widget"
+                editorType: htmlEditor.cmsEditorType
             });
         }
 

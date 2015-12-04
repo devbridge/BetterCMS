@@ -359,7 +359,12 @@ bettercms.define('bcms.pages.widgets', ['bcms.jquery', 'bcms', 'bcms.modal', 'bc
                 customOptions = data.CustomOptions,
                 showLanguages = data.ShowLanguages,
                 languages = data.Languages,
-                optionListViewModel = options.createOptionsViewModel(optionsContainer, widgetOptions, customOptions, showLanguages, languages),
+                langOpts = {
+                    showLanguages: showLanguages,
+                    languages: languages,
+                    translationsEnabled: showLanguages
+                },
+                optionListViewModel = options.createOptionsViewModel(optionsContainer, widgetOptions, customOptions, langOpts),
                 widgetEditViewModel = new WidgetEditViewModel(data),
                 codeEditorInitialized = false;
 
@@ -450,7 +455,12 @@ bettercms.define('bcms.pages.widgets', ['bcms.jquery', 'bcms', 'bcms.modal', 'bc
                 customOptions = data != null ? data.CustomOptions : null,
                 showLanguages = data != null ? data.ShowLanguages : null,
                 languages = data != null ? data.Languages : null,
-                optionListViewModel = options.createOptionsViewModel(optionsContainer, widgetOptions, customOptions, showLanguages, languages),
+                langOpts = {
+                    showLanguages: showLanguages,
+                    languages: languages,
+                    translationsEnabled: showLanguages
+                },
+                optionListViewModel = options.createOptionsViewModel(optionsContainer, widgetOptions, customOptions, langOpts),
                 widgetEditViewModel = new WidgetEditViewModel(data);
 
             categories.initCategoriesSelect(widgetEditViewModel.categories, data.CategoriesLookupList);
@@ -580,7 +590,7 @@ bettercms.define('bcms.pages.widgets', ['bcms.jquery', 'bcms', 'bcms.modal', 'bc
                 cancelTitle: '',
                 onCloseClick: null,
                 optionListViewModel: null,
-                enableTranslations: null
+                editorType: ''
             }, opts);
 
             modal.open({
@@ -592,9 +602,14 @@ bettercms.define('bcms.pages.widgets', ['bcms.jquery', 'bcms', 'bcms.modal', 'bc
                     dynamicContent.bindDialog(dialog, url, {
                         contentAvailable: function (contentDialog, content) {
                             var optionsContainer = contentDialog.container.find(selectors.pageContentOptionsForm);
-
+                            var langOpts = {
+                                showLanguages: opts.editorType == "widget" && content.Data.ShowLanguages,
+                                translationsEnabled: content.Data.ShowLanguages,
+                                languages: content.Data.Languages,
+                                editorType: opts.editorType
+                            };
                             optionListViewModel = opts.optionListViewModel
-                                || options.createOptionValuesViewModel(optionsContainer, content.Data.OptionValues, content.Data.CustomOptions, opts.enableTranslations && content.Data.ShowLanguages, content.Data.Languages);
+                                || options.createOptionValuesViewModel(optionsContainer, content.Data.OptionValues, content.Data.CustomOptions, langOpts);
 
                             ko.applyBindings(optionListViewModel, optionsContainer.get(0));
                         },
@@ -1000,7 +1015,7 @@ bettercms.define('bcms.pages.widgets', ['bcms.jquery', 'bcms', 'bcms.modal', 'bc
                 contentId = data.contentId,
                 onCloseClick = data.onCloseClick,
                 optionListViewModel = data.optionListViewModel,
-                enableTranslations = data.enableTranslations;
+                editorType = data.editorType;
 
             if (!assignmentId && !widgetId) {
                 bcms.logger.error("Cannot open child widget options modal window. assignmentId or widgetId should be set.");
@@ -1016,7 +1031,7 @@ bettercms.define('bcms.pages.widgets', ['bcms.jquery', 'bcms', 'bcms.modal', 'bc
                 cancelTitle: globalization.editChildWidgetOptionsCloseButtonTitle,
                 onCloseClick: onCloseClick,
                 optionListViewModel: optionListViewModel,
-                enableTranslations: enableTranslations
+                editorType: editorType
         });
         }
 

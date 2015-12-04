@@ -95,3 +95,4 @@ npm-debug.log
 #webstorm
 *.sass-cache
 *.idea
+Modules/BetterCms.Module.Root/Scripts/bcms.knockout-3.3.0.min.js

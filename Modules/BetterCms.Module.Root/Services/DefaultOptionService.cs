@@ -246,14 +246,6 @@ namespace BetterCms.Module.Root.Services
             {
                 foreach (var optionValue in optionValues.Distinct())
                 {
-                    if (languageId != null && languageId != default(Guid) && optionValue is IMultilingualOption)
-                    {
-                        var multilingualOption = optionValue as IMultilingualOption;
-                        if (multilingualOption.Translations == null || multilingualOption.Translations.All(t => t.LanguageId != languageId.ToString()))
-                        {
-                            continue;
-                        }
-                    }
                     var optionViewModel = CreateOptionValueViewModel(optionValue, languageId);
                     optionViewModel.UseDefaultValue = optionValue.UseDefaultValue;
                     optionModels.Add(optionViewModel);

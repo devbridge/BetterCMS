@@ -201,7 +201,7 @@ bettercms.define('bcms.htmlEditor', ['bcms.jquery', 'bcms', 'ckeditor', 'bcms.ma
         markdownEditor.initializeInstance(htmlEditor, id, editingContentId, options, heightOptions);
     }
 
-    htmlEditor.editChildWidgetOptions = function (editor, widgetId, assignmentId, contentId, optionListViewModel, onCloseClick, enableTranslations) {
+    htmlEditor.editChildWidgetOptions = function (editor, widgetId, assignmentId, contentId, optionListViewModel, onCloseClick, editorType) {
         bcms.trigger(htmlEditor.events.editChildWidgetOptions, {
             editor: editor,
             widgetId: widgetId,
@@ -209,7 +209,7 @@ bettercms.define('bcms.htmlEditor', ['bcms.jquery', 'bcms', 'ckeditor', 'bcms.ma
             contentId: contentId,
             onCloseClick: onCloseClick,
             optionListViewModel: optionListViewModel,
-            enableTranslations: enableTranslations
+            editorType: editorType
         });
     };
 
