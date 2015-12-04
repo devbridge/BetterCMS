@@ -13,8 +13,8 @@
     <copyright>Better CMS is licensed under BETTER CMS LICENSE AGREEMENT (http://www.bettercms.com/license.txt).</copyright>
     <dependencies>
       <dependency id="Autofac" version="3.1.5" />
-      <dependency id="BetterModules.Core" version="1.0.0-rc9" />
-      <dependency id="BetterModules.Core.Web" version="1.0.0-rc9" />
+      <dependency id="BetterModules.Core" version="1.0.0" />
+      <dependency id="BetterModules.Core.Web" version="1.0.0" />
       <dependency id="Common.Logging" version="2.1.2" />
       <dependency id="Common.Logging.NLog" version="[2.0.0]" />
       <dependency id="NHibernate" version="[3.3.3.4001]" />
