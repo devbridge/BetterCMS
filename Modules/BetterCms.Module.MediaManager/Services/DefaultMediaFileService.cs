@@ -11,7 +11,7 @@ using BetterCms.Core.Exceptions;
 using BetterCms.Core.Security;
 using BetterCms.Core.Services;
 using BetterCms.Core.Services.Storage;
-
+using BetterCms.Module.MediaManager.Helpers;
 using BetterCms.Module.MediaManager.Models;
 using BetterCms.Module.Root.Models;
 using BetterCms.Module.Root.Mvc;
@@ -367,8 +367,8 @@ namespace BetterCms.Module.MediaManager.Services
             file.OriginalFileName = fileName;
             file.OriginalFileExtension = Path.GetExtension(fileName);
             file.Size = fileLength;
-            file.FileUri = GetFileUri(type, folderName, RemoveInvalidHtmlSymbols(fileName));
-            file.PublicUrl = GetPublicFileUrl(type, folderName, RemoveInvalidHtmlSymbols(fileName));
+            file.FileUri = GetFileUri(type, folderName, MediaHelper.RemoveInvalidPathSymbols(fileName));
+            file.PublicUrl = GetPublicFileUrl(type, folderName, MediaHelper.RemoveInvalidPathSymbols(fileName));
             file.IsTemporary = isTemporary;
             file.IsCanceled = false;
             file.IsUploaded = null;
@@ -461,8 +461,8 @@ namespace BetterCms.Module.MediaManager.Services
                 createHistoryItem = false;
             }
 
-            tempFile.FileUri = GetFileUri(type, folderName, RemoveInvalidHtmlSymbols(fileName));
-            tempFile.PublicUrl = GetPublicFileUrl(type, folderName, RemoveInvalidHtmlSymbols(fileName));
+            tempFile.FileUri = GetFileUri(type, folderName, MediaHelper.RemoveInvalidPathSymbols(fileName));
+            tempFile.PublicUrl = GetPublicFileUrl(type, folderName, MediaHelper.RemoveInvalidPathSymbols(fileName));
 
             tempFile.OriginalFileName = fileName;
             tempFile.OriginalFileExtension = Path.GetExtension(fileName);
@@ -621,9 +621,7 @@ namespace BetterCms.Module.MediaManager.Services
                 GetContentPublicRoot(configuration.Storage.PublicContentUrlRoot),
                 Path.Combine(type.ToString().ToLower(), folderName, fileName));
 
-            string absoluteUri = new Uri(fullPath).AbsoluteUri;
-
-            return HttpUtility.UrlDecode(absoluteUri);
+            return new Uri(fullPath).AbsoluteUri;
         }
 
         public void UploadMediaFileToStorageSync<TMedia>(
@@ -807,13 +805,6 @@ namespace BetterCms.Module.MediaManager.Services
             unitOfWork.BeginTransaction();
             repository.Save(file);
             unitOfWork.Commit();
-        }
-
-        private static string RemoveInvalidHtmlSymbols(string fileName)
-        {
-            var invalidFileNameChars = Path.GetInvalidFileNameChars().ToList();
-            invalidFileNameChars.AddRange(new[] { '+', ' ' });
-            return HttpUtility.UrlEncode(invalidFileNameChars.Aggregate(fileName, (current, invalidFileNameChar) => current.Replace(invalidFileNameChar, '_')));
         }
     }
 }
