@@ -24,19 +24,24 @@ bettercms.define('bcms.ko.extenders', ['bcms.jquery', 'bcms', 'knockout', 'bcms.
     * Extend knockout handlers: select2 support.
     */
     ko.bindingHandlers.select2 = {
-        init: function (element, valueAccessor) {
-            var obj = valueAccessor();
+        init: function (element, valueAccessor, allBindingsAccessor) {
+            var allBindings, _base, obj;
+            obj = valueAccessor();
+
+            // workaround for ko compatibility
             obj.ko_FIX = true;
             $(element).select2(obj);
-            ko.utils.domNodeDisposal.addDisposeCallback(element, function () {
-                $(element).select2('destroy');
+            allBindings = allBindingsAccessor();
+            if (typeof (_base = allBindings.value).subscribe === "function") {
+                _base.subscribe(function (val) {
+                    return $(element).select2('val', val);
+                });
+            }
+            return ko.utils.domNodeDisposal.addDisposeCallback(element, function () {
+                return $(element).select2('destroy');
             });
         },
         update: function (element, valueAccessor, allBindingsAccessor) {
-            var options = allBindingsAccessor().select2Options || {};
-            for (var property in options) {
-                $(element).select2(property, ko.utils.unwrapObservable(options[property]));
-            }
             $(element).trigger('change');
         }
     };
