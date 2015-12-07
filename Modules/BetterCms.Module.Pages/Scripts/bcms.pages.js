@@ -805,7 +805,7 @@ bettercms.define('bcms.pages', ['bcms.jquery', 'bcms', 'bcms.modal', 'bcms.siteS
         page.addSiteSettingsPage = function (container, opts) {
             page.openCreatePageDialog(function (json) {
                 if (json.Data != null) {
-                    onAfterSiteSettingsPageItemSaved(json);
+                    page.pagesGridViewModel.items.unshift(new PageItemViewModel(json.Data));
                 }
             });
         };
