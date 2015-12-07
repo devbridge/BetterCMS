@@ -174,6 +174,7 @@ namespace BetterCms.Module.Blog.Controllers
         /// Json result.
         /// </returns>
         [BcmsAuthorize]
+        [ValidateInput(false)]
         public ActionResult ConvertStringToSlug(string text, string senderId, string parentPageUrl, string parentPageId, string languageId, List<string> categoryId)
         {
             var categories = categoryId == null || categoryId.All(string.IsNullOrEmpty) 
