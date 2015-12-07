@@ -89,7 +89,7 @@ namespace BetterCms.Module.Blog.Commands.SaveBlogPost
                            ModifiedByUser = blogPost.ModifiedByUser,
                            ModifiedOn = blogPost.ModifiedOn.ToFormattedDateString(),
                            CreatedOn = blogPost.CreatedOn.ToFormattedDateString(),
-                           PageStatus = blogPost.Status,
+                           Status = blogPost.Status,
                            DesirableStatus = request.Content.DesirableStatus,
                            PageContentId = blogPost.PageContents[0].Id,
                            ContentId = blogPost.PageContents[0].Content.Id,

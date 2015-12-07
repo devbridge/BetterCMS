@@ -25,6 +25,7 @@
 // Email: info@bettercms.com
 // </summary>
 // -------------------------------------------------------------------------------------------------------------------- *@
+@using BetterCms.Module.Pages.Content.Resources
 @using BetterCms.Module.Root
 @using BetterCms.Module.Root.Content.Resources
 @using BetterCms.Module.Root.Mvc
@@ -50,7 +51,7 @@
         </div>
 
         <div class="bcms-list-column bcms-list-status">
-            <div class="bcms-page-ispublished" data-bind="attr: { class: pageStatus() == 3 ? 'bcms-action-ok' : 'bcms-action-warn' }"></div>
+            <div class="bcms-page-ispublished" data-bind="attr: { class: pageStatus() == 3 ? 'bcms-action-ok' : 'bcms-action-warn', title: pageStatus() == 3 ? '@PagesGlobalization.SiteSettings_PageStatus_Published':'@PagesGlobalization.SiteSettings_PageStatus_Unpublished'}"></div>
         </div>
 
         @if ((ViewContext.Controller as CmsControllerBase).SecurityService.IsAuthorized(RootModuleConstants.UserRoles.DeleteContent))

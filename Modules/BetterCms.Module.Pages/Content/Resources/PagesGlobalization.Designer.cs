@@ -3409,6 +3409,24 @@ namespace BetterCms.Module.Pages.Content.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Published.
+        /// </summary>
+        public static string SiteSettings_PageStatus_Published {
+            get {
+                return ResourceManager.GetString("SiteSettings_PageStatus_Published", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Unpublished.
+        /// </summary>
+        public static string SiteSettings_PageStatus_Unpublished {
+            get {
+                return ResourceManager.GetString("SiteSettings_PageStatus_Unpublished", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Redirects.
         /// </summary>
         public static string SiteSettings_Redirects {
