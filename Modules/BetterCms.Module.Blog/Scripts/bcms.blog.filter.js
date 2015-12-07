@@ -77,7 +77,7 @@ bettercms.define('bcms.blog.filter', ['bcms.jquery', 'bcms', 'bcms.ko.extenders'
             self.sortColumn = ko.observable(jsonData.GridOptions.Column);
             self.sortDirection = ko.observable(jsonData.GridOptions.Direction);
             self.sortFields = ko.observableArray([]);
-            self.suspend = true;
+            self.suspendSortingSelector = false;
 
             if (jsonData.SortAliases) {
                 jsonData.SortAliases.forEach(function (sortAlias) {
@@ -105,8 +105,9 @@ bettercms.define('bcms.blog.filter', ['bcms.jquery', 'bcms', 'bcms.ko.extenders'
             // Actions.
             self.toggleShowSorting = function () {
                 self.showSorting(!self.showSorting());
+                self.suspendSortingSelector = true;
                 setTimeout(function () {
-                    self.suspend = false;
+                    self.suspendSortingSelector = false;
                 }, 100);
             };
             self.applySort = function (data, column, direction) {
@@ -115,7 +116,6 @@ bettercms.define('bcms.blog.filter', ['bcms.jquery', 'bcms', 'bcms.ko.extenders'
                 self.showSorting(false);
                 self.form.find(selectors.hiddenSortColumnField).val(column);
                 self.form.find(selectors.hiddenSortDirectionField).val(direction);
-                self.suspend = true;
                 onSearchClick(true);
             };
             self.toggleFilter = function() {
@@ -143,9 +143,10 @@ bettercms.define('bcms.blog.filter', ['bcms.jquery', 'bcms', 'bcms.ko.extenders'
                 self.includeArchived(!(self.includeArchived()));
             };
             bcms.on(bcms.events.bodyClick, function () {
-                if (!self.suspend) {
-                    self.showSorting(false);
-                    self.suspend = true;
+                if (!self.suspendSortingSelector) {
+                    if (self.showSorting() == true) {
+                        self.showSorting(false);
+                    }
                 }
             });
         }
