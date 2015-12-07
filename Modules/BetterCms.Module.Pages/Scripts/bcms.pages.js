@@ -741,7 +741,7 @@ bettercms.define('bcms.pages', ['bcms.jquery', 'bcms', 'bcms.modal', 'bcms.siteS
         function PageItemViewModel(item, parent, canBeSelected) {
             var self = this;
             self.id = ko.observable(item.Id);
-            self.title = ko.observable(antiXss.encodeHtml(item.Title));
+            self.title = ko.observable(item.Title);
             self.createdOn = ko.observable(globalization.created + ' ' + item.CreatedOn);
             self.modifiedOn = ko.observable(globalization.lastEdited + ' ' + item.ModifiedOn);
             self.pageStatus = ko.observable(item.PageStatus);
@@ -750,7 +750,7 @@ bettercms.define('bcms.pages', ['bcms.jquery', 'bcms', 'bcms.modal', 'bcms.siteS
 
             self.update = function(_item) {
                 self.id(_item.PageId);
-                self.title(antiXss.encodeHtml(_item.Title));
+                self.title(_item.Title);
                 self.createdOn(globalization.created + ' ' + _item.CreatedOn);
                 self.modifiedOn(globalization.lastEdited + ' ' + _item.ModifiedOn);
                 self.pageStatus(_item.PageStatus);

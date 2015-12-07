@@ -514,7 +514,7 @@ bettercms.define('bcms.blog', ['bcms.jquery', 'bcms', 'bcms.modal', 'bcms.siteSe
             var self = this;
 
             self.id = ko.observable(item.Id);
-            self.title = ko.observable(antiXss.encodeHtml(item.Title));
+            self.title = ko.observable(item.Title);
             self.createdOn = ko.observable(globalization.created + ' ' + item.CreatedOn);
             self.modifiedOn = ko.observable(globalization.lastEdited + ' ' + item.ModifiedOn);
             self.modifiedByUser = ko.observable(globalization.lastEditedBy + ' ' + item.ModifiedByUser);
@@ -524,7 +524,7 @@ bettercms.define('bcms.blog', ['bcms.jquery', 'bcms', 'bcms.modal', 'bcms.siteSe
 
             self.update = function(_item) {
                 self.id(_item.Id);
-                self.title(antiXss.encodeHtml(_item.Title));
+                self.title(_item.Title);
                 self.createdOn(globalization.created + ' ' + _item.CreatedOn);
                 self.modifiedOn(globalization.lastEdited + ' ' + _item.ModifiedOn);
                 self.modifiedByUser(globalization.lastEditedBy + ' ' + _item.ModifiedByUser);
