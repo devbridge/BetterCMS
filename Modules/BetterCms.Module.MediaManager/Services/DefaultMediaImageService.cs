@@ -227,7 +227,7 @@ namespace BetterCms.Module.MediaManager.Services
             overrideUrl = false; // TODO: temporary disabling feature #1055.
 
             var folderName = mediaFileService.CreateRandomFolderName();
-            var publicFileName = RemoveInvalidHtmlSymbols(MediaImageHelper.CreatePublicFileName(fileName, Path.GetExtension(fileName)));
+            var publicFileName = MediaHelper.RemoveInvalidPathSymbols(MediaImageHelper.CreatePublicFileName(fileName, Path.GetExtension(fileName)));
             var fileExtension = Path.GetExtension(fileName);
             var imageType = ImageHelper.GetImageType(fileExtension);
 
@@ -351,7 +351,7 @@ namespace BetterCms.Module.MediaManager.Services
                 CreatePngThumbnail(fileStream, thumbnailFileStream, ThumbnailSize);
 
                 var folderName = mediaFileService.CreateRandomFolderName();
-                var publicFileName = RemoveInvalidHtmlSymbols(MediaImageHelper.CreatePublicFileName(image.OriginalFileName, image.OriginalFileExtension));
+                var publicFileName = MediaHelper.RemoveInvalidPathSymbols(MediaImageHelper.CreatePublicFileName(image.OriginalFileName, image.OriginalFileExtension));
 
                 // Create new original image and upload file stream to the storage
                 var originalImage = CreateImage(null, image.OriginalFileName, image.OriginalFileExtension, Path.GetFileName(image.Title), size, image.Size, image);
@@ -468,7 +468,7 @@ namespace BetterCms.Module.MediaManager.Services
 
                 if (!overrideUrl)
                 {
-                    var publicFileName = RemoveInvalidHtmlSymbols(MediaImageHelper.CreateVersionedFileName(originalImage.OriginalFileName, GetVersion(originalImage)));
+                    var publicFileName = MediaHelper.RemoveInvalidPathSymbols(MediaImageHelper.CreateVersionedFileName(originalImage.OriginalFileName, GetVersion(originalImage)));
                     mediaImageVersionPathService.SetPathForNewOriginal(originalImage, folderName, publicFileName, ImageHelper.GetImageType(originalImage.OriginalFileExtension) ,archivedImage.OriginalUri, archivedImage.PublicOriginallUrl);
                 }
                 else
@@ -530,7 +530,7 @@ namespace BetterCms.Module.MediaManager.Services
 
                 if (!overrideUrl)
                 {
-                    var publicFileName = RemoveInvalidHtmlSymbols(MediaImageHelper.CreateVersionedFileName(image.OriginalFileName, GetVersion(image)));
+                    var publicFileName = MediaHelper.RemoveInvalidPathSymbols(MediaImageHelper.CreateVersionedFileName(image.OriginalFileName, GetVersion(image)));
                     mediaImageVersionPathService.SetPathForNewOriginal(image, folderName, publicFileName, ImageHelper.GetImageType(image.OriginalFileExtension), archivedImage.OriginalUri, archivedImage.PublicOriginallUrl);
                 }
                 
@@ -592,7 +592,7 @@ namespace BetterCms.Module.MediaManager.Services
             if (previousOriginal != null)
             {
                 var folderName = Path.GetFileName(Path.GetDirectoryName(previousOriginal.FileUri.OriginalString));
-                var publicFileName = RemoveInvalidHtmlSymbols(MediaImageHelper.CreatePublicFileName(previousOriginal.OriginalFileName, previousOriginal.OriginalFileExtension));
+                var publicFileName = MediaHelper.RemoveInvalidPathSymbols(MediaImageHelper.CreatePublicFileName(previousOriginal.OriginalFileName, previousOriginal.OriginalFileExtension));
 
                 // Get original file stream
                 using (var fileStream = DownloadFileStream(previousOriginal.PublicUrl))
@@ -1117,13 +1117,6 @@ namespace BetterCms.Module.MediaManager.Services
             {
                 RemoveImageWithFiles(media.Id, media.Version, false, shouldNotUploadOriginal);
             }
-        }
-
-        private static string RemoveInvalidHtmlSymbols(string fileName)
-        {
-            var invalidFileNameChars = Path.GetInvalidFileNameChars().ToList();
-            invalidFileNameChars.AddRange(new[] { '+', ' ' });
-            return HttpUtility.UrlEncode(invalidFileNameChars.Aggregate(fileName, (current, invalidFileNameChar) => current.Replace(invalidFileNameChar, '_')));
         }
 
         #endregion

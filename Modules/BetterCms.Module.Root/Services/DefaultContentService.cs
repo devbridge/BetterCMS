@@ -200,7 +200,7 @@ namespace BetterCms.Module.Root.Services
                 var contentVersionOfRequestedStatus = originalContent.History.FirstOrDefault(f => f.Status == requestedStatus && !f.IsDeleted);
                 if (contentVersionOfRequestedStatus == null)
                 {
-                    contentVersionOfRequestedStatus = originalContent.Clone();
+                    contentVersionOfRequestedStatus = originalContent.Clone(copyCollections:false);
                 }
 
                 updatedContent.CopyDataTo(contentVersionOfRequestedStatus, false);

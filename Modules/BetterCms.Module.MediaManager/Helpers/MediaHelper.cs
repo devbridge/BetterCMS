@@ -25,7 +25,9 @@
 // Email: info@bettercms.com
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
+using System.IO;
 using System.Linq;
+using System.Web;
 
 using BetterCms.Core.DataContracts;
 using BetterCms.Module.MediaManager.Models;
@@ -101,6 +103,13 @@ namespace BetterCms.Module.MediaManager.Helpers
         {
             SetCategories(repository, sourceMedia, destinationMedia);
             SetTags(repository, sourceMedia, destinationMedia);
+        }
+
+        public static string RemoveInvalidPathSymbols(string fileName)
+        {
+            var invalidFileNameChars = Path.GetInvalidFileNameChars().ToList();
+            invalidFileNameChars.AddRange(new[] { '+', ' ' , '&' });
+            return HttpUtility.UrlEncode(invalidFileNameChars.Aggregate(fileName, (current, invalidFileNameChar) => current.Replace(invalidFileNameChar, '_')));
         }
     }
 }
