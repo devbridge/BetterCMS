@@ -53,7 +53,12 @@
                         css: { 'bcms-node-box-drag': isBeingDragged(), 'bcms-node-box-edit': isActive(), 'bcms-node-box-active': !isBeingDragged() && superDraggable() }">
 
                 <!-- ko if: hasChildNodes() -->
-                <div class="bcms-node-expander" data-bind="click: $parents[$parents.length - 2].toggleNodeExpand, css: { 'bcms-node-expanded': isExpanded() }">&nbsp;</div>
+                <!-- ko if: $root.sitemap -->
+                <div class="bcms-node-expander" data-bind="click: $root.sitemap.toggleNodeExpand, css: { 'bcms-node-expanded': isExpanded() }">&nbsp;</div>
+                <!-- /ko -->
+                <!-- ko ifnot: $root.sitemap -->
+                <div class="bcms-node-expander" data-bind="click: $root.activeNewPageViewModel().sitemap.toggleNodeExpand, css: { 'bcms-node-expanded': isExpanded() }">&nbsp;</div>
+                <!-- /ko -->
                 <!-- /ko -->
 
                 <div class="bcms-node-box-info" data-bind="droppable: 'middleZone'">
