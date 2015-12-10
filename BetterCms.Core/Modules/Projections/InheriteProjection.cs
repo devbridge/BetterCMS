@@ -84,7 +84,7 @@ namespace BetterCms.Core.Modules.Projections
         /// <returns><c>true</c> on success, otherwise <c>false</c>.</returns>
         public override bool Render(IPage page, ISecurityService securityService, HtmlHelper html)
         {
-            if (AccessRole != null && !securityService.IsAuthorized(AccessRole))
+            if (ShouldBeRendered != null && !ShouldBeRendered(page) || AccessRole != null && !securityService.IsAuthorized(AccessRole))
             {
                 return false;
             }

@@ -327,7 +327,7 @@ namespace BetterCms.Module.Pages
                                     {
                                         Order = 10,
                                         Title = page => page.Status == PageStatus.Published ? PagesGlobalization.Sidebar_PageStatusUnpublish : PagesGlobalization.Sidebar_PageStatusPublish,
-                                        CssClass = page => page.Status == PageStatus.Published ? "bcms-switch bcms-switch-on" : "bcms-switch bcms-switch-off",
+                                        CssClass = page => page.Status == PageStatus.Published ? "bcms-switch bcms-switch-on" : "bcms-switch bcms-switch-off"
                                     }, 
                                 new HtmlElementProjection("div")
                                     {
