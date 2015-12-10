@@ -100,7 +100,7 @@ WriteLiteral(@"</div>
         <div data-bind=""draggable: $parentContext.$index, style: { zIndex: !isBeingDragged() ? '0' : '9999' }"">
             <div class=""bcms-node-box-container"" data-bind=""
                         attr: { id: containerId },
-                        css: { 'bcms-node-box-drag': isBeingDragged(), 'bcms-node-box-edit': isActive(), 'bcms-node-box-active': !isBeingDragged() && superDraggable() }"">
+                        css: { 'bcms-node-box-drag': isBeingDragged(), 'bcms-node-box-edit': isActive(), 'bcms-node-box-active': !isBeingDragged() && superDraggable(), 'bcms-inactive': isDisabled } "">
 
                 <!-- ko if: hasChildNodes() -->
                 <!-- ko if: $root.sitemap -->
@@ -206,12 +206,11 @@ WriteLiteral("</div>\r\n                        <div class=\"bcms-btn-cancel\" d
             #line hidden
 WriteLiteral(@"</div>
                         <!-- /ko -->
-
                         <!-- ko ifnot: isUrlReadonly -->
                         <div class=""bcms-btn-primary"" data-bind=""click: saveSitemapNodeWithValidation, text: getSitemap().settings.nodeSaveButtonTitle"">");
 
             
-            #line 95 "..\..\Views\Sitemap\Partial\SitemapTemplate.cshtml"
+            #line 94 "..\..\Views\Sitemap\Partial\SitemapTemplate.cshtml"
                                                                                                                                                    Write(RootGlobalization.Button_Ok);
 
             
@@ -221,7 +220,7 @@ WriteLiteral("</div>\r\n                        <div class=\"bcms-btn-cancel\" d
 "ncelEditSitemapNode\">");
 
             
-            #line 96 "..\..\Views\Sitemap\Partial\SitemapTemplate.cshtml"
+            #line 95 "..\..\Views\Sitemap\Partial\SitemapTemplate.cshtml"
                                                                                          Write(RootGlobalization.Button_Cancel);
 
             
@@ -234,7 +233,7 @@ WriteLiteral("</div>\r\n                        <!-- /ko -->\r\n                
 WriteLiteral("                        ");
 
             
-            #line 102 "..\..\Views\Sitemap\Partial\SitemapTemplate.cshtml"
+            #line 101 "..\..\Views\Sitemap\Partial\SitemapTemplate.cshtml"
                    Write(Html.Tooltip(NavigationGlobalization.Sitemap_NodeEdit_Macro_Tooltip_Message));
 
             
@@ -245,7 +244,7 @@ WriteLiteral("\r\n                        <div class=\"bcms-field-wrapper\">\r\n
 WriteLiteral("                            ");
 
             
-            #line 104 "..\..\Views\Sitemap\Partial\SitemapTemplate.cshtml"
+            #line 103 "..\..\Views\Sitemap\Partial\SitemapTemplate.cshtml"
                        Write(Html.TextBoxFor(m => m.Macro, new
                             {
                                 data_bind = "value: macro, valueUpdate: 'afterkeydown', enterPress: saveSitemapNodeWithValidation, escPress: cancelEditSitemapNode",
@@ -262,7 +261,7 @@ WriteLiteral("\r\n");
 WriteLiteral("                            ");
 
             
-            #line 111 "..\..\Views\Sitemap\Partial\SitemapTemplate.cshtml"
+            #line 110 "..\..\Views\Sitemap\Partial\SitemapTemplate.cshtml"
                        Write(Html.BcmsValidationMessageFor(m => m.Macro));
 
             
@@ -279,14 +278,13 @@ WriteLiteral(@"
                             <a data-bind=""text: url, attr: { href: url }"" href="""" target=""_blank""></a>
                         </div>
                         <!-- /ko -->
-
                         <!-- ko ifnot: isUrlReadonly -->
 ");
 
 WriteLiteral("                        ");
 
             
-            #line 124 "..\..\Views\Sitemap\Partial\SitemapTemplate.cshtml"
+            #line 122 "..\..\Views\Sitemap\Partial\SitemapTemplate.cshtml"
                    Write(Html.Tooltip(NavigationGlobalization.Sitemap_NodeEdit_Url_Tooltip_Message));
 
             
@@ -297,7 +295,7 @@ WriteLiteral("\r\n                        <div class=\"bcms-field-wrapper\">\r\n
 WriteLiteral("                            ");
 
             
-            #line 126 "..\..\Views\Sitemap\Partial\SitemapTemplate.cshtml"
+            #line 124 "..\..\Views\Sitemap\Partial\SitemapTemplate.cshtml"
                        Write(Html.TextBoxFor(m => m.Url, new
                             {
                                 data_bind = "value: url, valueUpdate: 'afterkeydown', enterPress: saveSitemapNodeWithValidation, escPress: cancelEditSitemapNode, attr: { 'readonly': getUrlReadonlyState() }",
@@ -313,7 +311,7 @@ WriteLiteral("\r\n");
 WriteLiteral("                            ");
 
             
-            #line 132 "..\..\Views\Sitemap\Partial\SitemapTemplate.cshtml"
+            #line 130 "..\..\Views\Sitemap\Partial\SitemapTemplate.cshtml"
                        Write(Html.BcmsValidationMessageFor(m => m.Url));
 
             
@@ -325,13 +323,12 @@ WriteLiteral(@"
                     </div>
                 </div>
                 <!-- /ko -->
-
                 <!-- ko if: getSitemap().settings.canDeleteNode -->
                 <div class=""bcms-node-delete-box"">
                     <div class=""bcms-action-delete"" data-bind=""click: deleteSitemapNode"" title=""");
 
             
-            #line 141 "..\..\Views\Sitemap\Partial\SitemapTemplate.cshtml"
+            #line 138 "..\..\Views\Sitemap\Partial\SitemapTemplate.cshtml"
                                                                                            Write(RootGlobalization.Button_Delete);
 
             
@@ -340,7 +337,7 @@ WriteLiteral(@"
 WriteLiteral("\">");
 
             
-            #line 141 "..\..\Views\Sitemap\Partial\SitemapTemplate.cshtml"
+            #line 138 "..\..\Views\Sitemap\Partial\SitemapTemplate.cshtml"
                                                                                                                              Write(RootGlobalization.Button_Delete);
 
             
@@ -357,7 +354,7 @@ WriteLiteral(@"</div>
                     <div class=""bcms-node-drop-zone-text"">");
 
             
-            #line 149 "..\..\Views\Sitemap\Partial\SitemapTemplate.cshtml"
+            #line 146 "..\..\Views\Sitemap\Partial\SitemapTemplate.cshtml"
                                                      Write(NavigationGlobalization.Sitemap_NodeEdit_PlaceLinkHere);
 
             
@@ -380,7 +377,7 @@ WriteLiteral(@"</div>
                 <div class=""bcms-node-drop-zone-text"">");
 
             
-            #line 163 "..\..\Views\Sitemap\Partial\SitemapTemplate.cshtml"
+            #line 160 "..\..\Views\Sitemap\Partial\SitemapTemplate.cshtml"
                                                  Write(NavigationGlobalization.Sitemap_NodeEdit_PlaceLinkHere);
 
             

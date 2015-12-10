@@ -536,7 +536,7 @@ bettercms.define('bcms.pages.sitemap', ['bcms.jquery', 'bcms', 'bcms.modal', 'bc
                             newPageModel = new AddNewPageViewModel(sitemapModel, pageLinkModel, onSkip),
                             tabModel = new TabModel(newPageModel);
                         tabsArray.push(tabModel);
-                        sitemapModel.parseJsonNodes(content.Data[i].RootNodes);
+                        sitemapModel.parseJsonNodes(content.Data[i].RootNodes, true);
 
                         // Setup settings.
                         sitemapModel.settings.canEditNode = false;
@@ -1073,12 +1073,12 @@ bettercms.define('bcms.pages.sitemap', ['bcms.jquery', 'bcms', 'bcms.modal', 'bc
             };
 
             // Parsing / composing.
-            self.parseJsonNodes = function (jsonNodes) {
+            self.parseJsonNodes = function (jsonNodes, areNodesDisabled) {
                 var nodes = [];
                 jsonNodes = jsonNodes || [];
                 for (var i = 0; i < jsonNodes.length; i++) {
-                    var node = new NodeViewModel();
-                    node.fromJson(jsonNodes[i], self.showLanguages);
+                    var node = new NodeViewModel(areNodesDisabled);
+                    node.fromJson(jsonNodes[i], self.showLanguages, areNodesDisabled);
                     node.parentNode(self);
                     nodes.push(node);
                 }
@@ -1129,7 +1129,7 @@ bettercms.define('bcms.pages.sitemap', ['bcms.jquery', 'bcms', 'bcms.modal', 'bc
         /**
         * Responsible for sitemap node data.
         */
-        function NodeViewModel() {
+        function NodeViewModel(isDisabled) {
             var self = this;
             
             // Data fields.
@@ -1158,6 +1158,7 @@ bettercms.define('bcms.pages.sitemap', ['bcms.jquery', 'bcms', 'bcms.modal', 'bc
             self.activeTranslation = ko.observable(null);
             
             // For behavior.
+            self.isDisabled = isDisabled;
             self.isActive = ko.observable(false);           // If TRUE - show edit fields.
             self.isExpanded = ko.observable(false);         // If TRUE - show child nodes.
             self.toggleExpand = function () {
@@ -1440,7 +1441,7 @@ bettercms.define('bcms.pages.sitemap', ['bcms.jquery', 'bcms', 'bcms.modal', 'bc
                 return null;
             };
 
-            self.fromJson = function(jsonNode, translationsEnabled) {
+            self.fromJson = function(jsonNode, translationsEnabled, isDisabled) {
                 self.id(jsonNode.Id);
                 self.version(jsonNode.Version);
                 self.title(jsonNode.Title);
@@ -1473,8 +1474,8 @@ bettercms.define('bcms.pages.sitemap', ['bcms.jquery', 'bcms', 'bcms.modal', 'bc
                 var nodes = [];
                 if (jsonNode.ChildNodes != null) {
                     for (var i = 0; i < jsonNode.ChildNodes.length; i++) {
-                        var node = new NodeViewModel();
-                        node.fromJson(jsonNode.ChildNodes[i], translationsEnabled);
+                        var node = new NodeViewModel(isDisabled);
+                        node.fromJson(jsonNode.ChildNodes[i], translationsEnabled, isDisabled);
                         node.parentNode(self);
                         nodes.push(node);
                     }

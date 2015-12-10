@@ -50,7 +50,7 @@
         <div data-bind="draggable: $parentContext.$index, style: { zIndex: !isBeingDragged() ? '0' : '9999' }">
             <div class="bcms-node-box-container" data-bind="
                         attr: { id: containerId },
-                        css: { 'bcms-node-box-drag': isBeingDragged(), 'bcms-node-box-edit': isActive(), 'bcms-node-box-active': !isBeingDragged() && superDraggable() }">
+                        css: { 'bcms-node-box-drag': isBeingDragged(), 'bcms-node-box-edit': isActive(), 'bcms-node-box-active': !isBeingDragged() && superDraggable(), 'bcms-inactive': isDisabled } ">
 
                 <!-- ko if: hasChildNodes() -->
                 <!-- ko if: $root.sitemap -->
@@ -90,7 +90,6 @@
                         <div class="bcms-btn-primary" data-bind="click: saveSitemapNodeWithValidation, text: getSitemap().settings.nodeSaveButtonTitle">@RootGlobalization.Button_Ok</div>
                         <div class="bcms-btn-cancel" data-bind="click: cancelEditSitemapNode">@RootGlobalization.Button_Cancel</div>
                         <!-- /ko -->
-
                         <!-- ko ifnot: isUrlReadonly -->
                         <div class="bcms-btn-primary" data-bind="click: saveSitemapNodeWithValidation, text: getSitemap().settings.nodeSaveButtonTitle">@RootGlobalization.Button_Ok</div>
                         <div class="bcms-btn-cancel" data-bind="click: cancelEditSitemapNode">@RootGlobalization.Button_Cancel</div>
@@ -119,7 +118,6 @@
                             <a data-bind="text: url, attr: { href: url }" href="" target="_blank"></a>
                         </div>
                         <!-- /ko -->
-
                         <!-- ko ifnot: isUrlReadonly -->
                         @Html.Tooltip(NavigationGlobalization.Sitemap_NodeEdit_Url_Tooltip_Message)
                         <div class="bcms-field-wrapper">
@@ -135,7 +133,6 @@
                     </div>
                 </div>
                 <!-- /ko -->
-
                 <!-- ko if: getSitemap().settings.canDeleteNode -->
                 <div class="bcms-node-delete-box">
                     <div class="bcms-action-delete" data-bind="click: deleteSitemapNode" title="@RootGlobalization.Button_Delete">@RootGlobalization.Button_Delete</div>
