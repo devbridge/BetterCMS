@@ -125,6 +125,12 @@ $sitemap-tab-arrows: (
             border-style: dashed;
             cursor: move;
         }
+
+        &.bcms-inactive{
+            &:hover{
+                border: $border-thin-smoke;
+            }
+        }
     }
 
     &-info {
