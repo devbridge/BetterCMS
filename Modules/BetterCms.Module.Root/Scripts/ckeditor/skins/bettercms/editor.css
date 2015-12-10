@@ -34,9 +34,7 @@
   display: block;
 }
 
-.cke_top,
-.cke_contents,
-.cke_bottom {
+.cke_top, .cke_contents, .cke_bottom {
   display: block;
   overflow: hidden;
 }

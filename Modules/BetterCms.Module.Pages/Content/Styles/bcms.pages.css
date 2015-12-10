@@ -138,6 +138,10 @@
   cursor: move;
 }
 
+.bcms-node-box-container.bcms-inactive:hover {
+  border: 1px solid #dfdfdf;
+}
+
 .bcms-node-box-info {
   overflow: hidden;
   text-overflow: ellipsis;
