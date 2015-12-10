@@ -47,7 +47,10 @@ function ($, bcms, modal, siteSettings, forms, dynamicContent, messages, mediaUp
             fileListMessageBox: '#bcms-site-settings-media-messages-',
             filterCategoriesSelect: '#bcms-js-categories-select',
 
-            previewBox: '#bcms-media-properties-preview'
+            previewBox: '#bcms-media-properties-preview',
+
+            filesTabMessageBox: '#bcms-media-manager-messages',
+            filesTabMessageBoxCloseButton: '#bcms-media-manager-messages .bcms-js-btn-close'
         },
         links = {
             loadSiteSettingsMediaManagerUrl: null,
@@ -1949,6 +1952,9 @@ function ($, bcms, modal, siteSettings, forms, dynamicContent, messages, mediaUp
         // Attach to files tab selector
         dialogContainer.find(selectors.tabFilesSelector).on('click', function () {
             var tabContainer = dialogContainer.find(selectors.tabFilesContainer);
+            dialogContainer.find(selectors.filesTabMessageBoxCloseButton).on('click', function() {
+                dialogContainer.find(selectors.filesTabMessageBox).hide();
+            });
             if (filesViewModel == null) {
                 filesViewModel = new MediaItemsViewModel(tabContainer, links.loadFilesUrl, dialogContainer);
                 filesViewModel.spinContainer = tabContainer.parents(selectors.spinContainer);

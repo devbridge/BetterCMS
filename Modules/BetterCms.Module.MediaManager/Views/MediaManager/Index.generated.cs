@@ -141,14 +141,14 @@ WriteLiteral("\r\n    <div>\r\n");
             #line hidden
             
             #line 48 "..\..\Views\MediaManager\Index.cshtml"
-       Write(Html.CustomMessagesBox(Model.CustomFilesMessages));
+       Write(Html.CustomMessagesBox(Model.CustomFilesMessages, "bcms-media-manager-messages"));
 
             
             #line default
             #line hidden
             
             #line 48 "..\..\Views\MediaManager\Index.cshtml"
-                                                              
+                                                                                             
         }
 
             

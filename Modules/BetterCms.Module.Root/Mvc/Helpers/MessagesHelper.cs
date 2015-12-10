@@ -148,6 +148,7 @@ namespace BetterCms.Module.Root.Mvc.Helpers
                 foreach (var message in messages)
                 {
                     sb.AppendLine("<li>");
+                    sb.Append("<div class=\"bcms-messages-close bcms-js-btn-close\">Close</div>");
                     sb.Append(message);
                     sb.AppendLine("</li>");                    
                 }

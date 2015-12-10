@@ -45,7 +45,7 @@
     <div>
         @if (Model.CustomFilesMessages != null)
         {
-            @Html.CustomMessagesBox(Model.CustomFilesMessages)
+            @Html.CustomMessagesBox(Model.CustomFilesMessages, "bcms-media-manager-messages")
         }
         @Html.Partial("Partial/MediaManagerTab")
     </div>
