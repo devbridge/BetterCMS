@@ -54,7 +54,8 @@ bettercms.define('bcms.modal', ['bcms.jquery', 'bcms', 'bcms.tabs', 'bcms.ko.ext
             errorFrame: '.bcms-error-frame',
             loaderContainer: '.bcms-window-options,.bcms-window-tabbed-options',
 
-            readonly: '[data-readonly=true]'
+            readonly: '[data-readonly=true]',
+            inUse: '[data-inuse=true]'
         },
 
         classes = {
@@ -386,6 +387,11 @@ bettercms.define('bcms.modal', ['bcms.jquery', 'bcms', 'bcms.tabs', 'bcms.ko.ext
                 if (form.data('readonly') === true) {
                     forms.setFieldsReadOnly(form);
 
+                    this.disableAcceptButton();
+                    this.disableExtraButtons();
+                }
+
+                if (this.container.find(selectors.inUse).length) {
                     this.disableAcceptButton();
                     this.disableExtraButtons();
                 }
