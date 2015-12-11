@@ -81,7 +81,7 @@ namespace BetterCms.Module.Pages.Command.Content.GetChildContentOptions
                         var query = Repository.AsQueryable<ChildContent>().Where(
                                     f => f.Parent.Id == request.ContentId && f.AssignmentIdentifier == request.AssignmentIdentifier && !f.IsDeleted && !f.Child.IsDeleted);
 
-                        childContent = query.First();
+                        childContent = query.FirstOrDefault();
                         FetchCollections(childContent);
                     }
                     else
@@ -186,6 +186,10 @@ namespace BetterCms.Module.Pages.Command.Content.GetChildContentOptions
 
         private void FetchCollections(ChildContent childContent)
         {
+            if (childContent == null)
+            {
+                return;
+            }
             var childQuery = Repository.AsQueryable<Root.Models.Content>().Where(x => x.Id == childContent.Child.Id).ToFuture();
             var historyQuery = Repository.AsQueryable<Root.Models.Content>().Where(x => x.Original.Id == childContent.Child.Id).ToFuture();
 
