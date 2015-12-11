@@ -950,9 +950,10 @@ bettercms.define('bcms.content', ['bcms.jquery', 'bcms', 'bcms.modal', 'bcms.red
         var tags = $(selectors.regionsAndContents).toArray();
         collectRegionsAndContents(tags, 0);
 
-        $.each(pageViewModel.regions, function () {
-            this.initializeRegion();
-        });
+        // Regions are rendered in opposite direction because new content types dropdown stays on top this way
+        for (var i = pageViewModel.regions.length - 1; i >= 0; i--) {
+            pageViewModel.regions[i].initializeRegion();
+        }
 
         $.each(pageViewModel.contents, function () {
             this.initializeContent();
