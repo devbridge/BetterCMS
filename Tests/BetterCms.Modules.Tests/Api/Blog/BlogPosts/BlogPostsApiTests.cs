@@ -62,6 +62,7 @@ namespace BetterCms.Test.Module.Api.Blog.BlogPosts
         {
             // Attach to events
             Events.BlogEvents.Instance.BlogCreated += Instance_EntityCreated;
+            Events.BlogEvents.Instance.BlogCreated += CheckTagCount;
             Events.BlogEvents.Instance.BlogUpdated += Instance_EntityUpdated;
             Events.BlogEvents.Instance.BlogDeleted += Instance_EntityDeleted;
 
@@ -88,6 +89,7 @@ namespace BetterCms.Test.Module.Api.Blog.BlogPosts
 
             // Detach from events
             Events.BlogEvents.Instance.BlogCreated -= Instance_EntityCreated;
+            Events.BlogEvents.Instance.BlogCreated -= CheckTagCount;
             Events.BlogEvents.Instance.BlogUpdated -= Instance_EntityUpdated;
             Events.BlogEvents.Instance.BlogDeleted -= Instance_EntityDeleted;
         }
@@ -348,6 +350,11 @@ namespace BetterCms.Test.Module.Api.Blog.BlogPosts
             Events.BlogEvents.Instance.BlogCreated -= Instance_EntityCreated;
             Events.BlogEvents.Instance.BlogUpdated -= Instance_EntityUpdated;
             Events.BlogEvents.Instance.BlogDeleted -= Instance_EntityDeleted;
+        }
+        
+        private void CheckTagCount(BetterModules.Events.SingleItemEventArgs<BlogPost> args)
+        {
+            Assert.AreEqual(2, args.Item.PageTags.Count);
         }
 
         protected override SaveBlogPostPropertiesModel GetCreateModel(ISession session)
