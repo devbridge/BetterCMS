@@ -68,12 +68,11 @@ namespace BetterCms.Module.Pages.Command.Content.GetChildContentOptions
                             && !f.Parent.Original.IsDeleted
                             && f.Parent.Original.Status == ContentStatus.Published
                             && f.Parent.Status == ContentStatus.Draft
+                            && !f.Parent.IsDeleted
                             && f.AssignmentIdentifier == request.AssignmentIdentifier
                             && !f.IsDeleted
                             && !f.Child.IsDeleted);
-//                    var childContent = AddFetches(draftQuery).ToList().FirstOrDefault();
                     var childContent = draftQuery.FirstOrDefault();
-//                    var childContent = GetChildContent(request);
 
                     // If draft not found, load content
                     if (childContent == null)
