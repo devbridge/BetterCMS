@@ -95,12 +95,11 @@ namespace BetterCms.Module.Pages.Command.Content.GetChildContentOptions
                             && !f.Parent.Original.IsDeleted
                             && f.Parent.Original.Status == ContentStatus.Published
                             && f.Parent.Status == ContentStatus.Draft
+                            && !f.Parent.IsDeleted
                             && f.AssignmentIdentifier == request.AssignmentIdentifier
                             && !f.IsDeleted
                             && !f.Child.IsDeleted);
-//                    var childContent = AddFetches(draftQuery).ToList().FirstOrDefault();
                     var childContent = draftQuery.FirstOrDefault();
-//                    var childContent = GetChildContent(request);
 
                     // If draft not found, load content
                     if (childContent == null)
@@ -108,7 +107,7 @@ namespace BetterCms.Module.Pages.Command.Content.GetChildContentOptions
                         var query = Repository.AsQueryable<ChildContent>().Where(
                                     f => f.Parent.Id == request.ContentId && f.AssignmentIdentifier == request.AssignmentIdentifier && !f.IsDeleted && !f.Child.IsDeleted);
 
-                        childContent = query.First();
+                        childContent = query.FirstOrDefault();
                         FetchCollections(childContent);
                     }
                     else
@@ -213,6 +212,10 @@ namespace BetterCms.Module.Pages.Command.Content.GetChildContentOptions
 
         private void FetchCollections(ChildContent childContent)
         {
+            if (childContent == null)
+            {
+                return;
+            }
             var childQuery = Repository.AsQueryable<Root.Models.Content>().Where(x => x.Id == childContent.Child.Id).ToFuture();
             var historyQuery = Repository.AsQueryable<Root.Models.Content>().Where(x => x.Original.Id == childContent.Child.Id).ToFuture();
 

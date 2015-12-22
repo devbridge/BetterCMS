@@ -693,5 +693,35 @@ namespace BetterCms.Test.Module.Root.ServiceTests
             Assert.NotNull(result);
             Assert.AreEqual(valueTranslation.Value, result[0].Value);
         }
+
+        [Test]
+        public void ShouldReturnCorrectOptionValueForAnotherLanguage()
+        {
+            Language lang1 = new Language();
+            lang1.Id = Guid.NewGuid();
+
+            Language lang2 = new Language();
+            lang2.Id = Guid.NewGuid();
+
+            var option1 = TestDataProvider.CreateNewContentOption();
+            option1.Type = OptionType.Text;
+            var optionValue1 = TestDataProvider.CreateNewChildContentOption();
+            optionValue1.Key = option1.Key;
+            optionValue1.Type = option1.Type;
+
+            var valueTranslation = new ChildContentOptionTranslation();
+            valueTranslation.ChildContentOption = optionValue1;
+            valueTranslation.Value = TestDataProvider.ProvideRandomString(100);
+            valueTranslation.Language = lang1;
+            optionValue1.Translations.Add(valueTranslation);
+            optionValue1.Value = null;
+            optionValue1.UseDefaultValue = true;
+            var service = CreateOptionService();
+            var options = new List<IOptionEntity> { option1 };
+            var optionValues = new List<IOptionValueEntity> { optionValue1 };
+            var result = service.GetMergedOptionValues(options, optionValues, lang2.Id);
+            Assert.NotNull(result);
+            Assert.AreEqual(option1.DefaultValue, result[0].Value);
+        }
     }
 }
