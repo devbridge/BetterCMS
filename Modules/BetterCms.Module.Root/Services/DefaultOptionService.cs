@@ -975,7 +975,7 @@ namespace BetterCms.Module.Root.Services
                         {
                             foreach (var optionModel in optionModels)
                             {
-                                if (optionModel.Type != OptionType.Custom)
+                                if (optionModel.Type != OptionType.Custom || optionModel.CustomOption.Identifier != group.Key)
                                 {
                                     continue;
                                 }
