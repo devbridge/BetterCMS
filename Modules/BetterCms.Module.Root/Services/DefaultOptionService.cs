@@ -239,7 +239,7 @@ namespace BetterCms.Module.Root.Services
 
             if (options != null)
             {
-                foreach (var option in options.Distinct())
+                foreach (var option in options.Reverse().Distinct())
                 {
                     var optionViewModel = optionModels.FirstOrDefault(f => f.OptionKey.Equals(option.Key.Trim(), StringComparison.OrdinalIgnoreCase));
                     if (optionViewModel == null)
