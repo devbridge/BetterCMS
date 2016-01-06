@@ -266,7 +266,7 @@ namespace BetterCms.Module.Root.Services
 
             if (options != null)
             {
-                foreach (var option in options.Distinct())
+                foreach (var option in options.Reverse().Distinct())
                 {
                     var optionViewModel = optionModels.FirstOrDefault(f => f.OptionKey.Equals(option.Key.Trim(), StringComparison.OrdinalIgnoreCase));
                     if (optionViewModel == null)
@@ -1002,7 +1002,7 @@ namespace BetterCms.Module.Root.Services
                         {
                             foreach (var optionModel in optionModels)
                             {
-                                if (optionModel.Type != OptionType.Custom)
+                                if (optionModel.Type != OptionType.Custom || optionModel.CustomOption.Identifier != group.Key)
                                 {
                                     continue;
                                 }
