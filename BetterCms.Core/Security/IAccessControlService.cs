@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Security.Principal;
 
-using BetterCms.Core.DataContracts;
+using BetterModules.Core.DataContracts;
 
 namespace BetterCms.Core.Security
 {

@@ -48,9 +48,9 @@ namespace BetterCms.Module.Root.Models
             return copy;
         }
 
-        public override Content Clone()
+        public override Content Clone(bool copyCollections = true)
         {
-            return CopyDataTo(new Widget());
+            return CopyDataTo(new Widget(), copyCollections);
         }
 
 

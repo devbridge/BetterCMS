@@ -1,5 +1,4 @@
-﻿using BetterCms.Core.Models;
-using BetterCms.Module.Root.Content.Resources;
+﻿using BetterCms.Module.Root.Content.Resources;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;

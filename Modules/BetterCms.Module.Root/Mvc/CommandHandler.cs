@@ -1,14 +1,15 @@
 ﻿using System;
 using System.Text;
 
-using BetterCms.Core.Exceptions;
-using BetterCms.Core.Exceptions.DataTier;
 using BetterCms.Core.Exceptions.Mvc;
 using BetterCms.Core.Exceptions.Service;
-using BetterCms.Core.Mvc.Commands;
 using BetterCms.Module.Root.Content.Resources;
 
 using Common.Logging;
+
+using BetterModules.Core.Exceptions;
+using BetterModules.Core.Exceptions.DataTier;
+using BetterModules.Core.Web.Mvc.Commands;
 
 namespace BetterCms.Module.Root.Mvc
 {
@@ -54,9 +55,9 @@ namespace BetterCms.Module.Root.Mvc
             {
                 HandleSecurityException(ex, command);
             }
-            catch (CmsException ex)
+            catch (CoreException ex)
             {
-                HandleCmsException(ex, command);
+                HandleCoreException(ex, command);
             }
             catch (Exception ex)
             {
@@ -100,9 +101,9 @@ namespace BetterCms.Module.Root.Mvc
             {
                 HandleSecurityException(ex, command, request);
             }
-            catch (CmsException ex)
+            catch (CoreException ex)
             {
-                HandleCmsException(ex, command, request);
+                HandleCoreException(ex, command, request);
             }
             catch (Exception ex)
             {
@@ -144,9 +145,9 @@ namespace BetterCms.Module.Root.Mvc
             {
                 HandleSecurityException(ex, command);
             }
-            catch (CmsException ex)
+            catch (CoreException ex)
             {
-                HandleCmsException(ex, command);
+                HandleCoreException(ex, command);
             }
             catch (Exception ex)
             {
@@ -190,9 +191,9 @@ namespace BetterCms.Module.Root.Mvc
             {
                 HandleSecurityException(ex, command, request);
             }
-            catch (CmsException ex)
+            catch (CoreException ex)
             {
-                HandleCmsException(ex, command, request);
+                HandleCoreException(ex, command, request);
             }
             catch (Exception ex)
             {
@@ -299,7 +300,7 @@ namespace BetterCms.Module.Root.Mvc
         /// <param name="ex">The exception.</param>
         /// <param name="command">The command.</param>
         /// <param name="request">The request.</param>
-        private static void HandleCmsException(CmsException ex, ICommandBase command, object request = null)
+        private static void HandleCoreException(CoreException ex, ICommandBase command, object request = null)
         {
             Log.Error(FormatCommandExceptionMessage(command, request), ex);
             if (command.Context != null)

@@ -1,7 +1,8 @@
 ﻿using System;
-using System.Threading;
 
 using BetterCms.Module.Api.Infrastructure;
+
+using BetterModules.Events;
 
 using NHibernate;
 
@@ -107,12 +108,12 @@ namespace BetterCms.Test.Module.Api
             CheckDeleteEvent();
         }
 
-        protected void Instance_EntityDeleted<TEntity>(Events.SingleItemEventArgs<TEntity> args)
+        protected void Instance_EntityDeleted<TEntity>(SingleItemEventArgs<TEntity> args)
         {
             deletedEventCount++;
         }
 
-        protected void Instance_EntityCreated<TEntity>(Events.SingleItemEventArgs<TEntity> args)
+        protected void Instance_EntityCreated<TEntity>(SingleItemEventArgs<TEntity> args)
         {
             createdEventCount++;
         }

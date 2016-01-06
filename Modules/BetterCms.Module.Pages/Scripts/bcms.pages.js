@@ -2,8 +2,8 @@
 /*global bettercms */
 
 bettercms.define('bcms.pages', ['bcms.jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', 'bcms.forms', 'bcms.dynamicContent',
-        'bcms.pages.properties', 'bcms.grid', 'bcms.redirect', 'bcms.messages', 'bcms.pages.filter', 'bcms.options', 'bcms.ko.extenders', 'bcms.security', 'bcms.sidemenu', 'bcms.datepicker', 'bcms.pages.languages', 'bcms.store'],
-    function ($, bcms, modal, siteSettings, forms, dynamicContent, pageProperties, grid, redirect, messages, filter, options, ko, security, sidemenu, datepicker, pageLanguages, store) {
+        'bcms.pages.properties', 'bcms.grid', 'bcms.redirect', 'bcms.messages', 'bcms.pages.filter', 'bcms.options', 'bcms.ko.extenders', 'bcms.security', 'bcms.sidemenu', 'bcms.datepicker', 'bcms.pages.languages', 'bcms.store', 'bcms.antiXss'],
+    function ($, bcms, modal, siteSettings, forms, dynamicContent, pageProperties, grid, redirect, messages, filter, options, ko, security, sidemenu, datepicker, pageLanguages, store, antiXss) {
         'use strict';
 
         var page = {},
@@ -58,7 +58,7 @@ bettercms.define('bcms.pages', ['bcms.jquery', 'bcms', 'bcms.modal', 'bcms.siteS
 
                 clonePageForm: 'form:first',
                 cloneWithLanguageGoToPagePropertiesLink: '#bcms-open-page-translations',
-                pagePropertiesTranslationsTab: '.bcms-tab-header .bcms-tab[data-name="#bcms-tab-5"]',
+                pagePropertiesTranslationsTab: '.bcms-tab-header .bcms-tab-item[data-name="#bcms-tab-5"]',
                 languageSelection: '#LanguageId'
             },
             links = {
@@ -333,7 +333,7 @@ bettercms.define('bcms.pages', ['bcms.jquery', 'bcms', 'bcms.modal', 'bcms.siteS
         };
 
         page.changePublishStatus = function (sender) {
-            var publish = sender.val() == "publish",
+            var publish = !sender.hasClass('bcms-btn-ok'),
                 message = publish ? globalization.pageStatusChangeConfirmationMessagePublish : globalization.pageStatusChangeConfirmationMessageUnPublish,
                 data = { PageId: bcms.pageId, IsPublished: publish },
                 onComplete = function (json) {
@@ -349,6 +349,13 @@ bettercms.define('bcms.pages', ['bcms.jquery', 'bcms', 'bcms.modal', 'bcms.siteS
             modal.confirm({
                 content: message,
                 onAccept: function () {
+                    if (data.IsPublished) {
+                        sender.removeClass("bcms-btn-warn");
+                        sender.addClass("bcms-btn-ok");
+                    } else {
+                        sender.removeClass("bcms-btn-ok");
+                        sender.addClass("bcms-btn-warn");
+                    }
                     $.ajax({
                         type: 'POST',
                         url: links.changePublishStatusUrl,
@@ -365,12 +372,6 @@ bettercms.define('bcms.pages', ['bcms.jquery', 'bcms', 'bcms.modal', 'bcms.siteS
                     return true;
                 },
                 onClose: function () {
-                    // Restore previous value.
-                    if (publish) {
-                        sender.val("unpublished");
-                    } else {
-                        sender.val("published");
-                    }
                 }
             });
         };
@@ -643,7 +644,7 @@ bettercms.define('bcms.pages', ['bcms.jquery', 'bcms', 'bcms.modal', 'bcms.siteS
                     var template = $(selectors.siteSettingsPageRowTemplate),
                         newRow = $(template.html()).find(selectors.siteSettingsPageRowTemplateFirstRow);
 
-                    newRow.find(selectors.siteSettingPageTitleCell).html(data.Data.Title);
+                    newRow.find(selectors.siteSettingPageTitleCell).html(antiXss.encodeHtml(data.Data.Title));
                     newRow.find(selectors.siteSettingPageCreatedCell).html(data.Data.CreatedOn);
                     newRow.find(selectors.siteSettingPageModifiedCell).html(data.Data.ModifiedOn);
                         
@@ -719,7 +720,7 @@ bettercms.define('bcms.pages', ['bcms.jquery', 'bcms', 'bcms.modal', 'bcms.siteS
 
                     var row = self.parents(selectors.siteSettingsPageParentRow),
                         cell = row.find(selectors.siteSettingPageTitleCell);
-                    cell.html(data.Data.Title);
+                    cell.html(antiXss.encodeHtml(data.Data.Title));
                     cell.data('url', data.Data.PageUrl);
                     row.find(selectors.siteSettingPageCreatedCell).html(data.Data.CreatedOn);
                     row.find(selectors.siteSettingPageModifiedCell).html(data.Data.ModifiedOn);

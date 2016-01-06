@@ -2,9 +2,10 @@
 using System.Collections.Generic;
 using System.Linq;
 
-using BetterCms.Core.Models;
 using BetterCms.Core.Security;
 using BetterCms.Module.Root.Models;
+
+using BetterModules.Core.Models;
 
 namespace BetterCms.Module.Pages.Models
 {

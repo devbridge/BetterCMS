@@ -1,20 +1,20 @@
 ﻿@model BetterCms.Module.Root.Mvc.Grids.EditableGridDropDownColumn
 
 <td @Html.Raw(Model.Attributes)>
+
+    <a class="bcms-tables-link" data-bind="
+       text: @(Model.ValueTextBind)()
+       @(!string.IsNullOrEmpty(Model.FocusIdentifier) ? string.Format(", click: onItemSelect.bind($data, {0})", Model.FocusIdentifier) : string.Empty)
+       @(Model.CanBeEdited ? string.Format(", visible: !isActive() || ({0}.editingIsDisabled && {0}.editingIsDisabled())", Model.ValueBind) : string.Empty)
+       "></a>
     @if (Model.CanBeEdited)
     {
-        <!-- ko if: !isActive() || (@(Model.ValueBind).editingIsDisabled && @(Model.ValueBind).editingIsDisabled()) -->
-    }
-    <a class="bcms-tables-link" data-bind="text: @(Model.ValueTextBind)()"></a>
-    @if (Model.CanBeEdited)
-    {
-        <!-- /ko -->
-        <!-- ko if: isActive() && (!@(Model.ValueBind).editingIsDisabled || !@(Model.ValueBind).editingIsDisabled()) -->
         <select class="bcms-global-select" style="width: 125px;" data-bind="options: @(Model.OptionsBind),
             optionsText: '@(Model.OptionsText)',
             optionsValue: '@(Model.OptionsValue)',
-            value: @Model.ValueBind, 
-            event: {blur: onBlurField, focus: onStopEvent, click: onStopEvent}"></select>
-        <!-- /ko -->
+            value: @Model.ValueBind
+            @(!string.IsNullOrEmpty(Model.FocusIdentifier) ? string.Format(", hasfocus: {0}", Model.FocusIdentifier) : string.Empty)
+            @(string.Format(", visible: isActive() && (!{0}.editingIsDisabled || !{0}.editingIsDisabled())", Model.ValueBind))
+                "></select>
     }
 </td>

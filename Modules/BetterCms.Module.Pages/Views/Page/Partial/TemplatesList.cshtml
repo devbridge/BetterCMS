@@ -30,8 +30,8 @@
 }
 <div class="bcms-inner-tabs-holder">
     <div class="bcms-tab-header bcms-tab-header-inner">
-        <a class="bcms-tab @(selectFirstTab ? "bcms-tab-active" : string.Empty)" data-name="#bcms-tab-a">Templates</a>
-        <a class="bcms-tab @(!selectFirstTab ? "bcms-tab-active" : string.Empty)" data-name="#bcms-tab-b">Master Pages</a>
+        <a class="bcms-tab-item @(selectFirstTab ? "bcms-active" : string.Empty)" data-name="#bcms-tab-a">Templates</a>
+        <a class="bcms-tab-item @(!selectFirstTab ? "bcms-active" : string.Empty)" data-name="#bcms-tab-b">Master Pages</a>
     </div>
     <div id="bcms-tab-a" class="bcms-tab-single" style="display: @(selectFirstTab ? "block" : "none");padding-top: 15px;">
         @Templates(Model.Where(m => !m.IsMasterPage).ToList())

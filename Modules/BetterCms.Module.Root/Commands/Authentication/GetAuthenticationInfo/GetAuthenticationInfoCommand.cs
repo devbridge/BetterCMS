@@ -1,9 +1,10 @@
 ﻿using System;
 
-using BetterCms.Core.Mvc.Commands;
 using BetterCms.Module.Root.Models.Authentication;
 using BetterCms.Module.Root.Mvc;
 using BetterCms.Module.Root.Services;
+
+using BetterModules.Core.Web.Mvc.Commands;
 
 namespace BetterCms.Module.Root.Commands.Authentication.GetAuthenticationInfo
 {

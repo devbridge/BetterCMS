@@ -1,28 +1,27 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project xmlns="http://schemas.microsoft.com/developer/MsBuild/2003">
 
-  <UsingTask TaskName="CssCompressorTask" AssemblyFile="$(SolutionDir)Libs\YUICompressor-2.2.1.0\Yahoo.Yui.Compressor.Build.MsBuild.dll" />
   <UsingTask TaskName="JavaScriptCompressorTask" AssemblyFile="$(SolutionDir)Libs\YUICompressor-2.2.1.0\Yahoo.Yui.Compressor.Build.MsBuild.dll" />
 
   <Target Name="Minify">
 
     <ItemGroup>      
-      <CssFiles Include="$(ProjectDir)Content\Styles\base.css" />
-      <CssFiles Include="$(ProjectDir)Content\Styles\bcms.messages.css" />
-      
       <JavaScriptFiles Include="$(ProjectDir)Scripts\bcms.jquery-1.7.2.js" />
       <JavaScriptFiles Include="$(ProjectDir)Scripts\bcms.jquery-ui-1.9.0.js" />
       <JavaScriptFiles Include="$(ProjectDir)Scripts\bcms.jquery.unobtrusive-ajax.js" />
       <JavaScriptFiles Include="$(ProjectDir)Scripts\bcms.jquery.validate.js" />
       <JavaScriptFiles Include="$(ProjectDir)Scripts\bcms.jquery.validate.unobtrusive.js" />
       <JavaScriptFiles Include="$(ProjectDir)Scripts\bcms.jquery.autocomplete.js" />
+      <JavaScriptFiles Include="$(ProjectDir)Scripts\bcms.jquery.markitup.js" />
       <JavaScriptFiles Include="$(ProjectDir)Scripts\bcms.autocomplete.js" />
       <JavaScriptFiles Include="$(ProjectDir)Scripts\bcms.slides.jquery.js" />
       <JavaScriptFiles Include="$(ProjectDir)Scripts\bcms.spinner.jquery.js" />      
+      <JavaScriptFiles Include="$(ProjectDir)Scripts\bcms.antiXss.js" />
       <JavaScriptFiles Include="$(ProjectDir)Scripts\bcms.authentication.js" />
       <JavaScriptFiles Include="$(ProjectDir)Scripts\bcms.categories.js" />
       <JavaScriptFiles Include="$(ProjectDir)Scripts\bcms.content.js" />
       <JavaScriptFiles Include="$(ProjectDir)Scripts\bcms.content.tree.js" />
+      <JavaScriptFiles Include="$(ProjectDir)Scripts\bcms.customValidation.js" />
       <JavaScriptFiles Include="$(ProjectDir)Scripts\bcms.languages.js" />
       <JavaScriptFiles Include="$(ProjectDir)Scripts\bcms.datepicker.js" />
       <JavaScriptFiles Include="$(ProjectDir)Scripts\bcms.dynamicContent.js" />
@@ -34,6 +33,7 @@
       <JavaScriptFiles Include="$(ProjectDir)Scripts\bcms.js" />
       <JavaScriptFiles Include="$(ProjectDir)Scripts\bcms.ko.extenders.js" />
       <JavaScriptFiles Include="$(ProjectDir)Scripts\bcms.ko.grid.js" />
+      <JavaScriptFiles Include="$(ProjectDir)Scripts\bcms.markdown.js" />
       <JavaScriptFiles Include="$(ProjectDir)Scripts\bcms.messages.js" />
       <JavaScriptFiles Include="$(ProjectDir)Scripts\bcms.modal.js" />
       <JavaScriptFiles Include="$(ProjectDir)Scripts\bcms.options.js" />
@@ -48,11 +48,6 @@
       <JavaScriptFiles Include="$(ProjectDir)Scripts\bcms.tags.js" />
       <JavaScriptFiles Include="$(ProjectDir)Scripts\bcms.multiple.select.js" />
     </ItemGroup>
-
-    <CssCompressorTask
-          SourceFiles="@(CssFiles)"
-          OutputFile="$(ProjectDir)Content\Styles\bcms.root.min.css"
-       />
 
     <JavaScriptCompressorTask
           SourceFiles="@(JavaScriptFiles)"

@@ -1,10 +1,12 @@
 using BetterCms.Configuration;
 
+using BetterModules.Core.Web.Configuration;
+
 namespace BetterCms
 {
     /// <summary>
     /// </summary>
-    public interface ICmsConfiguration
+    public interface ICmsConfiguration : IWebConfiguration
     {
         /// <summary>
         /// Gets the Better CMS version.
@@ -39,14 +41,6 @@ namespace BetterCms
         string LoginUrl { get; set; }
 
         /// <summary>
-        /// Gets or sets the web site URL.
-        /// </summary>
-        /// <value>
-        /// The web site URL.
-        /// </value>
-        string WebSiteUrl { get; set; }
-
-        /// <summary>
         /// Gets the virtual root path (like "~/App_Data") of BetterCMS working directory. 
         /// </summary>
         /// <value>
@@ -61,11 +55,6 @@ namespace BetterCms
         /// The storage service.
         /// </value>
         ICmsStorageConfiguration Storage { get; }
-
-        /// <summary>
-        /// Gets the configuration of CMS database.
-        /// </summary>
-        ICmsDatabaseConfiguration Database { get; }
 
         /// <summary>
         /// Gets the configuration of CMS permissions service.

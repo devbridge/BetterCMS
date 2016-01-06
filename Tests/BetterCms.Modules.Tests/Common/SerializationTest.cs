@@ -2,7 +2,7 @@
 using System.Linq;
 using System.Text;
 
-using BetterCms.Core.Models;
+using BetterModules.Core.Models;
 
 using NUnit.Framework;
 

@@ -1,6 +1,5 @@
-﻿using BetterCms.Core.DataAccess.DataContext.Migrations;
-using BetterCms.Core.Models;
-using BetterCms.Module.Root;
+﻿using BetterModules.Core.DataAccess.DataContext.Migrations;
+
 using BetterCms.Module.Root.Models.Migrations;
 
 using FluentMigrator;
@@ -8,7 +7,7 @@ using FluentMigrator;
 namespace BetterCms.Module.MediaManager.Models.Migrations
 {
     [Migration(201308272154)]
-    public class Migration201308272154 : DefaultMigration
+    public class Migration201308272154: DefaultMigration
     {
         private readonly string rootModuleSchemaName;
         

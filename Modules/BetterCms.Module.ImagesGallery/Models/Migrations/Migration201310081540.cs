@@ -1,6 +1,6 @@
 ﻿using System;
 
-using BetterCms.Core.DataAccess.DataContext.Migrations;
+using BetterModules.Core.DataAccess.DataContext.Migrations;
 
 using FluentMigrator;
 
@@ -10,7 +10,7 @@ namespace BetterCms.Module.ImagesGallery.Models.Migrations
     /// Creates new widget options
     /// </summary>
     [Migration(201310081540)]
-    public class Migration201310081540 : DefaultMigration
+    public class Migration201310081540: DefaultMigration
     {
         /// <summary>
         /// The root schema name

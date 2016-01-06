@@ -1,11 +1,13 @@
-﻿using System;
-using System.Web;
+﻿using System.Web;
 
 using Autofac;
 
-using BetterCms.Core.Dependencies;
 using BetterCms.Core.Modules;
-using BetterCms.Events;
+
+using BetterModules.Core.Dependencies;
+using BetterModules.Core.Web.Dependencies;
+using BetterModules.Core.Web.Modules.Registration;
+using BetterModules.Events;
 
 namespace BetterCms.Module.Api
 {
@@ -14,7 +16,7 @@ namespace BetterCms.Module.Api
     /// <summary>
     /// API module descriptor.
     /// </summary>
-    public class WebApiModuleDescriptor : ModuleDescriptor
+    public class WebApiModuleDescriptor : CmsModuleDescriptor
     {
         /// <summary>
         /// Current class logger.
@@ -33,23 +35,7 @@ namespace BetterCms.Module.Api
         public WebApiModuleDescriptor(ICmsConfiguration cmsConfiguration)
             : base(cmsConfiguration)
         {
-            CoreEvents.Instance.HostStart += ApplicationStart;
-        }
-
-        internal const string ModuleId = "f19e11dc-f991-48e7-be82-ab4d2c07209d";
-
-        /// <summary>
-        /// Gets the identifier.
-        /// </summary>
-        /// <value>
-        /// The identifier.
-        /// </value>
-        public override Guid Id
-        {
-            get
-            {
-                return new Guid(ModuleId);
-            }
+            WebCoreEvents.Instance.HostStart += ApplicationStart;
         }
 
         /// <summary>
@@ -85,7 +71,7 @@ namespace BetterCms.Module.Api
         /// </summary>
         /// <param name="context">The area registration context.</param>
         /// <param name="containerBuilder">The container builder.</param>
-        public override void RegisterCustomRoutes(ModuleRegistrationContext context, ContainerBuilder containerBuilder)
+        public override void RegisterCustomRoutes(WebModuleRegistrationContext context, ContainerBuilder containerBuilder)
         {
             context.IgnoreRoute("bcms-api/{*pathInfo}");
         }

@@ -10,6 +10,8 @@ using BetterCms.Module.Root.ViewModels;
 
 using Common.Logging;
 
+using BetterModules.Core.Exceptions;
+
 using Microsoft.Web.Mvc;
 
 namespace BetterCms.Module.Root.Controllers
@@ -29,7 +31,7 @@ namespace BetterCms.Module.Root.Controllers
         /// <summary>
         /// A contract to manage modules registry.
         /// </summary>
-        private readonly IModulesRegistration modulesRegistration;
+        private readonly ICmsModulesRegistration modulesRegistration;
 
         /// <summary>
         /// The page extensions.
@@ -41,7 +43,7 @@ namespace BetterCms.Module.Root.Controllers
         /// </summary>
         /// <param name="modulesRegistration">The modules registration.</param>
         /// <param name="pageAccessor">The page extensions.</param>
-        public SiteSettingsController(IModulesRegistration modulesRegistration, IPageAccessor pageAccessor)
+        public SiteSettingsController(ICmsModulesRegistration modulesRegistration, IPageAccessor pageAccessor)
         {
             this.modulesRegistration = modulesRegistration;
             this.pageAccessor = pageAccessor;
@@ -65,7 +67,7 @@ namespace BetterCms.Module.Root.Controllers
                     model.MenuItems.Projections = siteSettingsProjections.OrderBy(f => f.Order);                   
                 }
             }
-            catch (CmsException ex)
+            catch (CoreException ex)
             {
                 Log.Error("Failed to load site settings container data.", ex);
             }

@@ -6,8 +6,6 @@ using System.Web;
 using BetterCms.Core.DataContracts;
 using BetterCms.Core.DataContracts.Enums;
 using BetterCms.Core.Modules.Projections;
-using BetterCms.Core.Mvc.Commands;
-using BetterCms.Core.Mvc.Extensions;
 using BetterCms.Core.Security;
 using BetterCms.Core.Services;
 
@@ -19,7 +17,10 @@ using BetterCms.Module.Root.Services;
 using BetterCms.Module.Root.ViewModels.Cms;
 using BetterCms.Module.Root.Models.Extensions;
 using BetterCms.Module.Root.ViewModels.Security;
-using BetterCms.Module.Root.Views.Language;
+//using BetterCms.Module.Root.Views.Language;
+
+using BetterModules.Core.Web.Mvc.Commands;
+using BetterModules.Core.Web.Mvc.Extensions;
 
 using NHibernate.Linq;
 
@@ -168,7 +169,7 @@ namespace BetterCms.Module.Root.Commands.GetPageToRender
 
             var pageContents = allPageContents.Where(pc => pc.Page.Id == page.Id).Where(pc => pc.Parent == null || allPageContents.All(apc => apc.Id != pc.Parent.Id));
             var contentProjections = pageContents.Distinct()
-                    .Select(f => contentProjectionService.CreatePageContentProjection(request.CanManageContent, f, allPageContents, null, request.PreviewPageContentId))
+                    .Select(f => contentProjectionService.CreatePageContentProjection(request.CanManageContent, f, allPageContents, null, request.PreviewPageContentId, renderPageViewModel.LanguageId))
                     .Where(c => c != null).ToList();
 
             renderPageViewModel.Contents = contentProjections;
@@ -443,7 +444,7 @@ namespace BetterCms.Module.Root.Commands.GetPageToRender
                 .Where(i => pageContentsIds.Contains(i.PageContent.Id)).ToFuture();
 
             var contentOptions = Repository.AsQueryable<ContentOption>()
-                .Where(i => contentsIds.Contains(i.Content.Id)).ToFuture();
+                .Where(i => contentsIds.Contains(i.Content.Id)).FetchMany(co => co.Translations).ToFuture();
 
             var contentRegions = Repository.AsQueryable<ContentRegion>()
                 .Where(i => contentsIds.Contains(i.Content.Id))
@@ -537,7 +538,7 @@ namespace BetterCms.Module.Root.Commands.GetPageToRender
         /// <param name="optionValues">The option values.</param>
         /// <param name="childrenPages">The children pages.</param>
         /// <returns>Merged option values</returns>
-        private IList<IOptionValue> GetMergedOptionValues(IEnumerable<IOption> options, IEnumerable<IOption> optionValues, IList<Page> childrenPages)
+        private IList<IOptionValue> GetMergedOptionValues(IEnumerable<IOptionEntity> options, IEnumerable<IOptionValueEntity> optionValues, IList<Page> childrenPages)
         {
             var mergedOptions = new List<IOptionValue>();
 

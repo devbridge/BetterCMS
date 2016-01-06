@@ -3,8 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Security.Principal;
 
-using BetterCms.Core.DataAccess;
-using BetterCms.Core.DataAccess.DataContext.Fetching;
 using BetterCms.Core.Exceptions.Service;
 using BetterCms.Core.Modules.Projections;
 using BetterCms.Core.Services;
@@ -14,6 +12,9 @@ using BetterCms.Module.Root.Models;
 using BetterCms.Module.Root.Projections;
 using BetterCms.Module.Root.Services;
 using BetterCms.Module.Root.ViewModels.Cms;
+
+using BetterModules.Core.DataAccess;
+using BetterModules.Core.DataAccess.DataContext.Fetching;
 
 using ContentEntity = BetterCms.Module.Root.Models.Content;
 
@@ -101,7 +102,14 @@ namespace BetterCms.Module.Pages.Services
 
             if (pageContent.Content != null)
             {
-                DemandAccess(user, RootModuleConstants.UserRoles.EditContent, RootModuleConstants.UserRoles.PublishContent);
+                if (pageContent.Content is Models.HtmlContentWidget || pageContent.Content is Models.ServerControlWidget)
+                {
+                    DemandAccess(user, RootModuleConstants.UserRoles.EditContent, RootModuleConstants.UserRoles.PublishContent, RootModuleConstants.UserRoles.Administration);
+                }
+                else
+                {
+                    DemandAccess(user, RootModuleConstants.UserRoles.EditContent, RootModuleConstants.UserRoles.PublishContent);
+                }
             }
 
             childContentService.RetrieveChildrenContentsRecursively(true, new[] { pageContent.Content });

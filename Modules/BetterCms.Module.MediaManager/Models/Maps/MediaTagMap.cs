@@ -1,8 +1,6 @@
-using BetterCms.Core.Models;
-using BetterCms.Module.MediaManager;
-using BetterCms.Module.MediaManager.Models;
+using BetterModules.Core.Models;
 
-namespace BetterCms.Module.Pages.Models.Maps
+namespace BetterCms.Module.MediaManager.Models.Maps
 {
     public class MediaTagMap : EntityMapBase<MediaTag>
     {

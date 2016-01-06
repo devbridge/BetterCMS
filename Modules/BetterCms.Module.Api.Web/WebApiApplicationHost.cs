@@ -4,14 +4,16 @@ using System.Reflection;
 
 using Autofac;
 
-using BetterCms.Core.Dependencies;
-using BetterCms.Core.Environment.Assemblies;
 using BetterCms.Core.Exceptions.Api;
 using BetterCms.Core.Modules.Registration;
+
 using BetterCms.Module.Api.Filters;
 using BetterCms.Module.Api.Operations.Root.Tags.Tag;
 
 using Common.Logging;
+
+using BetterModules.Core.Dependencies;
+using BetterModules.Core.Environment.Assemblies;
 
 using ServiceStack.ServiceInterface.Validation;
 using ServiceStack.Text;
@@ -51,15 +53,15 @@ namespace BetterCms.Module.Api
         private static Assembly[] GetAssembliesWithServices()
         {
             List<Assembly> assemblies = new List<Assembly>();
-            IModulesRegistration modulesRegistry;
+            ICmsModulesRegistration modulesRegistry;
             IAssemblyLoader assemblyLoader = null;
 
             using (var container = ContextScopeProvider.CreateChildContainer())
             {
-                modulesRegistry = container.Resolve<IModulesRegistration>();
+                modulesRegistry = container.Resolve<ICmsModulesRegistration>();
                 if (modulesRegistry == null)
                 {
-                    throw new CmsApiException("Failed to resolve IModulesRegistration.");
+                    throw new CmsApiException("Failed to resolve ICmsModulesRegistration.");
                 }
 
                 assemblyLoader = container.Resolve<IAssemblyLoader>();

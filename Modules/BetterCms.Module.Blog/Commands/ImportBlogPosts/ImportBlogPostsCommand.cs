@@ -3,8 +3,8 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 
 using BetterCms.Core.Exceptions.Mvc;
-using BetterCms.Core.Mvc.Commands;
 using BetterCms.Core.Services.Storage;
+
 using BetterCms.Module.Blog.Content.Resources;
 using BetterCms.Module.Blog.Models;
 using BetterCms.Module.Blog.Services;
@@ -12,6 +12,8 @@ using BetterCms.Module.Blog.ViewModels.Blog;
 using BetterCms.Module.Root.Mvc;
 
 using Common.Logging;
+
+using BetterModules.Core.Web.Mvc.Commands;
 
 namespace BetterCms.Module.Blog.Commands.ImportBlogPosts
 {
@@ -46,7 +48,7 @@ namespace BetterCms.Module.Blog.Commands.ImportBlogPosts
             {
                 downloadResponse.ResponseStream.Position = 0;
                 var blogs = importService.DeserializeXMLStream(downloadResponse.ResponseStream);
-                results = importService.ImportBlogs(blogs, request.BlogPosts, Context.Principal, request.CreateRedirects);
+                results = importService.ImportBlogs(blogs, request.BlogPosts, Context.Principal, request.CreateRedirects, request.RecreateCategoryTree, request.ReuseExistingCategories);
             }
             else
             {

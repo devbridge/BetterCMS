@@ -1,5 +1,6 @@
-﻿using BetterCms.Core.Models;
-using BetterCms.Module.LuceneSearch;
+﻿using BetterCms.Module.LuceneSearch;
+
+using BetterModules.Core.Models;
 
 namespace BetterCMS.Module.LuceneSearch.Models.Maps
 {

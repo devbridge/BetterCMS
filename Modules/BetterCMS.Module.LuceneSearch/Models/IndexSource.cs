@@ -1,7 +1,7 @@
 ﻿using System;
 
-using BetterCms.Core.DataContracts;
-using BetterCms.Core.Models;
+using BetterModules.Core.DataContracts;
+using BetterModules.Core.Models;
 
 namespace BetterCMS.Module.LuceneSearch.Models
 {

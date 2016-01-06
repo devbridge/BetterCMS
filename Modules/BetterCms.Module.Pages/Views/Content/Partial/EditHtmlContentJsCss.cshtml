@@ -1,0 +1,30 @@
+﻿@using BetterCms.Module.Pages.Content.Resources
+@using BetterCms.Module.Root.Mvc.Helpers
+
+@model BetterCms.Module.Pages.ViewModels.Content.PageContentViewModel
+
+<div class="bcms-input-list-holder" id="bcms-custom-css-container">
+    <div class="bcms-content-titles">@PagesGlobalization.HtmlContent_CustomCss_Title</div>
+    @Html.TextAreaFor(model => model.CustomCss, new { @class = "bcms-editor-field-area bcms-code-field bcms-code-field-css", @style = "width:820px;", @id = Guid.NewGuid() })
+    @Html.BcmsValidationMessageFor(model => model.CustomCss)
+</div>
+
+<div class="bcms-input-list-holder">
+    <div class="bcms-edit-check-field">
+        @Html.CheckBoxFor(model => model.EnabledCustomCss)
+        <div class="bcms-edit-label">@Html.Raw(PagesGlobalization.HtmlContent_RenderCustomCss_Title)</div>
+    </div>
+</div>
+
+<div class="bcms-input-list-holder" id="bcms-custom-js-container">
+    <div class="bcms-content-titles">@PagesGlobalization.HtmlContent_CustomJs_Title</div>
+    @Html.TextAreaFor(model => model.CustomJs, new { @class = "bcms-editor-field-area bcms-code-field bcms-code-field-javascript", @style = "width:820px;", @id = Guid.NewGuid() })
+    @Html.BcmsValidationMessageFor(model => model.CustomJs)
+</div>
+
+<div class="bcms-input-list-holder">
+    <div class="bcms-edit-check-field">
+        @Html.CheckBoxFor(model => model.EnabledCustomJs)
+        <div class="bcms-edit-label">@Html.Raw(PagesGlobalization.HtmlContent_RenderCustomJs_Title)</div>
+    </div>
+</div>

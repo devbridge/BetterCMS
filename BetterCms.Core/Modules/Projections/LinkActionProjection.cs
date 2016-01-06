@@ -2,6 +2,8 @@ using System;
 
 using BetterCms.Core.DataContracts;
 
+using BetterModules.Core.Web.Modules;
+
 namespace BetterCms.Core.Modules.Projections
 {
     /// <summary>

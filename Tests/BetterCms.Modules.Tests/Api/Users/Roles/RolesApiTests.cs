@@ -1,7 +1,8 @@
-﻿using BetterCms.Core.Models;
-using BetterCms.Module.Api.Extensions;
+﻿using BetterCms.Module.Api.Extensions;
 using BetterCms.Module.Api.Operations.Users.Roles;
 using BetterCms.Module.Api.Operations.Users.Roles.Role;
+
+using BetterModules.Core.Models;
 
 using NHibernate;
 

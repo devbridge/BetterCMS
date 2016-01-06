@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Runtime.Serialization;
 
 using BetterCms.Module.Api.Operations.Root;
@@ -44,5 +45,13 @@ namespace BetterCms.Module.Api.Operations
         /// </value>
         [DataMember]
         public string CustomTypeIdentifier { get; set; }
+
+        [DataMember]
+        public List<OptionTranslationModel> Translations { get; set; }
+
+        public OptionModel()
+        {
+            Translations = new List<OptionTranslationModel>();
+        }
     }
 }

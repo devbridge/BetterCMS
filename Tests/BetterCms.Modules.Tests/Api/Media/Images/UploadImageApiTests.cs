@@ -1,10 +1,12 @@
 ﻿using System.Reflection;
 
 using BetterCms.Core.Exceptions.Api;
-using BetterCms.Core.Models;
+
 using BetterCms.Module.Api.Infrastructure;
 using BetterCms.Module.Api.Operations.MediaManager.Images.Image;
 using BetterCms.Module.MediaManager.Models;
+
+using BetterModules.Core.Models;
 
 using NHibernate;
 

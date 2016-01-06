@@ -3,9 +3,10 @@ using System.Collections.Generic;
 
 using BetterCms.Core.DataContracts;
 using BetterCms.Core.DataContracts.Enums;
-using BetterCms.Core.Models;
-using BetterCms.Module.Root.Models;
 using BetterCms.Module.Root.ViewModels.Option;
+
+using BetterModules.Core.DataContracts;
+using BetterModules.Core.Models;
 
 namespace BetterCms.Module.Root.Services
 {
@@ -19,27 +20,29 @@ namespace BetterCms.Module.Root.Services
         /// <returns>
         /// List of option values view models, merged from options and option values
         /// </returns>
-        List<OptionValueEditViewModel> GetMergedOptionValuesForEdit(IEnumerable<IOption> options, IEnumerable<IOption> optionValues);
+        List<OptionValueEditViewModel> GetMergedOptionValuesForEdit(IEnumerable<IOptionEntity> options, IEnumerable<IOptionValueEntity> optionValues);
 
         /// <summary>
         /// Merges options and values and returns one list with option value view models for use (values are returned as objects).
         /// </summary>
         /// <param name="options">The options.</param>
         /// <param name="optionValues">The option values.</param>
+        /// <param name="languageId">The language identifier.</param>
         /// <returns>
         /// List of option values view models, merged from options and option values
         /// </returns>
-        List<IOptionValue> GetMergedOptionValues(IEnumerable<IOption> options, IEnumerable<IOption> optionValues);
-        
+        List<IOptionValue> GetMergedOptionValues(IEnumerable<IOptionEntity> options, IEnumerable<IOptionValueEntity> optionValues, Guid? languageId = null);
+
         /// <summary>
         /// Merges options and values and returns one list with option value view models for use (values are returned as objects).
         /// </summary>
         /// <param name="options">The options.</param>
         /// <param name="optionValues">The option values.</param>
+        /// <param name="languageId">The language identifier.</param>
         /// <returns>
         /// List of option values view models, merged from options and option values
         /// </returns>
-        List<IOptionValue> GetMergedOptionValues(IEnumerable<IOptionValue> options, IEnumerable<IOption> optionValues);
+        List<IOptionValue> GetMergedOptionValues(IEnumerable<IOptionValue> options, IEnumerable<IOptionEntity> optionValues, Guid? languageId = null);
 
         /// <summary>
         /// Gets the merged master pages option values.
@@ -57,7 +60,8 @@ namespace BetterCms.Module.Root.Services
         /// <typeparam name="TEntity">The type of the option parent entity.</typeparam>
         /// <param name="optionContainer">The options container entity.</param>
         /// <param name="options">The list of new options.</param>
-        void SetOptions<TOption, TEntity>(IOptionContainer<TEntity> optionContainer, IEnumerable<IOption> options)
+        /// <param name="translationEntityCreator"></param>
+        void SetOptions<TOption, TEntity>(IOptionContainer<TEntity> optionContainer, IEnumerable<IOption> options, Func<IOptionTranslationEntity> translationEntityCreator = null)
             where TEntity : IEntity
             where TOption : IDeletableOption<TEntity>, new();
 
@@ -68,15 +72,25 @@ namespace BetterCms.Module.Root.Services
         /// <param name="optionViewModels">The option view models.</param>
         /// <param name="savedOptionValues">The list of saved option values.</param>
         /// <param name="entityCreator">The entity creator.</param>
-        IList<TEntity> SaveOptionValues<TEntity>(IEnumerable<OptionValueEditViewModel> optionViewModels, IEnumerable<TEntity> savedOptionValues, 
-            Func<TEntity> entityCreator)
-            where TEntity : Entity, IOption;
+        /// <param name="translationEntityCreator"></param>
+        IList<TEntity> SaveOptionValues<TEntity>(IEnumerable<OptionValueEditViewModel> optionViewModels, IEnumerable<TEntity> savedOptionValues,
+            Func<TEntity> entityCreator, Func<IOptionTranslationEntity> translationEntityCreator = null)
+            where TEntity : Entity, IOptionValueEntity;
 
         /// <summary>
         /// Validates the option value.
         /// </summary>
         /// <param name="option">The option.</param>
         void ValidateOptionValue(IOption option);
+
+        /// <summary>
+        /// Validates the option value.
+        /// </summary>
+        /// <param name="key">The key.</param>
+        /// <param name="value">The value.</param>
+        /// <param name="type">The type.</param>
+        /// <param name="customOption">The custom option.</param>
+        void ValidateOptionValue(string key, string value, OptionType type, ICustomOption customOption);
 
         /// <summary>
         /// Validates the uniqueness of the option keys.

@@ -1,14 +1,16 @@
 ﻿using System;
-using System.Web;
 
-using BetterCms.Core.Dependencies;
 using BetterCms.Core.Environment.ApplicationStart;
 using BetterCms.Core.Exceptions;
 using BetterCms.Core.Security;
 
 using Common.Logging;
 
-[assembly: PreApplicationStartMethod(typeof(BetterCmsEntrypoint), "PreApplicationStart")]
+using BetterModules.Core.Dependencies;
+using BetterModules.Core.Exceptions;
+using BetterModules.Core.Web.Environment.Application;
+
+[assembly: WebApplicationPreStart(typeof(BetterCmsEntrypoint), "PreApplicationStart", Order = 50)]
 
 namespace BetterCms.Core.Environment.ApplicationStart
 {
@@ -28,7 +30,6 @@ namespace BetterCms.Core.Environment.ApplicationStart
             get { return AppDomain.CurrentDomain.IsHomogenous && AppDomain.CurrentDomain.IsFullyTrusted; }
         }
 
-
         /// <summary>
         /// Method to run logic before application start (as PreApplicationStartMethod). Do not run this method from your code.
         /// </summary>        
@@ -43,8 +44,8 @@ namespace BetterCms.Core.Environment.ApplicationStart
             }
             catch (Exception ex)
             {
-                throw new CmsException("Logging is not working. A reason may be that Common.Logging section is not configured in web.config.", ex);
-            }            
+                throw new CoreException("Logging is not working. A reason may be that Common.Logging section is not configured in web.config.", ex);
+            }
 
             if (!IsFullTrust)
             {
@@ -69,19 +70,6 @@ namespace BetterCms.Core.Environment.ApplicationStart
 
             try
             {
-                logger.Info("Registering per web request lifetime manager module...");
-                PerWebRequestLifetimeModule.DynamicModuleRegistration();
-            }
-            catch (Exception ex)
-            {
-                string message = "Failed to register per web request lifetime manager module.";
-                logger.Fatal(message, ex);
-
-                throw new CmsException(message, ex);
-            }
-            
-            try
-            {
                 logger.Info("Registering forms authentication redirect suppress module...");
                 SuppressFormsAuthenticationRedirectModule.DynamicModuleRegistration();
             }
@@ -92,21 +80,6 @@ namespace BetterCms.Core.Environment.ApplicationStart
 
                 throw new CmsException(message, ex);
             }
-
-            try
-            {
-                logger.Info("Load assemblies...");
-                CmsContext.LoadAssemblies();
-            }
-            catch (Exception ex)
-            {
-                string message = "Failed to load assemblies.";
-                logger.Fatal(message, ex);
-
-                throw new CmsException(message, ex);
-            }
-
-
         }
     }
 }

@@ -1,7 +1,7 @@
 using System;
 using System.Collections.Generic;
 
-using BetterCms.Core.DataContracts;
+using BetterModules.Core.DataContracts;
 
 namespace BetterCms.Module.Root.Models.Extensions
 {

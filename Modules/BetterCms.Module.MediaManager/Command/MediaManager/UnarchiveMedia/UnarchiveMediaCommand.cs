@@ -1,11 +1,12 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 
-using BetterCms.Core.DataContracts;
-using BetterCms.Core.Mvc.Commands;
 using BetterCms.Module.MediaManager.Models;
 using BetterCms.Module.MediaManager.ViewModels.MediaManager;
 using BetterCms.Module.Root.Mvc;
+
+using BetterModules.Core.DataContracts;
+using BetterModules.Core.Web.Mvc.Commands;
 
 namespace BetterCms.Module.MediaManager.Command.MediaManager.UnarchiveMedia
 {

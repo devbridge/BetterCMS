@@ -6,6 +6,7 @@
                 <h2 data-bind="visible: $parent.invisibleItems().length > 0">@RootGlobalization.ContentsTree_VisibleItems_Title</h2>
                 <div data-bind='template: { name: "bcms-contents-tree-list-template" }'></div>
             </div>
+
             <div class="bcms-tree-container" data-bind="visible: invisibleItems().length > 0, with: invisibleItems()">
                 <h2>@RootGlobalization.ContentsTree_InvisibleItems_Title</h2>
                 <div data-bind='template: { name: "bcms-contents-tree-list-template" }'></div>
@@ -31,28 +32,40 @@
             attr: {
                 'data-item-id': itemId
             } ">
-            <div data-bind="css: {'bcms-contents-tree-region-header': type == types.region}">
+
+            <div data-bind="css: { 'bcms-contents-tree-region-header': type == types.region, 'bcms-contents-tree-content-header': type == types.content }">
                 <span data-bind="text: title()"></span>
+
                 <div class="bcms-tree-controls" data-bind="visible: !isBeingDragged()">
-                    <!-- ko if: type == types.content -->
-                    <!-- ko if: model.visibleButtons.configure -->
-                    <a class="bcms-tree-controls-config" data-bind="click: configure"></a>
-                    <!-- /ko -->
-                    <!-- ko if: model.visibleButtons.history -->
-                    <a class="bcms-tree-controls-history" data-bind="click: history"></a>
-                    <!-- /ko -->
-                    <!-- ko if: model.visibleButtons.edit -->
-                    <a class="bcms-tree-controls-edit" data-bind="click: editItem, css: {'bcms-tree-controls-edit-draft': draft()}"></a>
-                    <!-- /ko -->
-                    <!-- ko if: model.visibleButtons.delete -->
-                    <a class="bcms-tree-controls-delete" data-bind="click: deleteItem"></a>
-                    <!-- /ko -->
-                    <!-- /ko -->
                     <!-- ko if: type == types.region -->
-                    <a class="bcms-tree-controls-add" data-bind="click: addContent"></a>
+                    <div class="bcms-contents-tree-add-block" data-bind="css: {'bcms-active': isOpened()}, click: toggleAddContent">
+                        <div class="bcms-contents-tree-add-content">
+                            <div class="bcms-contents-tree-controls bcms-region-addhtml" data-bind="click: addContent">HTML</div>
+                            <div class="bcms-contents-tree-controls bcms-region-addmarkdown" data-bind="click: addMarkdown">Markdown</div>
+                            <div class="bcms-contents-tree-controls bcms-region-addtext" data-bind="click: addSimpleText">Plain text</div>
+                            <div class="bcms-contents-tree-controls bcms-region-insertwidget" data-bind="click: insertWidget">Widget</div>
+                        </div>
+                    </div>
+                    <!-- /ko -->
+                    <!-- ko if: type == types.content -->
+                    <div class="bcms-tree-controls-box">
+                        <!-- ko if: model.visibleButtons.delete -->
+                        <a class="bcms-tree-controls-delete" data-bind="click: deleteItem"></a>
+                        <!-- /ko -->
+                        <!-- ko if: model.visibleButtons.configure -->
+                        <a class="bcms-tree-controls-config" data-bind="click: configure"></a>
+                        <!-- /ko -->
+                        <!-- ko if: model.visibleButtons.edit -->
+                        <a class="bcms-tree-controls-edit" data-bind="click: editItem, css: {'bcms-tree-controls-edit-draft': draft()}"></a>
+                        <!-- /ko -->
+                        <!-- ko if: model.visibleButtons.history -->
+                        <a class="bcms-tree-controls-history" data-bind="click: history"></a>
+                        <!-- /ko -->
+                    </div>
                     <!-- /ko -->
                 </div>
             </div>
+
             <!-- ko if: items().length > 0 -->
             <div data-bind="with: items()">
                 <div data-bind="template: { name: 'bcms-contents-tree-list-template' }"></div>

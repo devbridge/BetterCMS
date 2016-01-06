@@ -1,8 +1,10 @@
-﻿using BetterCms.Core.Mvc.Commands;
-using BetterCms.Module.Blog.Models;
+﻿using BetterCms.Module.Blog.Models;
 using BetterCms.Module.Blog.Services;
 using BetterCms.Module.Blog.ViewModels.Author;
+
 using BetterCms.Module.Root.Mvc;
+
+using BetterModules.Core.Web.Mvc.Commands;
 
 namespace BetterCms.Module.Blog.Commands.SaveAuthor
 {
@@ -21,17 +23,18 @@ namespace BetterCms.Module.Blog.Commands.SaveAuthor
 
             if (request.Id.HasDefaultValue())
             {
-                author = authorService.CreateAuthor(request.Name, request.Image != null ? request.Image.ImageId : null);
+                author = authorService.CreateAuthor(request.Name, request.Image != null ? request.Image.ImageId : null, request.Description);
             }
             else
             {
-                author = authorService.UpdateAuthor(request.Id, request.Version, request.Name, request.Image != null ? request.Image.ImageId : null);
+                author = authorService.UpdateAuthor(request.Id, request.Version, request.Name, request.Image != null ? request.Image.ImageId : null, request.Description);
             }
 
             return new AuthorViewModel {
                                            Id = author.Id,
                                            Version = author.Version,
-                                           Name = author.Name
+                                           Name = author.Name,
+                                           Description = author.Description
                                        };
         }
     }

@@ -22,7 +22,7 @@ bettercms.define('bcms.user', ['bcms.jquery', 'bcms', 'bcms.modal', 'bcms.siteSe
                 userRowTemplate: '#bcms-users-list-row-template',
                 userTableFirstRow: 'table.bcms-tables > tbody > tr:first',
                 userRowTemplateFirstRow: 'tr:first',
-                openEditUserProfile: '.bcms-sidemenu-username .bcms-as-user'
+                openEditUserProfile: '#bcms-user-profile'
             },
             links = {
                 loadSiteSettingsUsersUrl: null,

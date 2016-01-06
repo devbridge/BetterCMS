@@ -4,14 +4,10 @@ using System.Linq;
 using System.Security.Principal;
 using System.Web;
 
-using BetterCms.Core.DataAccess;
-using BetterCms.Core.DataAccess.DataContext;
 using BetterCms.Core.DataContracts;
 using BetterCms.Core.DataContracts.Enums;
-using BetterCms.Core.Exceptions.DataTier;
 using BetterCms.Core.Exceptions.Mvc;
 using BetterCms.Core.Modules.Projections;
-using BetterCms.Core.Mvc;
 using BetterCms.Core.Security;
 using BetterCms.Core.Services;
 using BetterCms.Core.Web;
@@ -27,6 +23,11 @@ using BetterCms.Module.Root.Mvc;
 using BetterCms.Module.Root.Mvc.Helpers;
 
 using Common.Logging;
+
+using BetterModules.Core.DataAccess;
+using BetterModules.Core.DataAccess.DataContext;
+using BetterModules.Core.Exceptions.DataTier;
+using BetterModules.Core.Web.Mvc;
 
 using NHibernate.Linq;
 using NHibernate.Proxy;

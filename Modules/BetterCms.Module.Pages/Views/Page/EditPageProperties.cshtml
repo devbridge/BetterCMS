@@ -7,6 +7,7 @@
 @using BetterCms.Module.Root.Mvc.Extensions
 @using BetterCms.Module.Root.Mvc.Helpers
 @using BetterCms.Module.Root.ViewModels.Category
+@using BetterCms.Module.Root.ViewModels.Shared
 @using BetterCms.Module.Root.ViewModels.Tags
 @using Microsoft.Web.Mvc
 @using MvcContrib.EnumerableExtensions
@@ -29,13 +30,13 @@
 }
 
 <div class="bcms-tab-header">
-    <a class="bcms-tab bcms-tab-active" data-name="#bcms-tab-1">@PagesGlobalization.EditPageProperties_BasicPropertiesTab_Title</a>
-    <a class="bcms-tab" data-name="#bcms-tab-2">@PagesGlobalization.EditPageProperties_AdvancedPropertiesTab_Title</a>
-    <a class="bcms-tab" data-name="#bcms-tab-3">@PagesGlobalization.EditPageProperties_LayoutPropertiesTab_Title</a>
-    <a class="bcms-tab" data-name="#bcms-tab-4">@PagesGlobalization.EditPageProperties_OptionsTab_Title</a>
+    <a class="bcms-tab-item bcms-active" data-name="#bcms-tab-1">@PagesGlobalization.EditPageProperties_BasicPropertiesTab_Title</a>
+    <a class="bcms-tab-item" data-name="#bcms-tab-2">@PagesGlobalization.EditPageProperties_AdvancedPropertiesTab_Title</a>
+    <a class="bcms-tab-item" data-name="#bcms-tab-3">@PagesGlobalization.EditPageProperties_LayoutPropertiesTab_Title</a>
+    <a class="bcms-tab-item" data-name="#bcms-tab-4">@PagesGlobalization.EditPageProperties_OptionsTab_Title</a>
     @if (Model.ShowTranslationsTab)
     {
-        <a class="bcms-tab" data-name="#bcms-tab-5">@PagesGlobalization.EditPageProperties_TranslationsTab_Title</a>
+        <a class="bcms-tab-item" data-name="#bcms-tab-5">@PagesGlobalization.EditPageProperties_TranslationsTab_Title</a>
     }
 </div>
 
@@ -178,13 +179,13 @@
                 <div class="bcms-input-list-holder">
                     @Html.Tooltip(PagesGlobalization.EditPageProperties_AdvancedPropertiesTab_PageCss_Tooltip_Description)
                     <div class="bcms-content-titles">@PagesGlobalization.EditPageProperties_AdvancedPropertiesTab_PageCss_Title</div>
-                    @Html.TextAreaFor(model => model.PageCSS, new { @class = "bcms-editor-field-area bcms-code-field bcms-code-field-css" })
+                    @Html.TextAreaFor(model => model.PageCSS, new { @class = "bcms-editor-field-area bcms-code-field bcms-code-field-css", @id = Guid.NewGuid() })
                 </div>
 
                 <div class="bcms-input-list-holder">
                     @Html.Tooltip(PagesGlobalization.EditPageProperties_AdvancedPropertiesTab_PageJavascript_Tooltip_Description)
                     <div class="bcms-content-titles">@PagesGlobalization.EditPageProperties_AdvancedPropertiesTab_PageJavascript_Title</div>
-                    @Html.TextAreaFor(model => model.PageJavascript, new { @class = "bcms-editor-field-area bcms-code-field bcms-code-field-javascript" })
+                    @Html.TextAreaFor(model => model.PageJavascript, new { @class = "bcms-editor-field-area bcms-code-field bcms-code-field-javascript", id = Guid.NewGuid() })
                 </div>
             </div>
         </div>
@@ -206,7 +207,7 @@
         </div>
 
         <div id="bcms-tab-4" class="bcms-tab-single" data-bind="with: options">
-            @Html.Partial(PagesConstants.OptionValuesGridTemplate)
+            @Html.Partial(PagesConstants.OptionValuesGridTemplate, new EditableGridViewModel{ CanAddNewItems = true })
         </div>
 
         if (Model.ShowTranslationsTab)

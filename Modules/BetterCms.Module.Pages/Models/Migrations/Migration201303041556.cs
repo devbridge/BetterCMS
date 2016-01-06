@@ -1,7 +1,7 @@
-﻿using System;
+﻿using BetterModules.Core.DataAccess.DataContext.Migrations;
 
-using BetterCms.Core.DataAccess.DataContext.Migrations;
-using BetterCms.Core.Models;
+using BetterModules.Core.DataAccess.DataContext.Migrations;
+using BetterModules.Core.Models;
 
 using FluentMigrator;
 
@@ -11,7 +11,7 @@ namespace BetterCms.Module.Pages.Models.Migrations
     /// Database structure setup.
     /// </summary>
     [Migration(201303041556)]
-    public class Migration201303041556 : DefaultMigration
+    public class Migration201303041556: DefaultMigration
     {        
         /// <summary>
         /// Initializes a new instance of the <see cref="Migration201303041556"/> class.
@@ -37,7 +37,7 @@ namespace BetterCms.Module.Pages.Models.Migrations
                .Table("SitemapNodes")
                .InSchema(SchemaName)
 
-               .WithCmsBaseColumns()
+               .WithBaseColumns()
                .WithColumn("Title").AsString(MaxLength.Name).NotNullable()
                .WithColumn("Url").AsString(MaxLength.Url).NotNullable()
                .WithColumn("DisplayOrder").AsInt32().NotNullable()

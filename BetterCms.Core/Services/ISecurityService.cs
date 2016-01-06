@@ -1,26 +1,14 @@
 ﻿using System.Security.Principal;
 
+using BetterModules.Core.Security;
+
 namespace BetterCms.Core.Services
 {
     /// <summary>
     /// Security service contract.
     /// </summary>
-    public interface ISecurityService
+    public interface ISecurityService : IPrincipalProvider
     {
-        /// <summary>
-        /// Gets the name of the get current principal.
-        /// </summary>
-        /// <value>
-        /// The name of the get current principal.
-        /// </value>
-        string CurrentPrincipalName { get; }
-
-        /// <summary>
-        /// Gets the current principal.
-        /// </summary>
-        /// <returns>Current IPrincipal.</returns>
-        IPrincipal GetCurrentPrincipal();
-
         /// <summary>
         /// Determines whether the specified principal is authorized.
         /// </summary>

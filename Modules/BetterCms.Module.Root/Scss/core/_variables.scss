@@ -1,0 +1,75 @@
+@import '../../node_modules/susy/sass/susy',
+'bourbon',
+'mixins',
+'assets';
+
+//module typo
+$font-base-size: 13px;
+$font-base-family: 'Open Sans', sans-serif !important;
+$font-arial: 'Arial', sans-serif;
+$font-code-family: 'Courier New', Courier, monospace;
+
+//module main colors
+$white: #ffffff;
+$black: #000000;
+$dark: #303030;
+$gray-l5: #aaaaaa;
+$gray-l10: #eaeaea;
+$gray-l20: #e3e3e3;
+$gray-l25: #e5e5e5;
+$gray-l30: #f5f5f5;
+$gray-l35: #c0c0c0;
+$gray-l40: #c6c6c6;
+$gray-l45: #8E8E8E;
+$gray-l46: #787878;
+$gray-l50: #676767;
+$gray-l60: #555555;
+$gray-l65: #474747;
+$a:#d1d1d1;
+//
+$blue-main: #0383df;
+$sky-blue: #9ed4f0;
+$blue-5: #eff9fd;
+$blue-l30: #1892E4;
+$blue-l40: #0C7FC7;
+$blue-l55: #0D7BC9;
+$blue-l60: #24597e;
+
+//
+$red-l60: #A63333;
+$red-l70: #8E2626;
+//
+$green: #007633;
+
+//module borders
+$border-hr-control-top: 1px solid $gray-l50;
+$border-hr-control-bottom: 1px solid #202020;
+$border-thin-gray: 1px solid $gray-l40;
+$border-thin-light-gray: 1px solid $gray-l20;
+$border-thin-blue: 1px solid $blue-l60;
+$border-thin-white: 1px solid $white;
+$border-overlay: 1px dashed $blue-l30;
+$border-content-actions: 1px solid $sky-blue;
+$border-content-box: 1px solid $gray-l45;
+
+//module images paths
+
+//module misc variables
+
+//module transitions
+
+//module bourbon config
+$prefix-for-webkit: true;
+$prefix-for-mozilla: true;
+$prefix-for-microsoft: false;
+$prefix-for-opera: false;
+$prefix-for-spec: true;
+
+//module susy config
+$susy: (
+        columns: 12,
+        container: 1160px,
+        gutters: (40/60)
+);
+
+//module global maps/keys

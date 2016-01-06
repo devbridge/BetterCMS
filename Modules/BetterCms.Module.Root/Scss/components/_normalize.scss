@@ -1,0 +1,82 @@
+html {
+    -webkit-text-size-adjust: 100%;
+}
+
+body {
+    font-weight: 400;
+    line-height: 1.5em;
+    margin: 0;
+    min-width: 768px;
+    text-rendering: optimizeLegibility;
+    -webkit-font-smoothing: antialiased;
+}
+
+label {
+    cursor: pointer;
+    -moz-user-select: none;
+    -webkit-user-select: none;
+    user-select: none;
+}
+
+img {
+    border: 0;
+    display: block;
+    -ms-interpolation-mode: bicubic;
+    max-width: 100%;
+}
+
+button {
+    cursor: pointer;
+    outline: 0;
+}
+
+strong,
+b {
+    font-weight: 700;
+}
+
+button[disabled],
+input[disabled],
+.disabled {
+    cursor: default;
+}
+
+button::-moz-focus-inner,
+input::-moz-focus-inner {
+    border: 0;
+    line-height: normal;
+    padding: 0
+}
+
+input[type="text"],
+input[type="email"],
+input[type="search"],
+input[type="password"],
+input[type="number"],
+textarea,
+button {
+    margin: 0;
+    -webkit-appearance: none;
+    -webkit-font-smoothing: antialiased;
+}
+
+select {
+    margin: 0;
+    width: 100%;
+}
+
+figure,
+form,
+dl,
+dd,
+dt, {
+    margin: 0;
+}
+
+video {
+    width: 100%;
+}
+
+svg {
+    display: block;
+}

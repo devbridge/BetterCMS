@@ -2,11 +2,12 @@
 using System.Linq;
 
 using BetterCms.Core.DataContracts.Enums;
-using BetterCms.Core.Models;
-using BetterCms.Core.Mvc.Commands;
+
 using BetterCms.Module.Pages.Models;
 using BetterCms.Module.Pages.ViewModels.Sitemap;
 using BetterCms.Module.Root.Mvc;
+
+using BetterModules.Core.Web.Mvc.Commands;
 
 using NHibernate.Criterion;
 using NHibernate.Transform;

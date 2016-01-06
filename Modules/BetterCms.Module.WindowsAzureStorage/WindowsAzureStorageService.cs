@@ -1,8 +1,9 @@
 ﻿using System;
 using System.IO;
 using System.Net;
+using System.Threading;
+using System.Threading.Tasks;
 
-using BetterCms.Core.Services.Caching;
 using BetterCms.Core.Services.Storage;
 using BetterCms.Module.WindowsAzureStorage.Content.Resources;
 

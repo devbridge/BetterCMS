@@ -2,14 +2,16 @@
 
 using Autofac;
 
-using BetterCms.Core.DataAccess.DataContext;
-using BetterCms.Core.DataContracts;
-using BetterCms.Core.Dependencies;
+using BetterModules.Core.DataAccess.DataContext;
+
 using BetterCms.Core.Exceptions;
 using BetterCms.Core.Exceptions.Mvc;
 using BetterCms.Core.Security;
 using BetterCms.Core.Services;
 using BetterCms.Module.Root.Content.Resources;
+
+using BetterModules.Core.DataContracts;
+using BetterModules.Core.Dependencies;
 
 using NHibernate.Proxy.DynamicProxy;
 

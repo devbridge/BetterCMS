@@ -1,8 +1,8 @@
 ﻿/*jslint unparam: true, white: true, browser: true, devel: true */
 /*global bettercms */
 
-bettercms.define('bcms.pages.masterpage', ['bcms.jquery', 'bcms', 'bcms.siteSettings', 'bcms.pages', 'bcms.grid', 'bcms.pages.properties', 'bcms.messages'],
-    function ($, bcms, siteSettings, page, grid, pageProperties, messages) {
+bettercms.define('bcms.pages.masterpage', ['bcms.jquery', 'bcms', 'bcms.siteSettings', 'bcms.pages', 'bcms.grid', 'bcms.pages.properties', 'bcms.messages', 'bcms.antiXss'],
+    function ($, bcms, siteSettings, page, grid, pageProperties, messages, antiXss) {
         'use strict';
 
         var module = {},
@@ -19,6 +19,7 @@ bettercms.define('bcms.pages.masterpage', ['bcms.jquery', 'bcms', 'bcms.siteSett
 
                 siteSettingsMasterPagesForm: "#bcms-master-pages-form",
                 siteSettingsMasterPageCreateButton: '#bcms-create-page-button',
+                siteSettingsMasterPageCreateButtonSidePanel: '#bcms-create-page-button-side-panel',
                 siteSettingsPageParentRow: 'tr:first',
                 siteSettingsPageTitleCell: '.bcms-page-title',
                 siteSettingsPageEditButton: '.bcms-grid-item-edit-button',
@@ -84,6 +85,10 @@ bettercms.define('bcms.pages.masterpage', ['bcms.jquery', 'bcms', 'bcms.siteSett
                 addMasterPage(container);
             });
 
+            container.find(selectors.siteSettingsMasterPageCreateButtonSidePanel).on('click', function () {
+                addMasterPage(container);
+            });
+
             container.find(selectors.siteSettingsRowCells).on('click', function () {
                 var editButton = $(this).parents(selectors.siteSettingsPageParentRow).find(selectors.siteSettingsPageEditButton);
                 if (editButton.length > 0) {
@@ -114,8 +119,11 @@ bettercms.define('bcms.pages.masterpage', ['bcms.jquery', 'bcms', 'bcms.siteSett
                     var template = $(selectors.siteSettingsPageRowTemplate),
                         newRow = $(template.html()).find(selectors.siteSettingsPageRowTemplateFirstRow);
 
-                    newRow.find(selectors.siteSettingsPageTitleCell).html(data.Data.Title);
-
+                    newRow.find(selectors.siteSettingsPageTitleCell).html(antiXss.encodeHtml(data.Data.Title));
+                    if (container.hasClass('js-redirect-to-new-page') && data.Data.IsMasterPage) {
+                        window.location.href = data.Data.PageUrl;
+                    }
+                    
                     newRow.find(selectors.siteSettingsPageTitleCell).data('url', data.Data.PageUrl);
                     newRow.find(selectors.siteSettingsPageEditButton).data('id', data.Data.PageId);
                     newRow.find(selectors.siteSettingsPageDeleteButton).data('id', data.Data.PageId);
@@ -147,7 +155,7 @@ bettercms.define('bcms.pages.masterpage', ['bcms.jquery', 'bcms', 'bcms.siteSett
 
                     var row = self.parents(selectors.siteSettingsPageParentRow),
                         cell = row.find(selectors.siteSettingsPageTitleCell);
-                    cell.html(data.Data.Title);
+                    cell.html(antiXss.encodeHtml(data.Data.Title));
                     cell.data('url', data.Data.PageUrl);
                 }
             }, globalization.editMasterPagePropertiesModalTitle);
@@ -175,6 +183,8 @@ bettercms.define('bcms.pages.masterpage', ['bcms.jquery', 'bcms', 'bcms.siteSett
                 grid.showHideEmptyRow(container);
             });
         };
+
+        module.addMasterPage = addMasterPage;
 
         return module;
     });

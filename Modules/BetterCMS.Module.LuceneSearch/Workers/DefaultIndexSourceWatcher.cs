@@ -1,10 +1,7 @@
 ﻿using System;
-
 using Autofac;
-
 using BetterCMS.Module.LuceneSearch.Services.ScrapeService;
-
-using BetterCms.Core.Dependencies;
+using BetterModules.Core.Dependencies;
 
 namespace BetterCMS.Module.LuceneSearch.Workers
 {

@@ -1,14 +1,16 @@
-﻿using System.Linq;
+﻿using System.Collections.Generic;
+using System.Linq;
 
-using BetterCms.Core.DataAccess.DataContext;
 using BetterCms.Core.DataContracts.Enums;
 using BetterCms.Core.Exceptions.Mvc;
-using BetterCms.Core.Mvc.Commands;
 
 using BetterCms.Module.Root.Models;
 using BetterCms.Module.Root.Mvc;
 using BetterCms.Module.Root.Services;
 using BetterCms.Module.Root.ViewModels.Option;
+
+using BetterModules.Core.DataAccess.DataContext;
+using BetterModules.Core.Web.Mvc.Commands;
 
 using NHibernate.Linq;
 
@@ -25,6 +27,22 @@ namespace BetterCms.Module.Pages.Command.Content.GetChildContentOptions
         public IOptionService OptionService { get; set; }
 
         /// <summary>
+        /// Gets or sets the CMS configuration.
+        /// </summary>
+        /// <value>
+        /// The CMS configuration.
+        /// </value>
+        public ICmsConfiguration CmsConfiguration { get; set; }
+
+        /// <summary>
+        /// Gets or sets the language service.
+        /// </summary>
+        /// <value>
+        /// The language service.
+        /// </value>
+        public ILanguageService LanguageService { get; set; }
+
+        /// <summary>
         /// Executes the specified request.
         /// </summary>
         /// <param name="request">The request.</param>
@@ -39,6 +57,7 @@ namespace BetterCms.Module.Pages.Command.Content.GetChildContentOptions
 
             var model = new ContentOptionValuesViewModel();
             var optionsLoaded = false;
+            var languagesFuture = CmsConfiguration.EnableMultilanguage ? LanguageService.GetLanguagesLookupValues() : new List<LookupKeyValue>();
 
             if (request.LoadOptions) { 
                 if (!request.AssignmentIdentifier.HasDefaultValue())
@@ -49,20 +68,24 @@ namespace BetterCms.Module.Pages.Command.Content.GetChildContentOptions
                             && !f.Parent.Original.IsDeleted
                             && f.Parent.Original.Status == ContentStatus.Published
                             && f.Parent.Status == ContentStatus.Draft
+                            && !f.Parent.IsDeleted
                             && f.AssignmentIdentifier == request.AssignmentIdentifier
                             && !f.IsDeleted
                             && !f.Child.IsDeleted);
-                    var childContent = AddFetches(draftQuery).ToList().FirstOrDefault();
+                    var childContent = draftQuery.FirstOrDefault();
 
                     // If draft not found, load content
-                    if (childContent == null) {
-                        var query = Repository.AsQueryable<ChildContent>()
-                            .Where(f => f.Parent.Id == request.ContentId 
-                                && f.AssignmentIdentifier == request.AssignmentIdentifier 
-                                && !f.IsDeleted 
-                                && !f.Child.IsDeleted);
+                    if (childContent == null)
+                    {
+                        var query = Repository.AsQueryable<ChildContent>().Where(
+                                    f => f.Parent.Id == request.ContentId && f.AssignmentIdentifier == request.AssignmentIdentifier && !f.IsDeleted && !f.Child.IsDeleted);
 
-                        childContent = AddFetches(query).ToList().FirstOrDefault();
+                        childContent = query.FirstOrDefault();
+                        FetchCollections(childContent);
+                    }
+                    else
+                    {
+                        FetchCollections(childContent);
                     }
 
                     if (childContent != null)
@@ -92,6 +115,9 @@ namespace BetterCms.Module.Pages.Command.Content.GetChildContentOptions
             }
 
             model.CustomOptions = OptionService.GetCustomOptions();
+            var languages = CmsConfiguration.EnableMultilanguage ? languagesFuture.ToList() : new List<LookupKeyValue>();
+            model.Languages = languages;
+            model.ShowLanguages = CmsConfiguration.EnableMultilanguage && languages.Any();
 
             return model;
         }
@@ -112,10 +138,83 @@ namespace BetterCms.Module.Pages.Command.Content.GetChildContentOptions
 
         private IQueryable<ChildContent> AddFetches(IQueryable<ChildContent> query)
         {
+            // TODO: fix this !!! This has critical performance impact
             return query
-                .Fetch(f => f.Child).ThenFetchMany(f => f.ContentOptions).ThenFetch(f => f.CustomOption)
-                .FetchMany(f => f.Options).ThenFetch(f => f.CustomOption)
-                .Fetch(f => f.Child).ThenFetchMany(f => f.History).ThenFetchMany(f => f.ContentOptions).ThenFetch(f => f.CustomOption);
+                .Fetch(f => f.Child)
+                .ThenFetchMany(f => f.ContentOptions)
+                .ThenFetch(f => f.CustomOption)
+
+                .FetchMany(f => f.Options)
+                .ThenFetch(f => f.CustomOption)
+
+                .Fetch(f => f.Child)
+                .ThenFetchMany(f => f.History)
+                .ThenFetchMany(f => f.ContentOptions)
+                .ThenFetch(f => f.CustomOption);
+        }
+        private ChildContent GetChildContent(GetChildContentOptionsCommandRequest request)
+        {
+//            var draftQuery = Repository.AsQueryable<ChildContent>()
+//                .Where(f => f.Parent.Original.Id == request.ContentId
+//                    && !f.Parent.Original.IsDeleted
+//                    && f.Parent.Original.Status == ContentStatus.Published
+//                    && f.Parent.Status == ContentStatus.Draft
+//                    && f.AssignmentIdentifier == request.AssignmentIdentifier
+//                    && !f.IsDeleted
+//                    && !f.Child.IsDeleted);
+//            var childContent = AddFetches(draftQuery).ToList().FirstOrDefault();
+            var query = Repository.AsQueryable<ChildContent>()
+
+                .Where(f => f.Parent.Original.Id == request.ContentId
+                    && !f.Parent.Original.IsDeleted
+                    && f.Parent.Original.Status == ContentStatus.Published
+                    && f.Parent.Status == ContentStatus.Draft
+                    && f.AssignmentIdentifier == request.AssignmentIdentifier
+                    && !f.IsDeleted
+                    && !f.Child.IsDeleted)
+                .Fetch(x => x.Parent)
+                .ThenFetch(x => x.Original);
+            var childContent = query.ToList().FirstOrDefault();
+
+            if (childContent != null)
+            {
+
+            }
+            return childContent;
+        }
+
+        private void FetchCollections(ChildContent childContent)
+        {
+            if (childContent == null)
+            {
+                return;
+            }
+            var childQuery = Repository.AsQueryable<Root.Models.Content>().Where(x => x.Id == childContent.Child.Id).ToFuture();
+            var historyQuery = Repository.AsQueryable<Root.Models.Content>().Where(x => x.Original.Id == childContent.Child.Id).ToFuture();
+
+            childContent.Child = childQuery.First();
+            childContent.Child.History = historyQuery as IList<Root.Models.Content> ?? historyQuery.ToList();
+
+            var historyIds = childContent.Child.History.Select(x => x.Id).ToList();
+            var contentOptionsQuery =
+                Repository.AsQueryable<ContentOption>()
+                    .Where(x => x.Content.Id == childContent.Child.Id)
+                    .FetchMany(x => x.Translations)
+                    .Fetch(x => x.CustomOption)
+                    .ToFuture();
+
+            var childContentOptionsQuery = Repository.AsQueryable<ChildContentOption>().Where(x => x.ChildContent.Id == childContent.Id).Fetch(x => x.CustomOption).FetchMany(x => x.Translations).ToFuture();
+            var historyContentOptionsQuery = Repository.AsQueryable<ContentOption>().Where(x => historyIds.Contains(x.Id)).Fetch(x => x.CustomOption).FetchMany(x => x.Translations).ToFuture();
+            childContent.Child.ContentOptions = contentOptionsQuery.ToList();
+            childContent.Options = childContentOptionsQuery as IList<ChildContentOption> ?? childContentOptionsQuery.ToList();
+            if (childContent.Child.History.Any())
+            {
+                var historyContentOptions = historyContentOptionsQuery as IList<ContentOption> ?? historyContentOptionsQuery.ToList();
+                foreach (var content in childContent.Child.History)
+                {
+                    content.ContentOptions = historyContentOptions.Where(x => x.Content.Id == content.Id).ToList();
+                }
+            }
         }
     }
 }

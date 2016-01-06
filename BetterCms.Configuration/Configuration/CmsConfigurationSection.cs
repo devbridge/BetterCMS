@@ -2,18 +2,18 @@
 using System.Configuration;
 using System.Reflection;
 
+using BetterModules.Core.Web.Configuration;
+
 namespace BetterCms.Configuration
 {
-    public class CmsConfigurationSection : ConfigurationSection, ICmsConfiguration
+    public class CmsConfigurationSection : DefaultWebConfigurationSection, ICmsConfiguration
     {
         private const string VersionAttribute = "version";
         private const string UseMinifiedResourcesAttribute = "useMinifiedResources";
         private const string ResourcesBasePathAttribute = "resourcesBasePath";
         private const string LoginUrlAttribute = "loginUrl";
-        private const string WebSiteUrlAttribute = "webSiteUrl";
         private const string PageNotFoundUrlAttribute = "pageNotFoundUrl";
         private const string UrlModeAttribute = "urlMode";
-        private const string DatabaseNode = "database";
         private const string StorageNode = "storage";
         private const string SearchNode = "search";
         private const string CacheNode = "cache";
@@ -85,19 +85,6 @@ namespace BetterCms.Configuration
         {
             get { return Convert.ToString(this[LoginUrlAttribute]); }
             set { this[LoginUrlAttribute] = value; }
-        }
-
-        /// <summary>
-        /// Gets or sets the web site URL.
-        /// </summary>
-        /// <value>
-        /// The web site URL.
-        /// </value>
-        [ConfigurationProperty(WebSiteUrlAttribute, DefaultValue = "Auto", IsRequired = false)]
-        public string WebSiteUrl
-        {
-            get { return Convert.ToString(this[WebSiteUrlAttribute]); }
-            set { this[WebSiteUrlAttribute] = value; }
         }
 
         /// <summary>
@@ -233,8 +220,6 @@ namespace BetterCms.Configuration
 
         #region Child Nodes
 
-
-
         /// <summary>
         /// Gets or sets the URL patterns.
         /// </summary>
@@ -280,13 +265,6 @@ namespace BetterCms.Configuration
         {
             get { return (CmsCacheConfigurationElement)this[CacheNode]; }
             set { this[CacheNode] = value; }
-        }
-
-        [ConfigurationProperty(DatabaseNode, IsRequired = true)]
-        public CmsDatabaseConfigurationElement Database
-        {
-            get { return (CmsDatabaseConfigurationElement)this[DatabaseNode]; }
-            set { this[DatabaseNode] = value; }
         }
 
         [ConfigurationProperty(SecurityNode, IsRequired = true)]
@@ -336,11 +314,6 @@ namespace BetterCms.Configuration
         ICmsCacheConfiguration ICmsConfiguration.Cache
         {
             get { return Cache; }
-        }
-
-        ICmsDatabaseConfiguration ICmsConfiguration.Database
-        {
-            get { return Database; }
         }
 
         ICmsSecurityConfiguration ICmsConfiguration.Security

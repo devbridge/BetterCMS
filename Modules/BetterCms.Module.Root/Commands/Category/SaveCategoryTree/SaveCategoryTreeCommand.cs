@@ -1,10 +1,12 @@
-﻿using BetterCms.Core.Mvc.Commands;
+﻿using System.Collections.Generic;
+using System.Linq;
+
 using BetterCms.Module.Root.Mvc;
 using BetterCms.Module.Root.Services.Categories;
 using BetterCms.Module.Root.Services.Categories.Tree;
 using BetterCms.Module.Root.ViewModels.Category;
-using System.Collections.Generic;
-using System.Linq;
+
+using BetterModules.Core.Web.Mvc.Commands;
 
 namespace BetterCms.Module.Root.Commands.Category.SaveCategoryTree
 {

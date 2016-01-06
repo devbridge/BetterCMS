@@ -1,11 +1,13 @@
 ﻿using System.Linq;
 
 using BetterCms.Core.DataContracts.Enums;
-using BetterCms.Core.Mvc.Commands;
 
 using BetterCms.Module.Blog.Services;
+using BetterCms.Module.Pages.Models.Enums;
 using BetterCms.Module.Pages.Services;
 using BetterCms.Module.Root.Mvc;
+
+using BetterModules.Core.Web.Mvc.Commands;
 
 namespace BetterCms.Module.Blog.Commands.SaveBlogPost
 {
@@ -36,6 +38,12 @@ namespace BetterCms.Module.Blog.Commands.SaveBlogPost
         /// <returns>Blog post view model</returns>
         public SaveBlogPostCommandResponse Execute(SaveBlogPostCommandRequest request)
         {
+            if (request.Content.ContentTextMode == ContentTextMode.Markdown)
+            {
+                request.Content.OriginalText = request.Content.Content;
+                request.Content.Content = null;
+            }
+
             string[] error;
             var blogPost = blogService.SaveBlogPost(request.Content, request.ChildContentOptionValues, Context.Principal, out error, false);
             if (blogPost == null)

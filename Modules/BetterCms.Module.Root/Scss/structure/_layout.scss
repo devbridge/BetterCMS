@@ -1,0 +1,43 @@
+@import '../core/variables';
+
+html,
+body {
+    height: 100%;
+    width: 100%;
+}
+
+body {
+    font-family: $font-base-family;
+    margin: 0;
+}
+
+a,
+div,
+button {
+    &:focus {
+        outline: none;
+    }
+}
+
+//todo remove when iFrame implemented
+[class*="bcms-"] {
+    font-family: $font-base-family;
+}
+
+.bcms-modal {
+    form {
+        background: none !important;
+        color: inherit !important;
+        height: auto !important;
+        margin: auto !important;
+        max-width: none !important;
+        padding: 0 !important;
+        width: auto !important;
+    }
+}
+
+//todo end of
+
+.bcms-no-ui {
+    //this class used for any element which doesn't require any styling.
+}

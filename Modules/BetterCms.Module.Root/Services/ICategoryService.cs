@@ -2,8 +2,9 @@
 using System.Collections.Generic;
 
 using BetterCms.Core.DataContracts;
-using BetterCms.Core.Models;
 using BetterCms.Module.Root.Models;
+
+using BetterModules.Core.Models;
 
 namespace BetterCms.Module.Root.Services
 {

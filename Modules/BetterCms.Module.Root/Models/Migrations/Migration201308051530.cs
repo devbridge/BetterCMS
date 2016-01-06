@@ -1,12 +1,14 @@
-﻿using BetterCms.Core.DataAccess.DataContext.Migrations;
-using BetterCms.Core.Models;
+﻿using BetterModules.Core.DataAccess.DataContext.Migrations;
+
+using BetterModules.Core.DataAccess.DataContext.Migrations;
+using BetterModules.Core.Models;
 
 using FluentMigrator;
 
 namespace BetterCms.Module.Root.Models.Migrations
 {
     [Migration(201308051530)]
-    public class Migration201308051530 : DefaultMigration
+    public class Migration201308051530: DefaultMigration
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="Migration201308051530" /> class.
@@ -22,7 +24,7 @@ namespace BetterCms.Module.Root.Models.Migrations
             Create
                 .Table("PageOptions")
                 .InSchema(SchemaName)
-                .WithCmsBaseColumns()
+                .WithBaseColumns()
                 .WithColumn("PageId").AsGuid().NotNullable()
                 .WithColumn("Value").AsString(MaxLength.Max).Nullable()
                 .WithColumn("Key").AsString(MaxLength.Name).NotNullable()

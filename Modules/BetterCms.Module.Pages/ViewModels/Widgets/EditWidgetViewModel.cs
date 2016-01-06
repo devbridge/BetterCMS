@@ -3,6 +3,7 @@ using System.Collections.Generic;
 
 using BetterCms.Core.DataContracts.Enums;
 using BetterCms.Core.Mvc.Binders;
+using BetterCms.Module.Root.Models;
 
 using Newtonsoft.Json;
 
@@ -60,6 +61,22 @@ namespace BetterCms.Module.Pages.ViewModels.Widgets
         /// <c>true</c> if user confirmed content saving when affecting children pages; otherwise, <c>false</c>.
         /// </value>
         public bool IsUserConfirmed { get; set; }
+
+        /// <summary>
+        /// Gets or sets the languages.
+        /// </summary>
+        /// <value>
+        /// The languages.
+        /// </value>
+        public List<LookupKeyValue> Languages { get; set; }
+
+        /// <summary>
+        /// Gets or sets a value indicating whether to show languages.
+        /// </summary>
+        /// <value>
+        ///   <c>true</c> if [show languages]; otherwise, <c>false</c>.
+        /// </value>
+        public bool ShowLanguages { get; set; }
 
         /// <summary>
         /// Returns a <see cref="System.String" /> that represents this instance.

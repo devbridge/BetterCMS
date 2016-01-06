@@ -160,7 +160,7 @@
     <value>Select page layout</value>
   </data>
   <data name="AddNewPage_Template_InfoMessage_Text" xml:space="preserve">
-    <value>&lt;b&gt;The layout of this page is based on a template.&lt;/b&gt; Select a template from options below. &#x3;If you need an additional template contact your system administrator to create a custom template.</value>
+    <value>&lt;b&gt;The layout of this page is based on a template.&lt;/b&gt; Select a template from options below. If you need an additional template contact your system administrator to create a custom template.</value>
   </data>
   <data name="AddNewPage_Template_Tooltip_Description" xml:space="preserve">
     <value>Select the template you would like to use for your new page.</value>
@@ -276,8 +276,8 @@
   <data name="HtmlContentWidget_CustomCSS_Title" xml:space="preserve">
     <value>Custom CSS</value>
   </data>
-  <data name="HtmlContentWidget_EnableCustomCSS_Title" xml:space="preserve">
-    <value>Custom CSS (If not Enabled, then &lt;b&gt;CSS&lt;/b&gt; will not be added to a Page)</value>
+  <data name="HtmlContentWidget_RenderCustomCSS_Title" xml:space="preserve">
+    <value>Render Custom CSS (If not Enabled, &lt;b&gt;CSS&lt;/b&gt; will not be added to the Page)</value>
   </data>
   <data name="CreateHtmlContentWidget_Dialog_Title" xml:space="preserve">
     <value>Create Widget</value>
@@ -535,7 +535,7 @@
     <value>New page</value>
   </data>
   <data name="Sidebar_DeletePageButtonTitle" xml:space="preserve">
-    <value>Delete this page</value>
+    <value>Delete page</value>
   </data>
   <data name="Sidebar_EditPagePropertiesButtonTitle" xml:space="preserve">
     <value>Edit page properties</value>
@@ -604,10 +604,10 @@
     <value>Add New +</value>
   </data>
   <data name="SiteSettings_Redirects_PageUrlColumn" xml:space="preserve">
-    <value>Page URL</value>
+    <value>Source URL</value>
   </data>
   <data name="SiteSettings_Redirects_RedirectUrlColumn" xml:space="preserve">
-    <value>Redirected URL</value>
+    <value>Destination URL</value>
   </data>
   <data name="SiteSettings_Redirects_Search" xml:space="preserve">
     <value>Search</value>
@@ -741,11 +741,11 @@
   <data name="HtmlContentWidget_CustomJS_Title" xml:space="preserve">
     <value>Custom JavaScript</value>
   </data>
-  <data name="HtmlContentWidget_EnableCustomHTML_Title" xml:space="preserve">
-    <value>Custom HTML (If not Enabled, then &lt;b&gt;HTML&lt;/b&gt; will not be added to a Page)</value>
+  <data name="HtmlContentWidget_RenderCustomHTML_Title" xml:space="preserve">
+    <value>Render HTML (If not Enabled, &lt;b&gt;HTML&lt;/b&gt; will not be added to the Page)</value>
   </data>
-  <data name="HtmlContentWidget_EnableCustomJS_Title" xml:space="preserve">
-    <value>Custom JavaScript (If not Enabled, then &lt;b&gt;JavaScript&lt;/b&gt; will not be added to a Page)</value>
+  <data name="HtmlContentWidget_RenderCustomJS_Title" xml:space="preserve">
+    <value>Render Custom JavaScript (If not Enabled, &lt;b&gt;JavaScript&lt;/b&gt; will not be added to the Page)</value>
   </data>
   <data name="WidgetPreviewImageUrl_Title" xml:space="preserve">
     <value>Preview Image URL</value>
@@ -846,11 +846,11 @@
   <data name="HtmlContent_CustomJs_Title" xml:space="preserve">
     <value>Custom JavaScript</value>
   </data>
-  <data name="HtmlContent_EnableCustomCss_Title" xml:space="preserve">
-    <value>Enable Custom CSS (If not Enabled, then &lt;b&gt;CSS&lt;/b&gt; will not be added to a Page)</value>
+  <data name="HtmlContent_RenderCustomCss_Title" xml:space="preserve">
+    <value>Enable Custom CSS (If not Enabled, &lt;b&gt;CSS&lt;/b&gt; will not be added to a Page)</value>
   </data>
-  <data name="HtmlContent_EnableCustomJs_Title" xml:space="preserve">
-    <value>Enable Custom JavaScript (If not Enabled, then &lt;b&gt;JavaScript&lt;/b&gt; will not be added to a Page)</value>
+  <data name="HtmlContent_RenderCustomJs_Title" xml:space="preserve">
+    <value>Enable Custom JavaScript (If not Enabled, &lt;b&gt;JavaScript&lt;/b&gt; will not be added to a Page)</value>
   </data>
   <data name="EditPageProperties_BasicPropertiesTab_PageImage_Description" xml:space="preserve">
     <value>Image will be displayed as a thumbnail with the page.</value>
@@ -1170,6 +1170,9 @@
   <data name="AddNewPage_Language_Tooltip_Description" xml:space="preserve">
     <value>Choose language for current page, which will be used in sitemap and determines the language and culture of the page</value>
   </data>
+  <data name="Sidebar_CreateMasterPageButtonTitle" xml:space="preserve">
+    <value>Create Master</value>
+  </data>
   <data name="Sidebar_TranslatePageButtonTitle" xml:space="preserve">
     <value>Translate page</value>
   </data>
@@ -1364,5 +1367,11 @@
   </data>
   <data name="SaveWidget_ContentHasChildrenWidgetWithDynamicContents_ConfirmationMessage" xml:space="preserve">
     <value>You are trying to remove child widget which has children with dynamic regions. There are some children pages, which have contents created within these regions. If you delete this region, children page contents will be deleted also. &lt;br /&gt;&lt;br /&gt;Are you sure you want to continue?</value>
+  </data>
+  <data name="EditWidget_AdvancedOptionsTab_Title" xml:space="preserve">
+    <value>JavaScript &amp; CSS</value>
+  </data>
+  <data name="EditPageContent_AdvancedOptionsTab_Title" xml:space="preserve">
+    <value>Javascript &amp; CSS</value>
   </data>
 </root>

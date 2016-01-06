@@ -3,7 +3,7 @@ using System.IO;
 using System.Security.Cryptography;
 using System.Text;
 
-using BetterCms.Core.Exceptions;
+using BetterModules.Core.Exceptions;
 
 namespace BetterCms.Core.Security
 {
@@ -54,7 +54,7 @@ namespace BetterCms.Core.Security
             }
             catch (Exception ex)
             {
-                throw new CmsException("Encryption failed.", ex);
+                throw new CoreException("Encryption failed.", ex);
             }
         }
 
@@ -89,7 +89,7 @@ namespace BetterCms.Core.Security
             }
             catch (Exception ex)
             {
-                throw new CmsException("Decryption failed.", ex);
+                throw new CoreException("Decryption failed.", ex);
             }
         }
 
@@ -99,7 +99,7 @@ namespace BetterCms.Core.Security
             {
                 if (configuration.Security.EncryptionEnabled && string.IsNullOrWhiteSpace(configuration.Security.EncryptionKey))
                 {
-                    throw new CmsException("A ContentEncryptionKey should be provided when an content encryption is enabled (<security enableContentEncryption=\"true\" contentEncryptionKey=\"any key to encrypt data\">)");
+                    throw new CoreException("A ContentEncryptionKey should be provided when an content encryption is enabled (<security enableContentEncryption=\"true\" contentEncryptionKey=\"any key to encrypt data\">)");
                 }
 
                 using (var rfc2898 = new Rfc2898DeriveBytes(configuration.Security.EncryptionKey, Encoding.ASCII.GetBytes(Salt)))

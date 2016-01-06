@@ -1,6 +1,6 @@
 ﻿using System.Linq;
 
-using BetterCms.Core.DataAccess;
+using BetterModules.Core.DataAccess;
 using BetterCms.Module.Pages.Services;
 using BetterCms.Module.Root.Mvc;
 using BetterCms.Module.Root.Mvc.Helpers;

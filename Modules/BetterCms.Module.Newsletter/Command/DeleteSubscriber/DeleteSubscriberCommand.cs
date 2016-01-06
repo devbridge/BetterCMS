@@ -1,7 +1,9 @@
-﻿using BetterCms.Core.Mvc.Commands;
-using BetterCms.Module.Newsletter.Models;
+﻿using BetterCms.Module.Newsletter.Models;
 using BetterCms.Module.Newsletter.ViewModels;
+
 using BetterCms.Module.Root.Mvc;
+
+using BetterModules.Core.Web.Mvc.Commands;
 
 namespace BetterCms.Module.Newsletter.Command.DeleteSubscriber
 {

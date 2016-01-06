@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Web.Mvc;
-using System.Web.UI.WebControls;
 
 using BetterCms.Core.Exceptions.Mvc;
 using BetterCms.Core.Mvc.Binders;
@@ -20,9 +19,10 @@ using BetterCms.Module.Pages.ViewModels.Filter;
 using BetterCms.Module.Pages.ViewModels.Widgets;
 
 using BetterCms.Module.Root;
-using BetterCms.Module.Root.Models;
 using BetterCms.Module.Root.Mvc;
 using BetterCms.Module.Root.Mvc.Grids.GridOptions;
+
+using BetterModules.Core.Web.Models;
 
 using Common.Logging;
 
@@ -115,7 +115,7 @@ namespace BetterCms.Module.Pages.Controllers
         [BcmsAuthorize(RootModuleConstants.UserRoles.Administration)]
         public ActionResult EditHtmlContentWidget([ModelBinder(typeof(JSONDataBinder))] SaveWidgetCommandRequest<EditHtmlContentWidgetViewModel> request)
         {
-            ValidateModelExplicilty(request.Content);
+            ValidateModelExplicitly(request.Content);
 
             try
             {
@@ -184,7 +184,7 @@ namespace BetterCms.Module.Pages.Controllers
         [BcmsAuthorize(RootModuleConstants.UserRoles.Administration)]
         public ActionResult EditServerControlWidget([ModelBinder(typeof(JSONDataBinder))] SaveWidgetCommandRequest<EditServerControlWidgetViewModel> request)
         {
-            ValidateModelExplicilty(request.Content);
+            ValidateModelExplicitly(request.Content);
 
             if (ModelState.IsValid)
             {
@@ -270,7 +270,7 @@ namespace BetterCms.Module.Pages.Controllers
         public ActionResult SelectWidget(GetRecentWidgetAndWidgetCategoryRequest request)
         {
             var model = GetCommand<GetRecentWidgetAndWidgetCategoryCommand>().ExecuteCommand(request);
-            var view = model != null ? RenderView("SelectWidget", new PageContentViewModel{ WidgetCategories = model.WidgetCategories, RecentWidgets = model.RecentWidgets }) : string.Empty;
+            var view = model != null ? RenderView("SelectWidget", model) : string.Empty;
 
             var result = ComboWireJson(model != null, view, model, JsonRequestBehavior.AllowGet);
             result.MaxJsonLength = int.MaxValue;

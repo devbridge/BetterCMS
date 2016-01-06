@@ -1,7 +1,7 @@
 ﻿using System;
 
-using BetterCms.Core.DataAccess.DataContext.Migrations;
-using BetterCms.Core.Models;
+using BetterModules.Core.DataAccess.DataContext.Migrations;
+using BetterModules.Core.Models;
 
 using FluentMigrator;
 
@@ -65,7 +65,7 @@ namespace BetterCms.Module.Pages.Models.Migrations
             Create
                 .Table("Redirects")
                 .InSchema(SchemaName)
-                .WithCmsBaseColumns()
+                .WithBaseColumns()
                 .WithColumn("PageUrl").AsString(MaxLength.Url).NotNullable()
                 .WithColumn("RedirectUrl").AsString(MaxLength.Url).NotNullable();                
         }
@@ -175,7 +175,7 @@ namespace BetterCms.Module.Pages.Models.Migrations
             Create
                 .Table("PageTags")
                 .InSchema(SchemaName)
-                .WithCmsBaseColumns()
+                .WithBaseColumns()
                 .WithColumn("PageId").AsGuid().NotNullable()
                 .WithColumn("TagId").AsGuid().NotNullable();
 

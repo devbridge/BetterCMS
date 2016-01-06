@@ -1,34 +1,18 @@
-﻿using System;
-
-using Autofac;
+﻿using Autofac;
 
 using BetterCms.Configuration;
 using BetterCms.Core.Modules;
-using BetterCms.Core.Services.Caching;
+
+using BetterModules.Core.Modules.Registration;
+using BetterModules.Core.Web.Services.Caching;
 
 namespace BetterCms.Module.AppFabricCache
 {
     /// <summary>
     /// Caching module based on AppFabric cache server.
     /// </summary>
-    public class AppFabricCacheModuleDescriptor : ModuleDescriptor
+    public class AppFabricCacheModuleDescriptor : CmsModuleDescriptor
     {
-        internal const string ModuleId = "c7980cec-fd62-4e1a-84a4-1ecfe99283e0";
-
-        /// <summary>
-        /// Gets the identifier.
-        /// </summary>
-        /// <value>
-        /// The identifier.
-        /// </value>
-        public override Guid Id
-        {
-            get
-            {
-                return new Guid(ModuleId);
-            }
-        }
-
         /// <summary>
         /// Gets the name.
         /// </summary>

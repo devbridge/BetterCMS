@@ -399,6 +399,9 @@
   <data name="MediaManager_IncludeArchived_Message" xml:space="preserve">
     <value>Include archived items</value>
   </data>
+  <data name="MediaManager_SearchInHistoryItems_Message" xml:space="preserve">
+    <value>Search in history items</value>
+  </data>
   <data name="ArchiveFile_ConfirmationMessage" xml:space="preserve">
     <value>Are you sure you want to send the file {0} to archive?</value>
   </data>
@@ -668,5 +671,8 @@
   </data>
   <data name="SiteSettings_FilterByCategory" xml:space="preserve">
     <value>By Category</value>
+  </data>
+  <data name="DeleteFolder_DeletedError_Message" xml:space="preserve">
+    <value>Failed to delete folder. Some of folder items can not be removed.</value>
   </data>
 </root>

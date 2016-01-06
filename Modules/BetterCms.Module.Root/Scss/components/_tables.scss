@@ -1,0 +1,168 @@
+@import '../core/variables';
+
+//todo upgrade tables styling to db pattern
+//table {
+//    border-spacing: 0;
+//    width: 100%;
+//
+//    th {
+//    }
+//
+//    td {
+//    }
+//}
+
+.bcms-tables {
+    width: 100%;
+    background-color: #fff;
+    border-spacing: 0;
+    font-size: 12px;
+}
+
+.bcms-tables tr:hover {
+    background-color: #f5f5f5;
+    cursor: pointer;
+}
+
+.bcms-tables tr:hover a.bcms-icn-edit {
+    background-position: center -869px;
+}
+
+.bcms-tables tr:hover a.bcms-icn-edit:active {
+    background-position: center -903px;
+}
+
+.bcms-tables th {
+    padding: 10px;
+    line-height: 14px;
+    background-color: #f5f5f5;
+    border-top: 1px solid #c6c6c6;
+    border-bottom: 1px solid #c6c6c6;
+    font-weight: 700;
+    font-size: 13px !important;
+    text-align: left;
+    cursor: pointer;
+}
+
+.bcms-tables th:first-child {
+    width: 40px;
+    padding: 10px 0;
+}
+
+.bcms-tables th:hover {
+    background-color: #e5e5e5;
+}
+
+th.bcms-tables-nohover:hover {
+    background-color: #f5f5f5;
+    cursor: default;
+}
+
+.bcms-table-row-active {
+    background-color: #effcfe;
+}
+
+.bcms-table-row-active {
+    background-color: #effcfe;
+    -webkit-transition: background-color 0.5s ease-out;
+    transition: background-color 0.5s ease-out;
+}
+
+.bcms-tables tr.bcms-table-row-active:hover {
+    background-color: #effcfe;
+}
+
+.bcms-table-row-active .bcms-icn-preview {
+    background-position: -60px -133px;
+}
+
+.bcms-table-row-active .bcms-icn-restore {
+    color: #303030;
+    background-position: right -1121px;
+}
+
+.bcms-table-row-active .bcms-icn-edit {
+    background-position: center -869px;
+}
+
+.bcms-table-row-active .bcms-icn-delete {
+    color: #303030;
+    background-position: right -970px;
+}
+
+.bcms-table-row-active .bcms-editor-field-area {
+    background: #fff;
+    border-color: #1894e4;
+    box-shadow: 0 0 3px 0 rgba(24, 145, 230, 0.35);
+    outline: none;
+}
+
+.bcms-tables td {
+    padding: 10px;
+    border-bottom: 1px solid #e3e3e3;
+    color: #787878;
+    word-break: break-all;
+}
+
+table.bcms-tables td:first-child {
+    border-right: 1px solid #e3e3e3;
+    text-align: left;
+}
+
+.bcms-tables td:first-child a.bcms-icn-edit {
+    margin: 0 0 0 5px;
+}
+
+.bcms-tables td:last-child {
+    text-align: right;
+}
+
+.bcms-tables-link {
+    line-height: 16px;
+    color: #0383df;
+    text-decoration: none;
+}
+
+.bcms-tables-link:hover {
+    text-decoration: underline;
+}
+
+.bcms-tables td > ins {
+    display: block;
+    text-decoration: none;
+}
+
+.bcms-table-no-data {
+    margin-left: 37px;
+}
+
+.bcms-sort-arrow {
+    display: inline-block;
+    width: 100%;
+    padding-left: 15px;
+    background: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAoAAAAGCAYAAAGN9z9QAAAAV0lEQVQI12N4+vTpNCD+zwAjQPgPiAaLIIu6whi3YTJALMSAxIHhaSBBfiSB2zADQdgJZgNMkBmI92IxBoZBcmww3SCsAsQfkBSA2OrIJqLjTCDOQRcHAEn2vvYOPcQQAAAAAElFTkSuQmCC') no-repeat left 4px;
+    color: #000;
+    text-align: left;
+    font-size: 13px !important;
+    font-weight: 700;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.bcms-sort-arrow:hover {
+    background: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAoAAAAGCAYAAAGN9z9QAAAAUElEQVQI12NgYGCYBsT/GWAECPyBMf4ji7rCGLeRZISQlcEwyEQGfiSB2wxIwAnZBhBgBuK9WIyBYZAcG7IGFSD+gKQAxFZnwAMygTgHXRAA+ZId8raGMaEAAAAASUVORK5CYII=') no-repeat left 4px;
+    text-decoration: none;
+}
+
+.bcms-sort-arrow-top {
+    background: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAoAAAAGCAYAAAGN9z9QAAAATklEQVQI12NgQAKZIIIZiP8D8V5kGbDIfxhHBcr5wIAGMtEF3kJVqsAEdiGZ9R9qGwpwAuKfQPwHysYA/EB8A80UEL4NlQODyVgUoONpAKCTHdQ696ExAAAAAElFTkSuQmCC') no-repeat left 4px;
+}
+
+a.bcms-sort-arrow-top:hover {
+    background: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAoAAAAGCAYAAAGN9z9QAAAATklEQVQI12NgQAKZIIIZiP8D8V5kGbDIfxhHBcr5wIAGMtEF3kJVqsAEdiGZ9R9qGwpwAuKfQPwHysYA/EB8A80UEL4NlQODyVgUoONpAKCTHdQ696ExAAAAAElFTkSuQmCC') no-repeat left 4px;
+}
+
+.bcms-sort-arrow-bottom {
+    background: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAoAAAAGCAYAAAGN9z9QAAAAUElEQVQI12NgYGCYBsT/GWAECPyBMf4ji7rCGLeRZISQlcEwyEQGfiSB2wxIwAnZBhBgBuK9WIyBYZAcG7IGFSD+gKQAxFZnwAMygTgHXRAA+ZId8raGMaEAAAAASUVORK5CYII=') no-repeat left 4px;
+}

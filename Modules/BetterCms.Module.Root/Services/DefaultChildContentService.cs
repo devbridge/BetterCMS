@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 
-using BetterCms.Core.DataAccess;
+using BetterModules.Core.DataAccess;
 using BetterCms.Core.DataContracts.Enums;
 using BetterCms.Core.Exceptions.Mvc;
 
@@ -11,7 +11,6 @@ using BetterCms.Module.Root.Models;
 using BetterCms.Module.Root.Mvc;
 using BetterCms.Module.Root.Mvc.PageHtmlRenderer;
 
-using NHibernate.Criterion;
 using NHibernate.Linq;
 
 namespace BetterCms.Module.Root.Services
@@ -139,8 +138,26 @@ namespace BetterCms.Module.Root.Services
                         destinationChildOption = new ChildContentOption();
                         destinationChildContent.Options.Add(destinationChildOption);
                     }
+                    sourceChildOption.CopyDataTo(destinationChildOption, false);
+                    if (sourceChildOption.Translations != null)
+                    {
+                        foreach (var childContentOptionTranslation in sourceChildOption.Translations)
+                        {
+                            var languageId = childContentOptionTranslation.Language.Id;
+                            var translation = destinationChildOption.Translations.FirstOrDefault(x => x.Language.Id == languageId);
+                            if (translation == null)
+                            {
+                                translation = childContentOptionTranslation.Clone();
+                            }
+                            else
+                            {
+                                translation.Value = childContentOptionTranslation.Value;
+                            }
+                            translation.ChildContentOption = destinationChildOption;
+                            destinationChildOption.Translations.Add(translation);
+                        }
+                    }
 
-                    sourceChildOption.CopyDataTo(destinationChildOption);
                     destinationChildOption.ChildContent = destinationChildContent;
                 }
             }
@@ -326,7 +343,7 @@ namespace BetterCms.Module.Root.Services
             }
 
             var childContentOptions = repository.AsQueryable<ChildContentOption>()
-                .Where(i => childContentIds.Contains(i.ChildContent.Id)).ToFuture();
+                .Where(i => childContentIds.Contains(i.ChildContent.Id)).FetchMany(x => x.Translations).ToFuture();
 
             var childChildContents = repository.AsQueryable<ChildContent>()
                 .Where(i => childIds.Contains(i.Parent.Id)).ToFuture().ToList();

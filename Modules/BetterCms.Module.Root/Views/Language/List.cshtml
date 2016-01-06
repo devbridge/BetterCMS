@@ -14,11 +14,12 @@
                     {
                         CustomBinding = "autocomplete: 'onlyExisting', attr: {tabindex: 50}",
                         HeaderAttributes = "style=\"width: 200px;\"",
-                        AutoFocus = true
+                        FocusIdentifier = "hasFocus"
                     },
                 new EditableGridColumn(RootGlobalization.SiteSettings_Languages_Name_Title, "Name", "name")
                     {
-                        CustomBinding = "attr: {tabindex: 100}, hasfocus: hasNameFocus"
+                        CustomBinding = "attr: {tabindex: 100}",
+                        FocusIdentifier = "hasNameFocus"
                     }  
             }
     };

@@ -723,4 +723,115 @@
   <data name="Validation_Category_Unavailable_Message" xml:space="preserve">
     <value>Selected category '{0}' cannot be assigned.</value>
   </data>
+  <data name="AntiXss_Contains_Html_Error" xml:space="preserve">
+    <value>The field must not contain html.</value>
+  </data>
+  <data name="Validation_DisallowHtml_Title_Message" xml:space="preserve">
+    <value>Title field must not contain HTML.</value>
+  </data>
+  <data name="Validation_DisallowHtml_Field_Message" xml:space="preserve">
+    <value>Field must not contain HTML.</value>
+  </data>
+  <data name="Validation_DisallowHtml_Name_Message" xml:space="preserve">
+    <value>Name field must not contain HTML.</value>
+  </data>
+  <data name="Validation_PreventHtml_Message" xml:space="preserve">
+    <value>This field cannot contain HTML.</value>
+  </data>
+  <data name="Validation_DisallowHtml_PageUrl_Message" xml:space="preserve">
+    <value>Page URL must not contain HTML.</value>
+  </data>
+  <data name="Validation_DisallowHtml_RedirectUrl_Message" xml:space="preserve">
+    <value>Redirect URL must not contain HTML.</value>
+  </data>
+  <data name="String" xml:space="preserve">
+    <value>Validation_PreventNonAlphanumeric_Message</value>
+  </data>
+  <data name="Validation_PreventNonAlphanumeric_Message" xml:space="preserve">
+    <value>Field invalid. Field can only contain alphanumeric characters: 'a-z', 'A-Z', '0-9'.</value>
+  </data>
+  <data name="Validation_ActiveDirectoryCompliant_Message" xml:space="preserve">
+    <value>The field must not contain any of the following characters: " / [ ] : ; | = , + * ? &lt; &gt; % or backslash</value>
+  </data>
+  <data name="Validation_ActiveDirectoryCompliant_TagMessage" xml:space="preserve">
+    <value>Tag must not contain any of the following characters: " / [ ] : ; | = , + * ? &lt; &gt; % or backslash</value>
+  </data>
+  <data name="Validation_ActiveDirectoryCompliant_CategoryMessage" xml:space="preserve">
+    <value>Category title must not contain any of the following characters: " / [ ] : ; | = , + * ? &lt; &gt; % or backslash</value>
+  </data>
+  <data name="SmartTag_BlogActivationDate_Title" xml:space="preserve">
+    <value>Blog post activation date</value>
+  </data>
+  <data name="SmartTag_BlogAuthor_Title" xml:space="preserve">
+    <value>Blog post author</value>
+  </data>
+  <data name="SmartTag_BlogExpirationDate_Title" xml:space="preserve">
+    <value>Blog post expiration date</value>
+  </data>
+  <data name="SmartTag_PageCategory_Title" xml:space="preserve">
+    <value>Category name</value>
+  </data>
+  <data name="SmartTag_PageCreatedOn_Title" xml:space="preserve">
+    <value>Page creation date</value>
+  </data>
+  <data name="SmartTag_PageFeaturedImageUrl_Title" xml:space="preserve">
+    <value>Featured image URL</value>
+  </data>
+  <data name="SmartTag_PageId_Title" xml:space="preserve">
+    <value>Page id</value>
+  </data>
+  <data name="SmartTag_PageMainImageUrl_Title" xml:space="preserve">
+    <value>Main image URL</value>
+  </data>
+  <data name="SmartTag_PageMetaDescription_Title" xml:space="preserve">
+    <value>Meta description</value>
+  </data>
+  <data name="SmartTag_PageMetaKeywords_Title" xml:space="preserve">
+    <value>Meta keywords</value>
+  </data>
+  <data name="SmartTag_PageMetaTitle_Title" xml:space="preserve">
+    <value>Meta title</value>
+  </data>
+  <data name="SmartTag_PageModifiedOn_Title" xml:space="preserve">
+    <value>Page last modification date</value>
+  </data>
+  <data name="SmartTag_PageOption_Title" xml:space="preserve">
+    <value>Page option</value>
+  </data>
+  <data name="SmartTag_PageSecondaryImageUrl_Title" xml:space="preserve">
+    <value>Secondary image URL</value>
+  </data>
+  <data name="SmartTag_PageTitle_Title" xml:space="preserve">
+    <value>Page title</value>
+  </data>
+  <data name="SmartTag_PageUrl_Title" xml:space="preserve">
+    <value>Page URL</value>
+  </data>
+  <data name="SmartTag_WidgetOption_Title" xml:space="preserve">
+    <value>Widget option</value>
+  </data>
+  <data name="Button_AddContent_Html" xml:space="preserve">
+    <value>HTML</value>
+  </data>
+  <data name="Button_AddContent_Markdown" xml:space="preserve">
+    <value>Markdown</value>
+  </data>
+  <data name="Button_AddContent_PlainText" xml:space="preserve">
+    <value>Plain text</value>
+  </data>
+  <data name="OptionTypes_MultilineText_Title" xml:space="preserve">
+    <value>Multi-line Text</value>
+  </data>
+  <data name="Button_AddContent_Widget" xml:space="preserve">
+    <value>Widget</value>
+  </data>
+  <data name="ContentEditMode_Html" xml:space="preserve">
+    <value>HTML</value>
+  </data>
+  <data name="ContentEditMode_Markdown" xml:space="preserve">
+    <value>Markdown</value>
+  </data>
+  <data name="ContentEditMode_SimpleText" xml:space="preserve">
+    <value>Simple Text</value>
+  </data>
 </root>

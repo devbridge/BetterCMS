@@ -4,8 +4,8 @@ using System.Transactions;
 
 using Autofac;
 
-using BetterCms.Core.DataAccess;
-using BetterCms.Core.DataAccess.DataContext;
+using BetterModules.Core.DataAccess;
+using BetterModules.Core.DataAccess.DataContext;
 
 using BetterCms.Module.Api;
 using BetterCms.Module.Api.Infrastructure;

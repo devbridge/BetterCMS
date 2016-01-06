@@ -1,6 +1,9 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Web.Mvc;
 
+using BetterCms.Core;
 using BetterCms.Core.DataContracts;
 
 namespace BetterCms.Module.Root.ViewModels.Option
@@ -8,7 +11,7 @@ namespace BetterCms.Module.Root.ViewModels.Option
     /// <summary>
     /// Option view model
     /// </summary>
-    public class OptionViewModel : OptionViewModelBase, IOption
+    public class OptionViewModel : OptionViewModelBase, IOption, IMultilingualOption
     {
         /// <summary>
         /// Gets or sets the option default value.
@@ -56,6 +59,26 @@ namespace BetterCms.Module.Root.ViewModels.Option
                     CustomOption = new CustomOptionViewModel();
                 }
                 CustomOption.Identifier = value;
+            }
+        }
+
+        /// <summary>
+        /// Gets or sets the translations.
+        /// </summary>
+        /// <value>
+        /// The translations.
+        /// </value>
+        public IList<OptionTranslationViewModel> Translations { get; set; }
+
+        IList<IOptionTranslation> IMultilingualOption.Translations
+        {
+            get
+            {
+                return Translations.Cast<IOptionTranslation>().ToList();
+            }
+            set
+            {
+                Translations = value.Cast<OptionTranslationViewModel>().ToList();
             }
         }
 
@@ -123,58 +146,6 @@ namespace BetterCms.Module.Root.ViewModels.Option
             set
             {
                 OptionDefaultValue = value;
-            }
-        }
-
-        System.Guid IEntity.Id
-        {
-            get { throw new System.NotSupportedException(); }
-        }
-
-        bool IEntity.IsDeleted
-        {
-            get { throw new System.NotSupportedException(); }
-        }
-
-        System.DateTime IEntity.CreatedOn
-        {
-            get { throw new System.NotSupportedException(); }
-        }
-
-        System.DateTime IEntity.ModifiedOn
-        {
-            get { throw new System.NotSupportedException(); }
-        }
-
-        System.DateTime? IEntity.DeletedOn
-        {
-            get { throw new System.NotSupportedException(); }
-        }
-
-        string IEntity.CreatedByUser
-        {
-            get { throw new System.NotSupportedException(); }
-        }
-
-        string IEntity.ModifiedByUser
-        {
-            get { throw new System.NotSupportedException(); }
-        }
-
-        string IEntity.DeletedByUser
-        {
-            get { throw new System.NotSupportedException(); }
-        }
-
-        int IEntity.Version
-        {
-            get
-            {
-                throw new System.NotSupportedException();
-            }
-            set
-            {
-                throw new System.NotSupportedException();
             }
         }
 

@@ -2,8 +2,9 @@
 using System.Collections.Generic;
 using System.Security.Principal;
 
-using BetterCms.Core.Mvc;
 using BetterCms.Module.Pages.ViewModels.Page;
+
+using BetterModules.Core.Web.Mvc;
 
 using Page = BetterCms.Module.Pages.Models.PageProperties;
 

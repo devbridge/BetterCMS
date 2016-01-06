@@ -1,13 +1,13 @@
 ﻿using System;
 
-using BetterCms.Core.DataAccess.DataContext.Migrations;
+using BetterModules.Core.DataAccess.DataContext.Migrations;
 
 using FluentMigrator;
 
 namespace BetterCms.Module.Users.Models.Migrations
 {
     [Migration(201309101400)]
-    public class Migration201309101400 : DefaultMigration
+    public class Migration201309101400: DefaultMigration
     {
         public Migration201309101400()
             : base(UsersModuleDescriptor.ModuleName)

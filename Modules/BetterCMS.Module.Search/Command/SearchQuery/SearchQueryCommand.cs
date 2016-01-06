@@ -1,13 +1,15 @@
 ﻿using BetterCms.Core.Exceptions;
-using BetterCms.Core.Mvc.Commands;
-using BetterCms.Core.Web;
 
 using BetterCms.Module.Root.Mvc;
 using BetterCms.Module.Root.Mvc.Helpers;
+
 using BetterCms.Module.Search.Helpers;
 using BetterCms.Module.Search.Models;
 using BetterCms.Module.Search.Services;
 using BetterCms.Module.Search.ViewModels;
+
+using BetterModules.Core.Web.Mvc.Commands;
+using BetterModules.Core.Web.Web;
 
 namespace BetterCms.Module.Search.Command.SearchQuery
 {

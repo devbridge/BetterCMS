@@ -25,7 +25,7 @@
     <link rel="stylesheet" type="text/css" href="/file/bcms-pages/content/styles/bcms.navigation.css" />
     <link rel="stylesheet" type="text/css" href="/file/bcms-users/content/styles/bcms.users.css" />
     <link rel="stylesheet" type="text/css" href="/file/bcms-media/content/styles/bcms.media.css" />
-    <link rel="stylesheet" type="text/css" href="/file/bcms-root/content/styles/base.css" />
+    <link rel="stylesheet" type="text/css" href="/file/bcms-root/content/styles/bcms.root.css" />
     <link rel="stylesheet" type="text/css" href="/file/bcms-root/content/styles/bcms.messages.css" />
 
         
@@ -327,9 +327,9 @@
     </div>
 </script>
 <script type="text/html" id="bcms-site-setting-tab-template">
-    <div class="bcms-innertab-header">
+    <div class="bcms-inner-tab-header">
         <!-- ko foreach: tabs -->
-        <a class="bcms-tab" data-bind="
+        <a class="bcms-tab-item" data-bind="
             text: title, 
             attr: {'data-name': href}, 
             click: tabClick, clickBubble: true"></a>

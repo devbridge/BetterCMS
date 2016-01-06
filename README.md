@@ -15,9 +15,11 @@ Copyright notice and permission notice shall be included in all copies or substa
 
 ##Contacts##
 Devbridge Group LLC<br/>
-1659 W. Hubbard St.<br/>
-Chicago, IL 60622<br/>
+343 W Erie St.<br/>
+Suite 600<br/>
+Chicago, IL 60654<br/>
 United States<br/>
-tel. (312) 242-1642<br/>
+Phone. 312.635.4246<br/>
+Fax. 312.277.1068<br/>
 info@bettercms.com<br/>
 www.bettercms.com<br/>

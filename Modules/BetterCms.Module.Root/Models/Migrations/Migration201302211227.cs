@@ -1,6 +1,4 @@
-﻿using System;
-
-using BetterCms.Core.DataAccess.DataContext.Migrations;
+﻿using BetterModules.Core.DataAccess.DataContext.Migrations;
 
 using FluentMigrator;
 
@@ -10,7 +8,7 @@ namespace BetterCms.Module.Root.Models.Migrations
     /// Module database structure update.
     /// </summary>
     [Migration(201302211227)]
-    public class Migration201302211227 : DefaultMigration
+    public class Migration201302211227: DefaultMigration
     {
         /// <summary>
         /// The root module schema name.

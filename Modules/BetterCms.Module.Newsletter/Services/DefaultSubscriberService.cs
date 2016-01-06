@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Linq;
 
-using BetterCms.Core.DataAccess;
-using BetterCms.Core.DataAccess.DataContext;
+using BetterModules.Core.DataAccess;
+using BetterModules.Core.DataAccess.DataContext;
 
 using BetterCms.Module.Newsletter.Content.Resources;
 using BetterCms.Module.Newsletter.Exceptions;

@@ -1,4 +1,8 @@
-﻿using BetterCms.Core.DataAccess;
+﻿using System.Collections.Generic;
+
+using BetterCms.Core.DataContracts;
+
+using BetterModules.Core.DataAccess;
 
 using NHibernate;
 
@@ -8,5 +12,6 @@ namespace BetterCms.Module.Root.Models
     {
         string Name { get; }
         IFutureValue<int> CheckIsUsed(IRepository repository, CategoryTree categoryTree);
+        IEnumerable<IEntityCategory> QueryEntityCategories(IRepository repository, ICategory category);
     }
 }

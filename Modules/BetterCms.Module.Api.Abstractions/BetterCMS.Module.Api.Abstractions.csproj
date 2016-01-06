@@ -9,10 +9,11 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>BetterCms.Module.Api</RootNamespace>
     <AssemblyName>BetterCms.Module.Api.Abstractions</AssemblyName>
-    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">..\</SolutionDir>
     <RestorePackages>true</RestorePackages>
+    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -23,6 +24,7 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -32,6 +34,7 @@
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <PropertyGroup>
     <StartupObject />
@@ -105,6 +108,8 @@
     <Compile Include="Infrastructure\RequestBase.cs" />
     <Compile Include="Infrastructure\ResponseBase.cs" />
     <Compile Include="Infrastructure\SaveModelBase.cs" />
+    <Compile Include="Operations\MultilingualChildContentOptionValuesModel.cs" />
+    <Compile Include="Operations\MultilingualOptionValueModel.cs" />
     <Compile Include="Operations\Blog\Authors\Author\DeleteAuthorRequest.cs" />
     <Compile Include="Operations\Blog\Authors\Author\DeleteAuthorResponse.cs" />
     <Compile Include="Operations\Blog\Authors\Author\PostAuthorRequest.cs" />
@@ -183,6 +188,7 @@
     <Compile Include="Operations\Pages\Contents\Content\HtmlContent\SaveHtmlContentModel.cs" />
     <Compile Include="Operations\Pages\Contents\Content\HtmlContent\PutHtmlContentRequest.cs" />
     <Compile Include="Operations\Pages\Contents\Content\HtmlContent\PutHtmlContentResponse.cs" />
+    <Compile Include="Operations\Pages\ContentTextMode.cs" />
     <Compile Include="Operations\Pages\Pages\Page\Contents\Content\DeletePageContentRequest.cs" />
     <Compile Include="Operations\Pages\Pages\Page\Contents\Content\DeletePageContentResponse.cs" />
     <Compile Include="Operations\Pages\Pages\Page\Contents\Content\GetPageContentModel.cs" />
@@ -547,6 +553,7 @@
     <Compile Include="Operations\Root\Tags\Tag\GetTagRequestValidator.cs" />
     <Compile Include="Operations\Root\Tags\Tag\DeleteTagRequest.cs" />
     <Compile Include="Operations\Root\Tags\Tag\DeleteTagResponse.cs" />
+    <Compile Include="Operations\OptionTranslationModel.cs" />
     <Compile Include="Operations\Users\Roles\GetRolesRequest.cs" />
     <Compile Include="Operations\Users\Roles\GetRolesResponse.cs" />
     <Compile Include="Operations\Users\Roles\IRolesService.cs" />

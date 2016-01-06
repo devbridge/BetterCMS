@@ -2,11 +2,9 @@
 using System.Collections.Generic;
 using System.Linq;
 
-using BetterCms.Core.DataAccess;
-using BetterCms.Core.DataAccess.DataContext;
 using BetterCms.Core.Exceptions.Api;
-using BetterCms.Core.Exceptions.DataTier;
 using BetterCms.Core.Security;
+
 using BetterCms.Module.Api.Operations.Root;
 using BetterCms.Module.Api.Operations.Root.Categories.Category;
 using BetterCms.Module.MediaManager.Models;
@@ -16,6 +14,10 @@ using BetterCms.Module.Root.Models;
 using BetterCms.Module.Root.Models.Extensions;
 using BetterCms.Module.Root.Mvc;
 using BetterCms.Module.Root.Services;
+
+using BetterModules.Core.DataAccess;
+using BetterModules.Core.DataAccess.DataContext;
+using BetterModules.Core.Exceptions.DataTier;
 
 using NHibernate.Linq;
 
@@ -377,25 +379,9 @@ namespace BetterCms.Module.Api.Operations.MediaManager.Files.File
                 return new DeleteFileResponse { Data = false };
             }
 
-            var itemToDelete = repository
-                .AsQueryable<MediaFile>()
-                .Where(p => p.Id == request.Id)
-                .FirstOne();
+            var result = mediaService.DeleteMedia(request.Id, request.Data.Version, false);
 
-            if (request.Data.Version > 0 && itemToDelete.Version != request.Data.Version)
-            {
-                throw new ConcurrentDataException(itemToDelete);
-            }
-
-            unitOfWork.BeginTransaction();
-
-            mediaService.DeleteMedia(itemToDelete);
-
-            unitOfWork.Commit();
-
-            Events.MediaManagerEvents.Instance.OnMediaFileDeleted(itemToDelete);
-
-            return new DeleteFileResponse { Data = true };
+            return new DeleteFileResponse { Data = result };
         }
     }
 }

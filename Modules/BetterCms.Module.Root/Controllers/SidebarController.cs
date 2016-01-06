@@ -12,6 +12,8 @@ using BetterCms.Module.Root.ViewModels.Cms;
 
 using Common.Logging;
 
+using BetterModules.Core.Exceptions;
+
 using Microsoft.Web.Mvc;
 
 namespace BetterCms.Module.Root.Controllers
@@ -31,7 +33,7 @@ namespace BetterCms.Module.Root.Controllers
         /// <summary>
         /// A contract to manage modules registry.
         /// </summary>
-        private readonly IModulesRegistration modulesRegistration;
+        private readonly ICmsModulesRegistration modulesRegistration;
 
         /// <summary>
         /// The contract for BetterCMS application host.
@@ -43,7 +45,7 @@ namespace BetterCms.Module.Root.Controllers
         /// </summary>
         /// <param name="modulesRegistration">The modules.</param>
         /// <param name="configuration">The CMS configuration.</param>
-        public SidebarController(IModulesRegistration modulesRegistration, ICmsConfiguration configuration)
+        public SidebarController(ICmsModulesRegistration modulesRegistration, ICmsConfiguration configuration)
         {
             this.configuration = configuration;
             this.modulesRegistration = modulesRegistration;
@@ -81,7 +83,7 @@ namespace BetterCms.Module.Root.Controllers
 
                 model.Version = configuration.Version;
             }
-            catch (CmsException ex)
+            catch (CoreException ex)
             {
                 Log.Error(ex);
             }                       

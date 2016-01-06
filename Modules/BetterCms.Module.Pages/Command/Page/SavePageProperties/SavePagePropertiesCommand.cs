@@ -2,14 +2,9 @@
 using System.Collections.Generic;
 using System.Linq;
 
-using BetterCms.Core.DataAccess;
-using BetterCms.Core.DataAccess.DataContext;
-using BetterCms.Core.DataAccess.DataContext.Fetching;
 using BetterCms.Core.DataContracts.Enums;
 using BetterCms.Core.Exceptions;
 using BetterCms.Core.Exceptions.Mvc;
-using BetterCms.Core.Models;
-using BetterCms.Core.Mvc.Commands;
 using BetterCms.Core.Security;
 
 using BetterCms.Module.MediaManager.Models;
@@ -26,6 +21,11 @@ using BetterCms.Module.Root.Models.Extensions;
 using BetterCms.Module.Root.Mvc;
 using BetterCms.Module.Root.Mvc.Helpers;
 using BetterCms.Module.Root.Services;
+
+using BetterModules.Core.DataAccess;
+using BetterModules.Core.DataAccess.DataContext;
+using BetterModules.Core.DataAccess.DataContext.Fetching;
+using BetterModules.Core.Web.Mvc.Commands;
 
 using CategoryEntity = BetterCms.Module.Root.Models.Category;
 
@@ -314,12 +314,13 @@ namespace BetterCms.Module.Pages.Command.Page.SavePageProperties
                 tagService.SavePageTags(page, request.Tags, out newTags);
             }
 
+            UnitOfWork.Commit();
+
             if (publishDraftContent)
             {
                 contentService.PublishDraftContent(page.Id);
+                UnitOfWork.Commit();
             }
-
-            UnitOfWork.Commit();
 
             // Notify about page properties change.
             page.Options = pageOptions;

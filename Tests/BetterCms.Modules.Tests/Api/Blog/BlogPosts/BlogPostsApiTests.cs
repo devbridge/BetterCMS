@@ -3,16 +3,19 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Security.Principal;
 
-using BetterCms.Core.Models;
-
 using BetterCms.Module.Api.Extensions;
 using BetterCms.Module.Api.Operations;
 using BetterCms.Module.Api.Operations.Blog.BlogPosts.BlogPost.Properties;
+using BetterCms.Module.Api.Operations.Pages;
 using BetterCms.Module.Api.Operations.Root;
+
 using BetterCms.Module.Blog.Models;
 using BetterCms.Module.Pages.Helpers;
+
 using BetterCms.Module.Root;
 using BetterCms.Module.Root.Models;
+
+using BetterModules.Core.Models;
 
 using NHibernate;
 
@@ -27,6 +30,9 @@ namespace BetterCms.Test.Module.Api.Blog.BlogPosts
         PutBlogPostPropertiesRequest, PutBlogPostPropertiesResponse,
         DeleteBlogPostPropertiesRequest, DeleteBlogPostPropertiesResponse>
     {
+        private const string MarkdownOriginalText = "Testing **Bold**";
+        private const string MarkdownHtml = "<p>Testing <strong>Bold</strong></p>";
+
         private Layout layout;
         private Layout defaultLayout;
         private Page masterPage;
@@ -35,6 +41,8 @@ namespace BetterCms.Test.Module.Api.Blog.BlogPosts
         private bool isNullUrl;
         private string currentTitle;
         private IList<Guid> categories;
+        private bool isMarkdown;
+        private bool isHtmlSet;
 
         [SetUp]
         public void SetUp()
@@ -54,6 +62,7 @@ namespace BetterCms.Test.Module.Api.Blog.BlogPosts
         {
             // Attach to events
             Events.BlogEvents.Instance.BlogCreated += Instance_EntityCreated;
+            Events.BlogEvents.Instance.BlogCreated += CheckTagCount;
             Events.BlogEvents.Instance.BlogUpdated += Instance_EntityUpdated;
             Events.BlogEvents.Instance.BlogDeleted += Instance_EntityDeleted;
 
@@ -61,6 +70,9 @@ namespace BetterCms.Test.Module.Api.Blog.BlogPosts
                 (api, session) =>
                 {
                     isNullUrl = true;
+                    isMarkdown = false;
+                    isHtmlSet = true;
+
                     masterPage = null;
                     layout = TestDataProvider.CreateNewLayout();
                     region = TestDataProvider.CreateNewRegion();
@@ -77,6 +89,7 @@ namespace BetterCms.Test.Module.Api.Blog.BlogPosts
 
             // Detach from events
             Events.BlogEvents.Instance.BlogCreated -= Instance_EntityCreated;
+            Events.BlogEvents.Instance.BlogCreated -= CheckTagCount;
             Events.BlogEvents.Instance.BlogUpdated -= Instance_EntityUpdated;
             Events.BlogEvents.Instance.BlogDeleted -= Instance_EntityDeleted;
         }
@@ -112,6 +125,8 @@ namespace BetterCms.Test.Module.Api.Blog.BlogPosts
                         
 
                         isNullUrl = true;
+                        isMarkdown = false;
+                        isHtmlSet = true;
                         masterPage = null;
                         layout = TestDataProvider.CreateNewLayout();
                         region = TestDataProvider.CreateNewRegion();
@@ -156,6 +171,9 @@ namespace BetterCms.Test.Module.Api.Blog.BlogPosts
                 (api, session) =>
                 {
                     isNullUrl = false;
+                    isMarkdown = false;
+                    isHtmlSet = true;
+
                     masterPage = null;
                     layout = TestDataProvider.CreateNewLayout();
                     region = TestDataProvider.CreateNewRegion();
@@ -187,7 +205,10 @@ namespace BetterCms.Test.Module.Api.Blog.BlogPosts
             RunApiActionInTransaction(
                 (api, session) =>
                 {
+                    isMarkdown = false;
+                    isHtmlSet = true;
                     isNullUrl = false;
+
                     masterPage = TestDataProvider.CreateNewPage();
                     masterPage.IsMasterPage = true;
                     layout = null;
@@ -224,6 +245,8 @@ namespace BetterCms.Test.Module.Api.Blog.BlogPosts
             RunApiActionInTransaction(
                 (api, session) =>
                 {
+                    isMarkdown = false;
+                    isHtmlSet = true;
                     isNullUrl = false;
                     masterPage = null;
                     layout = null;
@@ -257,6 +280,81 @@ namespace BetterCms.Test.Module.Api.Blog.BlogPosts
             Events.BlogEvents.Instance.BlogCreated -= Instance_EntityCreated;
             Events.BlogEvents.Instance.BlogUpdated -= Instance_EntityUpdated;
             Events.BlogEvents.Instance.BlogDeleted -= Instance_EntityDeleted;
+        }
+
+        [Test]
+        public void Should_CRUD_BlogPost_WithLayout_WithMarkdown_NoHtml_Successfully()
+        {
+            // Attach to events
+            Events.BlogEvents.Instance.BlogCreated += Instance_EntityCreated;
+            Events.BlogEvents.Instance.BlogUpdated += Instance_EntityUpdated;
+            Events.BlogEvents.Instance.BlogDeleted += Instance_EntityDeleted;
+
+            RunApiActionInTransaction(
+                (api, session) =>
+                {
+                    isMarkdown = true;
+                    isHtmlSet = false;
+                    isNullUrl = false;
+
+                    masterPage = null;
+                    layout = TestDataProvider.CreateNewLayout();
+                    region = TestDataProvider.CreateNewRegion();
+
+                    var layoutRegion = new LayoutRegion { Layout = layout, Region = region };
+                    layout.LayoutRegions = new[] { layoutRegion };
+
+                    session.SaveOrUpdate(region);
+                    session.SaveOrUpdate(layout);
+                    session.SaveOrUpdate(layoutRegion);
+
+                    Run(session, api.Blog.BlogPost.Properties.Post, api.Blog.BlogPost.Properties.Get, api.Blog.BlogPost.Properties.Put, api.Blog.BlogPost.Properties.Delete);
+                });
+
+            // Detach from events
+            Events.BlogEvents.Instance.BlogCreated -= Instance_EntityCreated;
+            Events.BlogEvents.Instance.BlogUpdated -= Instance_EntityUpdated;
+            Events.BlogEvents.Instance.BlogDeleted -= Instance_EntityDeleted;
+        }
+        
+        [Test]
+        public void Should_CRUD_BlogPost_WithLayout_WithMarkdown_WithHtml_Successfully()
+        {
+            // Attach to events
+            Events.BlogEvents.Instance.BlogCreated += Instance_EntityCreated;
+            Events.BlogEvents.Instance.BlogUpdated += Instance_EntityUpdated;
+            Events.BlogEvents.Instance.BlogDeleted += Instance_EntityDeleted;
+
+            RunApiActionInTransaction(
+                (api, session) =>
+                {
+                    isMarkdown = true;
+                    isHtmlSet = true;
+                    isNullUrl = true;
+
+                    masterPage = null;
+                    layout = TestDataProvider.CreateNewLayout();
+                    region = TestDataProvider.CreateNewRegion();
+
+                    var layoutRegion = new LayoutRegion { Layout = layout, Region = region };
+                    layout.LayoutRegions = new[] { layoutRegion };
+
+                    session.SaveOrUpdate(region);
+                    session.SaveOrUpdate(layout);
+                    session.SaveOrUpdate(layoutRegion);
+
+                    Run(session, api.Blog.BlogPost.Properties.Post, api.Blog.BlogPost.Properties.Get, api.Blog.BlogPost.Properties.Put, api.Blog.BlogPost.Properties.Delete);
+                });
+
+            // Detach from events
+            Events.BlogEvents.Instance.BlogCreated -= Instance_EntityCreated;
+            Events.BlogEvents.Instance.BlogUpdated -= Instance_EntityUpdated;
+            Events.BlogEvents.Instance.BlogDeleted -= Instance_EntityDeleted;
+        }
+        
+        private void CheckTagCount(BetterModules.Events.SingleItemEventArgs<BlogPost> args)
+        {
+            Assert.AreEqual(2, args.Item.PageTags.Count);
         }
 
         protected override SaveBlogPostPropertiesModel GetCreateModel(ISession session)
@@ -304,7 +402,9 @@ namespace BetterCms.Test.Module.Api.Blog.BlogPosts
                     UseCanonicalUrl = true,
                     UseNoFollow = true,
                     UseNoIndex = true,
-                    HtmlContent = html,
+                    HtmlContent = isMarkdown &&!isHtmlSet ? null : html,
+                    OriginalText = isMarkdown ? MarkdownOriginalText : null,
+                    ContentTextMode = isMarkdown ? ContentTextMode.Markdown : ContentTextMode.Html,
                     Tags = new List<string> { TestDataProvider.ProvideRandomString(20), TestDataProvider.ProvideRandomString(20) },
                     Language = new LanguageModel
                                 {
@@ -422,6 +522,15 @@ namespace BetterCms.Test.Module.Api.Blog.BlogPosts
             Assert.IsNotNull(getResponse.Data.ActivationDate);
             Assert.IsNotNull(getResponse.Data.ExpirationDate);
             Assert.IsNotNull(getResponse.HtmlContent);
+            Assert.IsNotNull(getResponse.ContentTextMode);
+            if (isMarkdown)
+            {
+                Assert.IsNotNull(getResponse.OriginalText);
+            }
+            else
+            {
+                Assert.IsNull(getResponse.OriginalText);
+            }
             Assert.IsNotNull(getResponse.Tags);
             Assert.IsNotNull(getResponse.MetaData);
             Assert.IsNotNull(getResponse.Language);
@@ -434,8 +543,11 @@ namespace BetterCms.Test.Module.Api.Blog.BlogPosts
             Assert.IsNotNull(getResponse.TechnicalInfo.RegionId);
             Assert.IsNotNull(getResponse.TechnicalInfo.PageContentId);
             Assert.IsNotNull(getResponse.AccessRules);
-            Assert.IsNotNull(getResponse.ChildContentsOptionValues);
-            Assert.IsNotEmpty(getResponse.ChildContentsOptionValues);
+            if (!isMarkdown)
+            {
+                Assert.IsNotNull(getResponse.ChildContentsOptionValues);
+                Assert.IsNotEmpty(getResponse.ChildContentsOptionValues);
+            }
             if (masterPage != null)
             {
                 Assert.IsNotNull(getResponse.Data.MasterPageId);
@@ -482,7 +594,22 @@ namespace BetterCms.Test.Module.Api.Blog.BlogPosts
             Assert.AreEqual(getResponse.Data.UseCanonicalUrl, model.UseCanonicalUrl);
             Assert.AreEqual(getResponse.Data.UseNoFollow, model.UseNoFollow);
             Assert.AreEqual(getResponse.Data.UseNoIndex, model.UseNoIndex);
-            Assert.AreEqual(getResponse.HtmlContent, model.HtmlContent);
+            Assert.AreEqual(getResponse.OriginalText, model.OriginalText);
+            if (isMarkdown)
+            {
+                if (isHtmlSet)
+                {
+                    Assert.AreEqual(getResponse.HtmlContent.Trim(), model.HtmlContent);
+                }
+                else
+                {
+                    Assert.AreEqual(getResponse.HtmlContent.Trim(), MarkdownHtml);
+                }
+            }
+            else
+            {
+                Assert.AreEqual(getResponse.HtmlContent, model.HtmlContent);
+            }
 
             Assert.AreEqual(getResponse.Tags.Count, model.Tags.Count);
             Assert.IsTrue(getResponse.Tags.All(t1 => model.Tags.Any(t2 => t2 == t1.Name)));
@@ -505,21 +632,24 @@ namespace BetterCms.Test.Module.Api.Blog.BlogPosts
             Assert.AreEqual(getResponse.Language.Name, model.Language.Name);
             Assert.AreEqual(getResponse.Language.Code, model.Language.Code);
 
-            Assert.AreEqual(getResponse.ChildContentsOptionValues.Count, model.ChildContentsOptionValues.Count);
-            model.ChildContentsOptionValues.ToList().ForEach(
-                o =>
-                {
-                    var o1 = getResponse.ChildContentsOptionValues.FirstOrDefault(c => c.AssignmentIdentifier == o.AssignmentIdentifier);
-                    Assert.IsNotNull(o1);
-                    Assert.IsNotNull(o1.OptionValues);
-                    Assert.AreEqual(o1.OptionValues.Count(c => !c.UseDefaultValue), o.OptionValues.Count(c => !c.UseDefaultValue));
-                    Assert.IsTrue(o.OptionValues
-                        .Where(c => !c.UseDefaultValue)
-                        .All(c => o1.OptionValues.All(c1 => c1.Key == c.Key
-                            && c.Value == c1.Value
-                            && c.CustomTypeIdentifier == c1.CustomTypeIdentifier
-                            && c.Type == c1.Type)));
-                });
+            if (!isMarkdown)
+            {
+                Assert.AreEqual(getResponse.ChildContentsOptionValues.Count, model.ChildContentsOptionValues.Count);
+                model.ChildContentsOptionValues.ToList().ForEach(
+                    o =>
+                    {
+                        var o1 = getResponse.ChildContentsOptionValues.FirstOrDefault(c => c.AssignmentIdentifier == o.AssignmentIdentifier);
+                        Assert.IsNotNull(o1);
+                        Assert.IsNotNull(o1.OptionValues);
+                        Assert.AreEqual(o1.OptionValues.Count(c => !c.UseDefaultValue), o.OptionValues.Count(c => !c.UseDefaultValue));
+                        Assert.IsTrue(
+                            o.OptionValues.Where(c => !c.UseDefaultValue)
+                                .All(
+                                    c =>
+                                        o1.OptionValues.All(
+                                            c1 => c1.Key == c.Key && c.Value == c1.Value && c.CustomTypeIdentifier == c1.CustomTypeIdentifier && c.Type == c1.Type)));
+                    });
+            }
         }
     }
 }

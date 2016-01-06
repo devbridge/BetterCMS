@@ -2,14 +2,16 @@
 using System.Collections.Generic;
 using System.Linq;
 
-using BetterCms.Core.Models;
 using BetterCms.Module.Api.Extensions;
 using BetterCms.Module.Api.Operations;
 using BetterCms.Module.Api.Operations.Root;
 using BetterCms.Module.Api.Operations.Root.Layouts;
 using BetterCms.Module.Api.Operations.Root.Layouts.Layout;
 using BetterCms.Module.Api.Operations.Root.Layouts.Layout.Regions;
+
 using BetterCms.Module.MediaManager.Provider;
+
+using BetterModules.Core.Models;
 
 using NHibernate;
 

@@ -1,4 +1,4 @@
-﻿using BetterCms.Core.Models;
+﻿using BetterModules.Core.Models;
 
 namespace BetterCms.Module.Blog.Models.Maps
 {
@@ -8,6 +8,8 @@ namespace BetterCms.Module.Blog.Models.Maps
             : base(BlogModuleDescriptor.ModuleName)
         {
             Table("Options");
+
+            Map(x => x.DefaultContentTextMode).Not.Nullable();
 
             References(x => x.DefaultLayout).Cascade.SaveUpdate().LazyLoad();
             References(x => x.DefaultMasterPage).Cascade.SaveUpdate().LazyLoad();

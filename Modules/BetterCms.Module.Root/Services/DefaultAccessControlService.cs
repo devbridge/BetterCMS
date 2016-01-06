@@ -5,19 +5,19 @@ using System.Security.Principal;
 using System.Text;
 
 using BetterCms.Configuration;
-using BetterCms.Core.DataAccess;
-using BetterCms.Core.DataAccess.DataContext.Fetching;
-using BetterCms.Core.DataContracts;
 using BetterCms.Core.Exceptions;
 using BetterCms.Core.Exceptions.Mvc;
 using BetterCms.Core.Exceptions.Service;
 using BetterCms.Core.Security;
 using BetterCms.Core.Services;
-using BetterCms.Core.Services.Caching;
-
 using BetterCms.Module.Root.Content.Resources;
 using BetterCms.Module.Root.Models;
 using BetterCms.Module.Root.ViewModels.Security;
+
+using BetterModules.Core.DataAccess;
+using BetterModules.Core.DataAccess.DataContext.Fetching;
+using BetterModules.Core.DataContracts;
+using BetterModules.Core.Web.Services.Caching;
 
 namespace BetterCms.Module.Root.Services
 {

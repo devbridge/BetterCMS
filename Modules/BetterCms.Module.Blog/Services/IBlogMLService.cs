@@ -17,7 +17,7 @@ namespace BetterCms.Module.Blog.Services
 
         List<BlogPostImportResult> ValidateImport(BlogMLBlog blogPosts);
 
-        List<BlogPostImportResult> ImportBlogs(BlogMLBlog blogPosts, List<BlogPostImportResult> modifications, IPrincipal principal, bool createRedirects);
+        List<BlogPostImportResult> ImportBlogs(BlogMLBlog blogPosts, List<BlogPostImportResult> modifications, IPrincipal principal, bool createRedirects, bool RecreateCategoryTree = true, bool ReuseExistingCategories = false);
 
         Uri ConstructFilePath(Guid guid);
     }

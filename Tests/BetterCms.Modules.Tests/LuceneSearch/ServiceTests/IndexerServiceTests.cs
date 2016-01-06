@@ -5,16 +5,18 @@ using System.Reflection;
 
 using Autofac;
 
+using BetterCms.Core.Security;
+using BetterCms.Core.Services;
+
 using BetterCms.Events;
 
 using BetterCMS.Module.LuceneSearch.Helpers;
 using BetterCMS.Module.LuceneSearch.Services.IndexerService;
 using BetterCMS.Module.LuceneSearch.Services.WebCrawlerService;
-
-using BetterCms.Core.DataAccess;
-using BetterCms.Core.Security;
-using BetterCms.Core.Services;
 using BetterCms.Module.Search.Models;
+
+using BetterModules.Core.DataAccess;
+using BetterModules.Events;
 
 using HtmlAgilityPack;
 

@@ -3,16 +3,17 @@ using System.Linq;
 
 using Autofac;
 
-using BetterCms.Core.Dependencies;
 using BetterCms.Core.Exceptions;
-using BetterCms.Core.Exceptions.DataTier;
-using BetterCms.Core.Mvc.Commands;
-using BetterCms.Core.Web;
 
 using BetterCms.Module.GoogleAnalytics.Models;
 using BetterCms.Module.Pages.Services;
 using BetterCms.Module.Root.Mvc;
 using BetterCms.Module.Root.Services;
+
+using BetterModules.Core.Dependencies;
+using BetterModules.Core.Exceptions.DataTier;
+using BetterModules.Core.Web.Mvc.Commands;
+using BetterModules.Core.Web.Web;
 
 namespace BetterCms.Module.GoogleAnalytics.Command.Sitemap
 {

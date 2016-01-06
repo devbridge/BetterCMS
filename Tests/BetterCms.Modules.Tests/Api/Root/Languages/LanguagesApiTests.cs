@@ -1,12 +1,12 @@
 ﻿using System.Globalization;
 using System.Linq;
 
-using BetterCms.Core.Models;
-
 using BetterCms.Module.Api.Extensions;
 using BetterCms.Module.Api.Operations.Root.Languages;
 using BetterCms.Module.Api.Operations.Root.Languages.Language;
 using BetterCms.Module.Root.Models;
+
+using BetterModules.Core.Models;
 
 using NHibernate;
 

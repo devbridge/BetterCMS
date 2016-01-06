@@ -4,24 +4,27 @@
  */
 
 CKEDITOR.editorConfig = function (config) {
-    config.extraPlugins = 'cms-imagemanager,cms-filemanager,cms-dynamicregion,cms-togglelinewrap,cms-modelvalues,aceeditor,cms-widget';
+    config.extraPlugins = 'cms-imagemanager,cms-filemanager,cms-dynamicregion,cms-togglelinewrap,cms-modelvalues,aceeditor,cms-widget,cms-option';
 
     config.toolbar = [
-		['Undo', 'Redo'],
-		['Link', 'Unlink'],
-		['CmsImageManager', 'CmsFileManager', 'Table', 'SpecialChar', 'HorizontalRule', 'Image'],
-	    ['JustifyLeft', 'JustifyCenter', 'JustifyRight', 'JustifyBlock'],
-		['Bold', 'Italic', 'Underline', 'Strike', 'Subscript', 'Superscript', 'RemoveFormat'],
-        ['TextColor', 'BGColor'],
-		['NumberedList', 'BulletedList', 'Outdent', 'Indent'],
-		['Styles', 'Format', 'Font', 'FontSize'],
-        ['CmsDynamicRegion', 'CmsModelValues', 'CmsWidget'],
-		['Source', 'Maximize', 'ShowBlocks', 'CmsToggleLineWrap']
+        ['Undo', 'Redo'],
+        ['Link', 'Unlink'],
+        ['Bold', 'Italic', 'Underline', 'BulletedList', 'SpecialChar'],
+        ['CmsImageManager', 'CmsFileManager', 'Image'],
+        ['CmsDynamicRegion', 'CmsWidget', 'CmsOption', 'CmsModelValues'],
+        ['Source', 'Maximize', 'CmsToggleLineWrap'],
+        '/',
+        ['Table', 'Strike', 'NumberedList', 'JustifyLeft', 'JustifyCenter', 'JustifyRight', 'JustifyBlock', 'Styles', 'Format', 'Font', 'FontSize'],
+        ['Copy', 'Cut', 'Paste', 'PasteFromWord']
     ];
 
+    config.skin = 'bettercms';
     config.removePlugins = 'tabletools';
     config.disableNativeSpellChecker = false;
     config.allowedContent = true;
     config.extraAllowedContent = 'div[class]';
     config.autoParagraph = false;
+    config.toolbarCanCollapse = true;
+    config.forcePasteAsPlainText = true;
+
 };

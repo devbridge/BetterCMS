@@ -2,8 +2,8 @@
 /*global bettercms */
 
 bettercms.define('bcms.pages.template', ['bcms.jquery', 'bcms', 'bcms.modal', 'bcms.datepicker', 'bcms.dynamicContent', 'bcms.siteSettings', 'bcms.messages',
-        'bcms.preview', 'bcms.grid', 'bcms.inlineEdit', 'bcms.slides.jquery', 'bcms.options', 'bcms.ko.extenders', 'bcms.pages.masterpage', 'bcms.pages'],
-    function ($, bcms, modal, datepicker, dynamicContent, siteSettings, messages, preview, grid, editor, slides, options, ko, masterpage, pages) {
+        'bcms.preview', 'bcms.grid', 'bcms.inlineEdit', 'bcms.slides.jquery', 'bcms.options', 'bcms.ko.extenders', 'bcms.pages.masterpage', 'bcms.pages', 'bcms.antiXss'],
+    function ($, bcms, modal, datepicker, dynamicContent, siteSettings, messages, preview, grid, editor, slides, options, ko, masterpage, pages, antiXss) {
         'use strict';
 
         var template = {},
@@ -373,7 +373,7 @@ bettercms.define('bcms.pages.template', ['bcms.jquery', 'bcms', 'bcms.modal', 'b
         function setTemplateFields(row, json) {
             row.data('id', json.Data.Id);
             row.data('version', json.Data.Version);
-            row.find(selectors.templateNameCell).html(json.Data.TemplateName);
+            row.find(selectors.templateNameCell).html(antiXss.encodeHtml(json.Data.TemplateName));
         };
 
         return template;

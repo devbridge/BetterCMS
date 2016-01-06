@@ -3,9 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
 
-using BetterCms.Core.DataAccess;
-using BetterCms.Core.DataAccess.DataContext;
-using BetterCms.Core.Exceptions.DataTier;
 using BetterCms.Core.Exceptions.Mvc;
 
 using BetterCms.Module.MediaManager.Models;
@@ -13,6 +10,10 @@ using BetterCms.Module.Root.Mvc;
 using BetterCms.Module.Users.Content.Resources;
 using BetterCms.Module.Users.Models;
 using BetterCms.Module.Users.ViewModels.User;
+
+using BetterModules.Core.DataAccess;
+using BetterModules.Core.DataAccess.DataContext;
+using BetterModules.Core.Exceptions.DataTier;
 
 using NHibernate.Linq;
 

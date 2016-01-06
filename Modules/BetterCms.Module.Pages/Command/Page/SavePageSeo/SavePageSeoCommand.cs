@@ -1,17 +1,20 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 
-using BetterCms.Core.DataAccess.DataContext;
-using BetterCms.Core.DataAccess.DataContext.Fetching;
-using BetterCms.Core.Mvc.Commands;
 using BetterCms.Core.Security;
+
 using BetterCms.Module.Pages.Models;
 using BetterCms.Module.Pages.Models.Events;
 using BetterCms.Module.Pages.Services;
 using BetterCms.Module.Pages.ViewModels.Seo;
+
 using BetterCms.Module.Root;
 using BetterCms.Module.Root.Mvc;
 using BetterCms.Module.Root.Mvc.Helpers;
+
+using BetterModules.Core.DataAccess.DataContext;
+using BetterModules.Core.DataAccess.DataContext.Fetching;
+using BetterModules.Core.Web.Mvc.Commands;
 
 namespace BetterCms.Module.Pages.Command.Page.SavePageSeo
 {

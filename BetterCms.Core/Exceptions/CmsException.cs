@@ -1,12 +1,14 @@
 ﻿using System;
 
+using BetterModules.Core.Exceptions;
+
 namespace BetterCms.Core.Exceptions
 {
     /// <summary>
     /// Generic CMS exception.
     /// </summary>
     [Serializable]
-    public class CmsException : Exception
+    public class CmsException : CoreException
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="CmsException" /> class.

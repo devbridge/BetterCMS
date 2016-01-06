@@ -19,7 +19,12 @@ namespace BetterCms.Module.Api.Extensions
                         Type = (OptionType)(short)o.Type,
                         CustomOption = o.Type == Operations.Root.OptionType.Custom 
                             ? new CustomOptionViewModel {Identifier = o.CustomTypeIdentifier} 
-                            : null
+                            : null,
+                        Translations = o.Translations != null ? o.Translations.Select(ot => new OptionTranslationViewModel
+                        {
+                            LanguageId = ot.LanguageId,
+                            OptionValue = ot.Value
+                        }).ToList() : null
                     })
                 .ToList();
         }
@@ -48,7 +53,7 @@ namespace BetterCms.Module.Api.Extensions
                         {
                             AssignmentIdentifier = o.OptionValuesContainerId,
                             OptionValues = o.OptionValues != null ? o.OptionValues
-                                .Select(ov => new OptionValueModel
+                                .Select(ov => new OptionValueModel()
                                         {
                                             Key = ov.OptionKey,
                                             Value = ov.OptionValue,
@@ -56,6 +61,31 @@ namespace BetterCms.Module.Api.Extensions
                                             Type = ((Operations.Root.OptionType)(int)ov.Type),
                                             UseDefaultValue = ov.UseDefaultValue,
                                             CustomTypeIdentifier = ov.CustomOption != null ? ov.CustomOption.Identifier : null
+                                        }).ToList() : null
+                        })
+                .ToList();
+        }
+        
+        public static IList<MultilingualChildContentOptionValuesModel> ToMultilingualServiceModel(this IList<ContentOptionValuesViewModel> model)
+        {
+            return model
+                .Select(o => new MultilingualChildContentOptionValuesModel
+                        {
+                            AssignmentIdentifier = o.OptionValuesContainerId,
+                            MultilingualOptionValues = o.OptionValues != null ? o.OptionValues
+                                .Select(ov => new MultilingualOptionValueModel()
+                                        {
+                                            Key = ov.OptionKey,
+                                            Value = ov.OptionValue,
+                                            DefaultValue = ov.OptionDefaultValue,
+                                            Type = ((Operations.Root.OptionType)(int)ov.Type),
+                                            UseDefaultValue = ov.UseDefaultValue,
+                                            CustomTypeIdentifier = ov.CustomOption != null ? ov.CustomOption.Identifier : null,
+                                            Translations = ov.ValueTranslations != null ? ov.ValueTranslations.Select(ovt => new OptionTranslationModel
+                                            {
+                                                LanguageId = ovt.LanguageId,
+                                                Value = ovt.OptionValue
+                                            }).ToList() : null
                                         })
                                 .ToList() : null
                         })
@@ -82,5 +112,32 @@ namespace BetterCms.Module.Api.Extensions
                 })
                 .ToList();
         }
+
+        public static IList<ContentOptionValuesViewModel> ToMultilingualViewModel(this IList<MultilingualChildContentOptionValuesModel> model)
+        {
+            return model
+                .Select(o => new ContentOptionValuesViewModel
+                {
+                    OptionValuesContainerId = o.AssignmentIdentifier,
+                    OptionValues = o.MultilingualOptionValues != null ? o.MultilingualOptionValues
+                        .Select(ov => new OptionValueEditViewModel
+                        {
+                            OptionKey = ov.Key,
+                            OptionValue = ov.Value,
+                            OptionDefaultValue = ov.DefaultValue,
+                            Type = (OptionType)(int)ov.Type,
+                            UseDefaultValue = ov.UseDefaultValue,
+                            CustomOption = ov.CustomTypeIdentifier != null ? new CustomOptionViewModel { Identifier = ov.CustomTypeIdentifier } : null,
+                            ValueTranslations = ov.Translations != null ? ov.Translations.Select(ovt => new OptionTranslationViewModel
+                            {
+                                OptionValue = ovt.Value,
+                                LanguageId = ovt.LanguageId
+                            }).ToList() : null
+                        })
+                        .ToList() : null
+                })
+                .ToList();
+        }
+ 
     }
 }

@@ -1,19 +1,14 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 
 using Autofac;
 
 using BetterCms.Core;
-using BetterCms.Core.DataAccess.DataContext;
-using BetterCms.Core.DataContracts;
-using BetterCms.Core.Dependencies;
 using BetterCms.Core.Modules;
 using BetterCms.Core.Modules.Projections;
-using BetterCms.Events;
+
 using BetterCms.Module.Root.Accessors;
 using BetterCms.Module.Root.Content.Resources;
 using BetterCms.Module.Root.Controllers;
-using BetterCms.Module.Root.Models;
 using BetterCms.Module.Root.Models.Accessors;
 using BetterCms.Module.Root.Mvc;
 using BetterCms.Module.Root.Projections;
@@ -22,12 +17,19 @@ using BetterCms.Module.Root.Services;
 using BetterCms.Module.Root.Services.Categories.Nodes;
 using BetterCms.Module.Root.Services.Categories.Tree;
 
+using BetterModules.Core.DataAccess.DataContext;
+using BetterModules.Core.DataContracts;
+using BetterModules.Core.Dependencies;
+using BetterModules.Core.Modules.Registration;
+using BetterModules.Core.Web.Modules.Registration;
+using BetterModules.Events;
+
 namespace BetterCms.Module.Root
 {
     /// <summary>
     /// Root functionality module descriptor.
     /// </summary>
-    public class RootModuleDescriptor : ModuleDescriptor
+    public class RootModuleDescriptor : CmsModuleDescriptor
     {        
         /// <summary>
         /// The module name.
@@ -80,34 +82,7 @@ namespace BetterCms.Module.Root
             categoriesJavaScriptModuleDescriptor = new CategoriesJavaScriptModuleDescriptor(this);
             languagesJsModuleIncludeDescriptor = new LanguagesJsModuleIncludeDescriptor(this);
             CategoryAccessors.Register<WidgetCategoryAccessor>();
-            InitializeSecurity();            
-        }
-
-        internal const string ModuleId = "456353c3-f4af-4016-838b-12e4677c3133";
-
-        /// <summary>
-        /// Gets the identifier.
-        /// </summary>
-        /// <value>
-        /// The identifier.
-        /// </value>
-        public override Guid Id
-        {
-            get
-            {
-                return new Guid(ModuleId);
-            }
-        }
-
-        /// <summary>
-        /// Flag describe is module root or additional
-        /// </summary>
-        public override bool IsRootModule
-        {
-            get
-            {
-                return true;
-            }
+            InitializeSecurity();
         }
 
         /// <summary>
@@ -210,7 +185,7 @@ namespace BetterCms.Module.Root
         /// </summary>
         /// <param name="context">The area registration context.</param>
         /// <param name="containerBuilder">The container builder.</param>
-        public override void RegisterCustomRoutes(ModuleRegistrationContext context, ContainerBuilder containerBuilder)
+        public override void RegisterCustomRoutes(WebModuleRegistrationContext context, ContainerBuilder containerBuilder)
         {            
             context.MapRoute(
                 "bcms_" + AreaName + "_MainJs",
@@ -264,8 +239,7 @@ namespace BetterCms.Module.Root
         {
             return new[]
                        {
-                           new CssIncludeDescriptor(this, "base.css"),
-                           new CssIncludeDescriptor(this, "bcms.messages.css")
+                           new CssIncludeDescriptor(this, "bcms.root.css")
                        };
         }
 
@@ -291,6 +265,8 @@ namespace BetterCms.Module.Root
                     new JsIncludeDescriptor(this, "bcms.jquery.autocomplete"),
                     new JsIncludeDescriptor(this, "bcms.autocomplete"),
                     new JsIncludeDescriptor(this, "bcms.multiple.select"),
+                    new AntiXssJsModuleIncludeDescriptor(this),
+                    new CustomValidationJsModuleIncludeDescriptor(this),
                     new BcmsJsModuleIncludeDescriptor(this), 
                     new KnockoutExtendersJsModuleIncludeDescriptor(this), 
                     new JsIncludeDescriptor(this, "bcms.ko.grid"),                    
@@ -313,7 +289,9 @@ namespace BetterCms.Module.Root
                     tagsJsModuleIncludeDescriptor,
                     categoriesJavaScriptModuleDescriptor,
                     languagesJsModuleIncludeDescriptor,
-                    new OptionsJsModuleIncludeDescriptor(this)
+                    new OptionsJsModuleIncludeDescriptor(this),
+                    new JsIncludeDescriptor(this, "bcms.markdown"),
+                    new JsIncludeDescriptor(this, "bcms.jquery.markitup")
                 };
         }
 
@@ -324,7 +302,7 @@ namespace BetterCms.Module.Root
                     new ButtonActionProjection(authenticationJsModuleIncludeDescriptor, page => RootGlobalization.Sidebar_LogoutButton, page => "logout")
                         {
                             Order = 10,
-                            CssClass = page => "bcms-logout-btn",
+                            CssClass = page => "bcms-btn-logout",
                         },
                     new RenderActionProjection<AuthenticationController>(f => f.Info())
                 };
@@ -338,7 +316,7 @@ namespace BetterCms.Module.Root
                         {
                             Title = page => RootGlobalization.Sidebar_SiteSettingsButtonTitle,
                             CssClass = page => "bcms-sidemenu-btn bcms-btn-settings",
-                            Order = 500,
+                            Order = 900,
                         }
                 };
         }
@@ -381,7 +359,7 @@ namespace BetterCms.Module.Root
         /// Creates the resource routes for 6 levels folder structure.
         /// </summary>
         /// <param name="context">The context.</param>
-        private void CreateEmbeddedResourcesRoutes(ModuleRegistrationContext context)
+        private void CreateEmbeddedResourcesRoutes(WebModuleRegistrationContext context)
         {
             string[] urls = new[]
                 {

@@ -20,8 +20,6 @@ using BetterCms.Module.Root.Mvc;
 
 using Microsoft.Web.Mvc;
 
-using NHibernate.Util;
-
 namespace BetterCms.Module.Blog.Controllers
 {
     /// <summary>
@@ -112,7 +110,7 @@ namespace BetterCms.Module.Blog.Controllers
         {
             try
             {
-                ValidateModelExplicilty(request.Content);
+                ValidateModelExplicitly(request.Content);
 
                 SaveBlogPostCommandResponse response = null;
                 if (ModelState.IsValid)

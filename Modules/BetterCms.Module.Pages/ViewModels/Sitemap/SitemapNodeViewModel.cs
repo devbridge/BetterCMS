@@ -2,9 +2,10 @@
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
-using BetterCms.Core.Models;
 using BetterCms.Module.Pages.Content.Resources;
 using BetterCms.Module.Root.Content.Resources;
+
+using BetterModules.Core.Models;
 
 namespace BetterCms.Module.Pages.ViewModels.Sitemap
 {

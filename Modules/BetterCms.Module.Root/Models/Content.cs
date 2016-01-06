@@ -4,7 +4,8 @@ using System.Linq;
 
 using BetterCms.Core.DataContracts;
 using BetterCms.Core.DataContracts.Enums;
-using BetterCms.Core.Models;
+
+using BetterModules.Core.Models;
 
 namespace BetterCms.Module.Root.Models
 {
@@ -61,9 +62,9 @@ namespace BetterCms.Module.Root.Models
         /// </value>
         public virtual bool ChildContentsLoaded { get; set; }
 
-        public virtual Content Clone()
+        public virtual Content Clone(bool copyCollections = true)
         {
-            return CopyDataTo(new Content());
+            return CopyDataTo(new Content(), copyCollections);
         }
 
         public virtual Content CopyDataTo(Content content, bool copyCollections = true)

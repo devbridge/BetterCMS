@@ -1,5 +1,7 @@
 ﻿using System;
 using System.IO;
+using System.Linq;
+using System.Security.Cryptography;
 
 using BetterCms.Core.Exceptions;
 using BetterCms.Core.Exceptions.Service;
@@ -59,6 +61,8 @@ namespace BetterCms.Core.Services.Storage
             CheckUri(sourceUri);
             CheckUri(destinationUri);
 
+            var cleanedDestinationPath = destinationUri.LocalPath.Remove(destinationUri.LocalPath.TrimEnd('\\', '/').LastIndexOfAny(new[] { '\\', '/' }));
+            Directory.CreateDirectory(cleanedDestinationPath);
             using (FileStream readStream = new FileStream(sourceUri.LocalPath, FileMode.Open, FileAccess.Read))
             {
                 using (FileStream writeStream = new FileStream(destinationUri.LocalPath, FileMode.Create, FileAccess.Write))

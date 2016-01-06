@@ -24,18 +24,21 @@ using BetterCms.Module.Pages.Services;
 
 using BetterCms.Module.Root;
 using BetterCms.Module.Root.Accessors;
+using BetterCms.Module.Root.Content.Resources;
 using BetterCms.Module.Root.Models;
 using BetterCms.Module.Root.Mvc.PageHtmlRenderer;
 using BetterCms.Module.Root.Services;
 using BetterCms.Module.Root.ViewModels.Cms;
+
+using BetterModules.Core.Modules.Registration;
 
 namespace BetterCms.Module.Pages
 {
     /// <summary>
     /// Pages module descriptor.
     /// </summary>
-    public class PagesModuleDescriptor : ModuleDescriptor
-    {        
+    public class PagesModuleDescriptor : CmsModuleDescriptor
+    {
         /// <summary>
         /// The module name.
         /// </summary>
@@ -70,7 +73,7 @@ namespace BetterCms.Module.Pages
         /// bcms.pages.content.js java script module descriptor.
         /// </summary>
         private readonly PagesContentJsModuleIncludeDescriptor pagesContentJsModuleIncludeDescriptor;
-        
+
         /// <summary>
         /// bcms.pages.redirects.js java script module descriptor.
         /// </summary>
@@ -104,7 +107,8 @@ namespace BetterCms.Module.Pages
         /// <summary>
         /// Initializes a new instance of the <see cref="PagesModuleDescriptor" /> class.
         /// </summary>
-        public PagesModuleDescriptor(ICmsConfiguration configuration) : base(configuration)
+        public PagesModuleDescriptor(ICmsConfiguration configuration)
+            : base(configuration)
         {
             pagesJsModuleIncludeDescriptor = new PagesJsModuleIncludeDescriptor(this);
             pagePropertiesJsModuleIncludeDescriptor = new PagePropertiesJsModuleIncludeDescriptor(this);
@@ -116,39 +120,12 @@ namespace BetterCms.Module.Pages
             masterPagesJsModuleIncludeDescriptor = new MasterPagesJsModuleIncludeDescriptor(this);
             historyJsModuleIncludeDescriptor = new HistoryJsModuleIncludeDescriptor(this);
             sitemapJsModuleIncludeDescriptor = new SitemapJsModuleIncludeDescriptor(this);
-//            CategoryAccessors.Register<PageCategory, PageProperties>(PageProperties.CategorizableItemKeyForPages);
+            //            CategoryAccessors.Register<PageCategory, PageProperties>(PageProperties.CategorizableItemKeyForPages);
             CategoryAccessors.Register<PageCategoryAccessor>();
 
             RootEvents.Instance.PageRetrieved += Events_PageRetrieved;
 
             RegisterRenderingPageProperties();
-        }
-
-        internal const string ModuleId = "6be7d282-e319-408e-8425-abf7468412de";
-
-        /// <summary>
-        /// Gets the identifier.
-        /// </summary>
-        /// <value>
-        /// The identifier.
-        /// </value>
-        public override Guid Id
-        {
-            get
-            {
-                return new Guid(ModuleId);
-            }
-        }
-
-        /// <summary>
-        /// Flag describe is module root or additional
-        /// </summary>
-        public override bool IsRootModule
-        {
-            get
-            {
-                return true;
-            }
         }
 
         /// <summary>
@@ -236,7 +213,7 @@ namespace BetterCms.Module.Pages
 
             RegisterContentRendererType<HtmlContentAccessor, HtmlContent>(containerBuilder);
             RegisterContentRendererType<HtmlContentWidgetAccessor, HtmlContentWidget>(containerBuilder);
-            RegisterContentRendererType<ServerControlWidgetAccessor, ServerControlWidget>(containerBuilder);            
+            RegisterContentRendererType<ServerControlWidgetAccessor, ServerControlWidget>(containerBuilder);
 
             containerBuilder.RegisterType<DefaultPageService>().AsImplementedInterfaces().InstancePerLifetimeScope();
             containerBuilder.RegisterType<DefaultRedirectService>().AsImplementedInterfaces().InstancePerLifetimeScope();
@@ -265,8 +242,7 @@ namespace BetterCms.Module.Pages
         {
             return new[]
                 {
-                    new CssIncludeDescriptor(this, "bcms.page.css"),
-                    new CssIncludeDescriptor(this, "bcms.navigation.css")
+                    new CssIncludeDescriptor(this, "bcms.pages.css")
                 };
         }
 
@@ -276,7 +252,7 @@ namespace BetterCms.Module.Pages
         /// <returns>List of known client side modules in page module.</returns>
         [SuppressMessage("StyleCop.CSharp.NamingRules", "SA1305:FieldNamesMustNotUseHungarianNotation", Justification = "Reviewed. Suppression is OK here.")]
         public override IEnumerable<JsIncludeDescriptor> RegisterJsIncludes()
-        {            
+        {
             return new JsIncludeDescriptor[]
                 {
                     pagesJsModuleIncludeDescriptor,
@@ -303,57 +279,47 @@ namespace BetterCms.Module.Pages
         {
             return new IPageActionProjection[]
                 {
-                    new DropDownListProjection(pagesJsModuleIncludeDescriptor, page => "changePublishStatus")
-                        {
-                            Items = new Func<IPage, DropDownListProjectionItem>[]
+                    new InheriteProjection(
+                        "div",
+                        new IPageActionProjection[]
+                            {
+                                new LinkToNewTabProjection
                                 {
-                                     page => new DropDownListProjectionItem
-                                         {
-                                             Order = 1,
-                                             Text = () => page.Status == PageStatus.Published
-                                                                ? PagesGlobalization.Sidebar_PageStatusPublished 
-                                                                : PagesGlobalization.Sidebar_PageStatusPublish,
-                                             Value = page.Status == PageStatus.Published
-                                                                ? "published"
-                                                                : "publish",
-                                             IsSelected = page.Status == PageStatus.Published
-                                         }, 
-
-                                     page => new DropDownListProjectionItem
-                                         {
-                                             Order = 2,
-                                             Text = () => page.Status == PageStatus.Published 
-                                                                ? PagesGlobalization.Sidebar_PageStatusUnpublish
-                                                                : PagesGlobalization.Sidebar_PageStatusUnpublished,
-                                                                    
-                                             Value = page.Status == PageStatus.Published
-                                                                ? "unpublish"
-                                                                : "unpublished",
-                                             IsSelected = page.Status != PageStatus.Published
-                                         }
+                                    InnerText = page => RootGlobalization.Authentication_ViewAsPublic_Public,
+                                    LinkAddress = page => page.PageUrl,
+                                    Order = 9,
+                                    CssClass = page => "bcms-sidemenu-btn bcms-as-public"
                                 },
-                                Order = 10,
-                                CssClass = page => page.Status != PageStatus.Published ? "bcms-sidemenu-select" : "bcms-sidemenu-select bcms-select-published",
-                                AccessRole = RootModuleConstants.UserRoles.PublishContent,
-                                ShouldBeRendered = page => !page.IsMasterPage && !IsReadOnly(page)
+                                new ButtonActionProjection(pagesJsModuleIncludeDescriptor, page => "changePublishStatus")
+                                {
+                                    Order = 10,
+                                    Title = page => page.Status == PageStatus.Published ? PagesGlobalization.Sidebar_PageStatusUnpublish : PagesGlobalization.Sidebar_PageStatusPublish,
+                                    CssClass = page => page.Status == PageStatus.Published ? "bcms-sidemenu-btn bcms-btn-ok" : "bcms-sidemenu-btn bcms-btn-warn",
+                                    AccessRole = RootModuleConstants.UserRoles.PublishContent,
+                                    ShouldBeRendered = page => !page.IsMasterPage && !IsReadOnly(page)
+                                }
+                             })
+                        {
+                            Order = 10,
+                            CssClass = page => "bcms-buttons-block"
                         }, 
                     
-                    new EditPagePropertiesButtonProjection(pagePropertiesJsModuleIncludeDescriptor, page => page.IsMasterPage ? "editMasterPageProperties" : "editPageProperties")
+                     new ButtonActionProjection(seoJsModuleIncludeDescriptor, page => "openEditSeoDialog")
                             {
                                 Order = 20,
-                                Title = page => page.IsMasterPage 
-                                    ? PagesGlobalization.Sidebar_EditMasterPagePropertiesButtonTitle
-                                    : PagesGlobalization.Sidebar_EditPagePropertiesButtonTitle,
-                                CssClass = page => "bcms-sidemenu-btn"
-                            },
-
-                    new ButtonActionProjection(seoJsModuleIncludeDescriptor, page => "openEditSeoDialog")
-                            {
-                                Order = 30,
                                 Title = page => PagesGlobalization.Sidebar_EditSeoButtonTitle,
                                 CssClass = page => page.HasSEO ? "bcms-sidemenu-btn bcms-btn-ok" : "bcms-sidemenu-btn bcms-btn-warn",
                                 AccessRole = RootModuleConstants.UserRoles.EditContent,
                                 ShouldBeRendered = page => !page.IsMasterPage
+                            },
+
+                    new EditPagePropertiesButtonProjection(pagePropertiesJsModuleIncludeDescriptor, page => page.IsMasterPage ? "editMasterPageProperties" : "editPageProperties")
+                            {
+                                Order = 30,
+                                Title = page => page.IsMasterPage 
+                                    ? PagesGlobalization.Sidebar_EditMasterPagePropertiesButtonTitle
+                                    : PagesGlobalization.Sidebar_EditPagePropertiesButtonTitle,
+                                CssClass = page => "bcms-sidemenu-btn"
                             },
 
                     new SeparatorProjection(40) { CssClass = page => "bcms-sidebar-separator" }, 
@@ -371,7 +337,7 @@ namespace BetterCms.Module.Pages
                                 },
                                 new ButtonActionProjection(pagesJsModuleIncludeDescriptor, page => "clonePage")
                                 {
-                                    Order = 20,
+                                    Order = 30,
                                     Title = page => PagesGlobalization.Siderbar_ClonePageButtonTitle,
                                     CssClass = page => "bcms-sidemenu-btn bcms-btn-clone",
                                     AccessRole = RootModuleConstants.UserRoles.EditContent
@@ -381,6 +347,16 @@ namespace BetterCms.Module.Pages
                             Order = 50,
                             CssClass = page => "bcms-buttons-block"
                         }, 
+                        
+                    new ButtonActionProjection(masterPagesJsModuleIncludeDescriptor, page => "addMasterPage")
+                        {
+                            Title = page => PagesGlobalization.Sidebar_CreateMasterPageButtonTitle,
+                            CssClass = page => "bcms-sidemenu-btn bcms-btn-add js-redirect-to-new-page",
+                            Order = 300,
+                            ShouldBeRendered = page => page.IsMasterPage,
+                            Id = page => "bcms-create-page-button-side-panel",
+                            AccessRole = RootModuleConstants.UserRoles.EditContent
+                        },
                         
                     new ButtonActionProjection(pagesJsModuleIncludeDescriptor, page => "translatePage")
                         {
@@ -393,7 +369,7 @@ namespace BetterCms.Module.Pages
 
                     new ButtonActionProjection(pagesJsModuleIncludeDescriptor, page => "deleteCurrentPage")
                         {
-                            Order = 900,
+                            Order = 800,
                             Title = page => PagesGlobalization.Sidebar_DeletePageButtonTitle,
                             CssClass = page => "bcms-sidemenu-btn bcms-btn-delete",
                             AccessRole = RootModuleConstants.UserRoles.DeleteContent

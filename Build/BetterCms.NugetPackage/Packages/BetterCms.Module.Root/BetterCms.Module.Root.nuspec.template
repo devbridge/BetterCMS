@@ -13,12 +13,12 @@
     <copyright>Better CMS is licensed under BETTER CMS LICENSE AGREEMENT (http://www.bettercms.com/license.txt).</copyright>
     <dependencies>
       <dependency id="BetterCms.Core" version="[@BetterCMSVersion@]" />
-      <dependency id="Microsoft.AspNet.Mvc" version="4.0.40804.0" />
-      <dependency id="Microsoft.AspNet.Razor" version="2.0.30506.0" />
-      <dependency id="Microsoft.AspNet.WebPages" version="2.0.30506.0" />
+      <dependency id="Microsoft.AspNet.Mvc" version="5.2.3" />
+      <dependency id="Microsoft.AspNet.Razor" version="3.2.3" />
+      <dependency id="Microsoft.AspNet.WebPages" version="3.2.3" />
       <dependency id="Microsoft.Net.Http" version="2.0.20505.0" />
       <dependency id="Mvc3Futures" version="3.0.20105.0" />
-      <dependency id="Newtonsoft.Json" version="5.0.8" />
+      <dependency id="Newtonsoft.Json" version="6.0.8" />
       <dependency id="HtmlAgilityPack" version="1.4.6" />
     </dependencies>
     <frameworkAssemblies>

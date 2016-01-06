@@ -1,4 +1,4 @@
-﻿using BetterCms.Core.DataAccess.DataContext.Migrations;
+﻿using BetterModules.Core.DataAccess.DataContext.Migrations;
 
 using FluentMigrator;
 
@@ -8,7 +8,7 @@ namespace BetterCms.Module.ImagesGallery.Models.Migrations
     /// Fixes broken custom options
     /// </summary>
     [Migration(201311190740)]
-    public class Migration201311190740 : DefaultMigration
+    public class Migration201311190740: DefaultMigration
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="Migration201311190740" /> class.

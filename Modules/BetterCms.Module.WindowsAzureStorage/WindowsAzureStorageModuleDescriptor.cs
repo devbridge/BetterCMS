@@ -1,34 +1,18 @@
-﻿using System;
-
-using Autofac;
+﻿using Autofac;
 
 using BetterCms.Configuration;
 using BetterCms.Core.Modules;
 using BetterCms.Core.Services.Storage;
+
+using BetterModules.Core.Modules.Registration;
 
 namespace BetterCms.Module.WindowsAzureStorage
 {
     /// <summary>
     /// A storage module based on the Windows Azure Storage cloud service.
     /// </summary>
-    public class WindowsAzureStorageModuleDescriptor : ModuleDescriptor
+    public class WindowsAzureStorageModuleDescriptor : CmsModuleDescriptor
     {
-        internal const string ModuleId = "92296b77-4102-4a85-92d9-35d8be2044a2";
-
-        /// <summary>
-        /// Gets the identifier.
-        /// </summary>
-        /// <value>
-        /// The identifier.
-        /// </value>
-        public override Guid Id
-        {
-            get
-            {
-                return new Guid(ModuleId);
-            }
-        }
-
         /// <summary>
         /// Gets the name.
         /// </summary>

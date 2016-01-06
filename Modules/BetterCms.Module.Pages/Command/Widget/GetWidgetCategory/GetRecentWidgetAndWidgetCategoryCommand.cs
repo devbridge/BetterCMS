@@ -3,13 +3,14 @@ using System.Collections.Generic;
 using System.Linq;
 
 using BetterCms.Core.DataContracts.Enums;
-using BetterCms.Core.Mvc.Commands;
 
 using BetterCms.Module.Pages.Content.Resources;
 using BetterCms.Module.Pages.Models;
 using BetterCms.Module.Pages.ViewModels.Widgets;
 using BetterCms.Module.Root.Models;
 using BetterCms.Module.Root.Mvc;
+
+using BetterModules.Core.Web.Mvc.Commands;
 
 using FluentNHibernate.Conventions;
 using FluentNHibernate.Utils;
@@ -23,7 +24,7 @@ namespace BetterCms.Module.Pages.Command.Widget.GetWidgetCategory
     /// <summary>
     /// Command to get widget categories model.
     /// </summary>
-    public class GetRecentWidgetAndWidgetCategoryCommand : CommandBase, ICommand<GetRecentWidgetAndWidgetCategoryRequest, GetRecentWidgetAndWidgetCategoryResponse>
+    public class GetRecentWidgetAndWidgetCategoryCommand : CommandBase, ICommand<GetRecentWidgetAndWidgetCategoryRequest, SelectWidgetViewModel>
     {
         /// <summary>
         /// Executes the specified request.
@@ -31,7 +32,7 @@ namespace BetterCms.Module.Pages.Command.Widget.GetWidgetCategory
         /// <param name="request">The request.</param>
         /// <returns></returns>
         /// <exception cref="System.NotImplementedException"></exception>
-        public GetRecentWidgetAndWidgetCategoryResponse Execute(GetRecentWidgetAndWidgetCategoryRequest request)
+        public SelectWidgetViewModel Execute(GetRecentWidgetAndWidgetCategoryRequest request)
         {
             IEnumerable<WidgetCategoryViewModel> categoriesFuture;
 
@@ -61,7 +62,10 @@ namespace BetterCms.Module.Pages.Command.Widget.GetWidgetCategory
             }
             
             // Load list of contents
-            var widgetsQuery = Repository.AsQueryable<Root.Models.Widget>().Where(f => !f.IsDeleted && f.Original == null && (f.Status == ContentStatus.Published || f.Status == ContentStatus.Draft));
+            var widgetsQuery = Repository.AsQueryable<Root.Models.Widget>()
+                                        .Where(f => !f.IsDeleted 
+                                                && (f.Original == null || !f.Original.IsDeleted) 
+                                                && (f.Status == ContentStatus.Published || f.Status == ContentStatus.Draft));
 
             var childContentsQuery = UnitOfWork.Session.Query<ChildContent>();
             var pageContentsQuery = UnitOfWork.Session.Query<PageContent>();
@@ -97,7 +101,8 @@ namespace BetterCms.Module.Pages.Command.Widget.GetWidgetCategory
 
             if (!string.IsNullOrWhiteSpace(request.Filter))
             {
-                widgetsQuery = widgetsQuery.Where(c => c.Name.ToLower().Contains(request.Filter.ToLowerInvariant()));
+                var filter = request.Filter.ToLowerInvariant();
+                widgetsQuery = widgetsQuery.Where(c => c.Name.ToLower().Contains(filter) || c.Categories.Any(a=>a.Category.Name.ToLower().Contains(filter)));
             }
 
             // Load all widgets
@@ -125,6 +130,9 @@ namespace BetterCms.Module.Pages.Command.Widget.GetWidgetCategory
             var contents = contentEntities.Select(f => CreateWidgetViewModel(f, drafts.FirstOrDefault(d => d.Original.Id == f.Id))).ToList();
             var recentWidgets = LeaveTheMostRecentWidgets(pageContentRecentWidgets, childContentRecentWidgets)
                                 .Select(f => CreateWidgetViewModel(f.Widget, drafts.FirstOrDefault(d => d.Original.Id == f.Widget.Id))).ToList();
+
+            // Remove duplicates, when draft and published versions are found
+            contents = contents.GroupBy(g => g.Id).Select(g => g.First()).ToList();
 
             List<WidgetCategoryViewModel> categories;
 
@@ -159,7 +167,7 @@ namespace BetterCms.Module.Pages.Command.Widget.GetWidgetCategory
             // Remove empty categories
             categories = categories.Where(c => c.Widgets.Any()).ToList();
 
-            return new GetRecentWidgetAndWidgetCategoryResponse
+            return new SelectWidgetViewModel
                        {
                            WidgetCategories = categories,
                            RecentWidgets = recentWidgets

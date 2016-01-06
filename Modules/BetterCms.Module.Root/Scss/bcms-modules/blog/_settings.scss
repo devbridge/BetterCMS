@@ -1,0 +1,22 @@
+@import '../../core/variables';
+
+.bcms-blog-settings-holder {
+    @include clearfix($extend: false);
+
+    > .bcms-input-list-holder {
+        float: left;
+        width: 70%;
+    }
+
+    > .bcms-page-images-holder {
+        box-sizing: border-box;
+        float: left;
+        padding-left: 30px;
+        width: 30%;
+    }
+
+    .bcms-btn-small {
+        margin-top: 10px;
+    }
+}
+

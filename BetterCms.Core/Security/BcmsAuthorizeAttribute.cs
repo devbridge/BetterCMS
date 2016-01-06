@@ -5,8 +5,9 @@ using System.Web.Mvc;
 
 using Autofac;
 
-using BetterCms.Core.Dependencies;
 using BetterCms.Core.Services;
+
+using BetterModules.Core.Web.Dependencies;
 
 namespace BetterCms.Core.Security
 {

@@ -3,8 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 
 using BetterCms;
-using BetterCms.Core.DataAccess;
-using BetterCms.Core.DataAccess.DataContext;
+using BetterModules.Core.DataAccess;
+using BetterModules.Core.DataAccess.DataContext;
 using BetterCms.Core.DataContracts.Enums;
 
 using BetterCMS.Module.LuceneSearch.Models;

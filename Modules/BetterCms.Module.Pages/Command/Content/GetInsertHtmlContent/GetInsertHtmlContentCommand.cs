@@ -1,11 +1,12 @@
 ﻿using System;
 
-using BetterCms.Core.DataAccess;
-using BetterCms.Core.Mvc.Commands;
+using BetterModules.Core.DataAccess;
 
 using BetterCms.Module.Pages.Services;
 using BetterCms.Module.Pages.ViewModels.Content;
 using BetterCms.Module.Root.Mvc;
+
+using BetterModules.Core.Web.Mvc.Commands;
 
 namespace BetterCms.Module.Pages.Command.Content.GetInsertHtmlContent
 {
@@ -34,7 +35,9 @@ namespace BetterCms.Module.Pages.Command.Content.GetInsertHtmlContent
                     LiveFrom = DateTime.Today,
                     EnableInsertDynamicRegion = isMasterPage,
                     EditInSourceMode = isMasterPage,
-                    CanEditContent = true
+                    CanEditContent = true,
+                    EnabledCustomCss = true,
+                    EnabledCustomJs = true
                 };
 
             if (model.EnableInsertDynamicRegion)

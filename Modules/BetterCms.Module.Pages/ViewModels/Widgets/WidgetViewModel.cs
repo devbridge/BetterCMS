@@ -2,11 +2,12 @@
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
-using BetterCms.Core.Models;
 using BetterCms.Module.Pages.Models;
 using BetterCms.Module.Pages.ViewModels.Content;
 using BetterCms.Module.Root.Content.Resources;
 using BetterCms.Module.Root.Models;
+
+using BetterModules.Core.Models;
 
 namespace BetterCms.Module.Pages.ViewModels.Widgets
 {

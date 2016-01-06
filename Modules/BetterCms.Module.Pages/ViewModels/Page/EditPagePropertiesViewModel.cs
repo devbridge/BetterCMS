@@ -4,15 +4,19 @@ using System.ComponentModel.DataAnnotations;
 using System.Web.Mvc;
 
 using BetterCms.Core.DataContracts.Enums;
-using BetterCms.Core.Models;
 
 using BetterCms.Module.MediaManager.ViewModels;
 
 using BetterCms.Module.Pages.Content.Resources;
-
+using BetterCms.Module.Pages.Mvc.Attributes;
+using BetterCms.Module.Root.Content.Resources;
 using BetterCms.Module.Root.Models;
+using BetterCms.Module.Root.Mvc.Attributes;
 using BetterCms.Module.Root.ViewModels.Option;
 using BetterCms.Module.Root.ViewModels.Security;
+
+using BetterModules.Core.Models;
+using BetterModules.Core.Web.Models;
 
 namespace BetterCms.Module.Pages.ViewModels.Page
 {
@@ -43,6 +47,7 @@ namespace BetterCms.Module.Pages.ViewModels.Page
         /// <value>
         /// The name of the page.
         /// </value>
+        [AllowHtml]
         [Required(AllowEmptyStrings = false, ErrorMessageResourceType = typeof(PagesGlobalization), ErrorMessageResourceName = "EditPageProperties_PageTitle_RequiredMessage")]
         [StringLength(MaxLength.Name, MinimumLength = 1, ErrorMessageResourceType = typeof(PagesGlobalization), ErrorMessageResourceName = "EditPageProperties_PageTitle_MaxLengthMessage")]
         public string PageName { get; set; }
@@ -53,7 +58,9 @@ namespace BetterCms.Module.Pages.ViewModels.Page
         /// <value>
         /// The page URL.
         /// </value>
+        [AllowHtml]
         [Required(AllowEmptyStrings = false, ErrorMessageResourceType = typeof(PagesGlobalization), ErrorMessageResourceName = "EditPageProperties_PagePermalink_RequiredMessage")]
+        [DisallowHtml(ErrorMessageResourceType = typeof(RootGlobalization), ErrorMessageResourceName = "Validation_DisallowHtml_Field_Message")]
         [RegularExpression(PagesConstants.InternalUrlRegularExpression, ErrorMessageResourceType = typeof(PagesGlobalization), ErrorMessageResourceName = "EditPageProperties_PagePermalink_InvalidMessage")]
         [StringLength(MaxLength.Url, MinimumLength = 1, ErrorMessageResourceType = typeof(PagesGlobalization), ErrorMessageResourceName = "EditPageProperties_PagePermalink_MaxLengthMessage")]
         public string PageUrl { get; set; }

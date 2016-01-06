@@ -1,5 +1,4 @@
-﻿
-using BetterCms.Core.DataAccess.DataContext.Migrations;
+﻿using BetterModules.Core.DataAccess.DataContext.Migrations;
 
 using FluentMigrator;
 
@@ -27,7 +26,7 @@ namespace BetterCms.Module.Pages.Models.Migrations
             Create
                 .Table("PageCategories")
                 .InSchema(SchemaName)
-                .WithCmsBaseColumns()
+                .WithBaseColumns()
                 .WithColumn("PageId").AsGuid().NotNullable()
                 .WithColumn("CategoryId").AsGuid().NotNullable();           
 

@@ -10,7 +10,7 @@ namespace BetterCms.Module.Api.Operations.Root
         Float = 3,
         DateTime = 4,
         Boolean = 5,
-
+        MultilineText = 21,
         JavaScriptUrl = 51,
         CssUrl = 52,
         Custom = 99

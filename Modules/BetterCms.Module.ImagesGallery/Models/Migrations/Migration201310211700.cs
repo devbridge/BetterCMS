@@ -1,6 +1,4 @@
-﻿using System;
-
-using BetterCms.Core.DataAccess.DataContext.Migrations;
+﻿using BetterModules.Core.DataAccess.DataContext.Migrations;
 
 using FluentMigrator;
 
@@ -10,7 +8,7 @@ namespace BetterCms.Module.ImagesGallery.Models.Migrations
     /// Creates category for image gallery widgets and assigns it to widgets
     /// </summary>
     [Migration(201310211700)]
-    public class Migration201310211700 : DefaultMigration
+    public class Migration201310211700: DefaultMigration
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="Migration201310211700" /> class.

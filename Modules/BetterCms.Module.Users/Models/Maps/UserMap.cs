@@ -1,5 +1,5 @@
 ﻿
-using BetterCms.Core.Models;
+using BetterModules.Core.Models;
 
 namespace BetterCms.Module.Users.Models.Maps
 {

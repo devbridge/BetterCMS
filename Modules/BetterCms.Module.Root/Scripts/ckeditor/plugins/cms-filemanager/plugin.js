@@ -1,6 +1,6 @@
 ﻿(function () {
   var a = {
-    modes: { wysiwyg: 1, source: 0 },
+    modes: { wysiwyg: 1, source: 1 },
     exec: function (editor) {
         editor.InsertFileClicked(editor);
     }

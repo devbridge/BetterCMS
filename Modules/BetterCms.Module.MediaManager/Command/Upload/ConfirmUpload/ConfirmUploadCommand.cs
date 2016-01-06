@@ -1,12 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Net;
-
-using BetterCms.Core.DataAccess.DataContext;
-using BetterCms.Core.DataAccess.DataContext.Fetching;
 using BetterCms.Core.Exceptions;
-using BetterCms.Core.Mvc.Commands;
+
 using BetterCms.Core.Security;
 
 using BetterCms.Module.MediaManager.Models;
@@ -16,6 +12,10 @@ using BetterCms.Module.MediaManager.ViewModels.MediaManager;
 using BetterCms.Module.MediaManager.ViewModels.Upload;
 
 using BetterCms.Module.Root.Mvc;
+
+using BetterModules.Core.DataAccess.DataContext;
+using BetterModules.Core.DataAccess.DataContext.Fetching;
+using BetterModules.Core.Web.Mvc.Commands;
 
 namespace BetterCms.Module.MediaManager.Command.Upload.ConfirmUpload
 {

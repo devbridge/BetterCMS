@@ -2,8 +2,8 @@
 using System.Linq;
 using System.Web.Security;
 
-using BetterCms.Core.DataAccess;
-using BetterCms.Core.DataAccess.DataContext;
+using BetterModules.Core.DataAccess;
+using BetterModules.Core.DataAccess.DataContext;
 using BetterCms.Module.Users.Models;
 using BetterCms.Module.Users.Provider;
 using BetterCms.Module.Users.Services;

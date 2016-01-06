@@ -2,14 +2,14 @@
 using System.Collections.Generic;
 using System.Linq;
 
-using BetterCms.Core.DataAccess;
-using BetterCms.Core.DataAccess.DataContext;
-using BetterCms.Core.Exceptions.DataTier;
 using BetterCms.Core.Exceptions.Mvc;
 using BetterCms.Module.Pages.Content.Resources;
 using BetterCms.Module.Pages.Models;
-using BetterCms.Module.Root.Models;
 using BetterCms.Module.Root.Mvc;
+
+using BetterModules.Core.DataAccess;
+using BetterModules.Core.DataAccess.DataContext;
+using BetterModules.Core.Exceptions.DataTier;
 
 using NHibernate.Linq;
 

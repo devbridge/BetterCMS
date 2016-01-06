@@ -2,6 +2,7 @@
 using System.Runtime.Serialization;
 
 using BetterCms.Module.Api.Infrastructure;
+using BetterCms.Module.Api.Operations.Pages;
 
 namespace BetterCms.Module.Api.Operations.Blog.BlogPosts.BlogPost.Properties
 {

@@ -1,4 +1,4 @@
-﻿using BetterCms.Core.DataAccess;
+﻿using BetterModules.Core.DataAccess;
 
 using ServiceStack.ServiceInterface;
 

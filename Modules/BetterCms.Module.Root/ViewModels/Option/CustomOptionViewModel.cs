@@ -1,6 +1,8 @@
 ﻿using System;
 
 using BetterCms.Core.DataContracts;
+using BetterCms.Module.Root.Content.Resources;
+using BetterCms.Module.Root.Mvc.Attributes;
 
 namespace BetterCms.Module.Root.ViewModels.Option
 {
@@ -21,6 +23,7 @@ namespace BetterCms.Module.Root.ViewModels.Option
         /// <value>
         /// The title.
         /// </value>
+        [DisallowHtml(ErrorMessageResourceType = typeof(RootGlobalization), ErrorMessageResourceName = "Validation_DisallowHtml_Name_Message")]
         public string Title { get; set; }
 
         /// <summary>

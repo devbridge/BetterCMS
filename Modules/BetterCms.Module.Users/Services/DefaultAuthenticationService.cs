@@ -3,7 +3,7 @@ using System.Linq;
 using System.Security.Cryptography;
 using System.Text;
 
-using BetterCms.Core.DataAccess;
+using BetterModules.Core.DataAccess;
 
 namespace BetterCms.Module.Users.Services
 {

@@ -15,6 +15,9 @@ using ApiAccessLevel = BetterCms.Module.Api.Operations.Root.AccessLevel;
 using CoreForceProtocolType = BetterCms.Core.DataContracts.Enums.ForceProtocolType;
 using ApiForceProtocolType = BetterCms.Module.Api.Operations.Pages.Pages.Page.Properties.ForceProtocolType;
 
+using PageContentTextMode = BetterCms.Module.Pages.Models.Enums.ContentTextMode;
+using ApiContentTextMode = BetterCms.Module.Api.Operations.Pages.ContentTextMode;
+
 using NUnit.Framework;
 
 namespace BetterCms.Api.Tests.UnitTests
@@ -52,13 +55,14 @@ namespace BetterCms.Api.Tests.UnitTests
             Assert.AreEqual((int)CoreOptionType.Integer, (int)ApiOptionType.Integer);
             Assert.AreEqual((int)CoreOptionType.DateTime, (int)ApiOptionType.DateTime);
             Assert.AreEqual((int)CoreOptionType.Boolean, (int)ApiOptionType.Boolean);
+            Assert.AreEqual((int)CoreOptionType.MultilineText, (int)ApiOptionType.MultilineText);
             
             Assert.AreEqual((int)CoreOptionType.Custom, (int)ApiOptionType.Custom);
             Assert.AreEqual((int)CoreOptionType.CssUrl, (int)ApiOptionType.CssUrl);
             Assert.AreEqual((int)CoreOptionType.JavaScriptUrl, (int)ApiOptionType.JavaScriptUrl);
 
-            Assert.AreEqual(Enum.GetValues(typeof(CoreOptionType)).Length, 8, "Not all CoreOptionType values are mapped.");
-            Assert.AreEqual(Enum.GetValues(typeof(ApiOptionType)).Length, 8, "Not all ApiOptionType are mapped.");
+            Assert.AreEqual(Enum.GetValues(typeof(CoreOptionType)).Length, 9, "Not all CoreOptionType values are mapped.");
+            Assert.AreEqual(Enum.GetValues(typeof(ApiOptionType)).Length, 9, "Not all ApiOptionType are mapped.");
         }
         
         [Test]
@@ -81,6 +85,17 @@ namespace BetterCms.Api.Tests.UnitTests
 
             Assert.AreEqual(Enum.GetValues(typeof(CoreForceProtocolType)).Length, 3, "Not all CoreForceProtocolType values are mapped.");
             Assert.AreEqual(Enum.GetValues(typeof(ApiForceProtocolType)).Length, 3, "Not all ApiForceProtocolType are mapped.");
+        }
+        
+        [Test]
+        public void ShouldMapContentTextModeValuese()
+        {
+            Assert.AreEqual((int)PageContentTextMode.Html, (int)ApiContentTextMode.Html);
+            Assert.AreEqual((int)PageContentTextMode.Markdown, (int)ApiContentTextMode.Markdown);
+            Assert.AreEqual((int)PageContentTextMode.SimpleText, (int)ApiContentTextMode.SimpleText);
+
+            Assert.AreEqual(Enum.GetValues(typeof(PageContentTextMode)).Length, 3, "Not all PageContentTextMode values are mapped.");
+            Assert.AreEqual(Enum.GetValues(typeof(ApiContentTextMode)).Length, 3, "Not all ApiContentTextMode are mapped.");
         }
     }
 }

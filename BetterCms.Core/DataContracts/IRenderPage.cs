@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 
 namespace BetterCms.Core.DataContracts
 {
@@ -9,5 +10,7 @@ namespace BetterCms.Core.DataContracts
         IDictionary<string, IOptionValue> OptionsAsDictionary { get; }
         
         string LanguageCode { get; set; }
+
+        Guid LanguageId { get; set; }
     }
 }

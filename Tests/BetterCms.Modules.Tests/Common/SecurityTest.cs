@@ -8,9 +8,8 @@ using System.Web.Mvc;
 
 using Autofac;
 
-using BetterCms.Core.Modules.Registration;
 using BetterCms.Core.Services;
-using BetterCms.Core.Web;
+
 using BetterCms.Module.Blog;
 using BetterCms.Module.MediaManager;
 using BetterCms.Module.Pages;
@@ -18,6 +17,8 @@ using BetterCms.Module.Root;
 using BetterCms.Module.Installation;
 using BetterCms.Module.Root.Services;
 using BetterCms.Module.Users;
+
+using BetterModules.Core.Web.Web;
 
 using Moq;
 

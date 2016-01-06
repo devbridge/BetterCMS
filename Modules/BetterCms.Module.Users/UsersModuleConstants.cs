@@ -1,7 +1,4 @@
-﻿using System;
-using System.EnterpriseServices.Internal;
-
-using BetterCms.Core.Models;
+﻿using BetterModules.Core.Models;
 
 namespace BetterCms.Module.Users
 {

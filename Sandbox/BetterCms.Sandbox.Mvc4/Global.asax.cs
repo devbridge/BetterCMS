@@ -19,21 +19,15 @@ namespace BetterCms.Sandbox.Mvc4
     {
         private static readonly ILog Log = LogManager.GetCurrentClassLogger();
 
-        private static ICmsHost cmsHost;
-
         private static List<string> usersToForceRelogin = new List<string>();
 
         protected void Application_Start()
         {
-            cmsHost = CmsContext.RegisterHost();
-
             AreaRegistration.RegisterAllAreas();
 
             FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);
 
             RouteConfig.RegisterRoutes(RouteTable.Routes);
-
-            cmsHost.OnApplicationStart(this);
 
             AddCategoryEvents();
             AddContentEvents();
@@ -197,31 +191,6 @@ namespace BetterCms.Sandbox.Mvc4
            // args.RenderPageData.Metadata.Add(new MetaDataProjection("test-metadata", "hello world!"));
         }
 
-        protected void Application_BeginRequest()
-        {
-            cmsHost.OnBeginRequest(this);
-        }
-
-        protected void Application_EndRequest()
-        {
-            // Redirect to login page example:
-            // if (Response.StatusCode == 403)
-            // {
-            //     Response.Redirect(string.Format(FormsAuthentication.LoginUrl+"?returnUrl={0}", (new UrlHelper(Request.RequestContext)).Encode(Request.RawUrl)));
-            // }
-            cmsHost.OnEndRequest(this);
-        }
-
-        protected void Application_Error()
-        {            
-            cmsHost.OnApplicationError(this);
-        }
-
-        protected void Application_End()
-        {
-            cmsHost.OnApplicationEnd(this);
-        }
-
         /// <summary>
         /// Handles the AuthenticateRequest event of the Application control.
         /// </summary>
@@ -273,8 +242,6 @@ namespace BetterCms.Sandbox.Mvc4
 
                 Response.Redirect(FormsAuthentication.LoginUrl);
             }
-
-            cmsHost.OnAuthenticateRequest(this);
         }
     }
 }

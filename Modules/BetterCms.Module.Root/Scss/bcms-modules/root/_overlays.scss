@@ -1,0 +1,234 @@
+@import '../../core/variables';
+
+//module local maps/keys
+$overlay-mange-controls: (
+                ('addcontent', $bcms-add-content),
+                ('addwidget', $bcms-overlay-widget),
+                ('sortcontent' $bcms-manage)
+);
+
+$overlay-control-buttons: (
+                ('history', $bcms-overlay-history),
+                ('edit', $bcms-overlay-edit),
+                ('configure', $bcms-overlay-options),
+                ('delete', $bcms-overlay-delete),
+                ('edit-child', $bcms-overlay-edit-child)
+);
+
+//module content region
+.bcms-on {
+    .bcms-region-overlay {
+        display: block;
+    }
+}
+
+.bcms-region {
+    &-overlay {
+        @include position(absolute, null);
+        display: none;
+        min-height: 35px;
+        outline: $border-overlay;
+        z-index: 100;
+
+        &.bcms-show-overlay {
+            @include size(100%);
+            background-image: url($bcms-texture);
+            height: 100%;
+            width: 100%;
+        }
+    }
+
+    &-actions {
+        @include position(absolute, 0 0 null null);
+        border: {
+            bottom: $border-overlay;
+            left: $border-overlay;
+        }
+        cursor: default;
+        height: 26px;
+        z-index: 10;
+    }
+
+    &-button {
+        @include transition(all 200ms);
+        @include vertical-align($align: top);
+        background-color: $blue-main;
+        box-sizing: border-box;
+        color: $white;
+        cursor: pointer;
+        font-size: 12px;
+        height: 26px;
+        line-height: 25px;
+        padding: 0 10px;
+
+        &:hover {
+            background-color: darken($blue-main, 10%);
+            cursor: pointer;
+        }
+    }
+
+    &-addcontent {
+        position: relative;
+
+        &.bcms-active {
+            background-color: darken($blue-main, 10%);
+        }
+    }
+
+    &-options-block {
+        @include position(absolute, 100% 0 null null);
+        display: none;
+        white-space: nowrap;
+
+        .bcms-active & {
+            display: block;
+        }
+    }
+
+    &-pick-editor {
+        @include transition(all 200ms);
+        background-color: darken($blue-main, 10%);
+        line-height: 18px;
+        padding: 5px 20px;
+
+        &:hover {
+            background-color: darken($gray-l50, 10%);
+        }
+    }
+
+    &-contentstree,
+    &-sortcancel {
+        background-color: $gray-l50;
+
+        &:hover {
+            background-color: darken($gray-l50, 10%);
+        }
+    }
+
+    @each $name, $icon in $overlay-mange-controls {
+        &-#{$name} {
+            @include size(30px 26px);
+            background: $blue-main url($icon) no-repeat center;
+        }
+    }
+}
+
+.bcms-content-overlay {
+    display: none;
+    position: relative;
+    width: 100%;
+    z-index: 5;
+
+    @include virtual(before) {
+        @include position(absolute, 0);
+        background-color: rgba($gray-l5, .2);
+    }
+}
+
+.bcms-show {
+    &-overlay {
+        .bcms-sort-block {
+            display: block;
+        }
+    }
+
+    &-controls {
+        .bcms-content-overlay {
+            @include size(100%);
+            display: block;
+        }
+    }
+}
+
+//module content sorting
+.bcms-sort {
+    &-block {
+        display: none;
+        height: 100%;
+        position: relative;
+        z-index: 5;
+    }
+
+    &-wrapper {
+        cursor: move;
+        height: 30px;
+        line-height: 30px;
+        margin-top: 10px;
+        overflow: hidden;
+        padding: 5px 10px;
+        position: relative;
+
+        &:first-child {
+            margin-top: 0;
+        }
+
+        @include virtual(before) {
+            @include position(absolute, 0);
+            background-color: rgba($gray-l5, .2);
+        }
+    }
+
+    &-wrapper-placeholder {
+        background-color: $black;
+        height: 30px;
+        margin-top: 10px;
+        opacity: .1;
+        padding: 5px 10px;
+        position: relative;
+        z-index: 10;
+    }
+
+    &-content {
+        color: $dark;
+        font-weight: 700;
+        text-transform: capitalize;
+    }
+}
+
+//module content action controls
+.bcms-content {
+    &-actions {
+        @include position(absolute, 10px null null 10px);
+        border: $border-content-actions;
+        height: 42px;
+    }
+
+    &-button {
+        @include transition(all 200ms);
+        @include size(42px);
+        background-color: $blue-main;
+        border-left: $border-content-actions;
+        cursor: pointer;
+        display: block;
+        float: left;
+        position: relative;
+
+        &:first-child {
+            border-left: 0;
+        }
+
+        &:hover {
+            background-color: darken($blue-main, 15%);
+        }
+    }
+
+    @each $name, $icon in $overlay-control-buttons {
+        &-#{$name} {
+            @include virtual(after) {
+                @include positioning($center: true);
+                @include size(100%);
+                background: url($icon) no-repeat center;
+            }
+        }
+    }
+
+    &-edit {
+        &.bcms-active-draft {
+            background-color: $red-l70;
+
+            &:hover {
+                background-color: lighten($red-l70, 10%);
+            }
+        }
+    }
+}

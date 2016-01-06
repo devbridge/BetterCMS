@@ -1,17 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Security.Permissions;
 
-using Autofac;
-
-using BetterCms.Core.DataAccess;
-using BetterCms.Core.DataAccess.DataContext;
 using BetterCms.Core.DataContracts;
 using BetterCms.Core.DataContracts.Enums;
-using BetterCms.Core.Dependencies;
-using BetterCms.Core.Models;
 using BetterCms.Core.Modules.Projections;
+
 using BetterCms.Module.Pages.Accessors;
 using BetterCms.Module.Pages.Command.Content.InsertContent;
 using BetterCms.Module.Pages.Models;
@@ -19,6 +13,10 @@ using BetterCms.Module.Pages.Services;
 using BetterCms.Module.Root.Models;
 using BetterCms.Module.Root.Projections;
 using BetterCms.Module.Root.Services;
+
+using BetterModules.Core.DataAccess;
+using BetterModules.Core.DataAccess.DataContext;
+using BetterModules.Core.Web.Dependencies;
 
 using Moq;
 

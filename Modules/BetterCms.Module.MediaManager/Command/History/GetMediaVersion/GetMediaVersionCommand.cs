@@ -1,8 +1,5 @@
 ﻿using System;
 
-using BetterCms.Core.DataAccess.DataContext;
-using BetterCms.Core.DataAccess.DataContext.Fetching;
-using BetterCms.Core.Mvc.Commands;
 using BetterCms.Core.Security;
 
 using BetterCms.Module.MediaManager.Content.Resources;
@@ -13,6 +10,10 @@ using BetterCms.Module.MediaManager.Services;
 using BetterCms.Module.MediaManager.ViewModels.History;
 
 using BetterCms.Module.Root.Mvc;
+
+using BetterModules.Core.DataAccess.DataContext;
+using BetterModules.Core.DataAccess.DataContext.Fetching;
+using BetterModules.Core.Web.Mvc.Commands;
 
 namespace BetterCms.Module.MediaManager.Command.History.GetMediaVersion
 {

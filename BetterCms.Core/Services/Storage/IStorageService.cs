@@ -13,7 +13,7 @@ namespace BetterCms.Core.Services.Storage
         void CopyObject(Uri sourceUri, Uri destinationUri);
 
         void RemoveObject(Uri uri);
-
+        
         void RemoveFolder(Uri uri);
 
         string GetSecuredUrl(Uri uri);

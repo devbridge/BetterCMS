@@ -1,5 +1,4 @@
-﻿using BetterCms.Core.Models;
-using BetterCms.Module.Root;
+﻿using BetterModules.Core.Models;
 
 namespace BetterCms.Module.Pages.Models.Maps
 {

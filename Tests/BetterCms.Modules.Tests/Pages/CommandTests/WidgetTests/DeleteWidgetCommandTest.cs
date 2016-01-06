@@ -3,8 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-using BetterCms.Core.DataAccess;
-using BetterCms.Core.DataAccess.DataContext;
+using BetterModules.Core.DataAccess;
+using BetterModules.Core.DataAccess.DataContext;
 using BetterCms.Core.Services;
 using BetterCms.Module.Pages.Command.Widget.DeleteWidget;
 using BetterCms.Module.Pages.Services;
@@ -36,7 +36,8 @@ namespace BetterCms.Test.Module.Pages.CommandTests.WidgetTests
                     var contentService = new Mock<IContentService>().Object;
                     var childContentService = new Mock<IChildContentService>().Object;
                     var categoryService = new Mock<ICategoryService>();
-                    var widgetService = new DefaultWidgetService(repository, uow, optionService, contentService, childContentService, categoryService.Object);
+                    var cmsConfiguration = new Mock<ICmsConfiguration>().Object;
+                    var widgetService = new DefaultWidgetService(repository, uow, optionService, contentService, childContentService, categoryService.Object, cmsConfiguration);
 
                     DeleteWidgetCommand command = new DeleteWidgetCommand(widgetService);
 
@@ -66,7 +67,8 @@ namespace BetterCms.Test.Module.Pages.CommandTests.WidgetTests
                 var contentService = new Mock<IContentService>().Object;
                 var childContentService = new Mock<IChildContentService>().Object;
                 var categoryService = new Mock<ICategoryService>();
-                var widgetService = new DefaultWidgetService(repository, uow, optionService, contentService, childContentService, categoryService.Object);
+                var cmsConfiguration = new Mock<ICmsConfiguration>().Object;
+                var widgetService = new DefaultWidgetService(repository, uow, optionService, contentService, childContentService, categoryService.Object, cmsConfiguration);
 
                 DeleteWidgetCommand command = new DeleteWidgetCommand(widgetService);
 

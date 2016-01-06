@@ -12,6 +12,8 @@ using BetterCms.Module.Root.Mvc;
 using BetterCms.Module.Root.ViewModels;
 using BetterCms.Module.Root.ViewModels.Category;
 
+using BetterModules.Core.Web.Models;
+
 using Microsoft.Web.Mvc;
 
 namespace BetterCms.Module.Root.Controllers

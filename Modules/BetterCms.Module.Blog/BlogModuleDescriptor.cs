@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 
 using Autofac;
@@ -21,18 +20,20 @@ using BetterCms.Module.Blog.Registration;
 using BetterCms.Module.Blog.Services;
 
 using BetterCms.Module.Pages.Accessors;
-using BetterCms.Module.Pages.Models;
+
 using BetterCms.Module.Root;
 using BetterCms.Module.Root.Accessors;
 using BetterCms.Module.Root.Mvc.PageHtmlRenderer;
 using BetterCms.Module.Root.ViewModels.Cms;
+
+using BetterModules.Core.Modules.Registration;
 
 namespace BetterCms.Module.Blog
 {
     /// <summary>
     /// Blog module descriptor
     /// </summary>
-    public class BlogModuleDescriptor : ModuleDescriptor
+    public class BlogModuleDescriptor : CmsModuleDescriptor
     {
         /// <summary>
         /// The module name.
@@ -65,33 +66,6 @@ namespace BetterCms.Module.Blog
 
             CategoryAccessors.Register<BlogCategoryAccessor>();
             RegisterRenderingPageProperties();
-        }
-
-        internal const string ModuleId = "f2fd4209-8cc1-42a4-9b81-bde4de11008a";
-
-        /// <summary>
-        /// Gets the identifier.
-        /// </summary>
-        /// <value>
-        /// The identifier.
-        /// </value>
-        public override Guid Id
-        {
-            get
-            {
-                return new Guid(ModuleId);
-            }
-        }
-
-        /// <summary>
-        /// Flag describe is module root or additional
-        /// </summary>
-        public override bool IsRootModule
-        {
-            get
-            {
-                return true;
-            }
         }
 
         /// <summary>

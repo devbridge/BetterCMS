@@ -1,12 +1,13 @@
 ﻿using System.Linq;
 
-using BetterCms.Core.Mvc;
-using BetterCms.Core.Mvc.Commands;
 using BetterCms.Module.Pages.ViewModels.SiteSettings;
+
 using BetterCms.Module.Root.Mvc;
 using BetterCms.Module.Root.Mvc.Grids.Extensions;
 using BetterCms.Module.Root.Mvc.Grids.GridOptions;
 using BetterCms.Module.Root.ViewModels.SiteSettings;
+
+using BetterModules.Core.Web.Mvc.Commands;
 
 using NHibernate.Criterion;
 using NHibernate.Transform;
@@ -40,8 +41,8 @@ namespace BetterCms.Module.Pages.Command.Redirect.GetRedirectsList
                 var searchQuery = string.Format("%{0}%", options.SearchQuery);
                 query =
                     query.Where(
-                        Restrictions.InsensitiveLike(NHibernate.Criterion.Projections.Property(() => alias.PageUrl), searchQuery)
-                        || Restrictions.InsensitiveLike(NHibernate.Criterion.Projections.Property(() => alias.RedirectUrl), searchQuery));
+                        Restrictions.InsensitiveLike(Projections.Property(() => alias.PageUrl), searchQuery)
+                        || Restrictions.InsensitiveLike(Projections.Property(() => alias.RedirectUrl), searchQuery));
             }
 
             query =

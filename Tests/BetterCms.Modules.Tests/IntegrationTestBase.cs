@@ -3,8 +3,8 @@ using System.Transactions;
 
 using Autofac;
 
-using BetterCms.Core.DataAccess.DataContext;
-using BetterCms.Core.Models;
+using BetterModules.Core.DataAccess.DataContext;
+using BetterModules.Core.Models;
 
 using FluentNHibernate.Testing;
 

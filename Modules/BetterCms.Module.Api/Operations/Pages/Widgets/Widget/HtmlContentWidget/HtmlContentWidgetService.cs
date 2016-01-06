@@ -2,8 +2,8 @@
 using System.Collections.Generic;
 using System.Linq;
 
-using BetterCms.Core.DataAccess;
-using BetterCms.Core.DataAccess.DataContext;
+using BetterModules.Core.DataAccess;
+using BetterModules.Core.DataAccess.DataContext;
 using BetterCms.Core.DataContracts.Enums;
 
 using BetterCms.Module.Api.Extensions;
@@ -74,7 +74,7 @@ namespace BetterCms.Module.Api.Operations.Pages.Widgets.Widget.HtmlContentWidget
             {
                 response.ChildContentsOptionValues = optionService
                     .GetChildContentsOptionValues(request.WidgetId)
-                    .ToServiceModel();
+                    .ToMultilingualServiceModel();
             }
 
             if (request.Data.IncludeCategories)
@@ -122,7 +122,7 @@ namespace BetterCms.Module.Api.Operations.Pages.Widgets.Widget.HtmlContentWidget
             IList<ContentOptionValuesViewModel> childContents = null;
             if (request.Data.ChildContentsOptionValues != null)
             {
-                childContents = request.Data.ChildContentsOptionValues.ToViewModel();
+                childContents = request.Data.ChildContentsOptionValues.ToMultilingualViewModel();
             }
             widgetService.SaveHtmlContentWidget(model, childContents, out widget, out originalWidget, false, true);
 

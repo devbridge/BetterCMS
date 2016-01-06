@@ -53,7 +53,8 @@
                                 editor.childWidgetOptions[assignId] = viewModel;
 
                                 return true;
-                            });
+                            },
+                            editor.cmsEditorType);
                     }
                 }),
 

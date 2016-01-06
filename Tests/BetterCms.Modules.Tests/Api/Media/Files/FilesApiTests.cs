@@ -1,10 +1,12 @@
 ﻿using System.Linq;
 
-using BetterCms.Core.Models;
 using BetterCms.Module.Api.Extensions;
 using BetterCms.Module.Api.Operations.MediaManager.Files.File;
 using BetterCms.Module.Api.Operations.Root;
 using BetterCms.Module.Root.Models;
+
+using BetterModules.Core.Models;
+using BetterModules.Events;
 
 using NHibernate;
 
@@ -56,12 +58,12 @@ namespace BetterCms.Test.Module.Api.Media.Files
             Events.MediaManagerEvents.Instance.MediaUnarchived -= Instance_MediaUnarchived;
         }
 
-        void Instance_MediaUnarchived(Events.SingleItemEventArgs<BetterCms.Module.MediaManager.Models.Media> args)
+        void Instance_MediaUnarchived(SingleItemEventArgs<BetterCms.Module.MediaManager.Models.Media> args)
         {
             archivedMediaEventCount++;
         }
 
-        void Instance_MediaArchived(Events.SingleItemEventArgs<BetterCms.Module.MediaManager.Models.Media> args)
+        void Instance_MediaArchived(SingleItemEventArgs<BetterCms.Module.MediaManager.Models.Media> args)
         {
             unarchivedMediaEventCount++;
         }
@@ -83,6 +85,7 @@ namespace BetterCms.Test.Module.Api.Media.Files
                     OriginalFileName = TestDataProvider.ProvideRandomString(MaxLength.Name),
                     PublishedOn = TestDataProvider.ProvideRandomDateTime(),
                     Tags = new[] { TestDataProvider.ProvideRandomString(MaxLength.Name), TestDataProvider.ProvideRandomString(MaxLength.Name) },
+                    Categories = new[] { category.Id },
                     ThumbnailId = null,
                     AccessRules = new[]
                                      {           

@@ -1,0 +1,129 @@
+@import '../core/variables';
+
+$datepicker-arrows: (
+                ('prev', $bcms-datepicker-arrow-left),
+                ('next', $bcms-datepicker-arrow-right)
+);
+
+.ui-datepicker {
+    display: none;
+    margin-top: -1px;
+    padding: 1px;
+    width: 200px;
+
+    &-trigger {
+        cursor: pointer;
+        position: absolute;
+        right: 5px;
+        top: 6px;
+    }
+
+    &-title {
+        cursor: default;
+        font-family: $font-base-family;
+        font-size: 14px;
+        padding: 4px 0;
+        text-align: center;
+        text-transform: uppercase;
+    }
+
+    table {
+        border-collapse: collapse;
+        font-size: 12px;
+        width: 100%;
+    }
+
+    th {
+        border: 0;
+        text-align: center;
+    }
+
+    td {
+        border: 0;
+        padding: 1px;
+
+        a {
+            display: block;
+            padding: 1px 2px;
+            text-decoration: none;
+        }
+    }
+
+    @each $name, $icon in $datepicker-arrows {
+        .ui-datepicker-#{$name} {
+            @include size(25px 100%);
+            background: url($icon) no-repeat center;
+            cursor: pointer;
+            position: absolute;
+            z-index: 2;
+            @if ($name == 'prev') {
+                left: 5px;
+            }
+            @if ($name == 'next') {
+                right: 5px;
+            }
+        }
+    }
+}
+
+.ui-icon {
+    display: block;
+    overflow: hidden;
+    text-indent: -999em;
+}
+
+.ui-widget {
+    font-family: $font-base-family;
+    font-size: 14px;
+
+    input,
+    select,
+    textarea,
+    button {
+        font-size: 14px;
+    }
+
+    &-content {
+        background-color: $white;
+        border: $border-thin-gray;
+        color: $dark;
+
+        a {
+            @include transition(background-color 200ms, color 200ms);
+            color: $dark;
+        }
+
+        .ui-state-default {
+            background-color: $gray-l30;
+            text-align: center;
+
+            &:hover {
+                background-color: $sky-blue;
+                color: $white;
+                font-weight: normal;
+            }
+        }
+
+        .ui-state-active {
+            background: $sky-blue;
+        }
+    }
+
+    &-header {
+        background-color: $blue-main;
+        color: $white;
+        position: relative;
+
+        a {
+            color: $white;
+        }
+    }
+
+    .ui-widget {
+        font-size: 14px;
+    }
+}
+
+.ui-state-disabled {
+    cursor: default !important;
+}

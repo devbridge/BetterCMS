@@ -150,58 +150,58 @@
   <data name="EditBlockPost_AddTags_Title" xml:space="preserve">
     <value>Add Tags</value>
   </data>
-  <data name="EditBlockPost_Author_Title" xml:space="preserve">
+  <data name="EditBlogPost_Author_Title" xml:space="preserve">
     <value>Author</value>
   </data>
-  <data name="EditBlockPost_Author_Tooltip_Description" xml:space="preserve">
+  <data name="EditBlogPost_Author_Tooltip_Description" xml:space="preserve">
     <value>Specify the author of this post.</value>
   </data>
   <data name="EditBlockPost_Category_Title" xml:space="preserve">
     <value>Categories</value>
   </data>
-  <data name="EditBlockPost_Category_Tooltip_Description" xml:space="preserve">
+  <data name="EditBlogPost_Category_Tooltip_Description" xml:space="preserve">
     <value>Assign this post to a category to identify it with similar posts.</value>
   </data>
-  <data name="EditBlockPost_Content_Title" xml:space="preserve">
+  <data name="EditBlogPost_Content_Title" xml:space="preserve">
     <value>Full Post</value>
   </data>
-  <data name="EditBlockPost_Content_Tooltip_Description" xml:space="preserve">
+  <data name="EditBlogPost_Content_Tooltip_Description" xml:space="preserve">
     <value>Type or paste the entire body of the post.</value>
   </data>
-  <data name="EditBlockPost_FeaturedImage_Description" xml:space="preserve">
+  <data name="EditBlogPost_FeaturedImage_Description" xml:space="preserve">
     <value>Image will be displayed as a thumbnail with your post.</value>
   </data>
-  <data name="EditBlockPost_FeaturedImage_Title" xml:space="preserve">
+  <data name="EditBlogPost_FeaturedImage_Title" xml:space="preserve">
     <value>Main Image</value>
   </data>
-  <data name="EditBlockPost_FeaturedImage_Tooltip_Description" xml:space="preserve">
+  <data name="EditBlogPost_FeaturedImage_Tooltip_Description" xml:space="preserve">
     <value>Select an image that will accompany your post.</value>
   </data>
-  <data name="EditBlockPost_IntroText_Title" xml:space="preserve">
+  <data name="EditBlogPost_IntroText_Title" xml:space="preserve">
     <value>Intro / Featured Text</value>
   </data>
-  <data name="EditBlockPost_IntroText_Tooltip_Description" xml:space="preserve">
+  <data name="EditBlogPost_IntroText_Tooltip_Description" xml:space="preserve">
     <value>Type or paste the introductory text of the post.</value>
   </data>
-  <data name="EditBlockPost_LiveDates_Tooltip_Description" xml:space="preserve">
+  <data name="EditBlogPost_LiveDates_Tooltip_Description" xml:space="preserve">
     <value>Specify the date you would like this post to be visible on your website. If applicable, specify the date this post should expire.</value>
   </data>
-  <data name="EditBlockPost_LiveFrom_Title" xml:space="preserve">
+  <data name="EditBlogPost_LiveFrom_Title" xml:space="preserve">
     <value>Live From</value>
   </data>
-  <data name="EditBlockPost_LiveTo_Title" xml:space="preserve">
+  <data name="EditBlogPost_LiveTo_Title" xml:space="preserve">
     <value>Live To</value>
   </data>
-  <data name="EditBlockPost_SelectImage_Button_Title" xml:space="preserve">
+  <data name="EditBlogPost_SelectImage_Button_Title" xml:space="preserve">
     <value>Select Image</value>
   </data>
-  <data name="EditBlockPost_Tags_Tooltip_Description" xml:space="preserve">
+  <data name="EditBlogPost_Tags_Tooltip_Description" xml:space="preserve">
     <value>Add tags to this post to identify it with related posts.</value>
   </data>
-  <data name="EditBlockPost_Title_Title" xml:space="preserve">
+  <data name="EditBlogPost_Title_Title" xml:space="preserve">
     <value>Title of the Post (H1)</value>
   </data>
-  <data name="EditBlockPost_Title_Tooltip_Description" xml:space="preserve">
+  <data name="EditBlogPost_Title_Tooltip_Description" xml:space="preserve">
     <value>Edit the title of this post.</value>
   </data>
   <data name="EditPost_Dialog_Title" xml:space="preserve">
@@ -249,8 +249,8 @@
   <data name="SiteSettings_Blogs_Search" xml:space="preserve">
     <value>Search</value>
   </data>
-  <data name="SiteSettings_Blogs_TemplatesTab_Title" xml:space="preserve">
-    <value>Layouts</value>
+  <data name="SiteSettings_Blogs_SettingsTab_Title" xml:space="preserve">
+    <value>Settings</value>
   </data>
   <data name="SiteSettings_Blogs_TitleColumn" xml:space="preserve">
     <value>Posts Title</value>
@@ -366,6 +366,12 @@
   <data name="ImportBlogPosts_CreateRedirects_Title" xml:space="preserve">
     <value>Create redirects</value>
   </data>
+  <data name="ImportBlogPosts_ReuseExistingCategories_Title" xml:space="preserve">
+    <value>Reuse existing categories (no categories will be created)</value>
+  </data>
+  <data name="ImportBlogPosts_RecreateCategoryTree_Title" xml:space="preserve">
+    <value>Recreate category tree (if not found will create categories if possible)</value>
+  </data>
   <data name="ImportBlogPosts_Results_Title_Title" xml:space="preserve">
     <value>Title</value>
   </data>
@@ -411,7 +417,28 @@
   <data name="ImportBlogPosts_AuthorByRefNotFound_Message" xml:space="preserve">
     <value>Author with ID "{0}" wasn't found in the list of importing authors</value>
   </data>
-  <data name="ImportBlogPosts_CategoryByRefNotFound_Message" xml:space="preserve">
-    <value>Category with ID "{0}" wasn't found in the list of importing categories</value>
+  <data name="SiteSettings_BlogSettingsTab_SettingName_Title" xml:space="preserve">
+    <value>Setting</value>
+  </data>
+  <data name="SiteSettings_BlogSettingsTab_SettingValue_Title" xml:space="preserve">
+    <value>Value</value>
+  </data>
+  <data name="SiteSettings_BlogSettingsTab_DefaultEditMode_Title" xml:space="preserve">
+    <value>Default content edit mode</value>
+  </data>
+  <data name="SiteSettings_Blogs_TemplatesTab_Title" xml:space="preserve">
+    <value>Layout</value>
+  </data>
+  <data name="SiteSettings_BlogSettingsTab_Header" xml:space="preserve">
+    <value>Blog Settings</value>
+  </data>
+  <data name="SiteSettings_AuthorsTab_AuthorDescription_Title" xml:space="preserve">
+    <value>Description</value>
+  </data>
+  <data name="EditBlogPost_ContentTab_Title" xml:space="preserve">
+    <value>Content</value>
+  </data>
+  <data name="EditBlogPost_PropertiesTab_Title" xml:space="preserve">
+    <value>Properties</value>
   </data>
 </root>

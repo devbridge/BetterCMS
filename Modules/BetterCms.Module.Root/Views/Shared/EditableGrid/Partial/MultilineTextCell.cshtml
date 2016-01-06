@@ -1,0 +1,30 @@
+﻿@using BetterCms.Module.Root.Mvc.Grids
+@model EditableGridColumn
+
+<td @Html.Raw(Model.Attributes)>
+    <div class="bcms-input-box">
+        <a class="bcms-tables-link" data-bind="
+           text: getCroppedText(@(Model.ValueBind)()) 
+           @(!string.IsNullOrEmpty(Model.FocusIdentifier) ? string.Format(", click: onItemSelect.bind($data, {0})", Model.FocusIdentifier) : string.Empty)
+           @(Model.CanBeEdited ? string.Format(", visible: !isActive() || ({0}.editingIsDisabled && {0}.editingIsDisabled())", Model.ValueBind) : string.Empty)
+        "></a>
+        @if (Model.CanBeEdited)
+        {
+            <textarea class="bcms-editor-field-area" data-bind="
+                css: { 'bcms-input-validation-error': !isNew() && @(Model.ValueBind).hasError && @(Model.ValueBind).hasError() },
+                value: @Model.ValueBind, 
+                valueUpdate: 'afterkeydown', 
+                escPress: onCancelEdit, 
+                afterRender: initInput($element, @Model.ValueBind)
+                @(!string.IsNullOrWhiteSpace(Model.CustomBinding) ? string.Format(", {0}", Model.CustomBinding) : string.Empty)
+                @(!string.IsNullOrEmpty(Model.FocusIdentifier) ? string.Format(", hasfocus: {0}", Model.FocusIdentifier) : string.Empty)
+                @(string.Format(", visible: isActive() && (!{0}.editingIsDisabled || !{0}.editingIsDisabled())", Model.ValueBind))
+                "></textarea>
+            <!-- ko if: !isNew() &&  @(Model.ValueBind).hasError && @(Model.ValueBind).hasError() -->
+            <span class="bcms-field-validation-error">
+                <span data-bind="html: @(Model.ValueBind).validationMessage()"></span>
+            </span>
+            <!-- /ko -->
+        }
+    </div>
+</td>

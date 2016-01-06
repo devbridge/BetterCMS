@@ -1,15 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-
-using BetterCms.Core.Models;
-
-using BetterCms.Module.Pages.Content.Resources;
-using BetterCms.Module.Pages.Mvc.Attributes;
+using System.Web.Mvc;
 
 using BetterCms.Module.Root.Content.Resources;
+using BetterCms.Module.Root.Mvc.Attributes;
 using BetterCms.Module.Root.Mvc.Grids;
 using BetterCms.Module.Root.ViewModels.Option;
+
+using BetterModules.Core.Models;
 
 namespace BetterCms.Module.Pages.ViewModels.Templates
 {
@@ -38,6 +37,8 @@ namespace BetterCms.Module.Pages.ViewModels.Templates
         /// The name.
         /// </value>
         [Required(ErrorMessageResourceType = typeof(RootGlobalization), ErrorMessageResourceName = "Validation_RequiredAttribute_Message")]
+        [AllowHtml]
+        [DisallowHtml(ErrorMessageResourceType = typeof(RootGlobalization), ErrorMessageResourceName = "Validation_DisallowHtml_Field_Message")]
         [StringLength(MaxLength.Name, ErrorMessageResourceType = typeof(RootGlobalization), ErrorMessageResourceName = "Validation_StringLengthAttribute_Message")]
         public string Name { get; set; }
 
@@ -47,6 +48,8 @@ namespace BetterCms.Module.Pages.ViewModels.Templates
         /// <value>
         /// The image URL.
         /// </value>        
+        [AllowHtml]
+        [DisallowHtml(ErrorMessageResourceType = typeof(RootGlobalization), ErrorMessageResourceName = "Validation_DisallowHtml_Field_Message")]
         [StringLength(MaxLength.Url, ErrorMessageResourceType = typeof(RootGlobalization), ErrorMessageResourceName = "Validation_StringLengthAttribute_Message")]
         public string PreviewImageUrl { get; set; }
 
@@ -57,6 +60,8 @@ namespace BetterCms.Module.Pages.ViewModels.Templates
         /// The template url.
         /// </value>
         [Required(ErrorMessageResourceType = typeof(RootGlobalization), ErrorMessageResourceName = "Validation_RequiredAttribute_Message")]
+        [AllowHtml]
+        [DisallowHtml(ErrorMessageResourceType = typeof(RootGlobalization), ErrorMessageResourceName = "Validation_DisallowHtml_Field_Message")]
         [StringLength(MaxLength.Url, ErrorMessageResourceType = typeof(RootGlobalization), ErrorMessageResourceName = "Validation_StringLengthAttribute_Message")]
         public string Url { get; set; }
 

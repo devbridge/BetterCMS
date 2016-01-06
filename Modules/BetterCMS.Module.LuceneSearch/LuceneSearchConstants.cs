@@ -43,6 +43,8 @@
             public const string LuceneExcludedIds = "LuceneExcludedIds";
 
             public const string LuceneExcludedClasses = "LuceneExcludedClasses";
+
+            public const string LuceneExcludedPages = "LuceneExcludedPages";
         }
 
         public const string LuceneSearchModuleLoggerNamespace = "LuceneSearchModule";

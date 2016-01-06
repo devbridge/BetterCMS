@@ -4,16 +4,16 @@ using System.ComponentModel.DataAnnotations;
 using System.Web.Mvc;
 
 using BetterCms.Core.DataContracts.Enums;
-using BetterCms.Core.Models;
-using BetterCms.Core.Mvc.Binders;
+
 using BetterCms.Module.Blog.Content.Resources;
 using BetterCms.Module.MediaManager.ViewModels;
+using BetterCms.Module.Pages.Models.Enums;
 using BetterCms.Module.Pages.Mvc.Attributes;
 using BetterCms.Module.Root.Content.Resources;
 using BetterCms.Module.Root.Models;
 using BetterCms.Module.Root.ViewModels.Security;
 
-using Newtonsoft.Json;
+using BetterModules.Core.Models;
 
 namespace BetterCms.Module.Blog.ViewModels.Blog
 {
@@ -90,6 +90,15 @@ namespace BetterCms.Module.Blog.ViewModels.Blog
         /// </value>
         [AllowHtml]
         public virtual string Content { get; set; }
+        
+        /// <summary>
+        /// Gets or sets the blog original text.
+        /// </summary>
+        /// <value>
+        /// The blog original text.
+        /// </value>
+        [AllowHtml]
+        public virtual string OriginalText { get; set; }
 
         /// <summary>
         /// Gets or sets a value indicating whether blog post content editor must be opened in source mode.
@@ -233,7 +242,21 @@ namespace BetterCms.Module.Blog.ViewModels.Blog
         /// </value>
         public bool IncludeChildRegions { get; set; }
 
+        /// <summary>
+        /// Gets or sets the categories filter key.
+        /// </summary>
+        /// <value>
+        /// The categories filter key.
+        /// </value>
         public string CategoriesFilterKey { get; set; }
+
+        /// <summary>
+        /// Gets or sets a value indicating whether content type is markdown.
+        /// </summary>
+        /// <value>
+        /// <c>true</c> if content type is markdown; otherwise, <c>false</c>.
+        /// </value>
+        public ContentTextMode ContentTextMode { get; set; }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="BlogPostViewModel" /> class.
@@ -242,6 +265,7 @@ namespace BetterCms.Module.Blog.ViewModels.Blog
         {
             Image = new ImageSelectorViewModel();
             UseCanonicalUrl = true;
+            ContentTextMode = ContentTextMode.Html;
         }
 
         /// <summary>

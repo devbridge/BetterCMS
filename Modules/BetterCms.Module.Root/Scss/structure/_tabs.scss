@@ -1,0 +1,137 @@
+@import '../core/variables';
+
+//module tabbed view
+.bcms-tab {
+    &-header {
+        background: $dark;
+        padding: 10px 60px 0;
+    }
+
+    &-item {
+        @include transition(all 200ms ease);
+        background: $gray-l25;
+        color: $black;
+        cursor: pointer;
+        display: inline-block;
+        font-size: 14px;
+        font-weight: 700;
+        line-height: 30px;
+        margin-right: 5px;
+        max-width: 250px;
+        padding: 0 22px;
+        text-decoration: none;
+
+        &:hover {
+            background-color: $gray-l35;
+            text-decoration: none;
+        }
+
+        &.bcms-active {
+            background-color: $white;
+
+            &:hover {
+                background-color: $white;
+            }
+        }
+    }
+
+    &-single {
+        display: none;
+
+        &:first-of-type {
+            display: block;
+        }
+    }
+
+    .bcms-inner-tabs-holder & {
+        &-header {
+
+            background: $white;
+            border-bottom: $border-thin-gray;
+            padding-left: 10px;
+        }
+
+        &-item {
+            border: {
+                top: $border-thin-gray;
+                right: $border-thin-gray;
+                left: $border-thin-gray;
+            }
+            position: relative;
+
+            &.bcms-active {
+                @include virtual(after) {
+                    @include position(absolute, null 0 -1px 0);
+                    border-top: 1px solid $white;
+                }
+            }
+        }
+
+        &-single {
+            padding-top: 20px;
+        }
+    }
+}
+
+//module inner tabbed view
+.bcms-inner-tab-header {
+    background: $gray-l10;
+    border-bottom: $border-thin-gray;
+    height: 30px;
+    padding: 25px 20px 0;
+    position: relative;
+
+    @include virtual(before) {
+        @include position(absolute, 0 null 0 -1px);
+        border-left: 1px solid $gray-l10;
+    }
+
+    > .bcms-tab-item {
+        border: $border-thin-gray;
+        line-height: 29px;
+
+        &.bcms-active {
+            background-color: $white;
+            border-bottom: $border-thin-white;
+        }
+    }
+}
+
+.bcms-inner-grid-box {
+    border: 1px solid #c6c6c6;
+    box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    cursor: pointer;
+    float: left;
+    margin-left: 20px;
+    max-width: 220px;
+    padding: 8px 3px 3px;
+    position: relative;
+}
+
+//todo convert to sass or remove if not used
+.bcms-inner-grid-box:first-child {
+    margin-left: 0;
+}
+
+.bcms-inner-grid-box .bcms-content-titles {
+    padding: 0 4px;
+}
+
+.bcms-inner-grid-box-active {
+    background-color: #eff9fd;
+    border: 2px solid #0383df;
+    cursor: default;
+}
+
+.bcms-inner-grid-box-active .bcms-content-titles {
+    background: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAA20lEQVQ4y2NgaHrEgIa1gLgPiK8D8Q8ovgYV08JQj8RhA+IpQPwXiP/jwCC5GUDMiW4ASPNuPBrR8V6oHrgBU0nQDMNTYAZoA/EfMgz4A9YLJPqJ0SDa8+R/xtZ36OL9DNDQhguCFIEUo2u+8urXfxDI2Y5iyHWQAT9hAiBJEAAphhmCrBlZHIp/ohiArlhr+nN8mkH4M4YXkA359/8/Ps0gfAVrIBJwNjKeADJAB1s0gjRNPPkJn+Y/YL0UJKSpVE3KFGcmZKwNDpymRzeA+BcQfwGHNkRMB109AFNqT2Ji6QGbAAAAAElFTkSuQmCC") no-repeat right center;
+    color: #0383df;
+    padding-right: 20px;
+}
+
+.bcms-inner-grid-box-notcompatible {
+    background-color: #fcecec;
+    border: 1px solid #e64343;
+}
+//todo end of

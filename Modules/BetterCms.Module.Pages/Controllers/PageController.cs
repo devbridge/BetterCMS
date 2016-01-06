@@ -24,16 +24,18 @@ using BetterCms.Module.Pages.Command.Page.SavePageProperties;
 using BetterCms.Module.Pages.Command.Page.SavePagePublishStatus;
 using BetterCms.Module.Pages.Command.Page.SuggestPages;
 using BetterCms.Module.Pages.Content.Resources;
-using BetterCms.Module.Pages.Helpers;
+
 using BetterCms.Module.Pages.Models;
 using BetterCms.Module.Pages.Services;
+
 using BetterCms.Module.Pages.ViewModels.Filter;
 using BetterCms.Module.Pages.ViewModels.Page;
 
 using BetterCms.Module.Root;
-using BetterCms.Module.Root.Models;
 using BetterCms.Module.Root.Mvc;
 using BetterCms.Module.Root.ViewModels.Security;
+
+using BetterModules.Core.Web.Models;
 
 using Microsoft.Web.Mvc;
 
@@ -382,6 +384,7 @@ namespace BetterCms.Module.Pages.Controllers
         /// URL, created from text.
         /// </returns>
         [BcmsAuthorize]
+        [ValidateInput(false)]
         public ActionResult ConvertStringToSlug(string text, string senderId, string parentPageUrl, string parentPageId, string languageId, string categoryId)
         {
             var category = categoryId.ToGuidOrNull();

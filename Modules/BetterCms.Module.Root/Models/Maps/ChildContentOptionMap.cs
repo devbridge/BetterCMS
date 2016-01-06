@@ -1,4 +1,4 @@
-using BetterCms.Core.Models;
+using BetterModules.Core.Models;
 
 namespace BetterCms.Module.Root.Models.Maps
 {
@@ -12,9 +12,11 @@ namespace BetterCms.Module.Root.Models.Maps
             Map(x => x.Key, "[Key]").Length(MaxLength.Name).Not.Nullable();
             Map(x => x.Type).Not.Nullable();
             Map(x => x.Value).Length(MaxLength.Max).Nullable();
+            Map(x => x.UseDefaultValue).Not.Nullable();
 
             References(x => x.ChildContent).Cascade.SaveUpdate().LazyLoad();
             References(x => x.CustomOption).Cascade.SaveUpdate().LazyLoad();
+            HasMany(x => x.Translations).Inverse().Cascade.SaveUpdate().LazyLoad().Where("IsDeleted = 0");
         }
     }
 }

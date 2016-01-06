@@ -1,9 +1,6 @@
 ﻿using System.Linq;
 
-using BetterCms.Core.DataAccess.DataContext;
-using BetterCms.Core.DataAccess.DataContext.Fetching;
 using BetterCms.Core.Exceptions.Mvc;
-using BetterCms.Core.Mvc.Commands;
 
 using BetterCms.Module.MediaManager.Models;
 
@@ -12,6 +9,10 @@ using BetterCms.Module.Root.Mvc;
 using BetterCms.Module.Users.Content.Resources;
 using BetterCms.Module.Users.Services;
 using BetterCms.Module.Users.ViewModels.User;
+
+using BetterModules.Core.DataAccess.DataContext;
+using BetterModules.Core.DataAccess.DataContext.Fetching;
+using BetterModules.Core.Web.Mvc.Commands;
 
 namespace BetterCms.Module.Users.Commands.User.SaveUserProfile
 {

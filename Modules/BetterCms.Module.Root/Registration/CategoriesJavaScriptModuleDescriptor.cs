@@ -1,5 +1,6 @@
 ﻿using BetterCms.Core.Modules;
 using BetterCms.Core.Modules.Projections;
+
 using BetterCms.Module.Root.Content.Resources;
 using BetterCms.Module.Root.Controllers;
 
@@ -14,7 +15,7 @@ namespace BetterCms.Module.Root.Registration
         /// Initializes a new instance of the <see cref="CategoriesJavaScriptModuleDescriptor" /> class.
         /// </summary>
         /// <param name="module">The container module.</param>
-        public CategoriesJavaScriptModuleDescriptor(ModuleDescriptor module)
+        public CategoriesJavaScriptModuleDescriptor(CmsModuleDescriptor module)
             : base(module, "bcms.categories")
         {
 

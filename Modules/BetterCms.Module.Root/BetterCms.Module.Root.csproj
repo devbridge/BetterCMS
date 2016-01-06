@@ -8,12 +8,12 @@
     </ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectGuid>{66E7E4DF-EEEA-4B1E-8663-A1B430EB7375}</ProjectGuid>
-    <ProjectTypeGuids>{E53F8FEA-EAE0-44A6-8774-FFD645390401};{349c5851-65df-11da-9384-00065b846f21};{fae04ec0-301f-11d3-bf4b-00c04f79efbc}</ProjectTypeGuids>
+    <ProjectTypeGuids>{349c5851-65df-11da-9384-00065b846f21};{fae04ec0-301f-11d3-bf4b-00c04f79efbc}</ProjectTypeGuids>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>BetterCms.Module.Root</RootNamespace>
     <AssemblyName>BetterCms.Module.Root</AssemblyName>
-    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <MvcBuildViews>false</MvcBuildViews>
     <UseIISExpress>false</UseIISExpress>
     <SccProjectName>
@@ -32,6 +32,7 @@
     </UpgradeBackupLocation>
     <OldToolsVersion>4.0</OldToolsVersion>
     <MvcProjectUpgradeChecked>true</MvcProjectUpgradeChecked>
+    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -44,6 +45,7 @@
     <PlatformTarget>AnyCPU</PlatformTarget>
     <PrecompileBeforePublish>false</PrecompileBeforePublish>
     <ExcludeGeneratedDebugSymbol>false</ExcludeGeneratedDebugSymbol>
+    <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -52,11 +54,20 @@
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Autofac, Version=3.0.0.0, Culture=neutral, PublicKeyToken=17863af14b0044da, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\packages\Autofac.3.1.5\lib\net40\Autofac.dll</HintPath>
+    </Reference>
+    <Reference Include="BetterModules.Core, Version=1.0.0.32, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\BetterModules.Core.1.0.0\lib\net40\BetterModules.Core.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="BetterModules.Core.Web, Version=1.0.0.32, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\BetterModules.Core.Web.1.0.0\lib\net40\BetterModules.Core.Web.dll</HintPath>
+      <Private>True</Private>
     </Reference>
     <Reference Include="Common.Logging, Version=2.1.2.0, Culture=neutral, PublicKeyToken=af08829b84f0328e, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
@@ -94,6 +105,11 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\packages\NHibernate.3.3.3.4001\lib\Net35\NHibernate.dll</HintPath>
     </Reference>
+    <Reference Include="RazorGenerator.Mvc, Version=2.0.0.0, Culture=neutral, PublicKeyToken=7b26dc2a43f6a0d4, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\BetterModules.Core.Web.1.0.0\lib\net40\RazorGenerator.Mvc.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="System.Data.Entity" />
     <Reference Include="System.Transactions" />
     <Reference Include="System" />
@@ -103,41 +119,39 @@
     <Reference Include="System.Web.Entity" />
     <Reference Include="System.Web.ApplicationServices" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
-    <Reference Include="System.Core" />
-    <Reference Include="System.Data.DataSetExtensions" />
-    <Reference Include="System.Web.Helpers, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <Private>True</Private>
-      <HintPath>..\..\packages\Microsoft.AspNet.WebPages.2.0.30506.0\lib\net40\System.Web.Helpers.dll</HintPath>
-    </Reference>
-    <Reference Include="System.Web.Mvc, Version=4.0.0.1, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\packages\Microsoft.AspNet.Mvc.4.0.40804.0\lib\net40\System.Web.Mvc.dll</HintPath>
-    </Reference>
-    <Reference Include="System.Web.Razor, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <Private>True</Private>
-      <HintPath>..\..\packages\Microsoft.AspNet.Razor.2.0.30506.0\lib\net40\System.Web.Razor.dll</HintPath>
-    </Reference>
-    <Reference Include="System.Web.WebPages, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <Private>True</Private>
-      <HintPath>..\..\packages\Microsoft.AspNet.WebPages.2.0.30506.0\lib\net40\System.Web.WebPages.dll</HintPath>
-    </Reference>
-    <Reference Include="System.Web.WebPages.Deployment, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <Private>True</Private>
-      <HintPath>..\..\packages\Microsoft.AspNet.WebPages.2.0.30506.0\lib\net40\System.Web.WebPages.Deployment.dll</HintPath>
-    </Reference>
-    <Reference Include="System.Web.WebPages.Razor, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <Private>True</Private>
-      <HintPath>..\..\packages\Microsoft.AspNet.WebPages.2.0.30506.0\lib\net40\System.Web.WebPages.Razor.dll</HintPath>
-    </Reference>
-    <Reference Include="System.Xml.Linq" />
-    <Reference Include="System.Web" />
     <Reference Include="System.Web.Extensions" />
+    <Reference Include="System.Web" />
     <Reference Include="System.Web.Abstractions" />
+    <Reference Include="System.Web.Helpers">
+      <HintPath>..\..\packages\Microsoft.AspNet.WebPages.3.2.3\lib\net45\System.Web.Helpers.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Web.Mvc">
+      <HintPath>..\..\packages\Microsoft.AspNet.Mvc.5.2.3\lib\net45\System.Web.Mvc.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Web.Razor">
+      <HintPath>..\..\packages\Microsoft.AspNet.Razor.3.2.3\lib\net45\System.Web.Razor.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="System.Web.Routing" />
+    <Reference Include="System.Web.WebPages">
+      <HintPath>..\..\packages\Microsoft.AspNet.WebPages.3.2.3\lib\net45\System.Web.WebPages.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Web.WebPages.Deployment">
+      <HintPath>..\..\packages\Microsoft.AspNet.WebPages.3.2.3\lib\net45\System.Web.WebPages.Deployment.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Web.WebPages.Razor">
+      <HintPath>..\..\packages\Microsoft.AspNet.WebPages.3.2.3\lib\net45\System.Web.WebPages.Razor.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="System.Xml" />
     <Reference Include="System.Configuration" />
     <Reference Include="System.Web.Services" />
     <Reference Include="System.EnterpriseServices" />
+    <Reference Include="System.Xml.Linq" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="..\..\SharedAssemblyInfo.cs">
@@ -156,6 +170,11 @@
     <Compile Include="Commands\Language\GetLanguageList\GetLanguageListCommand.cs" />
     <Compile Include="Commands\Language\SaveLanguage\SaveLanguageCommand.cs" />
     <Compile Include="Commands\Language\SuggestLanguages\SuggestLanguagesCommand.cs" />
+    <Compile Include="Content\Resources\RootGlobalization.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>RootGlobalization.resx</DependentUpon>
+    </Compile>
     <Compile Include="Controllers\LanguageController.cs" />
     <Compile Include="Events\ContentEvents.cs" />
     <Compile Include="Events\CategoryEvents.cs" />
@@ -176,11 +195,6 @@
     <Compile Include="Commands\Tag\GetTag\GetTagCommand.cs" />
     <Compile Include="Commands\Tag\SaveTag\SaveTagCommand.cs" />
     <Compile Include="Commands\Tag\SearchTags\SearchTagsCommand.cs" />
-    <Compile Include="Content\Resources\RootGlobalization.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>RootGlobalization.resx</DependentUpon>
-    </Compile>
     <Compile Include="Controllers\AuthenticationController.cs" />
     <Compile Include="Controllers\CategoryController.cs" />
     <Compile Include="Controllers\CmsController.cs" />
@@ -197,9 +211,19 @@
     <Compile Include="Models\CategoryTree.cs" />
     <Compile Include="Models\CategoryTreeCategorizableItem.cs" />
     <Compile Include="Models\ChildContentOption.cs" />
+    <Compile Include="Models\ChildContentOptionTranslation.cs" />
+    <Compile Include="Models\ContentOptionTranslation.cs" />
     <Compile Include="Models\ICategoryAccessor.cs" />
+    <Compile Include="Models\Maps\ChildContentOptionTranslationMap.cs" />
+    <Compile Include="Models\Maps\ContentOptionTranslationMap.cs" />
     <Compile Include="Models\Maps\WidgetCategoryMap.cs" />
+    <Compile Include="Models\Migrations\Migration201510231700.cs" />
+    <Compile Include="Models\Migrations\Migration201509281017.cs" />
     <Compile Include="Models\Migrations\Migration201502061445.cs" />
+    <Compile Include="Models\Migrations\Migration201510141900.cs" />
+    <Compile Include="Models\Migrations\Migration201510061845.cs" />
+    <Compile Include="Models\Migrations\Migration201509241740.cs" />
+    <Compile Include="Models\Migrations\Migration201511051430.cs" />
     <Compile Include="Models\WidgetCategories.cs" />
     <Compile Include="Models\IChildRegionContainer.cs" />
     <Compile Include="Models\Language.cs" />
@@ -236,9 +260,13 @@
     <Compile Include="Models\Migrations\Migration201502101035.cs" />
     <Compile Include="Models\Migrations\Migration201502101136.cs" />
     <Compile Include="Models\PagesView.cs" />
+    <Compile Include="Mvc\Attributes\DisallowHtmlAttribute.cs" />
+    <Compile Include="Mvc\Attributes\DisallowNonActiveDirectoryNameCompliantAttribute.cs" />
+    <Compile Include="Mvc\Attributes\DisallowNonAlphanumericAttribute.cs" />
     <Compile Include="Mvc\Extensions\HtmlAttributesUtility.cs" />
     <Compile Include="Mvc\Extensions\HtmlHelperExtensions.cs" />
     <Compile Include="Mvc\Extensions\StringExtensions.cs" />
+    <Compile Include="Mvc\Grids\EditableGridMultilineColumn.cs" />
     <Compile Include="Mvc\PageHtmlRenderer\PageContentRenderHelper.cs" />
     <Compile Include="Mvc\PageHtmlRenderer\PageContentHtmlRenderer.cs" />
     <Compile Include="Mvc\PageHtmlRenderer\RenderingContentOptionProperty.cs" />
@@ -267,7 +295,6 @@
     <Compile Include="Models\Category.cs" />
     <Compile Include="Models\Content.cs" />
     <Compile Include="Models\ContentOption.cs" />
-    <Compile Include="Models\ComboWireJson.cs" />
     <Compile Include="Models\AccessRule.cs" />
     <Compile Include="Models\CustomOption.cs" />
     <Compile Include="Models\Extensions\ListExtensions.cs" />
@@ -349,6 +376,8 @@
     <Compile Include="Projections\PageContentProjectionFactory.cs" />
     <Compile Include="Projections\PageJavaScriptProjection.cs" />
     <Compile Include="Providers\ICustomOptionProvider.cs" />
+    <Compile Include="Registration\CustomValidationJsModuleIncludeDescriptor.cs" />
+    <Compile Include="Registration\AntiXssJsModuleIncludeDescriptor.cs" />
     <Compile Include="Registration\AuthenticationJavaScriptModuleDescriptor.cs" />
     <Compile Include="Registration\ContentJsModuleIncludeDescriptor.cs" />
     <Compile Include="Registration\ContentTreeJsModuleIncludeDescriptor.cs" />
@@ -378,7 +407,6 @@
     <Compile Include="Models\Page.cs" />
     <Compile Include="Mvc\Helpers\SelectHelper.cs" />
     <Compile Include="Mvc\UI\DateBoxHelper.cs" />
-    <Compile Include="Models\WireJson.cs" />
     <Compile Include="Mvc\Helpers\FormHelper.cs" />
     <Compile Include="Mvc\Helpers\MessagesHelper.cs" />
     <Compile Include="Registration\TabsJsModuleIncludeDescriptor.cs" />
@@ -435,6 +463,7 @@
     <Compile Include="ViewModels\Language\LanguageViewModel.cs" />
     <Compile Include="ViewModels\Option\ContentOptionValuesViewModel.cs" />
     <Compile Include="ViewModels\Option\CustomOptionViewModel.cs" />
+    <Compile Include="ViewModels\Option\OptionTranslationViewModel.cs" />
     <Compile Include="ViewModels\Option\OptionValueEditViewModel.cs" />
     <Compile Include="ViewModels\Option\OptionValueViewModel.cs" />
     <Compile Include="ViewModels\Option\OptionViewModel.cs" />
@@ -444,9 +473,6 @@
     <Compile Include="ViewModels\Rendering\JavaScriptModuleInclude.cs" />
     <Compile Include="ViewModels\Rendering\RenderMainJsViewModel.cs" />
     <Compile Include="ViewModels\Rendering\RenderStyleSheetIncludesViewModel.cs" />
-    <Compile Include="Models\UserMessages.cs">
-      <SubType>Code</SubType>
-    </Compile>
     <Compile Include="Mvc\Grids\EditableGridColumn.cs" />
     <Compile Include="ViewModels\Rendering\JavaScriptModuleShimConfigurationViewModel.cs" />
     <Compile Include="ViewModels\Security\IAccessSecuredViewModel.cs" />
@@ -557,6 +583,11 @@
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>Header.cshtml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Shared\EditableGrid\Partial\MultilineTextCell.generated.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>MultilineTextCell.cshtml</DependentUpon>
     </Compile>
     <Compile Include="Views\Shared\EditableGrid\Partial\TopBlock.generated.cs">
       <AutoGen>True</AutoGen>
@@ -702,69 +733,9 @@
   <ItemGroup>
     <EmbeddedResource Include="Content\Resources\RootGlobalization.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
-      <LastGenOutput>RootGlobalization.Designer.cs</LastGenOutput>
       <SubType>Designer</SubType>
+      <LastGenOutput>RootGlobalization.Designer.cs</LastGenOutput>
     </EmbeddedResource>
-    <EmbeddedResource Include="Content\themes\base\images\ui-bg_flat_0_aaaaaa_40x100.png" />
-    <EmbeddedResource Include="Content\themes\base\images\ui-bg_flat_75_ffffff_40x100.png" />
-    <EmbeddedResource Include="Content\themes\base\images\ui-bg_glass_55_fbf9ee_1x400.png" />
-    <EmbeddedResource Include="Content\themes\base\images\ui-bg_glass_65_ffffff_1x400.png" />
-    <EmbeddedResource Include="Content\themes\base\images\ui-bg_glass_75_dadada_1x400.png" />
-    <EmbeddedResource Include="Content\themes\base\images\ui-bg_glass_75_e6e6e6_1x400.png" />
-    <EmbeddedResource Include="Content\themes\base\images\ui-bg_glass_95_fef1ec_1x400.png" />
-    <EmbeddedResource Include="Content\themes\base\images\ui-bg_highlight-soft_75_cccccc_1x100.png" />
-    <EmbeddedResource Include="Content\themes\base\images\ui-icons_222222_256x240.png" />
-    <EmbeddedResource Include="Content\themes\base\images\ui-icons_2e83ff_256x240.png" />
-    <EmbeddedResource Include="Content\themes\base\images\ui-icons_454545_256x240.png" />
-    <EmbeddedResource Include="Content\themes\base\images\ui-icons_888888_256x240.png" />
-    <EmbeddedResource Include="Content\themes\base\images\ui-icons_cd0a0a_256x240.png" />
-    <EmbeddedResource Include="Content\themes\base\jquery-ui.css" />
-    <EmbeddedResource Include="Content\themes\base\jquery.ui.accordion.css" />
-    <EmbeddedResource Include="Content\themes\base\jquery.ui.all.css" />
-    <EmbeddedResource Include="Content\themes\base\jquery.ui.autocomplete.css" />
-    <EmbeddedResource Include="Content\themes\base\jquery.ui.base.css" />
-    <EmbeddedResource Include="Content\themes\base\jquery.ui.button.css" />
-    <EmbeddedResource Include="Content\themes\base\jquery.ui.core.css" />
-    <EmbeddedResource Include="Content\themes\base\jquery.ui.datepicker.css" />
-    <EmbeddedResource Include="Content\themes\base\jquery.ui.dialog.css" />
-    <EmbeddedResource Include="Content\themes\base\jquery.ui.menu.css" />
-    <EmbeddedResource Include="Content\themes\base\jquery.ui.progressbar.css" />
-    <EmbeddedResource Include="Content\themes\base\jquery.ui.resizable.css" />
-    <EmbeddedResource Include="Content\themes\base\jquery.ui.selectable.css" />
-    <EmbeddedResource Include="Content\themes\base\jquery.ui.slider.css" />
-    <EmbeddedResource Include="Content\themes\base\jquery.ui.spinner.css" />
-    <EmbeddedResource Include="Content\themes\base\jquery.ui.tabs.css" />
-    <EmbeddedResource Include="Content\themes\base\jquery.ui.theme.css" />
-    <EmbeddedResource Include="Content\themes\base\jquery.ui.tooltip.css" />
-    <EmbeddedResource Include="Content\themes\base\minified\images\ui-bg_flat_0_aaaaaa_40x100.png" />
-    <EmbeddedResource Include="Content\themes\base\minified\images\ui-bg_flat_75_ffffff_40x100.png" />
-    <EmbeddedResource Include="Content\themes\base\minified\images\ui-bg_glass_55_fbf9ee_1x400.png" />
-    <EmbeddedResource Include="Content\themes\base\minified\images\ui-bg_glass_65_ffffff_1x400.png" />
-    <EmbeddedResource Include="Content\themes\base\minified\images\ui-bg_glass_75_dadada_1x400.png" />
-    <EmbeddedResource Include="Content\themes\base\minified\images\ui-bg_glass_75_e6e6e6_1x400.png" />
-    <EmbeddedResource Include="Content\themes\base\minified\images\ui-bg_glass_95_fef1ec_1x400.png" />
-    <EmbeddedResource Include="Content\themes\base\minified\images\ui-bg_highlight-soft_75_cccccc_1x100.png" />
-    <EmbeddedResource Include="Content\themes\base\minified\images\ui-icons_222222_256x240.png" />
-    <EmbeddedResource Include="Content\themes\base\minified\images\ui-icons_2e83ff_256x240.png" />
-    <EmbeddedResource Include="Content\themes\base\minified\images\ui-icons_454545_256x240.png" />
-    <EmbeddedResource Include="Content\themes\base\minified\images\ui-icons_888888_256x240.png" />
-    <EmbeddedResource Include="Content\themes\base\minified\images\ui-icons_cd0a0a_256x240.png" />
-    <EmbeddedResource Include="Content\themes\base\minified\jquery-ui.min.css" />
-    <EmbeddedResource Include="Content\themes\base\minified\jquery.ui.accordion.min.css" />
-    <EmbeddedResource Include="Content\themes\base\minified\jquery.ui.autocomplete.min.css" />
-    <EmbeddedResource Include="Content\themes\base\minified\jquery.ui.button.min.css" />
-    <EmbeddedResource Include="Content\themes\base\minified\jquery.ui.core.min.css" />
-    <EmbeddedResource Include="Content\themes\base\minified\jquery.ui.datepicker.min.css" />
-    <EmbeddedResource Include="Content\themes\base\minified\jquery.ui.dialog.min.css" />
-    <EmbeddedResource Include="Content\themes\base\minified\jquery.ui.menu.min.css" />
-    <EmbeddedResource Include="Content\themes\base\minified\jquery.ui.progressbar.min.css" />
-    <EmbeddedResource Include="Content\themes\base\minified\jquery.ui.resizable.min.css" />
-    <EmbeddedResource Include="Content\themes\base\minified\jquery.ui.selectable.min.css" />
-    <EmbeddedResource Include="Content\themes\base\minified\jquery.ui.slider.min.css" />
-    <EmbeddedResource Include="Content\themes\base\minified\jquery.ui.spinner.min.css" />
-    <EmbeddedResource Include="Content\themes\base\minified\jquery.ui.tabs.min.css" />
-    <EmbeddedResource Include="Content\themes\base\minified\jquery.ui.theme.min.css" />
-    <EmbeddedResource Include="Content\themes\base\minified\jquery.ui.tooltip.min.css" />
     <EmbeddedResource Include="Scripts\bcms.authentication.js" />
     <EmbeddedResource Include="Scripts\bcms.datepicker.js" />
     <EmbeddedResource Include="Scripts\bcms.htmlEditor.js" />
@@ -780,7 +751,6 @@
     <EmbeddedResource Include="Scripts\bcms.modal.js" />
     <EmbeddedResource Include="Scripts\bcms.siteSettings.js" />
     <EmbeddedResource Include="Scripts\bcms.forms.js" />
-    <EmbeddedResource Include="Content\Styles\images\bcms-logo.png" />
     <EmbeddedResource Include="Content\Styles\images\bcms-no-image-1.png" />
     <EmbeddedResource Include="Content\Styles\images\bcms-no-image-2.png" />
     <EmbeddedResource Include="Content\Styles\images\bcms-no-image-3.png" />
@@ -793,15 +763,17 @@
     <EmbeddedResource Include="Content\Styles\images\sprite-base-1.png" />
     <EmbeddedResource Include="Content\Styles\images\sprite-base-2.png" />
     <EmbeddedResource Include="Scripts\bcms.spinner.jquery.js" />
+    <EmbeddedResource Include="Scripts\ckeditor\plugins\icons.png" />
     <EmbeddedResource Include="Scripts\html5shiv.js" />
     <EmbeddedResource Include="Scripts\bcms.inlineEdit.js" />
     <EmbeddedResource Include="Scripts\bcms.jquery-ui-1.9.0.js" />
     <EmbeddedResource Include="Scripts\bcms.jquery-1.7.2.js" />
     <EmbeddedResource Include="Scripts\bcms.sidemenu.js" />
-    <EmbeddedResource Include="Content\Styles\base.css" />
     <EmbeddedResource Include="Scripts\bcms.security.js" />
     <EmbeddedResource Include="Scripts\bcms.content.js" />
-    <Content Include="BuildConfiguration.xml" />
+    <Content Include="BuildConfiguration.xml">
+      <SubType>Designer</SubType>
+    </Content>
     <EmbeddedResource Include="Content\Styles\images\icn-zoom-notcompatible.png" />
     <EmbeddedResource Include="Scripts\bcms.knockout-2.2.1.js" />
     <EmbeddedResource Include="Scripts\bcms.require-2.1.5.js" />
@@ -815,7 +787,6 @@
     <EmbeddedResource Include="Content\Styles\images\message-ff.png" />
     <EmbeddedResource Include="Content\Styles\images\message-ie.png" />
     <EmbeddedResource Include="Content\Styles\images\msg-bg.jpg" />
-    <EmbeddedResource Include="Content\Styles\bcms.messages.css" />
     <EmbeddedResource Include="Scripts\bcms.dynamicContent.js" />
     <EmbeddedResource Include="Scripts\bcms.js" />
     <EmbeddedResource Include="Scripts\bcms.grid.js" />
@@ -1245,7 +1216,6 @@
     <EmbeddedResource Include="Scripts\ckeditor\plugins\forms\dialogs\textarea.js" />
     <EmbeddedResource Include="Scripts\ckeditor\plugins\forms\dialogs\textfield.js" />
     <EmbeddedResource Include="Scripts\ckeditor\plugins\forms\images\hiddenfield.gif" />
-    <EmbeddedResource Include="Scripts\ckeditor\plugins\icons.png" />
     <EmbeddedResource Include="Scripts\ckeditor\plugins\icons_hidpi.png" />
     <EmbeddedResource Include="Scripts\ckeditor\plugins\iframe\dialogs\iframe.js" />
     <EmbeddedResource Include="Scripts\ckeditor\plugins\iframe\images\placeholder.png" />
@@ -1378,18 +1348,6 @@
     <EmbeddedResource Include="Scripts\ckeditor\plugins\wsc\dialogs\wsc.css" />
     <EmbeddedResource Include="Scripts\ckeditor\plugins\wsc\dialogs\wsc.js" />
     <EmbeddedResource Include="Scripts\ckeditor\plugins\wsc\dialogs\wsc_ie.js" />
-    <EmbeddedResource Include="Scripts\ckeditor\skins\moono\dialog.css" />
-    <EmbeddedResource Include="Scripts\ckeditor\skins\moono\editor.css" />
-    <EmbeddedResource Include="Scripts\ckeditor\skins\moono\icons.png" />
-    <EmbeddedResource Include="Scripts\ckeditor\skins\moono\images\arrow.png" />
-    <EmbeddedResource Include="Scripts\ckeditor\skins\moono\images\close.png" />
-    <EmbeddedResource Include="Scripts\ckeditor\skins\moono\images\hidpi\close.png" />
-    <EmbeddedResource Include="Scripts\ckeditor\skins\moono\images\hidpi\lock-open.png" />
-    <EmbeddedResource Include="Scripts\ckeditor\skins\moono\images\hidpi\lock.png" />
-    <EmbeddedResource Include="Scripts\ckeditor\skins\moono\images\hidpi\refresh.png" />
-    <EmbeddedResource Include="Scripts\ckeditor\skins\moono\images\lock-open.png" />
-    <EmbeddedResource Include="Scripts\ckeditor\skins\moono\images\lock.png" />
-    <EmbeddedResource Include="Scripts\ckeditor\skins\moono\images\refresh.png" />
     <EmbeddedResource Include="Scripts\ckeditor\styles.js" />
     <EmbeddedResource Include="Scripts\bcms.content.tree.js" />
     <EmbeddedResource Include="Scripts\bcms.store.js" />
@@ -1448,12 +1406,156 @@
     <EmbeddedResource Include="Scripts\ace\theme-kuroir.js" />
     <EmbeddedResource Include="Scripts\ace\worker-html.js" />
     <EmbeddedResource Include="Scripts\ace\worker-xml.js" />
+    <EmbeddedResource Include="Scripts\bcms.antiXss.js" />
+    <EmbeddedResource Include="Scripts\bcms.customValidation.js" />
     <EmbeddedResource Include="Scripts\ckeditor\plugins\cms-togglelinewrap\plugin.js" />
+    <EmbeddedResource Include="Content\Styles\bcms.root.css" />
+    <EmbeddedResource Include="Content\Styles\bcms.root.min.css" />
+    <Content Include="Gulpfile.js" />
+    <Content Include="gulp\compile-sass\compile-sass.js" />
+    <Content Include="gulp\create-data-uri-vars\create-data-uri-vars.js" />
+    <Content Include="gulp\gulp.config.js" />
+    <Content Include="gulp\utils\utils.js" />
+    <Content Include="gulp\watch-files\watch-files.js" />
+    <EmbeddedResource Include="Scripts\ckeditor\plugins\cms-option\plugin.js" />
+    <EmbeddedResource Include="Scripts\bcms.markdown.js" />
+    <EmbeddedResource Include="Scripts\bcms.jquery.markitup.js" />
+    <EmbeddedResource Include="Scripts\ckeditor\skins\bettercms\skin.js" />
+    <EmbeddedResource Include="Scripts\ckeditor\skins\bettercms\editor.css" />
+    <EmbeddedResource Include="Scripts\ckeditor\skins\bettercms\dialog.css" />
+    <EmbeddedResource Include="Models\Migrations\Migration201510231700.sqlserver.sql" />
+    <Content Include="Scss\base_64\icons\add-content.svg" />
+    <Content Include="Scss\base_64\icons\close.svg" />
+    <Content Include="Scss\base_64\icons\cp-add-new.svg" />
+    <Content Include="Scss\base_64\icons\cp-clone.svg" />
+    <Content Include="Scss\base_64\icons\cp-delete.svg" />
+    <Content Include="Scss\base_64\icons\cp-drag-handle.svg" />
+    <Content Include="Scss\base_64\icons\cp-hide-right.svg" />
+    <Content Include="Scss\base_64\icons\cp-hide.svg" />
+    <Content Include="Scss\base_64\icons\cp-indicate-button.svg" />
+    <Content Include="Scss\base_64\icons\cp-indicate-off.svg" />
+    <Content Include="Scss\base_64\icons\cp-indicate-on.svg" />
+    <Content Include="Scss\base_64\icons\cp-notification-ok.svg" />
+    <Content Include="Scss\base_64\icons\cp-notification-warn.svg" />
+    <Content Include="Scss\base_64\icons\cp-pub-ok.svg" />
+    <Content Include="Scss\base_64\icons\cp-pub-warn.svg" />
+    <Content Include="Scss\base_64\icons\cp-seo-ok.svg" />
+    <Content Include="Scss\base_64\icons\cp-seo-warn.svg" />
+    <Content Include="Scss\base_64\icons\cp-settings.svg" />
+    <Content Include="Scss\base_64\icons\cp-show-right.svg" />
+    <Content Include="Scss\base_64\icons\cp-show.svg" />
+    <Content Include="Scss\base_64\icons\cp-stick-handle-right.svg" />
+    <Content Include="Scss\base_64\icons\cp-stick-handle.svg" />
+    <Content Include="Scss\base_64\icons\cp-texture.svg" />
+    <Content Include="Scss\base_64\icons\cp-translate.svg" />
+    <Content Include="Scss\base_64\icons\cp-user.svg" />
+    <Content Include="Scss\base_64\icons\datepicker-arrow-left.svg" />
+    <Content Include="Scss\base_64\icons\datepicker-arrow-right.svg" />
+    <Content Include="Scss\base_64\icons\editor-blockquote.svg" />
+    <Content Include="Scss\base_64\icons\editor-bold.svg" />
+    <Content Include="Scss\base_64\icons\editor-bulletedlist.svg" />
+    <Content Include="Scss\base_64\icons\editor-close.svg" />
+    <Content Include="Scss\base_64\icons\editor-cmsdynamicregion.svg" />
+    <Content Include="Scss\base_64\icons\editor-cmsimage.svg" />
+    <Content Include="Scss\base_64\icons\editor-cmsoption.svg" />
+    <Content Include="Scss\base_64\icons\editor-cmstogglelinebreak.svg" />
+    <Content Include="Scss\base_64\icons\editor-cmswidget.svg" />
+    <Content Include="Scss\base_64\icons\editor-copy.svg" />
+    <Content Include="Scss\base_64\icons\editor-cut.svg" />
+    <Content Include="Scss\base_64\icons\editor-italic.svg" />
+    <Content Include="Scss\base_64\icons\editor-justifyblock.svg" />
+    <Content Include="Scss\base_64\icons\editor-justifycenter.svg" />
+    <Content Include="Scss\base_64\icons\editor-justifyleft.svg" />
+    <Content Include="Scss\base_64\icons\editor-justifyright.svg" />
+    <Content Include="Scss\base_64\icons\editor-link.svg" />
+    <Content Include="Scss\base_64\icons\editor-maximize.svg" />
+    <Content Include="Scss\base_64\icons\editor-numberedlist.svg" />
+    <Content Include="Scss\base_64\icons\editor-paste.svg" />
+    <Content Include="Scss\base_64\icons\editor-pastefromword.svg" />
+    <Content Include="Scss\base_64\icons\editor-redo.svg" />
+    <Content Include="Scss\base_64\icons\editor-source.svg" />
+    <Content Include="Scss\base_64\icons\editor-specialchar.svg" />
+    <Content Include="Scss\base_64\icons\editor-strike.svg" />
+    <Content Include="Scss\base_64\icons\editor-table.svg" />
+    <Content Include="Scss\base_64\icons\editor-templates.svg" />
+    <Content Include="Scss\base_64\icons\editor-underline.svg" />
+    <Content Include="Scss\base_64\icons\editor-undo.svg" />
+    <Content Include="Scss\base_64\icons\editor-unlink.svg" />
+    <Content Include="Scss\base_64\icons\manage.svg" />
+    <Content Include="Scss\base_64\icons\manager-add-content.svg" />
+    <Content Include="Scss\base_64\icons\manager-content.svg" />
+    <Content Include="Scss\base_64\icons\manager-delete.svg" />
+    <Content Include="Scss\base_64\icons\manager-edit-draft.svg" />
+    <Content Include="Scss\base_64\icons\manager-edit.svg" />
+    <Content Include="Scss\base_64\icons\manager-history.svg" />
+    <Content Include="Scss\base_64\icons\manager-options.svg" />
+    <Content Include="Scss\base_64\icons\manager-region.svg" />
+    <Content Include="Scss\base_64\icons\overlay-delete.svg" />
+    <Content Include="Scss\base_64\icons\overlay-edit-child.svg" />
+    <Content Include="Scss\base_64\icons\overlay-edit.svg" />
+    <Content Include="Scss\base_64\icons\overlay-history.svg" />
+    <Content Include="Scss\base_64\icons\overlay-options.svg" />
+    <Content Include="Scss\base_64\icons\overlay-widget.svg" />
+    <Content Include="Scss\base_64\icons\search.svg" />
+    <Content Include="Scss\base_64\icons\texture.svg" />
+    <Content Include="Scss\base_64\icons\toolbar-h1.svg" />
+    <Content Include="Scss\base_64\icons\toolbar-h2.svg" />
+    <Content Include="Scss\base_64\icons\toolbar-h3.svg" />
+    <Content Include="Scss\base_64\icons\toolbar-h4.svg" />
+    <Content Include="Scss\base_64\icons\toolbar-h5.svg" />
+    <Content Include="Scss\base_64\icons\toolbar-h6.svg" />
+    <Content Include="Scss\base_64\icons\validation.svg" />
     <Content Include="Views\Web.config" />
     <Content Include="Views\Category\CategoryTreeEdit.cshtml">
       <Generator>RazorGenerator</Generator>
       <LastGenOutput>CategoryTreeEdit.generated.cs</LastGenOutput>
     </Content>
+    <Content Include="package.json" />
+    <Content Include="Scss\components\_forms.scss" />
+    <Content Include="Scss\components\_normalize.scss" />
+    <Content Include="Scss\components\_tables.scss" />
+    <Content Include="Scss\core\_mixins.scss" />
+    <Content Include="Scss\core\_variables.scss" />
+    <Content Include="Scss\blog.scss" />
+    <Content Include="Scss\installation.scss" />
+    <Content Include="Scss\pages.scss" />
+    <Content Include="Scss\bcms-modules\pages\_index.scss" />
+    <Content Include="Scss\users.scss" />
+    <Content Include="Scss\structure\_modules.scss" />
+    <Content Include="Scss\bcms-modules\pages\_navigation.scss" />
+    <Content Include="Scss\media.scss" />
+    <Content Include="Scss\structure\_layout.scss" />
+    <Content Include="Scss\structure\_tabs.scss" />
+    <Content Include="Scss\bcms-modules\blog\_index.scss" />
+    <Content Include="Scss\bcms-modules\installation\_index.scss" />
+    <Content Include="Scss\bcms-modules\media\_index.scss" />
+    <Content Include="Scss\bcms-modules\users\_index.scss" />
+    <Content Include="Scss\bcms-modules\media\_crop.scss" />
+    <Content Include="Scss\bcms-modules\media\_manager.scss" />
+    <Content Include="Scss\bcms-modules\media\_types.scss" />
+    <Content Include="Scss\bcms-modules\media\_uploader.scss" />
+    <Content Include="Scss\bcms-modules\pages\_history.scss" />
+    <Content Include="Scss\bcms-modules\pages\_editseo.scss" />
+    <Content Include="Scss\bcms-modules\pages\_nodedropzone.scss" />
+    <Content Include="Scss\root.scss" />
+    <Content Include="Scss\bcms-modules\root\_buttons.scss" />
+    <Content Include="Scss\bcms-modules\root\_controlpanel.scss" />
+    <Content Include="Scss\bcms-modules\root\_index.scss" />
+    <Content Include="Scss\bcms-modules\root\_messages.scss" />
+    <Content Include="Scss\bcms-modules\root\_notifications.scss" />
+    <Content Include="Scss\bcms-modules\root\_overlays.scss" />
+    <Content Include="Scss\base_64\webfonts\OpenSans-Bold.ttf" />
+    <Content Include="Scss\base_64\webfonts\OpenSans-Italic.ttf" />
+    <Content Include="Scss\base_64\webfonts\OpenSans-Light.ttf" />
+    <Content Include="Scss\base_64\webfonts\OpenSans-Regular.ttf" />
+    <Content Include="Scss\base_64\webfonts\OpenSans-Semibold.ttf" />
+    <Content Include="Scss\core\_assets.scss" />
+    <Content Include="Scss\editor.scss" />
+    <Content Include="Scss\plugins\_ckeditor.scss" />
+    <Content Include="Scss\plugins\_markitup.scss" />
+    <Content Include="Scss\plugins\_jquerycalendar.scss" />
+    <Content Include="Scss\bcms-modules\root\_contentstree.scss" />
+    <Content Include="Scss\bcms-modules\blog\_settings.scss" />
     <None Include="Views\Category\CategoryTrees.cshtml">
       <Generator>RazorGenerator</Generator>
       <LastGenOutput>CategoryTrees.generated.cs</LastGenOutput>
@@ -1470,6 +1572,10 @@
       <Generator>RazorGenerator</Generator>
       <LastGenOutput>CategoriesTemplate.generated.cs</LastGenOutput>
     </Content>
+    <None Include="Views\Shared\EditableGrid\Partial\MultilineTextCell.cshtml">
+      <Generator>RazorGenerator</Generator>
+      <LastGenOutput>MultilineTextCell.generated.cs</LastGenOutput>
+    </None>
     <None Include="Views\Shared\Partial\ContentsTree.cshtml">
       <LastGenOutput>ContentsTree.generated.cs</LastGenOutput>
       <Generator>RazorGenerator</Generator>
@@ -1729,7 +1835,6 @@
   <ItemGroup>
     <EmbeddedResource Include="Scripts\ckeditor\plugins\wsc\README.md" />
   </ItemGroup>
-  <ItemGroup />
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
     <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
@@ -1749,6 +1854,7 @@
     <DefineConstants>DEBUG</DefineConstants>
     <DebugType>full</DebugType>
     <DebugSymbols>true</DebugSymbols>
+    <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <Import Project="$(VSToolsPath)\WebApplications\Microsoft.WebApplication.targets" Condition="'$(VSToolsPath)' != ''" />

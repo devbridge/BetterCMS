@@ -9,7 +9,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace ASP
+namespace BetterCms.Module.Root.Views.Category
 {
     using System;
     using System.Collections.Generic;
@@ -53,9 +53,9 @@ namespace ASP
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("RazorGenerator", "2.0.0.0")]
     [System.Web.WebPages.PageVirtualPathAttribute("~/Views/Category/CategoriesTemplate.cshtml")]
-    public partial class _Views_Category_CategoriesTemplate_cshtml : System.Web.Mvc.WebViewPage<BetterCms.Module.Root.ViewModels.Category.CategoryTemplateViewModel>
+    public partial class CategoriesTemplate : System.Web.Mvc.WebViewPage<BetterCms.Module.Root.ViewModels.Category.CategoryTemplateViewModel>
     {
-        public _Views_Category_CategoriesTemplate_cshtml()
+        public CategoriesTemplate()
         {
         }
         public override void Execute()

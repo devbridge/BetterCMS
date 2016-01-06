@@ -8,29 +8,29 @@
 @model BetterCms.Module.Pages.ViewModels.Content.PageContentViewModel
 
 <div class="bcms-tab-header">
-    <a class="bcms-tab bcms-tab-active" data-name="#bcms-tab-1">@PagesGlobalization.AddPageContent_RegularContentTab_Title</a>
-    <a class="bcms-tab" data-name="#bcms-tab-2">@PagesGlobalization.AddPageContent_WidgetTab_Title</a>
+    <a class="bcms-tab-item bcms-active" data-name="#bcms-tab-1">@PagesGlobalization.AddPageContent_RegularContentTab_Title</a>
+    <a class="bcms-tab-item" data-name="#bcms-tab-2">@PagesGlobalization.EditPageContent_AdvancedOptionsTab_Title</a>
 </div>
 @{ ViewBag.CanEdit = (ViewContext.Controller as CmsControllerBase).SecurityService.IsAuthorized(RootModuleConstants.UserRoles.EditContent); }
 <div class="bcms-scroll-window">
     @Html.TabbedContentMessagesBox()
     <div class="bcms-padded-content">
-            
-        <div id="bcms-tab-1" class="bcms-tab-single">
-            @using (Html.BeginForm<ContentController>(c => c.SavePageHtmlContent(null), FormMethod.Post, new { @id = "bcms-content-form", @class = "bcms-ajax-form" }))
-            {              
-                @Html.Partial("Partial/EditHtmlContent", Model)                  
-                @Html.HiddenFor(model => model.Id, new { @id = "bcmsPageContentId"})
-                @Html.HiddenFor(model => model.ContentId, new { @id = "bcmsContentId"})
+
+        @using (Html.BeginForm<ContentController>(c => c.SavePageHtmlContent(null), FormMethod.Post, new { @id = "bcms-content-form", @class = "bcms-ajax-form" }))
+        {
+            <div id="bcms-tab-1" class="bcms-tab-single">
+                @Html.Partial("Partial/EditHtmlContent", Model)
+                @Html.HiddenFor(model => model.Id, new { @id = "bcmsPageContentId" })
+                @Html.HiddenFor(model => model.ContentId, new { @id = "bcmsContentId" })
                 @Html.HiddenFor(model => model.ParentPageContentId, new { @id = "bcmsParentPageContentId" })
                 @Html.HiddenFor(model => model.PageId)
                 @Html.HiddenFor(model => model.RegionId, new { @id = "bcmsContentToRegionId" })
-                @Html.HiddenFor(modal => modal.DesirableStatus, new { @class = "bcms-content-desirable-status"})
-            }
-        </div>
+                @Html.HiddenFor(modal => modal.DesirableStatus, new { @class = "bcms-content-desirable-status" })
+            </div>
 
-        <div id="bcms-tab-2" class="bcms-tab-single">
-            @Html.Partial("Partial/SelectWidget", Model)
-        </div>
+            <div id="bcms-tab-2" class="bcms-tab-single">
+                @Html.Partial("Partial/EditHtmlContentJsCss", Model)
+            </div>
+        }
     </div>
 </div>

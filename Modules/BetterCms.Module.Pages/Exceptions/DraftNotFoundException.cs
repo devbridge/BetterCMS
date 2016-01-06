@@ -1,7 +1,7 @@
 ﻿using System;
 
-using BetterCms.Core.Exceptions.DataTier;
-using BetterCms.Core.Models;
+using BetterModules.Core.Exceptions.DataTier;
+using BetterModules.Core.Models;
 
 namespace BetterCms.Module.Pages.Exceptions
 {

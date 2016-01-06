@@ -1,5 +1,7 @@
-﻿using BetterCms.Core.DataAccess.DataContext.Migrations;
-using BetterCms.Core.Models;
+﻿using BetterModules.Core.DataAccess.DataContext.Migrations;
+
+using BetterModules.Core.DataAccess.DataContext.Migrations;
+using BetterModules.Core.Models;
 
 using FluentMigrator;
 
@@ -9,7 +11,7 @@ namespace BetterCms.Module.Root.Models.Migrations
     /// Child contents database structure create.
     /// </summary>
     [Migration(201406191600)]
-    public class Migration201406191600 : DefaultMigration
+    public class Migration201406191600: DefaultMigration
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="Migration201406191600"/> class.
@@ -32,7 +34,7 @@ namespace BetterCms.Module.Root.Models.Migrations
         {
             Create
                 .Table("ChildContents").InSchema(SchemaName)
-                .WithCmsBaseColumns()
+                .WithBaseColumns()
                 .WithColumn("ParentContentId").AsGuid().NotNullable()
                 .WithColumn("ChildContentId").AsGuid().NotNullable()
                 .WithColumn("AssignmentIdentifier").AsGuid().NotNullable();
@@ -56,7 +58,7 @@ namespace BetterCms.Module.Root.Models.Migrations
             Create
                 .Table("ChildContentOptions")
                 .InSchema(SchemaName)
-                .WithCmsBaseColumns()
+                .WithBaseColumns()
                 .WithColumn("ChildContentId").AsGuid().NotNullable()
                 .WithColumn("Value").AsString(MaxLength.Max).Nullable()
                 .WithColumn("Key").AsString(MaxLength.Name).NotNullable()

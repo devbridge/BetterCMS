@@ -1,7 +1,8 @@
-﻿using BetterCms.Core.Models;
-using BetterCms.Module.Api.Extensions;
+﻿using BetterCms.Module.Api.Extensions;
 using BetterCms.Module.Api.Operations.Blog.Authors;
 using BetterCms.Module.Api.Operations.Blog.Authors.Author;
+
+using BetterModules.Core.Models;
 
 using NHibernate;
 
@@ -41,6 +42,7 @@ namespace BetterCms.Test.Module.Api.Blog.Authors
             return new SaveAuthorModel
                 {
                     Name = TestDataProvider.ProvideRandomString(MaxLength.Name),
+                    Description = TestDataProvider.ProvideRandomString(MaxLength.Name),
                     ImageId = image.Id
                 };
         }
@@ -54,6 +56,7 @@ namespace BetterCms.Test.Module.Api.Blog.Authors
         {
             var request = getResponse.ToPutRequest();
             request.Data.Name = TestDataProvider.ProvideRandomString(MaxLength.Name);
+            request.Data.Description = TestDataProvider.ProvideRandomString(MaxLength.Name);
 
             return request;
         }
@@ -62,9 +65,11 @@ namespace BetterCms.Test.Module.Api.Blog.Authors
         {
             Assert.IsNotNull(getResponse.Data.Name);
             Assert.IsNotNull(getResponse.Data.ImageId);
+            Assert.IsNotNull(getResponse.Data.Description);
 
             Assert.AreEqual(getResponse.Data.Name, model.Name);
             Assert.AreEqual(getResponse.Data.ImageId, model.ImageId);
+            Assert.AreEqual(getResponse.Data.Description, model.Description);
         }
     }
 }

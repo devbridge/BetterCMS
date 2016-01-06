@@ -6,38 +6,41 @@
 @using BetterCms.Module.Root.ViewModels.Shared;
 
 @{
-    var gridViewModel = new EditableGridViewModel
-    {
-        ShowSearch = false,
-        TopBlockClass = "bcms-top-block-holder",
-        SaveButtonTitle = RootGlobalization.Button_Ok,
-        AddHiddenFields = true,
-        ShowMessages = false,
-        Columns = new List<EditableGridColumn>
+    var model = new EditableGridViewModel();
+
+    model.ShowSearch = false;
+    model.TopBlockClass = "bcms-top-block-holder";
+    model.SaveButtonTitle = RootGlobalization.Button_Ok;
+    model.AddHiddenFields = true;
+    model.ShowMessages = false;
+    model.TopBlockAddItemView = "~/Areas/bcms-pages/Views/Option/Partial/TopBlockAddItem.cshtml";
+    model.Columns = new List<EditableGridColumn>
             {
                 new EditableGridColumn(PagesGlobalization.Options_OptionKeyColumn, null, "key")
                     {
-                        HeaderAttributes = "style=\"width: 250px;\"",
+                        HeaderAttributes = "style=\"width: 200px;\"",
                         AutoFocus = true,
-                        HiddenFieldName = "Options[{0}].OptionKey"
+                        HiddenFieldName = "Options[{0}].OptionKey",
+                        FocusIdentifier = "hasFocus"
                     },
 
                 new EditableGridDropDownColumn(PagesGlobalization.Options_OptionTypeColumn, null, "calcType")
                     {
+                        HeaderAttributes = "style=\"width: 100px;\"",
                         OptionsBind = "optionTypes",
-                        ValueTextBind = "typeName"
+                        ValueTextBind = "typeName",
+                        CanBeEdited = false
                     },
                                         
-                new OptionValueEditableGridColumn(PagesGlobalization.Options_OptionDefaultValueColumn, "defaultValue", "customOptionDefaultTitle")
+                new OptionValueEditableGridColumn(PagesGlobalization.Options_OptionDefaultValueColumn, "defaultValueBinding", "customOptionDefaultTitleBinding")
                     {
-                        HeaderAttributes = "style=\"width: 250px;\"",
-                        HiddenFieldName = "Options[{0}].OptionDefaultValue"
+                        HiddenFieldName = "Options[{0}].OptionDefaultValue",
+                        FocusIdentifier = "valueHasFocus"
                     },
                     
                 new EditableGridHiddenField("type", "Options[{0}].Type"),
                 new EditableGridHiddenField("customType", "Options[{0}].CustomType")
-            }
-    };
+            };
 }
 
-@Html.Partial(RootModuleConstants.EditableGridTemplate, gridViewModel)
+@Html.Partial(RootModuleConstants.EditableGridTemplate, model)

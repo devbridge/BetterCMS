@@ -2,14 +2,15 @@
 using System.Collections.Generic;
 using System.Linq;
 
-using BetterCms.Core.DataAccess;
-using BetterCms.Core.DataAccess.DataContext;
-using BetterCms.Core.DataAccess.DataContext.Fetching;
-
 using BetterCms.Module.Api.Helpers;
 using BetterCms.Module.Api.Infrastructure;
+
 using BetterCms.Module.Root.Models;
 using BetterCms.Module.Root.Services;
+
+using BetterModules.Core.DataAccess;
+using BetterModules.Core.DataAccess.DataContext;
+using BetterModules.Core.DataAccess.DataContext.Fetching;
 
 namespace BetterCms.Module.Api.Operations.Pages.Pages.Page.Contents.Content
 {
@@ -30,22 +31,39 @@ namespace BetterCms.Module.Api.Operations.Pages.Pages.Page.Contents.Content
             var pageContent = repository
                 .AsQueryable<PageContent>()
                 .Where(f => f.Id == pageContentId && !f.IsDeleted && !f.Content.IsDeleted)
+                .Fetch(f => f.Page).ThenFetch(f => f.Language)
                 .Fetch(f => f.Content).ThenFetchMany(f => f.ContentOptions)
                 .FetchMany(f => f.Options)
                 .ToList()
                 .FirstOne();
 
-            return optionService
-                .GetMergedOptionValuesForEdit(pageContent.Content.ContentOptions, pageContent.Options)
-                .Select(o => new OptionValueModel
+            var langId = pageContent.Page.Language != null ? pageContent.Page.Language.Id.ToString() : "";
+            var mergedOptionValues = optionService.GetMergedOptionValuesForEdit(pageContent.Content.ContentOptions, pageContent.Options);
+
+            foreach (var optionValue in mergedOptionValues)
+            {
+                if (optionValue.Translations != null)
+                {
+                    var translation = optionValue.Translations.FirstOrDefault(x => x.LanguageId == langId);
+                    if (translation != null)
                     {
-                        Key = o.OptionKey,
-                        Value = o.OptionValue,
-                        DefaultValue = o.OptionDefaultValue,
-                        Type = ((Root.OptionType)(int)o.Type),
-                        UseDefaultValue = o.UseDefaultValue,
-                        CustomTypeIdentifier = o.CustomOption != null ? o.CustomOption.Identifier : null
-                    }).AsQueryable();
+                        optionValue.OptionValue = optionValue.UseDefaultValue ? translation.OptionValue : optionValue.OptionValue;
+                        optionValue.OptionDefaultValue = translation.OptionValue;
+                    }
+                }
+            }
+
+            return mergedOptionValues
+                    .Select(o => new OptionValueModel
+                        {
+                            Key = o.OptionKey,
+                            Value = o.OptionValue,
+                            DefaultValue = o.OptionDefaultValue,
+                            Type = ((Root.OptionType)(int)o.Type),
+                            UseDefaultValue = o.UseDefaultValue,
+                            CustomTypeIdentifier = o.CustomOption != null ? o.CustomOption.Identifier : null
+
+                        }).AsQueryable();
         }
     }
 }

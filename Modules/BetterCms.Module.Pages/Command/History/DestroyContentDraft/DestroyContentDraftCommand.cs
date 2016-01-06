@@ -1,11 +1,12 @@
 ﻿using BetterCms.Core.DataContracts.Enums;
 using BetterCms.Core.Exceptions;
-using BetterCms.Core.Exceptions.DataTier;
-using BetterCms.Core.Mvc.Commands;
 
 using BetterCms.Module.Pages.Models;
 using BetterCms.Module.Pages.Services;
 using BetterCms.Module.Root.Mvc;
+
+using BetterModules.Core.Exceptions.DataTier;
+using BetterModules.Core.Web.Mvc.Commands;
 
 namespace BetterCms.Module.Pages.Command.History.DestroyContentDraft
 {

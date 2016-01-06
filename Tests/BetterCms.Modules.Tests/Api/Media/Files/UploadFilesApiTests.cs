@@ -2,11 +2,13 @@
 using System.Reflection;
 
 using BetterCms.Core.Exceptions.Api;
-using BetterCms.Core.Models;
+
 using BetterCms.Module.Api.Infrastructure;
 using BetterCms.Module.Api.Operations.MediaManager.Files.File;
 using BetterCms.Module.Api.Operations.Root;
 using BetterCms.Module.MediaManager.Models;
+
+using BetterModules.Core.Models;
 
 using NHibernate;
 

@@ -2,15 +2,15 @@
 using System.Collections.Generic;
 using System.Linq;
 
-using BetterCms.Core.DataAccess;
-using BetterCms.Core.DataAccess.DataContext;
-using BetterCms.Core.DataContracts;
-using BetterCms.Core.Models;
-using BetterCms.Core.Security;
+using BetterModules.Core.DataAccess;
+using BetterModules.Core.DataAccess.DataContext;
+
 using BetterCms.Core.Services;
 using BetterCms.Module.MediaManager.Models;
 using BetterCms.Module.Pages.Models;
 using BetterCms.Module.Root.Models;
+
+using BetterModules.Core.Models;
 
 using NHibernate.Criterion;
 using NHibernate.Linq;
@@ -65,6 +65,19 @@ namespace BetterCms.Module.Pages.Services
                 }
             }
 
+            // remove tags who are equal (tags are case insensitive)
+            for (int i = 0; i < trimmedTags.Count; i++)
+            {
+                for (int j = i + 1; j < trimmedTags.Count; j++)
+                {
+                    if (i != j && trimmedTags[i].ToLowerInvariant() == trimmedTags[j].ToLowerInvariant())
+                    {
+                        trimmedTags.RemoveAt(j);
+                        --j;
+                    }
+                }
+            }
+
             newCreatedTags = new List<Tag>();
             
             Tag tagAlias = null;
@@ -77,6 +90,8 @@ namespace BetterCms.Module.Pages.Services
                 .Where(t => !t.IsDeleted)
                 .List<PageTag>();
 
+            // All page tag list
+            var finalTagList = new List<PageTag>();
             // Remove deleted tags:
             for (int i = pageTags.Count - 1; i >= 0; i--)
             {
@@ -85,8 +100,10 @@ namespace BetterCms.Module.Pages.Services
 
                 if (tag == null)
                 {
-                    UpdateModifiedInformation(pageTags[i]);
-                    unitOfWork.Session.Delete(pageTags[i]);
+                    var tagToRemove = pageTags[i];
+                    UpdateModifiedInformation(tagToRemove);
+                    unitOfWork.Session.Delete(tagToRemove);
+                    finalTagList.Add(tagToRemove);
                 }
             }
 
@@ -130,8 +147,10 @@ namespace BetterCms.Module.Pages.Services
 
                     UpdateModifiedInformation(pageTag);
                     unitOfWork.Session.SaveOrUpdate(pageTag);
+                    finalTagList.Add(pageTag);
                 }
             }
+            page.PageTags = finalTagList;
         }
 
         /// <summary>
@@ -178,6 +197,19 @@ namespace BetterCms.Module.Pages.Services
                 foreach (var tag in tags)
                 {
                     trimmedTags.Add(tag.Trim());
+                }
+            }
+
+            // remove tags who are equal (tags are case insensitive)
+            for (int i = 0; i < trimmedTags.Count; i++)
+            {
+                for (int j = i + 1; j < trimmedTags.Count; j++)
+                {
+                    if (i != j && trimmedTags[i].ToLowerInvariant() == trimmedTags[j].ToLowerInvariant())
+                    {
+                        trimmedTags.RemoveAt(j);
+                        --j;
+                    }
                 }
             }
 

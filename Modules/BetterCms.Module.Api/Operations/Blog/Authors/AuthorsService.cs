@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Linq;
 
-using BetterCms.Core.DataAccess;
+using BetterModules.Core.DataAccess;
 using BetterCms.Module.Api.Helpers;
 using BetterCms.Module.Api.Infrastructure;
 using BetterCms.Module.Api.Operations.Blog.Authors.Author;
@@ -64,6 +64,7 @@ namespace BetterCms.Module.Api.Operations.Blog.Authors
                         LastModifiedOn = author.ModifiedOn,
 
                         Name = author.Name,
+                        Description = author.Description,
 
                         ImageId = author.Image != null && !author.Image.IsDeleted ? author.Image.Id : (Guid?)null,
                         ImageUrl = author.Image != null && !author.Image.IsDeleted ? author.Image.PublicUrl : (string)null,

@@ -3,10 +3,11 @@ using System.Data;
 
 using Autofac;
 
+using BetterModules.Core.Dependencies;
+
 using NHibernate;
 using NHibernate.SqlTypes;
 using NHibernate.UserTypes;
-using BetterCms.Core.Dependencies;
 
 namespace BetterCms.Core.Security
 {
@@ -19,7 +20,10 @@ namespace BetterCms.Core.Security
 
         public EncryptableString()
         {
-            encryptor = ContextScopeProvider.ApplicationContainer.Resolve<ITextEncryptor>();
+            using (var container = ContextScopeProvider.CreateChildContainer())
+            {
+                encryptor = container.Resolve<ITextEncryptor>();
+            }
         }
 
         /// <summary>

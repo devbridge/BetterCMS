@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Threading.Tasks;
 
@@ -33,5 +34,7 @@ namespace BetterCms.Module.MediaManager.Services
         void SaveMediaFile(MediaFile file);
 
         void SwapOriginalMediaWithVersion(MediaFile originalEntity, MediaFile newVersion, ISession session = null);
+
+        void MoveFilesToTrashFolder();
     }
 }

@@ -2,9 +2,10 @@
 using System.Collections.Generic;
 using System.Linq;
 
-using BetterCms.Core.Mvc.Commands;
 using BetterCms.Module.Pages.ViewModels.Page;
 using BetterCms.Module.Root.Mvc;
+
+using BetterModules.Core.Web.Mvc.Commands;
 
 namespace BetterCms.Module.Pages.Command.Sitemap.GetPageTranslations
 {

@@ -2,20 +2,21 @@
 using System.Collections.Generic;
 using System.Text;
 
-using BetterCms.Core.DataAccess;
 using BetterCms.Core.DataContracts;
 using BetterCms.Core.DataContracts.Enums;
-using BetterCms.Core.Models;
 using BetterCms.Core.Security;
 
 using BetterCms.Module.Blog.Models;
 using BetterCms.Module.MediaManager.Models;
 using BetterCms.Module.Pages.Models;
+using BetterCms.Module.Pages.Models.Enums;
 using BetterCms.Module.Root.Models;
 using BetterCms.Module.Users;
 using BetterCms.Module.Users.Models;
 
 using BetterCms.Module.Root.Mvc.Helpers;
+
+using BetterModules.Core.Models;
 
 using NHibernate;
 
@@ -161,6 +162,7 @@ namespace BetterCms.Tests.Helpers
             PopulateBaseFields(entity);
 
             entity.DefaultLayout = CreateNewLayout();
+            entity.DefaultContentTextMode = ContentTextMode.Html;
 
             return entity;
         }
@@ -353,6 +355,30 @@ namespace BetterCms.Tests.Helpers
 
             return entity;
         }
+
+        public ChildContentOption CreateNewChildContentOption(ChildContent childContent = null)
+        {
+            var entity = new ChildContentOption();
+            PopulateBaseFields(entity);
+
+            entity.Key = ProvideRandomString(MaxLength.Name);
+            entity.ChildContent = childContent ?? CreateNewChildContent();
+            entity.Type = ProvideRandomEnumValue<OptionType>();
+            entity.UseDefaultValue = false;
+            entity.Value = ProvideRandomString(100);
+
+            return entity;
+        }
+
+        public ChildContent CreateNewChildContent(Content parent = null, Content child = null)
+        {
+            var entity = new ChildContent();
+            PopulateBaseFields(entity);
+
+            entity.Parent = parent ?? CreateNewContent();
+            entity.Child = child ?? CreateNewContent();
+            return entity;
+        }
         
         public LayoutOption CreateNewLayoutOption(Layout layout = null)
         {
@@ -521,6 +547,7 @@ namespace BetterCms.Tests.Helpers
             entity.Original = null;
             entity.PublishedByUser = ProvideRandomString(MaxLength.Name);
             entity.PublishedOn = ProvideRandomDateTime();
+            entity.ContentTextMode = ContentTextMode.Html;
         }
        
         public Media CreateNewMedia(MediaType type = MediaType.Image)

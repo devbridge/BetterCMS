@@ -17,6 +17,7 @@ namespace BetterCms.Module.Blog.ViewModels.Author
                 Id = author.Id;
                 Version = author.Version;
                 Name = author.Name;
+                Description = author.Description;
                 if (author.Image != null)
                 {
                     Image = new RenderPageImageViewModel(author.Image);
@@ -49,6 +50,14 @@ namespace BetterCms.Module.Blog.ViewModels.Author
         public string Name { get; set; }
 
         /// <summary>
+        /// Gets or sets the author description.
+        /// </summary>
+        /// <value>
+        /// The author description.
+        /// </value>
+        public string Description { get; set; }
+
+        /// <summary>
         /// Gets or sets the author image view model.
         /// </summary>
         /// <value>
@@ -64,7 +73,7 @@ namespace BetterCms.Module.Blog.ViewModels.Author
         /// </returns>
         public override string ToString()
         {
-            return string.Format("{0}, Id: {1}, Version: {2}, Name: {3}", base.ToString(), Id, Version, Name);
+            return string.Format("{0}, Id: {1}, Version: {2}, Name: {3}, Description: {4}", base.ToString(), Id, Version, Name, Description);
         }
     }
 }

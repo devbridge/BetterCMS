@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 
 using BetterCms.Core.DataContracts;
+using BetterCms.Core.DataContracts.Enums;
 
 namespace BetterCms.Module.Root.Mvc.PageHtmlRenderer
 {
@@ -38,13 +39,14 @@ namespace BetterCms.Module.Root.Mvc.PageHtmlRenderer
                     var option = options.FirstOrDefault(o => o.Key == optionKey);
                     if (option != null && option.Value != null)
                     {
-                        if (option.Value is DateTime)
+                        if (option.Type == OptionType.DateTime)
                         {
+                            var dateValue = (DateTime)Convert.ChangeType(option.Value, typeof(DateTime));
                             if (match.Parameters.Length > 1)
                             {
                                 try
                                 {
-                                    replaceWith = ((DateTime)option.Value).ToString(match.Parameters[1]);
+                                    replaceWith = (dateValue).ToString(match.Parameters[1]);
                                 }
                                 catch
                                 {
@@ -53,16 +55,18 @@ namespace BetterCms.Module.Root.Mvc.PageHtmlRenderer
                             }
                             else
                             {
-                                replaceWith = ((DateTime)option.Value).ToString(System.Threading.Thread.CurrentThread.CurrentCulture.DateTimeFormat.ShortDatePattern);
+                                replaceWith = (dateValue).ToString(System.Threading.Thread.CurrentThread.CurrentCulture.DateTimeFormat.ShortDatePattern);
                             }
                         }
-                        else if (option.Value is decimal)
+//                        else if (option.Value is decimal)
+                        else if (option.Type == OptionType.Float)
                         {
+                            var decimalValue = (decimal)Convert.ChangeType(option.Value, typeof(decimal));
                             if (match.Parameters.Length > 1)
                             {
                                 try
                                 {
-                                    replaceWith = ((decimal)option.Value).ToString(match.Parameters[1]);
+                                    replaceWith = (decimalValue).ToString(match.Parameters[1]);
                                 }
                                 catch
                                 {
@@ -71,12 +75,12 @@ namespace BetterCms.Module.Root.Mvc.PageHtmlRenderer
                             }
                             else
                             {
-                                replaceWith = ((decimal)option.Value).ToString(CultureInfo.InvariantCulture);
+                                replaceWith = (decimalValue).ToString(CultureInfo.InvariantCulture);
                             }
                         }
                         else
                         {
-                            replaceWith = option.Value.ToString();
+                            replaceWith = option.Value;
                         }
                     }
                 }

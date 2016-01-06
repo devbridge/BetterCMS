@@ -1,8 +1,8 @@
 ﻿/*jslint unparam: true, white: true, browser: true, devel: true */
 /*global bettercms */
 
-bettercms.define('bcms.pages.sitemap', ['bcms.jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', 'bcms.forms', 'bcms.dynamicContent', 'bcms.messages', 'bcms.ko.extenders', 'bcms.grid', 'bcms.security', 'bcms.tags'],
-    function ($, bcms, modal, siteSettings, forms, dynamicContent, messages, ko, grid, security, tags) {
+bettercms.define('bcms.pages.sitemap', ['bcms.jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', 'bcms.forms', 'bcms.dynamicContent', 'bcms.messages', 'bcms.ko.extenders', 'bcms.grid', 'bcms.security', 'bcms.tags', 'bcms.antiXss'],
+    function ($, bcms, modal, siteSettings, forms, dynamicContent, messages, ko, grid, security, tags, antiXss) {
         'use strict';
 
         var sitemap = {},
@@ -40,7 +40,7 @@ bettercms.define('bcms.pages.sitemap', ['bcms.jquery', 'bcms', 'bcms.modal', 'bc
                 modalContent: '.bcms-modal-content-padded',
                 firstTab: '#bcms-tab-1',
                 secondTab: '#bcms-tab-2',
-                secondTabButton: '.bcms-tab[data-name="#bcms-tab-2"]',
+                secondTabButton: '.bcms-tab-item[data-name="#bcms-tab-2"]',
                 leftColumn: '.bcms-leftcol',
                 
                 tabsSlider: '.bcms-tab-header:first',
@@ -202,7 +202,7 @@ bettercms.define('bcms.pages.sitemap', ['bcms.jquery', 'bcms', 'bcms.modal', 'bc
                     var template = $(selectors.siteSettingsSitemapRowTemplate),
                         newRow = $(template.html()).find(selectors.siteSettingsSitemapRowTemplateFirstRow);
 
-                    newRow.find(selectors.siteSettingsSitemapTitleCell).html(data.Data.Title);
+                    newRow.find(selectors.siteSettingsSitemapTitleCell).html(antiXss.encodeHtml(data.Data.Title));
                     newRow.find(selectors.siteSettingsSitemapEditButton).data('id', data.Data.Id);
                     newRow.find(selectors.siteSettingsSitemapHistoryButton).data('id', data.Data.Id);
                     newRow.find(selectors.siteSettingsSitemapDeleteButton).data('id', data.Data.Id);
@@ -227,7 +227,7 @@ bettercms.define('bcms.pages.sitemap', ['bcms.jquery', 'bcms', 'bcms.modal', 'bc
                 if (data.Data != null) {
                     var row = self.parents(selectors.siteSettingsSitemapParentRow),
                         cell = row.find(selectors.siteSettingsSitemapTitleCell);
-                    cell.html(data.Data.Title);
+                    cell.html(antiXss.encodeHtml(data.Data.Title));
                     row.find(selectors.siteSettingsSitemapDeleteButton).data('version', data.Data.Version);
                 }
             }, globalization.sitemapEditorDialogTitle);
@@ -243,7 +243,7 @@ bettercms.define('bcms.pages.sitemap', ['bcms.jquery', 'bcms', 'bcms.modal', 'bc
                 if (data.Data != null) {
                     var row = self.parents(selectors.siteSettingsSitemapParentRow),
                         cell = row.find(selectors.siteSettingsSitemapTitleCell);
-                    cell.html(data.Data.Title);
+                    cell.html(antiXss.encodeHtml(data.Data.Title));
                     row.find(selectors.siteSettingsSitemapDeleteButton).data('version', data.Data.Version);
                 }
             }, globalization.sitemapHistoryDialogTitle);

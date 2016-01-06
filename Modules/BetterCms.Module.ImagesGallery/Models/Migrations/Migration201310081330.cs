@@ -1,6 +1,6 @@
 ﻿using System;
 
-using BetterCms.Core.DataAccess.DataContext.Migrations;
+using BetterModules.Core.DataAccess.DataContext.Migrations;
 
 using FluentMigrator;
 
@@ -10,7 +10,7 @@ namespace BetterCms.Module.ImagesGallery.Models.Migrations
     /// Deletes custom option and table, if exists
     /// </summary>
     [Migration(201310081330)]
-    public class Migration201310081330 : DefaultMigration
+    public class Migration201310081330: DefaultMigration
     {
         /// <summary>
         /// The root schema name

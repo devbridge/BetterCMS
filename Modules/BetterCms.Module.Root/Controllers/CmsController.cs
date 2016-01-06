@@ -8,14 +8,14 @@ using BetterCms.Configuration;
 using BetterCms.Core.DataContracts.Enums;
 using BetterCms.Core.Mvc.Attributes;
 using BetterCms.Core.Security;
-using BetterCms.Core.Services.Caching;
-
 using BetterCms.Module.Root.Commands.GetPageToRender;
 using BetterCms.Module.Root.Mvc;
 using BetterCms.Module.Root.Mvc.Helpers;
 using BetterCms.Module.Root.ViewModels.Cms;
 
 using Common.Logging;
+
+using BetterModules.Core.Web.Services.Caching;
 
 using Microsoft.Web.Mvc;
 

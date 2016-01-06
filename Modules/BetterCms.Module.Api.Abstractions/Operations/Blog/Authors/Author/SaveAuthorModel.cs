@@ -19,6 +19,15 @@ namespace BetterCms.Module.Api.Operations.Blog.Authors.Author
         public string Name { get; set; }
 
         /// <summary>
+        /// Gets or sets the author Description.
+        /// </summary>
+        /// <value>
+        /// The author Description.
+        /// </value>
+        [DataMember]
+        public string Description { get; set; }
+
+        /// <summary>
         /// Gets or sets the image identifier.
         /// </summary>
         /// <value>

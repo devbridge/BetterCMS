@@ -3,8 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Security.Principal;
 
-using BetterCms.Core.DataAccess;
-using BetterCms.Core.DataAccess.DataContext;
+using BetterModules.Core.DataAccess;
+using BetterModules.Core.DataAccess.DataContext;
 using BetterCms.Core.DataContracts.Enums;
 
 using BetterCms.Core.Exceptions;
@@ -20,9 +20,9 @@ using BetterCms.Module.Blog.ViewModels.Blog;
 
 using BetterCms.Module.MediaManager.Models;
 
-using BetterCms.Module.Pages.Content.Resources;
 using BetterCms.Module.Pages.Helpers;
 using BetterCms.Module.Pages.Models;
+using BetterCms.Module.Pages.Models.Enums;
 using BetterCms.Module.Pages.Services;
 using BetterCms.Module.Pages.ViewModels.Filter;
 
@@ -320,15 +320,24 @@ namespace BetterCms.Module.Blog.Services
                 Id = content != null ? content.Id : Guid.Empty,
                 Name = request.Title,
                 Html = request.Content ?? string.Empty,
+                OriginalText = request.OriginalText,
                 EditInSourceMode = request.EditInSourceMode,
                 ActivationDate = request.LiveFromDate,
-                ExpirationDate = TimeHelper.FormatEndDate(request.LiveToDate)
+                ExpirationDate = TimeHelper.FormatEndDate(request.LiveToDate),
+                ContentTextMode = request.ContentTextMode,
             };
 
             if (!updateActivationIfNotChanged && content != null)
             {
                 newContent.ActivationDate = TimeHelper.GetFirstIfTheSameDay(content.ActivationDate, newContent.ActivationDate);
                 newContent.ExpirationDate = TimeHelper.GetFirstIfTheSameDay(content.ExpirationDate, newContent.ExpirationDate);
+            }
+
+            if (request.ContentTextMode == ContentTextMode.Markdown
+                && request.Content == null
+                && request.OriginalText != null)
+            {
+                newContent.Html = MarkdownConverter.ToHtml(request.OriginalText);
             }
 
             // Preserve content if user is not authorized to change it.
@@ -345,6 +354,8 @@ namespace BetterCms.Module.Blog.Services
 
                 newContent.Name = contentToPublish.Name;
                 newContent.Html = contentToPublish.Html;
+                newContent.ContentTextMode = contentToPublish.ContentTextMode;
+                newContent.OriginalText = contentToPublish.OriginalText;
             }
 
             content = SaveContentWithStatusUpdate(isNew, newContent, request, principal);
@@ -377,8 +388,6 @@ namespace BetterCms.Module.Blog.Services
 
             pageContent.Content = content;
             blogPost.PageContents = new [] {pageContent};
-
-            
 
             IList<Tag> newTags = null;
             if (userCanEdit)
@@ -700,14 +709,17 @@ namespace BetterCms.Module.Blog.Services
                 }
                 else if (request.Status.Value == PageStatusFilterType.ContainingUnpublishedContents)
                 {
-                    const ContentStatus draft = ContentStatus.Draft;
+                    PageContent pageContentAlias = null;
                     Root.Models.Content contentAlias = null;
-                    var subQuery = QueryOver.Of<PageContent>()
-                        .JoinAlias(p => p.Content, () => contentAlias)
-                        .Where(pageContent => pageContent.Page.Id == alias.Id)
-                        .And(() => contentAlias.Status == draft)
-                        .And(() => !contentAlias.IsDeleted)
-                        .Select(pageContent => 1);
+                    Root.Models.Content contentHistoryAlias = null;
+
+                    var subQuery =
+                        QueryOver.Of(() => pageContentAlias)
+                            .Inner.JoinAlias(() => pageContentAlias.Content, () => contentAlias, () => !contentAlias.IsDeleted)
+                            .Left.JoinAlias(() => contentAlias.History, () => contentHistoryAlias, () => !contentHistoryAlias.IsDeleted)
+                            .Where(() => pageContentAlias.Page.Id == alias.Id && !pageContentAlias.IsDeleted)
+                            .Where(() => contentHistoryAlias.Status == ContentStatus.Draft || contentAlias.Status == ContentStatus.Draft)
+                            .Select(p => 1);
 
                     query = query.WithSubquery.WhereExists(subQuery);
                 }

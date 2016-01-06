@@ -1,7 +1,8 @@
-﻿using BetterCms.Core.Mvc.Commands;
-using BetterCms.Module.Pages.Services;
+﻿using BetterCms.Module.Pages.Services;
 using BetterCms.Module.Pages.ViewModels.Sitemap;
 using BetterCms.Module.Root.Mvc;
+
+using BetterModules.Core.Web.Mvc.Commands;
 
 namespace BetterCms.Module.Pages.Command.Sitemap.DeleteSitemap
 {

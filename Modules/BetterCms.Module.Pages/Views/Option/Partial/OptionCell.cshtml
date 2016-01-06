@@ -4,40 +4,45 @@
 @model BetterCms.Module.Pages.Mvc.EditableGrid.OptionValueEditableGridColumn
 
 @* Text type *@
-<!-- ko if: !useDefaultValue() && type() != 5 && type() != 4 && type() != 99 -->
+<!-- ko if: !useDefaultValueBinding() && type() != 5 && type() != 4 && type() != 21 && type() != 99 -->
     @Html.Partial(RootModuleConstants.EditableGridCellTemplate)
 <!-- /ko -->
 
+@* Multi-line Text type *@
+<!-- ko if: !useDefaultValueBinding() && type() == 21 -->
+    @Html.Partial(RootModuleConstants.EditableGridMultilineTextCellTemplate)
+<!-- /ko -->
+
 @* Boolean *@
-<!-- ko if: !useDefaultValue() && type() == 5  -->
+<!-- ko if: !useDefaultValueBinding() && type() == 5  -->
     @Html.Partial(RootModuleConstants.EditableGridBooleanCellTemplate, new EditableGridBooleanColumn(Model.HeaderTitle, Model.SortColumn, Model.ValueBind)
                                                                            {
                                                                                HiddenFieldName = Model.HiddenFieldName,
                                                                                HeaderAttributes = Model.HeaderAttributes,
                                                                                AutoFocus = Model.AutoFocus,
                                                                                CanBeEdited = Model.CanBeEdited,
-                                                                               ShowValueAsText = true
+                                                                               ShowValueAsText = true,
+                                                                               FocusIdentifier = Model.FocusIdentifier
                                                                            })
 <!-- /ko -->
 
 @* DateTime *@
-<!-- ko if: !useDefaultValue() && type() == 4  -->
+<!-- ko if: !useDefaultValueBinding() && type() == 4  -->
 <td @Html.Raw(Model.Attributes)>
     @if (Model.CanBeEdited)
     {
-        <!-- ko if: isActive() -->
         <div class="bcms-input-field-holder">
-            <div class="bcms-date-input-box bcms-options-date">
+            <div class="bcms-date-input-box bcms-options-date" data-bind="visible: isActive()">
                 <input class="bcms-editor-field-box bcms-datepicker" data-bind="
                     css: { 'bcms-input-validation-error': !isNew() && @(Model.ValueBind).hasError && @(Model.ValueBind).hasError() },
                     value: @(Model.ValueBind),
                     valueUpdate: 'afterkeydown', 
-                    click: onItemSelect,
-                    event: {blur: onBlurField, focus: onItemSelect},
                     enterPress: onSave, 
                     escPress: onCancelEdit,
-                    afterRender: initDatePickers()
-                    @(Model.AutoFocus ? ", hasfocus: isActive() && hasFocus" : "") " />
+                    afterRender: initDatePickers(),
+                    visible: isActive()
+                    @(!string.IsNullOrEmpty(Model.FocusIdentifier) ? string.Format(", hasfocus: {0}", Model.FocusIdentifier) : string.Empty)
+                       " />
             
                 <!-- ko if: !isNew() &&  @(Model.ValueBind).hasError && @(Model.ValueBind).hasError() -->
                 <span class="bcms-field-validation-error">
@@ -46,47 +51,42 @@
                 <!-- /ko -->
             </div>
         </div>
-        <!-- /ko -->
-        <!-- ko ifnot: isActive() -->
     }
-    <a class="bcms-tables-link" data-bind="text: @(Model.ValueBind)()"></a>    
-    @if (Model.CanBeEdited)
-    {
-        <!-- /ko -->
-    }
+    <a class="bcms-tables-link" data-bind="
+       text: @(Model.ValueBind)() @(!string.IsNullOrEmpty(Model.FocusIdentifier) ? string.Format(", click: onItemSelect.bind($data, {0})", Model.FocusIdentifier) : string.Empty)
+       @(Model.CanBeEdited ? ", visible: !isActive()" : string.Empty)
+       "></a>    
+
 </td>
 <!-- /ko -->
 
 @* Custom *@
-<!-- ko if: !useDefaultValue() && type() == 99  -->
+<!-- ko if: !useDefaultValueBinding() && type() == 99  -->
 <td @Html.Raw(Model.Attributes)>
     @if (Model.CanBeEdited)
     {
-        <!-- ko if: isActive() -->
         <input style="width: 70%" class="bcms-editor-field-box" type="text" readonly="readonly" data-bind="value: @(Model.CustomValueBind)() || @(Model.ValueBind)(), 
-            click: onItemSelect,
-            event: {blur: onBlurFieldDelayed, focus: onItemSelect},
             enterPress: onSave, 
-            escPress: onCancelEdit
-            @(Model.AutoFocus ? ", hasfocus: isActive() && hasFocus" : "")" />
+            escPress: onCancelEdit,
+            visible: isActive()
+            @(!string.IsNullOrEmpty(Model.FocusIdentifier) ? string.Format(", hasfocus: {0}", Model.FocusIdentifier) : string.Empty)
+               " />
         <div class="bcms-btn-small" data-bind="
                     click: onCustomOptionExecute.bind($data, $data, @(Model.CustomValueBind), @(Model.ValueBind)),
-                    event: {blur: onBlurField, focus: onItemSelect},
                     enterPress: onSave, 
-                    escPress: onCancelEdit">...</div>
-        <!-- /ko -->
-        <!-- ko ifnot: isActive() -->
+                    escPress: onCancelEdit,
+                    visible: isActive()">...</div>
     }
-    <a class="bcms-tables-link" data-bind="text: @(Model.CustomValueBind)() || @(Model.ValueBind)()"></a>    
-    @if (Model.CanBeEdited)
-    {
-        <!-- /ko -->
-    }
+    <a class="bcms-tables-link" data-bind="
+       text: @(Model.CustomValueBind)() || @(Model.ValueBind)() 
+       @(!string.IsNullOrEmpty(Model.FocusIdentifier) ? string.Format(", click: onItemSelect.bind($data, {0})", Model.FocusIdentifier) : string.Empty)
+       @(Model.CanBeEdited ? ", visible: !isActive()" : string.Empty)
+       "></a>    
 </td>
 <!-- /ko -->
 
 @* Using default value *@
-<!-- ko if: useDefaultValue() && type() == 5  -->
+<!-- ko if: useDefaultValueBinding() && type() == 5  -->
     @Html.Partial(RootModuleConstants.EditableGridBooleanCellTemplate, new EditableGridBooleanColumn(null, null, Model.ValueBind)
                                                                            {
                                                                                CanBeEdited = false,
@@ -94,8 +94,8 @@
                                                                            })
 <!-- /ko -->
 
-<!-- ko if: useDefaultValue() && type() != 5  -->
+<!-- ko if: useDefaultValueBinding() && type() != 5  -->
 <td @Html.Raw(Model.Attributes)>
-    <a class="bcms-tables-link" data-bind="text: @(Model.CustomValueBind)() || @(Model.ValueBind)()"></a>
+    <a class="bcms-tables-link" data-bind="text: @(Model.CustomValueBind)() || @(Model.ValueBind)() @(!string.IsNullOrEmpty(Model.FocusIdentifier) ? string.Format(", click: onItemSelect.bind($data, {0})", Model.FocusIdentifier): string.Empty)"></a>
 </td>
 <!-- /ko -->

@@ -1,8 +1,8 @@
 ﻿/*jslint unparam: true, white: true, browser: true, devel: true */
 /*global bettercms */
 
-bettercms.define('bcms.languages', ['bcms.jquery', 'bcms', 'bcms.dynamicContent', 'bcms.siteSettings', 'bcms.ko.extenders', 'bcms.ko.grid', 'bcms.autocomplete'],
-function ($, bcms, dynamicContent, siteSettings, ko, kogrid, autocomplete) {
+bettercms.define('bcms.languages', ['bcms.jquery', 'bcms', 'bcms.dynamicContent', 'bcms.siteSettings', 'bcms.ko.extenders', 'bcms.ko.grid', 'bcms.autocomplete', 'bcms.antiXss'],
+function ($, bcms, dynamicContent, siteSettings, ko, kogrid, autocomplete, antiXss) {
     'use strict';
 
     var languages = {},
@@ -16,7 +16,8 @@ function ($, bcms, dynamicContent, siteSettings, ko, kogrid, autocomplete) {
         },
         globalization = {
             deleteLanguageConfirmMessage: null
-        };
+        },
+        rowId = 0;
 
     /**
     * Assign objects to module.
@@ -106,8 +107,8 @@ function ($, bcms, dynamicContent, siteSettings, ko, kogrid, autocomplete) {
                 };
 
             self.hasNameFocus = ko.observable(false);
-            self.name = ko.observable().extend({ required: "", maxLength: { maxLength: ko.maxLength.name } });
-            self.code = ko.observable().extend({ required: "", maxLength: { maxLength: ko.maxLength.name } });
+            self.name = ko.observable().extend({ required: "", maxLength: { maxLength: ko.maxLength.name }, preventHtml: "" });
+            self.code = ko.observable().extend({ required: "", maxLength: { maxLength: ko.maxLength.name }, preventHtml: "" });
             self.shortCode = ko.observable();
             self.oldAutocompleteValue = '';
 
@@ -125,7 +126,7 @@ function ($, bcms, dynamicContent, siteSettings, ko, kogrid, autocomplete) {
         }
 
         LanguageViewModel.prototype.getDeleteConfirmationMessage = function () {
-            return $.format(globalization.deleteLanguageConfirmMessage, this.name());
+            return $.format(globalization.deleteLanguageConfirmMessage, antiXss.encodeHtml(this.name()));
         };
 
         LanguageViewModel.prototype.onAfterItemSaved = function (json) {
@@ -170,6 +171,13 @@ function ($, bcms, dynamicContent, siteSettings, ko, kogrid, autocomplete) {
             }
 
             _super.prototype.onCancelEdit.call(this, data, event);
+        };
+
+        LanguageViewModel.prototype.getRowId = function () {
+            if (!this.rowId) {
+                this.rowId = 'bcms-lang-row-' + rowId++;
+            }
+            return this.rowId;
         };
 
         return LanguageViewModel;

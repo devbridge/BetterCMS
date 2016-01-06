@@ -1,9 +1,10 @@
 ﻿using System;
 
 using BetterCms.Core.Exceptions;
-using BetterCms.Core.Services.Caching;
 
 using Common.Logging;
+
+using BetterModules.Core.Web.Services.Caching;
 
 using Microsoft.ApplicationServer.Caching;
 

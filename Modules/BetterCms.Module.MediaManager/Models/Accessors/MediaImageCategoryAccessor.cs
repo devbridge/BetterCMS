@@ -1,14 +1,18 @@
-﻿using System.Linq;
+﻿using System.Collections.Generic;
+using System.Linq;
 
-using BetterCms.Core.DataAccess;
-using BetterCms.Core.DataAccess.DataContext;
+using BetterCms.Core.DataContracts;
 using BetterCms.Module.Root.Models;
 
+using BetterModules.Core.DataAccess;
+using BetterModules.Core.DataAccess.DataContext;
+
 using NHibernate;
+using NHibernate.Linq;
 
 namespace BetterCms.Module.MediaManager.Models.Accessors
 {
-    public class MediaImageCategoryAccessor :  ICategoryAccessor
+    public class MediaImageCategoryAccessor : ICategoryAccessor
     {
         public string Name
         {
@@ -22,6 +26,11 @@ namespace BetterCms.Module.MediaManager.Models.Accessors
         {
             var query = repository.AsQueryable<MediaCategory>().Where(mc => mc.Media is MediaImage && mc.Category.CategoryTree == categoryTree && mc.Media.Original == null);
             return query.ToRowCountFutureValue();
+        }
+
+        public IEnumerable<IEntityCategory> QueryEntityCategories(IRepository repository, ICategory category)
+        {
+            return repository.AsQueryable<MediaCategory>().Where(m => m.Media is MediaImage && m.Category.Id == category.Id).ToFuture();
         }
     }
 }

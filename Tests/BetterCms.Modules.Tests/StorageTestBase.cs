@@ -20,6 +20,7 @@ namespace BetterCms.Test.Module
         protected const string TestBigImageFileName = "logo.big.png";
         protected const string TestBigImagePath = "BetterCms.Test.Module.Contents.Images.logo.big.png";
         protected const string TestImageCopyFileName = "logo.copy.png";
+        protected const string TestImageMoveFileName = "logo.move.png";
 
         /// <summary>
         /// Mocks the configuration.

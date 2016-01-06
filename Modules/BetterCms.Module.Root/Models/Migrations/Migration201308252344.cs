@@ -1,12 +1,14 @@
-﻿using BetterCms.Core.DataAccess.DataContext.Migrations;
-using BetterCms.Core.Models;
+﻿using BetterModules.Core.DataAccess.DataContext.Migrations;
+
+using BetterModules.Core.DataAccess.DataContext.Migrations;
+using BetterModules.Core.Models;
 
 using FluentMigrator;
 
 namespace BetterCms.Module.Root.Models.Migrations
 {
     [Migration(201308252344)]
-    public class Migration201308252344 : DefaultMigration
+    public class Migration201308252344: DefaultMigration
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="Migration201308252344"/> class.
@@ -34,7 +36,7 @@ namespace BetterCms.Module.Root.Models.Migrations
             Create
                 .Table("PageAccess")
                 .InSchema(SchemaName)
-                .WithCmsBaseColumns()
+                .WithBaseColumns()
                 .WithColumn("PageId").AsGuid().NotNullable()
                 .WithColumn("RoleOrUser").AsString(MaxLength.Name).NotNullable()
                 .WithColumn("AccessLevel").AsInt32().NotNullable();

@@ -1,15 +1,16 @@
 ﻿using System;
 using System.Linq;
 
-using BetterCms.Core.DataAccess;
-using BetterCms.Core.DataAccess.DataContext;
-using BetterCms.Core.DataAccess.DataContext.Fetching;
-using BetterCms.Core.Exceptions.DataTier;
 using BetterCms.Core.Exceptions.Mvc;
 
 using BetterCms.Module.Root.Mvc;
 using BetterCms.Module.Users.Content.Resources;
 using BetterCms.Module.Users.Models;
+
+using BetterModules.Core.DataAccess;
+using BetterModules.Core.DataAccess.DataContext;
+using BetterModules.Core.DataAccess.DataContext.Fetching;
+using BetterModules.Core.Exceptions.DataTier;
 
 namespace BetterCms.Module.Users.Services
 {

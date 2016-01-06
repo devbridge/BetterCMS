@@ -8,10 +8,7 @@ using System.Web;
 using System.Xml;
 
 using BetterCms.Configuration;
-using BetterCms.Core.DataAccess;
-using BetterCms.Core.DataAccess.DataContext;
 using BetterCms.Core.DataContracts.Enums;
-using BetterCms.Core.Web;
 
 using BetterCms.Module.Blog.Content.Resources;
 using BetterCms.Module.Blog.Models;
@@ -24,8 +21,14 @@ using BlogML.Xml;
 
 using Common.Logging;
 
-using FluentNHibernate.Testing.Values;
+using BetterModules.Core.DataAccess;
+using BetterModules.Core.DataAccess.DataContext;
+using BetterModules.Core.Web.Web;
+
 using FluentNHibernate.Utils;
+
+using NHibernate.Linq;
+using NHibernate.Util;
 
 using ValidationException = BetterCms.Core.Exceptions.Mvc.ValidationException;
 
@@ -219,19 +222,6 @@ namespace BetterCms.Module.Blog.Services
                         continue;
                     }
                     
-                    // Validate categories
-                    if (blogML.Categories != null &&
-                        blogML.Categories.Count > 0 &&
-                        (blogPosts.Categories == null || blogPosts.Categories.All(c => c.ID != blogML.Categories[0].Ref)))
-                    {
-
-                        var failedResult = CreateFailedResult(blogML);
-                        failedResult.ErrorMessage = string.Format(BlogGlobalization.ImportBlogPosts_CategoryByRefNotFound_Message, blogML.Categories[0].Ref);
-                        result.Add(failedResult);
-
-                        continue;
-                    }
-
                     var blogPostModel = MapViewModel(blogML, null, unsavedUrls);
                     unsavedUrls.Add(blogPostModel.BlogUrl);
 
@@ -271,8 +261,16 @@ namespace BetterCms.Module.Blog.Services
             return result;
         }
 
-        public List<BlogPostImportResult> ImportBlogs(BlogMLBlog blogPosts, List<BlogPostImportResult> modifications, 
-            IPrincipal principal, bool createRedirects = false)
+        private IEnumerable<BlogMLCategoryReference> BlogMlCategoryCollectionToEnumerable(BlogMLPost.CategoryReferenceCollection collection)
+        {
+            for (int i = 0; i < collection.Count; i++)
+            {
+                yield return collection[i];
+            }
+        }
+
+        public List<BlogPostImportResult> ImportBlogs(BlogMLBlog blogPosts, List<BlogPostImportResult> modifications,
+            IPrincipal principal, bool createRedirects = false, bool RecreateCategoryTree = true, bool ReuseExistingCategories = false)
         {
             List<BlogPostImportResult> createdBlogPosts = null;
             if (blogPosts != null)
@@ -290,16 +288,19 @@ namespace BetterCms.Module.Blog.Services
                 // Import authors and categories
                 unitOfWork.BeginTransaction();
 
-                var createdCategories = new List<Category>();
+                var newTreeList = new List<CategoryTree>();
+                var newCategoriesList = new List<Category>();
+
                 var createdAuthors = new List<Author>();
                 var authors = ImportAuthors(blogPosts.Authors, createdAuthors, blogs);
-                var categories = ImportCategories(blogPosts.Categories, createdCategories, blogs);
+                var categories = ImportCategories(blogPosts.Categories, blogs, ref newTreeList, ref newCategoriesList, ReuseExistingCategories, RecreateCategoryTree);
 
                 unitOfWork.Commit();
 
-                // Notify authors / categories created
-                createdCategories.ForEach(c => Events.RootEvents.Instance.OnCategoryCreated(c));
+                // Notify authors, categories created
                 createdAuthors.ForEach(a => Events.BlogEvents.Instance.OnAuthorCreated(a));
+                newTreeList.ForEach(Events.RootEvents.Instance.OnCategoryTreeCreated);
+                newCategoriesList.ForEach(Events.RootEvents.Instance.OnCategoryCreated);
 
                 // Import blog posts
                 createdBlogPosts = ImportBlogPosts(principal, authors, categories, blogs, modifications, createRedirects);
@@ -344,7 +345,10 @@ namespace BetterCms.Module.Blog.Services
                                     blogPostModel.Categories = new List<LookupKeyValue>();
                                 }
 
-                                blogPostModel.Categories.Add(new LookupKeyValue() {Key = categories[category.Ref].ToLowerInvariantString()});                                
+                                if (categories.ContainsKey(category.Ref))
+                                {
+                                    blogPostModel.Categories.Add(new LookupKeyValue() { Key = categories[category.Ref].ToLowerInvariantString() });
+                                }
                             }                            
                         }
 
@@ -479,40 +483,242 @@ namespace BetterCms.Module.Blog.Services
             return dictionary;
         }
 
-        private IDictionary<string, Guid> ImportCategories(BlogMLBlog.CategoryCollection categories, IList<Category> createdCategories, List<BlogMLPost> blogs)
+        private IDictionary<string, Guid> ImportCategories(BlogMLBlog.CategoryCollection categories, 
+                                                           IEnumerable<BlogMLPost> blogs,
+                                                           ref List<CategoryTree> newCategoriesTreeList,
+                                                           ref List<Category> newCategoriesList, 
+                                                           bool ReuseExistingCategories, 
+                                                           bool RecreateCategoryTree)
         {
             var dictionary = new Dictionary<string, Guid>();
-            return dictionary; // TODO: https://github.com/devbridge/BetterCMS/issues/1235
-            if (categories != null)
+            if (categories.Count == 0)
             {
-                foreach (var categoryML in categories)
+                // old export method when only categories ids are exported
+                var oldExistingCategoriesIds = new List<Guid>();
+                blogs.Select(t => t.Categories).ForEach(
+                    t =>
+                    {
+                        for (int i = 0; i < t.Count; i++)
+                        {
+                            Guid parsedGuid;
+                            if (Guid.TryParse(t[i].Ref, out parsedGuid) && !oldExistingCategoriesIds.Contains(parsedGuid))
+                            {
+                                oldExistingCategoriesIds.Add(parsedGuid);
+                            }
+                        }
+                    });
+                oldExistingCategoriesIds = repository.AsQueryable<Category>().Where(t => oldExistingCategoriesIds.Contains(t.Id)).Select(t => t.Id).ToList();
+                oldExistingCategoriesIds.ForEach(t => dictionary.Add(t.ToString(), t));
+                return dictionary;
+            }
+
+
+            if (RecreateCategoryTree)
+            {
+                // sort categories that parents would be first
+                for (int i = 0; i < categories.Count; i++)
                 {
-                    if (!blogs.Any(b => b.Categories != null && b.Categories.Cast<BlogMLCategoryReference>().Any(c => c.Ref == categoryML.ID)))
+                    for (int j = 0; j < categories.Count; j++)
                     {
-                        continue;
+                        if (categories[i].ID == categories[j].ParentRef && i > j)
+                        {
+                            var tmp = categories[j];
+                            categories[j] = categories[i];
+                            categories[i] = tmp;
+                        }
                     }
-
-                    var id = repository
-                        .AsQueryable<Category>()
-                        .Where(a => a.Name == categoryML.Title)
-                        .Select(a => a.Id)
-                        .FirstOrDefault();
-
-                    if (id.HasDefaultValue())
+                }
+                var newIdsForCategories = new Dictionary<string, Guid>();
+                // regenerate new ids for category tree
+                foreach (var category in categories)
+                {
+                    if (!newIdsForCategories.ContainsKey(category.ID))
                     {
-                        var category = new Category { Name = categoryML.Title };
-                        repository.Save(category);
-                        
-                        createdCategories.Add(category);
-
-                        id = category.Id;
+                        newIdsForCategories.Add(category.ID, Guid.NewGuid());
                     }
+                    if (!string.IsNullOrEmpty(category.ParentRef) && !newIdsForCategories.ContainsKey(category.ParentRef))
+                    {
+                        newIdsForCategories.Add(category.ParentRef, Guid.NewGuid());
+                    }
+                }
+                foreach (var category in categories)
+                {
+                    category.ID = newIdsForCategories[category.ID].ToString();
+                    if (!string.IsNullOrEmpty(category.ParentRef))
+                    {
+                        category.ParentRef = newIdsForCategories[category.ParentRef].ToString();
+                    }
+                }
+                var refrencedCategoriesIds = new List<Guid>();
+                foreach (var blog in blogs)
+                {
+                    for (int i = 0; i < blog.Categories.Count; i++)
+                    {
+                        var category = blog.Categories[i];
+                        // it may be that category is deleted but it is still linked to blog and that link is not deleted
+                        if (newIdsForCategories.ContainsKey(category.Ref))
+                        {
+                            var newCategoryId = newIdsForCategories[category.Ref];
+                            category.Ref = newCategoryId.ToString();
+                            refrencedCategoriesIds.Add(newCategoryId);
+                        }
+                    }
+                }
 
-                    dictionary.Add(categoryML.ID, id);
+                Guid testParseGuid;
+                var oldIdsCategories = newIdsForCategories.Keys.Where(t => Guid.TryParse(t, out testParseGuid)).Select(t => new Guid(t)).ToList();
+                var existingCategoriesIdsFuture = repository.AsQueryable<Category>().Select(t => t.Id).Where(t => oldIdsCategories.Contains(t)).ToFuture();
+                var availableFor = repository.AsQueryable<CategorizableItem>().ToFuture().ToList();
+                var existingCategoriesIds = existingCategoriesIdsFuture.ToList();
+
+                // creates categories trees
+                foreach (var categoryTree in categories.Where(c => string.IsNullOrEmpty(c.ParentRef)))
+                {
+                    var newTree = new CategoryTree
+                    {
+                        Title = categoryTree.Title,
+                        CreatedOn = categoryTree.DateCreated,
+                        ModifiedOn = categoryTree.DateModified,
+                        Id = new Guid(categoryTree.ID)
+                    };
+                    newTree.AvailableFor = new List<CategoryTreeCategorizableItem>();
+                    foreach (var categorizableItem in availableFor)
+                    {
+                        newTree.AvailableFor.Add(new CategoryTreeCategorizableItem { CategorizableItem = categorizableItem, CategoryTree = newTree });
+                    }
+                    newCategoriesTreeList.Add(newTree);
+                }
+
+                // create categories
+                foreach (var category in categories.Where(t => !string.IsNullOrEmpty(t.ParentRef)))
+                {
+                    var categoryParentId = new Guid(category.ParentRef);
+                    var newParentCategoryTree = newCategoriesTreeList.FirstOrDefault(t => t.Id == categoryParentId);
+                    var newCategory = new Category
+                    {
+                        Name = category.Title,
+                        CreatedOn = category.DateCreated,
+                        ModifiedOn = category.DateModified,
+                        Id = new Guid(category.ID),
+                        CategoryTree = newParentCategoryTree
+                    };
+                    newCategoriesList.Add(newCategory);
+                }
+
+                // set references for category, category tree
+                foreach (var category in newCategoriesList.Where(t => t.CategoryTree == null))
+                {
+                    category.CategoryTree = newCategoriesList.First(t => t.Id.ToString() == categories.First(c => c.ID == category.Id.ToString()).ParentRef).CategoryTree;
+                }
+                foreach (var tree in newCategoriesTreeList)
+                {
+                    tree.Categories = newCategoriesList.Where(t => t.CategoryTree != null && t.CategoryTree.Id == tree.Id).ToList();
+                }
+                foreach (var child in newCategoriesList)
+                {
+                    var parentId = new Guid(categories.First(t => t.ID == child.Id.ToString()).ParentRef);
+                    var parentCategory = newCategoriesList.FirstOrDefault(t => t.Id == parentId);
+                    if (parentCategory != null)
+                    {
+                        child.ParentCategory = parentCategory;
+                        parentCategory.ChildCategories = parentCategory.ChildCategories ?? new List<Category>();
+                        parentCategory.ChildCategories.Add(child);
+                    }
+                }
+
+                // generate category for empty category tree
+                foreach (var categoryTree in newCategoriesTreeList.Where(t => t.Categories != null && t.Categories.Count == 0))
+                {
+                    var category = new Category
+                    {
+                        Id = categoryTree.Id,
+                        CreatedOn = categoryTree.CreatedOn,
+                        ModifiedOn = categoryTree.ModifiedOn,
+                        Name = categoryTree.Title,
+                        CategoryTree = categoryTree
+                    };
+                    categoryTree.Id = Guid.NewGuid();
+                    categoryTree.Categories.Add(category);
+                    newCategoriesList.Add(category);
+                }
+
+                // removing referenced categories that they would not be saved and adding existing category id from db
+                foreach (var existingCategoriesId in existingCategoriesIds)
+                {
+                    refrencedCategoriesIds.Remove(newIdsForCategories[existingCategoriesId.ToLowerInvariantString()]);
+                    dictionary.Add(existingCategoriesId.ToString(), existingCategoriesId);
+                    foreach (var blog in blogs)
+                    {
+                        for (int i = 0; i < blog.Categories.Count; i++)
+                        {
+                            if (blog.Categories[i].Ref == newIdsForCategories[existingCategoriesId.ToLowerInvariantString()].ToLowerInvariantString())
+                            {
+                                blog.Categories[i].Ref = existingCategoriesId.ToLowerInvariantString();
+                            }
+                        }
+                    }
+                }
+
+                // filter, save only categories who are related to imported blogs
+                newCategoriesTreeList = newCategoriesTreeList.Where(t => t.Categories.Any(z => refrencedCategoriesIds.Contains(z.Id))).ToList();
+                newCategoriesList =
+                    newCategoriesList.Where(t => t.CategoryTree != null && t.CategoryTree.Categories.Any(z => refrencedCategoriesIds.Contains(z.Id))).ToList();
+                // save new records
+                foreach (var category in newCategoriesList)
+                {
+                    dictionary.Add(category.Id.ToString(), category.Id);
+                    unitOfWork.Session.Save(category);
+                }
+                foreach (var tree in newCategoriesTreeList)
+                {
+                    unitOfWork.Session.Save(tree);
+                }
+            } else if (ReuseExistingCategories)
+            {
+                // Get used categories names and ids (key id, value name)
+                var catNames = new Dictionary<string, string>();
+                foreach (var blog in blogs)
+                {
+                    for (int i = 0; i < blog.Categories.Count; i++)
+                    {
+                        var categoryId = blog.Categories[i].Ref;
+                        if (!catNames.ContainsKey(categoryId) && blogs.Any(t => BlogHasCategory(t, categoryId)))
+                        {
+                            catNames.Add(categoryId, (categories.FirstOrDefault(t => t.ID == categoryId) ?? new BlogMLCategory()).Title);
+                        }
+                    }
+                }
+
+                var existingCategoriesByIdsFuture = repository.AsQueryable<Category>().Where(t => catNames.Keys.Contains(t.Id.ToString())).ToFuture();
+                var existingCategoriesByNamesFuture = repository.AsQueryable<Category>().Where(t => catNames.Values.Contains(t.Name)).ToFuture();
+                // Get categories by ids
+                var existingCategoriesByIds = existingCategoriesByIdsFuture.ToList();
+                // Get categories by names
+                var existingCategoriesByNames = existingCategoriesByNamesFuture.ToList();
+                foreach (var catName in catNames)
+                {
+                    var category = existingCategoriesByIds.FirstOrDefault(t => t.Id.ToLowerInvariantString() == catName.Key);
+                    category = category ?? existingCategoriesByNames.FirstOrDefault(t => t.Name == catName.Value);
+                    if (category != null)
+                    {
+                        dictionary.Add(catName.Key, category.Id);
+                    }
                 }
             }
 
             return dictionary;
+        }
+
+        private static bool BlogHasCategory(BlogMLPost blog, string categoryId)
+        {
+            for (int j = 0; j < blog.Categories.Count; j++)
+            {
+                if (blog.Categories[j].Ref == categoryId)
+                {
+                    return true;
+                }
+            }
+            return false;
         }
 
         public Uri ConstructFilePath(Guid guid)

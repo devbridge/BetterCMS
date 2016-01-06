@@ -8,6 +8,8 @@ using System.Web.Mvc;
 using BetterCms.Core.Exceptions;
 using BetterCms.Core.Mvc;
 
+using BetterModules.Core.Web.Mvc;
+
 namespace BetterCms.Module.Root.Mvc.Helpers
 {
     /// <summary>

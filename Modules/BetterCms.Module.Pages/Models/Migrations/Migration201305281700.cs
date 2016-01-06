@@ -1,6 +1,6 @@
 ﻿using System;
 
-using BetterCms.Core.DataAccess.DataContext.Migrations;
+using BetterModules.Core.DataAccess.DataContext.Migrations;
 
 using FluentMigrator;
 
@@ -10,7 +10,7 @@ namespace BetterCms.Module.Pages.Models.Migrations
     /// Migration for IsInSitemap.
     /// </summary>
     [Migration(201305281700)]
-    public class Migration201305281700 : DefaultMigration
+    public class Migration201305281700: DefaultMigration
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="Migration201303050900"/> class.

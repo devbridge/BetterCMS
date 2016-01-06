@@ -1,6 +1,6 @@
-    using System;
+using System;
 
-using BetterCms.Core.Models;
+using BetterModules.Core.Models;
 
 namespace BetterCms.Module.MediaManager.Models.Maps
 {

@@ -1,14 +1,15 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.Web.Mvc;
 
-using BetterCms.Core.Models;
-
 using BetterCms.Module.MediaManager.ViewModels;
 
 using BetterCms.Module.Root;
-
+using BetterCms.Module.Root.Content.Resources;
+using BetterCms.Module.Root.Mvc.Attributes;
 using BetterCms.Module.Users.Content.Resources;
 using BetterCms.Module.Users.Mvc.Attributes;
+
+using BetterModules.Core.Models;
 
 namespace BetterCms.Module.Users.ViewModels.User
 {
@@ -36,6 +37,8 @@ namespace BetterCms.Module.Users.ViewModels.User
         /// <value>
         /// The name of the user.
         /// </value>
+        [AllowHtml]
+        [DisallowNonActiveDirectoryNameCompliant(ErrorMessageResourceType = typeof(RootGlobalization), ErrorMessageResourceName = "Validation_ActiveDirectoryCompliant_Message")]
         [Required(AllowEmptyStrings = false, ErrorMessageResourceType = typeof(UsersGlobalization), ErrorMessageResourceName = "User_UserName_RequiredMessage")]
         [StringLength(UsersModuleConstants.UserNameMaxLength, ErrorMessageResourceType = typeof(UsersGlobalization), ErrorMessageResourceName = "User_UserName_MaxLengthMessage")]
         public string UserName { get; set; }
@@ -46,6 +49,7 @@ namespace BetterCms.Module.Users.ViewModels.User
         /// <value>
         /// The first name.
         /// </value>
+        [AllowHtml]
         [StringLength(MaxLength.Name, ErrorMessageResourceType = typeof(UsersGlobalization), ErrorMessageResourceName = "User_FirstName_MaxLengthMessage")]
         public string FirstName { get; set; }
 
@@ -55,6 +59,7 @@ namespace BetterCms.Module.Users.ViewModels.User
         /// <value>
         /// The last name.
         /// </value>
+        [AllowHtml]
         [StringLength(MaxLength.Name, ErrorMessageResourceType = typeof(UsersGlobalization), ErrorMessageResourceName = "User_LastName_MaxLengthMessage")]
         public string LastName { get; set; }
 
@@ -85,7 +90,7 @@ namespace BetterCms.Module.Users.ViewModels.User
         /// <value>
         /// The retyped password.
         /// </value>
-        [Compare("Password", ErrorMessageResourceType = typeof(UsersGlobalization), ErrorMessageResourceName = "User_Password_ShouldMatchMessage")]
+        [System.ComponentModel.DataAnnotations.Compare("Password", ErrorMessageResourceType = typeof(UsersGlobalization), ErrorMessageResourceName = "User_Password_ShouldMatchMessage")]
         public string RetypedPassword { get; set; }
 
         /// <summary>

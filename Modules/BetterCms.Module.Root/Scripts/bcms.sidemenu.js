@@ -108,7 +108,6 @@ bettercms.define('bcms.sidemenu', ['bcms.jquery', 'bcms', 'bcms.security', 'bcms
             'left': 'auto',
             'right': sidemenu.isOpen() ? '0px' : '-260px'
         }).addClass(classes.sideMenuRight);
-        sidemenuContainer.find(selectors.footerTextHolder).html(globalization.stickLeftMenuTitle);
     };
 
     /**
@@ -120,7 +119,6 @@ bettercms.define('bcms.sidemenu', ['bcms.jquery', 'bcms', 'bcms.security', 'bcms
             'left': sidemenu.isOpen() ? '0px' : '-260px',
             'right': 'auto'
         }).removeClass(classes.sideMenuRight);
-        sidemenuContainer.find(selectors.footerTextHolder).html(globalization.stickRightMenuTitle);
     };
 
     /**

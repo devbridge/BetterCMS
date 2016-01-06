@@ -17,9 +17,9 @@ namespace BetterCms.Module.Pages.Models
 
         public virtual string Url { get; set; }
 
-        public override Root.Models.Content Clone()
+        public override Root.Models.Content Clone(bool copyCollections = true)
         {
-            return CopyDataTo(new ServerControlWidget());
+            return CopyDataTo(new ServerControlWidget(), copyCollections);
         }
     }
 }

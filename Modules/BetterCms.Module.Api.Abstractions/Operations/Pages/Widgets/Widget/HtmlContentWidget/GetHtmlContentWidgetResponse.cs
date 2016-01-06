@@ -26,7 +26,7 @@ namespace BetterCms.Module.Api.Operations.Pages.Widgets.Widget.HtmlContentWidget
         /// The list of child contents option values.
         /// </value>
         [DataMember]
-        public System.Collections.Generic.IList<ChildContentOptionValuesModel> ChildContentsOptionValues { get; set; }
+        public System.Collections.Generic.IList<MultilingualChildContentOptionValuesModel> ChildContentsOptionValues { get; set; }
 
         /// <summary>
         /// Gets or sets the list of widget options.

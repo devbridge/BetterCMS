@@ -1,6 +1,8 @@
 ﻿using BetterCms.Core.DataContracts;
 using BetterCms.Module.Root.ViewModels.Cms;
 
+using BetterModules.Events;
+
 // ReSharper disable CheckNamespace
 namespace BetterCms.Events
 // ReSharper restore CheckNamespace

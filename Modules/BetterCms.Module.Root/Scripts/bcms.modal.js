@@ -810,6 +810,60 @@ bettercms.define('bcms.modal', ['bcms.jquery', 'bcms', 'bcms.tabs', 'bcms.ko.ext
         }
     };
 
+    /**
+    * Maximizes dialog's provided child/children height up to maximum visible value.
+    */
+    modal.maximizeChildHeight = function (obj, dialog, options) {
+        options = $.extend({
+            substractHeight: 60
+        }, options);
+
+        if (obj.length === 0) {
+            return 0;
+        }
+
+        var objects = $.isArray(obj) ? obj : new Array(obj),
+            contentContainer = dialog.container.find(selectors.scrollWindow).first(),
+            containerHeight = contentContainer.outerHeight(),
+            objectsHeight = 0,
+            childrenHeight = 0,
+            newHeight = 0,
+            addHeight;
+
+        $.each(objects, function() {
+            objectsHeight += $(this).outerHeight();
+            newHeight += $(this).height();
+        });
+
+        if (contentContainer.length === 0 || objectsHeight >= containerHeight) {
+            return newHeight;
+        }
+
+        $.each(contentContainer.children(), function () {
+            var child = $(this);
+            childrenHeight += child.outerHeight();
+        });
+        childrenHeight += objects.length * options.substractHeight;
+
+        addHeight = containerHeight - childrenHeight;
+
+        if (objects.length > 1) {
+            addHeight = Math.floor(addHeight / objects.length);
+        }
+
+        newHeight = 0;
+        if (addHeight > 0) {
+            $.each(objects, function () {
+                var newObjHeight = $(this).height() + addHeight;
+                newHeight += newObjHeight;
+               
+                $(this).height(newObjHeight + 'px');
+            });
+        }
+
+        return newHeight;
+    };
+
     return modal;
 
 });

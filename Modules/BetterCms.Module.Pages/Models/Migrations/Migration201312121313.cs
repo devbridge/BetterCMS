@@ -1,7 +1,9 @@
 ﻿using System;
 
-using BetterCms.Core.DataAccess.DataContext.Migrations;
-using BetterCms.Core.Models;
+using BetterModules.Core.DataAccess.DataContext.Migrations;
+
+using BetterModules.Core.DataAccess.DataContext.Migrations;
+using BetterModules.Core.Models;
 
 using FluentMigrator;
 
@@ -11,7 +13,7 @@ namespace BetterCms.Module.Pages.Models.Migrations
     /// Module database structure update.
     /// </summary>
     [Migration(201312121313)]
-    public class Migration201312121313 : DefaultMigration
+    public class Migration201312121313: DefaultMigration
     {
         /// <summary>
         /// The default sitemap identifier.
@@ -54,7 +56,7 @@ namespace BetterCms.Module.Pages.Models.Migrations
             Create
                 .Table("Sitemaps")
                 .InSchema(SchemaName)
-                .WithCmsBaseColumns()
+                .WithBaseColumns()
                 .WithColumn("Title").AsString(MaxLength.Name).NotNullable();
         }
 
@@ -66,7 +68,7 @@ namespace BetterCms.Module.Pages.Models.Migrations
             Create
                 .Table("SitemapTags")
                 .InSchema(SchemaName)
-                .WithCmsBaseColumns()
+                .WithBaseColumns()
                 .WithColumn("SitemapId").AsGuid().NotNullable()
                 .WithColumn("TagId").AsGuid().NotNullable();
 

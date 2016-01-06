@@ -74,7 +74,7 @@
                 {
                     <!-- ko if: isActive() -->
                     <div class="bcms-btn-small" data-bind="click: onSave">@Model.SaveButtonTitle</div>
-                    <div class="bcms-btn-links-small" data-bind="click: onCancelEdit">@RootGlobalization.Button_Cancel</div>
+                    <div class="bcms-btn-links-small" data-bind="event : {mousedown: onCancelEdit}">@RootGlobalization.Button_Cancel</div>
                     <!-- /ko -->
                 }
                 @if (!Model.CanDeleteItems && !Model.CanEditItems)

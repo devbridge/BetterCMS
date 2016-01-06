@@ -1,4 +1,4 @@
-﻿using BetterCms.Core.DataAccess.DataContext.Migrations;
+﻿using BetterModules.Core.DataAccess.DataContext.Migrations;
 using BetterCms.Core.DataContracts.Enums;
 
 using FluentMigrator;
@@ -9,7 +9,7 @@ namespace BetterCms.Module.Root.Models.Migrations
     /// Fix for issue: https://github.com/devbridge/BetterCMS/issues/840
     /// </summary>
     [Migration(201404171400)]
-    public class Migration201404171400 : DefaultMigration
+    public class Migration201404171400: DefaultMigration
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="Migration201404171400"/> class.

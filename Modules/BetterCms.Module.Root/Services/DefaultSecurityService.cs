@@ -2,22 +2,23 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Security.Principal;
-using System.Threading;
 
 using BetterCms.Core.Services;
-using BetterCms.Core.Web;
+
+using BetterModules.Core.Web.Security;
+using BetterModules.Core.Web.Web;
 
 namespace BetterCms.Module.Root.Services
 {
     /// <summary>
     /// Default security service contract realization.
     /// </summary>
-    public class DefaultSecurityService : ISecurityService
+    public class DefaultSecurityService : DefaultWebPrincipalProvider, ISecurityService
     {
         /// <summary>
         /// The roles splitter.
         /// </summary>
-        private static readonly char[] RolesSplitter = new[] { ',' };
+        private static readonly char[] RolesSplitter = { ',' };
 
         /// <summary>
         /// The configuration service.
@@ -25,58 +26,14 @@ namespace BetterCms.Module.Root.Services
         private readonly ICmsConfiguration configuration;
 
         /// <summary>
-        /// The HTTP context accessor.
-        /// </summary>
-        private readonly IHttpContextAccessor httpContextAccessor;
-
-        /// <summary>
         /// Initializes a new instance of the <see cref="DefaultSecurityService" /> class.
         /// </summary>
         /// <param name="configuration">The configuration.</param>
         /// <param name="httpContextAccessor">The HTTP context accessor.</param>
         public DefaultSecurityService(ICmsConfiguration configuration, IHttpContextAccessor httpContextAccessor)
+            : base(httpContextAccessor)
         {
-            this.httpContextAccessor = httpContextAccessor;
             this.configuration = configuration;
-        }
-
-        /// <summary>
-        /// Gets the name of the get current principal.
-        /// </summary>
-        /// <value>
-        /// The name of the get current principal.
-        /// </value>
-        public string CurrentPrincipalName
-        {
-            get
-            {
-                var principal = GetCurrentPrincipal();
-
-                if (principal != null && principal.Identity.IsAuthenticated)
-                {
-                    return principal.Identity.Name;
-                }
-
-                return "Anonymous";
-            }
-        }
-
-        /// <summary>
-        /// Gets the current principal.
-        /// </summary>
-        /// <returns>
-        /// Current IPrincipal.
-        /// </returns>
-        public IPrincipal GetCurrentPrincipal()
-        {
-            var currentHttpContext = httpContextAccessor.GetCurrent();
-
-            if (currentHttpContext == null)
-            {
-                return Thread.CurrentPrincipal;
-            }
-
-            return currentHttpContext.User;
         }
 
         /// <summary>

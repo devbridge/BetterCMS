@@ -1,8 +1,8 @@
 ﻿/*jslint unparam: true, white: true, browser: true, devel: true */
 /*global bettercms */
 
-bettercms.define('bcms.tags', ['bcms.jquery', 'bcms', 'bcms.dynamicContent', 'bcms.siteSettings', 'bcms.inlineEdit', 'bcms.grid', 'bcms.ko.extenders', 'bcms.autocomplete'],
-    function ($, bcms, dynamicContent, siteSettings, editor, grid, ko, autocomplete) {
+bettercms.define('bcms.tags', ['bcms.jquery', 'bcms', 'bcms.dynamicContent', 'bcms.siteSettings', 'bcms.inlineEdit', 'bcms.grid', 'bcms.ko.extenders', 'bcms.autocomplete', 'bcms.antiXss'],
+    function ($, bcms, dynamicContent, siteSettings, editor, grid, ko, autocomplete, antiXss) {
     'use strict';
 
     var tags = {},
@@ -118,7 +118,7 @@ bettercms.define('bcms.tags', ['bcms.jquery', 'bcms', 'bcms.dynamicContent', 'bc
     */
     tags.setTagFields = function (row, json) {
         if (json.Data) {
-            row.find(selectors.tagName).html(json.Data.Name);
+            row.find(selectors.tagName).html(antiXss.encodeHtml(json.Data.Name));
             row.find(selectors.tagNameEditor).val(json.Data.Name);
             row.find(selectors.tagOldName).val(json.Data.Name);
         }
@@ -197,7 +197,7 @@ bettercms.define('bcms.tags', ['bcms.jquery', 'bcms', 'bcms.dynamicContent', 'bc
     */
     tags.setCategoryFields = function (row, json) {
         if (json.Data) {
-            row.find(selectors.categoryName).html(json.Data.Name);
+            row.find(selectors.categoryName).html(antiXss.encodeHtml(json.Data.Name));
             row.find(selectors.categoryNameEditor).val(json.Data.Name);
             row.find(selectors.categoryOldName).val(json.Data.Name);
         }

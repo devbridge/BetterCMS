@@ -9,7 +9,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace ASP
+namespace BetterCms.Module.MediaManager.Views.Images
 {
     using System;
     using System.Collections.Generic;
@@ -89,9 +89,9 @@ namespace ASP
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("RazorGenerator", "2.0.0.0")]
     [System.Web.WebPages.PageVirtualPathAttribute("~/Views/Images/ImageEditor.cshtml")]
-    public partial class _Views_Images_ImageEditor_cshtml : System.Web.Mvc.WebViewPage<ImageViewModel>
+    public partial class ImageEditor : System.Web.Mvc.WebViewPage<ImageViewModel>
     {
-        public _Views_Images_ImageEditor_cshtml()
+        public ImageEditor()
         {
         }
         public override void Execute()

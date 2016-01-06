@@ -6,29 +6,17 @@ using BetterCms.Core.Modules;
 using BetterCms.Events;
 using BetterCms.Module.GoogleAnalytics.Accessors;
 
+using BetterModules.Core.Web.Modules.Registration;
+
 namespace BetterCms.Module.GoogleAnalytics
 {
-    public class GoogleAnalyticsModuleDescriptor : ModuleDescriptor
+    public class GoogleAnalyticsModuleDescriptor : CmsModuleDescriptor
     {
         internal const string ModuleName = "google_analytics";
 
-        internal const string ModuleId = "de5280e4-99e6-4c95-ac06-1c31312b82ec";
+        private const string ModuleId = "de5280e4-99e6-4c95-ac06-1c31312b82ec";
 
         private readonly ICmsConfiguration cmsConfiguration;
-
-        /// <summary>
-        /// Gets the identifier.
-        /// </summary>
-        /// <value>
-        /// The identifier.
-        /// </value>
-        public override Guid Id
-        {
-            get
-            {
-                return new Guid(ModuleId);
-            }
-        }
 
         /// <summary>
         /// Gets the name.
@@ -74,7 +62,7 @@ namespace BetterCms.Module.GoogleAnalytics
         /// </summary>
         /// <param name="context">The module context.</param>
         /// <param name="containerBuilder">The container builder.</param>
-        public override void RegisterCustomRoutes(ModuleRegistrationContext context, ContainerBuilder containerBuilder)
+        public override void RegisterCustomRoutes(WebModuleRegistrationContext context, ContainerBuilder containerBuilder)
         {
             context.MapRoute(
                 "bcms-google-sitemap",
@@ -88,7 +76,7 @@ namespace BetterCms.Module.GoogleAnalytics
         /// <param name="args">The args.</param>
         private void Events_PageRendering(PageRenderingEventArgs args)
         {
-            var googleAnalyticsAccessor = new GoogleAnalyticsScriptAccessor(cmsConfiguration, Id);
+            var googleAnalyticsAccessor = new GoogleAnalyticsScriptAccessor(cmsConfiguration, new Guid(ModuleId));
             if (!args.RenderPageData.JavaScripts.Contains(googleAnalyticsAccessor))
             {
                 args.RenderPageData.JavaScripts.Add(googleAnalyticsAccessor);

@@ -1,5 +1,5 @@
-﻿using BetterCms.Core.DataAccess.DataContext.Migrations;
-using BetterCms.Core.Models;
+﻿using BetterModules.Core.DataAccess.DataContext.Migrations;
+using BetterModules.Core.Models;
 
 using FluentMigrator;
 
@@ -18,7 +18,7 @@ namespace BetterCms.Module.LuceneSearch.Models.Migrations
             Create
                 .Table("IndexSources")
                 .InSchema(SchemaName)
-                .WithCmsBaseColumns()
+                .WithBaseColumns()
                 .WithColumn("SourceId").AsGuid().NotNullable()
                 .WithColumn("Path").AsString(MaxLength.Url).NotNullable()
                 .WithColumn("StartTime").AsDateTime().Nullable()

@@ -3,6 +3,8 @@ using System.Web.Mvc;
 
 using Common.Logging;
 
+using BetterModules.Core.Web.Modules;
+
 namespace BetterCms.Core.Modules.Projections
 {
     public class JavaScriptModuleLink : IActionProjection

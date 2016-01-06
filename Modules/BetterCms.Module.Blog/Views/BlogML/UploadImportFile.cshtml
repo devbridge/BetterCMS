@@ -40,6 +40,14 @@
                         <input type="checkbox" data-bind="checked: createRedirects" />
                         <div class="bcms-edit-label">@Html.Raw(BlogGlobalization.ImportBlogPosts_CreateRedirects_Title)</div>
                     </div>
+                    <div class="bcms-edit-check-field">
+                        <input type="checkbox" data-bind="checked: recreateCategoryTree" />
+                        <div class="bcms-edit-label">@Html.Raw(BlogGlobalization.ImportBlogPosts_RecreateCategoryTree_Title)</div>
+                    </div>
+                    <div class="bcms-edit-check-field">
+                        <input type="checkbox" data-bind="checked: reuseExistingCategories" />
+                        <div class="bcms-edit-label">@Html.Raw(BlogGlobalization.ImportBlogPosts_ReuseExistingCategories_Title)</div>
+                    </div>
                 </div>
                 <!-- /ko -->
             </div>

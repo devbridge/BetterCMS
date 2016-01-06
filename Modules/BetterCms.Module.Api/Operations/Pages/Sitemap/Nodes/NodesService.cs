@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Linq;
 
-using BetterCms.Core.DataAccess;
+using BetterModules.Core.DataAccess;
 using BetterCms.Core.DataContracts.Enums;
 using BetterCms.Module.Api.Helpers;
 using BetterCms.Module.Api.Infrastructure;

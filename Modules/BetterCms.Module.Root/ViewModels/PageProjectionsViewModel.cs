@@ -1,7 +1,6 @@
 ﻿using System.Collections.Generic;
 
 using BetterCms.Core.DataContracts;
-using BetterCms.Core.Models;
 using BetterCms.Core.Modules.Projections;
 
 namespace BetterCms.Module.Root.ViewModels

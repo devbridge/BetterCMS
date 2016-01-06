@@ -4,15 +4,15 @@
 @using BetterCms.Module.Root.Mvc.Helpers
 @using Microsoft.Web.Mvc
 <div class="bcms-tab-header">
-    <a href="#" class="bcms-sitemaps-arrow-left" data-bind="css: { 'bcms-sitemaps-arrow-inactive': !slider.canSlideLeft() }, click: slider.slideLeft, visible: slider.showSliders"></a>
+    <a class="bcms-sitemaps-arrow-left" data-bind="css: { 'bcms-sitemaps-arrow-inactive': !slider.canSlideLeft() }, click: slider.slideLeft, visible: slider.showSliders"></a>
     <!-- ko foreach: tabs -->
-        <a class="bcms-tab" data-bind="text: newPageViewModel.sitemap.title(), css: { 'bcms-tab-active': isActive }, click: activate, attr: { id: tabId }, visible: isVisible"></a>
+        <a class="bcms-tab-item" data-bind="text: newPageViewModel.sitemap.title(), css: { 'bcms-active': isActive }, click: activate, attr: { id: tabId }, visible: isVisible"></a>
     <!-- /ko -->
-    <a href="#" class="bcms-sitemaps-arrow-right" data-bind="css: { 'bcms-sitemaps-arrow-inactive': !slider.canSlideRight() }, click: slider.slideRight, visible: slider.showSliders"></a>
+    <a class="bcms-sitemaps-arrow-right" data-bind="css: { 'bcms-sitemaps-arrow-inactive': !slider.canSlideRight() }, click: slider.slideRight, visible: slider.showSliders"></a>
 </div>
 <div class="bcms-scroll-window" id="bcms-sitemap-addnewpage" data-bind="with: activeNewPageViewModel">
     @Html.SiteSettingsMessagesBox()
-    <div class="bcms-tab-single" style="height: 100%;">
+    <div class="bcms-tab-single" style="display: block; height: 100%;">
         <div class="bcms-columns-container">
             <div class="bcms-sitemap-filter-holder" data-bind="with: sitemap">
                 <div class="bcms-language-bar" style="display: none;" data-bind="visible: showLanguages, with: language">

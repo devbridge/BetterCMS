@@ -1,5 +1,6 @@
-﻿using BetterCms.Core.DataAccess.DataContext.Migrations;
-using BetterCms.Core.Models;
+﻿using BetterModules.Core.DataAccess.DataContext.Migrations;
+using BetterModules.Core.Models;
+
 using FluentMigrator;
 using System;
 
@@ -60,7 +61,7 @@ namespace BetterCms.Module.Root.Models.Migrations
             {
                 Create
                     .Table("CategoryTrees").InSchema(SchemaName)
-                    .WithCmsBaseColumns()
+                    .WithBaseColumns()
                     .WithColumn("Title").AsString(MaxLength.Name).NotNullable();
 
                 CreateDefaultCategoryTree();

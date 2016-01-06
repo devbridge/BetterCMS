@@ -1,19 +1,23 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text.RegularExpressions;
 
-using BetterCms.Core.DataAccess;
+using BetterModules.Core.DataAccess;
+
 using BetterCms.Core.DataContracts;
 using BetterCms.Core.DataContracts.Enums;
 using BetterCms.Core.Exceptions;
-using BetterCms.Core.Exceptions.DataTier;
 using BetterCms.Core.Exceptions.Mvc;
 using BetterCms.Core.Services;
+
 using BetterCms.Module.Root.Content.Resources;
 using BetterCms.Module.Root.Models;
 using BetterCms.Module.Root.Mvc;
 using BetterCms.Module.Root.Mvc.Helpers;
+
+using BetterModules.Core.Exceptions.DataTier;
 
 using NHibernate.Linq;
 
@@ -85,19 +89,7 @@ namespace BetterCms.Module.Root.Services
 
                 return updatedContent;
             }
-            
-            var originalContent =
-                repository.AsQueryable<Models.Content>()
-                          .Where(f => f.Id == updatedContent.Id && !f.IsDeleted)
-                          .Fetch(f => f.Original).ThenFetchMany(f => f.History)
-                          .Fetch(f => f.Original).ThenFetchMany(f => f.ContentOptions)
-                          .FetchMany(f => f.History)
-                          .FetchMany(f => f.ContentOptions)
-                          .FetchMany(f => f.ChildContents)
-                          .FetchMany(f => f.ContentRegions)            
-                          .ThenFetch(f => f.Region)
-                          .ToList()
-                          .FirstOrDefault();
+            var originalContent = GetOriginalContent(updatedContent.Id);
 
             if (originalContent == null)
             {
@@ -111,28 +103,9 @@ namespace BetterCms.Module.Root.Services
 
             originalContent = repository.UnProxy(originalContent);
 
-            if (originalContent.History != null)
-            {
-                originalContent.History = originalContent.History.Distinct().ToList();
-            }
-            else
+            if (originalContent.History == null)
             {
                 originalContent.History = new List<Models.Content>();
-            }
-
-            if (originalContent.ContentOptions != null)
-            {
-                originalContent.ContentOptions = originalContent.ContentOptions.Distinct().ToList();
-            }
-
-            if (originalContent.ContentRegions != null)
-            {
-                originalContent.ContentRegions = originalContent.ContentRegions.Distinct().ToList();
-            }
-            
-            if (originalContent.ChildContents != null)
-            {
-                originalContent.ChildContents = originalContent.ChildContents.Distinct().ToList();
             }
 
             childContentService.ValidateChildContentsCircularReferences(originalContent, updatedContent);
@@ -159,6 +132,34 @@ namespace BetterCms.Module.Root.Services
             return originalContent;
         }
 
+        private Models.Content GetOriginalContent(Guid id)
+        {
+            var content = repository.AsQueryable<Models.Content>().Where(c => c.Id == id).Fetch(c => c.Original).FirstOrDefault();
+            if (content == null)
+            {
+                throw new EntityNotFoundException(typeof(Models.Content), id);
+            }
+
+            var historyFuture = repository.AsQueryable<Models.Content>().Where(c => c.Original.Id == content.Id).ToFuture();
+            var contentOptionsFuture = repository.AsQueryable<ContentOption>().Where(co => co.Content.Id == content.Id).FetchMany(co => co.Translations).ToFuture();
+            var childContentsFuture = repository.AsQueryable<ChildContent>().Where(cc => cc.Parent.Id == content.Id).ToFuture();
+            var contentRegionsFuture = repository.AsQueryable<ContentRegion>().Where(cr => cr.Content.Id == content.Id).Fetch(cr => cr.Region).ToFuture();
+            if (content.Original != null)
+            {
+                var originalHistoryFuture = repository.AsQueryable<Models.Content>().Where(c => c.Original.Id == content.Original.Id).ToFuture();
+                var originalContentOptionsFuture = repository.AsQueryable<ContentOption>().Where(co => co.Content.Id == content.Original.Id).FetchMany(co => co.Translations).ToFuture();
+
+                content.Original.History = originalHistoryFuture as IList<Models.Content> ?? originalHistoryFuture.ToList();
+                content.Original.ContentOptions = originalContentOptionsFuture as IList<ContentOption> ?? originalContentOptionsFuture.ToList();
+            }
+            content.History = historyFuture as IList<Models.Content> ?? historyFuture.ToList();
+            content.ContentOptions = contentOptionsFuture as IList<ContentOption> ?? contentOptionsFuture.ToList();
+            content.ChildContents = childContentsFuture as IList<ChildContent> ?? childContentsFuture.ToList();
+            content.ContentRegions = contentRegionsFuture as IList<ContentRegion> ?? contentRegionsFuture.ToList();
+
+            return content;
+        }
+
         private void SavePublishedContentWithStatusUpdate(Models.Content originalContent, Models.Content updatedContent, ContentStatus requestedStatus)
         {            
             /* 
@@ -172,7 +173,7 @@ namespace BetterCms.Module.Root.Services
                 var contentVersionOfRequestedStatus = originalContent.History.FirstOrDefault(f => f.Status == requestedStatus && !f.IsDeleted);
                 if (contentVersionOfRequestedStatus == null)
                 {
-                    contentVersionOfRequestedStatus = originalContent.Clone();
+                    contentVersionOfRequestedStatus = originalContent.Clone(copyCollections:false);
                 }
 
                 updatedContent.CopyDataTo(contentVersionOfRequestedStatus, false);
@@ -510,7 +511,7 @@ namespace BetterCms.Module.Root.Services
 
         private void SetContentOptions(IOptionContainer<Models.Content> destination, IOptionContainer<Models.Content> source)
         {
-            optionService.SetOptions<ContentOption, Models.Content>(destination, source.Options);
+            optionService.SetOptions<ContentOption, Models.Content>(destination, source.Options, () => new ContentOptionTranslation());
         }
 
         private void SetContentRegions(Models.Content destination, Models.Content source)

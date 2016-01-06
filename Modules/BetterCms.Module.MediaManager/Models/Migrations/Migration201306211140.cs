@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Data.SqlTypes;
 
-using BetterCms.Core.DataAccess.DataContext.Migrations;
+using BetterModules.Core.DataAccess.DataContext.Migrations;
 
 using FluentMigrator;
 
@@ -11,7 +11,7 @@ namespace BetterCms.Module.MediaManager.Models.Migrations
     /// Module database structure update.
     /// </summary>
     [Migration(201306211140)]
-    public class Migration201306211140 : DefaultMigration
+    public class Migration201306211140: DefaultMigration
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="Migration201306211140"/> class.

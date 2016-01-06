@@ -11,6 +11,8 @@ using BetterCms.Module.MediaManager.Provider;
 
 using BetterCms.Module.Root.Models;
 
+using BetterModules.Events;
+
 using NHibernate;
 
 using NUnit.Framework;
@@ -249,7 +251,7 @@ namespace BetterCms.Test.Module.Api.Pages.Page.Contents
             }
         }
 
-        void Instance_PageContentConfigured(Events.SingleItemEventArgs<PageContent> args)
+        void Instance_PageContentConfigured(SingleItemEventArgs<PageContent> args)
         {
             contentConfigredCount ++;
         }

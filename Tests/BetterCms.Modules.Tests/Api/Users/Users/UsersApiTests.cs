@@ -1,10 +1,11 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 
-using BetterCms.Core.Models;
 using BetterCms.Module.Api.Extensions;
 using BetterCms.Module.Api.Operations.Users.Users;
 using BetterCms.Module.Api.Operations.Users.Users.User;
+
+using BetterModules.Core.Models;
 
 using NHibernate;
 

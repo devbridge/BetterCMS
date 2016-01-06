@@ -4,6 +4,8 @@ using BetterCms.Core.Modules.Projections;
 using BetterCms.Module.Root.Content.Resources;
 using BetterCms.Module.Root.Controllers;
 
+using BetterModules.Core.Web.Modules;
+
 namespace BetterCms.Module.Root.Registration
 {
     /// <summary>
@@ -15,7 +17,7 @@ namespace BetterCms.Module.Root.Registration
         /// Initializes a new instance of the <see cref="LanguagesJsModuleIncludeDescriptor" /> class.
         /// </summary>
         /// <param name="module">The container module.</param>
-        public LanguagesJsModuleIncludeDescriptor(ModuleDescriptor module)
+        public LanguagesJsModuleIncludeDescriptor(CmsModuleDescriptor module)
             : base(module, "bcms.languages")
         {
 

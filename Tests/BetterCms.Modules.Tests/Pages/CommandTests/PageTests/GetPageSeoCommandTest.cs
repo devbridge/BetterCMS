@@ -3,7 +3,7 @@ using System.Linq;
 
 using Autofac;
 
-using BetterCms.Core.DataAccess;
+using BetterModules.Core.DataAccess;
 using BetterCms.Module.Pages.Command.Page.GetPageSeo;
 using BetterCms.Module.Pages.Models;
 

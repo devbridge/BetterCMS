@@ -1,7 +1,8 @@
 ﻿using System;
 
-using BetterCms.Core.Web;
 using BetterCms.Module.MediaManager.Controllers;
+
+using BetterModules.Core.Web.Web;
 
 namespace BetterCms.Module.MediaManager.Services
 {

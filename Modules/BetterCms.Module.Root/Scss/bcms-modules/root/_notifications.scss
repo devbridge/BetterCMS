@@ -1,0 +1,78 @@
+@import '../../core/variables';
+
+.bcms-info-message-box {
+    position: relative;
+    max-width: 760px;
+    padding: 8px 35px 8px 20px;
+    margin: 0 0 15px 0;
+    border: 1px solid #cecece;
+    background-color: #eff9fd;
+    line-height: 16px;
+    font-size: 12px;
+}
+
+.bcms-info-message-box .bcms-tooltip-mark {
+    left: -20px;
+    top: 50%;
+    margin-top: -6px;
+}
+
+.bcms-error-frame {
+    width: 320px;
+    position: relative;
+    padding: 20px;
+    background-color: #A73331;
+    background-image: -webkit-linear-gradient(top, #A73331 0, #8F2724 100%);
+    background-image: linear-gradient(to bottom, #A73331 0, #8F2724 100%);
+    color: #f3bfbf;
+    top: 50%;
+    left: 50%;
+    margin-left: -180px;
+    margin-top: -50px;
+}
+
+.bcms-error-frame > h4 {
+    margin: 0;
+    color: #fff;
+}
+
+.bcms-error-frame > p {
+    font-size: 11px;
+    line-height: 19px;
+}
+
+.bcms-popinfo-frame {
+    width: 320px;
+    position: relative;
+    padding: 20px;
+    background-color: #eff9fd;
+    border: 1px solid #818181;
+    color: #000;
+    top: 50%;
+    left: 50%;
+    margin-left: -180px;
+    margin-top: -70px;
+}
+
+.bcms-popinfo-frame > h4 {
+    margin: 0;
+}
+
+.bcms-popinfo-frame > p {
+    line-height: 19px;
+    word-wrap: break-word;
+    font-size: 11px;
+}
+
+a.bcms-error-close {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    height: 14px;
+    width: 15px;
+    background: url('images/sprite-base-1.png') no-repeat -9px -726px;
+    cursor: pointer;
+    overflow: hidden;
+    text-indent: 9999px;
+    text-decoration: none;
+}

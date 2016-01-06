@@ -1,19 +1,23 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Web;
 
 using Autofac;
 
-using BetterCms.Core.Dependencies;
 using BetterCms.Core.Modules;
 using BetterCms.Core.Modules.Projections;
-using BetterCms.Events;
+
 using BetterCms.Module.Root;
 using BetterCms.Module.Root.Services;
+
 using BetterCms.Module.Users.Content.Resources;
 using BetterCms.Module.Users.Registration;
 using BetterCms.Module.Users.Services;
+
+using BetterModules.Core.Dependencies;
+using BetterModules.Core.Modules.Registration;
+using BetterModules.Core.Web.Modules.Registration;
+using BetterModules.Events;
 
 namespace BetterCms.Module.Users
 {
@@ -22,7 +26,7 @@ namespace BetterCms.Module.Users
     /// <summary>
     /// Pages module descriptor.
     /// </summary>
-    public class UsersModuleDescriptor : ModuleDescriptor
+    public class UsersModuleDescriptor : CmsModuleDescriptor
     {
         /// <summary>
         /// Current class logger.
@@ -76,24 +80,8 @@ namespace BetterCms.Module.Users
         {
             userJsModuleIncludeDescriptor = new UserJsModuleIncludeDescriptor(this);
 
-            CoreEvents.Instance.HostStart += OnHostStart;
-            CoreEvents.Instance.HostAuthenticateRequest += HostAuthenticateRequest;            
-        }
-
-        internal const string ModuleId = "6c5ca410-e8c4-483f-a9ec-354051e1cb38";
-
-        /// <summary>
-        /// Gets the identifier.
-        /// </summary>
-        /// <value>
-        /// The identifier.
-        /// </value>
-        public override Guid Id
-        {
-            get
-            {
-                return new Guid(ModuleId);
-            }
+            WebCoreEvents.Instance.HostStart += OnHostStart;
+            WebCoreEvents.Instance.HostAuthenticateRequest += HostAuthenticateRequest;            
         }
 
         /// <summary>
@@ -225,7 +213,7 @@ namespace BetterCms.Module.Users
             containerBuilder.RegisterType<DefaultRegistrationService>().As<IRegistrationService>().InstancePerLifetimeScope();
         }
 
-        public override void RegisterCustomRoutes(ModuleRegistrationContext context, ContainerBuilder containerBuilder)
+        public override void RegisterCustomRoutes(WebModuleRegistrationContext context, ContainerBuilder containerBuilder)
         {
             if (Configuration.Users != null)
             {

@@ -2,17 +2,16 @@
 @using BetterCms.Module.Pages.Content.Resources
 @using BetterCms.Module.Pages.Controllers
 @using BetterCms.Module.Pages.ViewModels.Widgets
-@using BetterCms.Module.Root.Mvc.Extensions
 @using BetterCms.Module.Root.Mvc.Helpers
 @using BetterCms.Module.Root.ViewModels.Category
 @using Microsoft.Web.Mvc
 
 @model EditHtmlContentWidgetViewModel
+
 @if (Model == null)
 {
     return;
 }
-
 @{
     var categoriesTemplateViewModel = new CategoryTemplateViewModel
     {
@@ -20,9 +19,11 @@
     };
 }
 <div class="bcms-tab-header">
-    <a class="bcms-tab bcms-tab-active" data-name="#bcms-tab-1">@PagesGlobalization.EditWidget_BasicPropertiesTab_Title</a>
-    <a class="bcms-tab" data-name="#bcms-tab-2">@PagesGlobalization.EditWidget_OptionsTab_Title</a>
+    <a class="bcms-tab-item bcms-active" data-name="#bcms-tab-1">@PagesGlobalization.EditWidget_BasicPropertiesTab_Title</a>
+    <a class="bcms-tab-item" data-name="#bcms-tab-2">@PagesGlobalization.EditWidget_OptionsTab_Title</a>
+    <a class="bcms-tab-item" data-name="#bcms-tab-3">@PagesGlobalization.EditWidget_AdvancedOptionsTab_Title</a>
 </div>
+
 <div class="bcms-scroll-window">
     @Html.TabbedContentMessagesBox("bcms-edit-widget-messages")
     @Html.Partial("Partial/WarnMessageAboutDraft", Model)
@@ -38,48 +39,58 @@
                         @Html.BcmsValidationMessageFor(m => m.Name)
                     </div>
                 </div>
-            
-                <div class="bcms-tags-box-holder" data-bind="with: categories">
-                    @Html.Partial("~/Areas/bcms-root/Views/Category/CategoriesTemplate.cshtml", categoriesTemplateViewModel)
-                </div>
-                            
-                <div class="bcms-edit-check-field">
-                    @Html.CheckBoxFor(model => model.EnableCustomHtml, new { @id = "bcms-enable-custom-html" })
-                    <div class="bcms-edit-label">@Html.Raw(PagesGlobalization.HtmlContentWidget_EnableCustomHTML_Title)</div>
-                </div>             
-            
-                <div class="bcms-input-list-holder" id="bcms-custom-html-container" style="display: none;">
+
+                <div class="bcms-input-list-holder">
                     <div class="bcms-content-titles">@PagesGlobalization.HtmlContentWidget_CustomHTML_Title</div>
                     <div class="bcms-poptext-editor-holder">
-                        @Html.TextAreaFor(model => model.PageContent, new { @class = "bcms-advanced-contenthtml", @id=Guid.NewGuid() })
+                        @Html.TextAreaFor(model => model.PageContent, new { @class = "bcms-advanced-contenthtml", @id = Guid.NewGuid() })
                     </div>
                 </div>
 
-                <div class="bcms-edit-check-field">
-                    @Html.CheckBoxFor(model => model.EnableCustomCSS, new { @id = "bcms-enable-custom-css" })
-                    <div class="bcms-edit-label">@Html.Raw(PagesGlobalization.HtmlContentWidget_EnableCustomCSS_Title)</div>
-                </div>
-    
-                <div class="bcms-input-list-holder" id="bcms-custom-css-container" style="display: none;">
-                    <div class="bcms-content-titles">@PagesGlobalization.HtmlContentWidget_CustomCSS_Title</div>
-                    @Html.TextAreaFor(model => model.CustomCSS, new { @class = "bcms-editor-field-area bcms-code-field bcms-code-field-css" })
-                </div>
-            
-                <div class="bcms-edit-check-field">
-                    @Html.CheckBoxFor(model => model.EnableCustomJS, new { @id = "bcms-enable-custom-js" })
-                    <div class="bcms-edit-label">@Html.Raw(PagesGlobalization.HtmlContentWidget_EnableCustomJS_Title)</div>
+                <div class="bcms-input-list-holder">
+                    <div class="bcms-edit-check-field">
+                        @Html.CheckBoxFor(model => model.EnableCustomHtml, new { @id = "bcms-enable-custom-html" })
+                        <div class="bcms-edit-label">@Html.Raw(PagesGlobalization.HtmlContentWidget_RenderCustomHTML_Title)</div>
+                    </div>
                 </div>
 
-                <div class="bcms-input-list-holder" id="bcms-custom-js-container" style="display: none;">
-                    <div class="bcms-content-titles">@PagesGlobalization.HtmlContentWidget_CustomJS_Title</div>
-                    @Html.TextAreaFor(model => model.CustomJS, new { @class = "bcms-editor-field-area bcms-code-field bcms-code-field-javascript" })
-                </div>   
-            </div>   
+                <div class="bcms-tags-box-holder" data-bind="with: categories">
+                    @Html.Partial("~/Areas/bcms-root/Views/Category/CategoriesTemplate.cshtml", categoriesTemplateViewModel)
+                </div>
+            </div>
         </div>
 
-    <div id="bcms-tab-2" class="bcms-tab-single">
-        @Html.Partial(PagesConstants.OptionsGridTemplate)
-    </div>
+        <div id="bcms-tab-2" class="bcms-tab-single">
+            @Html.Partial(PagesConstants.OptionsGridTemplate)
+        </div>
+
+        <div id="bcms-tab-3" class="bcms-tab-single">
+            <div class="bcms-padded-content">
+                <div class="bcms-input-list-holder">
+                    <div class="bcms-content-titles">@PagesGlobalization.HtmlContentWidget_CustomCSS_Title</div>
+                    @Html.TextAreaFor(model => model.CustomCSS, new { @class = "bcms-editor-field-area bcms-code-field bcms-code-field-css", @id = Guid.NewGuid() })
+                </div>
+
+                <div class="bcms-input-list-holder">
+                    <div class="bcms-edit-check-field">
+                        @Html.CheckBoxFor(model => model.EnableCustomCSS, new { @id = "bcms-enable-custom-css" })
+                        <div class="bcms-edit-label">@Html.Raw(PagesGlobalization.HtmlContentWidget_RenderCustomCSS_Title)</div>
+                    </div>
+                </div>
+
+                <div class="bcms-input-list-holder">
+                    <div class="bcms-content-titles">@PagesGlobalization.HtmlContentWidget_CustomJS_Title</div>
+                    @Html.TextAreaFor(model => model.CustomJS, new { @class = "bcms-editor-field-area bcms-code-field bcms-code-field-javascript", id = Guid.NewGuid() })
+                </div>
+
+                <div class="bcms-input-list-holder">
+                    <div class="bcms-edit-check-field">
+                        @Html.CheckBoxFor(model => model.EnableCustomJS, new { @id = "bcms-enable-custom-js" })
+                        <div class="bcms-edit-label">@Html.Raw(PagesGlobalization.HtmlContentWidget_RenderCustomJS_Title)</div>
+                    </div>
+                </div>
+            </div>
+        </div>
 
         @Html.HiddenFor(model => model.Id, new { @id = "bcmsContentId" })
         @Html.HiddenFor(model => model.Version, new { @id = "bcmsContentVersion" })

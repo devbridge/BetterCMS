@@ -15,17 +15,22 @@ namespace BetterCms.Module.Root.ViewModels.Option
         /// </value>
         public object OptionValue { get; set; }
 
+        public bool UseDefaultValue { get; set; }
         /// <summary>
         /// Gets the option key.
         /// </summary>
         /// <value>
         /// The option key.
         /// </value>
-        string IOptionValue.Key
+        string IOption.Key
         {
             get
             {
                 return OptionKey;
+            }
+            set
+            {
+                throw new NotImplementedException("Operation not supported"); 
             }
         }
 
@@ -35,9 +40,16 @@ namespace BetterCms.Module.Root.ViewModels.Option
         /// <value>
         /// The option value.
         /// </value>
-        object IOptionValue.Value
+        string IOption.Value
         {
-            get { return OptionValue; }
+            get
+            {
+                return OptionValue != null ? OptionValue.ToString() : null;
+            }
+            set
+            {
+                throw new NotImplementedException("Operation not supported"); 
+            }
         }
 
         /// <summary>
@@ -46,7 +58,7 @@ namespace BetterCms.Module.Root.ViewModels.Option
         /// <value>
         /// The custom option.
         /// </value>
-        ICustomOption IOptionValue.CustomOption
+        ICustomOption IOption.CustomOption
         {
             get
             {

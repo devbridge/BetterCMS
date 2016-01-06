@@ -5,6 +5,7 @@
 @model BetterCms.Module.Pages.ViewModels.Content.PageContentViewModel
 
 @Html.HiddenFor(model => model.EditInSourceMode, new { @id = "bcms-edit-in-source-mode" })
+@Html.HiddenFor(model => model.ContentTextMode, new { @id = "bcms-content-text-mode" })
 
 <div class="bcms-newcontent-top">
     <div class="bcms-input-field-holder">
@@ -18,38 +19,19 @@
     <div class="bcms-input-field-holder">
         <div class="bcms-content-titles">@PagesGlobalization.AddPageContent_RegularContentTab_LiveFrom_Title:</div>
         <div class="bcms-date-input-box">
-            @Html.DateTextBoxFor(model => model.LiveFrom, Model.LiveFrom, new Dictionary<string, object> {{"class", "bcms-editor-field-box bcms-datepicker"}, {"style", "width: 127px;"}})
+            @Html.DateTextBoxFor(model => model.LiveFrom, Model.LiveFrom, new Dictionary<string, object> { { "class", "bcms-editor-field-box bcms-datepicker" }, { "style", "width: 127px;" } })
             @Html.BcmsValidationMessageFor(model => model.LiveFrom)
         </div>
     </div>
     <div class="bcms-input-field-holder">
         <div class="bcms-content-titles">@PagesGlobalization.AddPageContent_RegularContentTab_LiveTo_Title:</div>
         <div class="bcms-date-input-box">
-            @Html.DateTextBoxFor(model => model.LiveTo, Model.LiveTo, new Dictionary<string, object> {{"class", "bcms-editor-field-box bcms-datepicker"}, {"style", "width: 127px;"}})
+            @Html.DateTextBoxFor(model => model.LiveTo, Model.LiveTo, new Dictionary<string, object> { { "class", "bcms-editor-field-box bcms-datepicker" }, { "style", "width: 127px;" } })
             @Html.BcmsValidationMessageFor(model => model.LiveTo)
         </div>
     </div>
 </div>
+
 <div class="bcms-text-editor-holder">
     @Html.TextAreaFor(model => model.PageContent, new { @class = "bcms-contenthtml", @id = Guid.NewGuid() })
-</div>
-
-<div class="bcms-edit-check-field">
-    @Html.CheckBoxFor(model => model.EnabledCustomCss, new { @id = "bcms-enable-custom-css" })
-    <div class="bcms-edit-label">@Html.Raw(PagesGlobalization.HtmlContent_EnableCustomCss_Title)</div>
-</div>
-<div class="bcms-input-list-holder" id="bcms-custom-css-container">
-    <div class="bcms-content-titles">@PagesGlobalization.HtmlContent_CustomCss_Title</div>
-    @Html.TextAreaFor(model => model.CustomCss, new { @class = "bcms-editor-field-area bcms-code-field bcms-code-field-css", @style = "width:820px;" })
-    @Html.BcmsValidationMessageFor(model => model.CustomCss)
-</div>
-
-<div class="bcms-edit-check-field">
-    @Html.CheckBoxFor(model => model.EanbledCustomJs, new { @id = "bcms-enable-custom-js" })
-    <div class="bcms-edit-label">@Html.Raw(PagesGlobalization.HtmlContent_EnableCustomJs_Title)</div>
-</div>
-<div class="bcms-input-list-holder" id="bcms-custom-js-container">
-    <div class="bcms-content-titles">@PagesGlobalization.HtmlContent_CustomJs_Title</div>
-    @Html.TextAreaFor(model => model.CustomJs, new { @class = "bcms-editor-field-area bcms-code-field bcms-code-field-javascript", @style = "width:820px;" })
-    @Html.BcmsValidationMessageFor(model => model.CustomJs)
 </div>

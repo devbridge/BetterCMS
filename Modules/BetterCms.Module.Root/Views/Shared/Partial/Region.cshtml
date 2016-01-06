@@ -1,21 +1,26 @@
 @using BetterCms.Module.Root.Content.Resources
 @model BetterCms.Module.Root.ViewModels.Cms.RenderPageViewModel
-
 <script type="text/html" id="bcms-region-overlay-template">
     <div class="bcms-region-overlay bcms-layer">
-        <div class="bcms-region-overlay-inner">
-            <div class="bcms-hidden-overlay-bg"></div>
-            @if (!Model.IsReadOnly && Model.HasEditRole)
-            {
-                <div class="bcms-region-actions">
-                    <div class="bcms-region-button bcms-region-sortdone" style="display: none;">@RootGlobalization.Button_Save</div>
-                    <div class="bcms-region-button bcms-region-contentstree" style="display: none;">@RootGlobalization.Button_Manage</div>
-                    <div class="bcms-region-button bcms-region-sortcancel" style="display: none;">@RootGlobalization.Button_Cancel</div>
-                    <div class="bcms-region-button bcms-region-addcontent"></div>
-                    <div class="bcms-region-button bcms-region-sortcontent"></div>
+        @if (!Model.IsReadOnly && Model.HasEditRole)
+        {
+            <div class="bcms-region-actions">
+                <div class="bcms-region-button bcms-region-sortdone" style="display: none;">@RootGlobalization.Button_Save</div>
+                <div class="bcms-region-button bcms-region-contentstree" style="display: none;">@RootGlobalization.Button_Manage</div>
+                <div class="bcms-region-button bcms-region-sortcancel" style="display: none;">@RootGlobalization.Button_Cancel</div>
+
+                <div class="bcms-region-button bcms-region-addcontent">
+                    <div class="bcms-region-options-block">
+                        <div class="bcms-region-pick-editor bcms-region-addhtml">@RootGlobalization.Button_AddContent_Html</div>
+                        <div class="bcms-region-pick-editor bcms-region-addmarkdown">@RootGlobalization.Button_AddContent_Markdown</div>
+                        <div class="bcms-region-pick-editor bcms-region-addtext">@RootGlobalization.Button_AddContent_PlainText</div>
+                        <div class="bcms-region-pick-editor bcms-region-insertwidget">@RootGlobalization.Button_AddContent_Widget</div>
+                    </div>
                 </div>
-                <div class="bcms-sorting-block"></div>
-            }
-        </div>
+                @*<div class="bcms-region-button bcms-region-addwidget"></div>*@
+                <div class="bcms-region-button bcms-region-sortcontent"></div>
+            </div>
+            <div class="bcms-sort-block"></div>
+        }
     </div>
 </script>

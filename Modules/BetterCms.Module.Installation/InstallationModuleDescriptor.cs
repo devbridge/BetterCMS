@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 
 using BetterCms.Core.Modules;
 
@@ -8,7 +7,7 @@ namespace BetterCms.Module.Installation
     /// <summary>
     /// Templates module descriptor.
     /// </summary>
-    public class InstallationModuleDescriptor : ModuleDescriptor
+    public class InstallationModuleDescriptor : CmsModuleDescriptor
     {
         internal const string ModuleName = "installation";
         
@@ -20,22 +19,6 @@ namespace BetterCms.Module.Installation
         /// <param name="configuration">The configuration.</param>
         public InstallationModuleDescriptor(ICmsConfiguration configuration) : base(configuration)
         {            
-        }
-
-        internal const string ModuleId = "042e857e-8f35-44db-b512-b6584af05e05";
-
-        /// <summary>
-        /// Gets the identifier.
-        /// </summary>
-        /// <value>
-        /// The identifier.
-        /// </value>
-        public override Guid Id
-        {
-            get
-            {
-                return new Guid(ModuleId);
-            }
         }
 
         /// <summary>

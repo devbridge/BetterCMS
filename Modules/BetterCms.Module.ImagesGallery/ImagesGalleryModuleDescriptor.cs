@@ -7,7 +7,7 @@ namespace BetterCms.Module.ImagesGallery
     /// <summary>
     /// Images gallery module descriptor.
     /// </summary>
-    public class ImagesGalleryModuleDescriptor : ModuleDescriptor
+    public class ImagesGalleryModuleDescriptor : CmsModuleDescriptor
     {
         /// <summary>
         /// The module name.
@@ -30,22 +30,6 @@ namespace BetterCms.Module.ImagesGallery
         public ImagesGalleryModuleDescriptor(ICmsConfiguration cmsConfiguration)
             : base(cmsConfiguration)
         {
-        }
-
-        internal const string ModuleId = "abbdb3e7-818c-457c-a787-98822ffafc61";
-
-        /// <summary>
-        /// Gets the identifier.
-        /// </summary>
-        /// <value>
-        /// The identifier.
-        /// </value>
-        public override Guid Id
-        {
-            get
-            {
-                return new Guid(ModuleId);
-            }
         }
 
         /// <summary>

@@ -3,13 +3,13 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 
+using Autofac;
+
 using BetterCMS.Module.LuceneSearch.Services.IndexerService;
 using BetterCMS.Module.LuceneSearch.Services.ScrapeService;
 using BetterCMS.Module.LuceneSearch.Services.WebCrawlerService;
 
-using BetterCms.Core.Dependencies;
-
-using Autofac;
+using BetterModules.Core.Dependencies;
 
 namespace BetterCMS.Module.LuceneSearch.Workers
 {

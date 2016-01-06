@@ -15,7 +15,7 @@ using BetterCMS.Module.LuceneSearch.Helpers;
 using BetterCMS.Module.LuceneSearch.Services.WebCrawlerService;
 
 using BetterCms;
-using BetterCms.Core.DataAccess;
+using BetterModules.Core.DataAccess;
 using BetterCms.Core.Exceptions.Mvc;
 using BetterCms.Core.Security;
 using BetterCms.Core.Services;
@@ -63,6 +63,7 @@ namespace BetterCMS.Module.LuceneSearch.Services.IndexerService
         private static ICollection<string> configurationExcludedNodeTypes = new List<string>();
         private static ICollection<string> configurationExcludedIds = new List<string>();
         private static ICollection<string> configurationExcludedClasses = new List<string>();
+        private static ICollection<string> configurationExcludedPages = new List<string>();
 
         private IndexWriter writer;
 
@@ -128,6 +129,7 @@ namespace BetterCMS.Module.LuceneSearch.Services.IndexerService
                 configurationExcludedNodeTypes = GetCollectionFromConfiguration(LuceneSearchConstants.ConfigurationKeys.LuceneExcludedNodes);
                 configurationExcludedIds = GetCollectionFromConfiguration(LuceneSearchConstants.ConfigurationKeys.LuceneExcludedIds);
                 configurationExcludedClasses = GetCollectionFromConfiguration(LuceneSearchConstants.ConfigurationKeys.LuceneExcludedClasses);
+                configurationExcludedPages = GetCollectionFromConfiguration(LuceneSearchConstants.ConfigurationKeys.LuceneExcludedPages).Select(t => t.Split('#', '?').FirstOrDefault()).ToList();
 
                 bool.TryParse(cmsConfiguration.Search.GetValue(LuceneSearchConstants.ConfigurationKeys.LuceneSearchForPartOfWordsPrefix), out searchForPartOfWords);
                 
@@ -246,6 +248,14 @@ namespace BetterCMS.Module.LuceneSearch.Services.IndexerService
             if (!Initialize())
             {
                 Log.ErrorFormat("Cannot add document. Lucene search engine is not initialized.");
+                return;
+            }
+
+            if (configurationExcludedPages.Contains(pageData.AbsolutePath) ||
+                configurationExcludedPages.Contains(pageData.AbsoluteUri))
+            {
+                var term = new Term(LuceneIndexDocumentKeys.Id, pageData.Id.ToString().ToLower());
+                writer.DeleteDocuments(term);
                 return;
             }
 
@@ -543,12 +553,25 @@ namespace BetterCMS.Module.LuceneSearch.Services.IndexerService
             }
 
             if (node.Attributes.Any(a => (a.Name == "id" && (defaultExcludedIds.Contains(a.Value) || configurationExcludedIds.Contains(a.Value)))
-                || (a.Name == "class" && (defautlExcludedClasses.Contains(a.Value) || configurationExcludedClasses.Contains(a.Value)))))
+                || (a.Name == "class" && (ContainsExcludedClasses(defautlExcludedClasses, a.Value) || ContainsExcludedClasses(configurationExcludedClasses, a.Value)))))
             {
                 return false;
             }
 
             return true;
+        }
+
+        private static bool ContainsExcludedClasses(ICollection<string> excludedClasses, string classField)
+        {
+            var cssClases = classField.Split(new[] { ' ' }, StringSplitOptions.RemoveEmptyEntries);
+            foreach (var cssClass in cssClases)
+            {
+                if (excludedClasses.Contains(cssClass))
+                {
+                    return true;
+                }
+            }
+            return false;
         }
 
         private static string GetSnippet(string text, string fullSearchString)

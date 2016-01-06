@@ -15,6 +15,8 @@ using BetterCms.Module.Users.Content.Resources;
 
 using BetterCms.Module.Users.ViewModels.User;
 
+using BetterModules.Core.Web.Models;
+
 using Microsoft.Web.Mvc;
 
 namespace BetterCms.Module.Users.Controllers

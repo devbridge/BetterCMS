@@ -13,13 +13,15 @@ using BetterCMS.Module.LuceneSearch.Workers;
 
 using BetterCms.Module.Search.Services;
 
+using BetterModules.Events;
+
 using Common.Logging;
 
-using HtmlAgilityPack;
+using BetterModules.Core.Modules.Registration;
 
 namespace BetterCms.Module.LuceneSearch
 {
-    public class LuceneSearchModuleDescriptor : ModuleDescriptor
+    public class LuceneSearchModuleDescriptor : CmsModuleDescriptor
     {
         /// <summary>
         /// Current class logger.
@@ -31,24 +33,6 @@ namespace BetterCms.Module.LuceneSearch
         internal const string LuceneSchemaName = "bcms_lucene";        
 
         private static List<IWorker> workers = new List<IWorker>();
-
-        private static readonly ILog Log = LogManager.GetLogger(LuceneSearchConstants.LuceneSearchModuleLoggerNamespace);
-
-        internal const string ModuleId = "4382d4f2-b5a3-4c1f-bcdb-823289ccf82f";
-
-        /// <summary>
-        /// Gets the identifier.
-        /// </summary>
-        /// <value>
-        /// The identifier.
-        /// </value>
-        public override Guid Id
-        {
-            get
-            {
-                return new Guid(ModuleId);
-            }
-        }
 
         /// <summary>
         /// Gets the name.
@@ -99,7 +83,7 @@ namespace BetterCms.Module.LuceneSearch
         public LuceneSearchModuleDescriptor(ICmsConfiguration configuration)
             : base(configuration)
         {
-            Events.CoreEvents.Instance.HostStart += x =>
+            WebCoreEvents.Instance.HostStart += x =>
                 {
                     Logger.Info("OnHostStart: preparing Lucene Search index workers...");
 

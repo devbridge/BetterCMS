@@ -1,7 +1,5 @@
-﻿using System;
-
-using BetterCms.Core.DataAccess.DataContext.Migrations;
-using BetterCms.Core.Models;
+﻿using BetterModules.Core.DataAccess.DataContext.Migrations;
+using BetterModules.Core.Models;
 
 using FluentMigrator;
 
@@ -27,7 +25,7 @@ namespace BetterCms.Module.Root.Models.Migrations
             {
                 Create
                 .Table("CategorizableItems").InSchema(SchemaName)
-                .WithCmsBaseColumns()
+                .WithBaseColumns()
                 .WithColumn("Name").AsString(MaxLength.Name).NotNullable();
 
                 Create
@@ -41,7 +39,7 @@ namespace BetterCms.Module.Root.Models.Migrations
                 Create
                .Table("CategoryTreeCategorizableItems")
                .InSchema(SchemaName)
-               .WithCmsBaseColumns()
+               .WithBaseColumns()
                .WithColumn("CategoryTreeId").AsGuid().NotNullable()
                .WithColumn("CategorizableItemId").AsGuid().NotNullable();
 

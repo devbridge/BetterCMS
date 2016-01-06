@@ -1,6 +1,6 @@
 ﻿//using System.Linq;
 //
-//using BetterCms.Core.DataAccess;
+//using BetterModules.Core.DataAccess;
 //using BetterCms.Module.Blog.Commands.GetAuthorList;
 //using BetterCms.Module.Root.Mvc.Grids.GridOptions;
 //

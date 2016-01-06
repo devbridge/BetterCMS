@@ -3,6 +3,7 @@
 @using BetterCms.Module.Pages.Controllers
 @using BetterCms.Module.Pages.ViewModels.Templates
 @using BetterCms.Module.Root.Mvc.Helpers
+@using BetterCms.Module.Root.ViewModels.Shared
 @using Microsoft.Web.Mvc
 
 @model TemplateEditViewModel
@@ -11,9 +12,9 @@
     return;
 }
 <div class="bcms-tab-header">
-    <a class="bcms-tab bcms-tab-active" data-name="#bcms-tab-1">@PagesGlobalization.EditTemplate_BasicPropertiesTab_Title</a>
-    <a class="bcms-tab" data-name="#bcms-tab-2">@PagesGlobalization.EditTemplate_RegionsTab_Title</a>
-    <a class="bcms-tab" data-name="#bcms-tab-3">@PagesGlobalization.EditTemplate_OptionsTab_Title</a>
+    <a class="bcms-tab-item bcms-active" data-name="#bcms-tab-1">@PagesGlobalization.EditTemplate_BasicPropertiesTab_Title</a>
+    <a class="bcms-tab-item" data-name="#bcms-tab-2">@PagesGlobalization.EditTemplate_RegionsTab_Title</a>
+    <a class="bcms-tab-item" data-name="#bcms-tab-3">@PagesGlobalization.EditTemplate_OptionsTab_Title</a>
 </div>
 
 <div class="bcms-scroll-window">
@@ -68,7 +69,7 @@
         </div>
         
         <div id="bcms-tab-3" class="bcms-tab-single">
-            @Html.Partial(PagesConstants.OptionsGridTemplate)
+            @Html.Partial(PagesConstants.OptionsGridTemplate, new EditableGridViewModel())
         </div>
             
         @Html.HiddenFor(model => model.Id)

@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 
-using BetterCms.Core.DataAccess;
+using BetterModules.Core.DataAccess;
 using BetterCms.Core.Security;
 using BetterCms.Module.Api.Helpers;
 using BetterCms.Module.Api.Infrastructure;

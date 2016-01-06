@@ -1,0 +1,44 @@
+@import '../core/variables';
+
+//module auto-complete styles
+.autocomplete {
+    &-suggestions {
+        background-color: $white;
+        border: $border-thin-light-gray;
+        box-sizing: border-box;
+        font-size: 12px;
+        margin-top: -1px;
+        overflow: auto;
+    }
+
+    &-suggestion {
+        color: $gray-l50;
+        cursor: pointer;
+        font-weight: 400;
+        padding: 4px 7px 3px;
+
+        &:hover {
+            background-color: $gray-l30;
+            color: $black;
+        }
+    }
+
+    &-selected {
+        background-color: $gray-l30;
+        color: $black;
+    }
+}
+
+//module BetterCms helper styles
+.bcms-inactive {
+    position: relative;
+
+    @include virtual(after) {
+        @include size(100%);
+        @include position(absolute, 0 null null 0);
+        background-color: $white;
+        cursor: default;
+        opacity: .3;
+        z-index: 99;
+    }
+}

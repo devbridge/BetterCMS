@@ -2,7 +2,6 @@
 @using BetterCms.Module.Pages.Content.Resources
 @using BetterCms.Module.Pages.Controllers
 @using BetterCms.Module.Pages.ViewModels.Widgets
-@using BetterCms.Module.Root.Mvc.Extensions
 @using BetterCms.Module.Root.Mvc.Helpers
 @using BetterCms.Module.Root.ViewModels.Category
 @using Microsoft.Web.Mvc
@@ -21,8 +20,8 @@
     return;
 }
 <div class="bcms-tab-header">
-    <a class="bcms-tab bcms-tab-active" data-name="#bcms-tab-1">@PagesGlobalization.EditWidget_BasicPropertiesTab_Title</a>
-    <a class="bcms-tab" data-name="#bcms-tab-2">@PagesGlobalization.EditWidget_OptionsTab_Title</a>
+    <a class="bcms-tab-item bcms-active" data-name="#bcms-tab-1">@PagesGlobalization.EditWidget_BasicPropertiesTab_Title</a>
+    <a class="bcms-tab-item" data-name="#bcms-tab-2">@PagesGlobalization.EditWidget_OptionsTab_Title</a>
 </div>
 <div class="bcms-scroll-window">
     @Html.TabbedContentMessagesBox("bcms-edit-widget-messages")

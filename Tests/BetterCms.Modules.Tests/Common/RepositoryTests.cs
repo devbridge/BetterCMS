@@ -2,9 +2,10 @@
 
 using Autofac;
 
-using BetterCms.Core.DataAccess;
-using BetterCms.Core.Exceptions.DataTier;
+using BetterModules.Core.DataAccess;
 using BetterCms.Module.Root.Models;
+
+using BetterModules.Core.Exceptions.DataTier;
 
 using NUnit.Framework;
 

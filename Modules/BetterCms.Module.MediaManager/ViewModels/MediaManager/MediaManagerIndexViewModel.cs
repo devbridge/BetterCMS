@@ -1,5 +1,7 @@
 ﻿using BetterCms.Module.Root.Models;
 
+using BetterModules.Core.Web.Models;
+
 namespace BetterCms.Module.MediaManager.ViewModels.MediaManager
 {
     public class MediaManagerIndexViewModel : MediaViewModel

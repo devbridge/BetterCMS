@@ -2,7 +2,9 @@
 
 using BetterCms.Core.Modules;
 using BetterCms.Core.Modules.Projections;
-using BetterCms.Core.Mvc.Extensions;
+
+using BetterModules.Core.Web.Modules;
+using BetterModules.Core.Web.Mvc.Extensions;
 
 namespace BetterCms.Module.Root.Registration
 {

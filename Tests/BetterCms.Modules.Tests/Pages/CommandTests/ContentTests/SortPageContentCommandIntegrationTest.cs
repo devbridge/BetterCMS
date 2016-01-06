@@ -4,14 +4,15 @@ using System.Security.Principal;
 
 using Autofac;
 
-using BetterCms.Core.DataAccess;
-using BetterCms.Core.DataAccess.DataContext;
-using BetterCms.Core.Mvc.Commands;
 using BetterCms.Core.Security;
 
 using BetterCms.Module.Pages.Command.Content.SortPageContent;
 using BetterCms.Module.Pages.ViewModels.Content;
 using BetterCms.Module.Root.Models;
+
+using BetterModules.Core.DataAccess;
+using BetterModules.Core.DataAccess.DataContext;
+using BetterModules.Core.Web.Mvc.Commands;
 
 using Moq;
 

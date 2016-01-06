@@ -1,12 +1,13 @@
-﻿using BetterCms.Core.DataAccess.DataContext.Migrations;
-using BetterCms.Core.Models;
+﻿using BetterModules.Core.DataAccess.DataContext.Migrations;
+
+using BetterModules.Core.Models;
 
 using FluentMigrator;
 
 namespace BetterCms.Module.Root.Models.Migrations
 {
     [Migration(201307191431)]
-    public class Migration201307191431 : DefaultMigration
+    public class Migration201307191431: DefaultMigration
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="Migration201307191431" /> class.

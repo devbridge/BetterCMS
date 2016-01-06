@@ -1,36 +1,20 @@
-﻿using System;
+﻿using Autofac;
 
-using Autofac;
-
-using BetterCms.Core.Dependencies;
 using BetterCms.Core.Modules;
-using BetterCms.Core.Web;
+
 using BetterCms.Events;
+
 using BetterCms.Module.OpenGraphIntegration.Projections;
 using BetterCms.Module.Pages.Helpers.Extensions;
 
+using BetterModules.Core.Dependencies;
+using BetterModules.Core.Web.Web;
 
 namespace BetterCms.Module.OpenGraphIntegration
 {
-    public class OpenGraphIntegrationModuleDescriptor : ModuleDescriptor
+    public class OpenGraphIntegrationModuleDescriptor : CmsModuleDescriptor
     {
         internal const string ModuleName = "opengraph_integration";
-
-        internal const string ModuleId = "0528b726-7fe9-489c-84c3-6af89479a5ad";
-
-        /// <summary>
-        /// Gets the identifier.
-        /// </summary>
-        /// <value>
-        /// The identifier.
-        /// </value>
-        public override Guid Id
-        {
-            get
-            {
-                return new Guid(ModuleId);
-            }
-        }
 
         /// <summary>
         /// Gets the name.

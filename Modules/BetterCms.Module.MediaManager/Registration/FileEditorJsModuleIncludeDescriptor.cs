@@ -14,7 +14,7 @@ namespace BetterCms.Module.MediaManager.Registration
         /// Initializes a new instance of the <see cref="FileEditorJsModuleIncludeDescriptor" /> class.
         /// </summary>
         /// <param name="module">The container module.</param>
-        public FileEditorJsModuleIncludeDescriptor(ModuleDescriptor module)
+        public FileEditorJsModuleIncludeDescriptor(CmsModuleDescriptor module)
             : base(module, "bcms.media.fileeditor")
         {
             Links = new IActionProjection[]

@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-using BetterCms.Core.Models;
+using BetterModules.Core.Models;
 
 namespace BetterCms.Module.Users.Models
 {

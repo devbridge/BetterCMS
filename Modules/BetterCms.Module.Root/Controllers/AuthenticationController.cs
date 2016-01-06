@@ -13,6 +13,8 @@ using BetterCms.Module.Root.ViewModels.Autocomplete;
 
 using Common.Logging;
 
+using BetterModules.Core.Web.Models;
+
 using Microsoft.Web.Mvc;
 
 namespace BetterCms.Module.Root.Controllers

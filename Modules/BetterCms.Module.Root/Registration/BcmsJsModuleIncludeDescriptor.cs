@@ -2,6 +2,8 @@
 using BetterCms.Core.Modules.Projections;
 using BetterCms.Module.Root.Content.Resources;
 
+using BetterModules.Core.Web.Modules;
+
 namespace BetterCms.Module.Root.Registration
 {
     /// <summary>

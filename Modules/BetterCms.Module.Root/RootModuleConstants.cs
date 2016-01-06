@@ -26,6 +26,11 @@
         public const string EditableGridCellTemplate = "~/Areas/bcms-root/Views/Shared/EditableGrid/Partial/Cell.cshtml";
         
         /// <summary>
+        /// The editable grid cell template.
+        /// </summary>
+        public const string EditableGridMultilineTextCellTemplate = "~/Areas/bcms-root/Views/Shared/EditableGrid/Partial/MultilineTextCell.cshtml";
+        
+        /// <summary>
         /// The editable grid drop down cell template.
         /// </summary>
         public const string EditableGridDropDownCellTemplate = "~/Areas/bcms-root/Views/Shared/EditableGrid/Partial/DropDownCell.cshtml";
@@ -64,6 +69,21 @@
         /// The email regular expression
         /// </summary>
         public const string EmailRegularExpression = @"^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)+$";
+
+        /// <summary>
+        /// The html regular expression
+        /// </summary>
+        public const string HtmlRegularExpression = "</?\\w+((\\s+\\w+(\\s*=\\s*(?:\".*?\"|'.*?'|[^'\">\\s]+))?)+\\s*|\\s*)/?>";
+        
+        /// <summary>
+        /// The alphanumeric regular expression
+        /// </summary>
+        public const string AlphanumericExpression = "^[a-zA-Z0-9]*$";
+
+        /// <summary>
+        /// The active directory name regular expression
+        /// </summary>
+        public const string ActiveDirectoryNonCompliantExpression = @"^[^\\\/\""\[\]\:\;\|\=\,\+\*\?\<\>\%]+$";
 
         /// <summary>
         /// The editable grid option cell template.

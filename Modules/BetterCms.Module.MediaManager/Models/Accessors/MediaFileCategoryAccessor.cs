@@ -1,10 +1,14 @@
-﻿using System.Linq;
+﻿using System.Collections.Generic;
+using System.Linq;
 
-using BetterCms.Core.DataAccess;
-using BetterCms.Core.DataAccess.DataContext;
+using BetterCms.Core.DataContracts;
 using BetterCms.Module.Root.Models;
 
+using BetterModules.Core.DataAccess;
+using BetterModules.Core.DataAccess.DataContext;
+
 using NHibernate;
+using NHibernate.Linq;
 
 namespace BetterCms.Module.MediaManager.Models.Accessors
 {
@@ -20,8 +24,12 @@ namespace BetterCms.Module.MediaManager.Models.Accessors
 
         public IFutureValue<int> CheckIsUsed(IRepository repository, CategoryTree categoryTree)
         {
-
             return repository.AsQueryable<MediaCategory>().Where(m => m.Media is MediaFile && m.Category.CategoryTree == categoryTree && m.Media.Original == null).ToRowCountFutureValue();
+        }
+
+        public IEnumerable<IEntityCategory> QueryEntityCategories(IRepository repository, ICategory category)
+        {
+            return repository.AsQueryable<MediaCategory>().Where(m =>  m.Media is MediaFile && m.Category.Id == category.Id).ToFuture();
         }
     }
 }

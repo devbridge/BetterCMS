@@ -1,6 +1,8 @@
 ﻿using System;
 
-using BetterCms.Core.DataAccess.DataContext.Migrations;
+using BetterModules.Core.DataAccess.DataContext.Migrations;
+
+using BetterModules.Core.DataAccess.DataContext.Migrations;
 
 using FluentMigrator;
 
@@ -10,7 +12,7 @@ namespace BetterCms.Module.MediaManager.Models.Migrations
     /// Module database structure update.
     /// </summary>
     [Migration(201306271317)]
-    public class Migration201306271317 : DefaultMigration
+    public class Migration201306271317: DefaultMigration
     {
         /// <summary>
         /// The root module schema name.
@@ -34,7 +36,7 @@ namespace BetterCms.Module.MediaManager.Models.Migrations
             Create
                 .Table("MediaTags")
                 .InSchema(SchemaName)
-                .WithCmsBaseColumns()
+                .WithBaseColumns()
                 .WithColumn("MediaId").AsGuid().NotNullable()
                 .WithColumn("TagId").AsGuid().NotNullable();
 

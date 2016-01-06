@@ -14,7 +14,7 @@ namespace BetterCms.Module.Newsletter.Registration
         /// Initializes a new instance of the <see cref="NewsletterJsModuleIncludeDescriptor" /> class.
         /// </summary>
         /// <param name="module">The container module.</param>
-        public NewsletterJsModuleIncludeDescriptor(ModuleDescriptor module)
+        public NewsletterJsModuleIncludeDescriptor(CmsModuleDescriptor module)
             : base(module, "bcms.newsletter")
         {
             Links = new IActionProjection[]

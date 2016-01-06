@@ -1,6 +1,4 @@
-﻿using System;
-
-using Autofac;
+﻿using Autofac;
 
 using BetterCms.Core.Modules;
 
@@ -16,12 +14,14 @@ using BetterCms.Module.Users.Api.Operations.Users.Users;
 using BetterCms.Module.Users.Api.Operations.Users.Users.User;
 using BetterCms.Module.Users.Api.Operations.Users.Users.User.Validate;
 
+using BetterModules.Core.Modules.Registration;
+
 namespace BetterCms.Module.Users.Api
 {
     /// <summary>
     /// API module descriptor.
     /// </summary>
-    public class UsersApiModuleDescriptor : ModuleDescriptor
+    public class UsersApiModuleDescriptor : CmsModuleDescriptor
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="UsersApiModuleDescriptor" /> class.
@@ -30,22 +30,6 @@ namespace BetterCms.Module.Users.Api
         public UsersApiModuleDescriptor(ICmsConfiguration cmsConfiguration)
             : base(cmsConfiguration)
         {
-        }
-
-        internal const string ModuleId = "aa68459e-50fc-4e66-9c31-0eaaaacdf832";
-
-        /// <summary>
-        /// Gets the identifier.
-        /// </summary>
-        /// <value>
-        /// The identifier.
-        /// </value>
-        public override Guid Id
-        {
-            get
-            {
-                return new Guid(ModuleId);
-            }
         }
 
         /// <summary>

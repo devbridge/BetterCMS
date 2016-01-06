@@ -46,6 +46,15 @@ namespace BetterCms.Module.Api.Operations.Pages.Contents.Content.HtmlContent
         public string Html { get; set; }
 
         /// <summary>
+        /// Gets or sets the content original text.
+        /// </summary>
+        /// <value>
+        /// The content original text.
+        /// </value>
+        [DataMember]
+        public string OriginalText { get; set; }
+
+        /// <summary>
         /// Gets or sets the content custom CSS.
         /// </summary>
         /// <value>
@@ -116,5 +125,14 @@ namespace BetterCms.Module.Api.Operations.Pages.Contents.Content.HtmlContent
         /// </value>
         [DataMember]
         public System.Collections.Generic.IList<ChildContentOptionValuesModel> ChildContentsOptionValues { get; set; }
+
+        /// <summary>
+        /// Gets or sets the content text mode.
+        /// </summary>
+        /// <value>
+        /// The content text mode.
+        /// </value>
+        [DataMember]
+        public virtual ContentTextMode ContentTextMode { get; set; }
     }
 }

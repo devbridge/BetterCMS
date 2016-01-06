@@ -1,7 +1,5 @@
 ﻿using System.Web.Mvc;
 
-using BetterCms.Core.Web.EmbeddedResources;
-
 namespace BetterCms.Core.Web.ViewEngines
 {
     /// <summary>

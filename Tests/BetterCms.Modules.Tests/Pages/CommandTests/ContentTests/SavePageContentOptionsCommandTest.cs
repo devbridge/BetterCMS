@@ -1,16 +1,18 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 
-using BetterCms.Core.DataAccess;
-using BetterCms.Core.DataAccess.DataContext;
-using BetterCms.Core.DataContracts.Enums;
-using BetterCms.Core.Services.Caching;
+using Autofac;
 
+using BetterModules.Core.DataAccess;
+using BetterModules.Core.DataAccess.DataContext;
+using BetterCms.Core.DataContracts.Enums;
 using BetterCms.Module.Pages.Command.Content.SavePageContentOptions;
 using BetterCms.Module.Pages.ViewModels.Content;
 using BetterCms.Module.Root.Models;
 using BetterCms.Module.Root.Services;
 using BetterCms.Module.Root.ViewModels.Option;
+
+using BetterModules.Core.Web.Services.Caching;
 
 using NUnit.Framework;
 
@@ -81,7 +83,7 @@ namespace BetterCms.Test.Module.Pages.CommandTests.ContentTests
                 var command = new SavePageContentOptionsCommand();
                 command.UnitOfWork = unitOfWork;
                 command.Repository = repository;
-                command.OptionService = new DefaultOptionService(repository, new HttpRuntimeCacheService());
+                command.OptionService = new DefaultOptionService(repository, new HttpRuntimeCacheService(), Container.Resolve<ICmsConfiguration>());
                 var result = command.Execute(request);
 
                 Assert.IsNotNull(result);

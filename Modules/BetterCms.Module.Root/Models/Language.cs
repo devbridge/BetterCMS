@@ -1,11 +1,13 @@
 ﻿using System;
 
-using BetterCms.Core.Models;
+using BetterCms.Core.DataContracts;
+
+using BetterModules.Core.Models;
 
 namespace BetterCms.Module.Root.Models
 {
     [Serializable]
-    public class Language : EquatableEntity<Language>
+    public class Language : EquatableEntity<Language>, ILanguage
     {
         public virtual string Name { get; set; }
 

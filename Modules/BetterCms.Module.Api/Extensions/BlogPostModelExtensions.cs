@@ -8,6 +8,7 @@ using BetterCms.Core.Security;
 using BetterCms.Module.Api.Operations.Blog.BlogPosts.BlogPost.Properties;
 using BetterCms.Module.Blog.ViewModels.Blog;
 using BetterCms.Module.MediaManager.ViewModels;
+using BetterCms.Module.Pages.Models.Enums;
 using BetterCms.Module.Root.Models;
 using BetterCms.Module.Root.ViewModels.Security;
 
@@ -23,6 +24,8 @@ namespace BetterCms.Module.Api.Extensions
             serviceModel.Title = model.Title;
             serviceModel.IntroText = model.IntroText;
             serviceModel.Content = model.HtmlContent;
+            serviceModel.OriginalText = model.OriginalText;
+            serviceModel.ContentTextMode = (ContentTextMode)model.ContentTextMode;
             serviceModel.LiveFromDate = model.ActivationDate;
             serviceModel.LiveToDate = model.ExpirationDate;
             serviceModel.BlogUrl = model.BlogPostUrl;

@@ -1,12 +1,14 @@
 ﻿using System;
 using System.Linq;
 
-using BetterCms.Core.DataAccess;
-using BetterCms.Core.DataAccess.DataContext;
 using BetterCms.Core.Security;
 using BetterCms.Core.Services;
+
 using BetterCms.Module.Root.Models;
 using BetterCms.Module.Root.Mvc;
+
+using BetterModules.Core.DataAccess;
+using BetterModules.Core.DataAccess.DataContext;
 
 using NHibernate.Linq;
 

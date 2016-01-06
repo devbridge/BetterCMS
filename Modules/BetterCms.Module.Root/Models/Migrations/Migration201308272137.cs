@@ -1,12 +1,14 @@
-﻿using BetterCms.Core.DataAccess.DataContext.Migrations;
-using BetterCms.Core.Models;
+﻿using BetterModules.Core.DataAccess.DataContext.Migrations;
+
+using BetterModules.Core.DataAccess.DataContext.Migrations;
+using BetterModules.Core.Models;
 
 using FluentMigrator;
 
 namespace BetterCms.Module.Root.Models.Migrations
 {
     [Migration(201308272137)]
-    public class Migration201308272137 : DefaultMigration
+    public class Migration201308272137: DefaultMigration
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="Migration201308252344"/> class.
@@ -27,7 +29,7 @@ namespace BetterCms.Module.Root.Models.Migrations
             Create
                 .Table("AccessRules")
                 .InSchema(SchemaName)
-                .WithCmsBaseColumns()
+                .WithBaseColumns()
                 .WithColumn("Identity").AsString(MaxLength.Name).NotNullable()
                 .WithColumn("AccessLevel").AsInt32().NotNullable();
         }

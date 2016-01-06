@@ -25,7 +25,7 @@
       <dependency id="Microsoft.Web.Infrastructure" version="1.0.0.0" />
       <dependency id="Mvc3Futures" version="3.0.20105.0" />
       <dependency id="MvcContrib.Mvc3-ci" version="3.0.100.0" />
-      <dependency id="Newtonsoft.Json" version="5.0.8" />
+      <dependency id="Newtonsoft.Json" version="6.0.8" />
       <dependency id="NHibernate" version="[3.3.3.4001]" />
     </dependencies>
   </metadata>

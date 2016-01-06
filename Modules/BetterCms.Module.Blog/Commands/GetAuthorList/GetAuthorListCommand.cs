@@ -1,8 +1,5 @@
 ﻿using System.Linq;
 
-using BetterCms.Core;
-using BetterCms.Core.DataAccess.DataContext;
-using BetterCms.Core.Mvc.Commands;
 using BetterCms.Module.Blog.Models;
 using BetterCms.Module.Blog.Services;
 using BetterCms.Module.Blog.ViewModels.Author;
@@ -13,6 +10,9 @@ using BetterCms.Module.Root.Mvc;
 using BetterCms.Module.Root.Mvc.Grids.Extensions;
 using BetterCms.Module.Root.Mvc.Grids.GridOptions;
 using BetterCms.Module.Root.ViewModels.SiteSettings;
+
+using BetterModules.Core.DataAccess.DataContext;
+using BetterModules.Core.Web.Mvc.Commands;
 
 namespace BetterCms.Module.Blog.Commands.GetAuthorList
 {
@@ -43,6 +43,7 @@ namespace BetterCms.Module.Blog.Commands.GetAuthorList
                             Id = author.Id,
                             Version = author.Version,
                             Name = author.Name,
+                            Description = author.Description,
                             Image = author.Image != null && !author.Image.IsDeleted
                                     ?
                                     new ImageSelectorViewModel

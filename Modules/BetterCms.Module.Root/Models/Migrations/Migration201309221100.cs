@@ -1,12 +1,14 @@
-﻿using BetterCms.Core.DataAccess.DataContext.Migrations;
-using BetterCms.Core.Models;
+﻿using BetterModules.Core.DataAccess.DataContext.Migrations;
+
+using BetterModules.Core.DataAccess.DataContext.Migrations;
+using BetterModules.Core.Models;
 
 using FluentMigrator;
 
 namespace BetterCms.Module.Root.Models.Migrations
 {
     [Migration(201309221100)]
-    public class Migration201309221100 : DefaultMigration
+    public class Migration201309221100: DefaultMigration
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="Migration201309221100"/> class.
@@ -27,7 +29,7 @@ namespace BetterCms.Module.Root.Models.Migrations
             Create
                 .Table("CustomOptions")
                 .InSchema(SchemaName)
-                .WithCmsBaseColumns()
+                .WithBaseColumns()
                 .WithColumn("Title").AsString(MaxLength.Name).NotNullable()
                 .WithColumn("Identifier").AsString(MaxLength.Name).NotNullable();
 

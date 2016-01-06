@@ -15,6 +15,8 @@ namespace BetterCms.Core.DataContracts.Enums
 
         Boolean = 5,
 
+        MultilineText = 21,
+
         JavaScriptUrl = 51,
         
         CssUrl = 52,

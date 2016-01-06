@@ -1,4 +1,5 @@
-﻿using System.Web.Mvc;
+﻿using System;
+using System.Web.Mvc;
 
 using BetterCms.Core.Security;
 using BetterCms.Core.Services.Storage;
@@ -13,6 +14,8 @@ using BetterCms.Module.MediaManager.ViewModels.MediaManager;
 using BetterCms.Module.Root;
 using BetterCms.Module.Root.Models;
 using BetterCms.Module.Root.Mvc;
+
+using BetterModules.Core.Web.Models;
 
 using Microsoft.Web.Mvc;
 

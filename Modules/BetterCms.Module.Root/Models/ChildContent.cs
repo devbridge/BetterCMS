@@ -2,7 +2,8 @@
 using System.Collections.Generic;
 
 using BetterCms.Core.DataContracts;
-using BetterCms.Core.Models;
+
+using BetterModules.Core.Models;
 
 namespace BetterCms.Module.Root.Models
 {
@@ -29,7 +30,7 @@ namespace BetterCms.Module.Root.Models
             }
         }
 
-        IEnumerable<IOption> IChildContent.Options
+        IEnumerable<IOptionValueEntity> IChildContent.Options
         {
             get
             {

@@ -1,8 +1,8 @@
 ﻿/*jslint unparam: true, white: true, browser: true, devel: true */
 /*global bettercms */
 
-bettercms.define('bcms.role', ['bcms.jquery', 'bcms', 'bcms.autocomplete', 'bcms.ko.extenders', 'bcms.ko.grid'],
-    function($, bcms, autocomplete, ko, kogrid) {
+bettercms.define('bcms.role', ['bcms.jquery', 'bcms', 'bcms.autocomplete', 'bcms.ko.extenders', 'bcms.ko.grid', 'bcms.antiXss'],
+    function ($, bcms, autocomplete, ko, kogrid, antiXss) {
         'use strict';
 
         var role = {},
@@ -17,7 +17,8 @@ bettercms.define('bcms.role', ['bcms.jquery', 'bcms', 'bcms.autocomplete', 'bcms
             globalization = {
                 rolesListTabTitle: null,
                 deleteRoleConfirmMessage: null
-            };
+            },
+            rowId = 0;
 
         // Assign objects to module.
         role.links = links;
@@ -69,11 +70,12 @@ bettercms.define('bcms.role', ['bcms.jquery', 'bcms', 'bcms.autocomplete', 'bcms
 
                 var self = this;
 
-                self.name = ko.observable().extend({ required: "", maxLength: { maxLength: ko.maxLength.name } });
+                self.name = ko.observable().extend({ required: "", maxLength: { maxLength: ko.maxLength.name }, activeDirectoryCompliant: "" });    
                 self.description = ko.observable().extend({ maxLength: { maxLength: ko.maxLength.name } });
                 self.registerFields(self.name, self.description);
                 self.name(item.Name);
                 self.description(item.Description);
+                self.valueHasFocus = ko.observable(false);
                 
                 if (item.IsSystematic === true) {
                     self.editingIsDisabled(true);
@@ -82,7 +84,7 @@ bettercms.define('bcms.role', ['bcms.jquery', 'bcms', 'bcms.autocomplete', 'bcms
             }
 
             RoleViewModel.prototype.getDeleteConfirmationMessage = function () {
-                return $.format(globalization.deleteRoleConfirmMessage, this.name());
+                return $.format(globalization.deleteRoleConfirmMessage, antiXss.encodeHtml(this.name()));
             };
 
             RoleViewModel.prototype.getSaveParams = function () {
@@ -91,6 +93,13 @@ bettercms.define('bcms.role', ['bcms.jquery', 'bcms', 'bcms.autocomplete', 'bcms
                 params.Description = this.description();
 
                 return params;
+            };
+
+            RoleViewModel.prototype.getRowId = function () {
+                if (!this.rowId) {
+                    this.rowId = 'bcms-role-row-' + rowId++;
+                }
+                return this.rowId;
             };
 
             return RoleViewModel;

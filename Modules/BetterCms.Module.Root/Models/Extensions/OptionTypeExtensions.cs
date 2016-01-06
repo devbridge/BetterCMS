@@ -26,6 +26,9 @@ namespace BetterCms.Module.Root.Models.Extensions
                 case OptionType.Boolean:
                     return RootGlobalization.OptionTypes_Boolean_Title;
 
+                case OptionType.MultilineText:
+                    return RootGlobalization.OptionTypes_MultilineText_Title;
+
                 default:
                     throw new NotSupportedException(string.Format("Not supported option type: {0}", type));
             }

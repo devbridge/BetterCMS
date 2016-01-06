@@ -14,6 +14,8 @@ using BetterCms.Module.Users.Commands.Role.SearchRoles;
 using BetterCms.Module.Users.Content.Resources;
 using BetterCms.Module.Users.ViewModels.Role;
 
+using BetterModules.Core.Web.Models;
+
 using Microsoft.Web.Mvc;
 
 namespace BetterCms.Module.Users.Controllers

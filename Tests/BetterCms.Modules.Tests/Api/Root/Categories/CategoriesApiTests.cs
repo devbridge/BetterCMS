@@ -3,12 +3,16 @@ using System.Collections.Generic;
 using System.Linq;
 
 using BetterCms.Core.DataContracts;
-using BetterCms.Core.Models;
+
 using BetterCms.Events;
+
 using BetterCms.Module.Api.Extensions;
 using BetterCms.Module.Api.Infrastructure;
 using BetterCms.Module.Api.Operations.Root.Categories;
 using BetterCms.Module.Api.Operations.Root.Categories.Category;
+
+using BetterModules.Core.Models;
+using BetterModules.Events;
 
 using NHibernate;
 

@@ -1,8 +1,9 @@
 ﻿using System.Linq;
 
-using BetterCms.Core.DataAccess;
-using BetterCms.Core.Web;
 using BetterCms.Module.Users.Models;
+
+using BetterModules.Core.DataAccess;
+using BetterModules.Core.Web.Web;
 
 namespace BetterCms.Module.Users.Services
 {

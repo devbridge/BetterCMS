@@ -1,4 +1,4 @@
-﻿using BetterCms.Core.Models;
+﻿using BetterModules.Core.Models;
 
 namespace BetterCms.Module.Blog.Models.Maps
 {
@@ -10,6 +10,7 @@ namespace BetterCms.Module.Blog.Models.Maps
             Table("Authors");
 
             Map(x => x.Name).Not.Nullable().Length(MaxLength.Name);
+            Map(x => x.Description).Nullable().Length(MaxLength.Max);
 
             References(x => x.Image).Cascade.SaveUpdate().LazyLoad().Nullable();
         }

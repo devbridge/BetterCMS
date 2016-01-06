@@ -4,12 +4,14 @@ using Autofac;
 
 using BetterCms.Core.Modules;
 
+using BetterModules.Core.Modules.Registration;
+
 namespace BetterCms.Module.Search
 {
     /// <summary>
     /// Pages module descriptor.
     /// </summary>
-    public class SearchModuleDescriptor : ModuleDescriptor
+    public class SearchModuleDescriptor : CmsModuleDescriptor
     {
         /// <summary>
         /// The module name.
@@ -32,22 +34,6 @@ namespace BetterCms.Module.Search
         public SearchModuleDescriptor(ICmsConfiguration cmsConfiguration)
             : base(cmsConfiguration)
         {            
-        }
-
-        internal const string ModuleId = "312bf2f0-dbfb-408e-a648-b17b69b0f6dc";
-
-        /// <summary>
-        /// Gets the identifier.
-        /// </summary>
-        /// <value>
-        /// The identifier.
-        /// </value>
-        public override Guid Id
-        {
-            get
-            {
-                return new Guid(ModuleId);
-            }
         }
 
         /// <summary>

@@ -1,15 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Web;
 
-using BetterCms.Core.Exceptions;
 using BetterCms.Core.Modules;
 using BetterCms.Core.Modules.Registration;
 using BetterCms.Module.Root.ViewModels;
 using BetterCms.Module.Root.ViewModels.Rendering;
 
 using Common.Logging;
+
+using BetterModules.Core.Exceptions;
 
 namespace BetterCms.Module.Root.Services
 {
@@ -23,7 +23,7 @@ namespace BetterCms.Module.Root.Services
         /// <summary>
         /// The modules registration.
         /// </summary>
-        private readonly IModulesRegistration modulesRegistration;
+        private readonly ICmsModulesRegistration modulesRegistration;
 
         /// <summary>
         /// The CMS configuration.
@@ -35,7 +35,7 @@ namespace BetterCms.Module.Root.Services
         /// </summary>
         /// <param name="modulesRegistration">The modules registration.</param>
         /// <param name="cmsConfiguration">The CMS configuration.</param>
-        public DefaultRenderingService(IModulesRegistration modulesRegistration, ICmsConfiguration cmsConfiguration)
+        public DefaultRenderingService(ICmsModulesRegistration modulesRegistration, ICmsConfiguration cmsConfiguration)
         {
             this.cmsConfiguration = cmsConfiguration;
             this.modulesRegistration = modulesRegistration;
@@ -80,7 +80,7 @@ namespace BetterCms.Module.Root.Services
                             });
                 }
             }
-            catch (CmsException ex)
+            catch (CoreException ex)
             {
                 Log.Error("Failed to retrieve java script modules.", ex);
             }
@@ -94,12 +94,12 @@ namespace BetterCms.Module.Root.Services
 
             if (moduleDescriptorType != null)
             {
-                var modules = modulesRegistration.GetModules();
+                var modules = modulesRegistration.GetCmsModules();
                 foreach (var module in modules)
                 {
-                    if (module.ModuleDescriptor.GetType() == moduleDescriptorType)
+                    if (module.GetType() == moduleDescriptorType)
                     {
-                        allIncludes.AddRange(module.ModuleDescriptor.RegisterCssIncludes());
+                        allIncludes.AddRange(module.RegisterCssIncludes());
                     }
                 }
             }

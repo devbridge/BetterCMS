@@ -1,0 +1,122 @@
+@import '../../core/variables';
+
+%btn-extender {
+    @include vertical-align();
+    border: 0;
+    border-radius: 2px;
+    box-sizing: border-box;
+    cursor: pointer;
+    font-family: $font-base-family;
+    overflow: hidden;
+    text-align: center;
+    text-transform: uppercase;
+}
+
+%btn-links-extender {
+    color: $blue-main;
+    font-weight: 600;
+    padding: 0 10px;
+
+    &:hover {
+        color: $blue-l60;
+    }
+}
+
+.bcms-btn {
+    &-main {
+        @extend %btn-extender;
+        @include add-gradient($top: $blue-l30, $bottom: $blue-l40);
+        color: $white;
+        font-size: 16px;
+        line-height: 32px;
+        padding: 0 10px;
+    }
+
+    &-small {
+        @extend %btn-extender;
+        @include add-gradient($top: $blue-l30, $bottom: $blue-l40);
+        color: $white;
+        font-size: 12px;
+        line-height: 30px;
+        padding: 0 10px;
+
+        &.bcms-btn-gray {
+            @include add-gradient($top: $gray-l45, $bottom: $gray-l46);
+        }
+    }
+
+    &-grid {
+        @extend %btn-extender;
+        @include add-gradient($top: $gray-l50, $bottom: $gray-l60);
+        color: $white;
+        font-size: 14px;
+        font-weight: 600;
+        line-height: 36px;
+        padding: 0 15px;
+    }
+
+    &-links-main {
+        @extend %btn-extender;
+        @extend %btn-links-extender;
+        font-size: 14px;
+        line-height: 32px;
+    }
+
+    &-links-small {
+        @extend %btn-extender;
+        @extend %btn-links-extender;
+        font-size: 12px;
+        line-height: 30px;
+    }
+
+    &-search {
+        @include transition(background-color 200ms);
+        @include position(absolute, 1px 1px null null);
+        @include size(28px);
+        background: $dark url($bcms-search) no-repeat center;
+        cursor: pointer;
+        overflow: hidden;
+        text-indent: -999em;
+
+        &:hover {
+            background-color: lighten($dark, 5%);
+        }
+    }
+
+    &-close {
+        @include position(absolute, 10px 10px null null);
+        @include size(15px);
+        background: url($bcms-close) no-repeat center;
+        cursor: pointer;
+        overflow: hidden;
+        text-decoration: none;
+        text-indent: -999em;
+    }
+}
+
+//todo need to update
+.bcms-btn-plus {
+    background: url('images/sprite-base-2.png') no-repeat -44px -179px;
+    cursor: pointer;
+    display: inline-block;
+    line-height: 16px;
+    margin-left: 5px;
+    vertical-align: middle;
+    width: 16px;
+}
+
+div.bcms-btn-plus-expand {
+    background-position: -64px -179px;
+}
+
+//todo check if this button still relevant
+//.bcms-form-button {
+//    background: #1891e6;
+//    background: -webkit-linear-gradient(top, #1891e6 0, #0c7bc8 100%);
+//    background: linear-gradient(to bottom, #1891e6 0, #0c7bc8 100%);
+//    color: #FFFFFF;
+//    cursor: pointer;
+//    font-size: 12px;
+//    margin: 10px 0;
+//    padding: 10px;
+//}

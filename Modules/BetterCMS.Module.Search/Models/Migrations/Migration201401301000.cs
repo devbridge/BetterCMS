@@ -1,6 +1,6 @@
 ﻿using System;
 
-using BetterCms.Core.DataAccess.DataContext.Migrations;
+using BetterModules.Core.DataAccess.DataContext.Migrations;
 using BetterCms.Module.Search.Content.Resources;
 
 using FluentMigrator;
@@ -8,7 +8,7 @@ using FluentMigrator;
 namespace BetterCms.Module.Search.Models.Migrations
 {
     [Migration(201401301000)]
-    public class Migration201401301000 : DefaultMigration
+    public class Migration201401301000: DefaultMigration
     {
         /// <summary>
         /// The root schema name

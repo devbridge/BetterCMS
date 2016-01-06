@@ -56,25 +56,16 @@ logs
 /Sandbox/BetterCms.Sandbox.Mvc4/App_Data/BetterCMS/Modules/BetterCms.Module.WebApi.dll
 /Sandbox/BetterCms.Sandbox.Mvc4/App_Data/BetterCMS/Modules/BetterCms.Module.WebApi.pdb
 /Sandbox/BetterCms.Sandbox.Mvc4/uploads
+/Sandbox/BetterCms.Sandbox.Mvc4/trash
 /Modules/BetterCms.Module.Root/Content/Styles/bcms.root.min.css
 /Modules/BetterCms.Module.Root/Scripts/bcms.root.min.js
-/Modules/BetterCms.Module.Blog/Content/Styles/bcms.blog.min.css
 /Modules/BetterCms.Module.Blog/Scripts/bcms.blog.min.js
-/Modules/BetterCms.Module.MediaManager/Content/Css/bcms.media.min.css
 /Modules/BetterCms.Module.MediaManager/Scripts/bcms.media.min.js
-/Modules/BetterCms.Module.Pages/Content/Css/bcms.pages.min.css
-/Modules/BetterCms.Module.Templates/Content/Css/bcms.templates.min.css
-/Modules/BetterCms.Module.Users/Content/Css/bcms.users.min.css
 /Modules/BetterCms.Module.Users/Scripts/bcms.users.min.js
 /Modules/BetterCms.Module.Pages/Scripts/bcms.pages.min.js
 /Build/BetterCms.NugetPackage/Resources
-/Modules/BetterCms.Module.MediaManager/Content/Styles/bcms.media.min.css
-/Modules/BetterCms.Module.Pages/Content/Styles/bcms.pages.min.css
-/Modules/BetterCms.Module.Templates/Content/Styles/bcms.templates.min.css
-/Modules/BetterCms.Module.Users/Content/Styles/bcms.users.min.css
 /Modules/BetterCms.Module.ImagesGallery/Scripts/bcms.images_gallery.min.js
 
-/Modules/BetterCms.Module.Installation/Content/Styles/bcms.installation.min.css
 /Modules/BetterCms.Module.Root/Scripts/bcms.knockout-2.2.1.min.js
 
 /Modules/BetterCms.Module.Root/Scripts/bcms.require-2.1.5.min.js
@@ -97,3 +88,11 @@ logs
 ._.DS_Store
 ._.*
 
+#node modules
+node_modules/
+npm-debug.log
+
+#webstorm
+*.sass-cache
+*.idea
+Modules/BetterCms.Module.Root/Scripts/bcms.knockout-3.3.0.min.js

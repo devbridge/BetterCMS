@@ -1,17 +1,15 @@
 ﻿using System;
 using System.Linq;
 
-using BetterCms.Core.DataAccess;
-using BetterCms.Core.DataAccess.DataContext;
-using BetterCms.Core.Exceptions.Api;
-using BetterCms.Core.Exceptions.DataTier;
 using BetterCms.Module.MediaManager.Models;
 using BetterCms.Module.MediaManager.Services;
 using BetterCms.Module.Root.Mvc;
 
-using ServiceStack.ServiceInterface;
+using BetterModules.Core.DataAccess;
+using BetterModules.Core.DataAccess.DataContext;
+using BetterModules.Core.Exceptions.DataTier;
 
-using NHibernate.Linq;
+using ServiceStack.ServiceInterface;
 
 namespace BetterCms.Module.Api.Operations.Blog.Authors.Author
 {
@@ -69,6 +67,7 @@ namespace BetterCms.Module.Api.Operations.Blog.Authors.Author
                         LastModifiedOn = author.ModifiedOn,
 
                         Name = author.Name,
+                        Description = author.Description,
 
                         ImageId = author.Image != null && !author.Image.IsDeleted ? author.Image.Id : (Guid?)null,
                         ImageUrl = author.Image != null && !author.Image.IsDeleted ? author.Image.PublicUrl : (string)null,
@@ -117,6 +116,7 @@ namespace BetterCms.Module.Api.Operations.Blog.Authors.Author
             unitOfWork.BeginTransaction();
 
             authorToSave.Name = request.Data.Name;
+            authorToSave.Description = request.Data.Description;
             authorToSave.Image = request.Data.ImageId.HasValue ? repository.AsProxy<MediaImage>(request.Data.ImageId.Value) : null;
 
             repository.Save(authorToSave);

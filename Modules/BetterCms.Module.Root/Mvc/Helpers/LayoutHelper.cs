@@ -76,17 +76,19 @@ namespace BetterCms.Module.Root.Mvc.Helpers
                     webPage.Write(result);
                 });
         }
-        
+
         /// <summary>
         /// Renders the page custom JavaScript.
         /// </summary>
         /// <param name="htmlHelper">The HTML helper.</param>
         /// <param name="styles">The styles.</param>
-        /// <returns></returns>
-        public static IHtmlString RenderPageCustomCss(this HtmlHelper htmlHelper, IEnumerable<IStylesheetAccessor> styles)
+        /// <param name="pageModel">The rendering page model.</param>
+        /// <returns>The rendering page custom CSS</returns>
+        public static IHtmlString RenderPageCustomCss(this HtmlHelper htmlHelper, IEnumerable<IStylesheetAccessor> styles, RenderPageViewModel pageModel = null)
         {
             if (styles != null)
             {
+                var includedCssResources = new List<string>();
                 var inlineCssBuilder = new StringBuilder();
                 var cssIncludesBuilder = new StringBuilder();
 
@@ -97,9 +99,10 @@ namespace BetterCms.Module.Root.Mvc.Helpers
                     {
                         foreach (var css in cssList)
                         {
-                            if (!string.IsNullOrWhiteSpace(css))
+                            if (!string.IsNullOrWhiteSpace(css) && !includedCssResources.Contains(css))
                             {
                                 inlineCssBuilder.AppendLine(css);
+                                includedCssResources.Add(css);
                             }
                         }
                     }
@@ -109,9 +112,19 @@ namespace BetterCms.Module.Root.Mvc.Helpers
                     {
                         foreach (var include in includes)
                         {
-                            cssIncludesBuilder.AppendLine(string.Format(@"<link rel=""stylesheet"" type=""text/css"" href=""{0}"" />", include));
+                            if (!includedCssResources.Contains(include))
+                            {
+                                cssIncludesBuilder.AppendLine(string.Format(@"<link rel=""stylesheet"" type=""text/css"" href=""{0}"" />", include));
+                                includedCssResources.Add(include);
+                            }
                         }
                     }
+                }
+
+                if (pageModel != null)
+                {
+                    var pageHtmlHelper = new PageHtmlRenderer.PageHtmlRenderer(inlineCssBuilder, pageModel);
+                    inlineCssBuilder = pageHtmlHelper.GetReplacedHtml();
                 }
 
                 var inlineCss = inlineCssBuilder.ToString();
@@ -129,17 +142,19 @@ namespace BetterCms.Module.Root.Mvc.Helpers
 
             return null;
         }
-        
+
         /// <summary>
         /// Renders the page custom JavaScript.
         /// </summary>
         /// <param name="htmlHelper">The HTML helper.</param>
         /// <param name="scripts">The scripts.</param>
-        /// <returns></returns>
-        public static IHtmlString RenderPageCustomJavaScript(this HtmlHelper htmlHelper, IEnumerable<IJavaScriptAccessor> scripts)
+        /// <param name="pageModel">The renderingpage model.</param>
+        /// <returns>Rendering page custom JavaScript</returns>
+        public static IHtmlString RenderPageCustomJavaScript(this HtmlHelper htmlHelper, IEnumerable<IJavaScriptAccessor> scripts, RenderPageViewModel pageModel = null)
         {
             if (scripts != null)
             {
+                var insertedJsResources = new List<string>();
                 var inlineJsBuilder = new StringBuilder();
                 var jsIncludesBuilder = new StringBuilder();
 
@@ -150,11 +165,12 @@ namespace BetterCms.Module.Root.Mvc.Helpers
                     {
                         foreach (var jScript in jScriptList)
                         {
-                            if (!string.IsNullOrWhiteSpace(jScript))
+                            if (!string.IsNullOrWhiteSpace(jScript) && !insertedJsResources.Contains(jScript))
                             {
                                 inlineJsBuilder.Append(@"<script type=""text/javascript"" language=""javascript"">");
                                 inlineJsBuilder.Append(jScript);
                                 inlineJsBuilder.AppendLine(@"</script>");
+                                insertedJsResources.Add(jScript);
                             }
                         }
                     }
@@ -164,9 +180,19 @@ namespace BetterCms.Module.Root.Mvc.Helpers
                     {
                         foreach (var include in includes)
                         {
-                            jsIncludesBuilder.AppendLine(string.Format(@"<script src=""{0}"" type=""text/javascript""></script>", include));
+                            if (!insertedJsResources.Contains(include))
+                            {
+                                jsIncludesBuilder.AppendLine(string.Format(@"<script src=""{0}"" type=""text/javascript""></script>", include));
+                                insertedJsResources.Add(include);
+                            }
                         }
                     }
+                }
+
+                if (pageModel != null)
+                {
+                    var pageHtmlHelper = new PageHtmlRenderer.PageHtmlRenderer(inlineJsBuilder, pageModel);
+                    inlineJsBuilder = pageHtmlHelper.GetReplacedHtml();
                 }
 
                 var inlineJs = inlineJsBuilder.ToString();
@@ -186,7 +212,7 @@ namespace BetterCms.Module.Root.Mvc.Helpers
         /// <param name="htmlHelper">The html helper.</param>
         /// <typeparam name="T"></typeparam>
         /// <returns>The <see cref="IHtmlString"/>.</returns>
-        public static IHtmlString RenderStyleSheets<T>(this HtmlHelper htmlHelper) where T : ModuleDescriptor
+        public static IHtmlString RenderStyleSheets<T>(this HtmlHelper htmlHelper) where T : CmsModuleDescriptor
         {
             return htmlHelper.Action("RenderModuleStyleSheetIncludes", "Rendering", new { moduleDescriptorType = typeof(T) });
         }
@@ -224,6 +250,7 @@ namespace BetterCms.Module.Root.Mvc.Helpers
                     }
 
                     attributes = string.Format(@"{0} data-language=""{1}""", attributes, cultureCode);
+                    attributes = string.Format(@"{0} data-language-id=""{1}""", attributes, model.LanguageId);
                 }
             }
 

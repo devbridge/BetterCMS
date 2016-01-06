@@ -120,7 +120,7 @@ WriteLiteral("\r\n");
     {
         column.EditButtonColumn(renderId: false);
         
-        column.For(f => string.Format("<a class=\"bcms-tables-link bcms-grid-item-edit-button bcms-widget-name\" data-id=\"{0}\">{1}</a>", f.Id, f.WidgetName))
+        column.For(f => string.Format("<a class=\"bcms-tables-link bcms-grid-item-edit-button bcms-widget-name\" data-id=\"{0}\">{1}</a>", f.Id, System.Web.Security.AntiXss.AntiXssEncoder.HtmlEncode(f.WidgetName ?? "", true)))
             .Named(PagesGlobalization.SiteSettings_Widgets_NameColumn)
             .SortColumnName("WidgetName")
             .HeaderAttributes(@style => "width: 245px;")

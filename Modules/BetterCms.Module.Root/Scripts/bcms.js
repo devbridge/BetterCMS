@@ -1,6 +1,12 @@
 ﻿/*global bettercms */
 
-bettercms.define('bcms', ['bcms.jquery','bcms.store'], function ($, store) {
+bettercms.define('bcms', ['bcms.jquery', 'bcms.store'], function ($, store) {
+    /// <summary>
+    /// s the specified $.
+    /// </summary>
+    /// <param name="$">The $.</param>
+    /// <param name="store">The store.</param>
+    /// <returns></returns>
     'use strict';
 
     var app = {
@@ -21,7 +27,9 @@ bettercms.define('bcms', ['bcms.jquery','bcms.store'], function ($, store) {
             sortPageContent: 'sortPageContent',
             contentModelCreated: 'contentModelCreated',
             pageCreated: 'pageCreated',
-            editContentsTree: 'editContentsTree'
+            editContentsTree: 'editContentsTree',
+            insertWidget: 'insertWidget',
+            bodyClick: 'bodyClick'
         },
         eventListeners = {},
         contentStatus = {
@@ -66,7 +74,10 @@ bettercms.define('bcms', ['bcms.jquery','bcms.store'], function ($, store) {
     * Current page language.
     */
     app.language = null;
-
+    /**
+    * Current page language ID.
+    */
+    app.languageId = null;
     /**
     * Indicates if error trace output is enabled.
     */
@@ -376,8 +387,8 @@ bettercms.define('bcms', ['bcms.jquery','bcms.store'], function ($, store) {
     /**
     * Creates new Guid
     */
-    app.createGuid = function() {
-        return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
+    app.createGuid = function () {
+        return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function (c) {
             var r = Math.random() * 16 | 0, v = c == 'x' ? r : (r & 0x3 | 0x8);
             return v.toString(16).toUpperCase();
         });
@@ -412,7 +423,7 @@ bettercms.define('bcms', ['bcms.jquery','bcms.store'], function ($, store) {
             where: function (whereClause) {
                 var filtered = [];
 
-                forEach(function(x) {
+                forEach(function (x) {
                     if (whereClause(x)) {
                         filtered.push(x);
                     }
@@ -421,7 +432,7 @@ bettercms.define('bcms', ['bcms.jquery','bcms.store'], function ($, store) {
                 return app.asEnumerable(filtered);
             },
 
-            toArray: function() {
+            toArray: function () {
                 return arr;
             },
 
@@ -442,6 +453,10 @@ bettercms.define('bcms', ['bcms.jquery','bcms.store'], function ($, store) {
             });
             browserInfo.css('display', 'block');
         }
+
+        $(document).on('click', function (e) {
+            app.trigger(app.events.bodyClick, e);
+        });
 
         // Handle unauthorized ajax errors
         $(document).ajaxError(handleUnauthorizedAjaxError);

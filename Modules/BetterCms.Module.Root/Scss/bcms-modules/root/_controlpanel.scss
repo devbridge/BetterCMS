@@ -1,0 +1,360 @@
+@import '../../core/variables';
+
+$control-panel-buttons: (
+                ('add', $bcms-cp-add-new, $blue-l30, $blue-l40),
+                ('clone', $bcms-cp-clone, $blue-l30, $blue-l40),
+                ('blog-add', $bcms-cp-add-new, $blue-l30, $blue-l40),
+                ('translate', $bcms-cp-translate, $blue-l30, $blue-l40),
+                ('settings', $bcms-cp-settings, $gray-l45, $gray-l46),
+                ('delete', $bcms-cp-delete, $red-l60, $red-l70)
+);
+
+$control-panel-switch-status: (
+                ('on', $bcms-cp-indicate-on),
+                ('off' $bcms-cp-indicate-off)
+);
+
+$control-panel-status: (
+                ('pubstatus', $bcms-cp-pub-ok, $bcms-cp-pub-warn),
+                ('seostatus', $bcms-cp-seo-ok, $bcms-cp-seo-warn)
+);
+//module
+.bcms-user-profile {
+    @include ellipsis();
+    background: url($bcms-cp-user) no-repeat left center;
+    box-sizing: border-box;
+    color: $white;
+    cursor: pointer;
+    float: left;
+    line-height: 26px;
+    max-width: 160px;
+    padding-left: 20px;
+}
+
+//module control panel global
+.bcms-sidemenu {
+    @include position(fixed, 100px null null -260px);
+    @include user-select();
+    background-color: $black;
+    border-radius: 0 0 2px 0;
+    color: $gray-l60;
+    font-family: $font-base-family;
+    font-size: 12px;
+    padding: 5px 5px 0 0;
+    width: 255px;
+    z-index: 2000;
+
+    &.bcms-sidemenu-right {
+        border-radius: 0 0 0 2px;
+        left: auto;
+        padding: 5px 0 0 5px;
+        right: 0;
+    }
+
+    &-header {
+        background-color: $dark;
+        border-radius: 0 2px 2px 0;
+        box-sizing: border-box;
+        float: left;
+        margin-bottom: 5px;
+        padding: 10px;
+        position: relative;
+        width: 100%;
+    }
+
+    &-body {
+        background-color: $dark;
+        border-radius: 0 2px 2px 0;
+        min-height: 190px;
+        overflow: hidden;
+        padding: 0 10px 10px;
+
+        > hr {
+            border: {
+                top: $border-hr-control-top;
+                right: 0;
+                bottom: 0;
+                left: 0;
+            }
+            float: left;
+            margin: 10px 0 0;
+            width: 100%;
+        }
+    }
+
+    &-footer {
+        height: 20px;
+        padding: 10px;
+    }
+
+    &-btn {
+        @include size(100% 32px);
+        @include add-gradient($top: $gray-l50, $bottom: $gray-l60);
+        border-radius: 2px;
+        box-shadow: 0 0 1px 1px rgba($black, .2);
+        box-sizing: border-box;
+        color: $white;
+        cursor: pointer;
+        float: left;
+        font-size: 12px;
+        line-height: 32px;
+        margin: 10px 0 0;
+        overflow: hidden;
+        padding: 0 10px;
+
+        &:active {
+            background: $gray-l60;
+            box-shadow: 0 0 2px 1px rgba($black, .2);
+        }
+    }
+}
+
+//module panel handle
+.bcms-sidemenu {
+    &-handle {
+        @include user-select();
+        @include position(absolute, 0 -50px null null);
+        background-color: $black;
+        border-radius: 0 2px 2px 0;
+        padding-top: 5px;
+        width: 50px;
+    }
+
+    &-openclosearrow {
+        background: url($bcms-cp-show) no-repeat center;
+        height: 46px;
+        margin: 0 auto 5px;
+        overflow: hidden;
+        text-indent: -999em;
+        width: 50px;
+
+        .bcms-state-open & {
+            background-image: url($bcms-cp-hide);
+        }
+    }
+
+    &-toggler {
+        cursor: pointer;
+    }
+
+    &-switch {
+        background-color: $dark;
+        border: $border-hr-control-top;
+        border-radius: 2px;
+        box-shadow: inset 0 0 6px 1px rgba($black, .7);
+        box-sizing: border-box;
+        cursor: pointer;
+        height: 62px;
+        margin: 5px auto;
+        overflow: hidden;
+        position: relative;
+        width: 32px;
+
+        @include virtual(after) {
+            @include position(absolute, 0 0 null);
+            background: url($bcms-cp-indicate-button) no-repeat center;
+            border: 1px solid #303030;
+            border-radius: 2px;
+            box-sizing: border-box;
+            height: 50%;
+            overflow: hidden;
+            width: 100%;
+
+            .bcms-on & {
+                bottom: 0;
+                top: auto;
+            }
+        }
+
+        .bcms-on & {
+            background-color: $green;
+        }
+    }
+
+    @each $name, $name-icon in $control-panel-switch-status {
+        &-#{$name} {
+            background: url($name-icon) no-repeat center;
+            height: 50%;
+            overflow: hidden;
+            text-indent: -999em;
+        }
+    }
+
+    &-separator {
+        border-top: $border-hr-control-top;
+        height: 0;
+        margin: 10px auto;
+        width: 100%;
+    }
+
+    &-status {
+        background: url($bcms-cp-texture);
+        overflow: hidden;
+        padding: 0 9px 5px;
+    }
+
+    @each $name, $icon, $warn-icon in $control-panel-status {
+        &-#{$name} {
+            @include size(21px 35px);
+            background: url($icon) no-repeat center;
+            margin: auto;
+
+            &.bcms-#{$name}-warn {
+                background-image: url($warn-icon);
+            }
+        }
+    }
+
+    &-drag-handle {
+        background: url($bcms-cp-drag-handle) no-repeat center;
+        cursor: move;
+        height: 14px;
+        margin: 5px auto;
+    }
+
+    &-position-handle {
+        background: $gray-l60 url($bcms-cp-stick-handle) no-repeat center;
+        border-radius: 2px;
+        cursor: pointer;
+        float: right;
+        height: 20px;
+        width: 24px;
+
+        .bcms-sidemenu-right & {
+            background-image: url($bcms-cp-stick-handle-right);
+            float: left;
+        }
+    }
+}
+
+//module control panel right
+.bcms-sidemenu-right {
+    .bcms-sidemenu-openclosearrow {
+        background-image: url($bcms-cp-show-right);
+    }
+
+    &.bcms-state-open {
+        .bcms-sidemenu-openclosearrow {
+            background-image: url($bcms-cp-hide-right);
+        }
+    }
+
+    .bcms-sidemenu-handle {
+        border-radius: 2px 0 0 2px;
+        left: -50px;
+        right: auto;
+    }
+
+    .bcms-sidemenu-header {
+        border-radius: 2px 0 0 2px;
+    }
+
+    .bcms-sidemenu-body {
+        border-radius: 2px 0 0 2px;
+    }
+
+    .bcms-version-number {
+        float: right;
+        margin-left: 10px;
+    }
+}
+
+.bcms-buttons-block {
+    @include clearfix();
+    float: left;
+    width: 100%;
+
+    > a {
+        color: $white;
+
+        &:hover {
+            text-decoration: none;
+        }
+    }
+
+    > .bcms-sidemenu-btn {
+        @include span(6 before);
+
+        &:first-child {
+            margin-left: 0;
+        }
+    }
+}
+
+//module control panel buttons
+div {
+    @each $name, $icon, $top-color, $bottom-color in $control-panel-buttons {
+        &.bcms-btn-#{$name} {
+            @include add-gradient($top: $top-color, $bottom: $bottom-color);
+            padding-right: 35px;
+            position: relative;
+
+            @include virtual(after) {
+                @include size(20px);
+                @include positioning($center-y: true);
+                right: 6px;
+                background: url($icon) no-repeat center;
+            }
+        }
+    }
+
+    //module control panel buttons override
+    &.bcms-btn {
+        &-settings {
+            width: 100%;
+        }
+
+        &-delete {
+            @include span(6 last);
+
+            + .bcms-btn-settings {
+                @include span(6);
+            }
+        }
+
+        &-ok {
+            padding-left: 30px;
+            position: relative;
+
+            @include virtual(before) {
+                @include size(16px);
+                @include positioning($center-y: true);
+                background: url($bcms-cp-notification-ok) no-repeat center;
+                left: 7px;
+            }
+        }
+
+        &-warn {
+            padding-left: 30px;
+            position: relative;
+
+            @include virtual(before) {
+                @include size(16px);
+                @include positioning($center-y: true);
+                background: url($bcms-cp-notification-warn) no-repeat center;
+                left: 9px;
+            }
+        }
+
+        &-logout {
+            @include add-gradient($top: $red-l60, $bottom: $red-l70);
+            border-radius: 2px;
+            box-shadow: 0 0 2px rgba($black, .3);
+            color: $white;
+            cursor: pointer;
+            float: right;
+            font-size: 11px;
+            font-weight: bold;
+            height: 26px;
+            line-height: 26px;
+            text-align: center;
+            text-transform: uppercase;
+            width: 70px;
+        }
+    }
+}
+
+.bcms-version-number {
+    line-height: 21px;
+    margin-right: 10px;
+}

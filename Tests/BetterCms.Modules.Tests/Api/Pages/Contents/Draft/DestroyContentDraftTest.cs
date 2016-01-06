@@ -2,10 +2,12 @@
 using System.Security.Principal;
 
 using BetterCms.Core.DataContracts.Enums;
-using BetterCms.Core.Exceptions.DataTier;
+
 using BetterCms.Module.Api.Operations.Pages.Contents.Content.Draft;
 using BetterCms.Module.Pages.Exceptions;
 using BetterCms.Module.Root;
+
+using BetterModules.Core.Exceptions.DataTier;
 
 using NHibernate;
 

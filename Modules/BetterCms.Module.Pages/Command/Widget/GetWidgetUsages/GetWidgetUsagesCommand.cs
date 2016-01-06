@@ -1,8 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 
-using BetterCms.Core.Mvc.Commands;
-
 using BetterCms.Module.Pages.Models.Enums;
 using BetterCms.Module.Pages.Services;
 using BetterCms.Module.Pages.ViewModels.Filter;
@@ -12,6 +10,8 @@ using BetterCms.Module.Pages.ViewModels.Widgets;
 using BetterCms.Module.Root.Mvc;
 using BetterCms.Module.Root.Mvc.Grids.Extensions;
 using BetterCms.Module.Root.ViewModels.SiteSettings;
+
+using BetterModules.Core.Web.Mvc.Commands;
 
 using MvcContrib.Sorting;
 

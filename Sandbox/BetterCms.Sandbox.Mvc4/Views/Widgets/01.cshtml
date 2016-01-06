@@ -3,18 +3,18 @@
 @{
     using (var container = ApiFactory.Create())
     {
-        var results = container.Pages.Pages.Search(new SearchPagesRequest {SearchString = "test"});
+        var results = container.Pages.Pages.Search(new SearchPagesRequest { SearchString = "test" });
 
         <div>Showing @results.Data.Items.Count results of @results.Data.TotalCount</div>
-        
+
         foreach (var item in results.Data.Items)
         {
             var cssClass = item.IsDenied ? "bcms-search-result" : "bcms-search-result bcms-denied-search-result";
-        
+
             <article class="@cssClass">
-                <h3>@item.Title</h3>            
+                <h3>@item.Title</h3>
                 <a href="@(item.Link ?? "#")">@item.FormattedUrl</a>
-                <p>@item.Snippet</p>            
+                <p>@item.Snippet</p>
             </article>
         }
     }

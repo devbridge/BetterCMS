@@ -2,11 +2,10 @@
 using System.Linq;
 
 using BetterCms.Core.DataContracts.Enums;
-using BetterCms.Core.Exceptions.DataTier;
-using BetterCms.Core.Mvc.Commands;
 using BetterCms.Core.Security;
 
 using BetterCms.Module.Pages.Models;
+using BetterCms.Module.Pages.Models.Enums;
 using BetterCms.Module.Pages.Services;
 using BetterCms.Module.Pages.ViewModels.Content;
 
@@ -15,6 +14,9 @@ using BetterCms.Module.Root.Models;
 using BetterCms.Module.Root.Mvc;
 using BetterCms.Module.Root.Services;
 using BetterCms.Module.Root.ViewModels.Security;
+
+using BetterModules.Core.Exceptions.DataTier;
+using BetterModules.Core.Web.Mvc.Commands;
 
 namespace BetterCms.Module.Pages.Command.Content.GetPageHtmlContent
 {
@@ -60,17 +62,18 @@ namespace BetterCms.Module.Pages.Command.Content.GetPageHtmlContent
                                                 ContentName = content.Name,
                                                 LiveFrom = content.ActivationDate,
                                                 LiveTo = content.ExpirationDate,
-                                                PageContent = content.Html,
+                                                PageContent = content.ContentTextMode == ContentTextMode.Html ? content.Html : content.OriginalText,
                                                 Version = pageContent.Version,
                                                 ContentVersion = pageContent.Content.Version,
                                                 CustomCss = content.CustomCss,
                                                 CustomJs = content.CustomJs,
-                                                EanbledCustomJs = content.UseCustomJs,
+                                                EnabledCustomJs = content.UseCustomJs,
                                                 EnabledCustomCss = content.UseCustomCss,
                                                 EditInSourceMode = content.EditInSourceMode,
                                                 EnableInsertDynamicRegion = pageContent.Page.IsMasterPage,
                                                 CurrentStatus = content.Status,
-                                                HasPublishedContent = content.Original != null
+                                                HasPublishedContent = content.Original != null,
+                                                ContentTextMode = content.ContentTextMode
                                             };
 
             if (configuration.Security.AccessControlEnabled)

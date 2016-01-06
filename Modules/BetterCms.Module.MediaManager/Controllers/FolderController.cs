@@ -8,6 +8,8 @@ using BetterCms.Module.Root;
 using BetterCms.Module.Root.Models;
 using BetterCms.Module.Root.Mvc;
 
+using BetterModules.Core.Web.Models;
+
 using Microsoft.Web.Mvc;
 
 namespace BetterCms.Module.MediaManager.Controllers
@@ -47,7 +49,7 @@ namespace BetterCms.Module.MediaManager.Controllers
         /// <summary>
         /// An action to delete a given folder.
         /// </summary>
-        /// <param name="id">The fodler id.</param>
+        /// <param name="id">The folder id.</param>
         /// <param name="version">The version.</param>
         /// <returns>
         /// Json with status.
@@ -66,6 +68,10 @@ namespace BetterCms.Module.MediaManager.Controllers
             if (success)
             {
                 Messages.AddSuccess(MediaGlobalization.DeleteFolder_DeletedSuccessfully_Message);
+            }
+            else
+            {
+                Messages.AddError(MediaGlobalization.DeleteFolder_DeletedError_Message);
             }
 
             return Json(new WireJson(success));

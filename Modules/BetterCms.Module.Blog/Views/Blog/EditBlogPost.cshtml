@@ -1,21 +1,15 @@
 ﻿@using BetterCms.Core.DataContracts.Enums
-
 @using BetterCms.Module.Blog.Content.Resources
 @using BetterCms.Module.Blog.Controllers
-
 @using BetterCms.Module.Pages.Content.Resources
-
 @using BetterCms.Module.Root
 @using BetterCms.Module.Root.Content.Resources
 @using BetterCms.Module.Root.Mvc
-@using BetterCms.Module.Root.Mvc.Extensions
 @using BetterCms.Module.Root.Mvc.Helpers
 @using BetterCms.Module.Root.Mvc.UI
 @using BetterCms.Module.Root.ViewModels.Category
 @using BetterCms.Module.Root.ViewModels.Tags
-
 @using Microsoft.Web.Mvc
-
 @model BetterCms.Module.Blog.ViewModels.Blog.BlogPostViewModel
 @if (Model == null)
 {
@@ -25,23 +19,24 @@
     var canEdit = (ViewContext.Controller as CmsControllerBase).SecurityService.IsAuthorized(RootModuleConstants.UserRoles.EditContent);
     var tagsTemplateViewModel = new TagsTemplateViewModel
     {
-        TooltipDescription = BlogGlobalization.EditBlockPost_Tags_Tooltip_Description
+        TooltipDescription = BlogGlobalization.EditBlogPost_Tags_Tooltip_Description
     };
     var categoriesTemplateViewModel = new CategoryTemplateViewModel
     {
-        TooltipDescription = BlogGlobalization.EditBlockPost_Category_Tooltip_Description
+        TooltipDescription = BlogGlobalization.EditBlogPost_Category_Tooltip_Description
     };
 }
-
+<div class="bcms-tab-header">
+    <a class="bcms-tab-item bcms-active" data-name="#bcms-tab-1">@BlogGlobalization.EditBlogPost_ContentTab_Title</a>
+    <a class="bcms-tab-item" data-name="#bcms-tab-2">@BlogGlobalization.EditBlogPost_PropertiesTab_Title</a>
+</div>
 <div class="bcms-scroll-window">
     @Html.TabbedContentMessagesBox()
     @if (Model.CurrentStatus == ContentStatus.Draft)
     {
         <div class="bcms-messages-type-1">
-            <ul class="bcms-success-messages" style="display: none">
-            </ul>
-            <ul class="bcms-info-messages" style="display: none">
-            </ul>
+            <ul class="bcms-success-messages" style="display: none"></ul>
+            <ul class="bcms-info-messages" style="display: none"></ul>
             <ul class="bcms-warning-messages">
                 <li>
                     @PagesGlobalization.EditPageContent_Messages_DraftStatusWarnMessage
@@ -51,100 +46,95 @@
                     }
                 </li>
             </ul>
-            <ul class="bcms-error-messages" style="display: none">
-            </ul>
+            <ul class="bcms-error-messages" style="display: none"></ul>
         </div>
     }
-    @using (Html.BeginForm<BlogController>(c => c.SaveBlogPost(null), FormMethod.Post, new {
-                                                                                               @id = "bcms-blog-post-form", 
-                                                                                               @class = "bcms-ajax-form",
-                                                                                               data_readonly = Model.IsReadOnly.ToString().ToLower()
-                                                                                           }))
+    @using (Html.BeginForm<BlogController>(c => c.SaveBlogPost(null), FormMethod.Post, new { @id = "bcms-blog-post-form", @class = "bcms-ajax-form", data_readonly = Model.IsReadOnly.ToString().ToLower() }))
     {
-        @Html.HiddenFor(model => model.Id, new { data_bind = "value: id()" })
-        @Html.HiddenFor(model => model.Version, new { data_bind = "value: version()" })
-        @Html.HiddenFor(model => model.Image.ImageId, new { data_bind = "value: image().id()" })
-        @Html.HiddenFor(modal => modal.DesirableStatus, new { @class = "bcms-content-desirable-status" })        
-        @Html.HiddenFor(model => model.EditInSourceMode, new { @data_bind = "value: editInSourceMode()" })
-        @Html.HiddenFor(modal => modal.IsUserConfirmed, new { @id = "bcms-user-confirmed-region-deletion" })
-
-        <div class="bcms-new-blog-content">
-
-            <div class="bcms-blog-left">
-
-                <div class="bcms-input-list-holder">
-                    @Html.Tooltip(BlogGlobalization.EditBlockPost_Title_Tooltip_Description)
-                    <div class="bcms-content-titles">@BlogGlobalization.EditBlockPost_Title_Title</div>
-                    <div class="bcms-input-box">
-                        @Html.TextBoxFor(m => m.Title, new { @style = "width: 510px;", @class = "bcms-editor-field-box", @id = "bcms-editor-blog-title" })
-                        @Html.BcmsValidationMessageFor(m => m.Title)
-                    </div>
-                </div>
-
-                @Html.Partial("Partial/AddNewBlogEditPermalink")
-
-                <div class="bcms-input-list-holder">
-                    @Html.Tooltip(BlogGlobalization.EditBlockPost_IntroText_Tooltip_Description)
-                    <div class="bcms-content-titles">@BlogGlobalization.EditBlockPost_IntroText_Title</div>
-                    <div class="bcms-textarea-box">
-                        @Html.TextAreaFor(m => m.IntroText, new { @style = "width: 510px; height: 170px;", @class = "bcms-editor-field-area" })
-                        @Html.BcmsValidationMessageFor(m => m.IntroText)
-                    </div>
-                </div>
-                <div class="bcms-input-list-holder" id="bcms-blog-content-holder">
-                    @Html.Tooltip(BlogGlobalization.EditBlockPost_Content_Tooltip_Description)
-                    <div class="bcms-content-titles">@BlogGlobalization.EditBlockPost_Content_Title</div>
-                    @Html.TextAreaFor(model => model.Content, new { @id = "bcms-contenthtml" })
-                </div>
-
-            </div>
-            <div class="bcms-blog-right">
-
-                <div class="bcms-blog-dates-holder">
+        <div class="bcms-padded-content">
+            @Html.HiddenFor(model => model.Id, new { data_bind = "value: id()" })
+            @Html.HiddenFor(model => model.Version, new { data_bind = "value: version()" })
+            @Html.HiddenFor(model => model.Image.ImageId, new { data_bind = "value: image().id()" })
+            @Html.HiddenFor(modal => modal.DesirableStatus, new { @class = "bcms-content-desirable-status" })
+            @Html.HiddenFor(model => model.EditInSourceMode, new { @data_bind = "value: editInSourceMode()" })
+            @Html.HiddenFor(modal => modal.IsUserConfirmed, new { @id = "bcms-user-confirmed-region-deletion" })
+            @Html.HiddenFor(modal => modal.ContentTextMode, new { @id = "bcms-user-confirmed-region-deletion" })
+            <div id="bcms-tab-1" class="bcms-tab-single">
+                <div class="bcms-newcontent-top">
                     <div class="bcms-input-field-holder">
-                        @Html.Tooltip(BlogGlobalization.EditBlockPost_LiveDates_Tooltip_Description)
-                        <div class="bcms-content-titles">@BlogGlobalization.EditBlockPost_LiveFrom_Title</div>
+                        @Html.Tooltip(BlogGlobalization.EditBlogPost_Title_Tooltip_Description)
+                        <div class="bcms-content-titles">@BlogGlobalization.EditBlogPost_Title_Title</div>
+                        <div class="bcms-input-box">
+                            @Html.TextBoxFor(m => m.Title, new { @class = "bcms-editor-field-box", @id = "bcms-editor-blog-title", @style = "width: 523px;" })
+                            @Html.BcmsValidationMessageFor(m => m.Title)
+                        </div>
+                    </div>
+                    <div class="bcms-input-field-holder">
+                        @Html.Tooltip(BlogGlobalization.EditBlogPost_LiveDates_Tooltip_Description)
+                        <div class="bcms-content-titles">@BlogGlobalization.EditBlogPost_LiveFrom_Title</div>
                         <div class="bcms-date-input-box">
-                            @Html.DateTextBoxFor(model => model.LiveFromDate, Model.LiveFromDate, new Dictionary<string, object> { { "class", "bcms-editor-field-box bcms-datepicker" }, {"style", "width: 127px;"} })
+                            @Html.DateTextBoxFor(model => model.LiveFromDate, Model.LiveFromDate, new Dictionary<string, object> { { "class", "bcms-editor-field-box bcms-datepicker" }, { "style", "width: 127px;" } })
                             @Html.BcmsValidationMessageFor(m => m.LiveFromDate)
                         </div>
                     </div>
                     <div class="bcms-input-field-holder">
-                        <div class="bcms-content-titles">@BlogGlobalization.EditBlockPost_LiveTo_Title</div>
+                        <div class="bcms-content-titles">@BlogGlobalization.EditBlogPost_LiveTo_Title</div>
                         <div class="bcms-date-input-box">
-                            @Html.DateTextBoxFor(model => model.LiveToDate, Model.LiveToDate, new Dictionary<string, object> { { "class", "bcms-editor-field-box bcms-datepicker" }, {"style", "width: 127px;"} })
+                            @Html.DateTextBoxFor(model => model.LiveToDate, Model.LiveToDate, new Dictionary<string, object> { { "class", "bcms-editor-field-box bcms-datepicker" }, { "style", "width: 127px;" } })
                             @Html.BcmsValidationMessageFor(m => m.LiveToDate)
                         </div>
                     </div>
                 </div>
+                @Html.Partial("Partial/AddNewBlogEditPermalink")
+                <div class="bcms-input-list-holder" id="bcms-blog-content-holder">
+                    @Html.Tooltip(BlogGlobalization.EditBlogPost_Content_Tooltip_Description)
+                    <div class="bcms-content-titles">@BlogGlobalization.EditBlogPost_Content_Title</div>
+                    @Html.TextAreaFor(model => model.Content, new { @id = "bcms-blogcontent" })
+                </div>
+            </div>
 
-                <div class="bcms-input-field-holder">
-                    @Html.Tooltip(BlogGlobalization.EditBlockPost_FeaturedImage_Tooltip_Description)
-                    <div class="bcms-content-titles">@BlogGlobalization.EditBlockPost_FeaturedImage_Title</div>
-                    <div class="bcms-uploaded-image">
-                        <!-- ko if: image().url() -->
-                        <a class="bcms-remove-image" data-bind="@(canEdit ? "click: image().remove.bind(image())" : string.Empty)">@RootGlobalization.Button_Remove</a>
-                        <a data-bind="click: image().preview.bind(image())">
-                            <img data-bind="attr: { src: image().thumbnailUrl(), alt: image().tooltip() }" /></a>
-                        <!-- /ko -->
+            <div id="bcms-tab-2" class="bcms-tab-single">
+                <div class="bcms-blog-settings-holder">
+                    <div class="bcms-input-list-holder">
+                        @Html.Tooltip(BlogGlobalization.EditBlogPost_IntroText_Tooltip_Description)
+                        <div class="bcms-content-titles">@BlogGlobalization.EditBlogPost_IntroText_Title</div>
+                        <div class="bcms-textarea-box">
+                            @Html.TextAreaFor(m => m.IntroText, new { @style = "height: 217px;", @class = "bcms-editor-field-area" })
+                            @Html.BcmsValidationMessageFor(m => m.IntroText)
+                        </div>
                     </div>
-                    <div class="bcms-upload-info">
-                        <div class="bcms-upload-info-text">@BlogGlobalization.EditBlockPost_FeaturedImage_Description</div>
-                        <div class="bcms-btn-small" data-bind="@(canEdit ? "click: image().select.bind(image())" : string.Empty)">@BlogGlobalization.EditBlockPost_SelectImage_Button_Title</div>
+
+                    <div class="bcms-page-images-holder">
+                        <div class="bcms-input-list-holder">
+                            @Html.Tooltip(BlogGlobalization.EditBlogPost_FeaturedImage_Tooltip_Description)
+                            <div class="bcms-content-titles">@BlogGlobalization.EditBlogPost_FeaturedImage_Title</div>
+                            <div class="bcms-uploaded-image">
+                                <!-- ko if: image().url() -->
+                                <a class="bcms-remove-image" data-bind="@(canEdit ? "click: image().remove.bind(image())" : string.Empty)">@RootGlobalization.Button_Remove</a>
+                                <a data-bind="click: image().preview.bind(image())">
+                                    <img data-bind="attr: { src: image().thumbnailUrl(), alt: image().tooltip() }" />
+                                </a>
+                                <!-- /ko -->
+                            </div>
+                            <div class="bcms-upload-info">
+                                <div class="bcms-upload-info-text">@BlogGlobalization.EditBlogPost_FeaturedImage_Description</div>
+                                <div class="bcms-btn-small" data-bind="@(canEdit ? "click: image().select.bind(image())" : string.Empty)">@BlogGlobalization.EditBlogPost_SelectImage_Button_Title</div>
+                            </div>
+                        </div>
                     </div>
                 </div>
 
-                <div class="bcms-input-field-holder">
-                    @Html.Tooltip(BlogGlobalization.EditBlockPost_Author_Tooltip_Description)
-                    <div class="bcms-content-titles">@BlogGlobalization.EditBlockPost_Author_Title</div>
+                <div class="bcms-input-list-holder">
+                    @Html.Tooltip(BlogGlobalization.EditBlogPost_Author_Tooltip_Description)
+                    <div class="bcms-content-titles">@BlogGlobalization.EditBlogPost_Author_Title</div>
                     @Html.DropDownListFor(model => model.AuthorId, Model.Authors.ToSelectList(Model.AuthorId), string.Empty, new { @class = "bcms-global-select", @style = "width: 245px;" })
                 </div>
 
-                <div class="bcms-blog-categories-holder" data-bind="with: categories">
+                <div class="bcms-categories-box-holder" data-bind="with: categories">
                     @Html.Partial("~/Areas/bcms-root/Views/Category/CategoriesTemplate.cshtml", categoriesTemplateViewModel)
                 </div>
 
-                <div class="bcms-blog-tags-holder" data-bind="with: tags">
+                <div class="bcms-tags-box-holder" data-bind="with: tags">
                     @Html.Partial("~/Areas/bcms-root/Views/Tags/TagsTemplate.cshtml", tagsTemplateViewModel)
                 </div>
             </div>

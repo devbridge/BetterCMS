@@ -1,9 +1,9 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 
 using BetterCms.Core.DataContracts.Enums;
-using BetterCms.Core.Exceptions.DataTier;
-using BetterCms.Core.Mvc.Commands;
+
 using BetterCms.Module.Pages.Helpers;
 using BetterCms.Module.Pages.Models;
 using BetterCms.Module.Pages.Services;
@@ -13,6 +13,9 @@ using BetterCms.Module.Root.Mvc;
 using BetterCms.Module.Root.Services;
 using BetterCms.Module.Root.ViewModels.Option;
 
+using BetterModules.Core.Exceptions.DataTier;
+using BetterModules.Core.Web.Mvc.Commands;
+
 namespace BetterCms.Module.Pages.Command.Widget.GetHtmlContentWidgetForEdit
 {
     public class GetHtmlContentWidgetForEditCommand : CommandBase, ICommand<Guid?, EditHtmlContentWidgetViewModel>
@@ -21,6 +24,11 @@ namespace BetterCms.Module.Pages.Command.Widget.GetHtmlContentWidgetForEdit
         /// The content service.
         /// </summary>
         private readonly IContentService contentService;
+
+        /// <summary>
+        /// The CMS configuration
+        /// </summary>
+        private readonly ICmsConfiguration cmsConfiguration;
 
         /// <summary>
         /// The category service
@@ -33,16 +41,25 @@ namespace BetterCms.Module.Pages.Command.Widget.GetHtmlContentWidgetForEdit
         private readonly IOptionService optionService;
 
         /// <summary>
+        /// The language service
+        /// </summary>
+        private readonly ILanguageService languageService;
+
+        /// <summary>
         /// Initializes a new instance of the <see cref="GetHtmlContentWidgetForEditCommand" /> class.
         /// </summary>
         /// <param name="categoryService">The category service.</param>
         /// <param name="contentService">The content service.</param>
         /// <param name="optionService">The option service.</param>
-        public GetHtmlContentWidgetForEditCommand(ICategoryService categoryService, IContentService contentService, IOptionService optionService)
+        /// <param name="cmsConfiguration">The CMS configuration.</param>
+        /// <param name="languageService"></param>
+        public GetHtmlContentWidgetForEditCommand(ICategoryService categoryService, IContentService contentService, IOptionService optionService, ICmsConfiguration cmsConfiguration, ILanguageService languageService)
         {
             this.categoryService = categoryService;
             this.contentService = contentService;
             this.optionService = optionService;
+            this.cmsConfiguration = cmsConfiguration;
+            this.languageService = languageService;
         }
 
         /// <summary>
@@ -53,6 +70,9 @@ namespace BetterCms.Module.Pages.Command.Widget.GetHtmlContentWidgetForEdit
         public EditHtmlContentWidgetViewModel Execute(Guid? widgetId)
         {
             EditHtmlContentWidgetViewModel model = null;
+
+            var languagesFuture = cmsConfiguration.EnableMultilanguage ? languageService.GetLanguagesLookupValues() : new List<LookupKeyValue>();
+            var languages = cmsConfiguration.EnableMultilanguage ? languagesFuture.ToList() : new List<LookupKeyValue>();
 
             if (widgetId.HasValue && widgetId.Value != Guid.Empty)
             {
@@ -93,7 +113,13 @@ namespace BetterCms.Module.Pages.Command.Widget.GetHtmlContentWidgetForEdit
                                                  Title = f.CustomOption.Title,
                                                  Id = f.CustomOption.Id
                                              }
-                                           : null
+                                           : null,
+                                        Translations = cmsConfiguration.EnableMultilanguage ? 
+                                            f.Translations.Select(x => new OptionTranslationViewModel
+                                            {
+                                                LanguageId = x.Language.Id.ToString(),
+                                                OptionValue = optionService.ClearFixValueForEdit(f.Type, x.Value)
+                                            }).ToList() : null
                                     })
                         .OrderBy(o => o.OptionKey)
                         .ToList();
@@ -116,7 +142,8 @@ namespace BetterCms.Module.Pages.Command.Widget.GetHtmlContentWidgetForEdit
             {
                 model = new EditHtmlContentWidgetViewModel();
             }
-
+            model.ShowLanguages = cmsConfiguration.EnableMultilanguage && languages.Any();
+            model.Languages = languages;
             model.Categories = categoryService.GetSelectedCategories<Root.Models.Widget, WidgetCategory>(widgetId).ToList();
             model.CustomOptions = optionService.GetCustomOptions();
             model.CanDestroyDraft = model.CurrentStatus == ContentStatus.Draft && model.HasPublishedContent;

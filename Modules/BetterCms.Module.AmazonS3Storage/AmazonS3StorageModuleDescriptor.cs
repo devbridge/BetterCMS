@@ -1,17 +1,17 @@
-﻿using System;
-
-using Autofac;
+﻿using Autofac;
 
 using BetterCms.Configuration;
 using BetterCms.Core.Modules;
 using BetterCms.Core.Services.Storage;
+
+using BetterModules.Core.Modules.Registration;
 
 namespace BetterCms.Module.AmazonS3Storage
 {
     /// <summary>
     /// A storage module based on the Amazon S3 cloud service.
     /// </summary>
-    public class AmazonS3StorageModuleDescriptor : ModuleDescriptor
+    public class AmazonS3StorageModuleDescriptor : CmsModuleDescriptor
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="AmazonS3StorageModuleDescriptor" /> class.
@@ -20,22 +20,6 @@ namespace BetterCms.Module.AmazonS3Storage
         public AmazonS3StorageModuleDescriptor(ICmsConfiguration configuration)
             : base(configuration)
         {
-        }
-
-        internal const string ModuleId = "3723f5a8-b855-4c20-878f-cd2ed43451fa";
-
-        /// <summary>
-        /// Gets the identifier.
-        /// </summary>
-        /// <value>
-        /// The identifier.
-        /// </value>
-        public override Guid Id
-        {
-            get
-            {
-                return new Guid(ModuleId);
-            }
         }
 
         /// <summary>

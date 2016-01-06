@@ -4,8 +4,8 @@
 bettercms.define('bcms.pages.widgets', ['bcms.jquery', 'bcms', 'bcms.modal', 'bcms.datepicker', 'bcms.htmlEditor',
         'bcms.dynamicContent', 'bcms.siteSettings', 'bcms.messages', 'bcms.preview', 'bcms.grid',
         'bcms.slides.jquery', 'bcms.redirect', 'bcms.pages.history', 'bcms.security', 'bcms.options', 'bcms.ko.extenders', 'bcms.codeEditor',
-        'bcms.pages', 'bcms.categories', 'bcms.forms', 'bcms.ko.grid'],
-    function ($, bcms, modal, datepicker, htmlEditor, dynamicContent, siteSettings, messages, preview, grid, slides, redirect, contentHistory, security, options, ko, codeEditor, pages, categories, forms, kogrid) {
+        'bcms.pages', 'bcms.categories', 'bcms.forms', 'bcms.ko.grid', 'bcms.antiXss'],
+    function ($, bcms, modal, datepicker, htmlEditor, dynamicContent, siteSettings, messages, preview, grid, slides, redirect, contentHistory, security, options, ko, codeEditor, pages, categories, forms, kogrid, antiXss) {
         'use strict';
 
         var widgets = {},
@@ -39,20 +39,14 @@ bettercms.define('bcms.pages.widgets', ['bcms.jquery', 'bcms', 'bcms.modal', 'bc
                 widgetUsagesDialogTitle: null,
                 widgetUsagesType_Page: null,
                 widgetUsagesType_HtmlWidget: null,
-                widgetUsagesType_MasterPage: null
+                widgetUsagesType_MasterPage: null,
+                invariantLanguage: null
             },
             selectors = {
-                enableCustomCss: '#bcms-enable-custom-css',
-                customCssContainer: '#bcms-custom-css-container',
-                enableCustomJs: '#bcms-enable-custom-js',
-                customJsContainer: '#bcms-custom-js-container',
-                enableCustomHtml: '#bcms-enable-custom-html',
-                customHtmlContainer: '#bcms-custom-html-container',
                 desirableStatus: '#bcmsWidgetDesirableStatus',
                 destroyDraftVersionLink: '.bcms-messages-draft-destroy',
                 contentId: '#bcmsContentId',
                 contentVersion: '#bcmsContentVersion',
-                aceEditorContainer: '.bcms-editor-field-area-container:first',
 
                 messagesContainer: "#bcms-edit-widget-messages",
 
@@ -90,6 +84,7 @@ bettercms.define('bcms.pages.widgets', ['bcms.jquery', 'bcms', 'bcms.modal', 'bc
 
                 widgetTab: '#bcms-tab-1',
                 optionsTab: '#bcms-tab-2',
+                htmlWidgetJsCssTabOpener: '.bcms-tab-item[data-name="#bcms-tab-3"]',
                 pageContentOptionsForm: '#bcms-options-form',
 
                 editInSourceModeHiddenField: '#bcms-edit-in-source-mode',
@@ -152,8 +147,6 @@ bettercms.define('bcms.pages.widgets', ['bcms.jquery', 'bcms', 'bcms.modal', 'bc
                         },
 
                         beforePost: function () {
-                            htmlEditor.updateEditorContent(editorId);
-
                             var editInSourceMode = htmlEditor.isSourceMode(editorId);
                             childDialog.container.find(selectors.editInSourceModeHiddenField).val(editInSourceMode);
 
@@ -163,7 +156,7 @@ bettercms.define('bcms.pages.widgets', ['bcms.jquery', 'bcms', 'bcms.modal', 'bc
                         postSuccess: postSuccess,
 
                         formSerialize: function (form) {
-                            return widgets.serializeFormWithChildWidgetOptions(form, editorId);
+                            return widgets.serializeFormWithChildWidgetOptions(form, editorId, optionsViewModel);
                         },
                         formContentType: 'application/json; charset=utf-8'
                     });
@@ -202,8 +195,6 @@ bettercms.define('bcms.pages.widgets', ['bcms.jquery', 'bcms', 'bcms.modal', 'bc
                         },
 
                         beforePost: function () {
-                            htmlEditor.updateEditorContent(editorId);
-
                             var editInSourceMode = htmlEditor.isSourceMode(editorId);
                             childDialog.container.find(selectors.editInSourceModeHiddenField).val(editInSourceMode);
 
@@ -211,7 +202,7 @@ bettercms.define('bcms.pages.widgets', ['bcms.jquery', 'bcms', 'bcms.modal', 'bc
                         },
 
                         postSuccess: postSuccess,
-                    
+
                         postError: function (json) {
                             if (json.Data && json.Data.ConfirmationMessage) {
                                 modal.confirm({
@@ -227,7 +218,7 @@ bettercms.define('bcms.pages.widgets', ['bcms.jquery', 'bcms', 'bcms.modal', 'bc
                         },
 
                         formSerialize: function (form) {
-                            return widgets.serializeFormWithChildWidgetOptions(form, editorId, function(data) {
+                            return widgets.serializeFormWithChildWidgetOptions(form, editorId, optionsViewModel, function (data) {
                                 if (includeChildRegions) {
                                     data.IncludeChildRegions = true;
                                 }
@@ -273,7 +264,7 @@ bettercms.define('bcms.pages.widgets', ['bcms.jquery', 'bcms', 'bcms.modal', 'bc
                         postSuccess: onSaveCallback,
 
                         formSerialize: function (form) {
-                            return widgets.serializeFormWithChildWidgetOptions(form, null);
+                            return widgets.serializeFormWithChildWidgetOptions(form, null, optionsViewModel);
                         },
                         formContentType: 'application/json; charset=utf-8'
                     });
@@ -304,7 +295,7 @@ bettercms.define('bcms.pages.widgets', ['bcms.jquery', 'bcms', 'bcms.modal', 'bc
                         postSuccess: onSaveCallback,
 
                         formSerialize: function (form) {
-                            return widgets.serializeFormWithChildWidgetOptions(form, null);
+                            return widgets.serializeFormWithChildWidgetOptions(form, null, optionsViewModel);
                         },
                         formContentType: 'application/json; charset=utf-8'
                     });
@@ -328,9 +319,17 @@ bettercms.define('bcms.pages.widgets', ['bcms.jquery', 'bcms', 'bcms.modal', 'bc
                 data = content.Data || {},
                 widgetOptions = data.Options,
                 customOptions = data.CustomOptions,
-                optionListViewModel = options.createOptionsViewModel(optionsContainer, widgetOptions, customOptions),
-                widgetEditViewModel = new WidgetEditViewModel(data);
-                
+                showLanguages = data.ShowLanguages,
+                languages = data.Languages,
+                langOpts = {
+                    showLanguages: showLanguages,
+                    languages: languages,
+                    translationsEnabled: showLanguages
+                },
+                optionListViewModel = options.createOptionsViewModel(optionsContainer, widgetOptions, customOptions, langOpts),
+                widgetEditViewModel = new WidgetEditViewModel(data),
+                codeEditorInitialized = false;
+
 
             ko.applyBindings(optionListViewModel, optionsContainer.get(0));
             ko.applyBindings(widgetEditViewModel, widgetEditContainer.get(0));
@@ -338,18 +337,6 @@ bettercms.define('bcms.pages.widgets', ['bcms.jquery', 'bcms', 'bcms.modal', 'bc
             if (availablePreviewOnPageContentId !== null) {
                 dialog.container.find(selectors.widgetPreviewPageContentId).val(availablePreviewOnPageContentId);
             }
-
-            dialog.container.find(selectors.enableCustomCss).on('change', function () {
-                showHideCustomCssText(dialog, true);
-            });
-
-            dialog.container.find(selectors.enableCustomJs).on('change', function () {
-                showHideCustomJsText(dialog, true);
-            });
-
-            dialog.container.find(selectors.enableCustomHtml).on('change', function () {
-                showHideCustomHtmlText(dialog);
-            });
 
             dialog.container.find(selectors.destroyDraftVersionLink).on('click', function () {
                 var contentId = dialog.container.find(selectors.contentId).val(),
@@ -366,16 +353,22 @@ bettercms.define('bcms.pages.widgets', ['bcms.jquery', 'bcms', 'bcms.modal', 'bc
                 });
             });
 
-            htmlEditor.initializeHtmlEditor(editorId, data.Id, {}, editInSourceMode);
+            var editorHeight = modal.maximizeChildHeight(dialog.container.find("#" + editorId), dialog);
+
+            htmlEditor.initializeHtmlEditor(editorId, data.Id, {
+                cmsEditorType: htmlEditor.cmsEditorTypes.widget,
+                height: editorHeight
+            }, editInSourceMode);
             htmlEditor.enableInsertDynamicRegion(editorId, false, data.LastDynamicRegionNumber);
 
-            codeEditor.initialize(dialog.container);
-
-            showHideCustomCssText(dialog);
-            showHideCustomJsText(dialog);
-            showHideCustomHtmlText(dialog);
-
-            
+            dialog.container.find(selectors.htmlWidgetJsCssTabOpener).on('click', function () {
+                if (!codeEditorInitialized) {
+                    codeEditor.initialize(dialog.container, dialog, {
+                        cmsEditorType: htmlEditor.cmsEditorTypes.page
+                    });
+                    codeEditorInitialized = true;
+                }
+            });
 
             return optionListViewModel;
         };
@@ -392,7 +385,14 @@ bettercms.define('bcms.pages.widgets', ['bcms.jquery', 'bcms', 'bcms.modal', 'bc
                 widgetEditContainer = dialog.container.find(selectors.widgetTab),
                 widgetOptions = data != null ? data.Options : null,
                 customOptions = data != null ? data.CustomOptions : null,
-                optionListViewModel = options.createOptionsViewModel(optionsContainer, widgetOptions, customOptions),
+                showLanguages = data != null ? data.ShowLanguages : null,
+                languages = data != null ? data.Languages : null,
+                langOpts = {
+                    showLanguages: showLanguages,
+                    languages: languages,
+                    translationsEnabled: showLanguages
+                },
+                optionListViewModel = options.createOptionsViewModel(optionsContainer, widgetOptions, customOptions, langOpts),
                 widgetEditViewModel = new WidgetEditViewModel(data);
 
             ko.applyBindings(optionListViewModel, optionsContainer.get(0));
@@ -441,7 +441,7 @@ bettercms.define('bcms.pages.widgets', ['bcms.jquery', 'bcms', 'bcms.modal', 'bc
                 previewImage.parent().show();
             }
 
-            
+
             return optionListViewModel;
         };
 
@@ -508,7 +508,8 @@ bettercms.define('bcms.pages.widgets', ['bcms.jquery', 'bcms', 'bcms.modal', 'bc
                 disableAccept: false,
                 cancelTitle: '',
                 onCloseClick: null,
-                optionListViewModel: null
+                optionListViewModel: null,
+                editorType: ''
             }, opts);
 
             modal.open({
@@ -520,9 +521,14 @@ bettercms.define('bcms.pages.widgets', ['bcms.jquery', 'bcms', 'bcms.modal', 'bc
                     dynamicContent.bindDialog(dialog, url, {
                         contentAvailable: function (contentDialog, content) {
                             var optionsContainer = contentDialog.container.find(selectors.pageContentOptionsForm);
-
+                            var langOpts = {
+                                showLanguages: opts.editorType == "widget" && content.Data.ShowLanguages,
+                                translationsEnabled: content.Data.ShowLanguages,
+                                languages: content.Data.Languages,
+                                editorType: opts.editorType
+                            };
                             optionListViewModel = opts.optionListViewModel
-                                || options.createOptionValuesViewModel(optionsContainer, content.Data.OptionValues, content.Data.CustomOptions);
+                                || options.createOptionValuesViewModel(optionsContainer, content.Data.OptionValues, content.Data.CustomOptions, langOpts);
 
                             ko.applyBindings(optionListViewModel, optionsContainer.get(0));
                         },
@@ -655,13 +661,13 @@ bettercms.define('bcms.pages.widgets', ['bcms.jquery', 'bcms', 'bcms.modal', 'bc
             modal.open({
                 title: globalization.widgetUsagesDialogTitle,
                 disableAccept: true,
-                onLoad: function(dialog) {
+                onLoad: function (dialog) {
                     dynamicContent.setContentFromUrl(dialog, url, {
                         done: function (json) {
 
                             var data = (json.Success == true) ? json.Data : null,
                                 opts = {
-                                    createItem: function(listModel, item) {
+                                    createItem: function (listModel, item) {
                                         var newItem = new kogrid.ItemViewModel(listModel, item);
 
                                         newItem.title = ko.observable(item.Title);
@@ -682,10 +688,10 @@ bettercms.define('bcms.pages.widgets', ['bcms.jquery', 'bcms', 'bcms.modal', 'bc
                                             if (this.type() == widgetUsageTypes.page || this.type() == widgetUsageTypes.masterPage) {
                                                 pages.openEditPageDialog(this.id(), function (pageData) {
                                                     newItem.url(pageData.Data.PageUrl);
-                                                    newItem.title(pageData.Data.Title);
+                                                    newItem.title(antiXss.encodeHtml(pageData.Data.Title));
                                                 });
                                             } else if (item.Type == widgetUsageTypes.htmlWidget) {
-                                                widgets.openEditHtmlContentWidgetDialog(this.id(), function(widgetData) {
+                                                widgets.openEditHtmlContentWidgetDialog(this.id(), function (widgetData) {
                                                     newItem.title(widgetData.Data.WidgetName);
                                                 });
                                             }
@@ -771,8 +777,8 @@ bettercms.define('bcms.pages.widgets', ['bcms.jquery', 'bcms', 'bcms.modal', 'bc
             row.data('originalId', json.Data.OriginalId);
             row.data('version', json.Data.Version);
             row.data('originalVersion', json.Data.OriginalVersion);
-            row.find(selectors.widgetNameCell).html(json.Data.WidgetName);
-            row.find(selectors.widgetCategoryNameCell).html(json.Data.CategoryName);
+            row.find(selectors.widgetNameCell).html(antiXss.encodeHtml(json.Data.WidgetName));
+            row.find(selectors.widgetCategoryNameCell).html(antiXss.encodeHtml(json.Data.CategoryName));
 
             // Set widget type, if it's set
             if (json.Data.WidgetType) {
@@ -793,57 +799,6 @@ bettercms.define('bcms.pages.widgets', ['bcms.jquery', 'bcms', 'bcms.modal', 'bc
             }
             statusContainer.html(status);
             row.find(selectors.widgetStatusCell).html(statusContainer);
-        };
-
-        /**
-        * Function tries to resolve ace editor container ithin given container and focuses the editor
-        */
-        function focusAceEditor(container) {
-            var aceEditor = container.find(selectors.aceEditorContainer).data('aceEditor');
-            if (aceEditor != null) {
-                aceEditor.focus();
-            }
-        }
-
-        /**
-        * Shows/hides custom css field in a html content widget edit form
-        */
-        function showHideCustomCssText(dialog, focus) {
-            var container = dialog.container.find(selectors.customCssContainer);
-
-            if (dialog.container.find(selectors.enableCustomCss).attr('checked')) {
-                container.show();
-
-                if (focus) {
-                    focusAceEditor(container);
-                }
-            } else {
-                container.hide();
-            }
-        };
-
-        function showHideCustomJsText(dialog, focus) {
-            var container = dialog.container.find(selectors.customJsContainer);
-
-            if (dialog.container.find(selectors.enableCustomJs).attr('checked')) {
-                container.show();
-
-                if (focus) {
-                    focusAceEditor(container);
-                }
-            } else {
-                container.hide();
-            }
-        };
-
-        function showHideCustomHtmlText(dialog) {
-            var container = dialog.container.find(selectors.customHtmlContainer);
-
-            if (dialog.container.find(selectors.enableCustomHtml).attr('checked')) {
-                container.show();
-            } else {
-                container.hide();
-            }
         };
 
         /**
@@ -946,14 +901,15 @@ bettercms.define('bcms.pages.widgets', ['bcms.jquery', 'bcms', 'bcms.modal', 'bc
                 widgetId = data.widgetId,
                 contentId = data.contentId,
                 onCloseClick = data.onCloseClick,
-                optionListViewModel = data.optionListViewModel;
+                optionListViewModel = data.optionListViewModel,
+                editorType = data.editorType;
 
             if (!assignmentId && !widgetId) {
                 bcms.logger.error("Cannot open child widget options modal window. assignmentId or widgetId should be set.");
                 return;
             }
 
-            widgets.configureWidget('', function () {
+            widgets.configureWidget('', function() {
                 // Do nothing - just close modal and that's it
             }, {
                 title: globalization.editChildWidgetOptionsTitle,
@@ -961,8 +917,9 @@ bettercms.define('bcms.pages.widgets', ['bcms.jquery', 'bcms', 'bcms.modal', 'bc
                 disableAccept: true,
                 cancelTitle: globalization.editChildWidgetOptionsCloseButtonTitle,
                 onCloseClick: onCloseClick,
-                optionListViewModel: optionListViewModel
-            });
+                optionListViewModel: optionListViewModel,
+                editorType: editorType
+        });
         }
 
         /**
@@ -992,33 +949,20 @@ bettercms.define('bcms.pages.widgets', ['bcms.jquery', 'bcms', 'bcms.modal', 'bc
                 });
         }
 
-        /*
-         * Returns child content options view models
-         */
-        function getChildContentOptions(htmlEditorId) {
-            var editorInstance = htmlEditor.getInstance(htmlEditorId);
-
-            if (editorInstance) {
-                return editorInstance.childWidgetOptions;
-            }
-
-            return null;
-        }
-
         /**
          * Serializes content edit form with child widget options
          */
-        widgets.serializeFormWithChildWidgetOptions = function (form, htmlEditorId, onBeforeStringify) {
+        widgets.serializeFormWithChildWidgetOptions = function (form, htmlEditorId, optionsViewModel, onBeforeStringify) {
             var serializedForm = forms.serializeToObject(form, true),
-                childOptions = htmlEditorId != null ? getChildContentOptions(htmlEditorId) : null,
+                childOptions = htmlEditorId != null ? htmlEditor.getChildWidgetOptions(htmlEditorId) : null,
                 childContentOptionValues = [],
                 i, j, needFix, model;
-            
+
             // MVC's double checkbox fix - take only first item of an array
             for (i in serializedForm) {
                 if ($.isArray(serializedForm[i]) && serializedForm[i].length == 2) {
                     needFix = true;
-                    for (j = 0; j < 2; j ++) {
+                    for (j = 0; j < 2; j++) {
                         if (serializedForm[i][j] !== "true" && serializedForm[i][j] !== "false") {
                             needFix = false;
                             continue;
@@ -1031,6 +975,10 @@ bettercms.define('bcms.pages.widgets', ['bcms.jquery', 'bcms', 'bcms.modal', 'bc
                 }
             }
 
+            if (optionsViewModel != null && optionsViewModel.serializeToObject != null) {
+                serializedForm.Options = optionsViewModel.serializeToObject();
+            }
+
             if (childOptions) {
                 for (i in childOptions) {
                     childContentOptionValues.push({
@@ -1039,6 +987,7 @@ bettercms.define('bcms.pages.widgets', ['bcms.jquery', 'bcms', 'bcms.modal', 'bc
                     });
                 }
             }
+
 
             if ($.isFunction(onBeforeStringify)) {
                 onBeforeStringify(serializedForm, childContentOptionValues);

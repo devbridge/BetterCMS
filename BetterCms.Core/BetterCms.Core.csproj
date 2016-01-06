@@ -9,10 +9,11 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>BetterCms.Core</RootNamespace>
     <AssemblyName>BetterCms.Core</AssemblyName>
-    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">..\</SolutionDir>
     <RestorePackages>true</RestorePackages>
+    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -22,6 +23,7 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -30,6 +32,7 @@
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Staging|AnyCPU'">
     <DebugSymbols>true</DebugSymbols>
@@ -45,6 +48,7 @@
     <OutputPath>bin\Dev\</OutputPath>
     <DebugType>full</DebugType>
     <DebugSymbols>true</DebugSymbols>
+    <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Autofac, Version=3.0.0.0, Culture=neutral, PublicKeyToken=17863af14b0044da, processorArchitecture=MSIL">
@@ -53,6 +57,14 @@
     </Reference>
     <Reference Include="Autofac.Integration.Mvc">
       <HintPath>..\packages\Autofac.Mvc4.2.6.2.859\lib\NET40\Autofac.Integration.Mvc.dll</HintPath>
+    </Reference>
+    <Reference Include="BetterModules.Core, Version=1.0.0.32, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\BetterModules.Core.1.0.0\lib\net40\BetterModules.Core.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="BetterModules.Core.Web, Version=1.0.0.32, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\BetterModules.Core.Web.1.0.0\lib\net40\BetterModules.Core.Web.dll</HintPath>
+      <Private>True</Private>
     </Reference>
     <Reference Include="Common.Logging, Version=2.1.2.0, Culture=neutral, PublicKeyToken=af08829b84f0328e, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
@@ -84,23 +96,27 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\Mvc3Futures.3.0.20105.0\lib\Microsoft.Web.Mvc.dll</HintPath>
     </Reference>
+    <Reference Include="Microsoft.Web.XmlTransform">
+      <HintPath>..\packages\Microsoft.Web.Xdt.2.1.1\lib\net40\Microsoft.Web.XmlTransform.dll</HintPath>
+    </Reference>
     <Reference Include="MvcContrib">
       <HintPath>..\packages\MvcContrib.Mvc3-ci.3.0.100.0\lib\MvcContrib.dll</HintPath>
     </Reference>
-    <Reference Include="Newtonsoft.Json">
-      <HintPath>..\packages\Newtonsoft.Json.5.0.8\lib\net40\Newtonsoft.Json.dll</HintPath>
+    <Reference Include="Newtonsoft.Json, Version=6.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Newtonsoft.Json.6.0.8\lib\net45\Newtonsoft.Json.dll</HintPath>
     </Reference>
     <Reference Include="NHibernate, Version=3.3.1.4000, Culture=neutral, PublicKeyToken=aa95f207798dfdb4, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\NHibernate.3.3.3.4001\lib\Net35\NHibernate.dll</HintPath>
     </Reference>
-    <Reference Include="NuGet.Core, Version=2.0.30619.9119, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+    <Reference Include="NuGet.Core, Version=2.8.60318.667, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\Nuget.Core.2.0.1\lib\net40-Client\NuGet.Core.dll</HintPath>
+      <HintPath>..\packages\Nuget.Core.2.8.5\lib\net40-Client\NuGet.Core.dll</HintPath>
     </Reference>
-    <Reference Include="RazorGenerator.Mvc, Version=2.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\Libs\RazorGenerator.Mvc.2.2.3\RazorGenerator.Mvc.dll</HintPath>
+    <Reference Include="RazorGenerator.Mvc, Version=2.0.0.0, Culture=neutral, PublicKeyToken=7b26dc2a43f6a0d4, processorArchitecture=MSIL">
+      <HintPath>..\packages\BetterModules.Core.Web.1.0.0\lib\net40\RazorGenerator.Mvc.dll</HintPath>
+      <Private>True</Private>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
@@ -111,31 +127,31 @@
     <Reference Include="System.Transactions" />
     <Reference Include="System.Web" />
     <Reference Include="System.Web.ApplicationServices" />
-    <Reference Include="System.Web.Helpers, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+    <Reference Include="System.Web.Helpers">
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.3.2.3\lib\net45\System.Web.Helpers.dll</HintPath>
       <Private>True</Private>
-      <HintPath>..\packages\Microsoft.AspNet.WebPages.2.0.30506.0\lib\net40\System.Web.Helpers.dll</HintPath>
     </Reference>
     <Reference Include="System.Web.Http, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
-    <Reference Include="System.Web.Mvc, Version=4.0.0.1, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\Microsoft.AspNet.Mvc.4.0.40804.0\lib\net40\System.Web.Mvc.dll</HintPath>
-    </Reference>
-    <Reference Include="System.Web.Razor, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+    <Reference Include="System.Web.Mvc">
+      <HintPath>..\packages\Microsoft.AspNet.Mvc.5.2.3\lib\net45\System.Web.Mvc.dll</HintPath>
       <Private>True</Private>
-      <HintPath>..\packages\Microsoft.AspNet.Razor.2.0.30506.0\lib\net40\System.Web.Razor.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Razor">
+      <HintPath>..\packages\Microsoft.AspNet.Razor.3.2.3\lib\net45\System.Web.Razor.dll</HintPath>
+      <Private>True</Private>
     </Reference>
     <Reference Include="System.Web.Routing" />
-    <Reference Include="System.Web.WebPages, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+    <Reference Include="System.Web.WebPages">
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.3.2.3\lib\net45\System.Web.WebPages.dll</HintPath>
       <Private>True</Private>
-      <HintPath>..\packages\Microsoft.AspNet.WebPages.2.0.30506.0\lib\net40\System.Web.WebPages.dll</HintPath>
     </Reference>
-    <Reference Include="System.Web.WebPages.Deployment, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+    <Reference Include="System.Web.WebPages.Deployment">
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.3.2.3\lib\net45\System.Web.WebPages.Deployment.dll</HintPath>
       <Private>True</Private>
-      <HintPath>..\packages\Microsoft.AspNet.WebPages.2.0.30506.0\lib\net40\System.Web.WebPages.Deployment.dll</HintPath>
     </Reference>
-    <Reference Include="System.Web.WebPages.Razor, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+    <Reference Include="System.Web.WebPages.Razor">
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.3.2.3\lib\net45\System.Web.WebPages.Razor.dll</HintPath>
       <Private>True</Private>
-      <HintPath>..\packages\Microsoft.AspNet.WebPages.2.0.30506.0\lib\net40\System.Web.WebPages.Razor.dll</HintPath>
     </Reference>
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
@@ -147,8 +163,6 @@
     <Compile Include="..\SharedAssemblyInfo.cs">
       <Link>Properties\SharedAssemblyInfo.cs</Link>
     </Compile>
-    <Compile Include="DataAccess\DataContext\Migrations\VersionInfo.cs" />
-    <Compile Include="DataAccess\PredicateBuilder.cs" />
     <Compile Include="DataContracts\Enums\ForceProtocolType.cs" />
     <Compile Include="DataContracts\ICategorizableItem.cs" />
     <Compile Include="DataContracts\ICategorized.cs" />
@@ -160,81 +174,61 @@
     <Compile Include="DataContracts\IDeletableOption.cs" />
     <Compile Include="DataContracts\IDynamicContentContainer.cs" />
     <Compile Include="DataContracts\IEntityCategory.cs" />
+    <Compile Include="DataContracts\ILanguage.cs" />
+    <Compile Include="DataContracts\IOption.cs" />
     <Compile Include="DataContracts\IOptionContainer.cs" />
-    <Compile Include="DataContracts\IDeleteableEntity.cs" />
+    <Compile Include="DataContracts\IOptionTranslation.cs" />
     <Compile Include="DataContracts\IOptionValue.cs" />
+    <Compile Include="DataContracts\IOptionValueEntity.cs" />
     <Compile Include="DataContracts\IRenderPage.cs" />
-    <Compile Include="Events\EventBase.cs" />
-    <Compile Include="Events\CoreEvents.cs" />
-    <Compile Include="Events\EntitySavingEventArgs.cs" />
-    <Compile Include="Events\SingleItemEventArgs.cs" />
+    <Compile Include="Environment\FileSystem\CmsWorkingDirectory.cs" />
+    <Compile Include="Environment\Host\DefaultCmsAutoHost.cs" />
+    <Compile Include="Environment\Host\DefaultCmsHost.cs" />
+    <Compile Include="Environment\Host\ICmsHost.cs" />
     <Compile Include="CmsContext.cs" />
-    <Compile Include="DataAccess\DataContext\Fetching\EagerFetch.cs" />
-    <Compile Include="DataAccess\DataContext\Fetching\FetchRequest.cs" />
-    <Compile Include="DataAccess\DataContext\Fetching\IFetchingProvider.cs" />
-    <Compile Include="DataAccess\DataContext\Fetching\IFetchRequest.cs" />
-    <Compile Include="DataAccess\DataContext\Fetching\DefaultFetchingProvider.cs" />
-    <Compile Include="DataAccess\DataContext\Migrations\DefaultVersionChecker.cs" />
-    <Compile Include="DataAccess\DataContext\Migrations\IVersionChecker.cs" />
-    <Compile Include="DataAccess\DataContext\QueryableExtensions.cs" />
-    <Compile Include="DataAccess\DataContext\QueryOverExtensions.cs" />
-    <Compile Include="DataAccess\DataContext\EventListeners\DeleteEventListener.cs" />
-    <Compile Include="DataAccess\DataContext\EventListeners\EventListenerHelper.cs" />
-    <Compile Include="DataAccess\DataContext\EventListeners\SaveOrUpdateEventListener.cs" />
-    <Compile Include="DataAccess\DataContext\Interceptors\StaleInterceptor.cs" />
-    <Compile Include="DataAccess\DataContext\Migrations\DatabaseType.cs" />
-    <Compile Include="DataAccess\DataContext\Migrations\DefaultMigration.cs" />
-    <Compile Include="DataAccess\DataContext\Migrations\DefaultMigrationRunner.cs" />
-    <Compile Include="DataAccess\DataContext\Migrations\IMigrationRunner.cs" />
-    <Compile Include="DataAccess\DataContext\Migrations\MigrationExtensions.cs" />
-    <Compile Include="DataAccess\DataContext\RestrictionsExtensions.cs" />
-    <Compile Include="DataAccess\DataContext\SessionExtensions.cs" />
     <Compile Include="DataContracts\Enums\ContentStatus.cs" />
     <Compile Include="DataContracts\Enums\OptionType.cs" />
     <Compile Include="DataContracts\ICategory.cs" />
     <Compile Include="DataContracts\IContent.cs" />
-    <Compile Include="DataContracts\IEntity.cs" />
     <Compile Include="DataContracts\IHistorical.cs" />
     <Compile Include="DataContracts\IHtmlContent.cs" />
     <Compile Include="DataContracts\IHtmlContentWidget.cs" />
-    <Compile Include="DataContracts\IOption.cs" />
+    <Compile Include="DataContracts\IOptionEntity.cs" />
     <Compile Include="DataContracts\IPage.cs" />
     <Compile Include="DataContracts\IPageContent.cs" />
     <Compile Include="DataContracts\IRegion.cs" />
     <Compile Include="DataContracts\IWidget.cs" />
-    <Compile Include="Dependencies\ContextScopeProvider.cs" />
     <Compile Include="Environment\ApplicationStart\BetterCmsEntrypoint.cs" />
-    <Compile Include="Dependencies\PerWebRequestContainerProvider.cs" />
-    <Compile Include="Dependencies\PerWebRequestLifetimeModule.cs" />
-    <Compile Include="Environment\Assemblies\DefaultAssemblyManager.cs" />
-    <Compile Include="Environment\Assemblies\IAssemblyManager.cs" />
     <Compile Include="DataContracts\Enums\PageStatus.cs" />
     <Compile Include="Exceptions\Api\CmsApiException.cs" />
     <Compile Include="Exceptions\Api\CmsApiValidationException.cs" />
     <Compile Include="Exceptions\Mvc\ConfirmationRequestException.cs" />
-    <Compile Include="Models\EntityIdGenerator.cs" />
+    <Compile Include="IMultilingualOption.cs" />
     <Compile Include="Modules\CssIncludeDescriptor.cs" />
-    <Compile Include="Modules\Projections\JavaScriptModuleLink.cs" />
+    <Compile Include="Modules\JsIncludeDescriptor.cs" />
     <Compile Include="Modules\JsShimConfigDescriptor.cs" />
+    <Compile Include="Modules\Projections\JavaScriptModuleLink.cs" />
+    <Compile Include="Modules\Projections\LinkToNewTabProjection.cs" />
+    <Compile Include="Modules\Registration\CmsModulesRegistration.cs" />
+    <Compile Include="Modules\Registration\ICmsModulesRegistration.cs" />
     <Compile Include="Mvc\Binders\JSONDataBinder.cs" />
     <Compile Include="ActionResults\IHaveCustomXmlSettings.cs" />
     <Compile Include="ActionResults\XmlResult.cs" />
+    <Compile Include="Security\DefaultTextEncryptor.cs" />
+    <Compile Include="Security\EncryptableString.cs" />
+    <Compile Include="Security\ITextEncryptor.cs" />
     <Compile Include="Security\SuppressFormsAuthenticationRedirectModule.cs" />
     <Compile Include="Mvc\Attributes\NoCacheAttribute.cs" />
-    <Compile Include="Mvc\Extensions\VirtualPath.cs" />
     <Compile Include="Security\AccessLevel.cs" />
     <Compile Include="Security\BcmsAuthorizeAttribute.cs" />
     <Compile Include="Security\IAccessControlDisabled.cs" />
     <Compile Include="Security\IAccessSecuredObject.cs" />
     <Compile Include="Security\IAccessRule.cs" />
-    <Compile Include="Security\EncryptableString.cs" />
     <Compile Include="Security\IAccessControlService.cs" />
     <Compile Include="Security\IAccessSecuredObjectDependency.cs" />
-    <Compile Include="Security\ITextEncryptor.cs" />
     <Compile Include="Security\IUserRole.cs" />
     <Compile Include="Modules\Projections\EmptyContentAccessor.cs" />
     <Compile Include="Mvc\Attributes\IgnoreAutoRouteAttribute.cs" />
-    <Compile Include="Security\DefaultTextEncryptor.cs" />
     <Compile Include="Security\SpecialIdentities.cs" />
     <Compile Include="Security\UserRole.cs" />
     <Compile Include="Services\Storage\FtpStorageService.cs" />
@@ -244,10 +238,6 @@
     <Compile Include="Services\Storage\UploadRequest.cs" />
     <Compile Include="Exceptions\CmsException.cs" />
     <Compile Include="Exceptions\Configuration\ConfigurationLoaderException.cs" />
-    <Compile Include="Exceptions\DataTier\ConcurrentDataException.cs" />
-    <Compile Include="Exceptions\DataTier\DataTierException.cs" />
-    <Compile Include="Exceptions\DataTier\EntityNotFoundException.cs" />
-    <Compile Include="Exceptions\Host\RestartApplicationException.cs" />
     <Compile Include="Exceptions\Modules\ModuleAlreadyInstalledException.cs" />
     <Compile Include="Exceptions\Modules\ModuleException.cs" />
     <Compile Include="Exceptions\Modules\ModuleManagerNullException.cs" />
@@ -259,11 +249,6 @@
     <Compile Include="Exceptions\Service\PageException.cs" />
     <Compile Include="Exceptions\Service\SecurityException.cs" />
     <Compile Include="Exceptions\Service\StorageException.cs" />
-    <Compile Include="Models\EntitySubClassMapBase.cs" />
-    <Compile Include="Models\Entity.cs" />
-    <Compile Include="Models\EntityMapBase.cs" />
-    <Compile Include="Models\MaxLength.cs" />
-    <Compile Include="Modules\ModuleRegistrationContext.cs" />
     <Compile Include="Modules\Projections\ButtonActionProjection.cs" />
     <Compile Include="Modules\Projections\ActionCallProjectionBase.cs" />
     <Compile Include="Modules\Projections\ContentAccessor.cs" />
@@ -278,63 +263,21 @@
     <Compile Include="Modules\Projections\RenderActionProjection.cs" />
     <Compile Include="Modules\Projections\IPageActionProjection.cs" />
     <Compile Include="Modules\Projections\JavaScriptModuleGlobalization.cs" />
-    <Compile Include="Modules\JsIncludeDescriptor.cs" />
     <Compile Include="Modules\Projections\JavaScriptModuleLinkTo.cs" />
     <Compile Include="Modules\Projections\SeparatorProjection.cs" />
-    <Compile Include="Modules\Registration\IModulesRegistration.cs" />
-    <Compile Include="Modules\Registration\DefaultModulesRegistration.cs" />
-    <Compile Include="Mvc\Commands\DefaultCommandResolver.cs" />
-    <Compile Include="Mvc\Commands\ICommandContext.cs" />
-    <Compile Include="Mvc\Commands\ICommandResolver.cs" />
-    <Compile Include="Mvc\Extensions\DefaultControllerExtensions.cs" />
-    <Compile Include="Mvc\Extensions\IControllerExtensions.cs" />
-    <Compile Include="Mvc\Commands\ICommand.cs" />
-    <Compile Include="Mvc\IMessagesIndicator.cs" />
     <Compile Include="Services\IPageAccessor.cs" />
     <Compile Include="Services\ISecurityService.cs" />
-    <Compile Include="Web\DefaultHttpContextAccessor.cs" />
     <Compile Include="Modules\Install\DefaultModuleManager.cs" />
     <Compile Include="Modules\Install\IModuleManager.cs" />
-    <Compile Include="Web\EmbeddedResources\DefaultEmbeddedResourcesProvider.cs" />
-    <Compile Include="Web\EmbeddedResources\EmbeddedResourceDescriptor.cs" />
-    <Compile Include="Web\EmbeddedResources\IEmbeddedResourcesProvider.cs" />
     <Compile Include="Web\HttpContextTool.cs" />
-    <Compile Include="Web\IHttpContextAccessor.cs" />
     <Compile Include="Web\ViewEngines\EmbeddedResourcesViewEngine.cs" />
-    <Compile Include="Web\EmbeddedResources\EmbeddedResourcesVirtualFile.cs" />
-    <Compile Include="Web\EmbeddedResources\EmbeddedResourcesVirtualPathProvider.cs" />
-    <Compile Include="Mvc\Routes\RouteExtensions.cs" />
-    <Compile Include="DataAccess\DataContext\DefaultMappingResolver.cs" />
-    <Compile Include="DataAccess\DataContext\IMappingResolver.cs" />
-    <Compile Include="Environment\FileSystem\DefaultWorkingDirectory.cs" />
-    <Compile Include="Environment\FileSystem\IWorkingDirectory.cs" />
-    <Compile Include="Mvc\Routes\DefaultRouteTable.cs" />
-    <Compile Include="Environment\Host\DefaultCmsHost.cs" />
-    <Compile Include="DataAccess\DataContext\Conventions\EnumConvention.cs" />
-    <Compile Include="DataAccess\DataContext\ISessionFactoryProvider.cs" />
-    <Compile Include="DataAccess\DataContext\IUnitOfWork.cs" />
-    <Compile Include="DataAccess\DataContext\IUnitOfWorkFactory.cs" />
-    <Compile Include="DataAccess\DataContext\DefaultSessionFactoryProvider.cs" />
-    <Compile Include="DataAccess\DataContext\DefaultUnitOfWork.cs" />
-    <Compile Include="DataAccess\DataContext\DefaultUnitOfWorkFactory.cs" />
-    <Compile Include="DataAccess\IRepository.cs" />
-    <Compile Include="DataAccess\DefaultRepository.cs" />
-    <Compile Include="DataAccess\IUnitOfWorkRepository.cs" />
-    <Compile Include="Environment\Host\ICmsHost.cs" />
-    <Compile Include="Mvc\Routes\IRouteTable.cs" />
-    <Compile Include="Models\EquatableEntity.cs" />
-    <Compile Include="Modules\ModuleDescriptor.cs" />
-    <Compile Include="Mvc\DefaultCmsControllerFactory.cs" />
+    <Compile Include="Modules\CmsModuleDescriptor.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Services\Caching\HttpRuntimeCacheService.cs" />
-    <Compile Include="Environment\Assemblies\DefaultAssemblyLoader.cs" />
-    <Compile Include="Environment\Assemblies\IAssemblyLoader.cs" />
-    <Compile Include="Services\Caching\ICacheService.cs" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="app.config" />
     <None Include="packages.config" />
   </ItemGroup>
-  <ItemGroup />
   <ItemGroup>
     <ProjectReference Include="..\BetterCMS.Configuration\BetterCms.Configuration.csproj">
       <Project>{DA2B225E-6AEE-4465-8B08-4D5B1C1CED49}</Project>

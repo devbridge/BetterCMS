@@ -4,6 +4,7 @@ using System.Diagnostics.CodeAnalysis;
 
 using Autofac;
 
+using BetterCms.Core.Exceptions.Api;
 using BetterCms.Core.Modules;
 using BetterCms.Core.Modules.Projections;
 
@@ -17,13 +18,21 @@ using BetterCms.Module.Root;
 using BetterCms.Module.Root.Accessors;
 using BetterCms.Module.Root.Providers;
 
+using BetterModules.Core.Dependencies;
+using BetterModules.Core.Modules.Registration;
+using BetterModules.Events;
+
+using Common.Logging;
+
 namespace BetterCms.Module.MediaManager
 {
     /// <summary>
     /// Pages module descriptor.
     /// </summary>
-    public class MediaManagerModuleDescriptor : ModuleDescriptor
+    public class MediaManagerModuleDescriptor : CmsModuleDescriptor
     {
+        private static readonly ILog Log = LogManager.GetCurrentClassLogger();
+
         /// <summary>
         /// The module name.
         /// </summary>
@@ -85,32 +94,33 @@ namespace BetterCms.Module.MediaManager
             // Register images gallery custom option: album
             CustomOptionsProvider.RegisterProvider(MediaManagerFolderOptionProvider.Identifier, new MediaManagerFolderOptionProvider());
             CustomOptionsProvider.RegisterProvider(MediaManagerImageUrlOptionProvider.Identifier, new MediaManagerImageUrlOptionProvider());
+
+            Events.MediaManagerEvents.Instance.MediaFileDeleted += Instance_MediaFileDeleted;
         }
 
-        internal const string ModuleId = "73f53dfe-bf78-4e80-b231-9b275129b2cb";
-
-        /// <summary>
-        /// Gets the identifier.
-        /// </summary>
-        /// <value>
-        /// The identifier.
-        /// </value>
-        public override Guid Id
+        private void Instance_MediaFileDeleted(SingleItemEventArgs<MediaFile> args)
         {
-            get
+            try
             {
-                return new Guid(ModuleId);
+                var lifetimeScope = ContextScopeProvider.CreateChildContainer();
+                if (!lifetimeScope.IsRegistered<ICmsConfiguration>())
+                {
+                    throw new CmsApiException(string.Format("A '{0}' is unknown type in the Better CMS scope.", typeof(ICmsConfiguration).FullName));
+                }
+                var cmsConfiguration = lifetimeScope.Resolve<ICmsConfiguration>();
+                if (cmsConfiguration.Storage.MoveDeletedFilesToTrash)
+                {
+                    if (!lifetimeScope.IsRegistered<IMediaFileService>())
+                    {
+                        throw new CmsApiException(string.Format("A '{0}' is unknown type in the Better CMS scope.", typeof(IMediaFileService).FullName));
+                    }
+                    var mediaFileService = lifetimeScope.Resolve<IMediaFileService>();
+                    mediaFileService.MoveFilesToTrashFolder();
+                }
             }
-        }
-
-        /// <summary>
-        /// Flag describe is module root or additional
-        /// </summary>
-        public override bool IsRootModule
-        {
-            get
+            catch (Exception ex)
             {
-                return true;
+                Log.Error("Failed to start up deleted media trash collector.", ex);
             }
         }
 
@@ -191,7 +201,6 @@ namespace BetterCms.Module.MediaManager
         /// <param name="containerBuilder">The container builder.</param>        
         public override void RegisterModuleTypes(ModuleRegistrationContext context, ContainerBuilder containerBuilder)
         {
-
             containerBuilder.RegisterType<DefaultMediaFileUrlResolver>().AsImplementedInterfaces().InstancePerLifetimeScope();
             containerBuilder.RegisterType<DefaultMediaFileService>().AsImplementedInterfaces().InstancePerLifetimeScope();
             containerBuilder.RegisterType<DefaultMediaImageService>().AsImplementedInterfaces().InstancePerLifetimeScope();            

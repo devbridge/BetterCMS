@@ -1,7 +1,7 @@
 ﻿using System.Linq;
 
-using BetterCms.Core.DataAccess;
-using BetterCms.Core.DataAccess.DataContext;
+using BetterModules.Core.DataAccess;
+using BetterModules.Core.DataAccess.DataContext;
 
 using BetterCms.Module.Pages.Command.Widget.GetSiteSettingsWidgets;
 using BetterCms.Module.Pages.Services;
@@ -43,7 +43,8 @@ namespace BetterCms.Test.Module.Pages.CommandTests.WidgetTests
                     var unitOfWork = new DefaultUnitOfWork(session);
                     var repository = new DefaultRepository(unitOfWork);
                     var categoryService = new Mock<ICategoryService>();
-                    var widgetService = new DefaultWidgetService(repository, unitOfWork, null, null, null, categoryService.Object);
+                    var cmsConfiguration = new Mock<ICmsConfiguration>().Object;
+                    var widgetService = new DefaultWidgetService(repository, unitOfWork, null, null, null, categoryService.Object, cmsConfiguration);
                     var command = new GetSiteSettingsWidgetsCommand(widgetService);
 
                     var result = command.Execute(new WidgetsFilter

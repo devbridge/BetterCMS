@@ -26,6 +26,8 @@
 
         public virtual string CustomBinding { get; set; }
 
+        public virtual string FocusIdentifier { get; set; }
+
         /// <summary>
         /// Initializes a new instance of the <see cref="EditableGridColumn" /> class.
         /// </summary>
@@ -41,6 +43,7 @@
             CellView = RootModuleConstants.EditableGridCellTemplate;
             CanBeEdited = true;
             IsRendered = true;
+            FocusIdentifier = string.Empty;
         }
     }
 }

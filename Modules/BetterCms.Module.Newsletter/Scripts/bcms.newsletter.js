@@ -1,7 +1,7 @@
 ﻿/*jslint unparam: true, white: true, browser: true, devel: true */
 /*global bettercms */
-bettercms.define('bcms.newsletter', ['bcms.jquery', 'bcms', 'bcms.siteSettings', 'bcms.dynamicContent', 'bcms.ko.extenders', 'bcms.ko.grid'],
-    function ($, bcms, siteSettings, dynamicContent, ko, kogrid) {
+bettercms.define('bcms.newsletter', ['bcms.jquery', 'bcms', 'bcms.siteSettings', 'bcms.dynamicContent', 'bcms.ko.extenders', 'bcms.ko.grid', 'bcms.antiXss'],
+    function ($, bcms, siteSettings, dynamicContent, ko, kogrid, antiXss) {
         'use strict';
 
         var newsletter = {},
@@ -14,7 +14,8 @@ bettercms.define('bcms.newsletter', ['bcms.jquery', 'bcms', 'bcms.siteSettings',
             },
             globalization = {
                 deleteSubscriberDialogTitle: null
-            };
+            },
+            rowId = 0;
 
         /**
         * Assign objects to module.
@@ -63,7 +64,7 @@ bettercms.define('bcms.newsletter', ['bcms.jquery', 'bcms', 'bcms.siteSettings',
             }
 
             SubscriberViewModel.prototype.getDeleteConfirmationMessage = function () {
-                return $.format(globalization.deleteSubscriberDialogTitle, this.email());
+                return $.format(globalization.deleteSubscriberDialogTitle, antiXss.encodeHtml(this.email()));
             };
 
             SubscriberViewModel.prototype.getSaveParams = function () {
@@ -71,6 +72,13 @@ bettercms.define('bcms.newsletter', ['bcms.jquery', 'bcms', 'bcms.siteSettings',
                 params.Email = this.email();
 
                 return params;
+            };
+
+            SubscriberViewModel.prototype.getRowId = function () {
+                if (!this.rowId) {
+                    this.rowId = 'bcms-subscriber-row-' + rowId++;
+                }
+                return this.rowId;
             };
 
             return SubscriberViewModel;

@@ -1,5 +1,7 @@
 ﻿using System.Collections.Generic;
 
+using BetterModules.Core.DataContracts;
+
 namespace BetterCms.Core.DataContracts
 {
     /// <summary>

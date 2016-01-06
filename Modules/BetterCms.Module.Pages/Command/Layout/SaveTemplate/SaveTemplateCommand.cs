@@ -1,8 +1,8 @@
-﻿using BetterCms.Core.Mvc.Commands;
-
-using BetterCms.Module.Pages.Services;
+﻿using BetterCms.Module.Pages.Services;
 using BetterCms.Module.Pages.ViewModels.Templates;
 using BetterCms.Module.Root.Mvc;
+
+using BetterModules.Core.Web.Mvc.Commands;
 
 namespace BetterCms.Module.Pages.Command.Layout.SaveTemplate
 {

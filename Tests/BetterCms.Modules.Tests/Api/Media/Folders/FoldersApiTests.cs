@@ -1,8 +1,9 @@
-﻿using BetterCms.Core.Models;
-
-using BetterCms.Module.Api.Extensions;
+﻿using BetterCms.Module.Api.Extensions;
 using BetterCms.Module.Api.Operations.MediaManager;
 using BetterCms.Module.Api.Operations.MediaManager.Folders.Folder;
+
+using BetterModules.Core.Models;
+using BetterModules.Events;
 
 using NHibernate;
 
@@ -45,12 +46,12 @@ namespace BetterCms.Test.Module.Api.Media.Folders
             Events.MediaManagerEvents.Instance.MediaUnarchived -= Instance_MediaUnarchived;
         }
 
-        void Instance_MediaUnarchived(Events.SingleItemEventArgs<BetterCms.Module.MediaManager.Models.Media> args)
+        void Instance_MediaUnarchived(SingleItemEventArgs<BetterCms.Module.MediaManager.Models.Media> args)
         {
             archivedMediaEventCount++;
         }
 
-        void Instance_MediaArchived(Events.SingleItemEventArgs<BetterCms.Module.MediaManager.Models.Media> args)
+        void Instance_MediaArchived(SingleItemEventArgs<BetterCms.Module.MediaManager.Models.Media> args)
         {
             unarchivedMediaEventCount++;
         }

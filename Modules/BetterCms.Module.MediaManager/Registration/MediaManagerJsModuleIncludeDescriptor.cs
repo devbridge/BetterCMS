@@ -14,7 +14,7 @@ namespace BetterCms.Module.MediaManager.Registration
         /// Initializes a new instance of the <see cref="MediaManagerJsModuleIncludeDescriptor" /> class.
         /// </summary>
         /// <param name="module">The container module.</param>
-        public MediaManagerJsModuleIncludeDescriptor(ModuleDescriptor module)
+        public MediaManagerJsModuleIncludeDescriptor(CmsModuleDescriptor module)
             : base(module, "bcms.media")
         {
             Links = new IActionProjection[]

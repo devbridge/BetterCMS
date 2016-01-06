@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Net;
+using System.Security.Cryptography;
 
 using BetterCms.Core.Exceptions;
 using BetterCms.Core.Exceptions.Service;
@@ -88,7 +89,7 @@ namespace BetterCms.Core.Services.Storage
                 if (request.CreateDirectory)
                 {
                     var ftpDiretoryUri = ExtractPath(absolutePath);
-                    TryCreateDirectory(ftpDiretoryUri);
+                    TryCreateDirectory(ftpDiretoryUri, true);
                 }
 
                 request.InputStream.Position = 0;
@@ -150,6 +151,7 @@ namespace BetterCms.Core.Services.Storage
 
             try
             {
+                TryCreateDirectory(CutLastDirectoryFromUri(destinationUri.AbsoluteUri), true);
                 var response = DownloadObject(sourceUri);
 
                 UploadRequest request = new UploadRequest();
@@ -229,34 +231,11 @@ namespace BetterCms.Core.Services.Storage
         {
             try
             {
-                var tree = new List<string>();
-                tree.Add(serverUri);
+                var ftpRequest = CreateFtpRequest(serverUri);
+                ftpRequest.Method = WebRequestMethods.Ftp.MakeDirectory;
 
-                var url = serverUri;
-                var serverRoot = rootUrl.Trim('/');
-                while (url != null)
-                {
-                    url = ExtractPath(url, false);
-
-                    if (url.Contains(serverRoot) && url.Trim('/') != serverRoot)
-                    {
-                        tree.Add(url);
-                    }
-                    else
-                    {
-                        url = null;
-                    }
-                }
-                tree.Reverse();
-
-                foreach (var path in tree)
-                {
-                    var ftpRequest = CreateFtpRequest(path);
-                    ftpRequest.Method = WebRequestMethods.Ftp.MakeDirectory;
-
-                    var ftpResponse = (FtpWebResponse)ftpRequest.GetResponse();
-                    ftpResponse.Close();
-                }
+                var ftpResponse = (FtpWebResponse)ftpRequest.GetResponse();
+                ftpResponse.Close();
             }
             catch (Exception e)
             {
@@ -264,27 +243,38 @@ namespace BetterCms.Core.Services.Storage
             }
         }
 
-        private bool DirectoryExists(string serverUri)
+        private bool DirectoryExists(Uri uri)
         {
+            CheckUri(uri);
+
             try
             {
+                var absolutePath = ResolvePath(uri.AbsoluteUri);
+                var serverUri = string.Format("{0}{1}", ftpRoot, absolutePath);
+                var ftpRequest = CreateFtpRequest(serverUri);
+                ftpRequest.Method = WebRequestMethods.Ftp.ListDirectoryDetails;
+
                 try
                 {
-                    var request = CreateFtpRequest(serverUri);
-                    request.Method = WebRequestMethods.Ftp.PrintWorkingDirectory;
-
-                    var response = (FtpWebResponse)request.GetResponse();
+                    var response = (FtpWebResponse)ftpRequest.GetResponse();
                     response.Close();
                     return true;
                 }
-                catch (WebException)
+                catch (WebException ex)
                 {
-                    return false;
+                    var response = (FtpWebResponse)ex.Response;
+                    var statusCode = response.StatusCode;
+                    response.Close();
+                    if (statusCode == FtpStatusCode.ActionNotTakenFileUnavailable)
+                    {
+                        return false;
+                    }
+                    throw;
                 }
             }
             catch (Exception e)
             {
-                throw new StorageException(string.Format("Failed to check if directory {0} exists.", serverUri), e);
+                throw new StorageException(string.Format("Failed to check if object exists under {0}.", uri), e);
             }
         }
 
@@ -302,7 +292,7 @@ namespace BetterCms.Core.Services.Storage
             return path;
         }
 
-        private void TryCreateDirectory(string sereverUri)
+        private bool TryCreateDirectory(string sereverUri, bool recursive = false)
         {
             try
             {
@@ -310,11 +300,30 @@ namespace BetterCms.Core.Services.Storage
             }
             catch (Exception)
             {
-                if (!DirectoryExists(sereverUri))
+                if (!DirectoryExists(new Uri(sereverUri)))
                 {
-                    throw;
+                    if (recursive)
+                    {
+                        var upperDir = CutLastDirectoryFromUri(sereverUri);
+                        if (upperDir != sereverUri)
+                        {
+                            if (!TryCreateDirectory(upperDir, true))
+                            {
+                                throw;
+                            }
+                        }
+                        else
+                        {
+                            return false;
+                        }
+                    }
+                    else
+                    {
+                        throw;
+                    }
                 }
             }
+            return true;
         }
 
         private FtpWebRequest CreateFtpRequest(string serverUri)
@@ -326,6 +335,17 @@ namespace BetterCms.Core.Services.Storage
             ftpRequest.KeepAlive = false;
 
             return ftpRequest;
+        }
+
+        /// <summary>
+        /// Removes last directory from url if possible.
+        /// </summary>
+        /// <param name="url">Url address.</param>
+        /// <returns>Uri with removed last directory.</returns>
+        private string CutLastDirectoryFromUri(string url)
+        {
+            var lastIndexOf = url.Replace('\\', '/').TrimEnd('/').LastIndexOf('/');
+            return lastIndexOf != -1 && url[lastIndexOf - 1] != '/' ? url.Substring(0, lastIndexOf) : url;
         }
 
         public bool SecuredUrlsEnabled

@@ -6,10 +6,8 @@ using Autofac;
 using BetterCMS.Module.LuceneSearch.Helpers;
 
 using BetterCms.Core;
-using BetterCms.Core.DataAccess.DataContext;
-using BetterCms.Core.DataAccess.DataContext.Fetching;
-using BetterCms.Core.Dependencies;
 using BetterCms.Core.Modules.Registration;
+
 using BetterCms.Module.Api;
 using BetterCms.Module.Blog;
 using BetterCms.Module.ImagesGallery;
@@ -19,8 +17,13 @@ using BetterCms.Module.Pages;
 using BetterCms.Module.Root;
 using BetterCms.Module.Users;
 using BetterCms.Module.Users.Api;
+
 using BetterCms.Test.Module.Helpers;
 using BetterCms.Tests.Helpers;
+
+using BetterModules.Core.DataAccess.DataContext;
+using BetterModules.Core.DataAccess.DataContext.Fetching;
+using BetterModules.Core.Dependencies;
 
 namespace BetterCms.Test.Module
 {
@@ -31,8 +34,8 @@ namespace BetterCms.Test.Module
         private ILifetimeScope container;
 
         private RandomTestDataProvider testDataProvider;
-        
-        static TestBase()
+
+        protected TestBase()
         {
             KnownAssemblies = new List<Assembly>(new[]
                                                      {
@@ -46,7 +49,7 @@ namespace BetterCms.Test.Module
                                                          typeof(UsersApiModuleDescriptor).Assembly,
                                                          typeof(ImagesGalleryModuleDescriptor).Assembly
                                                      });
-            CreateContainer();
+            container = CreateContainer();
 
             HtmlAgilityPackHelper.FixMissingTagClosings();
         }
@@ -87,7 +90,7 @@ namespace BetterCms.Test.Module
 
             var container = ContextScopeProvider.CreateChildContainer();
 
-            IModulesRegistration modulesRegistration = container.Resolve<IModulesRegistration>();
+            ICmsModulesRegistration modulesRegistration = container.Resolve<ICmsModulesRegistration>();
             foreach (var knownAssembly in KnownAssemblies)
             {
                 modulesRegistration.AddModuleDescriptorTypeFromAssembly(knownAssembly);

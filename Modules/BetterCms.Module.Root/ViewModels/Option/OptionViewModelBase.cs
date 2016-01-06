@@ -2,8 +2,9 @@
 using System.ComponentModel.DataAnnotations;
 
 using BetterCms.Core.DataContracts.Enums;
-using BetterCms.Core.Models;
 using BetterCms.Module.Root.Content.Resources;
+
+using BetterModules.Core.Models;
 
 namespace BetterCms.Module.Root.ViewModels.Option
 {

@@ -1,6 +1,6 @@
 ﻿using System;
 
-using BetterCms.Core.DataAccess.DataContext.Migrations;
+using BetterModules.Core.DataAccess.DataContext.Migrations;
 using BetterCms.Module.Pages.Models.Migrations;
 using BetterCms.Module.Root.Models.Migrations;
 
@@ -9,7 +9,7 @@ using FluentMigrator;
 namespace BetterCms.Module.Newsletter.Models.Migrations
 {
     [Migration(201305231541)]
-    public class Migration201305231541 : DefaultMigration
+    public class Migration201305231541: DefaultMigration
     {
         private readonly string rootSchemaName;
 

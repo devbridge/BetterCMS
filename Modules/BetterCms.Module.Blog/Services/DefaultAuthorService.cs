@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 
-using BetterCms.Core.DataAccess;
-using BetterCms.Core.DataAccess.DataContext;
+using BetterModules.Core.DataAccess;
+using BetterModules.Core.DataAccess.DataContext;
 using BetterCms.Module.Blog.Models;
 using BetterCms.Module.Root.Models;
 
@@ -54,11 +54,12 @@ namespace BetterCms.Module.Blog.Services
                 .List<LookupKeyValue>();
         }
 
-        public Author CreateAuthor(string name, Guid? imageId)
+        public Author CreateAuthor(string name, Guid? imageId, string description)
         {
             var author = new Author();
 
             author.Name = name;
+            author.Description = description;
             author.Image = imageId.HasValue ? repository.AsProxy<MediaManager.Models.MediaImage>(imageId.Value) : null;
 
             repository.Save(author);
@@ -70,11 +71,12 @@ namespace BetterCms.Module.Blog.Services
             return author;
         }
 
-        public Author UpdateAuthor(Guid authorId, int version, string name, Guid? imageId)
+        public Author UpdateAuthor(Guid authorId, int version, string name, Guid? imageId, string description)
         {
             var author = repository.First<Author>(authorId);
 
             author.Name = name;
+            author.Description = description;
             author.Version = version;
             author.Image = imageId.HasValue ? repository.AsProxy<MediaManager.Models.MediaImage>(imageId.Value) : null;
 

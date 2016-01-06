@@ -1,10 +1,11 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations;
 
-using BetterCms.Core.Models;
 using BetterCms.Module.MediaManager.ViewModels;
 using BetterCms.Module.Root.Content.Resources;
 using BetterCms.Module.Root.Mvc.Grids;
+
+using BetterModules.Core.Models;
 
 namespace BetterCms.Module.Blog.ViewModels.Author
 {
@@ -37,6 +38,14 @@ namespace BetterCms.Module.Blog.ViewModels.Author
         [Required(ErrorMessageResourceType = typeof(RootGlobalization), ErrorMessageResourceName = "Validation_RequiredAttribute_Message")]
         [StringLength(MaxLength.Name, ErrorMessageResourceType = typeof(RootGlobalization), ErrorMessageResourceName = "Validation_StringLengthAttribute_Message")]
         public virtual string Name { get; set; }
+
+        /// <summary>
+        /// Gets or sets the author description.
+        /// </summary>
+        /// <value>
+        /// The author description.
+        /// </value>
+        public virtual string Description { get; set; }
 
         /// <summary>
         /// Gets or sets the image view model.

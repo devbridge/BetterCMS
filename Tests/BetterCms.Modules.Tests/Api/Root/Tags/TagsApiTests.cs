@@ -1,8 +1,8 @@
-﻿using BetterCms.Core.Models;
-
-using BetterCms.Module.Api.Extensions;
+﻿using BetterCms.Module.Api.Extensions;
 using BetterCms.Module.Api.Operations.Root.Tags;
 using BetterCms.Module.Api.Operations.Root.Tags.Tag;
+
+using BetterModules.Core.Models;
 
 using NHibernate;
 

@@ -2,7 +2,6 @@
 using System.Globalization;
 using System.Linq;
 
-using BetterCms.Core.Mvc.Commands;
 using BetterCms.Module.MediaManager.Helpers;
 using BetterCms.Module.MediaManager.Models;
 using BetterCms.Module.MediaManager.Models.Extensions;
@@ -10,6 +9,8 @@ using BetterCms.Module.MediaManager.Services;
 using BetterCms.Module.MediaManager.ViewModels.Images;
 using BetterCms.Module.Root.Mvc;
 using BetterCms.Module.Root.Services;
+
+using BetterModules.Core.Web.Mvc.Commands;
 
 namespace BetterCms.Module.MediaManager.Command.Images.GetImage
 {

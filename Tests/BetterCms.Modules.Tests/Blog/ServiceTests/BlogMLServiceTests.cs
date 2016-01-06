@@ -5,10 +5,7 @@ using System.Reflection;
 using System.Security.Principal;
 
 using BetterCms.Configuration;
-using BetterCms.Core.DataAccess;
-using BetterCms.Core.DataAccess.DataContext;
 using BetterCms.Core.DataContracts.Enums;
-using BetterCms.Core.Web;
 
 using BetterCms.Module.Blog.Models;
 using BetterCms.Module.Blog.Services;
@@ -19,6 +16,10 @@ using BetterCms.Module.Root.Models;
 using BetterCms.Module.Root.Mvc.Helpers;
 
 using BlogML.Xml;
+
+using BetterModules.Core.DataAccess;
+using BetterModules.Core.DataAccess.DataContext;
+using BetterModules.Core.Web.Web;
 
 using Moq;
 

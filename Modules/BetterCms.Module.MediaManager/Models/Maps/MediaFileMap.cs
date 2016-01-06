@@ -1,4 +1,4 @@
-using BetterCms.Core.Models;
+using BetterModules.Core.Models;
 
 namespace BetterCms.Module.MediaManager.Models.Maps
 {
@@ -17,6 +17,8 @@ namespace BetterCms.Module.MediaManager.Models.Maps
             Map(f => f.IsTemporary).Not.Nullable().Default("1");
             Map(f => f.IsUploaded).Nullable();
             Map(f => f.IsCanceled).Not.Nullable().Default("0");
+            Map(f => f.IsMovedToTrash).Not.Nullable().Default("0");
+            Map(f => f.NextTryToMoveToTrash).Nullable();
 
             HasManyToMany(x => x.AccessRules).Table("MediaFileAccessRules").Schema(SchemaName).Cascade.AllDeleteOrphan().LazyLoad();
         }

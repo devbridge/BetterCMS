@@ -1,11 +1,11 @@
-﻿using BetterCms.Core.DataAccess.DataContext;
-
-using MvcContrib.Sorting;
+﻿using MvcContrib.Sorting;
 
 using NHibernate;
 using NHibernate.Criterion;
 
 using SortAndPagingOptions = BetterCms.Module.Root.Mvc.Grids.GridOptions.GridOptions;
+
+using BetterModules.Core.DataAccess.DataContext;
 
 namespace BetterCms.Module.Root.Mvc.Grids.Extensions
 {

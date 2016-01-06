@@ -1,8 +1,6 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
-
-using BetterCms.Core.Exceptions.DataTier;
-using BetterCms.Core.Mvc.Commands;
 
 using BetterCms.Module.Pages.Models;
 using BetterCms.Module.Pages.Services;
@@ -11,6 +9,9 @@ using BetterCms.Module.Root.Models;
 using BetterCms.Module.Root.Mvc;
 using BetterCms.Module.Root.Services;
 using BetterCms.Module.Root.ViewModels.Option;
+
+using BetterModules.Core.Exceptions.DataTier;
+using BetterModules.Core.Web.Mvc.Commands;
 
 namespace BetterCms.Module.Pages.Command.Widget.GetServerControlWidgetForEdit
 {
@@ -35,16 +36,29 @@ namespace BetterCms.Module.Pages.Command.Widget.GetServerControlWidgetForEdit
         private readonly IOptionService optionService;
 
         /// <summary>
+        /// The CMS configuration
+        /// </summary>
+        private readonly ICmsConfiguration cmsConfiguration;
+
+        /// <summary>
+        /// The language service
+        /// </summary>
+        private readonly ILanguageService languageService;
+
+        /// <summary>
         /// Initializes a new instance of the <see cref="GetServerControlWidgetForEditCommand" /> class.
         /// </summary>
         /// <param name="categoryService">The category service.</param>
         /// <param name="contentService">The content service.</param>
         /// <param name="optionService">The option service.</param>
-        public GetServerControlWidgetForEditCommand(ICategoryService categoryService, IContentService contentService, IOptionService optionService)
+        /// <param name="cmsConfiguration"></param>
+        public GetServerControlWidgetForEditCommand(ICategoryService categoryService, IContentService contentService, IOptionService optionService, ICmsConfiguration cmsConfiguration, ILanguageService languageService)
         {
             this.contentService = contentService;
             this.categoryService = categoryService;
             this.optionService = optionService;
+            this.cmsConfiguration = cmsConfiguration;
+            this.languageService = languageService;
         }
 
         /// <summary>
@@ -57,6 +71,8 @@ namespace BetterCms.Module.Pages.Command.Widget.GetServerControlWidgetForEdit
         public EditServerControlWidgetViewModel Execute(Guid? widgetId)
         {            
             EditServerControlWidgetViewModel model = null;
+            var languagesFuture = cmsConfiguration.EnableMultilanguage ? languageService.GetLanguagesLookupValues() : new List<LookupKeyValue>();
+            var languages = cmsConfiguration.EnableMultilanguage ? languagesFuture.ToList() : new List<LookupKeyValue>();
 
             if (widgetId.HasValue && widgetId.Value != Guid.Empty)
             {
@@ -64,34 +80,41 @@ namespace BetterCms.Module.Pages.Command.Widget.GetServerControlWidgetForEdit
 
                 if (serverControlWidget != null)
                 {
-                    model = new EditServerControlWidgetViewModel {
-                                                                     Id = serverControlWidget.Id,
-                                                                     Version = serverControlWidget.Version,
-                                                                     Name = serverControlWidget.Name,
-                                                                     Url = serverControlWidget.Url,
-                                                                     PreviewImageUrl = serverControlWidget.PreviewUrl,
-                                                                     CurrentStatus = serverControlWidget.Status,
-                                                                     HasPublishedContent = serverControlWidget.Original != null,
-                                                                     WidgetType = WidgetType.ServerControl                                                                     
-                                                                 };
+                    model = new EditServerControlWidgetViewModel
+                    {
+                        Id = serverControlWidget.Id,
+                        Version = serverControlWidget.Version,
+                        Name = serverControlWidget.Name,
+                        Url = serverControlWidget.Url,
+                        PreviewImageUrl = serverControlWidget.PreviewUrl,
+                        CurrentStatus = serverControlWidget.Status,
+                        HasPublishedContent = serverControlWidget.Original != null,
+                        WidgetType = WidgetType.ServerControl
+                    };
 
                     model.Options = serverControlWidget.ContentOptions.Distinct()
                         .Select(
                             f => 
                                 new OptionViewModel
-                                 {
-                                     Type = f.Type,
-                                     OptionDefaultValue = optionService.ClearFixValueForEdit(f.Type, f.DefaultValue),
-                                     OptionKey = f.Key,
-                                     CanDeleteOption = f.IsDeletable,
-                                     CustomOption = f.CustomOption != null
+                                {
+                                    Type = f.Type,
+                                    OptionDefaultValue = optionService.ClearFixValueForEdit(f.Type, f.DefaultValue),
+                                    OptionKey = f.Key,
+                                    CanDeleteOption = f.IsDeletable,
+                                    CustomOption = f.CustomOption != null
                                         ? new CustomOptionViewModel
-                                          {
-                                              Identifier = f.CustomOption.Identifier,
-                                              Title = f.CustomOption.Title,
-                                              Id = f.CustomOption.Id
-                                          }
-                                        : null
+                                        {
+                                            Identifier = f.CustomOption.Identifier,
+                                            Title = f.CustomOption.Title,
+                                            Id = f.CustomOption.Id
+                                        }
+                                        : null,
+                                    Translations = cmsConfiguration.EnableMultilanguage ?
+                                    f.Translations.Select(x => new OptionTranslationViewModel
+                                    {
+                                        LanguageId = x.Language.Id.ToString(),
+                                        OptionValue = optionService.ClearFixValueForEdit(f.Type, x.Value)
+                                    }).ToList() : null
                                  })
                         .OrderBy(o => o.OptionKey)
                         .ToList();
@@ -108,6 +131,8 @@ namespace BetterCms.Module.Pages.Command.Widget.GetServerControlWidgetForEdit
                 model = new EditServerControlWidgetViewModel();
             }
 
+            model.ShowLanguages = cmsConfiguration.EnableMultilanguage && languages.Any();
+            model.Languages = languages;
             model.Categories = categoryService.GetSelectedCategories<Root.Models.Widget, WidgetCategory>(widgetId).ToList();
             model.CustomOptions = optionService.GetCustomOptions();
             model.CategoriesFilterKey = Root.Models.Widget.CategorizableItemKeyForWidgets;

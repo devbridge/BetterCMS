@@ -2,13 +2,15 @@
 using System.Collections.Generic;
 using System.Linq;
 
-using BetterCms.Core.Models;
 using BetterCms.Module.Api.Extensions;
 using BetterCms.Module.Api.Operations;
 using BetterCms.Module.Api.Operations.Pages.Widgets.Widget.ServerControlWidget;
 using BetterCms.Module.Api.Operations.Root;
+
 using BetterCms.Module.MediaManager.Provider;
 using BetterCms.Module.Root.Models;
+
+using BetterModules.Core.Models;
 
 using NHibernate;
 
@@ -61,6 +63,13 @@ namespace BetterCms.Test.Module.Api.Pages.Widgets
 
             session.SaveOrUpdate(content);
             session.Flush();
+
+            var language1 = TestDataProvider.CreateNewLanguage();
+            session.SaveOrUpdate(language1);
+
+            var language2 = TestDataProvider.CreateNewLanguage();
+            session.SaveOrUpdate(language2);
+
             return new SaveServerControlWidgetModel
                 {
                     Name = TestDataProvider.ProvideRandomString(MaxLength.Name),
@@ -76,7 +85,20 @@ namespace BetterCms.Test.Module.Api.Pages.Widgets
                                   {
                                       DefaultValue = "1",
                                       Key = "K1",
-                                      Type = OptionType.Text
+                                      Type = OptionType.Text,
+                                      Translations = new List<OptionTranslationModel>
+                                                {
+                                                    new OptionTranslationModel
+                                                    {
+                                                        LanguageId = language1.Id.ToString(),
+                                                        Value = "translated_lang1"
+                                                    },
+                                                    new OptionTranslationModel
+                                                    {
+                                                        LanguageId = language2.Id.ToString(),
+                                                        Value = "translated_lang2"
+                                                    }
+                                                }
                                   },
 
                                   new OptionModel
@@ -136,7 +158,8 @@ namespace BetterCms.Test.Module.Api.Pages.Widgets
             Assert.IsTrue(getResponse.Options.All(a1 => model.Options.Any(a2 => a1.Key == a2.Key
                    && a1.CustomTypeIdentifier == a2.CustomTypeIdentifier
                    && a1.DefaultValue == a2.DefaultValue
-                   && a1.Type == a2.Type)));
+                   && a1.Type == a2.Type
+                   && a1.Translations.All(t1 => a2.Translations.Any(t2 => t1.LanguageId == t2.LanguageId && t1.Value == t2.Value)))));
         }
     }
 }

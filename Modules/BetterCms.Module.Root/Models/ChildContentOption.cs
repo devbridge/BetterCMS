@@ -1,23 +1,48 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 
+using BetterCms.Core;
 using BetterCms.Core.DataContracts;
 using BetterCms.Core.DataContracts.Enums;
-using BetterCms.Core.Models;
+
+using BetterModules.Core.Models;
 
 namespace BetterCms.Module.Root.Models
 {
     [Serializable]
-    public class ChildContentOption : EquatableEntity<ChildContentOption>, IOption
+    public class ChildContentOption : EquatableEntity<ChildContentOption>, IOptionValueEntity, IMultilingualOption
     {
+        public ChildContentOption()
+        {
+            Translations = new List<ChildContentOptionTranslation>();
+        }
+
         public virtual ChildContent ChildContent { get; set; }
 
         public virtual string Value { get; set; }
 
         public virtual string Key { get; set; }
 
+        public virtual bool UseDefaultValue { get; set; }
+
         public virtual OptionType Type { get; set; }
 
         public virtual CustomOption CustomOption { get; set; }
+
+        public virtual IList<ChildContentOptionTranslation> Translations { get; set; }
+
+        IList<IOptionTranslation> IMultilingualOption.Translations
+        {
+            get
+            {
+                return Translations.Cast<IOptionTranslation>().ToList();
+            }
+            set
+            {
+                Translations = value.Cast<ChildContentOptionTranslation>().ToList();
+            }
+        }
 
         ICustomOption IOption.CustomOption
         {
@@ -36,12 +61,23 @@ namespace BetterCms.Module.Root.Models
             return CopyDataTo(new ChildContentOption());
         }
 
-        public virtual ChildContentOption CopyDataTo(ChildContentOption contentOption)
+        public virtual ChildContentOption CopyDataTo(ChildContentOption contentOption, bool copyCollections = true)
         {
             contentOption.Key = Key;
             contentOption.Type = Type;
             contentOption.Value = Value;
             contentOption.CustomOption = CustomOption;
+            contentOption.UseDefaultValue = UseDefaultValue;
+
+            if (copyCollections && Translations != null)
+            {
+                foreach (var childContentOptionTranslation in Translations)
+                {
+                    var clonedTranslation = childContentOptionTranslation.Clone();
+                    clonedTranslation.ChildContentOption = contentOption;
+                    contentOption.Translations.Add(clonedTranslation);
+                }
+            }
 
             return contentOption;
         }

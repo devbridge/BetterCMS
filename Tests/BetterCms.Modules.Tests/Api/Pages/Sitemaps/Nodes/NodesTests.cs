@@ -1,10 +1,12 @@
 ﻿using System;
 
-using BetterCms.Core.Models;
 using BetterCms.Module.Api.Extensions;
 using BetterCms.Module.Api.Infrastructure;
 using BetterCms.Module.Api.Operations.Pages.Sitemaps.Sitemap.Nodes;
 using BetterCms.Module.Api.Operations.Pages.Sitemaps.Sitemap.Nodes.Node;
+
+using BetterModules.Core.Models;
+using BetterModules.Events;
 
 using NHibernate;
 
@@ -52,7 +54,7 @@ namespace BetterCms.Test.Module.Api.Pages.Sitemaps.Nodes
             Events.SitemapEvents.Instance.SitemapNodeDeleted -= Instance_EntityDeleted;
         }
 
-        void Instance_SitemapUpdated(Events.SingleItemEventArgs<BetterCms.Module.Pages.Models.Sitemap> args)
+        void Instance_SitemapUpdated(SingleItemEventArgs<BetterCms.Module.Pages.Models.Sitemap> args)
         {
             updatedSitemapEventCount++;
         }

@@ -1,7 +1,7 @@
 ﻿using System;
 
-using BetterCms.Core.DataAccess.DataContext.Migrations;
-using BetterCms.Core.Models;
+using BetterModules.Core.DataAccess.DataContext.Migrations;
+using BetterModules.Core.Models;
 
 using FluentMigrator;
 
@@ -67,7 +67,7 @@ namespace BetterCms.Module.MediaManager.Models.Migrations
         {
             Create
                 .Table("Medias").InSchema(SchemaName)
-                .WithCmsBaseColumns()
+                .WithBaseColumns()
                 .WithColumn("FolderId").AsGuid().Nullable()
                 .WithColumn("Title").AsString(MaxLength.Name).NotNullable()
                 .WithColumn("Type").AsInt32().NotNullable();

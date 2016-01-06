@@ -1,4 +1,6 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 
 using BetterCms.Core.DataContracts;
@@ -50,7 +52,7 @@ namespace BetterCms.Module.Root.Mvc.Helpers
             {
                 try
                 {
-                    return (TType)optionValue.Value;
+                    return (TType)TypeDescriptor.GetConverter(typeof(TType)).ConvertFromInvariantString(optionValue.Value);
                 }
                 catch
                 {

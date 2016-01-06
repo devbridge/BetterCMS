@@ -2,13 +2,14 @@
 using System.Collections.Generic;
 using System.Linq;
 
-using BetterCms.Core.DataAccess;
-using BetterCms.Core.Mvc.Commands;
 using BetterCms.Core.Security;
 using BetterCms.Module.Pages.Models;
 using BetterCms.Module.Pages.ViewModels.Page;
 
 using BetterCms.Module.Root.Mvc;
+
+using BetterModules.Core.DataAccess;
+using BetterModules.Core.Web.Mvc.Commands;
 
 namespace BetterCms.Module.Pages.Command.Page.SuggestPages
 {

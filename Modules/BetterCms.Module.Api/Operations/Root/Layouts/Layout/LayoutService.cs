@@ -1,7 +1,7 @@
 ﻿using System.Linq;
 
-using BetterCms.Core.DataAccess;
-using BetterCms.Core.DataAccess.DataContext;
+using BetterModules.Core.DataAccess;
+using BetterModules.Core.DataAccess.DataContext;
 
 using BetterCms.Module.Api.Extensions;
 using BetterCms.Module.Api.Operations.Root.Layouts.Layout.Options;

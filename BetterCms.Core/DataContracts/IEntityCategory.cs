@@ -1,4 +1,6 @@
-﻿namespace BetterCms.Core.DataContracts
+﻿using BetterModules.Core.DataContracts;
+
+namespace BetterCms.Core.DataContracts
 {
     public interface IEntityCategory: IEntity
     {

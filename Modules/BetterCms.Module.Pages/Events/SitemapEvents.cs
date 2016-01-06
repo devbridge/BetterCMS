@@ -1,5 +1,7 @@
 ﻿using BetterCms.Module.Pages.Models;
 
+using BetterModules.Events;
+
 // ReSharper disable CheckNamespace
 namespace BetterCms.Events
 // ReSharper restore CheckNamespace

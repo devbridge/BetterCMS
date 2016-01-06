@@ -1,16 +1,16 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Web.Mvc;
 
 using BetterCms.Core.DataContracts.Enums;
-using BetterCms.Core.Models;
 
 using BetterCms.Module.Pages.Content.Resources;
+using BetterCms.Module.Pages.Models.Enums;
 using BetterCms.Module.Pages.Mvc.Attributes;
-using BetterCms.Module.Pages.ViewModels.Widgets;
 
 using BetterCms.Module.Root.ViewModels.Security;
+
+using BetterModules.Core.Models;
 
 namespace BetterCms.Module.Pages.ViewModels.Content
 {
@@ -19,11 +19,6 @@ namespace BetterCms.Module.Pages.ViewModels.Content
     /// </summary>
     public class PageContentViewModel : IAccessSecuredViewModel, IDraftDestroy
     {
-        public PageContentViewModel()
-        {
-            WidgetCategories = new List<WidgetCategoryViewModel>();
-        }
-
         /// <summary>
         /// Gets or sets the page content id.
         /// </summary>
@@ -149,7 +144,7 @@ namespace BetterCms.Module.Pages.ViewModels.Content
         /// <value>
         ///   <c>true</c> if custom javascript is enabled; otherwise, <c>false</c>.
         /// </value>
-        public bool EanbledCustomJs { get; set; }
+        public bool EnabledCustomJs { get; set; }
 
         /// <summary>
         /// Gets or sets a value indicating whether to enable custom CSS.
@@ -200,22 +195,6 @@ namespace BetterCms.Module.Pages.ViewModels.Content
         /// </value>
         [AllowHtml]
         public string CustomCss { get; set; }
-
-        /// <summary>
-        /// Gets or sets the list of the widget categories.
-        /// </summary>
-        /// <value>
-        /// The list of the widget categories.
-        /// </value>
-        public IList<WidgetCategoryViewModel> WidgetCategories { get; set; }
-
-        /// <summary>
-        /// Gets or sets the recent widgets.
-        /// </summary>
-        /// <value>
-        /// The recent widgets.
-        /// </value>
-        public IList<WidgetViewModel> RecentWidgets { get; set; }
         
         /// <summary>
         /// Gets or sets a value indicating whether dialog should be opened in the read only mode.
@@ -256,6 +235,14 @@ namespace BetterCms.Module.Pages.ViewModels.Content
         ///   <c>true</c> if child regions should be included to the results; otherwise, <c>false</c>.
         /// </value>
         public bool IncludeChildRegions { get; set; }
+
+        /// <summary>
+        /// Gets or sets a value indicating whether content type is markdown.
+        /// </summary>
+        /// <value>
+        /// <c>true</c> if content type is markdown; otherwise, <c>false</c>.
+        /// </value>
+        public ContentTextMode ContentTextMode { get; set; }
 
         /// <summary>
         /// Returns a <see cref="System.String" /> that represents this instance.

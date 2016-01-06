@@ -5,13 +5,15 @@ using System.Linq;
 using System.Text;
 using System.Xml;
 
-using BetterCms.Core.DataAccess;
 using BetterCms.Core.DataContracts.Enums;
-using BetterCms.Core.Web;
+
 using BetterCms.Module.Blog.Models;
 using BetterCms.Module.Blog.Services;
 using BetterCms.Module.Pages.Models;
 using BetterCms.Module.Root.Models;
+
+using BetterModules.Core.DataAccess;
+using BetterModules.Core.Web.Web;
 
 using FluentNHibernate.Utils;
 
@@ -131,34 +133,35 @@ namespace BetterCms.Test.Module.Blog.ServiceTests
                 Assert.IsNotNull(docNodes.FirstOrDefault(node => node.Name == "authors"));
                 Assert.IsFalse(docNodes.First(node => node.Name == "authors").HasChildNodes);
             }
-// TODO: https://github.com/devbridge/BetterCMS/issues/1235
-//            if (post.Categories != null)
-//            {
-//                var categoriesIds = post.Categories.Select(c => c.Category.Id.ToLowerInvariantString()).ToList();
-//                var categoriesNode = docNodes.First(node => node.Name == "categories");
-//                Assert.IsTrue(childNodes.First(node => node.Name == "categories").HasChildNodes);
-//                Assert.IsTrue(docNodes.First(node => node.Name == "categories").HasChildNodes);
-//
-//                for (var i = 0; i < categoriesNode.ChildNodes.Count; i++)
-//                {
-//                    var xmlCategory = categoriesNode.ChildNodes[0];
-//                    Assert.IsNotNull(xmlCategory);
-//                    Assert.Contains(xmlCategory.Attributes.Cast<XmlAttribute>().First(a => a.Name == "id").InnerText, categoriesIds);
-//
-//                    xmlCategory = childNodes.First(node => node.Name == "categories").ChildNodes[0];
-//                    Assert.IsNotNull(xmlCategory);
-//                    Assert.Contains(xmlCategory.Attributes.Cast<XmlAttribute>().First(a => a.Name == "ref").InnerText, categoriesIds);
-//                }
-//
-//                //var xmlCategory = docNodes.First(node => node.Name == "categories").ChildNodes[0];
-//
-//            }
-//            else
-//            {
-//                Assert.IsNull(childNodes.FirstOrDefault(node => node.Name == "categories"));
-//                Assert.IsNotNull(docNodes.FirstOrDefault(node => node.Name == "categories"));
-//                Assert.IsFalse(docNodes.First(node => node.Name == "categories").HasChildNodes);
-//            }
+
+            if (post.Categories != null)
+            {
+                var categoriesIds = post.Categories.Select(c => c.Category.Id.ToLowerInvariantString()).ToList();
+                var pageCategoriesIds = post.Categories.Select(c => c.Id.ToLowerInvariantString()).ToList();
+                var categoriesNode = docNodes.First(node => node.Name == "categories");
+                Assert.IsTrue(childNodes.First(node => node.Name == "categories").HasChildNodes);
+                Assert.IsTrue(docNodes.First(node => node.Name == "categories").HasChildNodes);
+
+                for (var i = 0; i < categoriesNode.ChildNodes.Count; i++)
+                {
+                    var xmlCategory = categoriesNode.ChildNodes[0];
+                    Assert.IsNotNull(xmlCategory);
+                    Assert.Contains(xmlCategory.Attributes.Cast<XmlAttribute>().First(a => a.Name == "id").InnerText, pageCategoriesIds);
+
+                    xmlCategory = childNodes.First(node => node.Name == "categories").ChildNodes[0];
+                    Assert.IsNotNull(xmlCategory);
+                    Assert.Contains(xmlCategory.Attributes.Cast<XmlAttribute>().First(a => a.Name == "ref").InnerText, categoriesIds);
+                }
+
+                //var xmlCategory = docNodes.First(node => node.Name == "categories").ChildNodes[0];
+
+            }
+            else
+            {
+                Assert.IsNull(childNodes.FirstOrDefault(node => node.Name == "categories"));
+                Assert.IsNotNull(docNodes.FirstOrDefault(node => node.Name == "categories"));
+                Assert.IsFalse(docNodes.First(node => node.Name == "categories").HasChildNodes);
+            }
         }
 
         private List<BlogPost> GetFakeBlogPosts()
@@ -180,11 +183,13 @@ namespace BetterCms.Test.Module.Blog.ServiceTests
                         new PageContent { Content = new BlogPostContent { Html = "Test content <p>with HTML</p>", Status = ContentStatus.Published } }
                     }
             };
-            blog.Categories = new List<PageCategory>() { new PageCategory() { Category = new Category { Id = Guid.NewGuid(), Name = "Test Category" }, Page = blog } };
-            return new List<BlogPost>
-                   {
-                        blog
-                   };
+            var categoryTree = new CategoryTree { Title = "Test Category Tree" };
+            var category = new Category { Id = Guid.NewGuid(), Name = "Test Category", CategoryTree = categoryTree };
+            category.CategoryTree = categoryTree;
+            var pageCategory = new PageCategory { Category = category, Page = blog };
+            categoryTree.Categories = new List<Category> { pageCategory.Category };
+            blog.Categories = new List<PageCategory> { pageCategory };
+            return new List<BlogPost> { blog };
         }
     }
 }

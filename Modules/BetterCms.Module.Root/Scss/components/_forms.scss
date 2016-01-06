@@ -1,0 +1,201 @@
+@import '../core/variables';
+
+//todo upgrade forms styling to db pattern
+//.field {
+//    &-wrapper {
+//    }
+//
+//    &-text {
+//    }
+//
+//    &-textarea {
+//    }
+//}
+
+//module Input Fields & Field Holders
+.bcms-input-field-holder {
+    position: relative;
+}
+
+.bcms-input-field-holder .bcms-tooltip-mark {
+    top: 4px;
+    left: -15px;
+}
+
+.bcms-input-list-holder {
+    position: relative;
+    padding: 0 0 20px 0;
+}
+
+.bcms-input-list-holder:first-child {
+    padding-top: 20px;
+}
+
+.bcms-input-list-holder:first-child .bcms-tooltip-mark {
+    top: 24px;
+}
+
+.bcms-checkbox-holder {
+    display: inline-block;
+    padding: 5px 10px 5px 0;
+    color: #595959;
+    font-size: 12px;
+}
+
+.bcms-checkbox-holder > input[type="checkbox"] {
+    margin-top: 0;
+    vertical-align: middle;
+}
+
+//module  Overwrite default placeholder text
+:-moz-placeholder {
+    font-family: "Open Sans", sans-serif;
+    font-size: 16px;
+    color: #787878;
+}
+
+::-webkit-input-placeholder {
+    font-family: "Open Sans", sans-serif;
+    font-size: 12px;
+    color: #787878;
+}
+
+:-ms-input-placeholder {
+    font-family: "Open Sans", sans-serif;
+    font-size: 12px;
+    color: #787878;
+}
+
+.bcms-editor-field-box {
+    height: 30px;
+    width: 100%;
+    line-height: 18px;
+    padding: 6px;
+    margin: 0;
+    border: 1px solid #c6c6c6;
+    font-family: "Open Sans", sans-serif;
+    font-size: 12px;
+    color: #000;
+    vertical-align: middle;
+    background-color: #f5f5f5;
+    border-radius: 0;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+    -webkit-appearance: none;
+    border-radius: 0;
+}
+
+.bcms-editor-field-box:focus {
+    background: #fff;
+    border-color: #1894e4;
+    box-shadow: 0 0 3px 0 rgba(24, 145, 230, 0.35);
+    outline: none;
+}
+
+.bcms-editor-field-area, .bcms-editor-field-area-container {
+    width: 100%;
+    line-height: 18px;
+    padding: 6px;
+    margin: 0;
+    border: 1px solid #c6c6c6;
+    font-family: "Open Sans", sans-serif;
+    font-size: 12px;
+    color: #000;
+    background-color: #f5f5f5;
+    border-radius: 0;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+    -webkit-appearance: none;
+    border-radius: 0;
+}
+
+.bcms-editor-field-area:focus, .bcms-editor-field-area-container:focus {
+    background: #fff;
+    border-color: #1894e4;
+    box-shadow: 0 0 3px 0 rgba(24, 145, 230, 0.35);
+    outline: none;
+}
+
+.bcms-editor-field-area {
+    height: 104px;
+    resize: vertical;
+}
+
+.bcms-code-field {
+    font-family: monospace !important;
+}
+
+//module Global Select
+.bcms-global-select {
+    display: block;
+    padding: 5px;
+    background-color: #f3f3f3;
+    border: 1px solid #b8b8b8;
+    color: #000;
+    cursor: pointer;
+    overflow: hidden;
+    white-space: nowrap;
+    height: 30px;
+    width: 285px;
+    line-height: 17px;
+    font-size: 12px;
+}
+
+.bcms-global-select:focus {
+    outline: none;
+}
+
+.bcms-select-holder {
+    position: relative;
+    display: inline-block;
+}
+
+.bcms-select-holder span.bcms-field-validation-error {
+    right: 24px;
+}
+
+//module Form elements
+.bcms-textbox {
+    font-family: "Open Sans", sans-serif;
+    font-size: 14px;
+    color: #787878;
+    border: 1px solid #D1D1D1;
+    background: #F5F5F5;
+    padding: 5px 7px;
+    margin: 0;
+    width: 300px;
+    border-radius: 4px;
+}
+
+.bcms-textbox:focus {
+    color: #595959;
+    border-color: #0383DF;
+    outline: none;
+    background-color: #FFFFFF;
+}
+
+.bcms-textbox-warn {
+    border-color: #E64343;
+    outline: none;
+    background-color: #F9EDEA;
+    background-position: 100% 50%;
+    background-repeat: no-repeat;
+    background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAAJCAYAAAAywQxIAAAABHNCSVQICAgIfAhkiAAAAAlwSFlzAAALEgAACxIB0t1+/AAAABZ0RVh0Q3JlYXRpb24gVGltZQAwNy8xNi8xMjRk/+8AAAAcdEVYdFNvZnR3YXJlAEFkb2JlIEZpcmV3b3JrcyBDUzbovLKMAAAAvElEQVQoka2QIQ7CQBBFXyuRdXMZBF1DWzwoLFRzBCS6YFFwAYqZ0ITDUFdXbBEMSUFtE34ymZ3/Ny+TCR5xXABLYCqqd3qqnRsDV+AoqjkeCoEGGAFl7Vzag6VAaVnjAwMIuq6jdm4NFOZNrN+s56K6HwS0jVbA7iffiOrBF/YFNOgJmNt4FtXFEBi8b9jfcAa0VjPzBunvNwxr57YGa4FMVCtRrYDMvML++AGBCHgCiahePoG9E8siX+ALMz1MZRh3zgkAAAAASUVORK5CYII=');
+}
+
+.bcms-textbox-ok {
+    border-color: #20CD00;
+    outline: none;
+    background-color: #E8F8E6;
+    background-position: 100% 50%;
+    background-repeat: no-repeat;
+    background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAAJCAYAAAAywQxIAAAABHNCSVQICAgIfAhkiAAAAAlwSFlzAAALEgAACxIB0t1+/AAAABZ0RVh0Q3JlYXRpb24gVGltZQAwNy8xNi8xMjRk/+8AAAAcdEVYdFNvZnR3YXJlAEFkb2JlIEZpcmV3b3JrcyBDUzbovLKMAAAAyElEQVQokZXRoUpEURAG4O8sa7L4CHte4YJR0wab5rWYDUZBu8Eo+AaKvodR2AMm462CCHbBMXiQ6+Wue512/jPzMTApIgxVLukC553oA0dtE3eDA7UmK7AZFr14Azd/YTDJJe3kkrZ7+QKzgf6ztSAe8JhLOqzbTVcMPuF+HTjFZ4Vvc0lbmGOz1/eMvbaJlzEbnnbe1zhA6mRL7I7BIEWEXNIJrgb+S93sdQz2A2IIXWLeNvE+FvsFVvQYl74PsN828fYfDL4AtNQ7gD+Mkw4AAAAASUVORK5CYII=');
+}
+
+.bcms-ajax-show {
+    display: none;
+}
+
+.bcms-ajax-errors {
+    display: none;
+}

@@ -34,16 +34,25 @@ namespace BetterCms.Module.Api.Operations.Pages.Contents.Content.HtmlContent
         /// The expiration date.
         /// </value>
         [DataMember]
-        public System.DateTime? ExpirationDate { get; set; }
+        public DateTime? ExpirationDate { get; set; }
 
         /// <summary>
-        /// Gets or sets the content HTML.
+        /// Gets or sets the content prerendered HTML.
         /// </summary>
         /// <value>
-        /// The content HTML.
+        /// The content prerendered HTML.
         /// </value>
         [DataMember]
         public string Html { get; set; }
+        
+        /// <summary>
+        /// Gets or sets the content original text.
+        /// </summary>
+        /// <value>
+        /// The content original text.
+        /// </value>
+        [DataMember]
+        public string OriginalText { get; set; }
 
         /// <summary>
         /// Gets or sets the content custom CSS.
@@ -107,5 +116,14 @@ namespace BetterCms.Module.Api.Operations.Pages.Contents.Content.HtmlContent
         /// </value>
         [DataMember]
         public string PublishedByUser { get; set; }
+
+        /// <summary>
+        /// Gets or sets the content text mode.
+        /// </summary>
+        /// <value>
+        /// The content text mode.
+        /// </value>
+        [DataMember]
+        public virtual ContentTextMode ContentTextMode { get; set; }
     }
 }

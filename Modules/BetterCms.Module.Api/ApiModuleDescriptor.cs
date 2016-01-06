@@ -71,6 +71,8 @@ using BetterCms.Module.Api.Operations.Users.Users.User;
 using BetterCms.Module.Api.Operations.Users.Users.User.Validate;
 using BetterCms.Module.Api.Operations.Users.Users.User.ValidateUser;
 
+using BetterModules.Core.Modules.Registration;
+
 using ContentService = BetterCms.Module.Api.Operations.Pages.Contents.Content.ContentService;
 
 using INodeService = BetterCms.Module.Api.Operations.Pages.Sitemaps.Sitemap.Nodes.Node.INodeService;
@@ -83,7 +85,7 @@ namespace BetterCms.Module.Api
     /// <summary>
     /// API module descriptor.
     /// </summary>
-    public class ApiModuleDescriptor : ModuleDescriptor
+    public class ApiModuleDescriptor : CmsModuleDescriptor
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="ApiModuleDescriptor" /> class.
@@ -92,22 +94,6 @@ namespace BetterCms.Module.Api
         public ApiModuleDescriptor(ICmsConfiguration cmsConfiguration)
             : base(cmsConfiguration)
         {
-        }
-
-        internal const string ModuleId = "4abf7d03-bd9d-43db-9c2e-a964342c0af1";
-
-        /// <summary>
-        /// Gets the identifier.
-        /// </summary>
-        /// <value>
-        /// The identifier.
-        /// </value>
-        public override Guid Id
-        {
-            get
-            {
-                return new Guid(ModuleId);
-            }
         }
 
         /// <summary>

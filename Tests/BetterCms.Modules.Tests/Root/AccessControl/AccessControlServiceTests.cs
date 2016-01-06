@@ -5,11 +5,13 @@ using System.Security.Principal;
 using Autofac;
 
 using BetterCms.Configuration;
+
 using BetterCms.Core.Security;
 using BetterCms.Core.Services;
-using BetterCms.Core.Services.Caching;
 using BetterCms.Module.Root.Models;
 using BetterCms.Module.Root.Services;
+
+using BetterModules.Core.Web.Services.Caching;
 
 using Moq;
 

@@ -12,6 +12,8 @@ using BetterCms.Module.Root.Mvc.Helpers;
 using BetterCms.Module.Root.Projections;
 using BetterCms.Module.Root.ViewModels.Security;
 
+using BetterModules.Core.DataContracts;
+
 namespace BetterCms.Module.Root.ViewModels.Cms
 {
     /// <summary>
@@ -48,6 +50,7 @@ namespace BetterCms.Module.Root.ViewModels.Cms
             if (rootPage != null && rootPage.Language != null)
             {
                 LanguageCode = rootPage.Language.Code;
+                LanguageId = rootPage.Language.Id;
             }
 
             PageData = page;
@@ -254,6 +257,14 @@ namespace BetterCms.Module.Root.ViewModels.Cms
         /// The language code.
         /// </value>
         public string LanguageCode { get; set; }
+
+        /// <summary>
+        /// Gets or sets the language identifier.
+        /// </summary>
+        /// <value>
+        /// The language identifier.
+        /// </value>
+        public Guid LanguageId { get; set; }
 
         /// <summary>
         /// Gets or sets the list of meta data projections.

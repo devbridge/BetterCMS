@@ -8,6 +8,8 @@ using System.Web.UI.HtmlControls;
 
 using BetterCms.Core.DataContracts;
 
+using BetterModules.Core.Web.Modules;
+
 namespace BetterCms.Core.Modules.Projections
 {
     /// <summary>
@@ -46,7 +48,7 @@ namespace BetterCms.Core.Modules.Projections
         /// <param name="onChangeAction">Name of the action to execute after select item changed.</param>
         [SuppressMessage("StyleCop.CSharp.NamingRules", "SA1305:FieldNamesMustNotUseHungarianNotation", Justification = "Reviewed. Suppression is OK here.")]
         public DropDownListProjection(JsIncludeDescriptor parentModuleInclude, IEnumerable<Func<IPage, DropDownListProjectionItem>> items, Func<IPage, string> onChangeAction)
-            : base("select")
+            : base("div")
         {
             this.parentModuleInclude = parentModuleInclude;
             Items = items;
@@ -60,7 +62,7 @@ namespace BetterCms.Core.Modules.Projections
         /// <param name="onChangeAction">Name of the action to execute after select item changed.</param>
         [SuppressMessage("StyleCop.CSharp.NamingRules", "SA1305:FieldNamesMustNotUseHungarianNotation", Justification = "Reviewed. Suppression is OK here.")]
         public DropDownListProjection(JsIncludeDescriptor parentModuleInclude, Func<IPage, string> onChangeAction)
-            : base("select")
+            : base("div")
         {
             this.parentModuleInclude = parentModuleInclude;
             OnChangeAction = onChangeAction;
@@ -90,6 +92,8 @@ namespace BetterCms.Core.Modules.Projections
 
             if (Items != null && Items.Any())
             {
+                var innerDiv = new HtmlGenericControl("div");
+                controlRenderer.Controls.Add(innerDiv);
                 var items = Items
                     .Select(f => f(page))
                     .OrderBy(f => f.Order)
@@ -104,15 +108,15 @@ namespace BetterCms.Core.Modules.Projections
 
                 foreach (var item in items)
                 {
-                    var option = new HtmlGenericControl("option");
+                    var option = new HtmlGenericControl("div");
                     option.Controls.Add(new LiteralControl(item.Text));
                     option.Attributes["value"] = item.Value;
                     if (item.Selected)
                     {
                         option.Attributes["selected"] = "selected";
                     }
-                    
-                    controlRenderer.Controls.Add(option);
+
+                    innerDiv.Controls.Add(option);
                 }
             }
 

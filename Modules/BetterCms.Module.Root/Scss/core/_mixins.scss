@@ -1,0 +1,143 @@
+@mixin clearfix($extend: true) {
+    @if ($extend) {
+        @extend %clearfix;
+    } @else {
+        &:after {
+            content: '';
+            display: table;
+            clear: both;
+        }
+    }
+}
+
+@mixin vertical-align($block: inline-block, $align: middle) {
+    display: $block;
+    vertical-align: $align;
+}
+
+@mixin virtual($virtual: null, $content: null, $both: null) {
+    $ampersand: unquote('&');
+    @if ($ampersand) {
+        @if ($virtual == after) {
+            &:after {
+                content: '#{$content}';
+                @content;
+            }
+        } @else if ($virtual == before) {
+            &:before {
+                content: '#{$content}';
+                @content;
+            }
+        } @else if ($both == before after) {
+            &:before,
+            &:after {
+                content: '#{$content}';
+                @content;
+            }
+        }
+    } @else {
+        @warn "No parent exist! Add your ':#{$virtual}' element to existing class";
+    }
+}
+
+@mixin positioning($center: null, $center-y: null, $center-x: null) {
+    position: absolute;
+    @if $center {
+        @include transform(translate(-50%, -50%));
+        left: 50%;
+        top: 50%;
+    }
+    @if $center-y {
+        @include transform(translateY(-50%));
+        top: 50%;
+    }
+    @if $center-x {
+        @include transform(translateX(-50%));
+        left: 50%;
+    }
+}
+
+@mixin placeholder {
+    &::-webkit-input-placeholder {
+        @content;
+    }
+
+    &::-moz-placeholder {
+        @content;
+    }
+
+    &:-ms-input-placeholder {
+        @content;
+    }
+}
+
+@mixin ellipsis() {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+@mixin add-gradient($top: null, $bottom: null, $fallback: null) {
+    @if ($fallback == true) {
+        background-color: $bottom;
+    } @else {
+        background-image: -webkit-linear-gradient(top, $top 0, $bottom 100%);
+        background-image: linear-gradient(to bottom, $top 0, $bottom 100%);
+    }
+
+    &:active {
+        background-image: -webkit-linear-gradient(top, $bottom 0, $bottom 100%);
+        background-image: linear-gradient(to bottom, $bottom 0, $bottom 100%);
+    }
+}
+
+@mixin button() {
+    @include vertical-align();
+    border: 0;
+    border-radius: 2px;
+    box-sizing: border-box;
+    cursor: pointer;
+    font-family: $font-base-family;
+    overflow: hidden;
+    text-align: center;
+    text-transform: uppercase;
+    @content
+}
+
+//module functions
+//class constructor
+//@mixin construct-button($get-map: null) {
+//    @for $i from 1 through length($get-map) {
+//        @function key($key) {
+//            @if map-has-key(nth($get-map, $i), $key) {
+//                @return map-get(nth($get-map, $i), $key);
+//            } @else {
+//                @warn "Unknown key '#{$key}' in choosen map";
+//                @return null;
+//            }
+//        }
+//
+//        .bcms-btn-#{key(name)} {
+//            @if (map-has-key(nth($get-map, $i), color)) {
+//                color: key(color);
+//            }
+//
+//            @if (map-has-key(nth($get-map, $i), font-weight)) {
+//                font-weight: key(font-weight);
+//            }
+//
+//            @if (map-has-key(nth($get-map, $i), padding)) {
+//                padding: key(padding);
+//            }
+//
+//            @if (map-has-key(nth($get-map, $i), gradient-top)) {
+//                background: linear-gradient(to bottom, key(gradient-top), key(gradient-bottom));
+//            }
+//
+//            font-size: key(font-size);
+//            line-height: key(line-height);
+//            @content;
+//
+//        }
+//    }
+//}

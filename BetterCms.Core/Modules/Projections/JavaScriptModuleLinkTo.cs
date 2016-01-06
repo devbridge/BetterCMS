@@ -7,6 +7,8 @@ using System.Web.Routing;
 
 using Common.Logging;
 
+using BetterModules.Core.Web.Modules;
+
 using Microsoft.Web.Mvc;
 
 namespace BetterCms.Core.Modules.Projections

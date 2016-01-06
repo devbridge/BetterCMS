@@ -2,16 +2,20 @@
 using System.Collections.Generic;
 using System.Linq;
 
-using BetterCms.Core.DataAccess;
-using BetterCms.Core.DataAccess.DataContext;
+using BetterCms.Core.DataContracts;
 using BetterCms.Core.Exceptions;
-using BetterCms.Core.Exceptions.DataTier;
+
 using BetterCms.Events;
+
 using BetterCms.Module.Root.Accessors;
 using BetterCms.Module.Root.Models;
 using BetterCms.Module.Root.Mvc;
 using BetterCms.Module.Root.Mvc.Grids.Extensions;
 using BetterCms.Module.Root.Services.Categories.Nodes;
+
+using BetterModules.Core.DataAccess;
+using BetterModules.Core.DataAccess.DataContext;
+using BetterModules.Core.Exceptions.DataTier;
 
 using NHibernate.Criterion;
 using NHibernate.Linq;
@@ -131,6 +135,7 @@ namespace BetterCms.Module.Root.Services.Categories.Tree
 
             foreach (var category in existingCategoryList)
             {
+                CategoryNodeService.DeleteRelations(category);
                 Repository.Delete(category);
                 deletedCategories.Add(category);
             }
@@ -166,43 +171,46 @@ namespace BetterCms.Module.Root.Services.Categories.Tree
 
         public bool Delete(DeleteCategoryTreeRequest request)
         {
-            var categoryTree = Repository
+            var entityCategorysFuture = Repository
+                .AsQueryable<IEntityCategory>()
+                .Where(t => t.Category.CategoryTree.Id == request.Id)
+                .ToFuture();
+            var categoryTreeFuture = Repository
                 .AsQueryable<CategoryTree>()
-                .Where(map => map.Id == request.Id)
-                // TODO:                .FetchMany(map => map.AccessRules)
-                .Distinct()
-                .ToList()
-                .First();
+                .Where(t => t.Id == request.Id)
+                .ToFuture();
+            var children = Repository
+                .AsQueryable<Category>()
+                .Where(t=>t.CategoryTree.Id == request.Id)
+                .ToFuture()
+                .ToList();
+            var entityCategorys = entityCategorysFuture.ToList();
 
-            // TODO:            // Security.
-            //            if (cmsConfiguration.Security.AccessControlEnabled)
-            //            {
-            //                var roles = new[] { RootModuleConstants.UserRoles.EditContent };
-            //                accessControlService.DemandAccess(sitemap, currentUser, AccessLevel.ReadWrite, roles);
-            //            }
+            var categoryTree = categoryTreeFuture.First();
 
-            // Concurrency.
+
             if (request.Version > 0 && categoryTree.Version != request.Version)
             {
                 throw new ConcurrentDataException(categoryTree);
             }
 
+
             UnitOfWork.BeginTransaction();
 
-            // TODO:
-            //            if (sitemap.AccessRules != null)
-            //            {
-            //                var rules = sitemap.AccessRules.ToList();
-            //                rules.ForEach(sitemap.RemoveRule);
-            //            }
-
             Repository.Delete(categoryTree);
+            foreach (var category in children)
+            {
+                Repository.Delete(category);
+            }
+            foreach (var categorys in entityCategorys)
+            {
+                Repository.Delete(categorys);
+            }
 
             UnitOfWork.Commit();
 
+
             RootEvents.Instance.OnCategoryTreeDeleted(categoryTree);
-            // Events.
-            // TODO:            Events.SitemapEvents.Instance.OnSitemapDeleted(categoryTree);
             return true;
         }
 

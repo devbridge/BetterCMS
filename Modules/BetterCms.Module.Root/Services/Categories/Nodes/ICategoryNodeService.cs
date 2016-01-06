@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 
+using BetterCms.Core.DataContracts;
 using BetterCms.Module.Root.Models;
 
 namespace BetterCms.Module.Root.Services.Categories.Nodes
@@ -12,5 +13,7 @@ namespace BetterCms.Module.Root.Services.Categories.Nodes
             CategoryNodeModel categoryNodeModel,
             Category parentCategory,
             IEnumerable<Category> categories = null);
+
+        void DeleteRelations(ICategory category);
     }
 }

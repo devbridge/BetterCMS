@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Configuration;
-using System.Globalization;
 
 namespace BetterCms.Configuration
 {
@@ -20,6 +19,8 @@ namespace BetterCms.Configuration
         private const string ProcessTimeoutAttribute = "processTimeout";
 
         private const string MaximumFileNameLengthAttribute = "maxFileNameLength";
+
+        private const string MoveDeletedFilesToTrashAttribute = "moveDeletedFilesToTrashFolder";
 
         [ConfigurationProperty(ContentRootAttribute, IsRequired = true)]
         public string ContentRoot
@@ -97,6 +98,13 @@ namespace BetterCms.Configuration
         {
             get { return (TimeSpan)this[ProcessTimeoutAttribute]; }
             set { this[ProcessTimeoutAttribute] = value; }
+        }
+
+        [ConfigurationProperty(MoveDeletedFilesToTrashAttribute, IsRequired = false, DefaultValue = false)]
+        public bool MoveDeletedFilesToTrash
+        {
+            get { return (bool)this[MoveDeletedFilesToTrashAttribute]; }
+            set { this[MoveDeletedFilesToTrashAttribute] = value; }
         }
 
         [ConfigurationProperty(MaximumFileNameLengthAttribute, IsRequired = false, DefaultValue = 0)]

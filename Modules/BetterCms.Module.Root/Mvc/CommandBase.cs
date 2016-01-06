@@ -1,8 +1,5 @@
 ﻿using System.Collections.Generic;
 
-using BetterCms.Core.DataAccess;
-using BetterCms.Core.DataAccess.DataContext;
-using BetterCms.Core.Mvc.Commands;
 using BetterCms.Core.Security;
 using BetterCms.Core.Services;
 using BetterCms.Module.Root.Content.Resources;
@@ -13,32 +10,8 @@ namespace BetterCms.Module.Root.Mvc
     /// <summary>
     /// A base class for commands.
     /// </summary>
-    public abstract class CommandBase : ICommandBase
+    public abstract class CommandBase : BetterModules.Core.Web.Mvc.Commands.CoreCommandBase
     {
-        /// <summary>
-        /// Gets or sets a command context.
-        /// </summary>
-        /// <value>
-        /// A command executing context.
-        /// </value>
-        public ICommandContext Context { get; set; }
-
-        /// <summary>
-        /// Gets or sets the repository. This property is auto wired.
-        /// </summary>
-        /// <value>
-        /// The repository.
-        /// </value>
-        public virtual IRepository Repository { get; set; }
-
-        /// <summary>
-        /// Gets or sets the unit of work. This property is auto wired.
-        /// </summary>
-        /// <value>
-        /// The unit of work.
-        /// </value>
-        public virtual IUnitOfWork UnitOfWork { get; set; }
-
         /// <summary>
         /// Gets or sets the security service.
         /// </summary>

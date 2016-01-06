@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 
-using BetterCms.Core.DataAccess.DataContext;
+using BetterModules.Core.DataAccess.DataContext;
 using BetterCms.Core.Services;
 using BetterCms.Module.MediaManager.Models;
 using BetterCms.Module.Root.Models;
@@ -66,6 +66,19 @@ namespace BetterCms.Module.MediaManager.Services
                 foreach (var tag in tags)
                 {
                     trimmedTags.Add(tag.Trim());
+                }
+            }
+
+            // remove tags who are equal (tags are case insensitive)
+            for (int i = 0; i < trimmedTags.Count; i++)
+            {
+                for (int j = i + 1; j < trimmedTags.Count; j++)
+                {
+                    if (i != j && trimmedTags[i].ToLowerInvariant() == trimmedTags[j].ToLowerInvariant())
+                    {
+                        trimmedTags.RemoveAt(j);
+                        --j;
+                    }
                 }
             }
 

@@ -1,4 +1,4 @@
-﻿using BetterCms.Core.DataAccess.DataContext;
+﻿using BetterModules.Core.DataAccess.DataContext;
 using BetterCms.Module.Blog.Models.Maps;
 using BetterCms.Module.MediaManager.Models.Maps;
 using BetterCms.Module.Newsletter.Models.Maps;

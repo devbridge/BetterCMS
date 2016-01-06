@@ -1,4 +1,4 @@
-﻿using BetterCms.Core.DataAccess.DataContext.Migrations;
+﻿using BetterModules.Core.DataAccess.DataContext.Migrations;
 
 using FluentMigrator;
 
@@ -23,7 +23,7 @@ namespace BetterCms.Module.Root.Models.Migrations
             Create
                 .Table("WidgetCategories")
                 .InSchema(SchemaName)
-                .WithCmsBaseColumns()
+                .WithBaseColumns()
                 .WithColumn("WidgetId").AsGuid().NotNullable()
                 .WithColumn("CategoryId").AsGuid().NotNullable();
 

@@ -1,0 +1,62 @@
+@import 'core/variables';
+
+@font-face {
+    font-family: 'Open Sans';
+    font-style: normal;
+    font-weight: 400;
+    src: url($bcms-OpenSans-Regular) format('truetype');
+}
+
+@font-face {
+    font-family: 'Open Sans';
+    font-style: normal;
+    font-weight: 600;
+    src: url($bcms-OpenSans-Semibold) format('truetype');
+}
+
+@font-face {
+    font-family: 'Open Sans';
+    font-style: normal;
+    font-weight: 700;
+    src: url($bcms-OpenSans-Bold) format('truetype');
+}
+
+%clearfix {
+    @include clearfix($extend: false);
+}
+
+.clearfix {
+    @include clearfix();
+}
+
+%reset {
+    margin: 0;
+    padding: 0;
+}
+
+//module components
+@import 'components/normalize',
+'components/forms',
+'components/tables';
+
+//module structure
+@import 'structure/layout',
+'structure/modules',
+'structure/tabs';
+
+//module styles
+@import 'bcms-modules/root/buttons',
+'bcms-modules/root/controlpanel',
+'bcms-modules/root/contentstree',
+'bcms-modules/root/messages',
+'bcms-modules/root/notifications',
+'bcms-modules/root/overlays',
+'plugins/markitup',
+'bcms-modules/root/index';
+
+//module plugins
+@import 'plugins/markitup',
+'plugins/jquerycalendar';
+
+//module text & debug
+//@debug

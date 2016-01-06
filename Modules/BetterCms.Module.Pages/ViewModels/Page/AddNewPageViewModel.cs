@@ -1,14 +1,17 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-
-using BetterCms.Core.Models;
+using System.Web.Mvc;
 
 using BetterCms.Module.Pages.Content.Resources;
 using BetterCms.Module.Pages.Mvc.Attributes;
+using BetterCms.Module.Root.Content.Resources;
 using BetterCms.Module.Root.Models;
+using BetterCms.Module.Root.Mvc.Attributes;
 using BetterCms.Module.Root.ViewModels.Option;
 using BetterCms.Module.Root.ViewModels.Security;
+
+using BetterModules.Core.Models;
 
 namespace BetterCms.Module.Pages.ViewModels.Page
 {
@@ -23,6 +26,7 @@ namespace BetterCms.Module.Pages.ViewModels.Page
         /// <value>
         /// The page title.
         /// </value>
+        [AllowHtml]
         [Required(AllowEmptyStrings = false, ErrorMessageResourceType = typeof(PagesGlobalization), ErrorMessageResourceName = "AddNewPageProperties_PageTitle_RequiredMessage")]
         [StringLength(MaxLength.Name, MinimumLength = 1, ErrorMessageResourceType = typeof(PagesGlobalization), ErrorMessageResourceName = "AddNewPageProperties_PageTitle_MaxLengthMessage")]
         public string PageTitle { get; set; }
@@ -33,7 +37,9 @@ namespace BetterCms.Module.Pages.ViewModels.Page
         /// <value>
         /// The page URL.
         /// </value>
+        [AllowHtml]
         [CustomPageUrlValidation]
+        [DisallowHtml(ErrorMessageResourceType = typeof(RootGlobalization), ErrorMessageResourceName = "Validation_DisallowHtml_Field_Message")]
         [StringLength(MaxLength.Url, MinimumLength = 1, ErrorMessageResourceType = typeof(PagesGlobalization), ErrorMessageResourceName = "AddNewPageProperties_PagePermalink_MaxLengthMessage")]
         public string PageUrl { get; set; }
 

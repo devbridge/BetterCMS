@@ -1,12 +1,18 @@
 using System;
 
 using BetterCms.Core.DataContracts;
+using BetterCms.Module.Pages.Models.Enums;
 
 namespace BetterCms.Module.Pages.Models
 {
     [Serializable]
     public class HtmlContent : Root.Models.Content, IHtmlContent, IDynamicContentContainer
     {
+        public HtmlContent()
+        {
+            ContentTextMode = ContentTextMode.Html;
+        }
+
         public virtual DateTime ActivationDate { get; set; }
 
         public virtual DateTime? ExpirationDate { get; set; }
@@ -17,11 +23,15 @@ namespace BetterCms.Module.Pages.Models
 
         public virtual string Html { get; set; }
 
+        public virtual string OriginalText { get; set; }
+
         public virtual string CustomJs { get; set; }
 
         public virtual bool UseCustomJs { get; set; }
         
         public virtual bool EditInSourceMode { get; set; }
+
+        public virtual ContentTextMode ContentTextMode { get; set; }
 
         public override Root.Models.Content CopyDataTo(Root.Models.Content content, bool copyCollections = true)
         {
@@ -34,13 +44,15 @@ namespace BetterCms.Module.Pages.Models
             copy.CustomJs = CustomJs;
             copy.UseCustomJs = UseCustomJs;
             copy.EditInSourceMode = EditInSourceMode;
+            copy.ContentTextMode = ContentTextMode;
+            copy.OriginalText = OriginalText;
 
             return copy;
         }
 
-        public override Root.Models.Content Clone()
+        public override Root.Models.Content Clone(bool copyCollections = true)
         {
-            return CopyDataTo(new HtmlContent());
+            return CopyDataTo(new HtmlContent(), copyCollections);
         }
     }
 }

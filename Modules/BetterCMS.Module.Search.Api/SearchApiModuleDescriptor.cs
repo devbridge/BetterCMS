@@ -6,9 +6,11 @@ using BetterCms.Core.Modules;
 using BetterCms.Module.Api.Operations.Pages.Pages.Search;
 using BetterCms.Module.Search.Api.Operations.Pages.Pages;
 
+using BetterModules.Core.Modules.Registration;
+
 namespace BetterCms.Module.Search.Api
 {
-    public class SearchApiModuleDescriptor : ModuleDescriptor
+    public class SearchApiModuleDescriptor : CmsModuleDescriptor
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="SearchApiModuleDescriptor" /> class.
@@ -17,22 +19,6 @@ namespace BetterCms.Module.Search.Api
         public SearchApiModuleDescriptor(ICmsConfiguration cmsConfiguration)
             : base(cmsConfiguration)
         {
-        }
-
-        internal const string ModuleId = "a383b814-6dbf-497f-9f57-24fa57b74edd";
-
-        /// <summary>
-        /// Gets the identifier.
-        /// </summary>
-        /// <value>
-        /// The identifier.
-        /// </value>
-        public override Guid Id
-        {
-            get
-            {
-                return new Guid(ModuleId);
-            }
         }
 
         /// <summary>

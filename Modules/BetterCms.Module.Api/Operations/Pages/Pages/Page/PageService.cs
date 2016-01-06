@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Linq;
 
-using BetterCms.Core.DataAccess;
-using BetterCms.Core.DataAccess.DataContext;
+using BetterModules.Core.DataAccess;
+using BetterModules.Core.DataAccess.DataContext;
 using BetterCms.Core.DataContracts.Enums;
 using BetterCms.Core.Security;
 
@@ -208,6 +208,14 @@ namespace BetterCms.Module.Api.Operations.Pages.Pages.Page
                         MainImageThumbnauilUrl = page.Image != null && !page.Image.IsDeleted ? page.Image.PublicThumbnailUrl : null,
                         MainImageThumbnailUrl = page.Image != null && !page.Image.IsDeleted ? page.Image.PublicThumbnailUrl : null,
                         MainImageCaption = page.Image != null && !page.Image.IsDeleted ? page.Image.Caption : null,
+                        FeaturedImageId = page.FeaturedImage != null && !page.FeaturedImage.IsDeleted ? page.FeaturedImage.Id : (Guid?)null,
+                        FeaturedImageUrl = page.FeaturedImage != null && !page.FeaturedImage.IsDeleted ? page.FeaturedImage.PublicUrl : null,
+                        FeaturedImageThumbnailUrl = page.FeaturedImage != null && !page.FeaturedImage.IsDeleted ? page.FeaturedImage.PublicThumbnailUrl : null,
+                        FeaturedImageCaption = page.FeaturedImage != null && !page.FeaturedImage.IsDeleted ? page.FeaturedImage.Caption : null,
+                        SecondaryImageId = page.SecondaryImage != null && !page.SecondaryImage.IsDeleted ? page.SecondaryImage.Id : (Guid?)null,
+                        SecondaryImageUrl = page.SecondaryImage != null && !page.SecondaryImage.IsDeleted ? page.SecondaryImage.PublicUrl : null,
+                        SecondaryImageThumbnailUrl = page.SecondaryImage != null && !page.SecondaryImage.IsDeleted ? page.SecondaryImage.PublicThumbnailUrl : null,
+                        SecondaryImageCaption = page.SecondaryImage != null && !page.SecondaryImage.IsDeleted ? page.SecondaryImage.Caption : null,
                         IsArchived = page.IsArchived,
                         IsMasterPage = page.IsMasterPage,
                         LanguageId = page.Language != null ? page.Language.Id : (Guid?)null,
@@ -219,6 +227,12 @@ namespace BetterCms.Module.Api.Operations.Pages.Pages.Page
             model.MainImageUrl = fileUrlResolver.EnsureFullPathUrl(model.MainImageUrl);
             model.MainImageThumbnauilUrl = fileUrlResolver.EnsureFullPathUrl(model.MainImageThumbnauilUrl);
             model.MainImageThumbnailUrl = fileUrlResolver.EnsureFullPathUrl(model.MainImageThumbnailUrl);
+
+            model.FeaturedImageUrl = fileUrlResolver.EnsureFullPathUrl(model.FeaturedImageUrl);
+            model.FeaturedImageThumbnailUrl = fileUrlResolver.EnsureFullPathUrl(model.FeaturedImageThumbnailUrl);
+
+            model.SecondaryImageUrl = fileUrlResolver.EnsureFullPathUrl(model.SecondaryImageUrl);
+            model.SecondaryImageThumbnailUrl = fileUrlResolver.EnsureFullPathUrl(model.SecondaryImageThumbnailUrl);
 
 
             model.Categories = (from pagePr in repository.AsQueryable<PageProperties>()

@@ -1,12 +1,15 @@
 ﻿using System.Linq;
 
-using BetterCms.Core.DataAccess.DataContext;
-using BetterCms.Core.Mvc.Commands;
 using BetterCms.Module.MediaManager.Services;
 using BetterCms.Module.MediaManager.ViewModels;
+
 using BetterCms.Module.Root.Mvc;
+
 using BetterCms.Module.Users.Services;
 using BetterCms.Module.Users.ViewModels.User;
+
+using BetterModules.Core.DataAccess.DataContext;
+using BetterModules.Core.Web.Mvc.Commands;
 
 namespace BetterCms.Module.Users.Commands.User.GetUserProfile
 {

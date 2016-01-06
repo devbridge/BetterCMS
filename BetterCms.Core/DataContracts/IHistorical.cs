@@ -2,6 +2,8 @@
 
 using BetterCms.Core.DataContracts.Enums;
 
+using BetterModules.Core.DataContracts;
+
 namespace BetterCms.Core.DataContracts
 {
     /// <summary>

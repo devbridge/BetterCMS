@@ -4,10 +4,11 @@ using System.Linq;
 
 using Autofac;
 
-using BetterCms.Core.DataAccess;
-using BetterCms.Core.DataAccess.DataContext;
-using BetterCms.Core.Dependencies;
+using BetterModules.Core.DataAccess;
 using BetterCms.Module.Users.Services;
+
+using BetterModules.Core.DataAccess.DataContext;
+using BetterModules.Core.Dependencies;
 
 using NHibernate.Linq;
 

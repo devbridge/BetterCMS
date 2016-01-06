@@ -1,7 +1,8 @@
-﻿using BetterCms.Core.DataAccess.DataContext.Migrations;
-using BetterCms.Core.Models;
-using BetterCms.Module.Pages.Models.Migrations;
+﻿using BetterCms.Module.Pages.Models.Migrations;
 using BetterCms.Module.Root.Models.Migrations;
+
+using BetterModules.Core.DataAccess.DataContext.Migrations;
+using BetterModules.Core.Models;
 
 using FluentMigrator;
 
@@ -59,7 +60,7 @@ namespace BetterCms.Module.Blog.Models.Migrations
                .Table("Authors")
                .InSchema(SchemaName)
 
-               .WithCmsBaseColumns()
+               .WithBaseColumns()
 
                .WithColumn("Name").AsString(MaxLength.Name).NotNullable()
                .WithColumn("ImageId").AsGuid().Nullable();
@@ -99,7 +100,7 @@ namespace BetterCms.Module.Blog.Models.Migrations
             Create
                .Table("Options")
                .InSchema(SchemaName)
-               .WithCmsBaseColumns()
+               .WithBaseColumns()
                .WithColumn("DefaultLayoutId").AsGuid().Nullable();
 
             Create

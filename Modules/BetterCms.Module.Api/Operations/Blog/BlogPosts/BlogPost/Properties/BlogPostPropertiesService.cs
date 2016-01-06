@@ -2,13 +2,14 @@
 using System.Collections.Generic;
 using System.Linq;
 
-using BetterCms.Core.DataAccess;
-using BetterCms.Core.DataAccess.DataContext;
+using BetterModules.Core.DataAccess;
+using BetterModules.Core.DataAccess.DataContext;
 using BetterCms.Core.DataContracts.Enums;
 using BetterCms.Core.Exceptions.Api;
 using BetterCms.Core.Services;
 
 using BetterCms.Module.Api.Extensions;
+using BetterCms.Module.Api.Operations.Pages;
 using BetterCms.Module.Api.Operations.Root;
 
 using BetterCms.Module.Blog.Models;
@@ -243,6 +244,8 @@ namespace BetterCms.Module.Api.Operations.Blog.BlogPosts.BlogPost.Properties
                     .Select(pc => new
                                   {
                                       Html = ((BlogPostContent)pc.Content).Html,
+                                      OriginalText = ((BlogPostContent)pc.Content).OriginalText,
+                                      ContentTextMode = ((BlogPostContent)pc.Content).ContentTextMode,
                                       ContentId = pc.Content.Id,
                                       PageContentId = pc.Id,
                                       RegionId = pc.Region.Id
@@ -254,6 +257,8 @@ namespace BetterCms.Module.Api.Operations.Blog.BlogPosts.BlogPost.Properties
                 if (includeHtml)
                 {
                     response.HtmlContent = content.Html;
+                    response.OriginalText = content.OriginalText;
+                    response.ContentTextMode = (ContentTextMode)content.ContentTextMode;
                 }
 
                 if (includeTechnicalInfo)
@@ -278,7 +283,7 @@ namespace BetterCms.Module.Api.Operations.Blog.BlogPosts.BlogPost.Properties
         private List<TagModel> LoadTags(Guid blogPostId)
         {
             return repository
-                .AsQueryable<Module.Pages.Models.PageTag>(pageTag => pageTag.Page.Id == blogPostId && !pageTag.Tag.IsDeleted)
+                .AsQueryable<PageTag>(pageTag => pageTag.Page.Id == blogPostId && !pageTag.Tag.IsDeleted)
                 .OrderBy(tag => tag.Tag.Name)
                 .Select(media =>
                     new TagModel

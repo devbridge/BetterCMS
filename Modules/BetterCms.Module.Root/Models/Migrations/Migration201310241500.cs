@@ -1,11 +1,13 @@
-﻿using BetterCms.Core.DataAccess.DataContext.Migrations;
+﻿using BetterModules.Core.DataAccess.DataContext.Migrations;
+
+using BetterModules.Core.DataAccess.DataContext.Migrations;
 
 using FluentMigrator;
 
 namespace BetterCms.Module.Root.Models.Migrations
 {
     [Migration(201310241500)]
-    public class Migration201310241500 : DefaultMigration
+    public class Migration201310241500: DefaultMigration
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="Migration201310241500"/> class.
@@ -37,7 +39,7 @@ namespace BetterCms.Module.Root.Models.Migrations
             // Create content regions table
             Create
                 .Table("ContentRegions").InSchema(SchemaName)
-                .WithCmsBaseColumns()
+                .WithBaseColumns()
                 .WithColumn("RegionId").AsGuid().NotNullable()
                 .WithColumn("ContentId").AsGuid().NotNullable();
 
@@ -60,7 +62,7 @@ namespace BetterCms.Module.Root.Models.Migrations
             // Create master pages table
             Create
                 .Table("MasterPages").InSchema(SchemaName)
-                .WithCmsBaseColumns()
+                .WithBaseColumns()
                 .WithColumn("PageId").AsGuid().NotNullable()
                 .WithColumn("MasterPageId").AsGuid().NotNullable();
 

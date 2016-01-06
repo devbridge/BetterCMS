@@ -1,13 +1,14 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations;
 
-using BetterCms.Core.Models;
-
 using BetterCms.Module.Newsletter.Content.Resources;
+
 using BetterCms.Module.Root;
 using BetterCms.Module.Root.Content.Resources;
 using BetterCms.Module.Root.Mvc.Grids;
 using BetterCms.Module.Root.ViewModels.Cms;
+
+using BetterModules.Core.Models;
 
 namespace BetterCms.Module.Newsletter.ViewModels
 {

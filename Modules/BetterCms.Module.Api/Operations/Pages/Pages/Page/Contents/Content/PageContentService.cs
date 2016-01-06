@@ -1,15 +1,15 @@
 ﻿using System;
 using System.Linq;
 
-using BetterCms.Core.DataAccess;
-using BetterCms.Core.DataAccess.DataContext;
-using BetterCms.Core.Exceptions.DataTier;
-
 using BetterCms.Module.Api.Extensions;
 using BetterCms.Module.Api.Operations.Pages.Pages.Page.Contents.Content.Options;
 
 using BetterCms.Module.Root.Models;
 using BetterCms.Module.Root.Mvc;
+
+using BetterModules.Core.DataAccess;
+using BetterModules.Core.DataAccess.DataContext;
+using BetterModules.Core.Exceptions.DataTier;
 
 using ServiceStack.ServiceInterface;
 
