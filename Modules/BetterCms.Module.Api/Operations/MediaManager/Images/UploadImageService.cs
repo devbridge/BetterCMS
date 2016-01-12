@@ -20,10 +20,13 @@ namespace BetterCms.Module.Api.Operations.MediaManager.Images
 
         private readonly IMediaImageService mediaImageService;
 
-        public UploadImageService(IRepository repository, IMediaImageService mediaImageService)
+        private readonly ICmsConfiguration configuration;
+
+        public UploadImageService(IRepository repository, IMediaImageService mediaImageService, ICmsConfiguration configuration)
         {
             this.repository = repository;
             this.mediaImageService = mediaImageService;
+            this.configuration = configuration;
         }
 
         /// <summary>
@@ -46,17 +49,25 @@ namespace BetterCms.Module.Api.Operations.MediaManager.Images
                 }
             }
 
+            var maxLength = configuration.Storage.MaximumFileNameLength > 0 ? configuration.Storage.MaximumFileNameLength : 100;
+            // Fix for IIS express + IE (if full path is returned)
+            var fileName = Path.GetFileName(request.Data.FileName);
+            if (fileName.Length > maxLength)
+            {
+                fileName = string.Concat(Path.GetFileNameWithoutExtension(fileName.Substring(0, maxLength)), Path.GetExtension(fileName));
+            }
+
             var mediaImage = new MediaImage
             {
                 Id = request.Data.Id.GetValueOrDefault(),
                 Type = Module.MediaManager.Models.MediaType.Image,
                 Caption = request.Data.Caption,
-                Title = request.Data.Title ?? Path.GetFileName(request.Data.FileName),
+                Title = request.Data.Title ?? fileName,
                 Description = request.Data.Description,
                 Size = request.Data.FileStream.Length,
                 Folder = parentFolder,
-                OriginalFileName = request.Data.FileName,
-                OriginalFileExtension = Path.GetExtension(request.Data.FileName)
+                OriginalFileName = fileName,
+                OriginalFileExtension = Path.GetExtension(fileName)
             };
 
             var savedImage = mediaImageService.UploadImageWithStream(request.Data.FileStream, mediaImage, request.Data.WaitForUploadResult);
