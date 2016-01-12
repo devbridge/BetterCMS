@@ -1,5 +1,6 @@
 ﻿using System;
 using System.ComponentModel;
+using System.IO;
 using System.Linq;
 
 using BetterCms.Core.DataAccess;
@@ -26,11 +27,14 @@ namespace BetterCms.Module.Api.Operations.MediaManager.Files
 
         private readonly IAccessControlService accessControlService;
 
-        public UploadFileService(IRepository repository, IMediaFileService mediaFileService, IAccessControlService accessControlService)
+        private readonly ICmsConfiguration configuration;
+
+        public UploadFileService(IRepository repository, IMediaFileService mediaFileService, IAccessControlService accessControlService, ICmsConfiguration configuration)
         {
             this.repository = repository;
             this.mediaFileService = mediaFileService;
             this.accessControlService = accessControlService;
+            this.configuration = configuration;
         }
 
         /// <summary>
@@ -53,10 +57,18 @@ namespace BetterCms.Module.Api.Operations.MediaManager.Files
                 }
             }
 
+            var maxLength = configuration.Storage.MaximumFileNameLength > 0 ? configuration.Storage.MaximumFileNameLength : 100;
+            // Fix for IIS express + IE (if full path is returned)
+            var fileName = Path.GetFileName(request.Data.FileName);
+            if (fileName.Length > maxLength)
+            {
+                fileName = string.Concat(Path.GetFileNameWithoutExtension(fileName.Substring(0, maxLength)), Path.GetExtension(fileName));
+            }
+
             var savedFile = mediaFileService.UploadFileWithStream(
                 Module.MediaManager.Models.MediaType.File,
                 parentFolder != null ? parentFolder.Id : Guid.Empty,
-                request.Data.FileName,
+                fileName,
                 request.Data.FileStream.Length,
                 request.Data.FileStream,
                 request.Data.WaitForUploadResult,
