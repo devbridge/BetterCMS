@@ -854,6 +854,13 @@ bettercms.define('bcms.blog', ['bcms.jquery', 'bcms', 'bcms.modal', 'bcms.siteSe
                 this.oldImageId = this.image().id();
             };
 
+            AuthorViewModel.prototype.getRowId = function () {
+                if (!this.rowId) {
+                    this.rowId = 'bcms-author-row-' + rowId++;
+                }
+                return this.rowId;
+            };
+
             return AuthorViewModel;
 
         })(kogrid.ItemViewModel);
