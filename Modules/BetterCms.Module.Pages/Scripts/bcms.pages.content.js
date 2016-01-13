@@ -706,6 +706,9 @@ bettercms.define('bcms.pages.content', ['bcms.jquery', 'bcms', 'bcms.modal', 'bc
         * Initializes a content sliders.
         */
         pagesContent.initializeLivePreview = function (container) {
+            var scroller = $(container).find('.bcms-modal-content .bcms-modal-frame-holder .bcms-window-options');
+            var timer = null;
+            var iFramesPreview = [];
             $(container).find(selectors.widgetPreviewBox).each(function() {
                 var previewBox = $(this),
                     data = previewBox.data();
@@ -714,12 +717,35 @@ bettercms.define('bcms.pages.content', ['bcms.jquery', 'bcms', 'bcms.modal', 'bc
                         previewBox.append($.format("<img src=\"{0}\" alt=\"{1}\" />",
                             data.previewUrl, data.title));
                     } else {
-                        previewBox.append($.format("<iframe class=\"{0}\" width=\"{1}\" height=\"{2}\" scrolling=\"no\" border=\"0\" frameborder=\"0\" src=\"{3}\" style=\"background-color:white;\"/>",
-                            data.frameCssClass, data.width, data.height, data.previewUrl));
+                        iFramesPreview.push(previewBox);
                     }
                     previewBox.data("isLoaded", true);
                 }
             });
+
+            scroller.scroll(function () {
+                clearTimeout(timer);
+                return setTimeout(function () {
+                    $(iFramesPreview).each(function () {
+                        var previewBox = $(this),
+                            data = previewBox.data(),
+                            bounds = previewBox.get(0).getBoundingClientRect(),
+                            isVisable = bounds.top < window.innerHeight && bounds.bottom > 0,
+                            wasVisable = previewBox.data('isVisable') || false;
+                        if (!wasVisable && isVisable) {
+                            previewBox.data('isVisable', true);
+                            previewBox.append(
+                                $.format(
+                                    "<iframe class=\"{0}\" width=\"{1}\" height=\"{2}\" scrolling=\"no\" border=\"0\" frameborder=\"0\" src=\"{3}\" style=\"background-color:white;\"/>",
+                                    data.frameCssClass, data.width, data.height, data.previewUrl));
+                        } else if (wasVisable && !isVisable) {
+                            previewBox.data('isVisable', false);
+                            previewBox.find('#iframe').remove();
+                        }
+                    });
+                }, 500);
+            });
+            scroller.scroll();
         };
 
         /**
