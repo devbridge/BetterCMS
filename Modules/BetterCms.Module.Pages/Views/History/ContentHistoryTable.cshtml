@@ -59,28 +59,15 @@
     {
         case ContentStatus.Archived:
             @:<div class="bcms-archived-state">@statusName</div>
-
-
             break;
-
         case ContentStatus.Draft:
-        @:<div class="bcms-draft-state">@statusName</div>
-
-
-
-
+            @:<div class="bcms-draft-state">@statusName</div>
             break;
-
         case ContentStatus.Published:
-        @:<div class="bcms-published-state">@statusName</div>
-
-
-
-
+            @:<div class="bcms-published-state">@statusName</div>
             break;
-
         default:
-        @:statusName
+            @:statusName
             break;
     }
 }

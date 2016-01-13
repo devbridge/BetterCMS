@@ -196,10 +196,8 @@ bettercms.define('bcms.pages.history', ['bcms.jquery', 'bcms', 'bcms.modal', 'bc
     */
     history.initPageContentHistoryDialogEvents = function (dialog, opts, isSearchResult) {
         var container = dialog.container.find(selectors.modalContent);
-
         container.find(selectors.gridRestoreLinks).on('click', function (event) {
             bcms.stopEventPropagation(event);
-            
             restoreVersion(dialog, container, $(this).data('id'), opts.onContentRestore, opts.includeChildRegions);
         });
         
@@ -217,8 +215,12 @@ bettercms.define('bcms.pages.history', ['bcms.jquery', 'bcms', 'bcms.modal', 'bc
         
         var form = container.find(selectors.pageContentHistoryForm);
         grid.bindGridForm(form, function (data) {
-            container.html(data);
-            history.initPageContentHistoryDialogEvents(dialog);
+            var activeTabName = dialog.container.find(selectors.activeTab).data('name'),
+                inactiveTabName = dialog.container.find(selectors.inactiveTab).data('name');
+            form.closest(selectors.modalFrameHolder).html(data);
+            dialog.container.find(activeTabName).show();
+            dialog.container.find(inactiveTabName).hide();
+            history.initPageContentHistoryDialogEvents(dialog, opts, isSearchResult);
         });
 
         form.on('submit', function (event) {
