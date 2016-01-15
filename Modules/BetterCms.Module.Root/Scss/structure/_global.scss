@@ -1,0 +1,440 @@
+// --------------------------------------------------------------------------------------------------------------------
+// <copyright file="_global.scss" company="Devbridge Group LLC">
+// 
+// Copyright (C) 2015,2016 Devbridge Group LLC
+// 
+// This program is free software: you can redistribute it and/or modify
+// it under the terms of the GNU Lesser General Public License as published by
+// the Free Software Foundation, either version 3 of the License, or
+// (at your option) any later version.
+// 
+// This program is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU General Public License for more details.
+// 
+// You should have received a copy of the GNU Lesser General Public License
+// along with this program.  If not, see http://www.gnu.org/licenses/. 
+// </copyright>
+// 
+// <summary>
+// Better CMS is a publishing focused and developer friendly .NET open source CMS.
+// 
+// Website: https://www.bettercms.com 
+// GitHub: https://github.com/devbridge/bettercms
+// Email: info@bettercms.com
+// </summary>
+// --------------------------------------------------------------------------------------------------------------------
+$loader-height: rem(30);
+$loader-width: rem(8);
+
+$access-control-buttons: (
+                ('plus', $bcms-tree-plus),
+                ('minus', $bcms-tree-minus)
+);
+
+$loading-spinner: (
+                ('loader'),
+                ('loader-2')
+);
+
+$action-icons: (
+                ('edit', $bcms-action-edit),
+                ('usage', $bcms-action-usage),
+                ('restore', $bcms-revert),
+                ('history', $bcms-action-history),
+                ('download', $bcms-download),
+                ('delete', $bcms-action-delete),
+                ('ok', $bcms-action-status-ok),
+                ('warn', $bcms-action-status-warn),
+                ('draft', $bcms-action-status-draft),
+                ('menu', $bcms-action-menu),
+                ('options', $bcms-action-options)
+);
+
+//module titles & containers
+.bcms-input-list-holder {
+    margin: 30px 0 0;
+    position: relative;
+}
+
+.bcms-large-titles {
+    @include vertical-align();
+    color: $text-dark;
+    font: {
+        size: 18px;
+        family: $font-base-family;
+    }
+}
+
+.bcms-content {
+    &-info-container {
+        box-sizing: border-box;
+        max-width: 50%;
+        padding: 30px 0 0 10px;
+    }
+
+    &-info-block {
+        @include clearfix();
+        margin: 30px 0;
+
+        .bcms-input-list-holder {
+            @include span(2 before);
+            margin-top: 0;
+
+            &:first-child {
+                margin-left: 0;
+                width: span(8);
+            }
+        }
+
+        .bcms-drop-field-helper {
+            width: span(4);
+        }
+    }
+
+    &-titles {
+        @include vertical-align();
+        color: $text-dark;
+        cursor: default;
+        font: {
+            family: $font-base-family;
+            size: 14px;
+            weight: 700;
+        }
+        line-height: 20px;
+        margin-bottom: 4px;
+        position: relative;
+
+        > a {
+            color: $text-blue;
+            cursor: pointer;
+            font: {
+                size: 12px;
+                weight: 400;
+            }
+            margin-left: 10px;
+        }
+    }
+
+    &-titles-align {
+        @include vertical-align();
+    }
+
+    &-titles-helper {
+        float: left;
+    }
+
+    &-subtitle {
+        font-size: 14px;
+        line-height: 19px;
+    }
+
+    &-dialog-title {
+        @include clearfix();
+        border-bottom: $border-thin-smoke;
+        color: $text-gray;
+        font: {
+            size: 18px;
+            weight: 600;
+        }
+        margin: 20px 0 15px;
+        padding: 5px 0;
+
+        .bcms-btn-cancel {
+            float: right;
+        }
+    }
+
+    &-description {
+
+    }
+}
+
+.bcms-editor {
+    &-link {
+        color: $text-blue;
+        cursor: pointer;
+        display: inline;
+        font: {
+            size: 12px;
+            weight: 700;
+        }
+        margin-left: 5px;
+        text-transform: uppercase;
+    }
+
+    &-box {
+        @include clearfix();
+        @include position(absolute, 0 null null 0);
+        background-color: $white;
+        border: $border-thin-smoke;
+        box-shadow: $pop-box-shadow;
+        box-sizing: border-box;
+        padding: 14px;
+        width: 410px;
+        z-index: 5;
+
+        > .bcms-field-wrapper {
+            @include vertical-align();
+            width: 70%;
+        }
+
+        .bcms-btn-cancel {
+            + .bcms-checkbox-holder {
+                margin-top: 10px;
+            }
+        }
+
+        > .bcms-checkbox-holder {
+            clear: both;
+            width: auto;
+        }
+    }
+
+    &-path {
+        color: $text-dark;
+        cursor: default;
+        font: {
+            size: 14px;
+            weight: 600;
+        }
+        margin-top: 5px;
+    }
+}
+
+//module image upload thumbnails
+.bcms-thumb {
+    &-container {
+        display: table;
+        margin-bottom: 45px;
+    }
+
+    &-box {
+        @include vertical-align($block: table-cell, $align: top);
+        padding-right: 50px;
+
+        .bcms-input-list-holder {
+            margin-left: 0;
+        }
+
+        .bcms-content-titles {
+            font: {
+                size: 13px;
+                weight: 400;
+            }
+        }
+
+        .bcms-btn-selection {
+            width: 100%;
+        }
+    }
+
+    &-image {
+        @include size(125px);
+        background-color: $white;
+        background-size: cover;
+        border: $border-thin-smoke;
+        box-sizing: border-box;
+        margin-bottom: 5px;
+        position: relative;
+
+        img {
+            max-width: 100%;
+        }
+    }
+}
+
+.bcms-remove-image {
+    @include position(absolute, 0 0 null null);
+    @include size(24px);
+    background: rgba($white, .7) url($bcms-image-delete) no-repeat center center;
+    cursor: pointer;
+    overflow: hidden;
+    text-indent: -999em;
+    z-index: 1;
+}
+
+//module access control table
+.bcms-access {
+    &-title {
+        border: {
+            top: $border-thin-smoke;
+            bottom: $border-thin-smoke;
+        }
+        display: table;
+        margin-top: 10px;
+        width: 100%;
+    }
+
+    &-line {
+        border-bottom: $border-thin-smoke;
+        display: table;
+        width: 100%;
+    }
+
+    &-title-text {
+        @include vertical-align($block: table-cell);
+        color: $text-dark;
+        font-size: 12px;
+        font-weight: 700;
+        padding: 5px;
+        text-align: center;
+        width: 80px;
+
+        &:first-child {
+            padding: 0;
+            text-align: left;
+            width: auto;
+        }
+    }
+
+    &-value {
+        @include vertical-align($block: table-cell);
+        padding: 5px;
+        width: 80px;
+
+        &:first-child {
+            padding: 0;
+            text-align: left;
+            width: auto;
+        }
+
+        > span {
+            vertical-align: middle;
+        }
+
+        input[type="radio"] {
+            cursor: pointer;
+            display: block;
+            margin: auto;
+        }
+    }
+
+    &-value-add {
+        color: $text-blue;
+        cursor: pointer;
+
+        > span {
+            vertical-align: middle;
+        }
+
+        .bcms-field-wrapper {
+            @include vertical-align();
+        }
+
+        .bcms-field-text {
+            font-size: 11px;
+            height: 20px;
+        }
+    }
+
+    @each $name, $icon in $access-control-buttons {
+        &-#{$name} {
+            @include size(20px);
+            @include vertical-align();
+            background: url($icon) no-repeat center;
+            cursor: pointer;
+            margin-right: 10px;
+            padding: 5px 0;
+        }
+    }
+}
+
+//module BetterCms helper styles
+.bcms-inactive {
+    position: relative;
+
+    @include virtual(after) {
+        @include size(100%);
+        @include position(absolute, 0 null null 0);
+        background-color: $white;
+        cursor: default;
+        opacity: .3;
+        z-index: 99;
+    }
+}
+
+//module spinner
+.bcms-spinner-container {
+    background-color: $white;
+}
+
+@each $name, $color in $loading-spinner {
+    .bcms-#{$name} {
+        @include positioning($center: true);
+        @include size($loader-width $loader-height);
+        @include transform(translateZ(0));
+        @include animation(loader 800ms infinite ease-in-out);
+        @include animation-delay(-160ms);
+        @include transition(all 200ms ease);
+        background-color: $bg-blue;
+        z-index: 9999;
+        font-size: 11px;
+
+        @include virtual($both: true) {
+            @include animation(loader 800ms infinite ease-in-out);
+            @include size($loader-width $loader-height);
+            position: absolute;
+            background-color: $bg-blue;
+            top: 0;
+            z-index: 999;
+        }
+
+        &:after {
+            left: ($loader-width * 1.5);
+        }
+
+        &:before {
+            @include animation-delay(-320ms);
+            left: -($loader-width * 1.5);
+        }
+    }
+}
+
+@include keyframes (loader) {
+    0%,
+    80%,
+    100% {
+        box-shadow: 0 0 $bg-blue;
+        height: ($loader-height - rem(5));
+    }
+    40% {
+        box-shadow: 0 -2em $bg-blue;
+        height: $loader-height;
+    }
+}
+
+//module global helpers
+.bcms-ajax-show {
+    display: none;
+}
+
+.bcms-ajax-errors {
+    display: none;
+}
+
+//module global icons
+@each $name, $icon in $action-icons {
+    .bcms-action-#{$name} {
+        @include transition(opacity 200ms);
+        @include vertical-align();
+        @include size(22px);
+        background: url($icon) no-repeat center;
+        cursor: pointer;
+        overflow: hidden;
+        position: relative;
+        text-indent: 999em;
+        opacity: .6;
+
+        &:hover {
+            opacity: 1;
+        }
+    }
+}
+
+.bcms-action-edit {
+    &.bcms-draft {
+        background-image: url($bcms-action-edit-draft);
+    }
+}

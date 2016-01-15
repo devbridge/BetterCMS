@@ -213,6 +213,7 @@
     <Compile Include="Models\ChildContentOption.cs" />
     <Compile Include="Models\ChildContentOptionTranslation.cs" />
     <Compile Include="Models\ContentOptionTranslation.cs" />
+    <Compile Include="Models\Enums\Enum.cs" />
     <Compile Include="Models\ICategoryAccessor.cs" />
     <Compile Include="Models\Maps\ChildContentOptionTranslationMap.cs" />
     <Compile Include="Models\Maps\ContentOptionTranslationMap.cs" />
@@ -267,6 +268,7 @@
     <Compile Include="Mvc\Extensions\HtmlHelperExtensions.cs" />
     <Compile Include="Mvc\Extensions\StringExtensions.cs" />
     <Compile Include="Mvc\Grids\EditableGridMultilineColumn.cs" />
+    <Compile Include="Mvc\Grids\GridOptions\SortAlias.cs" />
     <Compile Include="Mvc\PageHtmlRenderer\PageContentRenderHelper.cs" />
     <Compile Include="Mvc\PageHtmlRenderer\PageContentHtmlRenderer.cs" />
     <Compile Include="Mvc\PageHtmlRenderer\RenderingContentOptionProperty.cs" />
@@ -445,6 +447,7 @@
     <Compile Include="ViewModels\Authentication\InfoViewModel.cs" />
     <Compile Include="ViewModels\Autocomplete\SuggestionViewModel.cs" />
     <Compile Include="ViewModels\CategoryTreesFilter.cs" />
+    <Compile Include="ViewModels\Category\CategoryLookupModel.cs" />
     <Compile Include="ViewModels\Category\CategorySuggestionViewModel.cs" />
     <Compile Include="ViewModels\Category\CategoryTreeNodeViewModel.cs" />
     <Compile Include="ViewModels\Category\CategoryTreesGridViewModel.cs" />
@@ -614,6 +617,11 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Alert.cshtml</DependentUpon>
     </Compile>
+    <Compile Include="Views\Shared\Partial\Delete.generated.cs">
+      <DependentUpon>Delete.cshtml</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+    </Compile>
     <Compile Include="Views\Shared\Partial\Confirm.generated.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -747,21 +755,9 @@
     <EmbeddedResource Include="Scripts\bcms.jquery.unobtrusive-ajax.js" />
     <EmbeddedResource Include="Scripts\bcms.jquery.validate.js" />
     <EmbeddedResource Include="Scripts\bcms.jquery.validate.unobtrusive.js" />
-    <EmbeddedResource Include="Scripts\bcms.slides.jquery.js" />
     <EmbeddedResource Include="Scripts\bcms.modal.js" />
     <EmbeddedResource Include="Scripts\bcms.siteSettings.js" />
     <EmbeddedResource Include="Scripts\bcms.forms.js" />
-    <EmbeddedResource Include="Content\Styles\images\bcms-no-image-1.png" />
-    <EmbeddedResource Include="Content\Styles\images\bcms-no-image-2.png" />
-    <EmbeddedResource Include="Content\Styles\images\bcms-no-image-3.png" />
-    <EmbeddedResource Include="Content\Styles\images\bcms-sidebar-select.png" />
-    <EmbeddedResource Include="Content\Styles\images\icn-calendar.png" />
-    <EmbeddedResource Include="Content\Styles\images\icn-sidebg.png" />
-    <EmbeddedResource Include="Content\Styles\images\icn-zoom.png" />
-    <EmbeddedResource Include="Content\Styles\images\loading.gif" />
-    <EmbeddedResource Include="Content\Styles\images\modal-back.png" />
-    <EmbeddedResource Include="Content\Styles\images\sprite-base-1.png" />
-    <EmbeddedResource Include="Content\Styles\images\sprite-base-2.png" />
     <EmbeddedResource Include="Scripts\bcms.spinner.jquery.js" />
     <EmbeddedResource Include="Scripts\ckeditor\plugins\icons.png" />
     <EmbeddedResource Include="Scripts\html5shiv.js" />
@@ -774,8 +770,6 @@
     <Content Include="BuildConfiguration.xml">
       <SubType>Designer</SubType>
     </Content>
-    <EmbeddedResource Include="Content\Styles\images\icn-zoom-notcompatible.png" />
-    <EmbeddedResource Include="Scripts\bcms.knockout-2.2.1.js" />
     <EmbeddedResource Include="Scripts\bcms.require-2.1.5.js" />
     <EmbeddedResource Include="Content\Styles\images\cookies.png" />
     <EmbeddedResource Include="Content\Styles\images\error-back.png" />
@@ -792,7 +786,6 @@
     <EmbeddedResource Include="Scripts\bcms.grid.js" />
     <EmbeddedResource Include="Scripts\bcms.jquery.autocomplete.js" />
     <EmbeddedResource Include="Scripts\bcms.ko.extenders.js" />
-    <EmbeddedResource Include="Content\Styles\images\bcms-arrows-sprite.png" />
     <EmbeddedResource Include="Models\Migrations\Migration201307191431.sqlserver.sql" />
     <EmbeddedResource Include="Scripts\bcms.ko.grid.js" />
     <EmbeddedResource Include="Scripts\bcms.options.js" />
@@ -1352,8 +1345,6 @@
     <EmbeddedResource Include="Scripts\bcms.content.tree.js" />
     <EmbeddedResource Include="Scripts\bcms.store.js" />
     <EmbeddedResource Include="Scripts\bcms.categories.js" />
-    <EmbeddedResource Include="Scripts\bcms.multiple.select.js" />
-    <EmbeddedResource Include="Content\Styles\multiple-select.png" />
     <EmbeddedResource Include="Models\Migrations\Migration201502101136.sqlserver.sql" />
     <EmbeddedResource Include="Models\Migrations\Migration201502061445.sqlserver.sql" />
     <EmbeddedResource Include="Scripts\ace\ext-beautify.js" />
@@ -1411,6 +1402,7 @@
     <EmbeddedResource Include="Scripts\ckeditor\plugins\cms-togglelinewrap\plugin.js" />
     <EmbeddedResource Include="Content\Styles\bcms.root.css" />
     <EmbeddedResource Include="Content\Styles\bcms.root.min.css" />
+    <EmbeddedResource Include="Content\Styles\images\calendar.svg" />
     <Content Include="Gulpfile.js" />
     <Content Include="gulp\compile-sass\compile-sass.js" />
     <Content Include="gulp\create-data-uri-vars\create-data-uri-vars.js" />
@@ -1424,96 +1416,150 @@
     <EmbeddedResource Include="Scripts\ckeditor\skins\bettercms\editor.css" />
     <EmbeddedResource Include="Scripts\ckeditor\skins\bettercms\dialog.css" />
     <EmbeddedResource Include="Models\Migrations\Migration201510231700.sqlserver.sql" />
-    <Content Include="Scss\base_64\icons\add-content.svg" />
-    <Content Include="Scss\base_64\icons\close.svg" />
-    <Content Include="Scss\base_64\icons\cp-add-new.svg" />
-    <Content Include="Scss\base_64\icons\cp-clone.svg" />
-    <Content Include="Scss\base_64\icons\cp-delete.svg" />
-    <Content Include="Scss\base_64\icons\cp-drag-handle.svg" />
-    <Content Include="Scss\base_64\icons\cp-hide-right.svg" />
-    <Content Include="Scss\base_64\icons\cp-hide.svg" />
-    <Content Include="Scss\base_64\icons\cp-indicate-button.svg" />
-    <Content Include="Scss\base_64\icons\cp-indicate-off.svg" />
-    <Content Include="Scss\base_64\icons\cp-indicate-on.svg" />
-    <Content Include="Scss\base_64\icons\cp-notification-ok.svg" />
-    <Content Include="Scss\base_64\icons\cp-notification-warn.svg" />
-    <Content Include="Scss\base_64\icons\cp-pub-ok.svg" />
-    <Content Include="Scss\base_64\icons\cp-pub-warn.svg" />
-    <Content Include="Scss\base_64\icons\cp-seo-ok.svg" />
-    <Content Include="Scss\base_64\icons\cp-seo-warn.svg" />
-    <Content Include="Scss\base_64\icons\cp-settings.svg" />
-    <Content Include="Scss\base_64\icons\cp-show-right.svg" />
-    <Content Include="Scss\base_64\icons\cp-show.svg" />
-    <Content Include="Scss\base_64\icons\cp-stick-handle-right.svg" />
-    <Content Include="Scss\base_64\icons\cp-stick-handle.svg" />
-    <Content Include="Scss\base_64\icons\cp-texture.svg" />
-    <Content Include="Scss\base_64\icons\cp-translate.svg" />
-    <Content Include="Scss\base_64\icons\cp-user.svg" />
-    <Content Include="Scss\base_64\icons\datepicker-arrow-left.svg" />
-    <Content Include="Scss\base_64\icons\datepicker-arrow-right.svg" />
-    <Content Include="Scss\base_64\icons\editor-blockquote.svg" />
-    <Content Include="Scss\base_64\icons\editor-bold.svg" />
-    <Content Include="Scss\base_64\icons\editor-bulletedlist.svg" />
-    <Content Include="Scss\base_64\icons\editor-close.svg" />
-    <Content Include="Scss\base_64\icons\editor-cmsdynamicregion.svg" />
-    <Content Include="Scss\base_64\icons\editor-cmsimage.svg" />
-    <Content Include="Scss\base_64\icons\editor-cmsoption.svg" />
-    <Content Include="Scss\base_64\icons\editor-cmstogglelinebreak.svg" />
-    <Content Include="Scss\base_64\icons\editor-cmswidget.svg" />
-    <Content Include="Scss\base_64\icons\editor-copy.svg" />
-    <Content Include="Scss\base_64\icons\editor-cut.svg" />
-    <Content Include="Scss\base_64\icons\editor-italic.svg" />
-    <Content Include="Scss\base_64\icons\editor-justifyblock.svg" />
-    <Content Include="Scss\base_64\icons\editor-justifycenter.svg" />
-    <Content Include="Scss\base_64\icons\editor-justifyleft.svg" />
-    <Content Include="Scss\base_64\icons\editor-justifyright.svg" />
-    <Content Include="Scss\base_64\icons\editor-link.svg" />
-    <Content Include="Scss\base_64\icons\editor-maximize.svg" />
-    <Content Include="Scss\base_64\icons\editor-numberedlist.svg" />
-    <Content Include="Scss\base_64\icons\editor-paste.svg" />
-    <Content Include="Scss\base_64\icons\editor-pastefromword.svg" />
-    <Content Include="Scss\base_64\icons\editor-redo.svg" />
-    <Content Include="Scss\base_64\icons\editor-source.svg" />
-    <Content Include="Scss\base_64\icons\editor-specialchar.svg" />
-    <Content Include="Scss\base_64\icons\editor-strike.svg" />
-    <Content Include="Scss\base_64\icons\editor-table.svg" />
-    <Content Include="Scss\base_64\icons\editor-templates.svg" />
-    <Content Include="Scss\base_64\icons\editor-underline.svg" />
-    <Content Include="Scss\base_64\icons\editor-undo.svg" />
-    <Content Include="Scss\base_64\icons\editor-unlink.svg" />
-    <Content Include="Scss\base_64\icons\manage.svg" />
-    <Content Include="Scss\base_64\icons\manager-add-content.svg" />
-    <Content Include="Scss\base_64\icons\manager-content.svg" />
-    <Content Include="Scss\base_64\icons\manager-delete.svg" />
-    <Content Include="Scss\base_64\icons\manager-edit-draft.svg" />
-    <Content Include="Scss\base_64\icons\manager-edit.svg" />
-    <Content Include="Scss\base_64\icons\manager-history.svg" />
-    <Content Include="Scss\base_64\icons\manager-options.svg" />
-    <Content Include="Scss\base_64\icons\manager-region.svg" />
-    <Content Include="Scss\base_64\icons\overlay-delete.svg" />
-    <Content Include="Scss\base_64\icons\overlay-edit-child.svg" />
-    <Content Include="Scss\base_64\icons\overlay-edit.svg" />
-    <Content Include="Scss\base_64\icons\overlay-history.svg" />
-    <Content Include="Scss\base_64\icons\overlay-options.svg" />
-    <Content Include="Scss\base_64\icons\overlay-widget.svg" />
-    <Content Include="Scss\base_64\icons\search.svg" />
-    <Content Include="Scss\base_64\icons\texture.svg" />
-    <Content Include="Scss\base_64\icons\toolbar-h1.svg" />
-    <Content Include="Scss\base_64\icons\toolbar-h2.svg" />
-    <Content Include="Scss\base_64\icons\toolbar-h3.svg" />
-    <Content Include="Scss\base_64\icons\toolbar-h4.svg" />
-    <Content Include="Scss\base_64\icons\toolbar-h5.svg" />
-    <Content Include="Scss\base_64\icons\toolbar-h6.svg" />
-    <Content Include="Scss\base_64\icons\validation.svg" />
+    <EmbeddedResource Include="Scripts\bcms.knockout-3.3.0.js" />
+    <EmbeddedResource Include="Scripts\bcms.jquery.select2.js" />
+    <Content Include="Scss\assets\icons\action-delete.svg" />
+    <Content Include="Scss\assets\icons\action-edit-draft.svg" />
+    <Content Include="Scss\assets\icons\action-edit.svg" />
+    <Content Include="Scss\assets\icons\action-history.svg" />
+    <Content Include="Scss\assets\icons\action-menu.svg" />
+    <Content Include="Scss\assets\icons\action-options.svg" />
+    <Content Include="Scss\assets\icons\action-status-draft.svg" />
+    <Content Include="Scss\assets\icons\action-status-ok.svg" />
+    <Content Include="Scss\assets\icons\action-status-warn.svg" />
+    <Content Include="Scss\assets\icons\action-usage.svg" />
+    <Content Include="Scss\assets\icons\align-center-active.svg" />
+    <Content Include="Scss\assets\icons\align-center.svg" />
+    <Content Include="Scss\assets\icons\align-left-active.svg" />
+    <Content Include="Scss\assets\icons\align-left.svg" />
+    <Content Include="Scss\assets\icons\align-right-active.svg" />
+    <Content Include="Scss\assets\icons\align-right.svg" />
+    <Content Include="Scss\assets\icons\arrow-left.svg" />
+    <Content Include="Scss\assets\icons\arrow-right.svg" />
+    <Content Include="Scss\assets\icons\btn-down-arrow.svg" />
+    <Content Include="Scss\assets\icons\close-white.svg" />
+    <Content Include="Scss\assets\icons\close.svg" />
+    <Content Include="Scss\assets\icons\content-add.svg" />
+    <Content Include="Scss\assets\icons\content-manage.svg" />
+    <Content Include="Scss\assets\icons\cp-add.svg" />
+    <Content Include="Scss\assets\icons\cp-delete.svg" />
+    <Content Include="Scss\assets\icons\cp-drag-handle.svg" />
+    <Content Include="Scss\assets\icons\cp-hide-right.svg" />
+    <Content Include="Scss\assets\icons\cp-hide.svg" />
+    <Content Include="Scss\assets\icons\cp-preview.svg" />
+    <Content Include="Scss\assets\icons\cp-pub-draft.svg" />
+    <Content Include="Scss\assets\icons\cp-pub-ok.svg" />
+    <Content Include="Scss\assets\icons\cp-pub-warn.svg" />
+    <Content Include="Scss\assets\icons\cp-show-right.svg" />
+    <Content Include="Scss\assets\icons\cp-show.svg" />
+    <Content Include="Scss\assets\icons\cp-stick-handle-right.svg" />
+    <Content Include="Scss\assets\icons\cp-stick-handle.svg" />
+    <Content Include="Scss\assets\icons\date-picker-left.svg" />
+    <Content Include="Scss\assets\icons\date-picker-right.svg" />
+    <Content Include="Scss\assets\icons\download.svg" />
+    <Content Include="Scss\assets\icons\dragger.svg" />
+    <Content Include="Scss\assets\icons\editor-block-quote-active.svg" />
+    <Content Include="Scss\assets\icons\editor-block-quote.svg" />
+    <Content Include="Scss\assets\icons\editor-bold-active.svg" />
+    <Content Include="Scss\assets\icons\editor-bold.svg" />
+    <Content Include="Scss\assets\icons\editor-bullet-list-active.svg" />
+    <Content Include="Scss\assets\icons\editor-bullet-list.svg" />
+    <Content Include="Scss\assets\icons\editor-cms-file.svg" />
+    <Content Include="Scss\assets\icons\editor-cms-image.svg" />
+    <Content Include="Scss\assets\icons\editor-cms-line-break-active.svg" />
+    <Content Include="Scss\assets\icons\editor-cms-line-break.svg" />
+    <Content Include="Scss\assets\icons\editor-cms-option.svg" />
+    <Content Include="Scss\assets\icons\editor-cms-region.svg" />
+    <Content Include="Scss\assets\icons\editor-cms-widget.svg" />
+    <Content Include="Scss\assets\icons\editor-copy.svg" />
+    <Content Include="Scss\assets\icons\editor-cut.svg" />
+    <Content Include="Scss\assets\icons\editor-drop-arrow.svg" />
+    <Content Include="Scss\assets\icons\editor-h1.svg" />
+    <Content Include="Scss\assets\icons\editor-h2.svg" />
+    <Content Include="Scss\assets\icons\editor-h3.svg" />
+    <Content Include="Scss\assets\icons\editor-h4.svg" />
+    <Content Include="Scss\assets\icons\editor-h5.svg" />
+    <Content Include="Scss\assets\icons\editor-h6.svg" />
+    <Content Include="Scss\assets\icons\editor-hide.svg" />
+    <Content Include="Scss\assets\icons\editor-italic-active.svg" />
+    <Content Include="Scss\assets\icons\editor-italic.svg" />
+    <Content Include="Scss\assets\icons\editor-justify-block-active.svg" />
+    <Content Include="Scss\assets\icons\editor-justify-block.svg" />
+    <Content Include="Scss\assets\icons\editor-justify-center-active.svg" />
+    <Content Include="Scss\assets\icons\editor-justify-center.svg" />
+    <Content Include="Scss\assets\icons\editor-justify-left-active.svg" />
+    <Content Include="Scss\assets\icons\editor-justify-left.svg" />
+    <Content Include="Scss\assets\icons\editor-justify-right-active.svg" />
+    <Content Include="Scss\assets\icons\editor-justify-right.svg" />
+    <Content Include="Scss\assets\icons\editor-link-active.svg" />
+    <Content Include="Scss\assets\icons\editor-link.svg" />
+    <Content Include="Scss\assets\icons\editor-maximize-active.svg" />
+    <Content Include="Scss\assets\icons\editor-maximize.svg" />
+    <Content Include="Scss\assets\icons\editor-number-list-active.svg" />
+    <Content Include="Scss\assets\icons\editor-number-list.svg" />
+    <Content Include="Scss\assets\icons\editor-paste-word.svg" />
+    <Content Include="Scss\assets\icons\editor-paste.svg" />
+    <Content Include="Scss\assets\icons\editor-redo.svg" />
+    <Content Include="Scss\assets\icons\editor-show.svg" />
+    <Content Include="Scss\assets\icons\editor-source-active.svg" />
+    <Content Include="Scss\assets\icons\editor-source.svg" />
+    <Content Include="Scss\assets\icons\editor-strike-active.svg" />
+    <Content Include="Scss\assets\icons\editor-strike.svg" />
+    <Content Include="Scss\assets\icons\editor-symbol.svg" />
+    <Content Include="Scss\assets\icons\editor-table.svg" />
+    <Content Include="Scss\assets\icons\editor-underline-active.svg" />
+    <Content Include="Scss\assets\icons\editor-underline.svg" />
+    <Content Include="Scss\assets\icons\editor-undo.svg" />
+    <Content Include="Scss\assets\icons\editor-unlink.svg" />
+    <Content Include="Scss\assets\icons\grid-filter.svg" />
+    <Content Include="Scss\assets\icons\image-delete.svg" />
+    <Content Include="Scss\assets\icons\list-preview.svg" />
+    <Content Include="Scss\assets\icons\manager-content.svg" />
+    <Content Include="Scss\assets\icons\manager-region.svg" />
+    <Content Include="Scss\assets\icons\media-folder-up.svg" />
+    <Content Include="Scss\assets\icons\media-folder.svg" />
+    <Content Include="Scss\assets\icons\media-new-folder.svg" />
+    <Content Include="Scss\assets\icons\messages-error.svg" />
+    <Content Include="Scss\assets\icons\messages-info.svg" />
+    <Content Include="Scss\assets\icons\messages-success.svg" />
+    <Content Include="Scss\assets\icons\messages-warning.svg" />
+    <Content Include="Scss\assets\icons\node-step.svg" />
+    <Content Include="Scss\assets\icons\overlay-delete.svg" />
+    <Content Include="Scss\assets\icons\overlay-drag-active.svg" />
+    <Content Include="Scss\assets\icons\overlay-drag.svg" />
+    <Content Include="Scss\assets\icons\overlay-edit-child.svg" />
+    <Content Include="Scss\assets\icons\overlay-edit.svg" />
+    <Content Include="Scss\assets\icons\overlay-history.svg" />
+    <Content Include="Scss\assets\icons\overlay-options.svg" />
+    <Content Include="Scss\assets\icons\pager-arrow-left.svg" />
+    <Content Include="Scss\assets\icons\pager-arrow-right.svg" />
+    <Content Include="Scss\assets\icons\path-drag.svg" />
+    <Content Include="Scss\assets\icons\path-hide.svg" />
+    <Content Include="Scss\assets\icons\path-left.svg" />
+    <Content Include="Scss\assets\icons\path-page.svg" />
+    <Content Include="Scss\assets\icons\path-right.svg" />
+    <Content Include="Scss\assets\icons\path-show.svg" />
+    <Content Include="Scss\assets\icons\path-template.svg" />
+    <Content Include="Scss\assets\icons\revert.svg" />
+    <Content Include="Scss\assets\icons\search.svg" />
+    <Content Include="Scss\assets\icons\select-arrow.svg" />
+    <Content Include="Scss\assets\icons\sort-by-arrow.svg" />
+    <Content Include="Scss\assets\icons\sort-down-active.svg" />
+    <Content Include="Scss\assets\icons\sort-inactive.svg" />
+    <Content Include="Scss\assets\icons\sort-up-active.svg" />
+    <Content Include="Scss\assets\icons\tag-close.svg" />
+    <Content Include="Scss\assets\icons\texture.svg" />
+    <Content Include="Scss\assets\icons\tooltip-mark.svg" />
+    <Content Include="Scss\assets\icons\tree-minus.svg" />
+    <Content Include="Scss\assets\icons\tree-new-node.svg" />
+    <Content Include="Scss\assets\icons\tree-plus.svg" />
+    <Content Include="Scss\assets\icons\zoom.svg" />
     <Content Include="Views\Web.config" />
     <Content Include="Views\Category\CategoryTreeEdit.cshtml">
       <Generator>RazorGenerator</Generator>
       <LastGenOutput>CategoryTreeEdit.generated.cs</LastGenOutput>
     </Content>
     <Content Include="package.json" />
-    <Content Include="Scss\components\_forms.scss" />
-    <Content Include="Scss\components\_normalize.scss" />
-    <Content Include="Scss\components\_tables.scss" />
     <Content Include="Scss\core\_mixins.scss" />
     <Content Include="Scss\core\_variables.scss" />
     <Content Include="Scss\blog.scss" />
@@ -1521,34 +1567,23 @@
     <Content Include="Scss\pages.scss" />
     <Content Include="Scss\bcms-modules\pages\_index.scss" />
     <Content Include="Scss\users.scss" />
-    <Content Include="Scss\structure\_modules.scss" />
-    <Content Include="Scss\bcms-modules\pages\_navigation.scss" />
     <Content Include="Scss\media.scss" />
     <Content Include="Scss\structure\_layout.scss" />
-    <Content Include="Scss\structure\_tabs.scss" />
     <Content Include="Scss\bcms-modules\blog\_index.scss" />
     <Content Include="Scss\bcms-modules\installation\_index.scss" />
     <Content Include="Scss\bcms-modules\media\_index.scss" />
     <Content Include="Scss\bcms-modules\users\_index.scss" />
-    <Content Include="Scss\bcms-modules\media\_crop.scss" />
     <Content Include="Scss\bcms-modules\media\_manager.scss" />
-    <Content Include="Scss\bcms-modules\media\_types.scss" />
     <Content Include="Scss\bcms-modules\media\_uploader.scss" />
     <Content Include="Scss\bcms-modules\pages\_history.scss" />
-    <Content Include="Scss\bcms-modules\pages\_editseo.scss" />
-    <Content Include="Scss\bcms-modules\pages\_nodedropzone.scss" />
     <Content Include="Scss\root.scss" />
-    <Content Include="Scss\bcms-modules\root\_buttons.scss" />
     <Content Include="Scss\bcms-modules\root\_controlpanel.scss" />
-    <Content Include="Scss\bcms-modules\root\_index.scss" />
-    <Content Include="Scss\bcms-modules\root\_messages.scss" />
-    <Content Include="Scss\bcms-modules\root\_notifications.scss" />
     <Content Include="Scss\bcms-modules\root\_overlays.scss" />
-    <Content Include="Scss\base_64\webfonts\OpenSans-Bold.ttf" />
-    <Content Include="Scss\base_64\webfonts\OpenSans-Italic.ttf" />
-    <Content Include="Scss\base_64\webfonts\OpenSans-Light.ttf" />
-    <Content Include="Scss\base_64\webfonts\OpenSans-Regular.ttf" />
-    <Content Include="Scss\base_64\webfonts\OpenSans-Semibold.ttf" />
+    <Content Include="Scss\assets\webfonts\OpenSans-Bold.ttf" />
+    <Content Include="Scss\assets\webfonts\OpenSans-Italic.ttf" />
+    <Content Include="Scss\assets\webfonts\OpenSans-Light.ttf" />
+    <Content Include="Scss\assets\webfonts\OpenSans-Regular.ttf" />
+    <Content Include="Scss\assets\webfonts\OpenSans-Semibold.ttf" />
     <Content Include="Scss\core\_assets.scss" />
     <Content Include="Scss\editor.scss" />
     <Content Include="Scss\plugins\_ckeditor.scss" />
@@ -1556,6 +1591,26 @@
     <Content Include="Scss\plugins\_jquerycalendar.scss" />
     <Content Include="Scss\bcms-modules\root\_contentstree.scss" />
     <Content Include="Scss\bcms-modules\blog\_settings.scss" />
+    <Content Include="Scss\bcms-modules\root\_tables.scss" />
+    <Content Include="Scss\core\_normalize.scss" />
+    <Content Include="Scss\bcms-modules\root\_autocomplete.scss" />
+    <Content Include="Scss\structure\_global.scss" />
+    <Content Include="Scss\bcms-modules\root\_tabs.scss" />
+    <Content Include="Scss\bcms-modules\root\_pager.scss" />
+    <Content Include="Scss\bcms-modules\pages\_topcontrols.scss" />
+    <Content Include="Scss\bcms-modules\root\_templategrids.scss" />
+    <Content Include="Scss\bcms-modules\root\_browsersupport.scss" />
+    <Content Include="Scss\bcms-modules\root\_structurepath.scss" />
+    <Content Include="Scss\bcms-modules\root\_tooltips.scss" />
+    <Content Include="Scss\bcms-modules\pages\_nodestree.scss" />
+    <Content Include="Scss\bcms-modules\pages\_taglabels.scss" />
+    <Content Include="Scss\plugins\_jcrop.scss" />
+    <Content Include="Scss\core\_colors.scss" />
+    <Content Include="Scss\plugins\_select2.scss" />
+    <Content Include="Scss\core\_webfonts.scss" />
+    <Content Include="Scss\structure\_buttons.scss" />
+    <Content Include="Scss\structure\_formelements.scss" />
+    <Content Include="Scss\structure\_notifications.scss" />
     <None Include="Views\Category\CategoryTrees.cshtml">
       <Generator>RazorGenerator</Generator>
       <LastGenOutput>CategoryTrees.generated.cs</LastGenOutput>
@@ -1576,6 +1631,10 @@
       <Generator>RazorGenerator</Generator>
       <LastGenOutput>MultilineTextCell.generated.cs</LastGenOutput>
     </None>
+    <Content Include="Views\Shared\Partial\Delete.cshtml">
+      <Generator>RazorGenerator</Generator>
+      <LastGenOutput>Delete.generated.cs</LastGenOutput>
+    </Content>
     <None Include="Views\Shared\Partial\ContentsTree.cshtml">
       <LastGenOutput>ContentsTree.generated.cs</LastGenOutput>
       <Generator>RazorGenerator</Generator>
@@ -1839,6 +1898,9 @@
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
     <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
   </PropertyGroup>
+  <ItemGroup>
+    <Content Include="..\..\licensing.licenseheader" />
+  </ItemGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Staging|AnyCPU'">
     <DebugSymbols>true</DebugSymbols>
     <OutputPath>bin\</OutputPath>

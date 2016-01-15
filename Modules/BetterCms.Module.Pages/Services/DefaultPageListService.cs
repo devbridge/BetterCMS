@@ -1,10 +1,38 @@
-﻿using System;
+﻿// --------------------------------------------------------------------------------------------------------------------
+// <copyright file="DefaultPageListService.cs" company="Devbridge Group LLC">
+// 
+// Copyright (C) 2015,2016 Devbridge Group LLC
+// 
+// This program is free software: you can redistribute it and/or modify
+// it under the terms of the GNU Lesser General Public License as published by
+// the Free Software Foundation, either version 3 of the License, or
+// (at your option) any later version.
+// 
+// This program is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU General Public License for more details.
+// 
+// You should have received a copy of the GNU Lesser General Public License
+// along with this program.  If not, see http://www.gnu.org/licenses/. 
+// </copyright>
+// 
+// <summary>
+// Better CMS is a publishing focused and developer friendly .NET open source CMS.
+// 
+// Website: https://www.bettercms.com 
+// GitHub: https://github.com/devbridge/bettercms
+// Email: info@bettercms.com
+// </summary>
+// --------------------------------------------------------------------------------------------------------------------
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
 using BetterModules.Core.DataAccess.DataContext;
 using BetterCms.Core.DataContracts.Enums;
 using BetterCms.Core.Security;
+using BetterCms.Module.Pages.Content.Resources;
 using BetterCms.Module.Pages.Models;
 using BetterCms.Module.Pages.ViewModels.Filter;
 using BetterCms.Module.Pages.ViewModels.SiteSettings;
@@ -13,6 +41,7 @@ using BetterCms.Module.Root.Models;
 using BetterCms.Module.Root.Mvc;
 using BetterCms.Module.Root.Mvc.Grids.Extensions;
 using BetterCms.Module.Root.Services;
+using BetterCms.Module.Root.ViewModels.Category;
 
 using NHibernate;
 using NHibernate.Criterion;
@@ -48,11 +77,11 @@ namespace BetterCms.Module.Pages.Services
 
         public PagesGridViewModel<SiteSettingPageViewModel> GetFilteredPagesList(PagesFilter request)
         {
-            request.SetDefaultSortingOptions("Title");
+            request.SetDefaultSortingOptions("CreatedOn", true);
 
             PageProperties alias = null;
             PagesView viewAlias = null;
-            SiteSettingPageViewModel modelAlias = null;
+            PageProperties modelAlias = null;
 
             var query = unitOfWork.Session
                 .QueryOver(() => viewAlias)
@@ -77,14 +106,14 @@ namespace BetterCms.Module.Pages.Services
                     .Select(() => alias.Id).WithAlias(() => modelAlias.Id)
                     .Select(() => alias.Version).WithAlias(() => modelAlias.Version)
                     .Select(() => alias.Title).WithAlias(() => modelAlias.Title)
-                    .Select(() => alias.Status).WithAlias(() => modelAlias.PageStatus)
-                    .Select(hasSeoProjection).WithAlias(() => modelAlias.HasSEO)
+                    .Select(() => alias.Status).WithAlias(() => modelAlias.Status)
+//                    .Select(hasSeoProjection).WithAlias(() => modelAlias.HasSEO)
                     .Select(() => alias.CreatedOn).WithAlias(() => modelAlias.CreatedOn)
                     .Select(() => alias.ModifiedOn).WithAlias(() => modelAlias.ModifiedOn)
-                    .Select(() => alias.PageUrl).WithAlias(() => modelAlias.Url)
-                    .Select(() => alias.Language.Id).WithAlias(() => modelAlias.LanguageId)
+                    .Select(() => alias.PageUrl).WithAlias(() => modelAlias.PageUrl)
+                    .Select(() => alias.Language).WithAlias(() => modelAlias.Language)
                     .Select(() => alias.IsMasterPage).WithAlias(() => modelAlias.IsMasterPage))
-                .TransformUsing(Transformers.AliasToBean<SiteSettingPageViewModel>());
+                .TransformUsing(Transformers.AliasToBean<PageProperties>());
 
             if (configuration.Security.AccessControlEnabled)
             {
@@ -100,7 +129,7 @@ namespace BetterCms.Module.Pages.Services
 
             IEnumerable<LookupKeyValue> languagesFuture = configuration.EnableMultilanguage ? languageService.GetLanguagesLookupValues() : null;
 
-            var pages = query.AddSortingAndPaging(request).Future<SiteSettingPageViewModel>();
+            var pages = query.AddSortingAndPaging(request).Future<PageProperties>();
 
             var layouts = layoutService
                         .GetAvailableLayouts()
@@ -109,7 +138,8 @@ namespace BetterCms.Module.Pages.Services
                             l.Title))
                         .ToList();
 
-            var model = CreateModel(pages, request, count, layouts);
+            var categoriesLookupList = categoryService.GetCategoriesLookupList(PageProperties.CategorizableItemKeyForPages);
+            var model = CreateModel(pages, request, count, layouts, categoriesLookupList);
 
             if (languagesFuture != null)
             {
@@ -120,13 +150,28 @@ namespace BetterCms.Module.Pages.Services
             return model;
         }
 
-        protected virtual PagesGridViewModel<SiteSettingPageViewModel> CreateModel(IEnumerable<SiteSettingPageViewModel> pages,
-            PagesFilter request, IFutureValue<int> count, IList<LookupKeyValue> layouts)
+        protected virtual PagesGridViewModel<SiteSettingPageViewModel> CreateModel(IEnumerable<PageProperties> pages,
+            PagesFilter request, IFutureValue<int> count, IList<LookupKeyValue> layouts, IList<CategoryLookupModel> categoriesLookupList)
         {
+            var pagesList = new List<SiteSettingPageViewModel>();
+            foreach (var page in pages)
+            {
+                var model = new SiteSettingPageViewModel();
+                model.Id = page.Id;
+                model.Version = page.Version;
+                model.Title = page.Title;
+                model.PageStatus = page.Status;
+                model.CreatedOn = page.CreatedOn.ToFormattedDateString();
+                model.ModifiedOn = page.ModifiedOn.ToFormattedDateString();
+                model.PageUrl = page.PageUrl;
+                model.IsMasterPage = page.IsMasterPage;
+                model.LanguageId = page.Language != null ? page.Language.Id : Guid.Empty;
+                pagesList.Add(model);
+            }
             return new PagesGridViewModel<SiteSettingPageViewModel>(
-                pages.ToList(),
+                pagesList,
                 request,
-                count.Value) { Layouts = layouts };
+                count.Value) { Layouts = layouts, CategoriesLookupList = categoriesLookupList};
         }
 
         protected virtual IQueryOver<PagesView, PagesView> FilterQuery(IQueryOver<PagesView, PagesView> query,

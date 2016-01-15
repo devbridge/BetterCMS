@@ -1,11 +1,38 @@
-﻿using System.Collections.Generic;
+﻿// --------------------------------------------------------------------------------------------------------------------
+// <copyright file="GetBlogPostListCommand.cs" company="Devbridge Group LLC">
+// 
+// Copyright (C) 2015,2016 Devbridge Group LLC
+// 
+// This program is free software: you can redistribute it and/or modify
+// it under the terms of the GNU Lesser General Public License as published by
+// the Free Software Foundation, either version 3 of the License, or
+// (at your option) any later version.
+// 
+// This program is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU General Public License for more details.
+// 
+// You should have received a copy of the GNU Lesser General Public License
+// along with this program.  If not, see http://www.gnu.org/licenses/. 
+// </copyright>
+// 
+// <summary>
+// Better CMS is a publishing focused and developer friendly .NET open source CMS.
+// 
+// Website: https://www.bettercms.com 
+// GitHub: https://github.com/devbridge/bettercms
+// Email: info@bettercms.com
+// </summary>
+// --------------------------------------------------------------------------------------------------------------------
+using System.Collections.Generic;
 using System.Linq;
 
 using BetterCms.Module.Blog.Models;
 using BetterCms.Module.Blog.Services;
 using BetterCms.Module.Blog.ViewModels.Blog;
 using BetterCms.Module.Blog.ViewModels.Filter;
-
+using BetterCms.Module.Pages.Content.Resources;
 using BetterCms.Module.Pages.Services;
 using BetterCms.Module.Root.Models;
 using BetterCms.Module.Root.Mvc;
@@ -67,7 +94,8 @@ namespace BetterCms.Module.Blog.Commands.GetBlogPostList
         public BlogsGridViewModel<SiteSettingBlogPostViewModel> Execute(BlogsFilter request)
         {
             BlogPost alias = null;
-            SiteSettingBlogPostViewModel modelAlias = null;
+//            SiteSettingBlogPostViewModel modelAlias = null;
+            BlogPost modelAlias = null;
 
             var query = blogService.GetFilteredBlogPostsQuery(request);
 
@@ -81,14 +109,30 @@ namespace BetterCms.Module.Blog.Commands.GetBlogPostList
                     .Select(() => alias.Status).WithAlias(() => modelAlias.Status)
                     .Select(() => alias.Version).WithAlias(() => modelAlias.Version)
                     .Select(() => alias.PageUrl).WithAlias(() => modelAlias.PageUrl))
-                .TransformUsing(Transformers.AliasToBean<SiteSettingBlogPostViewModel>());
+                .TransformUsing(Transformers.AliasToBean<BlogPost>());
 
             var count = query.ToRowCountFutureValue();
 
-            var blogPosts = query.AddSortingAndPaging(request).Future<SiteSettingBlogPostViewModel>();
+            var blogPosts = query.AddSortingAndPaging(request).Future<BlogPost>();
             IEnumerable<LookupKeyValue> languagesFuture = configuration.EnableMultilanguage ? languageService.GetLanguagesLookupValues() : null;
 
-            var model = new BlogsGridViewModel<SiteSettingBlogPostViewModel>(blogPosts.ToList(), request, count.Value);
+            var categoriesLookupList = categoryService.GetCategoriesLookupList(BlogPost.CategorizableItemKeyForBlogs);
+
+            var blogsList = new List<SiteSettingBlogPostViewModel>();
+            foreach (var blogPost in blogPosts)
+            {
+                var blogModel = new SiteSettingBlogPostViewModel();
+                blogModel.Id = blogPost.Id;
+                blogModel.Title = blogPost.Title;
+                blogModel.CreatedOn = blogPost.CreatedOn.ToFormattedDateString();
+                blogModel.ModifiedOn = blogPost.ModifiedOn.ToFormattedDateString();
+                blogModel.ModifiedByUser = blogPost.ModifiedByUser;
+                blogModel.Status = blogPost.Status;
+                blogModel.Version = blogPost.Version;
+                blogModel.PageUrl = blogPost.PageUrl;
+                blogsList.Add(blogModel);
+            }
+            var model = new BlogsGridViewModel<SiteSettingBlogPostViewModel>(blogsList, request, count.Value) { CategoriesLookupList = categoriesLookupList} ;
             if (languagesFuture != null)
             {
                 model.Languages = languagesFuture.ToList();

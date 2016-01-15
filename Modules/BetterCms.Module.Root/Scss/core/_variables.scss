@@ -1,62 +1,71 @@
-@import '../../node_modules/susy/sass/susy',
-'bourbon',
-'mixins',
-'assets';
+// --------------------------------------------------------------------------------------------------------------------
+// <copyright file="_variables.scss" company="Devbridge Group LLC">
+// 
+// Copyright (C) 2015,2016 Devbridge Group LLC
+// 
+// This program is free software: you can redistribute it and/or modify
+// it under the terms of the GNU Lesser General Public License as published by
+// the Free Software Foundation, either version 3 of the License, or
+// (at your option) any later version.
+// 
+// This program is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU General Public License for more details.
+// 
+// You should have received a copy of the GNU Lesser General Public License
+// along with this program.  If not, see http://www.gnu.org/licenses/. 
+// </copyright>
+// 
+// <summary>
+// Better CMS is a publishing focused and developer friendly .NET open source CMS.
+// 
+// Website: https://www.bettercms.com 
+// GitHub: https://github.com/devbridge/bettercms
+// Email: info@bettercms.com
+// </summary>
+// --------------------------------------------------------------------------------------------------------------------
 
-//module typo
 $font-base-size: 13px;
 $font-base-family: 'Open Sans', sans-serif !important;
-$font-arial: 'Arial', sans-serif;
 $font-code-family: 'Courier New', Courier, monospace;
 
-//module main colors
-$white: #ffffff;
-$black: #000000;
-$dark: #303030;
-$gray-l5: #aaaaaa;
-$gray-l10: #eaeaea;
-$gray-l20: #e3e3e3;
-$gray-l25: #e5e5e5;
-$gray-l30: #f5f5f5;
-$gray-l35: #c0c0c0;
-$gray-l40: #c6c6c6;
-$gray-l45: #8E8E8E;
-$gray-l46: #787878;
-$gray-l50: #676767;
-$gray-l60: #555555;
-$gray-l65: #474747;
-$a:#d1d1d1;
-//
-$blue-main: #0383df;
-$sky-blue: #9ed4f0;
-$blue-5: #eff9fd;
-$blue-l30: #1892E4;
-$blue-l40: #0C7FC7;
-$blue-l55: #0D7BC9;
-$blue-l60: #24597e;
-
-//
-$red-l60: #A63333;
-$red-l70: #8E2626;
-//
-$green: #007633;
-
 //module borders
-$border-hr-control-top: 1px solid $gray-l50;
-$border-hr-control-bottom: 1px solid #202020;
-$border-thin-gray: 1px solid $gray-l40;
-$border-thin-light-gray: 1px solid $gray-l20;
-$border-thin-blue: 1px solid $blue-l60;
+$border-thin-dark: 1px solid $dark-main;
+$border-thin-dashed-dark: 1px dashed $dark-main;
+$border-thin-smoke: 1px solid $gray-smoke;
+$border-thin-dashed-smoke: 1px dashed $gray-smoke;
+$border-thick-dashed-smoke: 2px dashed $gray-smoke;
+//
+$border-thin-blue: 1px solid $border-blue;
+$border-thin-blue-dashed: 1px dashed $border-blue;
+$border-thick-blue: 2px solid $border-blue;
+$border-solid-red: 4px solid $border-red;
+$border-solid-blue: 4px solid $border-blue;
+//
+$border-form-element: 1px solid $light;
+$border-form-element-dashed: 1px dashed $light;
+$border-pop-box: 1px solid $light;
+$border-dialog: 1px solid #dcdada;
+//
 $border-thin-white: 1px solid $white;
-$border-overlay: 1px dashed $blue-l30;
-$border-content-actions: 1px solid $sky-blue;
-$border-content-box: 1px solid $gray-l45;
+$border-thin-sky: 1px solid $sky-blue;
+//
+$border-thin-transparent: 1px solid transparent;
+$border-thick-transparent: 2px solid transparent;
 
-//module images paths
+//module shadows
+$pop-box-shadow: 0 0 20px 0 rgba($black, .2);
 
-//module misc variables
-
-//module transitions
+//module sizes
+$page-width: 1150px;
+$settings-sidebar: 180px;
+$page-frame-gutters: 20px;
+$header-height: 55px;
+$footer-height: 65px;
+$tab-height: 50px;
+$inner-navigation: 58px;
+$form-element-height: 36px;
 
 //module bourbon config
 $prefix-for-webkit: true;
@@ -65,11 +74,16 @@ $prefix-for-microsoft: false;
 $prefix-for-opera: false;
 $prefix-for-spec: true;
 
-//module susy config
+//module config
 $susy: (
         columns: 12,
-        container: 1160px,
-        gutters: (40/60)
+        container: 1150px,
+        gutters: (20/60)
 );
 
-//module global maps/keys
+@function rem($target, $context: $font-base-size) {
+    @if $target == 0 {
+        @return (0);
+    }
+    @return (($target + 0px ) / $context + 0rem);
+}

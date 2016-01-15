@@ -1,4 +1,31 @@
-﻿@using BetterCms.Module.Root.Content.Resources
+﻿@* --------------------------------------------------------------------------------------------------------------------
+// <copyright file="Index.cshtml" company="Devbridge Group LLC">
+// 
+// Copyright (C) 2015,2016 Devbridge Group LLC
+// 
+// This program is free software: you can redistribute it and/or modify
+// it under the terms of the GNU Lesser General Public License as published by
+// the Free Software Foundation, either version 3 of the License, or
+// (at your option) any later version.
+// 
+// This program is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU General Public License for more details.
+// 
+// You should have received a copy of the GNU Lesser General Public License
+// along with this program.  If not, see http://www.gnu.org/licenses/. 
+// </copyright>
+// 
+// <summary>
+// Better CMS is a publishing focused and developer friendly .NET open source CMS.
+// 
+// Website: https://www.bettercms.com 
+// GitHub: https://github.com/devbridge/bettercms
+// Email: info@bettercms.com
+// </summary>
+// -------------------------------------------------------------------------------------------------------------------- *@
+@using BetterCms.Module.Root.Content.Resources
 @using BetterCms.Module.Root.Mvc.Grids.Extensions
 @using BetterCms.Module.Root.Mvc.Grids.TableRenderers
 @using BetterCms.Module.Users.Content.Resources
@@ -9,50 +36,56 @@
 @using Microsoft.Web.Mvc;
 
 @model BetterCms.Module.Root.ViewModels.SiteSettings.SearchableGridViewModel<UserItemViewModel>
+    @{
+        Action<ColumnBuilder<UserItemViewModel>> columns = column =>
+        {
+            column.EditButtonColumn();
 
-@{
-    Action<ColumnBuilder<UserItemViewModel>> columns = column =>
+            column.For(m => string.Format("<div class=\"bcms-tables-link bcms-grid-item-edit-button bcms-user-name\">{0}</div>", m.UserName))
+                .Named(UsersGlobalization.SiteSettings_Users_NameColumn)
+                .SortColumnName("UserName")
+                .Encode(false);
+
+            column.For(m => m.FullName)
+               .Named(UsersGlobalization.SiteSettings_Users_FullNameColumn)
+               .SortColumnName("FullName")
+               .Attributes(@class => "bcms-user-fullName");
+
+            column.For(m => m.Email)
+               .Named(UsersGlobalization.SiteSettings_Users_EmailColumn)
+               .SortColumnName("Email")
+               .Attributes(@class => "bcms-user-email");
+
+
+            column.DeleteButtonColumn();
+        };
+    }
+
+    @using (Html.BeginForm<UserController>(f => f.Index(null), FormMethod.Post, new { @id = "bcms-users-form", @class = "bcms-ajax-form" }))
     {
-        column.EditButtonColumn();
+        @Html.MessagesBox("bcms-users-messages")
 
-        column.For(m => string.Format("<a class=\"bcms-tables-link bcms-grid-item-edit-button bcms-user-name\">{0}</a>", m.UserName))
-            .Named(UsersGlobalization.SiteSettings_Users_NameColumn)
-            .SortColumnName("UserName")
-            .Encode(false);
+        @Html.HiddenGridOptions(Model.GridOptions)
+        <div class="bcms-top-block-holder">
+            <div class="bcms-btn-main" id="bcms-create-user-button">@UsersGlobalization.User_Dialog_AddNew</div>
 
-        column.For(m => m.FullName)
-           .Named(UsersGlobalization.SiteSettings_Users_FullNameColumn)
-           .SortColumnName("FullName")
-           .Attributes(@class => "bcms-user-fullName");
-        
-        column.For(m => m.Email)
-           .Named(UsersGlobalization.SiteSettings_Users_EmailColumn)
-           .SortColumnName("Email")
-           .Attributes(@class => "bcms-user-email");
-      
+            <div class="bcms-top-block-inner">
 
-        column.DeleteButtonColumn();
-    };
-}
-    
-@using (Html.BeginForm<UserController>(f => f.Index(null), FormMethod.Post, new { @id = "bcms-users-form", @class = "bcms-ajax-form" }))
-{
-    @Html.HiddenGridOptions(Model.GridOptions)
-    <div class="bcms-top-block-holder">
-        <div class="bcms-btn-links-main" id="bcms-create-user-button">@UsersGlobalization.User_Dialog_AddNew</div>
-        <div class="bcms-search-block">
-            @Html.TextBoxFor(m => m.SearchQuery, new { @class = "bcms-editor-field-box", @placeholder = RootGlobalization.WaterMark_Search })
-            <div class="bcms-btn-search" id="bcms-users-search-btn">@UsersGlobalization.User_Dialog_Search</div>
-        </div>  
-        <div class="bcms-featured-grid bcms-clearfix">
-            @Html.RenderPaging(Model)
+                <div class="bcms-btn-search" id="bcms-users-search-btn">@UsersGlobalization.User_Dialog_Search</div>
+                <div class="bcms-search-block">
+                    @Html.TextBoxFor(m => m.SearchQuery, new { @class = "bcms-search-field-box bcms-js-search-box", @placeholder = RootGlobalization.WaterMark_Search })
+                </div>
+            </div>
+
+            <div class="bcms-top-block-pager">
+                @Html.RenderPaging(Model)
+            </div>
         </div>
-    </div>
 
-    @Html.SiteSettingsMessagesBox("bcms-users-messages")
-    @Html.Grid(Model.Items).Sort(Model.GridOptions).Columns(columns).Attributes(@class => "bcms-tables").RenderUsing(new EditableHtmlTableGridRenderer<UserItemViewModel>())
-}
 
-<script type="text/html" id="bcms-users-list-row-template">
-    @Html.Grid(new List<UserItemViewModel> {new UserItemViewModel()}).Columns(columns).Attributes(@class => "bcms-tables").RenderUsing(new HtmlTableGridSingleRowRenderer<UserItemViewModel>())
-</script>
+        @Html.Grid(Model.Items).Sort(Model.GridOptions).Columns(columns).Attributes(@class => "bcms-tables").RenderUsing(new EditableHtmlTableGridRenderer<UserItemViewModel>())
+    }
+
+    <script type="text/html" id="bcms-users-list-row-template">
+        @Html.Grid(new List<UserItemViewModel> { new UserItemViewModel() }).Columns(columns).Attributes(@class => "bcms-tables").RenderUsing(new HtmlTableGridSingleRowRenderer<UserItemViewModel>())
+    </script>

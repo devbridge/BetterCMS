@@ -1,9 +1,35 @@
 ﻿/*jslint unparam: true, white: true, browser: true, devel: true */
-/*global bettercms */
+// --------------------------------------------------------------------------------------------------------------------
+// <copyright file="bcms.pages.template.js" company="Devbridge Group LLC">
+// 
+// Copyright (C) 2015,2016 Devbridge Group LLC
+// 
+// This program is free software: you can redistribute it and/or modify
+// it under the terms of the GNU Lesser General Public License as published by
+// the Free Software Foundation, either version 3 of the License, or
+// (at your option) any later version.
+// 
+// This program is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU General Public License for more details.
+// 
+// You should have received a copy of the GNU Lesser General Public License
+// along with this program.  If not, see http://www.gnu.org/licenses/. 
+// </copyright>
+// 
+// <summary>
+// Better CMS is a publishing focused and developer friendly .NET open source CMS.
+// 
+// Website: https://www.bettercms.com 
+// GitHub: https://github.com/devbridge/bettercms
+// Email: info@bettercms.com
+// </summary>
+// --------------------------------------------------------------------------------------------------------------------
 
 bettercms.define('bcms.pages.template', ['bcms.jquery', 'bcms', 'bcms.modal', 'bcms.datepicker', 'bcms.dynamicContent', 'bcms.siteSettings', 'bcms.messages',
-        'bcms.preview', 'bcms.grid', 'bcms.inlineEdit', 'bcms.slides.jquery', 'bcms.options', 'bcms.ko.extenders', 'bcms.pages.masterpage', 'bcms.pages', 'bcms.antiXss'],
-    function ($, bcms, modal, datepicker, dynamicContent, siteSettings, messages, preview, grid, editor, slides, options, ko, masterpage, pages, antiXss) {
+        'bcms.preview', 'bcms.grid', 'bcms.inlineEdit', 'bcms.options', 'bcms.ko.extenders', 'bcms.pages.masterpage', 'bcms.pages', 'bcms.antiXss', 'bcms.pages.properties'],
+    function ($, bcms, modal, datepicker, dynamicContent, siteSettings, messages, preview, grid, editor, options, ko, masterpage, pages, antiXss, pageProperties) {
         'use strict';
 
         var template = {},
@@ -27,6 +53,7 @@ bettercms.define('bcms.pages.template', ['bcms.jquery', 'bcms', 'bcms.modal', 'b
             selectors = {
                 templatePreviewImageUrl: '#PreviewImageUrl',
                 templatePreviewImage: '#bcms-template-preview-image',
+                templateNoImagePreview: '#bcms-template-no-preview',
                 htmlContentTemplateRowTemplate: '#bcms-advanced-content-list-row-template',
                 htmlContentTemplateRowTemplateFirstRow: 'tr:first',
                 htmlContentTemplateTableFirstRow: 'table.bcms-tables > tbody > tr:first',
@@ -37,11 +64,12 @@ bettercms.define('bcms.pages.template', ['bcms.jquery', 'bcms', 'bcms.modal', 'b
                 templateSearchField: '.bcms-search-query',
 
                 templateRegisterButton: '#bcms-register-template-button',
+                templateCreateButton: '#bcms-create-page-button',
                 templateRowEditButtons: '.bcms-grid-item-edit-button',
 
                 templatesRowDeleteButtons: '.bcms-grid-item-delete-button',
                 templatesRowDeleteMessage: '.bcms-grid-item-message',
-                templatesRowUsageLinks: '.bcms-template-usage',
+                templatesRowUsageLinks: '.bcms-action-usage',
                 templatesRowDeleteElementsToHide: '.bcms-grid-item-delete-button, .bcms-grid-item-edit-button',
                 templateParentRow: 'tr:first',
                 templateNameCell: '.bcms-template-name',
@@ -57,7 +85,10 @@ bettercms.define('bcms.pages.template', ['bcms.jquery', 'bcms', 'bcms.modal', 'b
                 regionsTable: '#bcms-regions-grid',
                 regionsTab: '#bcms-tab-2',
                 
-                optionsTab: '#bcms-tab-3'
+                optionsTab: '#bcms-tab-3',
+                
+                siteSettingsButtonOpener: ".bcms-btn-opener",
+                siteSettingsButtonHolder: ".bcms-btn-opener-holder"
             };
 
         /**
@@ -147,31 +178,38 @@ bettercms.define('bcms.pages.template', ['bcms.jquery', 'bcms', 'bcms.modal', 'b
             ko.applyBindings(optionListViewModel, optionsContainer.get(0));
 
             dialog.container.find(selectors.templatePreviewImage).error(function () {
-                var image = dialog.container.find(selectors.templatePreviewImage);
+                var image = dialog.container.find(selectors.templatePreviewImage),
+                    noPreviewGrid = dialog.container.find(selectors.templateNoImagePreview);
+                noPreviewGrid.show();
                 if (image.attr("src") != null && image.attr("src") != "") {
                     messages.box({ container: dialog.container.find(selectors.messagesContainer) }).addWarningMessage(globalization.previewImageNotFoundMessage);
-                    image.parent().hide();
+                    image.hide();
                     image.removeAttr("src");
                 }
             });
 
             dialog.container.find(selectors.templatePreviewImageUrl).blur(function () {
                 var image = dialog.container.find(selectors.templatePreviewImage),
-                    urlInput = dialog.container.find(selectors.templatePreviewImageUrl);
+                    urlInput = dialog.container.find(selectors.templatePreviewImageUrl),
+                    noPreviewGrid = dialog.container.find(selectors.templateNoImagePreview);
 
                 if (urlInput.valid()) {
                     image.attr({ src: urlInput.val() });
-                    image.parent().show();
+                    noPreviewGrid.hide();
+                    image.show();
                 } else {
                     image.hide();
-                    image.parent().removeAttr("src");
+                    noPreviewGrid.show();
+                    image.removeAttr("src");
                 }
             });
             
             // IE fix: by default, while loading, picture is hidden
-            var previewImage = dialog.container.find(selectors.templatePreviewImage);
+            var previewImage = dialog.container.find(selectors.templatePreviewImage),
+                noPreviewGrid = dialog.container.find(selectors.templateNoImagePreview);
             if (previewImage.attr('src')) {
-                previewImage.parent().show();
+                noPreviewGrid.hide();
+                previewImage.show();
             }
 
             return optionListViewModel;
@@ -234,24 +272,15 @@ bettercms.define('bcms.pages.template', ['bcms.jquery', 'bcms', 'bcms.modal', 'b
         * Opens site settings template list dialog
         */
         template.loadSiteSettingsTemplateList = function () {
-            var tabs = [],
-                onShow = function (container) {
-                    var firstVisibleInputField = container.find('input[type=text],textarea,select').filter(':visible:first');
-                    if (firstVisibleInputField) {
-                        firstVisibleInputField.focus();
-                    }
-                };
-            var templates = new siteSettings.TabViewModel(globalization.templatesTabTitle, links.loadSiteSettingsTemplateListUrl, initializeTemplatesList, onShow);
-            tabs.push(templates);
-            var masterPages = new siteSettings.TabViewModel(masterpage.globalization.masterPagesTabTitle, masterpage.links.loadMasterPagesListUrl, masterpage.initializeMasterPagesList, onShow);
-            tabs.push(masterPages);
-            siteSettings.initContentTabs(tabs);
+            dynamicContent.bindSiteSettings(siteSettings, links.loadSiteSettingsTemplateListUrl, {
+                contentAvailable: initializeTemplatesList
+            });
         };
 
         /**
         * Initializes site settings template list and list items
         */
-        function initializeTemplatesList() {
+        function initializeTemplatesList(isSearchResult) {
             var dialog = siteSettings.getModalDialog(),
                 container = dialog.container.find(selectors.siteSettingsTemplatesListForm),
                 onTemplateCreated = function (json) {
@@ -279,12 +308,44 @@ bettercms.define('bcms.pages.template', ['bcms.jquery', 'bcms', 'bcms.modal', 'b
             });
 
             form.find(selectors.templateSearchButton).on('click', function () {
-                searchTemplates(form, container);
+                var parent = $(this).parent();
+                if (!parent.hasClass('bcms-active-search')) {
+                    form.find(selectors.templateSearchField).prop('disabled', false);
+                    parent.addClass('bcms-active-search');
+                    form.find(selectors.templateSearchField).focus();
+                } else {
+                    form.find(selectors.templateSearchField).prop('disabled', true);
+                    parent.removeClass('bcms-active-search');
+                    form.find(selectors.templateSearchField).val('');
+                }
+            });
+
+            form.find(selectors.siteSettingsButtonOpener).on('click', function (event) {
+                bcms.stopEventPropagation(event);
+                var holder = form.find(selectors.siteSettingsButtonHolder);
+                if (!holder.hasClass('bcms-opened')) {
+                    holder.addClass('bcms-opened');
+                } else {
+                    holder.removeClass('bcms-opened');
+                }
+            });
+
+            bcms.on(bcms.events.bodyClick, function (event) {
+                var holder = form.find(selectors.siteSettingsButtonHolder);
+                if (holder.hasClass('bcms-opened')) {
+                    holder.removeClass('bcms-opened');
+                }
             });
 
             container.find(selectors.templateRegisterButton).on('click', function () {
                 template.openRegisterTemplateDialog(onTemplateCreated);
             });
+
+            if (isSearchResult === true) {
+                form.find(selectors.templateSearchButton).parent().addClass('bcms-active-search');
+            } else {
+                form.find(selectors.templateSearchField).prop('disabled', true);
+            }
 
             initializeTemplateListEvents(container);
 
@@ -298,7 +359,7 @@ bettercms.define('bcms.pages.template', ['bcms.jquery', 'bcms', 'bcms.modal', 'b
         function searchTemplates(form, container) {
             grid.submitGridForm(form, function (htmlContent) {
                 container.html(htmlContent);
-                initializeTemplatesList();
+                initializeTemplatesList(true);
             });
         };
 
@@ -306,8 +367,14 @@ bettercms.define('bcms.pages.template', ['bcms.jquery', 'bcms', 'bcms.modal', 'b
         * Initializes site settings template list items.
         */
         function initializeTemplateListEvents(container) {
-            container.find(selectors.templateRowEditButtons).on('click', function () {
-                editTemplate(container, $(this));
+            container.find(selectors.templateRowEditButtons).on('click', function (event) {
+                var url = $(this).data('url');
+                if (url) {
+                    bcms.stopEventPropagation(event);
+                    window.open(url);
+                } else {
+                    editTemplate(container, $(this));
+                }
             });
 
             container.find(selectors.templatesRowDeleteButtons).on('click', function () {
@@ -319,6 +386,10 @@ bettercms.define('bcms.pages.template', ['bcms.jquery', 'bcms', 'bcms.modal', 'b
 
                 filterPagesByTemplate($(this));
             });
+
+            container.find(selectors.templateCreateButton).on('click', function () {
+                addMasterPage(container);
+            });
         };
 
         /**
@@ -326,40 +397,98 @@ bettercms.define('bcms.pages.template', ['bcms.jquery', 'bcms', 'bcms.modal', 'b
         */
         function editTemplate(container, self) {
             var row = self.parents(selectors.templateParentRow),
-                id = row.data('id');
+                id = row.data('id'),
+                isMasterPage = row.data('ismasterpage');
 
-            template.editTemplate(id, function (data) {
-                if (data.Data != null) {
-                    setTemplateFields(row, data);
-                    grid.showHideEmptyRow(container);
-                }
-            });
+            if (isMasterPage == 0) {
+
+                template.editTemplate(id, function(data) {
+                    if (data.Data != null) {
+                        setTemplateFields(row, data);
+                        grid.showHideEmptyRow(container);
+                    }
+                });
+
+            } else {
+                editMasterPage(row, container, function (data) {
+                    if (data.Data != null) {
+                        setMasterPageFields(row, data);
+                        grid.showHideEmptyRow(container);
+                    }
+                });
+            }
         };
 
         /**
         * Deletes template from site settings template list.
         */
         function deleteTemplates(container, self) {
-            var row = self.parents(selectors.templateParentRow);
+            var row = self.parents(selectors.templateParentRow),
+                isMasterPage = row.data('ismasterpage');
 
-            template.deleteTemplate(row, function (data) {
-                messages.refreshBox(row, data);
-                if (data.Success) {
-                    row.remove();
-                    grid.showHideEmptyRow(container);
-                }
-            });
+            if (isMasterPage == 1) {
+                deleteMasterPage(row, container);
+            } else {
+                template.deleteTemplate(row, function(data) {
+                    messages.refreshBox(row, data);
+                    if (data.Success) {
+                        row.remove();
+                        grid.showHideEmptyRow(container);
+                    }
+                });
+            }
         };
 
         /*
         * Opens pages list, filtered by template
         */
         function filterPagesByTemplate(self) {
+            var row = self.parents(selectors.templateParentRow),
+                id = row.data('id'),
+                isMasterPage = row.data('ismasterpage');
+
+            if (isMasterPage == 1) {
+                filterPagesByMasterPage(row);
+            } else {
+                pages.openPageSelectDialog({
+                    params: {
+                        Layout: 'l-' + id
+                    },
+                    canBeSelected: false,
+                    title: pages.globalization.pagesListTitle,
+                    disableAccept: true
+                });
+            }
+        }
+
+
+        function addMasterPage(container) {
+            var onCreated = function(json) {
+                if (json.Data != null) {
+                    var rowtemplate = $(selectors.templateRowTemplate),
+                        newRow = $(rowtemplate.html()).find(selectors.templateRowTemplateFirstRow);
+                    setMasterPageFields(newRow, json);
+                    messages.refreshBox(selectors.templatesListForm, json);
+                    newRow.insertBefore($(selectors.templateTableFirstRow, container));
+                    initializeTemplateListEvents(newRow);
+                    grid.showHideEmptyRow(container);
+                }
+            };
+            pages.openCreatePageDialog(onCreated, true);
+        };
+
+        function editMasterPage(self, container, postSuccess) {
+            var id = self.data('id');
+
+            pageProperties.openEditPageDialog(id, postSuccess, globalization.editMasterPagePropertiesModalTitle);
+        };
+
+        function filterPagesByMasterPage(self) {
             var id = self.data('id');
 
             pages.openPageSelectDialog({
                 params: {
-                    Layout: 'l-' + id
+                    Layout: 'm-' + id
                 },
                 canBeSelected: false,
                 title: pages.globalization.pagesListTitle,
@@ -367,14 +496,35 @@ bettercms.define('bcms.pages.template', ['bcms.jquery', 'bcms', 'bcms.modal', 'b
             });
         }
 
+        function deleteMasterPage(self, container) {
+            var id = self.data('id');
+
+            pages.deletePage(id, function (json) {
+                messages.refreshBox(self, json);
+                if (json.Success) {
+                    self.remove();
+                    grid.showHideEmptyRow(container);
+                }
+            });
+        };
+
         /**
         * Set values, returned from server to row fields
         */
         function setTemplateFields(row, json) {
             row.data('id', json.Data.Id);
             row.data('version', json.Data.Version);
+            row.data('ismasterpage', 0);
             row.find(selectors.templateNameCell).html(antiXss.encodeHtml(json.Data.TemplateName));
         };
+
+        function setMasterPageFields(row, json) {
+            row.data('id', json.Data.PageId);
+            row.data('version', json.Data.Version);
+            row.data('ismasterpage', 1);
+            row.find(selectors.templateNameCell).html(antiXss.encodeHtml(json.Data.Title));
+            row.find(selectors.templateNameCell).data('url',json.Data.PageUrl);
+        }
 
         return template;
     });

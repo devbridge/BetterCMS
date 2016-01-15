@@ -28,25 +28,25 @@ namespace ASP
     using System.Web.UI;
     using System.Web.WebPages;
     
-    #line 1 "..\..\Views\Language\List.cshtml"
+    #line 28 "..\..\Views\Language\List.cshtml"
     using BetterCms.Module.Root;
     
     #line default
     #line hidden
     
-    #line 2 "..\..\Views\Language\List.cshtml"
+    #line 29 "..\..\Views\Language\List.cshtml"
     using BetterCms.Module.Root.Content.Resources;
     
     #line default
     #line hidden
     
-    #line 3 "..\..\Views\Language\List.cshtml"
+    #line 30 "..\..\Views\Language\List.cshtml"
     using BetterCms.Module.Root.Mvc.Grids;
     
     #line default
     #line hidden
     
-    #line 4 "..\..\Views\Language\List.cshtml"
+    #line 31 "..\..\Views\Language\List.cshtml"
     using BetterCms.Module.Root.ViewModels.Shared;
     
     #line default
@@ -63,41 +63,56 @@ namespace ASP
         {
 WriteLiteral("\r\n");
 
+WriteLiteral("\r\n<div");
+
+WriteLiteral(" class=\"bcms-window-settings\"");
+
+WriteLiteral(">\r\n");
+
             
-            #line 6 "..\..\Views\Language\List.cshtml"
-  
-    var gridViewModel = new EditableGridViewModel
-    {
-        ShowMessages = true,
-        TopBlockTitle = RootGlobalization.SiteSettings_Languages_Title,
-        Columns = new List<EditableGridColumn>
+            #line 34 "..\..\Views\Language\List.cshtml"
+    
+            
+            #line default
+            #line hidden
+            
+            #line 34 "..\..\Views\Language\List.cshtml"
+      
+        var gridViewModel = new EditableGridViewModel
+        {
+            ShowMessages = true,
+            TopBlockTitle = RootGlobalization.SiteSettings_Languages_Title,
+            Columns = new List<EditableGridColumn>
             {
                 new EditableGridColumn(RootGlobalization.SiteSettings_Languages_Code_Title, "Code", "code")
                     {
                         CustomBinding = "autocomplete: 'onlyExisting', attr: {tabindex: 50}",
-                        HeaderAttributes = "style=\"width: 200px;\"",
                         FocusIdentifier = "hasFocus"
                     },
                 new EditableGridColumn(RootGlobalization.SiteSettings_Languages_Name_Title, "Name", "name")
                     {
                         CustomBinding = "attr: {tabindex: 100}",
                         FocusIdentifier = "hasNameFocus"
-                    }  
+                    }
             }
-    };
-
+        };
+    
             
             #line default
             #line hidden
 WriteLiteral("\r\n\r\n");
 
+WriteLiteral("    ");
+
             
-            #line 28 "..\..\Views\Language\List.cshtml"
+            #line 55 "..\..\Views\Language\List.cshtml"
 Write(Html.Partial(RootModuleConstants.EditableGridTemplate, gridViewModel));
 
             
             #line default
             #line hidden
+WriteLiteral("\r\n</div>");
+
         }
     }
 }

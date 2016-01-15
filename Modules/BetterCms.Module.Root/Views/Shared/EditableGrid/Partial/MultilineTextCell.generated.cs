@@ -28,7 +28,7 @@ namespace ASP
     using System.Web.UI;
     using System.Web.WebPages;
     
-    #line 1 "..\..\Views\Shared\EditableGrid\Partial\MultilineTextCell.cshtml"
+    #line 28 "..\..\Views\Shared\EditableGrid\Partial\MultilineTextCell.cshtml"
     using BetterCms.Module.Root.Mvc.Grids;
     
     #line default
@@ -43,10 +43,12 @@ namespace ASP
         }
         public override void Execute()
         {
+WriteLiteral("\r\n");
+
 WriteLiteral("<td ");
 
             
-            #line 4 "..\..\Views\Shared\EditableGrid\Partial\MultilineTextCell.cshtml"
+            #line 31 "..\..\Views\Shared\EditableGrid\Partial\MultilineTextCell.cshtml"
 Write(Html.Raw(Model.Attributes));
 
             
@@ -54,55 +56,51 @@ Write(Html.Raw(Model.Attributes));
             #line hidden
 WriteLiteral(">\r\n    <div");
 
-WriteLiteral(" class=\"bcms-input-box\"");
+WriteLiteral(" class=\"bcms-field-wrapper\"");
 
-WriteLiteral(">\r\n        <a");
+WriteLiteral(">\r\n        <div");
 
 WriteLiteral(" class=\"bcms-tables-link\"");
 
-WriteLiteral(" data-bind=\"\r\n           text: getCroppedText(");
+WriteLiteral(" data-bind=\"text: getCroppedText(");
 
             
-            #line 7 "..\..\Views\Shared\EditableGrid\Partial\MultilineTextCell.cshtml"
-                            Write(Model.ValueBind);
-
-            
-            #line default
-            #line hidden
-WriteLiteral("()) \r\n");
-
-WriteLiteral("           ");
-
-            
-            #line 8 "..\..\Views\Shared\EditableGrid\Partial\MultilineTextCell.cshtml"
-       Write(!string.IsNullOrEmpty(Model.FocusIdentifier) ? string.Format(", click: onItemSelect.bind($data, {0})", Model.FocusIdentifier) : string.Empty);
+            #line 33 "..\..\Views\Shared\EditableGrid\Partial\MultilineTextCell.cshtml"
+                                                                  Write(Model.ValueBind);
 
             
             #line default
             #line hidden
-WriteLiteral("\r\n");
-
-WriteLiteral("           ");
+WriteLiteral("()) ");
 
             
-            #line 9 "..\..\Views\Shared\EditableGrid\Partial\MultilineTextCell.cshtml"
-       Write(Model.CanBeEdited ? string.Format(", visible: !isActive() || ({0}.editingIsDisabled && {0}.editingIsDisabled())", Model.ValueBind) : string.Empty);
+            #line 33 "..\..\Views\Shared\EditableGrid\Partial\MultilineTextCell.cshtml"
+                                                                                        Write(!string.IsNullOrEmpty(Model.FocusIdentifier) ? string.Format(", click: onItemSelect.bind($data, {0})", Model.FocusIdentifier) : string.Empty);
 
             
             #line default
             #line hidden
-WriteLiteral("\r\n        \"");
-
-WriteLiteral("></a>\r\n");
+WriteLiteral(" ");
 
             
-            #line 11 "..\..\Views\Shared\EditableGrid\Partial\MultilineTextCell.cshtml"
+            #line 33 "..\..\Views\Shared\EditableGrid\Partial\MultilineTextCell.cshtml"
+                                                                                                                                                                                                                                        Write(Model.CanBeEdited ? string.Format(", visible: !isActive() || ({0}.editingIsDisabled && {0}.editingIsDisabled())", Model.ValueBind) : string.Empty);
+
+            
+            #line default
+            #line hidden
+WriteLiteral("\"");
+
+WriteLiteral("></div>\r\n");
+
+            
+            #line 34 "..\..\Views\Shared\EditableGrid\Partial\MultilineTextCell.cshtml"
         
             
             #line default
             #line hidden
             
-            #line 11 "..\..\Views\Shared\EditableGrid\Partial\MultilineTextCell.cshtml"
+            #line 34 "..\..\Views\Shared\EditableGrid\Partial\MultilineTextCell.cshtml"
          if (Model.CanBeEdited)
         {
 
@@ -111,13 +109,13 @@ WriteLiteral("></a>\r\n");
             #line hidden
 WriteLiteral("            <textarea");
 
-WriteLiteral(" class=\"bcms-editor-field-area\"");
+WriteLiteral(" class=\"bcms-field-textarea\"");
 
-WriteLiteral(" data-bind=\"\r\n                css: { \'bcms-input-validation-error\': !isNew() && ");
+WriteLiteral(" data-bind=\"css: { \'bcms-input-validation-error\': !isNew() && ");
 
             
-            #line 14 "..\..\Views\Shared\EditableGrid\Partial\MultilineTextCell.cshtml"
-                                                              Write(Model.ValueBind);
+            #line 36 "..\..\Views\Shared\EditableGrid\Partial\MultilineTextCell.cshtml"
+                                                                                                           Write(Model.ValueBind);
 
             
             #line default
@@ -125,72 +123,73 @@ WriteLiteral(" data-bind=\"\r\n                css: { \'bcms-input-validation-er
 WriteLiteral(".hasError && ");
 
             
-            #line 14 "..\..\Views\Shared\EditableGrid\Partial\MultilineTextCell.cshtml"
-                                                                                             Write(Model.ValueBind);
+            #line 36 "..\..\Views\Shared\EditableGrid\Partial\MultilineTextCell.cshtml"
+                                                                                                                                          Write(Model.ValueBind);
 
             
             #line default
             #line hidden
-WriteLiteral(".hasError() },\r\n                value: ");
+WriteLiteral(".hasError() }, value: ");
 
             
-            #line 15 "..\..\Views\Shared\EditableGrid\Partial\MultilineTextCell.cshtml"
-                  Write(Model.ValueBind);
-
-            
-            #line default
-            #line hidden
-WriteLiteral(", \r\n                valueUpdate: \'afterkeydown\', \r\n                escPress: onCa" +
-"ncelEdit, \r\n                afterRender: initInput($element, ");
-
-            
-            #line 18 "..\..\Views\Shared\EditableGrid\Partial\MultilineTextCell.cshtml"
-                                            Write(Model.ValueBind);
+            #line 36 "..\..\Views\Shared\EditableGrid\Partial\MultilineTextCell.cshtml"
+                                                                                                                                                                                 Write(Model.ValueBind);
 
             
             #line default
             #line hidden
-WriteLiteral(")\r\n");
-
-WriteLiteral("                ");
-
-            
-            #line 19 "..\..\Views\Shared\EditableGrid\Partial\MultilineTextCell.cshtml"
-            Write(!string.IsNullOrWhiteSpace(Model.CustomBinding) ? string.Format(", {0}", Model.CustomBinding) : string.Empty);
+WriteLiteral(", valueUpdate: \'afterkeydown\', escPress: onCancelEdit, afterRender: initInput($el" +
+"ement, ");
 
             
-            #line default
-            #line hidden
-WriteLiteral("\r\n");
-
-WriteLiteral("                ");
-
-            
-            #line 20 "..\..\Views\Shared\EditableGrid\Partial\MultilineTextCell.cshtml"
-            Write(!string.IsNullOrEmpty(Model.FocusIdentifier) ? string.Format(", hasfocus: {0}", Model.FocusIdentifier) : string.Empty);
+            #line 36 "..\..\Views\Shared\EditableGrid\Partial\MultilineTextCell.cshtml"
+                                                                                                                                                                                                                                                                                         Write(Model.ValueBind);
 
             
             #line default
             #line hidden
-WriteLiteral("\r\n");
-
-WriteLiteral("                ");
+WriteLiteral(") ");
 
             
-            #line 21 "..\..\Views\Shared\EditableGrid\Partial\MultilineTextCell.cshtml"
-            Write(string.Format(", visible: isActive() && (!{0}.editingIsDisabled || !{0}.editingIsDisabled())", Model.ValueBind));
+            #line 36 "..\..\Views\Shared\EditableGrid\Partial\MultilineTextCell.cshtml"
+                                                                                                                                                                                                                                                                                                            Write(!string.IsNullOrWhiteSpace(Model.CustomBinding) ? string.Format(", {0}", Model.CustomBinding) : string.Empty);
 
             
             #line default
             #line hidden
-WriteLiteral("\r\n                \"");
+WriteLiteral(" ");
+
+            
+            #line 36 "..\..\Views\Shared\EditableGrid\Partial\MultilineTextCell.cshtml"
+                                                                                                                                                                                                                                                                                                                                                                                                                            Write(!string.IsNullOrEmpty(Model.FocusIdentifier) ? string.Format(", hasfocus: {0}", Model.FocusIdentifier) : string.Empty);
+
+            
+            #line default
+            #line hidden
+WriteLiteral(" ");
+
+            
+            #line 36 "..\..\Views\Shared\EditableGrid\Partial\MultilineTextCell.cshtml"
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                     Write(string.Format(", visible: isActive() && (!{0}.editingIsDisabled || !{0}.editingIsDisabled())", Model.ValueBind));
+
+            
+            #line default
+            #line hidden
+WriteLiteral("\"");
 
 WriteLiteral("></textarea>\r\n");
 
+            
+            #line 37 "..\..\Views\Shared\EditableGrid\Partial\MultilineTextCell.cshtml"
+            
+
+            
+            #line default
+            #line hidden
 WriteLiteral("            <!-- ko if: !isNew() &&  ");
 
             
-            #line 23 "..\..\Views\Shared\EditableGrid\Partial\MultilineTextCell.cshtml"
+            #line 38 "..\..\Views\Shared\EditableGrid\Partial\MultilineTextCell.cshtml"
                                  Write(Model.ValueBind);
 
             
@@ -199,7 +198,7 @@ WriteLiteral("            <!-- ko if: !isNew() &&  ");
 WriteLiteral(".hasError && ");
 
             
-            #line 23 "..\..\Views\Shared\EditableGrid\Partial\MultilineTextCell.cshtml"
+            #line 38 "..\..\Views\Shared\EditableGrid\Partial\MultilineTextCell.cshtml"
                                                                 Write(Model.ValueBind);
 
             
@@ -216,7 +215,7 @@ WriteLiteral(">\r\n                <span");
 WriteLiteral(" data-bind=\"html: ");
 
             
-            #line 25 "..\..\Views\Shared\EditableGrid\Partial\MultilineTextCell.cshtml"
+            #line 40 "..\..\Views\Shared\EditableGrid\Partial\MultilineTextCell.cshtml"
                                    Write(Model.ValueBind);
 
             
@@ -229,7 +228,7 @@ WriteLiteral("></span>\r\n            </span>\r\n");
 WriteLiteral("            <!-- /ko -->\r\n");
 
             
-            #line 28 "..\..\Views\Shared\EditableGrid\Partial\MultilineTextCell.cshtml"
+            #line 43 "..\..\Views\Shared\EditableGrid\Partial\MultilineTextCell.cshtml"
         }
 
             

@@ -1,42 +1,56 @@
-﻿@using BetterCms.Module.Root.Content.Resources
-@model IList<BetterCms.Module.Pages.ViewModels.Page.TemplateViewModel> 
-@helper Templates(IList<BetterCms.Module.Pages.ViewModels.Page.TemplateViewModel> model)
-{
-    if (model != null && model.Count > 0)
-    {
-        @Html.Raw("<div class=\"bcms-grid-holder\">")
+﻿@* --------------------------------------------------------------------------------------------------------------------
+// <copyright file="TemplatesList.cshtml" company="Devbridge Group LLC">
+// 
+// Copyright (C) 2015,2016 Devbridge Group LLC
+// 
+// This program is free software: you can redistribute it and/or modify
+// it under the terms of the GNU Lesser General Public License as published by
+// the Free Software Foundation, either version 3 of the License, or
+// (at your option) any later version.
+// 
+// This program is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU General Public License for more details.
+// 
+// You should have received a copy of the GNU Lesser General Public License
+// along with this program.  If not, see http://www.gnu.org/licenses/. 
+// </copyright>
+// 
+// <summary>
+// Better CMS is a publishing focused and developer friendly .NET open source CMS.
+// 
+// Website: https://www.bettercms.com 
+// GitHub: https://github.com/devbridge/bettercms
+// Email: info@bettercms.com
+// </summary>
+// -------------------------------------------------------------------------------------------------------------------- *@
+<div class="bcms-templates-holder" data-bind="foreach: templatesList.displayedTemplates">
+    <div class="bcms-grid-box bcms-grid-box-pages bcms-js-grid-box" data-bind="css: { 'bcms-grid-box-active': isActive, 'bcms-grid-box-notcompatible': isCircularToCurrent }">
+        <div class="bcms-content-titles" data-bind="text: title"></div>
 
-        for (var i = 0; i < model.Count; i++)
-        {
-            if (i % 3 == 0 && i != 0)
-            {
-                @Html.Raw("</div>")
-                @Html.Raw("<div class=\"bcms-grid-holder\">")
-            }
+        <div class="bcms-grid-image-holder">
+            <!-- ko if: previewThumbnailUrl || previewUrl -->
+            <div class="bcms-grid-image">
+                <img data-bind="attr: { src: previewThumbnailUrl || previewUrl, alt: title }" />
+            </div>
 
-            @Html.Partial("Partial/Template", model[i])
-        }
+            <div class="bcms-zoom-overlay bcms-preview-template" data-bind="click: previewImage"></div>}
+            <!-- /ko -->
+            <!-- ko ifnot: previewThumbnailUrl || previewUrl -->
+            <svg class="bcms-grid-no-preview" viewBox="-237.5 336 138 121.5" enable-background="new -237.5 336 138 121.5">
+                <path d="m-237 336h137v4h-137v-4" fill="#e6e6e6" />
+                <g fill="#fff" stroke="#d7d4d4" stroke-linecap="square">
+                    <path d="m-237 404h43v27h-43v-27z" />
+                    <path d="m-190 404h43v27h-43v-27z" />
+                    <path d="m-237 437h137v20h-137v-20z" />
+                    <path d="m-143 404h43v27h-43v-27z" />
+                    <path d="m-237 345h137v53h-137v-53z" />
+                </g>
+            </svg>
+            <!-- /ko -->
+        </div>
 
-        @Html.Raw("</div>")
-    }
-    else
-    {
-        <p>@Html.Raw(RootGlobalization.Message_NoItemToSelect)</p>
-    }
-}
-@{
-    var active = Model.FirstOrDefault(m => m.IsActive);
-    var selectFirstTab = active == null || !active.IsMasterPage;
-}
-<div class="bcms-inner-tabs-holder">
-    <div class="bcms-tab-header bcms-tab-header-inner">
-        <a class="bcms-tab-item @(selectFirstTab ? "bcms-active" : string.Empty)" data-name="#bcms-tab-a">Templates</a>
-        <a class="bcms-tab-item @(!selectFirstTab ? "bcms-active" : string.Empty)" data-name="#bcms-tab-b">Master Pages</a>
-    </div>
-    <div id="bcms-tab-a" class="bcms-tab-single" style="display: @(selectFirstTab ? "block" : "none");padding-top: 15px;">
-        @Templates(Model.Where(m => !m.IsMasterPage).ToList())
-    </div>
-    <div id="bcms-tab-b" class="bcms-tab-single" style="display: @(!selectFirstTab ? "block" : "none");padding-top: 15px;">
-        @Templates(Model.Where(m => m.IsMasterPage).ToList())
+        <div class="bcms-btn-selection bcms-js-grid-box" data-bind="click: $root.templatesList.setActive">Select</div>
     </div>
 </div>

@@ -1,4 +1,31 @@
-﻿using System;
+﻿// --------------------------------------------------------------------------------------------------------------------
+// <copyright file="DefaultBlogService.cs" company="Devbridge Group LLC">
+// 
+// Copyright (C) 2015,2016 Devbridge Group LLC
+// 
+// This program is free software: you can redistribute it and/or modify
+// it under the terms of the GNU Lesser General Public License as published by
+// the Free Software Foundation, either version 3 of the License, or
+// (at your option) any later version.
+// 
+// This program is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU General Public License for more details.
+// 
+// You should have received a copy of the GNU Lesser General Public License
+// along with this program.  If not, see http://www.gnu.org/licenses/. 
+// </copyright>
+// 
+// <summary>
+// Better CMS is a publishing focused and developer friendly .NET open source CMS.
+// 
+// Website: https://www.bettercms.com 
+// GitHub: https://github.com/devbridge/bettercms
+// Email: info@bettercms.com
+// </summary>
+// --------------------------------------------------------------------------------------------------------------------
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Security.Principal;
@@ -35,10 +62,13 @@ using BetterCms.Module.Root.ViewModels.Option;
 
 using Common.Logging;
 
+using FluentNHibernate.Conventions;
+
 using NHibernate.Criterion;
 using NHibernate.Linq;
 
 using RootOptionService = BetterCms.Module.Root.Services.IOptionService;
+using ConfigurationHelper = BetterCms.Module.Blog.Helpers.ConfigurationHelper;
 
 namespace BetterCms.Module.Blog.Services
 {
@@ -218,7 +248,7 @@ namespace BetterCms.Module.Blog.Services
                 if (level < AccessLevel.Read)
                 {
                     var message = BlogGlobalization.SaveBlogPost_FailedToSave_InaccessibleMasterPage;
-                    const string logMessage = "Failed to save blog post. Selected master page for page layout is inaccessible.";
+                    const string logMessage = "Failed to save blog post. Selected template for page layout is inaccessible.";
                     throw new ValidationException(() => message, logMessage);
                 }
             }
@@ -380,6 +410,13 @@ namespace BetterCms.Module.Blog.Services
                 categoryService.CombineEntityCategories<BlogPost, PageCategory>(blogPost, request.Categories);
             }
 
+            var oldLanguageId = blogPost.Language != null ? blogPost.Language.Id : (Guid?)null;
+            var newLanguageId = request.LanguageId;
+            if (oldLanguageId != newLanguageId)
+            {
+                blogPost.Language = request.LanguageId.HasValue ? repository.AsProxy<Language>(request.LanguageId.Value) : null;
+            }
+
             repository.Save(blogPost);
             repository.Save(content);
             repository.Save(pageContent);
@@ -393,6 +430,11 @@ namespace BetterCms.Module.Blog.Services
             if (userCanEdit)
             {
                 newTags = SaveTags(blogPost, request);
+            }
+
+            if (userCanEdit && ConfigurationHelper.IsFillSeoDataFromArticlePropertiesEnabled(configuration))
+            {
+                FillMetaInfo(blogPost);
             }
 
             // Commit
@@ -644,7 +686,7 @@ namespace BetterCms.Module.Blog.Services
         /// </returns>
         public NHibernate.IQueryOver<BlogPost, BlogPost> GetFilteredBlogPostsQuery(ViewModels.Filter.BlogsFilter request, bool joinContents = false)
         {
-            request.SetDefaultSortingOptions("Title");
+            request.SetDefaultSortingOptions("CreatedOn", true);
 
             BlogPost alias = null;
 
@@ -761,6 +803,31 @@ namespace BetterCms.Module.Blog.Services
             }
 
             return query;
+        }
+
+        private void FillMetaInfo(BlogPost blogPost)
+        {
+            if (string.IsNullOrEmpty(blogPost.MetaDescription) && !string.IsNullOrEmpty(blogPost.Description))
+            {
+                blogPost.MetaDescription = blogPost.Description;
+            }
+
+            if (string.IsNullOrEmpty(blogPost.MetaKeywords))
+            {
+                if (blogPost.PageTags != null && blogPost.PageTags.IsNotEmpty())
+                {
+                    blogPost.MetaKeywords += string.Join(", ", blogPost.PageTags.Select(x => x.Tag).Select(y => y.Name).ToList());
+                }
+
+                if (blogPost.Categories != null && blogPost.Categories.IsNotEmpty())
+                {
+                    if (!string.IsNullOrEmpty(blogPost.MetaKeywords))
+                    {
+                        blogPost.MetaKeywords += ", ";
+                    }
+                    blogPost.MetaKeywords += string.Join(", ", blogPost.Categories.Select(x => x.Category).Select(y => y.Name).ToList());
+                }
+            }
         }
     }
 }

@@ -169,7 +169,7 @@
     <value>Upload file</value>
   </data>
   <data name="FileUpload_Failed_ImageFormatNotSuported" xml:space="preserve">
-    <value>Failed! Can upload only gif, jpg, jpeg, png or bmp.</value>
+    <value>Failed! Can upload only gif, jpg, jpeg, png, bmp or svg.</value>
   </data>
   <data name="ImageEditor_CroppingDialog_SubTitle" xml:space="preserve">
     <value>Select area to crop.</value>
@@ -674,5 +674,8 @@
   </data>
   <data name="DeleteFolder_DeletedError_Message" xml:space="preserve">
     <value>Failed to delete folder. Some of folder items can not be removed.</value>
+  </data>
+    <data name="MediaManager_Menu" xml:space="preserve">
+    <value>Menu</value>
   </data>
 </root>

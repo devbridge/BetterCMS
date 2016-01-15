@@ -1,0 +1,104 @@
+﻿@* --------------------------------------------------------------------------------------------------------------------
+// <copyright file="MediaManagerFilterTemplate.cshtml" company="Devbridge Group LLC">
+// 
+// Copyright (C) 2015,2016 Devbridge Group LLC
+// 
+// This program is free software: you can redistribute it and/or modify
+// it under the terms of the GNU Lesser General Public License as published by
+// the Free Software Foundation, either version 3 of the License, or
+// (at your option) any later version.
+// 
+// This program is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU General Public License for more details.
+// 
+// You should have received a copy of the GNU Lesser General Public License
+// along with this program.  If not, see http://www.gnu.org/licenses/. 
+// </copyright>
+// 
+// <summary>
+// Better CMS is a publishing focused and developer friendly .NET open source CMS.
+// 
+// Website: https://www.bettercms.com 
+// GitHub: https://github.com/devbridge/bettercms
+// Email: info@bettercms.com
+// </summary>
+// -------------------------------------------------------------------------------------------------------------------- *@
+@using BetterCms.Module.MediaManager.Content.Resources
+@using BetterCms.Module.Root.Content.Resources
+@model BetterCms.Module.MediaManager.ViewModels.MediaManager.MediaViewModel
+
+<div class="bcms-filter-holder">
+    <div class="bcms-grid-filtering" data-bind="css: { 'bcms-active-filter': gridOptions().isFilterVisible() }">
+        <div class="bcms-filterbox" data-bind="click: gridOptions().toggleFilter">
+            @RootGlobalization.Button_Filter
+            <div class="bcms-filter-modified" data-bind="style: { display: gridOptions().isEdited() ? 'inline-block' : 'none' }">@MediaGlobalization.SiteSettings_Media_FilterIsModified</div>
+        </div>
+    </div>
+
+    <div class="bcms-filter-selection-block" style="display: none;" data-bind="visible: gridOptions().isFilterVisible()">
+        <div class="bcms-filter-controls">
+            <div class="bcms-clearfix">
+                <div class="bcms-filter-options" data-bind="with: gridOptions().tags">
+                    <div class="bcms-filter-text">@MediaGlobalization.SiteSettings_FilterByTags</div>
+                    <div class="bcms-field-wrapper">
+                        <input type="text" class="bcms-field-text" data-bind="
+                                    css: { 'bcms-input-validation-error': newItem.hasError() },
+                                    value: newItem,
+                                    valueUpdate: 'afterkeydown',
+                                    escPress: clearItem,
+                                    autocompleteList: 'onlyExisting'" />
+                        <!-- ko if: newItem.hasError() -->
+                        <span class="bcms-field-validation-error">
+                            <span data-bind="text: newItem.validationMessage()"></span>
+                        </span>
+                        <!-- /ko -->
+                    </div>
+                </div>
+                <div class="bcms-filter-options" data-bind="with: gridOptions().categories">
+                    <div class="bcms-filter-text">@MediaGlobalization.SiteSettings_FilterByCategory</div>
+                    <div class="bcms-field-wrapper">
+                        <input type="hidden" id="bcms-js-categories-select" />
+                    </div>
+                </div>
+            </div>
+
+            <div class="bcms-single-tag-holder" data-bind="foreach: gridOptions().tags.items()">
+                <div class="bcms-single-tag" data-bind="css: { 'bcms-single-tag-active': isActive() }">
+                    <div data-bind="text: name()"></div>
+                    <div class="bcms-single-tag-remove" data-bind="click: remove">@RootGlobalization.Button_Remove</div>
+                </div>
+                <input type="hidden" data-bind="attr: { name: getItemInputName($index()) + '.Key', value: id() }" />
+                <input type="hidden" data-bind="attr: { name: getItemInputName($index()) + '.Value', value: name() }" />
+            </div>
+
+            <div class="bcms-single-tag-holder" data-bind="foreach: gridOptions().categories.items()">
+                <div class="bcms-single-tag">
+                    <div data-bind="text: $data.text"></div>
+                    <div class="bcms-single-tag-remove" data-bind="click: $parent.gridOptions().categories.remove">@RootGlobalization.Button_Remove</div>
+                </div>
+                <input type="hidden" data-bind="attr: { name: 'Categories[' + $index() + '].Key', value: $data.id }" />
+                <input type="hidden" data-bind="attr: { name: 'Categories[' + $index() + '].Value', value: $data.text }" />
+            </div>
+        </div>
+
+        <div class="bcms-clearfix">
+            <div class="bcms-checkbox-block">
+                <div class="bcms-checkbox-holder">
+                    <input type="checkbox" data-bind="checked: gridOptions().includeArchived" />
+                    <div class="bcms-checkbox-label bcms-pointer" data-bind="click: gridOptions().changeIncludeArchived">@MediaGlobalization.MediaManager_IncludeArchived_Message</div>
+                </div>
+                <div class="bcms-checkbox-holder">
+                    <input type="checkbox" data-bind="checked: gridOptions().includeHistoryItems" />
+                    <div class="bcms-checkbox-label bcms-pointer" data-bind="click: gridOptions().changeIncludeHistoryItems">@MediaGlobalization.MediaManager_SearchInHistoryItems_Message</div>
+                </div>
+            </div>
+
+            <div class="bcms-btn-field-holder">
+                <div class="bcms-btn-primary" data-bind="click: searchWithFilter">@RootGlobalization.Button_Filter_Search</div>
+                <div class="bcms-btn-cancel" data-bind="click: clearFilter">@RootGlobalization.Button_Filter_Clear</div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,4 +1,42 @@
-@import '../core/variables';
+// --------------------------------------------------------------------------------------------------------------------
+// <copyright file="_layout.scss" company="Devbridge Group LLC">
+// 
+// Copyright (C) 2015,2016 Devbridge Group LLC
+// 
+// This program is free software: you can redistribute it and/or modify
+// it under the terms of the GNU Lesser General Public License as published by
+// the Free Software Foundation, either version 3 of the License, or
+// (at your option) any later version.
+// 
+// This program is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU General Public License for more details.
+// 
+// You should have received a copy of the GNU Lesser General Public License
+// along with this program.  If not, see http://www.gnu.org/licenses/. 
+// </copyright>
+// 
+// <summary>
+// Better CMS is a publishing focused and developer friendly .NET open source CMS.
+// 
+// Website: https://www.bettercms.com 
+// GitHub: https://github.com/devbridge/bettercms
+// Email: info@bettercms.com
+// </summary>
+// --------------------------------------------------------------------------------------------------------------------
+$settings-frame: ($header-height + $footer-height);
+
+$tabbed-settings: ($settings-frame - $inner-navigation);
+$settings: $settings-frame;
+$tabbed-options: ($settings-frame + $tab-height);
+$options: $settings-frame;
+
+$dialog-window-options: (
+                ('settings', null, null, $settings, 0 30px 30px 0),
+                ('tabbed-options', $bg-modal-options, null, $tabbed-options, 0 30px 30px),
+                ('options', $bg-modal-options, null, $options, 0 30px 30px)
+);
 
 html,
 body {
@@ -6,8 +44,17 @@ body {
     width: 100%;
 }
 
+html {
+    &.bcms-noscroll {
+        overflow: hidden;
+    }
+}
+
 body {
-    font-family: $font-base-family;
+    font: {
+        family: $font-base-family;
+        size: $font-base-size;
+    }
     margin: 0;
 }
 
@@ -19,12 +66,134 @@ button {
     }
 }
 
-//todo remove when iFrame implemented
-[class*="bcms-"] {
-    font-family: $font-base-family;
+a {
+    text-decoration: none;
+
+    &:hover {
+        text-decoration: none;
+    }
+}
+
+.bcms-window {
+    @each $name, $bg-color, $width, $height, $padding in $dialog-window-options {
+        &-#{$name} {
+            background-color: $bg-color;
+            box-sizing: border-box;
+            height: calc(100vh - #{$height});
+            overflow: {
+                x: hidden;
+                y: scroll;
+            }
+            padding: $padding;
+            position: relative;
+            width: $width;
+        }
+    }
 }
 
 .bcms-modal {
+    @include position(fixed, 0);
+    background-color: $bg-gray-lighter;
+    font-size: 13px;
+    overflow: hidden;
+
+    &-frame-holder {
+        border: {
+            right: $border-thin-smoke;
+            left: $border-thin-smoke;
+        }
+        box-sizing: border-box;
+        height: 100%;
+        margin: auto;
+        max-width: $page-width;
+        position: relative;
+
+        .bcms-modal-header &,
+        .bcms-modal-footer &,
+        .bcms-tab-header & {
+            border: 0;
+            padding: 0 1px;
+        }
+    }
+
+    &-body {
+        height: 100vh;
+        margin: auto;
+        position: relative;
+    }
+
+    &-header {
+        @include position(absolute, 0 0 null);
+        background-color: $dark-main;
+        box-sizing: border-box;
+        height: $header-height;
+        line-height: $header-height;
+        padding: 0 $page-frame-gutters;
+        z-index: 6;
+    }
+
+    &-title {
+        color: $white;
+        font-size: 20px;
+    }
+
+    &-close {
+        @include size(20px);
+        @include positioning($center-y: true);
+        background: url($bcms-close) no-repeat center;
+        cursor: pointer;
+        overflow: hidden;
+        right: 0;
+        text-indent: -999em;
+    }
+
+    &-content {
+        background-color: $bg-gray-lighter;
+        box-sizing: border-box;
+        line-height: 22px;
+        margin: auto;
+        padding: $header-height 0 $footer-height;
+    }
+
+    &-footer {
+        @include position(absolute, null 0 0);
+        background-color: $dark-main;
+        box-sizing: border-box;
+        height: $footer-height;
+        padding: 14px $page-frame-gutters;
+        z-index: 6;
+    }
+
+    &-footer-buttons {
+        @include clearfix();
+
+        .bcms-btn-primary,
+        .bcms-btn-secondary,
+        .bcms-btn-tertiary {
+            float: right;
+            margin-left: 10px;
+        }
+
+        .bcms-btn-quaternary {
+            float: left;
+            margin-right: 10px;
+        }
+    }
+
+    &-edit-seo {
+        .bcms-modal-content {
+            margin: auto;
+            width: $page-width;
+        }
+    }
+
+    &-alert {
+        @include position(fixed, 0);
+        background-color: rgba($dark-main, .9);
+        overflow: hidden;
+        z-index: 999;
+    }
+
     form {
         background: none !important;
         color: inherit !important;
@@ -36,8 +205,57 @@ button {
     }
 }
 
-//todo end of
+//module dialog frame
+.bcms-settings {
+    &-frame {
+        @include size($page-width calc(100vh - #{$settings-frame}));
+        background-color: $white;
+        border: {
+            right: $border-thin-smoke;
+            left: $border-thin-smoke;
+        }
+        display: table;
+        margin: auto;
+        table-layout: fixed;
+    }
 
-.bcms-no-ui {
-    //this class used for any element which doesn't require any styling.
+    &-menu {
+        @include vertical-align($block: table-cell, $align: top);
+        background-color: $smoke;
+        padding-top: 40px;
+        width: $settings-sidebar;
+    }
+
+    &-window {
+        @include vertical-align($block: table-cell, $align: top);
+        padding-left: 30px;
+        position: relative;
+    }
+
+    &-link {
+        @include transition(color 200ms);
+        box-sizing: border-box;
+        color: $gray-light;
+        display: block;
+        font: {
+            size: 12px;
+            weight: 400;
+        }
+        line-height: 42px;
+        padding-left: 40px;
+        text-decoration: none;
+        text-transform: uppercase;
+        width: 210px;
+
+        &:hover {
+            color: $text-blue;
+        }
+
+        &-active {
+            background-color: $white;
+            color: $black;
+            text-decoration: none;
+        }
+
+    }
 }

@@ -1,10 +1,37 @@
-@import '../../core/variables';
+// --------------------------------------------------------------------------------------------------------------------
+// <copyright file="_overlays.scss" company="Devbridge Group LLC">
+// 
+// Copyright (C) 2015,2016 Devbridge Group LLC
+// 
+// This program is free software: you can redistribute it and/or modify
+// it under the terms of the GNU Lesser General Public License as published by
+// the Free Software Foundation, either version 3 of the License, or
+// (at your option) any later version.
+// 
+// This program is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU General Public License for more details.
+// 
+// You should have received a copy of the GNU Lesser General Public License
+// along with this program.  If not, see http://www.gnu.org/licenses/. 
+// </copyright>
+// 
+// <summary>
+// Better CMS is a publishing focused and developer friendly .NET open source CMS.
+// 
+// Website: https://www.bettercms.com 
+// GitHub: https://github.com/devbridge/bettercms
+// Email: info@bettercms.com
+// </summary>
+// --------------------------------------------------------------------------------------------------------------------
+$ol-red: #d82636;
 
-//module local maps/keys
+$border-button-separator: 1px solid #44a0f8;
+
 $overlay-mange-controls: (
-                ('addcontent', $bcms-add-content),
-                ('addwidget', $bcms-overlay-widget),
-                ('sortcontent' $bcms-manage)
+                ('addcontent', $bcms-content-add),
+                ('sortcontent' $bcms-content-manage)
 );
 
 $overlay-control-buttons: (
@@ -25,25 +52,22 @@ $overlay-control-buttons: (
 .bcms-region {
     &-overlay {
         @include position(absolute, null);
+        border: $border-thin-blue-dashed;
+        box-sizing: border-box;
         display: none;
         min-height: 35px;
-        outline: $border-overlay;
         z-index: 100;
 
         &.bcms-show-overlay {
-            @include size(100%);
-            background-image: url($bcms-texture);
-            height: 100%;
-            width: 100%;
+            background-color: $white;
+            box-sizing: border-box;
+            min-height: 93px;
+            padding: 36px 0 10px;
         }
     }
 
     &-actions {
-        @include position(absolute, 0 0 null null);
-        border: {
-            bottom: $border-overlay;
-            left: $border-overlay;
-        }
+        @include position(absolute, -1px -1px null null);
         cursor: default;
         height: 26px;
         z-index: 10;
@@ -51,27 +75,49 @@ $overlay-control-buttons: (
 
     &-button {
         @include transition(all 200ms);
-        @include vertical-align($align: top);
-        background-color: $blue-main;
+        background-color: $bg-blue;
+        border-left: $border-button-separator;
         box-sizing: border-box;
         color: $white;
         cursor: pointer;
-        font-size: 12px;
+        float: left;
+        font: {
+            size: 12px;
+            weight: 600;
+        }
         height: 26px;
         line-height: 25px;
         padding: 0 10px;
 
         &:hover {
-            background-color: darken($blue-main, 10%);
+            background-color: darken($bg-blue, 5%);
             cursor: pointer;
         }
     }
 
     &-addcontent {
+        border-left: 0;
         position: relative;
 
         &.bcms-active {
-            background-color: darken($blue-main, 10%);
+            background-color: darken($bg-blue, 10%);
+        }
+    }
+
+    &-sortdone {
+        background-color: $bg-blue;
+        border-left: 0;
+
+        &:hover {
+            background-color: darken($bg-blue, 10%);
+        }
+    }
+
+    &-sortcancel {
+        background-color: $cp-gray;
+
+        &:hover {
+            background-color: darken($cp-gray, 10%);
         }
     }
 
@@ -87,28 +133,19 @@ $overlay-control-buttons: (
 
     &-pick-editor {
         @include transition(all 200ms);
-        background-color: darken($blue-main, 10%);
+        background-color: darken($bg-blue, 10%);
         line-height: 18px;
         padding: 5px 20px;
 
         &:hover {
-            background-color: darken($gray-l50, 10%);
-        }
-    }
-
-    &-contentstree,
-    &-sortcancel {
-        background-color: $gray-l50;
-
-        &:hover {
-            background-color: darken($gray-l50, 10%);
+            background-color: $bg-dark;
         }
     }
 
     @each $name, $icon in $overlay-mange-controls {
         &-#{$name} {
-            @include size(30px 26px);
-            background: $blue-main url($icon) no-repeat center;
+            @include size(26px);
+            background: $bg-blue url($icon) no-repeat center;
         }
     }
 }
@@ -121,7 +158,7 @@ $overlay-control-buttons: (
 
     @include virtual(before) {
         @include position(absolute, 0);
-        background-color: rgba($gray-l5, .2);
+        background-color: rgba($bg-light, .2);
     }
 }
 
@@ -150,37 +187,43 @@ $overlay-control-buttons: (
     }
 
     &-wrapper {
+        background: $white url($bcms-overlay-drag) no-repeat 10px center;
+        border: $border-form-element;
+        box-sizing: border-box;
+        color: $text-dark;
         cursor: move;
-        height: 30px;
-        line-height: 30px;
-        margin-top: 10px;
+        height: 46px;
+        margin: 5px 10px;
         overflow: hidden;
-        padding: 5px 10px;
-        position: relative;
+        padding: 0 10px 0 25px;
 
-        &:first-child {
+        &:first-of-type {
             margin-top: 0;
         }
 
-        @include virtual(before) {
-            @include position(absolute, 0);
-            background-color: rgba($gray-l5, .2);
+        &.ui-sortable-helper {
+            background: $sky-blue url($bcms-overlay-drag-active) no-repeat 10px center;
+            border-color: $border-blue;
+            box-shadow: 0 0 4px rgba($blue-main, .24);
+            color: $text-blue;
         }
     }
 
     &-wrapper-placeholder {
-        background-color: $black;
-        height: 30px;
-        margin-top: 10px;
-        opacity: .1;
-        padding: 5px 10px;
+        border: $border-form-element-dashed;
+        box-sizing: border-box;
+        height: 46px;
+        margin: 0 10px 5px;
         position: relative;
         z-index: 10;
     }
 
     &-content {
-        color: $dark;
-        font-weight: 700;
+        font: {
+            size: 14px;
+            weight: 600;
+        }
+        line-height: 44px;
         text-transform: capitalize;
     }
 }
@@ -188,16 +231,15 @@ $overlay-control-buttons: (
 //module content action controls
 .bcms-content {
     &-actions {
-        @include position(absolute, 10px null null 10px);
-        border: $border-content-actions;
+        @include position(absolute, -1px null null -1px);
         height: 42px;
     }
 
     &-button {
         @include transition(all 200ms);
         @include size(42px);
-        background-color: $blue-main;
-        border-left: $border-content-actions;
+        background-color: $bg-blue;
+        border-left: $border-button-separator;
         cursor: pointer;
         display: block;
         float: left;
@@ -208,7 +250,7 @@ $overlay-control-buttons: (
         }
 
         &:hover {
-            background-color: darken($blue-main, 15%);
+            background-color: darken($bg-blue, 5%);
         }
     }
 
@@ -224,11 +266,25 @@ $overlay-control-buttons: (
 
     &-edit {
         &.bcms-active-draft {
-            background-color: $red-l70;
+            background-color: $ol-red;
 
             &:hover {
-                background-color: lighten($red-l70, 10%);
+                background-color: darken($ol-red, 5%);
             }
         }
     }
+}
+
+.bcms-draggable-region {
+    background-color: $white;
+    border: $border-thin-blue-dashed;
+    color: $text-blue;
+    font: {
+        family: $font-base-family;
+        size: 14px;
+        weight: 600;
+    }
+    line-height: 19px;
+    margin: 10px;
+    padding: 13px 15px 12px;
 }

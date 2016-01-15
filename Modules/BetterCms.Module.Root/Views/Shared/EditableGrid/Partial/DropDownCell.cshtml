@@ -1,20 +1,50 @@
-﻿@model BetterCms.Module.Root.Mvc.Grids.EditableGridDropDownColumn
+﻿@* --------------------------------------------------------------------------------------------------------------------
+// <copyright file="DropDownCell.cshtml" company="Devbridge Group LLC">
+// 
+// Copyright (C) 2015,2016 Devbridge Group LLC
+// 
+// This program is free software: you can redistribute it and/or modify
+// it under the terms of the GNU Lesser General Public License as published by
+// the Free Software Foundation, either version 3 of the License, or
+// (at your option) any later version.
+// 
+// This program is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU General Public License for more details.
+// 
+// You should have received a copy of the GNU Lesser General Public License
+// along with this program.  If not, see http://www.gnu.org/licenses/. 
+// </copyright>
+// 
+// <summary>
+// Better CMS is a publishing focused and developer friendly .NET open source CMS.
+// 
+// Website: https://www.bettercms.com 
+// GitHub: https://github.com/devbridge/bettercms
+// Email: info@bettercms.com
+// </summary>
+// -------------------------------------------------------------------------------------------------------------------- *@
+@model BetterCms.Module.Root.Mvc.Grids.EditableGridDropDownColumn
 
 <td @Html.Raw(Model.Attributes)>
-
-    <a class="bcms-tables-link" data-bind="
+    <div class="bcms-tables-link" data-bind="
        text: @(Model.ValueTextBind)()
        @(!string.IsNullOrEmpty(Model.FocusIdentifier) ? string.Format(", click: onItemSelect.bind($data, {0})", Model.FocusIdentifier) : string.Empty)
        @(Model.CanBeEdited ? string.Format(", visible: !isActive() || ({0}.editingIsDisabled && {0}.editingIsDisabled())", Model.ValueBind) : string.Empty)
-       "></a>
+       ">
+    </div>
     @if (Model.CanBeEdited)
     {
+    <div data-bind="@(string.Format(", visible: isActive() && (!{0}.editingIsDisabled || !{0}.editingIsDisabled())", Model.ValueBind))">
         <select class="bcms-global-select" style="width: 125px;" data-bind="options: @(Model.OptionsBind),
             optionsText: '@(Model.OptionsText)',
             optionsValue: '@(Model.OptionsValue)',
-            value: @Model.ValueBind
+            value: @Model.ValueBind,
+            select2: { minimumResultsForSearch: -1 }
             @(!string.IsNullOrEmpty(Model.FocusIdentifier) ? string.Format(", hasfocus: {0}", Model.FocusIdentifier) : string.Empty)
-            @(string.Format(", visible: isActive() && (!{0}.editingIsDisabled || !{0}.editingIsDisabled())", Model.ValueBind))
-                "></select>
+            ">
+        </select>
+    </div>
     }
 </td>

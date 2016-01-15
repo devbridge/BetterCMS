@@ -1,0 +1,45 @@
+﻿@* --------------------------------------------------------------------------------------------------------------------
+// <copyright file="MasterLayout.cshtml" company="Devbridge Group LLC">
+// 
+// Copyright (C) 2015,2016 Devbridge Group LLC
+// 
+// This program is free software: you can redistribute it and/or modify
+// it under the terms of the GNU Lesser General Public License as published by
+// the Free Software Foundation, either version 3 of the License, or
+// (at your option) any later version.
+// 
+// This program is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU General Public License for more details.
+// 
+// You should have received a copy of the GNU Lesser General Public License
+// along with this program.  If not, see http://www.gnu.org/licenses/. 
+// </copyright>
+// 
+// <summary>
+// Better CMS is a publishing focused and developer friendly .NET open source CMS.
+// 
+// Website: https://www.bettercms.com 
+// GitHub: https://github.com/devbridge/bettercms
+// Email: info@bettercms.com
+// </summary>
+// -------------------------------------------------------------------------------------------------------------------- *@
+@model BetterCms.Module.Root.ViewModels.Cms.RenderPageViewModel
+@{
+    Layout = "~/Areas/bcms-Root/Views/Shared/BaseLayout.cshtml";
+}
+@section CmsHeadScripts {
+    <meta charset="utf-8" />
+    @RenderSection("CmsHeadScripts", false)
+}
+@section Styles {
+    <meta name="twitter:card" content="summary" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1" />
+    <meta name="google" content="notranslate">
+    <link type="text/css" rel="stylesheet" href="//fast.fonts.net/cssapi/ff50334d-7692-47b2-913a-6c24a82061e2.css" />
+}
+
+@RenderBody()
+@RenderSection("Body", false)

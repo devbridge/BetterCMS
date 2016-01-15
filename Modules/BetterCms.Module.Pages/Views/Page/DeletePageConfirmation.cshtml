@@ -1,59 +1,90 @@
-﻿@using BetterCms.Module.Pages.Content.Resources
+﻿@* --------------------------------------------------------------------------------------------------------------------
+// <copyright file="DeletePageConfirmation.cshtml" company="Devbridge Group LLC">
+// 
+// Copyright (C) 2015,2016 Devbridge Group LLC
+// 
+// This program is free software: you can redistribute it and/or modify
+// it under the terms of the GNU Lesser General Public License as published by
+// the Free Software Foundation, either version 3 of the License, or
+// (at your option) any later version.
+// 
+// This program is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU General Public License for more details.
+// 
+// You should have received a copy of the GNU Lesser General Public License
+// along with this program.  If not, see http://www.gnu.org/licenses/. 
+// </copyright>
+// 
+// <summary>
+// Better CMS is a publishing focused and developer friendly .NET open source CMS.
+// 
+// Website: https://www.bettercms.com 
+// GitHub: https://github.com/devbridge/bettercms
+// Email: info@bettercms.com
+// </summary>
+// -------------------------------------------------------------------------------------------------------------------- *@
+@using BetterCms.Module.Pages.Content.Resources
 @using BetterCms.Module.Pages.Controllers
 @using BetterCms.Module.Pages.ViewModels.Page
-
 @using BetterCms.Module.Root
 @using BetterCms.Module.Root.Mvc
 @using BetterCms.Module.Root.Mvc.Helpers
 @using Microsoft.Web.Mvc
 
 @model DeletePageViewModel
-<div class="bcms-scroll-window">
-    @Html.TabbedContentMessagesBox()
-    <div class="bcms-padded-content">
-        @using (Html.BeginForm<PageController>(f => f.DeletePage(null), FormMethod.Post, 
-            new {
-                    @class = "bcms-ajax-form",
-                    data_readonly = (Model.ValidationMessage != null) ? "true" : "false"
-                }))
+
+@if (Model.ValidationMessage != null)
+{
+    <div data-inuse="true">This template cannot be deleted, because it is used by some pages or templates.</div>
+}
+else
+{
+    using (Html.BeginForm<PageController>(f => f.DeletePage(null), FormMethod.Post,
+            new
+            {
+                @class = "bcms-ajax-form",
+                data_readonly = (Model.ValidationMessage != null) ? "true" : "false"
+            }))
+    {
+        <div class="bcms-input-list-holder">
+            <div class="bcms-content-titles">@PagesGlobalization.DeletePage_Dialog_ConfirmationMessage_Header</div>
+            <div>@PagesGlobalization.DeletePage_Dialog_ConfirmationMessage_Text</div>
+        </div>
+
+        <div class="bcms-input-list-holder">
+            <div class="bcms-content-titles">@PagesGlobalization.DeletePage_Dialog_RedirectUrl</div>
+            @Html.Tooltip(PagesGlobalization.DeletePage_Dialog_RedurectUrl_Tooltip_Description)
+            <div class="bcms-field-wrapper">
+                @Html.TextBoxFor(m => m.RedirectUrl, new { @class = "bcms-field-text", @id = "PageTitle" })
+                @Html.BcmsValidationMessageFor(f => f.RedirectUrl)
+            </div>
+        </div>
+
+        <div class="bcms-input-list-holder">
+            <div class="bcms-content-titles">@PagesGlobalization.DeletePage_Dialog_SecurityWord</div>
+            @Html.Tooltip(PagesGlobalization.DeletePage_Dialog_SecurityWord_Tooltip_Description)
+            <div class="bcms-field-wrapper">
+                @Html.TextBoxFor(m => m.SecurityWord, new { @class = "bcms-field-text", @id = "SecurityWord" })
+                @Html.BcmsValidationMessageFor(f => f.SecurityWord)
+            </div>
+        </div>
+
+        if (Model.IsInSitemap && (ViewContext.Controller as CmsControllerBase).SecurityService.IsAuthorized(RootModuleConstants.UserRoles.EditContent))
         {
             <div class="bcms-input-list-holder">
-                <div class="bcms-content-titles">@PagesGlobalization.DeletePage_Dialog_ConfirmationMessage_Header</div>
-                <div>@PagesGlobalization.DeletePage_Dialog_ConfirmationMessage_Text</div>
-            </div>
-            <div class="bcms-input-list-holder">
-                @Html.Tooltip(PagesGlobalization.DeletePage_Dialog_RedurectUrl_Tooltip_Description)
-                <div class="bcms-content-titles">@PagesGlobalization.DeletePage_Dialog_RedirectUrl</div>
-                <div class="bcms-input-box">
-                    @Html.TextBoxFor(m => m.RedirectUrl, new { @class = "bcms-editor-field-box", @id = "PageTitle" })
-                    @Html.BcmsValidationMessageFor(f => f.RedirectUrl)
+                <div class="bcms-content-titles">@PagesGlobalization.DeletePage_Dialog_UpdateSitemap</div>
+                @Html.Tooltip(PagesGlobalization.DeletePage_Dialog_UpdateSitemap_Description)
+                <div class="bcms-checkbox-holder">
+                    @Html.CheckBoxFor(m => m.UpdateSitemap, new { @id = "UpdateSitemap" })
+                    <div class="bcms-checkbox-label bcms-js-edit-label">@PagesGlobalization.DeletePage_Dialog_UpdateSitemap_RemovePageFromSitemap</div>
                 </div>
             </div>
-
-            <div class="bcms-input-list-holder">
-                @Html.Tooltip(PagesGlobalization.DeletePage_Dialog_SecurityWord_Tooltip_Description)
-                <div class="bcms-content-titles">@PagesGlobalization.DeletePage_Dialog_SecurityWord</div>
-                <div class="bcms-input-box">
-                    @Html.TextBoxFor(m => m.SecurityWord, new { @class = "bcms-editor-field-box", @id = "SecurityWord" })
-                    @Html.BcmsValidationMessageFor(f => f.SecurityWord)
-                </div>
-            </div>
-
-            if (Model.IsInSitemap && (ViewContext.Controller as CmsControllerBase).SecurityService.IsAuthorized(RootModuleConstants.UserRoles.EditContent))
-            {
-                <div class="bcms-input-list-holder">
-                    @Html.Tooltip(PagesGlobalization.DeletePage_Dialog_UpdateSitemap_Description)
-                    <div class="bcms-content-titles">@PagesGlobalization.DeletePage_Dialog_UpdateSitemap</div>
-                    <div class="bcms-edit-check-field">
-                        @Html.CheckBoxFor(m => m.UpdateSitemap, new { @id = "UpdateSitemap" })
-                        <div class="bcms-edit-label">@PagesGlobalization.DeletePage_Dialog_UpdateSitemap_RemovePageFromSitemap</div>
-                    </div>
-                </div>
-            }
-
-            @Html.HiddenFor(m => m.PageId)
-            @Html.HiddenFor(m => m.Version)
-            @Html.HiddenSubmit()
         }
-    </div>
-</div>
+
+        @Html.HiddenFor(m => m.PageId)
+        @Html.HiddenFor(m => m.Version)
+        @Html.HiddenSubmit()
+    }
+}

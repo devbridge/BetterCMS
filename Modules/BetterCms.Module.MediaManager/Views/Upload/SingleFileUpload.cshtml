@@ -1,4 +1,31 @@
-﻿@using BetterCms.Module.MediaManager.Content.Resources
+﻿@* --------------------------------------------------------------------------------------------------------------------
+// <copyright file="SingleFileUpload.cshtml" company="Devbridge Group LLC">
+// 
+// Copyright (C) 2015,2016 Devbridge Group LLC
+// 
+// This program is free software: you can redistribute it and/or modify
+// it under the terms of the GNU Lesser General Public License as published by
+// the Free Software Foundation, either version 3 of the License, or
+// (at your option) any later version.
+// 
+// This program is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU General Public License for more details.
+// 
+// You should have received a copy of the GNU Lesser General Public License
+// along with this program.  If not, see http://www.gnu.org/licenses/. 
+// </copyright>
+// 
+// <summary>
+// Better CMS is a publishing focused and developer friendly .NET open source CMS.
+// 
+// Website: https://www.bettercms.com 
+// GitHub: https://github.com/devbridge/bettercms
+// Email: info@bettercms.com
+// </summary>
+// -------------------------------------------------------------------------------------------------------------------- *@
+@using BetterCms.Module.MediaManager.Content.Resources
 @using BetterCms.Module.MediaManager.Controllers
 @using BetterCms.Module.Root
 @using BetterCms.Module.Root.Content.Resources
@@ -6,10 +33,12 @@
 @using BetterCms.Module.Root.Mvc.Helpers
 @using Microsoft.Web.Mvc
 @model BetterCms.Module.MediaManager.ViewModels.Upload.MultiFileUploadViewModel
-           
-<div class="bcms-scroll-window">
-    @Html.TabbedContentMessagesBox("bcms-multi-file-upload-messages")
-    <div class="bcms-file-manager-inner bcms-clearfix" id="bcms-media-uploads">
+
+<div class="bcms-modal-frame-holder">
+    @Html.MessagesBox("bcms-multi-file-upload-messages")
+
+    <div class="bcms-window-options" id="bcms-media-uploads">
+        <div class="bcms-content-dialog-title">Upload File</div>
 
         @using (Html.BeginForm("UploadSingleFile", "Upload", FormMethod.Post, new
         {
@@ -20,26 +49,38 @@
             @class = "bcms-ajax-form"
         }))
         {
-            <div class="bcms-input-list-holder">
                 @Html.HiddenFor(f => f.ReuploadMediaId)
                 @Html.HiddenFor(f => f.RootFolderId)
                 @Html.HiddenFor(f => f.RootFolderType)
                 @if (Model.RootFolderId.HasDefaultValue() && Model.ReuploadMediaId.HasDefaultValue())
                 {
-                    @Html.Tooltip(MediaGlobalization.MultiFileUpload_SelectFolder_Help_Message)
-                    <div class="bcms-content-titles">@MediaGlobalization.MultiFileUpload_SelectFolder</div>
-                    @Html.DropDownListFor(f => f.SelectedFolderId, Model.Folders.Select(o => new SelectListItem { Selected = Model.SelectedFolderId == o.Item1, Text = o.Item2, Value = o.Item1.ToString() }), new { @class = "bcms-global-select" })
+                    <div class="bcms-form-block-holder">
+                        <div>
+                            <div class="bcms-input-list-holder">
+                                <div class="bcms-content-titles">@MediaGlobalization.MultiFileUpload_SelectFolder</div>
+                                @Html.Tooltip(MediaGlobalization.MultiFileUpload_SelectFolder_Help_Message)
+                                <div class="bcms-field-wrapper">
+                                    @Html.DropDownListFor(f => f.SelectedFolderId, Model.Folders.Select(o => new SelectListItem { Selected = Model.SelectedFolderId == o.Item1, Text = o.Item2, Value = o.Item1.ToString() }))
+                                </div>
+                            </div>
+                        </div>
+                        <div>
+                        </div>
+                    </div>
                 }
                 else
                 {
                     @Html.HiddenFor(f => f.SelectedFolderId, new { @Value = Model.RootFolderId })
                 }
-            </div>
-            <div id="bcms-files-dropzone" class="bcms-dropzone">
-                <div class="bcms-dropzone-infotext" data-bind="text: !(activeUploads().length > 0) ? '@MediaGlobalization.SingleFileUpload_DragDropBox' : '@MediaGlobalization.MultiFileUpload_Uploading'"></div>
-                <div class="bcms-btn-upload-files" data-bind="visible: !(activeUploads().length > 0)">
-                    <label for="uploadFile" class="bcms-btn-upload-files-text">@MediaGlobalization.MultiFileUpload_UploadButton</label>
-                    <input type="file" name="uploadFile" id="uploadFile" style="position: absolute; left: -999em; top: -999em;" />
+
+            <div class="bcms-file-drop-zone-container">
+                <div id="bcms-files-drop-zone" class="bcms-file-drop-zone">
+                    <div class="bcms-file-drop-zone-text" data-bind="text: !(activeUploads().length > 0) ? '@MediaGlobalization.SingleFileUpload_DragDropBox' :'@MediaGlobalization.MultiFileUpload_Uploading'"></div>
+
+                    <div class="bcms-btn-main" data-bind="visible: !(activeUploads().length > 0)">
+                        <label for="uploadFile" class="bcms-btn-upload-files-text">@MediaGlobalization.MultiFileUpload_UploadButton</label>
+                        <input type="file" name="uploadFile" id="uploadFile" style="position: absolute; left: -999em; top: -999em;" />
+                    </div>
                 </div>
             </div>
         }
@@ -57,15 +98,18 @@
                 @Html.HiddenFor(m => m.SelectedFolderId, new { @Value = Model.RootFolderId })
             }
 
-            <div class="bcms-upload-holder" data-bind="template: { name: 'bcms-file-upload-template' }"></div>
-            
+            <div class="bcms-uploaded-container" data-bind="template: { name: 'bcms-file-upload-template' }"></div>
+
             if (Model.AccessControlEnabled)
             {
                 @Html.Partial(RootModuleConstants.AccessControlTemplate)
             }
         }
+
         <iframe id="UploadTarget" name="UploadTarget" style="position: absolute; left: -999em; top: -999em;"></iframe>
+
         <div id="Images"></div>
+
         <script type="text/html" id="bcms-file-upload-template">
             <div data-bind="foreach: uploads">
                 <div data-bind="css: {
@@ -82,34 +126,37 @@
                         <div class="bcms-progress-bar" data-bind="visible: !uploadCompleted() && !uploadFailed() && !uploadProcessing()">
                             <div class="bcms-progress" style="width: 0;" data-bind="style: { width: uploadProgress() + '%' }"></div>
                         </div>
+
                         <div class="bcms-upload-description" data-bind="visible: uploadProcessing()">
                             @MediaGlobalization.MultiFileUpload_Processing_ServerSide
                         </div>
+
                         <div class="bcms-upload-description" data-bind="visible: uploadFailed(), attr: { title: failureMessage() }">
                             <span data-bind="visible: !(failureMessage() != null && failureMessage().length > 0)">@MediaGlobalization.MultiFileUpload_Failed</span>
                             <span data-bind="visible: failureMessage() != null && failureMessage().length > 0, text: failureMessage"></span>
                         </div>
+
                         <div class="bcms-upload-description" data-bind="visible: uploadCompleted() && !uploadProcessing() && !uploadFailed()">
                             @MediaGlobalization.MultiFileUpload_Success
                         </div>
                     </div>
                     <!-- ko if: uploadCompleted() && !uploadFailed() -->
-                    <div class="bcms-uploaded-info" data-bind="text: uploadProgress() + '%'"></div>
+                    <div class="bcms-upload-info" data-bind="text: uploadProgress() + '%'"></div>
                     <div class="bcms-upload-size-info"><b>@MediaGlobalization.MultiFileUpload_FileSize</b> <span data-bind="text: fileSizeFormated"></span></div>
                     <div class="bcms-media-delete-holder">
-                        <a class="bcms-icn-delete" data-bind="click: function() { $root.removeUpload($data); }">@RootGlobalization.Button_Remove</a>
+                        <div class="bcms-action-delete" data-bind="click: function() { $root.removeUpload($data); }" title="@RootGlobalization.Button_Remove">@RootGlobalization.Button_Remove</div>
                     </div>
                     <!-- /ko -->
+
                     <!-- ko if: uploadFailed() -->
-                    <div class="bcms-uploaded-info">&nbsp;</div>
+                    <div class="bcms-upload-info">&nbsp;</div>
                     <div class="bcms-upload-size-info">&nbsp;</div>
                     <div class="bcms-media-delete-holder">
-                        <a class="bcms-icn-delete" data-bind="click: function() { $root.removeUpload($data); }">@RootGlobalization.Button_Remove</a>
+                        <div class="bcms-action-delete" data-bind="click: function() { $root.removeUpload($data); }" title="@RootGlobalization.Button_Remove">@RootGlobalization.Button_Remove</div>
                     </div>
                     <!-- /ko -->
                 </div>
             </div>
         </script>
     </div>
-
 </div>

@@ -28,13 +28,13 @@ namespace ASP
     using System.Web.UI;
     using System.Web.WebPages;
     
-    #line 1 "..\..\Views\Shared\EditableGrid\Grid.cshtml"
+    #line 28 "..\..\Views\Shared\EditableGrid\Grid.cshtml"
     using BetterCms.Module.Root.Content.Resources;
     
     #line default
     #line hidden
     
-    #line 2 "..\..\Views\Shared\EditableGrid\Grid.cshtml"
+    #line 29 "..\..\Views\Shared\EditableGrid\Grid.cshtml"
     using BetterCms.Module.Root.Mvc.Helpers;
     
     #line default
@@ -52,33 +52,8 @@ namespace ASP
 WriteLiteral("\r\n");
 
             
-            #line 6 "..\..\Views\Shared\EditableGrid\Grid.cshtml"
+            #line 31 "..\..\Views\Shared\EditableGrid\Grid.cshtml"
 Write(Html.Partial(Model.TopBlockView, Model));
-
-            
-            #line default
-            #line hidden
-WriteLiteral("\r\n\r\n");
-
-            
-            #line 8 "..\..\Views\Shared\EditableGrid\Grid.cshtml"
- if (Model.ShowMessages)
-{
-    
-            
-            #line default
-            #line hidden
-            
-            #line 10 "..\..\Views\Shared\EditableGrid\Grid.cshtml"
-Write(Html.SiteSettingsMessagesBox(null, new Dictionary<string, string> { { "data-bind", "attr: { id: messagesDomId() }" } }));
-
-            
-            #line default
-            #line hidden
-            
-            #line 10 "..\..\Views\Shared\EditableGrid\Grid.cshtml"
-                                                                                                                            
-}
 
             
             #line default
@@ -86,7 +61,30 @@ Write(Html.SiteSettingsMessagesBox(null, new Dictionary<string, string> { { "dat
 WriteLiteral("\r\n");
 
             
-            #line 13 "..\..\Views\Shared\EditableGrid\Grid.cshtml"
+            #line 32 "..\..\Views\Shared\EditableGrid\Grid.cshtml"
+ if (Model.ShowMessages)
+{
+    
+            
+            #line default
+            #line hidden
+            
+            #line 34 "..\..\Views\Shared\EditableGrid\Grid.cshtml"
+Write(Html.MessagesBox(null, new Dictionary<string, string> { { "data-bind", "attr: { id: messagesDomId() }" } }));
+
+            
+            #line default
+            #line hidden
+            
+            #line 34 "..\..\Views\Shared\EditableGrid\Grid.cshtml"
+                                                                                                                
+}
+
+            
+            #line default
+            #line hidden
+            
+            #line 36 "..\..\Views\Shared\EditableGrid\Grid.cshtml"
   
     var visibleColumns = Model.Columns.Where(c => c.IsRendered).ToList();
     var visibleColumnsCount = visibleColumns.Count;
@@ -94,7 +92,7 @@ WriteLiteral("\r\n");
             
             #line default
             #line hidden
-WriteLiteral("\r\n\r\n<table");
+WriteLiteral("\r\n<table");
 
 WriteLiteral(" class=\"bcms-tables\"");
 
@@ -102,16 +100,18 @@ WriteLiteral(">\r\n    <thead>\r\n        <tr>\r\n            <th");
 
 WriteLiteral(" class=\"bcms-tables-nohover\"");
 
+WriteLiteral(" style=\"width: 40px; padding: 0;\"");
+
 WriteLiteral(">&nbsp;</th>\r\n");
 
             
-            #line 22 "..\..\Views\Shared\EditableGrid\Grid.cshtml"
+            #line 44 "..\..\Views\Shared\EditableGrid\Grid.cshtml"
             
             
             #line default
             #line hidden
             
-            #line 22 "..\..\Views\Shared\EditableGrid\Grid.cshtml"
+            #line 44 "..\..\Views\Shared\EditableGrid\Grid.cshtml"
              foreach (var column in visibleColumns)
             {
                 
@@ -119,14 +119,14 @@ WriteLiteral(">&nbsp;</th>\r\n");
             #line default
             #line hidden
             
-            #line 24 "..\..\Views\Shared\EditableGrid\Grid.cshtml"
+            #line 46 "..\..\Views\Shared\EditableGrid\Grid.cshtml"
            Write(Html.Partial(column.HeaderView, column));
 
             
             #line default
             #line hidden
             
-            #line 24 "..\..\Views\Shared\EditableGrid\Grid.cshtml"
+            #line 46 "..\..\Views\Shared\EditableGrid\Grid.cshtml"
                                                         
             }
 
@@ -137,8 +137,6 @@ WriteLiteral("            <th");
 
 WriteLiteral(" class=\"bcms-tables-nohover\"");
 
-WriteLiteral(" style=\"width: 145px;\"");
-
 WriteLiteral(">&nbsp;</th>\r\n        </tr>\r\n    </thead>\r\n    <tbody>\r\n        <!-- ko foreach: " +
 "items -->\r\n        <tr");
 
@@ -148,13 +146,13 @@ WriteLiteral(" data-bind=\"click: onOpen, css: {\'bcms-table-row-active\' : isAc
 WriteLiteral(">\r\n            <!-- ko if: saving() || deleting() -->\r\n");
 
             
-            #line 33 "..\..\Views\Shared\EditableGrid\Grid.cshtml"
+            #line 55 "..\..\Views\Shared\EditableGrid\Grid.cshtml"
             
             
             #line default
             #line hidden
             
-            #line 33 "..\..\Views\Shared\EditableGrid\Grid.cshtml"
+            #line 55 "..\..\Views\Shared\EditableGrid\Grid.cshtml"
              if (Model.CanEditItems)
             {
 
@@ -173,20 +171,20 @@ WriteLiteral("                <td");
 
 WriteLiteral(" class=\"bcms-tables-nohover\"");
 
-WriteAttribute("colspan", Tuple.Create(" colspan=\"", 1305), Tuple.Create("\"", 1335)
+WriteAttribute("colspan", Tuple.Create(" colspan=\"", 2596), Tuple.Create("\"", 2626)
             
-            #line 37 "..\..\Views\Shared\EditableGrid\Grid.cshtml"
-, Tuple.Create(Tuple.Create("", 1315), Tuple.Create<System.Object, System.Int32>(visibleColumnsCount
+            #line 59 "..\..\Views\Shared\EditableGrid\Grid.cshtml"
+, Tuple.Create(Tuple.Create("", 2606), Tuple.Create<System.Object, System.Int32>(visibleColumnsCount
             
             #line default
             #line hidden
-, 1315), false)
+, 2606), false)
 );
 
 WriteLiteral(">");
 
             
-            #line 37 "..\..\Views\Shared\EditableGrid\Grid.cshtml"
+            #line 59 "..\..\Views\Shared\EditableGrid\Grid.cshtml"
                                                                           Write(RootGlobalization.Message_Saving);
 
             
@@ -195,113 +193,6 @@ WriteLiteral(">");
 WriteLiteral("</td>\r\n");
 
 WriteLiteral("                <!-- /ko -->\r\n");
-
-            
-            #line 39 "..\..\Views\Shared\EditableGrid\Grid.cshtml"
-            }
-
-            
-            #line default
-            #line hidden
-WriteLiteral("            ");
-
-            
-            #line 40 "..\..\Views\Shared\EditableGrid\Grid.cshtml"
-             if (Model.CanEditItems)
-            {
-
-            
-            #line default
-            #line hidden
-WriteLiteral("                <td");
-
-WriteLiteral(" class=\"bcms-tables-nohover\"");
-
-WriteLiteral(" style=\"width: 145px;\"");
-
-WriteLiteral(">&nbsp;</td>\r\n");
-
-WriteLiteral("                <!-- ko if: deleting() -->\r\n");
-
-WriteLiteral("                <td");
-
-WriteLiteral(" class=\"bcms-tables-nohover\"");
-
-WriteAttribute("colspan", Tuple.Create(" colspan=\"", 1649), Tuple.Create("\"", 1679)
-            
-            #line 44 "..\..\Views\Shared\EditableGrid\Grid.cshtml"
-, Tuple.Create(Tuple.Create("", 1659), Tuple.Create<System.Object, System.Int32>(visibleColumnsCount
-            
-            #line default
-            #line hidden
-, 1659), false)
-);
-
-WriteLiteral(">");
-
-            
-            #line 44 "..\..\Views\Shared\EditableGrid\Grid.cshtml"
-                                                                          Write(RootGlobalization.Message_Deleting);
-
-            
-            #line default
-            #line hidden
-WriteLiteral("</td>\r\n");
-
-WriteLiteral("                <!-- /ko -->\r\n");
-
-            
-            #line 46 "..\..\Views\Shared\EditableGrid\Grid.cshtml"
-            }
-
-            
-            #line default
-            #line hidden
-WriteLiteral("            <!-- /ko -->\r\n            \r\n            <!-- ko ifnot: saving() || de" +
-"leting() -->\r\n");
-
-            
-            #line 50 "..\..\Views\Shared\EditableGrid\Grid.cshtml"
-            
-            
-            #line default
-            #line hidden
-            
-            #line 50 "..\..\Views\Shared\EditableGrid\Grid.cshtml"
-             if (Model.CanEditItems)
-            {
-
-            
-            #line default
-            #line hidden
-WriteLiteral("                <td>\r\n                    <!-- ko if: !editingIsDisabled() -->\r\n " +
-"                   <a");
-
-WriteLiteral(" class=\"bcms-icn-edit\"");
-
-WriteLiteral(" data-bind=\"click: onEdit\"");
-
-WriteLiteral(">");
-
-            
-            #line 54 "..\..\Views\Shared\EditableGrid\Grid.cshtml"
-                                                                  Write(RootGlobalization.Button_Edit);
-
-            
-            #line default
-            #line hidden
-WriteLiteral("</a>\r\n                    <!-- /ko -->\r\n                </td>\r\n");
-
-            
-            #line 57 "..\..\Views\Shared\EditableGrid\Grid.cshtml"
-            }
-            else
-            {
-
-            
-            #line default
-            #line hidden
-WriteLiteral("                <td>&nbsp;</td>\r\n");
 
             
             #line 61 "..\..\Views\Shared\EditableGrid\Grid.cshtml"
@@ -314,6 +205,121 @@ WriteLiteral("            ");
 
             
             #line 62 "..\..\Views\Shared\EditableGrid\Grid.cshtml"
+             if (Model.CanEditItems)
+            {
+
+            
+            #line default
+            #line hidden
+WriteLiteral("                <td");
+
+WriteLiteral(" class=\"bcms-tables-nohover\"");
+
+WriteLiteral(">&nbsp;</td>\r\n");
+
+WriteLiteral("                <!-- ko if: deleting() -->\r\n");
+
+WriteLiteral("                <td");
+
+WriteLiteral(" class=\"bcms-tables-nohover\"");
+
+WriteAttribute("colspan", Tuple.Create(" colspan=\"", 2918), Tuple.Create("\"", 2948)
+            
+            #line 66 "..\..\Views\Shared\EditableGrid\Grid.cshtml"
+, Tuple.Create(Tuple.Create("", 2928), Tuple.Create<System.Object, System.Int32>(visibleColumnsCount
+            
+            #line default
+            #line hidden
+, 2928), false)
+);
+
+WriteLiteral(">");
+
+            
+            #line 66 "..\..\Views\Shared\EditableGrid\Grid.cshtml"
+                                                                          Write(RootGlobalization.Message_Deleting);
+
+            
+            #line default
+            #line hidden
+WriteLiteral("</td>\r\n");
+
+WriteLiteral("                <!-- /ko -->\r\n");
+
+            
+            #line 68 "..\..\Views\Shared\EditableGrid\Grid.cshtml"
+            }
+
+            
+            #line default
+            #line hidden
+WriteLiteral("            <!-- /ko -->\r\n            <!-- ko ifnot: saving() || deleting() -->\r\n" +
+"");
+
+            
+            #line 71 "..\..\Views\Shared\EditableGrid\Grid.cshtml"
+            
+            
+            #line default
+            #line hidden
+            
+            #line 71 "..\..\Views\Shared\EditableGrid\Grid.cshtml"
+             if (Model.CanEditItems)
+            {
+
+            
+            #line default
+            #line hidden
+WriteLiteral("                <td>\r\n                    <!-- ko if: !editingIsDisabled() -->\r\n " +
+"                   <div");
+
+WriteLiteral(" class=\"bcms-action-edit\"");
+
+WriteLiteral(" data-bind=\"click: onEdit\"");
+
+WriteAttribute("title", Tuple.Create(" title=\"", 3326), Tuple.Create("\"", 3364)
+            
+            #line 75 "..\..\Views\Shared\EditableGrid\Grid.cshtml"
+   , Tuple.Create(Tuple.Create("", 3334), Tuple.Create<System.Object, System.Int32>(RootGlobalization.Button_Edit
+            
+            #line default
+            #line hidden
+, 3334), false)
+);
+
+WriteLiteral(">");
+
+            
+            #line 75 "..\..\Views\Shared\EditableGrid\Grid.cshtml"
+                                                                                                              Write(RootGlobalization.Button_Edit);
+
+            
+            #line default
+            #line hidden
+WriteLiteral("</div>\r\n                    <!-- /ko -->\r\n                </td>\r\n");
+
+            
+            #line 78 "..\..\Views\Shared\EditableGrid\Grid.cshtml"
+            }
+            else
+            {
+
+            
+            #line default
+            #line hidden
+WriteLiteral("                <td>&nbsp;</td>\r\n");
+
+            
+            #line 82 "..\..\Views\Shared\EditableGrid\Grid.cshtml"
+            }
+
+            
+            #line default
+            #line hidden
+WriteLiteral("            ");
+
+            
+            #line 83 "..\..\Views\Shared\EditableGrid\Grid.cshtml"
              foreach (var column in visibleColumns)
             {
                 
@@ -321,59 +327,70 @@ WriteLiteral("            ");
             #line default
             #line hidden
             
-            #line 64 "..\..\Views\Shared\EditableGrid\Grid.cshtml"
+            #line 85 "..\..\Views\Shared\EditableGrid\Grid.cshtml"
            Write(Html.Partial(column.CellView, column));
 
             
             #line default
             #line hidden
             
-            #line 64 "..\..\Views\Shared\EditableGrid\Grid.cshtml"
+            #line 85 "..\..\Views\Shared\EditableGrid\Grid.cshtml"
                                                       
             }
 
             
             #line default
             #line hidden
-WriteLiteral("            <td>\r\n");
+WriteLiteral("            <td");
+
+WriteLiteral(" data-bind=\"style: { width: isActive() ? \'120px\' : \'40px\', padding: isActive() ? " +
+"\'10px\' : \'0\' }\"");
+
+WriteLiteral(">\r\n");
 
             
-            #line 67 "..\..\Views\Shared\EditableGrid\Grid.cshtml"
+            #line 88 "..\..\Views\Shared\EditableGrid\Grid.cshtml"
                 
             
             #line default
             #line hidden
             
-            #line 67 "..\..\Views\Shared\EditableGrid\Grid.cshtml"
+            #line 88 "..\..\Views\Shared\EditableGrid\Grid.cshtml"
                  if (Model.CanDeleteItems)
                 {
 
             
             #line default
             #line hidden
-WriteLiteral("                    <!-- ko if: !isActive() && !deletingIsDisabled() -->\r\n");
+WriteLiteral("                    <div");
 
-WriteLiteral("                    <a");
+WriteLiteral(" class=\"bcms-action-delete\"");
 
-WriteLiteral(" class=\"bcms-icn-delete\"");
+WriteLiteral(" data-bind=\"click: onDelete, visible: !isActive() && !deletingIsDisabled()\"");
 
-WriteLiteral(" data-bind=\"click: onDelete\"");
+WriteAttribute("title", Tuple.Create(" title=\"", 3999), Tuple.Create("\"", 4039)
+            
+            #line 90 "..\..\Views\Shared\EditableGrid\Grid.cshtml"
+                                                      , Tuple.Create(Tuple.Create("", 4007), Tuple.Create<System.Object, System.Int32>(RootGlobalization.Button_Delete
+            
+            #line default
+            #line hidden
+, 4007), false)
+);
 
 WriteLiteral(">");
 
             
-            #line 70 "..\..\Views\Shared\EditableGrid\Grid.cshtml"
-                                                                      Write(RootGlobalization.Button_Delete);
+            #line 90 "..\..\Views\Shared\EditableGrid\Grid.cshtml"
+                                                                                                                                                                   Write(RootGlobalization.Button_Delete);
 
             
             #line default
             #line hidden
-WriteLiteral("</a>\r\n");
-
-WriteLiteral("                    <!-- /ko -->\r\n");
+WriteLiteral("</div>\r\n");
 
             
-            #line 72 "..\..\Views\Shared\EditableGrid\Grid.cshtml"
+            #line 91 "..\..\Views\Shared\EditableGrid\Grid.cshtml"
                 }
 
             
@@ -382,7 +399,7 @@ WriteLiteral("                    <!-- /ko -->\r\n");
 WriteLiteral("                ");
 
             
-            #line 73 "..\..\Views\Shared\EditableGrid\Grid.cshtml"
+            #line 92 "..\..\Views\Shared\EditableGrid\Grid.cshtml"
                  if (Model.CanEditItems)
                 {
 
@@ -393,15 +410,15 @@ WriteLiteral("                    <!-- ko if: isActive() -->\r\n");
 
 WriteLiteral("                    <div");
 
-WriteLiteral(" class=\"bcms-btn-small\"");
+WriteLiteral(" class=\"bcms-btn-primary\"");
 
 WriteLiteral(" data-bind=\"click: onSave\"");
 
 WriteLiteral(">");
 
             
-            #line 76 "..\..\Views\Shared\EditableGrid\Grid.cshtml"
-                                                                     Write(Model.SaveButtonTitle);
+            #line 95 "..\..\Views\Shared\EditableGrid\Grid.cshtml"
+                                                                       Write(Model.SaveButtonTitle);
 
             
             #line default
@@ -410,15 +427,15 @@ WriteLiteral("</div>\r\n");
 
 WriteLiteral("                    <div");
 
-WriteLiteral(" class=\"bcms-btn-links-small\"");
+WriteLiteral(" class=\"bcms-btn-cancel\"");
 
 WriteLiteral(" data-bind=\"event : {mousedown: onCancelEdit}\"");
 
 WriteLiteral(">");
 
             
-            #line 77 "..\..\Views\Shared\EditableGrid\Grid.cshtml"
-                                                                                               Write(RootGlobalization.Button_Cancel);
+            #line 96 "..\..\Views\Shared\EditableGrid\Grid.cshtml"
+                                                                                          Write(RootGlobalization.Button_Cancel);
 
             
             #line default
@@ -428,7 +445,7 @@ WriteLiteral("</div>\r\n");
 WriteLiteral("                    <!-- /ko -->\r\n");
 
             
-            #line 79 "..\..\Views\Shared\EditableGrid\Grid.cshtml"
+            #line 98 "..\..\Views\Shared\EditableGrid\Grid.cshtml"
                 }
 
             
@@ -437,7 +454,7 @@ WriteLiteral("                    <!-- /ko -->\r\n");
 WriteLiteral("                ");
 
             
-            #line 80 "..\..\Views\Shared\EditableGrid\Grid.cshtml"
+            #line 99 "..\..\Views\Shared\EditableGrid\Grid.cshtml"
                  if (!Model.CanDeleteItems && !Model.CanEditItems)
                 {
 
@@ -449,43 +466,43 @@ WriteLiteral("                    ");
 WriteLiteral("&nbsp;\r\n");
 
             
-            #line 83 "..\..\Views\Shared\EditableGrid\Grid.cshtml"
+            #line 102 "..\..\Views\Shared\EditableGrid\Grid.cshtml"
                 }
 
             
             #line default
             #line hidden
-WriteLiteral("                \r\n            </td>\r\n            <!-- /ko -->\r\n        </tr>\r\n   " +
-"     <!-- /ko -->\r\n        <!-- ko if: items().length == 0 -->\r\n        <tr>\r\n  " +
-"          <td");
+WriteLiteral("            </td>\r\n            <!-- /ko -->\r\n        </tr>\r\n        <!-- /ko -->\r" +
+"\n        <!-- ko if: items().length == 0 -->\r\n        <tr>\r\n            <td");
 
-WriteAttribute("colspan", Tuple.Create(" colspan=\"", 3432), Tuple.Create("\"", 3468)
+WriteAttribute("colspan", Tuple.Create(" colspan=\"", 4795), Tuple.Create("\"", 4831)
             
-            #line 91 "..\..\Views\Shared\EditableGrid\Grid.cshtml"
-, Tuple.Create(Tuple.Create("", 3442), Tuple.Create<System.Object, System.Int32>(visibleColumnsCount + 2
+            #line 109 "..\..\Views\Shared\EditableGrid\Grid.cshtml"
+, Tuple.Create(Tuple.Create("", 4805), Tuple.Create<System.Object, System.Int32>(visibleColumnsCount + 2
             
             #line default
             #line hidden
-, 3442), false)
+, 4805), false)
 );
 
-WriteLiteral("><span");
+WriteLiteral(">\r\n                <div");
 
 WriteLiteral(" class=\"bcms-table-no-data\"");
 
 WriteLiteral(">");
 
             
-            #line 91 "..\..\Views\Shared\EditableGrid\Grid.cshtml"
-                                                                                 Write(RootGlobalization.Grid_NoDataAvailable_Message);
+            #line 110 "..\..\Views\Shared\EditableGrid\Grid.cshtml"
+                                           Write(RootGlobalization.Grid_NoDataAvailable_Message);
 
             
             #line default
             #line hidden
-WriteLiteral("</span></td>\r\n        </tr>\r\n        <!-- /ko -->\r\n    </tbody>\r\n</table>\r\n\r\n");
+WriteLiteral("</div>\r\n            </td>\r\n        </tr>\r\n        <!-- /ko -->\r\n    </tbody>\r\n</t" +
+"able>\r\n");
 
             
-            #line 97 "..\..\Views\Shared\EditableGrid\Grid.cshtml"
+            #line 116 "..\..\Views\Shared\EditableGrid\Grid.cshtml"
  if (Model.AddHiddenFields)
 {
 
@@ -495,16 +512,16 @@ WriteLiteral("</span></td>\r\n        </tr>\r\n        <!-- /ko -->\r\n    </tbo
 WriteLiteral("    <!-- ko foreach: items -->\r\n");
 
             
-            #line 100 "..\..\Views\Shared\EditableGrid\Grid.cshtml"
-        foreach (var column in Model.Columns)
+            #line 119 "..\..\Views\Shared\EditableGrid\Grid.cshtml"
+    foreach (var column in Model.Columns)
+    {
+        if (!string.IsNullOrWhiteSpace(column.HiddenFieldName))
         {
-            if (!string.IsNullOrWhiteSpace(column.HiddenFieldName))
-            {
 
             
             #line default
             #line hidden
-WriteLiteral("                <input");
+WriteLiteral("            <input");
 
 WriteLiteral(" type=\"hidden\"");
 
@@ -512,20 +529,20 @@ WriteLiteral(" name=\"\"");
 
 WriteLiteral(" value=\"\"");
 
-WriteLiteral(" data-bind=\"valueBinder: ");
+WriteLiteral(" data-bind=\"value: ");
 
             
-            #line 104 "..\..\Views\Shared\EditableGrid\Grid.cshtml"
-                                                                          Write(column.ValueBind);
+            #line 123 "..\..\Views\Shared\EditableGrid\Grid.cshtml"
+                                                                Write(column.ValueBind);
 
             
             #line default
             #line hidden
-WriteLiteral("\r\n                    , attr: {name: hiddenFieldName(\'");
+WriteLiteral(", attr: {name: hiddenFieldName(\'");
 
             
-            #line 105 "..\..\Views\Shared\EditableGrid\Grid.cshtml"
-                                                Write(column.HiddenFieldName);
+            #line 123 "..\..\Views\Shared\EditableGrid\Grid.cshtml"
+                                                                                                                   Write(column.HiddenFieldName);
 
             
             #line default
@@ -535,9 +552,9 @@ WriteLiteral("\', $index()) }\"");
 WriteLiteral(">\r\n");
 
             
-            #line 106 "..\..\Views\Shared\EditableGrid\Grid.cshtml"
-            }
+            #line 124 "..\..\Views\Shared\EditableGrid\Grid.cshtml"
         }
+    }
 
             
             #line default
@@ -545,7 +562,7 @@ WriteLiteral(">\r\n");
 WriteLiteral("    <!-- /ko -->\r\n");
 
             
-            #line 109 "..\..\Views\Shared\EditableGrid\Grid.cshtml"
+            #line 127 "..\..\Views\Shared\EditableGrid\Grid.cshtml"
 }
             
             #line default

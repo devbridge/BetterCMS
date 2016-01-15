@@ -14,7 +14,6 @@
       <JavaScriptFiles Include="$(ProjectDir)Scripts\bcms.jquery.autocomplete.js" />
       <JavaScriptFiles Include="$(ProjectDir)Scripts\bcms.jquery.markitup.js" />
       <JavaScriptFiles Include="$(ProjectDir)Scripts\bcms.autocomplete.js" />
-      <JavaScriptFiles Include="$(ProjectDir)Scripts\bcms.slides.jquery.js" />
       <JavaScriptFiles Include="$(ProjectDir)Scripts\bcms.spinner.jquery.js" />      
       <JavaScriptFiles Include="$(ProjectDir)Scripts\bcms.antiXss.js" />
       <JavaScriptFiles Include="$(ProjectDir)Scripts\bcms.authentication.js" />
@@ -46,7 +45,6 @@
       <JavaScriptFiles Include="$(ProjectDir)Scripts\bcms.tabs.js" />
       <JavaScriptFiles Include="$(ProjectDir)Scripts\bcms.tooltip.js" />
       <JavaScriptFiles Include="$(ProjectDir)Scripts\bcms.tags.js" />
-      <JavaScriptFiles Include="$(ProjectDir)Scripts\bcms.multiple.select.js" />
     </ItemGroup>
 
     <JavaScriptCompressorTask
@@ -78,8 +76,8 @@
        />
 
     <JavaScriptCompressorTask
-             SourceFiles="$(ProjectDir)Scripts\bcms.knockout-2.2.1.js"
-             OutputFile="$(ProjectDir)Scripts\bcms.knockout-2.2.1.min.js"
+             SourceFiles="$(ProjectDir)Scripts\bcms.knockout-3.3.0.js"
+             OutputFile="$(ProjectDir)Scripts\bcms.knockout-3.3.0.min.js"
              CompressionType="Standard"
              ObfuscateJavaScript="True"
              PreserveAllSemicolons="True"

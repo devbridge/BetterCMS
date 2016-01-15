@@ -1,5 +1,31 @@
 ﻿/*jslint unparam: true, white: true, browser: true, devel: true */
-/*global bettercms */
+// --------------------------------------------------------------------------------------------------------------------
+// <copyright file="bcms.pages.history.js" company="Devbridge Group LLC">
+// 
+// Copyright (C) 2015,2016 Devbridge Group LLC
+// 
+// This program is free software: you can redistribute it and/or modify
+// it under the terms of the GNU Lesser General Public License as published by
+// the Free Software Foundation, either version 3 of the License, or
+// (at your option) any later version.
+// 
+// This program is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU General Public License for more details.
+// 
+// You should have received a copy of the GNU Lesser General Public License
+// along with this program.  If not, see http://www.gnu.org/licenses/. 
+// </copyright>
+// 
+// <summary>
+// Better CMS is a publishing focused and developer friendly .NET open source CMS.
+// 
+// Website: https://www.bettercms.com 
+// GitHub: https://github.com/devbridge/bettercms
+// Email: info@bettercms.com
+// </summary>
+// --------------------------------------------------------------------------------------------------------------------
 
 bettercms.define('bcms.pages.history', ['bcms.jquery', 'bcms', 'bcms.modal', 'bcms.messages', 'bcms.dynamicContent', 'bcms.redirect', 'bcms.grid'],
     function ($, bcms, modal, messages, dynamicContent, redirect, grid) {
@@ -12,22 +38,28 @@ bettercms.define('bcms.pages.history', ['bcms.jquery', 'bcms', 'bcms.modal', 'bc
         },
         
         selectors = {
-            gridRestoreLinks: '#bcms-pagecontenthistory-form .bcms-history-cell a.bcms-icn-restore',
-            gridCells: '#bcms-pagecontenthistory-form .bcms-history-cell tbody td',
-            gridRowPreviewLink: 'a.bcms-icn-preview:first',
+            gridRestoreLinks: '#bcms-pagecontenthistory-form tr .bcms-js-restore',
+            gridCells: '#bcms-pagecontenthistory-form tr td',
+            gridRowPreviewLink: '.bcms-js-preview:first',
             firstRow: 'tr:first',
-            gridRows: '#bcms-pagecontenthistory-form .bcms-history-cell tbody tr',
+            gridRows: '#bcms-pagecontenthistory-form tr',
             versionPreviewContainer: '#bcms-history-preview',
+            versionPreviewPropertiesContainer: '#bcms-history-preview-properties',
             versionPreviewLoaderContainer: '.bcms-history-preview',
             versionPreviewTemplate: '#bcms-history-preview-template',
             pageContentHistoryForm: '#bcms-pagecontenthistory-form',
             pageContentHistorySearchButton: '.bcms-btn-search',
-            modalContent: '.bcms-modal-content-padded'
+            pageContentHistorySearchField: '.bcms-search-query',
+            modalContent: '.bcms-modal-content',
+            modalFrameHolder: '.bcms-modal-frame-holder',
+            activeTab: '.bcms-js-tab-header .bcms-modal-frame-holder>.bcms-active',
+            inactiveTab: '.bcms-js-tab-header .bcms-modal-frame-holder>:not(.bcms-active)'
         },
         
         links = {
             loadContentHistoryDialogUrl: null,
             loadContentVersionPreviewUrl: null,
+            loadContentVersionPreviewPropertiesUrl: null,
             restoreContentVersionUrl: null,
             destroyContentDraftVersionUrl: null
         },
@@ -36,6 +68,7 @@ bettercms.define('bcms.pages.history', ['bcms.jquery', 'bcms', 'bcms.modal', 'bc
             contentHistoryDialogTitle: null,
             contentVersionRestoreConfirmation: null,
             contentVersionDestroyDraftConfirmation: null,
+            versionPreviewNotAvailableMessage: null,
             restoreButtonTitle: null,
             closeButtonTitle: null
         };
@@ -50,19 +83,49 @@ bettercms.define('bcms.pages.history', ['bcms.jquery', 'bcms', 'bcms.modal', 'bc
     * Preview specified content version
     */
     function previewVersion(container, id) {
-        var url = $.format(links.loadContentVersionPreviewUrl, id),
-            iFrame = $(container.find(selectors.versionPreviewTemplate).html()),
+        var viewUrl = $.format(links.loadContentVersionPreviewUrl, id),
+            previewIFrame = $(container.find(selectors.versionPreviewTemplate).html()),
             previewContainer = container.find(selectors.versionPreviewContainer),
-            loaderContainer = container.find(selectors.versionPreviewLoaderContainer);
+            loaderContainer = container.find(selectors.versionPreviewContainer),
+            activeTab = container.find(selectors.activeTab),
 
-        previewContainer.html(iFrame);
-        loaderContainer.showLoading();
+            propertiesUrl = $.format(links.loadContentVersionPreviewPropertiesUrl, id),
+            previewPropertiesContainer = container.find(selectors.versionPreviewPropertiesContainer),
+            previewPropertiesLoaderContainer = container.find(selectors.versionPreviewPropertiesContainer),
+            
+            previewIsNotAvailableMessage = "<div class=\"bcms-history-preview\" id=\"bcms-history-preview-properties\" style=\"height: 100%\"><div class=\"bcms-history-info\" style=\"display: block;\">" +
+                                           globalization.versionPreviewNotAvailableMessage + "</div></div>";
 
-        iFrame.on('load', function () {
+        previewContainer.html(previewIFrame);
+        if (activeTab.data('name') === '#bcms-tab-1') {
+            loaderContainer.showLoading();
+        } else {
+            previewPropertiesLoaderContainer.showLoading();
+        }
+
+        previewIFrame.on('load', function () {
             loaderContainer.hideLoading();
         });
         
-        iFrame.attr('src', url);
+        previewIFrame.attr('src', viewUrl);
+
+        $.ajax({
+                type: 'GET',
+                cache: false,
+                url: propertiesUrl
+            })
+            .done(function(result) {
+                previewPropertiesLoaderContainer.hideLoading();
+                if (result === "") {
+                    previewPropertiesContainer.html(previewIsNotAvailableMessage);
+                } else {
+                    previewPropertiesContainer.html(result);
+                }
+            })
+            .fail(function() {
+                previewPropertiesLoaderContainer.hideLoading();
+                previewPropertiesContainer.html(previewIsNotAvailableMessage);
+            });
     }
 
     /**
@@ -119,22 +182,22 @@ bettercms.define('bcms.pages.history', ['bcms.jquery', 'bcms', 'bcms.modal', 'bc
     */
     function searchPageContentHistory(dialog, container, form) {
         grid.submitGridForm(form, function (data) {
-            container.html(data);
-            history.initPageContentHistoryDialogEvents(dialog, data);
+            var activeTabName = dialog.container.find(selectors.activeTab).data('name'),
+                inactiveTabName = dialog.container.find(selectors.inactiveTab).data('name');
+            form.closest(selectors.modalFrameHolder).html(data);
+            dialog.container.find(activeTabName).show();
+            dialog.container.find(inactiveTabName).hide();
+            history.initPageContentHistoryDialogEvents(dialog, data, true);
         });
     }
 
     /**
     * Initializes EditSeo dialog events.
     */
-    history.initPageContentHistoryDialogEvents = function (dialog, opts) {
-        dialog.maximizeHeight();
-
+    history.initPageContentHistoryDialogEvents = function (dialog, opts, isSearchResult) {
         var container = dialog.container.find(selectors.modalContent);
-
         container.find(selectors.gridRestoreLinks).on('click', function (event) {
             bcms.stopEventPropagation(event);
-            
             restoreVersion(dialog, container, $(this).data('id'), opts.onContentRestore, opts.includeChildRegions);
         });
         
@@ -152,8 +215,12 @@ bettercms.define('bcms.pages.history', ['bcms.jquery', 'bcms', 'bcms.modal', 'bc
         
         var form = container.find(selectors.pageContentHistoryForm);
         grid.bindGridForm(form, function (data) {
-            container.html(data);
-            history.initPageContentHistoryDialogEvents(dialog);
+            var activeTabName = dialog.container.find(selectors.activeTab).data('name'),
+                inactiveTabName = dialog.container.find(selectors.inactiveTab).data('name');
+            form.closest(selectors.modalFrameHolder).html(data);
+            dialog.container.find(activeTabName).show();
+            dialog.container.find(inactiveTabName).hide();
+            history.initPageContentHistoryDialogEvents(dialog, opts, isSearchResult);
         });
 
         form.on('submit', function (event) {
@@ -162,9 +229,30 @@ bettercms.define('bcms.pages.history', ['bcms.jquery', 'bcms', 'bcms.modal', 'bc
             return false;
         });
 
-        form.find(selectors.pageContentHistorySearchButton).on('click', function () {
-            searchPageContentHistory(dialog, container, form);
+        bcms.preventInputFromSubmittingForm(form.find(selectors.pageContentHistorySearchField), {
+            preventedEnter: function () {
+                searchPageContentHistory(dialog, container, form);
+            }
         });
+
+        form.find(selectors.pageContentHistorySearchButton).on('click', function () {
+            var parent = $(this).parent();
+            if (!parent.hasClass('bcms-active-search')) {
+                form.find(selectors.pageContentHistorySearchField).prop('disabled', false);
+                parent.addClass('bcms-active-search');
+                form.find(selectors.pageContentHistorySearchField).focus();
+            } else {
+                form.find(selectors.pageContentHistorySearchField).prop('disabled', true);
+                parent.removeClass('bcms-active-search');
+                form.find(selectors.pageContentHistorySearchField).val('');
+            }
+        });
+
+        if (isSearchResult === true) {
+            form.find(selectors.pageContentHistorySearchButton).parent().addClass('bcms-active-search');
+        } else {
+            form.find(selectors.pageContentHistorySearchField).prop('disabled', true);
+        }
     };   
     
     /**

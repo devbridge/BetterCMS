@@ -1,0 +1,90 @@
+﻿@* --------------------------------------------------------------------------------------------------------------------
+// <copyright file="BlogPosts.cshtml" company="Devbridge Group LLC">
+// 
+// Copyright (C) 2015,2016 Devbridge Group LLC
+// 
+// This program is free software: you can redistribute it and/or modify
+// it under the terms of the GNU Lesser General Public License as published by
+// the Free Software Foundation, either version 3 of the License, or
+// (at your option) any later version.
+// 
+// This program is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU General Public License for more details.
+// 
+// You should have received a copy of the GNU Lesser General Public License
+// along with this program.  If not, see http://www.gnu.org/licenses/. 
+// </copyright>
+// 
+// <summary>
+// Better CMS is a publishing focused and developer friendly .NET open source CMS.
+// 
+// Website: https://www.bettercms.com 
+// GitHub: https://github.com/devbridge/bettercms
+// Email: info@bettercms.com
+// </summary>
+// -------------------------------------------------------------------------------------------------------------------- *@
+@using BetterCms.Module.Installation.Models.Blog
+@model BlogItemsModel
+
+@foreach (var item in Model.Items)
+{
+    <section class="blog-post">
+        <h2>
+            <a href="@item.Url">@item.Title</a>
+        </h2>
+        @if (Model.ShowAuthor)
+        {
+            <span class="author">@item.Author</span>
+        }
+        @if (Model.ShowDate)
+        {
+            <time datetime="@item.PublishedOn.ToString("yyyy-MM-dd")">@item.PublishedOn.ToString("MMM d, yyyy")</time>
+        }
+        <br />
+        <span>
+            @if (item.Tags.Count > 0 && Model.ShowTags)
+            {
+                <span>Tags:</span>
+                foreach (var tag in item.Tags)
+                {
+                    <a href="@Request.Path?blogtag=@tag" class="single-tag">@tag</a>
+                }
+            }
+        </span>
+        <span>
+            @if (item.Categories.Count > 0 && Model.ShowCategories)
+            {
+                <span>Categories:</span>
+                foreach (var category in item.Categories)
+                {
+                    <a href="@Request.Path?blogcategory=@category.Name" class="single-category">@category.Name</a>
+                }
+            }
+        </span>
+        <article>
+            <p>@Html.Raw(item.IntroText)</p>
+
+            <a href="@item.Url">&lt; Read more &gt;</a>
+        </article>
+    </section>
+}
+
+@if (Model.ShowPager && Model.Items.Count > 0)
+{
+    <section class="blog-pager">
+        @for (int i = 1; i <= Model.NumberOfPages; i++)
+        {
+            if (Model.CurrentPage == i)
+            {
+                <a href="@Request.Path?blogpage=@i" class="blog-page" style="pointer-events: none; cursor: default">@i</a>
+            }
+            else
+            {
+                <a href="@Request.Path?blogpage=@i" class="blog-page">@i</a>
+            }
+        }
+    </section>
+}
+

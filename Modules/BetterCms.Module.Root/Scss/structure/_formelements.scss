@@ -1,0 +1,144 @@
+// --------------------------------------------------------------------------------------------------------------------
+// <copyright file="_formelements.scss" company="Devbridge Group LLC">
+// 
+// Copyright (C) 2015,2016 Devbridge Group LLC
+// 
+// This program is free software: you can redistribute it and/or modify
+// it under the terms of the GNU Lesser General Public License as published by
+// the Free Software Foundation, either version 3 of the License, or
+// (at your option) any later version.
+// 
+// This program is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU General Public License for more details.
+// 
+// You should have received a copy of the GNU Lesser General Public License
+// along with this program.  If not, see http://www.gnu.org/licenses/. 
+// </copyright>
+// 
+// <summary>
+// Better CMS is a publishing focused and developer friendly .NET open source CMS.
+// 
+// Website: https://www.bettercms.com 
+// GitHub: https://github.com/devbridge/bettercms
+// Email: info@bettercms.com
+// </summary>
+// --------------------------------------------------------------------------------------------------------------------
+%input-fields-ui {
+    @include transition(border-color 200ms, box-shadow 200ms);
+    background-color: $white;
+    border: $border-form-element;
+    box-sizing: border-box;
+    color: $text-gray;
+    font: {
+        family: $font-base-family;
+        size: 14px;
+    }
+    padding: 9px 11px 10px;
+    width: 100%;
+
+    &:focus {
+        background: $white;
+        border-color: $border-blue;
+        outline: none;
+    }
+
+    @include placeholder {
+        color: $text-light;
+    }
+}
+
+.bcms-field {
+    &-wrapper {
+        position: relative;
+
+        td & {
+            margin-bottom: 0;
+        }
+    }
+
+    &-text {
+        @extend %input-fields-ui;
+        height: $form-element-height;
+
+        &.bcms-datepicker {
+            padding-right: 32px;
+        }
+    }
+
+    &-textarea {
+        @extend %input-fields-ui;
+        height: 150px;
+        resize: vertical;
+
+        &.bcms-code-field {
+            font-family: monospace !important;
+        }
+    }
+}
+
+.bcms-form {
+    &-block-holder {
+        @include clearfix();
+        margin: 0 -30px;
+
+        > div {
+            @include flexible-grid($elem-class: 'div');
+            box-sizing: border-box;
+            float: left;
+            padding: 0 30px;
+        }
+    }
+}
+
+.bcms-checkbox {
+    &-block {
+        @include clearfix();
+
+        .bcms-checkbox-holder {
+            float: left;
+            width: 35%;
+        }
+
+        .bcms-filter-selection-block & {
+            float: left;
+
+            .bcms-checkbox-holder {
+                margin-right: 20px;
+                width: auto;
+            }
+        }
+    }
+
+    &-holder {
+        color: $text-dark;
+        font-size: 12px;
+        padding: 5px 10px 5px 0;
+
+        > input[type="checkbox"] {
+            margin: 0;
+            vertical-align: middle;
+        }
+    }
+
+    &-label {
+        @include vertical-align();
+        cursor: pointer;
+        margin-left: 3px;
+    }
+}
+
+.bcms-check-field-helper {
+    background-color: $white;
+    border: $border-thin-smoke;
+    line-height: 16px;
+    margin-top: -1px;
+    padding: 10px;
+
+    .bcms-checkbox-holder {
+        float: none;
+        font-size: 11px;
+        width: auto;
+    }
+}

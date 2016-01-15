@@ -1,4 +1,31 @@
-﻿@using BetterCms.Module.Pages
+﻿@* --------------------------------------------------------------------------------------------------------------------
+// <copyright file="AddNewPage.cshtml" company="Devbridge Group LLC">
+// 
+// Copyright (C) 2015,2016 Devbridge Group LLC
+// 
+// This program is free software: you can redistribute it and/or modify
+// it under the terms of the GNU Lesser General Public License as published by
+// the Free Software Foundation, either version 3 of the License, or
+// (at your option) any later version.
+// 
+// This program is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU General Public License for more details.
+// 
+// You should have received a copy of the GNU Lesser General Public License
+// along with this program.  If not, see http://www.gnu.org/licenses/. 
+// </copyright>
+// 
+// <summary>
+// Better CMS is a publishing focused and developer friendly .NET open source CMS.
+// 
+// Website: https://www.bettercms.com 
+// GitHub: https://github.com/devbridge/bettercms
+// Email: info@bettercms.com
+// </summary>
+// -------------------------------------------------------------------------------------------------------------------- *@
+@using BetterCms.Module.Pages
 @using BetterCms.Module.Pages.Content.Resources
 @using BetterCms.Module.Pages.Controllers
 @using BetterCms.Module.Pages.ViewModels.Page
@@ -8,77 +35,103 @@
 @using BetterCms.Module.Root.ViewModels.Security
 @using BetterCms.Module.Root.ViewModels.Shared
 @using Microsoft.Web.Mvc
-
 @model AddNewPageViewModel
 
-<div class="bcms-tab-header">
-    <a class="bcms-tab-item bcms-active" data-name="#bcms-tab-1">@PagesGlobalization.AddNewPage_Title</a>
-    <a class="bcms-tab-item" data-name="#bcms-tab-2">@PagesGlobalization.AddNewPage_Options</a>
+<div class="bcms-tab-header bcms-js-tab-header">
+    <div class="bcms-modal-frame-holder">
+        <div class="bcms-tab-ui bcms-tab-item bcms-active" data-name="#bcms-tab-1">@PagesGlobalization.AddNewPage_Title</div>
+        <div class="bcms-tab-ui bcms-tab-item" data-name="#bcms-tab-2">@PagesGlobalization.AddNewPage_Options</div>
+    </div>
 </div>
 
-<div class="bcms-scroll-window">
-    @Html.TabbedContentMessagesBox()
+<div class="bcms-modal-frame-holder">
+    <div class="bcms-messages-ui">
+        <ul class="bcms-info-messages bcms-js-info-message">
+            <li>
+                <div class="bcms-messages-close bcms-js-btn-close" id="bcms-addnewpage-closeinfomessage">@RootGlobalization.Button_Close</div>
+                @Html.Raw(PagesGlobalization.AddNewPage_Template_InfoMessage_Text)
+            </li>
+        </ul>
+    </div>
 
-    @using (Html.BeginForm<PageController>(f => f.AddNewPage(null, null), FormMethod.Post, new { @class = "bcms-ajax-form" }))
-    {
-        <div id="bcms-tab-1" class="bcms-tab-single">
-            <div class="bcms-padded-content">
+    <div class="bcms-window-tabbed-options">
+        @Html.MessagesBox()
+        @using (Html.BeginForm<PageController>(f => f.AddNewPage(null, null), FormMethod.Post, new { @class = "bcms-ajax-form" }))
+        {
+            <div id="bcms-tab-1" class="bcms-tab-single">
+                <div class="bcms-form-block-holder">
+                    <div>
+                        @if (Model.Languages != null && Model.Languages.Any())
+                        {
+                            @Html.HiddenFor(model => model.LanguageId, new { data_bind = "value: language.languageId()" })
+                        }
+                        @Html.HiddenSubmit()
+                        @if (Model.ShowLanguages)
+                        {
+                            <div class="bcms-input-list-holder" data-bind="with: language">
+                                <div class="bcms-content-titles">@PagesGlobalization.AddNewPage_Language</div>
+                                @Html.Tooltip(PagesGlobalization.AddNewPage_Language_Tooltip_Description)
+                                <div class="bcms-field-wrapper">
+                                    <select data-bind="options: languages, optionsText: 'value', optionsValue: 'key', value: languageId, select2: { minimumResultsForSearch: -1 }"></select>
+                                    </div>
+                                </div>
+                        }
 
-                <div class="bcms-input-list-holder">
-                    @Html.Tooltip(PagesGlobalization.AddNewPage_PageTitle_Tooltip_Description)
-                    <div class="bcms-content-titles">@PagesGlobalization.AddNewPage_PageTitle</div>
-                    <div class="bcms-input-box">
-                        @Html.TextBoxFor(f => f.PageTitle, new { @class = "bcms-editor-field-box", @id = "PageTitle" })
-                        @Html.BcmsValidationMessageFor(f => f.PageTitle)
+                        <div class="bcms-input-list-holder">
+                            <div class="bcms-content-titles">@PagesGlobalization.AddNewPage_PageTitle</div>
+                            @Html.Tooltip(PagesGlobalization.AddNewPage_PageTitle_Tooltip_Description)
+                            <div class="bcms-field-wrapper">
+                                @Html.TextBoxFor(f => f.PageTitle, new { @class = "bcms-field-text", @id = "PageTitle" })
+                                @Html.BcmsValidationMessageFor(f => f.PageTitle)
+                            </div>
+                        </div>
+
+                        @Html.Partial("Partial/AddNewPageEditPermalink")
+                    </div>
+
+                    <div>
+                        @if (Model.AccessControlEnabled)
+                        {
+                            var viewModel = new UserAccessTemplateViewModel
+                                                {
+                                                    Title = PagesGlobalization.AddNewPage_UserAccess,
+                                                    Tooltip = PagesGlobalization.AddNewPage_UserAccess_Tooltip_Description
+                                                };
+                            @Html.Partial(RootModuleConstants.AccessControlTemplate, viewModel)
+                        }
                     </div>
                 </div>
 
-                @Html.Partial("Partial/AddNewPageEditPermalink")
+                <div class="bcms-input-list-holder">
+                    <div class="bcms-content-dialog-title">
+                        <div class="bcms-content-titles-align">
+                            @PagesGlobalization.AddNewPage_Template
+                            @Html.Tooltip(PagesGlobalization.AddNewPage_Template_Tooltip_Description)
+                        </div>
 
-                <div class="bcms-addpage-title">
-                    @Html.Tooltip(PagesGlobalization.AddNewPage_Template_Tooltip_Description)
-                    <div class="bcms-content-titles">@PagesGlobalization.AddNewPage_Template</div>
+                        <!-- ko with: templatesList -->
+                        <div class="bcms-top-block-inner" data-bind="css: { 'bcms-active-search': searchEnabled() }">
+                            <div class="bcms-btn-search" data-bind="click: toggleSearch">@RootGlobalization.Button_Search</div>
+                            <div class="bcms-search-block">
+                                <input type="text" class="bcms-search-field-box bcms-js-search-box" placeholder="@RootGlobalization.WaterMark_Search"
+                                       data-bind="value: searchQuery, valueUpdate: 'afterkeydown', enterPress: search, hasFocus: hasFocus, enable: searchEnabled">
+                            </div>
+                        </div>
+                        <!-- /ko -->
+                    </div>
+
+                    @Html.Partial("Partial/TemplatesList", Model.Templates)
                 </div>
 
-                <div class="bcms-info-message-box">
-                    <a class="bcms-btn-close" id="bcms-addnewpage-closeinfomessage">@RootGlobalization.Button_Close</a>
-                    @Html.Raw(PagesGlobalization.AddNewPage_Template_InfoMessage_Text)
-                </div>
-
-                @Html.Partial("Partial/TemplatesList", Model.Templates)
                 @Html.HiddenFor(f => f.TemplateId, new { @id = "TemplateId" })
                 @Html.HiddenFor(f => f.MasterPageId, new { @id = "MasterPageId" })
                 @Html.HiddenFor(f => f.ParentPageUrl)
                 @Html.HiddenFor(f => f.CreateMasterPage)
-                @if (Model.Languages != null && Model.Languages.Any())
-                {
-                    @Html.HiddenFor(model => model.LanguageId, new { data_bind = "value: language.languageId()" })
-                }
-                @Html.HiddenSubmit()
-
-                @if (Model.AccessControlEnabled)
-                {
-                    var viewModel = new UserAccessTemplateViewModel
-                                        {
-                                            Title = PagesGlobalization.AddNewPage_UserAccess,
-                                            Tooltip = PagesGlobalization.AddNewPage_UserAccess_Tooltip_Description
-                                        };
-                    @Html.Partial(RootModuleConstants.AccessControlTemplate, viewModel)
-                }
-                
-                @if (Model.ShowLanguages)
-                {
-                    <div class="bcms-input-list-holder" data-bind="with: language">
-                        @Html.Tooltip(PagesGlobalization.AddNewPage_Language_Tooltip_Description)
-                        <div class="bcms-content-titles">@PagesGlobalization.AddNewPage_Language</div>
-                        <select class="bcms-global-select" data-bind="options: languages, optionsText: 'value', optionsValue: 'key', value: languageId"></select>
-                    </div>
-                }
             </div>
-        </div>
 
-        <div id="bcms-tab-2" class="bcms-tab-single" data-bind="with: options">
-            @Html.Partial(PagesConstants.OptionValuesGridTemplate, new EditableGridViewModel{CanAddNewItems = true})
-        </div>
-    }
+            <div id="bcms-tab-2" class="bcms-tab-single" data-bind="with: options">
+                @Html.Partial(PagesConstants.OptionValuesGridTemplate, new EditableGridViewModel { CanAddNewItems = true })
+            </div>
+        }
+    </div>
 </div>

@@ -1,0 +1,172 @@
+// --------------------------------------------------------------------------------------------------------------------
+// <copyright file="_notifications.scss" company="Devbridge Group LLC">
+// 
+// Copyright (C) 2015,2016 Devbridge Group LLC
+// 
+// This program is free software: you can redistribute it and/or modify
+// it under the terms of the GNU Lesser General Public License as published by
+// the Free Software Foundation, either version 3 of the License, or
+// (at your option) any later version.
+// 
+// This program is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU General Public License for more details.
+// 
+// You should have received a copy of the GNU Lesser General Public License
+// along with this program.  If not, see http://www.gnu.org/licenses/. 
+// </copyright>
+// 
+// <summary>
+// Better CMS is a publishing focused and developer friendly .NET open source CMS.
+// 
+// Website: https://www.bettercms.com 
+// GitHub: https://github.com/devbridge/bettercms
+// Email: info@bettercms.com
+// </summary>
+// --------------------------------------------------------------------------------------------------------------------
+$message-success: #33aa61;
+$message-warning: #e5a12a;
+$message-error: #dc4250;
+$message-info: #368fd3;
+
+$validation-error-bg: #ffe9e9;
+$validation-error-border: 1px solid #e17777;
+
+$message-icon-size: 22px;
+
+$alert-frames: (
+                ('error', $text-red, $border-solid-red),
+                ('popinfo', $blue-main, $border-solid-blue)
+);
+
+$message-content-type: (
+                ('success', $message-success, $bcms-messages-success),
+                ('warning', $message-warning, $bcms-messages-warning),
+                ('error', $message-error, $bcms-messages-error),
+                ('info', $message-info, $bcms-messages-info)
+);
+
+$validation-fields: ();
+
+@each $name, $color, $border in $alert-frames {
+    .bcms-#{$name}-frame {
+        @include positioning($center: true);
+        background-color: $white;
+        border-top: $border;
+        box-shadow: 0 25px 80px 5px rgba($black, .4);
+        box-sizing: border-box;
+        color: $dark-main;
+        padding: 30px 40px;
+        width: 600px;
+
+        > .bcms-message-titles {
+            color: $color;
+            margin: 0 0 15px;
+            font-size: 18px;
+        }
+
+        > .bcms-message-description {
+            font-size: 14px;
+            line-height: 19px;
+        }
+    }
+}
+
+//module server side messages
+.bcms-messages {
+    &-ui {
+        @include position(fixed, 0 0 null);
+        z-index: 999;
+
+        @each $name, $color, $message-icon in $message-content-type {
+            .bcms-#{$name}-messages {
+                background-color: $color;
+
+                li {
+                    &:first-child {
+                        @include virtual(before) {
+                            @include position(absolute, 2px null null 4px);
+                            @include size($message-icon-size);
+                            background: url($message-icon) no-repeat center;
+                        }
+                    }
+                }
+            }
+        }
+
+        ul {
+            box-sizing: border-box;
+            font-size: 13px;
+            margin: 0;
+            min-height: 55px;
+            padding: 14px 0;
+            text-align: center;
+        }
+
+        li {
+            box-sizing: border-box;
+            color: $white;
+            display: inline-block;
+            line-height: 18px;
+            list-style: none;
+            margin: auto;
+            padding: 4px 75px 4px 35px;
+            position: relative;
+            text-align: left;
+            width: $page-width;
+        }
+    }
+
+    &-close {
+        @include close-button($icon: $bcms-close-white, $position: 4px 47px null null);
+    }
+
+    &-draft-destroy {
+        color: $white;
+        font-weight: 700;
+        text-decoration: underline;
+    }
+}
+
+//module field validation messages
+.bcms-input-validation-error {
+    background-color: $validation-error-bg;
+    border: $validation-error-border;
+
+    &:focus {
+        background-color: $validation-error-bg;
+        border: $validation-error-border;
+
+        ~ .bcms-field-validation-error {
+            > span {
+                visibility: visible;
+            }
+        }
+    }
+}
+
+.bcms-field-validation-error {
+    @include position(absolute, 0 0 null null);
+    @include size(10px $form-element-height);
+    z-index: 1;
+
+    > span {
+        @include position(absolute, null 0 ($form-element-height + 8px) null);
+        background-color: $message-error;
+        color: $white;
+        font: {
+            size: 13px;
+            weight: 400;
+        }
+        line-height: 18px;
+        min-width: 205px;
+        padding: 10px 25px;
+        visibility: hidden;
+
+        @include virtual(after) {
+            @include position(absolute, null 10px -7px null);
+            @include triangle(14px, $message-error, down);
+        }
+    }
+}

@@ -207,8 +207,10 @@
     <Compile Include="Modules\CssIncludeDescriptor.cs" />
     <Compile Include="Modules\JsIncludeDescriptor.cs" />
     <Compile Include="Modules\JsShimConfigDescriptor.cs" />
+    <Compile Include="Modules\Projections\SwitchActionProjection.cs" />
     <Compile Include="Modules\Projections\JavaScriptModuleLink.cs" />
     <Compile Include="Modules\Projections\LinkToNewTabProjection.cs" />
+    <Compile Include="Modules\Projections\PropertiesPreview.cs" />
     <Compile Include="Modules\Registration\CmsModulesRegistration.cs" />
     <Compile Include="Modules\Registration\ICmsModulesRegistration.cs" />
     <Compile Include="Mvc\Binders\JSONDataBinder.cs" />
@@ -283,6 +285,10 @@
       <Project>{DA2B225E-6AEE-4465-8B08-4D5B1C1CED49}</Project>
       <Name>BetterCms.Configuration</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup />
+  <ItemGroup>
+    <Content Include="..\licensing.licenseheader" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="$(SolutionDir)\.nuget\nuget.targets" />

@@ -1,12 +1,43 @@
-﻿using System;
+﻿// --------------------------------------------------------------------------------------------------------------------
+// <copyright file="DefaultMediaImageService.cs" company="Devbridge Group LLC">
+// 
+// Copyright (C) 2015,2016 Devbridge Group LLC
+// 
+// This program is free software: you can redistribute it and/or modify
+// it under the terms of the GNU Lesser General Public License as published by
+// the Free Software Foundation, either version 3 of the License, or
+// (at your option) any later version.
+// 
+// This program is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU General Public License for more details.
+// 
+// You should have received a copy of the GNU Lesser General Public License
+// along with this program.  If not, see http://www.gnu.org/licenses/. 
+// </copyright>
+// 
+// <summary>
+// Better CMS is a publishing focused and developer friendly .NET open source CMS.
+// 
+// Website: https://www.bettercms.com 
+// GitHub: https://github.com/devbridge/bettercms
+// Email: info@bettercms.com
+// </summary>
+// --------------------------------------------------------------------------------------------------------------------
+using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Drawing.Imaging;
 using System.IO;
 using System.Linq;
 using System.Net;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Web;
+using System.Xml;
+using System.Xml.Linq;
+using System.Xml.XPath;
 
 using BetterModules.Core.DataAccess;
 using BetterModules.Core.DataAccess.DataContext;
@@ -17,9 +48,12 @@ using BetterCms.Core.Services.Storage;
 using BetterCms.Module.MediaManager.Content.Resources;
 using BetterCms.Module.MediaManager.Helpers;
 using BetterCms.Module.MediaManager.Models;
+using BetterCms.Module.MediaManager.Models.Enum;
 using BetterCms.Module.Root.Mvc;
 
 using Common.Logging;
+
+using FluentNHibernate.Mapping;
 
 using NHibernate;
 using NHibernate.Linq;
@@ -191,51 +225,119 @@ namespace BetterCms.Module.MediaManager.Services
         public MediaImage UploadImage(Guid rootFolderId, string fileName, long fileLength, Stream fileStream, Guid reuploadMediaId, bool overrideUrl = true)
         {
             overrideUrl = false; // TODO: temporary disabling feature #1055.
-            using (var thumbnailFileStream = new MemoryStream())
-            {
-                var folderName = mediaFileService.CreateRandomFolderName();
 
+            var folderName = mediaFileService.CreateRandomFolderName();
+            var publicFileName = MediaHelper.RemoveInvalidPathSymbols(MediaImageHelper.CreatePublicFileName(fileName, Path.GetExtension(fileName)));
+            var fileExtension = Path.GetExtension(fileName);
+            var imageType = ImageHelper.GetImageType(fileExtension);
+
+            MediaImage uploadImage = null;
+            MemoryStream thumbnailFileStream = new MemoryStream();
+            Size size;
+            Size thumbnailSize = ThumbnailSize;
+            long thumbnailImageLength;
+
+            /* Upload standard raster type images */
+            if (imageType == ImageType.Raster)
+            {
                 fileStream = RotateImage(fileStream);
-                var size = GetSize(fileStream);
+                size = GetSize(fileStream);
 
                 CreatePngThumbnail(fileStream, thumbnailFileStream, ThumbnailSize);
+                thumbnailImageLength = thumbnailFileStream.Length;
+            }
+            /* Upload vector graphics images */
+            else
+            {
+                size = Size.Empty;
+                ReadParametersFormVectorImage(fileStream, ref size);
+                thumbnailImageLength = fileStream.Length;
+                CreateSvgThumbnail(fileStream, thumbnailFileStream, ThumbnailSize);
+            }
 
+            try
+            {
                 if (!reuploadMediaId.HasDefaultValue())
                 {
                     // Re-uploading image: Get original image, folder name, file extension, file name
-                    MediaImage reuploadImage = (MediaImage)repository.First<MediaImage>(image => image.Id == reuploadMediaId).Clone();
-                    reuploadImage.IsTemporary = true;
-                    var publicFileName = MediaHelper.RemoveInvalidPathSymbols(MediaImageHelper.CreatePublicFileName(fileName, Path.GetExtension(fileName)));
+                    uploadImage = (MediaImage)repository.First<MediaImage>(image => image.Id == reuploadMediaId).Clone();
+                    uploadImage.IsTemporary = true;
 
                     // Create new original image and upload file stream to the storage
-                    reuploadImage = CreateImage(rootFolderId, fileName, Path.GetExtension(fileName), fileName, size, fileLength, thumbnailFileStream.Length);
-                    mediaImageVersionPathService.SetPathForNewOriginal(reuploadImage, folderName, publicFileName);
-
-                    unitOfWork.BeginTransaction();
-                    repository.Save(reuploadImage);
-                    unitOfWork.Commit();
-
-                    StartTasksForImage(reuploadImage, fileStream, thumbnailFileStream, false);
-
-                    return reuploadImage;
+                    uploadImage = CreateImage(rootFolderId, fileName, fileExtension, Path.GetFileName(fileName), size, fileLength);
                 }
                 else
                 {
                     // Uploading new image
-                    var publicFileName = MediaHelper.RemoveInvalidPathSymbols(MediaImageHelper.CreatePublicFileName(fileName, Path.GetExtension(fileName)));
-
                     // Create new original image and upload file stream to the storage
-                    MediaImage originalImage = CreateImage(rootFolderId, fileName, Path.GetExtension(fileName), fileName, size, fileLength, thumbnailFileStream.Length);
-                    mediaImageVersionPathService.SetPathForNewOriginal(originalImage, folderName, publicFileName);
+                    uploadImage = CreateImage(
+                        rootFolderId,
+                        fileName,
+                        fileExtension,
+                        Path.GetFileName(fileName),
+                        size,
+                        fileLength);
 
-                    unitOfWork.BeginTransaction();
-                    repository.Save(originalImage);
-                    unitOfWork.Commit();
-
-                    StartTasksForImage(originalImage, fileStream, thumbnailFileStream, false);
-
-                    return originalImage;
                 }
+                SetThumbnailParameters(uploadImage, thumbnailSize, thumbnailImageLength);
+                mediaImageVersionPathService.SetPathForNewOriginal(uploadImage, folderName, publicFileName, imageType);
+
+                unitOfWork.BeginTransaction();
+                repository.Save(uploadImage);
+                unitOfWork.Commit();
+
+                StartTasksForImage(uploadImage, fileStream, thumbnailFileStream, false);
+            }
+            finally
+            {
+                if (thumbnailFileStream != null)
+                {
+                    thumbnailFileStream.Dispose();
+                }
+            }
+
+            return uploadImage;
+        }
+
+        private void ReadParametersFormVectorImage(Stream fileStream, ref Size size)
+        {
+            XDocument xdocument = XDocument.Load(fileStream);
+            var root = xdocument.Root;
+            if (root == null || root.Name.LocalName != "svg")
+            {
+                const string message = "An error has ocurred while trying to read the file";
+                throw new ValidationException(() => message, message);
+            }
+            var attributes = root.Attributes().ToList();
+
+            var widthAttribute = attributes.FirstOrDefault(x => x.Name == "width");
+
+            var heightAttribute = attributes.FirstOrDefault(x => x.Name == "height");
+
+            /* Assume that attribute may look something like '1024px'. We need to match int value */
+            Match match;
+            int value;
+            var regex = new Regex(@"^\d+");
+            if (widthAttribute != null)
+            {
+                match = regex.Match(widthAttribute.Value);
+                if (int.TryParse(match.Value, out value))
+                {
+                    size.Width = value;
+                };
+            }
+            if (heightAttribute != null)
+            {
+                match = regex.Match(heightAttribute.Value);
+                if (int.TryParse(match.Value, out value))
+                {
+                    size.Height = value;
+                };
+            }
+            if (size.Height * size.Width == 0)
+            {
+                size.Height = -1;
+                size.Width = -1;
             }
         }
 
@@ -252,8 +354,9 @@ namespace BetterCms.Module.MediaManager.Services
                 var publicFileName = MediaHelper.RemoveInvalidPathSymbols(MediaImageHelper.CreatePublicFileName(image.OriginalFileName, image.OriginalFileExtension));
 
                 // Create new original image and upload file stream to the storage
-                var originalImage = CreateImage(null, image.OriginalFileName, image.OriginalFileExtension, image.Title, size, image.Size, thumbnailFileStream.Length, image);
-                mediaImageVersionPathService.SetPathForNewOriginal(originalImage, folderName, publicFileName);
+                var originalImage = CreateImage(null, image.OriginalFileName, image.OriginalFileExtension, Path.GetFileName(image.Title), size, image.Size, image);
+                SetThumbnailParameters(originalImage, ThumbnailSize, thumbnailFileStream.Length);
+                mediaImageVersionPathService.SetPathForNewOriginal(originalImage, folderName, publicFileName, ImageHelper.GetImageType(image.OriginalFileExtension));
 
                 unitOfWork.BeginTransaction();
                 repository.Save(originalImage);
@@ -310,10 +413,17 @@ namespace BetterCms.Module.MediaManager.Services
             }
 
             var downloadResponse = storageService.DownloadObject(mediaImage.FileUri);
-
+            var imageType = ImageHelper.GetImageType(mediaImage.OriginalFileExtension);
             using (var memoryStream = new MemoryStream())
             {
-                CreatePngThumbnail(downloadResponse.ResponseStream, memoryStream, size);
+                if (imageType == ImageType.Raster)
+                {
+                    CreatePngThumbnail(downloadResponse.ResponseStream, memoryStream, size);
+                }
+                else
+                {
+                    CreateSvgThumbnail(downloadResponse.ResponseStream, memoryStream, size);
+                }
 
                 mediaImage.ThumbnailWidth = size.Width;
                 mediaImage.ThumbnailHeight = size.Height;
@@ -359,7 +469,7 @@ namespace BetterCms.Module.MediaManager.Services
                 if (!overrideUrl)
                 {
                     var publicFileName = MediaHelper.RemoveInvalidPathSymbols(MediaImageHelper.CreateVersionedFileName(originalImage.OriginalFileName, GetVersion(originalImage)));
-                    mediaImageVersionPathService.SetPathForNewOriginal(originalImage, folderName, publicFileName, archivedImage.OriginalUri, archivedImage.PublicOriginallUrl);
+                    mediaImageVersionPathService.SetPathForNewOriginal(originalImage, folderName, publicFileName, ImageHelper.GetImageType(originalImage.OriginalFileExtension) ,archivedImage.OriginalUri, archivedImage.PublicOriginallUrl);
                 }
                 else
                 {
@@ -421,7 +531,7 @@ namespace BetterCms.Module.MediaManager.Services
                 if (!overrideUrl)
                 {
                     var publicFileName = MediaHelper.RemoveInvalidPathSymbols(MediaImageHelper.CreateVersionedFileName(image.OriginalFileName, GetVersion(image)));
-                    mediaImageVersionPathService.SetPathForNewOriginal(image, folderName, publicFileName, archivedImage.OriginalUri, archivedImage.PublicOriginallUrl);
+                    mediaImageVersionPathService.SetPathForNewOriginal(image, folderName, publicFileName, ImageHelper.GetImageType(image.OriginalFileExtension), archivedImage.OriginalUri, archivedImage.PublicOriginallUrl);
                 }
                 
                 unitOfWork.BeginTransaction();
@@ -617,6 +727,13 @@ namespace BetterCms.Module.MediaManager.Services
             image.IsOriginalUploaded = null;
         }
 
+        private void SetThumbnailParameters(MediaImage image, Size size, long length)
+        {
+            image.ThumbnailWidth = size.Width;
+            image.ThumbnailHeight = size.Height;
+            image.ThumbnailSize = length;
+        }
+
         private MediaImage CreateImage(
             Guid? rootFolderId,
             string fileName,
@@ -624,7 +741,6 @@ namespace BetterCms.Module.MediaManager.Services
             string imageTitle,
             Size size,
             long fileLength,
-            long thumbnailImageLength,
             MediaImage filledInImage = null)
         {
             MediaImage image;
@@ -638,7 +754,7 @@ namespace BetterCms.Module.MediaManager.Services
                     image.Folder = repository.AsProxy<MediaFolder>((Guid)rootFolderId);
                 }
 
-                image.Title = Path.GetFileName(imageTitle);
+                image.Title = imageTitle;
                 image.Caption = null;
                 image.Size = fileLength;
                 image.IsTemporary = true;
@@ -665,10 +781,6 @@ namespace BetterCms.Module.MediaManager.Services
             image.OriginalWidth = size.Width;
             image.OriginalHeight = size.Height;
             image.OriginalSize = fileLength;
-
-            image.ThumbnailWidth = ThumbnailSize.Width;
-            image.ThumbnailHeight = ThumbnailSize.Height;
-            image.ThumbnailSize = thumbnailImageLength;
 
             image.ImageAlign = null;
 
@@ -711,6 +823,42 @@ namespace BetterCms.Module.MediaManager.Services
 
                 destination.Save(destinationStream, ImageFormat.Png);
             }
+        }
+
+        private void CreateSvgThumbnail(Stream sourceStream, Stream destinationStream, Size size)
+        {
+            sourceStream.Seek(0, SeekOrigin.Begin);
+            var xDocument = XDocument.Load(sourceStream);
+            var root = xDocument.Root;
+            if (root == null || root.Name.LocalName != "svg")
+            {
+                const string message = "An error has occured while trying to read the file";
+                throw new ValidationException(() => message, message);
+            }
+            var attributes = root.Attributes().ToList();
+
+            var widthAttribute = attributes.FirstOrDefault(x => x.Name == "width");
+            if (widthAttribute == null)
+            {
+                widthAttribute = new XAttribute("width", size.Width.ToString());
+                attributes.Add(widthAttribute);
+            }
+            else
+            {
+                widthAttribute.Value = size.Width.ToString();
+            }
+            var heightAttribute = attributes.FirstOrDefault(x => x.Name == "height");
+            if (heightAttribute == null)
+            {
+                heightAttribute = new XAttribute("height", size.Height.ToString());
+                attributes.Add(heightAttribute);
+            }
+            else
+            {
+                heightAttribute.Value = size.Height.ToString();
+            }
+            root.ReplaceAttributes(attributes);
+            xDocument.Save(destinationStream);
         }
         
         private int GetVersion(MediaImage image)
@@ -857,6 +1005,8 @@ namespace BetterCms.Module.MediaManager.Services
             MemoryStream thumbnailFileStream, 
             bool shouldNotUploadOriginal = false)
         {
+            var allTasks = new List<Task>();
+
             var publicImageUpload = mediaFileService.UploadMediaFileToStorageAsync<MediaImage>(
                 fileStream,
                 mediaImage.FileUri,
@@ -876,6 +1026,7 @@ namespace BetterCms.Module.MediaManager.Services
                     }
                 },
                 true);
+            allTasks.Add(publicImageUpload);
 
             var publicThumbnailUpload = mediaFileService.UploadMediaFileToStorageAsync<MediaImage>(
                 thumbnailFileStream,
@@ -896,8 +1047,7 @@ namespace BetterCms.Module.MediaManager.Services
                     }
                 },
                 true);
-
-            var allTasks = new List<Task> { publicImageUpload, publicThumbnailUpload };
+            allTasks.Add(publicThumbnailUpload);
 
             Task publicOriginalUpload = null;
             if (!shouldNotUploadOriginal)
@@ -953,7 +1103,10 @@ namespace BetterCms.Module.MediaManager.Services
             {
                 publicOriginalUpload.Start();
             }
-            publicThumbnailUpload.Start();
+            if (publicThumbnailUpload != null)
+            {
+                publicThumbnailUpload.Start();
+            }
         }
 
         private void OnAfterUploadCompleted(MediaImage media, bool shouldNotUploadOriginal)

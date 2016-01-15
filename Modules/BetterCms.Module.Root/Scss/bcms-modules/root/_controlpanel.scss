@@ -1,123 +1,119 @@
-@import '../../core/variables';
-
-$control-panel-buttons: (
-                ('add', $bcms-cp-add-new, $blue-l30, $blue-l40),
-                ('clone', $bcms-cp-clone, $blue-l30, $blue-l40),
-                ('blog-add', $bcms-cp-add-new, $blue-l30, $blue-l40),
-                ('translate', $bcms-cp-translate, $blue-l30, $blue-l40),
-                ('settings', $bcms-cp-settings, $gray-l45, $gray-l46),
-                ('delete', $bcms-cp-delete, $red-l60, $red-l70)
-);
+// --------------------------------------------------------------------------------------------------------------------
+// <copyright file="_controlpanel.scss" company="Devbridge Group LLC">
+// 
+// Copyright (C) 2015,2016 Devbridge Group LLC
+// 
+// This program is free software: you can redistribute it and/or modify
+// it under the terms of the GNU Lesser General Public License as published by
+// the Free Software Foundation, either version 3 of the License, or
+// (at your option) any later version.
+// 
+// This program is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU General Public License for more details.
+// 
+// You should have received a copy of the GNU Lesser General Public License
+// along with this program.  If not, see http://www.gnu.org/licenses/. 
+// </copyright>
+// 
+// <summary>
+// Better CMS is a publishing focused and developer friendly .NET open source CMS.
+// 
+// Website: https://www.bettercms.com 
+// GitHub: https://github.com/devbridge/bettercms
+// Email: info@bettercms.com
+// </summary>
+// --------------------------------------------------------------------------------------------------------------------
+$border-cp-frame: 1px solid #536082;
+$cp-handle-width: 54px;
 
 $control-panel-switch-status: (
-                ('on', $bcms-cp-indicate-on),
-                ('off' $bcms-cp-indicate-off)
+                ('on', $cp-blue, auto, 3px),
+                ('off', null, 3px, auto)
 );
 
-$control-panel-status: (
-                ('pubstatus', $bcms-cp-pub-ok, $bcms-cp-pub-warn),
-                ('seostatus', $bcms-cp-seo-ok, $bcms-cp-seo-warn)
-);
-//module
-.bcms-user-profile {
-    @include ellipsis();
-    background: url($bcms-cp-user) no-repeat left center;
-    box-sizing: border-box;
+%cp-btn-frame {
+    @include transition(background-color 200ms);
     color: $white;
     cursor: pointer;
-    float: left;
-    line-height: 26px;
-    max-width: 160px;
-    padding-left: 20px;
+    font: {
+        family: $font-base-family;
+        size: 14px;
+    }
+    height: 36px;
+    line-height: 36px
 }
 
-//module control panel global
+%cp-settings-btn-frame {
+    @include transition(background-color 200ms);
+    background-color: $cp-dark;
+    border: $border-cp-frame;
+    box-sizing: border-box;
+    color: $cp-sky;
+    cursor: pointer;
+    font: {
+        family: $font-base-family;
+        size: 10px;
+        weight: 600;
+    }
+    height: 33px;
+    line-height: 33px;
+    text-transform: uppercase;
+
+    &:hover {
+        background-color: lighten($cp-dark, 10%);
+    }
+
+    &:active {
+        background-color: darken($cp-dark, 5%);
+    }
+}
+
+//module control panel
 .bcms-sidemenu {
     @include position(fixed, 100px null null -260px);
     @include user-select();
-    background-color: $black;
-    border-radius: 0 0 2px 0;
-    color: $gray-l60;
+    background-color: $bg-dark;
+    box-sizing: border-box;
     font-family: $font-base-family;
     font-size: 12px;
-    padding: 5px 5px 0 0;
-    width: 255px;
+    line-height: 22px;
+    padding: 10px;
+    width: 260px;
     z-index: 2000;
 
     &.bcms-sidemenu-right {
-        border-radius: 0 0 0 2px;
         left: auto;
-        padding: 5px 0 0 5px;
         right: 0;
     }
 
     &-header {
-        background-color: $dark;
-        border-radius: 0 2px 2px 0;
-        box-sizing: border-box;
-        float: left;
-        margin-bottom: 5px;
-        padding: 10px;
-        position: relative;
-        width: 100%;
+        @include clearfix();
+        margin-bottom: 10px;
     }
 
     &-body {
-        background-color: $dark;
-        border-radius: 0 2px 2px 0;
-        min-height: 190px;
-        overflow: hidden;
-        padding: 0 10px 10px;
-
-        > hr {
-            border: {
-                top: $border-hr-control-top;
-                right: 0;
-                bottom: 0;
-                left: 0;
-            }
-            float: left;
-            margin: 10px 0 0;
-            width: 100%;
+        border: {
+            top: $border-cp-frame;
+            bottom: $border-cp-frame;
         }
+        overflow: hidden;
+        padding: 10px 0 5px;
     }
 
     &-footer {
-        height: 20px;
-        padding: 10px;
+        @include clearfix();
+        margin: 8px auto 0;
     }
 
-    &-btn {
-        @include size(100% 32px);
-        @include add-gradient($top: $gray-l50, $bottom: $gray-l60);
-        border-radius: 2px;
-        box-shadow: 0 0 1px 1px rgba($black, .2);
-        box-sizing: border-box;
-        color: $white;
-        cursor: pointer;
-        float: left;
-        font-size: 12px;
-        line-height: 32px;
-        margin: 10px 0 0;
-        overflow: hidden;
-        padding: 0 10px;
-
-        &:active {
-            background: $gray-l60;
-            box-shadow: 0 0 2px 1px rgba($black, .2);
-        }
-    }
-}
-
-//module panel handle
-.bcms-sidemenu {
     &-handle {
         @include user-select();
-        @include position(absolute, 0 -50px null null);
-        background-color: $black;
-        border-radius: 0 2px 2px 0;
+        @include position(absolute, 0 null null null);
+        background-color: $cp-dark;
         padding-top: 5px;
-        width: 50px;
+        right: -($cp-handle-width);
+        width: $cp-handle-width;
     }
 
     &-openclosearrow {
@@ -138,92 +134,267 @@ $control-panel-status: (
     }
 
     &-switch {
-        background-color: $dark;
-        border: $border-hr-control-top;
+        @include transition(background-color 200ms);
+        @include size(32px 56px);
+        background-color: $cp-gray;
         border-radius: 2px;
-        box-shadow: inset 0 0 6px 1px rgba($black, .7);
-        box-sizing: border-box;
         cursor: pointer;
-        height: 62px;
         margin: 5px auto;
         overflow: hidden;
         position: relative;
-        width: 32px;
 
         @include virtual(after) {
-            @include position(absolute, 0 0 null);
-            background: url($bcms-cp-indicate-button) no-repeat center;
-            border: 1px solid #303030;
+            @include positioning($center-x: true);
+            @include size(22px);
+            background-color: $cp-light;
             border-radius: 2px;
             box-sizing: border-box;
-            height: 50%;
             overflow: hidden;
-            width: 100%;
+            top: 5px;
 
             .bcms-on & {
-                bottom: 0;
+                bottom: 5px;
                 top: auto;
             }
         }
 
         .bcms-on & {
-            background-color: $green;
+            background-color: $cp-blue;
         }
     }
 
     @each $name, $name-icon in $control-panel-switch-status {
         &-#{$name} {
-            background: url($name-icon) no-repeat center;
+            color: $white;
+            font: {
+                family: $font-base-family;
+                size: 10px;
+                weight: 600;
+            }
             height: 50%;
+            line-height: 28px;
+            width: 100%;
             overflow: hidden;
-            text-indent: -999em;
+            text-transform: uppercase;
+            text-align: center;
         }
     }
 
-    &-separator {
-        border-top: $border-hr-control-top;
-        height: 0;
-        margin: 10px auto;
-        width: 100%;
-    }
+    &-pubstatus {
+        @include size(24px);
+        background: url($bcms-cp-pub-ok) no-repeat center;
+        margin: 15px auto;
 
-    &-status {
-        background: url($bcms-cp-texture);
-        overflow: hidden;
-        padding: 0 9px 5px;
-    }
+        &.bcms-pubstatus-warn {
+            background-image: url($bcms-cp-pub-warn);
+        }
 
-    @each $name, $icon, $warn-icon in $control-panel-status {
-        &-#{$name} {
-            @include size(21px 35px);
-            background: url($icon) no-repeat center;
-            margin: auto;
-
-            &.bcms-#{$name}-warn {
-                background-image: url($warn-icon);
-            }
+        &.bcms-pubstatus-draft {
+            background-image: url($bcms-cp-pub-draft);
         }
     }
 
     &-drag-handle {
+        @include size(32px 17px);
         background: url($bcms-cp-drag-handle) no-repeat center;
         cursor: move;
-        height: 14px;
-        margin: 5px auto;
+        margin: 15px auto 10px;
+    }
+}
+
+.bcms-user-profile {
+    @include ellipsis();
+    box-sizing: border-box;
+    color: $white;
+    cursor: pointer;
+    float: left;
+    line-height: 33px;
+    max-width: 140px;
+}
+
+.bcms-buttons-block {
+    @include clearfix();
+    margin-bottom: 5px;
+    padding-top: 5px;
+
+    .bcms-cp-seo-btn {
+        float: left;
+        width: span(6);
+
+        + .bcms-cp-settings-btn {
+            float: right;
+            width: span(6);
+        }
+    }
+}
+
+.bcms-cp {
+    &-settings-btn {
+        @extend %cp-settings-btn-frame;
+        text-align: center;
     }
 
-    &-position-handle {
-        background: $gray-l60 url($bcms-cp-stick-handle) no-repeat center;
-        border-radius: 2px;
-        cursor: pointer;
+    &-preview-btn {
+        @extend %cp-settings-btn-frame;
         float: right;
-        height: 20px;
-        width: 24px;
+        padding: 0 34px 0 12px;
+        position: relative;
 
-        .bcms-sidemenu-right & {
-            background-image: url($bcms-cp-stick-handle-right);
-            float: left;
+        @include virtual(after) {
+            @include size(12px);
+            @include positioning($center-y: true);
+            background: url($bcms-cp-preview) no-repeat center;
+            right: 12px;
         }
+    }
+
+    &-btn {
+        @extend %cp-btn-frame;
+        background-color: $cp-blue;
+        font-weight: 400;
+        margin: 5px 0;
+        padding: 0 16px;
+
+        &:hover {
+            background-color: lighten($cp-blue, 10%);
+        }
+
+        &:active {
+            background-color: darken($cp-blue, 5%);
+        }
+
+        &-add {
+            position: relative;
+
+            @include virtual(after) {
+                @include size(20px);
+                @include positioning($center-y: true);
+                background: url($bcms-cp-add) no-repeat center;
+                right: 10px;
+            }
+        }
+    }
+
+    &-delete {
+        @include size(25px 20px);
+        @include position(absolute, null 10px 10px null);
+        background: url($bcms-cp-delete) no-repeat center;
+        box-sizing: border-box;
+        cursor: pointer;
+        overflow: hidden;
+        text-indent: -999em;
+    }
+
+    &-logout {
+        @extend %cp-btn-frame;
+        background-color: $cp-red;
+        border-color: $cp-red;
+        color: $white;
+        float: left;
+        width: span(6);
+
+        &:hover {
+            background-color: lighten($cp-red, 10%);
+        }
+
+        &:active {
+            background-color: darken($cp-red, 5%);
+        }
+
+        + .bcms-cp-settings-btn {
+            float: right;
+            width: span(6);
+        }
+    }
+
+    &-logo {
+        float: left;
+    }
+
+    &-version-number {
+        color: $cp-smoke;
+        float: left;
+        font-size: 12px;
+        line-height: 1;
+        margin: 10px 10px 0;
+    }
+}
+
+.bcms-publisher {
+    &-block {
+        margin-bottom: 10px;
+    }
+
+    &-info {
+        @include vertical-align();
+        color: $cp-smoke;
+        cursor: default;
+        font: {
+            family: $font-base-family;
+            size: 10px;
+            weight: 600;
+        }
+        line-height: 1;
+        margin-left: 5px;
+        text-transform: uppercase;
+
+        .bcms-publisher-switch-on & {
+            color: $cp-sky;
+        }
+    }
+
+    &-includes-draft {
+        color: $cp-red;
+        display: inline;
+        font-weight: 700;
+        margin-left: 5px;
+    }
+}
+
+.bcms-switch {
+    @include transition(background-color 200ms);
+    @include size(50px 22px);
+    @include vertical-align();
+    background-color: $cp-gray;
+    border-radius: 2px;
+    box-sizing: border-box;
+    cursor: pointer;
+    overflow: hidden;
+    position: relative;
+
+    @include virtual(after) {
+        @include positioning($center-y: true);
+        @include size(20px 16px);
+        background-color: $cp-light;
+        border-radius: 2px;
+        overflow: hidden;
+    }
+
+    @each $name, $bg-color, $left, $right in $control-panel-switch-status {
+        &.bcms-switch-#{$name} {
+            background-color: $bg-color;
+
+            &:after {
+                left: $left;
+                right: $right;
+            }
+        }
+    }
+
+    &-text {
+        color: $white;
+        float: left;
+        font: {
+            family: $font-base-family;
+            size: 10px;
+            weight: 600;
+        }
+        height: 100%;
+        line-height: 22px;
+        overflow: hidden;
+        text-align: center;
+        text-transform: uppercase;
+        width: 50%;
     }
 }
 
@@ -233,128 +404,35 @@ $control-panel-status: (
         background-image: url($bcms-cp-show-right);
     }
 
+    .bcms-sidemenu-handle {
+        left: -($cp-handle-width);
+        right: auto;
+    }
+
     &.bcms-state-open {
         .bcms-sidemenu-openclosearrow {
             background-image: url($bcms-cp-hide-right);
         }
     }
 
-    .bcms-sidemenu-handle {
-        border-radius: 2px 0 0 2px;
-        left: -50px;
+    .bcms-user-profile {
+        float: right;
+    }
+
+    .bcms-cp-preview-btn {
+        float: left;
+    }
+
+    .bcms-cp-logo {
+        float: right;
+    }
+
+    .bcms-cp-version-number {
+        float: right;
+    }
+
+    .bcms-cp-delete {
+        left: 10px;
         right: auto;
     }
-
-    .bcms-sidemenu-header {
-        border-radius: 2px 0 0 2px;
-    }
-
-    .bcms-sidemenu-body {
-        border-radius: 2px 0 0 2px;
-    }
-
-    .bcms-version-number {
-        float: right;
-        margin-left: 10px;
-    }
-}
-
-.bcms-buttons-block {
-    @include clearfix();
-    float: left;
-    width: 100%;
-
-    > a {
-        color: $white;
-
-        &:hover {
-            text-decoration: none;
-        }
-    }
-
-    > .bcms-sidemenu-btn {
-        @include span(6 before);
-
-        &:first-child {
-            margin-left: 0;
-        }
-    }
-}
-
-//module control panel buttons
-div {
-    @each $name, $icon, $top-color, $bottom-color in $control-panel-buttons {
-        &.bcms-btn-#{$name} {
-            @include add-gradient($top: $top-color, $bottom: $bottom-color);
-            padding-right: 35px;
-            position: relative;
-
-            @include virtual(after) {
-                @include size(20px);
-                @include positioning($center-y: true);
-                right: 6px;
-                background: url($icon) no-repeat center;
-            }
-        }
-    }
-
-    //module control panel buttons override
-    &.bcms-btn {
-        &-settings {
-            width: 100%;
-        }
-
-        &-delete {
-            @include span(6 last);
-
-            + .bcms-btn-settings {
-                @include span(6);
-            }
-        }
-
-        &-ok {
-            padding-left: 30px;
-            position: relative;
-
-            @include virtual(before) {
-                @include size(16px);
-                @include positioning($center-y: true);
-                background: url($bcms-cp-notification-ok) no-repeat center;
-                left: 7px;
-            }
-        }
-
-        &-warn {
-            padding-left: 30px;
-            position: relative;
-
-            @include virtual(before) {
-                @include size(16px);
-                @include positioning($center-y: true);
-                background: url($bcms-cp-notification-warn) no-repeat center;
-                left: 9px;
-            }
-        }
-
-        &-logout {
-            @include add-gradient($top: $red-l60, $bottom: $red-l70);
-            border-radius: 2px;
-            box-shadow: 0 0 2px rgba($black, .3);
-            color: $white;
-            cursor: pointer;
-            float: right;
-            font-size: 11px;
-            font-weight: bold;
-            height: 26px;
-            line-height: 26px;
-            text-align: center;
-            text-transform: uppercase;
-            width: 70px;
-        }
-    }
-}
-
-.bcms-version-number {
-    line-height: 21px;
-    margin-right: 10px;
 }

@@ -1,0 +1,69 @@
+﻿@* --------------------------------------------------------------------------------------------------------------------
+// <copyright file="PagesGrid.cshtml" company="Devbridge Group LLC">
+// 
+// Copyright (C) 2015,2016 Devbridge Group LLC
+// 
+// This program is free software: you can redistribute it and/or modify
+// it under the terms of the GNU Lesser General Public License as published by
+// the Free Software Foundation, either version 3 of the License, or
+// (at your option) any later version.
+// 
+// This program is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU General Public License for more details.
+// 
+// You should have received a copy of the GNU Lesser General Public License
+// along with this program.  If not, see http://www.gnu.org/licenses/. 
+// </copyright>
+// 
+// <summary>
+// Better CMS is a publishing focused and developer friendly .NET open source CMS.
+// 
+// Website: https://www.bettercms.com 
+// GitHub: https://github.com/devbridge/bettercms
+// Email: info@bettercms.com
+// </summary>
+// -------------------------------------------------------------------------------------------------------------------- *@
+@using BetterCms.Module.Pages.Content.Resources
+@using BetterCms.Module.Root
+@using BetterCms.Module.Root.Content.Resources
+@using BetterCms.Module.Root.Mvc
+@model BetterCms.Module.Pages.ViewModels.Filter.PagesGridViewModel<BetterCms.Module.Pages.ViewModels.SiteSettings.SiteSettingPageViewModel>
+
+<div id="bcms-pages-grid" class="bcms-list-pages">
+    <!-- ko foreach: items -->
+    <div class="bcms-list-pages-row bcms-js-list-row" data-bind="click: onSelect, css: { 'bcms-list-row-active': $parent.selectedRowId() == id() }">
+        @if ((ViewContext.Controller as CmsControllerBase).SecurityService.IsAuthorized(RootModuleConstants.UserRoles.MultipleRoles(RootModuleConstants.UserRoles.EditContent, RootModuleConstants.UserRoles.PublishContent)))
+        {
+            <div class="bcms-list-column bcms-list-edit">
+                <div class="bcms-action-edit bcms-grid-item-edit-button bcms-js-edit-button" title="@RootGlobalization.Button_Edit" data-bind="attr: { 'data-id': id }, click: onEditClick">@RootGlobalization.Button_Edit</div>
+            </div>
+        }
+
+        <div class="bcms-list-column">
+            <div class="bcms-list-link bcms-page-title" data-bind="text: title, attr: { 'data-url': url, 'data-id': id }, click: onTitleClick"></div>
+
+            <div class="bcms-list-row">
+                <div class="bcms-list-dates bcms-page-created" data-bind="text: createdOn"></div>
+                <div class="bcms-list-dates bcms-page-created" data-bind="text: modifiedOn"></div>
+            </div>
+        </div>
+
+        <div class="bcms-list-column bcms-list-status">
+            <div class="bcms-page-ispublished" data-bind="attr: { class: pageStatus() == 3 ? 'bcms-action-ok' : 'bcms-action-warn', title: pageStatus() == 3 ? '@PagesGlobalization.SiteSettings_PageStatus_Published':'@PagesGlobalization.SiteSettings_PageStatus_Unpublished'}"></div>
+        </div>
+
+        @if ((ViewContext.Controller as CmsControllerBase).SecurityService.IsAuthorized(RootModuleConstants.UserRoles.DeleteContent))
+        {
+            <div class="bcms-list-column bcms-list-delete">
+                <div class="bcms-action-delete bcms-grid-item-delete-button" title="@RootGlobalization.Button_Delete" data-bind="attr: { 'data-id': id, 'data-version': version }, click: onDeleteClick">@RootGlobalization.Button_Delete</div>
+                <div style="display: none" class="bcms-grid-item.message"></div>
+            </div>
+        }
+    </div>
+    <!-- /ko -->
+    <!-- ko ifnot: items().length -->
+    <div class="bcms-pages-no-data">No items to display</div>
+    <!-- /ko-->
+</div>

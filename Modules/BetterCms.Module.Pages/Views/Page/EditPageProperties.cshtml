@@ -1,18 +1,43 @@
-﻿@using BetterCms.Module.Pages
+﻿@* --------------------------------------------------------------------------------------------------------------------
+// <copyright file="EditPageProperties.cshtml" company="Devbridge Group LLC">
+// 
+// Copyright (C) 2015,2016 Devbridge Group LLC
+// 
+// This program is free software: you can redistribute it and/or modify
+// it under the terms of the GNU Lesser General Public License as published by
+// the Free Software Foundation, either version 3 of the License, or
+// (at your option) any later version.
+// 
+// This program is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU General Public License for more details.
+// 
+// You should have received a copy of the GNU Lesser General Public License
+// along with this program.  If not, see http://www.gnu.org/licenses/. 
+// </copyright>
+// 
+// <summary>
+// Better CMS is a publishing focused and developer friendly .NET open source CMS.
+// 
+// Website: https://www.bettercms.com 
+// GitHub: https://github.com/devbridge/bettercms
+// Email: info@bettercms.com
+// </summary>
+// -------------------------------------------------------------------------------------------------------------------- *@
+@using BetterCms.Module.Pages
 @using BetterCms.Module.Pages.Content.Resources
 @using BetterCms.Module.Pages.Controllers
 @using BetterCms.Module.Pages.ViewModels.Page
 @using BetterCms.Module.Root
 @using BetterCms.Module.Root.Content.Resources
-@using BetterCms.Module.Root.Mvc.Extensions
 @using BetterCms.Module.Root.Mvc.Helpers
 @using BetterCms.Module.Root.ViewModels.Category
 @using BetterCms.Module.Root.ViewModels.Shared
 @using BetterCms.Module.Root.ViewModels.Tags
 @using Microsoft.Web.Mvc
-@using MvcContrib.EnumerableExtensions
-
 @model EditPagePropertiesViewModel
+
 @if (Model == null)
 {
     return;
@@ -29,214 +54,294 @@
     };
 }
 
-<div class="bcms-tab-header">
-    <a class="bcms-tab-item bcms-active" data-name="#bcms-tab-1">@PagesGlobalization.EditPageProperties_BasicPropertiesTab_Title</a>
-    <a class="bcms-tab-item" data-name="#bcms-tab-2">@PagesGlobalization.EditPageProperties_AdvancedPropertiesTab_Title</a>
-    <a class="bcms-tab-item" data-name="#bcms-tab-3">@PagesGlobalization.EditPageProperties_LayoutPropertiesTab_Title</a>
-    <a class="bcms-tab-item" data-name="#bcms-tab-4">@PagesGlobalization.EditPageProperties_OptionsTab_Title</a>
-    @if (Model.ShowTranslationsTab)
-    {
-        <a class="bcms-tab-item" data-name="#bcms-tab-5">@PagesGlobalization.EditPageProperties_TranslationsTab_Title</a>
-    }
+<div class="bcms-tab-header bcms-js-tab-header">
+    <div class="bcms-modal-frame-holder">
+        <div class="bcms-tab-ui bcms-tab-item bcms-active" data-name="#bcms-tab-1">@PagesGlobalization.EditPageProperties_BasicPropertiesTab_Title</div>
+        <div class="bcms-tab-ui bcms-tab-item" data-name="#bcms-tab-2">@PagesGlobalization.EditPageProperties_LayoutPropertiesTab_Title</div>
+        <div class="bcms-tab-ui bcms-tab-item" data-name="#bcms-tab-3">@PagesGlobalization.EditPageProperties_OptionsTab_Title</div>
+        <div class="bcms-tab-ui bcms-tab-item" data-name="#bcms-tab-4">@PagesGlobalization.EditPageProperties_AdvancedPropertiesTab_Title</div>
+        @if (Model.ShowTranslationsTab)
+        {
+            <div class="bcms-tab-ui bcms-tab-item" data-name="#bcms-tab-5">@PagesGlobalization.EditPageProperties_TranslationsTab_Title</div>
+        }
+    </div>
 </div>
 
-<div class="bcms-scroll-window">
-    @Html.TabbedContentMessagesBox()
-    @if (Model.IsMasterPage)
-    {
-        @Html.Partial("Partial/InfoMessageAboutMasterPage")
-    }
-    @using (Html.BeginForm<PageController>(f => f.EditPageProperties((EditPagePropertiesViewModel)null), FormMethod.Post,
+<div class="bcms-modal-frame-holder">
+    <div class="bcms-window-tabbed-options">
+        @Html.MessagesBox()
+
+        @using (Html.BeginForm<PageController>(f => f.EditPageProperties((EditPagePropertiesViewModel)null), FormMethod.Post,
             new
             {
                 @class = "bcms-ajax-form",
                 data_readonly = Model.IsReadOnly.ToString().ToLower()
             }))
-    {
-        <div id="bcms-tab-1" class="bcms-tab-single">
-            <div class="bcms-padded-content">
-                <div class="bcms-input-list-holder">
-                    @Html.Tooltip(PagesGlobalization.EditPageProperties_BasicPropertiesTab_PageName_Tooltip_Description)
-                    <div class="bcms-content-titles">@PagesGlobalization.EditPageProperties_BasicPropertiesTab_PageName_Title</div>
-
-                    <div class="bcms-input-box">
-                        @Html.TextBoxFor(model => model.PageName, new { @class = "bcms-editor-field-box" })
-                        @Html.BcmsValidationMessageFor(f => f.PageName)
-                    </div>
-                </div>
-
-                @Html.Partial("Partial/PagePropertiesEditPermalink")
-
-                <div class="bcms-page-images-holder">
-                    <div class="bcms-input-list-holder">
-                        @Html.Tooltip(PagesGlobalization.EditPageProperties_BasicPropertiesTab_PageImage_Tooltip_Description)
-                        <div class="bcms-content-titles">@PagesGlobalization.EditPageProperties_BasicPropertiesTab_PageImage_Title</div>
-                        <div class="bcms-uploaded-image">
-                            <!-- ko if: image().url() -->
-                            <a class="bcms-remove-image" data-bind="click: image().remove.bind(image())">@RootGlobalization.Button_Remove</a>
-                            <a data-bind="click: image().preview.bind(image())">
-                                <img data-bind="attr: { src: image().thumbnailUrl(), alt: image().tooltip() }" />
-                            </a>
-                            <!-- /ko -->
-                        </div>
-                        <div class="bcms-btn-small" data-bind="click: image().select.bind(image())">@PagesGlobalization.EditPageProperties_BasicPropertiesTab_SelectImage_ButtonTitle</div>
-                    </div>
-
-                    <div class="bcms-input-list-holder">
-                        @Html.Tooltip(PagesGlobalization.EditPageProperties_BasicPropertiesTab_PageFeaturedImage_Tooltip_Description)
-                        <div class="bcms-content-titles">@PagesGlobalization.EditPageProperties_BasicPropertiesTab_PageFeaturedImage_Title</div>
-                        <div class="bcms-uploaded-image">
-                            <!-- ko if: featuredImage().url() -->
-                            <a class="bcms-remove-image" data-bind="click: featuredImage().remove.bind(featuredImage())">@RootGlobalization.Button_Remove</a>
-                            <a data-bind="click: featuredImage().preview.bind(featuredImage())">
-                                <img data-bind="attr: { src: featuredImage().thumbnailUrl(), alt: featuredImage().tooltip() }" />
-                            </a>
-                            <!-- /ko -->
-                        </div>
-                        <div class="bcms-btn-small" data-bind="click: featuredImage().select.bind(featuredImage())">@PagesGlobalization.EditPageProperties_BasicPropertiesTab_SelectImage_ButtonTitle</div>
-                    </div>
-
-                    <div class="bcms-input-list-holder">
-                        @Html.Tooltip(PagesGlobalization.EditPageProperties_BasicPropertiesTab_PageSecondaryImage_Tooltip_Description)
-                        <div class="bcms-content-titles">@PagesGlobalization.EditPageProperties_BasicPropertiesTab_PageSecondaryImage_Title</div>
-                        <div class="bcms-uploaded-image">
-                            <!-- ko if: secondaryImage().url() -->
-                            <a class="bcms-remove-image" data-bind="click: secondaryImage().remove.bind(secondaryImage())">@RootGlobalization.Button_Remove</a>
-                            <a data-bind="click: secondaryImage().preview.bind(secondaryImage())">
-                                <img data-bind="attr: { src: secondaryImage().thumbnailUrl(), alt: secondaryImage().tooltip() }" />
-                            </a>
-                            <!-- /ko -->
-                        </div>
-                        <div class="bcms-btn-small" data-bind="click: secondaryImage().select.bind(secondaryImage())">@PagesGlobalization.EditPageProperties_BasicPropertiesTab_SelectImage_ButtonTitle</div>
-                    </div>
-                </div>
-
-                <div class="bcms-categories-box-holder" data-bind="with: categories">
-                    @Html.Partial("~/Areas/bcms-root/Views/Category/CategoriesTemplate.cshtml", categoriesTemplateViewModel)
-                </div>
-
-                <div class="bcms-tags-box-holder" data-bind="with: tags">
-                    @Html.Partial("~/Areas/bcms-root/Views/Tags/TagsTemplate.cshtml", tagsTemplateViewModel)
-                </div>
-
-                @if (Model.AccessControlEnabled)
-                {
-                    @Html.Partial(RootModuleConstants.AccessControlTemplate)
-                }
-
-                @if (!Model.IsMasterPage)
-                {
-                    <div class="bcms-input-list-holder">
-                        @Html.Tooltip(PagesGlobalization.EditPageProperties_Properties_Tooltip_Description)
-                        <div class="bcms-content-titles">@PagesGlobalization.EditPageProperties_Properties_Title</div>
-                        <div class="bcms-checkbox-holder">
-                            @{
-                    object options = null;
-                    if (!Model.CanPublishPage)
-                    {
-                        options = new { disabled = "disabled" };
-                    }
-                            }
-                            @Html.CheckBoxFor(model => model.IsPagePublished, options)
-                            <div class="bcms-edit-label">@PagesGlobalization.EditPageProperties_AdvancedPropertiesTab_Privacy_VisibleToEveryone</div>
-                        </div>
-                        <div class="bcms-checkbox-holder">
-                            @Html.CheckBoxFor(model => model.UseNoFollow)
-                            <div class="bcms-edit-label">@PagesGlobalization.EditPageProperties_AdvancedPropertiesTab_UseNoFollow</div>
-                        </div>
-                        <div class="bcms-checkbox-holder">
-                            @Html.CheckBoxFor(model => model.UseNoIndex)
-                            <div class="bcms-edit-label">@PagesGlobalization.EditPageProperties_AdvancedPropertiesTab_UseNoIndex</div>
-                        </div>
-                        <div class="bcms-checkbox-holder">
-                            @Html.CheckBoxFor(model => model.IsArchived)
-                            <div class="bcms-edit-label">@PagesGlobalization.EditPageProperties_AdvancedPropertiesTab_IsArchived</div>
-                        </div>
-                    </div>
-                    <div class="bcms-input-list-holder">
-                        @Html.Tooltip(PagesGlobalization.EditPageProperties_ForceProtocol_Tooltip_Description)
-                        <div class="bcms-content-titles">@PagesGlobalization.EditPageProperties_ForceProtocol_Title</div>
-                        @Html.DropDownListFor(model => model.ForceAccessProtocol, Model.PageAccessProtocols.ToSelectList(Model.ForceAccessProtocol), null, new { @class = "bcms-global-select" })
-                    </div>
-                }
-                @Html.HiddenFor(model => model.CanPublishPage)
-                @Html.HiddenFor(model => model.TemplateId, new { @id = "TemplateId" })
-                @Html.HiddenFor(model => model.MasterPageId, new { @id = "MasterPageId" })
-                @Html.HiddenFor(model => model.Id)
-                @Html.HiddenFor(model => model.Version)
-                @Html.HiddenFor(model => model.Image.ImageId, new { data_bind = "value: image().id()" })
-                @Html.HiddenFor(model => model.SecondaryImage.ImageId, new { data_bind = "value: secondaryImage().id()" })
-                @Html.HiddenFor(model => model.FeaturedImage.ImageId, new { data_bind = "value: featuredImage().id()" })
-                @if (Model.ShowTranslationsTab)
-                {
-                    @Html.HiddenFor(model => model.LanguageId, new { data_bind = "value: translations.language.languageId()" })
-                }
-            </div>
-        </div>
-
-        <div id="bcms-tab-2" class="bcms-tab-single">
-            <div class="bcms-padded-content">
-                <div class="bcms-input-list-holder">
-                    @Html.Tooltip(PagesGlobalization.EditPageProperties_AdvancedPropertiesTab_PageCss_Tooltip_Description)
-                    <div class="bcms-content-titles">@PagesGlobalization.EditPageProperties_AdvancedPropertiesTab_PageCss_Title</div>
-                    @Html.TextAreaFor(model => model.PageCSS, new { @class = "bcms-editor-field-area bcms-code-field bcms-code-field-css", @id = Guid.NewGuid() })
-                </div>
-
-                <div class="bcms-input-list-holder">
-                    @Html.Tooltip(PagesGlobalization.EditPageProperties_AdvancedPropertiesTab_PageJavascript_Tooltip_Description)
-                    <div class="bcms-content-titles">@PagesGlobalization.EditPageProperties_AdvancedPropertiesTab_PageJavascript_Title</div>
-                    @Html.TextAreaFor(model => model.PageJavascript, new { @class = "bcms-editor-field-area bcms-code-field bcms-code-field-javascript", id = Guid.NewGuid() })
-                </div>
-            </div>
-        </div>
-
-        <div id="bcms-tab-3" class="bcms-tab-single">
-            <div class="bcms-padded-content">
-                <div class="bcms-input-list-holder">
-                    @Html.Tooltip(PagesGlobalization.EditPageProperties_LayoutPropertiesTab_Layout_Tooltip_Description)
-                    <div class="bcms-content-titles">@PagesGlobalization.EditPageProperties_LayoutPropertiesTab_ChooseLayout_Title</div>
-                </div>
-
-                <div class="bcms-info-message-box">
-                    <a class="bcms-btn-close">@RootGlobalization.Button_Close</a>
-                    @Html.Raw(PagesGlobalization.EditPageProperties_LayoutPropertiesTab_InfoMessage)
-                </div>
-
-                @Html.Partial("Partial/TemplatesList", Model.Templates)
-            </div>
-        </div>
-
-        <div id="bcms-tab-4" class="bcms-tab-single" data-bind="with: options">
-            @Html.Partial(PagesConstants.OptionValuesGridTemplate, new EditableGridViewModel{ CanAddNewItems = true })
-        </div>
-
-        if (Model.ShowTranslationsTab)
         {
-            <div id="bcms-tab-5" class="bcms-tab-single">
+            <div id="bcms-tab-1" class="bcms-tab-single">
+                <div class="bcms-form-block-holder">
+                    <div>
+                        <div class="bcms-input-list-holder">
+                            <div class="bcms-content-titles">@PagesGlobalization.EditPageProperties_BasicPropertiesTab_PageName_Title</div>
+                            @Html.Tooltip(PagesGlobalization.EditPageProperties_BasicPropertiesTab_PageName_Tooltip_Description)
+                            <div class="bcms-field-wrapper">
+                                @Html.TextBoxFor(model => model.PageName, new { @class = "bcms-field-text" })
+                                @Html.BcmsValidationMessageFor(f => f.PageName)
+                            </div>
+                        </div>
 
-                @if (Model.TranslationMessages != null)
-                {
-                    @Html.TabbedContentCustomMessagesBox(Model.TranslationMessages)
-                }
+                        @Html.Partial("Partial/PagePropertiesEditPermalink")
 
-                <div class="bcms-padded-content bcms-page-translations-content">
-                    <div class="bcms-input-list-holder" data-bind="with: translations.language">
-                        @Html.Tooltip(PagesGlobalization.EditPageProperties_TranslationsTab_Language_Tooltip_Description)
-                        <div class="bcms-content-titles">@PagesGlobalization.EditPageProperties_TranslationsTab_Language</div>
-                        <select class="bcms-global-select" data-bind="options: languages, optionsText: 'value', optionsValue: 'key', value: languageId"></select>
+                        <div class="bcms-thumb-container">
+                            <div class="bcms-thumb-box">
+                                <div class="bcms-input-list-holder">
+                                    <div class="bcms-content-titles">@PagesGlobalization.EditPageProperties_BasicPropertiesTab_PageImage_Title</div>
+                                    @Html.Tooltip(PagesGlobalization.EditPageProperties_BasicPropertiesTab_PageImage_Tooltip_Description)
+                                </div>
+
+                                <div class="bcms-thumb-image">
+                                    <!-- ko if: image().url() -->
+                                    <div class="bcms-remove-image" data-bind="click: image().remove.bind(image())">@RootGlobalization.Button_Remove</div>
+                                    <div data-bind="click: image().preview.bind(image())">
+                                        <img data-bind="attr: { src: image().thumbnailUrl(), alt: image().tooltip() }" />
+                                    </div>
+                                    <!-- /ko -->
+                                    <!-- ko ifnot: image().url() -->
+                                    <svg class="bcms-grid-no-preview" width="50" height="50" viewBox="-205 372 50 50" enable-background="new -205 372 50 50">
+                                        <g fill="#cdcdcd">
+                                            <path d="m-205 422h50v-50h-50v50m2-48h46v46h-46v-46" />
+                                            <path d="m-164.3 406.2l1.4-1.4-11.5-11.5-7.7 7.6-3.6-3.6-11.5 11.5 1.4 1.4 10.1-10.1 11.1 11.1 1.4-1.4-7.5-7.5 6.3-6.2 10.1 10.1" />
+                                            <path d="m-187.9 382.4c-2.8 0-5 2.2-5 5 0 2.8 2.2 5 5 5 2.8 0 5-2.2 5-5 0-2.8-2.2-5-5-5m0 2c1.7 0 3 1.4 3 3 0 1.7-1.3 3-3 3-1.6 0-3-1.3-3-3 0-1.7 1.3-3 3-3" />
+                                        </g>
+                                    </svg>
+                                    <!-- /ko -->
+                                </div>
+
+                                <div class="bcms-btn-selection" data-bind="click: image().select.bind(image())">@PagesGlobalization.EditPageProperties_BasicPropertiesTab_SelectImage_ButtonTitle</div>
+                            </div>
+
+                            <div class="bcms-thumb-box">
+                                <div class="bcms-input-list-holder">
+                                    <div class="bcms-content-titles">@PagesGlobalization.EditPageProperties_BasicPropertiesTab_PageFeaturedImage_Title</div>
+                                    @Html.Tooltip(PagesGlobalization.EditPageProperties_BasicPropertiesTab_PageFeaturedImage_Tooltip_Description)
+                                </div>
+
+                                <div class="bcms-thumb-image">
+                                    <!-- ko if: featuredImage().url() -->
+                                    <div class="bcms-remove-image" data-bind="click: featuredImage().remove.bind(featuredImage())">@RootGlobalization.Button_Remove</div>
+                                    <div data-bind="click: featuredImage().preview.bind(featuredImage())">
+                                        <img data-bind="attr: { src: featuredImage().thumbnailUrl(), alt: featuredImage().tooltip() }" />
+                                    </div>
+                                    <!-- /ko -->
+                                    <!-- ko ifnot: featuredImage().url() -->
+                                    <svg class="bcms-grid-no-preview" xmlns="http://www.w3.org/2000/svg" width="50" height="50" viewBox="-205 372 50 50" enable-background="new -205 372 50 50">
+                                        <g fill="#cdcdcd">
+                                            <path d="m-205 422h50v-50h-50v50m2-48h46v46h-46v-46" />
+                                            <path d="m-164.3 406.2l1.4-1.4-11.5-11.5-7.7 7.6-3.6-3.6-11.5 11.5 1.4 1.4 10.1-10.1 11.1 11.1 1.4-1.4-7.5-7.5 6.3-6.2 10.1 10.1" />
+                                            <path d="m-187.9 382.4c-2.8 0-5 2.2-5 5 0 2.8 2.2 5 5 5 2.8 0 5-2.2 5-5 0-2.8-2.2-5-5-5m0 2c1.7 0 3 1.4 3 3 0 1.7-1.3 3-3 3-1.6 0-3-1.3-3-3 0-1.7 1.3-3 3-3" />
+                                        </g>
+                                    </svg>
+                                    <!-- /ko -->
+                                </div>
+
+                                <div class="bcms-btn-selection" data-bind="click: featuredImage().select.bind(featuredImage())">@PagesGlobalization.EditPageProperties_BasicPropertiesTab_SelectImage_ButtonTitle</div>
+                            </div>
+
+                            <div class="bcms-thumb-box">
+                                <div class="bcms-input-list-holder">
+                                    <div class="bcms-content-titles">@PagesGlobalization.EditPageProperties_BasicPropertiesTab_PageSecondaryImage_Title</div>
+                                    @Html.Tooltip(PagesGlobalization.EditPageProperties_BasicPropertiesTab_PageSecondaryImage_Tooltip_Description)
+                                </div>
+
+                                <div class="bcms-thumb-image">
+                                    <!-- ko if: secondaryImage().url() -->
+                                    <div class="bcms-remove-image" data-bind="click: secondaryImage().remove.bind(secondaryImage())">@RootGlobalization.Button_Remove</div>
+                                    <div data-bind="click: secondaryImage().preview.bind(secondaryImage())">
+                                        <img data-bind="attr: { src: secondaryImage().thumbnailUrl(), alt: secondaryImage().tooltip() }" />
+                                    </div>
+                                    <!-- /ko -->
+                                    <!-- ko ifnot: secondaryImage().url() -->
+                                    <svg class="bcms-grid-no-preview" xmlns="http://www.w3.org/2000/svg" width="50" height="50" viewBox="-205 372 50 50" enable-background="new -205 372 50 50">
+                                        <g fill="#cdcdcd">
+                                            <path d="m-205 422h50v-50h-50v50m2-48h46v46h-46v-46" />
+                                            <path d="m-164.3 406.2l1.4-1.4-11.5-11.5-7.7 7.6-3.6-3.6-11.5 11.5 1.4 1.4 10.1-10.1 11.1 11.1 1.4-1.4-7.5-7.5 6.3-6.2 10.1 10.1" />
+                                            <path d="m-187.9 382.4c-2.8 0-5 2.2-5 5 0 2.8 2.2 5 5 5 2.8 0 5-2.2 5-5 0-2.8-2.2-5-5-5m0 2c1.7 0 3 1.4 3 3 0 1.7-1.3 3-3 3-1.6 0-3-1.3-3-3 0-1.7 1.3-3 3-3" />
+                                        </g>
+                                    </svg>
+                                    <!-- /ko -->
+                                </div>
+
+                                <div class="bcms-btn-selection" data-bind="click: secondaryImage().select.bind(secondaryImage())">@PagesGlobalization.EditPageProperties_BasicPropertiesTab_SelectImage_ButtonTitle</div>
+                            </div>
+                        </div>
+
+                        <div class="bcms-input-list-holder" data-bind="with: categories">
+                            @Html.Partial("~/Areas/bcms-root/Views/Category/CategoriesTemplate.cshtml", categoriesTemplateViewModel)
+                        </div>
+
+                        <div class="bcms-input-list-holder" data-bind="with: tags">
+                            @Html.Partial("~/Areas/bcms-root/Views/Tags/TagsTemplate.cshtml", tagsTemplateViewModel)
+                        </div>
                     </div>
 
-                    <div class="bcms-title-show-helper">
-                        @Html.Tooltip(PagesGlobalization.EditPageTranslations_OtherLanguages_Tooltip)
-                        <div class="bcms-content-titles">@PagesGlobalization.EditPageTranslations_OtherLanguages_Title</div>
+                    <div>
+                        @if (!Model.IsMasterPage)
+                        {
+                            <div class="bcms-input-list-holder">
+                                <div class="bcms-content-titles">@PagesGlobalization.EditPageProperties_ForceProtocol_Title</div>
+                                @Html.Tooltip(PagesGlobalization.EditPageProperties_ForceProtocol_Tooltip_Description)
+                                @Html.DropDownListFor(model => model.ForceAccessProtocol, Model.PageAccessProtocols.ToSelectList(Model.ForceAccessProtocol), null, new { })
+                            </div>
+
+                            <div class="bcms-input-list-holder">
+                                <div class="bcms-content-titles">@PagesGlobalization.EditPageProperties_Properties_Title</div>
+                                @Html.Tooltip(PagesGlobalization.EditPageProperties_Properties_Tooltip_Description)
+
+                                <div class="bcms-checkbox-block">
+                                    <div class="bcms-checkbox-holder">
+                                        @{
+                                            object options = null;
+                                            if (!Model.CanPublishPage)
+                                            {
+                                                options = new { disabled = "disabled" };
+                                            }
+                                        }
+
+                                        @Html.CheckBoxFor(model => model.IsPagePublished, options)
+                                        <div class="bcms-checkbox-label bcms-js-edit-label">@PagesGlobalization.EditPageProperties_AdvancedPropertiesTab_Privacy_VisibleToEveryone</div>
+                                    </div>
+
+                                    <div class="bcms-checkbox-holder">
+                                        @Html.CheckBoxFor(model => model.UseNoFollow)
+                                        <div class="bcms-checkbox-label bcms-js-edit-label">@PagesGlobalization.EditPageProperties_AdvancedPropertiesTab_UseNoFollow</div>
+                                    </div>
+
+                                    <div class="bcms-checkbox-holder">
+                                        @Html.CheckBoxFor(model => model.UseNoIndex)
+                                        <div class="bcms-checkbox-label bcms-js-edit-label">@PagesGlobalization.EditPageProperties_AdvancedPropertiesTab_UseNoIndex</div>
+                                    </div>
+
+                                    <div class="bcms-checkbox-holder">
+                                        @Html.CheckBoxFor(model => model.IsArchived)
+                                        <div class="bcms-checkbox-label bcms-js-edit-label">@PagesGlobalization.EditPageProperties_AdvancedPropertiesTab_IsArchived</div>
+                                    </div>
+                                </div>
+                            </div>
+                        }
+
+                        @if (Model.AccessControlEnabled)
+                        {
+                            @Html.Partial(RootModuleConstants.AccessControlTemplate)
+                        }
+
+                        @Html.HiddenFor(model => model.CanPublishPage)
+                        @Html.HiddenFor(model => model.TemplateId, new { @id = "TemplateId" })
+                        @Html.HiddenFor(model => model.MasterPageId, new { @id = "MasterPageId" })
+                        @Html.HiddenFor(model => model.Id)
+                        @Html.HiddenFor(model => model.Version)
+                        @Html.HiddenFor(model => model.Image.ImageId, new { data_bind = "value: image().id()" })
+                        @Html.HiddenFor(model => model.SecondaryImage.ImageId, new { data_bind = "value: secondaryImage().id()" })
+                        @Html.HiddenFor(model => model.FeaturedImage.ImageId, new { data_bind = "value: featuredImage().id()" })
+                        @if (Model.ShowTranslationsTab)
+                        {
+                            @Html.HiddenFor(model => model.LanguageId, new { data_bind = "value: translations.language.languageId()" })
+                        }
                     </div>
                 </div>
-
-                @Html.Partial("Partial/TranslationsGrid")
-
             </div>
-        }
 
-        @Html.HiddenSubmit()
-    }
+            <div id="bcms-tab-2" class="bcms-tab-single">
+                <div class="bcms-messages-ui bcms-js-messages">
+                    <ul class="bcms-js-info-message bcms-info-messages">
+                        <li>
+                            <div class="bcms-messages-close bcms-js-btn-close">@RootGlobalization.Button_Close</div>
+                            @Html.Raw(PagesGlobalization.EditPageProperties_LayoutPropertiesTab_InfoMessage)
+                        </li>
+                    </ul>
+                </div>
+
+                @if (Model.IsMasterPage)
+                {
+                    @Html.Partial("Partial/InfoMessageAboutMasterPage")
+                }
+
+                <div class="bcms-input-list-holder">
+                    <div class="bcms-content-dialog-title">
+                        <div class="bcms-content-titles-align">
+                            @PagesGlobalization.EditPageProperties_LayoutPropertiesTab_ChooseLayout_Title
+                            @Html.Tooltip(PagesGlobalization.EditPageProperties_LayoutPropertiesTab_Layout_Tooltip_Description)
+                        </div>
+
+                        <!-- ko with: templatesList -->
+                        <div class="bcms-top-block-inner" data-bind="css: { 'bcms-active-search': searchEnabled() }">
+                            <div class="bcms-btn-search" data-bind="click: toggleSearch">@RootGlobalization.Button_Search</div>
+                            <div class="bcms-search-block">
+                                <input type="text" class="bcms-search-field-box bcms-js-search-box" placeholder="@RootGlobalization.WaterMark_Search"
+                                       data-bind="value: searchQuery, valueUpdate: 'afterkeydown', enterPress: search, hasFocus: hasFocus, enable: searchEnabled">
+                            </div>
+                        </div>
+                        <!-- /ko -->
+                    </div>
+                    @Html.Partial("Partial/TemplatesList", Model.Templates)
+                </div>
+            </div>
+
+            <div id="bcms-tab-3" class="bcms-tab-single" data-bind="with: options">
+                @Html.Partial(PagesConstants.OptionValuesGridTemplate, new EditableGridViewModel { CanAddNewItems = true })
+            </div>
+
+            <div id="bcms-tab-4" class="bcms-tab-single">
+                <div class="bcms-form-block-holder">
+                    <div>
+                        <div class="bcms-input-list-holder">
+                            <div class="bcms-content-titles">@PagesGlobalization.EditPageProperties_AdvancedPropertiesTab_PageCss_Title</div>
+                            @Html.Tooltip(PagesGlobalization.EditPageProperties_AdvancedPropertiesTab_PageCss_Tooltip_Description)
+                            @Html.TextAreaFor(model => model.PageCSS, new { @class = "bcms-field-textarea bcms-code-field bcms-code-field-css", @id = Guid.NewGuid() })
+                        </div>
+                    </div>
+
+                    <div>
+                        <div class="bcms-input-list-holder">
+                            <div class="bcms-content-titles">@PagesGlobalization.EditPageProperties_AdvancedPropertiesTab_PageJavascript_Title</div>
+                            @Html.Tooltip(PagesGlobalization.EditPageProperties_AdvancedPropertiesTab_PageJavascript_Tooltip_Description)
+                            @Html.TextAreaFor(model => model.PageJavascript, new { @class = "bcms-field-textarea bcms-code-field bcms-code-field-javascript", id = Guid.NewGuid() })
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            if (Model.ShowTranslationsTab)
+            {
+                <div id="bcms-tab-5" class="bcms-tab-single">
+                    @if (Model.TranslationMessages != null)
+                    {
+                        @Html.CustomMessagesBox(Model.TranslationMessages)
+                    }
+                    <div class="bcms-top-block-holder">
+                        <div class="bcms-top-controls-btn-holder" data-bind="with: translations">
+                            <div class="bcms-btn-main" data-bind="click: startEditMode">@PagesGlobalization.EditPageTranslations_AddTranslation_ButtonTitle</div>
+                        </div>
+
+                        <div class="bcms-language-selector-box" data-bind="with: translations.language">
+                            <div class="bcms-content-titles">@PagesGlobalization.EditPageProperties_TranslationsTab_Language</div>
+                            @Html.Tooltip(PagesGlobalization.EditPageProperties_TranslationsTab_Language_Tooltip_Description)
+                            <div class="bcms-field-wrapper">
+                                <select data-bind="options: languages, optionsText: 'value', optionsValue: 'key', value: languageId, select2: { minimumResultsForSearch: -1 }"></select>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="bcms-content-dialog-title">
+                        <div class="bcms-content-titles-align">
+                            @PagesGlobalization.EditPageTranslations_OtherLanguages_Title
+                            @Html.Tooltip(PagesGlobalization.EditPageTranslations_OtherLanguages_Tooltip)
+                        </div>
+                    </div>
+                    @Html.Partial("Partial/TranslationsGrid")
+                </div>
+            }
+
+            @Html.HiddenSubmit()
+        }
+    </div>
 </div>

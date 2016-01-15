@@ -1,5 +1,31 @@
 ﻿/*jslint unparam: true, white: true, browser: true, devel: true */
-/*global bettercms */
+// --------------------------------------------------------------------------------------------------------------------
+// <copyright file="bcms.media.js" company="Devbridge Group LLC">
+// 
+// Copyright (C) 2015,2016 Devbridge Group LLC
+// 
+// This program is free software: you can redistribute it and/or modify
+// it under the terms of the GNU Lesser General Public License as published by
+// the Free Software Foundation, either version 3 of the License, or
+// (at your option) any later version.
+// 
+// This program is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU General Public License for more details.
+// 
+// You should have received a copy of the GNU Lesser General Public License
+// along with this program.  If not, see http://www.gnu.org/licenses/. 
+// </copyright>
+// 
+// <summary>
+// Better CMS is a publishing focused and developer friendly .NET open source CMS.
+// 
+// Website: https://www.bettercms.com 
+// GitHub: https://github.com/devbridge/bettercms
+// Email: info@bettercms.com
+// </summary>
+// --------------------------------------------------------------------------------------------------------------------
 
 bettercms.define('bcms.media', ['bcms.jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', 'bcms.forms', 'bcms.dynamicContent', 'bcms.messages', 'bcms.media.upload', 'bcms.media.imageeditor', 'bcms.htmlEditor', 'bcms.ko.extenders', 'bcms.contextMenu', 'bcms.security', 'bcms.media.history', 'bcms.media.fileeditor', 'bcms.tags', 'bcms.categories', 'bcms.options', 'bcms.store'],
 function ($, bcms, modal, siteSettings, forms, dynamicContent, messages, mediaUpload, imageEditor, htmlEditor, ko, menu, security, history, fileEditor, tags, categories, optionsModule, store) {
@@ -8,23 +34,23 @@ function ($, bcms, modal, siteSettings, forms, dynamicContent, messages, mediaUp
     var media = {},
         selectors = {
             tabImagesContainer: '#bcms-tab-1',
-            tabVideosContainer: '#bcms-tab-2',
-            tabAudiosContainer: '#bcms-tab-3',
-            tabFilesContainer: '#bcms-tab-4',
+            tabFilesContainer: '#bcms-tab-2',
 
             tabImagesSelector: '#bcms-tab-images',
-            tabVideosSelector: '#bcms-tab-videos',
-            tabAudiosSelector: '#bcms-tab-audios',
             tabFilesSelector: '#bcms-tab-files',
 
             templateDataBind: '.bcms-data-bind-container',
             firstForm: 'form:first',
-            spinContainer: '.bcms-rightcol:first',
+            spinContainer: '.bcms-js-settings-window:first',
             insertContentContainer: '.bcms-insert-content-modal:first',
             searchBox: '#bcms-search-input',
             fileListMessageBox: '#bcms-site-settings-media-messages-',
+            filterCategoriesSelect: '#bcms-js-categories-select',
 
-            previewBox: '#bcms-media-properties-preview'
+            previewBox: '#bcms-media-properties-preview',
+
+            filesTabMessageBox: '#bcms-media-manager-messages',
+            filesTabMessageBoxCloseButton: '#bcms-media-manager-messages .bcms-js-btn-close'
         },
         links = {
             loadSiteSettingsMediaManagerUrl: null,
@@ -146,9 +172,9 @@ function ($, bcms, modal, siteSettings, forms, dynamicContent, messages, mediaUp
     /**
     * Media's current folder sort / search / paging option view model
     */
-    function MediaItemsOptionsViewModel(onOpenPage, folderType) {
+    function MediaItemsOptionsViewModel(onOpenPage, folderType, container) {
         var self = this;
-
+        var context = container.find(selectors.templateDataBind).get(0);
         var categorizableItemKey = folderType == mediaTypes.image ? 'Images' : 'Files';
 
         self.searchQuery = ko.observable();
@@ -158,7 +184,7 @@ function ($, bcms, modal, siteSettings, forms, dynamicContent, messages, mediaUp
         self.column = ko.observable();
         self.isDescending = ko.observable(false);
         self.tags = new tags.TagsListViewModel();
-        self.categories = new categories.CategoriesListViewModel(null, categorizableItemKey),
+        self.categories = new categories.CategoriesSelectListModel([], context),
         self.isEdited = ko.computed(function () {
             if (self.includeArchived()) {
                 return true;
@@ -183,7 +209,8 @@ function ($, bcms, modal, siteSettings, forms, dynamicContent, messages, mediaUp
             self.includeArchived(false);
             self.includeHistoryItems(false);
             self.tags.removeAll();
-            self.categories.removeAll();
+            self.categories.items([]);
+            $(context).find(selectors.filterCategoriesSelect).select2('data', self.categories.items());
         };
 
         self.toggleFilter = function () {
@@ -272,8 +299,11 @@ function ($, bcms, modal, siteSettings, forms, dynamicContent, messages, mediaUp
 
             self.imageUrl(src + (src.indexOf('?') != -1 ? '&' : '?') + (new Date()).getTime());
             self.previewUrl(item.thumbnailUrl());
-
-            self.dimensions(item.width + ' x ' + item.height);
+            if (item.width == -1 || item.height == -1) {
+                self.dimensions("Auto");
+            } else {
+                self.dimensions(item.width + ' x ' + item.height);
+            }
 
             var dimensions = imageEditor.calculateImageDimensionsToFit(item.width, item.height, maxWidth, maxHeight);
             self.containerWidth(parseInt(dimensions.width) + 'px');
@@ -345,7 +375,9 @@ function ($, bcms, modal, siteSettings, forms, dynamicContent, messages, mediaUp
         self.canInsertMedia = ko.observable(false);
         self.canInsertMediaWithOptions = ko.observable(false);
         self.canSearchInHistory = ko.observable(false);
-
+        self.searchEnabled = ko.observable(false);
+        self.hasFocus = ko.observable(false);
+        
         self.showPropertiesPreview = ko.observable(false);
         self.previewItem = new MediaItemPreviewViewModel();
 
@@ -384,6 +416,33 @@ function ($, bcms, modal, siteSettings, forms, dynamicContent, messages, mediaUp
             }
         };
 
+        self.toggleMenu = function(media, event) {
+            var i,
+                open = media.isMenuOpen(),
+                button = $(event.target),
+                menu = button.siblings(),
+                container = button.scrollParent(),
+                remainingSpace;
+
+            for (i = 0; i < self.medias().length; i++) {
+                self.medias()[i].isMenuOpen(false);
+            }
+            if (!open) {
+                remainingSpace = container.height() + container.offset().top - button.offset().top - button.outerHeight(true);
+                if (remainingSpace < menu.outerHeight(true)) {
+                    var bottom = button.outerHeight(true) + parseInt(button.parent().css('padding-bottom'));
+                    menu.css({ bottom: bottom });
+                    media.isMenuAbove(true);
+                } else {
+                    menu.css({ bottom: '' });
+                    media.isMenuAbove(false);
+                }
+            }
+            media.isMenuOpen(!open);
+
+            bcms.stopEventPropagation(event);
+        };
+
         self.uploadMedia = function () {
             mediaUpload.openUploadFilesDialog(self.path().currentFolder().id(), self.path().currentFolder().type, onUploadFiles);
             messages.refreshBox($(selectors.fileListMessageBox + self.path().type), {});
@@ -412,8 +471,18 @@ function ($, bcms, modal, siteSettings, forms, dynamicContent, messages, mediaUp
 
         self.searchMedia = function () {
             self.gridOptions().paging.pageNumber(1);
-            self.gridOptions().closeFilter();
+            //self.gridOptions().closeFilter();
             self.loadMedia();
+        };
+
+        self.toggleSearch = function() {
+            if (!self.searchEnabled()) {
+                self.searchEnabled(true);
+                self.hasFocus(true);
+            } else {
+                self.searchEnabled(false);
+                self.gridOptions().searchQuery('');
+            }
         };
 
         self.searchWithFilter = function (searchInHistory) {
@@ -605,31 +674,6 @@ function ($, bcms, modal, siteSettings, forms, dynamicContent, messages, mediaUp
     }
 
     /**
-    * Media item context menu view model
-    */
-    function MediaItemContextMenuViewModel() {
-        var self = this;
-
-        self.initialized = false;
-        self.domId = 'cmenu_' + staticDomId++;
-
-        self.show = function (data, event) {
-            var menuContainer = $('#' + self.domId);
-
-            if (!self.initialized) {
-                self.initialized = true;
-                menu.initContext(menuContainer, event.target, false);
-            }
-
-            menu.contextShow(event, menuContainer);
-        };
-
-        self.close = function (data, event) {
-            menu.closeContext();
-        };
-    }
-
-    /**
     * Media item base view model
     */
     var MediaItemBaseViewModel = (function () {
@@ -660,6 +704,8 @@ function ($, bcms, modal, siteSettings, forms, dynamicContent, messages, mediaUp
             self.tooltip = ko.observable(item.Tooltip);
             self.thumbnailUrl = ko.observable(item.ThumbnailUrl);
             self.isReadOnly = ko.observable(item.IsReadOnly);
+            self.isMenuOpen = ko.observable(false);
+            self.isMenuAbove = ko.observable(false);
 
             self.getImageUrl = function () {
                 if (!self.publicUrl()) {
@@ -675,7 +721,13 @@ function ($, bcms, modal, siteSettings, forms, dynamicContent, messages, mediaUp
                 return self.thumbnailUrl();
             }
 
-            self.contextMenu = new MediaItemContextMenuViewModel();
+            bcms.on(bcms.events.bodyClick, function (event) {
+                if ($(event.srcElement).closest('.bcms-media-context').length > 0) {
+                    bcms.stopEventPropagation(event);
+                } else {
+                    self.isMenuOpen(false);
+                }
+            });
 
             self.isFile = function () {
                 return !self.isFolder();
@@ -691,6 +743,7 @@ function ($, bcms, modal, siteSettings, forms, dynamicContent, messages, mediaUp
 
             self.downloadMedia = function () {
                 window.open($.format(links.downloadFileUrl, self.id()), '_newtab');
+                self.isMenuOpen(false);
             };
 
             self.rowClassNames = ko.computed(function () {
@@ -724,7 +777,7 @@ function ($, bcms, modal, siteSettings, forms, dynamicContent, messages, mediaUp
                 var iconClasses = '';
 
                 if (self.isFolder()) {
-                    iconClasses += ' bcms-system-folder';
+                    iconClasses += ' bcms-media-folder';
                 }
                 if (self.isImage()) {
                     iconClasses += ' bcms-media-file-holder';
@@ -746,6 +799,7 @@ function ($, bcms, modal, siteSettings, forms, dynamicContent, messages, mediaUp
                     message = $.format(self.getArchiveMediaConfirmationMessage(), this.name());
 
                 archiveUnarchiveMediaItem(true, url, message, folderViewModel, this);
+                self.isMenuOpen(false);
             };
 
             self.unarchiveMedia = function (folderViewModel, data, event) {
@@ -755,6 +809,7 @@ function ($, bcms, modal, siteSettings, forms, dynamicContent, messages, mediaUp
                     message = $.format(self.getUnarchiveMediaConfirmationMessage(), this.name());
 
                 archiveUnarchiveMediaItem(false, url, message, folderViewModel, this);
+                self.isMenuOpen(false);
             };
 
             self.showParentLink = function (mediaItemsViewModel, data) {
@@ -804,6 +859,7 @@ function ($, bcms, modal, siteSettings, forms, dynamicContent, messages, mediaUp
                 return;
             }
             this.isActive(true);
+            this.isMenuOpen(false);
         };
 
         MediaItemBaseViewModel.prototype.reuploadMedia = function (folderViewModel, data, event) {
@@ -812,6 +868,7 @@ function ($, bcms, modal, siteSettings, forms, dynamicContent, messages, mediaUp
                 return;
             }
             folderViewModel.reuploadMedia(this);
+            this.isMenuOpen(false);
         };
 
         MediaItemBaseViewModel.prototype.openMedia = function (folderViewModel, data, event) {
@@ -890,6 +947,7 @@ function ($, bcms, modal, siteSettings, forms, dynamicContent, messages, mediaUp
             self.sizeText = item.SizeText;
 
             self.previewImage = function () {
+                self.isMenuOpen(false);
                 var previewUrl = self.publicUrl();
                 if (previewUrl) {
                     modal.imagePreview(previewUrl, self.tooltip);
@@ -908,13 +966,16 @@ function ($, bcms, modal, siteSettings, forms, dynamicContent, messages, mediaUp
                 message = $.format(globalization.deleteImageConfirmMessage, this.name());
 
             deleteMediaItem(url, message, folderViewModel, this);
+            this.isMenuOpen(false);
         };
 
         MediaImageViewModel.prototype.getArchiveMediaConfirmationMessage = function () {
+            this.isMenuOpen(false);
             return globalization.archiveImageConfirmMessage;
         };
 
         MediaImageViewModel.prototype.getUnarchiveMediaConfirmationMessage = function () {
+            this.isMenuOpen(false);
             return globalization.unarchiveImageConfirmMessage;
         };
 
@@ -1080,7 +1141,7 @@ function ($, bcms, modal, siteSettings, forms, dynamicContent, messages, mediaUp
             self.updateUrl = links.saveFolderUrl;
 
             self.pathName = ko.computed(function () {
-                return self.name() + '/';
+                return self.name() + ' / ';
             });
         }
 
@@ -1706,8 +1767,8 @@ function ($, bcms, modal, siteSettings, forms, dynamicContent, messages, mediaUp
                 params.Categories = [];
                 for (var i = 0; i < folderViewModel.gridOptions().categories.items().length; i++) {
                     params.Categories.push({
-                        Key: folderViewModel.gridOptions().categories.items()[i].id(),
-                        Value: folderViewModel.gridOptions().categories.items()[i].name()
+                        Key: folderViewModel.gridOptions().categories.items()[i].id,
+                        Value: folderViewModel.gridOptions().categories.items()[i].text
                     });
                 }
             }
@@ -1778,10 +1839,9 @@ function ($, bcms, modal, siteSettings, forms, dynamicContent, messages, mediaUp
 
                 // Map grid options
                 if (!folderViewModel.gridOptions()) {
-                    folderViewModel.gridOptions(new MediaItemsOptionsViewModel(folderViewModel.onOpenPage, json.Data.Path.CurrentFolder.Type));
+                    folderViewModel.gridOptions(new MediaItemsOptionsViewModel(folderViewModel.onOpenPage, json.Data.Path.CurrentFolder.Type, folderViewModel.container));
                 }
                 folderViewModel.gridOptions().fromJson(json.Data);
-
                 isSearchResult = !folderViewModel.gridOptions().isSearchEmpty();
                 folderViewModel.isSearchResults(isSearchResult);
                 folderViewModel.path().isSearchResults(isSearchResult);
@@ -1868,7 +1928,7 @@ function ($, bcms, modal, siteSettings, forms, dynamicContent, messages, mediaUp
 
         if (parseJsonResults(json, folderViewModel)) {
             ko.applyBindings(folderViewModel, context);
-
+            categories.initCategoriesSelect(folderViewModel.gridOptions().categories, json.Data.CategoriesLookupList, context);
             bcms.updateFormValidator(folderViewModel.container.find(selectors.firstForm));
         }
     }
@@ -1889,41 +1949,12 @@ function ($, bcms, modal, siteSettings, forms, dynamicContent, messages, mediaUp
                 }
             };
 
-        // Attach to audios tab selector
-        dialogContainer.find(selectors.tabAudiosSelector).on('click', function () {
-            var tabContainer = dialogContainer.find(selectors.tabAudiosContainer);
-            if (audiosViewModel == null) {
-                audiosViewModel = new MediaItemsViewModel(tabContainer, links.loadAudiosUrl, dialogContainer);
-                audiosViewModel.spinContainer = tabContainer.parents(selectors.spinContainer);
-
-                loadTabData(audiosViewModel, null, function (json) {
-                    initializeTab(json, audiosViewModel);
-                    selectSearch();
-                });
-            } else {
-                selectSearch();
-            }
-        });
-
-        // Attach to videos tab selector
-        dialogContainer.find(selectors.tabVideosSelector).on('click', function () {
-            var tabContainer = dialogContainer.find(selectors.tabVideosContainer);
-            if (videosViewModel == null) {
-                videosViewModel = new MediaItemsViewModel(tabContainer, links.loadVideosUrl, dialogContainer);
-                videosViewModel.spinContainer = tabContainer.parents(selectors.spinContainer);
-
-                loadTabData(videosViewModel, null, function (json) {
-                    initializeTab(json, videosViewModel);
-                    selectSearch();
-                });
-            } else {
-                selectSearch();
-            }
-        });
-
         // Attach to files tab selector
         dialogContainer.find(selectors.tabFilesSelector).on('click', function () {
             var tabContainer = dialogContainer.find(selectors.tabFilesContainer);
+            dialogContainer.find(selectors.filesTabMessageBoxCloseButton).on('click', function() {
+                dialogContainer.find(selectors.filesTabMessageBox).hide();
+            });
             if (filesViewModel == null) {
                 filesViewModel = new MediaItemsViewModel(tabContainer, links.loadFilesUrl, dialogContainer);
                 filesViewModel.spinContainer = tabContainer.parents(selectors.spinContainer);

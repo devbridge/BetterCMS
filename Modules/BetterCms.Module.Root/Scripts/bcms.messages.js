@@ -1,5 +1,31 @@
 ﻿/*jslint unparam: true, white: true, browser: true, devel: true */
-/*global bettercms */
+// --------------------------------------------------------------------------------------------------------------------
+// <copyright file="bcms.messages.js" company="Devbridge Group LLC">
+// 
+// Copyright (C) 2015,2016 Devbridge Group LLC
+// 
+// This program is free software: you can redistribute it and/or modify
+// it under the terms of the GNU Lesser General Public License as published by
+// the Free Software Foundation, either version 3 of the License, or
+// (at your option) any later version.
+// 
+// This program is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU General Public License for more details.
+// 
+// You should have received a copy of the GNU Lesser General Public License
+// along with this program.  If not, see http://www.gnu.org/licenses/. 
+// </copyright>
+// 
+// <summary>
+// Better CMS is a publishing focused and developer friendly .NET open source CMS.
+// 
+// Website: https://www.bettercms.com 
+// GitHub: https://github.com/devbridge/bettercms
+// Email: info@bettercms.com
+// </summary>
+// --------------------------------------------------------------------------------------------------------------------
 
 bettercms.define('bcms.messages', ['bcms.jquery'], function ($) {
     'use strict';
@@ -13,7 +39,7 @@ bettercms.define('bcms.messages', ['bcms.jquery'], function ($) {
     // Selectors used in the module to locate DOM elements:
         selectors = {
             messagesBox: '#bcms-messages-box',
-            messages: '.bcms-messages-type-1:not(.bcms-custom-messages):first, .bcms-messages-type-2:not(.bcms-custom-messages):first',
+            messages: '.bcms-js-messages:not(.bcms-custom-messages):first',
             success: '.bcms-success-messages:first',
             info: '.bcms-info-messages:first',
             warn: '.bcms-warning-messages:first',
@@ -107,7 +133,11 @@ bettercms.define('bcms.messages', ['bcms.jquery'], function ($) {
 
             if (message) {
                 messagesOfTypeContainer.fadeIn();
-                var element = $('<li>' + message + '</li>');
+                var closeButton = '<a class="bcms-messages-close bcms-js-btn-close">Close</a>';
+                var element = $('<li>' + closeButton + message + '</li>');
+                element.find('.bcms-js-btn-close').on('click', function () {
+                    messagesOfTypeContainer.hide();
+                });
                 messagesOfTypeContainer.append(element);
 
                 if (options.enableAutoHide) {

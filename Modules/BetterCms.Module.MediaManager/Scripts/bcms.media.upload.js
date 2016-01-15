@@ -1,5 +1,31 @@
-﻿/*jslint unparam: true, white: true, browser: true, devel: true, vars: true */
-/*global bettercms */
+﻿/*jslint unparam: true, white: true, browser: true, devel: true */
+// --------------------------------------------------------------------------------------------------------------------
+// <copyright file="bcms.media.upload.js" company="Devbridge Group LLC">
+// 
+// Copyright (C) 2015,2016 Devbridge Group LLC
+// 
+// This program is free software: you can redistribute it and/or modify
+// it under the terms of the GNU Lesser General Public License as published by
+// the Free Software Foundation, either version 3 of the License, or
+// (at your option) any later version.
+// 
+// This program is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU General Public License for more details.
+// 
+// You should have received a copy of the GNU Lesser General Public License
+// along with this program.  If not, see http://www.gnu.org/licenses/. 
+// </copyright>
+// 
+// <summary>
+// Better CMS is a publishing focused and developer friendly .NET open source CMS.
+// 
+// Website: https://www.bettercms.com 
+// GitHub: https://github.com/devbridge/bettercms
+// Email: info@bettercms.com
+// </summary>
+// --------------------------------------------------------------------------------------------------------------------
 
 bettercms.define('bcms.media.upload', ['bcms.jquery', 'bcms', 'bcms.dynamicContent', 'bcms.modal', 'bcms.html5Upload', 'bcms.ko.extenders', 'bcms.messages', 'bcms.security'],
     function ($, bcms, dynamicContent, modal, html5Upload, ko, messages, security) {
@@ -7,7 +33,7 @@ bettercms.define('bcms.media.upload', ['bcms.jquery', 'bcms', 'bcms.dynamicConte
 
         var mediaUpload = {},
             selectors = {
-                dragZone: '#bcms-files-dropzone',
+                dragZone: '#bcms-files-drop-zone',
                 messageBox: "#bcms-multi-file-upload-messages",
                 fileUploadingContext: '#bcms-media-uploads',
                 fileUploadingMasterForm: '#SaveForm',
@@ -21,7 +47,7 @@ bettercms.define('bcms.media.upload', ['bcms.jquery', 'bcms', 'bcms.dynamicConte
                 overrideSelect: "bcms-media-reupload-override"
             },
             classes = {
-                dragZoneActive: 'bcms-dropzone-active'
+                dragZoneActive: 'bcms-file-drop-zone-active'
             },
             links = {
                 loadUploadFilesDialogUrl: null,
@@ -494,13 +520,17 @@ bettercms.define('bcms.media.upload', ['bcms.jquery', 'bcms', 'bcms.dynamicConte
 
         dialog.container.find(selectors.uploadButtonLabel).on('click', fixUploadButtonForMozilla);
 
+        dialog.container.find(selectors.folderDropDown).select2({
+            minimumResultsForSearch: -1
+        });
+
         if (fileApiSupported) {
 
             var context = document.getElementById('bcms-media-uploads');
 
             html5Upload.initialize({
                 uploadUrl: links.uploadFileToServerUrl,
-                dropContainer: document.getElementById('bcms-files-dropzone'),
+                dropContainer: document.getElementById('bcms-files-drop-zone'),
                 inputField: document.getElementById('bcms-files-upload-input'),
                 key: 'File',
                 data: { rootFolderId: options.rootFolderId, rootFolderType: options.rootFolderType, reuploadMediaId: options.reuploadMediaId },

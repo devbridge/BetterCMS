@@ -1,0 +1,150 @@
+// --------------------------------------------------------------------------------------------------------------------
+// <copyright file="_buttons.scss" company="Devbridge Group LLC">
+// 
+// Copyright (C) 2015,2016 Devbridge Group LLC
+// 
+// This program is free software: you can redistribute it and/or modify
+// it under the terms of the GNU Lesser General Public License as published by
+// the Free Software Foundation, either version 3 of the License, or
+// (at your option) any later version.
+// 
+// This program is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU General Public License for more details.
+// 
+// You should have received a copy of the GNU Lesser General Public License
+// along with this program.  If not, see http://www.gnu.org/licenses/. 
+// </copyright>
+// 
+// <summary>
+// Better CMS is a publishing focused and developer friendly .NET open source CMS.
+// 
+// Website: https://www.bettercms.com 
+// GitHub: https://github.com/devbridge/bettercms
+// Email: info@bettercms.com
+// </summary>
+// --------------------------------------------------------------------------------------------------------------------
+
+$bg-button-primary: #0d7be3;
+$bg-button-secondary: #3e465c;
+$bg-button-tertiary: #0d7be3;
+$bg-button-quaternary: #286baa;
+
+//module buttons borders
+$border-button-primary: 1px solid #0d67bc;
+$border-button-secondary: 1px solid #798093;
+$border-button-tertiary: 1px solid #44a0f8;
+$border-button-quaternary: 1px solid #1e2434;
+
+$global-button-structure: (
+                ('primary', $bg-button-primary, $border-button-primary),
+                ('secondary', $bg-button-secondary, $border-button-secondary),
+                ('tertiary', $bg-button-tertiary, $border-button-tertiary),
+                ('quaternary', $bg-button-quaternary, $border-button-quaternary)
+);
+
+%btn-frame {
+    @include vertical-align();
+    @include user-select();
+    box-sizing: border-box;
+    cursor: pointer;
+    font-family: $font-base-family;
+    overflow: hidden;
+    text-align: center;
+}
+
+%global-button-structure {
+    @extend %btn-frame;
+    @include transition(background-color 200ms);
+    color: $white;
+    font-size: 14px;
+    height: 36px;
+    line-height: 34px;
+    padding: 0 12px;
+}
+
+.bcms-btn {
+    &-main {
+        @extend %btn-frame;
+        @include transition(background-color 200ms, color 200ms);
+        background-color: $bg-blue;
+        color: $white;
+        font-size: 16px;
+        line-height: $form-element-height;
+        padding: 0 20px;
+        text-transform: uppercase;
+
+        &:hover {
+            background-color: lighten($bg-blue, 10%);
+        }
+
+        &:active {
+            background-color: darken($bg-blue, 5%);
+        }
+    }
+
+    &-selection {
+        @extend %btn-frame;
+        @include transition(background-color 200ms, color 200ms);
+        background-color: $white;
+        border: $border-thin-smoke;
+        color: $text-blue;
+        font-size: 12px;
+        height: 28px;
+        line-height: 26px;
+        padding: 0 20px;
+    }
+
+    &-cancel {
+        @include transition(color 200ms);
+        @include vertical-align();
+        color: $text-blue;
+        cursor: pointer;
+        font: {
+            size: 14px;
+            weight: 400;
+        }
+        margin-left: 10px;
+
+        &:hover {
+            color: darken($text-blue, 10%);
+        }
+    }
+
+    @each $name, $bg-color, $border in $global-button-structure {
+        &-#{$name} {
+            @extend %global-button-structure;
+            background-color: $bg-color;
+            border: $border;
+
+            &:hover {
+                background-color: lighten($bg-color, 10%);
+            }
+
+            &:active {
+                background-color: darken($bg-color, 5%);
+            }
+        }
+    }
+
+    &-search {
+        @include vertical-align();
+        @include size(37px);
+        background: url($bcms-search) no-repeat center;
+        cursor: pointer;
+        overflow: hidden;
+        position: relative;
+        text-indent: -999em;
+        z-index: 1;
+    }
+
+    &-close {
+        @include close-button($icon: $bcms-close, $position: 15px 15px null null);
+    }
+}
+
+.bcms-success-buttons-holder {
+    @include clearfix();
+    margin-top: 24px;
+}

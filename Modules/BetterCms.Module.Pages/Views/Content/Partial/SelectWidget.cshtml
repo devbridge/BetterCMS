@@ -1,22 +1,58 @@
-﻿@using BetterCms.Module.Pages.Content.Resources
+﻿@* --------------------------------------------------------------------------------------------------------------------
+// <copyright file="SelectWidget.cshtml" company="Devbridge Group LLC">
+// 
+// Copyright (C) 2015,2016 Devbridge Group LLC
+// 
+// This program is free software: you can redistribute it and/or modify
+// it under the terms of the GNU Lesser General Public License as published by
+// the Free Software Foundation, either version 3 of the License, or
+// (at your option) any later version.
+// 
+// This program is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU General Public License for more details.
+// 
+// You should have received a copy of the GNU Lesser General Public License
+// along with this program.  If not, see http://www.gnu.org/licenses/. 
+// </copyright>
+// 
+// <summary>
+// Better CMS is a publishing focused and developer friendly .NET open source CMS.
+// 
+// Website: https://www.bettercms.com 
+// GitHub: https://github.com/devbridge/bettercms
+// Email: info@bettercms.com
+// </summary>
+// -------------------------------------------------------------------------------------------------------------------- *@
+@using BetterCms.Module.Pages.Content.Resources
 @using BetterCms.Module.Root
 @using BetterCms.Module.Root.Content.Resources
 @using BetterCms.Module.Root.Mvc
-
 @model BetterCms.Module.Pages.ViewModels.Widgets.SelectWidgetViewModel
 
 <div class="bcms-top-block-holder">
     @if ((ViewContext.Controller as CmsControllerBase).SecurityService.IsAuthorized(RootModuleConstants.UserRoles.Administration))
     {
-        <div class="bcms-btn-links-main" id="bcms-create-advanced-content-button">@PagesGlobalization.AddPageContent_WidgetTab_AddNewButton</div>
-        <div class="bcms-btn-links-main" id="bcms-registeradvanced-content-button">@PagesGlobalization.AddPageContent_WidgetTab_RegisterButton</div>
+        <div class="bcms-top-controls-btn-holder">
+            <div class="bcms-btn-main" id="bcms-create-advanced-content-button">@PagesGlobalization.AddPageContent_WidgetTab_AddNewButton</div>
+
+            <div class="bcms-btn-opener"> </div>
+            <div class="bcms-btn-opener-holder">
+                <div class="bcms-btn-opener-link" id="bcms-registeradvanced-content-button">@PagesGlobalization.AddPageContent_WidgetTab_RegisterButton</div>
+            </div>
+        </div>
     }
-    <div class="bcms-search-block">
-        <input type="text" id="bcms-advanced-content-search" class="bcms-editor-field-box" placeholder="@RootGlobalization.WaterMark_Search" />
+
+    <div class="bcms-top-block-inner">
         <div class="bcms-btn-search" id="bcms-advanced-content-search-btn">@PagesGlobalization.AddPageContent_WidgetTab_SearchButton</div>
+        <div class="bcms-search-block">
+            <input type="text" id="bcms-advanced-content-search" class="bcms-search-field-box bcms-js-search-box" placeholder="@RootGlobalization.WaterMark_Search" />
+        </div>
     </div>
 </div>
-<div class="bcms-content-sliders" id="bcms-advanced-contents-container">
-        @Html.Partial("~/Areas/bcms-pages/Views/Content/Partial/WidgetRecent.cshtml", Model.RecentWidgets)
-        @Html.Partial("~/Areas/bcms-pages/Views/Content/Partial/WidgetCategories.cshtml", Model.WidgetCategories)
+
+<div id="bcms-advanced-contents-container">
+    @Html.Partial("~/Areas/bcms-pages/Views/Content/Partial/WidgetRecent.cshtml", Model.RecentWidgets)
+    @Html.Partial("~/Areas/bcms-pages/Views/Content/Partial/WidgetCategories.cshtml", Model.WidgetCategories)
 </div>

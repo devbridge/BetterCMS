@@ -1,4 +1,31 @@
-﻿using System.Linq;
+﻿// --------------------------------------------------------------------------------------------------------------------
+// <copyright file="GetSiteSettingsTemplatesCommand.cs" company="Devbridge Group LLC">
+// 
+// Copyright (C) 2015,2016 Devbridge Group LLC
+// 
+// This program is free software: you can redistribute it and/or modify
+// it under the terms of the GNU Lesser General Public License as published by
+// the Free Software Foundation, either version 3 of the License, or
+// (at your option) any later version.
+// 
+// This program is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU General Public License for more details.
+// 
+// You should have received a copy of the GNU Lesser General Public License
+// along with this program.  If not, see http://www.gnu.org/licenses/. 
+// </copyright>
+// 
+// <summary>
+// Better CMS is a publishing focused and developer friendly .NET open source CMS.
+// 
+// Website: https://www.bettercms.com 
+// GitHub: https://github.com/devbridge/bettercms
+// Email: info@bettercms.com
+// </summary>
+// --------------------------------------------------------------------------------------------------------------------
+using System.Linq;
 
 using BetterModules.Core.DataAccess.DataContext;
 
@@ -23,7 +50,22 @@ namespace BetterCms.Module.Pages.Command.Layout.GetSiteSettingsTemplates
         /// <returns>A list of paged\sorted widgets.</returns>
         public SiteSettingTemplateListViewModel Execute(SearchableGridOptions gridOptions)
         {
-            var query =
+            var masterPages =
+                Repository.AsQueryable<Root.Models.Page>()
+                    .Where(f => f.IsDeleted == false && f.IsMasterPage)
+                    .Select(
+                        f =>
+                        new SiteSettingTemplateItemViewModel
+                        {
+                            Id = f.Id,
+                            Version = f.Version,
+                            TemplateName = f.Title,
+                            IsMasterPage = true,
+                            Url = f.PageUrl
+                        })
+                    .ToList();
+
+            var layouts =
                Repository.AsQueryable<Root.Models.Layout>()
                          .Where(f => f.IsDeleted == false)
                          .Select(
@@ -33,7 +75,10 @@ namespace BetterCms.Module.Pages.Command.Layout.GetSiteSettingsTemplates
                                  Id = f.Id,
                                  Version = f.Version,
                                  TemplateName = f.Name,
+                                 IsMasterPage = false
                              });
+
+            var query = masterPages.Union(layouts).AsQueryable();
 
             if (gridOptions != null)
             {
@@ -45,10 +90,10 @@ namespace BetterCms.Module.Pages.Command.Layout.GetSiteSettingsTemplates
                 }
             }
 
-            var count = query.ToRowCountFutureValue();
-            var templates = query.AddSortingAndPaging(gridOptions).ToFuture().ToList();
+            var count = query.Count();
+            var templates = query.AddSortingAndPaging(gridOptions).ToList();
 
-            return new SiteSettingTemplateListViewModel(templates, gridOptions, count.Value);
+            return new SiteSettingTemplateListViewModel(templates, gridOptions, count);
         }
     }
 }

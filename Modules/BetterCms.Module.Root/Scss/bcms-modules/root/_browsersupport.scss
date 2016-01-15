@@ -1,0 +1,175 @@
+// --------------------------------------------------------------------------------------------------------------------
+// <copyright file="_browsersupport.scss" company="Devbridge Group LLC">
+// 
+// Copyright (C) 2015,2016 Devbridge Group LLC
+// 
+// This program is free software: you can redistribute it and/or modify
+// it under the terms of the GNU Lesser General Public License as published by
+// the Free Software Foundation, either version 3 of the License, or
+// (at your option) any later version.
+// 
+// This program is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU General Public License for more details.
+// 
+// You should have received a copy of the GNU Lesser General Public License
+// along with this program.  If not, see http://www.gnu.org/licenses/. 
+// </copyright>
+// 
+// <summary>
+// Better CMS is a publishing focused and developer friendly .NET open source CMS.
+// 
+// Website: https://www.bettercms.com 
+// GitHub: https://github.com/devbridge/bettercms
+// Email: info@bettercms.com
+// </summary>
+// --------------------------------------------------------------------------------------------------------------------
+.bcms-msg-message-page {
+    background: url('images/message-bg.jpg');
+    color: #38393c;
+    font-family: 'Arial', sans-serif;
+    height: 100%;
+    left: 0;
+    overflow: hidden;
+    position: fixed;
+    top: 0;
+    width: 100%;
+    z-index: 9999;
+}
+
+.bcms-msg-message-block {
+    margin: 0 auto;
+    width: 786px;
+}
+
+.bcms-msg-message-top {
+    background: #ce2b27;
+    color: #fff;
+    font-size: 23px;
+    font-weight: 200;
+    margin: 70px 0 30px;
+    padding: 15px 30px;
+}
+
+.bcms-msg-message-top span {
+    font-weight: 700;
+}
+
+.bcms-msg-message-lower {
+    font-size: 44px;
+    line-height: 1em;
+    margin-bottom: 40px;
+    position: relative;
+    text-align: center;
+}
+
+.bcms-msg-message-lower span {
+    padding: 0 5px;
+}
+
+.bcms-msg-lower-upper {
+    font-size: 22px;
+    line-height: 1.5em;
+    padding-bottom: 14px;
+}
+
+.bcms-msg-lower-lower {
+    font-size: 22px;
+    line-height: 1.5em;
+    padding-top: 14px;
+}
+
+.bcms-msg-message-upgrade {
+    background: url('images/message-circle.png') no-repeat;
+    height: 72px;
+    left: 235px;
+    position: absolute;
+    top: 35px;
+    width: 189px;
+}
+
+.bcms-msg-choose-browser a {
+    background-color: #fff;
+    background-position: center 25px;
+    background-repeat: no-repeat;
+    border: 1px dashed #d7d7d7;
+    color: #38393c;
+    float: left;
+    font-size: 24px;
+    padding: 186px 0 10px;
+    text-align: center;
+    text-decoration: none;
+    width: 250px;
+}
+
+.bcms-msg-choose-browser a:hover {
+    border: 1px dashed #ce2b27;
+    color: #000000;
+    text-decoration: none;
+}
+
+.bcms-msg-download-chrome, .bcms-msg-download-ff {
+    margin-right: 14px;
+}
+
+.bcms-msg-download-chrome {
+    background-image: url('images/message-chrome.png');
+}
+
+.bcms-msg-download-ff {
+    background-image: url('images/message-ff.png');
+}
+
+.bcms-msg-download-ie {
+    background-image: url('images/message-ie.png');
+}
+
+.bcms-msg-message-close {
+    color: #ce2b27;
+    cursor: pointer;
+    float: right;
+    padding-top: 10px;
+}
+
+.bcms-msg-message-close:hover {
+    text-decoration: underline;
+}
+
+.bcms-msg-top-page {
+    background: url('images/msg-bg.jpg');
+    color: #5f4126;
+    font-family: Arial, sans-serif;
+    height: 74px;
+    overflow: hidden;
+    padding-top: 20px;
+}
+
+.bcms-msg-top-holder {
+    margin: 0 auto;
+    position: relative;
+    width: 540px;
+}
+
+.bcms-msg-top-block {
+    font-size: 14px;
+    text-align: center;
+}
+
+.bcms-msg-cookies {
+    background: url('images/cookies.png') no-repeat center top;
+    height: 85px;
+    position: absolute;
+    right: -140px;
+    top: -21px;
+    width: 119px;
+}
+
+.bcms-msg-js {
+    background: url('images/js.png') no-repeat center top;
+    height: 93px;
+    position: absolute;
+    right: -140px;
+    top: -20px;
+    width: 195px;
+}

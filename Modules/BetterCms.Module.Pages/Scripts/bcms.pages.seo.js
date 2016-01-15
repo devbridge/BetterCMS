@@ -1,5 +1,31 @@
 ﻿/*jslint unparam: true, white: true, browser: true, devel: true */
-/*global bettercms */
+// --------------------------------------------------------------------------------------------------------------------
+// <copyright file="bcms.pages.seo.js" company="Devbridge Group LLC">
+// 
+// Copyright (C) 2015,2016 Devbridge Group LLC
+// 
+// This program is free software: you can redistribute it and/or modify
+// it under the terms of the GNU Lesser General Public License as published by
+// the Free Software Foundation, either version 3 of the License, or
+// (at your option) any later version.
+// 
+// This program is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU General Public License for more details.
+// 
+// You should have received a copy of the GNU Lesser General Public License
+// along with this program.  If not, see http://www.gnu.org/licenses/. 
+// </copyright>
+// 
+// <summary>
+// Better CMS is a publishing focused and developer friendly .NET open source CMS.
+// 
+// Website: https://www.bettercms.com 
+// GitHub: https://github.com/devbridge/bettercms
+// Email: info@bettercms.com
+// </summary>
+// --------------------------------------------------------------------------------------------------------------------
 
 bettercms.define('bcms.pages.seo', ['bcms.jquery', 'bcms', 'bcms.modal', 'bcms.messages', 'bcms.dynamicContent', 'bcms.redirect'],
     function ($, bcms, modal, messages, dynamicContent, redirect) {
@@ -7,16 +33,18 @@ bettercms.define('bcms.pages.seo', ['bcms.jquery', 'bcms', 'bcms.modal', 'bcms.m
 
     var seo = {},
         classes = {
-            editSeoDialogClass: 'bcms-editseo-modal'
+            editSeoDialogClass: 'bcms-modal-edit-seo'
         },
         selectors = {
-            pageUrlPath: '.bcms-editseo-urlpath',
+            pageUrlPath: '#bcms-page-permalink-info',
             editPageUrlLink: '#bcms-editseo-editurlpath',
-            editUrlPathBox: '.bcms-edit-urlpath-box',
+            editUrlPathBox: '.bcms-js-edit-box',
             editUrlSave: '#bcms-editseo-editurlpath-save',
-            editUrlCancel: '#bcms-editseo-editurlpath-cancel, .bcms-edit-urlpath-box .bcms-tip-close',
-            editUrlTextBox: '.bcms-edit-urlpath-box .bcms-editor-field-box',
-            editSeoForm: 'form:first'
+            editUrlCancel: '#bcms-editseo-editurlpath-cancel, .bcms-js-edit-box .bcms-tip-close',
+            editUrlTextBox: '.bcms-js-url-path',
+            editSeoForm: 'form:first',
+            editSeoCloseInfoMessage: '#bcms-seo-closeinfomessage',
+            editSeoInfoMessageBox: '.bcms-warning-messages'
         },
         links = {
             loadEditSeoDialogUrl: null
@@ -37,14 +65,10 @@ bettercms.define('bcms.pages.seo', ['bcms.jquery', 'bcms', 'bcms.modal', 'bcms.m
     function setEditPagePathBoxVisibility(dialog, visible) {
         if (visible) {
             dialog.container.find(selectors.editUrlPathBox).show();
-            dialog.container.find(selectors.editPageUrlLink).hide();
-            dialog.container.find(selectors.pageUrlPath).hide();
             dialog.container.find(selectors.editUrlTextBox).focus();
         } else {
             dialog.container.find(selectors.editUrlTextBox).blur();
             dialog.container.find(selectors.editUrlPathBox).hide();
-            dialog.container.find(selectors.editPageUrlLink).show();
-            dialog.container.find(selectors.pageUrlPath).show();
         }
     }
     
@@ -62,6 +86,10 @@ bettercms.define('bcms.pages.seo', ['bcms.jquery', 'bcms', 'bcms.modal', 'bcms.m
 
         editSeoDialog.container.find(selectors.editUrlCancel).on('click', function () {            
             seo.cancelEditUrlPath(editSeoDialog);
+        });
+
+        editSeoDialog.container.find(selectors.editSeoCloseInfoMessage).on('click', function () {
+            editSeoDialog.container.find(selectors.editSeoInfoMessageBox).hide();
         });
 
         editSeoDialog.container.find(selectors.editSeoForm).on('submit', function () {
@@ -122,13 +150,8 @@ bettercms.define('bcms.pages.seo', ['bcms.jquery', 'bcms', 'bcms.modal', 'bcms.m
                     contentAvailable : function () {
                         seo.initEditSeoDialogEvents(dialog);
                     },
-                        
-                    beforePost: function () {
-                        dialog.container.showLoading();
-                    },
                                    
                     postComplete: function (data) {
-                        dialog.container.hideLoading();
                         if (data.Data && data.Data.PageUrlPath) {
                             redirect.RedirectWithAlert(data.Data.PageUrlPath);
                         }

@@ -1,0 +1,294 @@
+// --------------------------------------------------------------------------------------------------------------------
+// <copyright file="_tables.scss" company="Devbridge Group LLC">
+// 
+// Copyright (C) 2015,2016 Devbridge Group LLC
+// 
+// This program is free software: you can redistribute it and/or modify
+// it under the terms of the GNU Lesser General Public License as published by
+// the Free Software Foundation, either version 3 of the License, or
+// (at your option) any later version.
+// 
+// This program is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU General Public License for more details.
+// 
+// You should have received a copy of the GNU Lesser General Public License
+// along with this program.  If not, see http://www.gnu.org/licenses/. 
+// </copyright>
+// 
+// <summary>
+// Better CMS is a publishing focused and developer friendly .NET open source CMS.
+// 
+// Website: https://www.bettercms.com 
+// GitHub: https://github.com/devbridge/bettercms
+// Email: info@bettercms.com
+// </summary>
+// --------------------------------------------------------------------------------------------------------------------
+$bg-th: #eaeaea;
+$bg-td-even: #f8f8f8;
+
+$border-th: 1px solid #cbcbcb;
+
+$text-th: #303646;
+
+$first-column-width: 44px;
+
+$sort-icons: (
+                ('top', $bcms-sort-up-active),
+                ('bottom', $bcms-sort-down-active)
+);
+
+.bcms-tables {
+    background-color: $white;
+    border: $border-thin-smoke;
+    border-collapse: collapse;
+    border-spacing: 0;
+    margin: 20px 0;
+    width: 100%;
+
+    th {
+        background-color: $bg-th;
+        border: {
+            bottom: $border-th;
+            top: $border-th;
+        }
+        color: $text-th;
+        cursor: default;
+        font: {
+            family: $font-base-family;
+            size: 14px;
+            weight: 600;
+        }
+        line-height: 18px;
+        padding: 9px 10px 8px;
+        text-align: left;
+
+        &:first-child {
+            border: {
+                left: $border-th;
+                right: $border-th;
+            }
+            text-align: center;
+        }
+
+        &:last-child {
+            border-right: $border-th;
+            padding: 0;
+        }
+    }
+
+    tr {
+        &.bcms-table-row-active {
+            td {
+                background-color: $sky-blue;
+            }
+
+            &:nth-child(even) {
+                td {
+                    background-color: $sky-blue;
+                }
+            }
+        }
+
+        &:nth-child(even) {
+            td {
+                background-color: $bg-td-even;
+            }
+        }
+    }
+
+    td {
+        border: {
+            top: $border-thin-smoke;
+            left: $border-thin-smoke;
+        }
+        color: $text-blue;
+        padding: 10px;
+        position: relative;
+        word-break: break-all;
+
+        &.bcms-widget-status {
+            border-left: 0;
+            width: 40px;
+
+            .bcms-action-ok,
+            .bcms-action-draft,
+            .bcms-action-warn {
+                display: block;
+                margin: auto;
+            }
+        }
+
+        > a {
+            color: $text-blue;
+        }
+
+        .bcms-page-url {
+            color: $text-red;
+        }
+
+        .bcms-action-edit,
+        .bcms-action-usage,
+        .bcms-action-history,
+        .bcms-action-delete,
+        .bcms-action-restore {
+            display: block;
+            margin: auto;
+        }
+
+        .bcms-thumb-box {
+            padding: 0;
+        }
+    }
+}
+
+.bcms-table {
+    &-field-helper {
+        .bcms-field-wrapper {
+            @include span(10.5 no-gutter);
+        }
+
+        .bcms-btn-primary {
+            @include span(1.5 before);
+            padding: 0;
+            text-align: center;
+        }
+    }
+
+    &-translation-helper {
+        .bcms-field-wrapper {
+            @include span(7 of 10 no-gutter);
+        }
+
+        .bcms-btn-primary {
+            @include span(3 of 10 before);
+        }
+    }
+}
+
+.bcms-tables-link {
+    color: #0383df;
+    text-decoration: none;
+}
+
+.bcms-table-no-data {
+    cursor: default;
+    font: {
+        family: $font-base-family;
+        size: 14px;
+    }
+    margin-left: 30px;
+}
+
+.bcms-pages-no-data {
+    color: $text-blue;
+    cursor: default;
+    font: {
+        family: $font-base-family;
+        size: 14px;
+    }
+    line-height: 28px;
+    padding: 10px 30px;
+}
+
+.bcms-sort-arrow {
+    background: url($bcms-sort-inactive) no-repeat right center;
+    cursor: pointer;
+    display: inline;
+    padding-right: 15px;
+    text-align: left;
+
+    @each $name, $icon in $sort-icons {
+        &-#{$name} {
+            background: url($icon) no-repeat right center;
+        }
+    }
+}
+
+//module pages list
+.bcms-list {
+    &-pages {
+        background-color: $white;
+        border: $border-pop-box;
+        margin-top: 20px;
+    }
+
+    &-pages-row {
+        border-top: $border-pop-box;
+        display: table;
+        width: 100%;
+
+        &:first-child {
+            border-top: 0;
+        }
+    }
+
+    &-column {
+        @include vertical-align($block: table-cell);
+        box-sizing: border-box;
+        line-height: 18px;
+        padding: 17px 10px 10px;
+
+        .bcms-action-edit,
+        .bcms-action-delete {
+            @include size(22px);
+            display: block;
+            margin: auto;
+        }
+    }
+
+    &-edit {
+        padding-right: 0;
+        width: 55px;
+    }
+
+    &-status {
+        padding: 0 10px;
+        width: 50px;
+
+        .bcms-action-ok,
+        .bcms-action-warn,
+        .bcms.action-draft {
+            display: block;
+            margin: auto;
+        }
+    }
+
+    &-delete {
+        padding: 0 10px;
+        width: 65px;
+    }
+
+    &-row-active {
+        background-color: $sky-blue;
+    }
+
+    &-dates {
+        color: $text-gray;
+        display: inline;
+        font-size: 10px;
+        line-height: 18px;
+        margin-right: 40px;
+        text-transform: uppercase;
+    }
+
+    &-link {
+        @include transition(opacity 200ms);
+        background: url($bcms-list-preview) no-repeat right center;
+        color: $text-blue;
+        cursor: pointer;
+        display: inline;
+        font: {
+            size: 14px;
+            weight: 600;
+        }
+        line-height: 20px;
+        opacity: 1;
+        padding-right: 16px;
+
+        &:hover {
+            opacity: .7;
+        }
+    }
+}

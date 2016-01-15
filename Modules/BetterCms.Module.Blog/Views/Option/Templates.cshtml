@@ -1,47 +1,84 @@
-﻿@using BetterCms.Module.Blog.Content.Resources
+﻿@* --------------------------------------------------------------------------------------------------------------------
+// <copyright file="Templates.cshtml" company="Devbridge Group LLC">
+// 
+// Copyright (C) 2015,2016 Devbridge Group LLC
+// 
+// This program is free software: you can redistribute it and/or modify
+// it under the terms of the GNU Lesser General Public License as published by
+// the Free Software Foundation, either version 3 of the License, or
+// (at your option) any later version.
+// 
+// This program is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU General Public License for more details.
+// 
+// You should have received a copy of the GNU Lesser General Public License
+// along with this program.  If not, see http://www.gnu.org/licenses/. 
+// </copyright>
+// 
+// <summary>
+// Better CMS is a publishing focused and developer friendly .NET open source CMS.
+// 
+// Website: https://www.bettercms.com 
+// GitHub: https://github.com/devbridge/bettercms
+// Email: info@bettercms.com
+// </summary>
+// -------------------------------------------------------------------------------------------------------------------- *@
+@using BetterCms.Module.Blog.Content.Resources
 @using BetterCms.Module.Root.Content.Resources
 @using BetterCms.Module.Root.Mvc.Helpers
 
-@Html.TabbedContentMessagesBox()
+@Html.MessagesBox()
 
-<div class="bcms-blog-templates-container">
-    
-    <div class="bcms-top-block-holder">
-        <div class="bcms-large-titles">@BlogGlobalization.SiteSettings_Templates_Title</div>
+<div class="bcms-content-dialog-title">
+    <div class="bcms-content-titles-align">@BlogGlobalization.BlogPostTitle_ChooseLayout_Title</div>
+
+    <div class="bcms-top-block-inner" data-bind="css: { 'bcms-active-search': searchEnabled() }">
+        <div class="bcms-btn-search bcms-search-query" data-bind="click: toggleSearch">@RootGlobalization.Button_Search</div>
         <div class="bcms-search-block">
-            <input type="text" class="bcms-editor-field-box" placeholder="@RootGlobalization.WaterMark_Search" data-bind="value: searchQuery, valueUpdate: 'afterkeydown', enterPress: search">
-            <div class="bcms-btn-search bcms-search-query" data-bind="click: search">@RootGlobalization.Button_Search</div>
+            <input type="text" class="bcms-search-field-box bcms-js-search-box" placeholder="@RootGlobalization.WaterMark_Search" data-bind="value: searchQuery, valueUpdate: 'afterkeydown', enterPress: search, hasFocus: hasFocus, enable: searchEnabled">
         </div>
     </div>
+</div>
 
-    <div class="bcms-blog-templates-container">
-        <!-- ko foreach: templateRows -->
-        <div class="bcms-blog-templates-holder">
-            <!-- ko foreach: templates() -->
-            <div class="bcms-blog-templates" data-bind="css: {'bcms-blog-templates-active': isCompatible && isActive(), 'bcms-blog-templates-notcompatible': !isCompatible }">
-                <div class="bcms-title-holder">
-                    <div class="bcms-content-titles" data-bind="text: title"></div>
-                </div>
-                <div class="bcms-blog-templates-image-holder">
-                    <!-- ko if: previewUrl -->
-                    <div class="bcms-zoom-overlay" data-bind="click: previewImage"></div>
-                    <div class="bcms-blog-templates-image"><img data-bind="attr:{src: previewUrl, alt: title}" /></div>
-                    <!-- /ko -->
-                </div>
-                <div class="bcms-blog-templates-button-holder">
-                    <!-- ko if: isCompatible && isActive() -->
-                    <div class="bcms-blog-templates-active-text">@BlogGlobalization.SiteSettings_Templates_DefaultTemplate</div>
-                    <!-- /ko -->
-                    <!-- ko if: isCompatible && !isActive() -->
-                    <div class="bcms-btn-grid" data-bind="click: select">@BlogGlobalization.SiteSettings_Templates_SelectButton</div>
-                    <!-- /ko -->
-                    <!-- ko if: !isCompatible -->
-                    <div class="bcms-blog-templates-notcompatible-text">@BlogGlobalization.SiteSettings_Templates_IncompatibleTemplate</div>
-                    <!-- /ko -->
-                </div>
+<div class="bcms-templates-holder">
+    <!-- ko foreach: displayedTemplates() -->
+    <div class="bcms-grid-box bcms-grid-box-blog" data-bind="css: {'bcms-grid-box-active': isCompatible && isActive(), 'bcms-grid-box-notcompatible': !isCompatible }">
+        <div class="bcms-content-titles" data-bind="text: title"></div>
+
+        <div class="bcms-grid-image-holder">
+            <!-- ko if: previewUrl -->
+            <div class="bcms-grid-image">
+                <img data-bind="attr:{src: previewUrl, alt: title}" />
             </div>
+
+            <div class="bcms-zoom-overlay" data-bind="click: previewImage"></div>
+            <!-- /ko -->
+            <!-- ko ifnot: previewUrl -->
+            <svg class="bcms-grid-no-preview" viewBox="-237.5 336 138 121.5" enable-background="new -237.5 336 138 121.5">
+                <path d="m-237 336h137v4h-137v-4" fill="#e6e6e6" />
+                <g fill="#fff" stroke="#d7d4d4" stroke-linecap="square">
+                    <path d="m-237 404h43v27h-43v-27z" />
+                    <path d="m-190 404h43v27h-43v-27z" />
+                    <path d="m-237 437h137v20h-137v-20z" />
+                    <path d="m-143 404h43v27h-43v-27z" />
+                    <path d="m-237 345h137v53h-137v-53z" />
+                </g>
+            </svg>
             <!-- /ko -->
         </div>
+
+        <!-- ko if: isCompatible && isActive() -->
+        <div class="bcms-btn-selection">@BlogGlobalization.SiteSettings_Templates_DefaultTemplate</div>
         <!-- /ko -->
+        <!-- ko if: isCompatible && !isActive() -->
+        <div class="bcms-btn-selection" data-bind="click: select">@BlogGlobalization.SiteSettings_Templates_SelectButton</div>
+        <!-- /ko -->
+        <!-- ko if: !isCompatible -->
+        <div class="bcms-btn-selection">@BlogGlobalization.SiteSettings_Templates_IncompatibleTemplate</div>
+        <!-- /ko -->
+
     </div>
+    <!-- /ko -->
 </div>

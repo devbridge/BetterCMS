@@ -11,9 +11,9 @@ bettercms.define('bcms.user', ['bcms.jquery', 'bcms', 'bcms.modal', 'bcms.siteSe
                 usersForm: '#bcms-users-form',
                 userForm: 'form:first',
                 usersSearchButton: '#bcms-users-search-btn',
-                usersSearchField: '.bcms-search-block input.bcms-editor-field-box',
+                usersSearchField: '.bcms-js-search-box',
                 userCells: 'td',
-                userEditButton: '.bcms-icn-edit',
+                userEditButton: '.bcms-action-edit',
                 userRowDeleteButton: '.bcms-grid-item-delete-button',
                 userParentRow: 'tr:first',
                 userNameCell: '.bcms-user-name',
@@ -50,14 +50,14 @@ bettercms.define('bcms.user', ['bcms.jquery', 'bcms', 'bcms.modal', 'bcms.siteSe
         function searchSiteSettingsUsers(form) {
             grid.submitGridForm(form, function (htmlContent) {
                 usersContainer.html(htmlContent);
-                initializeSiteSettingsUsersList();
+                initializeSiteSettingsUsersList(true);
             });
         }
 
         /**
         * Initailizes site settings users list
         */
-        function initializeSiteSettingsUsersList() {
+        function initializeSiteSettingsUsersList(isSearchResult) {
             var form = usersContainer.find(selectors.usersForm);
 
             grid.bindGridForm(form, function (htmlContent) {
@@ -78,13 +78,27 @@ bettercms.define('bcms.user', ['bcms.jquery', 'bcms', 'bcms.modal', 'bcms.siteSe
             });
 
             form.find(selectors.usersSearchButton).on('click', function () {
-                searchSiteSettingsUsers(form);
+                var parent = $(this).parent();
+                if (!parent.hasClass('bcms-active-search')) {
+                    form.find(selectors.usersSearchField).prop('disabled', false);
+                    parent.addClass('bcms-active-search');
+                    form.find(selectors.usersSearchField).focus();
+                } else {
+                    form.find(selectors.usersSearchField).prop('disabled', true);
+                    parent.removeClass('bcms-active-search');
+                    form.find(selectors.usersSearchField).val('');
+                }
             });
 
             usersContainer.find(selectors.siteSettingsUserCreateButton).on('click', function () {
                 createUser();
-                
             });
+
+            if (isSearchResult === true) {
+                form.find(selectors.usersSearchButton).parent().addClass('bcms-active-search');
+            } else {
+                form.find(selectors.usersSearchField).prop('disabled', true);
+            }
 
             initializeSiteSettingsUsersListItem(usersContainer);
             

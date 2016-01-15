@@ -172,7 +172,7 @@
     <value>to one of the following modern browsers:</value>
   </data>
   <data name="Button_AddNew" xml:space="preserve">
-    <value>Add New +</value>
+    <value>Add New</value>
   </data>
   <data name="Button_Browse" xml:space="preserve">
     <value>Browse</value>
@@ -201,6 +201,9 @@
   <data name="Button_History" xml:space="preserve">
     <value>History</value>
   </data>
+  <data name="Button_Options" xml:space="preserve">
+    <value>Options</value>
+  </data>
   <data name="Button_Insert" xml:space="preserve">
     <value>Insert</value>
   </data>
@@ -208,7 +211,7 @@
     <value>No</value>
   </data>
   <data name="Button_Ok" xml:space="preserve">
-    <value>OK</value>
+    <value>Ok</value>
   </data>
   <data name="Button_Open" xml:space="preserve">
     <value>Open</value>
@@ -313,10 +316,10 @@
     <value>Show Path</value>
   </data>
   <data name="MasterPage_Or_Layout_OnlyOne_ShouldBeSelected_ValidationMessage" xml:space="preserve">
-    <value>Only one of master page and template can be specified.</value>
+    <value>Only one template can be specified.</value>
   </data>
   <data name="MasterPage_Or_Layout_ShouldBeSelected_ValidationMessage" xml:space="preserve">
-    <value>Template or master page should be selected.</value>
+    <value>Template should be selected.</value>
   </data>
   <data name="Message_AccessForbidden" xml:space="preserve">
     <value>Forbidden: Access is denied.</value>
@@ -448,7 +451,7 @@
     <value>Categories</value>
   </data>
   <data name="SiteSettings_Categories_AddNewCategory" xml:space="preserve">
-    <value>Add New +</value>
+    <value>Add New</value>
   </data>
   <data name="SiteSettings_Categories_DeleteCategoryMessage" xml:space="preserve">
     <value>Are you sure you want to delete the "{0}" category?</value>
@@ -466,7 +469,7 @@
     <value>Tags</value>
   </data>
   <data name="SiteSettings_Tags_AddNewTag" xml:space="preserve">
-    <value>Add New +</value>
+    <value>Add New</value>
   </data>
   <data name="SiteSettings_Tags_DeleteTagMessage" xml:space="preserve">
     <value>Are you sure you want to delete the "{0}" tag?</value>
@@ -601,7 +604,7 @@
     <value>Add Tags</value>
   </data>
   <data name="Authentication_ViewAsPublic_Public" xml:space="preserve">
-    <value>Anonymous</value>
+    <value>Preview</value>
   </data>
   <data name="MasterPagesPath_CurrentPage_Title" xml:space="preserve">
     <value>Current page</value>
@@ -631,7 +634,7 @@
     <value>Visible regions</value>
   </data>
   <data name="SiteSettings_CategoryTrees_AddNewCategoryTree" xml:space="preserve">
-    <value>Add New +</value>
+    <value>Add New</value>
   </data>
   <data name="SiteSettings_CategoryTrees_Search" xml:space="preserve">
     <value>Search</value>

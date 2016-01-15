@@ -1,4 +1,31 @@
-﻿@using BetterCms.Module.Root.Content.Resources
+﻿@* --------------------------------------------------------------------------------------------------------------------
+// <copyright file="EditUser.cshtml" company="Devbridge Group LLC">
+// 
+// Copyright (C) 2015,2016 Devbridge Group LLC
+// 
+// This program is free software: you can redistribute it and/or modify
+// it under the terms of the GNU Lesser General Public License as published by
+// the Free Software Foundation, either version 3 of the License, or
+// (at your option) any later version.
+// 
+// This program is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU General Public License for more details.
+// 
+// You should have received a copy of the GNU Lesser General Public License
+// along with this program.  If not, see http://www.gnu.org/licenses/. 
+// </copyright>
+// 
+// <summary>
+// Better CMS is a publishing focused and developer friendly .NET open source CMS.
+// 
+// Website: https://www.bettercms.com 
+// GitHub: https://github.com/devbridge/bettercms
+// Email: info@bettercms.com
+// </summary>
+// -------------------------------------------------------------------------------------------------------------------- *@
+@using BetterCms.Module.Root.Content.Resources
 @using BetterCms.Module.Root.Mvc.Helpers
 @using BetterCms.Module.Users.Content.Resources
 @using BetterCms.Module.Users.Controllers
@@ -6,90 +33,109 @@
 @using Microsoft.Web.Mvc
 
 @model EditUserViewModel
-           
-<div class="bcms-scroll-window" style="height: 527px;">
-    @Html.TabbedContentMessagesBox()
-    <div class="bcms-new-blog-content">
+
+<div class="bcms-modal-frame-holder">
+    @Html.MessagesBox()
+
+    <div class="bcms-window-options">
         @using (Html.BeginForm<UserController>(c => c.SaveUser(null), FormMethod.Post, new { @class = "bcms-ajax-form" }))
         {
             @Html.HiddenFor(m => m.Id)
             @Html.HiddenFor(m => m.Version)
             @Html.HiddenFor(model => model.Image.ImageId, new { data_bind = "value: image().id()" })
-            
-            <div class="bcms-blog-left">
-                <div class="bcms-input-list-holder">
-                    <div class="bcms-tooltip-mark" data-message="@UsersGlobalization.EditUser_FirstName_Tooltip_Description"></div>
-                    <div class="bcms-content-titles">@UsersGlobalization.EditUser_FirstName_Title</div>
-                    <div class="bcms-input-box">
-                        @Html.TextBoxFor(m => m.FirstName, new { @class = "bcms-editor-field-box", data_bind = "value: firstName, valueUpdate: 'afterkeydown'" })
-                        @Html.BcmsValidationMessageFor(m => m.FirstName)
+
+            <div class="bcms-form-block-holder">
+                <div>
+                    <div class="bcms-input-list-holder">
+                        <div class="bcms-content-titles">@UsersGlobalization.EditUser_FirstName_Title</div>
+                        <div class="bcms-tooltip-mark" data-message="@UsersGlobalization.EditUser_FirstName_Tooltip_Description"></div>
+                        <div class="bcms-field-wrapper">
+                            @Html.TextBoxFor(m => m.FirstName, new { @class = "bcms-field-text", data_bind = "value: firstName, valueUpdate: 'afterkeydown'" })
+                            @Html.BcmsValidationMessageFor(m => m.FirstName)
+                        </div>
                     </div>
-                </div>
-                <div class="bcms-input-list-holder">
-                    <div class="bcms-tooltip-mark" data-message="@UsersGlobalization.EditUser_LastName_Tooltip_Description"></div>
-                    <div class="bcms-content-titles">@UsersGlobalization.EditUser_LastName</div>
-                    <div class="bcms-input-box">
-                        @Html.TextBoxFor(m => m.LastName, new { @class = "bcms-editor-field-box", data_bind = "value: lastName, valueUpdate: 'afterkeydown'" })
-                        @Html.BcmsValidationMessageFor(m => m.LastName)
+
+                    <div class="bcms-input-list-holder">
+                        <div class="bcms-content-titles">@UsersGlobalization.EditUser_LastName</div>
+                        <div class="bcms-tooltip-mark" data-message="@UsersGlobalization.EditUser_LastName_Tooltip_Description"></div>
+                        <div class="bcms-field-wrapper">
+                            @Html.TextBoxFor(m => m.LastName, new { @class = "bcms-field-text", data_bind = "value: lastName, valueUpdate: 'afterkeydown'" })
+                            @Html.BcmsValidationMessageFor(m => m.LastName)
+                        </div>
                     </div>
-                </div>
-                <div class="bcms-input-list-holder">
-                    <div class="bcms-tooltip-mark" data-message="@UsersGlobalization.EditUser_UserName_Tooltip_Description"></div>
-                    <div class="bcms-content-titles">@UsersGlobalization.EditUser_UserName_Title</div>
-                    <div class="bcms-input-box">
-                        @Html.TextBoxFor(m => m.UserName, new { @class = "bcms-editor-field-box", data_bind = "value: userName, valueUpdate: 'afterkeydown', event: {keyup: userNameOnKeyUp}" })
-                        @Html.BcmsValidationMessageFor(m => m.UserName)
+
+                    <div class="bcms-input-list-holder">
+                        <div class="bcms-content-titles">@UsersGlobalization.EditUser_UserName_Title</div>
+                        <div class="bcms-tooltip-mark" data-message="@UsersGlobalization.EditUser_UserName_Tooltip_Description"></div>
+                        <div class="bcms-field-wrapper">
+                            @Html.TextBoxFor(m => m.UserName, new { @class = "bcms-field-text", data_bind = "value: userName, valueUpdate: 'afterkeydown', event: {keyup: userNameOnKeyUp}" })
+                            @Html.BcmsValidationMessageFor(m => m.UserName)
+                        </div>
                     </div>
-                </div>
-                <div class="bcms-input-list-holder">
-                    <div class="bcms-tooltip-mark" data-message="@UsersGlobalization.EditUser_Email_Tooltip_Description"></div>
-                    <div class="bcms-content-titles">@UsersGlobalization.EditUser_Email_Title</div>
-                    <div class="bcms-input-box">
-                        @Html.TextBoxFor(m => m.Email, new { @class = "bcms-editor-field-box" })
-                        @Html.BcmsValidationMessageFor(m => m.Email)
+
+                    <div class="bcms-input-list-holder">
+                        <div class="bcms-content-titles">@UsersGlobalization.EditUser_Email_Title</div>
+                        <div class="bcms-tooltip-mark" data-message="@UsersGlobalization.EditUser_Email_Tooltip_Description"></div>
+                        <div class="bcms-field-wrapper">
+                            @Html.TextBoxFor(m => m.Email, new { @class = "bcms-field-text" })
+                            @Html.BcmsValidationMessageFor(m => m.Email)
+                        </div>
                     </div>
-                </div>
-                <div class="bcms-input-list-holder">
-                    <div class="bcms-tooltip-mark" data-message="@UsersGlobalization.EditUser_Password_Tooltip_Description"></div>
-                    <div class="bcms-content-titles">@UsersGlobalization.EditUser_Password_Title</div>
-                    <div class="bcms-input-box">
-                        @Html.TextBoxFor(m => m.Password, new { @class = "bcms-editor-field-box", @type = "password" })
-                        @Html.BcmsValidationMessageFor(m => m.Password)
+
+                    <div class="bcms-input-list-holder">
+                        <div class="bcms-content-titles">@UsersGlobalization.EditUser_Password_Title</div>
+                        <div class="bcms-tooltip-mark" data-message="@UsersGlobalization.EditUser_Password_Tooltip_Description"></div>
+                        <div class="bcms-field-wrapper">
+                            @Html.TextBoxFor(m => m.Password, new { @class = "bcms-field-text", @type = "password" })
+                            @Html.BcmsValidationMessageFor(m => m.Password)
+                        </div>
                     </div>
-                </div>
-                <div class="bcms-input-list-holder">
-                    <div class="bcms-tooltip-mark" data-message="@UsersGlobalization.EditUser_RetypePassword_Tooltip_Description"></div>
-                    <div class="bcms-content-titles">@UsersGlobalization.EditUser_RetypePassword_Title</div>
-                    <div class="bcms-input-box">
-                        @Html.TextBoxFor(m => m.RetypedPassword, new { @class = "bcms-editor-field-box", @type = "password" })
-                        @Html.BcmsValidationMessageFor(m => m.RetypedPassword)
-                    </div>
-                </div>
-            </div>
-             
-            <div class="bcms-blog-right">
-                <div class="bcms-create-author-holder">
-                    <div class="bcms-tooltip-mark" data-message="@UsersGlobalization.EditUser_UserImage_Tooltip_Description"></div>
-                    <div class="bcms-content-titles">@UsersGlobalization.EditUser_Image_Title</div>
-                    <div class="bcms-uploaded-image">
-                        <!-- ko if: image().url() -->
-                        <a class="bcms-remove-image" data-bind="click: image().remove.bind(image())">@RootGlobalization.Button_Remove</a>
-                        <a data-bind="click: image().preview.bind(image())">
-                            <img data-bind="attr: { src: image().thumbnailUrl(), alt: image().tooltip() }" />
-                        </a>
-                        <!-- /ko -->
-                    </div>
-                    <div class="bcms-upload-info">
-                        <div class="bcms-upload-info-text">@UsersGlobalization.EditUser_UploadImage_Info</div>
-                        <div class="bcms-btn-small" data-bind="click: image().select.bind(image())">@UsersGlobalization.EditUser_UploadImage_Button_Title</div>
+
+                    <div class="bcms-input-list-holder">
+                        <div class="bcms-content-titles">@UsersGlobalization.EditUser_RetypePassword_Title</div>
+                        <div class="bcms-tooltip-mark" data-message="@UsersGlobalization.EditUser_RetypePassword_Tooltip_Description"></div>
+                        <div class="bcms-field-wrapper">
+                            @Html.TextBoxFor(m => m.RetypedPassword, new { @class = "bcms-field-text", @type = "password" })
+                            @Html.BcmsValidationMessageFor(m => m.RetypedPassword)
+                        </div>
                     </div>
                 </div>
 
-                <div class="bcms-blog-tags-holder">
-                    @Html.Partial("Partial/EditUserRoles")
+                <div>
+                    <div class="bcms-thumb-container">
+                        <div class="bcms-thumb-box">
+                            <div class="bcms-input-list-holder">
+                                <div class="bcms-content-titles">@UsersGlobalization.EditUser_Image_Title</div>
+                                <div class="bcms-tooltip-mark" data-message="@UsersGlobalization.EditUser_UserImage_Tooltip_Description"></div>
+                            </div>
+
+                            <div class="bcms-thumb-image">
+                                <!-- ko if: image().url() -->
+                                <div class="bcms-remove-image" data-bind="click: image().remove.bind(image())">@RootGlobalization.Button_Remove</div>
+                                <div data-bind="click: image().preview.bind(image())">
+                                    <img data-bind="attr: { src: image().thumbnailUrl(), alt: image().tooltip() }" />
+                                </div>
+                                <!-- /ko -->
+                                <!-- ko ifnot: image().url() -->
+                                <svg class="bcms-grid-no-preview" width="50" height="50" viewBox="-205 372 50 50" enable-background="new -205 372 50 50">
+                                    <g fill="#cdcdcd">
+                                        <path d="m-205 422h50v-50h-50v50m2-48h46v46h-46v-46"></path>
+                                        <path d="m-164.3 406.2l1.4-1.4-11.5-11.5-7.7 7.6-3.6-3.6-11.5 11.5 1.4 1.4 10.1-10.1 11.1 11.1 1.4-1.4-7.5-7.5 6.3-6.2 10.1 10.1"></path>
+                                        <path d="m-187.9 382.4c-2.8 0-5 2.2-5 5 0 2.8 2.2 5 5 5 2.8 0 5-2.2 5-5 0-2.8-2.2-5-5-5m0 2c1.7 0 3 1.4 3 3 0 1.7-1.3 3-3 3-1.6 0-3-1.3-3-3 0-1.7 1.3-3 3-3"></path>
+                                    </g>
+                                </svg>
+                                <!-- /ko -->
+                            </div>
+
+                            <div class="bcms-btn-selection" data-bind="click: image().select.bind(image())">@UsersGlobalization.EditUser_UploadImage_Button_Title</div>
+                        </div>
+                    </div>
+
+                    <div class="bcms-input-list-holder">
+                        @Html.Partial("Partial/EditUserRoles")
+                    </div>
                 </div>
             </div>
         }
     </div>
 </div>
-

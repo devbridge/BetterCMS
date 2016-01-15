@@ -1,33 +1,68 @@
-﻿@using BetterCms.Module.Pages.Content.Resources
+﻿@* --------------------------------------------------------------------------------------------------------------------
+// <copyright file="EditSeoEditUrlPath.cshtml" company="Devbridge Group LLC">
+// 
+// Copyright (C) 2015,2016 Devbridge Group LLC
+// 
+// This program is free software: you can redistribute it and/or modify
+// it under the terms of the GNU Lesser General Public License as published by
+// the Free Software Foundation, either version 3 of the License, or
+// (at your option) any later version.
+// 
+// This program is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU General Public License for more details.
+// 
+// You should have received a copy of the GNU Lesser General Public License
+// along with this program.  If not, see http://www.gnu.org/licenses/. 
+// </copyright>
+// 
+// <summary>
+// Better CMS is a publishing focused and developer friendly .NET open source CMS.
+// 
+// Website: https://www.bettercms.com 
+// GitHub: https://github.com/devbridge/bettercms
+// Email: info@bettercms.com
+// </summary>
+// -------------------------------------------------------------------------------------------------------------------- *@
+@using BetterCms.Module.Pages.Content.Resources
 @using BetterCms.Module.Root.Content.Resources
 @using BetterCms.Module.Root.Mvc.Helpers
 @model BetterCms.Module.Pages.ViewModels.Seo.EditSeoViewModel
+
 <div class="bcms-input-list-holder">
-    @Html.Tooltip(PagesGlobalization.EditSeo_UrlPath_Tooltip_Description)
-    <div class="bcms-content-titles">@PagesGlobalization.EditSeo_UrlPath<a id="bcms-editseo-editurlpath">@RootGlobalization.Button_Edit</a></div>
-    <div class="bcms-editseo-urlpath">@Html.Raw(string.IsNullOrWhiteSpace(Model.PageUrlPath) ? "&nbsp;" : Html.Encode(Model.PageUrlPath))</div>
+    <div class="bcms-content-titles">
+        @PagesGlobalization.EditSeo_UrlPath @Html.Tooltip(PagesGlobalization.EditSeo_UrlPath_Tooltip_Description)
+        <div class="bcms-editor-link" id="bcms-editseo-editurlpath">@RootGlobalization.Button_Edit</div>
+    </div>
+    <div class="bcms-editor-path" id="bcms-page-permalink-info">@Html.Raw(string.IsNullOrWhiteSpace(Model.PageUrlPath) ? "&nbsp;" : Html.Encode(Model.PageUrlPath))</div>
     @Html.HiddenFor(f => f.PageUrlPath)
-</div>
-<div class="bcms-edit-urlpath-box" style="display: none;">
-    <div class="bcms-custom-input-box" style="width: 503px;">
-        @Html.TextBoxFor(f => f.ChangedUrlPath, new { @class = "bcms-editor-field-box" })
-        @Html.BcmsValidationMessageFor(f => f.ChangedUrlPath)
-    </div>
-    <div id="bcms-editseo-editurlpath-save" class="bcms-btn-small">@RootGlobalization.Button_Ok</div>
-    <div id="bcms-editseo-editurlpath-cancel" class="bcms-btn-links-small">@RootGlobalization.Button_Cancel</div>
-    <div class="bcms-edit-check-field">
-        @Html.CheckBoxFor(f => f.CreatePermanentRedirect)
-        <div class="bcms-edit-label">@PagesGlobalization.EditSeo_EditUrlPath_PermanentRedirect</div>
-    </div>
-    <div class="bcms-edit-check-field">
-        @Html.CheckBoxFor(f => f.UseCanonicalUrl)
-        <div class="bcms-edit-label">@PagesGlobalization.EditSeo_EditUrlPath_UseCanonicalUrl</div>
-    </div>
-    @if (Model.IsInSitemap)
-    {
-        <div class="bcms-edit-check-field">
-            @Html.CheckBoxFor(f => f.UpdateSitemap)
-            <div class="bcms-edit-label">@PagesGlobalization.EditSeo_EditUrlPath_UpdateSitemap</div>
+
+    <div class="bcms-editor-box bcms-js-edit-box" style="display: none;">
+        <div class="bcms-field-wrapper">
+            @Html.TextBoxFor(f => f.ChangedUrlPath, new { @class = "bcms-field-text bcms-js-url-path" })
+            @Html.BcmsValidationMessageFor(f => f.ChangedUrlPath)
         </div>
-    }
+
+        <div id="bcms-editseo-editurlpath-save" class="bcms-btn-primary">@RootGlobalization.Button_Ok</div>
+        <div id="bcms-editseo-editurlpath-cancel" class="bcms-btn-cancel">@RootGlobalization.Button_Cancel</div>
+
+        <div class="bcms-checkbox-holder">
+            @Html.CheckBoxFor(f => f.CreatePermanentRedirect)
+            <div class="bcms-checkbox-label bcms-js-edit-label">@PagesGlobalization.EditSeo_EditUrlPath_PermanentRedirect</div>
+        </div>
+
+        <div class="bcms-checkbox-holder">
+            @Html.CheckBoxFor(f => f.UseCanonicalUrl)
+            <div class="bcms-checkbox-label bcms-js-edit-label">@PagesGlobalization.EditSeo_EditUrlPath_UseCanonicalUrl</div>
+        </div>
+
+        @if (Model.IsInSitemap)
+        {
+            <div class="bcms-checkbox-holder">
+                @Html.CheckBoxFor(f => f.UpdateSitemap)
+                <div class="bcms-checkbox-label bcms-js-edit-label">@PagesGlobalization.EditSeo_EditUrlPath_UpdateSitemap</div>
+            </div>
+        }
+    </div>
 </div>

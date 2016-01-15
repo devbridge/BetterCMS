@@ -1,5 +1,31 @@
 ﻿/*jslint unparam: true, white: true, browser: true, devel: true */
-/*global bettercms */
+// --------------------------------------------------------------------------------------------------------------------
+// <copyright file="bcms.sidemenu.js" company="Devbridge Group LLC">
+// 
+// Copyright (C) 2015,2016 Devbridge Group LLC
+// 
+// This program is free software: you can redistribute it and/or modify
+// it under the terms of the GNU Lesser General Public License as published by
+// the Free Software Foundation, either version 3 of the License, or
+// (at your option) any later version.
+// 
+// This program is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU General Public License for more details.
+// 
+// You should have received a copy of the GNU Lesser General Public License
+// along with this program.  If not, see http://www.gnu.org/licenses/. 
+// </copyright>
+// 
+// <summary>
+// Better CMS is a publishing focused and developer friendly .NET open source CMS.
+// 
+// Website: https://www.bettercms.com 
+// GitHub: https://github.com/devbridge/bettercms
+// Email: info@bettercms.com
+// </summary>
+// --------------------------------------------------------------------------------------------------------------------
 
 bettercms.define('bcms.sidemenu', ['bcms.jquery', 'bcms', 'bcms.security', 'bcms.store'], function ($, bcms, security, store) {
     'use strict';
@@ -150,14 +176,25 @@ bettercms.define('bcms.sidemenu', ['bcms.jquery', 'bcms', 'bcms.security', 'bcms
             editingOn = store.get(keys.editingOn),
             middleOfThePage;
 
-        if (offsetTop) {
+
+
+        function setOffset(offset) {
             var windowHeight = $(window).height();
             var sidemenuHeight = sidemenuContainer.height();
-            if (offsetTop > windowHeight - sidemenuHeight) {
-                sidemenuContainer.css('top', (windowHeight - sidemenuHeight - 15) + 'px');
-            } else if (offsetTop >= 0) {
-                sidemenuContainer.css('top', offsetTop + 'px');
+            if (offset > windowHeight - sidemenuHeight) {
+                sidemenuContainer.css('top', (windowHeight - sidemenuHeight - 20) + 'px');
+            } else if (offset >= 0) {
+                sidemenuContainer.css('top', offset + 'px');
             }
+        }
+
+        function onWindowResize() {
+            if (offsetTop) {
+                setOffset(offsetTop);
+            }
+        }
+        if (offsetTop) {
+            setOffset(offsetTop);
         }
 
         if (isMenuOnTheRight) {
@@ -209,12 +246,13 @@ bettercms.define('bcms.sidemenu', ['bcms.jquery', 'bcms', 'bcms.security', 'bcms
                 var wHeight = $(window).height();
                 var sHeight = sidemenuContainer.height();
                 if (top > wHeight - sHeight) {
-                    top = (windowHeight - sidemenuHeight - 15);
+                    top = (windowHeight - sidemenuHeight - 20);
                     sidemenuContainer.css('top', top +'px');
                 } else if (top < 0) {
                     top = 0;
                     sidemenuContainer.css('top', '0px');
-                } 
+                }
+                offsetTop = top;
                 store.set(keys.sideMenuOffsetTop, top);
             },
             start: function () {
@@ -237,6 +275,7 @@ bettercms.define('bcms.sidemenu', ['bcms.jquery', 'bcms', 'bcms.security', 'bcms
         });
 
         sidemenuContainer.show();
+        window.addEventListener('resize', onWindowResize);
     };
 
     bcms.registerInit(sidemenu.init);

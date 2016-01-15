@@ -448,7 +448,7 @@ namespace BetterCms.Module.MediaManager.Content.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Failed! Can upload only gif, jpg, jpeg, png or bmp..
+        ///   Looks up a localized string similar to Failed! Can upload only gif, jpg, jpeg, png, bmp or svg..
         /// </summary>
         public static string FileUpload_Failed_ImageFormatNotSuported {
             get {
@@ -1353,6 +1353,15 @@ namespace BetterCms.Module.MediaManager.Content.Resources {
         public static string MediaManager_ItemParentFolder_Prefix {
             get {
                 return ResourceManager.GetString("MediaManager_ItemParentFolder_Prefix", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Menu.
+        /// </summary>
+        public static string MediaManager_Menu {
+            get {
+                return ResourceManager.GetString("MediaManager_Menu", resourceCulture);
             }
         }
         

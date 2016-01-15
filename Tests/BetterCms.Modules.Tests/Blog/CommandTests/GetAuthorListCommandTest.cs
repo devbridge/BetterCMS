@@ -1,58 +1,27 @@
-﻿//using System.Linq;
-//
-//using BetterModules.Core.DataAccess;
-//using BetterCms.Module.Blog.Commands.GetAuthorList;
-//using BetterCms.Module.Root.Mvc.Grids.GridOptions;
-//
-//using Moq;
-//
-//using NUnit.Framework;
-//
-//namespace BetterCms.Test.Module.Blog.CommandTests
-//{
-//    [TestFixture]
-//    public class GetAuthorListCommandTest : TestBase
-//    {
-//        [Test]
-//        public void Should_Return_Author_List_Successfully()
-//        {
-//            var author1 = TestDataProvider.CreateNewAuthor();
-//            var author2 = TestDataProvider.CreateNewAuthor();
-//
-//            Mock<IRepository> repositoryMock = new Mock<IRepository>();
-//            repositoryMock
-//                .Setup(f => f.AsQueryable<BetterCms.Module.Blog.Models.Author>())
-//                .Returns(new[] { author1, author2 }.AsQueryable());
-//
-//            var command = new GetAuthorListCommand { Repository = repositoryMock.Object };
-//
-//            var response = command.Execute(new SearchableGridOptions());
-//
-//            Assert.IsNotNull(response);
-//            Assert.IsNotNull(response.Items);
-//            Assert.AreEqual(response.Items.Count(), 2);
-//
-//            var author = response.Items.FirstOrDefault(l => author1.Id == l.Id);
-//            Assert.IsNotNull(author);
-//
-//            Assert.AreEqual(author1.Name, author.Name);
-//        }
-//
-//        [Test]
-//        public void Should_Return_Empty_List()
-//        {
-//            Mock<IRepository> repositoryMock = new Mock<IRepository>();
-//            repositoryMock
-//                .Setup(f => f.AsQueryable<BetterCms.Module.Blog.Models.Author>())
-//                .Returns(new BetterCms.Module.Blog.Models.Author[] { }.AsQueryable());
-//
-//            var command = new GetAuthorListCommand { Repository = repositoryMock.Object };
-//
-//            var list = command.Execute(new SearchableGridOptions());
-//
-//            Assert.IsNotNull(list);
-//            Assert.IsNotNull(list.Items);
-//            Assert.IsEmpty(list.Items);
-//        }
-//    }
-//}
+﻿// --------------------------------------------------------------------------------------------------------------------
+// <copyright file="GetAuthorListCommandTest.cs" company="Devbridge Group LLC">
+// 
+// Copyright (C) 2015,2016 Devbridge Group LLC
+// 
+// This program is free software: you can redistribute it and/or modify
+// it under the terms of the GNU Lesser General Public License as published by
+// the Free Software Foundation, either version 3 of the License, or
+// (at your option) any later version.
+// 
+// This program is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU General Public License for more details.
+// 
+// You should have received a copy of the GNU Lesser General Public License
+// along with this program.  If not, see http://www.gnu.org/licenses/. 
+// </copyright>
+// 
+// <summary>
+// Better CMS is a publishing focused and developer friendly .NET open source CMS.
+// 
+// Website: https://www.bettercms.com 
+// GitHub: https://github.com/devbridge/bettercms
+// Email: info@bettercms.com
+// </summary>
+// --------------------------------------------------------------------------------------------------------------------

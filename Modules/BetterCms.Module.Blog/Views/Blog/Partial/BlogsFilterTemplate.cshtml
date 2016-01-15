@@ -1,110 +1,133 @@
-﻿@using BetterCms.Module.Blog.Content.Resources
+﻿@* --------------------------------------------------------------------------------------------------------------------
+// <copyright file="BlogsFilterTemplate.cshtml" company="Devbridge Group LLC">
+// 
+// Copyright (C) 2015,2016 Devbridge Group LLC
+// 
+// This program is free software: you can redistribute it and/or modify
+// it under the terms of the GNU Lesser General Public License as published by
+// the Free Software Foundation, either version 3 of the License, or
+// (at your option) any later version.
+// 
+// This program is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU General Public License for more details.
+// 
+// You should have received a copy of the GNU Lesser General Public License
+// along with this program.  If not, see http://www.gnu.org/licenses/. 
+// </copyright>
+// 
+// <summary>
+// Better CMS is a publishing focused and developer friendly .NET open source CMS.
+// 
+// Website: https://www.bettercms.com 
+// GitHub: https://github.com/devbridge/bettercms
+// Email: info@bettercms.com
+// </summary>
+// -------------------------------------------------------------------------------------------------------------------- *@
+@using BetterCms.Module.Blog.Content.Resources
 @using BetterCms.Module.Root.Content.Resources
 @using BetterCms.Module.Blog.ViewModels.Blog
 @using BetterCms.Module.Blog.ViewModels.Filter
+@using BetterCms.Module.Pages.Content.Resources
 
 @model BlogsGridViewModel<SiteSettingBlogPostViewModel>
-<div id="bcms-filter-template">
+
+<div class="bcms-filter-holder" id="bcms-filter-template">
+    <div class="bcms-sort-options" id="bcms-js-filter-sort">
+        <div class="bcms-sort-options-label" data-bind="click: toggleShowSorting">@PagesGlobalization.SiteSettings_Pages_Sort</div>
+
+        <div class="bcms-sort-options-block bcms-tooltip-tl" data-bind="visible: showSorting">
+            <!-- ko foreach: sortFields -->
+            <div class="bcms-sort-option" data-bind="click: $parent.applySort.bind($data, title, column, direction)">
+                <div data-bind="text: title, css: { 'bcms-sort-options-sorted':direction == $parent.sortDirection() && column == $parent.sortColumn() }"></div>
+            </div>
+            <!-- /ko -->
+        </div>
+    </div>
+
     <div class="bcms-grid-filtering" data-bind="css: { 'bcms-active-filter': isVisible() }">
         <div class="bcms-filterbox" data-bind="click: toggleFilter">
             @BlogGlobalization.SiteSettings_Blogs_Filter
             <div class="bcms-filter-modified" data-bind="style: { display: isEdited() ? 'inline-block' : 'none' }">@BlogGlobalization.SiteSettings_Blogs_FilterIsModified</div>
         </div>
     </div>
-    <div class="bcms-tags-block" style="display: none;" data-bind="visible: isVisible()">
-        <div class="bcms-featured-tags">
-            <div class="bcms-clearfix">
 
+    <div class="bcms-filter-selection-block" style="display: none;" data-bind="visible: isVisible()">
+        <div class="bcms-filter-controls">
+            <div class="bcms-clearfix">
                 <div class="bcms-filter-options" data-bind="with: tags">
                     <div class="bcms-filter-text">@BlogGlobalization.SiteSettings_Blogs_FilterByTags</div>
-                    <div class="bcms-filter-field-holder">
-                        <input type="text" class="bcms-add-tags-field" data-bind="
-    css: { 'bcms-tag-validation-error': newItem.hasError() },
-    value: newItem,
-    valueUpdate: 'afterkeydown',
-    escPress: clearItem,
-    autocompleteList: 'onlyExisting'" />
+                    <div class="bcms-field-wrapper">
+                        <input type="text" class="bcms-field-text" data-bind=" css: { 'bcms-input-validation-error': newItem.hasError() }, value: newItem, valueUpdate: 'afterkeydown', escPress: clearItem, autocompleteList: 'onlyExisting'" />
                         <!-- ko if: newItem.hasError()  -->
-                        <span class="bcms-tag-field-validation-error">
+                        <span class="bcms-field-validation-error">
                             <span data-bind="text: newItem.validationMessage()"></span>
                         </span>
                         <!-- /ko -->
                     </div>
                 </div>
-                
+
                 <div class="bcms-filter-options" data-bind="with: categories">
                     <div class="bcms-filter-text">@BlogGlobalization.SiteSettings_Blogs_FilterByCategory</div>
-
-                    <div class="bcms-filter-field-holder">
-                        <input type="text" class="bcms-add-tags-field" data-bind="
-                            css: { 'bcms-tag-validation-error': newItem.hasError() },
-                            value: newItem,
-                            valueUpdate: 'afterkeydown',
-                            escPress: clearItem,
-                            autocompleteList: 'onlyExisting'" />
-                        <!-- ko if: newItem.hasError()  -->
-                        <span class="bcms-tag-field-validation-error">
-                            <span data-bind="text: newItem.validationMessage()"></span>
-                        </span>
-                        <!-- /ko -->
+                    <div class="bcms-field-wrapper">
+                        <input type="hidden" id="bcms-js-categories-select"/>
                     </div>
                 </div>
-                
+
                 <div class="bcms-filter-options">
                     <div class="bcms-filter-text">@BlogGlobalization.SiteSettings_Blogs_FilterByStatus</div>
-                    @Html.DropDownListFor(m => m.Status, new List<SelectListItem>(), new
-                                                                      {
-                                                                          data_bind = "options: statuses, value: status, optionsText: 'Value', optionsValue: 'Key'",
-                                                                          @class = "bcms-global-select"
-                                                                      })
+                    <div class="bcms-field-wrapper">
+                        @Html.DropDownListFor(m => m.Status, new List<SelectListItem>(), new { data_bind = "options: statuses, value: status, optionsText: 'Value', optionsValue: 'Key', select2: { minimumResultsForSearch: -1 }", id = "bcms-js-filter-status" })
+                    </div>
                 </div>
-
                 <div class="bcms-filter-options">
                     <div class="bcms-filter-text">@BlogGlobalization.SiteSettings_Blogs_FilterBySEO</div>
-                    @Html.DropDownListFor(m => m.SeoStatus, new List<SelectListItem>(), new
-                                                                                            {
-                                                                                                data_bind = "options: seoStatuses, value: seoStatus, optionsText: 'Value', optionsValue: 'Key'",
-                                                                                                @class = "bcms-global-select"
-                                                                                            })
+                    <div class="bcms-field-wrapper">
+                        @Html.DropDownListFor(m => m.SeoStatus, new List<SelectListItem>(), new { data_bind = "options: seoStatuses, value: seoStatus, optionsText: 'Value', optionsValue: 'Key', select2: { minimumResultsForSearch: -1 }", id = "bcms-js-filter-seostatus" })
+                    </div>
                 </div>
-
                 @if (Model.Languages != null && Model.Languages.Any())
                 {
                     <div class="bcms-filter-options">
                         <div class="bcms-filter-text">@BlogGlobalization.SiteSettings_Blogs_FilterByLanguage</div>
-                        <select class="bcms-global-select" name="LanguageId" data-bind="options: languages, value: languageId, optionsText: 'Value', optionsValue: 'Key'" />
+                        <div class="bcms-field-wrapper">
+                            <select name="LanguageId" data-bind="options: languages, value: languageId, optionsText: 'Value', optionsValue: 'Key', select2: { minimumResultsForSearch: -1 }" id="bcms-js-filter-languages"/>
+                        </div>
                     </div>
                 }
-
             </div>
 
             <div class="bcms-single-tag-holder" data-bind="foreach: tags.items()">
                 <div class="bcms-single-tag" data-bind="css: { 'bcms-single-tag-active': isActive() }">
-                    <span data-bind="text: name()"></span><a data-bind="    click: remove">@RootGlobalization.Button_Remove</a>
+                    <div data-bind="text: name()"></div>
+                    <div class="bcms-single-tag-remove" data-bind="click: remove">@RootGlobalization.Button_Remove</div>
                 </div>
-                <input type="hidden" data-bind="attr: { name: getItemInputName($index()) + '.Key', value: id() }" />
-                <input type="hidden" data-bind="attr: { name: getItemInputName($index()) + '.Value', value: name() }" />
+                <input type="hidden" data-bind="attr: { name: getItemInputName($index()) + '.Key', value: id() }"/>
+                <input type="hidden" data-bind="attr: { name: getItemInputName($index()) + '.Value', value: name() }"/>
             </div>
-            
+
             <div class="bcms-single-tag-holder" data-bind="foreach: categories.items()">
-                <div class="bcms-single-tag" data-bind="css: { 'bcms-single-tag-active': isActive() }">
-                    <span data-bind="text: name()"></span><a data-bind="    click: remove">@RootGlobalization.Button_Remove</a>
+                <div class="bcms-single-tag">
+                    <div data-bind="text: $data.text"></div>
+                    <div class="bcms-single-tag-remove" data-bind="click: $parent.categories.remove">@RootGlobalization.Button_Remove</div>
                 </div>
-                <input type="hidden" data-bind="attr: { name: 'Categories[' + $index() + '].Key', value: id() }" />
-                <input type="hidden" data-bind="attr: { name: 'Categories[' + $index() + '].Value', value: name() }" />
+                <input type="hidden" data-bind="attr: { name: 'Categories[' + $index() + '].Key', value: $data.id }"/>
+                <input type="hidden" data-bind="attr: { name: 'Categories[' + $index() + '].Value', value: $data.text }"/>
             </div>
-
         </div>
-
         <div class="bcms-clearfix">
-            <div class="bcms-check-field-holder">
-                @Html.CheckBoxFor(model => model.IncludeArchived, new { data_bind = "checked: includeArchived" })
-                <span class="bcms-pointer" data-bind="click: changeIncludeArchived">@BlogGlobalization.SiteSettings_Blogs_FilterIncludeArchived</span>
+            <div class="bcms-checkbox-block">
+                <div class="bcms-checkbox-holder">
+                    @Html.CheckBoxFor(model => model.IncludeArchived, new { data_bind = "checked: includeArchived" })
+                    <div class="bcms-checkbox-label bcms-pointer" data-bind="click: changeIncludeArchived">@BlogGlobalization.SiteSettings_Blogs_FilterIncludeArchived</div>
+                </div>
             </div>
             <div class="bcms-btn-field-holder">
-                <div class="bcms-btn-links-small" data-bind="click: clearFilter">@BlogGlobalization.SiteSettings_Blogs_FilterClear</div>
-                <div class="bcms-btn-small" data-bind="click: searchWithFilter">@BlogGlobalization.SiteSettings_Blogs_FilterSearch</div>
+                <div class="bcms-btn-primary" data-bind="click: searchWithFilter">@BlogGlobalization.SiteSettings_Blogs_FilterSearch</div>
+                <div class="bcms-btn-cancel" data-bind="click: clearFilter">@BlogGlobalization.SiteSettings_Blogs_FilterClear</div>
             </div>
         </div>
     </div>
+
 </div>

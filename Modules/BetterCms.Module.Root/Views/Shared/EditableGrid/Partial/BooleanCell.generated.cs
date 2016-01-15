@@ -28,7 +28,7 @@ namespace ASP
     using System.Web.UI;
     using System.Web.WebPages;
     
-    #line 1 "..\..\Views\Shared\EditableGrid\Partial\BooleanCell.cshtml"
+    #line 28 "..\..\Views\Shared\EditableGrid\Partial\BooleanCell.cshtml"
     using BetterCms.Module.Root.Content.Resources;
     
     #line default
@@ -43,11 +43,17 @@ namespace ASP
         }
         public override void Execute()
         {
-WriteLiteral("<td ");
+WriteLiteral("\r\n");
+
+WriteLiteral("<td");
+
+WriteLiteral(" style=\"width: 100px;\"");
+
+WriteLiteral(" ");
 
             
-            #line 4 "..\..\Views\Shared\EditableGrid\Partial\BooleanCell.cshtml"
-Write(Html.Raw(Model.Attributes));
+            #line 31 "..\..\Views\Shared\EditableGrid\Partial\BooleanCell.cshtml"
+                     Write(Html.Raw(Model.Attributes));
 
             
             #line default
@@ -55,13 +61,13 @@ Write(Html.Raw(Model.Attributes));
 WriteLiteral(">\r\n");
 
             
-            #line 5 "..\..\Views\Shared\EditableGrid\Partial\BooleanCell.cshtml"
+            #line 32 "..\..\Views\Shared\EditableGrid\Partial\BooleanCell.cshtml"
     
             
             #line default
             #line hidden
             
-            #line 5 "..\..\Views\Shared\EditableGrid\Partial\BooleanCell.cshtml"
+            #line 32 "..\..\Views\Shared\EditableGrid\Partial\BooleanCell.cshtml"
      if (Model.CanBeEdited)
     {
 
@@ -74,43 +80,39 @@ WriteLiteral(" type=\"checkbox\"");
 
 WriteLiteral(" class=\"bcms-checkbox-holder bcms-pointer\"");
 
-WriteLiteral(" data-bind=\"\r\n            checked: ");
+WriteLiteral(" data-bind=\"checked: ");
 
             
-            #line 8 "..\..\Views\Shared\EditableGrid\Partial\BooleanCell.cshtml"
-                 Write(Model.ValueBind);
-
-            
-            #line default
-            #line hidden
-WriteLiteral(",\r\n            enterPress: onSave, \r\n            afterRender: initInput($element," +
-" ");
-
-            
-            #line 10 "..\..\Views\Shared\EditableGrid\Partial\BooleanCell.cshtml"
-                                        Write(Model.ValueBind);
+            #line 34 "..\..\Views\Shared\EditableGrid\Partial\BooleanCell.cshtml"
+                                                                                         Write(Model.ValueBind);
 
             
             #line default
             #line hidden
-WriteLiteral("),\r\n            escPress: onCancelEdit,\r\n            visible: isActive()\r\n");
-
-WriteLiteral("            ");
+WriteLiteral(", enterPress: onSave, afterRender: initInput($element, ");
 
             
-            #line 13 "..\..\Views\Shared\EditableGrid\Partial\BooleanCell.cshtml"
-        Write(!string.IsNullOrEmpty(Model.FocusIdentifier) ? string.Format(", hasfocus: {0}", Model.FocusIdentifier) : string.Empty);
+            #line 34 "..\..\Views\Shared\EditableGrid\Partial\BooleanCell.cshtml"
+                                                                                                                                                                 Write(Model.ValueBind);
 
             
             #line default
             #line hidden
-WriteLiteral("\r\n               \"");
+WriteLiteral("), escPress: onCancelEdit, visible: isActive() ");
+
+            
+            #line 34 "..\..\Views\Shared\EditableGrid\Partial\BooleanCell.cshtml"
+                                                                                                                                                                                                                                 Write(!string.IsNullOrEmpty(Model.FocusIdentifier) ? string.Format(", hasfocus: {0}", Model.FocusIdentifier) : string.Empty);
+
+            
+            #line default
+            #line hidden
+WriteLiteral("\"");
 
 WriteLiteral(" />\r\n");
 
             
-            #line 15 "..\..\Views\Shared\EditableGrid\Partial\BooleanCell.cshtml"
-
+            #line 35 "..\..\Views\Shared\EditableGrid\Partial\BooleanCell.cshtml"
     }
 
             
@@ -119,22 +121,22 @@ WriteLiteral(" />\r\n");
 WriteLiteral("    ");
 
             
-            #line 17 "..\..\Views\Shared\EditableGrid\Partial\BooleanCell.cshtml"
+            #line 36 "..\..\Views\Shared\EditableGrid\Partial\BooleanCell.cshtml"
      if (Model.ShowValueAsText)
     {
 
             
             #line default
             #line hidden
-WriteLiteral("        <a");
+WriteLiteral("        <div");
 
 WriteLiteral(" class=\"bcms-tables-link\"");
 
-WriteLiteral(" data-bind=\"\r\n           text: ");
+WriteLiteral(" data-bind=\"text: ");
 
             
-            #line 20 "..\..\Views\Shared\EditableGrid\Partial\BooleanCell.cshtml"
-             Write(Model.ValueBind);
+            #line 38 "..\..\Views\Shared\EditableGrid\Partial\BooleanCell.cshtml"
+                                                   Write(Model.ValueBind);
 
             
             #line default
@@ -142,8 +144,8 @@ WriteLiteral(" data-bind=\"\r\n           text: ");
 WriteLiteral("() === true || ");
 
             
-            #line 20 "..\..\Views\Shared\EditableGrid\Partial\BooleanCell.cshtml"
-                                              Write(Model.ValueBind);
+            #line 38 "..\..\Views\Shared\EditableGrid\Partial\BooleanCell.cshtml"
+                                                                                    Write(Model.ValueBind);
 
             
             #line default
@@ -151,8 +153,8 @@ WriteLiteral("() === true || ");
 WriteLiteral("() === \'true\' ? \'");
 
             
-            #line 20 "..\..\Views\Shared\EditableGrid\Partial\BooleanCell.cshtml"
-                                                                                Write(RootGlobalization.Button_Yes);
+            #line 38 "..\..\Views\Shared\EditableGrid\Partial\BooleanCell.cshtml"
+                                                                                                                      Write(RootGlobalization.Button_Yes);
 
             
             #line default
@@ -160,8 +162,8 @@ WriteLiteral("() === \'true\' ? \'");
 WriteLiteral("\' : (");
 
             
-            #line 20 "..\..\Views\Shared\EditableGrid\Partial\BooleanCell.cshtml"
-                                                                                                                   Write(Model.ValueBind);
+            #line 38 "..\..\Views\Shared\EditableGrid\Partial\BooleanCell.cshtml"
+                                                                                                                                                         Write(Model.ValueBind);
 
             
             #line default
@@ -169,8 +171,8 @@ WriteLiteral("\' : (");
 WriteLiteral("() === false || ");
 
             
-            #line 20 "..\..\Views\Shared\EditableGrid\Partial\BooleanCell.cshtml"
-                                                                                                                                                     Write(Model.ValueBind);
+            #line 38 "..\..\Views\Shared\EditableGrid\Partial\BooleanCell.cshtml"
+                                                                                                                                                                                           Write(Model.ValueBind);
 
             
             #line default
@@ -178,40 +180,36 @@ WriteLiteral("() === false || ");
 WriteLiteral("() === \'false\' ? \'");
 
             
-            #line 20 "..\..\Views\Shared\EditableGrid\Partial\BooleanCell.cshtml"
-                                                                                                                                                                                        Write(RootGlobalization.Button_No);
+            #line 38 "..\..\Views\Shared\EditableGrid\Partial\BooleanCell.cshtml"
+                                                                                                                                                                                                                              Write(RootGlobalization.Button_No);
 
             
             #line default
             #line hidden
-WriteLiteral("\' : \'&nbsp;\' )\r\n");
-
-WriteLiteral("           ");
+WriteLiteral("\' : \'&nbsp;\' ) ");
 
             
-            #line 21 "..\..\Views\Shared\EditableGrid\Partial\BooleanCell.cshtml"
-       Write(!string.IsNullOrEmpty(Model.FocusIdentifier) ? string.Format(", click: onItemSelect.bind($data, {0})", Model.FocusIdentifier) : string.Empty);
+            #line 38 "..\..\Views\Shared\EditableGrid\Partial\BooleanCell.cshtml"
+                                                                                                                                                                                                                                                                          Write(!string.IsNullOrEmpty(Model.FocusIdentifier) ? string.Format(", click: onItemSelect.bind($data, {0})", Model.FocusIdentifier) : string.Empty);
 
             
             #line default
             #line hidden
-WriteLiteral("\r\n");
-
-WriteLiteral("           ");
+WriteLiteral(" ");
 
             
-            #line 22 "..\..\Views\Shared\EditableGrid\Partial\BooleanCell.cshtml"
-       Write(Model.CanBeEdited ? ", visible: !isActive()"  : string.Empty);
+            #line 38 "..\..\Views\Shared\EditableGrid\Partial\BooleanCell.cshtml"
+                                                                                                                                                                                                                                                                                                                                                                                                                          Write(Model.CanBeEdited ? ", visible: !isActive()"  : string.Empty);
 
             
             #line default
             #line hidden
-WriteLiteral("\r\n           \"");
+WriteLiteral("\"");
 
-WriteLiteral("></a>\r\n");
+WriteLiteral("></div>\r\n");
 
             
-            #line 24 "..\..\Views\Shared\EditableGrid\Partial\BooleanCell.cshtml"
+            #line 39 "..\..\Views\Shared\EditableGrid\Partial\BooleanCell.cshtml"
     }
     else
     {
@@ -225,49 +223,45 @@ WriteLiteral(" type=\"checkbox\"");
 
 WriteLiteral(" class=\"bcms-checkbox-holder\"");
 
-WriteLiteral(" data-bind=\"\r\n               checked: ");
+WriteLiteral(" data-bind=\"checked: ");
 
             
-            #line 28 "..\..\Views\Shared\EditableGrid\Partial\BooleanCell.cshtml"
-                    Write(Model.ValueBind);
-
-            
-            #line default
-            #line hidden
-WriteLiteral("()\r\n");
-
-WriteLiteral("               ");
-
-            
-            #line 29 "..\..\Views\Shared\EditableGrid\Partial\BooleanCell.cshtml"
-           Write(!string.IsNullOrEmpty(Model.FocusIdentifier) ? string.Format(", click: onItemSelect.bind($data, {0})", Model.FocusIdentifier) : string.Empty);
+            #line 42 "..\..\Views\Shared\EditableGrid\Partial\BooleanCell.cshtml"
+                                                                            Write(Model.ValueBind);
 
             
             #line default
             #line hidden
-WriteLiteral("\r\n");
-
-WriteLiteral("               ");
+WriteLiteral("() ");
 
             
-            #line 30 "..\..\Views\Shared\EditableGrid\Partial\BooleanCell.cshtml"
-           Write(Model.CanBeEdited ? ", visible: !isActive()"  : string.Empty);
+            #line 42 "..\..\Views\Shared\EditableGrid\Partial\BooleanCell.cshtml"
+                                                                                                 Write(!string.IsNullOrEmpty(Model.FocusIdentifier) ? string.Format(", click: onItemSelect.bind($data, {0})", Model.FocusIdentifier) : string.Empty);
 
             
             #line default
             #line hidden
-WriteLiteral("\r\n               \"");
+WriteLiteral(" ");
+
+            
+            #line 42 "..\..\Views\Shared\EditableGrid\Partial\BooleanCell.cshtml"
+                                                                                                                                                                                                                                                 Write(Model.CanBeEdited ? ", visible: !isActive()"  : string.Empty);
+
+            
+            #line default
+            #line hidden
+WriteLiteral("\"");
 
 WriteLiteral(" />\r\n");
 
             
-            #line 32 "..\..\Views\Shared\EditableGrid\Partial\BooleanCell.cshtml"
+            #line 43 "..\..\Views\Shared\EditableGrid\Partial\BooleanCell.cshtml"
     }
 
             
             #line default
             #line hidden
-WriteLiteral("</td>");
+WriteLiteral("</td>\n");
 
         }
     }

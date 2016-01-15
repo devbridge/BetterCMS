@@ -133,12 +133,15 @@
     <value>Subscriber with email {0} already exists.</value>
   </data>
   <data name="SiteSettings_NewsletterSubscribersMenuItem" xml:space="preserve">
-    <value>Newsletter subscribers</value>
+    <value>Subscribers</value>
   </data>
   <data name="SiteSettings_NewsletterSubscribers_Email_Title" xml:space="preserve">
     <value>Email Address</value>
   </data>
   <data name="SiteSettings_NewsletterSubscribers_Title" xml:space="preserve">
-    <value>Newsletter subscribers</value>
+    <value>Subscribers</value>
+  </data>
+  <data name="Download_NewsletterSubscribers_Title" xml:space="preserve">
+    <value>Export</value>
   </data>
 </root>

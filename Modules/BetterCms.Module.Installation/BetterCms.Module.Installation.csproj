@@ -102,6 +102,15 @@
       <HintPath>..\..\packages\BetterModules.Core.Web.1.0.0\lib\net40\RazorGenerator.Mvc.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="ServiceStack.Common">
+      <HintPath>..\..\packages\ServiceStack.Common.3.9.71\lib\net35\ServiceStack.Common.dll</HintPath>
+    </Reference>
+    <Reference Include="ServiceStack.Interfaces">
+      <HintPath>..\..\packages\ServiceStack.Common.3.9.71\lib\net35\ServiceStack.Interfaces.dll</HintPath>
+    </Reference>
+    <Reference Include="ServiceStack.Text">
+      <HintPath>..\..\packages\ServiceStack.Text.3.9.71\lib\net35\ServiceStack.Text.dll</HintPath>
+    </Reference>
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="System.Data.Entity" />
     <Reference Include="System.Transactions" />
@@ -155,12 +164,42 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>UsersGlobalization.resx</DependentUpon>
     </Compile>
+    <Compile Include="Controllers\BlogWidgetController.cs" />
+    <Compile Include="Models\Blog\BlogItem.cs" />
+    <Compile Include="Models\Blog\BlogItemsModel.cs" />
+    <Compile Include="Models\Blog\CategoryItem.cs" />
+    <Compile Include="Models\Migrations\Migration201511041154.cs" />
+    <Compile Include="Models\Migrations\Migration201511041142.cs" />
+    <Compile Include="Models\Migrations\Migration201510291304.cs" />
+    <Compile Include="Models\Migrations\Migration201510281110.cs" />
+    <Compile Include="Models\Migrations\Migration201510280946.cs" />
+    <Compile Include="Models\Migrations\Migration201510261332.cs" />
     <Compile Include="Models\Migrations\Migration201311181011.cs" />
     <Compile Include="Models\Migrations\InitialSetup.cs" />
     <Compile Include="Models\Migrations\Migration201309101320.cs" />
     <Compile Include="Models\Migrations\InstallationVersionTableMetaData.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="InstallationModuleDescriptor.cs" />
+    <Compile Include="Views\BlogWidget\BlogPosts.generated.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>BlogPosts.cshtml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\BlogWidget\GetCategories.generated.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>GetCategories.cshtml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Widgets\BlogPostCategoriesWidgetInvoker.generated.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>BlogPostCategoriesWidgetInvoker.cshtml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Widgets\BlogPostsWidgetInvoker.generated.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>BlogPostsWidgetInvoker.cshtml</DependentUpon>
+    </Compile>
     <Compile Include="Views\Shared\BlankLayout.generated.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -196,7 +235,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Content\Styles\images\" />
-    <Folder Include="Scripts\" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\BetterCMS.Configuration\BetterCms.Configuration.csproj">
@@ -206,6 +244,18 @@
     <ProjectReference Include="..\..\BetterCMS.Core\BetterCms.Core.csproj">
       <Project>{694ca5ca-a0e2-4578-a249-648498b058d7}</Project>
       <Name>BetterCms.Core</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\BetterCms.Module.Api.Abstractions\BetterCMS.Module.Api.Abstractions.csproj">
+      <Project>{073e257b-a6a0-42fc-9102-8e920bf54e50}</Project>
+      <Name>BetterCMS.Module.Api.Abstractions</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\BetterCms.Module.Api\BetterCms.Module.Api.csproj">
+      <Project>{5ff9d100-cf25-4899-8d23-8eb9f0c0e102}</Project>
+      <Name>BetterCms.Module.Api</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\BetterCMS.Module.Blog\BetterCms.Module.Blog.csproj">
+      <Project>{a66a3046-ef60-4c51-ada7-eb055763419b}</Project>
+      <Name>BetterCms.Module.Blog</Name>
     </ProjectReference>
     <ProjectReference Include="..\BetterCms.Module.Pages\BetterCms.Module.Pages.csproj">
       <Project>{fc04d4c2-8688-498f-b546-292c7e3688a9}</Project>
@@ -231,9 +281,32 @@
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Scripts\bootstrap.js" />
+    <Content Include="Scripts\bootstrap.min.js" />
+    <None Include="Scripts\jquery-1.10.2.intellisense.js" />
+    <Content Include="Scripts\jquery-1.10.2.js" />
+    <Content Include="Scripts\jquery-1.10.2.min.js" />
+    <Content Include="Scripts\modernizr-2.6.2.js" />
     <Content Include="web.config" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="Views\BlogWidget\BlogPosts.cshtml">
+      <Generator>RazorGenerator</Generator>
+      <LastGenOutput>BlogPosts.generated.cs</LastGenOutput>
+    </None>
+    <Content Include="Scripts\jquery-1.10.2.min.map" />
+    <Content Include="Views\Widgets\BlogPostCategoriesWidgetInvoker.cshtml">
+      <Generator>RazorGenerator</Generator>
+      <LastGenOutput>BlogPostCategoriesWidgetInvoker.generated.cs</LastGenOutput>
+    </Content>
+    <None Include="Views\BlogWidget\GetCategories.cshtml">
+      <Generator>RazorGenerator</Generator>
+      <LastGenOutput>GetCategories.generated.cs</LastGenOutput>
+    </None>
+    <None Include="Views\Widgets\BlogPostsWidgetInvoker.cshtml">
+      <Generator>RazorGenerator</Generator>
+      <LastGenOutput>BlogPostsWidgetInvoker.generated.cs</LastGenOutput>
+    </None>
     <None Include="Views\Shared\ThreeColumnsLayout.cshtml">
       <Generator>RazorGenerator</Generator>
       <LastGenOutput>ThreeColumnsLayout.generated.cs</LastGenOutput>
@@ -265,6 +338,9 @@
       <Generator>RazorGenerator</Generator>
       <LastGenOutput>BlankLayout.generated.cs</LastGenOutput>
     </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="..\..\licensing.licenseheader" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

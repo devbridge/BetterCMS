@@ -1,40 +1,69 @@
-﻿@using BetterCms.Module.Blog.Content.Resources
+﻿@* --------------------------------------------------------------------------------------------------------------------
+// <copyright file="AddNewBlogEditPermalink.cshtml" company="Devbridge Group LLC">
+// 
+// Copyright (C) 2015,2016 Devbridge Group LLC
+// 
+// This program is free software: you can redistribute it and/or modify
+// it under the terms of the GNU Lesser General Public License as published by
+// the Free Software Foundation, either version 3 of the License, or
+// (at your option) any later version.
+// 
+// This program is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU General Public License for more details.
+// 
+// You should have received a copy of the GNU Lesser General Public License
+// along with this program.  If not, see http://www.gnu.org/licenses/. 
+// </copyright>
+// 
+// <summary>
+// Better CMS is a publishing focused and developer friendly .NET open source CMS.
+// 
+// Website: https://www.bettercms.com 
+// GitHub: https://github.com/devbridge/bettercms
+// Email: info@bettercms.com
+// </summary>
+// -------------------------------------------------------------------------------------------------------------------- *@
+@using BetterCms.Module.Blog.Content.Resources
 @using BetterCms.Module.Root
 @using BetterCms.Module.Root.Content.Resources
 @using BetterCms.Module.Root.Mvc
 @using BetterCms.Module.Root.Mvc.Helpers
-
 @model BetterCms.Module.Blog.ViewModels.Blog.BlogPostViewModel
-<div class="bcms-input-list-holder">
-    @Html.Tooltip(BlogGlobalization.EditBlogPost_Permalink_Tooltip_Description)
-    <div class="bcms-content-titles">@BlogGlobalization.EditBlogPost_Permalink
+
+<div class="bcms-input-list-holder bcms-js-blog-permalink">
+    <div class="bcms-content-titles">
+        @BlogGlobalization.EditBlogPost_Permalink
+        @Html.Tooltip(BlogGlobalization.EditBlogPost_Permalink_Tooltip_Description)
         @if ((ViewContext.Controller as CmsControllerBase).SecurityService.IsAuthorized(RootModuleConstants.UserRoles.EditContent))
         {
-            <a id="bcms-page-editpermalink">@RootGlobalization.Button_Edit</a>
+            <div class="bcms-editor-link" id="bcms-page-editpermalink">@RootGlobalization.Button_Edit</div>
         }
     </div>
-    <div class="bcms-editseo-urlpath" id="bcms-page-permalink-info">@(string.IsNullOrWhiteSpace(Model.BlogUrl) ? Html.Raw("/") : new MvcHtmlString(Html.Encode(Model.BlogUrl)))</div>
-</div>
+    <div class="bcms-editor-path" id="bcms-page-permalink-info">@(string.IsNullOrWhiteSpace(Model.BlogUrl) ? Html.Raw("/") : new MvcHtmlString(Html.Encode(Model.BlogUrl)))</div>
 
-<div class="bcms-edit-urlpath-box" style="display: none;">
+    <div class="bcms-editor-box bcms-js-edit-box" style="display: none;">
+        @Html.Hidden("PagePermalinkHidden", Model.BlogUrl, new { @id = "bcms-page-permalink" })
+        <div class="bcms-field-wrapper">
+            @Html.TextBoxFor(model => model.BlogUrl, new { @id = "bcms-page-permalink-edit", @class = "bcms-field-text bcms-js-url-path" })
+            @Html.BcmsValidationMessageFor(f => f.BlogUrl)
+        </div>
 
-    @Html.Hidden("PagePermalinkHidden", Model.BlogUrl, new { @id = "bcms-page-permalink" })
+        <div class="bcms-btn-primary" id="bcms-save-permalink">@RootGlobalization.Button_Ok</div>
+        <div class="bcms-btn-cancel">@RootGlobalization.Button_Cancel</div>
 
-    <div class="bcms-custom-input-box" style="width: 395px;">
-        @Html.TextBoxFor(model => model.BlogUrl, new { @id = "bcms-page-permalink-edit", @class = "bcms-editor-field-box" })
-        @Html.BcmsValidationMessageFor(f => f.BlogUrl)
+        @if (Model.Id != Guid.Empty)
+        {
+            <div class="bcms-checkbox-holder">
+                @Html.CheckBoxFor(model => model.RedirectFromOldUrl)
+                <div class="bcms-checkbox-label bcms-js-edit-label">@BlogGlobalization.EditBlogPost_CreatePermanentRedirectToOldUrl_Title</div>
+            </div>
+            <div class="bcms-checkbox-holder">
+                @Html.CheckBoxFor(model => model.UseCanonicalUrl)
+                <div class="bcms-checkbox-label bcms-js-edit-label">@BlogGlobalization.EditBlogPost_UseCanonicalUrl</div>
+            </div>
+        }
+
     </div>
-    @if (Model.Id != Guid.Empty)
-    {
-        <div class="bcms-edit-check-field">
-            @Html.CheckBoxFor(model => model.RedirectFromOldUrl)
-            <div class="bcms-edit-label">@BlogGlobalization.EditBlogPost_CreatePermanentRedirectToOldUrl_Title</div>
-        </div>
-        <div class="bcms-edit-check-field">
-            @Html.CheckBoxFor(model => model.UseCanonicalUrl)
-            <div class="bcms-edit-label">@BlogGlobalization.EditBlogPost_UseCanonicalUrl</div>
-        </div>
-    }
-    <div class="bcms-btn-small" id="bcms-save-permalink">@RootGlobalization.Button_Ok</div>
-    <div class="bcms-btn-links-small">@RootGlobalization.Button_Cancel</div>
 </div>

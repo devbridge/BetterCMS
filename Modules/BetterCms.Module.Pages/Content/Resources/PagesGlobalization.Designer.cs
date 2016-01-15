@@ -70,7 +70,7 @@ namespace BetterCms.Module.Pages.Content.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Add New Master Page.
+        ///   Looks up a localized string similar to Add New Template.
         /// </summary>
         public static string AddNewMasterPage_PageTitle {
             get {
@@ -115,7 +115,7 @@ namespace BetterCms.Module.Pages.Content.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Choose language for current page, which will be used in sitemap and determines the language and culture of the page.
+        ///   Looks up a localized string similar to Choose language for current page, which will be used in menu and determines the language and culture of the page.
         /// </summary>
         public static string AddNewPage_Language_Tooltip_Description {
             get {
@@ -169,7 +169,7 @@ namespace BetterCms.Module.Pages.Content.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Select page layout.
+        ///   Looks up a localized string similar to Select template.
         /// </summary>
         public static string AddNewPage_Template {
             get {
@@ -178,7 +178,7 @@ namespace BetterCms.Module.Pages.Content.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to &lt;b&gt;The layout of this page is based on a template.&lt;/b&gt; Select a template from options below. If you need an additional template contact your system administrator to create a custom template..
+        ///   Looks up a localized string similar to The layout of this page is based on a template. Select a template from options below, or contact your system administrator to create a custom template..
         /// </summary>
         public static string AddNewPage_Template_InfoMessage_Text {
             get {
@@ -250,7 +250,7 @@ namespace BetterCms.Module.Pages.Content.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Layout template is required..
+        ///   Looks up a localized string similar to Template is required..
         /// </summary>
         public static string AddNewPageProperties_TemplateId_RequiredMessage {
             get {
@@ -331,7 +331,7 @@ namespace BetterCms.Module.Pages.Content.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Add New +.
+        ///   Looks up a localized string similar to Add New.
         /// </summary>
         public static string AddPageContent_WidgetTab_AddNewButton {
             get {
@@ -376,7 +376,7 @@ namespace BetterCms.Module.Pages.Content.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Register +.
+        ///   Looks up a localized string similar to Register.
         /// </summary>
         public static string AddPageContent_WidgetTab_RegisterButton {
             get {
@@ -412,6 +412,24 @@ namespace BetterCms.Module.Pages.Content.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Collapse All.
+        /// </summary>
+        public static string CategoryTree_Button_CollapseAll {
+            get {
+                return ResourceManager.GetString("CategoryTree_Button_CollapseAll", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Expand All.
+        /// </summary>
+        public static string CategoryTree_Button_ExpandAll {
+            get {
+                return ResourceManager.GetString("CategoryTree_Button_ExpandAll", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Edit child widget options.
         /// </summary>
         public static string ChildWidgetOptions_Dialog_Title {
@@ -421,7 +439,7 @@ namespace BetterCms.Module.Pages.Content.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Clone the current page as a master page.
+        ///   Looks up a localized string similar to Clone the current page as a template.
         /// </summary>
         public static string ClonePage_Dialog_AsMasterPage {
             get {
@@ -430,7 +448,7 @@ namespace BetterCms.Module.Pages.Content.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Create Master Page.
+        ///   Looks up a localized string similar to Create Template.
         /// </summary>
         public static string ClonePage_Dialog_AsMasterPage_Title {
             get {
@@ -439,7 +457,7 @@ namespace BetterCms.Module.Pages.Content.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Create new master page from the current page..
+        ///   Looks up a localized string similar to Create new template from the current page..
         /// </summary>
         public static string ClonePage_Dialog_AsMasterPage_Tooltip_Description {
             get {
@@ -637,7 +655,7 @@ namespace BetterCms.Module.Pages.Content.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Choose creating page language, which will be used in sitemap and determines the language and culture of the page.
+        ///   Looks up a localized string similar to Choose creating page language, which will be used in menu and determines the language and culture of the page.
         /// </summary>
         public static string ClonePageWithLanguage_Dialog_Language_Tootlip {
             get {
@@ -754,6 +772,15 @@ namespace BetterCms.Module.Pages.Content.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Visual Preview.
+        /// </summary>
+        public static string ContentHistory_ContentTab_Title {
+            get {
+                return ResourceManager.GetString("ContentHistory_ContentTab_Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Destroy.
         /// </summary>
         public static string ContentHistory_Destroy_AcceptButtonTitle {
@@ -790,6 +817,15 @@ namespace BetterCms.Module.Pages.Content.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Data Preview.
+        /// </summary>
+        public static string ContentHistory_PropertiesTab_Title {
+            get {
+                return ResourceManager.GetString("ContentHistory_PropertiesTab_Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Restore.
         /// </summary>
         public static string ContentHistory_Restore_AcceptButtonTitle {
@@ -813,6 +849,15 @@ namespace BetterCms.Module.Pages.Content.Resources {
         public static string ContentHistory_SelectVersionToPreviewMessage {
             get {
                 return ResourceManager.GetString("ContentHistory_SelectVersionToPreviewMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Preview is not available..
+        /// </summary>
+        public static string ContentHistory_VersionPreviewNotAvailableMessage {
+            get {
+                return ResourceManager.GetString("ContentHistory_VersionPreviewNotAvailableMessage", resourceCulture);
             }
         }
         
@@ -970,7 +1015,7 @@ namespace BetterCms.Module.Pages.Content.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Update sitemap.
+        ///   Looks up a localized string similar to Update menu.
         /// </summary>
         public static string DeletePage_Dialog_UpdateSitemap {
             get {
@@ -979,7 +1024,7 @@ namespace BetterCms.Module.Pages.Content.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Removing this page from the sitemap will delete the page and remove it from the navigation elements throughout your website..
+        ///   Looks up a localized string similar to Removing this page from the menu will delete the page and remove it from the navigation elements throughout your website..
         /// </summary>
         public static string DeletePage_Dialog_UpdateSitemap_Description {
             get {
@@ -988,7 +1033,7 @@ namespace BetterCms.Module.Pages.Content.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Remove this page from sitemap..
+        ///   Looks up a localized string similar to Remove this page from menu..
         /// </summary>
         public static string DeletePage_Dialog_UpdateSitemap_RemovePageFromSitemap {
             get {
@@ -1015,7 +1060,7 @@ namespace BetterCms.Module.Pages.Content.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to The page was not removed from some site map or maps, because you do not have permission to modified it or them..
+        ///   Looks up a localized string similar to The page was not removed from one or more menus, because you do not have permission to modified it or them..
         /// </summary>
         public static string DeletePage_SitemapSkipped_Message {
             get {
@@ -1042,7 +1087,7 @@ namespace BetterCms.Module.Pages.Content.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Cannot delete page. Other pages are using current page as a master page..
+        ///   Looks up a localized string similar to Cannot delete template. Other pages are using it..
         /// </summary>
         public static string DeletePageCommand_MasterPageHasChildren_Message {
             get {
@@ -1051,7 +1096,7 @@ namespace BetterCms.Module.Pages.Content.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Can not remove this page from the sitemap, because it has child nodes..
+        ///   Looks up a localized string similar to Can not remove this page from the menu, because it has child nodes..
         /// </summary>
         public static string DeletePageCommand_SitemapNodeHasChildNodes_Message {
             get {
@@ -1375,7 +1420,7 @@ namespace BetterCms.Module.Pages.Content.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Update sitemap with new URL..
+        ///   Looks up a localized string similar to Update menu with new URL..
         /// </summary>
         public static string EditPageProperties_AdvancedPropertiesTab_UpdateSitemap_Title {
             get {
@@ -1582,7 +1627,16 @@ namespace BetterCms.Module.Pages.Content.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Edit Master Page Properties.
+        ///   Looks up a localized string similar to For page layout you have selected template, which structure is not the same as previous template and some page content will be missing. Missing content can be found in Page Structure Manager.&lt;/br&gt;Do you really want to change current page template?.
+        /// </summary>
+        public static string EditPageProperties_ChangedLayoutMissingContent_Confirmation_Message {
+            get {
+                return ResourceManager.GetString("EditPageProperties_ChangedLayoutMissingContent_Confirmation_Message", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Edit Template Properties.
         /// </summary>
         public static string EditPageProperties_EditMasterPage_Title {
             get {
@@ -1609,7 +1663,7 @@ namespace BetterCms.Module.Pages.Content.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Choose Page Layout.
+        ///   Looks up a localized string similar to Choose Template.
         /// </summary>
         public static string EditPageProperties_LayoutPropertiesTab_ChooseLayout_Title {
             get {
@@ -1618,7 +1672,7 @@ namespace BetterCms.Module.Pages.Content.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to &lt;b&gt;The layout of this page is based on a template.&lt;/b&gt; Select a template from options below. If you need an additional template contact your system administrator to create a custom template..
+        ///   Looks up a localized string similar to The layout of this page is based on a template. Select a template from options below, or contact your system administrator to create a custom template..
         /// </summary>
         public static string EditPageProperties_LayoutPropertiesTab_InfoMessage {
             get {
@@ -1636,7 +1690,7 @@ namespace BetterCms.Module.Pages.Content.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Layout.
+        ///   Looks up a localized string similar to Template.
         /// </summary>
         public static string EditPageProperties_LayoutPropertiesTab_Title {
             get {
@@ -1654,7 +1708,7 @@ namespace BetterCms.Module.Pages.Content.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to You are about to convert the page to Master Page. Master page is not accessible from the outside and is intended to be used as a template for other pages.&lt;br/&gt;Proceed?.
+        ///   Looks up a localized string similar to You are about to convert the page to template. Template is not accessible from the outside and is intended to be used as a layout for other pages.&lt;br/&gt;Proceed?.
         /// </summary>
         public static string EditPageProperties_PageConversionToMaster_ConfirmationMessage {
             get {
@@ -1771,7 +1825,7 @@ namespace BetterCms.Module.Pages.Content.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Edit current page language, which will be used in sitemap and determines the language and the culture of the page.
+        ///   Looks up a localized string similar to Edit current page language, which will be used in menu and determines the language and the culture of the page.
         /// </summary>
         public static string EditPageProperties_TranslationsTab_Language_Tooltip_Description {
             get {
@@ -1807,7 +1861,7 @@ namespace BetterCms.Module.Pages.Content.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Add Translation +.
+        ///   Looks up a localized string similar to Add Translation.
         /// </summary>
         public static string EditPageTranslations_AddTranslation_ButtonTitle {
             get {
@@ -1951,7 +2005,7 @@ namespace BetterCms.Module.Pages.Content.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Update sitemap with new URL..
+        ///   Looks up a localized string similar to Update menu with new URL..
         /// </summary>
         public static string EditSeo_EditUrlPath_UpdateSitemap {
             get {
@@ -1969,7 +2023,7 @@ namespace BetterCms.Module.Pages.Content.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Page is not in sitemap..
+        ///   Looks up a localized string similar to Page is not added to any menu..
         /// </summary>
         public static string EditSeo_Messages_NotInSitemapWarnMessage {
             get {
@@ -2167,7 +2221,7 @@ namespace BetterCms.Module.Pages.Content.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Basic Properties.
+        ///   Looks up a localized string similar to Properties.
         /// </summary>
         public static string EditWidget_BasicPropertiesTab_Title {
             get {
@@ -2185,7 +2239,7 @@ namespace BetterCms.Module.Pages.Content.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Widget Options.
+        ///   Looks up a localized string similar to Options.
         /// </summary>
         public static string EditWidget_OptionsTab_Title {
             get {
@@ -2199,6 +2253,15 @@ namespace BetterCms.Module.Pages.Content.Resources {
         public static string EditWidget_PreviewImageNotFound_Message {
             get {
                 return ResourceManager.GetString("EditWidget_PreviewImageNotFound_Message", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Content.
+        /// </summary>
+        public static string HtmlContent_Content_Title {
+            get {
+                return ResourceManager.GetString("HtmlContent_Content_Title", resourceCulture);
             }
         }
         
@@ -2356,7 +2419,7 @@ namespace BetterCms.Module.Pages.Content.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to This page is a master page..
+        ///   Looks up a localized string similar to This page is a template..
         /// </summary>
         public static string MasterPage_InfoMessage {
             get {
@@ -2365,7 +2428,7 @@ namespace BetterCms.Module.Pages.Content.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Add New +.
+        ///   Looks up a localized string similar to Add New.
         /// </summary>
         public static string Options_AddNew {
             get {
@@ -2397,6 +2460,33 @@ namespace BetterCms.Module.Pages.Content.Resources {
         public static string Options_OptionTypeColumn {
             get {
                 return ResourceManager.GetString("Options_OptionTypeColumn", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Created:.
+        /// </summary>
+        public static string Page_Created {
+            get {
+                return ResourceManager.GetString("Page_Created", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Last edited:.
+        /// </summary>
+        public static string Page_LastEdited {
+            get {
+                return ResourceManager.GetString("Page_LastEdited", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Last edited by:.
+        /// </summary>
+        public static string Page_LastEditedBy {
+            get {
+                return ResourceManager.GetString("Page_LastEditedBy", resourceCulture);
             }
         }
         
@@ -2626,7 +2716,7 @@ namespace BetterCms.Module.Pages.Content.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Page created succesfully..
+        ///   Looks up a localized string similar to Page created successfully..
         /// </summary>
         public static string SavePage_CreatedSuccessfully_Message {
             get {
@@ -2635,7 +2725,7 @@ namespace BetterCms.Module.Pages.Content.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Only one of master page and layout can be selected..
+        ///   Looks up a localized string similar to Only one template can be selected..
         /// </summary>
         public static string SavePagePropertiesCommand_LayoutAndMasterIsSelected_Message {
             get {
@@ -2644,7 +2734,7 @@ namespace BetterCms.Module.Pages.Content.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Template or master page should be selected for page..
+        ///   Looks up a localized string similar to Template should be selected for page..
         /// </summary>
         public static string SavePagePropertiesCommand_NoLayoutOrMasterSelected_Message {
             get {
@@ -2698,7 +2788,7 @@ namespace BetterCms.Module.Pages.Content.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Master pages cannot be assigned as translation..
+        ///   Looks up a localized string similar to Templates cannot be assigned as translation..
         /// </summary>
         public static string SavePagePropertiesCommand_PageTranslationsIsMasterPage_Message {
             get {
@@ -2707,7 +2797,7 @@ namespace BetterCms.Module.Pages.Content.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Selected master page is the current page or is a child of it..
+        ///   Looks up a localized string similar to Selected template is the current page or is a child of it..
         /// </summary>
         public static string SavePagePropertiesCommand_SelectedMasterIsChildPage_Message {
             get {
@@ -2716,7 +2806,7 @@ namespace BetterCms.Module.Pages.Content.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Selected master page is the current page..
+        ///   Looks up a localized string similar to Selected template is the current page..
         /// </summary>
         public static string SavePagePropertiesCommand_SelectedMasterIsCurrentPage_Message {
             get {
@@ -2860,7 +2950,7 @@ namespace BetterCms.Module.Pages.Content.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Hasn&apos;t SEO.
+        ///   Looks up a localized string similar to Some SEO fields are empty.
         /// </summary>
         public static string SeoStatusFilterType_HasNotSEO {
             get {
@@ -2869,7 +2959,7 @@ namespace BetterCms.Module.Pages.Content.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Has SEO.
+        ///   Looks up a localized string similar to All SEO fields filled.
         /// </summary>
         public static string SeoStatusFilterType_HasSEO {
             get {
@@ -2887,7 +2977,7 @@ namespace BetterCms.Module.Pages.Content.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Create Master.
+        ///   Looks up a localized string similar to Create new template.
         /// </summary>
         public static string Sidebar_CreateMasterPageButtonTitle {
             get {
@@ -2905,7 +2995,7 @@ namespace BetterCms.Module.Pages.Content.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Edit master page properties.
+        ///   Looks up a localized string similar to Properties.
         /// </summary>
         public static string Sidebar_EditMasterPagePropertiesButtonTitle {
             get {
@@ -2914,7 +3004,7 @@ namespace BetterCms.Module.Pages.Content.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Edit page properties.
+        ///   Looks up a localized string similar to Properties.
         /// </summary>
         public static string Sidebar_EditPagePropertiesButtonTitle {
             get {
@@ -3004,7 +3094,7 @@ namespace BetterCms.Module.Pages.Content.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Translate page.
+        ///   Looks up a localized string similar to Translate this page.
         /// </summary>
         public static string Sidebar_TranslatePageButtonTitle {
             get {
@@ -3013,7 +3103,7 @@ namespace BetterCms.Module.Pages.Content.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Clone page.
+        ///   Looks up a localized string similar to Duplicate this page.
         /// </summary>
         public static string Siderbar_ClonePageButtonTitle {
             get {
@@ -3022,7 +3112,7 @@ namespace BetterCms.Module.Pages.Content.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Master Pages.
+        ///   Looks up a localized string similar to Templates.
         /// </summary>
         public static string SiteSettings_MasterPages_Title {
             get {
@@ -3040,7 +3130,7 @@ namespace BetterCms.Module.Pages.Content.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Add New +.
+        ///   Looks up a localized string similar to Add New.
         /// </summary>
         public static string SiteSettings_Pages_AddNew {
             get {
@@ -3085,7 +3175,7 @@ namespace BetterCms.Module.Pages.Content.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to By Layout.
+        ///   Looks up a localized string similar to By Template.
         /// </summary>
         public static string SiteSettings_Pages_FilterByLayout {
             get {
@@ -3094,7 +3184,7 @@ namespace BetterCms.Module.Pages.Content.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to By SEO status.
+        ///   Looks up a localized string similar to By SEO data.
         /// </summary>
         public static string SiteSettings_Pages_FilterBySEO {
             get {
@@ -3148,7 +3238,7 @@ namespace BetterCms.Module.Pages.Content.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Include master pages.
+        ///   Looks up a localized string similar to Include templates.
         /// </summary>
         public static string SiteSettings_Pages_FilterIncludeMasterPages {
             get {
@@ -3211,6 +3301,87 @@ namespace BetterCms.Module.Pages.Content.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to SORT.
+        /// </summary>
+        public static string SiteSettings_Pages_Sort {
+            get {
+                return ResourceManager.GetString("SiteSettings_Pages_Sort", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to [A-Z].
+        /// </summary>
+        public static string SiteSettings_Pages_Sort_AZ {
+            get {
+                return ResourceManager.GetString("SiteSettings_Pages_Sort_AZ", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Least recently edited.
+        /// </summary>
+        public static string SiteSettings_Pages_Sort_LeastRecent {
+            get {
+                return ResourceManager.GetString("SiteSettings_Pages_Sort_LeastRecent", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Newest.
+        /// </summary>
+        public static string SiteSettings_Pages_Sort_Newest {
+            get {
+                return ResourceManager.GetString("SiteSettings_Pages_Sort_Newest", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Oldest.
+        /// </summary>
+        public static string SiteSettings_Pages_Sort_Oldest {
+            get {
+                return ResourceManager.GetString("SiteSettings_Pages_Sort_Oldest", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Recently edited.
+        /// </summary>
+        public static string SiteSettings_Pages_Sort_Recent {
+            get {
+                return ResourceManager.GetString("SiteSettings_Pages_Sort_Recent", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Published first.
+        /// </summary>
+        public static string SiteSettings_Pages_Sort_StatusAsc {
+            get {
+                return ResourceManager.GetString("SiteSettings_Pages_Sort_StatusAsc", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Unpublished first.
+        /// </summary>
+        public static string SiteSettings_Pages_Sort_StatusDesc {
+            get {
+                return ResourceManager.GetString("SiteSettings_Pages_Sort_StatusDesc", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to [Z-A].
+        /// </summary>
+        public static string SiteSettings_Pages_Sort_ZA {
+            get {
+                return ResourceManager.GetString("SiteSettings_Pages_Sort_ZA", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Pages.
         /// </summary>
         public static string SiteSettings_Pages_Title {
@@ -3238,6 +3409,24 @@ namespace BetterCms.Module.Pages.Content.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Published.
+        /// </summary>
+        public static string SiteSettings_PageStatus_Published {
+            get {
+                return ResourceManager.GetString("SiteSettings_PageStatus_Published", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Unpublished.
+        /// </summary>
+        public static string SiteSettings_PageStatus_Unpublished {
+            get {
+                return ResourceManager.GetString("SiteSettings_PageStatus_Unpublished", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Redirects.
         /// </summary>
         public static string SiteSettings_Redirects {
@@ -3247,7 +3436,7 @@ namespace BetterCms.Module.Pages.Content.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Add New +.
+        ///   Looks up a localized string similar to Add New.
         /// </summary>
         public static string SiteSettings_Redirects_AddNew {
             get {
@@ -3328,7 +3517,7 @@ namespace BetterCms.Module.Pages.Content.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Register +.
+        ///   Looks up a localized string similar to Register.
         /// </summary>
         public static string SiteSettings_Template_RegisterNew {
             get {
@@ -3373,7 +3562,7 @@ namespace BetterCms.Module.Pages.Content.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Page layouts.
+        ///   Looks up a localized string similar to Templates.
         /// </summary>
         public static string SiteSettings_TemplatesMenuItem {
             get {
@@ -3382,7 +3571,7 @@ namespace BetterCms.Module.Pages.Content.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Add New +.
+        ///   Looks up a localized string similar to Add New.
         /// </summary>
         public static string SiteSettings_Widgets_AddNew {
             get {
@@ -3418,7 +3607,7 @@ namespace BetterCms.Module.Pages.Content.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Register +.
+        ///   Looks up a localized string similar to Register.
         /// </summary>
         public static string SiteSettings_Widgets_RegisterNew {
             get {
@@ -3580,7 +3769,7 @@ namespace BetterCms.Module.Pages.Content.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Add New Region +.
+        ///   Looks up a localized string similar to Add New Region.
         /// </summary>
         public static string TemplateRegions_AddNewRegion {
             get {
@@ -3805,7 +3994,7 @@ namespace BetterCms.Module.Pages.Content.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Master page.
+        ///   Looks up a localized string similar to Template.
         /// </summary>
         public static string WidgetUsages_Type_MasterPage {
             get {

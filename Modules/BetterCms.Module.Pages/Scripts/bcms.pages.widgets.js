@@ -1,11 +1,37 @@
 ﻿/*jslint unparam: true, white: true, browser: true, devel: true */
-/*global bettercms */
+// --------------------------------------------------------------------------------------------------------------------
+// <copyright file="bcms.pages.widgets.js" company="Devbridge Group LLC">
+// 
+// Copyright (C) 2015,2016 Devbridge Group LLC
+// 
+// This program is free software: you can redistribute it and/or modify
+// it under the terms of the GNU Lesser General Public License as published by
+// the Free Software Foundation, either version 3 of the License, or
+// (at your option) any later version.
+// 
+// This program is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU General Public License for more details.
+// 
+// You should have received a copy of the GNU Lesser General Public License
+// along with this program.  If not, see http://www.gnu.org/licenses/. 
+// </copyright>
+// 
+// <summary>
+// Better CMS is a publishing focused and developer friendly .NET open source CMS.
+// 
+// Website: https://www.bettercms.com 
+// GitHub: https://github.com/devbridge/bettercms
+// Email: info@bettercms.com
+// </summary>
+// --------------------------------------------------------------------------------------------------------------------
 
 bettercms.define('bcms.pages.widgets', ['bcms.jquery', 'bcms', 'bcms.modal', 'bcms.datepicker', 'bcms.htmlEditor',
         'bcms.dynamicContent', 'bcms.siteSettings', 'bcms.messages', 'bcms.preview', 'bcms.grid',
-        'bcms.slides.jquery', 'bcms.redirect', 'bcms.pages.history', 'bcms.security', 'bcms.options', 'bcms.ko.extenders', 'bcms.codeEditor',
+        'bcms.redirect', 'bcms.pages.history', 'bcms.security', 'bcms.options', 'bcms.ko.extenders', 'bcms.codeEditor',
         'bcms.pages', 'bcms.categories', 'bcms.forms', 'bcms.ko.grid', 'bcms.antiXss'],
-    function ($, bcms, modal, datepicker, htmlEditor, dynamicContent, siteSettings, messages, preview, grid, slides, redirect, contentHistory, security, options, ko, codeEditor, pages, categories, forms, kogrid, antiXss) {
+    function ($, bcms, modal, datepicker, htmlEditor, dynamicContent, siteSettings, messages, preview, grid, redirect, contentHistory, security, options, ko, codeEditor, pages, categories, forms, kogrid, antiXss) {
         'use strict';
 
         var widgets = {},
@@ -52,6 +78,7 @@ bettercms.define('bcms.pages.widgets', ['bcms.jquery', 'bcms', 'bcms.modal', 'bc
 
                 widgetPreviewImageUrl: '#PreviewImageUrl',
                 widgetPreviewImage: '#bcms-widget-preview-image',
+                widgetNoImagePreview: '#bcms-widget-no-preview',
                 widgetPreviewPageContentId: '.bcms-preview-page-content-id',
                 htmlContentWidgetContentHtmlEditor: '.bcms-advanced-contenthtml',
 
@@ -78,7 +105,7 @@ bettercms.define('bcms.pages.widgets', ['bcms.jquery', 'bcms', 'bcms.modal', 'bc
                 widgetRowTemplateFirstRow: 'tr:first',
                 widgetsTableFirstRow: 'table.bcms-tables > tbody > tr:first',
                 widgetInsertButtons: '.bcms-widget-insert-button',
-                widgetRowUsageLinks: '.bcms-template-usage',
+                widgetRowUsageLinks: '.bcms-action-usage',
 
                 siteSettingsWidgetsListForm: '#bcms-widgets-form',
 
@@ -90,14 +117,25 @@ bettercms.define('bcms.pages.widgets', ['bcms.jquery', 'bcms', 'bcms.modal', 'bc
                 editInSourceModeHiddenField: '#bcms-edit-in-source-mode',
 
                 widgetUsagesGrid: '#bcms-widget-usages-grid',
-                userConfirmationHiddenField: '#bcms-user-confirmed-region-deletion'
+                userConfirmationHiddenField: '#bcms-user-confirmed-region-deletion',
+                editContentCloseInfoMessage: '#bcms-draft-closeinfomessage',
+                editContentInfoMessageBox: '.bcms-warning-messages',
+
+                siteSettingsButtonOpener: ".bcms-btn-opener",
+                siteSettingsButtonHolder: ".bcms-btn-opener-holder",
+
+                editorContainer: '.bcms-window-tabbed-options',
+                editorTitle: '.bcms-content-titles',
+                editorCheckBoxField: '.bcms-check-field-helper',
+                codeEditorParent: '.bcms-input-list-holder',
+                editorInfoBlock: '.bcms-content-info-block'
             },
             classes = {
                 regionAdvancedContent: 'bcms-content-advanced',
                 regionWidget: 'bcms-content-widget',
-                draftStatus: 'bcms-icn-draft',
-                publishStatus: 'bcms-icn-published',
-                draftPublStatus: 'bcms-icn-pubdraft'
+                draftStatus: 'bcms-action-warn',
+                publishStatus: 'bcms-action-ok',
+                draftPublStatus: 'bcms-action-draft'
             },
             contentTypes = {
                 htmlWidget: 'html-widget',
@@ -309,8 +347,8 @@ bettercms.define('bcms.pages.widgets', ['bcms.jquery', 'bcms', 'bcms.modal', 'bc
 
         function WidgetEditViewModel(data) {
             var self = this,
-                categorieslist = data.Categories;
-            self.categories = new categories.CategoriesListViewModel(categorieslist, data.CategoriesFilterKey);
+                categorieslist = new categories.CategoriesSelectListModel(data.Categories);
+            self.categories = categorieslist;
         }
 
         function initializeEditHtmlContentWidgetForm(dialog, availablePreviewOnPageContentId, onSaveCallback, editInSourceMode, content, editorId, includeChildRegions) {
@@ -330,6 +368,8 @@ bettercms.define('bcms.pages.widgets', ['bcms.jquery', 'bcms', 'bcms.modal', 'bc
                 widgetEditViewModel = new WidgetEditViewModel(data),
                 codeEditorInitialized = false;
 
+
+            categories.initCategoriesSelect(widgetEditViewModel.categories, data.CategoriesLookupList);
 
             ko.applyBindings(optionListViewModel, optionsContainer.get(0));
             ko.applyBindings(widgetEditViewModel, widgetEditContainer.get(0));
@@ -353,19 +393,47 @@ bettercms.define('bcms.pages.widgets', ['bcms.jquery', 'bcms', 'bcms.modal', 'bc
                 });
             });
 
-            var editorHeight = modal.maximizeChildHeight(dialog.container.find("#" + editorId), dialog);
+            var heightOptions = {
+                topElements: [
+                {
+                    element: selectors.editorInfoBlock,
+                    takeMargins: true
+                },
+                {
+                    element: selectors.editorTitle,
+                    takeMargins: true
+                }],
+                container: selectors.editorContainer,
+                bottomElement: selectors.editorCheckBoxField,
+                parent: selectors.widgetTab,
+                marginBottom: 1
+            };
 
             htmlEditor.initializeHtmlEditor(editorId, data.Id, {
-                cmsEditorType: htmlEditor.cmsEditorTypes.widget,
-                height: editorHeight
-            }, editInSourceMode);
+                cmsEditorType: htmlEditor.cmsEditorTypes.widget
+            }, editInSourceMode, heightOptions);
             htmlEditor.enableInsertDynamicRegion(editorId, false, data.LastDynamicRegionNumber);
+
+            dialog.container.find(selectors.editContentCloseInfoMessage).on('click', function () {
+                dialog.container.find(selectors.editContentInfoMessageBox).hide();
+            });
 
             dialog.container.find(selectors.htmlWidgetJsCssTabOpener).on('click', function () {
                 if (!codeEditorInitialized) {
+                    var heightOptions = {
+                        marginTop: 30,
+                        topElements: [{
+                                element: selectors.editorTitle,
+                                takeMargins: true
+                            }],
+                        container: selectors.editorContainer,
+                        bottomElement: selectors.editorCheckBoxField,
+                        parent: selectors.codeEditorParent,
+                        marginBottom: 1
+                    };
                     codeEditor.initialize(dialog.container, dialog, {
                         cmsEditorType: htmlEditor.cmsEditorTypes.page
-                    });
+                    }, heightOptions);
                     codeEditorInitialized = true;
                 }
             });
@@ -395,29 +463,40 @@ bettercms.define('bcms.pages.widgets', ['bcms.jquery', 'bcms', 'bcms.modal', 'bc
                 optionListViewModel = options.createOptionsViewModel(optionsContainer, widgetOptions, customOptions, langOpts),
                 widgetEditViewModel = new WidgetEditViewModel(data);
 
+            categories.initCategoriesSelect(widgetEditViewModel.categories, data.CategoriesLookupList);
+
             ko.applyBindings(optionListViewModel, optionsContainer.get(0));
             ko.applyBindings(widgetEditViewModel, widgetEditContainer.get(0));
 
             dialog.container.find(selectors.widgetPreviewImage).error(function () {
-                var image = dialog.container.find(selectors.widgetPreviewImage);
+                var image = dialog.container.find(selectors.widgetPreviewImage),
+                    noPreviewGrid = dialog.container.find(selectors.widgetNoImagePreview);
+                noPreviewGrid.show();
                 if (image.attr("src") != null && image.attr("src") != "") {
                     messages.box({ container: dialog.container.find(selectors.messagesContainer) }).addWarningMessage(globalization.previewImageNotFoundMessage);
-                    image.parent().hide();
+                    image.hide();
                     image.removeAttr("src");
                 }
             });
 
             dialog.container.find(selectors.widgetPreviewImageUrl).blur(function () {
                 var image = dialog.container.find(selectors.widgetPreviewImage),
-                    urlInput = dialog.container.find(selectors.widgetPreviewImageUrl);
+                    urlInput = dialog.container.find(selectors.widgetPreviewImageUrl),
+                    noPreviewGrid = dialog.container.find(selectors.widgetNoImagePreview);
 
                 if (urlInput.valid()) {
                     image.attr({ src: urlInput.val() });
-                    image.parent().show();
+                    noPreviewGrid.hide();
+                    image.show();
                 } else {
                     image.hide();
-                    image.parent().removeAttr("src");
+                    noPreviewGrid.show();
+                    image.removeAttr("src");
                 }
+            });
+
+            dialog.container.find(selectors.editContentCloseInfoMessage).on('click', function () {
+                dialog.container.find(selectors.editContentInfoMessageBox).hide();
             });
 
             dialog.container.find(selectors.destroyDraftVersionLink).on('click', function () {
@@ -436,9 +515,11 @@ bettercms.define('bcms.pages.widgets', ['bcms.jquery', 'bcms', 'bcms.modal', 'bc
             });
 
             // IE fix: by default, while loading, picture is hidden
-            var previewImage = dialog.container.find(selectors.widgetPreviewImage);
+            var previewImage = dialog.container.find(selectors.widgetPreviewImage),
+                noPreviewGrid = dialog.container.find(selectors.widgetNoImagePreview);
             if (previewImage.attr('src')) {
-                previewImage.parent().show();
+                noPreviewGrid.hide();
+                previewImage.show();
             }
 
 
@@ -567,7 +648,7 @@ bettercms.define('bcms.pages.widgets', ['bcms.jquery', 'bcms', 'bcms.modal', 'bc
         /**
         * Initializes site settings widgets list and list items
         */
-        function initializeSiteSettingsWidgetsList() {
+        function initializeSiteSettingsWidgetsList(isSearchResult) {
             var dialog = siteSettings.getModalDialog(),
                 container = dialog.container,
                 onWidgetCreated = function (json) {
@@ -595,7 +676,39 @@ bettercms.define('bcms.pages.widgets', ['bcms.jquery', 'bcms', 'bcms.modal', 'bc
             });
 
             form.find(selectors.widgetsSearchButton).on('click', function () {
-                searchSiteSettingsWidgets(form);
+                var parent = $(this).parent();
+                if (!parent.hasClass('bcms-active-search')) {
+                    form.find(selectors.widgetsSearchField).prop('disabled', false);
+                    parent.addClass('bcms-active-search');
+                    form.find(selectors.widgetsSearchField).focus();
+                } else {
+                    form.find(selectors.widgetsSearchField).prop('disabled', true);
+                    parent.removeClass('bcms-active-search');
+                    form.find(selectors.widgetsSearchField).val('');
+                }
+            });
+
+            if (isSearchResult === true) {
+                form.find(selectors.widgetsSearchButton).parent().addClass('bcms-active-search');
+            } else {
+                form.find(selectors.widgetsSearchField).prop('disabled', true);
+            }
+
+            form.find(selectors.siteSettingsButtonOpener).on('click', function (event) {
+                bcms.stopEventPropagation(event);
+                var holder = form.find(selectors.siteSettingsButtonHolder);
+                if (!holder.hasClass('bcms-opened')) {
+                    holder.addClass('bcms-opened');
+                } else {
+                    holder.removeClass('bcms-opened');
+                }
+            });
+
+            bcms.on(bcms.events.bodyClick, function (event) {
+                var holder = form.find(selectors.siteSettingsButtonHolder);
+                if (holder.hasClass('bcms-opened')) {
+                    holder.removeClass('bcms-opened');
+                }
             });
 
             container.find(selectors.widgetCreateButton).on('click', function () {
@@ -618,7 +731,7 @@ bettercms.define('bcms.pages.widgets', ['bcms.jquery', 'bcms', 'bcms.modal', 'bc
         function searchSiteSettingsWidgets(form) {
             grid.submitGridForm(form, function (data) {
                 siteSettings.setContent(data);
-                initializeSiteSettingsWidgetsList();
+                initializeSiteSettingsWidgetsList(true);
             });
         };
 
@@ -798,6 +911,7 @@ bettercms.define('bcms.pages.widgets', ['bcms.jquery', 'bcms', 'bcms.modal', 'bc
                 status = globalization.widgetStatusDraft;
             }
             statusContainer.html(status);
+            statusContainer.attr('title', status);
             row.find(selectors.widgetStatusCell).html(statusContainer);
         };
 

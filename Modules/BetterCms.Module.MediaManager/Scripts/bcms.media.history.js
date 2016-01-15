@@ -1,5 +1,31 @@
 ﻿/*jslint unparam: true, white: true, browser: true, devel: true */
-/*global bettercms */
+// --------------------------------------------------------------------------------------------------------------------
+// <copyright file="bcms.media.history.js" company="Devbridge Group LLC">
+// 
+// Copyright (C) 2015,2016 Devbridge Group LLC
+// 
+// This program is free software: you can redistribute it and/or modify
+// it under the terms of the GNU Lesser General Public License as published by
+// the Free Software Foundation, either version 3 of the License, or
+// (at your option) any later version.
+// 
+// This program is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU General Public License for more details.
+// 
+// You should have received a copy of the GNU Lesser General Public License
+// along with this program.  If not, see http://www.gnu.org/licenses/. 
+// </copyright>
+// 
+// <summary>
+// Better CMS is a publishing focused and developer friendly .NET open source CMS.
+// 
+// Website: https://www.bettercms.com 
+// GitHub: https://github.com/devbridge/bettercms
+// Email: info@bettercms.com
+// </summary>
+// --------------------------------------------------------------------------------------------------------------------
 
 bettercms.define('bcms.media.history', ['bcms.jquery', 'bcms', 'bcms.modal', 'bcms.messages', 'bcms.dynamicContent', 'bcms.redirect', 'bcms.grid'],
     function ($, bcms, modal, messages, dynamicContent, redirect, grid) {
@@ -12,17 +38,18 @@ bettercms.define('bcms.media.history', ['bcms.jquery', 'bcms', 'bcms.modal', 'bc
         },
         
         selectors = {
-            gridRestoreLinks: '#bcms-pagecontenthistory-form .bcms-history-cell a.bcms-icn-restore',
-            gridDownloadLinks: '#bcms-pagecontenthistory-form .bcms-history-cell a.bcms-icn-download',
-            gridCells: '#bcms-pagecontenthistory-form .bcms-history-cell tbody td',
-            gridRowPreviewLink: 'a.bcms-icn-preview:first',
+            gridRestoreLinks: '#bcms-pagecontenthistory-form tr .bcms-js-restore',
+            gridDownloadLinks: '#bcms-pagecontenthistory-form tr .bcms-js-download',
+            gridCells: '#bcms-pagecontenthistory-form tr td',
+            gridRowPreviewLink: '.bcms-js-preview:first',
             firstRow: 'tr:first',
-            gridRows: '#bcms-pagecontenthistory-form .bcms-history-cell tbody tr',
+            gridRows: '#bcms-pagecontenthistory-form tr',
             versionPreviewContainer: '#bcms-history-preview',
-            versionPreviewLoaderContainer: '.bcms-history-preview',
+            versionPreviewLoaderContainer: '.bcms-history-preview-holder',
             mediaHistoryForm: '#bcms-pagecontenthistory-form',
             mediaHistorySearchButton: '.bcms-btn-search',
-            modalContent: '.bcms-modal-content-padded',
+            mediaHistorySearchField: '.bcms-js-search-box',
+            modalContent: '.bcms-modal-content',
             popinfoFrame: '.bcms-popinfo-frame'
         },
         
@@ -165,16 +192,14 @@ bettercms.define('bcms.media.history', ['bcms.jquery', 'bcms', 'bcms.modal', 'bc
     function searchPageContentHistory(dialog, container, form, isImage) {
         grid.submitGridForm(form, function (data) {
             container.html(data);
-            history.initMediaHistoryDialogEvents(dialog, isImage, data);
+            history.initMediaHistoryDialogEvents(dialog, isImage, data, true);
         });
     }
 
     /**
     * Initializes EditSeo dialog events.
     */
-    history.initMediaHistoryDialogEvents = function (dialog, isImage) {
-        dialog.maximizeHeight();
-
+    history.initMediaHistoryDialogEvents = function (dialog, isImage, data, isSearchResult) {
         var container = dialog.container.find(selectors.modalContent);
 
         container.find(selectors.gridRestoreLinks).on('click', function (event) {
@@ -213,8 +238,23 @@ bettercms.define('bcms.media.history', ['bcms.jquery', 'bcms', 'bcms.modal', 'bc
         });
 
         form.find(selectors.mediaHistorySearchButton).on('click', function () {
-            searchPageContentHistory(dialog, container, form, isImage);
+            var parent = $(this).parent();
+            if (!parent.hasClass('bcms-active-search')) {
+                form.find(selectors.mediaHistorySearchField).prop('disabled', false);
+                parent.addClass('bcms-active-search');
+                form.find(selectors.mediaHistorySearchField).focus();
+            } else {
+                form.find(selectors.mediaHistorySearchField).prop('disabled', true);
+                parent.removeClass('bcms-active-search');
+                form.find(selectors.mediaHistorySearchField).val('');
+            }
         });
+
+        if (isSearchResult === true) {
+            form.find(selectors.mediaHistorySearchButton).parent().addClass('bcms-active-search');
+        } else {
+            form.find(selectors.mediaHistorySearchField).prop('disabled', true);
+        }
     };   
     
     /**

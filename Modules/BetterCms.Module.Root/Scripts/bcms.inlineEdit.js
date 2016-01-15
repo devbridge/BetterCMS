@@ -1,5 +1,31 @@
 ﻿/*jslint unparam: true, white: true, browser: true, devel: true */
-/*global bettercms */
+// --------------------------------------------------------------------------------------------------------------------
+// <copyright file="bcms.inlineEdit.js" company="Devbridge Group LLC">
+// 
+// Copyright (C) 2015,2016 Devbridge Group LLC
+// 
+// This program is free software: you can redistribute it and/or modify
+// it under the terms of the GNU Lesser General Public License as published by
+// the Free Software Foundation, either version 3 of the License, or
+// (at your option) any later version.
+// 
+// This program is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU General Public License for more details.
+// 
+// You should have received a copy of the GNU Lesser General Public License
+// along with this program.  If not, see http://www.gnu.org/licenses/. 
+// </copyright>
+// 
+// <summary>
+// Better CMS is a publishing focused and developer friendly .NET open source CMS.
+// 
+// Website: https://www.bettercms.com 
+// GitHub: https://github.com/devbridge/bettercms
+// Email: info@bettercms.com
+// </summary>
+// --------------------------------------------------------------------------------------------------------------------
 
 bettercms.define('bcms.inlineEdit', ['bcms.jquery', 'bcms', 'bcms.messages', 'bcms.modal', 'bcms.grid'], function ($, bcms, messages, modal, grid) {
     'use strict';
@@ -24,13 +50,13 @@ bettercms.define('bcms.inlineEdit', ['bcms.jquery', 'bcms', 'bcms.messages', 'bc
             firstForm: 'form:first',
             firstEditableInput: 'input[type="text"]:first',
             editableInput: 'input[type="text"]',
-            fieldInputs: 'td > .bcms-input-box > input.bcms-editor-field-box',
+            fieldInputs: '.bcms-js-grid-input',
             allInputs: 'td input',
             fieldValues: '.bcms-grid-item-info',
-            deleteRowLink: 'a.bcms-icn-delete',
+            deleteRowLink: 'div.bcms-action-delete',
             rowMessage: '.bcms-grid-item-message',
-            saveRowLink: '.bcms-btn-small',
-            cancelLink: 'a.bcms-btn-links-small',
+            saveRowLink: '.bcms-btn-primary',
+            cancelLink: 'div.bcms-btn-cancel',
             editRowLink: '.bcms-grid-item-edit-button',
             firstTable: 'table.bcms-tables:first',
             templateFirstRow: 'tr:first',
@@ -123,7 +149,6 @@ bettercms.define('bcms.inlineEdit', ['bcms.jquery', 'bcms', 'bcms.messages', 'bc
                 }
             });
         }
-
         row.data('isSelected', isSelected);
     }
 
@@ -304,7 +329,7 @@ bettercms.define('bcms.inlineEdit', ['bcms.jquery', 'bcms', 'bcms.messages', 'bc
             }
             
             row.data('blurred', false);
-        }, 500);
+        }, 100);
     };
 
     /**
@@ -380,6 +405,7 @@ bettercms.define('bcms.inlineEdit', ['bcms.jquery', 'bcms', 'bcms.messages', 'bc
                         if (json.Success) {
                             saveLink.hide();
                             cancelLink.hide();
+                            
                             if (json.Data) {
                                 if (json.Data.Version) {
                                     row.find(selectors.deleteRowLink).data('version', json.Data.Version);
@@ -518,6 +544,9 @@ bettercms.define('bcms.inlineEdit', ['bcms.jquery', 'bcms', 'bcms.messages', 'bc
         row.find(selectors.saveRowLink).show();
         row.find(selectors.cancelLink).show();
         row.find(selectors.rowMessage).hide();
+
+        row.find('td:last').css("width", "120px");
+        row.find('td:last').css("padding", "");
     };
 
     /**
@@ -533,6 +562,9 @@ bettercms.define('bcms.inlineEdit', ['bcms.jquery', 'bcms', 'bcms.messages', 'bc
         row.find(selectors.saveRowLink).hide();
         row.find(selectors.cancelLink).hide();
         row.find(selectors.rowMessage).hide();
+
+        row.find('td:last').css("width", "40px");
+        row.find('td:last').css("padding", "10px 0");
     };
 
     /**

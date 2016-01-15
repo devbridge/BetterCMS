@@ -28,7 +28,7 @@ namespace ASP
     using System.Web.UI;
     using System.Web.WebPages;
     
-    #line 1 "..\..\Views\Rendering\RenderMainJsFile.cshtml"
+    #line 28 "..\..\Views\Rendering\RenderMainJsFile.cshtml"
     using BetterCms.Module.Root.Mvc.Helpers;
     
     #line default
@@ -43,6 +43,8 @@ namespace ASP
         }
         public override void Execute()
         {
+WriteLiteral("\r\n");
+
 WriteLiteral(@"/* Better CMS
 * https://github.com/devbridge/BetterCMS
 */
@@ -59,13 +61,13 @@ bettercms.requirejs.config({
 ");
 
             
-            #line 16 "..\..\Views\Rendering\RenderMainJsFile.cshtml"
+            #line 43 "..\..\Views\Rendering\RenderMainJsFile.cshtml"
     
             
             #line default
             #line hidden
             
-            #line 16 "..\..\Views\Rendering\RenderMainJsFile.cshtml"
+            #line 43 "..\..\Views\Rendering\RenderMainJsFile.cshtml"
      if (Model.IsDebugMode && !Model.UseMinReferences)
     {
 
@@ -77,7 +79,7 @@ WriteLiteral("        ");
 WriteLiteral("urlArgs: \'ver=\' + \'");
 
             
-            #line 18 "..\..\Views\Rendering\RenderMainJsFile.cshtml"
+            #line 45 "..\..\Views\Rendering\RenderMainJsFile.cshtml"
                             Write(Model.Version.ToString());
 
             
@@ -88,7 +90,7 @@ WriteLiteral("\',");
 WriteLiteral("\r\n");
 
             
-            #line 19 "..\..\Views\Rendering\RenderMainJsFile.cshtml"
+            #line 46 "..\..\Views\Rendering\RenderMainJsFile.cshtml"
     }
 
             
@@ -99,7 +101,7 @@ WriteLiteral("\r\n    paths: {     \r\n");
 WriteLiteral("         ");
 
             
-            #line 22 "..\..\Views\Rendering\RenderMainJsFile.cshtml"
+            #line 49 "..\..\Views\Rendering\RenderMainJsFile.cshtml"
     Write(Model.JavaScriptModules.RenderCommaSeparatedNamePathPairs(Model.UseMinReferences));
 
             
@@ -110,7 +112,7 @@ WriteLiteral("\r\n    },    \r\n\r\n    shim: {\r\n");
 WriteLiteral("        ");
 
             
-            #line 26 "..\..\Views\Rendering\RenderMainJsFile.cshtml"
+            #line 53 "..\..\Views\Rendering\RenderMainJsFile.cshtml"
    Write(Model.JavaScriptModules.RenderCommaSeparatedNameShimConfigPairs());
 
             
@@ -135,7 +137,7 @@ bettercms.requirejs(['bcms.jquery', 'bcms', 'bcms.processor'],
             bcms.errorTrace = ");
 
             
-            #line 42 "..\..\Views\Rendering\RenderMainJsFile.cshtml"
+            #line 69 "..\..\Views\Rendering\RenderMainJsFile.cshtml"
                           Write(Model.IsDebugMode ? "true" : "false");
 
             
@@ -144,13 +146,13 @@ bettercms.requirejs(['bcms.jquery', 'bcms', 'bcms.processor'],
 WriteLiteral(";\r\n            processor.init();\r\n            bcms.init();\r\n");
 
             
-            #line 45 "..\..\Views\Rendering\RenderMainJsFile.cshtml"
+            #line 72 "..\..\Views\Rendering\RenderMainJsFile.cshtml"
             
             
             #line default
             #line hidden
             
-            #line 45 "..\..\Views\Rendering\RenderMainJsFile.cshtml"
+            #line 72 "..\..\Views\Rendering\RenderMainJsFile.cshtml"
              if (Model.IsDebugMode)
             {
 
@@ -164,7 +166,7 @@ WriteLiteral("window.bj = $;");
 WriteLiteral("\r\n");
 
             
-            #line 48 "..\..\Views\Rendering\RenderMainJsFile.cshtml"
+            #line 75 "..\..\Views\Rendering\RenderMainJsFile.cshtml"
             }
 
             

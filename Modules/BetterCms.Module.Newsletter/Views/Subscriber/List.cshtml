@@ -1,22 +1,177 @@
-﻿@using BetterCms.Module.Newsletter.Content.Resources
-@using BetterCms.Module.Root;
+﻿@* --------------------------------------------------------------------------------------------------------------------
+// <copyright file="List.cshtml" company="Devbridge Group LLC">
+// 
+// Copyright (C) 2015,2016 Devbridge Group LLC
+// 
+// This program is free software: you can redistribute it and/or modify
+// it under the terms of the GNU Lesser General Public License as published by
+// the Free Software Foundation, either version 3 of the License, or
+// (at your option) any later version.
+// 
+// This program is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU General Public License for more details.
+// 
+// You should have received a copy of the GNU Lesser General Public License
+// along with this program.  If not, see http://www.gnu.org/licenses/. 
+// </copyright>
+// 
+// <summary>
+// Better CMS is a publishing focused and developer friendly .NET open source CMS.
+// 
+// Website: https://www.bettercms.com 
+// GitHub: https://github.com/devbridge/bettercms
+// Email: info@bettercms.com
+// </summary>
+// -------------------------------------------------------------------------------------------------------------------- *@
+@using BetterCms.Module.Newsletter.Content.Resources
 @using BetterCms.Module.Root.Mvc.Grids;
 @using BetterCms.Module.Root.ViewModels.Shared;
+@using BetterCms.Module.Root.Content.Resources
+@using BetterCms.Module.Root.Mvc.Helpers
 
-@{
-    var gridViewModel = new EditableGridViewModel
-    {
-        ShowMessages = true,
-        TopBlockTitle = NewsletterGlobalization.SiteSettings_NewsletterSubscribers_Title,
-        Columns = new List<EditableGridColumn>
+<div class="bcms-window-settings">
+    @{
+        var gridViewModel = new EditableGridViewModel { ShowMessages = true, TopBlockTitle = NewsletterGlobalization.SiteSettings_NewsletterSubscribers_Title, Columns = new List<EditableGridColumn> { new EditableGridColumn(NewsletterGlobalization.SiteSettings_NewsletterSubscribers_Email_Title, "Email", "email") { AutoFocus = true, FocusIdentifier = "hasFocus" } } };
+    }
+
+    <div class="@gridViewModel.TopBlockClass">
+        <div class="bcms-top-controls-btn-holder">
+            @if (gridViewModel.CanAddNewItems)
             {
-                new EditableGridColumn(NewsletterGlobalization.SiteSettings_NewsletterSubscribers_Email_Title, "Email", "email")
-                    {
-                        AutoFocus = true,
-                        FocusIdentifier = "hasFocus"
-                    }
+                <div class="bcms-btn-main" data-bind="click: addNewItem">@gridViewModel.AddNewTitle</div>
+                <div class="bcms-btn-opener"> </div>
+                <div class="bcms-btn-opener-holder">
+                    <div class="bcms-btn-opener-link" id="download-subscribers-in-csv">@NewsletterGlobalization.Download_NewsletterSubscribers_Title</div>
+                </div>
             }
-    };
-}
+        </div>
+        @if (gridViewModel.ShowSearch)
+        {
+            <div class="bcms-top-block-inner" data-bind="css: { 'bcms-active-search' : searchEnabled }">
+                <div class="bcms-btn-search" data-bind="click: toggleSearch">@RootGlobalization.Button_Search</div>
+                <div class="bcms-search-block">
+                    <input class="bcms-search-field-box" data-bind="value: options().searchQuery, valueUpdate: 'afterkeydown', enterPress: searchItems, hasfocus: options().hasFocus, enable: searchEnabled" type="text" placeholder="@RootGlobalization.WaterMark_Search" />
+                </div>
+            </div>
+        }
+        @if (gridViewModel.AddPaging)
+        {
+            <div class="bcms-top-block-pager">
+                <!-- ko with: options().paging -->
+                <div class="bcms-featured-grid bcms-clearfix">
+                    @Html.Partial(gridViewModel.PagingView, gridViewModel)
+                </div>
+                <!-- /ko -->
+            </div>
+        }
+    </div>
 
-@Html.Partial(RootModuleConstants.EditableGridTemplate, gridViewModel)
+    @if (gridViewModel.ShowMessages)
+    {
+        @Html.MessagesBox(null, new Dictionary<string, string> { { "data-bind", "attr: { id: messagesDomId() }" } })
+    }
+
+    @{
+        var visibleColumns = gridViewModel.Columns.Where(c => c.IsRendered).ToList();
+        var visibleColumnsCount = visibleColumns.Count;
+    }
+
+    <table class="bcms-tables">
+        <thead>
+            <tr>
+                <th class="bcms-tables-nohover" style="width: 40px; padding: 0;">&nbsp;</th>
+                @foreach (var column in visibleColumns)
+                {
+                    @Html.Partial(column.HeaderView, column)
+                }
+                <th class="bcms-tables-nohover">&nbsp;</th>
+            </tr>
+        </thead>
+        <tbody>
+            <!-- ko foreach: items -->
+            <tr data-bind="click: onOpen, css: {'bcms-table-row-active' : isActive() || isSelectedForInsert()}, attr: {id: getRowId()}">
+                <!-- ko if: saving() || deleting() -->
+                @if (gridViewModel.CanEditItems)
+                {
+                    <td class="bcms-tables-nohover">&nbsp;</td>
+                <!-- ko if: saving() -->
+                    <td class="bcms-tables-nohover" colspan="@visibleColumnsCount">@RootGlobalization.Message_Saving</td>
+                <!-- /ko -->
+                }
+                @if (gridViewModel.CanEditItems)
+                {
+                    <td class="bcms-tables-nohover">&nbsp;</td>
+                <!-- ko if: deleting() -->
+                    <td class="bcms-tables-nohover" colspan="@visibleColumnsCount">@RootGlobalization.Message_Deleting</td>
+                <!-- /ko -->
+                }
+                <!-- /ko -->
+                <!-- ko ifnot: saving() || deleting() -->
+                @if (gridViewModel.CanEditItems)
+                {
+                    <td>
+                        <!-- ko if: !editingIsDisabled() -->
+                        <div class="bcms-action-edit" data-bind="click: onEdit" title="@RootGlobalization.Button_Edit">@RootGlobalization.Button_Edit</div>
+                        <!-- /ko -->
+                    </td>
+                }
+                else
+                {
+                    <td>&nbsp;</td>
+                }
+
+                @foreach (var column in visibleColumns)
+                {
+                    @Html.Partial(column.CellView, column)
+                }
+
+                @if (gridViewModel.CanDeleteItems)
+                {
+                    <!-- ko if: !isActive() && !deletingIsDisabled() -->
+                    <td style="width: 40px; padding: 10px 0;">                 
+                        <div class="bcms-action-delete" data-bind="click: onDelete" title="@RootGlobalization.Button_Delete">@RootGlobalization.Button_Delete</div>
+                    </td>
+                    <!-- /ko -->
+                }
+                @if (gridViewModel.CanEditItems)
+                {
+                    <!-- ko if: isActive() -->
+                    <td style="width: 120px;">                   
+                        <div class="bcms-btn-primary" data-bind="click: onSave">@gridViewModel.SaveButtonTitle</div>
+                        <div class="bcms-btn-cancel" data-bind="click: onCancelEdit">@RootGlobalization.Button_Cancel</div>                   
+                    </td>
+                    <!-- /ko -->
+                }
+                @if (!gridViewModel.CanDeleteItems && !gridViewModel.CanEditItems)
+                {
+                    @:<td>&nbsp;</td>
+                }
+
+                <!-- /ko -->
+            </tr>
+            <!-- /ko -->
+            <!-- ko if: items().length == 0 -->
+            <tr>
+                <td colspan="@(visibleColumnsCount + 2)">
+                    <div class="bcms-table-no-data">@RootGlobalization.Grid_NoDataAvailable_Message</div>
+                </td>
+            </tr>
+            <!-- /ko -->
+        </tbody>
+    </table>
+
+    @if (gridViewModel.AddHiddenFields)
+    {
+        <!-- ko foreach: items -->
+        foreach (var column in gridViewModel.Columns)
+        {
+            if (!string.IsNullOrWhiteSpace(column.HiddenFieldName))
+            {
+                <input type="hidden" name="" value="" data-bind="valueBinder: @(column.ValueBind), attr {name hiddenfieldname('@(column.HiddenFieldName)', $index()) }">
+            }
+        }
+        <!-- /ko -->
+    }
+</div>

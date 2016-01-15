@@ -1,4 +1,31 @@
-﻿@using BetterCms.Module.MediaManager.ViewModels.File
+﻿@* --------------------------------------------------------------------------------------------------------------------
+// <copyright file="FileEditor.cshtml" company="Devbridge Group LLC">
+// 
+// Copyright (C) 2015,2016 Devbridge Group LLC
+// 
+// This program is free software: you can redistribute it and/or modify
+// it under the terms of the GNU Lesser General Public License as published by
+// the Free Software Foundation, either version 3 of the License, or
+// (at your option) any later version.
+// 
+// This program is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU General Public License for more details.
+// 
+// You should have received a copy of the GNU Lesser General Public License
+// along with this program.  If not, see http://www.gnu.org/licenses/. 
+// </copyright>
+// 
+// <summary>
+// Better CMS is a publishing focused and developer friendly .NET open source CMS.
+// 
+// Website: https://www.bettercms.com 
+// GitHub: https://github.com/devbridge/bettercms
+// Email: info@bettercms.com
+// </summary>
+// -------------------------------------------------------------------------------------------------------------------- *@
+@using BetterCms.Module.MediaManager.ViewModels.File
 @using BetterCms.Module.Root
 @using BetterCms.Module.Root.Content.Resources
 @using BetterCms.Module.Root.Mvc.Extensions
@@ -20,9 +47,11 @@
         TooltipDescription = MediaGlobalization.FileEditor_Dialog_Category_Tooltip_Description
     };
 }
-<div class="bcms-scroll-window">
-    @Html.TabbedContentMessagesBox()
-    <div class="bcms-padded-content bcms-clearfix" id="bcms-file-manager-inner" style="margin-top: 30px;">
+
+<div class="bcms-modal-frame-holder">
+    @Html.MessagesBox()
+
+    <div class="bcms-window-options" id="bcms-file-manager-inner">
         @using (Html.BeginForm<FilesController>(f => f.FileEditor((FileViewModel)null), FormMethod.Post,
             new
                 {
@@ -36,68 +65,86 @@
             @Html.HiddenFor(model => model.AccessControlEnabled)
             @Html.HiddenFor(model => model.Image.ImageId, new { data_bind = "value: image().id()" })
 
-            <div class="bcms-input-list-holder">
-                @Html.Tooltip(MediaGlobalization.FileEditor_Dialog_Title_Tooltip_Description)
-                <div class="bcms-content-titles">@MediaGlobalization.FileEditor_Dialog_Title_Title</div>
-                <div class="bcms-input-box">
-                    @Html.TextBoxFor(f => f.Title, new { @class = "bcms-editor-field-box", @id = "Title", data_bind = "event: {change: onValueChange}" })
-                    @Html.BcmsValidationMessageFor(f => f.Title)
-                </div>
-            </div>
-
-            <div class="bcms-input-list-holder">
-                @Html.Tooltip(MediaGlobalization.FileEditor_Dialog_PublicUrl_Tooltip_Description)
-                <div class="bcms-content-titles">@MediaGlobalization.FileProperties_Dialog_PublicUrl</div>
-                <div class="bcms-input-box">
-                    <input class="bcms-editor-field-box bcms-editor-selectable-field-box" type="text" value="@Model.Url" readonly="readonly" />
-                </div>
-            </div>
-
-            <div class="bcms-input-list-holder">
-                <b>@MediaGlobalization.FileEditor_Dialog_FileSize:</b>
-                <div class="bcms-editing-text" id="image-file-size">@Model.FileSize</div>
-            </div>
-
-            <div class="bcms-input-list-holder">
-                @Html.Tooltip(MediaGlobalization.FileEditor_Dialog_Description_Tooltip_Description)
-                <div class="bcms-content-titles">@MediaGlobalization.FileEditor_Dialog_Description</div>
-                <div class="bcms-textarea-box">
-                    @Html.TextAreaFor(f => f.Description, new { @class = "bcms-editor-field-area", @id = "Description", data_bind = "event: {change: onValueChange}" })
-                    @Html.BcmsValidationMessageFor(f => f.Description)
-                </div>
-            </div>
-
-            <div class="bcms-categories-box-holder" data-bind="with: categories">
-                @Html.Partial("~/Areas/bcms-root/Views/Category/CategoriesTemplate.cshtml", categoriesTemplateViewModel)
-            </div>
-
-            <div class="bcms-tags-box-holder" data-bind="with: tags">
-                @Html.Partial("~/Areas/bcms-root/Views/Tags/TagsTemplate.cshtml", tagsTemplateViewModel)
-            </div>
-
-            if (Model.AccessControlEnabled)
-            {
-                @Html.Partial(RootModuleConstants.AccessControlTemplate)
-            }
-
-            <div class="bcms-page-images-holder">
-                <div class="bcms-input-list-holder">
-                    @Html.Tooltip(MediaGlobalization.FileEditor_Dialog_Image_Tooltip_Description)
-                    <div class="bcms-content-titles">@MediaGlobalization.FileEditor_Dialog_Image_Title</div>
-                    <div class="bcms-uploaded-image">
-                        <!-- ko if: image().url() -->
-                        <a class="bcms-remove-image" data-bind="click: image().remove.bind(image())">@RootGlobalization.Button_Remove</a>
-                        <a data-bind="click: image().preview.bind(image())">
-                            <img data-bind="attr: { src: image().thumbnailUrl(), alt: image().tooltip() }" />
-                        </a>
-                        <!-- /ko -->
+            <div class="bcms-form-block-holder">
+                <div>
+                    <div class="bcms-input-list-holder">
+                        <div class="bcms-content-titles">@MediaGlobalization.FileEditor_Dialog_Title_Title</div>
+                        @Html.Tooltip(MediaGlobalization.FileEditor_Dialog_Title_Tooltip_Description)
+                        <div class="bcms-field-wrapper">
+                            @Html.TextBoxFor(f => f.Title, new { @class = "bcms-field-text", @id = "Title", data_bind = "event: {change: onValueChange}" })
+                            @Html.BcmsValidationMessageFor(f => f.Title)
+                        </div>
                     </div>
-                    <div class="bcms-btn-small" data-bind="click: image().select.bind(image())">@MediaGlobalization.FileEditor_Dialog_Image_SelectButtonTitle</div>
+
+                    <div class="bcms-input-list-holder">
+                        <div class="bcms-content-titles">@MediaGlobalization.FileProperties_Dialog_PublicUrl</div>
+                        @Html.Tooltip(MediaGlobalization.FileEditor_Dialog_PublicUrl_Tooltip_Description)
+                        <div class="bcms-field-wrapper">
+                            <input class="bcms-field-text bcms-editor-selectable-field-box" type="text" value="@Model.Url" readonly="readonly" />
+                        </div>
+                    </div>
+
+                    <div class="bcms-input-list-holder">
+                        <b>@MediaGlobalization.FileEditor_Dialog_FileSize:</b>
+                        <div class="bcms-editing-text" id="image-file-size">@Model.FileSize</div>
+                    </div>
+
+                    <div class="bcms-input-list-holder">
+                        <div class="bcms-content-titles">@MediaGlobalization.FileEditor_Dialog_Description</div>
+                        @Html.Tooltip(MediaGlobalization.FileEditor_Dialog_Description_Tooltip_Description)
+                        <div class="bcms-textarea-box">
+                            @Html.TextAreaFor(f => f.Description, new { @class = "bcms-field-textarea", @id = "Description", data_bind = "event: {change: onValueChange}" })
+                            @Html.BcmsValidationMessageFor(f => f.Description)
+                        </div>
+                    </div>
+
+                    <div class="bcms-media-re-upload" data-bind="click: reupload">@MediaGlobalization.FileEditor_Dialog_Reupload_Title</div>
+                </div>
+
+                <div>
+                    <div class="bcms-thumb-container">
+                        <div class="bcms-thumb-box">
+                            <div class="bcms-input-list-holder">
+                                <div class="bcms-content-titles">@MediaGlobalization.FileEditor_Dialog_Image_Title</div>
+                                @Html.Tooltip(MediaGlobalization.FileEditor_Dialog_Image_Tooltip_Description)
+                            </div>
+
+                            <div class="bcms-thumb-image">
+                                <!-- ko if: image().url() -->
+                                <div class="bcms-remove-image" data-bind="click: image().remove.bind(image())">@RootGlobalization.Button_Remove</div>
+                                <div data-bind="click: image().preview.bind(image())">
+                                    <img data-bind="attr: { src: image().thumbnailUrl(), alt: image().tooltip() }" />
+                                </div>
+                                <!-- /ko -->
+                                <!-- ko ifnot: image().url() -->
+                                <svg class="bcms-grid-no-preview" width="50" height="50" viewBox="-205 372 50 50" enable-background="new -205 372 50 50">
+                                    <g fill="#cdcdcd">
+                                        <path d="m-205 422h50v-50h-50v50m2-48h46v46h-46v-46"></path>
+                                        <path d="m-164.3 406.2l1.4-1.4-11.5-11.5-7.7 7.6-3.6-3.6-11.5 11.5 1.4 1.4 10.1-10.1 11.1 11.1 1.4-1.4-7.5-7.5 6.3-6.2 10.1 10.1"></path>
+                                        <path d="m-187.9 382.4c-2.8 0-5 2.2-5 5 0 2.8 2.2 5 5 5 2.8 0 5-2.2 5-5 0-2.8-2.2-5-5-5m0 2c1.7 0 3 1.4 3 3 0 1.7-1.3 3-3 3-1.6 0-3-1.3-3-3 0-1.7 1.3-3 3-3"></path>
+                                    </g>
+                                </svg>
+                                <!-- /ko -->
+                            </div>
+
+                            <div class="bcms-btn-selection" data-bind="click: image().select.bind(image())">@MediaGlobalization.FileEditor_Dialog_Image_SelectButtonTitle</div>
+                        </div>
+                    </div>
+
+                    @if (Model.AccessControlEnabled)
+                    {
+                        @Html.Partial(RootModuleConstants.AccessControlTemplate)
+                    }
+
+                    <div class="bcms-input-list-holder" data-bind="with: categories">
+                        @Html.Partial("~/Areas/bcms-root/Views/Category/CategoriesTemplate.cshtml", categoriesTemplateViewModel)
+                    </div>
+
+                    <div class="bcms-input-list-holder" data-bind="with: tags">
+                        @Html.Partial("~/Areas/bcms-root/Views/Tags/TagsTemplate.cshtml", tagsTemplateViewModel)
+                    </div>
                 </div>
             </div>
-
-            <div class="bcms-media-reupload" data-bind="click: reupload">@MediaGlobalization.FileEditor_Dialog_Reupload_Title</div>
-
             @Html.HiddenSubmit()
         }
     </div>

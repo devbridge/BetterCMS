@@ -1,30 +1,60 @@
-﻿@using BetterCms.Module.Pages.Content.Resources
+﻿@* --------------------------------------------------------------------------------------------------------------------
+// <copyright file="EditHtmlContentJsCss.cshtml" company="Devbridge Group LLC">
+// 
+// Copyright (C) 2015,2016 Devbridge Group LLC
+// 
+// This program is free software: you can redistribute it and/or modify
+// it under the terms of the GNU Lesser General Public License as published by
+// the Free Software Foundation, either version 3 of the License, or
+// (at your option) any later version.
+// 
+// This program is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU General Public License for more details.
+// 
+// You should have received a copy of the GNU Lesser General Public License
+// along with this program.  If not, see http://www.gnu.org/licenses/. 
+// </copyright>
+// 
+// <summary>
+// Better CMS is a publishing focused and developer friendly .NET open source CMS.
+// 
+// Website: https://www.bettercms.com 
+// GitHub: https://github.com/devbridge/bettercms
+// Email: info@bettercms.com
+// </summary>
+// -------------------------------------------------------------------------------------------------------------------- *@
+@using BetterCms.Module.Pages.Content.Resources
 @using BetterCms.Module.Root.Mvc.Helpers
-
 @model BetterCms.Module.Pages.ViewModels.Content.PageContentViewModel
 
-<div class="bcms-input-list-holder" id="bcms-custom-css-container">
-    <div class="bcms-content-titles">@PagesGlobalization.HtmlContent_CustomCss_Title</div>
-    @Html.TextAreaFor(model => model.CustomCss, new { @class = "bcms-editor-field-area bcms-code-field bcms-code-field-css", @style = "width:820px;", @id = Guid.NewGuid() })
-    @Html.BcmsValidationMessageFor(model => model.CustomCss)
-</div>
-
-<div class="bcms-input-list-holder">
-    <div class="bcms-edit-check-field">
-        @Html.CheckBoxFor(model => model.EnabledCustomCss)
-        <div class="bcms-edit-label">@Html.Raw(PagesGlobalization.HtmlContent_RenderCustomCss_Title)</div>
+<div class="bcms-form-block-holder">
+    <div>
+        <div class="bcms-input-list-holder" id="bcms-custom-css-container">
+            <div class="bcms-content-titles">@PagesGlobalization.HtmlContent_CustomCss_Title</div>
+            @Html.TextAreaFor(model => model.CustomCss, new { @class = "bcms-field-textarea bcms-code-field bcms-code-field-css", @style = "width:820px;", @id = Guid.NewGuid() })
+            @Html.BcmsValidationMessageFor(model => model.CustomCss)
+            <div class="bcms-check-field-helper">
+                <div class="bcms-checkbox-holder">
+                    @Html.CheckBoxFor(model => model.EnabledCustomCss)
+                    <div class="bcms-checkbox-label bcms-js-edit-label">@Html.Raw(PagesGlobalization.HtmlContent_RenderCustomCss_Title)</div>
+                </div>
+            </div>
+        </div>
     </div>
-</div>
 
-<div class="bcms-input-list-holder" id="bcms-custom-js-container">
-    <div class="bcms-content-titles">@PagesGlobalization.HtmlContent_CustomJs_Title</div>
-    @Html.TextAreaFor(model => model.CustomJs, new { @class = "bcms-editor-field-area bcms-code-field bcms-code-field-javascript", @style = "width:820px;", @id = Guid.NewGuid() })
-    @Html.BcmsValidationMessageFor(model => model.CustomJs)
-</div>
-
-<div class="bcms-input-list-holder">
-    <div class="bcms-edit-check-field">
-        @Html.CheckBoxFor(model => model.EnabledCustomJs)
-        <div class="bcms-edit-label">@Html.Raw(PagesGlobalization.HtmlContent_RenderCustomJs_Title)</div>
+    <div>
+        <div class="bcms-input-list-holder" id="bcms-custom-js-container" style="height: 800px">
+            <div class="bcms-content-titles">@PagesGlobalization.HtmlContent_CustomJs_Title</div>
+            @Html.TextAreaFor(model => model.CustomJs, new { @class = "bcms-field-textarea bcms-code-field bcms-code-field-javascript", @style = "width:820px", @id = Guid.NewGuid() })
+            @Html.BcmsValidationMessageFor(model => model.CustomJs)
+            <div class="bcms-check-field-helper">
+                <div class="bcms-checkbox-holder">
+                    @Html.CheckBoxFor(model => model.EnabledCustomJs)
+                    <div class="bcms-checkbox-label bcms-js-edit-label">@Html.Raw(PagesGlobalization.HtmlContent_RenderCustomJs_Title)</div>
+                </div>
+            </div>
+        </div>
     </div>
 </div>

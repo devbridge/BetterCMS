@@ -1,4 +1,31 @@
-﻿using System;
+﻿// --------------------------------------------------------------------------------------------------------------------
+// <copyright file="GridExtensions.cs" company="Devbridge Group LLC">
+// 
+// Copyright (C) 2015,2016 Devbridge Group LLC
+// 
+// This program is free software: you can redistribute it and/or modify
+// it under the terms of the GNU Lesser General Public License as published by
+// the Free Software Foundation, either version 3 of the License, or
+// (at your option) any later version.
+// 
+// This program is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU General Public License for more details.
+// 
+// You should have received a copy of the GNU Lesser General Public License
+// along with this program.  If not, see http://www.gnu.org/licenses/. 
+// </copyright>
+// 
+// <summary>
+// Better CMS is a publishing focused and developer friendly .NET open source CMS.
+// 
+// Website: https://www.bettercms.com 
+// GitHub: https://github.com/devbridge/bettercms
+// Email: info@bettercms.com
+// </summary>
+// --------------------------------------------------------------------------------------------------------------------
+using System;
 using System.Collections.Generic;
 using System.Linq.Expressions;
 using System.Text;
@@ -26,7 +53,7 @@ namespace BetterCms.Module.Root.Mvc.Grids.Extensions
         public static IGridColumn<T> EditButtonColumn<T>(this ColumnBuilder<T> builder, bool renderId = true) where T : class
         {
             return builder
-                .For(f => string.Format("<a class=\"bcms-icn-edit bcms-grid-item-edit-button\"{0}>{1}</a>",
+                .For(f => string.Format("<div class=\"bcms-action-edit bcms-grid-item-edit-button\"{0} title=\"{1}\">{1}</div>",
                         renderId && f is IEditableGridItem
                             ? string.Format("data-id=\"{0}\"", ((IEditableGridItem)f).Id)
                             : string.Empty,
@@ -34,37 +61,36 @@ namespace BetterCms.Module.Root.Mvc.Grids.Extensions
                 .Named("&nbsp;")
                 .Sortable(false)
                 .Encode(false)
-                .HeaderAttributes(@class => "bcms-tables-nohover");
+                .HeaderAttributes(@style => "width: 40px; padding: 8px 0;", @class => "bcms-tables-nohover");
         }
 
         public static IGridColumn<T> HistoryButtonColumn<T>(this ColumnBuilder<T> builder, bool renderId = true) where T : class
         {
             return builder
-                .For(f => string.Format("<a class=\"bcms-icn-history bcms-grid-item-history-button\"{0}>{1}</a>",
+                .For(f => string.Format("<div class=\"bcms-action-history bcms-grid-item-history-button\"{0} title=\"{1}\">{1}</div>",
                         renderId && f is IEditableGridItem
                             ? string.Format("data-id=\"{0}\"", ((IEditableGridItem)f).Id)
-                            : string.Empty,
-                        RootGlobalization.Button_History))
+                            : string.Empty, RootGlobalization.Button_History))
                 .Named("&nbsp;")
                 .Sortable(false)
                 .Encode(false)
-                .HeaderAttributes(@style => "width: 80px;", @class => "bcms-tables-nohover");
+                .HeaderAttributes(@style => "width: 40px; padding: 8px 0;", @class => "bcms-tables-nohover");
         }
 
         public static IGridColumn<T> DeleteButtonColumn<T>(this ColumnBuilder<T> builder, bool renderId = true) where T : class
         {
             return builder
                 .For(f => string.Format(
-                            "<a class=\"bcms-icn-delete bcms-grid-item-delete-button\"{0}>{1}</a><div style=\"display:none\" class=\"bcms-grid-item-message\"></div>",
+                            "<div class=\"bcms-action-delete bcms-grid-item-delete-button\"{0} title=\"{1}\">{1}</div><div style=\"display:none\" class=\"bcms-grid-item-message\"></div>",
                             renderId && f is IEditableGridItem
                                 ? string.Format("data-id=\"{0}\" data-version=\"{1}\"", ((IEditableGridItem)f).Id, ((IEditableGridItem)f).Version)
-                                : string.Empty,
-                            RootGlobalization.Button_Delete)
+                                : string.Empty, RootGlobalization.Button_Delete)
                     )
                 .Named("&nbsp;")
                 .Sortable(false)
                 .Encode(false)
-                .HeaderAttributes(@style => "width: 80px;", @class => "bcms-tables-nohover");
+                .HeaderAttributes(@class => "bcms-tables-nohover")
+                .Attributes(@style => "width: 40px; padding: 10px 0");
         }
 
         public static IGridColumn<T> InlineEditControlsColumn<T>(this ColumnBuilder<T> builder, string saveButtonTitle = null) where T : class
@@ -72,9 +98,9 @@ namespace BetterCms.Module.Root.Mvc.Grids.Extensions
             saveButtonTitle = saveButtonTitle ?? @RootGlobalization.Button_Save;
 
             var stringBuilder = new StringBuilder();
-            stringBuilder.AppendFormat("<a class=\"bcms-icn-delete bcms-grid-item-delete-button\" data-id=\"{{0}}\" data-version=\"{{1}}\">{0}</a>", RootGlobalization.Button_Delete).AppendLine();
-            stringBuilder.AppendFormat("<div style=\"display:none\" class=\"bcms-btn-small\">{0}</div>", saveButtonTitle).AppendLine();
-            stringBuilder.AppendFormat("<a style=\"display:none\" class=\"bcms-btn-links-small\">{0}</a>", @RootGlobalization.Button_Cancel).AppendLine();
+            stringBuilder.AppendFormat("<div class=\"bcms-action-delete bcms-grid-item-delete-button\" data-id=\"{{0}}\" data-version=\"{{1}}\" title=\"{0}\">{0}</div>", RootGlobalization.Button_Delete).AppendLine();
+            stringBuilder.AppendFormat("<div style=\"display:none\" class=\"bcms-btn-primary\">{0}</div>", saveButtonTitle).AppendLine();
+            stringBuilder.AppendFormat("<div style=\"display:none\" class=\"bcms-btn-cancel\">{0}</div>", RootGlobalization.Button_Cancel).AppendLine();
             stringBuilder.AppendFormat("<div style=\"display:none\" class=\"bcms-grid-item-message\"></div>");
 
             return builder
@@ -89,7 +115,8 @@ namespace BetterCms.Module.Root.Mvc.Grids.Extensions
                 .Named("&nbsp;")
                 .Sortable(false)
                 .Encode(false)
-                .HeaderAttributes(@style => "width: 145px;", @class => "bcms-tables-nohover");
+                .HeaderAttributes(@class => "bcms-tables-nohover")
+                .Attributes(@style => "width: 40px; padding: 10px 0;", @class => "bcms-tables-nohover");
         }
 
         public static HtmlString HiddenGridOptions(this HtmlHelper html, GridOptions.GridOptions gridOptions)
@@ -132,7 +159,7 @@ namespace BetterCms.Module.Root.Mvc.Grids.Extensions
                                         {
                                             {"id", null},
                                             {"Name", namePattern},
-                                            {"class", "bcms-editor-field-box"}
+                                            {"class", "bcms-field-text"}
                                         };
             if (!string.IsNullOrWhiteSpace(namePattern))
             {
@@ -175,7 +202,7 @@ namespace BetterCms.Module.Root.Mvc.Grids.Extensions
                                             {"id", null},
                                             {"name", namePattern},
                                             {"style", "display:none; width:100%;"},
-                                            {"class", string.Format("bcms-editor-field-box {0}", textBoxClassName)}
+                                            {"class", string.Format("bcms-field-text bcms-js-grid-input {0}", textBoxClassName)}
                                         };
             if (!string.IsNullOrWhiteSpace(namePattern))
             {
@@ -197,7 +224,7 @@ namespace BetterCms.Module.Root.Mvc.Grids.Extensions
             // Div
             var div = new TagBuilder("div");
             div.InnerHtml = string.Concat(link.ToString(TagRenderMode.Normal), textBox.ToString(), validationBox.ToString(), hiddenField.ToString());
-            div.AddCssClass("bcms-input-box");
+            div.AddCssClass("bcms-field-wrapper");
 
             return new MvcHtmlString(div.ToString());
         }

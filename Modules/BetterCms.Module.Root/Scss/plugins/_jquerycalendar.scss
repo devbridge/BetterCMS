@@ -1,67 +1,145 @@
-@import '../core/variables';
-
-$datepicker-arrows: (
-                ('prev', $bcms-datepicker-arrow-left),
-                ('next', $bcms-datepicker-arrow-right)
+// --------------------------------------------------------------------------------------------------------------------
+// <copyright file="_jquerycalendar.scss" company="Devbridge Group LLC">
+// 
+// Copyright (C) 2015,2016 Devbridge Group LLC
+// 
+// This program is free software: you can redistribute it and/or modify
+// it under the terms of the GNU Lesser General Public License as published by
+// the Free Software Foundation, either version 3 of the License, or
+// (at your option) any later version.
+// 
+// This program is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU General Public License for more details.
+// 
+// You should have received a copy of the GNU Lesser General Public License
+// along with this program.  If not, see http://www.gnu.org/licenses/. 
+// </copyright>
+// 
+// <summary>
+// Better CMS is a publishing focused and developer friendly .NET open source CMS.
+// 
+// Website: https://www.bettercms.com 
+// GitHub: https://github.com/devbridge/bettercms
+// Email: info@bettercms.com
+// </summary>
+// --------------------------------------------------------------------------------------------------------------------
+$date-picker-arrows: (
+                ('prev', $bcms-date-picker-left),
+                ('next', $bcms-date-picker-right)
 );
 
 .ui-datepicker {
+    background-color: $white;
+    border: $border-pop-box;
+    box-shadow: $pop-box-shadow;
     display: none;
-    margin-top: -1px;
-    padding: 1px;
-    width: 200px;
+    margin-top: 20px;
+
+    @include virtual(after) {
+        @include position(absolute, -9px null null 18px);
+        @include triangle(18px, $white, up);
+    }
+
+    @include virtual(before) {
+        @include position(absolute, -10px null null 17px);
+        @include triangle(20px, $light, up);
+    }
 
     &-trigger {
+        @include positioning($center-y: true);
         cursor: pointer;
-        position: absolute;
-        right: 5px;
-        top: 6px;
+        right: 13px;
     }
 
     &-title {
         cursor: default;
-        font-family: $font-base-family;
-        font-size: 14px;
-        padding: 4px 0;
+        font: {
+            family: $font-base-family;
+            size: 13px;
+            weight: 600;
+        }
+        line-height: 18px;
         text-align: center;
-        text-transform: uppercase;
+    }
+
+    &-header {
+        border-bottom: $border-pop-box;
+        color: $text-dark;
+        margin-bottom: 20px;
+        padding: 12px 0 10px;
+        position: relative;
     }
 
     table {
         border-collapse: collapse;
-        font-size: 12px;
-        width: 100%;
+        color: $text-dark;
+        font-family: $font-base-family;
+        margin: 0 15px 20px;
     }
 
     th {
-        border: 0;
+        cursor: default;
+        padding: 0;
         text-align: center;
+
+        > span {
+            font: {
+                size: 10px;
+                weight: 700;
+            }
+            text-transform: uppercase;
+        }
     }
 
     td {
-        border: 0;
-        padding: 1px;
+        padding: 0;
 
         a {
+            @include size(32px);
+            color: $text-dark;
+            cursor: pointer;
             display: block;
+            font: {
+                size: 11px;
+                weight: 700;
+            }
+            line-height: 32px;
             padding: 1px 2px;
+            text-align: center;
             text-decoration: none;
         }
     }
 
-    @each $name, $icon in $datepicker-arrows {
+    @each $name, $icon in $date-picker-arrows {
         .ui-datepicker-#{$name} {
-            @include size(25px 100%);
+            @include size(28px 100%);
             background: url($icon) no-repeat center;
             cursor: pointer;
+            top: 0;
             position: absolute;
             z-index: 2;
             @if ($name == 'prev') {
-                left: 5px;
+                left: 0;
             }
             @if ($name == 'next') {
-                right: 5px;
+                right: 0;
             }
+        }
+    }
+
+    a {
+        @include transition(background-color 200ms, color 200ms);
+        color: $dark;
+
+        &:hover {
+            color: $text-blue;
+        }
+
+        &.ui-state-active {
+            background-color: $bg-blue;
+            color: $white;
         }
     }
 }
@@ -70,58 +148,6 @@ $datepicker-arrows: (
     display: block;
     overflow: hidden;
     text-indent: -999em;
-}
-
-.ui-widget {
-    font-family: $font-base-family;
-    font-size: 14px;
-
-    input,
-    select,
-    textarea,
-    button {
-        font-size: 14px;
-    }
-
-    &-content {
-        background-color: $white;
-        border: $border-thin-gray;
-        color: $dark;
-
-        a {
-            @include transition(background-color 200ms, color 200ms);
-            color: $dark;
-        }
-
-        .ui-state-default {
-            background-color: $gray-l30;
-            text-align: center;
-
-            &:hover {
-                background-color: $sky-blue;
-                color: $white;
-                font-weight: normal;
-            }
-        }
-
-        .ui-state-active {
-            background: $sky-blue;
-        }
-    }
-
-    &-header {
-        background-color: $blue-main;
-        color: $white;
-        position: relative;
-
-        a {
-            color: $white;
-        }
-    }
-
-    .ui-widget {
-        font-size: 14px;
-    }
 }
 
 .ui-state-disabled {

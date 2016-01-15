@@ -1,8 +1,43 @@
-﻿@using BetterCms.Module.Root.Content.Resources
+﻿@* --------------------------------------------------------------------------------------------------------------------
+// <copyright file="Footer.cshtml" company="Devbridge Group LLC">
+// 
+// Copyright (C) 2015,2016 Devbridge Group LLC
+// 
+// This program is free software: you can redistribute it and/or modify
+// it under the terms of the GNU Lesser General Public License as published by
+// the Free Software Foundation, either version 3 of the License, or
+// (at your option) any later version.
+// 
+// This program is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU General Public License for more details.
+// 
+// You should have received a copy of the GNU Lesser General Public License
+// along with this program.  If not, see http://www.gnu.org/licenses/. 
+// </copyright>
+// 
+// <summary>
+// Better CMS is a publishing focused and developer friendly .NET open source CMS.
+// 
+// Website: https://www.bettercms.com 
+// GitHub: https://github.com/devbridge/bettercms
+// Email: info@bettercms.com
+// </summary>
+// -------------------------------------------------------------------------------------------------------------------- *@
+@using BetterCms.Module.Root.Content.Resources
 @model string
 <div class="bcms-sidemenu-footer">
-    <span class="bcms-version-number">@Model</span>
-    <div title="@RootGlobalization.Sidebar_Footer_DragTooltip" id="bcms-sidemenu-position-handle" class="bcms-sidemenu-position-handle">
-        <span class="bcms-sidemenu-stick-text" title="@RootGlobalization.Sidebar_Footer_Right_DragTitle"></span>
-    </div>
+    <svg class="bcms-cp-logo" height="22" width="22" viewBox="0 0 22 22">
+        <g fill-rule="evenodd">
+            <path fill="#4ad8e5" d="m0 0h22v22h-22v-22" />
+            <path fill="#5d7293" d="m7 7h15v15h-15v-15" />
+            <path fill="#184258" d="m7 7h9v9h-9v-9" />
+            <path fill="#fff" d="m12 12h4v4h-4v-4" />
+        </g>
+    </svg>
+    <div class="bcms-cp-version-number">@Model</div>
+@*    <div class="bcms-cp-position-handle" title="@RootGlobalization.Sidebar_Footer_DragTooltip" id="bcms-sidemenu-position-handle">*@
+@*        <div class="bcms-sidemenu-stick-text" title="@RootGlobalization.Sidebar_Footer_Right_DragTitle"></div>*@
+@*    </div>*@
 </div>

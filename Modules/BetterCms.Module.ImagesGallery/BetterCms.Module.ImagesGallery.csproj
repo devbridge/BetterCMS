@@ -281,6 +281,9 @@
     <Content Include="Views\Web.config" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="..\..\licensing.licenseheader" />
+  </ItemGroup>
+  <ItemGroup>
     <None Include="Views\Widgets\ImagesGalleryWidget.cshtml">
       <Generator>RazorGenerator</Generator>
       <LastGenOutput>ImagesGalleryWidget.generated.cs</LastGenOutput>

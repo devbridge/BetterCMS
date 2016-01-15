@@ -28,37 +28,37 @@ namespace ASP
     using System.Web.UI;
     using System.Web.WebPages;
     
-    #line 1 "..\..\Views\Option\EditOptions.cshtml"
+    #line 28 "..\..\Views\Option\EditOptions.cshtml"
     using BetterCms.Module.Pages.Content.Resources;
     
     #line default
     #line hidden
     
-    #line 2 "..\..\Views\Option\EditOptions.cshtml"
+    #line 29 "..\..\Views\Option\EditOptions.cshtml"
     using BetterCms.Module.Pages.Mvc.EditableGrid;
     
     #line default
     #line hidden
     
-    #line 3 "..\..\Views\Option\EditOptions.cshtml"
+    #line 30 "..\..\Views\Option\EditOptions.cshtml"
     using BetterCms.Module.Root;
     
     #line default
     #line hidden
     
-    #line 4 "..\..\Views\Option\EditOptions.cshtml"
+    #line 31 "..\..\Views\Option\EditOptions.cshtml"
     using BetterCms.Module.Root.Content.Resources;
     
     #line default
     #line hidden
     
-    #line 5 "..\..\Views\Option\EditOptions.cshtml"
+    #line 32 "..\..\Views\Option\EditOptions.cshtml"
     using BetterCms.Module.Root.Mvc.Grids;
     
     #line default
     #line hidden
     
-    #line 6 "..\..\Views\Option\EditOptions.cshtml"
+    #line 33 "..\..\Views\Option\EditOptions.cshtml"
     using BetterCms.Module.Root.ViewModels.Shared;
     
     #line default
@@ -75,8 +75,10 @@ namespace ASP
         {
 WriteLiteral("\r\n");
 
+WriteLiteral("\r\n");
+
             
-            #line 8 "..\..\Views\Option\EditOptions.cshtml"
+            #line 35 "..\..\Views\Option\EditOptions.cshtml"
   
     var model = new EditableGridViewModel();
 
@@ -90,7 +92,7 @@ WriteLiteral("\r\n");
             {
                 new EditableGridColumn(PagesGlobalization.Options_OptionKeyColumn, null, "key")
                     {
-                        HeaderAttributes = "style=\"width: 200px;\"",
+                        HeaderAttributes = "style=\"width: 250px;\"",
                         AutoFocus = true,
                         HiddenFieldName = "Options[{0}].OptionKey",
                         FocusIdentifier = "hasFocus"
@@ -103,13 +105,13 @@ WriteLiteral("\r\n");
                         ValueTextBind = "typeName",
                         CanBeEdited = false
                     },
-                                        
+
                 new OptionValueEditableGridColumn(PagesGlobalization.Options_OptionDefaultValueColumn, "defaultValueBinding", "customOptionDefaultTitleBinding")
                     {
                         HiddenFieldName = "Options[{0}].OptionDefaultValue",
                         FocusIdentifier = "valueHasFocus"
                     },
-                    
+
                 new EditableGridHiddenField("type", "Options[{0}].Type"),
                 new EditableGridHiddenField("customType", "Options[{0}].CustomType")
             };
@@ -120,7 +122,7 @@ WriteLiteral("\r\n");
 WriteLiteral("\r\n\r\n");
 
             
-            #line 46 "..\..\Views\Option\EditOptions.cshtml"
+            #line 73 "..\..\Views\Option\EditOptions.cshtml"
 Write(Html.Partial(RootModuleConstants.EditableGridTemplate, model));
 
             

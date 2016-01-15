@@ -1,61 +1,109 @@
-﻿@using BetterCms.Module.Pages.Content.Resources
+﻿@* --------------------------------------------------------------------------------------------------------------------
+// <copyright file="SitemapTemplate.cshtml" company="Devbridge Group LLC">
+// 
+// Copyright (C) 2015,2016 Devbridge Group LLC
+// 
+// This program is free software: you can redistribute it and/or modify
+// it under the terms of the GNU Lesser General Public License as published by
+// the Free Software Foundation, either version 3 of the License, or
+// (at your option) any later version.
+// 
+// This program is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU General Public License for more details.
+// 
+// You should have received a copy of the GNU Lesser General Public License
+// along with this program.  If not, see http://www.gnu.org/licenses/. 
+// </copyright>
+// 
+// <summary>
+// Better CMS is a publishing focused and developer friendly .NET open source CMS.
+// 
+// Website: https://www.bettercms.com 
+// GitHub: https://github.com/devbridge/bettercms
+// Email: info@bettercms.com
+// </summary>
+// -------------------------------------------------------------------------------------------------------------------- *@
+@using BetterCms.Module.Pages.Content.Resources
 @using BetterCms.Module.Root.Content.Resources
 @using BetterCms.Module.Root.Mvc.Helpers
 @model BetterCms.Module.Pages.ViewModels.Sitemap.SitemapNodeViewModel
+
 <script type="text/html" id="bcms-navigation-sitemapnode-template">
     <!-- ko if: !hasChildNodes() -->
-    <div class="bcms-nodes-dropzone bcms-nodes-dropzone-active" data-bind="droppable: 'emptyListZone'">
-        <div class="bcms-node-infotext" data-bind="text: getNoDataMessage()">@NavigationGlobalization.Sitemap_NodeEdit_PlaceLinkHere</div>
+    <div class="bcms-node-drop-zone bcms-node-drop-zone-active" data-bind="droppable: 'emptyListZone'">
+        <div class="bcms-node-drop-zone-text" data-bind="text: getNoDataMessage()">@NavigationGlobalization.Sitemap_NodeEdit_PlaceLinkHere</div>
     </div>
     <!-- /ko -->
 
     <!-- ko foreach: childNodes -->
     <!-- ko if: isVisible() && !isDeleted() -->
-    <div class="bcms-tree-holder">
+    <div class="bcms-node-container">
         <!-- ko if: isFirstNode() -->
-        <div class="bcms-nodes-dropzone"
-             data-bind="css: { 'bcms-nodes-dropzone-active': activeZone() == 'topZone'  }, droppable: 'topZone'">
-            <div class="bcms-node-infotext">@NavigationGlobalization.Sitemap_NodeEdit_PlaceLinkHere</div>
+        <div class="bcms-node-drop-zone"
+             data-bind="css: { 'bcms-node-drop-zone-active': activeZone() == 'topZone'  }, droppable: 'topZone'">
+            <div class="bcms-node-drop-zone-text">@NavigationGlobalization.Sitemap_NodeEdit_PlaceLinkHere</div>
         </div>
         <!-- /ko -->
+
         <div data-bind="draggable: $parentContext.$index, style: { zIndex: !isBeingDragged() ? '0' : '9999' }">
-            <div class="bcms-placement-node" data-bind="
-                        attr: { id: containerId }, 
-                        css: { 'bcms-placement-node-drag': isBeingDragged(), 'bcms-placement-node-edit': isActive(), 'bcms-placement-one-active': !isBeingDragged() && superDraggable() },
-                        style: { height: getNodeHeight() }">
+            <div class="bcms-node-box-container" data-bind="
+                        attr: { id: containerId },
+                        css: { 'bcms-node-box-drag': isBeingDragged(), 'bcms-node-box-edit': isActive(), 'bcms-node-box-active': !isBeingDragged() && superDraggable(), 'bcms-inactive': isDisabled } ">
+
                 <!-- ko if: hasChildNodes() -->
-                <a class="bcms-expand-collapse-node" data-bind="click: toggleExpand, css: { 'bcms-expanded-nodes': isExpanded() }">&nbsp;</a>
+                <!-- ko if: $root.sitemap -->
+                <div class="bcms-node-expander" data-bind="click: $root.sitemap.toggleNodeExpand, css: { 'bcms-node-expanded': isExpanded() }">&nbsp;</div>
                 <!-- /ko -->
-                <div class="bcms-node-info" data-bind="droppable: 'middleZone'">
-                    <div class="bcms-placement-title" data-bind="text: title"></div>
-                    <div class="bcms-placement-path"><a data-bind="text: url, attr: { href: url }" href="" target="_blank"></a></div>
+                <!-- ko ifnot: $root.sitemap -->
+                <div class="bcms-node-expander" data-bind="click: $root.activeNewPageViewModel().sitemap.toggleNodeExpand, css: { 'bcms-node-expanded': isExpanded() }">&nbsp;</div>
+                <!-- /ko -->
+                <!-- /ko -->
+
+                <div class="bcms-node-box-info" data-bind="droppable: 'middleZone'">
+                    <div class="bcms-node-box-title bcms-node-box-title-sitemap" data-bind="text: title"></div>
+
+                    <!-- ko if: getSitemap().settings.canEditNode -->
+                    <div class="bcms-action-edit" data-bind="click: startEditSitemapNode" title="@RootGlobalization.Button_Edit">@RootGlobalization.Button_Edit</div>
+                    <!-- /ko -->
+
+                    <div class="bcms-node-box-path">
+                        <a data-bind="text: url, attr: { href: url }" href="" target="_blank"></a>
+                    </div>
                 </div>
+
                 <!-- ko if: getSitemap().settings.canEditNode && isActive() -->
-                <div class="bcms-edit-node">
-                    <div class="bcms-edit-node-holder">
+                <div class="bcms-node-editable-box">
+                    <div class="bcms-node-edit-holder">
                         @Html.Tooltip(NavigationGlobalization.Sitemap_NodeEdit_Title_Tooltip_Message)
-                        <div class="bcms-custom-input-box" style="width: 50%;">
+                        <div class="bcms-field-wrapper">
                             @Html.TextBoxFor(m => m.Title, new
                             {
                                 data_bind = "value: title, valueUpdate: 'afterkeydown', enterPress: saveSitemapNodeWithValidation, escPress: cancelEditSitemapNode, hasfocus: isActive()",
-                                @class = "bcms-editor-field-box",
+                                @class = "bcms-field-text",
                                 Title = (string)null,
                             })
                             @Html.BcmsValidationMessageFor(m => m.Title)
                         </div>
                         <!-- ko if: isUrlReadonly -->
-                        <div class="bcms-btn-small" data-bind="click: saveSitemapNodeWithValidation, text: getSitemap().settings.nodeSaveButtonTitle">@RootGlobalization.Button_Ok</div>
-                        <div class="bcms-btn-links-small" data-bind="click: cancelEditSitemapNode">@RootGlobalization.Button_Cancel</div>
+                        <div class="bcms-btn-primary" data-bind="click: saveSitemapNodeWithValidation, text: getSitemap().settings.nodeSaveButtonTitle">@RootGlobalization.Button_Ok</div>
+                        <div class="bcms-btn-cancel" data-bind="click: cancelEditSitemapNode">@RootGlobalization.Button_Cancel</div>
+                        <!-- /ko -->
+                        <!-- ko ifnot: isUrlReadonly -->
+                        <div class="bcms-btn-primary" data-bind="click: saveSitemapNodeWithValidation, text: getSitemap().settings.nodeSaveButtonTitle">@RootGlobalization.Button_Ok</div>
+                        <div class="bcms-btn-cancel" data-bind="click: cancelEditSitemapNode">@RootGlobalization.Button_Cancel</div>
                         <!-- /ko -->
                     </div>
+
                     <!-- ko if: getSitemap().showMacros -->
-                    <div class="bcms-edit-node-holder">
+                    <div class="bcms-node-edit-holder">
                         @Html.Tooltip(NavigationGlobalization.Sitemap_NodeEdit_Macro_Tooltip_Message)
-                        <div class="bcms-custom-input-box" style="width: 100%;">
+                        <div class="bcms-field-wrapper">
                             @Html.TextBoxFor(m => m.Macro, new
                             {
                                 data_bind = "value: macro, valueUpdate: 'afterkeydown', enterPress: saveSitemapNodeWithValidation, escPress: cancelEditSitemapNode",
-                                @class = "bcms-editor-field-box",
+                                @class = "bcms-field-text",
                                 Title = (string)null,
                                 placeholder = NavigationGlobalization.Sitemap_NodeEdit_Macro_Placeholder_Message
                             })
@@ -63,56 +111,53 @@
                         </div>
                     </div>
                     <!-- /ko -->
-                    <div class="bcms-edit-node-holder">
+
+                    <div class="bcms-node-edit-holder">
                         <!-- ko if: isUrlReadonly -->
-                        <div class="bcms-placement-path"><a data-bind="text: url, attr: { href: url }" href="" target="_blank"></a></div>
+                        <div class="bcms-node-box-path">
+                            <a data-bind="text: url, attr: { href: url }" href="" target="_blank"></a>
+                        </div>
                         <!-- /ko -->
                         <!-- ko ifnot: isUrlReadonly -->
                         @Html.Tooltip(NavigationGlobalization.Sitemap_NodeEdit_Url_Tooltip_Message)
-                        <div class="bcms-input-box">
+                        <div class="bcms-field-wrapper">
                             @Html.TextBoxFor(m => m.Url, new
                             {
                                 data_bind = "value: url, valueUpdate: 'afterkeydown', enterPress: saveSitemapNodeWithValidation, escPress: cancelEditSitemapNode, attr: { 'readonly': getUrlReadonlyState() }",
-                                @class = "bcms-editor-field-box",
+                                @class = "bcms-field-text",
                                 Url = (string)null,
                             })
                             @Html.BcmsValidationMessageFor(m => m.Url)
                         </div>
                         <!-- /ko -->
                     </div>
-                    <!-- ko ifnot: isUrlReadonly -->
-                    <div class="bcms-edit-node-holder">
-                        <div class="bcms-btn-small" data-bind="click: saveSitemapNodeWithValidation, text: getSitemap().settings.nodeSaveButtonTitle">@RootGlobalization.Button_Ok</div>
-                        <div class="bcms-btn-links-small" data-bind="click: cancelEditSitemapNode">@RootGlobalization.Button_Cancel</div>
-                    </div>
-                    <!-- /ko -->
                 </div>
                 <!-- /ko -->
-                <div class="bcms-node-controls">
-                    <!-- ko if: getSitemap().settings.canEditNode -->
-                    <a class="bcms-icn-edit" data-bind="click: startEditSitemapNode">@RootGlobalization.Button_Edit</a>
-                    <!-- /ko -->
-                    <!-- ko if: getSitemap().settings.canDeleteNode -->
-                    <a class="bcms-icn-delete" data-bind="click: deleteSitemapNode">@RootGlobalization.Button_Delete</a>
-                    <!-- /ko -->
+                <!-- ko if: getSitemap().settings.canDeleteNode -->
+                <div class="bcms-node-delete-box">
+                    <div class="bcms-action-delete" data-bind="click: deleteSitemapNode" title="@RootGlobalization.Button_Delete">@RootGlobalization.Button_Delete</div>
                 </div>
+                <!-- /ko -->
             </div>
+
             <!-- ko if: activeZone() == 'middleZone' -->
             <div class="bcms-zone-holder">
-                <div class="bcms-nodes-dropzone bcms-nodes-dropzone-active">
-                    <div class="bcms-node-infotext">@NavigationGlobalization.Sitemap_NodeEdit_PlaceLinkHere</div>
+                <div class="bcms-node-drop-zone bcms-node-drop-zone-active">
+                    <div class="bcms-node-drop-zone-text">@NavigationGlobalization.Sitemap_NodeEdit_PlaceLinkHere</div>
                 </div>
             </div>
             <!-- /ko -->
+
             <!-- ko if: isExpanded() && hasChildNodes() -->
             <div class="bcms-zone-holder" data-bind="template: { name: 'bcms-navigation-sitemapnode-template' }"></div>
             <!-- /ko -->
+
             <!-- ko if: !isBeingDragged() -->
-            <div class="bcms-nodes-dropzone"
-                data-bind="css: { 'bcms-nodes-dropzone-active': activeZone() == 'bottomZone' },
+            <div class="bcms-node-drop-zone"
+                 data-bind="css: { 'bcms-node-drop-zone-active': activeZone() == 'bottomZone' },
                             style: { paddingBottom: !(parentNode().parentNode) && isLastNode() ? '80px' : '' },
                             droppable: 'bottomZone'">
-                <div class="bcms-node-infotext">@NavigationGlobalization.Sitemap_NodeEdit_PlaceLinkHere</div>
+                <div class="bcms-node-drop-zone-text">@NavigationGlobalization.Sitemap_NodeEdit_PlaceLinkHere</div>
             </div>
             <!-- /ko -->
         </div>

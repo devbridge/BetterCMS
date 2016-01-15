@@ -28,25 +28,25 @@ namespace ASP
     using System.Web.UI;
     using System.Web.WebPages;
     
-    #line 1 "..\..\Views\Role\Partial\ListTemplate.cshtml"
+    #line 28 "..\..\Views\Role\Partial\ListTemplate.cshtml"
     using BetterCms.Module.Root;
     
     #line default
     #line hidden
     
-    #line 2 "..\..\Views\Role\Partial\ListTemplate.cshtml"
+    #line 29 "..\..\Views\Role\Partial\ListTemplate.cshtml"
     using BetterCms.Module.Root.Mvc.Grids;
     
     #line default
     #line hidden
     
-    #line 3 "..\..\Views\Role\Partial\ListTemplate.cshtml"
+    #line 30 "..\..\Views\Role\Partial\ListTemplate.cshtml"
     using BetterCms.Module.Root.ViewModels.Shared;
     
     #line default
     #line hidden
     
-    #line 4 "..\..\Views\Role\Partial\ListTemplate.cshtml"
+    #line 31 "..\..\Views\Role\Partial\ListTemplate.cshtml"
     using BetterCms.Module.Users.Content.Resources;
     
     #line default
@@ -63,8 +63,10 @@ namespace ASP
         {
 WriteLiteral("\r\n");
 
+WriteLiteral("\r\n");
+
             
-            #line 6 "..\..\Views\Role\Partial\ListTemplate.cshtml"
+            #line 33 "..\..\Views\Role\Partial\ListTemplate.cshtml"
   
     var gridViewModel = new EditableGridViewModel
     {
@@ -78,7 +80,7 @@ WriteLiteral("\r\n");
                         FocusIdentifier = "hasFocus",
                         HeaderAttributes = "style=\"width: 130px;\"",
                     },
-                    
+
                 new EditableGridColumn(UsersGlobalization.SiteSettings_Roles_DescriptionColumn, "Description", "description")
                     {
                         FocusIdentifier = "valueHasFocus"
@@ -89,10 +91,10 @@ WriteLiteral("\r\n");
             
             #line default
             #line hidden
-WriteLiteral("\r\n\r\n");
+WriteLiteral("\r\n");
 
             
-            #line 28 "..\..\Views\Role\Partial\ListTemplate.cshtml"
+            #line 54 "..\..\Views\Role\Partial\ListTemplate.cshtml"
 Write(Html.Partial(RootModuleConstants.EditableGridTemplate, gridViewModel));
 
             

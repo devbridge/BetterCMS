@@ -5,12 +5,12 @@
     <version>@BetterCMSVersion@</version>
     <authors>Devbridge</authors>
     <owners>Devbridge</owners>
-    <licenseUrl>http://www.bettercms.com/license.txt</licenseUrl>
+    <licenseUrl>http://www.gnu.org/licenses/lgpl-3.0.txt</licenseUrl>
     <projectUrl>http://www.bettercms.com</projectUrl>
     <iconUrl>http://www.bettercms.com/nuget-logo.png</iconUrl>
     <requireLicenseAcceptance>true</requireLicenseAcceptance>
     <description>Windows Azure storage module for BetterCMS. Better CMS is publishing focused and developer friendly .NET Open source CMS.</description>
-    <copyright>Better CMS is licensed under BETTER CMS LICENSE AGREEMENT (http://www.bettercms.com/license.txt).</copyright>
+    <copyright>Better CMS is licensed under BETTER CMS LICENSE AGREEMENT (http://www.gnu.org/licenses/lgpl-3.0.txt).</copyright>
     <dependencies>
       <dependency id="BetterCms.Core" version="[@BetterCMSVersion@]" />
       <dependency id="WindowsAzure.Storage" version="[2.0.4.1,4.0.0)" />

@@ -1,4 +1,31 @@
-﻿using System;
+﻿// --------------------------------------------------------------------------------------------------------------------
+// <copyright file="MessagesHelper.cs" company="Devbridge Group LLC">
+// 
+// Copyright (C) 2015,2016 Devbridge Group LLC
+// 
+// This program is free software: you can redistribute it and/or modify
+// it under the terms of the GNU Lesser General Public License as published by
+// the Free Software Foundation, either version 3 of the License, or
+// (at your option) any later version.
+// 
+// This program is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU General Public License for more details.
+// 
+// You should have received a copy of the GNU Lesser General Public License
+// along with this program.  If not, see http://www.gnu.org/licenses/. 
+// </copyright>
+// 
+// <summary>
+// Better CMS is a publishing focused and developer friendly .NET open source CMS.
+// 
+// Website: https://www.bettercms.com 
+// GitHub: https://github.com/devbridge/bettercms
+// Email: info@bettercms.com
+// </summary>
+// --------------------------------------------------------------------------------------------------------------------
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -6,7 +33,6 @@ using System.Web;
 using System.Web.Mvc;
 
 using BetterCms.Core.Exceptions;
-using BetterCms.Core.Mvc;
 
 using BetterModules.Core.Web.Mvc;
 
@@ -17,11 +43,10 @@ namespace BetterCms.Module.Root.Mvc.Helpers
     /// </summary>
     public static class MessagesHelper
     {
-        private const string cssClassMessagesType1 = "bcms-messages-type-1";
-        private const string cssClassMessagesType2 = "bcms-messages-type-2";
+        private const string cssClassMessages = "bcms-messages-ui bcms-js-messages";
         private const string cssClassCustomMessages = "bcms-custom-messages";
 
-        public static IHtmlString TabbedContentCustomMessagesBox(this HtmlHelper html, IMessagesIndicator messages, string id = null,
+        public static IHtmlString CustomMessagesBox(this HtmlHelper html, IMessagesIndicator messages, string id = null,
             IDictionary<string, string> attributes = null)
         {
             if (string.IsNullOrWhiteSpace(id))
@@ -29,19 +54,13 @@ namespace BetterCms.Module.Root.Mvc.Helpers
                 id = string.Format("bcms-custom-messages-{0}", Guid.NewGuid());
             }
 
-            return MessagesBox(html, id, attributes, cssClassMessagesType1 + " " + cssClassCustomMessages, messages);
+            return MessagesBox(html, id, attributes, cssClassMessages + " " + cssClassCustomMessages, messages);
         }
 
-        public static IHtmlString TabbedContentMessagesBox(this HtmlHelper html, string id = null, 
+        public static IHtmlString MessagesBox(this HtmlHelper html, string id = null, 
             IDictionary<string, string> attributes = null)
         {
-            return MessagesBox(html, id, attributes, cssClassMessagesType1);
-        }
-
-        public static IHtmlString SiteSettingsMessagesBox(this HtmlHelper html, string id = null,
-            IDictionary<string, string> attributes = null)
-        {
-            return MessagesBox(html, id, attributes, cssClassMessagesType2);
+            return MessagesBox(html, id, attributes, cssClassMessages);
         }
 
         /// <summary>
@@ -129,6 +148,7 @@ namespace BetterCms.Module.Root.Mvc.Helpers
                 foreach (var message in messages)
                 {
                     sb.AppendLine("<li>");
+                    sb.Append("<div class=\"bcms-messages-close bcms-js-btn-close\">Close</div>");
                     sb.Append(message);
                     sb.AppendLine("</li>");                    
                 }

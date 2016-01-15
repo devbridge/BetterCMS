@@ -1,9 +1,37 @@
-﻿using System.Collections.Generic;
+﻿// --------------------------------------------------------------------------------------------------------------------
+// <copyright file="BlogJsModuleIncludeDescriptor.cs" company="Devbridge Group LLC">
+// 
+// Copyright (C) 2015,2016 Devbridge Group LLC
+// 
+// This program is free software: you can redistribute it and/or modify
+// it under the terms of the GNU Lesser General Public License as published by
+// the Free Software Foundation, either version 3 of the License, or
+// (at your option) any later version.
+// 
+// This program is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU General Public License for more details.
+// 
+// You should have received a copy of the GNU Lesser General Public License
+// along with this program.  If not, see http://www.gnu.org/licenses/. 
+// </copyright>
+// 
+// <summary>
+// Better CMS is a publishing focused and developer friendly .NET open source CMS.
+// 
+// Website: https://www.bettercms.com 
+// GitHub: https://github.com/devbridge/bettercms
+// Email: info@bettercms.com
+// </summary>
+// --------------------------------------------------------------------------------------------------------------------
+using System.Collections.Generic;
 
 using BetterCms.Core.Modules;
 using BetterCms.Core.Modules.Projections;
 using BetterCms.Module.Blog.Content.Resources;
 using BetterCms.Module.Blog.Controllers;
+using BetterCms.Module.Pages.Content.Resources;
 using BetterCms.Module.Root.Content.Resources;
 
 namespace BetterCms.Module.Blog.Registration
@@ -58,7 +86,10 @@ namespace BetterCms.Module.Blog.Registration
                             new JavaScriptModuleGlobalization(this, "noBlogPostsSelectedToImport", () => BlogGlobalization.ImportBlogPosts_NoBlogPostSelected_Message),
                             new JavaScriptModuleGlobalization(this, "editModeHtmlTitle", () => RootGlobalization.ContentEditMode_Html),
                             new JavaScriptModuleGlobalization(this, "editModeMarkdownTitle", () => RootGlobalization.ContentEditMode_Markdown),
-                            new JavaScriptModuleGlobalization(this, "templatesTabTitle", () => BlogGlobalization.SiteSettings_Blogs_TemplatesTab_Title)
+                            new JavaScriptModuleGlobalization(this, "templatesTabTitle", () => BlogGlobalization.SiteSettings_Blogs_TemplatesTab_Title),
+                            new JavaScriptModuleGlobalization(this, "created", () => PagesGlobalization.Page_Created), 
+                            new JavaScriptModuleGlobalization(this, "lastEdited", () => PagesGlobalization.Page_LastEdited), 
+                            new JavaScriptModuleGlobalization(this, "lastEditedBy", () => PagesGlobalization.Page_LastEditedBy), 
                         };
         }
     }

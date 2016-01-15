@@ -159,9 +159,6 @@
   <data name="EditUser_UploadImage_Button_Title" xml:space="preserve">
     <value>Select Image</value>
   </data>
-  <data name="EditUser_UploadImage_Info" xml:space="preserve">
-    <value>Image will be displayed as a thumbnail with user.</value>
-  </data>
   <data name="EditUser_UserImage_Tooltip_Description" xml:space="preserve">
     <value>Select an image that will be shown as user thumbnail.</value>
   </data>
@@ -175,7 +172,7 @@
     <value>Add New User</value>
   </data>
   <data name="Role_Dialog_AddNew" xml:space="preserve">
-    <value>Add New +</value>
+    <value>Add New</value>
   </data>
   <data name="SiteSettings_Roles_ListTab_Title" xml:space="preserve">
     <value>Roles</value>
@@ -193,7 +190,7 @@
     <value>User Name</value>
   </data>
   <data name="User_Dialog_AddNew" xml:space="preserve">
-    <value>Add New +</value>
+    <value>Add New</value>
   </data>
   <data name="User_Dialog_Search" xml:space="preserve">
     <value>Search</value>

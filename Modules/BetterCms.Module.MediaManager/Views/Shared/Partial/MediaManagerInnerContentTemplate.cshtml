@@ -1,0 +1,294 @@
+﻿@* --------------------------------------------------------------------------------------------------------------------
+// <copyright file="MediaManagerInnerContentTemplate.cshtml" company="Devbridge Group LLC">
+// 
+// Copyright (C) 2015,2016 Devbridge Group LLC
+// 
+// This program is free software: you can redistribute it and/or modify
+// it under the terms of the GNU Lesser General Public License as published by
+// the Free Software Foundation, either version 3 of the License, or
+// (at your option) any later version.
+// 
+// This program is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU General Public License for more details.
+// 
+// You should have received a copy of the GNU Lesser General Public License
+// along with this program.  If not, see http://www.gnu.org/licenses/. 
+// </copyright>
+// 
+// <summary>
+// Better CMS is a publishing focused and developer friendly .NET open source CMS.
+// 
+// Website: https://www.bettercms.com 
+// GitHub: https://github.com/devbridge/bettercms
+// Email: info@bettercms.com
+// </summary>
+// -------------------------------------------------------------------------------------------------------------------- *@
+@using BetterCms.Module.MediaManager.Content.Resources
+@using BetterCms.Module.Root
+@using BetterCms.Module.Root.Content.Resources
+@using BetterCms.Module.Root.Mvc
+@using BetterCms.Module.Root.Mvc.Helpers
+
+@model BetterCms.Module.MediaManager.ViewModels.MediaManager.MediaViewModel
+@{
+    var canEdit = (ViewContext.Controller as CmsControllerBase).SecurityService.IsAuthorized(RootModuleConstants.UserRoles.EditContent);
+}
+
+<div class="bcms-top-block-holder">
+    @if ((ViewContext.Controller as CmsControllerBase).SecurityService.IsAuthorized(RootModuleConstants.UserRoles.EditContent))
+    {
+        <!-- ko if: !isSearchResults() -->
+            <div class="bcms-btn-main" data-bind="click: uploadMedia, text: uploadButtonTitle()"></div>
+        <!-- /ko -->
+    }
+
+    <div class="bcms-top-block-inner" data-bind="css : { 'bcms-active-search': searchEnabled() }">
+        <div class="bcms-btn-search" data-bind="click: toggleSearch">@RootGlobalization.Button_Search</div>
+        <div class="bcms-search-block">
+            <input id="bcms-search-input" name="MediaSearch" data-bind="value: gridOptions().searchQuery, valueUpdate: 'afterkeydown', enterPress: searchMedia, hasFocus: hasFocus, enable: searchEnabled" class="bcms-search-field-box bcms-js-search-box" type="text" placeholder="@RootGlobalization.WaterMark_Search" />
+        </div>
+    </div>
+
+    <div class="bcms-top-block-pager">
+        <!-- ko with: gridOptions().paging -->
+        @Html.Partial(RootModuleConstants.EditableGridPagingTemplate)
+        <!-- /ko -->
+    </div>
+</div>
+
+<div class="bcms-top-block-filters">
+    @Html.Partial("Partial/MediaManagerFilterTemplate", Model)
+
+    <div class="bcms-breadcrumbs-holder" data-bind="foreach: path().pathFolders()">
+        <div class="bcms-breadcrumbs-root" data-bind="text: pathName(), click: openMedia.bind($data, $root)"></div>
+    </div>
+</div>
+
+<table class="bcms-tables bcms-media-table" id="bcms-view-container">
+        <thead>
+            <tr>
+                <th style="width: 40px; padding: 0;">&nbsp;</th>
+                <th>
+                    <div class="bcms-sort-arrow" data-bind="click: sortMedia.bind($root, 'Title'), css: { 'bcms-sort-arrow-top': isSortedAscending('Title'), 'bcms-sort-arrow-bottom': isSortedDescending('Title') }">@MediaGlobalization.MediaList_FileNameColumn</div>
+
+                    <div class="bcms-sort-arrow" data-bind="click: sortMedia.bind($root, 'FileExtension'), css: { 'bcms-sort-arrow-top': isSortedAscending('FileExtension'), 'bcms-sort-arrow-bottom': isSortedDescending('FileExtension') }">@MediaGlobalization.MediaList_FileTypeColumn</div>
+                </th>
+                <th style="width:40px; padding: 0;">&nbsp;</th>
+            </tr>
+        </thead>
+        <tbody>
+            <!-- ko if: !isSearchResults() -->
+            <tr>
+                <td colspan="3">
+                    <!-- ko if: !isRootFolder() && !isSearchResults() -->
+                    <div class="bcms-media-up" data-bind="click: openParent">
+                        <div class="bcms-media-name">..</div>
+                    </div>
+                    <!-- /ko -->
+
+                    @if ((ViewContext.Controller as CmsControllerBase).SecurityService.IsAuthorized(RootModuleConstants.UserRoles.EditContent))
+                    {                  
+                        <div class="bcms-media-new-folder" data-bind="click: addNewFolder">@MediaGlobalization.MediaManager_NewFolder</div>       
+                    }
+                </td>
+            </tr>
+            <!-- /ko -->
+            <!-- ko if: showNoDataInfoDiv() -->    
+            <tr>
+                <td colspan="3">
+                    <!-- ko if: isSearchResults() -->
+                    <div class="bcms-media-content-link">
+                        <!-- ko text: noSearchResultFound -->
+                        <!-- /ko -->
+                    </div>
+                    <div data-bind="visible: canSearchInHistory(), click: searchWithFilter.bind($data, true)">@MediaGlobalization.MediaManager_Search_TrySearchInHistory</div>
+                    <!-- /ko -->
+                    <!-- ko ifnot: isSearchResults() -->
+                    <div class="bcms-media-content-link">@RootGlobalization.Grid_NoDataAvailable_Message</div>
+                    <!-- /ko -->
+                </td>
+            </tr>
+            <!-- /ko -->
+        </tbody>
+        <tbody data-bind="foreach: medias()">
+            <tr>
+                <td>
+                    @if ((ViewContext.Controller as CmsControllerBase).SecurityService.IsAuthorized(RootModuleConstants.UserRoles.EditContent))
+                    {
+                    <!--  ko if: !isProcessing() && !isFailed() && !isDeleting() && !isReadOnly() -->
+    <div class="bcms-action-edit" data-bind="click: editMedia.bind($data, $root), clickBubble: false" title="@RootGlobalization.Button_Edit">@RootGlobalization.Button_Edit</div>
+                    <!-- /ko -->
+                    }
+                </td>
+                <td data-bind="click: openMedia.bind($data, $root), clickBubble: false, css: rowClassNames()">
+                    <div class="bcms-media-item-info">
+                        <div data-bind="css: iconClassNames(), click: onIconClicked.bind($data, $root)"></div>
+
+                        <!-- ko if: isImage() -->
+                        <div class="bcms-media-name" data-bind="text: name(), event: { mousemove: $root.movePreview, mouseleave: $root.hidePreview, mouseout: $root.hidePreview }"></div>
+                        <!-- /ko -->
+                        <!-- ko ifnot: isImage() -->
+                        <div class="bcms-media-name" data-bind="click: onTitleClicked.bind($data, $root)">
+                            <!-- ko text: name() -->
+                            <!-- /ko -->
+                            <!--  ko if: isProcessing() -->
+                            <br />
+                            <div class="bcms-processing-file">@MediaGlobalization.MediaManager_FileStillProcessing_Message</div>
+                            <!-- /ko -->
+                            <!--  ko if: isFailed() -->
+                            <br />
+                            <div class="bcms-failed-file">@MediaGlobalization.MediaManager_FailedToProcessFile_Message</div>
+                            <!-- /ko -->
+                            <!--  ko if: isDeleting() -->
+                            <br />
+                            <div class="bcms-failed-file">@RootGlobalization.Message_Deleting</div>
+                            <!-- /ko -->
+                            <!-- ko if: showParentLink($root, $data) -->
+                            <br />
+                            <div class="bcms-parent-folder">
+                                @MediaGlobalization.MediaManager_ItemParentFolder_Prefix: 
+                                <div data-bind="click: openParent.bind($data, $root), clickBubble: false, text: parentFolderName()"></div>
+                            </div>
+                            <!-- /ko -->
+                        </div>
+                        <!-- /ko -->
+                    </div>
+
+                    <div class="bcms-media-controls">
+                        <div class="bcms-field-wrapper">
+                            @{
+                                var attributes = new Dictionary<string, object>
+                            {
+                                {"data-bind", "value: name, valueUpdate: 'afterkeydown', enterPress: saveMedia.bind($data, $root), escPress: cancelEditMedia.bind($data, $root), hasfocus: isActive(), event: {blur: blurMediaField.bind($data, $root)}, attr: {id: nameDomId, name: nameDomId}, click: stopEvent, clickBubble: false "},
+                                {"class", "bcms-field-text"}
+                            };
+                                attributes = Html.MergeValidationAttributes(m => m.Name, attributes);
+
+                                @Html.TextBoxFor(m => m.Name, attributes)
+                                @Html.BcmsValidationMessageFor(m => m.Name, null, new { @data_bind = "attr: {'data-valmsg-for': nameDomId}" })
+                            }
+                        </div>
+
+                        <div class="bcms-media-buttons">
+                            <div class="bcms-btn-primary" data-bind="click: saveMedia.bind($data, $root), clickBubble: false">@RootGlobalization.Button_Save</div>
+                            <div class="bcms-btn-cancel" data-bind="click: cancelEditMedia.bind($data, $root), clickBubble: false">@RootGlobalization.Button_Cancel</div>
+                        </div>
+                    </div>
+                </td>
+                <td>
+                    @if ((ViewContext.Controller as CmsControllerBase).SecurityService.IsAuthorized(RootModuleConstants.UserRoles.DeleteContent))
+                    {
+                    <!--  ko if: !isProcessing() && !isDeleting() && !isReadOnly() -->
+                    <div class="bcms-action-menu" data-bind="click: $parent.toggleMenu, clickBubble: false" title="@MediaGlobalization.MediaManager_Menu">@MediaGlobalization.MediaManager_Menu</div>
+
+                    <div class="bcms-media-context" data-bind="visible: isMenuOpen, css: isMenuAbove() ? 'bcms-tooltip-br' : 'bcms-tooltip-tr'">
+                        <!--  ko if: !isFailed() && !isProcessing() && !isDeleting() && ($root.canInsertMedia() || $root.canInsertMediaWithOptions()) -->
+                        <div class="bcms-media-context-block">
+                            <!-- ko if: isImage() && $root.canInsertMedia() -->
+                            <div class="bcms-media-content-link" data-bind="click: insertMedia.bind($data, $root), clickBubble: false">@MediaGlobalization.MediaManager_ButtonInsertImage</div>
+                            <!-- /ko -->
+                            <!-- ko if: isImage() && $root.canInsertMediaWithOptions() -->
+                            <div class="bcms-media-content-link" data-bind="click: insertMediaWithOptions.bind($data, $root), clickBubble: false">@MediaGlobalization.MediaManager_ButtonInsertImageWithOptions</div>
+                            <!-- /ko -->
+                            <!-- ko if: !isImage() && !isFolder() && $root.canInsertMedia() -->
+                            <div class="bcms-media-content-link" data-bind="click: insertMedia.bind($data, $root), clickBubble: false">@MediaGlobalization.MediaManager_ButtonInsertFile</div>
+                            <!-- /ko -->
+                        </div>
+                        <!-- /ko -->
+
+                            <div class="bcms-media-context-block">
+                                <div class="bcms-media-context-column">
+                                    <!--  ko if: isProcessing() -->
+                                    @MediaGlobalization.MediaManager_FileStillProcessing_Message
+                                    <!-- /ko -->
+                                    <!--  ko if: isDeleting() -->
+                                    @RootGlobalization.Message_Deleting
+                                    <!-- /ko -->
+                                    <!--  ko if: !isProcessing() && !isDeleting() -->                                
+                                    <!-- ko if: !isFailed() && ($root.canInsertMedia() || $root.canInsertMediaWithOptions()) -->
+                                    <!-- /ko -->
+                                    <!-- ko if: !isFailed() && isFolder() -->
+                                    <div class="bcms-media-content-link" data-bind="click: openMedia.bind($data, $root), clickBubble: false">@RootGlobalization.Button_Open</div>
+                                    <!-- /ko -->
+                                    <!-- ko if: !isFailed() && isImage() -->
+                                    <div class="bcms-media-content-link" data-bind="click: previewImage.bind($data, $root), clickBubble: false">@MediaGlobalization.MediaManager_ButtonPreviewImage</div>
+                                    <!-- /ko -->
+                                    <!-- ko if: !isReadOnly() && !isFailed() && (isFolder() || isImage() && !publicUrl() || (@(canEdit ? "true" : "false") && !isFolder() && !publicUrl()) || (!isFolder() && !publicUrl())) -->
+                                    <!-- /ko -->
+                                    @if (canEdit)
+                        {
+                    <!-- ko if: !isFailed() && !isArchived() && !isReadOnly() -->
+                                        <div class="bcms-media-content-link" data-bind="click: archiveMedia.bind($data, $root), clickBubble: false">@MediaGlobalization.MediaManager_ButtonArchive</div>
+                    <!-- /ko -->
+                    <!-- ko if: !isFailed() && isArchived() && !isReadOnly()-->
+                                        <div class="bcms-media-content-link" data-bind="click: unarchiveMedia.bind($data, $root), clickBubble: false">@MediaGlobalization.MediaManager_ButtonUnarchive</div>
+                    <!-- /ko -->
+                        }
+                                    @if ((ViewContext.Controller as
+                    CmsControllerBase).SecurityService.IsAuthorized(RootModuleConstants.UserRoles.DeleteContent))
+                        {
+                                        <div class="bcms-media-content-link" data-bind="click: deleteMedia.bind($data, $root), clickBubble: false, visible: !isReadOnly()">@RootGlobalization.Button_Delete</div>
+                        }
+                                    @if (canEdit)
+                        {
+                    <!-- ko if: !$root.isGrid() -->
+                                        <div class="bcms-media-content-link" data-bind="click: renameMedia.bind($data, $root), clickBubble: false, visible: !isReadOnly()">@RootGlobalization.Button_Rename</div>
+                    <!-- /ko -->
+                        }
+                                    <!-- /ko -->
+                                </div>
+
+                                <div class="bcms-media-context-column">
+                                    <!-- ko if: !isFailed() && canBeDownloaded() -->
+                                    <div class="bcms-media-content-link" data-bind="click: downloadMedia, clickBubble: false">@MediaGlobalization.MediaManager_ButtonDownload</div>
+                                    <!-- /ko -->
+                                    @if (canEdit)
+                        {
+                    <!-- ko if: !isFolder() -->
+                                        <div class="bcms-media-content-link" data-bind="click: reuploadMedia.bind($data, $root), clickBubble: false, visible: !isReadOnly()">@MediaGlobalization.Button_Reupload</div>
+                    <!-- /ko -->
+                        }
+                                    <!-- ko if: (!isFolder() && @(canEdit ? "true" : "false")) || (!isFailed() && isImage()) -->
+                                    <!-- /ko -->
+                                    @if (canEdit)
+                        {
+                    <!-- ko if: !isFolder() -->
+                                        <div class="bcms-media-content-link" data-bind="click: showHistory.bind($data, $root), clickBubble: false">@MediaGlobalization.Button_ShowHistory</div>
+                    <!-- /ko -->
+                        }
+                                    @if (canEdit)
+                        {
+                    <!-- ko if: !isFailed() && !isFolder() -->
+                                        <div class="bcms-media-content-link" data-bind="click: editMedia.bind($data, $root), clickBubble: false">@MediaGlobalization.MediaManager_ButtonProperties</div>
+                    <!-- /ko -->
+                        }
+                                </div>
+                            </div>
+
+                            <!-- ko if: !isFailed() && !isFolder() && publicUrl() -->
+                            <div class="bcms-media-context-block">
+                                <input class="bcms-field-text" type="text" readonly="readonly" data-bind="value: publicUrl(), click: selectThis.bind($data, $root, $element)" />
+                            </div>
+                            <!-- /ko -->
+                        </div>        
+                    <!-- /ko -->
+                    }
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    
+<div class="bcms-media-preview" id="bcms-media-properties-preview" data-bind="visible: showPropertiesPreview(), style: {top: previewItem.top(), left: previewItem.left()}">
+    <div class="bcms-content-titles">@MediaGlobalization.MediaManager_ImageSize: <span data-bind="text: previewItem.size()"></span></div>
+    <!-- ko if: previewItem.dimensions() -->
+    <br/>
+    <div class ="bcms-content-titles">@MediaGlobalization.MediaManager_ImageDimensions: <span data-bind="text: previewItem.dimensions()"></span></div>
+    <!-- /ko -->
+    <div data-bind="style: {width: previewItem.containerWidth(), height: previewItem.containerHeight()}">
+        <img data-bind="attr: {src: previewItem.previewUrl(), alt: previewItem.imageAlt()}, style: {width: previewItem.width(), height: previewItem.height()}" />
+    </div>
+
+    <img data-bind="attr: {src: previewItem.imageUrl(), alt: previewItem.imageAlt()}, event: {load:previewItem.onImageLoad}" style="display: none;" />
+</div>

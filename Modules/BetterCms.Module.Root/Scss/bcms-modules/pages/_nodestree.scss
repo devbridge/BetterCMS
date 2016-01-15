@@ -1,0 +1,391 @@
+// --------------------------------------------------------------------------------------------------------------------
+// <copyright file="_nodestree.scss" company="Devbridge Group LLC">
+// 
+// Copyright (C) 2015,2016 Devbridge Group LLC
+// 
+// This program is free software: you can redistribute it and/or modify
+// it under the terms of the GNU Lesser General Public License as published by
+// the Free Software Foundation, either version 3 of the License, or
+// (at your option) any later version.
+// 
+// This program is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU General Public License for more details.
+// 
+// You should have received a copy of the GNU Lesser General Public License
+// along with this program.  If not, see http://www.gnu.org/licenses/. 
+// </copyright>
+// 
+// <summary>
+// Better CMS is a publishing focused and developer friendly .NET open source CMS.
+// 
+// Website: https://www.bettercms.com 
+// GitHub: https://github.com/devbridge/bettercms
+// Email: info@bettercms.com
+// </summary>
+// --------------------------------------------------------------------------------------------------------------------
+$sitemap-tab-arrows: (
+                ('left', $bcms-arrow-left, left),
+                ('right', $bcms-arrow-right, right)
+);
+
+%tree-links-ui {
+    color: $text-blue;
+    cursor: pointer;
+    font-weight: 600;
+    line-height: 20px;
+
+    &:hover {
+        color: darken($text-blue, 10%);
+    }
+}
+
+.bcms-sitemap-tabs-holder {
+    float: left;
+    height: 100%;
+    width: calc(#{$page-width} - 50px);
+}
+
+@each $name, $icon, $float in $sitemap-tab-arrows {
+    .bcms-sitemaps-arrow-#{$name} {
+        background: url($icon) no-repeat center;
+        cursor: pointer;
+        float: $float;
+        height: 100%;
+        width: 22px;
+
+        &.bcms-sitemaps-arrow-inactive {
+            background: none;
+            cursor: default;
+        }
+    }
+}
+
+//module contents tree structure
+.bcms-tree {
+    &-zones-holder {
+        display: table;
+        margin-bottom: 20px;
+        width: 100%;
+    }
+
+    &-drag-area-ui {
+        @include vertical-align($block: table-cell, $align: top);
+        padding-right: 30px;
+        width: $settings-sidebar;
+    }
+
+    &-drop-area-ui {
+        @include vertical-align($block: table-cell, $align: top);
+        border-left: $border-thin-smoke;
+        padding-left: 30px;
+    }
+
+    &-controls-holder {
+        @include clearfix();
+        margin: 15px 0 10px;
+    }
+
+    &-expander {
+        @extend %tree-links-ui;
+        background: url($bcms-tree-plus) no-repeat right center;
+        float: right;
+        font: {
+            size: 13px;
+            weight: 400;
+        }
+        padding-right: 28px;
+
+        &-close {
+            background-image: url($bcms-tree-minus);
+        }
+    }
+
+    &-add-node {
+        @extend %tree-links-ui;
+        background: url($bcms-tree-new-node) no-repeat left center;
+        float: left;
+        padding-left: 28px;
+
+    }
+}
+
+.bcms-node-box {
+    &-container {
+        @include transition(border-style 200ms);
+        background-color: $white;
+        border: $border-thin-smoke;
+        box-sizing: border-box;
+        min-height: 44px;
+        padding: 0 60px 0 20px;
+        position: relative;
+
+        &:hover {
+            border-style: dashed;
+            cursor: move;
+        }
+
+        &.bcms-inactive{
+            &:hover{
+                border: $border-thin-smoke;
+            }
+        }
+    }
+
+    &-info {
+        @include ellipsis();
+        max-width: 80%;
+    }
+
+    &-title {
+        @include vertical-align();
+        color: $text-blue;
+        line-height: 42px;
+
+        &.bcms-node-box-title-sitemap {
+            line-height: 18px;
+            margin-top: 4px;
+        }
+    }
+
+    &-path {
+        > a {
+            color: $text-dark;
+            font-size: 11px;
+        }
+    }
+
+    &-drag {
+        background-color: $sky-blue;
+        box-shadow: 5px 3px 0 2px rgba($sh-dark, .6);
+    }
+
+    &-edit {
+        background-color: $sky-blue;
+
+        .bcms-node-box-info {
+            display: none;
+        }
+
+        .bcms-node-box-path {
+            display: none;
+        }
+
+        .bcms-node-editable-box {
+            display: block;
+        }
+
+        .bcms-node-delete-box {
+            opacity: 0;
+        }
+    }
+
+    &-inactive {
+        cursor: default;
+        opacity: .8;
+
+        &:hover {
+            border-style: solid;
+        }
+    }
+}
+
+.bcms-node {
+    &-expander {
+        @include positioning($center-y: true);
+        @include size(20px);
+        background: $bg-modal-options url($bcms-tree-plus) no-repeat right center;
+        cursor: pointer;
+        left: -10px;
+        z-index: 1;
+    }
+
+    &-expanded {
+        background-image: url($bcms-tree-minus);
+    }
+
+    &-edit-holder {
+        margin: 5px 0;
+
+        .bcms-field-wrapper {
+            @include vertical-align();
+            width: 80%;
+        }
+    }
+
+    &-delete-box {
+        @include transition(opacity 200ms);
+        @include position(absolute, 0 0 0 null);
+        border-left: $border-thin-smoke;
+        opacity: 1;
+        width: 50px;
+
+        .bcms-action-delete {
+            height: 100%;
+            width: 100%;
+        }
+    }
+
+    &-drop-zone {
+        padding: 4px 0;
+    }
+
+    &-drop-zone-active {
+        padding: 8px 0;
+    }
+
+    &-drop-zone-text {
+        border: $border-thick-dashed-smoke;
+        box-sizing: border-box;
+        color: $text-smoke;
+        display: none;
+        font-size: 14px;
+        height: 44px;
+        line-height: 42px;
+        padding: 0 15px;
+    }
+
+    &-drop-zone-active {
+        .bcms-node-drop-zone-text {
+            display: block;
+        }
+    }
+}
+
+.bcms-zone-holder {
+    padding-left: 15px;
+
+    > .bcms-node-container {
+        position: relative;
+
+        @include virtual(before) {
+            @include position(absolute, 0 null null -15px);
+            @include size(15px 100%);
+            background: url($bcms-node-step) repeat-y left top;
+        }
+
+        @include virtual(after) {
+            @include position(absolute, 21px null null -15px);
+            @include size(15px 2px);
+            background-color: $bg-node-step;
+        }
+
+        &:first-of-type {
+            &:before {
+                top: 8px;
+            }
+
+            &:after {
+                top: 29px;
+            }
+        }
+
+        &:last-of-type {
+            &:before {
+                height: 23px;
+            }
+        }
+    }
+}
+
+.bcms-drag-zone {
+    &-read-only {
+        overflow: hidden;
+        position: relative;
+
+        @include virtual(after) {
+            @include position(absolute, 0);
+            background-color: rgba($white, .5);
+        }
+    }
+
+    &-box {
+        background-color: $white;
+        border: $border-thin-smoke;
+        box-shadow: 5px 3px 0 2px rgba($sh-dark, .6);
+        box-sizing: border-box;
+        cursor: move;
+        margin: 15px 0;
+        min-height: 44px;
+        padding: 5px 30px 5px 10px;
+        position: relative;
+
+        &:last-of-type {
+            margin-bottom: 0;
+        }
+
+        @include virtual(after) {
+            @include position(absolute, 10px 10px null null);
+            @include size(12px);
+            background: url($bcms-dragger) no-repeat center;
+            overflow: hidden;
+            text-indent: 9999px;
+        }
+    }
+
+    &-title {
+        @include ellipsis();
+        color: $text-blue;
+        max-width: $settings-sidebar;
+    }
+
+    &-path {
+        > a {
+            @include ellipsis();
+            color: $text-dark;
+            display: block;
+            font-size: 11px;
+            max-width: $settings-sidebar;
+        }
+    }
+}
+
+//module contents tree sidebar
+.bcms-sidebar-search {
+    margin: 0 0 15px;
+    position: relative;
+
+    .bcms-field-wrapper {
+        margin-right: 37px;
+    }
+
+    .bcms-btn-search {
+        @include position(absolute, 0 0 null null);
+    }
+}
+
+.bcms-drop-page-box {
+    @include user-select();
+    background-color: $white;
+    border: $border-thin-smoke;
+    box-sizing: border-box;
+    cursor: move;
+    margin-bottom: 8px;
+    padding: 15px;
+    position: relative;
+
+    &:hover {
+        border: $border-thin-dashed-smoke;
+    }
+
+    &:active {
+        opacity: .8;
+    }
+
+    .bcms-content-titles {
+        margin-bottom: 5px;
+    }
+
+    .bcms-drop-text {
+        margin-bottom: 20px;
+    }
+}
+
+.bcms-drop-button {
+    @include position(absolute, 10px 10px null null);
+    @include size(12px);
+    background: url($bcms-dragger) no-repeat center;
+    overflow: hidden;
+    text-indent: 9999px;
+}

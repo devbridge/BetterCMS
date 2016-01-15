@@ -1,5 +1,31 @@
 ﻿/*jslint unparam: true, white: true, browser: true, devel: true */
-/*global bettercms */
+// --------------------------------------------------------------------------------------------------------------------
+// <copyright file="bcms.ko.grid.js" company="Devbridge Group LLC">
+// 
+// Copyright (C) 2015,2016 Devbridge Group LLC
+// 
+// This program is free software: you can redistribute it and/or modify
+// it under the terms of the GNU Lesser General Public License as published by
+// the Free Software Foundation, either version 3 of the License, or
+// (at your option) any later version.
+// 
+// This program is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU General Public License for more details.
+// 
+// You should have received a copy of the GNU Lesser General Public License
+// along with this program.  If not, see http://www.gnu.org/licenses/. 
+// </copyright>
+// 
+// <summary>
+// Better CMS is a publishing focused and developer friendly .NET open source CMS.
+// 
+// Website: https://www.bettercms.com 
+// GitHub: https://github.com/devbridge/bettercms
+// Email: info@bettercms.com
+// </summary>
+// --------------------------------------------------------------------------------------------------------------------
 
 bettercms.define('bcms.ko.grid', ['bcms.jquery', 'bcms', 'bcms.ko.extenders', 'bcms.messages', 'bcms.modal', 'bcms.tabs'],
     function ($, bcms, ko, messages, modal, tabs) {
@@ -70,13 +96,24 @@ bettercms.define('bcms.ko.grid', ['bcms.jquery', 'bcms', 'bcms.ko.extenders', 'b
                     createItem: null
                 }, opts);
 
-                self.loadUrl = loadUrl;
-                self.saveUrl = null;
-                self.deleteUrl = null;
-                self.items = ko.observableArray();
-                self.options = ko.observable();
-                self.container = container;
-                self.rowAdded = false;
+            self.loadUrl = loadUrl;
+            self.saveUrl = null;
+            self.deleteUrl = null;
+            self.items = ko.observableArray();
+            self.options = ko.observable();
+            self.container = container;
+            self.rowAdded = false;
+            self.searchEnabled = ko.observable(false);
+            
+            self.messagesDomId = function () {
+                var id = staticDomId++;
+                return 'bcms-editable-grid-messages-' + id;
+            };
+            
+            self.setOptions = function (newGridOptions) {
+                var options = new grid.OptionsViewModel(newGridOptions, self.openPage);
+                self.options(options);
+            };
 
                 self.messagesDomId = function () {
                     var id = staticDomId++;
@@ -92,6 +129,16 @@ bettercms.define('bcms.ko.grid', ['bcms.jquery', 'bcms', 'bcms.ko.extenders', 'b
                     var params = self.toJson();
                     self.load(params);
                 };
+
+            self.toggleSearch = function() {
+                if (!self.searchEnabled()) {
+                    self.options().hasFocus(true);
+                    self.searchEnabled(true);
+                } else {
+                    self.searchEnabled(false);
+                    self.options().searchQuery('');
+                }
+            }
 
                 self.setItems = function (itemsList) {
                     if (!itemsList) {
@@ -157,7 +204,9 @@ bettercms.define('bcms.ko.grid', ['bcms.jquery', 'bcms', 'bcms.ko.extenders', 'b
 
                 self.load = function (params) {
                     var indicatorId = 'koGridList',
-                        spinContainer = self.container,
+                        spinContainer = self.container.closest('.bcms-window-settings').length > 0
+                            ? self.container.closest('.bcms-window-settings')
+                            : self.container,
                         onComplete = function (json) {
                             if (spinContainer) {
                                 spinContainer.hideLoading(indicatorId);

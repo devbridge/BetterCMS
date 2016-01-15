@@ -1,4 +1,31 @@
-﻿@using BetterCms.Module.Pages.Content.Resources
+﻿@* --------------------------------------------------------------------------------------------------------------------
+// <copyright file="Edit.cshtml" company="Devbridge Group LLC">
+// 
+// Copyright (C) 2015,2016 Devbridge Group LLC
+// 
+// This program is free software: you can redistribute it and/or modify
+// it under the terms of the GNU Lesser General Public License as published by
+// the Free Software Foundation, either version 3 of the License, or
+// (at your option) any later version.
+// 
+// This program is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU General Public License for more details.
+// 
+// You should have received a copy of the GNU Lesser General Public License
+// along with this program.  If not, see http://www.gnu.org/licenses/. 
+// </copyright>
+// 
+// <summary>
+// Better CMS is a publishing focused and developer friendly .NET open source CMS.
+// 
+// Website: https://www.bettercms.com 
+// GitHub: https://github.com/devbridge/bettercms
+// Email: info@bettercms.com
+// </summary>
+// -------------------------------------------------------------------------------------------------------------------- *@
+@using BetterCms.Module.Pages.Content.Resources
 @using BetterCms.Module.Pages.Controllers
 @using BetterCms.Module.Pages.ViewModels.Sitemap
 @using BetterCms.Module.Root
@@ -12,93 +39,103 @@
         TooltipDescription = NavigationGlobalization.Sitemap_EditDialog_AddTags_Tooltip_Description
     };
 }
-<div class="bcms-tab-header">
-    <a class="bcms-tab-item bcms-active" data-name="#bcms-tab-1">Properties</a>
-    <a class="bcms-tab-item" data-name="#bcms-tab-2">Nodes</a>
+<div class="bcms-tab-header bcms-js-tab-header">
+    <div class="bcms-modal-frame-holder">
+        <div class="bcms-tab-ui bcms-tab-item bcms-active" data-name="#bcms-tab-1">Properties</div>
+        <div class="bcms-tab-ui bcms-tab-item" data-name="#bcms-tab-2">Nodes</div>
+    </div>
 </div>
-<div id="bcms-sitemap-addnode">
-    @Html.TabbedContentMessagesBox()
-    @* Form is required for unobtrusive validation. *@
-    @using (Html.BeginForm<SitemapController>(f => f.EditSitemap(null), FormMethod.Post, new
+<div class="bcms-modal-frame-holder">
+    @Html.MessagesBox()
+    <div class="bcms-window-tabbed-options">
+        <div id="bcms-sitemap-addnode">
+            @* Form is required for unobtrusive validation. *@
+            @using (Html.BeginForm<SitemapController>(f => f.EditSitemap(null), FormMethod.Post, new
         {
             @class = "bcms-sitemap-form bcms-ajax-form",
             data_readonly = Model.IsReadOnly.ToString().ToLower()
         }))
-    {
-        <div id="bcms-tab-1" class="bcms-tab-single">
-            <div class="bcms-padded-content">
-                <div class="bcms-input-list-holder">
-                    @Html.Tooltip(NavigationGlobalization.Sitemap_EditDialog_SitemapTitle_Tooltip_Description)
-                    <div class="bcms-content-titles">@NavigationGlobalization.Sitemap_EditDialog_SitemapTitle_Title</div>
-                    <div class="bcms-input-box">
-                        @Html.TextBoxFor(model => model.Title, new { @class = "bcms-editor-field-box", data_bind = "value: title, valueUpdate: 'afterkeydown', hasfocus: true" })
-                        @Html.BcmsValidationMessageFor(f => f.Title)
-                        @Html.HiddenFor(m => m.Id)
-                        @Html.HiddenFor(m => m.Version)
-                    </div>
-                </div>
-                <div class="bcms-tags-box-holder" data-bind="with: tags">
-                    @Html.Partial("~/Areas/bcms-root/Views/Tags/TagsTemplate.cshtml", tagsTemplateViewModel)
-                </div>
-                @if (Model.AccessControlEnabled)
-                {
-                    @Html.Partial(RootModuleConstants.AccessControlTemplate)
-                }
-            </div>
-        </div>
-        <div id="bcms-tab-2" class="bcms-tab-single">
-            <div class="bcms-scroll-window">
-
-                <div class="bcms-columns-container">
-                    <div class="bcms-sitemap-filter-holder" data-bind="with: sitemap">
-                        <div class="bcms-language-bar" style="display: none;" data-bind="visible: showLanguages, with: language">
-                            <div class="bcms-filter-text bcms-table-middle-box">Edit sitemap in language:</div>
-                            <div class="bcms-table-middle-box">
-                                <select class="bcms-global-select" data-bind="options: languages, optionsText: 'value', optionsValue: 'key', value: languageId"></select>
+            {
+                <div id="bcms-tab-1" class="bcms-tab-single">
+                    <div class="bcms-form-block-holder">
+                        <div>
+                            <div class="bcms-input-list-holder">
+                                <div class="bcms-content-titles">@NavigationGlobalization.Sitemap_EditDialog_SitemapTitle_Title</div>
+                                @Html.Tooltip(NavigationGlobalization.Sitemap_EditDialog_SitemapTitle_Tooltip_Description)
+                                <div class="bcms-field-wrapper">
+                                    @Html.TextBoxFor(model => model.Title, new { @class = "bcms-field-text", data_bind = "value: title, valueUpdate: 'afterkeydown', hasfocus: true" })
+                                    @Html.BcmsValidationMessageFor(f => f.Title)
+                                    @Html.HiddenFor(m => m.Id)
+                                    @Html.HiddenFor(m => m.Version)
+                                </div>
+                            </div>
+                            <div class="bcms-input-list-holder" data-bind="with: tags">
+                                @Html.Partial("~/Areas/bcms-root/Views/Tags/TagsTemplate.cshtml", tagsTemplateViewModel)
                             </div>
                         </div>
-
-                        <div class="bcms-expand-link-holder" @* data-bind="droppable: 'emptyListZone'" TODO: check later. NOTE: jQuery error is raised on leave over. *@>
-                            <div class="bcms-expand-link" data-bind="click: expandAll">@NavigationGlobalization.Sitemap_Button_ExpandAll</div>
-                            <div class="bcms-expand-link" data-bind="click: collapseAll">@NavigationGlobalization.Sitemap_Button_CollapseAll</div>
+                        <div>
+                            @if (Model.AccessControlEnabled)
+                            {
+                                @Html.Partial(RootModuleConstants.AccessControlTemplate)
+                            }
                         </div>
                     </div>
-
-                    <div class="bcms-leftcol bcms-add-node-col">
-                        <div class="bcms-sitemap-links-holder" data-bind="template: { name: 'bcms-navigation-pagelinks-template' }"></div>
+                </div>
+                <div id="bcms-tab-2" class="bcms-tab-single">
+                    <!-- ko with: sitemap -->
+                    <div style="display: none;" data-bind="visible: showLanguages, with: language">
+                        <div class="bcms-top-block-holder">
+                            <div class="bcms-language-selector-box">
+                                <div class="bcms-content-titles">@NavigationGlobalization.Sitemap_EditDialog_LanguageSelectionTitle</div>
+                                <div class="bcms-field-wrapper">
+                                    <select data-bind="options: languages, optionsText: 'value', optionsValue: 'key', value: languageId, select2: { minimumResultsForSearch: -1 }"></select>
+                                </div>
+                            </div>
+                        </div>
                     </div>
+                    <div class="bcms-content-dialog-title">
+                        <div class="bcms-content-titles-helper">@NavigationGlobalization.Sitemap_EditDialog_PageLink_Header</div>
 
-                    <div class="bcms-rightcol">
-                        <div class="bcms-sitemap-holder bcms-sitemap-edit">
+                        <div class="bcms-tree-expander bcms-tree-expander-close" data-bind="click: callExpandOrCollapse, css: { 'bcms-tree-expander-close' : allNodesExpanded()}, text: allNodesExpanded() ? '@PagesGlobalization.CategoryTree_Button_CollapseAll' : '@PagesGlobalization.CategoryTree_Button_ExpandAll'"></div>
+                    </div>
+                    <!-- /ko -->
+                    <div class="bcms-tree-zones-holder">
+                        <div class="bcms-tree-drag-area-ui" data-bind="template: { name: 'bcms-navigation-pagelinks-template' }"></div>
+
+                        <div class="bcms-tree-drop-area-ui">
                             <div class="bcms-addnode-placement-holder@(Model.IsReadOnly ? "-readonly" : string.Empty)">
                                 @Html.Partial("Partial/Sitemap", new SitemapNodeViewModel())
                             </div>
                         </div>
                     </div>
                 </div>
-
-            </div>
+            }
         </div>
-    }
+
+        @Html.Partial("Partial/SitemapTemplate", new SitemapNodeViewModel())
+    </div>
 </div>
-@Html.Partial("Partial/SitemapTemplate", new SitemapNodeViewModel())
 <script type="text/html" id="bcms-navigation-pagelinks-template">
-    <div class="bcms-plain-text">@NavigationGlobalization.Sitemap_EditDialog_PageLink_Header</div>
     <div class="bcms-sidebar-search">
-        <input type="text" class="bcms-editor-field-box" placeholder="@NavigationGlobalization.Sitemap_EditDialog_AddPageLink_SearchPlaceHolder"
-               data-bind="hasfocus: hasfocus, value: searchQuery, valueUpdate: 'afterkeydown', enterPress: searchForPageLinks" />
+        <div class="bcms-field-wrapper">
+            <input type="text" class="bcms-field-text" placeholder="@NavigationGlobalization.Sitemap_EditDialog_AddPageLink_SearchPlaceHolder"
+                   data-bind="hasfocus: hasfocus, value: searchQuery, valueUpdate: 'afterkeydown', enterPress: searchForPageLinks" />
+        </div>
         <div class="bcms-btn-search" data-bind="click: searchForPageLinks">@NavigationGlobalization.Sitemap_EditDialog_AddPageLink_SearchButton</div>
     </div>
-    <div class="bcms-addnode-placement-holder@(Model.IsReadOnly ? "-readonly" : string.Empty)" data-bind="template: { name: 'bcms-navigation-pagelink-template', foreach: pageLinks }"></div>
+
+    <div class="bcms-drag-zone@(Model.IsReadOnly ? "-read-only" : string.Empty)" data-bind="template: { name: 'bcms-navigation-pagelink-template', foreach: pageLinks }"></div>
 </script>
 <script type="text/html" id="bcms-navigation-pagelink-template">
     <!-- ko if: isVisible() || isCustom() -->
-    <div class="bcms-placement-node" data-bind="@(!Model.IsReadOnly ? "draggable: $parentContext.$index, " : string.Empty)css: { 'bcms-placement-node-drag': isBeingDragged() }, style: { borderColor: isOnSitemap() == true ? '#0383df' : '' }">
-        <div class="bcms-placement-title" data-bind="text: title()"></div>
-        <div class="bcms-placement-path"><a data-bind="text: url, attr: { href: url }" href="" target="_blank"></a></div>
+    <div class="bcms-drag-zone-box" data-bind="@(!Model.IsReadOnly ? "draggable: $parentContext.$index, " : string.Empty)css: { 'bcms-node-box-drag': isBeingDragged() }, style: { borderColor: isOnSitemap() == true ? '#dc4250' : '' }">
+        <div class="bcms-drag-zone-title" data-bind="text: title()"></div>
+        <div class="bcms-drag-zone-path">
+            <a data-bind="text: url, attr: { href: url }" href="" target="_blank"></a>
+        </div>
     </div>
     <!-- ko if: isBeingDragged() -->
-    <div class="bcms-placement-dropzone"></div>
+    <div class="bcms-node-drop-zone"></div>
     <!-- /ko -->
     <!-- /ko -->
 </script>

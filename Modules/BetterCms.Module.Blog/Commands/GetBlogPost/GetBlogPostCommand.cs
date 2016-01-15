@@ -1,4 +1,31 @@
-﻿using System;
+﻿// --------------------------------------------------------------------------------------------------------------------
+// <copyright file="GetBlogPostCommand.cs" company="Devbridge Group LLC">
+// 
+// Copyright (C) 2015,2016 Devbridge Group LLC
+// 
+// This program is free software: you can redistribute it and/or modify
+// it under the terms of the GNU Lesser General Public License as published by
+// the Free Software Foundation, either version 3 of the License, or
+// (at your option) any later version.
+// 
+// This program is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU General Public License for more details.
+// 
+// You should have received a copy of the GNU Lesser General Public License
+// along with this program.  If not, see http://www.gnu.org/licenses/. 
+// </copyright>
+// 
+// <summary>
+// Better CMS is a publishing focused and developer friendly .NET open source CMS.
+// 
+// Website: https://www.bettercms.com 
+// GitHub: https://github.com/devbridge/bettercms
+// Email: info@bettercms.com
+// </summary>
+// --------------------------------------------------------------------------------------------------------------------
+using System;
 using System.Linq;
 
 using BetterCms.Core.Security;
@@ -63,6 +90,8 @@ namespace BetterCms.Module.Blog.Commands.GetBlogPost
         /// </summary>
         private readonly Services.IOptionService blogOptionService;
 
+        private readonly ILanguageService languageService;
+
         /// <summary>
         /// Initializes a new instance of the <see cref="GetBlogPostCommand" /> class.
         /// </summary>
@@ -73,9 +102,11 @@ namespace BetterCms.Module.Blog.Commands.GetBlogPost
         /// <param name="fileUrlResolver">The file URL resolver.</param>
         /// <param name="cmsConfiguration">The CMS configuration.</param>
         /// <param name="blogOptionService">The blog option service.</param>
+        /// <param name="languageService">The language service</param>
         public GetBlogPostCommand(ICategoryService categoryService, IAuthorService authorService,
             ITagService tagService, IContentService contentService, IMediaFileUrlResolver fileUrlResolver,
-            ICmsConfiguration cmsConfiguration, Services.IOptionService blogOptionService)
+            ICmsConfiguration cmsConfiguration, Services.IOptionService blogOptionService,
+            ILanguageService languageService)
         {
             this.categoryService = categoryService;
             this.authorService = authorService;
@@ -84,6 +115,7 @@ namespace BetterCms.Module.Blog.Commands.GetBlogPost
             this.fileUrlResolver = fileUrlResolver;
             this.cmsConfiguration = cmsConfiguration;
             this.blogOptionService = blogOptionService;
+            this.languageService = languageService;
         }
 
         /// <summary>
@@ -111,7 +143,8 @@ namespace BetterCms.Module.Blog.Commands.GetBlogPost
                                     BlogUrl = bp.PageUrl,
                                     UseCanonicalUrl = bp.UseCanonicalUrl,
                                     IntroText = bp.Description,
-                                    AuthorId = bp.Author != null ? bp.Author.Id : (Guid?)null,                                  
+                                    AuthorId = bp.Author != null ? bp.Author.Id : (Guid?)null,
+                                    LanguageId = bp.Language != null ? bp.Language.Id : (Guid?)null,
                                     Image = bp.Image == null || bp.Image.IsDeleted ? null :
                                         new ImageSelectorViewModel
                                         {
@@ -189,6 +222,15 @@ namespace BetterCms.Module.Blog.Commands.GetBlogPost
             model.Authors = authorService.GetAuthors();
             model.RedirectFromOldUrl = true;
             model.CategoriesFilterKey = categoriesFilterKey;
+            model.CategoriesLookupList = categoryService.GetCategoriesLookupList(categoriesFilterKey);
+
+            var showLanguages = cmsConfiguration.EnableMultilanguage;
+
+            if (showLanguages)
+            {
+                model.ShowLanguages = true;
+                model.Languages = languageService.GetLanguagesLookupValues();
+            }
 
             return model;
         }

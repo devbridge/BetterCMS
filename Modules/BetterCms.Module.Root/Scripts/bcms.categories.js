@@ -1,4 +1,32 @@
-﻿bettercms.define("bcms.categories", ["bcms.jquery", "bcms", "bcms.siteSettings", "bcms.dynamicContent", "bcms.grid", "bcms.messages", "bcms.modal", "bcms.forms", "bcms.ko.extenders", 'bcms.autocomplete', 'bcms.antiXss'],
+﻿/*jslint unparam: true, white: true, browser: true, devel: true */
+// --------------------------------------------------------------------------------------------------------------------
+// <copyright file="bcms.categories.js" company="Devbridge Group LLC">
+// 
+// Copyright (C) 2015,2016 Devbridge Group LLC
+// 
+// This program is free software: you can redistribute it and/or modify
+// it under the terms of the GNU Lesser General Public License as published by
+// the Free Software Foundation, either version 3 of the License, or
+// (at your option) any later version.
+// 
+// This program is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU General Public License for more details.
+// 
+// You should have received a copy of the GNU Lesser General Public License
+// along with this program.  If not, see http://www.gnu.org/licenses/. 
+// </copyright>
+// 
+// <summary>
+// Better CMS is a publishing focused and developer friendly .NET open source CMS.
+// 
+// Website: https://www.bettercms.com 
+// GitHub: https://github.com/devbridge/bettercms
+// Email: info@bettercms.com
+// </summary>
+// --------------------------------------------------------------------------------------------------------------------
+bettercms.define("bcms.categories", ["bcms.jquery", "bcms", "bcms.siteSettings", "bcms.dynamicContent", "bcms.grid", "bcms.messages", "bcms.modal", "bcms.forms", "bcms.ko.extenders", 'bcms.autocomplete', 'bcms.antiXss'],
     function ($, bcms, siteSettings, dynamicContent, grid, messages, modal, forms, ko, autocomplete, antiXss) {
         "use strict";
 
@@ -35,6 +63,7 @@
                 siteSettingsGridRow: "tr",
                 siteSettingsGridRowTemplate: "#bcms-categorytree-list-row-template",
                 siteSettingsGridRowTemplateFirstRow: "tr:first",
+                siteSettingsCategoriesSelect: '#bcms-js-categories-select',
 
                 categoryTreeForm: ".bcms-categorytree-form",
 
@@ -49,6 +78,9 @@
                 TopZone: "topZone",
                 MiddleZone: "middleZone",
                 BottomZone: "bottomZone"
+            },
+            events = {
+                categoryNodeAdded: 'categoryNodeAdded'
             },
             nodeId = 0;
 
@@ -229,6 +261,7 @@
                                 }
 
                                 updateValidation();
+                                bcms.trigger(events.categoryNodeAdded, dragObject);
                             }
                         };
                     if (dropZoneObject.getCategoryTree && !dropZoneObject.getCategoryTree().settings.canDropNode) {
@@ -577,6 +610,7 @@
             self.activeZone = ko.observable(DropZoneTypes.None);
             self.showHasNoDataMessage = ko.observable(false);
             self.savingInProgress = false;                  // To prevent multiple saving.
+            self.allNodesExpanded = ko.observable(false);
 
             self.version = jsonCategoryTree.Version;
             self.title = ko.observable(jsonCategoryTree.Title);
@@ -650,18 +684,35 @@
             };
 
             // Expanding or collapsing nodes.
-            self.expandAll = function () {
-                self.expandOrCollapse(self.childNodes(), true);
+            self.checkIfAllNodesExpanded = function (nodes) {
+                for (var i = 0; i < nodes.length; i++) {
+                    var node = nodes[i];
+                    if(node.hasChildNodes()){
+                        if (!node.isExpanded() || !self.checkIfAllNodesExpanded(node.childNodes())) {
+                            return false;
+                        };
+                    }
+                }
+                return true;
+            }
+
+            self.callExpandOrCollapse = function() {
+                var expand = !self.allNodesExpanded();
+                self.expandOrCollapse(self.childNodes(), expand);
+                self.allNodesExpanded(expand);
             };
-            self.collapseAll = function () {
-                self.expandOrCollapse(self.childNodes(), false);
-            };
+
             self.expandOrCollapse = function (nodes, expand) {
                 for (var i = 0; i < nodes.length; i++) {
                     var node = nodes[i];
                     node.isExpanded(expand);
                     self.expandOrCollapse(node.childNodes(), expand);
                 }
+            };
+
+            self.toggleNodeExpand = function(node) {
+                node.toggleExpand();
+                self.allNodesExpanded(self.checkIfAllNodesExpanded(self.childNodes()));
             };
 
             self.hasChildNodes = function () {
@@ -674,6 +725,10 @@
                 }
                 return false;
             };
+
+            bcms.on(events.categoryNodeAdded, function () {
+                self.allNodesExpanded(self.checkIfAllNodesExpanded(self.childNodes()));
+            });
 
             // Updating display order and parent node info.
             self.updateNodesOrderAndParent = function () {
@@ -994,7 +1049,7 @@
         function searchCategoryTrees(form) {
             grid.submitGridForm(form, function (htmlContent) {
                 siteSettings.setContent(htmlContent);
-                initializeListOfCategoryTrees();
+                initializeListOfCategoryTrees(true);
             });
         };
 
@@ -1064,7 +1119,7 @@
             });
         };
 
-        function initializeListOfCategoryTrees() {
+        function initializeListOfCategoryTrees(isSearchResult) {
             var dialog = siteSettings.getModalDialog(),
                 container = dialog.container,
                 form = container.find(selectors.siteSettingsCategoryTreesForm);
@@ -1087,9 +1142,23 @@
             });
 
             form.find(selectors.searchButton).on("click", function (event) {
-                bcms.stopEventPropagation(event);
-                searchCategoryTrees(form);
+                var parent = $(this).parent();
+                if (!parent.hasClass('bcms-active-search')) {
+                    form.find(selectors.searchField).prop('disabled', false);
+                    parent.addClass('bcms-active-search');
+                    form.find(selectors.searchField).focus();
+                } else {
+                    form.find(selectors.searchField).prop('disabled', true);
+                    parent.removeClass('bcms-active-search');
+                    form.find(selectors.searchField).val('');
+                }
             });
+
+            if (isSearchResult === true) {
+                form.find(selectors.searchButton).parent().addClass('bcms-active-search');
+            } else {
+                form.find(selectors.searchField).prop('disabled', true);
+            }
 
             initializeListItems(container);
 
@@ -1158,6 +1227,49 @@
                 }
             });
         }
+
+        module.initCategoriesSelect = function (selectedCategories, categoriesLookupList, context) {
+            var select = context ? $(context).find(selectors.siteSettingsCategoriesSelect) : $(selectors.siteSettingsCategoriesSelect);
+            var categoriesSelectBox = select.select2({
+                multiple: true,
+                data: categoriesLookupList
+            }).on('select2-selecting', function(e) {
+                selectedCategories.items.push({ id: e.choice.id, text: e.choice.text });
+            });
+
+            categoriesSelectBox.select2('data', selectedCategories.items());
+        }
+
+        module.CategoriesSelectListModel = function(items, context) {
+            var self = this,
+                categories = items ? items.map(function(cat) {
+                    var obj = { id: cat.Key.toLowerCase(), text: cat.Value };
+                    return obj;
+                }) : [];
+
+            self.items = ko.observableArray(categories);
+
+            self.remove = function(e) {
+                self.items.remove(function (item) {
+                    return item.id == e.id;
+                });
+                if (context) {
+                    $(context).find(selectors.siteSettingsCategoriesSelect).select2('data', self.items());
+                } else {
+                   $(selectors.siteSettingsCategoriesSelect).select2('data', self.items());
+                }
+            }
+
+            self.applyItemList = function(items) {
+                var categories = items ? items.map(function (cat) {
+                    var obj = { id: cat.Key.toLowerCase(), text: cat.Value };
+                    return obj;
+                }) : [];
+                self.items([]);
+                self.items(categories);
+            }
+        }
+
 
         /**
         * Initializes module.

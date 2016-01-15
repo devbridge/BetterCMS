@@ -1,0 +1,110 @@
+// --------------------------------------------------------------------------------------------------------------------
+// <copyright file="_tabs.scss" company="Devbridge Group LLC">
+// 
+// Copyright (C) 2015,2016 Devbridge Group LLC
+// 
+// This program is free software: you can redistribute it and/or modify
+// it under the terms of the GNU Lesser General Public License as published by
+// the Free Software Foundation, either version 3 of the License, or
+// (at your option) any later version.
+// 
+// This program is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU General Public License for more details.
+// 
+// You should have received a copy of the GNU Lesser General Public License
+// along with this program.  If not, see http://www.gnu.org/licenses/. 
+// </copyright>
+// 
+// <summary>
+// Better CMS is a publishing focused and developer friendly .NET open source CMS.
+// 
+// Website: https://www.bettercms.com 
+// GitHub: https://github.com/devbridge/bettercms
+// Email: info@bettercms.com
+// </summary>
+// --------------------------------------------------------------------------------------------------------------------
+
+.bcms-tab {
+    &-header {
+        background-color: $bg-blue;
+        height: $tab-height;
+    }
+
+    &-ui {
+        @include transition(background-color 200ms ease, color 200ms ease);
+        color: $white;
+        cursor: pointer;
+        display: inline-block;
+        font: {
+            size: 16px;
+            weight: 700;
+        }
+        line-height: $tab-height;
+        max-width: 250px;
+        padding: 0 30px;
+        text-decoration: none;
+
+        &:hover {
+            color: $text-dark;
+            text-decoration: none;
+        }
+
+        &.bcms-active {
+            background-color: $bg-modal-options;
+            color: $text-dark;
+            cursor: default;
+
+            &:hover {
+                color: $text-dark;
+            }
+        }
+    }
+
+    &-single {
+        display: none;
+
+        &:first-of-type {
+            display: block;
+        }
+    }
+}
+
+//module settings tabbed view
+.bcms-inner {
+    &-navigation {
+        @include clearfix();
+        @include position(absolute, -($header-height) null null);
+        height: $header-height;
+        z-index: 10;
+    }
+
+    &-navigation-ui {
+        @include transition(color 200ms, background-color 200ms);
+        background-color: transparent;;
+        color: $text-light;
+        cursor: pointer;
+        float: left;
+        font: {
+            family: $font-base-family;
+            weight: 600;
+            size: 16px;
+        }
+        height: 40px;
+        line-height: 41px;
+        margin: 15px 20px 0 0;
+        overflow: hidden;
+        padding: 0 15px;
+        position: relative;
+
+        &:hover {
+            color: darken($text-light, 10%);
+        }
+
+        &.bcms-active {
+            background-color: $white;
+            color: $text-blue;
+        }
+    }
+}

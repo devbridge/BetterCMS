@@ -1,16 +1,44 @@
-﻿@using BetterCms.Module.MediaManager.Models
+﻿@* --------------------------------------------------------------------------------------------------------------------
+// <copyright file="ImageEditorInsert.cshtml" company="Devbridge Group LLC">
+// 
+// Copyright (C) 2015,2016 Devbridge Group LLC
+// 
+// This program is free software: you can redistribute it and/or modify
+// it under the terms of the GNU Lesser General Public License as published by
+// the Free Software Foundation, either version 3 of the License, or
+// (at your option) any later version.
+// 
+// This program is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU General Public License for more details.
+// 
+// You should have received a copy of the GNU Lesser General Public License
+// along with this program.  If not, see http://www.gnu.org/licenses/. 
+// </copyright>
+// 
+// <summary>
+// Better CMS is a publishing focused and developer friendly .NET open source CMS.
+// 
+// Website: https://www.bettercms.com 
+// GitHub: https://github.com/devbridge/bettercms
+// Email: info@bettercms.com
+// </summary>
+// -------------------------------------------------------------------------------------------------------------------- *@
+@using BetterCms.Module.MediaManager.Models
 @using Microsoft.Web.Mvc
 @using BetterCms.Module.Root.Mvc.Helpers
 @using BetterCms.Module.MediaManager.Content.Resources
 @using BetterCms.Module.MediaManager.Controllers
 @using BetterCms.Module.MediaManager.ViewModels.Images
-
 @model ImageViewModel
-           
-<div class="bcms-scroll-window" style="height: 942px;">
-    @Html.TabbedContentMessagesBox()
-    <div class="bcms-file-manager-inner bcms-clearfix">
-        @using (Html.BeginForm<ImagesController>(f => f.ImageEditor((ImageViewModel)null), FormMethod.Post, new { @class = "bcms-ajax-form", @enctype = "multipart/form-data" }))
+
+<div class="bcms-modal-frame-holder">
+    @Html.MessagesBox()
+
+    <div class="bcms-window-options">
+        <div class="bcms-file-manager-inner bcms-clearfix">
+            @using (Html.BeginForm<ImagesController>(f => f.ImageEditor((ImageViewModel)null), FormMethod.Post, new { @class = "bcms-ajax-form", @enctype = "multipart/form-data" }))
         {
             @Html.HiddenFor(model => model.Id)
             @Html.HiddenFor(model => model.Version, new { @id = "image-version-field" })
@@ -27,35 +55,31 @@
                 <div class="bcms-file-info-text">
                     <div class="bcms-content-titles">@MediaGlobalization.ImageEditor_Dialog_PublicUrl</div>
                     <div class="bcms-edit-file-info">
-                        <input class="bcms-editor-field-box bcms-editor-selectable-field-box" type="text" value="@Model.Url" readonly="readonly" />
+                        <input class="bcms-field-text bcms-editor-selectable-field-box" type="text" value="@Model.Url" readonly="readonly" />
                     </div>
                 </div>
-
                 <div class="bcms-input-list-holder">
-                    @Html.Tooltip(MediaGlobalization.ImageEditor_Dialog_Caption_Tooltip_Description)
                     <div class="bcms-content-titles">@MediaGlobalization.ImageEditor_Dialog_Caption:</div>
-                    @Html.TextBoxFor(f => f.Caption, new { @class = "bcms-editor-field-box", @id = "Caption" })
+                    @Html.Tooltip(MediaGlobalization.ImageEditor_Dialog_Caption_Tooltip_Description)
+                    @Html.TextBoxFor(f => f.Caption, new { @class = "bcms-field-text", @id = "Caption" })
                 </div>
-
                 <div class="bcms-file-info-text"><b>@MediaGlobalization.ImageEditor_Dialog_FileName:</b> <span id="image-file-name">@Model.Title</span></div>
-
                 <div class="bcms-file-info-text"><b>@MediaGlobalization.ImageEditor_Dialog_FileSize:</b> <span id="image-file-size">@Model.FileSize</span></div>
-
                 <div class="bcms-file-info-text">
                     @if (Model.CroppedWidth != Model.OriginalImageWidth || Model.CroppedHeight != Model.OriginalImageHeight)
                     {
-                        <b>@MediaGlobalization.ImageEditor_Dialog_CroppedDimensions:</b>
+                <b>@MediaGlobalization.ImageEditor_Dialog_CroppedDimensions:</b>
                     }
                     else
                     {
-                        <b>@MediaGlobalization.ImageEditor_Dialog_Dimensions:</b>
+                <b>@MediaGlobalization.ImageEditor_Dialog_Dimensions:</b>
                     }
                     <span id="image-dimensions">@Model.CroppedWidth x @Model.CroppedHeight</span>
                 </div>
             </div>
 
             <div class="bcms-file-alignment">
-                <div class="bcms-content-titles">@MediaGlobalization.ImageEditor_Dialog_AligmentTitle:</div>
+                <div class="bcms-content-titles">@MediaGlobalization.ImageEditor_Dialog_AligmentTitle</div>
                 <div class="bcms-alignment-controls">
                     <div class="bcms-align-center@(Model.ImageAlign == MediaImageAlign.Center ? "-active" : string.Empty)">
                         <input type="radio" id="aligncenter" name="ImageAlign" value="@((int)MediaImageAlign.Center)" @(Model.ImageAlign == MediaImageAlign.Center ? "checked" : string.Empty)>
@@ -67,16 +91,14 @@
                         <input type="radio" id="alignright" name="ImageAlign" value="@((int)MediaImageAlign.Right)" @(Model.ImageAlign == MediaImageAlign.Right ? "checked" : string.Empty)>
                     </div>
                 </div>
-
                 <div class="bcms-input-list-holder">
-                    @Html.Tooltip(MediaGlobalization.ImageEditor_Dialog_Description_Tooltip_Description)
                     <div class="bcms-content-titles">@MediaGlobalization.ImageEditor_Dialog_Description</div>
+                    @Html.Tooltip(MediaGlobalization.ImageEditor_Dialog_Description_Tooltip_Description)
                     <div class="bcms-textarea-box">
                         @Html.TextAreaFor(f => f.Description, new
                                                                   {
-                                                                      @class = "bcms-editor-field-area",
+                                                                      @class = "bcms-field-textarea",
                                                                       @id = "Description",
-                                                                      @style = "width: 380px;",
                                                                       @readonly = "readonly"
                                                                   })
                     </div>
@@ -85,17 +107,17 @@
 
             if (Model.Tags != null && Model.Tags.Count > 0)
             {
-                <div class="bcms-media-tags-box-holder bcms-clearfix">
-                    <div class="bcms-content-titles">@MediaGlobalization.ImageEditor_Dialog_Tags_Title:</div>
-                    <div class="bcms-single-tag-holder">
-                        @foreach (var tag in Model.Tags)
+            <div class="bcms-media-tags-box-holder bcms-clearfix">
+                <div class="bcms-content-titles">@MediaGlobalization.ImageEditor_Dialog_Tags_Title</div>
+                <div class="bcms-single-tag-holder">
+                    @foreach (var tag in Model.Tags)
                         {
-                            <div class="bcms-single-tag">@tag</div>
+                <div class="bcms-single-tag">@tag</div>
                         }
-                    </div>
                 </div>
+            </div>
             }
         }
+        </div>
     </div>
-
 </div>

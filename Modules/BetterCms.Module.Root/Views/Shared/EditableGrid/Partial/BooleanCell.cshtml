@@ -1,33 +1,44 @@
-﻿@using BetterCms.Module.Root.Content.Resources
+﻿@* --------------------------------------------------------------------------------------------------------------------
+// <copyright file="BooleanCell.cshtml" company="Devbridge Group LLC">
+// 
+// Copyright (C) 2015,2016 Devbridge Group LLC
+// 
+// This program is free software: you can redistribute it and/or modify
+// it under the terms of the GNU Lesser General Public License as published by
+// the Free Software Foundation, either version 3 of the License, or
+// (at your option) any later version.
+// 
+// This program is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU General Public License for more details.
+// 
+// You should have received a copy of the GNU Lesser General Public License
+// along with this program.  If not, see http://www.gnu.org/licenses/. 
+// </copyright>
+// 
+// <summary>
+// Better CMS is a publishing focused and developer friendly .NET open source CMS.
+// 
+// Website: https://www.bettercms.com 
+// GitHub: https://github.com/devbridge/bettercms
+// Email: info@bettercms.com
+// </summary>
+// -------------------------------------------------------------------------------------------------------------------- *@
+@using BetterCms.Module.Root.Content.Resources
 @model BetterCms.Module.Root.Mvc.Grids.EditableGridBooleanColumn
 
-<td @Html.Raw(Model.Attributes)>
+<td style="width: 100px;" @Html.Raw(Model.Attributes)>
     @if (Model.CanBeEdited)
     {
-        <input type="checkbox" class="bcms-checkbox-holder bcms-pointer" data-bind="
-            checked: @(Model.ValueBind),
-            enterPress: onSave, 
-            afterRender: initInput($element, @Model.ValueBind),
-            escPress: onCancelEdit,
-            visible: isActive()
-            @(!string.IsNullOrEmpty(Model.FocusIdentifier) ? string.Format(", hasfocus: {0}", Model.FocusIdentifier) : string.Empty)
-               " />
-
+        <input type="checkbox" class="bcms-checkbox-holder bcms-pointer" data-bind="checked: @(Model.ValueBind), enterPress: onSave, afterRender: initInput($element, @Model.ValueBind), escPress: onCancelEdit, visible: isActive() @(!string.IsNullOrEmpty(Model.FocusIdentifier) ? string.Format(", hasfocus: {0}", Model.FocusIdentifier) : string.Empty)" />
     }
     @if (Model.ShowValueAsText)
     {
-        <a class="bcms-tables-link" data-bind="
-           text: @(Model.ValueBind)() === true || @(Model.ValueBind)() === 'true' ? '@RootGlobalization.Button_Yes' : (@(Model.ValueBind)() === false || @(Model.ValueBind)() === 'false' ? '@RootGlobalization.Button_No' : '&nbsp;' )
-           @(!string.IsNullOrEmpty(Model.FocusIdentifier) ? string.Format(", click: onItemSelect.bind($data, {0})", Model.FocusIdentifier) : string.Empty)
-           @(Model.CanBeEdited ? ", visible: !isActive()"  : string.Empty)
-           "></a>
+        <div class="bcms-tables-link" data-bind="text: @(Model.ValueBind)() === true || @(Model.ValueBind)() === 'true' ? '@RootGlobalization.Button_Yes' : (@(Model.ValueBind)() === false || @(Model.ValueBind)() === 'false' ? '@RootGlobalization.Button_No' : '&nbsp;' ) @(!string.IsNullOrEmpty(Model.FocusIdentifier) ? string.Format(", click: onItemSelect.bind($data, {0})", Model.FocusIdentifier) : string.Empty) @(Model.CanBeEdited ? ", visible: !isActive()"  : string.Empty)"></div>
     }
     else
     {
-        <input type="checkbox" class="bcms-checkbox-holder" data-bind="
-               checked: @(Model.ValueBind)()
-               @(!string.IsNullOrEmpty(Model.FocusIdentifier) ? string.Format(", click: onItemSelect.bind($data, {0})", Model.FocusIdentifier) : string.Empty)
-               @(Model.CanBeEdited ? ", visible: !isActive()"  : string.Empty)
-               " />
+        <input type="checkbox" class="bcms-checkbox-holder" data-bind="checked: @(Model.ValueBind)() @(!string.IsNullOrEmpty(Model.FocusIdentifier) ? string.Format(", click: onItemSelect.bind($data, {0})", Model.FocusIdentifier) : string.Empty) @(Model.CanBeEdited ? ", visible: !isActive()"  : string.Empty)" />
     }
 </td>

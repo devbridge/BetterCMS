@@ -124,22 +124,22 @@
     <value>Url is required.</value>
   </data>
   <data name="SiteSettings_SitemapMenuItem" xml:space="preserve">
-    <value>Site Maps</value>
+    <value>Menus</value>
   </data>
   <data name="Sitemap_Dialog_Title" xml:space="preserve">
-    <value>Sitemap</value>
+    <value>Menu</value>
   </data>
   <data name="Sitemap_NodeEdit_Title_Tooltip_Message" xml:space="preserve">
-    <value>Edit the title of the page as you would like it displayed in the site map.</value>
+    <value>Edit the title of the page as you would like it displayed in the menu.</value>
   </data>
   <data name="Sitemap_NodeEdit_Url_Tooltip_Message" xml:space="preserve">
     <value>Edit the URL visitors will use to navigate to this post.</value>
   </data>
   <data name="Sitemap_NodeDeletedSuccessfully_Message" xml:space="preserve">
-    <value>Sitemap node deleted successfully.</value>
+    <value>Menu node deleted successfully.</value>
   </data>
   <data name="Sitemap_EditorDialog_Title" xml:space="preserve">
-    <value>Edit Site Map</value>
+    <value>Edit Menu</value>
   </data>
   <data name="Sitemap_EditDialog_AddPageLink_SearchButton" xml:space="preserve">
     <value>Search</value>
@@ -148,7 +148,7 @@
     <value>Search...</value>
   </data>
   <data name="Sitemap_NodeCreatedSuccessfully_Message" xml:space="preserve">
-    <value>Sitemap node created successfully.</value>
+    <value>Menu node created successfully.</value>
   </data>
   <data name="Sitemap_EditDialog_PageLink_Header" xml:space="preserve">
     <value>Drag &amp; Drop your page where you want to place it.</value>
@@ -196,25 +196,25 @@
     <value>Title</value>
   </data>
   <data name="SiteSettings_Sitemaps_AddNew" xml:space="preserve">
-    <value>Add New+</value>
+    <value>Add New</value>
   </data>
   <data name="SiteSettings_Sitemaps_Search" xml:space="preserve">
     <value>Search</value>
   </data>
   <data name="Sitemap_CreatorDialog_Title" xml:space="preserve">
-    <value>Add New Site Map</value>
+    <value>Add New Menu</value>
   </data>
   <data name="Sitemap_SitemapCreatedSuccessfully_Message" xml:space="preserve">
-    <value>Site map created successfully.</value>
+    <value>Menu created successfully.</value>
   </data>
   <data name="Sitemap_SitemapDeletedSuccessfully_Message" xml:space="preserve">
-    <value>Site map deleted successfully.</value>
+    <value>Menu deleted successfully.</value>
   </data>
   <data name="Sitemap_Delete_Confirmation_Message" xml:space="preserve">
-    <value>Are you sure you want to delete the site map?</value>
+    <value>Are you sure you want to delete the menu?</value>
   </data>
   <data name="Sitemap_HistoryDialog_Title" xml:space="preserve">
-    <value>Site Map History</value>
+    <value>Menu History</value>
   </data>
   <data name="SitemapHistory_Column_ArchivedBy" xml:space="preserve">
     <value>Archived By</value>
@@ -226,7 +226,7 @@
     <value>Status</value>
   </data>
   <data name="SitemapHistory_Column_Title" xml:space="preserve">
-    <value>Site Map Title</value>
+    <value>Menu Title</value>
   </data>
   <data name="SitemapStatus_Active" xml:space="preserve">
     <value>Active</value>
@@ -235,10 +235,10 @@
     <value>Archived</value>
   </data>
   <data name="Sitemap_HistoryDialog_RestoreConfirmationMessage" xml:space="preserve">
-    <value>Are you sure you want to restore to older version? Restored sitemap will be immediately active.</value>
+    <value>Are you sure you want to restore to older version? Restored menu will be immediately active.</value>
   </data>
   <data name="Sitemap_SitemapIsEmpty_Message" xml:space="preserve">
-    <value>Site map has no nodes.</value>
+    <value>Menu has no nodes.</value>
   </data>
   <data name="Sitemap_Button_CollapseAll" xml:space="preserve">
     <value>Collapse All</value>
@@ -247,21 +247,24 @@
     <value>Expand All</value>
   </data>
   <data name="Sitemap_EditDialog_AddTags_Tooltip_Description" xml:space="preserve">
-    <value>Add tags to this sitemap to identify it.</value>
+    <value>Add tags to this menu to identify it.</value>
   </data>
   <data name="Sitemap_EditDialog_SitemapTitle_Title" xml:space="preserve">
     <value>Title</value>
   </data>
   <data name="Sitemap_EditDialog_SitemapTitle_Tooltip_Description" xml:space="preserve">
-    <value>Edit the title of this sitemap.</value>
+    <value>Edit the title of this menu.</value>
   </data>
   <data name="SiteSettings_Sitemaps_Title" xml:space="preserve">
-    <value>Site Maps</value>
+    <value>Menus</value>
   </data>
   <data name="Sitemap_NodeEdit_Macro_Placeholder_Message" xml:space="preserve">
     <value>Type custom application data (macro) ...</value>
   </data>
   <data name="Sitemap_NodeEdit_Macro_Tooltip_Message" xml:space="preserve">
     <value>Edit the field dedicated to application developers for specific / custom functionality.</value>
+  </data>
+  <data name="Sitemap_EditDialog_LanguageSelectionTitle" xml:space="preserve">
+    <value>Edit menu in language:</value>
   </data>
 </root>

@@ -1,18 +1,62 @@
-﻿@model BetterCms.Module.Pages.ViewModels.Page.TemplateViewModel
-<div class="bcms-inner-grid-box @(Model.IsActive ? "bcms-inner-grid-box-active" : string.Empty) @(Model.IsCircularToCurrent ? "bcms-inner-grid-box-notcompatible" : string.Empty)"
+﻿@* --------------------------------------------------------------------------------------------------------------------
+// <copyright file="Template.cshtml" company="Devbridge Group LLC">
+// 
+// Copyright (C) 2015,2016 Devbridge Group LLC
+// 
+// This program is free software: you can redistribute it and/or modify
+// it under the terms of the GNU Lesser General Public License as published by
+// the Free Software Foundation, either version 3 of the License, or
+// (at your option) any later version.
+// 
+// This program is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU General Public License for more details.
+// 
+// You should have received a copy of the GNU Lesser General Public License
+// along with this program.  If not, see http://www.gnu.org/licenses/. 
+// </copyright>
+// 
+// <summary>
+// Better CMS is a publishing focused and developer friendly .NET open source CMS.
+// 
+// Website: https://www.bettercms.com 
+// GitHub: https://github.com/devbridge/bettercms
+// Email: info@bettercms.com
+// </summary>
+// -------------------------------------------------------------------------------------------------------------------- *@
+@model BetterCms.Module.Pages.ViewModels.Page.TemplateViewModel
+
+<div class="bcms-grid-box bcms-grid-box-pages bcms-js-grid-box @(Model.IsActive ? "bcms-grid-box-active" : string.Empty) @(Model.IsCircularToCurrent ? "bcms-grid-box-notcompatible" : string.Empty)"
      data-id="@Model.TemplateId"
      data-master="@(Model.IsMasterPage ? "1" : "0")"
      data-iscircular="@(Model.IsCircularToCurrent ? "1" : "0")">
-    <div class="bcms-title-holder">
-        <div class="bcms-content-titles">@Model.Title</div>
-    </div>
+
+    <div class="bcms-content-titles">@Model.Title</div>
+
     <div class="bcms-grid-image-holder">
         @if (!string.IsNullOrWhiteSpace(Model.PreviewThumbnailUrl) || !string.IsNullOrWhiteSpace(Model.PreviewUrl))
         {
             <div class="bcms-grid-image">
                 <img src="@(!string.IsNullOrWhiteSpace(Model.PreviewThumbnailUrl) ? Model.PreviewThumbnailUrl : Model.PreviewUrl)" alt="@Model.Title" />
             </div>
+
             <div class="bcms-zoom-overlay bcms-preview-template" data-url="@(!string.IsNullOrWhiteSpace(Model.PreviewUrl) ? Model.PreviewUrl : Model.PreviewThumbnailUrl)" data-alt="@Model.Title"></div>
         }
+        else
+        {
+            <svg class="bcms-grid-no-preview" viewBox="-237.5 336 138 121.5" enable-background="new -237.5 336 138 121.5">
+                <path d="m-237 336h137v4h-137v-4" fill="#e6e6e6" />
+                <g fill="#fff" stroke="#d7d4d4" stroke-linecap="square">
+                    <path d="m-237 404h43v27h-43v-27z" />
+                    <path d="m-190 404h43v27h-43v-27z" />
+                    <path d="m-237 437h137v20h-137v-20z" />
+                    <path d="m-143 404h43v27h-43v-27z" />
+                    <path d="m-237 345h137v53h-137v-53z" />
+                </g>
+            </svg>
+        }
     </div>
+
+    <div class="bcms-btn-selection bcms-js-grid-box">Select</div>
 </div>

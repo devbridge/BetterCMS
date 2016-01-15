@@ -1,62 +1,65 @@
-@import 'core/variables';
-
-@font-face {
-    font-family: 'Open Sans';
-    font-style: normal;
-    font-weight: 400;
-    src: url($bcms-OpenSans-Regular) format('truetype');
-}
-
-@font-face {
-    font-family: 'Open Sans';
-    font-style: normal;
-    font-weight: 600;
-    src: url($bcms-OpenSans-Semibold) format('truetype');
-}
-
-@font-face {
-    font-family: 'Open Sans';
-    font-style: normal;
-    font-weight: 700;
-    src: url($bcms-OpenSans-Bold) format('truetype');
-}
-
-%clearfix {
-    @include clearfix($extend: false);
-}
-
-.clearfix {
-    @include clearfix();
-}
-
-%reset {
-    margin: 0;
-    padding: 0;
-}
+// --------------------------------------------------------------------------------------------------------------------
+// <copyright file="root.scss" company="Devbridge Group LLC">
+// 
+// Copyright (C) 2015,2016 Devbridge Group LLC
+// 
+// This program is free software: you can redistribute it and/or modify
+// it under the terms of the GNU Lesser General Public License as published by
+// the Free Software Foundation, either version 3 of the License, or
+// (at your option) any later version.
+// 
+// This program is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU General Public License for more details.
+// 
+// You should have received a copy of the GNU Lesser General Public License
+// along with this program.  If not, see http://www.gnu.org/licenses/. 
+// </copyright>
+// 
+// <summary>
+// Better CMS is a publishing focused and developer friendly .NET open source CMS.
+// 
+// Website: https://www.bettercms.com 
+// GitHub: https://github.com/devbridge/bettercms
+// Email: info@bettercms.com
+// </summary>
+// --------------------------------------------------------------------------------------------------------------------
+@import '../node_modules/susy/sass/susy',
+'bourbon',
+'core/assets',
+'core/mixins',
+'core/colors',
+'core/variables',
+'core/webfonts';
 
 //module components
-@import 'components/normalize',
-'components/forms',
-'components/tables';
+@import 'core/normalize';
 
 //module structure
 @import 'structure/layout',
-'structure/modules',
-'structure/tabs';
+'structure/formelements',
+'structure/notifications',
+'structure/buttons',
+'structure/global';
 
 //module styles
-@import 'bcms-modules/root/buttons',
+@import 'bcms-modules/root/autocomplete',
+'bcms-modules/root/browsersupport',
 'bcms-modules/root/controlpanel',
 'bcms-modules/root/contentstree',
-'bcms-modules/root/messages',
-'bcms-modules/root/notifications',
 'bcms-modules/root/overlays',
-'plugins/markitup',
-'bcms-modules/root/index';
+'bcms-modules/root/pager',
+'bcms-modules/root/structurepath',
+'bcms-modules/root/tables',
+'bcms-modules/root/tabs',
+'bcms-modules/root/templategrids',
+'bcms-modules/root/tooltips';
 
 //module plugins
 @import 'plugins/markitup',
-'plugins/jquerycalendar';
+'plugins/jquerycalendar',
+'plugins/select2';
 
 //module text & debug
 //@debug

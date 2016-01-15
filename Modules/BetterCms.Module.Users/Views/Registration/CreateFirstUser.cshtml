@@ -1,71 +1,91 @@
-﻿@using BetterCms.Module.Users.Content.Resources
+﻿@* --------------------------------------------------------------------------------------------------------------------
+// <copyright file="CreateFirstUser.cshtml" company="Devbridge Group LLC">
+// 
+// Copyright (C) 2015,2016 Devbridge Group LLC
+// 
+// This program is free software: you can redistribute it and/or modify
+// it under the terms of the GNU Lesser General Public License as published by
+// the Free Software Foundation, either version 3 of the License, or
+// (at your option) any later version.
+// 
+// This program is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU General Public License for more details.
+// 
+// You should have received a copy of the GNU Lesser General Public License
+// along with this program.  If not, see http://www.gnu.org/licenses/. 
+// </copyright>
+// 
+// <summary>
+// Better CMS is a publishing focused and developer friendly .NET open source CMS.
+// 
+// Website: https://www.bettercms.com 
+// GitHub: https://github.com/devbridge/bettercms
+// Email: info@bettercms.com
+// </summary>
+// -------------------------------------------------------------------------------------------------------------------- *@
+@using BetterCms.Module.Users.Content.Resources
 @using Microsoft.Web.Mvc
-
 @model BetterCms.Module.Users.ViewModels.Registration.CreateFirstUserViewModel
 
 @{
     Layout = "~/Areas/bcms-users/Views/Shared/PublicActionLayout.cshtml";
     ViewBag.Title = "Better CMS - Users Module Registration";
 }
-
 @using (Html.BeginForm())
 {
-    <h2>Create first user for the Better CMS</h2>
-    <div class="validation-summary-valid" data-valmsg-summary="true">
+    <div class="bcms-content-dialog-title">Create first user for the Better CMS</div>
+    @*<div class="validation-summary-valid" data-valmsg-summary="true">
         @Html.ValidationSummary()
-    </div>
-    <div>
-        <span class="bcms-title">@UsersGlobalization.EditUser_FirstName_Title</span>
-        <p>
-            @Html.TextBoxFor(m => m.FirstName, new { @class = "bcms-editor-field-box", @id = "firstName" })
+    </div>*@
+
+    <div class="bcms-form-block-holder">
+        <div>
+            <div class="bcms-content-titles">@UsersGlobalization.EditUser_FirstName_Title</div>
             @Html.ValidationMessageFor(m => m.FirstName)
-        </p>
-    </div>
+            <div class="bcms-field-wrapper">
+                @Html.TextBoxFor(m => m.FirstName, new { @class = "bcms-field-text", @id = "firstName" })
+            </div>
 
-    <div>
-        <span class="bcms-title">@UsersGlobalization.EditUser_LastName</span>
-        <p>
-            @Html.TextBoxFor(m => m.LastName, new { @class = "bcms-editor-field-box" })
+            <div class="bcms-content-titles">@UsersGlobalization.EditUser_LastName</div>
             @Html.ValidationMessageFor(m => m.LastName)
-        </p>
-    </div>
+            <div class="bcms-field-wrapper">
+                @Html.TextBoxFor(m => m.LastName, new { @class = "bcms-field-text" })
+            </div>
 
-    <div>
-        <span class="bcms-title">@UsersGlobalization.EditUser_UserName_Title</span>
-        <p>
-            @Html.TextBoxFor(m => m.UserName, new { @class = "bcms-editor-field-box" })
+            <div class="bcms-content-titles">@UsersGlobalization.EditUser_UserName_Title</div>
             @Html.ValidationMessageFor(m => m.UserName)
-        </p>
-    </div>
+            <div class="bcms-field-wrapper">
+                @Html.TextBoxFor(m => m.UserName, new { @class = "bcms-field-text" })
+            </div>
+        </div>
 
-    <div>
-        <span class="bcms-title">@UsersGlobalization.EditUser_Email_Title</span>
-        <p>
-            @Html.TextBoxFor(m => m.Email, new { @class = "bcms-editor-field-box" })
+        <div>
+            <div class="bcms-content-titles">@UsersGlobalization.EditUser_Email_Title</div>
             @Html.ValidationMessageFor(m => m.Email)
-        </p>
-    </div>
+            <div class="bcms-field-wrapper">
+                @Html.TextBoxFor(m => m.Email, new { @class = "bcms-field-text" })
+            </div>
 
-    <div>
-        <span class="bcms-title">@UsersGlobalization.EditUser_Password_Title</span>
-        <p>
-            @Html.PasswordFor(m => m.Password, new { @class = "bcms-editor-field-box" })
+            <div class="bcms-content-titles">@UsersGlobalization.EditUser_Password_Title</div>
             @Html.ValidationMessageFor(m => m.Password)
-        </p>
-    </div>
+            <div class="bcms-field-wrapper">
+                @Html.PasswordFor(m => m.Password, new { @class = "bcms-field-text" })
+            </div>
 
-    <div>
-        <span class="bcms-title">@UsersGlobalization.EditUser_RetypePassword_Title</span>
-        <p>
-            @Html.PasswordFor(m => m.RetypedPassword, new { @class = "bcms-editor-field-box" })
+            <div class="bcms-content-titles">@UsersGlobalization.EditUser_RetypePassword_Title</div>
             @Html.ValidationMessageFor(m => m.RetypedPassword)
-        </p>
+            <div class="bcms-field-wrapper">
+                @Html.PasswordFor(m => m.RetypedPassword, new { @class = "bcms-field-text" })
+            </div>
+        </div>
     </div>
-    @Html.SubmitButton("submit", "Save", new { @class = "bcms-btn-small" })
-}
 
+    @Html.SubmitButton("submit", "Save", new { @class = "bcms-btn-primary" })
+}
 <script type="text/javascript">
-    (function() {
+    (function () {
         document.getElementById('firstName').focus();
-    })();    
+    })();
 </script>

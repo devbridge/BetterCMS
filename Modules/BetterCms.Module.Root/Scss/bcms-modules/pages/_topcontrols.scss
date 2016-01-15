@@ -1,0 +1,313 @@
+// --------------------------------------------------------------------------------------------------------------------
+// <copyright file="_topcontrols.scss" company="Devbridge Group LLC">
+// 
+// Copyright (C) 2015,2016 Devbridge Group LLC
+// 
+// This program is free software: you can redistribute it and/or modify
+// it under the terms of the GNU Lesser General Public License as published by
+// the Free Software Foundation, either version 3 of the License, or
+// (at your option) any later version.
+// 
+// This program is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU General Public License for more details.
+// 
+// You should have received a copy of the GNU Lesser General Public License
+// along with this program.  If not, see http://www.gnu.org/licenses/. 
+// </copyright>
+// 
+// <summary>
+// Better CMS is a publishing focused and developer friendly .NET open source CMS.
+// 
+// Website: https://www.bettercms.com 
+// GitHub: https://github.com/devbridge/bettercms
+// Email: info@bettercms.com
+// </summary>
+// --------------------------------------------------------------------------------------------------------------------
+
+.bcms-top-block {
+    &-holder {
+        @include clearfix();
+        @include user-select();
+        margin: 20px 0;
+        position: relative;
+    }
+
+    &-inner {
+        @include vertical-align();
+
+        &.bcms-active-search {
+            .bcms-search-block {
+                opacity: 1;
+                width: 280px;
+            }
+
+            .bcms-search-field-box {
+                width: 280px;
+            }
+        }
+    }
+
+    &-pager {
+        @include positioning($center-y: true);
+        right: 0;
+    }
+
+    &-filters {
+        @include clearfix();
+        border: {
+            top: $border-thin-smoke;
+            bottom: $border-thin-smoke;
+        }
+        padding: 5px 0;
+        position: relative;
+    }
+}
+
+//module buttons opener
+.bcms-top-controls-btn-holder {
+    @include vertical-align();
+    position: relative;
+}
+
+.bcms-btn-opener {
+    @include transition(background-color 200ms);
+    @include vertical-align();
+    @include size($form-element-height);
+    background: $bg-blue url($bcms-btn-down-arrow) no-repeat center;
+    cursor: pointer;
+
+    &:hover {
+        background-color: darken($bg-blue, 10%);
+    }
+
+    &-holder {
+        @include position(absolute, calc(100% + 1px) 0 null);
+        border: $border-thin-blue;
+        box-sizing: border-box;
+        display: none;
+        z-index: 5;
+
+        &.bcms-opened {
+            display: block;
+        }
+    }
+
+    &-link {
+        @include transition(background-color 200ms);
+        @include pad(20px);
+        background-color: $white;
+        border-top: $border-thin-blue;
+        color: $text-blue;
+        cursor: pointer;
+        line-height: $form-element-height;
+
+        &:hover {
+            background-color: $sky-blue;
+        }
+
+        &:first-child {
+            border-top: 0;
+        }
+    }
+}
+
+//module search block
+.bcms-search {
+    &-block {
+        @include transition(opacity 100ms ease-in);
+        @include vertical-align();
+        margin-left: -35px;
+        min-width: 250px;
+        opacity: 0;
+    }
+
+    &-field-box {
+        @include transition(width 150ms ease-in);
+        @extend %reset;
+        @include size(50px $form-element-height);
+        background-color: transparent;
+        border: {
+            top: 0;
+            right: 0;
+            bottom: $border-thick-blue;
+            left: 0;
+        }
+        box-sizing: border-box;
+        color: $text-dark;
+        font: {
+            size: 14px;
+            style: italic;
+        }
+        padding-left: 35px;
+
+        @include placeholder {
+            color: $text-light;
+            font: {
+                size: 14px;
+                style: italic;
+            }
+        }
+    }
+}
+
+//module search filter
+.bcms-filter-holder {
+    position: relative;
+    text-align: right;
+    z-index: 1;
+}
+
+.bcms-grid-filtering {
+    @include vertical-align();
+    border: $border-thin-transparent;
+    box-sizing: border-box;
+    line-height: 30px;
+    margin-left: 5px;
+    min-width: 61px;
+
+    &.bcms-active-filter {
+        background-color: $bg-smoke;
+        border: {
+            color: $gray-smoke;
+            bottom-color: $bg-smoke;
+        }
+
+        .bcms-filterbox {
+            color: $text-gray;
+        }
+    }
+}
+
+.bcms-filterbox {
+    @include transition(background-color 200ms, color 200ms);
+    @include pad(5px 25px);
+    background: url($bcms-grid-filter) no-repeat 92% center;
+    color: $text-light;
+    cursor: pointer;
+    font-size: 11px;
+    line-height: 28px;
+    position: relative;
+    text-transform: uppercase;
+}
+
+.bcms-filter {
+    &-selection-block {
+        @include position(relative, -1px null null);
+        background-color: $bg-smoke;
+        border: $border-thin-smoke;
+        box-sizing: border-box;
+        clear: both;
+        padding: 15px;
+        text-align: left;
+        z-index: -1;
+    }
+
+    &-controls {
+        border-bottom: $border-thin-smoke;
+        margin-bottom: 8px;
+        padding-bottom: 5px;
+    }
+
+    &-options {
+        @include gallery(6);
+        padding-bottom: 5px;
+
+        .bcms-filter-text {
+            @include vertical-align();
+            width: 22%;
+        }
+
+        .bcms-field-wrapper {
+            @include vertical-align();
+            width: 75%;
+        }
+    }
+
+    &-text {
+        color: $text-gray;
+        font-size: 11px;
+        line-height: 20px;
+        text-transform: uppercase;
+    }
+
+    &-modified {
+        display: inline;
+    }
+}
+
+.bcms-check-field-holder {
+    float: left;
+    margin: 4px 0 0 -3px;
+}
+
+.bcms-language-selector-box {
+    float: right;
+
+    .bcms-content-titles {
+        margin: 0;
+    }
+
+    .bcms-field-wrapper {
+        @include vertical-align();
+        width: 300px;
+    }
+}
+
+.bcms-sort {
+    &-options {
+        @include vertical-align();
+        text-align: left;
+
+        &-sorted {
+            color: $text-blue;
+            font-weight: 600;
+        }
+
+        &-block {
+            @include position(absolute, 100% 0 null null);
+            background-color: $white;
+            border: $border-thin-smoke;
+            box-shadow: $pop-box-shadow;
+            box-sizing: border-box;
+            margin-top: 10px;
+            padding: 14px 25px;
+            width: 200px;
+
+            &.bcms-tooltip-tl {
+                &:before {
+                    left: 91px;
+                }
+
+                &:after {
+                    left: 92px;
+                }
+            }
+        }
+
+        &-label {
+            background: url($bcms-sort-by-arrow) no-repeat right center;
+            color: $text-light;
+            cursor: pointer;
+            font-size: 11px;
+            line-height: 30px;
+            padding-right: 15px;
+            text-transform: uppercase;
+        }
+    }
+
+    &-option {
+        color: $text-dark;
+        cursor: pointer;
+        margin: 10px 0;
+
+        &:hover {
+            color: $text-blue;
+        }
+    }
+}
+
+.bcms-btn-field-holder {
+    float: right;
+}

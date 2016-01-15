@@ -37,8 +37,10 @@ namespace ASP
         }
         public override void Execute()
         {
+WriteLiteral("\r\n");
+
             
-            #line 3 "..\..\Views\Option\Partial\TopBlockAddItem.cshtml"
+            #line 30 "..\..\Views\Option\Partial\TopBlockAddItem.cshtml"
  if (Model.CanAddNewItems)
 {
 
@@ -47,89 +49,70 @@ namespace ASP
             #line hidden
 WriteLiteral("    <div");
 
-WriteLiteral(" class=\"bcms-btn-links-main\"");
+WriteLiteral(" class=\"bcms-top-controls-btn-holder\"");
+
+WriteLiteral(">\r\n        <div");
+
+WriteLiteral(" class=\"bcms-btn-main\"");
 
 WriteLiteral(" data-bind=\"click: addNewItem\"");
 
 WriteLiteral(">");
 
             
-            #line 5 "..\..\Views\Option\Partial\TopBlockAddItem.cshtml"
-                                                              Write(Model.AddNewTitle);
+            #line 33 "..\..\Views\Option\Partial\TopBlockAddItem.cshtml"
+                                                            Write(Model.AddNewTitle);
 
             
             #line default
             #line hidden
-WriteLiteral("</div>\r\n");
+WriteLiteral("</div>\r\n        <div");
+
+WriteLiteral(" class=\"bcms-btn-opener\"");
+
+WriteLiteral(" data-bind=\"click: addNewItem\"");
+
+WriteLiteral("> </div>\r\n        <div");
+
+WriteLiteral(" class=\"bcms-btn-opener-holder\"");
+
+WriteLiteral(" data-bind=\"css: {\'bcms-opened\' : isAddNewSelected}, foreach: optionTypes\"");
+
+WriteLiteral(">\r\n            <div");
+
+WriteLiteral(" class=\"bcms-btn-opener-link\"");
+
+WriteLiteral(" data-bind=\"text: name, click: $parent.addOption, clickBubble: false\"");
+
+WriteLiteral("></div>\r\n        </div>\r\n    </div>\r\n");
 
             
-            #line 6 "..\..\Views\Option\Partial\TopBlockAddItem.cshtml"
-
-
-            
-            #line default
-            #line hidden
-WriteLiteral("    <div");
-
-WriteLiteral(" class=\"bcms-widget-option-box\"");
-
-WriteLiteral(" data-bind=\"visible: isAddNewSelected\"");
-
-WriteLiteral(">\r\n        <select");
-
-WriteLiteral(" class=\"bcms-global-select\"");
-
-WriteLiteral(" id=\"bcms-multi-opts\"");
-
-WriteLiteral(" data-bind=\"options: optionTypes, optionsText: \'name\', optionsCaption: \'Choose ty" +
-"pe...\', optionsValue: \'id\', value: selectedTypeId\"");
-
-WriteLiteral("></select>\r\n    </div>\r\n");
-
-            
-            #line 10 "..\..\Views\Option\Partial\TopBlockAddItem.cshtml"
-}
-else
-{
-
-            
-            #line default
-            #line hidden
-WriteLiteral("    <div");
-
-WriteLiteral(" class=\"bcms-btn-links-main\"");
-
-WriteLiteral(">&nbsp;</div>\r\n");
-
-            
-            #line 14 "..\..\Views\Option\Partial\TopBlockAddItem.cshtml"
+            #line 39 "..\..\Views\Option\Partial\TopBlockAddItem.cshtml"
 }
 
             
             #line default
             #line hidden
-WriteLiteral("\r\n<div");
+WriteLiteral("<div");
 
-WriteLiteral(" class=\"bcms-language-bar bcms-language-selector-box\"");
+WriteLiteral(" class=\"bcms-language-selector-box\"");
 
 WriteLiteral(" data-bind=\"visible: showLanguages, with: language\"");
 
 WriteLiteral(">\r\n    <div");
 
-WriteLiteral(" class=\"bcms-filter-text bcms-table-middle-box\"");
+WriteLiteral(" class=\"bcms-content-titles\"");
 
 WriteLiteral(">Edit in language:</div>\r\n    <div");
 
-WriteLiteral(" class=\"bcms-table-middle-box\"");
+WriteLiteral(" class=\"bcms-field-wrapper\"");
 
 WriteLiteral(">\r\n        <select");
 
-WriteLiteral(" class=\"bcms-global-select\"");
-
 WriteLiteral(" data-bind=\"options: languages, optionsText: \'value\', optionsValue: \'key\', value:" +
-" languageId\"");
+" languageId, select2: { minimumResultsForSearch: -1 }\"");
 
-WriteLiteral("></select>\r\n    </div>\r\n</div>");
+WriteLiteral("></select>\r\n    </div>\r\n</div>\r\n");
 
         }
     }

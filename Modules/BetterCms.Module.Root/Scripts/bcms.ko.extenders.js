@@ -21,6 +21,32 @@ bettercms.define('bcms.ko.extenders', ['bcms.jquery', 'bcms', 'knockout', 'bcms.
     };
 
     /**
+    * Extend knockout handlers: select2 support.
+    */
+    ko.bindingHandlers.select2 = {
+        init: function (element, valueAccessor, allBindingsAccessor) {
+            var allBindings, _base, obj;
+            obj = valueAccessor();
+
+            // workaround for ko compatibility
+            obj.ko_FIX = true;
+            $(element).select2(obj);
+            allBindings = allBindingsAccessor();
+            if (typeof (_base = allBindings.value).subscribe === "function") {
+                _base.subscribe(function (val) {
+                    return $(element).select2('val', val);
+                });
+            }
+            return ko.utils.domNodeDisposal.addDisposeCallback(element, function () {
+                return $(element).select2('destroy');
+            });
+        },
+        update: function (element, valueAccessor, allBindingsAccessor) {
+            $(element).trigger('change');
+        }
+    };
+
+    /**
     * Extend knockout handlers: add Enter key press event handler
     */
     ko.bindingHandlers.enterPress = {
@@ -78,6 +104,24 @@ bettercms.define('bcms.ko.extenders', ['bcms.jquery', 'bcms', 'knockout', 'bcms.
 
             ko.bindingHandlers.value.update(element, valueAccessor);
         }
+    };
+
+    /**
+    * Binds the observable value as a string (required for radio buttons checked binding) 
+    */
+    ko.observable.fn.asString = function () {
+        var source = this;
+        if (!source._asString) {
+            source._asString = ko.computed({
+                read: function () {
+                    return String(source());
+                },
+                write: function (newValue) {
+                    source(Number(newValue));
+                }
+            });
+        }
+        return source._asString;
     };
 
     /**

@@ -1,4 +1,31 @@
-﻿@using BetterCms.Module.MediaManager.Command.History.GetMediaHistory
+﻿@* --------------------------------------------------------------------------------------------------------------------
+// <copyright file="MediaHistory.cshtml" company="Devbridge Group LLC">
+// 
+// Copyright (C) 2015,2016 Devbridge Group LLC
+// 
+// This program is free software: you can redistribute it and/or modify
+// it under the terms of the GNU Lesser General Public License as published by
+// the Free Software Foundation, either version 3 of the License, or
+// (at your option) any later version.
+// 
+// This program is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU General Public License for more details.
+// 
+// You should have received a copy of the GNU Lesser General Public License
+// along with this program.  If not, see http://www.gnu.org/licenses/. 
+// </copyright>
+// 
+// <summary>
+// Better CMS is a publishing focused and developer friendly .NET open source CMS.
+// 
+// Website: https://www.bettercms.com 
+// GitHub: https://github.com/devbridge/bettercms
+// Email: info@bettercms.com
+// </summary>
+// -------------------------------------------------------------------------------------------------------------------- *@
+@using BetterCms.Module.MediaManager.Command.History.GetMediaHistory
 @using BetterCms.Module.MediaManager.Content.Resources
 @using BetterCms.Module.MediaManager.Controllers
 @using BetterCms.Module.MediaManager.Models.Enum
@@ -12,25 +39,26 @@
 @using MvcContrib.UI.Grid
 
 @model MediaHistoryViewModel
+
 @helper PreviewLink(MediaHistoryItem item)
 {
-    <a class="bcms-icn-preview" data-id="@item.Id">@RootGlobalization.Button_Preview</a>
+    <div class="bcms-action-usage bcms-js-preview" title="@RootGlobalization.Button_Preview" data-id="@item.Id">@RootGlobalization.Button_Preview</div>
 }
 
 @helper DownloadLink(MediaHistoryItem item)
 {
-    <a class="bcms-icn-download" data-id="@item.Id" data-version="@item.Version">@MediaGlobalization.MediaManager_ButtonDownload</a>
+    <div class="bcms-action-download bcms-js-download" title="@MediaGlobalization.MediaManager_ButtonDownload" data-id="@item.Id" data-version="@item.Version">@MediaGlobalization.MediaManager_ButtonDownload</div>
 }
 
 @helper RestoreLink(MediaHistoryItem item)
 {
     if (item.CanCurrentUserRestoreIt)
     {
-    <a class="bcms-icn-restore" data-id="@item.Id" data-version="@item.Version">@RootGlobalization.Button_Restore</a>
+        <div class="bcms-action-restore bcms-js-restore" title="@RootGlobalization.Button_Restore" data-id="@item.Id" data-version="@item.Version">@RootGlobalization.Button_Restore</div>
     }
     else
     {
-    @:&nbsp;
+        @:&nbsp;
     }
 }
 
@@ -39,17 +67,18 @@
     switch (status)
     {
         case MediaHistoryStatus.Archived:
-    @:<div class="bcms-archived-state">@statusName</div>
+            @:<div class="bcms-archived-state">@statusName</div>
 
             break;
 
         case MediaHistoryStatus.Active:
-    @:<div class="bcms-published-state">@statusName</div>
-        
+        @:<div class="bcms-published-state">@statusName</div>
+
+
             break;
 
         default:
-    @:statusName
+        @:statusName
             break;
     }
 }
@@ -61,86 +90,75 @@
                .Encode(false)
                .Named("&nbsp;")
                .Sortable(false)
-               .HeaderAttributes(@style => "width: 40px; padding: 10px;", @class => "bcms-tables-nohover");
+               .HeaderAttributes(@style => "width: 40px; padding: 0;", @class => "bcms-tables-nohover");
 
         column.For(m => m.PublishedOn.ToFormattedDateString())
                .Named(MediaGlobalization.MediaHistory_Column_PublishedOn)
                .SortColumnName("PublishedOn")
-               .HeaderAttributes(@style => "width: 95px;")
-               .Attributes(@style => "width: 100px;");
+               .HeaderAttributes(@style => "width: 130px;");
 
         column.For(m => m.PublishedByUser)
                .Named(MediaGlobalization.MediaHistory_Column_PublishedByUser)
-               .SortColumnName("PublishedByUser")
-               .HeaderAttributes(@style => "width: 200px;")
-               .Attributes(@style => "width: 200px;");
+               .SortColumnName("PublishedByUser");
 
         column.For(m => m.ArchivedOn.ToFormattedDateString())
                .Named(MediaGlobalization.MediaHistory_Column_ArchivedOn)
                .SortColumnName("ArchivedOn")
-               .HeaderAttributes(@style => "width: 100px;")
-               .Attributes(@style => "width: 100px;");
+               .HeaderAttributes(@style => "width: 130px;");
 
         column.For(m => m.DisplayedFor.ToFormatedTimeString())
                .Named(MediaGlobalization.MediaHistory_Column_DisplayedFor)
                .SortColumnName("DisplayedFor")
-               .HeaderAttributes(@style => "width: 90px;")
-               .Attributes(@style => "width: 90px;");
+               .HeaderAttributes(@style => "width: 130px;");
 
         column.For(m => DisplayStatus(m.StatusName, m.Status))
                .Named(MediaGlobalization.MediaHistory_Column_Status)
                .SortColumnName("StatusName")
                .Encode(false)
-               .HeaderAttributes(@style => "width: 90px;")
-               .Attributes(@style => "width: 90px;");
+               .HeaderAttributes(@style => "width: 95px;");
 
         column.For(f => DownloadLink(f))
                .Encode(false)
                .Named("&nbsp;")
                .Sortable(false)
-               .HeaderAttributes(@style => "width: 57px;", @class => "bcms-tables-nohover")
-               .Attributes(@style => "width: 57px;");
+               .HeaderAttributes(@style => "width:40px; padding: 0;", @class => "bcms-tables-nohover");
 
         column.For(f => RestoreLink(f))
                .Encode(false)
                .Named("&nbsp;")
                .Sortable(false)
-               .HeaderAttributes(@style => "width: 115px;", @class => "bcms-tables-nohover")
-               .Attributes(@style => "width: 89px;");
+               .HeaderAttributes(@style => "width: 40px; padding: 0;", @class => "bcms-tables-nohover");
     };
 }
 
-<div class="bcms-scroll-window">
-
-    <div class="bcms-history-preview-holder">
-        <div class="bcms-history-preview">
-            <div id="bcms-history-preview" style="height: 100%">
-                @Html.TabbedContentMessagesBox()
-                <div class="bcms-history-info" style="display: block;">@MediaGlobalization.MediaHistory_SelectVersionToPreviewMessage</div>
-                <div class="bcms-history-content"></div>
-            </div>
-        </div>
+@Html.MessagesBox()
+<div class="bcms-modal-frame-holder">
+    <div class="bcms-history-preview-holder bcms-history-preview-holder-media" id="bcms-history-preview">
+        <div class="bcms-history-info" style="display: block;">@MediaGlobalization.MediaHistory_SelectVersionToPreviewMessage</div>
+        @*<div class="bcms-history-content"></div>*@
     </div>
 
     <div class="bcms-history-table-holder">
-
         @using (Html.BeginForm<HistoryController>(f => f.MediaHistory((GetMediaHistoryRequest)null), FormMethod.Post, new { @id = "bcms-pagecontenthistory-form", @class = "bcms-ajax-form" }))
-        {                        
+        {
             @Html.HiddenGridOptions(Model.GridOptions)
             @Html.HiddenFor(model => model.MediaId)
 
             <div class="bcms-history-table-top">
                 <div class="bcms-large-titles">@MediaGlobalization.MediaHistory_OlderVersions</div>
-                <div class="bcms-search-block">
-                    @Html.TextBoxFor(m => m.SearchQuery, new { @class = "bcms-editor-field-box", @placeholder = RootGlobalization.WaterMark_Search })
+
+                <div class="bcms-top-block-inner">
                     <div class="bcms-btn-search" id="bcms-pagecontenthistory-search-btn">@RootGlobalization.Button_Search</div>
-                </div>
-            </div>                        
-            @Html.Grid(Model.Items).Sort(Model.GridOptions).Columns(columns).Attributes(@class => "bcms-tables bcms-history-grid").RenderUsing(new ScrollableEditableHtmlTableGridRenderer<MediaHistoryItem>()
-                                                                                                                                 {
-                                                                                                                                     InternalTableCssClass = "bcms-history-cell"
-                                                                                                                                 })
-            @Html.HiddenSubmit()
+                    <div class="bcms-search-block">
+                        @Html.TextBoxFor(m => m.SearchQuery, new { @class = "bcms-search-field-box bcms-js-search-box bcms-search-query", @placeholder = RootGlobalization.WaterMark_Search })
+                    </div>
+                </div>           
+            </div>
+
+            <div class="bcms-history-items-list bcms-history-items-list-media">
+                @Html.Grid(Model.Items).Sort(Model.GridOptions).Columns(columns).Attributes(@class => "bcms-tables bcms-history-grid").RenderUsing(new EditableHtmlTableGridRenderer<MediaHistoryItem>())
+                @Html.HiddenSubmit()
+            </div>
         }
     </div>
 </div>

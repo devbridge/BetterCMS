@@ -1,4 +1,31 @@
-﻿@using BetterCms.Module.Root
+﻿@* --------------------------------------------------------------------------------------------------------------------
+// <copyright file="OptionCell.cshtml" company="Devbridge Group LLC">
+// 
+// Copyright (C) 2015,2016 Devbridge Group LLC
+// 
+// This program is free software: you can redistribute it and/or modify
+// it under the terms of the GNU Lesser General Public License as published by
+// the Free Software Foundation, either version 3 of the License, or
+// (at your option) any later version.
+// 
+// This program is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU General Public License for more details.
+// 
+// You should have received a copy of the GNU Lesser General Public License
+// along with this program.  If not, see http://www.gnu.org/licenses/. 
+// </copyright>
+// 
+// <summary>
+// Better CMS is a publishing focused and developer friendly .NET open source CMS.
+// 
+// Website: https://www.bettercms.com 
+// GitHub: https://github.com/devbridge/bettercms
+// Email: info@bettercms.com
+// </summary>
+// -------------------------------------------------------------------------------------------------------------------- *@
+@using BetterCms.Module.Root
 @using BetterCms.Module.Root.Mvc.Grids
 
 @model BetterCms.Module.Pages.Mvc.EditableGrid.OptionValueEditableGridColumn
@@ -31,71 +58,40 @@
 <td @Html.Raw(Model.Attributes)>
     @if (Model.CanBeEdited)
     {
-        <div class="bcms-input-field-holder">
-            <div class="bcms-date-input-box bcms-options-date" data-bind="visible: isActive()">
-                <input class="bcms-editor-field-box bcms-datepicker" data-bind="
-                    css: { 'bcms-input-validation-error': !isNew() && @(Model.ValueBind).hasError && @(Model.ValueBind).hasError() },
-                    value: @(Model.ValueBind),
-                    valueUpdate: 'afterkeydown', 
-                    enterPress: onSave, 
-                    escPress: onCancelEdit,
-                    afterRender: initDatePickers(),
-                    visible: isActive()
-                    @(!string.IsNullOrEmpty(Model.FocusIdentifier) ? string.Format(", hasfocus: {0}", Model.FocusIdentifier) : string.Empty)
-                       " />
-            
+            <div class="bcms-field-wrapper bcms-options-date" data-bind="visible: isActive()">
+                <input class="bcms-field-text bcms-datepicker" data-bind="css: { 'bcms-input-validation-error': !isNew() && @(Model.ValueBind).hasError && @(Model.ValueBind).hasError() }, value: @(Model.ValueBind), valueUpdate: 'afterkeydown', enterPress: onSave, escPress: onCancelEdit, afterRender: initDatePickers(), visible: isActive() @(!string.IsNullOrEmpty(Model.FocusIdentifier) ? string.Format(", hasfocus: {0}", Model.FocusIdentifier) : string.Empty)"/>
                 <!-- ko if: !isNew() &&  @(Model.ValueBind).hasError && @(Model.ValueBind).hasError() -->
                 <span class="bcms-field-validation-error">
                     <span data-bind="html: @(Model.ValueBind).validationMessage()"></span>
                 </span>
                 <!-- /ko -->
             </div>
-        </div>
     }
-    <a class="bcms-tables-link" data-bind="
-       text: @(Model.ValueBind)() @(!string.IsNullOrEmpty(Model.FocusIdentifier) ? string.Format(", click: onItemSelect.bind($data, {0})", Model.FocusIdentifier) : string.Empty)
-       @(Model.CanBeEdited ? ", visible: !isActive()" : string.Empty)
-       "></a>    
-
+    <div class="bcms-tables-link" data-bind="text: @(Model.ValueBind)() @(!string.IsNullOrEmpty(Model.FocusIdentifier) ? string.Format(", click: onItemSelect.bind($data, {0})", Model.FocusIdentifier) : string.Empty) @(Model.CanBeEdited ? ", visible: !isActive()" : string.Empty)"></div>    
 </td>
 <!-- /ko -->
 
 @* Custom *@
 <!-- ko if: !useDefaultValueBinding() && type() == 99  -->
-<td @Html.Raw(Model.Attributes)>
+<td class="bcms-table-field-helper" @Html.Raw(Model.Attributes)>
     @if (Model.CanBeEdited)
     {
-        <input style="width: 70%" class="bcms-editor-field-box" type="text" readonly="readonly" data-bind="value: @(Model.CustomValueBind)() || @(Model.ValueBind)(), 
-            enterPress: onSave, 
-            escPress: onCancelEdit,
-            visible: isActive()
-            @(!string.IsNullOrEmpty(Model.FocusIdentifier) ? string.Format(", hasfocus: {0}", Model.FocusIdentifier) : string.Empty)
-               " />
-        <div class="bcms-btn-small" data-bind="
-                    click: onCustomOptionExecute.bind($data, $data, @(Model.CustomValueBind), @(Model.ValueBind)),
-                    enterPress: onSave, 
-                    escPress: onCancelEdit,
-                    visible: isActive()">...</div>
+        <div class="bcms-field-wrapper">
+        <input class="bcms-field-text" type="text" readonly="readonly" data-bind="value: @(Model.CustomValueBind)() || @(Model.ValueBind)(), enterPress: onSave, escPress: onCancelEdit,visible: isActive() @(!string.IsNullOrEmpty(Model.FocusIdentifier) ? string.Format(", hasfocus: {0}", Model.FocusIdentifier) : string.Empty)"/>
+        </div>
+        <div class="bcms-btn-primary" data-bind="click: onCustomOptionExecute.bind($data, $data, @(Model.CustomValueBind), @(Model.ValueBind)), enterPress: onSave, escPress: onCancelEdit, visible: isActive()">...</div>
     }
-    <a class="bcms-tables-link" data-bind="
-       text: @(Model.CustomValueBind)() || @(Model.ValueBind)() 
-       @(!string.IsNullOrEmpty(Model.FocusIdentifier) ? string.Format(", click: onItemSelect.bind($data, {0})", Model.FocusIdentifier) : string.Empty)
-       @(Model.CanBeEdited ? ", visible: !isActive()" : string.Empty)
-       "></a>    
+    <div class="bcms-tables-link" data-bind=" text: @(Model.CustomValueBind)() || @(Model.ValueBind)() @(!string.IsNullOrEmpty(Model.FocusIdentifier) ? string.Format(", click: onItemSelect.bind($data, {0})", Model.FocusIdentifier) : string.Empty) @(Model.CanBeEdited ? ", visible: !isActive()" : string.Empty)"></div>    
 </td>
 <!-- /ko -->
 
 @* Using default value *@
 <!-- ko if: useDefaultValueBinding() && type() == 5  -->
-    @Html.Partial(RootModuleConstants.EditableGridBooleanCellTemplate, new EditableGridBooleanColumn(null, null, Model.ValueBind)
-                                                                           {
-                                                                               CanBeEdited = false,
-                                                                               ShowValueAsText = true
-                                                                           })
+    @Html.Partial(RootModuleConstants.EditableGridBooleanCellTemplate, new EditableGridBooleanColumn(null, null, Model.ValueBind) { CanBeEdited = false, ShowValueAsText = true })
 <!-- /ko -->
 
 <!-- ko if: useDefaultValueBinding() && type() != 5  -->
 <td @Html.Raw(Model.Attributes)>
-    <a class="bcms-tables-link" data-bind="text: @(Model.CustomValueBind)() || @(Model.ValueBind)() @(!string.IsNullOrEmpty(Model.FocusIdentifier) ? string.Format(", click: onItemSelect.bind($data, {0})", Model.FocusIdentifier): string.Empty)"></a>
+    <div class="bcms-tables-link" data-bind="text: @(Model.CustomValueBind)() || @(Model.ValueBind)() @(!string.IsNullOrEmpty(Model.FocusIdentifier) ? string.Format(", click: onItemSelect.bind($data, {0})", Model.FocusIdentifier): string.Empty)"></div>
 </td>
 <!-- /ko -->

@@ -1,5 +1,31 @@
 ﻿/*jslint unparam: true, white: true, browser: true, devel: true */
-/*global bettercms */
+// --------------------------------------------------------------------------------------------------------------------
+// <copyright file="bcms.grid.js" company="Devbridge Group LLC">
+// 
+// Copyright (C) 2015,2016 Devbridge Group LLC
+// 
+// This program is free software: you can redistribute it and/or modify
+// it under the terms of the GNU Lesser General Public License as published by
+// the Free Software Foundation, either version 3 of the License, or
+// (at your option) any later version.
+// 
+// This program is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU General Public License for more details.
+// 
+// You should have received a copy of the GNU Lesser General Public License
+// along with this program.  If not, see http://www.gnu.org/licenses/. 
+// </copyright>
+// 
+// <summary>
+// Better CMS is a publishing focused and developer friendly .NET open source CMS.
+// 
+// Website: https://www.bettercms.com 
+// GitHub: https://github.com/devbridge/bettercms
+// Email: info@bettercms.com
+// </summary>
+// --------------------------------------------------------------------------------------------------------------------
 
 bettercms.define('bcms.grid', ['bcms.jquery', 'bcms'], function ($, bcms) {
     'use strict';
@@ -9,11 +35,11 @@ bettercms.define('bcms.grid', ['bcms.jquery', 'bcms'], function ($, bcms) {
             firstTable: 'table.bcms-tables:first',
             emptyRow: 'tr.bcms-grid-empty-row',
             anyRow: 'tbody > tr:not(.bcms-grid-empty-row):first',
-            sortColumnHeaders: 'a.bcms-sort-arrow',
+            sortColumnHeaders: '.bcms-sort-arrow',
             hiddenSortColumnField: '#bcms-grid-sort-column',
             hiddenSortDirectionField: '#bcms-grid-sort-direction',
             hiddenPageNumberField: '#bcms-grid-page-number',
-            formLoaderContainer: '.bcms-rightcol:first',
+            formLoaderContainer: '.bcms-js-settings-window:first',
             pageNumbers: '.bcms-pager-no, .bcms-pager-prev, .bcms-pager-next',
             scrollWindow: '.bcms-scroll-window:first'
         },
@@ -75,6 +101,13 @@ bettercms.define('bcms.grid', ['bcms.jquery', 'bcms'], function ($, bcms) {
     };
 
     /**
+     * 
+     */
+    grid.submitGridFormPaged = function(form, onSuccess) {
+        return submitGridForm(form, onSuccess);
+    };
+
+    /**
     * Submits site settings list form
     */
     grid.submitGridForm = function (form, onSuccess) {
@@ -105,7 +138,6 @@ bettercms.define('bcms.grid', ['bcms.jquery', 'bcms'], function ($, bcms) {
                 $(container).hideLoading();
             },
             success: function (data, status, response) {
-                $(container).hideLoading();
                 if ($.isFunction(onSuccess)) {
                     if (response.getResponseHeader('Content-Type').indexOf('application/json') === 0 && data.Html) {
                         onSuccess(data.Html, data.Data);
@@ -113,6 +145,7 @@ bettercms.define('bcms.grid', ['bcms.jquery', 'bcms'], function ($, bcms) {
                         onSuccess(data, null);
                     }
                 }
+                setTimeout(function () { $(container).hideLoading(); }, 100);
             }
         });
     }

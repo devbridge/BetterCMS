@@ -1,99 +1,112 @@
-﻿@using BetterCms.Module.Root
+﻿@* --------------------------------------------------------------------------------------------------------------------
+// <copyright file="CategoryTreeEdit.cshtml" company="Devbridge Group LLC">
+// 
+// Copyright (C) 2015,2016 Devbridge Group LLC
+// 
+// This program is free software: you can redistribute it and/or modify
+// it under the terms of the GNU Lesser General Public License as published by
+// the Free Software Foundation, either version 3 of the License, or
+// (at your option) any later version.
+// 
+// This program is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU General Public License for more details.
+// 
+// You should have received a copy of the GNU Lesser General Public License
+// along with this program.  If not, see http://www.gnu.org/licenses/. 
+// </copyright>
+// 
+// <summary>
+// Better CMS is a publishing focused and developer friendly .NET open source CMS.
+// 
+// Website: https://www.bettercms.com 
+// GitHub: https://github.com/devbridge/bettercms
+// Email: info@bettercms.com
+// </summary>
+// -------------------------------------------------------------------------------------------------------------------- *@
+@using BetterCms.Module.Root
 @using BetterCms.Module.Root.Content.Resources
 @using BetterCms.Module.Root.Controllers
 @using BetterCms.Module.Root.Mvc.Helpers
 @using BetterCms.Module.Root.ViewModels.Category
 @using Microsoft.Web.Mvc
 @model CategoryTreeViewModel
-<div class="bcms-tab-header">
-    <a class="bcms-tab-item bcms-active" data-name="#bcms-tab-1">@RootGlobalization.CategoryTree_EditDialog_PropertiesTab_Title</a>
-    <a class="bcms-tab-item" data-name="#bcms-tab-2">@RootGlobalization.CategoryTree_EditDialog_NodesTab_Title</a>
-</div>
-<div id="bcms-categorytree-addnode">
-    @Html.TabbedContentMessagesBox()
-    @* Form is required for unobtrusive validation. *@
-    @using (Html.BeginForm<CategoryController>(f => f.EditCategoryTree(null), FormMethod.Post, new
+
+<div class="bcms-modal-frame-holder">
+    @Html.MessagesBox()
+
+    <div class="bcms-window-options" id="bcms-categorytree-addnode">
+        @* Form is required for unobtrusive validation. *@
+        @using (Html.BeginForm<CategoryController>(f => f.EditCategoryTree(null), FormMethod.Post, new { @class = "bcms-categorytree-form bcms-ajax-form", data_readonly = Model.IsReadOnly.ToString().ToLower() }))
         {
-            @class = "bcms-categorytree-form bcms-ajax-form",
-            data_readonly = Model.IsReadOnly.ToString().ToLower()
-        }))
-    {
-        <div id="bcms-tab-1" class="bcms-tab-single">
-            <div class="bcms-padded-content">
-                <div class="bcms-input-list-holder">
-                    @Html.Tooltip(RootGlobalization.CategoryTree_EditDialog_Title_Tooltip_Description)
-                    <div class="bcms-content-titles">@RootGlobalization.CategoryTree_EditDialog_Title_Title</div>
-                    <div class="bcms-input-box">
-                        @Html.TextBoxFor(model => model.Title, new { @class = "bcms-editor-field-box", data_bind = "value: title, valueUpdate: 'afterkeydown', hasfocus: true" })
-                        @Html.BcmsValidationMessageFor(f => f.Title)
-                        @Html.HiddenFor(m => m.Id)
-                        @Html.HiddenFor(m => m.Version)
-                    </div>
-                </div>
-                <div class="bcms-input-list-holder">
-                    @Html.Tooltip(RootGlobalization.CategoryTree_EditDialog_UsedFor_Tooltip_Description)
-                    <div class="bcms-content-titles">@RootGlobalization.CategoryTree_EditDialog_UsedFor_Title</div>
-                    <!-- ko foreach: categorizableItems -->
-                    <div class="bcms-checkbox-holder">
-                        <input type="checkbox" data-bind="checked: isSelected, enable: !isDisabled()">
-                        <div class="bcms-edit-label" data-bind="text: name, click: inverseSelection"></div>
-                    </div>
-                    <!-- /ko -->
-                </div>
-                @if (Model.ShowMacros)
-                {
+            <div class="bcms-form-block-holder">
+                <div>
                     <div class="bcms-input-list-holder">
-                        @Html.Tooltip(RootGlobalization.CategoryTree_EditDialog_Macro_Tooltip_Message)
-                        <div class="bcms-content-titles">@RootGlobalization.CategoryTree_EditDialog_Macro_Title</div>
-                        <div class="bcms-input-box">
-                            @Html.TextBoxFor(model => model.Macro, new
+                        <div class="bcms-content-titles">@RootGlobalization.CategoryTree_EditDialog_Title_Title</div>
+                        @Html.Tooltip(RootGlobalization.CategoryTree_EditDialog_Title_Tooltip_Description)
+
+                        <div class="bcms-field-wrapper">
+                            @Html.TextBoxFor(model => model.Title, new { @class = "bcms-field-text", data_bind = "value: title, valueUpdate: 'afterkeydown', hasfocus: true" })
+                            @Html.BcmsValidationMessageFor(f => f.Title)
+                            @Html.HiddenFor(m => m.Id)
+                            @Html.HiddenFor(m => m.Version)
+                        </div>
+                    </div>
+
+                    @if (Model.ShowMacros)
+                    {
+                        <div class="bcms-input-list-holder">
+                            <div class="bcms-content-titles">@RootGlobalization.CategoryTree_EditDialog_Macro_Title</div>
+                            @Html.Tooltip(RootGlobalization.CategoryTree_EditDialog_Macro_Tooltip_Message)
+
+                            <div class="bcms-field-wrapper">
+                                @Html.TextBoxFor(model => model.Macro, new
                        {
-                           @class = "bcms-editor-field-box",
+                           @class = "bcms-field-text",
                            placeholder = RootGlobalization.CategoryTree_Macro_Placeholder_Message,
                            data_bind = "value: macro, valueUpdate: 'afterkeydown', hasfocus: true"
                        })
-                            @Html.BcmsValidationMessageFor(m => m.Macro)
-                        </div>
-                    </div>
-                }
-                @*                @if (Model.AccessControlEnabled)*@
-                @*                {*@
-                @*                    @Html.Partial(RootModuleConstants.AccessControlTemplate)*@
-                @*                }*@
-            </div>
-        </div>
-        <div id="bcms-tab-2" class="bcms-tab-single">
-            <div class="bcms-scroll-window">
-
-                <div class="bcms-columns-container">
-                    <div class="bcms-sitemap-filter-holder">
-                        @*                        <div class="bcms-language-bar" style="display: none;" data-bind="visible: showLanguages, with: language">*@
-                        @*                            <div class="bcms-filter-text bcms-table-middle-box">Edit sitemap in language:</div>*@
-                        @*                            <div class="bcms-table-middle-box">*@
-                        @*                                <select class="bcms-global-select" data-bind="options: languages, optionsText: 'value', optionsValue: 'key', value: languageId"></select>*@
-                        @*                            </div>*@
-                        @*                        </div>*@
-                        <div class="bcms-language-bar">
-                            <div class="bcms-filter-text bcms-table-middle-box bcms-btn-links-main" data-bind="click: addNewNode">Add New +</div>
-                        </div>
-
-                        <div class="bcms-expand-link-holder" @* data-bind="droppable: 'emptyListZone'" TODO: check later. NOTE: jQuery error is raised on leave over. *@>
-                            <div class="bcms-expand-link" data-bind="click: expandAll">@RootGlobalization.CategoryTree_Button_ExpandAll</div>
-                            <div class="bcms-expand-link" data-bind="click: collapseAll">@RootGlobalization.CategoryTree_Button_CollapseAll</div>
-                        </div>
-                    </div>
-
-                    <div class="bcms-rightcol">
-                        <div class="bcms-sitemap-holder bcms-sitemap-edit">
-                            <div class="bcms-addnode-placement-holder@(Model.IsReadOnly ? "-readonly" : string.Empty)">
-                                @Html.Partial("Partial/CategoryTree", new CategoryTreeNodeViewModel())
+                                @Html.BcmsValidationMessageFor(m => m.Macro)
                             </div>
+                        </div>
+                    }
+                </div>
+
+                <div>
+                    <div class="bcms-input-list-holder">
+                        <div class="bcms-content-titles">@RootGlobalization.CategoryTree_EditDialog_UsedFor_Title</div>
+                        @Html.Tooltip(RootGlobalization.CategoryTree_EditDialog_UsedFor_Tooltip_Description)
+
+                        <div class="bcms-checkbox-block">
+                            <!-- ko foreach: categorizableItems -->
+                            <div class="bcms-checkbox-holder">
+                                <input type="checkbox" data-bind="checked: isSelected, enable: !isDisabled()">
+                                <div class="bcms-checkbox-label bcms-js-edit-label" data-bind="text: name, click: inverseSelection"></div>
+                            </div>
+                            <!-- /ko -->
                         </div>
                     </div>
                 </div>
-
             </div>
-        </div>
-    }
+
+            <div class="bcms-content-dialog-title">
+                <div class="bcms-content-titles-helper">@RootGlobalization.CategoryTree_EditDialog_Title_Title</div>
+
+                <div class="bcms-tree-expander bcms-tree-expander-close" data-bind="click: callExpandOrCollapse, css: { 'bcms-tree-expander-close' : allNodesExpanded()}, text: allNodesExpanded() ? '@RootGlobalization.CategoryTree_Button_CollapseAll' : '@RootGlobalization.CategoryTree_Button_ExpandAll'"></div>
+            </div>
+
+            <div class="bcms-tree-controls-holder">
+                <div class="bcms-tree-add-node" data-bind="click: addNewNode">Add New</div>
+            </div>
+
+            <div class="bcms-tree-drop-area">
+                <div class="bcms-addnode-placement-holder@(Model.IsReadOnly ? "-readonly" : string.Empty)">
+                    @Html.Partial("Partial/CategoryTree", new CategoryTreeNodeViewModel())
+                </div>
+            </div>
+        }
+    </div>
+
+    @Html.Partial("Partial/CategoryTreeTemplate", new CategoryTreeNodeViewModel())
 </div>
-@Html.Partial("Partial/CategoryTreeTemplate", new CategoryTreeNodeViewModel())

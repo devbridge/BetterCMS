@@ -1,18 +1,56 @@
-﻿@using BetterCms.Module.Root.Content.Resources
-
+﻿@* --------------------------------------------------------------------------------------------------------------------
+// <copyright file="ImageCell.cshtml" company="Devbridge Group LLC">
+// 
+// Copyright (C) 2015,2016 Devbridge Group LLC
+// 
+// This program is free software: you can redistribute it and/or modify
+// it under the terms of the GNU Lesser General Public License as published by
+// the Free Software Foundation, either version 3 of the License, or
+// (at your option) any later version.
+// 
+// This program is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU General Public License for more details.
+// 
+// You should have received a copy of the GNU Lesser General Public License
+// along with this program.  If not, see http://www.gnu.org/licenses/. 
+// </copyright>
+// 
+// <summary>
+// Better CMS is a publishing focused and developer friendly .NET open source CMS.
+// 
+// Website: https://www.bettercms.com 
+// GitHub: https://github.com/devbridge/bettercms
+// Email: info@bettercms.com
+// </summary>
+// -------------------------------------------------------------------------------------------------------------------- *@
+@using BetterCms.Module.Root.Content.Resources
 @model BetterCms.Module.Root.Mvc.Grids.EditableGridColumn
 
 <td @Html.Raw(Model.Attributes)>
-    <div class="bcms-author-picture">
-        <!-- ko if: image().url() && isActive() -->
-        <a class="bcms-remove-image" data-bind="click: image().remove.bind(image())">@RootGlobalization.Button_Remove</a>
-        <!-- /ko -->
-        <!-- ko if: image().url() -->
-        <a data-bind="click: image().preview.bind(image())"><img data-bind="attr: {src: image().thumbnailUrl(), alt: image().tooltip() }" /></a>
+    <div class="bcms-thumb-box">
+        <div class="bcms-thumb-image">
+            <!-- ko if: image().url() && isActive() -->
+            <div class="bcms-remove-image" data-bind="click: image().remove.bind(image())">@RootGlobalization.Button_Remove</div>
+            <!-- /ko -->
+            <!-- ko if: image().url() -->
+            <div data-bind="click: image().preview.bind(image())">
+                <img data-bind="attr: {src: image().thumbnailUrl(), alt: image().tooltip() }" />
+            </div>
+            <!-- /ko -->
+            <!-- ko ifnot: image().url() -->
+            <svg class="bcms-grid-no-preview" width="50" height="50" viewBox="-205 372 50 50" enable-background="new -205 372 50 50">
+                <g fill="#cdcdcd">
+                    <path d="m-205 422h50v-50h-50v50m2-48h46v46h-46v-46"></path>
+                    <path d="m-164.3 406.2l1.4-1.4-11.5-11.5-7.7 7.6-3.6-3.6-11.5 11.5 1.4 1.4 10.1-10.1 11.1 11.1 1.4-1.4-7.5-7.5 6.3-6.2 10.1 10.1"></path>
+                    <path d="m-187.9 382.4c-2.8 0-5 2.2-5 5 0 2.8 2.2 5 5 5 2.8 0 5-2.2 5-5 0-2.8-2.2-5-5-5m0 2c1.7 0 3 1.4 3 3 0 1.7-1.3 3-3 3-1.6 0-3-1.3-3-3 0-1.7 1.3-3 3-3"></path>
+                </g>
+            </svg>
+            <!-- /ko -->
+        </div>
+        <!-- ko if: isActive() -->
+        <div class="bcms-btn-selection" data-bind="click: image().select.bind(image())">@RootGlobalization.Button_Browse</div>
         <!-- /ko -->
     </div>
-
-    <!-- ko if: isActive() -->
-    <div class="bcms-blog-browse-images" data-bind="click: image().select.bind(image())">@RootGlobalization.Button_Browse</div>
-    <!-- /ko -->
 </td>

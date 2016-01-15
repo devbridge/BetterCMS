@@ -1,7 +1,33 @@
 ﻿/*jslint unparam: true, white: true, browser: true, devel: true */
-/*global bettercms */
+// --------------------------------------------------------------------------------------------------------------------
+// <copyright file="bcms.media.fileeditor.js" company="Devbridge Group LLC">
+// 
+// Copyright (C) 2015,2016 Devbridge Group LLC
+// 
+// This program is free software: you can redistribute it and/or modify
+// it under the terms of the GNU Lesser General Public License as published by
+// the Free Software Foundation, either version 3 of the License, or
+// (at your option) any later version.
+// 
+// This program is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU General Public License for more details.
+// 
+// You should have received a copy of the GNU Lesser General Public License
+// along with this program.  If not, see http://www.gnu.org/licenses/. 
+// </copyright>
+// 
+// <summary>
+// Better CMS is a publishing focused and developer friendly .NET open source CMS.
+// 
+// Website: https://www.bettercms.com 
+// GitHub: https://github.com/devbridge/bettercms
+// Email: info@bettercms.com
+// </summary>
+// --------------------------------------------------------------------------------------------------------------------
 
-bettercms.define('bcms.media.fileeditor', ['bcms.jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', 'bcms.forms', 'bcms.dynamicContent', 'bcms.ko.extenders', 'bcms.tags', 'bcms.categories', 'bcms.security', 'bcms.media.upload', 'bcms.multiple.select'],
+bettercms.define('bcms.media.fileeditor', ['bcms.jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', 'bcms.forms', 'bcms.dynamicContent', 'bcms.ko.extenders', 'bcms.tags', 'bcms.categories', 'bcms.security', 'bcms.media.upload'],
     function ($, bcms, modal, siteSettings, forms, dynamicContent, ko, tags, categories, security, mediaUpload) {
         'use strict';
 
@@ -80,7 +106,7 @@ bettercms.define('bcms.media.fileeditor', ['bcms.jquery', 'bcms', 'bcms.modal', 
         function FileEditViewModel(dialog, data, onSaveCallback) {
             var self = this,
                 tagsViewModel = new tags.TagsListViewModel(data.Tags),
-                categoriesViewModel = new categories.CategoriesListViewModel(data.Categories, data.CategoriesFilterKey),
+                categoriesViewModel = new categories.CategoriesSelectListModel(data.Categories),
                 accessControl = security.createUserAccessViewModel(data.UserAccessList),
                 image = data.Image,
                 userAccessList = accessControl.UserAccessList(),
@@ -153,6 +179,8 @@ bettercms.define('bcms.media.fileeditor', ['bcms.jquery', 'bcms', 'bcms.modal', 
         function initFileEditorDialogEvents(dialog, content, onSaveCallback) {
 
             var viewModel = new FileEditViewModel(dialog, content.Data, onSaveCallback);
+
+            categories.initCategoriesSelect(viewModel.categories, content.Data.CategoriesLookupList, dialog.container);
 
             ko.applyBindings(viewModel, dialog.container.find(selectors.fileEditorForm).get(0));
 

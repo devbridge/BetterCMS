@@ -1,180 +1,176 @@
-@import '../../core/variables';
+// --------------------------------------------------------------------------------------------------------------------
+// <copyright file="_uploader.scss" company="Devbridge Group LLC">
+// 
+// Copyright (C) 2015,2016 Devbridge Group LLC
+// 
+// This program is free software: you can redistribute it and/or modify
+// it under the terms of the GNU Lesser General Public License as published by
+// the Free Software Foundation, either version 3 of the License, or
+// (at your option) any later version.
+// 
+// This program is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU General Public License for more details.
+// 
+// You should have received a copy of the GNU Lesser General Public License
+// along with this program.  If not, see http://www.gnu.org/licenses/. 
+// </copyright>
+// 
+// <summary>
+// Better CMS is a publishing focused and developer friendly .NET open source CMS.
+// 
+// Website: https://www.bettercms.com 
+// GitHub: https://github.com/devbridge/bettercms
+// Email: info@bettercms.com
+// </summary>
+// --------------------------------------------------------------------------------------------------------------------
+$uploaded-states: (
+                ('failed', $bg-red),
+                ('success' $bg-green)
+);
 
-.bcms-dropzone {
-    height: 150px;
-    margin-bottom: 15px;
+.bcms-file-drop-zone {
+    @include vertical-align($block: table-cell);
+    background-color: $bg-modal-options;
+    border: $border-thick-dashed-smoke;
     border-radius: 2px;
-    border: 2px dashed #0383df;
-    background-color: #eeeeee;
+    height: 300px;
+    margin-bottom: 15px;
     text-align: center;
+
+    &-container {
+        display: table;
+        margin-top: 30px;
+        width: 100%;
+    }
+
+    &-text {
+        color: $text-light;
+        cursor: default;
+        font-size: 23px;
+        margin-bottom: 25px;
+        text-align: center;
+    }
+
+    &-download {
+        margin-top: 25px;
+
+        > a {
+            color: $text-light;
+            cursor: pointer;
+            font-size: 16px;
+
+            &:hover {
+                color: $text-blue;
+            }
+        }
+    }
+
+    &-active {
+        .bcms-btn-main {
+            opacity: 0;
+        }
+    }
 }
 
-.bcms-dropzone:hover {
-    cursor: pointer;
+.bcms-btn-upload-files-text {
+    .bcms-btn-main & {
+        @include size(100%);
+        color: $white;
+        cursor: pointer;
+        display: block;
+    }
 }
 
-.bcms-dropzone-active {
-    border: 2px solid #0C7EC7;
-    box-shadow: 0 0 10px 0 #daf5ff, inset 0 0 10px #daf5ff;
+.bcms-uploaded-container {
+    margin-top: 35px;
 }
 
-.bcms-dropzone-active .bcms-dropzone-infotext {
-    margin: 0;
-    line-height: 145px;
-    font-size: 24px;
-    font-weight: 400;
-}
+.bcms-upload {
+    &-block {
+        background-color: $white;
+        border: $border-thin-smoke;
+        cursor: default;
+        display: table;
+        height: 39px;
+        margin-top: -1px;
+        overflow: hidden;
+        width: 100%;
 
-.bcms-dropzone-active .bcms-btn-upload-files {
-    display: none;
-}
+        @each $name, $color in $uploaded-states {
+            &.bcms-upload-#{$name} {
+                .bcms-upload-description {
+                    color: $color;
+                }
+            }
+        }
 
-.bcms-dropzone-infotext {
-    text-align: center;
-    margin-top: 40px;
-    color: #0383df;
-    font-size: 20px;
-    font-weight: 700;
-}
+        > div {
+            @include vertical-align($block: table-cell);
+            font-size: 12px;
+            line-height: 39px;
+            padding: 0 10px;
+        }
+    }
 
-.bcms-upload-cancel-link {
-    float: right;
-    text-transform: uppercase;
-}
+    &-file-titles {
+        @include ellipsis();
+        color: $text-blue;
+        width: 280px;
+    }
 
-.bcms-upload-cancel-link:hover {
-    text-decoration: underline;
-}
+    &-info {
+        font-weight: 700;
+        width: 40px;
+    }
 
-.bcms-btn-upload-files {
-    position: relative;
-    display: inline-block;
-    margin: 15px 0;
-    overflow: hidden;
-    box-shadow: 0 0 1px 1px #292929;
-    background-color: #676767;
-    background-image: -webkit-linear-gradient(top, #676767 0, #555555 100%);
-    background-image: linear-gradient(to bottom, #676767 0, #555555 100%);
-}
+    &-bar-holder {
+        overflow: hidden;
+        text-align: right;
+    }
 
-.bcms-btn-upload-files label:active {
-    box-shadow: 0 0 2px 1px #292929;
-    background: #555;
-}
+    &-description {
+        font-weight: 600;
+    }
 
-label.bcms-btn-upload-files-text {
-    display: block;
-    height: 33px;
-    line-height: 33px;
-    padding: 0 10px;
-    cursor: pointer;
-    font-size: 12px;
-    color: #fff;
-    white-space: nowrap;
-    text-transform: uppercase;
-}
-
-.bcms-upload-holder .bcms-upload-block:first-child {
-    border-top: 1px solid #e3e3e3;
-}
-
-.bcms-upload-block {
-    height: 39px;
-    background-color: #eff9fd;
-    border-style: none solid solid solid;
-    border-width: 1px;
-    border-color: #e3e3e3;
-    overflow: hidden;
-}
-
-.bcms-upload-block > div {
-    float: left;
-}
-
-.bcms-upload-file-titles {
-    width: 250px;
-    padding: 0 15px;
-    line-height: 39px;
-    font-size: 12px;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-}
-
-.bcms-upload-bar-holder {
-    width: 304px;
-    padding-right: 15px;
-    line-height: 39px;
-    overflow: hidden;
-}
-
-.bcms-progress-bar {
-    display: inline-block;
-    vertical-align: middle;
-    width: 302px;
-    height: 10px;
-    border: 1px solid #cdcdcd;
-    box-shadow: inset 0 0 5px rgba(170,170,170,0.36);
-    background-color: #e3e3e3;
-}
-
-.bcms-progress-info {
-    display: inline-block;
-    vertical-align: middle;
-    margin-left: 10px;
-    line-height: 39px;
-    font-weight: 700;
-    font-size: 14px;
-}
-
-.bcms-progress {
-    height: 12px;
-    margin: -1px;
-    background-color: #0C7EC7;
-}
-
-.bcms-uploaded-info {
-    width: 40px;
-    text-align: right;
-    padding-right: 15px;
-    line-height: 39px;
-    font-weight: 700;
-}
-
-.bcms-upload-size-info {
-    width: 95px;
-    padding: 0 10px;
-    border-left: 1px solid #e3e3e3;
-    border-right: 1px solid #e3e3e3;
-    line-height: 39px;
+    &-size-info {
+        border: {
+            right: $border-thin-smoke;
+            left: $border-thin-smoke;
+        }
+        text-align: center;
+        width: 100px;
+    }
 }
 
 .bcms-media-delete-holder {
     position: relative;
-    width: 62px;
-    padding: 9px;
+    text-align: center;
+    width: 40px;
 }
 
-.bcms-upload-description {
-    font-size: 11px;
-    font-weight: 700;
-    overflow: hidden;
-    white-space: nowrap;
-    text-overflow: ellipsis;
-}
+.bcms-progress {
+    @include transition(all 200ms);
+    background-color: $bg-blue;
+    height: 15px;
+    margin: -1px;
 
-div.bcms-upload-failed {
-    background-color: #fcecec;
-}
+    &-bar {
+        background-color: $bg-modal-options;
+        border: $border-thin-smoke;
+        box-shadow: inset 0 0 6px rgba($gray, .2);
+        box-sizing: border-box;
+        float: right;
+        height: 15px;
+        overflow: hidden;
+        width: 300px;
+    }
 
-div.bcms-upload-failed .bcms-upload-description {
-    color: #d9000d;
-}
-
-div.bcms-upload-success {
-    background-color: #e8fae5;
-}
-
-div.bcms-upload-success .bcms-upload-description {
-    color: #117000;
+    &-info {
+        @include vertical-align();
+        font-size: 14px;
+        font-weight: 600;
+        margin-left: 10px;
+    }
 }

@@ -133,6 +133,15 @@ namespace BetterCms.Module.Blog.Content.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Choose Blog Post Template.
+        /// </summary>
+        public static string BlogPostTitle_ChooseLayout_Title {
+            get {
+                return ResourceManager.GetString("BlogPostTitle_ChooseLayout_Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Author created successfully.
         /// </summary>
         public static string CreateAuthor_CreatedSuccessfully_Message {
@@ -277,15 +286,6 @@ namespace BetterCms.Module.Blog.Content.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Image will be displayed as a thumbnail with your post..
-        /// </summary>
-        public static string EditBlogPost_FeaturedImage_Description {
-            get {
-                return ResourceManager.GetString("EditBlogPost_FeaturedImage_Description", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Main Image.
         /// </summary>
         public static string EditBlogPost_FeaturedImage_Title {
@@ -318,6 +318,24 @@ namespace BetterCms.Module.Blog.Content.Resources {
         public static string EditBlogPost_IntroText_Tooltip_Description {
             get {
                 return ResourceManager.GetString("EditBlogPost_IntroText_Tooltip_Description", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Choose post language.
+        /// </summary>
+        public static string EditBlogPost_Language_Title {
+            get {
+                return ResourceManager.GetString("EditBlogPost_Language_Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Choose language for current page, which will be used in menu and determines the language and culture of the page.
+        /// </summary>
+        public static string EditBlogPost_Language_Tooltip {
+            get {
+                return ResourceManager.GetString("EditBlogPost_Language_Tooltip", resourceCulture);
             }
         }
         
@@ -673,7 +691,7 @@ namespace BetterCms.Module.Blog.Content.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Cannot save blog post. Master page, which is selected as default blog post layout is inaccessible..
+        ///   Looks up a localized string similar to Cannot save blog post. Template, which is selected as default is inaccessible..
         /// </summary>
         public static string SaveBlogPost_FailedToSave_InaccessibleMasterPage {
             get {
@@ -682,7 +700,7 @@ namespace BetterCms.Module.Blog.Content.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to There are no compatible layouts for blog post..
+        ///   Looks up a localized string similar to There are no compatible templates for blog post..
         /// </summary>
         public static string SaveBlogPost_LayoutNotFound_Message {
             get {
@@ -736,7 +754,7 @@ namespace BetterCms.Module.Blog.Content.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Add New +.
+        ///   Looks up a localized string similar to Add New.
         /// </summary>
         public static string SiteSettings_Blogs_AddNew {
             get {
@@ -934,7 +952,7 @@ namespace BetterCms.Module.Blog.Content.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Layout.
+        ///   Looks up a localized string similar to Template.
         /// </summary>
         public static string SiteSettings_Blogs_TemplatesTab_Title {
             get {
@@ -997,7 +1015,7 @@ namespace BetterCms.Module.Blog.Content.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Default Layout.
+        ///   Looks up a localized string similar to Default Template.
         /// </summary>
         public static string SiteSettings_Templates_DefaultTemplate {
             get {
@@ -1024,7 +1042,7 @@ namespace BetterCms.Module.Blog.Content.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Select Default Blog Layout.
+        ///   Looks up a localized string similar to Select Default Blog Template.
         /// </summary>
         public static string SiteSettings_Templates_Title {
             get {

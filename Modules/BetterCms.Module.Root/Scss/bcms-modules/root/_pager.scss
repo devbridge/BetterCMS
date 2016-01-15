@@ -1,0 +1,92 @@
+// --------------------------------------------------------------------------------------------------------------------
+// <copyright file="_pager.scss" company="Devbridge Group LLC">
+// 
+// Copyright (C) 2015,2016 Devbridge Group LLC
+// 
+// This program is free software: you can redistribute it and/or modify
+// it under the terms of the GNU Lesser General Public License as published by
+// the Free Software Foundation, either version 3 of the License, or
+// (at your option) any later version.
+// 
+// This program is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU General Public License for more details.
+// 
+// You should have received a copy of the GNU Lesser General Public License
+// along with this program.  If not, see http://www.gnu.org/licenses/. 
+// </copyright>
+// 
+// <summary>
+// Better CMS is a publishing focused and developer friendly .NET open source CMS.
+// 
+// Website: https://www.bettercms.com 
+// GitHub: https://github.com/devbridge/bettercms
+// Email: info@bettercms.com
+// </summary>
+// --------------------------------------------------------------------------------------------------------------------
+$pager-buttons: (
+                ('prev', left, 9px, $bcms-pager-arrow-left, null),
+                ('next', right, 6px, $bcms-pager-arrow-right, null)
+);
+
+%pager-buttons-extender {
+    @include size(30px);
+    cursor: pointer;
+    overflow: hidden;
+}
+
+.bcms-pager {
+    text-align: right;
+
+    &-no {
+        @extend %pager-buttons-extender;
+        @include transition(background-color 200ms);
+        background-color: $bg-gray-lighter;
+        border: $border-thin-smoke;
+        box-sizing: border-box;
+        color: $text-light;
+        float: left;
+        font-size: 10px;
+        line-height: 28px;
+        margin-left: 7px;
+        text-align: center;
+
+        &:hover,
+        &.bcms-active-pager {
+            background-color: $white;
+        }
+    }
+
+    &-text {
+        color: $text-light;
+        cursor: default;
+        float: left;
+        font-size: 10px;
+        line-height: 28px;
+        padding: 0 6px 0 5px;
+        text-transform: uppercase;
+    }
+}
+
+@each $name, $float, $margin, $icon, $icon-hover in $pager-buttons {
+    .bcms-pager-#{$name} {
+        @extend %pager-buttons-extender;
+        background: url($icon) no-repeat center;
+        float: $float;
+        margin-left: $margin;
+        text-indent: 999em;
+    }
+}
+
+.bcms-pager-next {
+    overflow: visible;
+    position: relative;
+
+    @include virtual(before) {
+        @include positioning($center-y: true);
+        border-left: $border-thin-smoke;
+        height: 30px;
+        left: -3px;
+    }
+}

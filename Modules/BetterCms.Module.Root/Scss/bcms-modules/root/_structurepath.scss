@@ -1,0 +1,170 @@
+﻿// --------------------------------------------------------------------------------------------------------------------
+// <copyright file="_structurepath.scss" company="Devbridge Group LLC">
+// 
+// Copyright (C) 2015,2016 Devbridge Group LLC
+// 
+// This program is free software: you can redistribute it and/or modify
+// it under the terms of the GNU Lesser General Public License as published by
+// the Free Software Foundation, either version 3 of the License, or
+// (at your option) any later version.
+// 
+// This program is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU General Public License for more details.
+// 
+// You should have received a copy of the GNU Lesser General Public License
+// along with this program.  If not, see http://www.gnu.org/licenses/. 
+// </copyright>
+// 
+// <summary>
+// Better CMS is a publishing focused and developer friendly .NET open source CMS.
+// 
+// Website: https://www.bettercms.com 
+// GitHub: https://github.com/devbridge/bettercms
+// Email: info@bettercms.com
+// </summary>
+// --------------------------------------------------------------------------------------------------------------------
+$path-height: 43px;
+
+$path-arrows: (
+                ('left', $bcms-path-left, left),
+                ('right', $bcms-path-right, right)
+);
+
+$path-icons: (
+                ('master', $bcms-path-template),
+                ('page', $bcms-path-page)
+);
+
+.bcms-layout-path {
+    @include position(fixed, -($path-height) 0 null);
+    @include transition(top 200ms);
+    @include size(100% $path-height);
+    background-color: $bg-dark;
+    z-index: 1100;
+
+    &-inner {
+        padding: 0 25px;
+    }
+
+    &-item {
+        color: $cp-sky;
+        cursor: pointer;
+        display: inline;
+        font: {
+            family: $font-base-family;
+            size: 14px;
+            weight: 400;
+        }
+        line-height: $path-height;
+        padding: 0 5px 0 25px;
+
+        @include virtual(after, $content: '/') {
+            margin-left: 5px;
+        }
+
+        &:last-of-type {
+            &:after {
+                display: none;
+            }
+        }
+    }
+
+    &-handle {
+        @include position(absolute, null 0 -26px null null);
+        background-color: $cp-dark;
+        box-sizing: border-box;
+        height: 26px;
+        padding-left: 40px;
+        text-transform: uppercase;
+        width: 130px;
+
+    }
+
+    &-drag-handle {
+        @include position(absolute, 0 null null 0);
+        @include size(28px 26px);
+        background: url($bcms-path-drag) no-repeat 8px center;
+        cursor: move;
+        overflow: hidden;
+        text-indent: -999em;
+    }
+
+    &-text {
+        background: url($bcms-path-show) no-repeat 90% center;
+        color: $white;
+        cursor: pointer;
+        font: {
+            size: 10px;
+            weight: 700;
+        }
+        line-height: 26px;
+        padding-right: 30px;
+    }
+}
+
+.bcms-path-toggler {
+    top: 0;
+    @include transition(top 200ms);
+
+    .bcms-layout-path-text {
+        background-image: url($bcms-path-hide);
+    }
+
+}
+
+.bcms-path-menu-bottom {
+    @include transition(bottom 200ms);
+    bottom: -43px;
+    top: auto;
+
+    .bcms-layout-path-handle {
+        bottom: auto;
+        top: -26px;
+    }
+
+    .bcms-layout-path-text {
+        background-image: url($bcms-path-hide);
+    }
+
+    &.bcms-path-toggler {
+        bottom: 0;
+
+        .bcms-layout-path-text {
+            background-image: url($bcms-path-show);
+        }
+    }
+}
+
+.bcms-path-child-content-active {
+    color: $white;
+    cursor: default;
+    padding: 0;
+}
+
+@each $name, $icon in $path-icons {
+    .bcms-path-#{$name} {
+        position: relative;
+
+        @include virtual(before) {
+            @include positioning($center-y: true);
+            @include size(20px);
+            left: 0;
+            background: url($icon) no-repeat center;
+        }
+    }
+}
+
+@each $name, $icon, $side in $path-arrows {
+    .bcms-path-arrow-#{$name} {
+        @include size(45px 100%);
+        background: url($icon) no-repeat center;
+        cursor: pointer;
+        float: $side;
+    }
+}
+
+.bcms-path-arrow-inactive {
+    width: 0;
+}

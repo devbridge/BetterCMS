@@ -1,5 +1,31 @@
 ﻿/*jslint unparam: true, white: true, browser: true, devel: true */
-/*global bettercms */
+// --------------------------------------------------------------------------------------------------------------------
+// <copyright file="bcms.media.imageeditor.js" company="Devbridge Group LLC">
+// 
+// Copyright (C) 2015,2016 Devbridge Group LLC
+// 
+// This program is free software: you can redistribute it and/or modify
+// it under the terms of the GNU Lesser General Public License as published by
+// the Free Software Foundation, either version 3 of the License, or
+// (at your option) any later version.
+// 
+// This program is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU General Public License for more details.
+// 
+// You should have received a copy of the GNU Lesser General Public License
+// along with this program.  If not, see http://www.gnu.org/licenses/. 
+// </copyright>
+// 
+// <summary>
+// Better CMS is a publishing focused and developer friendly .NET open source CMS.
+// 
+// Website: https://www.bettercms.com 
+// GitHub: https://github.com/devbridge/bettercms
+// Email: info@bettercms.com
+// </summary>
+// --------------------------------------------------------------------------------------------------------------------
 
 bettercms.define('bcms.media.imageeditor', ['bcms.jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', 'bcms.forms', 'bcms.dynamicContent', 'bcms.jquery.jcrop', 'bcms.ko.extenders', 'bcms.tags', 'bcms.categories', 'bcms.media.upload'],
     function($, bcms, modal, siteSettings, forms, dynamicContent, jcrop, ko, tags, categories, mediaUpload) {
@@ -48,8 +74,8 @@ bettercms.define('bcms.media.imageeditor', ['bcms.jquery', 'bcms', 'bcms.modal',
             constants = {
                 accept: 'bcms-modal-accept',
                 acceptAsNew: 'bcms-modal-accept-as-new',
-                maxHeightToFit: 557,
-                maxWidthToFit: 839,
+                maxHeightToFit: 600,
+                maxWidthToFit: 900,
                 jcropBackgroundColor: '#F5F5F5'
             },
             jCropApi = null;
@@ -79,7 +105,7 @@ bettercms.define('bcms.media.imageeditor', ['bcms.jquery', 'bcms', 'bcms.modal',
         */
         imageEditor.showImageEditorDialog = function (imageId, callback) {
 
-            var saveAsNewVersion = new modal.button(globalization.saveAsNewVersionButtonTitle, 'bcms-btn-small bcms-modal-accept-as-new', 5, function () {
+            var saveAsNewVersion = new modal.button(globalization.saveAsNewVersionButtonTitle, 'bcms-btn-primary bcms-modal-accept-as-new', 5, function () {
                     $(selectors.imageOverrideField).val(false);
                     modelDialog.acceptClick();
                 }),
@@ -175,44 +201,20 @@ bettercms.define('bcms.media.imageeditor', ['bcms.jquery', 'bcms', 'bcms.modal',
                 self.dialog = dialog;
                 self.boxSelector = boxSelector;
                 self.isOpened = ko.observable(false);
-                
-                // IE8 re-rendering fix
-                // TODO: self.isIE8 = $.browser.msie && parseInt($.browser.version, 10) <= 8;
-                self.isIE8 = true;
-                self.boxHeightHidden = self.dialog.container.find(self.boxSelector).height();
-                self.boxHeightOpen = 0;
-
-                function onAfterBoxIsClosed(viewModel) {
-                    // IE8 fails to rerender dimensions box: need to set it's height manually
-                    if (viewModel.isIE8) {
-                        viewModel.dialog.container.find(viewModel.boxSelector).height(viewModel.boxHeightHidden);
-                    }
-                }
 
                 self.open = function() {
                     self.isOpened(true);
-
-                    // IE8 fails to rerender dimensions box: need to set it's height manually
-                    if (self.isIE8) {
-                        var box = self.dialog.container.find(self.boxSelector);
-                        if (!self.boxHeightOpen) {
-                            self.boxHeightOpen = box.height();
-                        }
-                        box.height(self.boxHeightOpen);
-                    }
                 };
 
                 self.close = function () {
                     if (self.onClose()) {
                         self.isOpened(false);
-                        onAfterBoxIsClosed(self);
                     }
                 };
 
                 self.save = function (element) {
                     if (self.onSave($(element))) {
                         self.isOpened(false);
-                        onAfterBoxIsClosed(self);
                     }
                 };
             }
@@ -272,7 +274,7 @@ bettercms.define('bcms.media.imageeditor', ['bcms.jquery', 'bcms', 'bcms.modal',
 
                 var self = this;
 
-                self.enableCrop = enableCrop;
+                self.enableCrop = enableCrop && json.ImageType === 1;
 
                 self.widthInput = dialog.container.find(selectors.imageSizeEditBoxWidth);
                 self.heightInput = dialog.container.find(selectors.imageSizeEditBoxHeight);
@@ -287,8 +289,10 @@ bettercms.define('bcms.media.imageeditor', ['bcms.jquery', 'bcms', 'bcms.modal',
                 self.cropHeight = ko.observable(json.CroppedHeight);
                 self.cropWidth = ko.observable(json.CroppedWidth);
                 self.fit = ko.observable(false);
+                self.imageType = ko.observable(json.ImageType);
                 self.calculatedWidth = ko.observable(json.ImageWidth);
                 self.calculatedHeight = ko.observable(json.ImageHeight);
+
                 self.cropCoordX1 = ko.observable(json.CropCoordX1);
                 self.cropCoordX2 = ko.observable(json.CropCoordX2);
                 self.cropCoordY1 = ko.observable(json.CropCoordY1);
@@ -305,7 +309,11 @@ bettercms.define('bcms.media.imageeditor', ['bcms.jquery', 'bcms', 'bcms.modal',
                 self.oldHeight.subscribe(function () {
                     recalculate();
                 });
+
                 self.widthAndHeight = ko.computed(function () {
+                    if (self.oldWidth() == -1 || self.oldHeight() == -1) {
+                        return "Auto";
+                    }
                     return self.oldWidth() + ' x ' + self.oldHeight();
                 });
 
@@ -534,7 +542,7 @@ bettercms.define('bcms.media.imageeditor', ['bcms.jquery', 'bcms', 'bcms.modal',
             var self = this,
                 titleEditorViewModel = new TitleEditorViewModel(dialog, data.Title),
                 imageEditorViewModel = new ImageEditorViewModel(dialog, data, true),
-                categoriesViewModel = new categories.CategoriesListViewModel(data.Categories, data.CategoriesFilterKey),
+                categoriesViewModel = new categories.CategoriesSelectListModel(data.Categories),
                 tagsViewModel = new tags.TagsListViewModel(data.Tags);
 
             self.titleEditorViewModel = titleEditorViewModel;
@@ -646,6 +654,9 @@ bettercms.define('bcms.media.imageeditor', ['bcms.jquery', 'bcms', 'bcms.modal',
             var data = content.Data ? content.Data : { };
 
             var viewModel = new ImageEditViewModel(dialog, data, callback);
+
+            categories.initCategoriesSelect(viewModel.categories, data.CategoriesLookupList, dialog.container);
+
             ko.applyBindings(viewModel, dialog.container.find(selectors.imageEditorForm).get(0));
 
             // Image alignment

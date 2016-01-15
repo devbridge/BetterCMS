@@ -181,6 +181,7 @@
     <Compile Include="Command\Content\SavePageContentOptions\SavePageContentOptionsCommandResponse.cs" />
     <Compile Include="Command\Content\SavePageHtmlContent\SavePageHtmlContentCommandRequest.cs" />
     <Compile Include="Command\Content\SortPageContent\SortPageContentCommandResponse.cs" />
+    <Compile Include="Command\History\GetContentVersionProperties\GetContentVersionPropertiesCommand.cs" />
     <Compile Include="Command\History\GetSitemapHistory\GetSitemapHistoryCommand.cs" />
     <Compile Include="Command\History\GetSitemapHistory\GetSitemapHistoryRequest.cs" />
     <Compile Include="Command\History\RestoreSitemapVersion\RestoreSitemapVersionCommand.cs" />
@@ -190,6 +191,9 @@
     <Compile Include="Command\Layout\GetLayoutUserAccess\GetLayoutUserAccessCommandRequest.cs" />
     <Compile Include="Command\Page\AddNewPage\AddNewPageCommand.cs" />
     <Compile Include="Command\Page\AddNewPage\AddNewPageCommandRequest.cs" />
+    <Compile Include="Command\Page\CheckForMissingContent\CheckForMissingContentCommand.cs" />
+    <Compile Include="Command\Page\CheckForMissingContent\CheckForMissingContentRequest.cs" />
+    <Compile Include="Command\Page\CheckForMissingContent\CheckForMissingContentResponse.cs" />
     <Compile Include="Command\Page\ClonePageWithLanguage\ClonePageWithLanguageCommand.cs" />
     <Compile Include="Command\Page\GetPageForCloningWithLanguage\GetPageForCloningWithLanguageCommandRequest.cs" />
     <Compile Include="Command\Page\GetPageForCloningWithLanguage\GetPageForCloningWithLanguageCommand.cs" />
@@ -355,6 +359,7 @@
     <Compile Include="Mvc\Attributes\CustomPageUrlValidationAttribute.cs" />
     <Compile Include="Mvc\Attributes\DateValidationAttribute.cs" />
     <Compile Include="Mvc\Attributes\EndDateValidationAttribute.cs" />
+    <Compile Include="Mvc\EditableGrid\CustomTitleEditableGridColumn.cs" />
     <Compile Include="Mvc\EditableGrid\OptionValueEditableGridColumn.cs" />
     <Compile Include="Mvc\PageHtmlRenderer\RenderingPageCategoryProperty.cs" />
     <Compile Include="Mvc\PageHtmlRenderer\RenderingPageFeaturedImageUrlProperty.cs" />
@@ -403,6 +408,9 @@
     <Compile Include="ViewModels\Content\ContentViewModel.cs" />
     <Compile Include="ViewModels\Content\ContentSortViewModel.cs" />
     <Compile Include="ViewModels\Content\ChangedContentResultViewModel.cs" />
+    <Compile Include="ViewModels\History\ServerWidgetHistoryViewModel.cs" />
+    <Compile Include="ViewModels\History\HtmlContentWidgetHistoryViewModel.cs" />
+    <Compile Include="ViewModels\History\HtmlContentHistoryViewModel.cs" />
     <Compile Include="ViewModels\Content\PageContentChildRegionViewModel.cs" />
     <Compile Include="ViewModels\Content\RestorePageContentViewModel.cs" />
     <Compile Include="ViewModels\Content\IDraftDestroy.cs" />
@@ -465,6 +473,26 @@
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
     </Compile>
+    <Compile Include="Views\History\ContentHistoryTable.generated.cs">
+      <DependentUpon>ContentHistoryTable.cshtml</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+    </Compile>
+    <Compile Include="Views\History\ServerWidgetPropertiesHistory.generated.cs">
+      <DependentUpon>ServerWidgetPropertiesHistory.cshtml</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+    </Compile>
+    <Compile Include="Views\History\WidgetPropertiesHistory.generated.cs">
+      <DependentUpon>WidgetPropertiesHistory.cshtml</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+    </Compile>
+    <Compile Include="Views\History\ContentPropertiesHistory.generated.cs">
+      <DependentUpon>ContentPropertiesHistory.cshtml</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+    </Compile>
     <Compile Include="Views\Option\EditOptions.generated.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -479,6 +507,11 @@
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>Sitemaps.cshtml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Widgets\Partial\WidgetPreview.generated.cs">
+      <DependentUpon>WidgetPreview.cshtml</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
     </Compile>
     <Compile Include="Views\Widgets\Partial\WidgetUsagesTemplate.generated.cs">
       <AutoGen>True</AutoGen>
@@ -777,14 +810,7 @@
       <SubType>Designer</SubType>
       <LastGenOutput>PagesGlobalization.Designer.cs</LastGenOutput>
     </EmbeddedResource>
-    <EmbeddedResource Include="Content\Styles\Images\icn-zoom.png" />
-    <EmbeddedResource Include="Content\Styles\Images\loading.gif" />
     <EmbeddedResource Include="Content\Styles\Images\logo.png" />
-    <EmbeddedResource Include="Content\Styles\Images\bcms-no-image-1.png" />
-    <EmbeddedResource Include="Content\Styles\Images\bcms-no-image-2.png" />
-    <EmbeddedResource Include="Content\Styles\Images\bcms-no-image-3.png" />
-    <EmbeddedResource Include="Content\Styles\Images\sprite-pages-1.png" />
-    <EmbeddedResource Include="Content\Styles\Images\sprite-pages-2.png" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\BetterCMS.Configuration\BetterCms.Configuration.csproj">
@@ -805,7 +831,6 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Content\Styles\Images\sprite-base-2.png" />
     <Content Include="BuildConfiguration.xml">
       <SubType>Designer</SubType>
     </Content>
@@ -834,6 +859,7 @@
     <EmbeddedResource Include="Scripts\bcms.pages.masterpage.js" />
     <EmbeddedResource Include="Scripts\bcms.pages.languages.js" />
     <EmbeddedResource Include="Scripts\bcms.pages.content.js" />
+    <Content Include="Scripts\modernizr-2.6.2.js" />
     <Content Include="web.config" />
   </ItemGroup>
   <ItemGroup>
@@ -853,10 +879,29 @@
       <Generator>RazorGenerator</Generator>
       <LastGenOutput>TopBlockAddItem.generated.cs</LastGenOutput>
     </Content>
+    <Content Include="Views\History\ContentPropertiesHistory.cshtml">
+      <Generator>RazorGenerator</Generator>
+      <LastGenOutput>ContentPropertiesHistory.generated.cs</LastGenOutput>
+    </Content>
+    <Content Include="Views\History\WidgetPropertiesHistory.cshtml">
+      <Generator>RazorGenerator</Generator>
+      <LastGenOutput>WidgetPropertiesHistory.generated.cs</LastGenOutput>
+    </Content>
+    <Content Include="Views\History\ServerWidgetPropertiesHistory.cshtml">
+      <Generator>RazorGenerator</Generator>
+      <LastGenOutput>ServerWidgetPropertiesHistory.generated.cs</LastGenOutput>
+    </Content>
+    <EmbeddedResource Include="Views\Shared\EditableGrid\CustomTitleCell.cshtml" />
+    <EmbeddedResource Include="Views\Page\Partial\PagesGrid.cshtml" />
+    <Content Include="Views\History\ContentHistoryTable.cshtml">
+      <Generator>RazorGenerator</Generator>
+      <LastGenOutput>ContentHistoryTable.generated.cs</LastGenOutput>
+    </Content>
     <None Include="Views\Shared\Partial\WarnMessageAboutDraft.cshtml">
       <Generator>RazorGenerator</Generator>
       <LastGenOutput>WarnMessageAboutDraft.generated.cs</LastGenOutput>
     </None>
+    <Content Include="Views\_ViewStart.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Views\Content\AddPageHtmlContent.cshtml">
@@ -943,6 +988,7 @@
     </None>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Views\Shared\_Layout.cshtml" />
     <None Include="Views\Templates\EditTemplate.cshtml">
       <Generator>RazorGenerator</Generator>
       <LastGenOutput>EditTemplate.generated.cs</LastGenOutput>
@@ -973,6 +1019,10 @@
     </None>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Views\Widgets\Partial\WidgetPreview.cshtml">
+      <Generator>RazorGenerator</Generator>
+      <LastGenOutput>WidgetPreview.generated.cs</LastGenOutput>
+    </Content>
     <None Include="Views\Widgets\Widgets.cshtml">
       <Generator>RazorGenerator</Generator>
       <LastGenOutput>Widgets.generated.cs</LastGenOutput>
@@ -1190,6 +1240,9 @@
       <Generator>RazorGenerator</Generator>
       <LastGenOutput>ChildContentOptions.generated.cs</LastGenOutput>
     </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="..\..\licensing.licenseheader" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

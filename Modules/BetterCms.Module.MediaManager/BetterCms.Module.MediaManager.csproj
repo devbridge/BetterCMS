@@ -213,6 +213,7 @@
     <Compile Include="MediaManagerModuleDescriptor.cs" />
     <Compile Include="Models\Accessors\MediaFileCategoryAccessor.cs" />
     <Compile Include="Models\Accessors\MediaImageCategoryAccessor.cs" />
+    <Compile Include="Models\Enum\ImageType.cs" />
     <Compile Include="Models\Enum\MediaHistoryStatus.cs" />
     <Compile Include="Models\Extensions\MediaExtensions.cs" />
     <Compile Include="Models\Extensions\MediaFileExtensions.cs" />
@@ -341,12 +342,32 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Index.cshtml</DependentUpon>
     </Compile>
-    <Compile Include="Views\MediaManager\Partial\MediaManagerTab.generated.cs">
+    <Compile Include="Views\Shared\Partial\MediaManagerFilterTemplate.generated.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>MediaManagerFilterTemplate.cshtml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Shared\Partial\MediaManagerInsertion.generated.cs">
+      <DependentUpon>MediaManagerInsertion.cshtml</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+    </Compile>
+    <Compile Include="Views\Shared\Partial\MediaManagerTab.generated.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>MediaManagerTab.cshtml</DependentUpon>
     </Compile>
-    <Compile Include="Views\MediaManager\Partial\MediaManagerTemplate.generated.cs">
+    <Compile Include="Views\Shared\Partial\MediaManagerInnerContentTemplate.generated.cs">
+      <DependentUpon>MediaManagerInnerContentTemplate.cshtml</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+    </Compile>
+    <Compile Include="Views\Shared\Partial\MediaManagerWindowTemplate.generated.cs">
+      <DependentUpon>MediaManagerWindowTemplate.cshtml</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+    </Compile>
+    <Compile Include="Views\Shared\Partial\MediaManagerTemplate.generated.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>MediaManagerTemplate.cshtml</DependentUpon>
@@ -368,13 +389,6 @@
       <LastGenOutput>MediaGlobalization.Designer.cs</LastGenOutput>
       <SubType>Designer</SubType>
     </EmbeddedResource>
-    <EmbeddedResource Include="Content\Styles\Images\icn-zoom.png" />
-    <EmbeddedResource Include="Content\Styles\Images\loading.gif" />
-    <EmbeddedResource Include="Content\Styles\Images\sprite-media-1.png" />
-    <EmbeddedResource Include="Content\Styles\Images\sprite-media-2.png" />
-    <EmbeddedResource Include="Content\Styles\Images\bcms-no-image-1.png" />
-    <EmbeddedResource Include="Content\Styles\Images\bcms-no-image-2.png" />
-    <EmbeddedResource Include="Content\Styles\Images\bcms-no-image-3.png" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\BetterCMS.Configuration\BetterCms.Configuration.csproj">
@@ -394,7 +408,6 @@
     <Content Include="BuildConfiguration.xml">
       <SubType>Designer</SubType>
     </Content>
-    <EmbeddedResource Include="Content\Styles\Images\sprite-media-3.png" />
     <EmbeddedResource Include="Models\Migrations\Migration201306071105.sqlserver.sql" />
     <EmbeddedResource Include="Models\Migrations\Migration201306201216.sqlserver.sql" />
     <EmbeddedResource Include="Models\Migrations\Migration201502101137.sqlserver.sql" />
@@ -430,6 +443,22 @@
     </None>
   </ItemGroup>
   <ItemGroup>
+    <None Include="Views\Shared\Partial\MediaManagerFilterTemplate.cshtml">
+      <Generator>RazorGenerator</Generator>
+      <LastGenOutput>MediaManagerFilterTemplate.generated.cs</LastGenOutput>
+    </None>
+    <None Include="Views\Shared\Partial\MediaManagerInnerContentTemplate.cshtml">
+      <Generator>RazorGenerator</Generator>
+      <LastGenOutput>MediaManagerInnerContentTemplate.generated.cs</LastGenOutput>
+    </None>
+    <None Include="Views\Shared\Partial\MediaManagerInsertion.cshtml">
+      <Generator>RazorGenerator</Generator>
+      <LastGenOutput>MediaManagerInsertion.generated.cs</LastGenOutput>
+    </None>
+    <None Include="Views\Shared\Partial\MediaManagerWindowTemplate.cshtml">
+      <Generator>RazorGenerator</Generator>
+      <LastGenOutput>MediaManagerWindowTemplate.generated.cs</LastGenOutput>
+    </None>
     <None Include="Views\Upload\SingleFileUpload.cshtml">
       <Generator>RazorGenerator</Generator>
       <LastGenOutput>SingleFileUpload.generated.cs</LastGenOutput>
@@ -472,13 +501,13 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <None Include="Views\MediaManager\Partial\MediaManagerTab.cshtml">
+    <None Include="Views\Shared\Partial\MediaManagerTab.cshtml">
       <Generator>RazorGenerator</Generator>
       <LastGenOutput>MediaManagerTab.generated.cs</LastGenOutput>
     </None>
   </ItemGroup>
   <ItemGroup>
-    <None Include="Views\MediaManager\Partial\MediaManagerTemplate.cshtml">
+    <None Include="Views\Shared\Partial\MediaManagerTemplate.cshtml">
       <Generator>RazorGenerator</Generator>
       <LastGenOutput>MediaManagerTemplate.generated.cs</LastGenOutput>
     </None>
@@ -494,6 +523,12 @@
       <Generator>RazorGenerator</Generator>
       <LastGenOutput>FileEditor.generated.cs</LastGenOutput>
     </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Content\Styles\Images\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="..\..\licensing.licenseheader" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

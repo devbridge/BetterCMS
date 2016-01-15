@@ -1,23 +1,50 @@
-﻿@using BetterCms.Module.Pages.Content.Resources
+﻿@* --------------------------------------------------------------------------------------------------------------------
+// <copyright file="AddNewPageEditPermalink.cshtml" company="Devbridge Group LLC">
+// 
+// Copyright (C) 2015,2016 Devbridge Group LLC
+// 
+// This program is free software: you can redistribute it and/or modify
+// it under the terms of the GNU Lesser General Public License as published by
+// the Free Software Foundation, either version 3 of the License, or
+// (at your option) any later version.
+// 
+// This program is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU General Public License for more details.
+// 
+// You should have received a copy of the GNU Lesser General Public License
+// along with this program.  If not, see http://www.gnu.org/licenses/. 
+// </copyright>
+// 
+// <summary>
+// Better CMS is a publishing focused and developer friendly .NET open source CMS.
+// 
+// Website: https://www.bettercms.com 
+// GitHub: https://github.com/devbridge/bettercms
+// Email: info@bettercms.com
+// </summary>
+// -------------------------------------------------------------------------------------------------------------------- *@
+@using BetterCms.Module.Pages.Content.Resources
 @using BetterCms.Module.Root.Content.Resources
 @using BetterCms.Module.Root.Mvc.Helpers
-
 @model BetterCms.Module.Pages.ViewModels.Page.AddNewPageViewModel
+
 <div class="bcms-input-list-holder">
-    @Html.Tooltip(PagesGlobalization.AddNewPage_Permalink_Tooltip_Description)
-    <div class="bcms-content-titles">@PagesGlobalization.AddNewPage_Permalink<a id="bcms-page-editpermalink">@RootGlobalization.Button_Edit</a></div>
-    <div class="bcms-editseo-urlpath" id="bcms-page-permalink-info">@(string.IsNullOrWhiteSpace(Model.PageUrl) ? Html.Raw("&nbsp;") : new MvcHtmlString(Html.Encode(Model.PageUrl)))</div>
-</div>
-
-<div class="bcms-edit-urlpath-box" style="display: none;">
-
-    @Html.Hidden("PagePermalinkHidden", Model.PageUrl, new { @id = "bcms-page-permalink" })
-
-    <div class="bcms-custom-input-box">
-        @Html.TextBoxFor(model => model.PageUrl, new { @id = "bcms-page-permalink-edit", @class = "bcms-editor-field-box", @style = "width: 503px;" })
-        @Html.BcmsValidationMessageFor(f => f.PageUrl)
+    <div class="bcms-content-titles">
+        @PagesGlobalization.AddNewPage_Permalink
+        @Html.Tooltip(PagesGlobalization.AddNewPage_Permalink_Tooltip_Description)
+        <div class="bcms-editor-link" id="bcms-page-editpermalink">@RootGlobalization.Button_Edit</div>
     </div>
+    <div class="bcms-editor-path" id="bcms-page-permalink-info">@(string.IsNullOrWhiteSpace(Model.PageUrl) ? Html.Raw("&nbsp;") : new MvcHtmlString(Html.Encode(Model.PageUrl)))</div>
 
-    <div class="bcms-btn-small" id="bcms-save-permalink">@RootGlobalization.Button_Ok</div>
-    <div class="bcms-btn-links-small">@RootGlobalization.Button_Cancel</div>
+    <div class="bcms-editor-box bcms-js-edit-box" style="display: none;">
+        @Html.Hidden("PagePermalinkHidden", Model.PageUrl, new { @id = "bcms-page-permalink" })
+        <div class="bcms-field-wrapper">
+            @Html.TextBoxFor(model => model.PageUrl, new { @id = "bcms-page-permalink-edit", @class = "bcms-field-text bcms-js-url-path" })
+            @Html.BcmsValidationMessageFor(f => f.PageUrl)
+        </div>
+        <div class="bcms-btn-primary" id="bcms-save-permalink">@RootGlobalization.Button_Ok</div>
+        <div class="bcms-btn-cancel">@RootGlobalization.Button_Cancel</div>
+    </div>
 </div>

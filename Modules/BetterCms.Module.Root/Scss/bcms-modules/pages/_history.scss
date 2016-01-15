@@ -1,96 +1,134 @@
-@import '../../core/variables';
+// --------------------------------------------------------------------------------------------------------------------
+// <copyright file="_history.scss" company="Devbridge Group LLC">
+// 
+// Copyright (C) 2015,2016 Devbridge Group LLC
+// 
+// This program is free software: you can redistribute it and/or modify
+// it under the terms of the GNU Lesser General Public License as published by
+// the Free Software Foundation, either version 3 of the License, or
+// (at your option) any later version.
+// 
+// This program is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU General Public License for more details.
+// 
+// You should have received a copy of the GNU Lesser General Public License
+// along with this program.  If not, see http://www.gnu.org/licenses/. 
+// </copyright>
+// 
+// <summary>
+// Better CMS is a publishing focused and developer friendly .NET open source CMS.
+// 
+// Website: https://www.bettercms.com 
+// GitHub: https://github.com/devbridge/bettercms
+// Email: info@bettercms.com
+// </summary>
+// --------------------------------------------------------------------------------------------------------------------
+$history-preview-box: ($header-height + $tab-height);
 
-.bcms-history-preview-holder {
-    position: relative;
-    height: 100%;
-    padding-bottom: 251px;
+$history-states: (
+                ('published', $text-blue),
+                ('draft', $text-green),
+                ('archived', $text-red)
+);
+
+$history-bar-height: 44px;
+
+%history-preview-frame {
+    background-color: $bg-modal-options;
     box-sizing: border-box;
-    -moz-box-sizing: border-box;
+    height: calc(70vh - #{$history-preview-box});
+    padding: 10px 20px;
+    position: relative;
 }
 
-.bcms-history-preview {
-    width: 100%;
-    height: 100%;
+.bcms-history {
+    &-preview-holder {
+        @extend %history-preview-frame;
+        overflow: auto;
+
+        &-media {
+            height: calc(70vh - #{$header-height});
+        }
+
+        &.bcms-history-preview-iframe {
+            overflow: hidden;
+            padding: 0;
+        }
+    }
+
+    &-preview-data {
+        @extend %history-preview-frame;
+        box-sizing: border-box;
+        overflow: auto;
+
+        padding: 20px 30px;
+    }
+
+    &-info {
+        @include positioning($center: true);
+        color: $text-dark;
+        font-size: 19px;
+        text-align: center;
+    }
+
+    &-table-holder {
+        height: calc(30vh - #{$footer-height});
+    }
+
+    &-table-top {
+        background-color: $white;
+        border: {
+            top: $border-thin-smoke;
+            bottom: $border-thin-smoke;
+        }
+        box-sizing: border-box;
+        height: $history-bar-height;
+        padding: 3px 30px;
+
+        .bcms-large-titles {
+            line-height: 36px;
+        }
+    }
+
+    &-items-list {
+        background-color: $white;
+        height: calc(30vh - #{$footer-height + $history-bar-height});
+        overflow-y: auto;
+
+        &-media {
+            height: calc(30vh - #{$footer-height + $history-bar-height});
+        }
+    }
 }
 
-.bcms-history-info {
-    position: absolute;
-    left: 0;
-    top: 50%;
-    width: 100%;
-    margin-top: -139px;
-    line-height: 1.5em;
-    color: #24597e;
-    font-size: 19px;
-    font-weight: 700;
-    text-align: center;
+@each $name, $state-color in $history-states {
+    .bcms-#{$name}-state {
+        color: $state-color;
+    }
+
 }
 
-.bcms-history-content {
-    padding: 20px;
-}
+.bcms-history-grid {
+    .bcms-history-items-list & {
+        border: {
+            top: 0;
+            right: 0;
+            bottom: $border-thin-smoke;
+            left: 0;
+        }
+        margin: -1px 0 0;
 
-.bcms-history-table-holder {
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    right: 0;
-}
+        th,
+        td {
+            &:first-child {
+                border-left: 0;
+            }
 
-.bcms-history-table-top {
-    padding: 10px 15px;
-    background-color: #e3e3e3;
-    border-top: 4px solid #7a7a7a;
-}
-
-.bcms-history-table-top .bcms-large-titles {
-    display: inline-block;
-    padding: 5px;
-}
-
-.bcms-history-grid thead tr {
-    display: block;
-}
-
-.bcms-history-cell:hover {
-    background-color: #fff;
-}
-
-.bcms-scroll-tbody {
-    height: 160px;
-    overflow-y: scroll;
-}
-
-.bcms-scroll-tbody tr:hover a.bcms-icn-preview {
-    background-position: -60px -133px;
-}
-
-.bcms-scroll-tbody tr:hover a.bcms-icn-preview:active {
-    background-position: -60px -159px;
-}
-
-.bcms-scroll-tbody tr:hover a.bcms-icn-restore {
-    color: #303030;
-    background-position: right -1121px;
-}
-
-.bcms-scroll-tbody tr:hover a.bcms-icn-restore:active {
-    color: #df2200;
-    background-position: right -1151px;
-}
-
-.bcms-scroll-tbody tbody td {
-    vertical-align: middle;
-}
-
-.bcms-published-state {
-    color: #24597e;
-}
-
-.bcms-draft-state {
-    color: #20cd00;
-}
-
-.bcms-archived-state {
-    color: #e64343;
+            &:last-child {
+                border-right: 0;
+            }
+        }
+    }
 }

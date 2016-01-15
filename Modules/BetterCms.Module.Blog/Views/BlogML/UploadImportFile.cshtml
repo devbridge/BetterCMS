@@ -1,108 +1,135 @@
-﻿@using BetterCms.Module.Blog.Content.Resources
+﻿@* --------------------------------------------------------------------------------------------------------------------
+// <copyright file="UploadImportFile.cshtml" company="Devbridge Group LLC">
+// 
+// Copyright (C) 2015,2016 Devbridge Group LLC
+// 
+// This program is free software: you can redistribute it and/or modify
+// it under the terms of the GNU Lesser General Public License as published by
+// the Free Software Foundation, either version 3 of the License, or
+// (at your option) any later version.
+// 
+// This program is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU General Public License for more details.
+// 
+// You should have received a copy of the GNU Lesser General Public License
+// along with this program.  If not, see http://www.gnu.org/licenses/. 
+// </copyright>
+// 
+// <summary>
+// Better CMS is a publishing focused and developer friendly .NET open source CMS.
+// 
+// Website: https://www.bettercms.com 
+// GitHub: https://github.com/devbridge/bettercms
+// Email: info@bettercms.com
+// </summary>
+// -------------------------------------------------------------------------------------------------------------------- *@
+@using BetterCms.Module.Blog.Content.Resources
 @using BetterCms.Module.Blog.Controllers
 @using BetterCms.Module.Root.Mvc.Helpers
-
 @using Microsoft.Web.Mvc
-
 @model BetterCms.Module.Blog.ViewModels.Blog.UploadImportFileViewModel
 
-<div class="bcms-scroll-window">
-    @Html.TabbedContentMessagesBox()
+<div class="bcms-modal-frame-holder">
+    @Html.MessagesBox()
 
-
-    @using (Html.BeginForm<BlogMLController>(c => c.UploadImportFile(), FormMethod.Post, new { @enctype = "multipart/form-data", @id = "bcms-import-blog-posts", @target = "bcms-import-form-target", }))
-    {
-        <div class="bcms-padded-content">
-
+    <div class="bcms-window-options">
+        @using (Html.BeginForm<BlogMLController>(c => c.UploadImportFile(), FormMethod.Post, new { @enctype = "multipart/form-data", @id = "bcms-import-blog-posts", @target = "bcms-import-form-target", }))
+        {
             <div class="bcms-input-list-holder">
-
                 <!-- ko if: uploaded() && !finished() -->
-                <h2>@BlogGlobalization.ImportBlogPosts_PleaseSelectPostsToImport_Message</h2>
+                <div class="bcms-content-dialog-title">@BlogGlobalization.ImportBlogPosts_PleaseSelectPostsToImport_Message</div>
                 <!-- /ko -->
                 <!-- ko if: finished() -->
-                <h2 style="color: green;">@BlogGlobalization.ImportBlogPosts_ImportCompletedSuccessfully_Message</h2>
+                <div class="bcms-content-dialog-title">@BlogGlobalization.ImportBlogPosts_ImportCompletedSuccessfully_Message</div>
                 <!-- /ko -->
                 <!-- ko ifnot: uploaded() -->
-                <div id="bcms-files-dropzone" class="bcms-dropzone">
-                    <div class="bcms-dropzone-infotext">@BlogGlobalization.ImportBlogPosts_File_Description</div>
-                    <div class="bcms-btn-upload-files">
-                        <label for="uploadFile" class="bcms-btn-upload-files-text" data-bind="text: fixedFileName() || '@BlogGlobalization.ImportBlogPosts_File_ButtonTitle'"></label>
-                        <input type="file" name="uploadFile" id="uploadFile" style="position: absolute; left: -999em; top: -999em;" data-bind="value: fileName" />
+                <div class="bcms-file-drop-zone-container">
+                    <div id="bcms-files-drop-zone" class="bcms-file-drop-zone">
+                        <div class="bcms-file-drop-zone-text">@BlogGlobalization.ImportBlogPosts_File_Description</div>
+                        <div class="bcms-btn-main">
+                            <label for="uploadFile" class="bcms-btn-upload-files-text" data-bind="text: fixedFileName() || '@BlogGlobalization.ImportBlogPosts_File_ButtonTitle'"></label>
+                            <input type="file" name="uploadFile" id="uploadFile" style="position: absolute; left: -999em; top: -999em;" data-bind="value: fileName" />
+                        </div>
+
+                        <div class="bcms-file-drop-zone-download">
+                            <div href="/file/bcms-blog/Content/example.blog.post.import.xml" target="_blank">@BlogGlobalization.ImportBlogPosts_DownloadSampleFile_Title</div>
+                        </div>
                     </div>
-                    <div class="bcms-download-sample-file">
-                        <a href="/file/bcms-blog/Content/example.blog.post.import.xml" target="_blank">@BlogGlobalization.ImportBlogPosts_DownloadSampleFile_Title</a>
-                    </div>
+
                 </div>
+
                 <iframe id="bcms-import-form-target" name="bcms-import-form-target" style="position: absolute; left: -999em; top: -999em;"></iframe>
 
                 <div class="bcms-input-list-holder">
-                    <div class="bcms-edit-check-field">
+                    <div class="bcms-checkbox-holder">
                         <input type="checkbox" data-bind="checked: createRedirects" />
-                        <div class="bcms-edit-label">@Html.Raw(BlogGlobalization.ImportBlogPosts_CreateRedirects_Title)</div>
+                        <div class="bcms-checkbox-label bcms-js-edit-label">@Html.Raw(BlogGlobalization.ImportBlogPosts_CreateRedirects_Title)</div>
                     </div>
-                    <div class="bcms-edit-check-field">
+
+                    <div class="bcms-checkbox-holder">
                         <input type="checkbox" data-bind="checked: recreateCategoryTree" />
-                        <div class="bcms-edit-label">@Html.Raw(BlogGlobalization.ImportBlogPosts_RecreateCategoryTree_Title)</div>
+                        <div class="bcms-checkbox-label bcms-js-edit-label">@Html.Raw(BlogGlobalization.ImportBlogPosts_RecreateCategoryTree_Title)</div>
                     </div>
-                    <div class="bcms-edit-check-field">
+
+                    <div class="bcms-checkbox-holder">
                         <input type="checkbox" data-bind="checked: reuseExistingCategories" />
-                        <div class="bcms-edit-label">@Html.Raw(BlogGlobalization.ImportBlogPosts_ReuseExistingCategories_Title)</div>
+                        <div class="bcms-checkbox-label bcms-js-edit-label">@Html.Raw(BlogGlobalization.ImportBlogPosts_ReuseExistingCategories_Title)</div>
                     </div>
                 </div>
                 <!-- /ko -->
             </div>
 
-        </div>
-
         <!-- ko if: uploaded() -->
-        <table class="bcms-tables">
-            <thead>
-                <tr>
-                    <th class="bcms-tables-nohover" style="padding-left: 10px;"><input type="checkbox" data-bind="visible: !finished(), checked: checkedAll" /></th>
-                    <th class="bcms-tables-nohover">@BlogGlobalization.ImportBlogPosts_Results_Title_Title</th>
-                    <th class="bcms-tables-nohover">@BlogGlobalization.ImportBlogPosts_Results_Url_Title</th>
-                    <th class="bcms-tables-nohover">&nbsp;</th>
-                </tr>
-            </thead>
-            <tbody>
-                <!-- ko foreach: results() -->
-                <tr data-bind="css: {'bcms-import-failed' : !success, 'bcms-import-success': success && $parent.finished() && !skipped}">
-                    <td class="bcms-tables-nohover">
-                        <input type="checkbox" data-bind="visible: success && !$parent.finished(), checked: checked" />
-                    </td>
-                    <td class="bcms-tables-nohover" data-bind="html: title, attr: {title: title}"></td>
-                    <td class="bcms-tables-nohover">
-                        <!-- ko if: success && !$parent.finished() -->
-                        <span data-bind="text: url, attr: {title: url}"></span>
-                        <!-- /ko -->
-                        <!-- ko if: success && $parent.finished() && !skipped -->
-                        <a data-bind="text: url, attr: {title: url, href: url}" target="_blank"></a>
-                        <!-- /ko -->
-                        <!-- ko if: success && $parent.finished() && skipped -->
-                        @BlogGlobalization.ImportBlogPosts_Skipped_Title
-                        <!-- /ko -->
-                        <!-- ko if: !success -->
-                        <span class="bcms-import-error" data-bind="text: errorMessage, attr: {title: errorMessage}"></span>
-                        <!-- /ko -->
-                    </td>
-                    <td class="bcms-tables-nohover">
-                        <div data-bind="attr: { title: errorMessage || warnMessage || '' }, css: {
-                            'bcms-icn-import-success': success && !warnMessage && !skipped,
-                            'bcms-icn-import-warn': success && warnMessage && !skipped,
-                            'bcms-icn-import-error': !success }"></div>
-                    </td>
-                </tr>
-                <!-- /ko -->
-                <!-- ko if: results().length == 0 -->
-                <tr>
-                    <td colspan="4">
-                        <span class="bcms-table-no-data">@BlogGlobalization.ImportBlogPosts_ImportFileHasNoBlogs_Message</span>
-                    </td>
-                </tr>
-                <!-- /ko -->
-            </tbody>
-        </table>
+            <table class="bcms-tables">
+                <thead>
+                    <tr>
+                        <th class="bcms-tables-nohover" style="width: 40px; padding: 0;"><input type="checkbox" data-bind="visible: !finished(), checked: checkedAll" /></th>
+                        <th class="bcms-tables-nohover">@BlogGlobalization.ImportBlogPosts_Results_Title_Title</th>
+                        <th class="bcms-tables-nohover">@BlogGlobalization.ImportBlogPosts_Results_Url_Title</th>
+                        <th class="bcms-tables-nohover">&nbsp;</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <!-- ko foreach: results() -->
+                    <tr data-bind="css: {'bcms-import-failed' : !success, 'bcms-import-success': success && $parent.finished() && !skipped}">
+                        <td class="bcms-tables-nohover">
+                            <input type="checkbox" data-bind="visible: success && !$parent.finished(), checked: checked" />
+                        </td>
+                        <td class="bcms-tables-nohover" data-bind="html: title, attr: {title: title}"></td>
+                        <td class="bcms-tables-nohover">
+                            <!-- ko if: success && !$parent.finished() -->
+                            <div data-bind="text: url, attr: {title: url}"></div>
+                            <!-- /ko -->
+                            <!-- ko if: success && $parent.finished() && !skipped -->
+                            <div data-bind="text: url, attr: {title: url, href: url}" target="_blank"></div>
+                            <!-- /ko -->
+                            <!-- ko if: success && $parent.finished() && skipped -->
+                            @BlogGlobalization.ImportBlogPosts_Skipped_Title
+                            <!-- /ko -->
+                            <!-- ko if: !success -->
+                            <div class="bcms-import-error" data-bind="text: errorMessage, attr: {title: errorMessage}"></div>
+                            <!-- /ko -->
+                        </td>
+                        <td class="bcms-tables-nohover">
+                            <div data-bind="attr: { title: errorMessage || warnMessage || '' }, css: {
+                            'bcms-action-ok': success && !warnMessage && !skipped,
+                            'bcms-action-warn': success && warnMessage && !skipped,
+                            'bcms-action-draft': !success }"></div>
+                        </td>
+                    </tr>
+                    <!-- /ko -->
+                    <!-- ko if: results().length == 0 -->
+                    <tr>
+                        <td colspan="4">
+                            <div class="bcms-table-no-data">@BlogGlobalization.ImportBlogPosts_ImportFileHasNoBlogs_Message</div>
+                        </td>
+                    </tr>
+                    <!-- /ko -->
+                </tbody>
+            </table>
         <!-- /ko -->
-    }
-
+        }
+    </div>
 </div>

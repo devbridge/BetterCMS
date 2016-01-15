@@ -1,0 +1,189 @@
+// --------------------------------------------------------------------------------------------------------------------
+// <copyright file="_select2.scss" company="Devbridge Group LLC">
+// 
+// Copyright (C) 2015,2016 Devbridge Group LLC
+// 
+// This program is free software: you can redistribute it and/or modify
+// it under the terms of the GNU Lesser General Public License as published by
+// the Free Software Foundation, either version 3 of the License, or
+// (at your option) any later version.
+// 
+// This program is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU General Public License for more details.
+// 
+// You should have received a copy of the GNU Lesser General Public License
+// along with this program.  If not, see http://www.gnu.org/licenses/. 
+// </copyright>
+// 
+// <summary>
+// Better CMS is a publishing focused and developer friendly .NET open source CMS.
+// 
+// Website: https://www.bettercms.com 
+// GitHub: https://github.com/devbridge/bettercms
+// Email: info@bettercms.com
+// </summary>
+// --------------------------------------------------------------------------------------------------------------------
+.select2 {
+    &-container {
+        background-color: $white;
+        border: $border-form-element;
+        box-sizing: border-box;
+        cursor: pointer;
+        display: block;
+        height: $form-element-height;
+        overflow: hidden;
+        position: relative;
+        width: 100%;
+
+        @include virtual(after) {
+            @include positioning($center-y: true);
+            @include size(18px 10px);
+            background: url($bcms-select-arrow) no-repeat center;
+            right: 15px;
+        }
+
+        &.bcms-input-validation-error {
+            background-color: $validation-error-bg;
+            border: $validation-error-border;
+        }
+    }
+
+    &-results {
+        margin: 0;
+        max-height: 200px;
+        overflow-x: hidden;
+        overflow-y: auto;
+        padding: 0;
+        position: relative;
+
+        li {
+            line-height: 20px;
+            list-style: none;
+            margin: 0;
+        }
+
+        .select2-selected {
+            display: none;
+        }
+    }
+
+    &-drop {
+        @include position(absolute, 100% null null);
+        background: $white;
+        border: $border-form-element;
+        box-shadow: 0 15px 30px 0 rgba($black, .1);
+        box-sizing: border-box;
+        color: $text-dark;
+        margin-top: -1px;
+        width: 100%;
+        z-index: 9999;
+
+        &.select2-display-none {
+            display: none;
+        }
+    }
+
+    &-drop-mask {
+        @include position(fixed, 0);
+        background-color: rgba($white, 0);
+        z-index: 9998;
+    }
+
+    &-offscreen {
+        @include position(absolute, 0);
+    }
+
+    &-search-field {
+        display: block;
+        height: 100%;
+
+        > input {
+            @include position(absolute, 0);
+            background-color: transparent;
+            border: 0;
+            color: $text-gray;
+            font: {
+                family: $font-base-family;
+                size: 14px;
+            }
+            margin: 0;
+            padding: 9px 11px 10px;
+        }
+    }
+
+    &-choice,
+    &-choices {
+        @include size(100%);
+        display: block;
+        margin: 0;
+        padding: 0;
+        position: relative;
+        z-index: 10;
+    }
+
+    &-chosen {
+        color: $text-gray;
+        display: block;
+        font: {
+            family: $font-base-family;
+            size: 14px;
+        }
+        height: 100%;
+        line-height: ($form-element-height - 2px);
+        padding: 0 45px 0 10px;
+    }
+
+    &-result {
+        display: block;
+    }
+
+    &-result-sub {
+        margin: 0;
+        padding: 0 0 0 10px;
+
+        .select2-result-label {
+            font-weight: 400;
+            padding-left: 25px;
+        }
+    }
+
+    &-result-label {
+        @include transition(color 200ms);
+        color: $text-gray;
+        cursor: pointer;
+        font: {
+            size: 13px;
+            weight: 400;
+        }
+        padding: 5px 10px;
+
+        &:hover {
+            color: $text-blue;
+        }
+    }
+
+    &-highlighted {
+        > .select2-result-label {
+            color: $text-blue;
+        }
+    }
+
+    &-result-with-children {
+        > .select2-result-label {
+            font-weight: 600;
+        }
+    }
+
+    &-no-results {
+        background-color: $sky-blue;
+        display: block;
+        font-size: 14px;
+        padding: 5px 10px;
+    }
+
+    &-offscreen {
+        display: none !important;
+    }
+}

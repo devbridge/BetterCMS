@@ -1,7 +1,35 @@
-﻿@using BetterCms.Module.Root.Content.Resources
+﻿@* --------------------------------------------------------------------------------------------------------------------
+// <copyright file="ContentsTree.cshtml" company="Devbridge Group LLC">
+// 
+// Copyright (C) 2015,2016 Devbridge Group LLC
+// 
+// This program is free software: you can redistribute it and/or modify
+// it under the terms of the GNU Lesser General Public License as published by
+// the Free Software Foundation, either version 3 of the License, or
+// (at your option) any later version.
+// 
+// This program is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU General Public License for more details.
+// 
+// You should have received a copy of the GNU Lesser General Public License
+// along with this program.  If not, see http://www.gnu.org/licenses/. 
+// </copyright>
+// 
+// <summary>
+// Better CMS is a publishing focused and developer friendly .NET open source CMS.
+// 
+// Website: https://www.bettercms.com 
+// GitHub: https://github.com/devbridge/bettercms
+// Email: info@bettercms.com
+// </summary>
+// -------------------------------------------------------------------------------------------------------------------- *@
+@using BetterCms.Module.Root.Content.Resources
+
 <script type="text/html" id="bcms-contents-tree-template">
-    <div class="bcms-scroll-window" id="bcms-contents-tree">
-        <div class="bcms-padded-content">
+    <div class="bcms-modal-frame-holder" id="bcms-contents-tree">
+        <div class="bcms-window-options">
             <div class="bcms-tree-container" data-bind="visible: visibleItems().length > 0, with: visibleItems()">
                 <h2 data-bind="visible: $parent.invisibleItems().length > 0">@RootGlobalization.ContentsTree_VisibleItems_Title</h2>
                 <div data-bind='template: { name: "bcms-contents-tree-list-template" }'></div>
@@ -18,13 +46,14 @@
 <script type="text/html" id="bcms-contents-tree-list-template">
     <!-- ko if: $data.length > 0 -->
     <!-- ko foreach: $data -->
-    <div data-bind="css:{'bcms-contents-tree-sort-block': type == types.content}, draggableContent: type == types.content">
+    <div class="bcms-tree-item-container" data-bind="css:{'bcms-contents-tree-sort-block': type == types.content}, draggableContent: type == types.content">
         <div data-bind="
             css: {
-                'bcms-contents-tree-region': type == types.region,
-                'bcms-contents-tree-content': type == types.content,
+                'bcms-tree-region': type == types.region,
+                'bcms-tree-content': type == types.content,
                 'bcms-dragging': isBeingDragged(),
-                'bcms-contents-hover': isHover()
+                'bcms-contents-hover': isHover(),
+                'bcms-region-activated': type == types.region && isOpened()
             },
             event: {
                 mouseleave: onMouseLeave, mouseenter: onMouseEnter
@@ -33,35 +62,25 @@
                 'data-item-id': itemId
             } ">
 
-            <div data-bind="css: { 'bcms-contents-tree-region-header': type == types.region, 'bcms-contents-tree-content-header': type == types.content }">
-                <span data-bind="text: title()"></span>
+            <div class="bcms-tree-header" data-bind="css: { 'bcms-tree-header-region': type == types.region }">
+                <div data-bind="text: title(), css: { 'bcms-tree-region-title': type == types.region, 'bcms-tree-content-title': type == types.content }"></div>
+                <!-- ko if: type == types.content -->
+                <!-- ko if: model.visibleButtons.edit -->
+                <div class="bcms-action-edit" data-bind="click: editItem, css: {'bcms-draft': draft()}" title="@RootGlobalization.Button_Edit"></div>
+                <!-- /ko -->
+                <!-- /ko -->
 
-                <div class="bcms-tree-controls" data-bind="visible: !isBeingDragged()">
-                    <!-- ko if: type == types.region -->
-                    <div class="bcms-contents-tree-add-block" data-bind="css: {'bcms-active': isOpened()}, click: toggleAddContent">
-                        <div class="bcms-contents-tree-add-content">
-                            <div class="bcms-contents-tree-controls bcms-region-addhtml" data-bind="click: addContent">HTML</div>
-                            <div class="bcms-contents-tree-controls bcms-region-addmarkdown" data-bind="click: addMarkdown">Markdown</div>
-                            <div class="bcms-contents-tree-controls bcms-region-addtext" data-bind="click: addSimpleText">Plain text</div>
-                            <div class="bcms-contents-tree-controls bcms-region-insertwidget" data-bind="click: insertWidget">Widget</div>
-                        </div>
-                    </div>
-                    <!-- /ko -->
+                <div class="bcms-tree-controls-box" data-bind="visible: !isBeingDragged()">
                     <!-- ko if: type == types.content -->
-                    <div class="bcms-tree-controls-box">
-                        <!-- ko if: model.visibleButtons.delete -->
-                        <a class="bcms-tree-controls-delete" data-bind="click: deleteItem"></a>
-                        <!-- /ko -->
-                        <!-- ko if: model.visibleButtons.configure -->
-                        <a class="bcms-tree-controls-config" data-bind="click: configure"></a>
-                        <!-- /ko -->
-                        <!-- ko if: model.visibleButtons.edit -->
-                        <a class="bcms-tree-controls-edit" data-bind="click: editItem, css: {'bcms-tree-controls-edit-draft': draft()}"></a>
-                        <!-- /ko -->
-                        <!-- ko if: model.visibleButtons.history -->
-                        <a class="bcms-tree-controls-history" data-bind="click: history"></a>
-                        <!-- /ko -->
-                    </div>
+                    <!-- ko if: model.visibleButtons.history -->
+                    <div class="bcms-action-history" data-bind="click: history" title="@RootGlobalization.Button_History">@RootGlobalization.Button_History</div>
+                    <!-- /ko -->
+                    <!-- ko if: model.visibleButtons.configure -->
+                    <div class="bcms-action-options" data-bind="click: configure" title="@RootGlobalization.Button_Options">@RootGlobalization.Button_Options</div>
+                    <!-- /ko -->
+                    <!-- ko if: model.visibleButtons.delete -->
+                    <div class="bcms-action-delete" data-bind="click: deleteItem" title="@RootGlobalization.Button_Delete">@RootGlobalization.Button_Delete</div>
+                    <!-- /ko -->
                     <!-- /ko -->
                 </div>
             </div>
@@ -76,6 +95,16 @@
             <!-- /ko -->
             <!-- ko if: type == types.region && items().length == 0 -->
             <div class="bcms-contents-tree-sort-block" data-bind="draggableContent:true">&nbsp;</div>
+            <!-- /ko -->
+            <!-- ko if: type == types.region -->
+            <div class="bcms-contents-tree-add-block" data-bind="css: {'bcms-active': isOpened()}, click: toggleAddContent">
+                <div class="bcms-contents-tree-add-content">
+                    <div class="bcms-contents-tree-controls bcms-region-addhtml" data-bind="click: addContent">HTML</div>
+                    <div class="bcms-contents-tree-controls bcms-region-addmarkdown" data-bind="click: addMarkdown">Markdown</div>
+                    <div class="bcms-contents-tree-controls bcms-region-addtext" data-bind="click: addSimpleText">Plain text</div>
+                    <div class="bcms-contents-tree-controls bcms-region-insertwidget" data-bind="click: insertWidget">Widget</div>
+                </div>
+            </div>
             <!-- /ko -->
         </div>
     </div>

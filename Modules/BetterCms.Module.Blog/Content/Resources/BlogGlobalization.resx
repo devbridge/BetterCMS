@@ -168,9 +168,6 @@
   <data name="EditBlogPost_Content_Tooltip_Description" xml:space="preserve">
     <value>Type or paste the entire body of the post.</value>
   </data>
-  <data name="EditBlogPost_FeaturedImage_Description" xml:space="preserve">
-    <value>Image will be displayed as a thumbnail with your post.</value>
-  </data>
   <data name="EditBlogPost_FeaturedImage_Title" xml:space="preserve">
     <value>Main Image</value>
   </data>
@@ -208,7 +205,7 @@
     <value>Edit article</value>
   </data>
   <data name="SaveBlogPost_LayoutNotFound_Message" xml:space="preserve">
-    <value>There are no compatible layouts for blog post.</value>
+    <value>There are no compatible templates for blog post.</value>
   </data>
   <data name="SaveBlogPost_RegionNotFound_Message" xml:space="preserve">
     <value>Region {0} not found. It's the default region for blog post content.</value>
@@ -226,7 +223,7 @@
     <value>Blog</value>
   </data>
   <data name="SiteSettings_Blogs_AddNew" xml:space="preserve">
-    <value>Add New +</value>
+    <value>Add New</value>
   </data>
   <data name="SiteSettings_Blogs_AuthorsTab_Title" xml:space="preserve">
     <value>Authors</value>
@@ -256,7 +253,7 @@
     <value>Posts Title</value>
   </data>
   <data name="SiteSettings_Templates_DefaultTemplate" xml:space="preserve">
-    <value>Default Layout</value>
+    <value>Default Template</value>
   </data>
   <data name="SiteSettings_Templates_IncompatibleTemplate" xml:space="preserve">
     <value>Not Compatible</value>
@@ -265,7 +262,7 @@
     <value>Select</value>
   </data>
   <data name="SiteSettings_Templates_Title" xml:space="preserve">
-    <value>Select Default Blog Layout</value>
+    <value>Select Default Blog Template</value>
   </data>
   <data name="CreatePost_CreatedSuccessfully_Message" xml:space="preserve">
     <value>Post created successfully</value>
@@ -322,7 +319,7 @@
     <value>Import</value>
   </data>
   <data name="SaveBlogPost_FailedToSave_InaccessibleMasterPage" xml:space="preserve">
-    <value>Cannot save blog post. Master page, which is selected as default blog post layout is inaccessible.</value>
+    <value>Cannot save blog post. Template, which is selected as default is inaccessible.</value>
   </data>
   <data name="ImportBlogPosts_Dialog_Title" xml:space="preserve">
     <value>Import blog posts</value>
@@ -427,7 +424,7 @@
     <value>Default content edit mode</value>
   </data>
   <data name="SiteSettings_Blogs_TemplatesTab_Title" xml:space="preserve">
-    <value>Layout</value>
+    <value>Template</value>
   </data>
   <data name="SiteSettings_BlogSettingsTab_Header" xml:space="preserve">
     <value>Blog Settings</value>
@@ -440,5 +437,14 @@
   </data>
   <data name="EditBlogPost_PropertiesTab_Title" xml:space="preserve">
     <value>Properties</value>
+  </data>
+  <data name="EditBlogPost_Language_Title" xml:space="preserve">
+    <value>Choose post language</value>
+  </data>
+  <data name="EditBlogPost_Language_Tooltip" xml:space="preserve">
+    <value>Choose language for current page, which will be used in menu and determines the language and culture of the page</value>
+  </data>
+  <data name="BlogPostTitle_ChooseLayout_Title" xml:space="preserve">
+    <value>Choose Blog Post Template</value>
   </data>
 </root>

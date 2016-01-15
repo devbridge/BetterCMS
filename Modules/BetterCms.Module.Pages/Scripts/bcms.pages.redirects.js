@@ -1,5 +1,31 @@
 ﻿/*jslint unparam: true, white: true, browser: true, devel: true */
-/*global bettercms */
+// --------------------------------------------------------------------------------------------------------------------
+// <copyright file="bcms.pages.redirects.js" company="Devbridge Group LLC">
+// 
+// Copyright (C) 2015,2016 Devbridge Group LLC
+// 
+// This program is free software: you can redistribute it and/or modify
+// it under the terms of the GNU Lesser General Public License as published by
+// the Free Software Foundation, either version 3 of the License, or
+// (at your option) any later version.
+// 
+// This program is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU General Public License for more details.
+// 
+// You should have received a copy of the GNU Lesser General Public License
+// along with this program.  If not, see http://www.gnu.org/licenses/. 
+// </copyright>
+// 
+// <summary>
+// Better CMS is a publishing focused and developer friendly .NET open source CMS.
+// 
+// Website: https://www.bettercms.com 
+// GitHub: https://github.com/devbridge/bettercms
+// Email: info@bettercms.com
+// </summary>
+// --------------------------------------------------------------------------------------------------------------------
 
 bettercms.define('bcms.pages.redirects', ['bcms.jquery', 'bcms', 'bcms.dynamicContent', 'bcms.siteSettings', 'bcms.inlineEdit', 'bcms.grid'], function ($, bcms, dynamicContent, siteSettings, editor, grid) {
     'use strict';
@@ -45,7 +71,7 @@ bettercms.define('bcms.pages.redirects', ['bcms.jquery', 'bcms', 'bcms.dynamicCo
     /**
     * Initializes site settings redirects list and list items
     */
-    redirect.initializeSiteSettingsRedirectsList = function() {
+    redirect.initializeSiteSettingsRedirectsList = function(data, isSearchResult) {
         var dialog = siteSettings.getModalDialog(),
             container = dialog.container;
         
@@ -62,13 +88,28 @@ bettercms.define('bcms.pages.redirects', ['bcms.jquery', 'bcms', 'bcms.dynamicCo
         });
 
         form.find(selectors.searchLink).on('click', function () {
-            redirect.searchSiteSettingsRedirects(form, container);
+            var parent = $(this).parent();
+            if (!parent.hasClass('bcms-active-search')) {
+                form.find(selectors.searchField).prop('disabled', false);
+                parent.addClass('bcms-active-search');
+                form.find(selectors.searchField).focus();
+            } else {
+                form.find(selectors.searchField).prop('disabled', true);
+                parent.removeClass('bcms-active-search');
+                form.find(selectors.searchField).val('');
+            }
         });
 
         form.find(selectors.createLink).on('click', function () {
             editor.addNewRow(container);
         });
         
+        if (isSearchResult === true) {
+            form.find(selectors.searchLink).parent().addClass('bcms-active-search');
+        } else {
+            form.find(selectors.searchField).prop('disabled', true);
+        }
+
         editor.initialize(container, {
             saveUrl: links.saveRedirectUrl,
             deleteUrl: links.deleteRedirectUrl,
@@ -89,7 +130,7 @@ bettercms.define('bcms.pages.redirects', ['bcms.jquery', 'bcms', 'bcms.dynamicCo
     redirect.searchSiteSettingsRedirects = function(form, container) {
         grid.submitGridForm(form, function (data) {
             siteSettings.setContent(data);
-            redirect.initializeSiteSettingsRedirectsList(data);
+            redirect.initializeSiteSettingsRedirectsList(data, true);
             var searchInput = container.find(selectors.searchField);  
             grid.focusSearchInput(searchInput);
         });

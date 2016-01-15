@@ -155,6 +155,7 @@
     <Compile Include="..\..\SharedAssemblyInfo.cs">
       <Link>Properties\SharedAssemblyInfo.cs</Link>
     </Compile>
+    <Compile Include="Command\GetAllSubscribersCsv\GetAllSubscribersStreamCsvCommand.cs" />
     <Compile Include="Events\NewsletterEvents.cs" />
     <Compile Include="Command\DeleteSubscriber\DeleteSubscriberCommand.cs" />
     <Compile Include="Command\GetSubscriberList\GetSubscriberListCommand.cs" />
@@ -250,6 +251,9 @@
       <Generator>RazorGenerator</Generator>
       <LastGenOutput>SubscribeToNewsletter.generated.cs</LastGenOutput>
     </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="..\..\licensing.licenseheader" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

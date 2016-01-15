@@ -1,61 +1,87 @@
-﻿@using BetterCms.Module.Pages.Content.Resources
+﻿@* --------------------------------------------------------------------------------------------------------------------
+// <copyright file="TranslationsGrid.cshtml" company="Devbridge Group LLC">
+// 
+// Copyright (C) 2015,2016 Devbridge Group LLC
+// 
+// This program is free software: you can redistribute it and/or modify
+// it under the terms of the GNU Lesser General Public License as published by
+// the Free Software Foundation, either version 3 of the License, or
+// (at your option) any later version.
+// 
+// This program is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU General Public License for more details.
+// 
+// You should have received a copy of the GNU Lesser General Public License
+// along with this program.  If not, see http://www.gnu.org/licenses/. 
+// </copyright>
+// 
+// <summary>
+// Better CMS is a publishing focused and developer friendly .NET open source CMS.
+// 
+// Website: https://www.bettercms.com 
+// GitHub: https://github.com/devbridge/bettercms
+// Email: info@bettercms.com
+// </summary>
+// -------------------------------------------------------------------------------------------------------------------- *@
+@using BetterCms.Module.Pages.Content.Resources
 @using BetterCms.Module.Root.Content.Resources
-    
+
 <div data-bind="with: translations" class="bcms-page-translations-content">
-    <div class="bcms-add-language-button">
-        <div class="bcms-btn-links-main" data-bind="click: startEditMode">@PagesGlobalization.EditPageTranslations_AddTranslation_ButtonTitle</div>
-    </div>
-    
     <table class="bcms-tables">
         <thead>
             <tr>
-                <th></th>
+                <th style="width: 40px; padding: 0;"></th>
                 <th style="width: 350px;">@PagesGlobalization.EditPageTranslations_Title_Title</th>
                 <th style="width: 250px;">@PagesGlobalization.EditPageTranslations_Language_Title</th>
                 <th>@PagesGlobalization.EditPageTranslations_Url_Title</th>
-                <th class="bcms-tables-nohover" style="width: 145px;">&nbsp;</th>
+                <th class="bcms-tables-nohover">&nbsp;</th>
             </tr>
         </thead>
         <tbody>
-            
             <!-- ko foreach: items -->
             <tr>
                 <td></td>
                 <td data-bind="html: title()"></td>
                 <td data-bind="html: languageName()"></td>
                 <td><a data-bind="html: url(), attr: {href: url()}" target="_blank"></a></td>
-                <td>
-                    <a class="bcms-icn-delete" data-bind="click: $parent.unassignPage">@RootGlobalization.Button_Delete</a>
+                <td style="width: 40px; padding: 0;">
+                    <div class="bcms-action-delete" data-bind="click: $parent.unassignPage" title="@RootGlobalization.Button_Delete">@RootGlobalization.Button_Delete</div>
                 </td>
             </tr>
             <!-- /ko -->
-            
             <!-- ko if: items().length == 0 && !isInAddMode() -->
             <tr>
-                <td colspan="5"><span class="bcms-table-no-data">@RootGlobalization.Grid_NoDataAvailable_Message</span></td>
+                <td colspan="5">
+                    <div class="bcms-table-no-data">@RootGlobalization.Grid_NoDataAvailable_Message</div>
+                </td>
             </tr>
             <!-- /ko -->
-
             <!-- ko if: isInAddMode() -->
             <tr class="bcms-table-row-active">
                 <td></td>
-                <td>
-                    <input  style="width: 230px;" type="text" class="bcms-editor-field-box" data-bind="value: addPageTitle, autocomplete: 'onlyExisting', hasfocus: hasFocus, enterPress: addTranslation, escPress: endEditMode" placeholder="@PagesGlobalization.EditPageProperties_TranslationsTab_PageSelectionPlaceholder" />
-                    <div class="bcms-btn-links-main" data-bind="click: selectPage">BROWSE...</div>
+                <td class="bcms-table-translation-helper" style="width: 230px;">
+                    <div class="bcms-field-wrapper">
+                        <input type="text" class="bcms-field-text" data-bind="value: addPageTitle, autocomplete: 'onlyExisting', hasfocus: hasFocus, enterPress: addTranslation, escPress: endEditMode" placeholder="@PagesGlobalization.EditPageProperties_TranslationsTab_PageSelectionPlaceholder" />
+                    </div>
+                    <div class="bcms-btn-primary" data-bind="click: selectPage">BROWSE...</div>
                 </td>
                 <td colspan="2">
                     <!-- ko if: addPageId() && addingPageLanguages().length > 1 -->
-                    <select style="width: 100%;" class="bcms-global-select" data-bind="options: addingPageLanguages, optionsText: 'value', optionsValue: 'key', value: addLanguageId"></select>
+                    <div class="bcms-field-wrapper">
+                        <select data-bind="options: addingPageLanguages, optionsText: 'value', optionsValue: 'key', value: addLanguageId, select2: { minimumResultsForSearch: -1 }"></select>
+                    </div>
                     <!-- /ko -->
                     <!-- ko if: addPageId() && addingPageLanguages().length == 1 -->
-                    <span data-bind="html: addingPageLanguages()[0].value"></span>
+                    <div data-bind="html: addingPageLanguages()[0].value"></div>
                     <!-- /ko -->
                 </td>
-                <td>
+                <td style="width: 110px;">
                     <!-- ko if: addLanguageId() -->
-                    <div class="bcms-btn-small" data-bind="click: addTranslation">@RootGlobalization.Button_Ok</div>
+                    <div class="bcms-btn-primary" data-bind="click: addTranslation">@RootGlobalization.Button_Ok</div>
                     <!-- /ko -->
-                    <div class="bcms-btn-links-small" data-bind="click: endEditMode">@RootGlobalization.Button_Cancel</div>
+                    <div class="bcms-btn-cancel" data-bind="click: endEditMode">@RootGlobalization.Button_Cancel</div>
                 </td>
             </tr>
             <!-- /ko -->

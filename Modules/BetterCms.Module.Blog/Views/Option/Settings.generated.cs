@@ -28,31 +28,31 @@ namespace ASP
     using System.Web.UI;
     using System.Web.WebPages;
     
-    #line 1 "..\..\Views\Option\Settings.cshtml"
+    #line 28 "..\..\Views\Option\Settings.cshtml"
     using BetterCms.Module.Blog.Content.Resources;
     
     #line default
     #line hidden
     
-    #line 3 "..\..\Views\Option\Settings.cshtml"
+    #line 30 "..\..\Views\Option\Settings.cshtml"
     using BetterCms.Module.Root;
     
     #line default
     #line hidden
     
-    #line 4 "..\..\Views\Option\Settings.cshtml"
+    #line 31 "..\..\Views\Option\Settings.cshtml"
     using BetterCms.Module.Root.Mvc.Grids;
     
     #line default
     #line hidden
     
-    #line 2 "..\..\Views\Option\Settings.cshtml"
+    #line 29 "..\..\Views\Option\Settings.cshtml"
     using BetterCms.Module.Root.Mvc.Helpers;
     
     #line default
     #line hidden
     
-    #line 5 "..\..\Views\Option\Settings.cshtml"
+    #line 32 "..\..\Views\Option\Settings.cshtml"
     using BetterCms.Module.Root.ViewModels.Shared;
     
     #line default
@@ -69,9 +69,11 @@ namespace ASP
         {
 WriteLiteral("\r\n");
 
+WriteLiteral("\r\n");
+
             
-            #line 7 "..\..\Views\Option\Settings.cshtml"
-Write(Html.TabbedContentMessagesBox());
+            #line 34 "..\..\Views\Option\Settings.cshtml"
+Write(Html.MessagesBox());
 
             
             #line default
@@ -79,7 +81,7 @@ Write(Html.TabbedContentMessagesBox());
 WriteLiteral("\r\n\r\n");
 
             
-            #line 9 "..\..\Views\Option\Settings.cshtml"
+            #line 36 "..\..\Views\Option\Settings.cshtml"
   
     var gridViewModel = new EditableGridViewModel
     {
@@ -112,17 +114,15 @@ WriteLiteral("\r\n\r\n");
             
             #line default
             #line hidden
-WriteLiteral("\r\n\r\n");
+WriteLiteral("\r\n");
 
             
-            #line 39 "..\..\Views\Option\Settings.cshtml"
+            #line 65 "..\..\Views\Option\Settings.cshtml"
 Write(Html.Partial(RootModuleConstants.EditableGridTemplate, gridViewModel));
 
             
             #line default
             #line hidden
-WriteLiteral("\r\n");
-
         }
     }
 }

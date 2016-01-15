@@ -1,5 +1,31 @@
 ﻿/*jslint unparam: true, white: true, browser: true, devel: true */
-/*global bettercms */
+// --------------------------------------------------------------------------------------------------------------------
+// <copyright file="bcms.siteSettings.js" company="Devbridge Group LLC">
+// 
+// Copyright (C) 2015,2016 Devbridge Group LLC
+// 
+// This program is free software: you can redistribute it and/or modify
+// it under the terms of the GNU Lesser General Public License as published by
+// the Free Software Foundation, either version 3 of the License, or
+// (at your option) any later version.
+// 
+// This program is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU General Public License for more details.
+// 
+// You should have received a copy of the GNU Lesser General Public License
+// along with this program.  If not, see http://www.gnu.org/licenses/. 
+// </copyright>
+// 
+// <summary>
+// Better CMS is a publishing focused and developer friendly .NET open source CMS.
+// 
+// Website: https://www.bettercms.com 
+// GitHub: https://github.com/devbridge/bettercms
+// Email: info@bettercms.com
+// </summary>
+// --------------------------------------------------------------------------------------------------------------------
 
 bettercms.define('bcms.siteSettings', ['bcms.jquery', 'bcms', 'bcms.modal', 'bcms.dynamicContent', 'bcms.tabs', 'bcms.ko.extenders', 'bcms.messages', 'bcms.forms'],
     function ($, bcms, modal, dynamicContent, tabs, ko, messages, forms) {
@@ -13,8 +39,8 @@ bettercms.define('bcms.siteSettings', ['bcms.jquery', 'bcms', 'bcms.modal', 'bcm
             menu: '#bcms-site-settings-menu',
             placeHolder: '#bcms-site-settings-placeholder',
             firstMenuButton: '#bcms-site-settings-menu .bcms-onclick-action:first',
-            loaderContainer: '.bcms-rightcol',
-            mainContainer: '.bcms-rightcol',
+            loaderContainer: '.bcms-js-settings-window',
+            mainContainer: '.bcms-js-settings-window',
             tabsTemplate: '#bcms-site-setting-tab-template',
             tabsTemplateChildDiv: 'div',
             modalMessages: '#bcms-modal-messages'
@@ -52,6 +78,9 @@ bettercms.define('bcms.siteSettings', ['bcms.jquery', 'bcms', 'bcms.modal', 'bcm
                 dynamicContent.setContentFromUrl(dialog, siteSettings.links.loadSiteSettingsUrl, {
                     done: function () {
                         siteSettings.selectFirstMenuItem();
+                        $('bcms-btn-search').on('click', function() {
+                            $(this).parent().addClass("bcms-active-search");
+                        });
                     }
                 });
             },
@@ -74,7 +103,7 @@ bettercms.define('bcms.siteSettings', ['bcms.jquery', 'bcms', 'bcms.modal', 'bcm
                 $.validator.unobtrusive.parse(siteSettingsModalWindow.container);
             }
 
-            siteSettingsModalWindow.maximizeHeight();
+            //siteSettingsModalWindow.maximizeHeight();
 
             if (!doNotInitTabs) {
                 tabs.initTabPanel(siteSettingsModalWindow.container);
@@ -219,7 +248,8 @@ bettercms.define('bcms.siteSettings', ['bcms.jquery', 'bcms', 'bcms.modal', 'bcm
             content = $($(selectors.tabsTemplate).html());
 
         siteSettings.setContent(content, null, true);
-        
+
+        ko.cleanNode(siteSettingsModalWindow.container.find(selectors.placeHolder).get(0));
         ko.applyBindings(tabsViewModel, siteSettingsModalWindow.container.find(selectors.placeHolder).get(0));
 
         if (tabViewModels.length > 0) {

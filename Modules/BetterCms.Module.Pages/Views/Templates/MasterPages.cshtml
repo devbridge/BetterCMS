@@ -1,4 +1,31 @@
-﻿@using BetterCms.Module.Pages.Content.Resources
+﻿@* --------------------------------------------------------------------------------------------------------------------
+// <copyright file="MasterPages.cshtml" company="Devbridge Group LLC">
+// 
+// Copyright (C) 2015,2016 Devbridge Group LLC
+// 
+// This program is free software: you can redistribute it and/or modify
+// it under the terms of the GNU Lesser General Public License as published by
+// the Free Software Foundation, either version 3 of the License, or
+// (at your option) any later version.
+// 
+// This program is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU General Public License for more details.
+// 
+// You should have received a copy of the GNU Lesser General Public License
+// along with this program.  If not, see http://www.gnu.org/licenses/. 
+// </copyright>
+// 
+// <summary>
+// Better CMS is a publishing focused and developer friendly .NET open source CMS.
+// 
+// Website: https://www.bettercms.com 
+// GitHub: https://github.com/devbridge/bettercms
+// Email: info@bettercms.com
+// </summary>
+// -------------------------------------------------------------------------------------------------------------------- *@
+@using BetterCms.Module.Pages.Content.Resources
 @using BetterCms.Module.Pages.Controllers
 @using BetterCms.Module.Pages.ViewModels.SiteSettings
 @using BetterCms.Module.Root
@@ -22,16 +49,16 @@
     Action<ColumnBuilder<SiteSettingPageViewModel>> columns = column =>
     {
         column.EditButtonColumn();
-        column.For(m => string.Format("<a class=\"bcms-tables-link bcms-page-title\" data-id=\"{0}\" data-url=\"{2}\">{1}</a>", m.Id, System.Web.Security.AntiXss.AntiXssEncoder.HtmlEncode(m.Title ?? "", true), m.Url))
+        column.For(m => string.Format("<a class=\"bcms-tables-link bcms-page-title\" data-id=\"{0}\" data-url=\"{2}\">{1}</a>", m.Id, System.Web.Security.AntiXss.AntiXssEncoder.HtmlEncode(m.Title ?? "", true), m.PageUrl))
             .Named(PagesGlobalization.SiteSettings_Pages_TitleColumn)
             .SortColumnName("Title")
             .Attributes()
             .Encode(false);
 
         if (canViewPages) {
-            column.For(f => string.Format("<a class=\"bcms-template-usage\" data-id=\"{0}\">{1}</a>", f.Id, PagesGlobalization.SiteSettings_MasterPages_Usage))
+            column.For(f => string.Format("<div class=\"bcms-action-usage\" data-id=\"{0}\" title=\"{1}\">{1}</div>", f.Id, PagesGlobalization.SiteSettings_MasterPages_Usage))
                .Named("")
-               .HeaderAttributes(@style => "width: 100px;")
+               .HeaderAttributes(@style => "width: 40px; padding: 8px 0;")
                .Sortable(false)
                .Encode(false);
         }
@@ -49,22 +76,27 @@
 
 @using (Html.BeginForm<TemplatesController>(f => f.MasterPages(null), FormMethod.Post, new { @id = "bcms-master-pages-form", @class = "bcms-ajax-form" }))
 {
-    @Html.HiddenGridOptions(Model.GridOptions)
+    @Html.MessagesBox()
 
-    <div class="bcms-top-block-holder">
-        <div class="bcms-btn-links-main" id="bcms-create-page-button">@PagesGlobalization.SiteSettings_Pages_AddNew</div>
-        <div class="bcms-search-block">
-            @Html.TextBoxFor(m => m.SearchQuery, new { @class = "bcms-editor-field-box bcms-search-query", @placeholder = RootGlobalization.WaterMark_Search })
-            <div class="bcms-btn-search" id="bcms-pages-search-btn">@PagesGlobalization.SiteSettings_Pages_Search</div>
+        @Html.HiddenGridOptions(Model.GridOptions)
+        <div class="bcms-top-block-holder">
+            <div class="bcms-btn-main" id="bcms-create-page-button">@PagesGlobalization.SiteSettings_Pages_AddNew</div>
+
+                <div class="bcms-top-block-inner">
+                    <div class="bcms-btn-search" id="bcms-pages-search-btn">@PagesGlobalization.SiteSettings_Pages_Search</div>
+                    <div class="bcms-search-block">
+                        @Html.TextBoxFor(m => m.SearchQuery, new { @class = "bcms-field-text bcms-search-query", @placeholder = RootGlobalization.WaterMark_Search })
+                    </div>
+                </div>
+
+            <div class="bcms-top-block-pager">
+                @Html.RenderPaging(Model)
+            </div>
         </div>
-        
-        <div class="bcms-featured-grid bcms-clearfix">
-            @Html.RenderPaging(Model)
-        </div>
+
+    <div class="bcms-window-settings">
+        @Html.Grid(Model.Items).Sort(Model.GridOptions).Columns(columns).Attributes(@class => "bcms-tables").RenderUsing(new EditableHtmlTableGridRenderer<SiteSettingPageViewModel>())
     </div>
-    @Html.SiteSettingsMessagesBox()
-
-    @Html.Grid(Model.Items).Sort(Model.GridOptions).Columns(columns).Attributes(@class => "bcms-tables").RenderUsing(new EditableHtmlTableGridRenderer<SiteSettingPageViewModel>())
 }
 
 <script type="text/html" id="bcms-pages-list-row-template">

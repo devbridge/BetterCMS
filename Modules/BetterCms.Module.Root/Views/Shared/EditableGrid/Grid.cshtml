@@ -1,29 +1,51 @@
-﻿@using BetterCms.Module.Root.Content.Resources
+﻿@* --------------------------------------------------------------------------------------------------------------------
+// <copyright file="Grid.cshtml" company="Devbridge Group LLC">
+// 
+// Copyright (C) 2015,2016 Devbridge Group LLC
+// 
+// This program is free software: you can redistribute it and/or modify
+// it under the terms of the GNU Lesser General Public License as published by
+// the Free Software Foundation, either version 3 of the License, or
+// (at your option) any later version.
+// 
+// This program is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU General Public License for more details.
+// 
+// You should have received a copy of the GNU Lesser General Public License
+// along with this program.  If not, see http://www.gnu.org/licenses/. 
+// </copyright>
+// 
+// <summary>
+// Better CMS is a publishing focused and developer friendly .NET open source CMS.
+// 
+// Website: https://www.bettercms.com 
+// GitHub: https://github.com/devbridge/bettercms
+// Email: info@bettercms.com
+// </summary>
+// -------------------------------------------------------------------------------------------------------------------- *@
+@using BetterCms.Module.Root.Content.Resources
 @using BetterCms.Module.Root.Mvc.Helpers
-
 @model BetterCms.Module.Root.ViewModels.Shared.EditableGridViewModel
-
 @Html.Partial(Model.TopBlockView, Model)
-
 @if (Model.ShowMessages)
 {
-    @Html.SiteSettingsMessagesBox(null, new Dictionary<string, string> { { "data-bind", "attr: { id: messagesDomId() }" } })
+    @Html.MessagesBox(null, new Dictionary<string, string> { { "data-bind", "attr: { id: messagesDomId() }" } })
 }
-
 @{
     var visibleColumns = Model.Columns.Where(c => c.IsRendered).ToList();
     var visibleColumnsCount = visibleColumns.Count;
 }
-
 <table class="bcms-tables">
     <thead>
         <tr>
-            <th class="bcms-tables-nohover">&nbsp;</th>
+            <th class="bcms-tables-nohover" style="width: 40px; padding: 0;">&nbsp;</th>
             @foreach (var column in visibleColumns)
             {
                 @Html.Partial(column.HeaderView, column)
             }
-            <th class="bcms-tables-nohover" style="width: 145px;">&nbsp;</th>
+            <th class="bcms-tables-nohover">&nbsp;</th>
         </tr>
     </thead>
     <tbody>
@@ -39,19 +61,18 @@
             }
             @if (Model.CanEditItems)
             {
-                <td class="bcms-tables-nohover" style="width: 145px;">&nbsp;</td>
+                <td class="bcms-tables-nohover">&nbsp;</td>
                 <!-- ko if: deleting() -->
                 <td class="bcms-tables-nohover" colspan="@visibleColumnsCount">@RootGlobalization.Message_Deleting</td>
                 <!-- /ko -->
             }
             <!-- /ko -->
-            
             <!-- ko ifnot: saving() || deleting() -->
             @if (Model.CanEditItems)
             {
                 <td>
                     <!-- ko if: !editingIsDisabled() -->
-                    <a class="bcms-icn-edit" data-bind="click: onEdit">@RootGlobalization.Button_Edit</a>
+                    <div class="bcms-action-edit" data-bind="click: onEdit" title="@RootGlobalization.Button_Edit">@RootGlobalization.Button_Edit</div>
                     <!-- /ko -->
                 </td>
             }
@@ -63,47 +84,44 @@
             {
                 @Html.Partial(column.CellView, column)
             }
-            <td>
+            <td data-bind="style: { width: isActive() ? '120px' : '40px', padding: isActive() ? '10px' : '0' }">
                 @if (Model.CanDeleteItems)
                 {
-                    <!-- ko if: !isActive() && !deletingIsDisabled() -->
-                    <a class="bcms-icn-delete" data-bind="click: onDelete">@RootGlobalization.Button_Delete</a>
-                    <!-- /ko -->
+                    <div class="bcms-action-delete" data-bind="click: onDelete, visible: !isActive() && !deletingIsDisabled()" title="@RootGlobalization.Button_Delete">@RootGlobalization.Button_Delete</div>
                 }
                 @if (Model.CanEditItems)
                 {
                     <!-- ko if: isActive() -->
-                    <div class="bcms-btn-small" data-bind="click: onSave">@Model.SaveButtonTitle</div>
-                    <div class="bcms-btn-links-small" data-bind="event : {mousedown: onCancelEdit}">@RootGlobalization.Button_Cancel</div>
+                    <div class="bcms-btn-primary" data-bind="click: onSave">@Model.SaveButtonTitle</div>
+                    <div class="bcms-btn-cancel" data-bind="event : {mousedown: onCancelEdit}">@RootGlobalization.Button_Cancel</div>
                     <!-- /ko -->
                 }
                 @if (!Model.CanDeleteItems && !Model.CanEditItems)
                 {
                     @:&nbsp;
                 }
-                
             </td>
             <!-- /ko -->
         </tr>
         <!-- /ko -->
         <!-- ko if: items().length == 0 -->
         <tr>
-            <td colspan="@(visibleColumnsCount + 2)"><span class="bcms-table-no-data">@RootGlobalization.Grid_NoDataAvailable_Message</span></td>
+            <td colspan="@(visibleColumnsCount + 2)">
+                <div class="bcms-table-no-data">@RootGlobalization.Grid_NoDataAvailable_Message</div>
+            </td>
         </tr>
         <!-- /ko -->
     </tbody>
 </table>
-
 @if (Model.AddHiddenFields)
 {
     <!-- ko foreach: items -->
-        foreach (var column in Model.Columns)
+    foreach (var column in Model.Columns)
+    {
+        if (!string.IsNullOrWhiteSpace(column.HiddenFieldName))
         {
-            if (!string.IsNullOrWhiteSpace(column.HiddenFieldName))
-            {
-                <input type="hidden" name="" value="" data-bind="valueBinder: @(column.ValueBind)
-                    , attr: {name: hiddenFieldName('@(column.HiddenFieldName)', $index()) }">
-            }
+            <input type="hidden" name="" value="" data-bind="value: @(column.ValueBind), attr: {name: hiddenFieldName('@(column.HiddenFieldName)', $index()) }">
         }
+    }
     <!-- /ko -->
 }

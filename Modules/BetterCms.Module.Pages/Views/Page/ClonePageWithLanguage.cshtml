@@ -1,53 +1,79 @@
-﻿@using BetterCms.Module.Pages.Content.Resources
+﻿@* --------------------------------------------------------------------------------------------------------------------
+// <copyright file="ClonePageWithLanguage.cshtml" company="Devbridge Group LLC">
+// 
+// Copyright (C) 2015,2016 Devbridge Group LLC
+// 
+// This program is free software: you can redistribute it and/or modify
+// it under the terms of the GNU Lesser General Public License as published by
+// the Free Software Foundation, either version 3 of the License, or
+// (at your option) any later version.
+// 
+// This program is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU General Public License for more details.
+// 
+// You should have received a copy of the GNU Lesser General Public License
+// along with this program.  If not, see http://www.gnu.org/licenses/. 
+// </copyright>
+// 
+// <summary>
+// Better CMS is a publishing focused and developer friendly .NET open source CMS.
+// 
+// Website: https://www.bettercms.com 
+// GitHub: https://github.com/devbridge/bettercms
+// Email: info@bettercms.com
+// </summary>
+// -------------------------------------------------------------------------------------------------------------------- *@
+@using BetterCms.Module.Pages.Content.Resources
 @using BetterCms.Module.Pages.Controllers
 @using BetterCms.Module.Pages.ViewModels.Page
 @using BetterCms.Module.Root
 @using BetterCms.Module.Root.Mvc.Helpers
 @using Microsoft.Web.Mvc
-
 @model ClonePageWithLanguageViewModel
 
-<div class="bcms-scroll-window">
-    @Html.TabbedContentMessagesBox()
-    <div class="bcms-padded-content">
-        @using (Html.BeginForm<PageController>(f => f.ClonePageWithLanguage((string)null), FormMethod.Post,
-            new
-            {
-                @class = "bcms-ajax-form",
-                data_readonly = (!Model.Languages.Any()).ToString().ToLower()
-            }))
+<div class="bcms-modal-frame-holder">
+    @Html.MessagesBox()
+
+    <div class="bcms-window-options">
+        @using (Html.BeginForm<PageController>(f => f.ClonePageWithLanguage((string)null), FormMethod.Post, new { @class = "bcms-ajax-form", data_readonly = (!Model.Languages.Any()).ToString().ToLower() }))
         {
-            <div class="bcms-input-list-holder">
+            <div class="bcms-content-info-container">
                 <div class="bcms-content-titles">@PagesGlobalization.ClonePageWithLanguage_Dialog_ConfirmationMessage_Header</div>
-                <div>@PagesGlobalization.ClonePageWithLanguage_Dialog_ConfirmationMessage_Text</div>
+                <div class="bcms-content-description">@PagesGlobalization.ClonePageWithLanguage_Dialog_ConfirmationMessage_Text</div>
             </div>
 
-            <div class="bcms-input-list-holder">
-                @Html.Tooltip(PagesGlobalization.ClonePageWithLanguage_Dialog_Language_Tootlip)
-                <div class="bcms-content-titles">@PagesGlobalization.ClonePageWithLanguage_Dialog_Language_Title</div>
-                <div class="bcms-input-box">
-                    <div class="bcms-select-holder">
-                        @Html.DropDownListFor(model => model.LanguageId, Model.Languages.ToSelectList(Model.LanguageId), string.Empty, new { @class = "bcms-global-select" })
-                        @Html.BcmsValidationMessageFor(f => f.LanguageId)
+            <div class="bcms-form-block-holder">
+                <div>
+                    <div class="bcms-input-list-holder">
+                        <div class="bcms-content-titles">@PagesGlobalization.ClonePageWithLanguage_Dialog_Language_Title</div>
+                        @Html.Tooltip(PagesGlobalization.ClonePageWithLanguage_Dialog_Language_Tootlip)
+                        <div class="bcms-field-wrapper">
+                                @Html.DropDownListFor(model => model.LanguageId, Model.Languages.ToSelectList(Model.LanguageId), string.Empty)
+                                @Html.BcmsValidationMessageFor(f => f.LanguageId)
+                        </div>
                     </div>
+
+                    <div class="bcms-input-list-holder">
+                        <div class="bcms-content-titles">@PagesGlobalization.ClonePage_Dialog_PageTitle</div>
+                        @Html.Tooltip(PagesGlobalization.ClonePage_Dialog_PageTitle_Tooltip_Description)
+                        <div class="bcms-field-wrapper">
+                            @Html.TextBoxFor(m => m.PageTitle, new { @class = "bcms-field-text" })
+                            @Html.BcmsValidationMessageFor(f => f.PageTitle)
+                        </div>
+                    </div>
+
+                    @Html.Partial("Partial/ClonePageEditUrl")
+                </div>
+
+                <div>
+                    @if (Model.AccessControlEnabled)
+                    {
+                        @Html.Partial(RootModuleConstants.AccessControlTemplate)
+                    }
                 </div>
             </div>
-
-            <div class="bcms-input-list-holder">
-                @Html.Tooltip(PagesGlobalization.ClonePage_Dialog_PageTitle_Tooltip_Description)
-                <div class="bcms-content-titles">@PagesGlobalization.ClonePage_Dialog_PageTitle</div>
-                <div class="bcms-input-box">
-                    @Html.TextBoxFor(m => m.PageTitle, new { @class = "bcms-editor-field-box" })
-                    @Html.BcmsValidationMessageFor(f => f.PageTitle)
-                </div>
-            </div>
-
-            @Html.Partial("Partial/ClonePageEditUrl")
-
-            if (Model.AccessControlEnabled)
-            {
-                @Html.Partial(RootModuleConstants.AccessControlTemplate)
-            }
 
             @Html.HiddenFor(m => m.PageId)
             @Html.HiddenFor(m => m.LanguageId)

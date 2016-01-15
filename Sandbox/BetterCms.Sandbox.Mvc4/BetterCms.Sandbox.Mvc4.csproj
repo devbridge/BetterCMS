@@ -466,6 +466,10 @@
     <None Include="Properties\PublishProfiles\bcms-sandbox.pubxml" />
     <Content Include="Views\Widgets\ApiTestWidget.cshtml" />
     <Content Include="Views\Widgets\ApiTestWidgetInvoker.cshtml" />
+    <Content Include="Views\Shared\Layouts\MasterLayout.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="..\..\licensing.licenseheader" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

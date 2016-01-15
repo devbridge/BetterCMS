@@ -1,4 +1,31 @@
-﻿@using BetterCms.Module.Pages.Content.Resources
+﻿@* --------------------------------------------------------------------------------------------------------------------
+// <copyright file="EditOptionValues.cshtml" company="Devbridge Group LLC">
+// 
+// Copyright (C) 2015,2016 Devbridge Group LLC
+// 
+// This program is free software: you can redistribute it and/or modify
+// it under the terms of the GNU Lesser General Public License as published by
+// the Free Software Foundation, either version 3 of the License, or
+// (at your option) any later version.
+// 
+// This program is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU General Public License for more details.
+// 
+// You should have received a copy of the GNU Lesser General Public License
+// along with this program.  If not, see http://www.gnu.org/licenses/. 
+// </copyright>
+// 
+// <summary>
+// Better CMS is a publishing focused and developer friendly .NET open source CMS.
+// 
+// Website: https://www.bettercms.com 
+// GitHub: https://github.com/devbridge/bettercms
+// Email: info@bettercms.com
+// </summary>
+// -------------------------------------------------------------------------------------------------------------------- *@
+@using BetterCms.Module.Pages.Content.Resources
 @using BetterCms.Module.Pages.Mvc.EditableGrid
 @using BetterCms.Module.Root;
 @using BetterCms.Module.Root.Content.Resources
@@ -16,36 +43,35 @@
     { 
         new EditableGridColumn(PagesGlobalization.EditOptionsValues_OptionKeyColumn, null, "key")
         {
-            HeaderAttributes = "style=\"width: 200px;\"", 
+            HeaderAttributes = "style=\"width: 250px;\"",
             HiddenFieldName = "OptionValues[{0}].OptionKey"
-        }, 
+        },
         new EditableGridBooleanColumn(PagesGlobalization.EditOptionsValues_UseDefaultValueColumn, null, "useDefaultValueBinding")
         {
-            HiddenFieldName = "OptionValues[{0}].UseDefaultValue", 
+            HiddenFieldName = "OptionValues[{0}].UseDefaultValue",
             CellView = "~/Areas/bcms-pages/Views/Option/Partial/UseDefaultValueCell.cshtml",
             FocusIdentifier = "hasFocus"
-        }, 
+        },
         new OptionValueEditableGridColumn(PagesGlobalization.EditOptionsValues_OptionDefaultValueColumn, "defaultValueBinding", "customOptionDefaultTitleBinding")
         {
-            CanBeEdited = false, 
+            CanBeEdited = false,
             HeaderAttributes = "style=\"width: 160px;\""
-        }, 
+        },
         new EditableGridDropDownColumn(PagesGlobalization.EditOptionsValues_OptionTypeColumn, null, "calcType")
         {
-            OptionsBind = "optionTypes", 
-            ValueTextBind = "typeName", 
-            HeaderAttributes = "style=\"width: 100px;\"", 
+            OptionsBind = "optionTypes",
+            ValueTextBind = "typeName",
+            HeaderAttributes = "style=\"width: 100px;\"",
             CanBeEdited = false
-        }, 
+        },
         new OptionValueEditableGridColumn(PagesGlobalization.EditOptionsValues_OptionValueColumn, "valueBinding", "customOptionTitleBinding")
         {
-            HeaderAttributes = "style=\"width: 200px;\"", 
+            HeaderAttributes = "style=\"width: 250px;\"", 
             HiddenFieldName = "OptionValues[{0}].OptionValue",
             FocusIdentifier = "valueHasFocus"
             
-        }, 
-        new EditableGridHiddenField("type", "OptionValues[{0}].Type"), 
+        },
+        new EditableGridHiddenField("type", "OptionValues[{0}].Type"),
         new EditableGridHiddenField("customType", "OptionValues[{0}].CustomType") };
 }
-
 @Html.Partial(RootModuleConstants.EditableGridTemplate, Model)

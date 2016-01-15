@@ -133,7 +133,7 @@
     <value>Page title is required.</value>
   </data>
   <data name="AddNewPageProperties_TemplateId_RequiredMessage" xml:space="preserve">
-    <value>Layout template is required.</value>
+    <value>Template is required.</value>
   </data>
   <data name="AddNewPage_Dialog_Title" xml:space="preserve">
     <value>Add New Page</value>
@@ -157,16 +157,16 @@
     <value>Create a unique page URL for your new page.</value>
   </data>
   <data name="AddNewPage_Template" xml:space="preserve">
-    <value>Select page layout</value>
+    <value>Select template</value>
   </data>
   <data name="AddNewPage_Template_InfoMessage_Text" xml:space="preserve">
-    <value>&lt;b&gt;The layout of this page is based on a template.&lt;/b&gt; Select a template from options below. If you need an additional template contact your system administrator to create a custom template.</value>
+    <value>The layout of this page is based on a template. Select a template from options below, or contact your system administrator to create a custom template.</value>
   </data>
   <data name="AddNewPage_Template_Tooltip_Description" xml:space="preserve">
     <value>Select the template you would like to use for your new page.</value>
   </data>
   <data name="AddPageContent_WidgetTab_AddNewButton" xml:space="preserve">
-    <value>Add New +</value>
+    <value>Add New</value>
   </data>
   <data name="AddPageContent_WidgetTab_DeleteButton" xml:space="preserve">
     <value>Delete</value>
@@ -394,13 +394,13 @@
     <value>Basic Properties</value>
   </data>
   <data name="EditPageProperties_LayoutPropertiesTab_InfoMessage" xml:space="preserve">
-    <value>&lt;b&gt;The layout of this page is based on a template.&lt;/b&gt; Select a template from options below. &#x3;If you need an additional template contact your system administrator to create a custom template.</value>
+    <value>The layout of this page is based on a template. Select a template from options below, or contact your system administrator to create a custom template.</value>
   </data>
   <data name="EditPageProperties_LayoutPropertiesTab_Layout_Tooltip_Description" xml:space="preserve">
     <value>Change the way content is displayed on this page by selecting a different template.</value>
   </data>
   <data name="EditPageProperties_LayoutPropertiesTab_Title" xml:space="preserve">
-    <value>Layout</value>
+    <value>Template</value>
   </data>
   <data name="EditPageProperties_PagePermalink_InvalidMessage" xml:space="preserve">
     <value>Page permalink is invalid. Link can contain only following characters: '0-9', 'a-z', '-', '/', '_' and no more than 260 alphanumeric characters between the '/'.</value>
@@ -481,13 +481,13 @@
     <value>Edit the URL visitors will use to navigate to this post.</value>
   </data>
   <data name="EditWidget_BasicPropertiesTab_Title" xml:space="preserve">
-    <value>Basic Properties</value>
+    <value>Properties</value>
   </data>
   <data name="EditWidget_Dialog_Title" xml:space="preserve">
     <value>Edit Widget</value>
   </data>
   <data name="EditWidget_OptionsTab_Title" xml:space="preserve">
-    <value>Widget Options</value>
+    <value>Options</value>
   </data>
   <data name="PageContent_ContentName_MaxLengthMessage" xml:space="preserve">
     <value>Content name max length exceeded.</value>
@@ -538,7 +538,7 @@
     <value>Delete page</value>
   </data>
   <data name="Sidebar_EditPagePropertiesButtonTitle" xml:space="preserve">
-    <value>Edit page properties</value>
+    <value>Properties</value>
   </data>
   <data name="Sidebar_EditSeoButtonTitle" xml:space="preserve">
     <value>Edit SEO</value>
@@ -568,13 +568,13 @@
     <value>Page is not published!</value>
   </data>
   <data name="Siderbar_ClonePageButtonTitle" xml:space="preserve">
-    <value>Clone page</value>
+    <value>Duplicate this page</value>
   </data>
   <data name="SiteSettings_PagesMenuItem" xml:space="preserve">
     <value>Pages</value>
   </data>
   <data name="SiteSettings_Pages_AddNew" xml:space="preserve">
-    <value>Add New +</value>
+    <value>Add New</value>
   </data>
   <data name="SiteSettings_Pages_CreatedColumn" xml:space="preserve">
     <value>Created</value>
@@ -601,7 +601,7 @@
     <value>Redirects</value>
   </data>
   <data name="SiteSettings_Redirects_AddNew" xml:space="preserve">
-    <value>Add New +</value>
+    <value>Add New</value>
   </data>
   <data name="SiteSettings_Redirects_PageUrlColumn" xml:space="preserve">
     <value>Source URL</value>
@@ -628,7 +628,7 @@
     <value>Widgets</value>
   </data>
   <data name="SiteSettings_Widgets_AddNew" xml:space="preserve">
-    <value>Add New +</value>
+    <value>Add New</value>
   </data>
   <data name="SiteSettings_Widgets_CategoryColumn" xml:space="preserve">
     <value>Category</value>
@@ -641,6 +641,12 @@
   </data>
   <data name="SiteSettings_Widgets_Title" xml:space="preserve">
     <value>Widgets</value>
+  </data>
+  <data name="SiteSettings_PageStatus_Published" xml:space="preserve">
+    <value>Published</value>
+  </data>
+  <data name="SiteSettings_PageStatus_Unpublished" xml:space="preserve">
+    <value>Unpublished</value>
   </data>
   <data name="ValidatePageUrlCommand_InvalidUrlPath_Message" xml:space="preserve">
     <value>Invalid page URL. Please update URL (path) and try again.</value>
@@ -682,7 +688,7 @@
     <value>A page successfully cloned. Redirecting to {0}.</value>
   </data>
   <data name="Options_AddNew" xml:space="preserve">
-    <value>Add New +</value>
+    <value>Add New</value>
   </data>
   <data name="Options_OptionDefaultValueColumn" xml:space="preserve">
     <value>Default Value</value>
@@ -703,7 +709,7 @@
     <value>Edit page widget options</value>
   </data>
   <data name="SiteSettings_Widgets_RegisterNew" xml:space="preserve">
-    <value>Register +</value>
+    <value>Register</value>
   </data>
   <data name="DeletePageContent_ConfirmationMessage" xml:space="preserve">
     <value>Are you sure you want to delete "{0}" content?</value>
@@ -757,7 +763,7 @@
     <value>Preview</value>
   </data>
   <data name="SiteSettings_TemplatesMenuItem" xml:space="preserve">
-    <value>Page layouts</value>
+    <value>Templates</value>
   </data>
   <data name="SiteSettings_Templates_NameColumn" xml:space="preserve">
     <value>Name</value>
@@ -799,7 +805,7 @@
     <value>Edit Template</value>
   </data>
   <data name="TemplateRegions_AddNewRegion" xml:space="preserve">
-    <value>Add New Region +</value>
+    <value>Add New Region</value>
   </data>
   <data name="TemplateRegions_IdentificatorColumn" xml:space="preserve">
     <value>Identificator</value>
@@ -820,7 +826,7 @@
     <value>Are you sure you want to delete the "{0}" template?</value>
   </data>
   <data name="SiteSettings_Template_RegisterNew" xml:space="preserve">
-    <value>Register +</value>
+    <value>Register</value>
   </data>
   <data name="SiteSettings_Template_Search" xml:space="preserve">
     <value>Search</value>
@@ -871,7 +877,7 @@
     <value>Paste custom JavaScript code that will be executed only on this page.</value>
   </data>
   <data name="EditPageProperties_LayoutPropertiesTab_ChooseLayout_Title" xml:space="preserve">
-    <value>Choose Page Layout</value>
+    <value>Choose Template</value>
   </data>
   <data name="ContentHistory_Restore_ConfirmationMessage" xml:space="preserve">
     <value>Are you sure you want to restore to older version? Restored content will be immediately published.</value>
@@ -958,7 +964,7 @@
     <value>Cannot delete template, because it is in use.</value>
   </data>
   <data name="AddPageContent_WidgetTab_RegisterButton" xml:space="preserve">
-    <value>Register +</value>
+    <value>Register</value>
   </data>
   <data name="SaveTemplate_DublicateRegionIdentificator_Message" xml:space="preserve">
     <value>Duplicate template region found.</value>
@@ -979,28 +985,28 @@
     <value>Page status is inappropriate. Can not change it.</value>
   </data>
   <data name="SavePage_CreatedSuccessfully_Message" xml:space="preserve">
-    <value>Page created succesfully.</value>
+    <value>Page created successfully.</value>
   </data>
   <data name="EditSeo_Messages_NotInSitemapWarnMessage" xml:space="preserve">
-    <value>Page is not in sitemap.</value>
+    <value>Page is not added to any menu.</value>
   </data>
   <data name="EditPageProperties_AdvancedPropertiesTab_UpdateSitemap_Title" xml:space="preserve">
-    <value>Update sitemap with new URL.</value>
+    <value>Update menu with new URL.</value>
   </data>
   <data name="EditSeo_EditUrlPath_UpdateSitemap" xml:space="preserve">
-    <value>Update sitemap with new URL.</value>
+    <value>Update menu with new URL.</value>
   </data>
   <data name="DeletePage_Dialog_UpdateSitemap" xml:space="preserve">
-    <value>Update sitemap</value>
+    <value>Update menu</value>
   </data>
   <data name="DeletePage_Dialog_UpdateSitemap_Description" xml:space="preserve">
-    <value>Removing this page from the sitemap will delete the page and remove it from the navigation elements throughout your website.</value>
+    <value>Removing this page from the menu will delete the page and remove it from the navigation elements throughout your website.</value>
   </data>
   <data name="DeletePage_Dialog_UpdateSitemap_RemovePageFromSitemap" xml:space="preserve">
-    <value>Remove this page from sitemap.</value>
+    <value>Remove this page from menu.</value>
   </data>
   <data name="DeletePageCommand_SitemapNodeHasChildNodes_Message" xml:space="preserve">
-    <value>Can not remove this page from the sitemap, because it has child nodes.</value>
+    <value>Can not remove this page from the menu, because it has child nodes.</value>
   </data>
   <data name="SortPageContent_Info_Message" xml:space="preserve">
     <value>Sorting page contents. Please wait.</value>
@@ -1111,52 +1117,52 @@
     <value>Use default</value>
   </data>
   <data name="SavePagePropertiesCommand_LayoutAndMasterIsSelected_Message" xml:space="preserve">
-    <value>Only one of master page and layout can be selected.</value>
+    <value>Only one template can be selected.</value>
   </data>
   <data name="SavePagePropertiesCommand_NoLayoutOrMasterSelected_Message" xml:space="preserve">
-    <value>Template or master page should be selected for page.</value>
+    <value>Template should be selected for page.</value>
   </data>
   <data name="SavePagePropertiesCommand_SelectedMasterIsChildPage_Message" xml:space="preserve">
-    <value>Selected master page is the current page or is a child of it.</value>
+    <value>Selected template is the current page or is a child of it.</value>
   </data>
   <data name="SavePagePropertiesCommand_SelectedMasterIsCurrentPage_Message" xml:space="preserve">
-    <value>Selected master page is the current page.</value>
+    <value>Selected template is the current page.</value>
   </data>
   <data name="EditPageProperties_PageConversionToMaster_ConfirmationMessage" xml:space="preserve">
-    <value>You are about to convert the page to Master Page. Master page is not accessible from the outside and is intended to be used as a template for other pages.&lt;br/&gt;Proceed?</value>
+    <value>You are about to convert the page to template. Template is not accessible from the outside and is intended to be used as a layout for other pages.&lt;br/&gt;Proceed?</value>
   </data>
   <data name="SaveContent_DynamicRegionsAreNotAllowed_Message" xml:space="preserve">
     <value>Page is not a master, so dynamic regions are not allowed.</value>
   </data>
   <data name="DeletePageCommand_MasterPageHasChildren_Message" xml:space="preserve">
-    <value>Cannot delete page. Other pages are using current page as a master page.</value>
+    <value>Cannot delete template. Other pages are using it.</value>
   </data>
   <data name="SiteSettings_MasterPages_Title" xml:space="preserve">
-    <value>Master Pages</value>
+    <value>Templates</value>
   </data>
   <data name="AddNewMasterPage_PageTitle" xml:space="preserve">
-    <value>Add New Master Page</value>
+    <value>Add New Template</value>
   </data>
   <data name="MasterPage_InfoMessage" xml:space="preserve">
-    <value>This page is a master page.</value>
+    <value>This page is a template.</value>
   </data>
   <data name="SiteSettings_Pages_FilterIncludeMasterPages" xml:space="preserve">
-    <value>Include master pages</value>
+    <value>Include templates</value>
   </data>
   <data name="EditPageProperties_EditMasterPage_Title" xml:space="preserve">
-    <value>Edit Master Page Properties</value>
+    <value>Edit Template Properties</value>
   </data>
   <data name="Sidebar_EditMasterPagePropertiesButtonTitle" xml:space="preserve">
-    <value>Edit master page properties</value>
+    <value>Properties</value>
   </data>
   <data name="ClonePage_Dialog_AsMasterPage" xml:space="preserve">
-    <value>Clone the current page as a master page</value>
+    <value>Clone the current page as a template</value>
   </data>
   <data name="ClonePage_Dialog_AsMasterPage_Title" xml:space="preserve">
-    <value>Create Master Page</value>
+    <value>Create Template</value>
   </data>
   <data name="ClonePage_Dialog_AsMasterPage_Tooltip_Description" xml:space="preserve">
-    <value>Create new master page from the current page.</value>
+    <value>Create new template from the current page.</value>
   </data>
   <data name="DeletePageContent_ContentHasChildrenContents_DeleteConfirmationMessage" xml:space="preserve">
     <value>You are trying to delete content which contains dynamic regions. There are some children pages, which have contents created within these regions. If you delete this content, children page contens will be deleted also and there will be no possibility to restore them. &lt;br /&gt;&lt;br /&gt;Are you sure you want to continue and lose all the children contents?</value>
@@ -1168,13 +1174,13 @@
     <value>Choose page language</value>
   </data>
   <data name="AddNewPage_Language_Tooltip_Description" xml:space="preserve">
-    <value>Choose language for current page, which will be used in sitemap and determines the language and culture of the page</value>
+    <value>Choose language for current page, which will be used in menu and determines the language and culture of the page</value>
   </data>
   <data name="Sidebar_CreateMasterPageButtonTitle" xml:space="preserve">
-    <value>Create Master</value>
+    <value>Create new template</value>
   </data>
   <data name="Sidebar_TranslatePageButtonTitle" xml:space="preserve">
-    <value>Translate page</value>
+    <value>Translate this page</value>
   </data>
   <data name="EditPageTranslations_Dialog_Title" xml:space="preserve">
     <value>Edit page translations</value>
@@ -1222,7 +1228,7 @@
     <value>Current page language</value>
   </data>
   <data name="EditPageProperties_TranslationsTab_Language_Tooltip_Description" xml:space="preserve">
-    <value>Edit current page language, which will be used in sitemap and determines the language and the culture of the page</value>
+    <value>Edit current page language, which will be used in menu and determines the language and the culture of the page</value>
   </data>
   <data name="SavePagePropertiesCommand_PageHasTranslationsWithItsLanguage_Message" xml:space="preserve">
     <value>Page cannot contain translations to the same language as itself.</value>
@@ -1243,7 +1249,7 @@
     <value>New Page Language</value>
   </data>
   <data name="ClonePageWithLanguage_Dialog_Language_Tootlip" xml:space="preserve">
-    <value>Choose creating page language, which will be used in sitemap and determines the language and culture of the page</value>
+    <value>Choose creating page language, which will be used in menu and determines the language and culture of the page</value>
   </data>
   <data name="ClonePageWithLanguage_Language_RequiredMessage" xml:space="preserve">
     <value>Page language is requred field.</value>
@@ -1261,7 +1267,7 @@
     <value>There is already translation with current language. If you change current page's language to "{0}", translation will be removed from list. Are you sure you want to continue?</value>
   </data>
   <data name="EditPageTranslations_AddTranslation_ButtonTitle" xml:space="preserve">
-    <value>Add Translation +</value>
+    <value>Add Translation</value>
   </data>
   <data name="EditPageTranslations_Language_Title" xml:space="preserve">
     <value>Language</value>
@@ -1279,7 +1285,7 @@
     <value>Current page translations - another pages with different language, which are associated with current page.</value>
   </data>
   <data name="SavePagePropertiesCommand_PageTranslationsIsMasterPage_Message" xml:space="preserve">
-    <value>Master pages cannot be assigned as translation.</value>
+    <value>Templates cannot be assigned as translation.</value>
   </data>
   <data name="ClonePageWithLanguage_NoLanguagesCreated_Message" xml:space="preserve">
     <value>There are no languages created yet. To create a language, go to Site Settings -&gt; Languages or contact your system administrator.</value>
@@ -1294,7 +1300,7 @@
     <value>Type page title here ...</value>
   </data>
   <data name="DeletePage_SitemapSkipped_Message" xml:space="preserve">
-    <value>The page was not removed from some site map or maps, because you do not have permission to modified it or them.</value>
+    <value>The page was not removed from one or more menus, because you do not have permission to modified it or them.</value>
   </data>
   <data name="PageStatusFilterType_ContainingUnpublishedContents" xml:space="preserve">
     <value>Containing unpublished contents</value>
@@ -1306,19 +1312,19 @@
     <value>Unpublished</value>
   </data>
   <data name="SeoStatusFilterType_HasNotSEO" xml:space="preserve">
-    <value>Hasn't SEO</value>
+    <value>Some SEO fields are empty</value>
   </data>
   <data name="SeoStatusFilterType_HasSEO" xml:space="preserve">
-    <value>Has SEO</value>
+    <value>All SEO fields filled</value>
   </data>
   <data name="SiteSettings_Pages_FilterBySEO" xml:space="preserve">
-    <value>By SEO status</value>
+    <value>By SEO data</value>
   </data>
   <data name="SiteSettings_Pages_FilterByStatus" xml:space="preserve">
     <value>By page status</value>
   </data>
   <data name="SiteSettings_Pages_FilterByLayout" xml:space="preserve">
-    <value>By Layout</value>
+    <value>By Template</value>
   </data>
   <data name="SiteSettings_MasterPages_Usage" xml:space="preserve">
     <value>Find usages</value>
@@ -1363,7 +1369,7 @@
     <value>Select protocol forcing if it is required that page must be server only via one protocol.&lt;br/&gt;&lt;strong&gt;Warning:&lt;/strong&gt; selected forced protocol must be properly configured in website hosting environment.</value>
   </data>
   <data name="WidgetUsages_Type_MasterPage" xml:space="preserve">
-    <value>Master page</value>
+    <value>Template</value>
   </data>
   <data name="SaveWidget_ContentHasChildrenWidgetWithDynamicContents_ConfirmationMessage" xml:space="preserve">
     <value>You are trying to remove child widget which has children with dynamic regions. There are some children pages, which have contents created within these regions. If you delete this region, children page contents will be deleted also. &lt;br /&gt;&lt;br /&gt;Are you sure you want to continue?</value>
@@ -1373,5 +1379,62 @@
   </data>
   <data name="EditPageContent_AdvancedOptionsTab_Title" xml:space="preserve">
     <value>Javascript &amp; CSS</value>
+  </data>
+  <data name="ContentHistory_ContentTab_Title" xml:space="preserve">
+    <value>Visual Preview</value>
+  </data>
+  <data name="ContentHistory_PropertiesTab_Title" xml:space="preserve">
+    <value>Data Preview</value>
+  </data>
+  <data name="ContentHistory_VersionPreviewNotAvailableMessage" xml:space="preserve">
+    <value>Preview is not available.</value>
+  </data>
+  <data name="HtmlContent_Content_Title" xml:space="preserve">
+    <value>Content</value>
+  </data>
+  <data name="EditPageProperties_ChangedLayoutMissingContent_Confirmation_Message" xml:space="preserve">
+    <value>For page layout you have selected template, which structure is not the same as previous template and some page content will be missing. Missing content can be found in Page Structure Manager.&lt;/br&gt;Do you really want to change current page template?</value>
+  </data>
+  <data name="CategoryTree_Button_CollapseAll" xml:space="preserve">
+    <value>Collapse All</value>
+  </data>
+  <data name="CategoryTree_Button_ExpandAll" xml:space="preserve">
+    <value>Expand All</value>
+  </data>
+  <data name="Page_Created" xml:space="preserve">
+    <value>Created:</value>
+  </data>
+  <data name="Page_LastEdited" xml:space="preserve">
+    <value>Last edited:</value>
+  </data>
+  <data name="Page_LastEditedBy" xml:space="preserve">
+    <value>Last edited by:</value>
+  </data>
+  <data name="SiteSettings_Pages_Sort" xml:space="preserve">
+    <value>SORT</value>
+  </data>
+  <data name="SiteSettings_Pages_Sort_AZ" xml:space="preserve">
+    <value>[A-Z]</value>
+  </data>
+  <data name="SiteSettings_Pages_Sort_LeastRecent" xml:space="preserve">
+    <value>Least recently edited</value>
+  </data>
+  <data name="SiteSettings_Pages_Sort_Newest" xml:space="preserve">
+    <value>Newest</value>
+  </data>
+  <data name="SiteSettings_Pages_Sort_Oldest" xml:space="preserve">
+    <value>Oldest</value>
+  </data>
+  <data name="SiteSettings_Pages_Sort_Recent" xml:space="preserve">
+    <value>Recently edited</value>
+  </data>
+  <data name="SiteSettings_Pages_Sort_StatusAsc" xml:space="preserve">
+    <value>Published first</value>
+  </data>
+  <data name="SiteSettings_Pages_Sort_StatusDesc" xml:space="preserve">
+    <value>Unpublished first</value>
+  </data>
+  <data name="SiteSettings_Pages_Sort_ZA" xml:space="preserve">
+    <value>[Z-A]</value>
   </data>
 </root>

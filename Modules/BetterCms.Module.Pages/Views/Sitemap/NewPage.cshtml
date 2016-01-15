@@ -1,63 +1,102 @@
-﻿@using BetterCms.Module.Pages.Content.Resources
+﻿@* --------------------------------------------------------------------------------------------------------------------
+// <copyright file="NewPage.cshtml" company="Devbridge Group LLC">
+// 
+// Copyright (C) 2015,2016 Devbridge Group LLC
+// 
+// This program is free software: you can redistribute it and/or modify
+// it under the terms of the GNU Lesser General Public License as published by
+// the Free Software Foundation, either version 3 of the License, or
+// (at your option) any later version.
+// 
+// This program is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU General Public License for more details.
+// 
+// You should have received a copy of the GNU Lesser General Public License
+// along with this program.  If not, see http://www.gnu.org/licenses/. 
+// </copyright>
+// 
+// <summary>
+// Better CMS is a publishing focused and developer friendly .NET open source CMS.
+// 
+// Website: https://www.bettercms.com 
+// GitHub: https://github.com/devbridge/bettercms
+// Email: info@bettercms.com
+// </summary>
+// -------------------------------------------------------------------------------------------------------------------- *@
+@using BetterCms.Module.Pages.Content.Resources
 @using BetterCms.Module.Pages.Controllers
 @using BetterCms.Module.Pages.ViewModels.Sitemap
 @using BetterCms.Module.Root.Mvc.Helpers
 @using Microsoft.Web.Mvc
-<div class="bcms-tab-header">
-    <a class="bcms-sitemaps-arrow-left" data-bind="css: { 'bcms-sitemaps-arrow-inactive': !slider.canSlideLeft() }, click: slider.slideLeft, visible: slider.showSliders"></a>
-    <!-- ko foreach: tabs -->
-        <a class="bcms-tab-item" data-bind="text: newPageViewModel.sitemap.title(), css: { 'bcms-active': isActive }, click: activate, attr: { id: tabId }, visible: isVisible"></a>
-    <!-- /ko -->
-    <a class="bcms-sitemaps-arrow-right" data-bind="css: { 'bcms-sitemaps-arrow-inactive': !slider.canSlideRight() }, click: slider.slideRight, visible: slider.showSliders"></a>
-</div>
-<div class="bcms-scroll-window" id="bcms-sitemap-addnewpage" data-bind="with: activeNewPageViewModel">
-    @Html.SiteSettingsMessagesBox()
-    <div class="bcms-tab-single" style="display: block; height: 100%;">
-        <div class="bcms-columns-container">
-            <div class="bcms-sitemap-filter-holder" data-bind="with: sitemap">
-                <div class="bcms-language-bar" style="display: none;" data-bind="visible: showLanguages, with: language">
-                    <div class="bcms-filter-text bcms-table-middle-box">Edit sitemap in language:</div>
-                    <div class="bcms-table-middle-box">
-                        <select class="bcms-global-select" data-bind="options: languages, optionsText: 'value', optionsValue: 'key', value: languageId"></select>
-                    </div>
-                </div>
 
-                <div class="bcms-expand-link-holder" @* data-bind="droppable: 'emptyListZone'" TODO: check later. NOTE: jQuery error is raised on leave over. *@>
-                    <div class="bcms-expand-link" data-bind="click: expandAll">@NavigationGlobalization.Sitemap_Button_ExpandAll</div>
-                    <div class="bcms-expand-link" data-bind="click: collapseAll">@NavigationGlobalization.Sitemap_Button_CollapseAll</div>
-                </div>
-            </div>
-            <div class="bcms-leftcol bcms-leftcol-helper">
-                <div class="bcms-sidebar-info-block">
-                    <!-- ko if: !linkIsDropped() -->
-                    <div>@NavigationGlobalization.Sitemap_AddNewPageDialog_PageNodeHeader</div>
-                    <!-- ko with: pageLink -->
-                    <div data-bind="draggable: $parentContext">
-                        <div class="bcms-dropable-page-box" style="position: relative; z-index: 0;" data-bind="css: { 'bcms-placement-node-drag': isBeingDragged() }">
-                            <div class="bcms-drop-button">@NavigationGlobalization.Sitemap_AddNewPageDialog_DragButton</div>
-                            <div class="bcms-content-titles">@NavigationGlobalization.Sitemap_AddNewPageDialog_PageName</div>
-                            <div class="bcms-dropable-text" data-bind="text: title()"></div>
-                            <div class="bcms-content-titles">@NavigationGlobalization.Sitemap_AddNewPageDialog_PageUrl</div>
-                            <div class="bcms-dropable-text" data-bind="text: url()"></div>
+<div class="bcms-tab-header bcms-js-tab-header">
+    <div class="bcms-modal-frame-holder">
+        <div class="bcms-sitemaps-arrow-left" data-bind="css: { 'bcms-sitemaps-arrow-inactive': !slider.canSlideLeft() }, click: slider.slideLeft, visible: slider.showSliders"></div>
+        <div class="bcms-sitemap-tabs-holder">
+            <!-- ko foreach: tabs -->
+            <div class="bcms-tab-ui bcms-tab-item" data-bind="text: newPageViewModel.sitemap.title(), css: { 'bcms-active': isActive }, click: activate, attr: { id: tabId }, visible: isVisible"></div>
+            <!-- /ko -->
+        </div>
+        <div class="bcms-sitemaps-arrow-right" data-bind="css: { 'bcms-sitemaps-arrow-inactive': !slider.canSlideRight() }, click: slider.slideRight, visible: slider.showSliders"></div>
+    </div>
+</div>
+
+<div class="bcms-modal-frame-holder" id="bcms-sitemap-addnewpage" data-bind="with: activeNewPageViewModel">
+    @Html.MessagesBox()
+    <div class="bcms-window-tabbed-options">
+        <div class="bcms-tab-single">
+            <!-- ko with: sitemap -->
+            <div style="display: none;" data-bind="visible: showLanguages, with: language">
+                <div class="bcms-top-block-holder">
+                    <div class="bcms-language-selector-box">
+                        <div class="bcms-content-titles">@NavigationGlobalization.Sitemap_EditDialog_LanguageSelectionTitle</div>
+                        <div class="bcms-field-wrapper">
+                            <select data-bind="options: languages, optionsText: 'value', optionsValue: 'key', value: languageId, select2: { minimumResultsForSearch: -1 }"></select>
                         </div>
                     </div>
-                    <div class="bcms-placement-dropzone" data-bind="visible: isBeingDragged()"></div>
+                </div>
+            </div>
+            <!-- /ko -->
+            <div class="bcms-content-dialog-title">
+                <!-- ko if: !linkIsDropped() -->
+                <div class="bcms-content-titles-helper">@NavigationGlobalization.Sitemap_AddNewPageDialog_PageNodeHeader</div>
+                <!-- /ko -->
+                <!-- ko if: linkIsDropped() -->
+                <div class="bcms-content-titles-helper">@NavigationGlobalization.Sitemap_AddNewPageDialog_PageNodeFooter</div>
+                <!-- /ko -->
+                <!-- ko with: sitemap -->
+                <div class="bcms-tree-expander bcms-tree-expander-close" data-bind="click: callExpandOrCollapse, css: { 'bcms-tree-expander-close' : allNodesExpanded()}, text: allNodesExpanded() ? '@PagesGlobalization.CategoryTree_Button_CollapseAll' : '@PagesGlobalization.CategoryTree_Button_ExpandAll'"></div>
+                <!-- /ko -->
+            </div>
+            <div class="bcms-tree-zones-holder">
+                <div class="bcms-tree-drag-area-ui">
+                    <!-- ko if: !linkIsDropped() -->
+                    <!-- ko with: pageLink -->
+                    <div data-bind="draggable: $parentContext">
+                        <div class="bcms-drop-page-box" style="position: relative; z-index: 0;" data-bind="css: { 'bcms-node-box-drag': isBeingDragged() }">
+                            <div class="bcms-drop-button">@NavigationGlobalization.Sitemap_AddNewPageDialog_DragButton</div>
+                            <div class="bcms-content-titles">@NavigationGlobalization.Sitemap_AddNewPageDialog_PageName</div>
+                            <div class="bcms-drop-text" data-bind="text: title()"></div>
+                            <div class="bcms-content-titles">@NavigationGlobalization.Sitemap_AddNewPageDialog_PageUrl</div>
+                            <div class="bcms-drop-text" data-bind="text: url()"></div>
+                        </div>
+                    </div>
+                    <div class="bcms-node-drop-zone" data-bind="visible: isBeingDragged()"></div>
+                    <div class="bcms-content-titles">@NavigationGlobalization.Sitemap_AddNewPageDialog_UndoMessage</div>
                     <!-- /ko -->
-                    <div>@NavigationGlobalization.Sitemap_AddNewPageDialog_PageNodeFooter</div>
-                    <!-- /ko -->
-                    <!-- ko if: linkIsDropped() -->
-                    <div>@NavigationGlobalization.Sitemap_AddNewPageDialog_UndoMessage</div>
                     <!-- /ko -->
                     <div class="bcms-btn-main" data-bind="click: skipClicked, visible: !linkIsDropped()">@NavigationGlobalization.Sitemap_AddNewPageDialog_SkipButton</div>
                 </div>
-            </div>
-            <div class="bcms-rightcol">
-                <div class="bcms-placement-holder bcms-sitemap-newpage">
-                    @* Form is required for unobtrusive validation. *@
-                    @using (Html.BeginForm<SitemapController>(f => f.SaveSitemap(null), FormMethod.Post, new { @class = "bcms-sitemap-form bcms-ajax-form" }))
-                    {
-                        @Html.Partial("Partial/Sitemap", new SitemapNodeViewModel())
-                    }
+                <div class="bcms-tree-drop-area-ui">
+                    <div class="bcms-sitemap-newpage">
+                        @* Form is required for unobtrusive validation. *@
+                        @using (Html.BeginForm<SitemapController>(f => f.SaveSitemap(null), FormMethod.Post, new { @class = "bcms-sitemap-form bcms-ajax-form" }))
+                        {
+                            @Html.Partial("Partial/Sitemap", new SitemapNodeViewModel())
+                        }
+                    </div>
                 </div>
             </div>
         </div>

@@ -1,4 +1,31 @@
-﻿@using BetterCms.Module.Root.Mvc.Helpers
+﻿@* --------------------------------------------------------------------------------------------------------------------
+// <copyright file="Login.cshtml" company="Devbridge Group LLC">
+// 
+// Copyright (C) 2015,2016 Devbridge Group LLC
+// 
+// This program is free software: you can redistribute it and/or modify
+// it under the terms of the GNU Lesser General Public License as published by
+// the Free Software Foundation, either version 3 of the License, or
+// (at your option) any later version.
+// 
+// This program is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU General Public License for more details.
+// 
+// You should have received a copy of the GNU Lesser General Public License
+// along with this program.  If not, see http://www.gnu.org/licenses/. 
+// </copyright>
+// 
+// <summary>
+// Better CMS is a publishing focused and developer friendly .NET open source CMS.
+// 
+// Website: https://www.bettercms.com 
+// GitHub: https://github.com/devbridge/bettercms
+// Email: info@bettercms.com
+// </summary>
+// -------------------------------------------------------------------------------------------------------------------- *@
+@using BetterCms.Module.Root.Mvc.Helpers
 @using BetterCms.Module.Users.Content.Resources
 @using Microsoft.Web.Mvc
 @model BetterCms.Module.Users.ViewModels.Authentication.LoginViewModel
@@ -8,56 +35,40 @@
     ViewBag.Title = "Login";
 }
 
-@section Head {
-    <style>
-        .bcms-body {
-            width: 260px;
-            margin: 0 auto;
-            padding: 20px 0 74px;
-        }
-    </style>
-}
+<div class="bcms-login-box">
+    @using (Html.BeginForm())
+    {
+        <div class="bcms-content-titles">@UsersGlobalization.Login_UserName</div>
+        @Html.ValidationMessageFor(m => m.UserName)
+        <div class="bcms-field-wrapper">
+            @Html.TextBoxFor(m => m.UserName, new { id = "userName", @class = "bcms-field-text" })
+        </div>
 
-@using (Html.BeginForm())
-{
-    <div class="validation-summary-valid" data-valmsg-summary="true">
-       @Html.TabbedContentMessagesBox()
-    </div>
-    <div>
-        <span class="bcms-title">@UsersGlobalization.Login_UserName</span>
-        <p>
-            @Html.TextBoxFor(m => m.UserName, new { id = "userName", @class = "bcms-editor-field-box"})
-            @Html.ValidationMessageFor(m => m.UserName)
-        </p>
-    </div>
+        <div class="bcms-content-titles">@UsersGlobalization.Login_Password</div>
+        @Html.ValidationMessageFor(m => m.Password)
+        <div class="bcms-field-wrapper">
+            @Html.PasswordFor(m => m.Password, new { @class = "bcms-field-text" })
+        </div>
 
-    <div>
-        <span class="bcms-title">@UsersGlobalization.Login_Password</span>
-        <p>
-            @Html.PasswordFor(m => m.Password, new { @class = "bcms-editor-field-box" })
-            @Html.ValidationMessageFor(m => m.Password)
-        </p>
-    </div>
-    <div>
-        <span class="bcms-title">&nbsp;</span>
-        <p>
+        <div class="bcms-field-wrapper bcms-remember-box">
             @Html.CheckBoxFor(m => m.RememberMe)
             @Html.LabelFor(m => m.RememberMe)
-        </p>
-    </div>
+        </div>
 
-    Dictionary<string, object> submitProperties = new Dictionary<string, object>();
-    submitProperties.Add("class", "bcms-btn-small");
-    if (!Model.IsFormsAuthenticationEnabled)
-    {
-        submitProperties.Add("disabled", "disabled");
+        Dictionary<string, object> submitProperties = new Dictionary<string, object>();
+        submitProperties.Add("class", "bcms-btn-primary");
+        if (!Model.IsFormsAuthenticationEnabled)
+        {
+            submitProperties.Add("disabled", "disabled");
+        }
+
+        @Html.SubmitButton("submit", "Login", submitProperties)
+        @Html.HiddenFor(m => m.ReturnUrl)
     }
-    
-    @Html.SubmitButton("submit", "Login", submitProperties)
-    @Html.HiddenFor(m => m.ReturnUrl)
-}
+</div>
+
 <script type="text/javascript">
-    (function() {
+    (function () {
         document.getElementById('userName').focus();
-    })();    
+    })();
 </script>

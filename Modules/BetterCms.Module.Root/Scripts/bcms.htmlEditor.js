@@ -1,5 +1,31 @@
 ﻿/*jslint unparam: true, white: true, browser: true, devel: true */
-/*global bettercms */
+// --------------------------------------------------------------------------------------------------------------------
+// <copyright file="bcms.htmlEditor.js" company="Devbridge Group LLC">
+// 
+// Copyright (C) 2015,2016 Devbridge Group LLC
+// 
+// This program is free software: you can redistribute it and/or modify
+// it under the terms of the GNU Lesser General Public License as published by
+// the Free Software Foundation, either version 3 of the License, or
+// (at your option) any later version.
+// 
+// This program is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU General Public License for more details.
+// 
+// You should have received a copy of the GNU Lesser General Public License
+// along with this program.  If not, see http://www.gnu.org/licenses/. 
+// </copyright>
+// 
+// <summary>
+// Better CMS is a publishing focused and developer friendly .NET open source CMS.
+// 
+// Website: https://www.bettercms.com 
+// GitHub: https://github.com/devbridge/bettercms
+// Email: info@bettercms.com
+// </summary>
+// --------------------------------------------------------------------------------------------------------------------
 
 bettercms.define('bcms.htmlEditor', ['bcms.jquery', 'bcms', 'ckeditor', 'bcms.markdown', 'bcms.content'], function ($, bcms, ckEditor, markdownEditor, bcmsContent) {
     'use strict';
@@ -133,23 +159,46 @@ bettercms.define('bcms.htmlEditor', ['bcms.jquery', 'bcms', 'ckeditor', 'bcms.ma
             position = $(element.$).position().top;
         }
         for (; elementIndex < elementsCount; element = elements.getItem(++elementIndex)) {
+            element.show();
             newPosition = element && element.$ ? $(element.$).position().top : 0;
-
             inFirstRow = (inFirstRow && newPosition === position);
-
             if (!inFirstRow) {
                 if (show) element.show();
                 else element.hide();
             }
         }
     }
+    
+    function calculateHeight(element, options) {
+        options = $.extend({
+            marginTop: 0,
+            marginBottom: 0,
+            topElements: []
+        }, options);
 
-    htmlEditor.initializeMarkdownEditor = function (id, editingContentId, options) {
+        var i, topElement,
+            containerHeight = element.closest(options.container).height(),
+            topElementsHeight = 0,
+            bottomElementHeight = options.parent
+                ? element.closest(options.parent).find(options.bottomElement).outerHeight(true)
+                : $(options.bottomElement).outerHeight(true);
+
+            for (i = 0; i < options.topElements.length; i++) {
+                topElement = options.topElements[i];
+                topElementsHeight += options.parent
+                    ? element.closest(options.parent).find(topElement.element).outerHeight(topElement.takeMargins)
+                    : $(topElement.element).outerHeight(topElement.takeMargins);
+            }
+
+        return containerHeight - topElementsHeight - bottomElementHeight - options.marginTop - options.marginBottom;
+    }
+
+    htmlEditor.initializeMarkdownEditor = function (id, editingContentId, options, heightOptions) {
         options = $.extend({
             smartTags: getSmartTags()
         }, options);
-
-        markdownEditor.initializeInstance(htmlEditor, id, editingContentId, options);
+        
+        markdownEditor.initializeInstance(htmlEditor, id, editingContentId, options, heightOptions);
     }
 
     htmlEditor.editChildWidgetOptions = function (editor, widgetId, assignmentId, contentId, optionListViewModel, onCloseClick, editorType) {
@@ -174,7 +223,7 @@ bettercms.define('bcms.htmlEditor', ['bcms.jquery', 'bcms', 'ckeditor', 'bcms.ma
         return markdownEditor.getChildWidgetOptions(editorId);
     }
 
-    htmlEditor.initializeHtmlEditor = function (id, editingContentId, options, startInSourceMode) {
+    htmlEditor.initializeHtmlEditor = function (id, editingContentId, options, startInSourceMode, heightOptions) {
         var editMode = startInSourceMode;
         if (!CKEDITOR) {
             alert('Failed to load HTML editor.');
@@ -332,6 +381,17 @@ bettercms.define('bcms.htmlEditor', ['bcms.jquery', 'bcms', 'ckeditor', 'bcms.ma
 
             // Make sure advanced toolbars initially collapsed
             editor.execCommand('toolbarCollapse');
+            // Strech editor's height to fill the container
+            if (heightOptions) {
+                var setHeight = function () {
+                    editor.resize("100%", calculateHeight(element, heightOptions));
+                };
+                setHeight();
+                $(window).bind('resize', setHeight);
+                $(window).on('disableResize', function() {
+                    $(window).unbind('resize', setHeight);
+                });
+            }
         });
 
         CKEDITOR.instances[id].smartTags = getSmartTags();
@@ -353,6 +413,7 @@ bettercms.define('bcms.htmlEditor', ['bcms.jquery', 'bcms', 'ckeditor', 'bcms.ma
         if (window.location.href.slice(-2) === '#-') {
             window.location.hash = '';
         }
+        $(window).trigger('disableResize');
     };
 
     htmlEditor.destroyHtmlEditorInstance = function (textareaId) {
@@ -360,6 +421,7 @@ bettercms.define('bcms.htmlEditor', ['bcms.jquery', 'bcms', 'ckeditor', 'bcms.ma
         if (editor) {
             closeMaximizedMode(editor);
             editor.destroy();
+            $(window).trigger('disableResize');
         }
         if (window.location.href.slice(-2) === '#-') {
             window.location.hash = '';

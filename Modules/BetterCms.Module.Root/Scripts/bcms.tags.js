@@ -1,5 +1,31 @@
 ﻿/*jslint unparam: true, white: true, browser: true, devel: true */
-/*global bettercms */
+// --------------------------------------------------------------------------------------------------------------------
+// <copyright file="bcms.tags.js" company="Devbridge Group LLC">
+// 
+// Copyright (C) 2015,2016 Devbridge Group LLC
+// 
+// This program is free software: you can redistribute it and/or modify
+// it under the terms of the GNU Lesser General Public License as published by
+// the Free Software Foundation, either version 3 of the License, or
+// (at your option) any later version.
+// 
+// This program is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU General Public License for more details.
+// 
+// You should have received a copy of the GNU Lesser General Public License
+// along with this program.  If not, see http://www.gnu.org/licenses/. 
+// </copyright>
+// 
+// <summary>
+// Better CMS is a publishing focused and developer friendly .NET open source CMS.
+// 
+// Website: https://www.bettercms.com 
+// GitHub: https://github.com/devbridge/bettercms
+// Email: info@bettercms.com
+// </summary>
+// --------------------------------------------------------------------------------------------------------------------
 
 bettercms.define('bcms.tags', ['bcms.jquery', 'bcms', 'bcms.dynamicContent', 'bcms.siteSettings', 'bcms.inlineEdit', 'bcms.grid', 'bcms.ko.extenders', 'bcms.autocomplete', 'bcms.antiXss'],
     function ($, bcms, dynamicContent, siteSettings, editor, grid, ko, autocomplete, antiXss) {
@@ -7,18 +33,18 @@ bettercms.define('bcms.tags', ['bcms.jquery', 'bcms', 'bcms.dynamicContent', 'bc
 
     var tags = {},
         selectors = {
-            deleteTagLink: 'a.bcms-icn-delete',
+            deleteTagLink: 'div.bcms-action-delete',
             addTagButton: '#bcms-site-settings-add-tag',
-            tagName: 'a.bcms-tag-name',
+            tagName: '.bcms-tag-name',
             tagOldName: 'input.bcms-tag-old-name',
             tagNameEditor: 'input.bcms-tag-name',
             tagsListForm: '#bcms-tags-form',
             tagsSearchButton: '#bcms-tags-search-btn',
             tagsSearchField: '.bcms-search-query',
             
-            deleteCategoryLink: 'a.bcms-icn-delete',
+            deleteCategoryLink: 'div.bcms-action-delete',
             addCategoryButton: '#bcms-site-settings-add-category',
-            categoryName: 'a.bcms-category-name',
+            categoryName: '.bcms-category-name',
             categoryOldName: 'input.bcms-category-old-name',
             categoryNameEditor: 'input.bcms-category-name',
             categoriesListForm: '#bcms-categories-form',
@@ -66,7 +92,7 @@ bettercms.define('bcms.tags', ['bcms.jquery', 'bcms', 'bcms.dynamicContent', 'bc
     tags.searchSiteSettingsTags = function (form, container) {
         grid.submitGridForm(form, function (data) {
             siteSettings.setContent(data);
-            tags.initSiteSettingsTagsEvents(data);   
+            tags.initSiteSettingsTagsEvents(data, true);   
             var searchInput = container.find(selectors.tagsSearchField);
             grid.focusSearchInput(searchInput);
         });
@@ -75,7 +101,7 @@ bettercms.define('bcms.tags', ['bcms.jquery', 'bcms', 'bcms.dynamicContent', 'bc
     /**
     * Initializes site settings tags list and list items events
     */
-    tags.initSiteSettingsTagsEvents = function () {
+    tags.initSiteSettingsTagsEvents = function (data, isSearchResult) {
         var dialog = siteSettings.getModalDialog(),
             container = dialog.container;
         
@@ -92,13 +118,28 @@ bettercms.define('bcms.tags', ['bcms.jquery', 'bcms', 'bcms.dynamicContent', 'bc
         });
 
         container.find(selectors.tagsSearchButton).on('click', function () {
-            tags.searchSiteSettingsTags(form, container);
+            var parent = $(this).parent();
+            if (!parent.hasClass('bcms-active-search')) {
+                form.find(selectors.tagsSearchField).prop('disabled', false);
+                parent.addClass('bcms-active-search');
+                form.find(selectors.tagsSearchField).focus();
+            } else {
+                form.find(selectors.tagsSearchField).prop('disabled', true);
+                parent.removeClass('bcms-active-search');
+                form.find(selectors.tagsSearchField).val('');
+            }
         });
 
         container.find(selectors.addTagButton).on('click', function () {
             editor.addNewRow(container);
         });
         
+        if (isSearchResult === true) {
+            form.find(selectors.tagsSearchButton).parent().addClass('bcms-active-search');
+        } else {
+            form.find(selectors.tagsSearchField).prop('disabled', true);
+        }
+
         editor.initialize(container, {
             saveUrl: links.saveTagUrl,
             deleteUrl: links.deleteTagUrl,

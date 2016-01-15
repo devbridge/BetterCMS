@@ -1,4 +1,31 @@
-﻿@using BetterCms.Module.Pages.Content.Resources
+﻿@* --------------------------------------------------------------------------------------------------------------------
+// <copyright file="EditSeo.cshtml" company="Devbridge Group LLC">
+// 
+// Copyright (C) 2015,2016 Devbridge Group LLC
+// 
+// This program is free software: you can redistribute it and/or modify
+// it under the terms of the GNU Lesser General Public License as published by
+// the Free Software Foundation, either version 3 of the License, or
+// (at your option) any later version.
+// 
+// This program is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU General Public License for more details.
+// 
+// You should have received a copy of the GNU Lesser General Public License
+// along with this program.  If not, see http://www.gnu.org/licenses/. 
+// </copyright>
+// 
+// <summary>
+// Better CMS is a publishing focused and developer friendly .NET open source CMS.
+// 
+// Website: https://www.bettercms.com 
+// GitHub: https://github.com/devbridge/bettercms
+// Email: info@bettercms.com
+// </summary>
+// -------------------------------------------------------------------------------------------------------------------- *@
+@using BetterCms.Module.Pages.Content.Resources
 @using BetterCms.Module.Pages.Controllers
 @using BetterCms.Module.Pages.ViewModels.Seo
 @using BetterCms.Module.Root.Mvc.Helpers
@@ -9,56 +36,59 @@
 {
     return;
 }
-<div class="bcms-scroll-window">
-    @Html.TabbedContentMessagesBox()
-    @Html.Partial("Partial/WarnMessageAboutSitemap", Model)
-    <div class="bcms-padded-content">
-        <div class="bcms-editseo-window">
 
-            @using (Html.BeginForm<SeoController>(f => f.EditSeo((EditSeoViewModel)null), FormMethod.Post, 
+<div class="bcms-modal-frame-holder">
+    @Html.MessagesBox()
+    @Html.Partial("Partial/WarnMessageAboutSitemap", Model)
+
+    <div class="bcms-window-options">
+        @using (Html.BeginForm<SeoController>(f => f.EditSeo((EditSeoViewModel)null), FormMethod.Post,
                 new
                     {
                         @class = "bcms-ajax-form",
                         data_readonly = Model.IsReadOnly.ToString().ToLower()
                     }))
-            {
-                <div class="bcms-input-list-holder">
-                    @Html.Tooltip(PagesGlobalization.EditSeo_PageTitle_Tooltip_Description)
-                    <div class="bcms-content-titles">@PagesGlobalization.EditSeo_PageTitle</div>
-                    <div class="bcms-input-box">
-                        @Html.TextBoxFor(f => f.PageTitle, new { @class = "bcms-editor-field-box" })
-                        @Html.BcmsValidationMessageFor(f => f.PageTitle)
-                    </div>
+        {
+            <div class="bcms-input-list-holder">
+                <div class="bcms-content-titles">@PagesGlobalization.EditSeo_PageTitle</div>
+                @Html.Tooltip(PagesGlobalization.EditSeo_PageTitle_Tooltip_Description)
+                <div class="bcms-field-wrapper">
+                    @Html.TextBoxFor(f => f.PageTitle, new { @class = "bcms-field-text" })
+                    @Html.BcmsValidationMessageFor(f => f.PageTitle)
                 </div>
-                @Html.Partial("Partial/EditSeoEditUrlPath", Model)
-                <div class="bcms-input-list-holder">
-                    @Html.Tooltip(PagesGlobalization.EditSeo_MetaTitle_Tooltip_Description)
-                    <div class="bcms-content-titles">@PagesGlobalization.EditSeo_MetaTitle</div>
-                    <div class="bcms-input-box">
-                        @Html.TextBoxFor(f => f.MetaTitle, new { @class = "bcms-editor-field-box" })
-                        @Html.BcmsValidationMessageFor(f => f.MetaTitle)
-                    </div>
+            </div>
+
+            @Html.Partial("Partial/EditSeoEditUrlPath", Model)
+
+            <div class="bcms-input-list-holder">
+                <div class="bcms-content-titles">@PagesGlobalization.EditSeo_MetaTitle</div>
+                @Html.Tooltip(PagesGlobalization.EditSeo_MetaTitle_Tooltip_Description)
+                <div class="bcms-field-wrapper">
+                    @Html.TextBoxFor(f => f.MetaTitle, new { @class = "bcms-field-text" })
+                    @Html.BcmsValidationMessageFor(f => f.MetaTitle)
                 </div>
-                <div class="bcms-input-list-holder">
-                    @Html.Tooltip(PagesGlobalization.EditSeo_MetaKeywords_Tooltip_Description)
-                    <div class="bcms-content-titles">@PagesGlobalization.EditSeo_MetaKeywords</div>
-                    <div class="bcms-input-box">
-                        @Html.TextAreaFor(f => f.MetaKeywords, new { @class = "bcms-editor-field-area" })
-                        @Html.BcmsValidationMessageFor(f => f.MetaKeywords)
-                    </div>
+            </div>
+
+            <div class="bcms-input-list-holder">
+                <div class="bcms-content-titles">@PagesGlobalization.EditSeo_MetaKeywords</div>
+                @Html.Tooltip(PagesGlobalization.EditSeo_MetaKeywords_Tooltip_Description)
+                <div class="bcms-field-wrapper">
+                    @Html.TextAreaFor(f => f.MetaKeywords, new { @class = "bcms-field-textarea" })
+                    @Html.BcmsValidationMessageFor(f => f.MetaKeywords)
                 </div>
-                <div class="bcms-input-list-holder">
-                    @Html.Tooltip(PagesGlobalization.EditSeo_MetaDescription_Tooltip_Description)
-                    <div class="bcms-content-titles">@PagesGlobalization.EditSeo_MetaDescription</div>
-                    <div class="bcms-input-box">
-                        @Html.TextAreaFor(f => f.MetaDescription, new { @class = "bcms-editor-field-area" })
-                        @Html.BcmsValidationMessageFor(f => f.MetaDescription)
-                    </div>
+            </div>
+
+            <div class="bcms-input-list-holder">
+                <div class="bcms-content-titles">@PagesGlobalization.EditSeo_MetaDescription</div>
+                @Html.Tooltip(PagesGlobalization.EditSeo_MetaDescription_Tooltip_Description)
+                <div class="bcms-field-wrapper">
+                    @Html.TextAreaFor(f => f.MetaDescription, new { @class = "bcms-field-textarea" })
+                    @Html.BcmsValidationMessageFor(f => f.MetaDescription)
                 </div>
-                @Html.HiddenSubmit()
-                @Html.HiddenFor(f => f.PageId)
-                @Html.HiddenFor(f => f.Version)
-            }
-        </div>
+            </div>
+            @Html.HiddenSubmit()
+            @Html.HiddenFor(f => f.PageId)
+            @Html.HiddenFor(f => f.Version)
+        }
     </div>
 </div>

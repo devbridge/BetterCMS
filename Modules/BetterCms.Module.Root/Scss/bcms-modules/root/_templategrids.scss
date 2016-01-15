@@ -1,0 +1,127 @@
+// --------------------------------------------------------------------------------------------------------------------
+// <copyright file="_templategrids.scss" company="Devbridge Group LLC">
+// 
+// Copyright (C) 2015,2016 Devbridge Group LLC
+// 
+// This program is free software: you can redistribute it and/or modify
+// it under the terms of the GNU Lesser General Public License as published by
+// the Free Software Foundation, either version 3 of the License, or
+// (at your option) any later version.
+// 
+// This program is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU General Public License for more details.
+// 
+// You should have received a copy of the GNU Lesser General Public License
+// along with this program.  If not, see http://www.gnu.org/licenses/. 
+// </copyright>
+// 
+// <summary>
+// Better CMS is a publishing focused and developer friendly .NET open source CMS.
+// 
+// Website: https://www.bettercms.com 
+// GitHub: https://github.com/devbridge/bettercms
+// Email: info@bettercms.com
+// </summary>
+// --------------------------------------------------------------------------------------------------------------------
+$inactive-red: $red;
+
+$template-grid-box-states: (
+                ('active', $blue-main),
+                ('notcompatible', $inactive-red)
+);
+
+.bcms-templates-holder {
+    @include clearfix();
+    margin: 30px 0;
+}
+
+.bcms-grid {
+    &-box {
+        margin-bottom: gutter();
+        padding: 5px;
+
+        .bcms-content-titles {
+            @include ellipsis;
+            font: {
+                size: 12px;
+                weight: 400;
+            }
+            max-width: 100%;
+            padding-bottom: 0;
+        }
+
+        .bcms-btn-selection {
+            margin-top: 5px;
+            width: 100%;
+        }
+    }
+
+    &-box-pages {
+        @include gallery(2);
+    }
+
+    @each $name, $color in $template-grid-box-states {
+        &-box-#{$name} {
+            cursor: default;
+
+            .bcms-content-titles {
+                color: $color;
+            }
+
+            .bcms-grid-image-holder {
+                border-color: $color;
+            }
+            .bcms-btn-selection {
+                background-color: $color;
+                border-color: $color;
+                color: $white;
+                cursor: default;
+            }
+        }
+    }
+
+    &-image-holder {
+        @include transition(border-color 200ms);
+        background-color: $white;
+        border: $border-thin-smoke;
+        box-sizing: border-box;
+        height: 140px;
+        overflow: hidden;
+        padding: 5px;
+        position: relative;
+
+        img {
+            @include position(absolute, 0);
+            z-index: 1;
+        }
+
+        .bcms-no-image-found {
+            @include position(absolute, 0);
+            z-index: 0;
+        }
+    }
+
+    &-no-preview {
+        @include positioning($center: true);
+    }
+
+    &-controls-holder {
+        @include clearfix();
+
+        .bcms-btn-selection {
+            width: 50%;
+        }
+    }
+
+    &-controls-helper {
+        float: right;
+        line-height: 23px;
+        margin-top: 5px;
+
+        .bcms-action-delete {
+            margin-left: 10px;
+        }
+    }
+}

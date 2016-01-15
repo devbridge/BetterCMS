@@ -1,72 +1,89 @@
-﻿@using BetterCms.Core.DataContracts.Enums
+﻿@* --------------------------------------------------------------------------------------------------------------------
+// <copyright file="WidgetCategory.cshtml" company="Devbridge Group LLC">
+// 
+// Copyright (C) 2015,2016 Devbridge Group LLC
+// 
+// This program is free software: you can redistribute it and/or modify
+// it under the terms of the GNU Lesser General Public License as published by
+// the Free Software Foundation, either version 3 of the License, or
+// (at your option) any later version.
+// 
+// This program is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU General Public License for more details.
+// 
+// You should have received a copy of the GNU Lesser General Public License
+// along with this program.  If not, see http://www.gnu.org/licenses/. 
+// </copyright>
+// 
+// <summary>
+// Better CMS is a publishing focused and developer friendly .NET open source CMS.
+// 
+// Website: https://www.bettercms.com 
+// GitHub: https://github.com/devbridge/bettercms
+// Email: info@bettercms.com
+// </summary>
+// -------------------------------------------------------------------------------------------------------------------- *@
+@using BetterCms.Core.DataContracts.Enums
 @using BetterCms.Module.Pages.Content.Resources
 @using BetterCms.Module.Pages.Controllers
 @using BetterCms.Module.Root
 @using BetterCms.Module.Root.Mvc
 @using BetterCms.Module.Root.Mvc.Helpers
 @using Microsoft.Web.Mvc
-
 @model BetterCms.Module.Pages.ViewModels.Widgets.WidgetCategoryViewModel
 
-<div class="bcms-category bcms-content-sliders">           
-    <div class="bcms-category-titles">@Model.CategoryName</div>
-    <div class="bcms-slider-box">
-        <div class="bcms-slides-container">
-            @if (Model.Widgets != null)
-            {
-                @:<div class="bcms-slides-single-slide">
-                
-                for (int i = 0; i < Model.Widgets.Count; i++)
-                {
-                    var widget = Model.Widgets[i];
-                    
-                    if (i % 3 == 0 && i != 0)
-                    {
-                        @:</div>
-                        @:<div class="bcms-slides-single-slide">
-                    }
+<div class="bcms-category-titles">@Model.CategoryName</div>
+@if (Model.Widgets != null)
+{
+    @:<div class="bcms-templates-holder">
 
-                    <div class="bcms-preview-block" 
-                         data-id="@widget.Id"                          
-                         data-original-id="@widget.OriginalId"                          
-                         data-version="@widget.Version"       
-                         data-original-version="@widget.OriginalVersion"       
-                         data-type="@widget.WidgetType"
-                         data-category-id="@(Model.CategoryId ?? Guid.Empty)">
-                        <div class="bcms-title-holder">
-                            <div class="bcms-content-titles">@widget.Name</div>
-                        </div>
-                        @if (!string.IsNullOrWhiteSpace(widget.PreviewImageUrl))
+
+    for (int i = 0; i < Model.Widgets.Count; i++)
+    {
+        var widget = Model.Widgets[i];
+
+        <div class="bcms-grid-box bcms-grid-box-pages bcms-js-preview-block"
+             data-id="@widget.Id"
+             data-original-id="@widget.OriginalId"
+             data-version="@widget.Version"
+             data-original-version="@widget.OriginalVersion"
+             data-type="@widget.WidgetType"
+             data-category-id="@(Model.CategoryId ?? Guid.Empty)">
+
+            <div class="bcms-content-titles">@widget.Name</div>
+
+            @if (!string.IsNullOrWhiteSpace(widget.PreviewImageUrl))
+            {
+                @Html.PreviewContentBox(widget.PreviewImageUrl, widget.PreviewImageUrl, widget.Name, true)
+            }
+            else
+            {
+                var url1 = Html.BuildUrlFromExpression<WidgetsController>(f => f.PreviewWidget(widget.Id.ToString(), false));
+                var url2 = Html.BuildUrlFromExpression<WidgetsController>(f => f.PreviewWidget(widget.Id.ToString(), true));
+                @Html.PreviewContentBox(url1, url2, widget.Name)
+            }
+
+            <div class="bcms-grid-controls-holder">
+                <div class="bcms-btn-selection bcms-js-insert">@PagesGlobalization.AddPageContent_WidgetTab_InsertButton</div>
+                @if ((ViewContext.Controller as CmsControllerBase).SecurityService.IsAuthorized(RootModuleConstants.UserRoles.Administration))
+                {
+                    <div class="bcms-grid-controls-helper">
+                        @if (!widget.Status.Equals(ContentStatus.Published.ToString()))
                         {
-                            @Html.PreviewContentBox(widget.PreviewImageUrl, widget.PreviewImageUrl, widget.Name, true)
+                            <div class="bcms-action-edit bcms-draft bcms-js-content-edit" title="@PagesGlobalization.AddPageContent_WidgetTab_EditButton">@PagesGlobalization.AddPageContent_WidgetTab_EditButton</div>
                         }
                         else
                         {
-                            var url1 = Html.BuildUrlFromExpression<WidgetsController>(f => f.PreviewWidget(widget.Id.ToString(), false));
-                            var url2 = Html.BuildUrlFromExpression<WidgetsController>(f => f.PreviewWidget(widget.Id.ToString(), true));
-                            @Html.PreviewContentBox(url1, url2, widget.Name)
+                            <div class="bcms-action-edit bcms-js-content-edit" title="@PagesGlobalization.AddPageContent_WidgetTab_EditButton">@PagesGlobalization.AddPageContent_WidgetTab_EditButton</div>
                         }
-
-                        <div class="bcms-controls-holder">
-                            <div class="bcms-btn-small bcms-content-insert-button" >@PagesGlobalization.AddPageContent_WidgetTab_InsertButton</div>
-                            @if ((ViewContext.Controller as CmsControllerBase).SecurityService.IsAuthorized(RootModuleConstants.UserRoles.Administration))
-                            {
-                                if (!widget.Status.Equals(ContentStatus.Published.ToString()))
-                                {
-                                    <a class="bcms-icn-edit bcms-content-edit-button bcms-edit-draft">@PagesGlobalization.AddPageContent_WidgetTab_EditButton</a>
-                                }
-                                else
-                                {
-                                    <a class="bcms-icn-edit bcms-content-edit-button">@PagesGlobalization.AddPageContent_WidgetTab_EditButton</a>
-                                }
-                                <a class="bcms-icn-delete bcms-content-delete-button">@PagesGlobalization.AddPageContent_WidgetTab_DeleteButton</a>
-                            }
-                        </div>
+                        <div class="bcms-action-delete bcms-js-content-delete" title="@PagesGlobalization.AddPageContent_WidgetTab_DeleteButton">@PagesGlobalization.AddPageContent_WidgetTab_DeleteButton</div>
                     </div>
                 }
-                
-                @:</div>
-            }
+            </div>
         </div>
-    </div>
-</div>
+    }
+
+    @:</div>
+}

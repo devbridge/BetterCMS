@@ -1,4 +1,31 @@
-﻿@using BetterCms.Module.Pages.Content.Resources
+﻿@* --------------------------------------------------------------------------------------------------------------------
+// <copyright file="Widgets.cshtml" company="Devbridge Group LLC">
+// 
+// Copyright (C) 2015,2016 Devbridge Group LLC
+// 
+// This program is free software: you can redistribute it and/or modify
+// it under the terms of the GNU Lesser General Public License as published by
+// the Free Software Foundation, either version 3 of the License, or
+// (at your option) any later version.
+// 
+// This program is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU General Public License for more details.
+// 
+// You should have received a copy of the GNU Lesser General Public License
+// along with this program.  If not, see http://www.gnu.org/licenses/. 
+// </copyright>
+// 
+// <summary>
+// Better CMS is a publishing focused and developer friendly .NET open source CMS.
+// 
+// Website: https://www.bettercms.com 
+// GitHub: https://github.com/devbridge/bettercms
+// Email: info@bettercms.com
+// </summary>
+// -------------------------------------------------------------------------------------------------------------------- *@
+@using BetterCms.Module.Pages.Content.Resources
 @using BetterCms.Module.Pages.Controllers
 @using BetterCms.Module.Pages.ViewModels.SiteSettings
 @using BetterCms.Module.Root
@@ -11,30 +38,22 @@
 @using MvcContrib.UI.Grid
 
 @model SiteSettingWidgetListViewModel
-          
-
 @{
     var controller = (CmsControllerBase)ViewContext.Controller;
-    var roles = string.Format("{0},{1},{2}", 
-        RootModuleConstants.UserRoles.PublishContent, 
+    var roles = string.Format("{0},{1},{2}",
+        RootModuleConstants.UserRoles.PublishContent,
         RootModuleConstants.UserRoles.EditContent,
         RootModuleConstants.UserRoles.DeleteContent);
     var canViewPages = controller.SecurityService.IsAuthorized(roles);
-    
+
     Action<ColumnBuilder<SiteSettingWidgetItemViewModel>> columns = column =>
     {
         column.EditButtonColumn(renderId: false);
-        
-        column.For(f => string.Format("<a class=\"bcms-tables-link bcms-grid-item-edit-button bcms-widget-name\" data-id=\"{0}\">{1}</a>", f.Id, System.Web.Security.AntiXss.AntiXssEncoder.HtmlEncode(f.WidgetName ?? "", true)))
+
+        column.For(f => string.Format("<div class=\"bcms-tables-link bcms-grid-item-edit-button bcms-widget-name\" data-id=\"{0}\">{1}</div>", f.Id, System.Web.Security.AntiXss.AntiXssEncoder.HtmlEncode(f.WidgetName ?? "", true)))
             .Named(PagesGlobalization.SiteSettings_Widgets_NameColumn)
             .SortColumnName("WidgetName")
-            .HeaderAttributes(@style => "width: 245px;")
             .Encode(false);
-        // TODO Categories
-//        column.For(f => f.CategoryName)
-//            .Named(PagesGlobalization.SiteSettings_Widgets_CategoryColumn)
-//            .SortColumnName("CategoryName")
-//            .Attributes(@class => "bcms-category-name");
 
         column.For(f => Html.EditorFor(e => f.Status, "WidgetStatus"))
             .Named(PagesGlobalization.SiteSettings_Widgets_StatusColumn)
@@ -43,44 +62,49 @@
 
         if (canViewPages)
         {
-            column.For(f => string.Format("<a class=\"bcms-template-usage\" title=\"{1}\">&nbsp;</a>", f.Id, PagesGlobalization.SiteSettings_Widgets_Usage))
+            column.For(f => string.Format("<div class=\"bcms-action-usage\" title=\"{1}\">{1}</div>", f.Id, PagesGlobalization.SiteSettings_Widgets_Usage))
                 .Named("")
-                .HeaderAttributes(@style => "width: 15px;")
+                .HeaderAttributes(@style => "width: 40px; padding: 8px 0;")
                 .Sortable(false)
                 .Encode(false);
         }
-        
+
         column.HistoryButtonColumn(renderId: false);
-        
-        column.DeleteButtonColumn(renderId:false);
+
+        column.DeleteButtonColumn(renderId: false);
     };
 }
 
 @using (Html.BeginForm<WidgetsController>(f => f.Widgets(null), FormMethod.Post, new { @id = "bcms-widgets-form", @class = "bcms-ajax-form" }))
 {
-    @Html.HiddenGridOptions(Model.GridOptions)
-    
-    <div class="bcms-twocols-title-block">
-        <div class="bcms-large-titles">@PagesGlobalization.SiteSettings_Widgets_Title</div>
-        <div class="bcms-btn-links-main" id="bcms-create-widget-button">@PagesGlobalization.SiteSettings_Widgets_AddNew</div>
-        <div class="bcms-btn-links-main" id="bcms-register-widget-button">@PagesGlobalization.SiteSettings_Widgets_RegisterNew</div>
-        <div class="bcms-search-block">
-            @Html.TextBoxFor(m => m.SearchQuery, new { @class = "bcms-editor-field-box bcms-search-query", @placeholder = RootGlobalization.WaterMark_Search })
-            <div class="bcms-btn-search" id="bcms-widget-search-btn">@PagesGlobalization.SiteSettings_Widgets_Search</div>
-        </div>
-        <div class="bcms-featured-grid bcms-clearfix">
-            @Html.RenderPaging(Model)
-        </div>
-    </div>    
-    
-    @Html.SiteSettingsMessagesBox()
+    @Html.MessagesBox()
 
-    @(Html
-          .Grid(Model.Items)
-          .Sort(Model.GridOptions)
-          .Columns(columns)
-          .Attributes(@class => "bcms-tables")          
-          .RowAttributes(delegate(GridRowViewData<SiteSettingWidgetItemViewModel> row)
+    <div class="bcms-window-settings">
+        @Html.HiddenGridOptions(Model.GridOptions)
+
+        <div class="bcms-top-block-holder">
+            <div class="bcms-top-controls-btn-holder">
+                <div class="bcms-btn-main" id="bcms-create-widget-button">@PagesGlobalization.SiteSettings_Pages_AddNew</div>
+                <div class="bcms-btn-opener"> </div>
+
+                <div class="bcms-btn-opener-holder">
+                    <div class="bcms-btn-opener-link" id="bcms-register-widget-button">@PagesGlobalization.SiteSettings_Widgets_RegisterNew</div>
+                </div>
+            </div>
+
+            <div class="bcms-top-block-inner">
+                <div class="bcms-btn-search" id="bcms-widget-search-btn">@PagesGlobalization.SiteSettings_Template_Search</div>
+                <div class="bcms-search-block">
+                    @Html.TextBoxFor(m => m.SearchQuery, new { @class = "bcms-search-field-box bcms-js-search-box bcms-search-query", @placeholder = RootGlobalization.WaterMark_Search })
+                </div>
+            </div>
+
+            <div class="bcms-top-block-pager">
+                @Html.RenderPaging(Model)
+            </div>
+        </div>
+
+        @(Html.Grid(Model.Items).Sort(Model.GridOptions).Columns(columns).Attributes(@class => "bcms-tables").RowAttributes(delegate(GridRowViewData<SiteSettingWidgetItemViewModel> row)
                   {
                       return new Dictionary<string, object>
                               {
@@ -90,15 +114,10 @@
                                     {"data-version", row.Item.Version},
                                     {"data-original-version", row.Item.OriginalVersion}
                               };
-              })
-          .RenderUsing(new EditableHtmlTableGridRenderer<SiteSettingWidgetItemViewModel>()))
+                  }).RenderUsing(new EditableHtmlTableGridRenderer<SiteSettingWidgetItemViewModel>()))
+    </div>
 }
 
 <script type="text/html" id="bcms-widget-list-row-template">
-    @(Html
-        .Grid(new List<SiteSettingWidgetItemViewModel> {new SiteSettingWidgetItemViewModel()})
-        .Columns(columns)
-        .Attributes(@class => "bcms-tables")
-        .RenderUsing(new HtmlTableGridSingleRowRenderer<SiteSettingWidgetItemViewModel>()))
+    @(Html.Grid(new List<SiteSettingWidgetItemViewModel> { new SiteSettingWidgetItemViewModel() }).Columns(columns).Attributes(@class => "bcms-tables").RenderUsing(new HtmlTableGridSingleRowRenderer<SiteSettingWidgetItemViewModel>()))
 </script>
-

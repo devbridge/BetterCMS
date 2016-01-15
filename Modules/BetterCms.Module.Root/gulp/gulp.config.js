@@ -6,7 +6,7 @@ module.exports = function () {
 
     var config = {
         dataUri: {
-            src: ['Scss/base_64/**/*.{png,jpg,gif,svg,ttf}'],
+            src: ['Scss/assets/**/*.{png,jpg,gif,svg,ttf}'],
             dest: 'Scss/core',
             resultFile: '_assets.scss',
             varPrefix: '$bcms-'

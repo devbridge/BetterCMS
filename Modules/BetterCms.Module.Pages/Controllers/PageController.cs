@@ -1,5 +1,33 @@
-﻿using System;
+﻿// --------------------------------------------------------------------------------------------------------------------
+// <copyright file="PageController.cs" company="Devbridge Group LLC">
+// 
+// Copyright (C) 2015,2016 Devbridge Group LLC
+// 
+// This program is free software: you can redistribute it and/or modify
+// it under the terms of the GNU Lesser General Public License as published by
+// the Free Software Foundation, either version 3 of the License, or
+// (at your option) any later version.
+// 
+// This program is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU General Public License for more details.
+// 
+// You should have received a copy of the GNU Lesser General Public License
+// along with this program.  If not, see http://www.gnu.org/licenses/. 
+// </copyright>
+// 
+// <summary>
+// Better CMS is a publishing focused and developer friendly .NET open source CMS.
+// 
+// Website: https://www.bettercms.com 
+// GitHub: https://github.com/devbridge/bettercms
+// Email: info@bettercms.com
+// </summary>
+// --------------------------------------------------------------------------------------------------------------------
+using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 
@@ -10,6 +38,7 @@ using BetterCms.Module.MediaManager.ViewModels;
 using BetterCms.Module.Pages.Command.Layout.GetLayoutOptions;
 using BetterCms.Module.Pages.Command.Layout.GetLayoutUserAccess;
 using BetterCms.Module.Pages.Command.Page.AddNewPage;
+using BetterCms.Module.Pages.Command.Page.CheckForMissingContent;
 using BetterCms.Module.Pages.Command.Page.ClonePage;
 using BetterCms.Module.Pages.Command.Page.ClonePageWithLanguage;
 using BetterCms.Module.Pages.Command.Page.CreatePage;
@@ -88,6 +117,16 @@ namespace BetterCms.Module.Pages.Controllers
 
             return ComboWireJson(success, view, model, JsonRequestBehavior.AllowGet);
         }
+
+        [BcmsAuthorize(RootModuleConstants.UserRoles.EditContent, RootModuleConstants.UserRoles.PublishContent, RootModuleConstants.UserRoles.DeleteContent)]
+        public ActionResult PagesList(PagesFilter request)
+        {
+            request.SetDefaultPaging();
+            var model = GetCommand<GetPagesListCommand>().ExecuteCommand(request);
+            var success = model != null;
+            return WireJson(success, model);
+        }
+
 
         /// <summary>
         /// Opens dialog for selecting the page.
@@ -181,8 +220,10 @@ namespace BetterCms.Module.Pages.Controllers
                                Languages = success ? model.Languages : null,
                                LanguageId = success ? model.LanguageId : null,
                                Translations = success ? model.Translations : null,
+                               Templates = success ? model.Templates : null,
                                ShowTranslationsTab = success && model.ShowTranslationsTab,
-                               CategoriesFilterKey = success ? model.CategoriesFilterKey : PageProperties.CategorizableItemKeyForPages
+                               CategoriesFilterKey = success ? model.CategoriesFilterKey : PageProperties.CategorizableItemKeyForPages,
+                               CategoriesLookupList = success ? model.CategoriesLookupList : null,
                            };
 
             return ComboWireJson(success, view, json, JsonRequestBehavior.AllowGet);
@@ -468,6 +509,14 @@ namespace BetterCms.Module.Pages.Controllers
             var view = RenderView("SearchUntranslatedPages", model);
 
             return ComboWireJson(model != null, view, model, JsonRequestBehavior.AllowGet);
+        }
+
+        [HttpGet]
+        [BcmsAuthorize(RootModuleConstants.UserRoles.EditContent, RootModuleConstants.UserRoles.PublishContent, RootModuleConstants.UserRoles.Administration)]
+        public ActionResult CheckForMissingContent(string pageId, string templateId, string masterPageId)
+        {
+            var model = GetCommand<CheckForMissingContentCommand>().ExecuteCommand(new CheckForMissingContentRequest { PageId = pageId.ToGuidOrDefault(), TemplateId = templateId.ToGuidOrDefault(), MasterPageId = masterPageId.ToGuidOrDefault()});
+            return WireJson(model != null, model,JsonRequestBehavior.AllowGet);
         }
     }
 }

@@ -1,5 +1,31 @@
 ﻿/*jslint unparam: true, white: true, browser: true, devel: true */
-/*global bettercms, document */
+// --------------------------------------------------------------------------------------------------------------------
+// <copyright file="bcms.modal.js" company="Devbridge Group LLC">
+// 
+// Copyright (C) 2015,2016 Devbridge Group LLC
+// 
+// This program is free software: you can redistribute it and/or modify
+// it under the terms of the GNU Lesser General Public License as published by
+// the Free Software Foundation, either version 3 of the License, or
+// (at your option) any later version.
+// 
+// This program is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU General Public License for more details.
+// 
+// You should have received a copy of the GNU Lesser General Public License
+// along with this program.  If not, see http://www.gnu.org/licenses/. 
+// </copyright>
+// 
+// <summary>
+// Better CMS is a publishing focused and developer friendly .NET open source CMS.
+// 
+// Website: https://www.bettercms.com 
+// GitHub: https://github.com/devbridge/bettercms
+// Email: info@bettercms.com
+// </summary>
+// --------------------------------------------------------------------------------------------------------------------
 
 bettercms.define('bcms.modal', ['bcms.jquery', 'bcms', 'bcms.tabs', 'bcms.ko.extenders', 'bcms.forms'], function ($, bcms, tabs, ko, forms) {
     'use strict';
@@ -10,37 +36,34 @@ bettercms.define('bcms.modal', ['bcms.jquery', 'bcms', 'bcms.tabs', 'bcms.ko.ext
         resizeTimer,
 
         selectors = {
-            title: '.bcms-modal-title, .bcms-error-frame h4, .bcms-popinfo-frame h4',
-            accept: '.bcms-modal-accept, .bcms-popinfo-frame .bcms-success-buttons-holder .bcms-btn-main',
-            cancel: '.bcms-modal-cancel, .bcms-popinfo-frame .bcms-success-buttons-holder .bcms-btn-links-main',
-            close: '.bcms-modal-close, .bcms-modal-cancel, .bcms-error-frame .bcms-error-close, .bcms-success-buttons-holder .bcms-btn-links-main, .bcms-popinfo-frame .bcms-btn-close, .bcms-preview-image-border .bcms-btn-close',
-            focusElements: '[tabindex=-1], .bcms-modal-close, .bcms-modal-cancel, .bcms-error-frame .bcms-error-close, .bcms-success-buttons-holder .bcms-btn-links-main, .bcms-popinfo-frame .bcms-btn-close, .bcms-preview-image-border .bcms-btn-close',
+            title: '.bcms-modal-title, .bcms-message-titles',
+            accept: '.bcms-modal-accept, .bcms-success-buttons-holder .bcms-btn-tertiary',
+            cancel: '.bcms-js-btn-cancel',
+            close: '.bcms-js-btn-close',
+            focusElements: '[tabindex=-1], .bcms-modal-close, .bcms-success-buttons-holder .bcms-btn-secondary, .bcms-js-preview-box .bcms-btn-close',
             body: '.bcms-modal-body, .bcms-error-frame, .bcms-popinfo-frame',
-            content: '.bcms-modal-content-padded, .bcms-error-frame p, .bcms-popinfo-frame p',
+            content: '.bcms-modal-content, .bcms-message-description',
             loader: '.bcms-loader',
-            scrollWindow: '.bcms-scroll-window',
+            scrollWindow: '.bcms-window-tabbed-options',
             previewImage: '.bcms-preview-image-frame img',
-            previewImageContainer: '.bcms-preview-image-border',
+            previewImageContainer: '.bcms-js-preview-box',
             previewFailure: '.bcms-grid-image-holder',
             footer: '.bcms-success-buttons-holder, .bcms-modal-footer',
             desirableStatus: '.bcms-content-desirable-status',
             popinfoFrame: '.bcms-popinfo-frame',
             errorFrame: '.bcms-error-frame',
-            loaderContainer: '.bcms-modal-content',
+            loaderContainer: '.bcms-window-options,.bcms-window-tabbed-options',
 
-            // selectors for calculation of modal window size
-            elemOuter: '.bcms-modal-body',
-            elemHeader: '.bcms-modal-header',
-            elemFooter: '.bcms-modal-footer',
-            elemTabsHeader: '.bcms-tab-header',
-            elemContent: '.bcms-scroll-window',
-            readonly: '[data-readonly=true]'
+            readonly: '[data-readonly=true]',
+            inUse: '[data-inuse=true]'
         },
 
         classes = {
-            saveButton: 'bcms-btn-small bcms-modal-accept',
-            cancelButton: 'bcms-btn-links-small bcms-modal-cancel',
-            grayButton: 'bcms-btn-small bcms-btn-gray',
+            saveButton: 'bcms-btn-tertiary bcms-modal-accept',
+            deleteButton: 'bcms-btn-secondary bcms-modal-accept',
+            cancelButton: 'bcms-btn-secondary bcms-js-btn-cancel',
+            previewButton: 'bcms-btn-quaternary',
+            publishButton: 'bcms-btn-tertiary',
             inactive: 'bcms-inactive'
         },
 
@@ -58,23 +81,23 @@ bettercms.define('bcms.modal', ['bcms.jquery', 'bcms', 'bcms.tabs', 'bcms.ko.ext
         isGlobalKeyPressEventAttached = false;
 
     /**
-    /* Assign objects to module.
-    */
+     /* Assign objects to module.
+     */
     modal.selectors = selectors;
     modal.links = links;
     modal.globalization = globalization;
     modal.classes = classes;
     var isResized = false;
     /**
-    * Returns count of currently open modal windows.
-    */
+     * Returns count of currently open modal windows.
+     */
     modal.getCount = function () {
         return modalStack.length;
     };
 
     /**
-    * Returns last modal window instance of stack.
-    */
+     * Returns last modal window instance of stack.
+     */
     modal.last = function () {
         if (modalStack.length > 0) {
             return modalStack[modalStack.length - 1];
@@ -83,8 +106,8 @@ bettercms.define('bcms.modal', ['bcms.jquery', 'bcms', 'bcms.tabs', 'bcms.ko.ext
     };
 
     /**
-    * Button view model.
-    */
+     * Button view model.
+     */
     function ButtonViewModel(title, css, order, onClickCallback) {
         var self = this;
 
@@ -101,8 +124,8 @@ bettercms.define('bcms.modal', ['bcms.jquery', 'bcms', 'bcms.tabs', 'bcms.ko.ext
     }
 
     /**
-    * Modal window view model.
-    */
+     * Modal window view model.
+     */
     function ModalWindowViewModel() {
         var self = this;
         self.buttons = ko.observableArray();
@@ -111,8 +134,8 @@ bettercms.define('bcms.modal', ['bcms.jquery', 'bcms', 'bcms.tabs', 'bcms.ko.ext
     modal.button = ButtonViewModel;
 
     /**
-    * ModalWindow instance constructor:
-    */
+     * ModalWindow instance constructor:
+     */
     // ReSharper disable InconsistentNaming
     function ModalWindow(options) {
         // ReSharper restore InconsistentNaming        
@@ -148,7 +171,7 @@ bettercms.define('bcms.modal', ['bcms.jquery', 'bcms', 'bcms.tabs', 'bcms.ko.ext
 
         this.container = $(template);
         this.model = model;
-        
+
         if (bcms.language) {
             this.container.attr('lang', bcms.language);
         }
@@ -224,7 +247,7 @@ bettercms.define('bcms.modal', ['bcms.jquery', 'bcms', 'bcms.tabs', 'bcms.ko.ext
                 var button = options.buttons[i];
                 button.dialog = this;
                 if (!button.css()) {
-                    button.css(classes.grayButton);
+                    button.css(classes.previewButton);
                 }
                 model.buttons.push(button);
             }
@@ -243,12 +266,12 @@ bettercms.define('bcms.modal', ['bcms.jquery', 'bcms', 'bcms.tabs', 'bcms.ko.ext
     }
 
     /**
-    * ModalWindow instance methods:
-    */
+     * ModalWindow instance methods:
+     */
     ModalWindow.prototype = {
         /**
-        * Open modal window over all other windows.
-        */
+         * Open modal window over all other windows.
+         */
         open: function (disableAnimation) {
             var instance = this,
                 container = instance.container,
@@ -268,6 +291,10 @@ bettercms.define('bcms.modal', ['bcms.jquery', 'bcms', 'bcms.tabs', 'bcms.ko.ext
                 instance.closeClick();
             });
 
+            container.find(selectors.cancel).on('click', function () {
+                instance.closeClick();
+            });
+
             container.find(selectors.accept).on('click', function () {
                 instance.acceptClick();
             });
@@ -282,7 +309,7 @@ bettercms.define('bcms.modal', ['bcms.jquery', 'bcms', 'bcms.tabs', 'bcms.ko.ext
                 container.fadeIn('fast');
             }
 
-            this.maximizeHeight();
+            //this.maximizeHeight();
 
             if ($.isFunction(this.options.onShow)) {
                 this.options.onShow();
@@ -290,8 +317,8 @@ bettercms.define('bcms.modal', ['bcms.jquery', 'bcms', 'bcms.tabs', 'bcms.ko.ext
         },
 
         /*
-        * Executes accept button click logic.
-        */
+         * Executes accept button click logic.
+         */
         acceptClick: function () {
             if (this.container.find('form').data('readonly') !== true) {
                 if (this.onAction(this.options.onAcceptClick) === true) {
@@ -304,8 +331,8 @@ bettercms.define('bcms.modal', ['bcms.jquery', 'bcms', 'bcms.tabs', 'bcms.ko.ext
         },
 
         /*
-        * Executes accept action logic.
-        */
+         * Executes accept action logic.
+         */
         accept: function () {
             if (this.onAction(this.options.onAccept) === true) {
                 this.destroy();
@@ -315,8 +342,8 @@ bettercms.define('bcms.modal', ['bcms.jquery', 'bcms', 'bcms.tabs', 'bcms.ko.ext
         },
 
         /*
-        * Triggers close button click logic.
-        */
+         * Triggers close button click logic.
+         */
         closeClick: function () {
             if (this.onAction(this.options.onCloseClick) === true) {
                 this.close();
@@ -324,26 +351,25 @@ bettercms.define('bcms.modal', ['bcms.jquery', 'bcms', 'bcms.tabs', 'bcms.ko.ext
         },
 
         /**
-        * Executes cancel action logic.
-        */
+         * Executes cancel action logic.
+         */
         close: function () {
             if (this.onAction(this.options.onClose) === true) {
                 this.destroy();
-                this.changeFirstModalWindowSize();
             }
         },
 
         /**
-        * Updates modal window title.
-        */
+         * Updates modal window title.
+         */
         setTitle: function (title) {
             this.title = title;
             this.container.find(selectors.title).empty().append(title);
         },
 
         /**
-        * Updates modal window content.
-        */
+         * Updates modal window content.
+         */
         setContent: function (content) {
             try {
                 this.container
@@ -365,11 +391,14 @@ bettercms.define('bcms.modal', ['bcms.jquery', 'bcms', 'bcms.tabs', 'bcms.ko.ext
                     this.disableExtraButtons();
                 }
 
+                if (this.container.find(selectors.inUse).length) {
+                    this.disableAcceptButton();
+                    this.disableExtraButtons();
+                }
+
                 if ($.validator && $.validator.unobtrusive) {
                     $.validator.unobtrusive.parse(this.container);
                 }
-
-                this.maximizeHeight();
 
                 tabs.initTabPanel(this.container);
 
@@ -382,8 +411,8 @@ bettercms.define('bcms.modal', ['bcms.jquery', 'bcms', 'bcms.tabs', 'bcms.ko.ext
         },
 
         /**
-        * Sets focus on the first visible input element or on the dialog close element.
-        */
+         * Sets focus on the first visible input element or on the dialog close element.
+         */
         setFocus: function () {
             if (this.container.find('form').data('readonly') === true) {
                 return;
@@ -407,8 +436,8 @@ bettercms.define('bcms.modal', ['bcms.jquery', 'bcms', 'bcms.tabs', 'bcms.ko.ext
         },
 
         /**
-        * Sets modal dialog CSS class.
-        */
+         * Sets modal dialog CSS class.
+         */
         setCssClass: function (cssClass) {
             var body = this.container.find(selectors.body);
 
@@ -421,8 +450,8 @@ bettercms.define('bcms.modal', ['bcms.jquery', 'bcms', 'bcms.tabs', 'bcms.ko.ext
         },
 
         /**
-        * Executes given action.
-        */
+         * Executes given action.
+         */
         onAction: function (actionDelegate) {
             try {
                 if ($.isFunction(actionDelegate)) {
@@ -437,8 +466,8 @@ bettercms.define('bcms.modal', ['bcms.jquery', 'bcms', 'bcms.tabs', 'bcms.ko.ext
         },
 
         /**
-        * Removes dialog from DOM.
-        */
+         * Removes dialog from DOM.
+         */
         destroy: function () {
             this.container.find(selectors.accept).off('click');
             this.container.find(selectors.close).off('click');
@@ -463,68 +492,20 @@ bettercms.define('bcms.modal', ['bcms.jquery', 'bcms', 'bcms.tabs', 'bcms.ko.ext
             if (modal.getCount() < 1) {
                 removeGlobalEvents();
             }
-        },
-
-        /**
-        * Maximizes dialog height to document height.
-        */
-        maximizeHeight: function () {
-            if (this.disableMaxHeight) {
-                return;
-            }
-
-            var viewportHeight = $(window).height(),
-                elemOuter = this.container.find(selectors.elemOuter),
-                elemHeader = this.container.find(selectors.elemHeader),
-                elemFooter = this.container.find(selectors.elemFooter),
-                elemTabsHeader = this.container.find(selectors.elemTabsHeader),
-                elemContent = this.container.find(selectors.elemContent);
-
-            elemOuter.css({ 'height': viewportHeight + 'px' });
-
-            if (elemTabsHeader) {
-                elemContent.css({ 'height': (viewportHeight - (elemHeader.outerHeight() + elemFooter.outerHeight() + elemTabsHeader.outerHeight())) + 'px' });
-            } else {
-                elemContent.css({ 'height': (viewportHeight - (elemHeader.outerHeight() + elemFooter.outerHeight())) + 'px' });
-            }
-        },
-
-        changeFirstModalWindowSize: function () {
-            var dialog = modal.last();
-            if (dialog && isResized) {
-                dialog.maximizeHeight();
-            }
         }
     };
 
     /**
-    * Binds to a window resize event.
-    */
-    function addGlobalResizeModalEvent() {
-        $(window).on('resize.bcms.modal', function () {
-            clearTimeout(resizeTimer);
-
-            resizeTimer = setTimeout(function () {
-                var topModal = modal.last();
-                if (topModal) {
-                    topModal.maximizeHeight();
-                    isResized = true;
-                }
-            }, 200);
-        });
-    };
-
-    /**
-    * Checks if current element can handle key press events.
-    */
+     * Checks if current element can handle key press events.
+     */
     function canHandleKeyPress() {
         var element = $(document.activeElement);
         return element.is('body') || element.is('div') || element.is('input') || element.is(selectors.close);
     }
 
     /**
-    *  Binds to a document key press events.
-    */
+     *  Binds to a document key press events.
+     */
     function addGlobalKeyPressEvent() {
         var lastEnterModal,
             lastEscModal;
@@ -541,7 +522,7 @@ bettercms.define('bcms.modal', ['bcms.jquery', 'bcms', 'bcms.tabs', 'bcms.ko.ext
                         }
                     }
                 }
-                    // If Enter pressed and accept action is not disabled in the modal dialog.
+                // If Enter pressed and accept action is not disabled in the modal dialog.
                 else if (e.keyCode === 13 && !topModal.options.disableAccept) {
                     if (canHandleKeyPress()) {
                         e.preventDefault();
@@ -557,23 +538,22 @@ bettercms.define('bcms.modal', ['bcms.jquery', 'bcms', 'bcms.tabs', 'bcms.ko.ext
     }
 
     /**
-    * Removes global modal window events if no modals exists.
-    */
+     * Removes global modal window events if no modals exists.
+     */
     function removeGlobalEvents() {
         isGlobalKeyPressEventAttached = false;
         $(document).off('.bcms.modal');
     }
 
     /**
-    * Creates and opens modal windows
-    */
+     * Creates and opens modal windows
+     */
     modal.open = function (options) {
         var modalWindow = new ModalWindow(options);
         modalWindow.open();
 
         if (!isGlobalKeyPressEventAttached) {
             addGlobalKeyPressEvent();
-            addGlobalResizeModalEvent();
             isGlobalKeyPressEventAttached = true;
         }
 
@@ -623,12 +603,12 @@ bettercms.define('bcms.modal', ['bcms.jquery', 'bcms', 'bcms.tabs', 'bcms.ko.ext
             };
 
         if (!options.disableSaveDraft && !options.disableSaveAndPublish) {
-            var saveAndPublishButton = new ButtonViewModel(globalization.saveAndPublish, classes.grayButton, 2, saveAndPublishAction);
+            var saveAndPublishButton = new ButtonViewModel(globalization.saveAndPublish, classes.publishButton, 2, saveAndPublishAction);
             extraButtons.push(saveAndPublishButton);
         }
 
         if (!!options.isPreviewAvailable) {
-            var previewButton = new ButtonViewModel(globalization.preview, classes.grayButton, 3, function (dialog) {
+            var previewButton = new ButtonViewModel(globalization.preview, classes.previewButton, 3, function (dialog) {
                 if ($.isFunction(options.onPreviewClick)) {
                     if (options.onPreviewClick(dialog) !== false) {
                         changeContentDesirableStatus(dialog, bcms.contentStatus.preview);
@@ -687,23 +667,41 @@ bettercms.define('bcms.modal', ['bcms.jquery', 'bcms', 'bcms.tabs', 'bcms.ko.ext
         return dialog;
     };
 
+    modal.confirmDelete = function (options) {
+        options = $.extend({
+            acceptTitle: globalization.ok,
+            cancelTitle: globalization.cancel,
+            acceptCss: classes.deleteButton
+        }, options);
+
+        options.templateId = 'bcms-modal-delete-template';
+        options.disableAnimation = true;
+
+        var dialog = modal.open(options);
+        // Hack for IE.
+        dialog.container.find(selectors.errorFrame).get(0).focus();
+        return dialog;
+    };
+
     modal.confirmWithDecline = function (options) {
         options = $.extend({
             acceptTitle: globalization.yes,
             cancelTitle: globalization.cancel,
             declineTitle: globalization.no,
-            onDecline: function () { return true; },
+            onDecline: function () {
+                return true;
+            }
         }, options);
         if (!$.isArray(options.buttons)) {
             options.buttons = [];
         }
-        options.buttons.push(new ButtonViewModel(options.declineTitle, classes.grayButton, 2, function (confirmDialog) {
+        options.buttons.push(new ButtonViewModel(options.declineTitle, classes.previewButton, 2, function (confirmDialog) {
             var canClose = true;
-            
+
             if ($.isFunction(options.onDecline)) {
                 canClose = options.onDecline();
             }
-            
+
             if (canClose) {
                 confirmDialog.destroy();
             }
@@ -749,22 +747,9 @@ bettercms.define('bcms.modal', ['bcms.jquery', 'bcms', 'bcms.tabs', 'bcms.ko.ext
             imgLoaded = true;
 
             var imgContainer = dialog.container.find(selectors.previewImageContainer),
-                width = img.width(),
-                visibleWidth = $(window).width() - 150,
-                margin,
                 previewFailure = imgContainer.find(selectors.previewFailure);
 
             previewFailure.hide();
-
-            if (width > visibleWidth) {
-                width = visibleWidth;
-            }
-
-            imgContainer.css('width', width + 'px');
-            img.css('width', '100%');
-
-            margin = (width + 50) / -2;
-            imgContainer.css('margin-left', margin + 'px');
 
             imgContainer.find(selectors.loader).hide();
             img.show();
@@ -780,7 +765,7 @@ bettercms.define('bcms.modal', ['bcms.jquery', 'bcms', 'bcms.tabs', 'bcms.ko.ext
                 previewFailure.show();
             }
         });
-        
+
         img.attr('src', src + (src.indexOf('?') != -1 ? '&' : '?') + (new Date()).getTime());
 
         return dialog;
@@ -810,9 +795,9 @@ bettercms.define('bcms.modal', ['bcms.jquery', 'bcms', 'bcms.tabs', 'bcms.ko.ext
         }
     };
 
-    /**
-    * Maximizes dialog's provided child/children height up to maximum visible value.
-    */
+    ///**
+    // * Maximizes dialog's provided child/children height up to maximum visible value.
+    // */
     modal.maximizeChildHeight = function (obj, dialog, options) {
         options = $.extend({
             substractHeight: 60
@@ -830,7 +815,7 @@ bettercms.define('bcms.modal', ['bcms.jquery', 'bcms', 'bcms.tabs', 'bcms.ko.ext
             newHeight = 0,
             addHeight;
 
-        $.each(objects, function() {
+        $.each(objects, function () {
             objectsHeight += $(this).outerHeight();
             newHeight += $(this).height();
         });
@@ -856,7 +841,7 @@ bettercms.define('bcms.modal', ['bcms.jquery', 'bcms', 'bcms.tabs', 'bcms.ko.ext
             $.each(objects, function () {
                 var newObjHeight = $(this).height() + addHeight;
                 newHeight += newObjHeight;
-               
+
                 $(this).height(newObjHeight + 'px');
             });
         }

@@ -195,6 +195,7 @@
     <Compile Include="Controllers\BlogController.cs" />
     <Compile Include="Controllers\OptionController.cs" />
     <Compile Include="Events\BlogChangingEventArgs.cs" />
+    <Compile Include="Helpers\ConfigurationHelper.cs" />
     <Compile Include="Helpers\Extensions\RenderPageViewModelExtensions.cs" />
     <Compile Include="Models\Accessors\BlogCategoryAccessor.cs" />
     <Compile Include="Models\Author.cs" />
@@ -282,6 +283,11 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>BlogsFilterTemplate.cshtml</DependentUpon>
     </Compile>
+    <Compile Include="Views\History\BlogPropertiesHistory.generated.cs">
+      <DependentUpon>BlogPropertiesHistory.cshtml</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+    </Compile>
     <Compile Include="Views\Option\Settings.generated.cs">
       <DependentUpon>Settings.cshtml</DependentUpon>
       <AutoGen>True</AutoGen>
@@ -304,13 +310,8 @@
       <SubType>Designer</SubType>
       <LastGenOutput>BlogGlobalization.Designer.cs</LastGenOutput>
     </EmbeddedResource>
-    <EmbeddedResource Include="Content\Styles\Images\sprite-blog.png" />
-    <EmbeddedResource Include="Content\Styles\Images\bcms-no-image-1.png" />
-    <EmbeddedResource Include="Content\Styles\Images\bcms-no-image-2.png" />
-    <EmbeddedResource Include="Content\Styles\Images\bcms-no-image-3.png" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Content\Styles\Images\icn-zoom-notcompatible.png" />
     <EmbeddedResource Include="Scripts\bcms.blog.js" />
     <Content Include="BuildConfiguration.xml">
       <SubType>Designer</SubType>
@@ -321,6 +322,13 @@
     <EmbeddedResource Include="Models\Migrations\Migration201502101139.sqlserver.sql" />
     <EmbeddedResource Include="Content\Styles\bcms.blog.css" />
     <EmbeddedResource Include="Content\Styles\bcms.blog.min.css" />
+    <Content Include="Content\bootstrap-theme.css" />
+    <Content Include="Content\bootstrap-theme.min.css" />
+    <Content Include="Content\bootstrap.css" />
+    <Content Include="Content\bootstrap.min.css" />
+    <Content Include="Content\Site.css" />
+    <Content Include="fonts\glyphicons-halflings-regular.svg" />
+    <Content Include="Scripts\modernizr-2.6.2.js" />
     <Content Include="web.config" />
   </ItemGroup>
   <ItemGroup>
@@ -354,12 +362,22 @@
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="fonts\glyphicons-halflings-regular.woff" />
+    <Content Include="fonts\glyphicons-halflings-regular.ttf" />
+    <Content Include="fonts\glyphicons-halflings-regular.eot" />
     <None Include="Views\Author\Partial\ImageCell.cshtml">
       <Generator>RazorGenerator</Generator>
       <LastGenOutput>ImageCell.generated.cs</LastGenOutput>
     </None>
+    <Content Include="Views\_ViewStart.cshtml" />
+    <Content Include="Views\Shared\_Layout.cshtml" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Views\History\BlogPropertiesHistory.cshtml">
+      <Generator>RazorGenerator</Generator>
+      <LastGenOutput>BlogPropertiesHistory.generated.cs</LastGenOutput>
+    </Content>
+    <EmbeddedResource Include="Views\Blog\Partial\BlogsGrid.cshtml" />
     <None Include="Views\Option\Settings.cshtml">
       <Generator>RazorGenerator</Generator>
       <LastGenOutput>Settings.generated.cs</LastGenOutput>
@@ -414,7 +432,12 @@
       <LastGenOutput>UploadImportFile.generated.cs</LastGenOutput>
     </None>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="Content\Styles\Images\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="..\..\licensing.licenseheader" />
+  </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
     <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>

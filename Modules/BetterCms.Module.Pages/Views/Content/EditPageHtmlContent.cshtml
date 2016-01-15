@@ -1,4 +1,31 @@
-﻿@using BetterCms.Module.Pages.Content.Resources
+﻿@* --------------------------------------------------------------------------------------------------------------------
+// <copyright file="EditPageHtmlContent.cshtml" company="Devbridge Group LLC">
+// 
+// Copyright (C) 2015,2016 Devbridge Group LLC
+// 
+// This program is free software: you can redistribute it and/or modify
+// it under the terms of the GNU Lesser General Public License as published by
+// the Free Software Foundation, either version 3 of the License, or
+// (at your option) any later version.
+// 
+// This program is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU General Public License for more details.
+// 
+// You should have received a copy of the GNU Lesser General Public License
+// along with this program.  If not, see http://www.gnu.org/licenses/. 
+// </copyright>
+// 
+// <summary>
+// Better CMS is a publishing focused and developer friendly .NET open source CMS.
+// 
+// Website: https://www.bettercms.com 
+// GitHub: https://github.com/devbridge/bettercms
+// Email: info@bettercms.com
+// </summary>
+// -------------------------------------------------------------------------------------------------------------------- *@
+@using BetterCms.Module.Pages.Content.Resources
 @using BetterCms.Module.Pages.Controllers
 @using BetterCms.Module.Root.Mvc.Helpers
 @using Microsoft.Web.Mvc
@@ -8,23 +35,27 @@
 {
     return;
 }
-<div class="bcms-tab-header">
-    <a class="bcms-tab-item bcms-active" data-name="#bcms-tab-1">@PagesGlobalization.EditPageContent_RegularContentTab_Title</a>
-    <a class="bcms-tab-item" data-name="#bcms-tab-2">@PagesGlobalization.EditPageContent_AdvancedOptionsTab_Title</a>
+
+<div class="bcms-tab-header bcms-js-tab-header">
+    <div class="bcms-modal-frame-holder">
+        <div class="bcms-tab-ui bcms-tab-item bcms-active" data-name="#bcms-tab-1">@PagesGlobalization.EditPageContent_RegularContentTab_Title</div>
+        <div class="bcms-tab-ui bcms-tab-item" data-name="#bcms-tab-2">@PagesGlobalization.EditPageContent_AdvancedOptionsTab_Title</div>
+    </div>
 </div>
 
-<div class="bcms-scroll-window">
-    @Html.TabbedContentMessagesBox()
-    @Html.Partial("Partial/WarnMessageAboutDraft", Model)
+<div class="bcms-modal-frame-holder">
+    @Html.MessagesBox()
 
-    <div class="bcms-padded-content">
+    <div class="bcms-window-tabbed-options">
+        @Html.Partial("Partial/WarnMessageAboutDraft", Model)
+
         @using (Html.BeginForm<ContentController>(c => c.SavePageHtmlContent(null), FormMethod.Post,
-                new
-                    {
-                        @id = "bcms-content-form",
-                        @class = "bcms-ajax-form",
-                        data_readonly = Model.IsReadOnly.ToString().ToLowerInvariant()
-                    }))
+        new
+        {
+            @id = "bcms-content-form",
+            @class = "bcms-ajax-form",
+            data_readonly = Model.IsReadOnly.ToString().ToLowerInvariant()
+        }))
         {
 
             <div id="bcms-tab-1" class="bcms-tab-single">
@@ -39,11 +70,10 @@
                 @Html.HiddenFor(modal => modal.DesirableStatus, new { @class = "bcms-content-desirable-status" })
                 @Html.HiddenFor(modal => modal.IsUserConfirmed, new { @id = "bcms-user-confirmed-region-deletion" })
             </div>
-            
+
             <div id="bcms-tab-2" class="bcms-tab-single">
                 @Html.Partial("Partial/EditHtmlContentJsCss", Model)
             </div>
         }
-
     </div>
-    </div>
+</div>

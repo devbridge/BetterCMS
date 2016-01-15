@@ -1,21 +1,45 @@
-﻿@model BetterCms.Module.Root.ViewModels.Shared.EditableGridViewModel
+﻿@* --------------------------------------------------------------------------------------------------------------------
+// <copyright file="TopBlockAddItem.cshtml" company="Devbridge Group LLC">
+// 
+// Copyright (C) 2015,2016 Devbridge Group LLC
+// 
+// This program is free software: you can redistribute it and/or modify
+// it under the terms of the GNU Lesser General Public License as published by
+// the Free Software Foundation, either version 3 of the License, or
+// (at your option) any later version.
+// 
+// This program is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU General Public License for more details.
+// 
+// You should have received a copy of the GNU Lesser General Public License
+// along with this program.  If not, see http://www.gnu.org/licenses/. 
+// </copyright>
+// 
+// <summary>
+// Better CMS is a publishing focused and developer friendly .NET open source CMS.
+// 
+// Website: https://www.bettercms.com 
+// GitHub: https://github.com/devbridge/bettercms
+// Email: info@bettercms.com
+// </summary>
+// -------------------------------------------------------------------------------------------------------------------- *@
+@model BetterCms.Module.Root.ViewModels.Shared.EditableGridViewModel
 
 @if (Model.CanAddNewItems)
 {
-    <div class="bcms-btn-links-main" data-bind="click: addNewItem">@Model.AddNewTitle</div>
-
-    <div class="bcms-widget-option-box" data-bind="visible: isAddNewSelected">
-        <select class="bcms-global-select" id="bcms-multi-opts" data-bind="options: optionTypes, optionsText: 'name', optionsCaption: 'Choose type...', optionsValue: 'id', value: selectedTypeId"></select>
+    <div class="bcms-top-controls-btn-holder">
+        <div class="bcms-btn-main" data-bind="click: addNewItem">@Model.AddNewTitle</div>
+        <div class="bcms-btn-opener" data-bind="click: addNewItem"> </div>
+        <div class="bcms-btn-opener-holder" data-bind="css: {'bcms-opened' : isAddNewSelected}, foreach: optionTypes">
+            <div class="bcms-btn-opener-link" data-bind="text: name, click: $parent.addOption, clickBubble: false"></div>
+        </div>
     </div>
 }
-else
-{
-    <div class="bcms-btn-links-main">&nbsp;</div>
-}
-
-<div class="bcms-language-bar bcms-language-selector-box" data-bind="visible: showLanguages, with: language">
-    <div class="bcms-filter-text bcms-table-middle-box">Edit in language:</div>
-    <div class="bcms-table-middle-box">
-        <select class="bcms-global-select" data-bind="options: languages, optionsText: 'value', optionsValue: 'key', value: languageId"></select>
+<div class="bcms-language-selector-box" data-bind="visible: showLanguages, with: language">
+    <div class="bcms-content-titles">Edit in language:</div>
+    <div class="bcms-field-wrapper">
+        <select data-bind="options: languages, optionsText: 'value', optionsValue: 'key', value: languageId, select2: { minimumResultsForSearch: -1 }"></select>
     </div>
 </div>

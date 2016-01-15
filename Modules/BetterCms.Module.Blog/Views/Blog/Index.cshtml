@@ -1,118 +1,85 @@
-﻿@using BetterCms.Core.DataContracts.Enums
+﻿@* --------------------------------------------------------------------------------------------------------------------
+// <copyright file="Index.cshtml" company="Devbridge Group LLC">
+// 
+// Copyright (C) 2015,2016 Devbridge Group LLC
+// 
+// This program is free software: you can redistribute it and/or modify
+// it under the terms of the GNU Lesser General Public License as published by
+// the Free Software Foundation, either version 3 of the License, or
+// (at your option) any later version.
+// 
+// This program is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU General Public License for more details.
+// 
+// You should have received a copy of the GNU Lesser General Public License
+// along with this program.  If not, see http://www.gnu.org/licenses/. 
+// </copyright>
+// 
+// <summary>
+// Better CMS is a publishing focused and developer friendly .NET open source CMS.
+// 
+// Website: https://www.bettercms.com 
+// GitHub: https://github.com/devbridge/bettercms
+// Email: info@bettercms.com
+// </summary>
+// -------------------------------------------------------------------------------------------------------------------- *@
 @using BetterCms.Module.Blog.Content.Resources
 @using BetterCms.Module.Blog.Controllers
 @using BetterCms.Module.Blog.ViewModels.Blog
 @using BetterCms.Module.Root
 @using BetterCms.Module.Root.Content.Resources
 @using BetterCms.Module.Root.Mvc.Grids.Extensions
-@using BetterCms.Module.Root.Mvc.Grids.TableRenderers
 @using BetterCms.Module.Root.Mvc.Helpers
 @using BetterCms.Module.Root.Mvc
 @using Microsoft.Web.Mvc
-@using MvcContrib.UI.Grid
 
 @model BetterCms.Module.Blog.ViewModels.Filter.BlogsGridViewModel<SiteSettingBlogPostViewModel>
 @{
     var controller = (CmsControllerBase)ViewContext.Controller;
     var canEdit = controller.SecurityService.IsAuthorized(RootModuleConstants.UserRoles.EditContent);
     var canPublish = controller.SecurityService.IsAuthorized(RootModuleConstants.UserRoles.PublishContent);
-    
-    Action<ColumnBuilder<SiteSettingBlogPostViewModel>> columns = column =>
-    {
-        if (canEdit || canPublish)
-        {
-            column.EditButtonColumn();
-        }
-        else
-        {
-            column.EmptyColumn();
-        }
-
-        column.For(m => string.Format("<a class=\"bcms-tables-link bcms-blog-Title\" data-id=\"{0}\" data-url=\"{2}\">{1}</a>", m.Id, System.Web.Security.AntiXss.AntiXssEncoder.HtmlEncode(m.Title ?? "", true), m.PageUrl))
-            .Named(BlogGlobalization.SiteSettings_Blogs_TitleColumn)
-            .SortColumnName("Title")
-            .Attributes()
-            .Encode(false);
-
-        column.For(m => m.CreatedOn.ToFormattedDateString())
-           .Named(BlogGlobalization.SiteSettings_Blogs_CreatedColumn)
-           .SortColumnName("CreatedOn")
-           .Attributes(@class => "bcms-blog-CreatedOn");
-
-        column.For(m => m.ModifiedOn.ToFormattedDateString())
-           .Named(BlogGlobalization.SiteSettings_Blogs_ModifiedColumn)
-           .SortColumnName("ModifiedOn")
-           .Attributes(@class => "bcms-blog-ModifiedOn");
-
-        column.For(m => m.ModifiedByUser)
-           .Named(BlogGlobalization.SiteSettings_Blogs_ModifiedByColumn)
-           .SortColumnName("ModifiedByUser")
-           .Attributes(@class => "bcms-blog-ModifiedByUser");
-
-        column.For(m => Html.EditorFor(e => m.Status, "PageStatus"))
-           .Named(BlogGlobalization.SiteSettings_Blogs_PageStatusColumn)
-           .SortColumnName("Status")
-           .HeaderAttributes(@style => "width: 65px; text-align: center")
-           .Attributes(@class => "bcms-blog-IsPublished");
-
-        if (controller.SecurityService.IsAuthorized(RootModuleConstants.UserRoles.DeleteContent))
-        {
-            column.DeleteButtonColumn();
-        }
-        else
-        {
-            column.EmptyColumn();
-        }
-    };
 }
 
 @using (Html.BeginForm<BlogController>(f => f.Index(null), FormMethod.Post, new { @id = "bcms-blogs-form", @class = "bcms-ajax-form" }))
 {
+    @Html.MessagesBox()
+
     @Html.HiddenGridOptions(Model.GridOptions)
 
     <div class="bcms-top-block-holder">
-        @{
-            if (canEdit)
+        <div class="bcms-top-controls-btn-holder">
+            @if (canEdit)
             {
-                <div class="bcms-btn-links-main" id="bcms-create-blog-button">@BlogGlobalization.SiteSettings_Blogs_AddNew</div>
-            }
-            else
-            {
-                <div class="bcms-btn-links-main">&nbsp;</div>
+                <div class="bcms-btn-main" id="bcms-create-blog-button">@BlogGlobalization.SiteSettings_Blogs_AddNew</div>
             }
 
-            if (canPublish && canEdit)
+            @if (canPublish && canEdit)
             {
-                <div class="bcms-btn-links-main" id="bcms-import-blogs">@BlogGlobalization.SiteSettings_Blogs_Import</div>
-                <div class="bcms-btn-links-main" id="bcms-export-blogs">@BlogGlobalization.SiteSettings_Blogs_Export</div>
+                <div class="bcms-btn-opener"> </div>
+                <div class="bcms-btn-opener-holder">
+                    <div class="bcms-btn-opener-link" id="bcms-import-blogs">@BlogGlobalization.SiteSettings_Blogs_Import</div>
+                    <div class="bcms-btn-opener-link" id="bcms-export-blogs">@BlogGlobalization.SiteSettings_Blogs_Export</div>
+                </div>
             }
-        }
+        </div>
 
-        <div class="bcms-search-block">
-            @Html.TextBoxFor(m => m.SearchQuery, new { @class = "bcms-editor-field-box bcms-search-query", @placeholder = RootGlobalization.WaterMark_Search })
-            <div class="bcms-btn-search" id="bcms-blogs-search-btn">@BlogGlobalization.SiteSettings_Blogs_Search</div>
-        </div>
-        
-        <div class="bcms-featured-grid bcms-clearfix">
-            @Html.RenderPaging(Model)
-            @Html.Partial("~/Areas/bcms-blog/Views/Blog/Partial/BlogsFilterTemplate.cshtml", Model)
-        </div>
+            <div class="bcms-top-block-inner">
+                <div class="bcms-btn-search" id="bcms-blogs-search-btn">@BlogGlobalization.SiteSettings_Blogs_Search</div>
+                <div class="bcms-search-block">                 
+                    @Html.TextBoxFor(m => m.SearchQuery, new { @class = "bcms-search-field-box bcms-js-search-box bcms-search-query", @placeholder = RootGlobalization.WaterMark_Search })
+                </div>
+            </div>
+
+            <div class="bcms-top-block-pager">
+                @Html.Partial("~/Areas/bcms-root/Views/Shared/Partial/Paging.cshtml")
+            </div>
+    </div>
+
+    <div class="bcms-top-block-filters">
+        @Html.Partial("~/Areas/bcms-blog/Views/Blog/Partial/BlogsFilterTemplate.cshtml", Model)
     </div>
     
-    @Html.SiteSettingsMessagesBox()
-
-    @Html.Grid(Model.Items).Sort(Model.GridOptions).Columns(columns).Attributes(@class => "bcms-tables").RenderUsing(new EditableHtmlTableGridRenderer<SiteSettingBlogPostViewModel>())
+    @Html.Partial("~/Areas/bcms-blog/Views/Blog/Partial/BlogsGrid.cshtml", Model)
 }
-
-<script type="text/html" id="bcms-blogs-list-row-template">
-    @Html.Grid(new List<SiteSettingBlogPostViewModel> { new SiteSettingBlogPostViewModel() }).Columns(columns).Attributes(@class => "bcms-tables").RenderUsing(new HtmlTableGridSingleRowRenderer<SiteSettingBlogPostViewModel>())
-</script>
-<script type="text/html" id="bcms-pagestatus-published-template">
-    @Html.Partial("EditorTemplates/PageStatus", PageStatus.Published)
-</script>
-<script type="text/html" id="bcms-pagestatus-unpublished-template">
-    @Html.Partial("EditorTemplates/PageStatus", PageStatus.Unpublished)
-</script>
-<script type="text/html" id="bcms-pagestatus-draft-template">
-    @Html.Partial("EditorTemplates/PageStatus", PageStatus.Draft)
-</script>
