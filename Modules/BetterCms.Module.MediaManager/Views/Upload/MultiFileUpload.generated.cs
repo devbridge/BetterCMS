@@ -170,13 +170,7 @@ WriteLiteral(">Upload File</div>\r\n\r\n");
             
             #line 52 "..\..\Views\Upload\MultiFileUpload.cshtml"
                                                             
-                
-            
-            #line default
-            #line hidden
-            
-            #line 53 "..\..\Views\Upload\MultiFileUpload.cshtml"
-                 if (Model.RootFolderId.HasDefaultValue() && Model.ReuploadMediaId.HasDefaultValue())
+                if (Model.RootFolderId.HasDefaultValue() && Model.ReuploadMediaId.HasDefaultValue())
                 {
 
             
@@ -220,7 +214,7 @@ WriteLiteral("                                ");
 
             
             #line 60 "..\..\Views\Upload\MultiFileUpload.cshtml"
-                           Write(Html.DropDownListFor(f => f.SelectedFolderId, Model.Folders.Select(o => new SelectListItem { Selected = Model.SelectedFolderId == o.Item1, Text = o.Item2, Value = o.Item1.ToString() })));
+                           Write(Html.DropDownListFor(f => f.SelectedFolderId, Model.Folders.Select(o => new SelectListItem { Selected = Model.SelectedFolderId == o.Item1, Text = o.Item2, Value = o.Item1.ToString() }), new { id = "folderSelectionBox" }));
 
             
             #line default
@@ -249,12 +243,6 @@ WriteLiteral("\r\n                            </div>\r\n                        
             #line 69 "..\..\Views\Upload\MultiFileUpload.cshtml"
                                                                                                  
                 }
-            
-            #line default
-            #line hidden
-            
-            #line 70 "..\..\Views\Upload\MultiFileUpload.cshtml"
-                 
 
 
             

@@ -50,14 +50,14 @@
                 @Html.HiddenFor(f => f.ReuploadMediaId)
                 @Html.HiddenFor(f => f.RootFolderId)
                 @Html.HiddenFor(f => f.AccessControlEnabled)
-                @if (Model.RootFolderId.HasDefaultValue() && Model.ReuploadMediaId.HasDefaultValue())
+                if (Model.RootFolderId.HasDefaultValue() && Model.ReuploadMediaId.HasDefaultValue())
                 {
                     <div class="bcms-form-block-holder">
                         <div>
                             <div class="bcms-content-titles">@MediaGlobalization.MultiFileUpload_SelectFolder</div>
                             @Html.Tooltip(MediaGlobalization.MultiFileUpload_SelectFolder_Help_Message)
                             <div class="bcms-field-wrapper">
-                                @Html.DropDownListFor(f => f.SelectedFolderId, Model.Folders.Select(o => new SelectListItem { Selected = Model.SelectedFolderId == o.Item1, Text = o.Item2, Value = o.Item1.ToString() }))
+                                @Html.DropDownListFor(f => f.SelectedFolderId, Model.Folders.Select(o => new SelectListItem { Selected = Model.SelectedFolderId == o.Item1, Text = o.Item2, Value = o.Item1.ToString() }), new { id = "folderSelectionBox" })
                             </div>
                         </div>
                         <div>
