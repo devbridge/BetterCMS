@@ -41,7 +41,7 @@ bettercms.define('bcms.media.upload', ['bcms.jquery', 'bcms', 'bcms.dynamicConte
                 fileUploadingTarget: '#UploadTarget',
                 fileUploadingInput: '#uploadFile',
                 fileUploadingResult: '#jsonResult',
-                folderDropDown: '#SelectedFolderId',
+                folderDropDown: '#folderSelectionBox',
                 uploadButtonLabel: '.bcms-btn-upload-files-text',
                 userAccessControlContainer: '#bcms-accesscontrol-context',
                 overrideSelect: "bcms-media-reupload-override"

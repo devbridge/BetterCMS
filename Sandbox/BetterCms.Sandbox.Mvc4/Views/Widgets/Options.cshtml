@@ -30,12 +30,21 @@
 {
     <h2>Widget Name: @Model.Widget.Name</h2>
     <h3>Current Page: @Model.Page.PageUrl</h3>
+    <p>Page options:</p>
+    if (Model != null && Model.Page.Options != null)
+    {
+        foreach (var option in Model.Page.Options)
+        {
+            <strong>Option "@option.Key" Type:</strong> @(option.Value != null ? option.Value.GetType().ToString() : string.Empty)
+            <strong>; Value: </strong> @option.Value <br/>
+        }
+    }
 }
 else
 {
     <p>Widget Preview...</p>
 }
-
+<p>Widget options:</p>
 @if (Model != null && Model.Options != null)
 {
     foreach (var option in Model.Options)
