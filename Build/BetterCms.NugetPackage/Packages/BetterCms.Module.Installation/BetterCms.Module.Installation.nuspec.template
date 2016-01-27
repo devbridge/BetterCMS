@@ -15,6 +15,8 @@
       <dependency id="BetterCms.Core" version="[@BetterCMSVersion@]" />
       <dependency id="BetterCms.Module.Root" version="[@BetterCMSVersion@]" />
       <dependency id="BetterCms.Module.Pages" version="[@BetterCMSVersion@]" />
+      <dependency id="ServiceStack.Text" version="[3.9.71]" />
+      <dependency id="ServiceStack.Common" version="[3.9.71]" />
     </dependencies>
   </metadata>
 </package>
