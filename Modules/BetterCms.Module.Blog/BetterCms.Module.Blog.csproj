@@ -283,6 +283,11 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>BlogsFilterTemplate.cshtml</DependentUpon>
     </Compile>
+    <Compile Include="Views\Blog\Partial\BlogsGrid.generated.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>BlogsGrid.cshtml</DependentUpon>
+    </Compile>
     <Compile Include="Views\History\BlogPropertiesHistory.generated.cs">
       <DependentUpon>BlogPropertiesHistory.cshtml</DependentUpon>
       <AutoGen>True</AutoGen>
@@ -369,15 +374,16 @@
       <Generator>RazorGenerator</Generator>
       <LastGenOutput>ImageCell.generated.cs</LastGenOutput>
     </None>
-    <Content Include="Views\_ViewStart.cshtml" />
-    <Content Include="Views\Shared\_Layout.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\History\BlogPropertiesHistory.cshtml">
       <Generator>RazorGenerator</Generator>
       <LastGenOutput>BlogPropertiesHistory.generated.cs</LastGenOutput>
     </Content>
-    <EmbeddedResource Include="Views\Blog\Partial\BlogsGrid.cshtml" />
+    <None Include="Views\Blog\Partial\BlogsGrid.cshtml">
+      <Generator>RazorGenerator</Generator>
+      <LastGenOutput>BlogsGrid.generated.cs</LastGenOutput>
+    </None>
     <None Include="Views\Option\Settings.cshtml">
       <Generator>RazorGenerator</Generator>
       <LastGenOutput>Settings.generated.cs</LastGenOutput>
