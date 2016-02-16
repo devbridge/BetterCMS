@@ -1,26 +1,26 @@
 ﻿// --------------------------------------------------------------------------------------------------------------------
 // <copyright file="DefaultAccessControlService.cs" company="Devbridge Group LLC">
-// 
+//
 // Copyright (C) 2015,2016 Devbridge Group LLC
-// 
+//
 // This program is free software: you can redistribute it and/or modify
 // it under the terms of the GNU Lesser General Public License as published by
 // the Free Software Foundation, either version 3 of the License, or
 // (at your option) any later version.
-// 
+//
 // This program is distributed in the hope that it will be useful,
 // but WITHOUT ANY WARRANTY; without even the implied warranty of
 // MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 // GNU General Public License for more details.
-// 
+//
 // You should have received a copy of the GNU Lesser General Public License
-// along with this program.  If not, see http://www.gnu.org/licenses/. 
+// along with this program.  If not, see http://www.gnu.org/licenses/.
 // </copyright>
-// 
+//
 // <summary>
 // Better CMS is a publishing focused and developer friendly .NET open source CMS.
-// 
-// Website: https://www.bettercms.com 
+//
+// Website: https://www.bettercms.com
 // GitHub: https://github.com/devbridge/bettercms
 // Email: info@bettercms.com
 // </summary>
@@ -62,7 +62,7 @@ namespace BetterCms.Module.Root.Services
         private readonly ICmsConfiguration configuration;
 
         private readonly ISecurityService securityService;
-        
+
         private readonly IRepository repository;
 
         /// <summary>
@@ -110,7 +110,7 @@ namespace BetterCms.Module.Root.Services
         /// <param name="roles">The roles.</param>
         /// <exception cref="System.NotImplementedException"></exception>
         public void DemandAccess(IPrincipal principal, params string[] roles)
-        {          
+        {
             if (roles != null && roles.Any() && !securityService.IsAuthorized(principal, string.Join(",", roles)))
             {
                 throw new SecurityException("Forbidden: Access is denied.");
@@ -147,8 +147,8 @@ namespace BetterCms.Module.Root.Services
             {
                 return GetAccessLevelInternal(accessRules, principal);
             }
-            
-            StringBuilder cacheKeyBuilder = new StringBuilder();
+
+            var cacheKeyBuilder = new StringBuilder();
 
             cacheKeyBuilder.Append(AccessLevelCacheKeyPrefix);
             cacheKeyBuilder.Append("-");
@@ -157,7 +157,7 @@ namespace BetterCms.Module.Root.Services
             cacheKeyBuilder.Append(principal.Identity.IsAuthenticated);
             cacheKeyBuilder.Append("-");
 
-            StringBuilder accessRulesHasher = new StringBuilder();
+            var accessRulesHasher = new StringBuilder();
             if (accessRules != null && accessRules.Count > 0)
             {
                 foreach (var rule in accessRules.Distinct())
@@ -216,7 +216,7 @@ namespace BetterCms.Module.Root.Services
 
             var readWriteIsDefault = string.Equals(configuration.Security.DefaultAccessRules.DefaultAccessLevel, AccessLevel.ReadWrite.ToString(), StringComparison.OrdinalIgnoreCase);
 
-            if (securedObject.AccessRules == null && !readWriteIsDefault  || 
+            if (securedObject.AccessRules == null && !readWriteIsDefault  ||
                 securedObject.AccessRules != null && !securedObject.AccessRules.Any() && !readWriteIsDefault ||
                 securedObject.AccessRules != null && securedObject.AccessRules.Any() && securedObject.AccessRules.All(f => f.AccessLevel != AccessLevel.ReadWrite))
             {
@@ -225,7 +225,7 @@ namespace BetterCms.Module.Root.Services
                     return;
                 }
 
-                throw new ValidationException(() => RootGlobalization.Validation_SecuredObjectShouldHaveAccess_Message, 
+                throw new ValidationException(() => RootGlobalization.Validation_SecuredObjectShouldHaveAccess_Message,
                     string.Format("An '{0}' secured object can't be saved because of the complete access lose.", securedObject));
             }
         }
@@ -265,13 +265,13 @@ namespace BetterCms.Module.Root.Services
             }
 
             return list.OrderBy(x => x.IsForRole).ThenBy(x => x.Identity).ToList();
-        }       
+        }
 
         /// <summary>
         /// Update the access rule entities.
         /// </summary>
         /// <param name="securedObject">The secured object.</param>
-        /// <param name="updatedRules">The access list.</param>        
+        /// <param name="updatedRules">The access list.</param>
         private void UpdateChangedRules(IAccessSecuredObject securedObject, IList<IAccessRule> updatedRules)
         {
             if (updatedRules != null && updatedRules.Count > 0 && securedObject.AccessRules != null)
@@ -321,7 +321,7 @@ namespace BetterCms.Module.Root.Services
                     throw new CmsException(formatErrorMessage);
                 }
 
-                StringBuilder notDefinedMessage = new StringBuilder();
+                var notDefinedMessage = new StringBuilder();
                 notDefinedMessage.AppendLine("A defaultAccessLevel property is not defined in the cms.config <security> section. This access level is used for objects with no access rules.");
                 notDefinedMessage.AppendLine("<security><defaultAccessRules defaultAccessLevel=\"ReadWrite|Read|Deny\">...</defaultAccessRules></security>");
 

@@ -35,7 +35,7 @@ namespace BetterCms.Module.Root.Mvc.Helpers
     {
         public static IHtmlString Tooltip(this HtmlHelper htmlHelper, string message)
         {
-            StringBuilder sb = new StringBuilder();
+            var sb = new StringBuilder();
             sb.Append("<div class=\"bcms-tooltip-mark\"");
             sb.AppendFormat(" data-message=\"{0}\"", HttpUtility.HtmlEncode(message));
             sb.Append("></div>");

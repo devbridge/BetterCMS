@@ -402,7 +402,7 @@ namespace BetterCMS.Module.LuceneSearch.Services.IndexerService
                 }
 
                 ScoreDoc[] hits = collector.TopDocs(skip, take).ScoreDocs;
-                List<Document> hitDocuments = new List<Document>();
+                var hitDocuments = new List<Document>();
                 for (int i = 0; i < hits.Length; i++)
                 {
                     int docId = hits[i].Doc;

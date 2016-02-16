@@ -126,7 +126,7 @@ namespace BetterCMS.Module.LuceneSearch.Services.WebCrawlerService
             {
                 foreach (Cookie authCookie in authorizationCookies)
                 {
-                    Cookie cookie = new Cookie(authCookie.Name, authCookie.Value, authCookie.Path, authCookie.Domain);
+                    var cookie = new Cookie(authCookie.Name, authCookie.Value, authCookie.Path, authCookie.Domain);
                     httpWebRequest.CookieContainer.Add(cookie);
                 }
             }
@@ -215,7 +215,7 @@ namespace BetterCMS.Module.LuceneSearch.Services.WebCrawlerService
                 parameters = string.Format("{0}{1}={2}", parameters, element.Key.Substring(prefixLength, element.Key.Length - prefixLength), HttpUtility.UrlEncode(element.Value));
             }
 
-            HttpWebRequest requestLogin = (HttpWebRequest)WebRequest.Create(url);
+            var requestLogin = (HttpWebRequest)WebRequest.Create(url);
             requestLogin.Method = "POST";
             requestLogin.CookieContainer = new CookieContainer();
             requestLogin.ContentType = "application/x-www-form-urlencoded";

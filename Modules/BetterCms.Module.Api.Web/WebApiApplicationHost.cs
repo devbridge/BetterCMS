@@ -79,7 +79,7 @@ namespace BetterCms.Module.Api
 
         private static Assembly[] GetAssembliesWithServices()
         {
-            List<Assembly> assemblies = new List<Assembly>();
+            var assemblies = new List<Assembly>();
             ICmsModulesRegistration modulesRegistry;
             IAssemblyLoader assemblyLoader = null;
 

@@ -67,7 +67,7 @@ namespace BetterCms.Core.Services.Storage
         {
             CheckUri(uri);
 
-            DownloadResponse downloadResponse = new DownloadResponse();
+            var downloadResponse = new DownloadResponse();
             downloadResponse.Uri = uri;
 
             using (FileStream writeStream = new FileStream(uri.LocalPath, FileMode.Open, FileAccess.Read))

@@ -105,7 +105,7 @@ namespace BetterCms.Module.Root.Services
 
                 if (contentToProject == null && content.Status == ContentStatus.Published)
                 {
-                    IHtmlContent htmlContent = content as IHtmlContent;
+                    var htmlContent = content as IHtmlContent;
                     if (!canManageContent && htmlContent != null
                         && (DateTime.Now < htmlContent.ActivationDate || (htmlContent.ExpirationDate.HasValue && htmlContent.ExpirationDate.Value < DateTime.Now)))
                     {

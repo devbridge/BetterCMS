@@ -1,26 +1,26 @@
 ﻿// --------------------------------------------------------------------------------------------------------------------
 // <copyright file="CommandHandler.cs" company="Devbridge Group LLC">
-// 
+//
 // Copyright (C) 2015,2016 Devbridge Group LLC
-// 
+//
 // This program is free software: you can redistribute it and/or modify
 // it under the terms of the GNU Lesser General Public License as published by
 // the Free Software Foundation, either version 3 of the License, or
 // (at your option) any later version.
-// 
+//
 // This program is distributed in the hope that it will be useful,
 // but WITHOUT ANY WARRANTY; without even the implied warranty of
 // MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 // GNU General Public License for more details.
-// 
+//
 // You should have received a copy of the GNU Lesser General Public License
-// along with this program.  If not, see http://www.gnu.org/licenses/. 
+// along with this program.  If not, see http://www.gnu.org/licenses/.
 // </copyright>
-// 
+//
 // <summary>
 // Better CMS is a publishing focused and developer friendly .NET open source CMS.
-// 
-// Website: https://www.bettercms.com 
+//
+// Website: https://www.bettercms.com
 // GitHub: https://github.com/devbridge/bettercms
 // Email: info@bettercms.com
 // </summary>
@@ -49,7 +49,7 @@ namespace BetterCms.Module.Root.Mvc
         /// Current class logger.
         /// </summary>
         private static readonly ILog Log = LogManager.GetCurrentClassLogger();
-        
+
         /// <summary>
         /// Handles the command.
         /// </summary>
@@ -150,7 +150,7 @@ namespace BetterCms.Module.Root.Mvc
         {
             try
             {
-                return command.Execute();                
+                return command.Execute();
             }
             catch (ConfirmationRequestException ex)
             {
@@ -359,7 +359,7 @@ namespace BetterCms.Module.Root.Mvc
         /// <returns>Command execution failure message.</returns>
         private static string FormatCommandExceptionMessage(object command, object request = null)
         {
-            StringBuilder sb = new StringBuilder();
+            var sb = new StringBuilder();
             sb.AppendFormat("Failed to execute command {0}. ", command != null ? command.GetType().Name : "NULL");
 
             if (request != null)

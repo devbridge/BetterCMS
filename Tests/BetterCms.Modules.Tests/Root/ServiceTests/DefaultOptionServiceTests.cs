@@ -357,7 +357,7 @@ namespace BetterCms.Test.Module.Root.ServiceTests
         [Test]
         public void ShouldReturnCorrectOptionValueForDefaultLanguage4()
         {
-            Language lang = new Language();
+            var lang = new Language();
             lang.Id = Guid.NewGuid();
             var option1 = TestDataProvider.CreateNewContentOption();
             var translation = new ContentOptionTranslation();
@@ -554,7 +554,7 @@ namespace BetterCms.Test.Module.Root.ServiceTests
         [Test]
         public void ShouldReturnCorrectOptionValueForSpecificLanguage4()
         {
-            Language lang = new Language();
+            var lang = new Language();
             lang.Id = Guid.NewGuid();
             var option1 = TestDataProvider.CreateNewContentOption();
             var translation = new ContentOptionTranslation();
@@ -641,7 +641,7 @@ namespace BetterCms.Test.Module.Root.ServiceTests
         [Test]
         public void ShouldReturnCorrectOptionValueForSpecificLanguage7()
         {
-            Language lang = new Language();
+            var lang = new Language();
             lang.Id = Guid.NewGuid();
             var option1 = TestDataProvider.CreateNewContentOption();
 
@@ -697,10 +697,10 @@ namespace BetterCms.Test.Module.Root.ServiceTests
         [Test]
         public void ShouldReturnCorrectOptionValueForAnotherLanguage()
         {
-            Language lang1 = new Language();
+            var lang1 = new Language();
             lang1.Id = Guid.NewGuid();
 
-            Language lang2 = new Language();
+            var lang2 = new Language();
             lang2.Id = Guid.NewGuid();
 
             var option1 = TestDataProvider.CreateNewContentOption();

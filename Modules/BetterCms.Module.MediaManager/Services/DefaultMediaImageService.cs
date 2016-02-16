@@ -232,7 +232,7 @@ namespace BetterCms.Module.MediaManager.Services
             var imageType = ImageHelper.GetImageType(fileExtension);
 
             MediaImage uploadImage = null;
-            MemoryStream thumbnailFileStream = new MemoryStream();
+            var thumbnailFileStream = new MemoryStream();
             Size size;
             Size thumbnailSize = ThumbnailSize;
             long thumbnailImageLength;
