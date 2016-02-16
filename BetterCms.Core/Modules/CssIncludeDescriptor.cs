@@ -49,7 +49,7 @@ namespace BetterCms.Core.Modules
         {
             if (isPublic && string.IsNullOrEmpty(minFileName))
             {
-                throw new CoreException("Public CSS includes should describe a minified file version itself.", new ArgumentNullException("minFileName", "Please define the minFileName parameter."));
+                throw new CoreException("Public CSS includes should describe a minified file version itself.", new ArgumentNullException(nameof(minFileName), "Please define the minFileName parameter."));
             }
 
             ContainerModule = module;                        
