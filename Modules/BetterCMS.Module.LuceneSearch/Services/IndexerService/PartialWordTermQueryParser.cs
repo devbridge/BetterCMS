@@ -69,7 +69,7 @@ namespace BetterCMS.Module.LuceneSearch.Services.IndexerService
             {
                 queryText = string.Concat("*", queryText);
             }
-            if (!queryText.EndsWith("*"))
+            if (!queryText.EndsWith("*", System.StringComparison.Ordinal))
             {
                 queryText = string.Concat(queryText, "*");
             }
