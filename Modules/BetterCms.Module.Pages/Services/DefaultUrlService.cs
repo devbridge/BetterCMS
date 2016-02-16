@@ -242,7 +242,7 @@ namespace BetterCms.Module.Pages.Services
                     return url;
                 }
 
-                if (!url.StartsWith("/"))
+                if (!url.StartsWith("/", StringComparison.Ordinal))
                 {
                     url = string.Concat("/", url);
                 }

@@ -65,7 +65,7 @@ namespace BetterCMS.Module.LuceneSearch.Services.IndexerService
 
         private string FixQueryWord(string queryText)
         {
-            if (!queryText.StartsWith("*"))
+            if (!queryText.StartsWith("*", System.StringComparison.Ordinal))
             {
                 queryText = string.Concat("*", queryText);
             }

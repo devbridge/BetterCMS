@@ -204,7 +204,7 @@ namespace BetterCMS.Module.LuceneSearch.Services.WebCrawlerService
             var prefixLength = LuceneSearchConstants.ConfigurationKeys.LuceneAuthorizationFormFieldPrefix.Length;
             foreach (KeyValueElement element in (ConfigurationElementCollection)cmsConfiguration.Search)
             {
-                if (!element.Key.StartsWith(LuceneSearchConstants.ConfigurationKeys.LuceneAuthorizationFormFieldPrefix))
+                if (!element.Key.StartsWith(LuceneSearchConstants.ConfigurationKeys.LuceneAuthorizationFormFieldPrefix, StringComparison.Ordinal))
                 {
                     continue;
                 }

@@ -42,9 +42,9 @@ namespace BetterCms.Module.Pages.Helpers
             if (!string.IsNullOrWhiteSpace(virtualPath))
             {
                 // Fix virtual path
-                if (!virtualPath.StartsWith("~"))
+                if (!virtualPath.StartsWith("~", System.StringComparison.Ordinal))
                 {
-                    if (virtualPath.StartsWith("/"))
+                    if (virtualPath.StartsWith("/", System.StringComparison.Ordinal))
                     {
                         virtualPath = string.Concat("~", virtualPath);
                     }

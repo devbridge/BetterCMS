@@ -278,12 +278,12 @@ namespace BetterCms.Module.Pages.Services
             {
                 Guid id;
                 var length = request.Layout.Length - 2;
-                if (request.Layout.StartsWith("m-") && Guid.TryParse(request.Layout.Substring(2, length), out id))
+                if (request.Layout.StartsWith("m-", StringComparison.Ordinal) && Guid.TryParse(request.Layout.Substring(2, length), out id))
                 {
                     query = query.Where(() => alias.MasterPage.Id == id);
                 }
 
-                if (request.Layout.StartsWith("l-") && Guid.TryParse(request.Layout.Substring(2, length), out id))
+                if (request.Layout.StartsWith("l-", StringComparison.Ordinal) && Guid.TryParse(request.Layout.Substring(2, length), out id))
                 {
                     query = query.Where(() => alias.Layout.Id == id);
                 }

@@ -722,7 +722,7 @@ namespace BetterCMS.Module.LuceneSearch.Services.IndexerService
                 // Fix for tests / console applications
                 appDomainPath = Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().Location);
             }
-            if (directoryRelative.StartsWith("~"))
+            if (directoryRelative.StartsWith("~", StringComparison.Ordinal))
             {
                 directoryRelative = directoryRelative.TrimStart('~').TrimStart('/').TrimStart('\\');
             }
