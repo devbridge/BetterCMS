@@ -76,8 +76,7 @@ namespace BetterCms.Module.Api.Helpers
         {
             if (source == null) throw new ArgumentNullException("source");
             if (ordering == null) throw new ArgumentNullException("ordering");
-            ParameterExpression[] parameters = new ParameterExpression[] {
-                Expression.Parameter(source.ElementType, "") };
+            ParameterExpression[] parameters = { Expression.Parameter(source.ElementType, "") };
             ExpressionParser parser = new ExpressionParser(parameters, ordering, values);
             IEnumerable<DynamicOrdering> orderings = parser.ParseOrdering();
             Expression queryExpr = source.Expression;
@@ -1501,7 +1500,7 @@ namespace BetterCms.Module.Api.Helpers
 
         void CheckAndPromoteOperand(Type signatures, string opName, ref Expression expr, int errorPos)
         {
-            Expression[] args = new Expression[] { expr };
+            Expression[] args = { expr };
             MethodBase method;
             if (FindMethod(signatures, "F", false, args, out method) != 1)
                 throw ParseError(errorPos, Res.IncompatibleOperand,
@@ -1511,7 +1510,7 @@ namespace BetterCms.Module.Api.Helpers
 
         void CheckAndPromoteOperands(Type signatures, string opName, ref Expression left, ref Expression right, int errorPos)
         {
-            Expression[] args = new Expression[] { left, right };
+            Expression[] args = { left, right };
             MethodBase method;
             if (FindMethod(signatures, "F", false, args, out method) != 1)
                 throw IncompatibleOperandsError(opName, left, right, errorPos);

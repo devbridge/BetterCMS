@@ -1,26 +1,26 @@
 ﻿// --------------------------------------------------------------------------------------------------------------------
 // <copyright file="EmbeddedResourcesController.cs" company="Devbridge Group LLC">
-// 
+//
 // Copyright (C) 2015,2016 Devbridge Group LLC
-// 
+//
 // This program is free software: you can redistribute it and/or modify
 // it under the terms of the GNU Lesser General Public License as published by
 // the Free Software Foundation, either version 3 of the License, or
 // (at your option) any later version.
-// 
+//
 // This program is distributed in the hope that it will be useful,
 // but WITHOUT ANY WARRANTY; without even the implied warranty of
 // MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 // GNU General Public License for more details.
-// 
+//
 // You should have received a copy of the GNU Lesser General Public License
-// along with this program.  If not, see http://www.gnu.org/licenses/. 
+// along with this program.  If not, see http://www.gnu.org/licenses/.
 // </copyright>
-// 
+//
 // <summary>
 // Better CMS is a publishing focused and developer friendly .NET open source CMS.
-// 
-// Website: https://www.bettercms.com 
+//
+// Website: https://www.bettercms.com
 // GitHub: https://github.com/devbridge/bettercms
 // Email: info@bettercms.com
 // </summary>
@@ -40,7 +40,7 @@ namespace BetterCms.Module.Root.Controllers
     /// </summary>
     [ActionLinkArea(RootModuleDescriptor.RootAreaName)]
     public class EmbeddedResourcesController : Controller
-    {        
+    {
         /// <summary>
         /// Known embedded resource mime types.
         /// </summary>
@@ -65,7 +65,7 @@ namespace BetterCms.Module.Root.Controllers
                     { "ico", "image/ico" },
                     { "jpg", "image/jpeg" },
                     { "jpeg", "image/jpeg" },
-                    { "svg", "image/svg+xml" },                    
+                    { "svg", "image/svg+xml" },
                     { "txt", "text/plain" },
                     { "xml", "application/xml" },
                     { "zip", "application/zip" }
@@ -102,20 +102,18 @@ namespace BetterCms.Module.Root.Controllers
         {
             string contentType = GetContentType(resourceType);
             if (string.IsNullOrEmpty(contentType))
-            {                
+            {
                 Response.StatusCode = 404;
                 return new EmptyResult();
             }
 
-            string[] folders = new[]
-                                    {
-                                        folder1, 
-                                        folder2, 
-                                        folder3, 
-                                        folder4, 
-                                        folder5,
-                                        folder6
-                                    };
+            string[] folders = {folder1,
+                                folder2,
+                                folder3,
+                                folder4,
+                                folder5,
+                                folder6
+                                };
 
             string virtualPath = "~/Areas/" + area + "/";
             for (int i = 0; i < folders.Length; i++)
@@ -135,7 +133,7 @@ namespace BetterCms.Module.Root.Controllers
             }
 
             var virtualFile = embeddedResourcesProvider.GetEmbeddedResourceVirtualFile(virtualPath);
-           
+
             return File(virtualFile.Open(), contentType);
         }
 
@@ -150,7 +148,7 @@ namespace BetterCms.Module.Root.Controllers
             {
                 return MimeTypes[resourceType];
             }
-                        
+
             return null;
         }
     }
