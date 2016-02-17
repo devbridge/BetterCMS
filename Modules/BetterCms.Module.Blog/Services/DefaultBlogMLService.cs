@@ -118,13 +118,13 @@ namespace BetterCms.Module.Blog.Services
             {
                 stream.Position = 0;
 
-                XmlReaderSettings readerSettings = new XmlReaderSettings();
+                var readerSettings = new XmlReaderSettings();
                 readerSettings.ConformanceLevel = ConformanceLevel.Document;
                 readerSettings.CheckCharacters = true;
                 readerSettings.ValidationType = ValidationType.None;
 
                 var xmlReader = XmlReader.Create(stream, readerSettings);
-                XmlDocument xdoc = new XmlDocument();
+                var xdoc = new XmlDocument();
                 xdoc.Load(xmlReader);
             }
             catch (Exception exc)
@@ -230,7 +230,7 @@ namespace BetterCms.Module.Blog.Services
 
         public List<BlogPostImportResult> ValidateImport(BlogMLBlog blogPosts)
         {
-            List<BlogPostImportResult> result = new List<BlogPostImportResult>();
+            var result = new List<BlogPostImportResult>();
             var unsavedUrls = new List<string>();
 
             if (blogPosts != null && blogPosts.Posts != null)

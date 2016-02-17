@@ -47,7 +47,7 @@ namespace BetterCms.Module.Api.Helpers
         {
             if (categoriesFilter != null && (categoriesFilter.FilterByCategories != null || categoriesFilter.FilterByCategoriesNames != null))
             {
-                List<Guid> categories = new List<Guid>();
+                var categories = new List<Guid>();
 
                 if (categoriesFilter.FilterByCategories != null)
                 {

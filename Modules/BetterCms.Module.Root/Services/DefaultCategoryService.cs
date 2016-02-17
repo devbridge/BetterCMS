@@ -228,7 +228,7 @@ namespace BetterCms.Module.Root.Services
                                                     }).ToList();
             // Find given category
             var mainCategory = allCategoryNodes.First(c => c.Id == categoryId);
-            List<CategoryViewModel> childCategories = new List<CategoryViewModel>() { mainCategory };
+            var childCategories = new List<CategoryViewModel>() { mainCategory };
 
             FillChildCategories(allCategoryNodes, mainCategory, childCategories);
 

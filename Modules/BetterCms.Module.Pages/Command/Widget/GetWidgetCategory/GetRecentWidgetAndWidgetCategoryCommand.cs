@@ -1,26 +1,26 @@
 ﻿// --------------------------------------------------------------------------------------------------------------------
 // <copyright file="GetRecentWidgetAndWidgetCategoryCommand.cs" company="Devbridge Group LLC">
-// 
+//
 // Copyright (C) 2015,2016 Devbridge Group LLC
-// 
+//
 // This program is free software: you can redistribute it and/or modify
 // it under the terms of the GNU Lesser General Public License as published by
 // the Free Software Foundation, either version 3 of the License, or
 // (at your option) any later version.
-// 
+//
 // This program is distributed in the hope that it will be useful,
 // but WITHOUT ANY WARRANTY; without even the implied warranty of
 // MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 // GNU General Public License for more details.
-// 
+//
 // You should have received a copy of the GNU Lesser General Public License
-// along with this program.  If not, see http://www.gnu.org/licenses/. 
+// along with this program.  If not, see http://www.gnu.org/licenses/.
 // </copyright>
-// 
+//
 // <summary>
 // Better CMS is a publishing focused and developer friendly .NET open source CMS.
-// 
-// Website: https://www.bettercms.com 
+//
+// Website: https://www.bettercms.com
 // GitHub: https://github.com/devbridge/bettercms
 // Email: info@bettercms.com
 // </summary>
@@ -83,15 +83,15 @@ namespace BetterCms.Module.Pages.Command.Widget.GetWidgetCategory
                                     {
                                         CategoryId = c.Id,
                                         CategoryName = c.Name
-                                        
+
                                     })
                     .ToFuture();
             }
-            
+
             // Load list of contents
             var widgetsQuery = Repository.AsQueryable<Root.Models.Widget>()
-                                        .Where(f => !f.IsDeleted 
-                                                && (f.Original == null || !f.Original.IsDeleted) 
+                                        .Where(f => !f.IsDeleted
+                                                && (f.Original == null || !f.Original.IsDeleted)
                                                 && (f.Status == ContentStatus.Published || f.Status == ContentStatus.Draft));
 
             var childContentsQuery = UnitOfWork.Session.Query<ChildContent>();
@@ -113,7 +113,7 @@ namespace BetterCms.Module.Pages.Command.Widget.GetWidgetCategory
                     UsedOn = childContentsQuery.Where(z => z.Child.Id == t.Id).Max(z => z.ModifiedOn)
                 })
                 .OrderByDescending(t => t.UsedOn).Take(6).ToFuture();
-            
+
             if (request.CategoryId.HasValue)
             {
                 if (request.CategoryId.Value.HasDefaultValue())
@@ -206,7 +206,7 @@ namespace BetterCms.Module.Pages.Command.Widget.GetWidgetCategory
             WidgetViewModel result;
             if (widget is HtmlContentWidget)
             {
-                HtmlContentWidget htmlContentWidget = (HtmlContentWidget)widget;
+                var htmlContentWidget = (HtmlContentWidget)widget;
                 result = new HtmlContentWidgetViewModel
                              {
                                  Name = htmlContentWidget.Name,
@@ -214,13 +214,13 @@ namespace BetterCms.Module.Pages.Command.Widget.GetWidgetCategory
                                  CustomCSS = htmlContentWidget.CustomCss,
                                  EnableCustomCSS = htmlContentWidget.UseCustomCss,
                                  CustomJS =  htmlContentWidget.CustomJs,
-                                 EnableCustomJS = htmlContentWidget.UseCustomJs,                                 
+                                 EnableCustomJS = htmlContentWidget.UseCustomJs,
                                  WidgetType = WidgetType.HtmlContent
                              };
             }
             else if (widget is ServerControlWidget)
             {
-                ServerControlWidget serverControlWidget = (ServerControlWidget)widget;
+                var serverControlWidget = (ServerControlWidget)widget;
                 result = new ServerControlWidgetViewModel
                              {
                                  Url = serverControlWidget.Url,
@@ -258,7 +258,7 @@ namespace BetterCms.Module.Pages.Command.Widget.GetWidgetCategory
                 {
                     Key = c.Category.Id.ToLowerInvariantString(),
                     Value = c.Category.Name
-                }).ToList() : new List<LookupKeyValue>();                
+                }).ToList() : new List<LookupKeyValue>();
                 result.Id = widget.Id;
                 result.Version = widget.Version;
             }
@@ -272,7 +272,7 @@ namespace BetterCms.Module.Pages.Command.Widget.GetWidgetCategory
             {
                 return ContentStatus.Published.ToString() + "/" + ContentStatus.Draft.ToString();
             }
-            
+
             if (widget.Status == ContentStatus.Draft)
             {
                 return ContentStatus.Draft.ToString();

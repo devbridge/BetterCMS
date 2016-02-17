@@ -59,7 +59,7 @@ namespace BetterCms.Module.Users.Services
 
             if (http != null && http.Request != null && http.Request.Url != null)
             {
-                if (http.Request.Url.AbsolutePath.EndsWith(".css"))
+                if (http.Request.Url.AbsolutePath.EndsWith(".css", System.StringComparison.Ordinal))
                 {
                     return;
                 }

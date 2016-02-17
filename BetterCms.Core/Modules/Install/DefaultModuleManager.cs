@@ -83,7 +83,7 @@ namespace BetterCms.Core.Modules.Install
         {
             if (string.IsNullOrWhiteSpace(moduleId))
             {
-                throw new ArgumentNullException("moduleId");
+                throw new ArgumentNullException(nameof(moduleId));
             }
 
             CheckRepository();
@@ -134,7 +134,7 @@ namespace BetterCms.Core.Modules.Install
         {
             if (string.IsNullOrWhiteSpace(moduleId))
             {
-                throw new ArgumentNullException("moduleId");
+                throw new ArgumentNullException(nameof(moduleId));
             }
 
             CheckRepository();

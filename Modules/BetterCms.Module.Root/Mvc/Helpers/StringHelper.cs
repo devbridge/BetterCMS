@@ -48,7 +48,7 @@ namespace BetterCms.Module.Root.Mvc.Helpers
         {
             url = url.Trim();
 
-            if (url.EndsWith("/") && url != "/")
+            if (url.EndsWith("/", System.StringComparison.Ordinal) && url != "/")
             {
                 url = url.TrimEnd('/');
                 url = url.Trim();

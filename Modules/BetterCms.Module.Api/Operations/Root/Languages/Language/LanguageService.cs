@@ -217,7 +217,7 @@ namespace BetterCms.Module.Api.Operations.Root.Languages.Language
         {
             if (languageToSave == null)
             {
-                throw new ArgumentNullException("languageToSave");
+                throw new ArgumentNullException(nameof(languageToSave));
             }
 
             if (languageToSave.Code != request.Data.Code)

@@ -690,7 +690,7 @@ namespace BetterCms.Module.Installation.Models.Migrations
                     return url.TrimEnd('/');
 
                 case TrailingSlashBehaviorType.TrailingSlash:
-                    return url.EndsWith("/") ? url : string.Concat(url, "/");
+                    return url.EndsWith("/", StringComparison.Ordinal) ? url : string.Concat(url, "/");
 
                 default:
                     return url;

@@ -65,7 +65,7 @@ namespace BetterCms.Core.Security
         {
             if (httpContext == null)
             {
-                throw new ArgumentNullException("httpContext");
+                throw new ArgumentNullException(nameof(httpContext));
             }
 
             var container = PerWebRequestContainerProvider.GetLifetimeScope(httpContext);

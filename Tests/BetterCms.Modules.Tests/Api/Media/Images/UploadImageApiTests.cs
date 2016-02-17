@@ -136,15 +136,15 @@ namespace BetterCms.Test.Module.Api.Media.Images
             const string urlStart = "http://bettercms.sandbox.mvc4.local.net/uploads/image/";
 
             Assert.IsTrue(getResponse.Data.OriginalUrl.StartsWith(urlStart)
-                && getResponse.Data.OriginalUrl.EndsWith(string.Format("/o_{0}", TestBigImageFileName)));
+                && getResponse.Data.OriginalUrl.EndsWith(string.Format("/o_{0}", TestBigImageFileName), System.StringComparison.Ordinal));
             Assert.IsTrue(getResponse.Data.ThumbnailUrl.StartsWith(urlStart)
-               && getResponse.Data.ThumbnailUrl.EndsWith(string.Format("/t_{0}", TestBigImageFileName)));
+               && getResponse.Data.ThumbnailUrl.EndsWith(string.Format("/t_{0}", TestBigImageFileName), System.StringComparison.Ordinal));
             Assert.IsTrue(getResponse.Data.ImageUrl.StartsWith(urlStart)
-               && getResponse.Data.ImageUrl.EndsWith(string.Format("/{0}", TestBigImageFileName)));
+               && getResponse.Data.ImageUrl.EndsWith(string.Format("/{0}", TestBigImageFileName), System.StringComparison.Ordinal));
 
-            Assert.IsTrue(getResponse.Data.OriginalUri.EndsWith(string.Format("/o_{0}", TestBigImageFileName)));
-            Assert.IsTrue(getResponse.Data.ThumbnailUri.EndsWith(string.Format("/t_{0}", TestBigImageFileName)));
-            Assert.IsTrue(getResponse.Data.FileUri.EndsWith(string.Format("/{0}", TestBigImageFileName)));
+            Assert.IsTrue(getResponse.Data.OriginalUri.EndsWith(string.Format("/o_{0}", TestBigImageFileName), System.StringComparison.Ordinal));
+            Assert.IsTrue(getResponse.Data.ThumbnailUri.EndsWith(string.Format("/t_{0}", TestBigImageFileName), System.StringComparison.Ordinal));
+            Assert.IsTrue(getResponse.Data.FileUri.EndsWith(string.Format("/{0}", TestBigImageFileName), System.StringComparison.Ordinal));
         }
     }
 }

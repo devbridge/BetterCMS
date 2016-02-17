@@ -130,8 +130,8 @@ namespace BetterCms.Test.Module.Api.Media.Files
             const string urlStart = "http://bettercms.sandbox.mvc4.local.net/uploads/file/";
 
             Assert.IsTrue(getResponse.Data.FileUrl.StartsWith(urlStart)
-                && getResponse.Data.FileUrl.EndsWith(string.Format("/{0}", TestBigImageFileName)));
-            Assert.IsTrue(getResponse.Data.FileUri.EndsWith(string.Format("/{0}", TestBigImageFileName)));
+                && getResponse.Data.FileUrl.EndsWith(string.Format("/{0}", TestBigImageFileName), System.StringComparison.Ordinal));
+            Assert.IsTrue(getResponse.Data.FileUri.EndsWith(string.Format("/{0}", TestBigImageFileName), System.StringComparison.Ordinal));
 
             Assert.AreEqual(getResponse.Data.Title, model.Title);
             Assert.AreEqual(getResponse.Data.Description, model.Description);

@@ -1,26 +1,26 @@
 ﻿// --------------------------------------------------------------------------------------------------------------------
 // <copyright file="MessagesHelper.cs" company="Devbridge Group LLC">
-// 
+//
 // Copyright (C) 2015,2016 Devbridge Group LLC
-// 
+//
 // This program is free software: you can redistribute it and/or modify
 // it under the terms of the GNU Lesser General Public License as published by
 // the Free Software Foundation, either version 3 of the License, or
 // (at your option) any later version.
-// 
+//
 // This program is distributed in the hope that it will be useful,
 // but WITHOUT ANY WARRANTY; without even the implied warranty of
 // MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 // GNU General Public License for more details.
-// 
+//
 // You should have received a copy of the GNU Lesser General Public License
-// along with this program.  If not, see http://www.gnu.org/licenses/. 
+// along with this program.  If not, see http://www.gnu.org/licenses/.
 // </copyright>
-// 
+//
 // <summary>
 // Better CMS is a publishing focused and developer friendly .NET open source CMS.
-// 
-// Website: https://www.bettercms.com 
+//
+// Website: https://www.bettercms.com
 // GitHub: https://github.com/devbridge/bettercms
 // Email: info@bettercms.com
 // </summary>
@@ -57,7 +57,7 @@ namespace BetterCms.Module.Root.Mvc.Helpers
             return MessagesBox(html, id, attributes, cssClassMessages + " " + cssClassCustomMessages, messages);
         }
 
-        public static IHtmlString MessagesBox(this HtmlHelper html, string id = null, 
+        public static IHtmlString MessagesBox(this HtmlHelper html, string id = null,
             IDictionary<string, string> attributes = null)
         {
             return MessagesBox(html, id, attributes, cssClassMessages);
@@ -79,7 +79,7 @@ namespace BetterCms.Module.Root.Mvc.Helpers
         private static IHtmlString MessagesBox(this HtmlHelper html, string id,
             IDictionary<string, string> attributes, string cssClass, IMessagesIndicator messages = null)
         {
-            CmsControllerBase controller = html.ViewContext.Controller as CmsControllerBase;
+            var controller = html.ViewContext.Controller as CmsControllerBase;
             if (controller == null)
             {
                 throw new CmsException("Unable to generate messages box.", new NotSupportedException("Controller should inherit CmsControllerBase class."));
@@ -94,7 +94,7 @@ namespace BetterCms.Module.Root.Mvc.Helpers
                     .FirstOrDefault();
             }
 
-            StringBuilder sb = new StringBuilder();
+            var sb = new StringBuilder();
             sb.AppendFormat("<div class=\"{0} {1}\"", cssClass, customCssClass);
             if (!string.IsNullOrEmpty(id))
             {
@@ -121,7 +121,7 @@ namespace BetterCms.Module.Root.Mvc.Helpers
             AddMessagesBoxBlock(sb, "bcms-info-messages", messages.Info);
             AddMessagesBoxBlock(sb, "bcms-warning-messages", messages.Warn);
             AddMessagesBoxBlock(sb, "bcms-error-messages", messages.Error);
-            
+
             sb.AppendLine("</div>");
 
             return new MvcHtmlString(sb.ToString());
@@ -150,9 +150,9 @@ namespace BetterCms.Module.Root.Mvc.Helpers
                     sb.AppendLine("<li>");
                     sb.Append("<div class=\"bcms-messages-close bcms-js-btn-close\">Close</div>");
                     sb.Append(message);
-                    sb.AppendLine("</li>");                    
+                    sb.AppendLine("</li>");
                 }
-            }            
+            }
             sb.AppendLine("</ul>");
         }
     }

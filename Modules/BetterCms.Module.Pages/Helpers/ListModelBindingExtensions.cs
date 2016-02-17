@@ -53,7 +53,7 @@ namespace BetterCms.Module.Pages.Helpers
         {
             string fieldName = templateInfo.GetFullHtmlFieldName("Index");
             fieldName = stripIndexerRegex.Replace(fieldName, string.Empty);
-            if (fieldName.StartsWith("."))
+            if (fieldName.StartsWith(".", StringComparison.Ordinal))
             {
                 fieldName = fieldName.Substring(1);
             }
@@ -105,7 +105,7 @@ namespace BetterCms.Module.Pages.Helpers
             string expressionText = ExpressionHelper.GetExpressionText(expression);
             string name = html.ViewContext.ViewData.TemplateInfo.GetFullHtmlFieldName(expressionText) + ".Index";
             name = stripIndexerRegex.Replace(name, string.Empty);
-            if (name.StartsWith("."))
+            if (name.StartsWith(".", StringComparison.Ordinal))
             {
                 name = name.Substring(1);
             }

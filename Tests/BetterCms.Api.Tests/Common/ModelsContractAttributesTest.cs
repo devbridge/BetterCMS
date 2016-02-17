@@ -46,9 +46,9 @@ namespace BetterCms.Api.Tests.Common
             var assembly = Assembly.GetAssembly(typeof(GetPageRequest));
             var allTypes = assembly.GetTypes();
 
-            var models = allTypes.Where(type => type.IsClass && type.Name.EndsWith("Model")).ToList();
-            var requests = allTypes.Where(type => type.IsClass && type.Name.EndsWith("Request")).ToList();
-            var responses = allTypes.Where(type => type.IsClass && type.Name.EndsWith("Response")).ToList();
+            var models = allTypes.Where(type => type.IsClass && type.Name.EndsWith("Model", StringComparison.Ordinal)).ToList();
+            var requests = allTypes.Where(type => type.IsClass && type.Name.EndsWith("Request", StringComparison.Ordinal)).ToList();
+            var responses = allTypes.Where(type => type.IsClass && type.Name.EndsWith("Response", StringComparison.Ordinal)).ToList();
 
             var anyErrors = HasAnyErrors(models);
             anyErrors = anyErrors || HasAnyErrors(requests);

@@ -1,26 +1,26 @@
 ﻿// --------------------------------------------------------------------------------------------------------------------
 // <copyright file="DefaultOptionService.cs" company="Devbridge Group LLC">
-// 
+//
 // Copyright (C) 2015,2016 Devbridge Group LLC
-// 
+//
 // This program is free software: you can redistribute it and/or modify
 // it under the terms of the GNU Lesser General Public License as published by
 // the Free Software Foundation, either version 3 of the License, or
 // (at your option) any later version.
-// 
+//
 // This program is distributed in the hope that it will be useful,
 // but WITHOUT ANY WARRANTY; without even the implied warranty of
 // MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 // GNU General Public License for more details.
-// 
+//
 // You should have received a copy of the GNU Lesser General Public License
-// along with this program.  If not, see http://www.gnu.org/licenses/. 
+// along with this program.  If not, see http://www.gnu.org/licenses/.
 // </copyright>
-// 
+//
 // <summary>
 // Better CMS is a publishing focused and developer friendly .NET open source CMS.
-// 
-// Website: https://www.bettercms.com 
+//
+// Website: https://www.bettercms.com
 // GitHub: https://github.com/devbridge/bettercms
 // Email: info@bettercms.com
 // </summary>
@@ -356,7 +356,7 @@ namespace BetterCms.Module.Root.Services
             }
             return optionViewModel;
         }
-        
+
         /// <summary>
         /// Creates the option value view model.
         /// </summary>
@@ -638,7 +638,7 @@ namespace BetterCms.Module.Root.Services
 
                 foreach (var requestOption in options)
                 {
-                    TOption option = (TOption)optionsList.FirstOrDefault(o => o.Key == requestOption.Key);
+                    var option = (TOption)optionsList.FirstOrDefault(o => o.Key == requestOption.Key);
 
                     if (option == null)
                     {
@@ -864,7 +864,7 @@ namespace BetterCms.Module.Root.Services
                 .Where(o => o.Type == OptionType.Custom && o.CustomOption is CustomOption && !(o.CustomOption is IProxy))
                 .Select(o => new CustomOptionViewModel
                              {
-                                 Identifier = o.CustomOption.Identifier, 
+                                 Identifier = o.CustomOption.Identifier,
                                  Title = o.CustomOption.Title,
                                  Id = o.CustomOption.Id
                              })
@@ -872,7 +872,7 @@ namespace BetterCms.Module.Root.Services
 
             // Load missing custom options
             var customOptionsIdentifiers = options
-                .Where(o => o.Type == OptionType.Custom 
+                .Where(o => o.Type == OptionType.Custom
                     && (!(o.CustomOption is CustomOption) || o.CustomOption is IProxy)
                     && customOptions.All(co => co.Identifier != o.CustomOption.Identifier))
                 .Select(o => o.CustomOption.Identifier)
@@ -1137,11 +1137,11 @@ namespace BetterCms.Module.Root.Services
 
             allPages.Add(new PageMasterPage
                 {
-                    Id = pageId, 
-                    MasterPageId = masterPageId, 
+                    Id = pageId,
+                    MasterPageId = masterPageId,
                     LayoutId = templateId
                 });
-            
+
 
             if (templateId.HasValue)
             {
@@ -1243,7 +1243,7 @@ namespace BetterCms.Module.Root.Services
         /// <param name="content">The content.</param>
         /// <param name="viewModels">The list of view models with provided child content id and option values list.</param>
         /// <param name="requestedStatus">The requested status for saving content.</param>
-        public void SaveChildContentOptions(Models.Content content, IList<ContentOptionValuesViewModel> viewModels, 
+        public void SaveChildContentOptions(Models.Content content, IList<ContentOptionValuesViewModel> viewModels,
             ContentStatus requestedStatus)
         {
             if (viewModels == null)
@@ -1252,7 +1252,7 @@ namespace BetterCms.Module.Root.Services
             }
 
             Models.Content contentToUpdate = null;
-            if ((requestedStatus == ContentStatus.Draft || requestedStatus == ContentStatus.Preview) 
+            if ((requestedStatus == ContentStatus.Draft || requestedStatus == ContentStatus.Preview)
                 && content != null
                 && requestedStatus != content.Status
                 && content.History != null)
@@ -1273,7 +1273,7 @@ namespace BetterCms.Module.Root.Services
                     {
                         continue;
                     }
-                    
+
                     IList<OptionValueEditViewModel> optionValues = viewModel.OptionValues;
                     IList<ChildContentOption> childContentOptions = null;
 

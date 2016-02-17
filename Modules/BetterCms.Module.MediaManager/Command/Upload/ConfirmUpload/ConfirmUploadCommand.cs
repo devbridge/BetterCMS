@@ -1,26 +1,26 @@
 ﻿// --------------------------------------------------------------------------------------------------------------------
 // <copyright file="ConfirmUploadCommand.cs" company="Devbridge Group LLC">
-// 
+//
 // Copyright (C) 2015,2016 Devbridge Group LLC
-// 
+//
 // This program is free software: you can redistribute it and/or modify
 // it under the terms of the GNU Lesser General Public License as published by
 // the Free Software Foundation, either version 3 of the License, or
 // (at your option) any later version.
-// 
+//
 // This program is distributed in the hope that it will be useful,
 // but WITHOUT ANY WARRANTY; without even the implied warranty of
 // MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 // GNU General Public License for more details.
-// 
+//
 // You should have received a copy of the GNU Lesser General Public License
-// along with this program.  If not, see http://www.gnu.org/licenses/. 
+// along with this program.  If not, see http://www.gnu.org/licenses/.
 // </copyright>
-// 
+//
 // <summary>
 // Better CMS is a publishing focused and developer friendly .NET open source CMS.
-// 
-// Website: https://www.bettercms.com 
+//
+// Website: https://www.bettercms.com
 // GitHub: https://github.com/devbridge/bettercms
 // Email: info@bettercms.com
 // </summary>
@@ -49,7 +49,7 @@ namespace BetterCms.Module.MediaManager.Command.Upload.ConfirmUpload
     public class ConfirmUploadCommand : CommandBase, ICommand<MultiFileUploadViewModel, ConfirmUploadResponse>
     {
         private readonly ICmsConfiguration cmsConfiguration;
-        
+
         private readonly IMediaFileService fileService;
 
         private readonly IAccessControlService accessControlService;
@@ -72,7 +72,7 @@ namespace BetterCms.Module.MediaManager.Command.Upload.ConfirmUpload
         /// </summary>
         public ConfirmUploadResponse Execute(MultiFileUploadViewModel request)
         {
-            ConfirmUploadResponse response = new ConfirmUploadResponse { SelectedFolderId = request.SelectedFolderId ?? Guid.Empty, ReuploadMediaId = request.ReuploadMediaId };
+            var response = new ConfirmUploadResponse { SelectedFolderId = request.SelectedFolderId ?? Guid.Empty, ReuploadMediaId = request.ReuploadMediaId };
 
             if (request.UploadedFiles != null && request.UploadedFiles.Count > 0)
             {
@@ -90,7 +90,7 @@ namespace BetterCms.Module.MediaManager.Command.Upload.ConfirmUpload
 
                 UnitOfWork.BeginTransaction();
 
-                List<MediaFile> files = new List<MediaFile>();
+                var files = new List<MediaFile>();
                 var updateAccessControl = true;
 
                 if (request.ReuploadMediaId.HasDefaultValue())
@@ -149,7 +149,7 @@ namespace BetterCms.Module.MediaManager.Command.Upload.ConfirmUpload
                             accessControlService.UpdateAccessControl(
                                 fileEntity, request.UserAccessList != null ? request.UserAccessList.Cast<IAccessRule>().ToList() : new List<IAccessRule>());
                         }
-                    }                    
+                    }
                 }
 
                 UnitOfWork.Commit();

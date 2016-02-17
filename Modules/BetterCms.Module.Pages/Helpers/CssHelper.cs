@@ -89,7 +89,7 @@ namespace BetterCms.Module.Pages.Helpers
         {
             var sanitizedRule = Regex.Replace(rule, "\\s+", " ").Trim();
             var braketPosition = sanitizedRule.IndexOf('{');
-            var startsWithSmartTag = sanitizedRule.StartsWith("{{") && sanitizedRule.Contains("}}");
+            var startsWithSmartTag = sanitizedRule.StartsWith("{{", StringComparison.Ordinal) && sanitizedRule.Contains("}}");
 
             if (braketPosition <= 0 && !startsWithSmartTag)
             {
