@@ -85,7 +85,7 @@ namespace BetterCms.Module.Root.Services
         {
             if (updatedContent == null)
             {
-                throw new CmsException("Nothing to save.", new ArgumentNullException(nameof(updatedContent)));
+                throw new CmsException("Nothing to save.", new ArgumentNullException("updatedContent"));
             }
 
             if (requestedStatus == ContentStatus.Archived)
@@ -369,7 +369,7 @@ namespace BetterCms.Module.Root.Services
         {
             if (restoreFrom == null)
             {
-                throw new CmsException("Nothing to restore from.", new ArgumentNullException(nameof(restoreFrom)));
+                throw new CmsException("Nothing to restore from.", new ArgumentNullException("restoreFrom"));
             }
 
             if (restoreFrom.Status != ContentStatus.Archived)

@@ -197,7 +197,7 @@ namespace BetterCms.Core.Security
         {
             if (x == null)
             {
-                throw new ArgumentNullException(nameof(x));
+                throw new ArgumentNullException("x");
             }
 
             return x.GetHashCode();
