@@ -113,7 +113,7 @@ namespace BetterCms.Sandbox.DataMigration
             ApplicationContext.LoadAssemblies();
 
             IVersionChecker versionChecker = new VersionCheckerStub();
-            DefaultMigrationRunner runner = new DefaultMigrationRunner(new DefaultAssemblyLoader(), cmsConfiguration, versionChecker);
+            var runner = new DefaultMigrationRunner(new DefaultAssemblyLoader(), cmsConfiguration, versionChecker);
             runner.MigrateStructure(descriptors.Cast<ModuleDescriptor>().ToList());
         }
 

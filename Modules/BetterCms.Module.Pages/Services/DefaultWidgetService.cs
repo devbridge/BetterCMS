@@ -1,26 +1,26 @@
 ﻿// --------------------------------------------------------------------------------------------------------------------
 // <copyright file="DefaultWidgetService.cs" company="Devbridge Group LLC">
-// 
+//
 // Copyright (C) 2015,2016 Devbridge Group LLC
-// 
+//
 // This program is free software: you can redistribute it and/or modify
 // it under the terms of the GNU Lesser General Public License as published by
 // the Free Software Foundation, either version 3 of the License, or
 // (at your option) any later version.
-// 
+//
 // This program is distributed in the hope that it will be useful,
 // but WITHOUT ANY WARRANTY; without even the implied warranty of
 // MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 // GNU General Public License for more details.
-// 
+//
 // You should have received a copy of the GNU Lesser General Public License
-// along with this program.  If not, see http://www.gnu.org/licenses/. 
+// along with this program.  If not, see http://www.gnu.org/licenses/.
 // </copyright>
-// 
+//
 // <summary>
 // Better CMS is a publishing focused and developer friendly .NET open source CMS.
-// 
-// Website: https://www.bettercms.com 
+//
+// Website: https://www.bettercms.com
 // GitHub: https://github.com/devbridge/bettercms
 // Email: info@bettercms.com
 // </summary>
@@ -208,11 +208,11 @@ namespace BetterCms.Module.Pages.Services
                 else
                 {
                     widgetContent.PublishedOn = originalWidget.PublishedOn;
-                    widgetContent.PublishedByUser = originalWidget.PublishedByUser;                    
+                    widgetContent.PublishedByUser = originalWidget.PublishedByUser;
                 }
             }
 
-            
+
 
             if (createNewWithId)
             {
@@ -232,7 +232,7 @@ namespace BetterCms.Module.Pages.Services
 
         private HtmlContentWidget GetHtmlContentWidgetFromRequest(EditHtmlContentWidgetViewModel request, bool treatNullsAsLists, bool isNew)
         {
-            HtmlContentWidget content = new HtmlContentWidget();
+            var content = new HtmlContentWidget();
             content.Id = request.Id;
 
             SetWidgetCategories(request, content, treatNullsAsLists, isNew);
@@ -291,7 +291,7 @@ namespace BetterCms.Module.Pages.Services
 
         private ServerControlWidget GetServerControlWidgetFromRequest(EditServerControlWidgetViewModel request, bool treatNullsAsLists, bool isNew)
         {
-            ServerControlWidget widget = new ServerControlWidget();
+            var widget = new ServerControlWidget();
             widget.Id = request.Id;
 
             widget.Name = request.Name;
@@ -442,7 +442,7 @@ namespace BetterCms.Module.Pages.Services
                 query = query.Where(f => f.ChildContents.Any(cc => cc.Child.Id == filter.ChildContentId.Value));
             }
 
-            
+
 
             var modelQuery = query.Select(f => new SiteSettingWidgetItemViewModel
                 {
@@ -450,7 +450,7 @@ namespace BetterCms.Module.Pages.Services
                     OriginalId = f.Status == ContentStatus.Draft && f.Original != null && f.Original.Status == ContentStatus.Published ? f.Original.Id : f.Id,
                     Version = f.Version,
                     OriginalVersion = f.Status == ContentStatus.Draft && f.Original != null && f.Original.Status == ContentStatus.Published ? f.Original.Version : f.Version,
-                    WidgetName = f.Name,                    
+                    WidgetName = f.Name,
                     WidgetEntityType = f.GetType(),
                     IsPublished = f.Status == ContentStatus.Published || (f.Original != null && f.Original.Status == ContentStatus.Published),
                     HasDraft = f.Status == ContentStatus.Draft

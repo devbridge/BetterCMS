@@ -1,26 +1,26 @@
 ﻿// --------------------------------------------------------------------------------------------------------------------
 // <copyright file="DefaultIndexerService.cs" company="Devbridge Group LLC">
-// 
+//
 // Copyright (C) 2015,2016 Devbridge Group LLC
-// 
+//
 // This program is free software: you can redistribute it and/or modify
 // it under the terms of the GNU Lesser General Public License as published by
 // the Free Software Foundation, either version 3 of the License, or
 // (at your option) any later version.
-// 
+//
 // This program is distributed in the hope that it will be useful,
 // but WITHOUT ANY WARRANTY; without even the implied warranty of
 // MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 // GNU General Public License for more details.
-// 
+//
 // You should have received a copy of the GNU Lesser General Public License
-// along with this program.  If not, see http://www.gnu.org/licenses/. 
+// along with this program.  If not, see http://www.gnu.org/licenses/.
 // </copyright>
-// 
+//
 // <summary>
 // Better CMS is a publishing focused and developer friendly .NET open source CMS.
-// 
-// Website: https://www.bettercms.com 
+//
+// Website: https://www.bettercms.com
 // GitHub: https://github.com/devbridge/bettercms
 // Email: info@bettercms.com
 // </summary>
@@ -83,9 +83,9 @@ namespace BetterCMS.Module.LuceneSearch.Services.IndexerService
 
         private static readonly ILog Log = LogManager.GetLogger("LuceneSearchModule");
 
-        private static string[] defaultExcludedNodeTypes = new[] { "noscript", "script", "button", "style" };
-        private static string[] defaultExcludedIds = new[] { "bcms-browser-info", "bcms-sidemenu" };
-        private static string[] defautlExcludedClasses = new[] { "bcms-layout-path" };
+        private static string[] defaultExcludedNodeTypes = { "noscript", "script", "button", "style" };
+        private static string[] defaultExcludedIds = { "bcms-browser-info", "bcms-sidemenu" };
+        private static string[] defautlExcludedClasses = { "bcms-layout-path" };
 
         private static ICollection<string> configurationExcludedNodeTypes = new List<string>();
         private static ICollection<string> configurationExcludedIds = new List<string>();
@@ -107,7 +107,7 @@ namespace BetterCMS.Module.LuceneSearch.Services.IndexerService
         private bool failedToInitialize;
 
         private bool initialized;
-        
+
         private bool searchForPartOfWords;
 
         private bool isClosing;
@@ -159,7 +159,7 @@ namespace BetterCMS.Module.LuceneSearch.Services.IndexerService
                 configurationExcludedPages = GetCollectionFromConfiguration(LuceneSearchConstants.ConfigurationKeys.LuceneExcludedPages).Select(t => t.Split('#', '?').FirstOrDefault()).ToList();
 
                 bool.TryParse(cmsConfiguration.Search.GetValue(LuceneSearchConstants.ConfigurationKeys.LuceneSearchForPartOfWordsPrefix), out searchForPartOfWords);
-                
+
                 bool disableStopWords;
                 if (!bool.TryParse(cmsConfiguration.Search.GetValue(LuceneSearchConstants.ConfigurationKeys.LuceneDisableStopWords), out disableStopWords))
                 {
@@ -402,7 +402,7 @@ namespace BetterCMS.Module.LuceneSearch.Services.IndexerService
                 }
 
                 ScoreDoc[] hits = collector.TopDocs(skip, take).ScoreDocs;
-                List<Document> hitDocuments = new List<Document>();
+                var hitDocuments = new List<Document>();
                 for (int i = 0; i < hits.Length; i++)
                 {
                     int docId = hits[i].Doc;
@@ -544,7 +544,7 @@ namespace BetterCMS.Module.LuceneSearch.Services.IndexerService
         public bool StartIndexer()
         {
             var runOnHost = cmsConfiguration.Search.GetValue(LuceneSearchConstants.ConfigurationKeys.LuceneIndexerRunsOnlyOnHost);
-            
+
             if (string.IsNullOrWhiteSpace(runOnHost))
             {
                 return true;
@@ -651,7 +651,7 @@ namespace BetterCMS.Module.LuceneSearch.Services.IndexerService
             var textLength = text.Length;
 
             // Crop snippet from the whole search text
-            var takeFromEnd = (index + afterEnd < textLength) ? 0 : afterEnd - (textLength - index); 
+            var takeFromEnd = (index + afterEnd < textLength) ? 0 : afterEnd - (textLength - index);
             var startFrom = index - beforeStart - takeFromEnd;
             var addToEnd = 0;
             if (startFrom < 0)
@@ -696,7 +696,7 @@ namespace BetterCMS.Module.LuceneSearch.Services.IndexerService
             {
                 snippet = string.Concat(snippet, "...");
             }
-            
+
             return HttpUtility.HtmlDecode(snippet);
         }
 
@@ -706,9 +706,9 @@ namespace BetterCMS.Module.LuceneSearch.Services.IndexerService
             {
                 return directoryRelative;
             }
-            
+
             string appDomainPath;
-                
+
             try
             {
                 appDomainPath = HttpRuntime.AppDomainAppPath;
@@ -722,7 +722,7 @@ namespace BetterCMS.Module.LuceneSearch.Services.IndexerService
                 // Fix for tests / console applications
                 appDomainPath = Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().Location);
             }
-            if (directoryRelative.StartsWith("~"))
+            if (directoryRelative.StartsWith("~", StringComparison.Ordinal))
             {
                 directoryRelative = directoryRelative.TrimStart('~').TrimStart('/').TrimStart('\\');
             }

@@ -503,6 +503,16 @@
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
     </Compile>
+    <Compile Include="Views\Page\Partial\PagesGrid.generated.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>PagesGrid.cshtml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Shared\EditableGrid\CustomTitleCell.generated.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>CustomTitleCell.cshtml</DependentUpon>
+    </Compile>
     <Compile Include="Views\Sitemap\Sitemaps.generated.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -891,8 +901,14 @@
       <Generator>RazorGenerator</Generator>
       <LastGenOutput>ServerWidgetPropertiesHistory.generated.cs</LastGenOutput>
     </Content>
-    <EmbeddedResource Include="Views\Shared\EditableGrid\CustomTitleCell.cshtml" />
-    <EmbeddedResource Include="Views\Page\Partial\PagesGrid.cshtml" />
+    <None Include="Views\Shared\EditableGrid\CustomTitleCell.cshtml">
+      <Generator>RazorGenerator</Generator>
+      <LastGenOutput>CustomTitleCell.generated.cs</LastGenOutput>
+    </None>
+    <None Include="Views\Page\Partial\PagesGrid.cshtml">
+      <Generator>RazorGenerator</Generator>
+      <LastGenOutput>PagesGrid.generated.cs</LastGenOutput>
+    </None>
     <Content Include="Views\History\ContentHistoryTable.cshtml">
       <Generator>RazorGenerator</Generator>
       <LastGenOutput>ContentHistoryTable.generated.cs</LastGenOutput>

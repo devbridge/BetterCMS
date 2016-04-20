@@ -75,7 +75,7 @@ namespace BetterCms.Module.Pages.Services
         public string AddPageUrlPostfix(string url, string prefixPattern, List<string> unsavedUrls = null)
         {
             url = (url ?? string.Empty).Trim();
-            var endsWithSlash = url.EndsWith("/");
+            var endsWithSlash = url.EndsWith("/", StringComparison.Ordinal);
             url = url.Trim('/');
             
             prefixPattern = (prefixPattern ?? string.Empty).Trim('/');
@@ -162,14 +162,14 @@ namespace BetterCms.Module.Pages.Services
             {
                 if (endsWithSlash)
                 {
-                    if (!fullUrl.Trim().EndsWith("/"))
+                    if (!fullUrl.Trim().EndsWith("/", StringComparison.Ordinal))
                     {
                         fullUrl = string.Concat(fullUrl, "/");
                     }
                 }
                 else
                 {
-                    if (fullUrl.Trim().EndsWith("/"))
+                    if (fullUrl.Trim().EndsWith("/", StringComparison.Ordinal))
                     {
                         fullUrl = fullUrl.TrimEnd('/').Trim();
                     }
@@ -242,7 +242,7 @@ namespace BetterCms.Module.Pages.Services
                     return url;
                 }
 
-                if (!url.StartsWith("/"))
+                if (!url.StartsWith("/", StringComparison.Ordinal))
                 {
                     url = string.Concat("/", url);
                 }
@@ -250,13 +250,13 @@ namespace BetterCms.Module.Pages.Services
                 switch (configuration.UrlMode)
                 {
                     case TrailingSlashBehaviorType.TrailingSlash:
-                        if (!url.EndsWith("/"))
+                        if (!url.EndsWith("/", StringComparison.Ordinal))
                         {
                             url = string.Concat(url, "/");
                         }
                         break;
                     case TrailingSlashBehaviorType.NoTrailingSlash:
-                        if (url.EndsWith("/"))
+                        if (url.EndsWith("/", StringComparison.Ordinal))
                         {
                             url = url.TrimEnd('/');
                         }

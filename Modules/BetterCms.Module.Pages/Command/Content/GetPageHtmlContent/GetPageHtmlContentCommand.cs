@@ -77,7 +77,7 @@ namespace BetterCms.Module.Pages.Command.Content.GetPageHtmlContent
             }
 
             PageContent pageContent = pageContentForEdit.Item1;
-            HtmlContent content = (HtmlContent)pageContentForEdit.Item2;
+            var content = (HtmlContent)pageContentForEdit.Item2;
 
             var model = new PageContentViewModel 
                                             {

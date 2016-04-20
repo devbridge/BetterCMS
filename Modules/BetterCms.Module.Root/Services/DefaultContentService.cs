@@ -1,26 +1,26 @@
 ﻿// --------------------------------------------------------------------------------------------------------------------
 // <copyright file="DefaultContentService.cs" company="Devbridge Group LLC">
-// 
+//
 // Copyright (C) 2015,2016 Devbridge Group LLC
-// 
+//
 // This program is free software: you can redistribute it and/or modify
 // it under the terms of the GNU Lesser General Public License as published by
 // the Free Software Foundation, either version 3 of the License, or
 // (at your option) any later version.
-// 
+//
 // This program is distributed in the hope that it will be useful,
 // but WITHOUT ANY WARRANTY; without even the implied warranty of
 // MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 // GNU General Public License for more details.
-// 
+//
 // You should have received a copy of the GNU Lesser General Public License
-// along with this program.  If not, see http://www.gnu.org/licenses/. 
+// along with this program.  If not, see http://www.gnu.org/licenses/.
 // </copyright>
-// 
+//
 // <summary>
 // Better CMS is a publishing focused and developer friendly .NET open source CMS.
-// 
-// Website: https://www.bettercms.com 
+//
+// Website: https://www.bettercms.com
 // GitHub: https://github.com/devbridge/bettercms
 // Email: info@bettercms.com
 // </summary>
@@ -122,7 +122,7 @@ namespace BetterCms.Module.Root.Services
             {
                 throw new EntityNotFoundException(typeof(Models.Content), updatedContent.Id);
             }
-            
+
             if (originalContent.Original != null)
             {
                 originalContent = originalContent.Original;
@@ -188,8 +188,8 @@ namespace BetterCms.Module.Root.Services
         }
 
         private void SavePublishedContentWithStatusUpdate(Models.Content originalContent, Models.Content updatedContent, ContentStatus requestedStatus)
-        {            
-            /* 
+        {
+            /*
              * Edit published content:
              * -> Save as draft, preview - look for draft|preview version in history list or create a new history version with requested status (draft, preview) with reference to an original content.
              * -> Publish - current published version should be cloned to archive version with reference to original (archive state) and original updated with new data (published state).
@@ -215,7 +215,7 @@ namespace BetterCms.Module.Root.Services
 
                 repository.Save(contentVersionOfRequestedStatus);
             }
-            
+
             if (requestedStatus == ContentStatus.Published)
             {
                 // Original is copied with options and saved.
@@ -295,7 +295,7 @@ namespace BetterCms.Module.Root.Services
 
         private void SavePreviewOrDraftContentWithStatusUpdate(Models.Content originalContent, Models.Content updatedContent, ContentStatus requestedStatus)
         {
-            /* 
+            /*
              * Edit preview or draft content:
              * -> Save as preview or draft - look for preview or draft version in a history list or create a new history version with requested preview status with reference to an original content.
              * -> Save draft - just update field and save.
@@ -304,13 +304,13 @@ namespace BetterCms.Module.Root.Services
              *                  | create a history content version of the published (clone it). update original with draft data and remove draft|preview.
              *              - published content not exists:
              *                  | save draft content as published
-             */            
+             */
             if (requestedStatus == ContentStatus.Preview || requestedStatus == ContentStatus.Draft)
             {
                 var previewOrDraftContentVersion = originalContent.History.FirstOrDefault(f => f.Status == requestedStatus && !f.IsDeleted);
                 if (previewOrDraftContentVersion == null)
                 {
-                    if (originalContent.Status == requestedStatus 
+                    if (originalContent.Status == requestedStatus
                         || (originalContent.Status == ContentStatus.Preview && requestedStatus == ContentStatus.Draft))
                     {
                         previewOrDraftContentVersion = originalContent;
@@ -332,7 +332,7 @@ namespace BetterCms.Module.Root.Services
                 previewOrDraftContentVersion.Status = requestedStatus;
 
                 repository.Save(previewOrDraftContentVersion);
-            }            
+            }
             else if (requestedStatus == ContentStatus.Published)
             {
                 var publishedVersion = originalContent.History.FirstOrDefault(f => f.Status == requestedStatus && !f.IsDeleted);
@@ -435,7 +435,7 @@ namespace BetterCms.Module.Root.Services
         public int GetPageContentNextOrderNumber(Guid pageId, Guid? parentPageContentId)
         {
             var page = repository.AsProxy<Page>(pageId);
-            PageContent parent = parentPageContentId.HasValue && !parentPageContentId.Value.HasDefaultValue() 
+            PageContent parent = parentPageContentId.HasValue && !parentPageContentId.Value.HasDefaultValue()
                 ? repository.AsProxy<PageContent>(parentPageContentId.Value) : null;
 
             var max = repository
@@ -448,7 +448,7 @@ namespace BetterCms.Module.Root.Services
             {
                 return 0;
             }
-           
+
             return max.Value + 1;
         }
 
@@ -556,7 +556,7 @@ namespace BetterCms.Module.Root.Services
             source.ContentRegions
                 .Where(s => destination.ContentRegions.All(d => s.Region.RegionIdentifier.ToLowerInvariant() != d.Region.RegionIdentifier.ToLowerInvariant()))
                 .Distinct().ToList()
-                .ForEach(s => 
+                .ForEach(s =>
                     {
                         destination.ContentRegions.Add(new ContentRegion { Region = s.Region, Content = destination });
                     });
@@ -602,7 +602,7 @@ namespace BetterCms.Module.Root.Services
                 {
                     validationQuery = validationQuery.Where(pc => pc.Page.MasterPage.Id == pageId);
                 }
-                
+
                 hasAnyContents = validationQuery.Any();
             }
 

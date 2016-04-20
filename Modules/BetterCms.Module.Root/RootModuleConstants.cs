@@ -168,7 +168,7 @@ namespace BetterCms.Module.Root
             /// <summary>
             /// All CMS roles
             /// </summary>
-            public static string[] AllRoles = new[] { EditContent, PublishContent, DeleteContent, Administration, ManageUsers };
+            public static string[] AllRoles = { EditContent, PublishContent, DeleteContent, Administration, ManageUsers };
 
             /// <summary>
             /// Multiples the roles.

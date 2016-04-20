@@ -43,7 +43,7 @@ namespace BetterCms.Test.Module.Root.HelperTests
             IHtmlString button = new HtmlHelper(new ViewContext(), new ViewPage()).HiddenSubmit();
             string html = button.ToHtmlString().Trim();
             Assert.IsTrue(html.StartsWith("<input "));
-            Assert.IsTrue(html.EndsWith("/>"));
+            Assert.IsTrue(html.EndsWith("/>", System.StringComparison.Ordinal));
             Assert.IsTrue(html.Contains("position:absolute; left:-999em; top:-999em;") || html.Contains("position: absolute; left: -999em; top: -999em;"));
         }
     }

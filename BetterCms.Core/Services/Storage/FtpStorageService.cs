@@ -1,26 +1,26 @@
 ﻿// --------------------------------------------------------------------------------------------------------------------
 // <copyright file="FtpStorageService.cs" company="Devbridge Group LLC">
-// 
+//
 // Copyright (C) 2015,2016 Devbridge Group LLC
-// 
+//
 // This program is free software: you can redistribute it and/or modify
 // it under the terms of the GNU Lesser General Public License as published by
 // the Free Software Foundation, either version 3 of the License, or
 // (at your option) any later version.
-// 
+//
 // This program is distributed in the hope that it will be useful,
 // but WITHOUT ANY WARRANTY; without even the implied warranty of
 // MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 // GNU General Public License for more details.
-// 
+//
 // You should have received a copy of the GNU Lesser General Public License
-// along with this program.  If not, see http://www.gnu.org/licenses/. 
+// along with this program.  If not, see http://www.gnu.org/licenses/.
 // </copyright>
-// 
+//
 // <summary>
 // Better CMS is a publishing focused and developer friendly .NET open source CMS.
-// 
-// Website: https://www.bettercms.com 
+//
+// Website: https://www.bettercms.com
 // GitHub: https://github.com/devbridge/bettercms
 // Email: info@bettercms.com
 // </summary>
@@ -181,7 +181,7 @@ namespace BetterCms.Core.Services.Storage
                 TryCreateDirectory(CutLastDirectoryFromUri(destinationUri.AbsoluteUri), true);
                 var response = DownloadObject(sourceUri);
 
-                UploadRequest request = new UploadRequest();
+                var request = new UploadRequest();
                 request.Uri = destinationUri;
                 request.InputStream = new MemoryStream();
 
@@ -205,8 +205,8 @@ namespace BetterCms.Core.Services.Storage
             FtpWebRequest request = CreateFtpRequest(serverUri);
             request.Method = WebRequestMethods.Ftp.DeleteFile;
 
-            FtpWebResponse response = (FtpWebResponse)request.GetResponse();            
-            response.Close();            
+            var response = (FtpWebResponse)request.GetResponse();
+            response.Close();
         }
 
         public void RemoveFolder(Uri uri)
@@ -218,7 +218,7 @@ namespace BetterCms.Core.Services.Storage
             FtpWebRequest request = CreateFtpRequest(serverUri);
             request.Method = WebRequestMethods.Ftp.RemoveDirectory;
 
-            FtpWebResponse response = (FtpWebResponse)request.GetResponse();
+            var response = (FtpWebResponse)request.GetResponse();
             response.Close();
         }
 
@@ -228,7 +228,7 @@ namespace BetterCms.Core.Services.Storage
             {
                 throw new StorageException(string.Format("An Uri scheme {0} is invalid. Uri {1} can't be processed with a {2} storage service.", uri.Scheme, uri, GetType().Name));
             }
-        } 
+        }
 
         private static void Pump(Stream input, Stream output)
         {
