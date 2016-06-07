@@ -48,7 +48,7 @@ bettercms.define('bcms.autocomplete', ['bcms.jquery', 'bcms', 'bcms.jquery.autoc
                 var result = typeof response === 'string' ? $.parseJSON(response) : response;
                 return {
                     suggestions: $.map(result.suggestions, function(dataItem) {
-                        return { value: antiXss.encodeHtml(dataItem.Value), data: dataItem.Key, jsonItem: dataItem };
+                        return { value: dataItem.Value, data: dataItem.Key, jsonItem: dataItem };
                     })
                 };
             }, onSearchStart = function (params, autocompleteViewModel) {
