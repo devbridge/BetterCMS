@@ -38,6 +38,7 @@ using BetterModules.Core.DataAccess.DataContext;
 using BetterModules.Core.Dependencies;
 
 using NHibernate.Linq;
+using NHibernate.Util;
 
 namespace BetterCms.Module.Users.Provider
 {

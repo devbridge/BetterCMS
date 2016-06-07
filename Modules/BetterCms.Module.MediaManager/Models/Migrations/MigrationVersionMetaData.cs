@@ -32,6 +32,16 @@ namespace BetterCms.Module.MediaManager.Models.Migrations
     [VersionTableMetaData]
     public class MediaManagerVersionTableMetaData : IVersionTableMetaData
     {
+        public object ApplicationContext { get; set; }
+
+        public bool OwnsSchema
+        {
+            get
+            {
+                return true;
+            }
+        }
+
         public string SchemaName
         {
             get
@@ -56,11 +66,27 @@ namespace BetterCms.Module.MediaManager.Models.Migrations
             }
         }
 
+        public string DescriptionColumnName
+        {
+            get
+            {
+                return "Description";
+            }
+        }
+
         public string UniqueIndexName
         {
             get
             {
                 return "uc_VersionInfo_Verion_" + MediaManagerModuleDescriptor.ModuleName;
+            }
+        }
+
+        public string AppliedOnColumnName
+        {
+            get
+            {
+                return "AppliedOn";
             }
         }
     }

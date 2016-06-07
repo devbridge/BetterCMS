@@ -45,6 +45,7 @@ using BetterCms.Module.Pages.Models;
 using BetterCms.Module.Root.Services;
 
 using NHibernate.Linq;
+using NHibernate.Util;
 
 using ServiceStack.ServiceInterface;
 

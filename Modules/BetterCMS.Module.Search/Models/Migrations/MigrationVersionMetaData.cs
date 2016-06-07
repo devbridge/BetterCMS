@@ -32,6 +32,16 @@ namespace BetterCms.Module.Search.Models.Migrations
     [VersionTableMetaData]
     public class SearchVersionTableMetaData : IVersionTableMetaData
     {
+        public object ApplicationContext { get; set; }
+
+        public bool OwnsSchema
+        {
+            get
+            {
+                return true;
+            }
+        }
+
         public string SchemaName
         {
             get
@@ -56,11 +66,27 @@ namespace BetterCms.Module.Search.Models.Migrations
             }
         }
 
+        public string DescriptionColumnName
+        {
+            get
+            {
+                return "Description";
+            }
+        }
+
         public string UniqueIndexName
         {
             get
             {
                 return "uc_VersionInfo_Version_" + SearchModuleDescriptor.ModuleName;
+            }
+        }
+
+        public string AppliedOnColumnName
+        {
+            get
+            {
+                return "AppliedOn";
             }
         }
     }

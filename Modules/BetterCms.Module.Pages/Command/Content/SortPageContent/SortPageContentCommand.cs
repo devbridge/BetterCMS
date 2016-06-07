@@ -41,6 +41,7 @@ using BetterModules.Core.Exceptions.DataTier;
 using BetterModules.Core.Web.Mvc.Commands;
 
 using NHibernate.Linq;
+using NHibernate.Util;
 
 namespace BetterCms.Module.Pages.Command.Content.SortPageContent
 {

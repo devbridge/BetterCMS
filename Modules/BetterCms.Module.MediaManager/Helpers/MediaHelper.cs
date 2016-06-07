@@ -35,6 +35,7 @@ using BetterCms.Module.MediaManager.Models;
 using BetterModules.Core.DataAccess;
 
 using NHibernate.Linq;
+using NHibernate.Util;
 
 namespace BetterCms.Module.MediaManager.Helpers
 {

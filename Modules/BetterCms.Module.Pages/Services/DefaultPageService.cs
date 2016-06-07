@@ -58,6 +58,7 @@ using BetterModules.Core.Web.Mvc;
 
 using NHibernate.Linq;
 using NHibernate.Proxy;
+using NHibernate.Util;
 
 using Page = BetterCms.Module.Pages.Models.PageProperties;
 using RootPage = BetterCms.Module.Root.Models.Page;

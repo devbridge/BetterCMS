@@ -66,7 +66,7 @@ namespace BetterCms.Core.Environment.ApplicationStart
 
             try
             {
-                logger = LogManager.GetCurrentClassLogger();
+                logger = LogManager.GetLogger(typeof(BetterCmsEntrypoint));
                 logger.Info("Starting Better CMS...");
             }
             catch (Exception ex)

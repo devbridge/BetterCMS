@@ -39,6 +39,7 @@ using BetterModules.Core.DataAccess.DataContext;
 using BetterModules.Core.Exceptions.DataTier;
 
 using NHibernate.Linq;
+using NHibernate.Util;
 
 namespace BetterCms.Module.Pages.Services
 {

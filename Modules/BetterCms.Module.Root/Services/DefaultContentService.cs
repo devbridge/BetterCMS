@@ -26,7 +26,6 @@
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text.RegularExpressions;
@@ -47,6 +46,7 @@ using BetterCms.Module.Root.Mvc.Helpers;
 using BetterModules.Core.Exceptions.DataTier;
 
 using NHibernate.Linq;
+using NHibernate.Util;
 
 namespace BetterCms.Module.Root.Services
 {

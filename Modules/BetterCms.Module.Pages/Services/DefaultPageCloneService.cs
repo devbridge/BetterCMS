@@ -44,6 +44,7 @@ using BetterCms.Module.Root.Mvc;
 using BetterCms.Module.Root.Mvc.Helpers;
 
 using NHibernate.Linq;
+using NHibernate.Util;
 
 namespace BetterCms.Module.Pages.Services
 {

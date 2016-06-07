@@ -44,6 +44,7 @@ using BetterCms.Module.Root.ViewModels.Content;
 using HtmlAgilityPack;
 
 using NHibernate.Linq;
+using NHibernate.Util;
 
 namespace BetterCms.Module.Root.Mvc.PageHtmlRenderer
 {
