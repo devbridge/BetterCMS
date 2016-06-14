@@ -294,6 +294,7 @@
     <Folder Include="file\bcms-media\scripts\" />
     <Folder Include="file\bcms-pages\scripts\" />
     <Folder Include="file\bcms-root\scripts\" />
+    <Folder Include="Properties\PublishProfiles\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />
@@ -461,13 +462,9 @@
     <Content Include="Views\Widgets\MyFileUploadWidget.cshtml" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Properties\PublishProfiles\bcms-sandbox.pubxml" />
     <Content Include="Views\Widgets\ApiTestWidget.cshtml" />
     <Content Include="Views\Widgets\ApiTestWidgetInvoker.cshtml" />
     <Content Include="Views\Shared\Layouts\MasterLayout.cshtml" />
-    <None Include="Properties\PublishProfiles\Local.pubxml" />
-    <None Include="Properties\PublishProfiles\mtracker-web - Web Deploy.pubxml" />
-    <None Include="Properties\PublishProfiles\Web.pubxml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="..\..\licensing.licenseheader" />
