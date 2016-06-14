@@ -34,6 +34,10 @@ namespace BetterCms.Module.Pages.Exceptions
 {
     public class DraftNotFoundException : ConcurrentDataException
     {
+        public DraftNotFoundException()
+        {
+        }
+
         public DraftNotFoundException(string message)
             : base(message)
         {

@@ -34,6 +34,10 @@ namespace BetterCms.Module.Newsletter.Exceptions
     [Serializable]
     public class UniqueSubscriberException : ValidationException
     {
+        public UniqueSubscriberException()
+        {
+        }
+
         public UniqueSubscriberException(Func<string> resource, string message)
             : base(resource, message)
         {

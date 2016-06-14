@@ -38,6 +38,13 @@ namespace BetterCms.Core.Exceptions.Security
         /// <summary>
         /// Initializes a new instance of the <see cref="InvalidCypherTextException"/> class.
         /// </summary>
+        public InvalidCypherTextException()
+        {
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="InvalidCypherTextException"/> class.
+        /// </summary>
         /// <param name="message">The message.</param>
         public InvalidCypherTextException(string message)
             : base(message)

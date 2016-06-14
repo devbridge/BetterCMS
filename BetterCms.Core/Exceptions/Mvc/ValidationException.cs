@@ -38,6 +38,13 @@ namespace BetterCms.Core.Exceptions.Mvc
         /// <summary>
         /// Initializes a new instance of the <see cref="ValidationException" /> class.
         /// </summary>
+        public ValidationException()
+        {
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="ValidationException" /> class.
+        /// </summary>
         /// <param name="resource">A function to retrieve a globalized resource associated with this exception.</param>
         /// <param name="message">The exception message.</param>
         public ValidationException(Func<string> resource, string message)

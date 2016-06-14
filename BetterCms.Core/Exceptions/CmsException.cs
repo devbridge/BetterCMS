@@ -40,6 +40,13 @@ namespace BetterCms.Core.Exceptions
         /// <summary>
         /// Initializes a new instance of the <see cref="CmsException" /> class.
         /// </summary>
+        public CmsException()
+        {
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="CmsException" /> class.
+        /// </summary>
         /// <param name="message">The message.</param>
         public CmsException(string message) : base(message)
         {

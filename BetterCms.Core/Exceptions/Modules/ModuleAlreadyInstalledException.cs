@@ -32,6 +32,10 @@ namespace BetterCms.Core.Exceptions.Modules
     [Serializable]
     public class ModuleAlreadyInstalledException : ModuleException
     {
+        public ModuleAlreadyInstalledException()
+        {
+        }
+
         public ModuleAlreadyInstalledException(string message) : base(message)
         {
         }

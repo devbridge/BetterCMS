@@ -32,6 +32,10 @@ namespace BetterCms.Core.Exceptions.Modules
     [Serializable]
     public class ModuleManagerNullException : ModuleException
     {
+        public ModuleManagerNullException()
+        {
+        }
+
         public ModuleManagerNullException(string message) : base(message)
         {
         }
