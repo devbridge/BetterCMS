@@ -35,6 +35,13 @@ namespace BetterCms.Core.Exceptions.Mvc
         /// <summary>
         /// Initializes a new instance of the <see cref="ConfirmationRequestException" /> class.
         /// </summary>
+        public ConfirmationRequestException()
+        {
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="ConfirmationRequestException" /> class.
+        /// </summary>
         /// <param name="resource">A function to retrieve a globalized resource associated with this exception.</param>
         /// <param name="message">The exception message.</param>
         public ConfirmationRequestException(Func<string> resource, string message)

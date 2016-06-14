@@ -32,6 +32,10 @@ namespace BetterCms.Core.Exceptions.Modules
     [Serializable]
     public class ModuleException : CmsException
     {
+        public ModuleException()
+        {
+        }
+
         public ModuleException(string message) : base(message)
         {
         }

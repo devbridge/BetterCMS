@@ -38,6 +38,13 @@ namespace BetterCms.Core.Exceptions.Api
         /// <summary>
         /// Initializes a new instance of the <see cref="CmsApiException" /> class.
         /// </summary>
+        public CmsApiException()
+        {
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="CmsApiException" /> class.
+        /// </summary>
         /// <param name="message">The message.</param>
         public CmsApiException(string message)
             : base(message)

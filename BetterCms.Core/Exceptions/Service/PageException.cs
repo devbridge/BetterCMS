@@ -32,6 +32,10 @@ namespace BetterCms.Core.Exceptions.Service
     [Serializable]
     public class PageException : CmsException
     {
+        public PageException()
+        {
+        }
+
         public PageException(string message) : base(message)
         {
         }

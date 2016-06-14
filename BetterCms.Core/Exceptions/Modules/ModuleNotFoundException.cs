@@ -32,6 +32,10 @@ namespace BetterCms.Core.Exceptions.Modules
     [Serializable]
     public class ModuleNotFoundException : ModuleException
     {
+        public ModuleNotFoundException()
+        {
+        }
+
         public ModuleNotFoundException(string message)
             : base(message)
         {
