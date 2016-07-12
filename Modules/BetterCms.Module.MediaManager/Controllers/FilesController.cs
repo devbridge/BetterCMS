@@ -41,7 +41,6 @@ using BetterCms.Module.MediaManager.ViewModels.File;
 using BetterCms.Module.MediaManager.ViewModels.MediaManager;
 
 using BetterCms.Module.Root;
-using BetterCms.Module.Root.Models;
 using BetterCms.Module.Root.Mvc;
 
 using BetterModules.Core.Web.Models;

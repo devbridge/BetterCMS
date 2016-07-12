@@ -89,7 +89,6 @@ namespace BetterCms.Core
         /// Constructs the host context.
         /// </summary>
         /// <returns>Constructed host context.</returns>
-        [Obsolete("Explicit host registration is deprecated and not required anymore.")]
         public static ICmsHost RegisterHost()
         {
             ICmsHost cmsHost;

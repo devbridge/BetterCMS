@@ -48,8 +48,10 @@ namespace BetterCms.Sandbox.Mvc4
 
         private static List<string> usersToForceRelogin = new List<string>();
 
+        private static ICmsHost cmsHost;
         protected void Application_Start()
         {
+            cmsHost = CmsContext.RegisterHost();
             AreaRegistration.RegisterAllAreas();
 
             FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);
@@ -70,6 +72,7 @@ namespace BetterCms.Sandbox.Mvc4
             AddMediaManagerEvents();
             AddUsersEvents();
             AddNewsletterEvents();
+            cmsHost.OnApplicationStart(this);
         }
 
         private void AddContentEvents()
@@ -269,6 +272,27 @@ namespace BetterCms.Sandbox.Mvc4
 
                 Response.Redirect(FormsAuthentication.LoginUrl);
             }
+            cmsHost.OnAuthenticateRequest(this);
+        }
+
+        protected void Application_BeginRequest()
+        {
+            cmsHost.OnBeginRequest(this);
+        }
+
+        protected void Application_EndRequest()
+        {
+            cmsHost.OnEndRequest(this);
+        }
+
+        protected void Application_Error()
+        {
+            cmsHost.OnApplicationError(this);
+        }
+
+        protected void Application_End()
+        {
+            cmsHost.OnApplicationEnd(this);
         }
     }
 }

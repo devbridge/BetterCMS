@@ -32,11 +32,15 @@ using BetterCms.Core.Environment.Host;
 using BetterModules.Core.Web.Environment.Application;
 using BetterModules.Core.Web.Environment.Host;
 
-[assembly: WebApplicationHost(typeof(DefaultCmsAutoHost), Order = 100)]
+//[assembly: WebApplicationHost(typeof(DefaultCmsAutoHost), Order = 100)]
 namespace BetterCms.Core.Environment.Host
 {
     public class DefaultCmsAutoHost : DefaultWebApplicationAutoHost
     {
+        /// <summary>
+        /// Called when authenticating request.
+        /// </summary>
+        /// <param name="application">The application.</param>
         public override void OnAuthenticateRequest(HttpApplication application)
         {
             // Impersonates user as anonymous, if requested
