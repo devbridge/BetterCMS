@@ -19,6 +19,13 @@ namespace BetterCms.Module.Pages.Services
         /// <param name="url">The URL.</param>
         /// <returns>true, if url is valid for internal use (without http:// and other prefixes and any suffixes, such as ?# etc.)</returns>
         bool ValidateInternalUrl(string url);
+
+        /// <summary>
+        /// Validates the internal URL with query string.
+        /// </summary>
+        /// <param name="url">The URL.</param>
+        /// <returns>true, if url is valid for internal use</returns>
+        bool ValidateInternalUrlWithQueryString(string url);
         
         /// <summary>
         /// Validates the external URL.
@@ -42,5 +49,7 @@ namespace BetterCms.Module.Pages.Services
         /// <param name="url">The URL.</param>
         /// <returns>Fixed url</returns>
         string FixUrl(string url);
+
+        string FixUrlFront(string url);
     }
 }

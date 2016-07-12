@@ -1374,4 +1374,7 @@
   <data name="EditPageContent_AdvancedOptionsTab_Title" xml:space="preserve">
     <value>Javascript &amp; CSS</value>
   </data>
+  <data name="Redirect_InvalidUrl_Message" xml:space="preserve">
+    <value>The URL is invalid. It either contains restricted symbols or is not properly formed </value>
+  </data>
 </root>

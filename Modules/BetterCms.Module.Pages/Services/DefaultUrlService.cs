@@ -188,7 +188,17 @@ namespace BetterCms.Module.Pages.Services
         {
             return Regex.IsMatch(url, PagesConstants.InternalUrlRegularExpression);
         }
-        
+
+        /// <summary>
+        /// Validates the internal URL with query string.
+        /// </summary>
+        /// <param name="url">The URL.</param>
+        /// <returns>true, if url is valid for internal use</returns>
+        public bool ValidateInternalUrlWithQueryString(string url)
+        {
+            return Regex.IsMatch(url, PagesConstants.InternalUrlWithQueryStringRegularExpression) && Uri.IsWellFormedUriString(url, UriKind.Relative);
+        }
+
         /// <summary>
         /// Validates the internal URL.
         /// </summary>
@@ -234,6 +244,22 @@ namespace BetterCms.Module.Pages.Services
                             url = url.TrimEnd('/');
                         }
                         break;
+                }
+            }
+            return url;
+        }
+
+        public string FixUrlFront(string url)
+        {
+            if (!string.IsNullOrWhiteSpace(url))
+            {
+                if (url.Trim() == "/")
+                {
+                    return url;
+                }
+                if (!url.StartsWith("/", StringComparison.Ordinal))
+                {
+                    url = string.Concat("/", url);
                 }
             }
             return url;

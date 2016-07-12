@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 
 using BetterCms.Module.Pages.Models;
 using BetterCms.Module.Pages.ViewModels.SiteSettings;
@@ -67,5 +68,12 @@ namespace BetterCms.Module.Pages.Services
         /// <param name="version">The version.</param>
         /// <returns>Deletion result</returns>
         bool DeleteRedirect(Guid id, int version);
+
+
+        /// <summary>
+        /// Gets all redirects.
+        /// </summary>
+        /// <returns>List of redirects</returns>
+        IList<Redirect> GetAllRedirects();
     }
 }
