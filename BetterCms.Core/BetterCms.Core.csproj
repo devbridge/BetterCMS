@@ -58,12 +58,12 @@
     <Reference Include="Autofac.Integration.Mvc">
       <HintPath>..\packages\Autofac.Mvc4.2.6.2.859\lib\NET40\Autofac.Integration.Mvc.dll</HintPath>
     </Reference>
-    <Reference Include="BetterModules.Core, Version=1.0.0.32, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\BetterModules.Core.1.0.0\lib\net40\BetterModules.Core.dll</HintPath>
+    <Reference Include="BetterModules.Core, Version=1.1.0.37, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\BetterModules.Core.1.1.0\lib\net40\BetterModules.Core.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="BetterModules.Core.Web, Version=1.0.0.32, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\BetterModules.Core.Web.1.0.0\lib\net40\BetterModules.Core.Web.dll</HintPath>
+    <Reference Include="BetterModules.Core.Web, Version=1.1.0.37, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\BetterModules.Core.Web.1.1.0\lib\net40\BetterModules.Core.Web.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="Common.Logging, Version=2.1.2.0, Culture=neutral, PublicKeyToken=af08829b84f0328e, processorArchitecture=MSIL">
@@ -115,7 +115,7 @@
       <HintPath>..\packages\Nuget.Core.2.8.5\lib\net40-Client\NuGet.Core.dll</HintPath>
     </Reference>
     <Reference Include="RazorGenerator.Mvc, Version=2.0.0.0, Culture=neutral, PublicKeyToken=7b26dc2a43f6a0d4, processorArchitecture=MSIL">
-      <HintPath>..\packages\BetterModules.Core.Web.1.0.0\lib\net40\RazorGenerator.Mvc.dll</HintPath>
+      <HintPath>..\packages\BetterModules.Core.Web.1.1.0\lib\net40\RazorGenerator.Mvc.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="System" />
@@ -231,6 +231,7 @@
     <Compile Include="Mvc\Attributes\IgnoreAutoRouteAttribute.cs" />
     <Compile Include="Security\SpecialIdentities.cs" />
     <Compile Include="Security\UserRole.cs" />
+    <Compile Include="Services\IRedirectControl.cs" />
     <Compile Include="Services\Storage\FtpStorageService.cs" />
     <Compile Include="Services\Storage\DownloadResponse.cs" />
     <Compile Include="Services\Storage\FileSystemStorageService.cs" />

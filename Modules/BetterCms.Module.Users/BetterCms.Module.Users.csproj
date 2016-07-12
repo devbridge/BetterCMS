@@ -61,12 +61,12 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\packages\Autofac.3.1.5\lib\net40\Autofac.dll</HintPath>
     </Reference>
-    <Reference Include="BetterModules.Core, Version=1.0.0.32, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\BetterModules.Core.1.0.0\lib\net40\BetterModules.Core.dll</HintPath>
+    <Reference Include="BetterModules.Core, Version=1.1.0.37, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\BetterModules.Core.1.1.0\lib\net40\BetterModules.Core.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="BetterModules.Core.Web, Version=1.0.0.32, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\BetterModules.Core.Web.1.0.0\lib\net40\BetterModules.Core.Web.dll</HintPath>
+    <Reference Include="BetterModules.Core.Web, Version=1.1.0.37, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\BetterModules.Core.Web.1.1.0\lib\net40\BetterModules.Core.Web.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="Common.Logging, Version=2.1.2.0, Culture=neutral, PublicKeyToken=af08829b84f0328e, processorArchitecture=MSIL">
@@ -101,7 +101,7 @@
       <HintPath>..\..\packages\NHibernate.3.3.3.4001\lib\Net35\NHibernate.dll</HintPath>
     </Reference>
     <Reference Include="RazorGenerator.Mvc, Version=2.0.0.0, Culture=neutral, PublicKeyToken=7b26dc2a43f6a0d4, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\BetterModules.Core.Web.1.0.0\lib\net40\RazorGenerator.Mvc.dll</HintPath>
+      <HintPath>..\..\packages\BetterModules.Core.Web.1.1.0\lib\net40\RazorGenerator.Mvc.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="System.Data.DataSetExtensions" />
