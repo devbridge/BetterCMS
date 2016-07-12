@@ -194,7 +194,7 @@ namespace BetterCms.Module.Pages.Services
         /// Gets the list with all redirects.
         /// </summary>
         /// <returns>The list with all redirectss</returns>
-        private IList<Redirect> GetAllRedirects()
+        public IList<Redirect> GetAllRedirects()
         {
             var query = unitOfWork
                 .Session
@@ -227,26 +227,46 @@ namespace BetterCms.Module.Pages.Services
 
         public Redirect SaveRedirect(ViewModels.SiteSettings.SiteSettingRedirectViewModel model, bool createIfNotExists = false)
         {
-            var isRedirectInternal = urlService.ValidateInternalUrl(model.RedirectUrl);
-            if (!isRedirectInternal && urlService.ValidateInternalUrl(urlService.FixUrl(model.RedirectUrl)))
+            bool isDestinationInternal;
+            bool isDestinationInternalWithQueryString = false;
+            isDestinationInternal = urlService.ValidateInternalUrl(model.RedirectUrl);
+            if (!isDestinationInternal && urlService.ValidateInternalUrl(urlService.FixUrl(model.RedirectUrl)))
             {
-                isRedirectInternal = true;
+                isDestinationInternal = true;
             }
 
-            model.PageUrl = urlService.FixUrl(model.PageUrl);
-            if (isRedirectInternal)
+            if (urlService.ValidateInternalUrlWithQueryString(model.RedirectUrl))
             {
-                model.RedirectUrl = urlService.FixUrl(model.RedirectUrl);
+                isDestinationInternalWithQueryString = true;
             }
 
-            // Validate request
-            if (!urlService.ValidateInternalUrl(model.PageUrl))
+            // Validate redirect source field
+            var isSourceUrlInternal = urlService.ValidateInternalUrl(model.PageUrl);
+            var isSourceUrlInternalWithQueryString = urlService.ValidateInternalUrlWithQueryString(model.PageUrl);
+            if (isSourceUrlInternal)
+            {
+                model.PageUrl = urlService.FixUrl(model.PageUrl);
+            }
+            else if (isSourceUrlInternalWithQueryString)
+            {
+                model.PageUrl = urlService.FixUrlFront(model.PageUrl);
+            }
+            else
             {
                 var message = PagesGlobalization.SaveRedirect_InvalidPageUrl_Message;
                 var logMessage = string.Format("Invalid page url {0}.", model.PageUrl);
                 throw new ValidationException(() => message, logMessage);
             }
-            if (!urlService.ValidateExternalUrl(model.RedirectUrl))
+
+            if (isDestinationInternal)
+            {
+                model.RedirectUrl = urlService.FixUrl(model.RedirectUrl);
+            }
+            else if (isDestinationInternalWithQueryString)
+            {
+                model.RedirectUrl = urlService.FixUrlFront(model.RedirectUrl);
+            }
+            else if (!urlService.ValidateExternalUrl(model.RedirectUrl))
             {
                 var message = PagesGlobalization.SaveRedirect_InvalidRedirectUrl_Message;
                 var logMessage = string.Format("Invalid redirect url {0}.", model.RedirectUrl);
@@ -260,7 +280,7 @@ namespace BetterCms.Module.Pages.Services
                 var logMessage = string.Format("{0}. URL: {1}.", patternsValidationMessage, model.PageUrl);
                 throw new ValidationException(() => patternsValidationMessage, logMessage);
             }
-            if (isRedirectInternal && !urlService.ValidateUrlPatterns(model.RedirectUrl, out patternsValidationMessage, PagesGlobalization.SaveRedirect_RedirectUrl_Name))
+            if ((isDestinationInternal || isDestinationInternalWithQueryString) && !urlService.ValidateUrlPatterns(model.RedirectUrl, out patternsValidationMessage, PagesGlobalization.SaveRedirect_RedirectUrl_Name))
             {
                 var logMessage = string.Format("{0}. URL: {1}.", patternsValidationMessage, model.PageUrl);
                 throw new ValidationException(() => patternsValidationMessage, logMessage);

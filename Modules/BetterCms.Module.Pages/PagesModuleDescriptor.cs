@@ -35,7 +35,7 @@ using BetterCms.Core.DataContracts;
 using BetterCms.Core.DataContracts.Enums;
 using BetterCms.Core.Modules;
 using BetterCms.Core.Modules.Projections;
-
+using BetterCms.Core.Services;
 using BetterCms.Events;
 
 using BetterCms.Module.Pages.Accessors;
@@ -57,6 +57,7 @@ using BetterCms.Module.Root.Services;
 using BetterCms.Module.Root.ViewModels.Cms;
 
 using BetterModules.Core.Modules.Registration;
+using BetterModules.Events;
 
 namespace BetterCms.Module.Pages
 {
@@ -150,6 +151,7 @@ namespace BetterCms.Module.Pages
             CategoryAccessors.Register<PageCategoryAccessor>();
 
             RootEvents.Instance.PageRetrieved += Events_PageRetrieved;
+//            BetterModules.Events.WebCoreEvents.Instance.
 
             RegisterRenderingPageProperties();
         }
@@ -255,6 +257,7 @@ namespace BetterCms.Module.Pages
             containerBuilder.RegisterType<DefaultDraftService>().AsImplementedInterfaces().InstancePerLifetimeScope();
             containerBuilder.RegisterType<DefaultPageListService>().As<IPageListService>().InstancePerLifetimeScope();
             containerBuilder.RegisterType<DefaultUntranslatedPageListService>().As<IUntranslatedPageListService>().InstancePerLifetimeScope();
+            containerBuilder.RegisterType<DefaultRedirectControl>().As<IRedirectControl>().InstancePerLifetimeScope();
 
             // Registering root module, because root module register the last one, and this one should be before users module
             containerBuilder.RegisterType<EmptyUserProfileUrlResolver>().As<IUserProfileUrlResolver>().InstancePerLifetimeScope();

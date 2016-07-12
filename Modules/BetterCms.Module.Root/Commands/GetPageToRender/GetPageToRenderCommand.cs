@@ -97,7 +97,7 @@ namespace BetterCms.Module.Root.Commands.GetPageToRender
             var page = GetPage(request);
             if (page == null)
             {
-                return FindRedirect(request.PageUrl);
+                return null;
             }
 
             // Load page contents

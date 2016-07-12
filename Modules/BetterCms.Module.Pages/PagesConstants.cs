@@ -33,7 +33,12 @@ namespace BetterCms.Module.Pages
         /// The intenal URL regular expression (used in page naming)
         /// </summary>
         // NOTE: After changing this regexp please run BetterCms.Test.Module.Pages.ServiceTests.UrlServiceTests test.
-        public const string InternalUrlRegularExpression = @"^\/?([^\\:?#[\]@!$&'()*+,;=""<> \/%]{1,260}\/)*([^\\:?#[\]@!$&'()*+,;=""<> \/%]{1,260})?$";
+        public const string InternalUrlRegularExpression = @"^\/?([^\\:?#[\]@!$&'()*+.,;=""<> \/%]{1,260}\/)*([^\\:?#[\]@!$&'()*+.,;=""<> \/%]{1,260})?$";
+
+        /// <summary>
+        /// The internal URL regular expression used for redirects
+        /// </summary>
+        public const string InternalUrlWithQueryStringRegularExpression = @"^\/?([^\\:?#[\]@!$&'()*+.,;=""<> \/%]{1,260}\/)*([^\\:?#[\]@!$&'()*+.,;=""<> \/%]{1,260})?((\?|#).*)?$";
 
         /// <summary>
         /// The external URL regular expression (used in sitemaps, external URLs)

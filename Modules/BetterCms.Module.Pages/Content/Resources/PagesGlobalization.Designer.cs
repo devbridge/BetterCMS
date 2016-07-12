@@ -2689,6 +2689,15 @@ namespace BetterCms.Module.Pages.Content.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to The URL is invalid. It either contains restricted symbols or is not properly formed .
+        /// </summary>
+        public static string Redirect_InvalidUrl_Message {
+            get {
+                return ResourceManager.GetString("Redirect_InvalidUrl_Message", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Redirect url is invalid. Link cannot contain characters: &lt;,&gt;,*,&amp;,?..
         /// </summary>
         public static string RedirectUrl_InvalidMessage {

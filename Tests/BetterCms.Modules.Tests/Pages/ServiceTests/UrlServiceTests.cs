@@ -29,6 +29,8 @@ using System.Linq;
 
 using BetterCms.Module.Pages.Services;
 
+using NHibernate.Linq;
+
 using NUnit.Framework;
 
 namespace BetterCms.Test.Module.Pages.ServiceTests
@@ -83,6 +85,23 @@ namespace BetterCms.Test.Module.Pages.ServiceTests
                     @"http://goo&gle.com/?page=1#hash"
                 };
 
+        private static string[] validInternalUrlsWithQueryString =
+                {
+                    @"a/b?a=1",
+                    @"a/b/?a=1",
+                    @"a/b?a=1&b=2",
+                    @"a/b?a=asd%20%2Bf",
+                    @"/a/b?a=1&b=2"
+                };
+
+        private static string[] invalidInternalUrlsWithQueryString =
+                {
+                    @"a.b?a=1",
+                    @"a.b",
+                    @"/a.b",
+                    @"www.<>?*$#!#@%#^$%(*^&()_+.com"
+                };
+
         [Test]
         public void Should_Allow_Internal_Urls()
         {
@@ -114,6 +133,20 @@ namespace BetterCms.Test.Module.Pages.ServiceTests
             var service = new DefaultUrlService(null, null);
 
             invalidExternalUrls.ToList().ForEach(url => Assert.IsFalse(service.ValidateExternalUrl(url), string.Format("URL must be invalid: '{0}'", url)));
+        }
+
+        [Test]
+        public void Should_Allow_InternalUrlsWithQueryString()
+        {
+            var service = new DefaultUrlService(null, null);
+            validInternalUrlsWithQueryString.ForEach(url => Assert.IsTrue(service.ValidateInternalUrlWithQueryString(url), string.Format("URL must be valid: '{0}'",  url)));
+        }
+
+        [Test]
+        public void Should_Deny_InternalUrlsWithQueryString()
+        {
+            var service = new DefaultUrlService(null, null);
+            invalidInternalUrlsWithQueryString.ForEach(url => Assert.IsFalse(service.ValidateInternalUrlWithQueryString(url), string.Format("URL must be invalid: '{0}'", url)));
         }
     }
 }

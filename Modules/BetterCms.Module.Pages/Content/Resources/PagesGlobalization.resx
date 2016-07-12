@@ -1437,4 +1437,7 @@
   <data name="SiteSettings_Pages_Sort_ZA" xml:space="preserve">
     <value>[Z-A]</value>
   </data>
+  <data name="Redirect_InvalidUrl_Message" xml:space="preserve">
+    <value>The URL is invalid. It either contains restricted symbols or is not properly formed </value>
+  </data>
 </root>

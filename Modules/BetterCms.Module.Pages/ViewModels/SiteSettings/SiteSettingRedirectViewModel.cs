@@ -65,7 +65,7 @@ namespace BetterCms.Module.Pages.ViewModels.SiteSettings
         [AllowHtml]
         [DisallowHtml(ErrorMessageResourceType = typeof(RootGlobalization), ErrorMessageResourceName = "Validation_DisallowHtml_PageUrl_Message")]
         [Required(AllowEmptyStrings = false, ErrorMessageResourceType = typeof(RootGlobalization), ErrorMessageResourceName = "Validation_RequiredAttribute_Message")]
-        [RegularExpression(PagesConstants.InternalUrlRegularExpression, ErrorMessageResourceType = typeof(PagesGlobalization), ErrorMessageResourceName = "PageProperties_PageUrl_InvalidMessage")]
+        [RegularExpression(PagesConstants.InternalUrlWithQueryStringRegularExpression, ErrorMessageResourceType = typeof(PagesGlobalization), ErrorMessageResourceName = "Redirect_InvalidUrl_Message")]
         [StringLength(MaxLength.Url, ErrorMessageResourceType = typeof(RootGlobalization), ErrorMessageResourceName = "Validation_StringLengthAttribute_Message")]
         public string PageUrl { get; set; }
 
@@ -78,7 +78,7 @@ namespace BetterCms.Module.Pages.ViewModels.SiteSettings
         [AllowHtml]
         [DisallowHtml(ErrorMessageResourceType = typeof(RootGlobalization), ErrorMessageResourceName = "Validation_DisallowHtml_RedirectUrl_Message")]
         [Required(AllowEmptyStrings = false, ErrorMessageResourceType = typeof(RootGlobalization), ErrorMessageResourceName = "Validation_RequiredAttribute_Message")]
-        [RegularExpression(PagesConstants.ExternalUrlRegularExpression, ErrorMessageResourceType = typeof(PagesGlobalization), ErrorMessageResourceName = "RedirectUrl_InvalidMessage")]
+        [RegularExpression(PagesConstants.ExternalUrlRegularExpression, ErrorMessageResourceType = typeof(PagesGlobalization), ErrorMessageResourceName = "Redirect_InvalidUrl_Message")]
         [StringLength(MaxLength.Url, ErrorMessageResourceType = typeof(RootGlobalization), ErrorMessageResourceName = "Validation_StringLengthAttribute_Message")]
         public string RedirectUrl { get; set; }
 
