@@ -85,9 +85,9 @@ namespace BetterCms.Module.MediaManager.Helpers
 
         public static ImageType GetImageType(string extension)
         {
-            if (extension != null)
+            if (!string.IsNullOrEmpty(extension))
             {
-                extension = extension.Trim('.');
+                extension = extension.Trim('.').ToLowerInvariant();
             }
 
             switch (extension)
