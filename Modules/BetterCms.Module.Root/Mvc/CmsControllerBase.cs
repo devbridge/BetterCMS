@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Security.Principal;
+using System.Text;
 using System.Web;
 using System.Web.Mvc;
 using System.Web.Security;
@@ -314,6 +315,24 @@ namespace BetterCms.Module.Root.Mvc
         protected TCommand GetCommand<TCommand>() where TCommand : ICommandBase
         {
             return CommandResolver.ResolveCommand<TCommand>(this);
+        }
+
+        /// <summary>
+        /// Creates a <see cref="T:System.Web.Mvc.JsonResult" /> object that serializes the specified object to JavaScript Object Notation (JSON) format using the content type, content encoding, and the JSON request behavior.
+        /// </summary>
+        /// <returns>
+        /// The result object that serializes the specified object to JSON format.
+        /// </returns>
+        protected override JsonResult Json(object data, string contentType, Encoding contentEncoding, JsonRequestBehavior behavior)
+        {
+            return new JsonResult()
+            {
+                Data = data,
+                ContentType = contentType,
+                ContentEncoding = contentEncoding,
+                JsonRequestBehavior = behavior,
+                MaxJsonLength = int.MaxValue
+            };
         }
     }
 }
