@@ -86,10 +86,12 @@
     <div class="bcms-plain-text">@NavigationGlobalization.Sitemap_EditDialog_PageLink_Header</div>
     <div class="bcms-sidebar-search">
         <input type="text" class="bcms-editor-field-box" placeholder="@NavigationGlobalization.Sitemap_EditDialog_AddPageLink_SearchPlaceHolder"
-               data-bind="hasfocus: hasfocus, value: searchQuery, valueUpdate: 'afterkeydown', enterPress: searchForPageLinks" />
+               data-bind="hasfocus: hasfocus, value: searchQuery, valueUpdate: 'afterkeydown', enterPress: searchForPageLinks"/>
         <div class="bcms-btn-search" data-bind="click: searchForPageLinks">@NavigationGlobalization.Sitemap_EditDialog_AddPageLink_SearchButton</div>
     </div>
     <div class="bcms-addnode-placement-holder@(Model.IsReadOnly ? "-readonly" : string.Empty)" data-bind="template: { name: 'bcms-navigation-pagelink-template', foreach: pageLinks }"></div>
+    <div class="bcms-placement-node bcms-load-more-btn" data-bind="click: loadMorePageLinks, visible: loadMoreVisible">@NavigationGlobalization.Sitemap_PageLinks_LoadMore</div>
+    <div class="bcms-placement-node bcms-loader bcms-load-spinner-item" data-bind="visible: loadMoreSpinnerVisible" />
 </script>
 <script type="text/html" id="bcms-navigation-pagelink-template">
     <!-- ko if: isVisible() || isCustom() -->

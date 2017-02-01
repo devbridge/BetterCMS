@@ -1,11 +1,13 @@
 ﻿using System;
 
+using BetterCms.Module.Root.Mvc.Grids;
+
 namespace BetterCms.Module.Pages.ViewModels.Sitemap
 {
     /// <summary>
     /// View model for page links data.
     /// </summary>
-    public class PageLinkViewModel
+    public class PageLinkViewModel : IEditableGridItem
     {
         /// <summary>
         /// Gets or sets the title.
@@ -30,6 +32,14 @@ namespace BetterCms.Module.Pages.ViewModels.Sitemap
         /// The identifier.
         /// </value>
         public Guid Id { get; set; }
+
+        /// <summary>
+        /// Gets or sets the entity version.
+        /// </summary>
+        /// <value>
+        /// The entity version.
+        /// </value>
+        public int Version { get; set; }
 
         /// <summary>
         /// Gets or sets the language identifier.

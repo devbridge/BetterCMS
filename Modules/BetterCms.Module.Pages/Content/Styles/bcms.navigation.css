@@ -204,6 +204,23 @@
         text-decoration: none;
     }
 
+.bcms-load-more-btn {
+    height: 17px;
+    cursor: pointer;
+    text-align: center;
+}
+    .bcms-load-more-btn:hover {
+        border-color: #0383df;
+    }
+.bcms-load-spinner-item {
+    height: 17px !important;
+    position: static !important;
+    left: 0 !important;
+    top: 0 !important;
+    background-size: 35px 35px !important;
+    margin: 0 !important;
+    border: 0 !important;
+}
 .bcms-placement-node-drag {
     border: 1px dashed #bdbdbd;
     background: #effcfe;

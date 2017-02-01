@@ -1,6 +1,8 @@
 ﻿using System.Collections.Generic;
 using System.Globalization;
 
+using BetterCms.Module.Root.ViewModels.SiteSettings;
+
 namespace BetterCms.Module.Pages.ViewModels.Sitemap
 {
     /// <summary>
@@ -14,7 +16,7 @@ namespace BetterCms.Module.Pages.ViewModels.Sitemap
         /// <value>
         /// The page links.
         /// </value>
-        public IList<PageLinkViewModel> PageLinks { get; set; }
+        public SearchableGridViewModel<PageLinkViewModel> PageLinks { get; set; }
 
         /// <summary>
         /// Gets or sets the sitemap.
@@ -34,7 +36,7 @@ namespace BetterCms.Module.Pages.ViewModels.Sitemap
         {
             return string.Format(
                 "PageLinks count: {0}, RootNodes count: {1}",
-                PageLinks != null ? PageLinks.Count.ToString(CultureInfo.InvariantCulture) : string.Empty,
+                PageLinks != null ? PageLinks.TotalCount.ToString(CultureInfo.InvariantCulture) : string.Empty,
                 Sitemap != null && Sitemap.RootNodes != null ? Sitemap.RootNodes.Count.ToString(CultureInfo.InvariantCulture) : string.Empty);
         }
     }

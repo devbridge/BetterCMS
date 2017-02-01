@@ -59,7 +59,8 @@ bettercms.define('bcms.pages.sitemap', ['bcms.jquery', 'bcms', 'bcms.modal', 'bc
                 sitemapHistoryDialogUrl: null,
                 loadSitemapVersionPreviewUrl: null,
                 restoreSitemapVersionUrl: null,
-                getPageTranslations: null
+                getPageTranslations: null,
+                getPageLinks: null
             },
             globalization = {
                 sitemapCreatorDialogTitle: null,
@@ -428,7 +429,7 @@ bettercms.define('bcms.pages.sitemap', ['bcms.jquery', 'bcms', 'bcms.modal', 'bc
 
                     sitemapModel.parseJsonNodes(content.Data.Sitemap.RootNodes);
                     self.pageLinksModel = new SearchPageLinksViewModel(sitemapModel, dialog.container);
-                    self.pageLinksModel.parseJsonLinks(content.Data.PageLinks);
+                    self.pageLinksModel.parseJsonLinksResponse(content.Data);
                     sitemap.activeMapModel = sitemapModel;
 
                     // Setup settings.
@@ -1524,56 +1525,103 @@ bettercms.define('bcms.pages.sitemap', ['bcms.jquery', 'bcms', 'bcms.modal', 'bc
         */
         function SearchPageLinksViewModel(sitemapViewModel, container) {
             var self = this;
+            var gridOptions = {
+                pageNumber: null,
+                pageSize: null,
+            };
+            self.gridOptions = gridOptions;
             self.searchQuery = ko.observable("");
+
             self.pageLinks = ko.observableArray([]);
+            self.pageLinks.extend({ rateLimit: 50 });
             self.sitemap = sitemapViewModel;
+            self.loadMoreVisible = ko.observable(false);
+            self.loadMoreSpinnerVisible = ko.observable(false);
             self.hasfocus = ko.observable(false);
 
             container.find(selectors.secondTabButton).on('click', function () {
                 self.hasfocus(true);
             });
-
-            self.searchForPageLinks = function () {
-                var showAll = $.trim(self.searchQuery()).length === 0;
-                var pageLinks = self.pageLinks();
-                for (var i = 0; i < pageLinks.length; i++) {
-                    if (showAll) {
-                        pageLinks[i].isVisible(true);
-                    } else {
-                        var link = pageLinks[i],
-                            searchQuery = self.searchQuery().toLowerCase(),
-                            title = link.title().toLowerCase(),
-                            url = link.url().toLowerCase();
-                        link.isVisible(title.indexOf(searchQuery) !== -1 || url.indexOf(searchQuery) !== -1);
-                    }
-                }
-                
-                // IE8 fix
-                var val = self.searchQuery();
-                self.hasfocus(true);
-                self.searchQuery("");
-                self.searchQuery(val);
-            };
             
             // Parse.
-            self.parseJsonLinks = function (jsonLinks) {
-                var pageLinks = [],
-                    customLink = new PageLinkViewModel();
-                
+            self.parseJsonLinksResponse = function (jsonLinksResponse) {
+                var customLink = new PageLinkViewModel();
+
+                self.pageLinks([]);
                 customLink.title(globalization.sitemapEditorDialogCustomLinkTitle);
                 customLink.url('/../');
                 customLink.pageId(defaultIdValue);
                 customLink.isCustom(true);
-                pageLinks.push(customLink);
-                
-                for (var i = 0; i < jsonLinks.length; i++) {
+                self.pageLinks.push(customLink);
+
+                self.updatePageLinks(jsonLinksResponse, self.pageLinks);
+            };
+
+            self.updatePageLinks = function(jsonLinksResponse, pageLinks) {
+                var links = jsonLinksResponse.PageLinks.Items;
+                for (var i = 0; i < links.length; i++) {
                     var link = new PageLinkViewModel();
-                    link.fromJson(jsonLinks[i]);
+                    link.fromJson(links[i]);
                     pageLinks.push(link);
                 }
-                self.pageLinks(pageLinks);
+                self.gridOptions.pageSize = jsonLinksResponse.PageLinks.GridOptions.PageSize;
+                self.gridOptions.pageNumber = jsonLinksResponse.PageLinks.GridOptions.PageNumber;
+                self.gridOptions.totalCount = jsonLinksResponse.PageLinks.GridOptions.TotalCount;
+                self.loadMoreVisible(self.gridOptions.pageSize * self.gridOptions.pageNumber < self.gridOptions.totalCount);
                 self.updateStatusOfLinks();
-            };
+            }
+
+            self.searchForPageLinks = function () {
+                var onSuccess = function (json) {
+                    if (json && json.Success) {
+                        self.parseJsonLinksResponse(json.Data);
+                    }
+                };
+
+                var data = {
+                    searchQuery: self.searchQuery(),
+                    pageSize: self.gridOptions.pageSize
+                }
+
+                self.loadPageLinks(data, onSuccess);
+            }
+
+            self.loadMorePageLinks = function() {
+                var onSuccess = function (json) {
+                    if (json && json.Success) {
+                        self.updatePageLinks(json.Data, self.pageLinks);
+                    }
+                };
+
+                var data = {
+                    pageSize: self.gridOptions.pageSize,
+                    pageNumber: self.gridOptions.pageNumber + 1,
+                    searchQuery: self.searchQuery()
+                }
+
+                self.loadPageLinks(data, onSuccess);
+            }
+
+            self.loadPageLinks = function (data, onSuccess) {
+                var url = links.getPageLinks;
+                $.ajax({
+                    type: 'POST',
+                    cache: false,
+                    url: url,
+                    data: data,
+                    beforeSend: function () {
+                        self.loadMoreVisible(false);
+                        self.loadMoreSpinnerVisible(true);
+                    },
+                    error: function () {
+                        self.loadMoreSpinnerVisible(false);
+                    },
+                    success: function (data, status, response) {
+                        onSuccess(data);
+                        self.loadMoreSpinnerVisible(false);
+                    }
+                });
+            }
             
             self.title = sitemapViewModel.title;
             self.tags = sitemapViewModel.tags;

@@ -23,6 +23,7 @@ using BetterCms.Module.Pages.ViewModels.Sitemap;
 using BetterCms.Module.Root;
 using BetterCms.Module.Root.Models;
 using BetterCms.Module.Root.Mvc;
+using BetterCms.Module.Root.Mvc.Grids.GridOptions;
 using BetterCms.Module.Root.ViewModels.Security;
 
 using Microsoft.Web.Mvc;
@@ -67,7 +68,9 @@ namespace BetterCms.Module.Pages.Controllers
         public ActionResult EditSitemap(string sitemapId)
         {
             var model = GetCommand<GetSitemapCommand>().ExecuteCommand(sitemapId.ToGuidOrDefault());
-            var pageLinks = GetCommand<GetPageLinksCommand>().ExecuteCommand(string.Empty);
+            var pageLinksGridOptions = new SearchableGridOptions();
+            pageLinksGridOptions.SetDefaultPaging();
+            var pageLinks = GetCommand<GetPageLinksCommand>().ExecuteCommand(pageLinksGridOptions);
             var success = model != null & pageLinks != null;
             var view = RenderView("Edit", model);
 
@@ -214,9 +217,10 @@ namespace BetterCms.Module.Pages.Controllers
         /// </summary>
         /// <param name="searchQuery">The search query.</param>
         /// <returns>JSON result.</returns>
-        public ActionResult GetPageLinks(string searchQuery)
+        [HttpPost]
+        public ActionResult GetPageLinks(SearchableGridOptions request)
         {
-            var response = GetCommand<GetPageLinksCommand>().ExecuteCommand(searchQuery);
+            var response = GetCommand<GetPageLinksCommand>().ExecuteCommand(request);
             if (response != null)
             {
                 var data = new SitemapAndPageLinksViewModel { PageLinks = response };
