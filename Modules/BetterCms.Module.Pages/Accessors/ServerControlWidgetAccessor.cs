@@ -42,6 +42,7 @@ using BetterCms.Module.Root.ViewModels.Cms;
 using Common.Logging;
 
 using RazorGenerator.Mvc;
+using System.Web;
 
 namespace BetterCms.Module.Pages.Accessors
 {
@@ -189,7 +190,7 @@ namespace BetterCms.Module.Pages.Accessors
         //
         private static string GetErrorString(string view, string message)
         {
-            return string.Format(@"<div class=""bcms-error"">Error rendering view ""{0}"": {1}</div>", view, message);
+            return string.Format(@"<div class=""bcms-error"">Error rendering view ""{0}"": {1}</div>", view, HttpUtility.HtmlEncode(message));
         }
 
         private RenderWidgetViewModel CreateWidgetViewModel(IView view)
