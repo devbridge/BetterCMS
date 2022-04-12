@@ -78,7 +78,9 @@ namespace BetterCms.Module.Pages.Controllers
                 data.PageLinks = pageLinks;
             }
 
-            return ComboWireJson(success, view, data, JsonRequestBehavior.AllowGet);
+            var jsonResult = ComboWireJson(success, view, data, JsonRequestBehavior.AllowGet);
+            jsonResult.MaxJsonLength = int.MaxValue;
+            return jsonResult;
         }
 
         /// <summary>
